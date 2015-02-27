@@ -1526,13 +1526,18 @@ Namespace DWSIM.Flowsheet
             While form.CalculationQueue.Count >= 1
 
                 Dim myinfo As DWSIM.Outros.StatusChangeEventArgs = form.CalculationQueue.Peek()
+
+                UpdateDisplayStatus(form, myinfo.Nome, True)
+
                 If myinfo.Tipo = TipoObjeto.MaterialStream Then
                     CalculateMaterialStreamAsync(form, form.Collections.CLCS_MaterialStreamCollection(myinfo.Nome), ct)
                 Else
                     CalculateFlowsheetAsync(form, myinfo, ct)
                 End If
                 form.Collections.ObjectCollection(myinfo.Nome).GraphicObject.Calculated = True
-         
+
+                UpdateDisplayStatus(form, myinfo.Nome)
+
                 If form.CalculationQueue.Count = 1 Then form.FormSpreadsheet.InternalCounter = 0
                 If form.CalculationQueue.Count > 0 Then form.CalculationQueue.Dequeue()
 
@@ -1563,12 +1568,14 @@ Namespace DWSIM.Flowsheet
 
             For Each li In orderedlist
                 Parallel.ForEach(li.Value, poptions, Sub(myinfo)
+                                                         UpdateDisplayStatus(form, myinfo.Nome, True)
                                                          If myinfo.Tipo = TipoObjeto.MaterialStream Then
                                                              CalculateMaterialStreamAsync(form, form.Collections.CLCS_MaterialStreamCollection(myinfo.Nome), ct)
                                                          Else
                                                              CalculateFlowsheetAsync(form, myinfo, ct)
                                                          End If
                                                          form.Collections.ObjectCollection(myinfo.Nome).GraphicObject.Calculated = True
+                                                         UpdateDisplayStatus(form, myinfo.Nome)
                                                      End Sub)
             Next
 
@@ -1602,6 +1609,35 @@ Namespace DWSIM.Flowsheet
                 Application.DoEvents()
             End If
 
+        End Sub
+
+        Shared Sub UpdateDisplayStatus(form As FormFlowsheet, Optional ByVal ObjID As String = "", Optional ByVal calculating As Boolean = False)
+            If form.Visible Then
+                form.UIThread(Sub()
+                                  form.FormSurface.Enabled = True
+                                  If ObjID = "" Then
+                                      For Each baseobj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
+                                          If Not baseobj.GraphicObject Is Nothing Then
+                                              baseobj.GraphicObject.Calculated = baseobj.Calculated
+                                              If baseobj.Calculated Then baseobj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
+                                          End If
+                                      Next
+                                  Else
+                                      If form.Collections.ObjectCollection.ContainsKey(ObjID) Then
+                                          Dim baseobj As SimulationObjects_BaseClass = form.Collections.ObjectCollection(ObjID)
+                                          If Not baseobj.GraphicObject Is Nothing Then
+                                              If calculating Then
+                                                  baseobj.GraphicObject.Status = Status.Calculating
+                                              Else
+                                                  baseobj.GraphicObject.Calculated = baseobj.Calculated
+                                                  If baseobj.Calculated Then baseobj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
+                                              End If
+                                          End If
+                                      End If
+                                  End If
+                                  form.FormSurface.Enabled = False
+                              End Sub)
+            End If
         End Sub
 
         ''' <summary>
@@ -1653,6 +1689,8 @@ Namespace DWSIM.Flowsheet
                     baseobj.Calculated = False
                     If Not baseobj.GraphicObject Is Nothing Then baseobj.GraphicObject.Calculated = baseobj.Calculated
                 Next
+
+                Application.DoEvents()
 
                 Select Case mode
 
@@ -1845,8 +1883,7 @@ Namespace DWSIM.Flowsheet
 
                         If form.Visible Then
                             ts.Dispose()
-                            form.FormSurface.Enabled = True
-                        End If
+                       End If
 
                         My.MyApplication.TaskCancellationTokenSource = Nothing
 
@@ -1886,12 +1923,9 @@ Namespace DWSIM.Flowsheet
 
                 End Select
 
-                For Each baseobj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
-                    If Not baseobj.GraphicObject Is Nothing Then
-                        baseobj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                        baseobj.GraphicObject.Calculated = baseobj.Calculated
-                    End If
-                Next
+                UpdateDisplayStatus(form)
+
+                If form.Visible Then form.FormSurface.Enabled = True
 
                 If mode > 0 Then
                     form.UpdateStatusLabel(preLab)

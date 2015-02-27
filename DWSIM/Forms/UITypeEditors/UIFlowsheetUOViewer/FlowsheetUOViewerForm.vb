@@ -4,7 +4,7 @@
 
     Private Sub FlowsheetUOViewerForm_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-        fsuo.Fsheet.FormSurface.ChildParent = fsuo.Fsheet
+        fsuo.Fsheet.FormSurface.Flowsheet = fsuo.Fsheet
         Me.Controls.Add(fsuo.Fsheet.dckPanel)
         fsuo.Fsheet.dckPanel.Invalidate()
         fsuo.Fsheet.FormSurface.FlowsheetDesignSurface.Zoom = 1.0#

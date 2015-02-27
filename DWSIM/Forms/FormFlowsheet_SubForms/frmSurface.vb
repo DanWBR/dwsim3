@@ -14,7 +14,7 @@ Public Class frmSurface
     Private m_connecting As Boolean = False
     Private m_stPoint As New Point
 
-    Public ChildParent As FormFlowsheet
+    Public Flowsheet As FormFlowsheet
     Public PGEx2 As PropertyGridEx.PropertyGridEx
     Public PGEx1 As PropertyGridEx.PropertyGridEx
 
@@ -68,14 +68,14 @@ Public Class frmSurface
     Private Sub frmSurface_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         If TypeOf Me.ParentForm Is FormFlowsheet Then
-            ChildParent = Me.ParentForm
+            Flowsheet = Me.ParentForm
         End If
-        PGEx1 = Me.ChildParent.FormProps.PGEx1
-        PGEx2 = Me.ChildParent.FormProps.PGEx2
+        PGEx1 = Me.Flowsheet.FormProps.PGEx1
+        PGEx2 = Me.Flowsheet.FormProps.PGEx2
 
         AddHandler CopyFromTSMI.DropDownItemClicked, AddressOf MaterialStreamClickHandler
 
-        'If Not ChildParent.Options.SelectedPropertyPackage Is Nothing Then Me.LabelPP.Text = "PP: " & ChildParent.Options.SelectedPropertyPackage.ComponentName
+        'If Not Flowsheet.Options.SelectedPropertyPackage Is Nothing Then Me.LabelPP.Text = "PP: " & Flowsheet.Options.SelectedPropertyPackage.ComponentName
 
         If DWSIM.App.IsRunningOnMono Then
 
@@ -96,59 +96,59 @@ Public Class frmSurface
     Public Sub UpdateSelectedObject()
 
         If Not Me.FlowsheetDesignSurface.SelectedObject Is Nothing Then
-            ChildParent.FormProps.SuspendLayout()
+            Flowsheet.FormProps.SuspendLayout()
             If Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_Tabela Then
-                ChildParent.FormProps.LblNomeObj.Text = DWSIM.App.GetLocalString("Tabela")
-                ChildParent.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString("TabeladeDados")
-                ChildParent.FormProps.LblStatusObj.Text = "-"
-                ChildParent.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
+                Flowsheet.FormProps.LblNomeObj.Text = DWSIM.App.GetLocalString("Tabela")
+                Flowsheet.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString("TabeladeDados")
+                Flowsheet.FormProps.LblStatusObj.Text = "-"
+                Flowsheet.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
             ElseIf Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_MasterTable Then
-                ChildParent.FormProps.LblNomeObj.Text = DWSIM.App.GetLocalString("MasterTable")
-                ChildParent.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString("MasterTable")
-                ChildParent.FormProps.LblStatusObj.Text = "-"
-                ChildParent.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
+                Flowsheet.FormProps.LblNomeObj.Text = DWSIM.App.GetLocalString("MasterTable")
+                Flowsheet.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString("MasterTable")
+                Flowsheet.FormProps.LblStatusObj.Text = "-"
+                Flowsheet.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
             ElseIf Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_Figura Then
-                ChildParent.FormProps.LblNomeObj.Text = DWSIM.App.GetLocalString("Figura")
-                ChildParent.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString("ImagemBitmap")
-                ChildParent.FormProps.LblStatusObj.Text = "-"
-                ChildParent.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
+                Flowsheet.FormProps.LblNomeObj.Text = DWSIM.App.GetLocalString("Figura")
+                Flowsheet.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString("ImagemBitmap")
+                Flowsheet.FormProps.LblStatusObj.Text = "-"
+                Flowsheet.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
             ElseIf Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_Texto Then
-                ChildParent.FormProps.LblNomeObj.Text = DWSIM.App.GetLocalString("Texto")
-                ChildParent.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString("CaixadeTexto")
-                ChildParent.FormProps.LblStatusObj.Text = "-"
-                ChildParent.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
+                Flowsheet.FormProps.LblNomeObj.Text = DWSIM.App.GetLocalString("Texto")
+                Flowsheet.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString("CaixadeTexto")
+                Flowsheet.FormProps.LblStatusObj.Text = "-"
+                Flowsheet.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
             Else
-                Dim nodes = ChildParent.FormObjList.TreeViewObj.Nodes.Find(Me.FlowsheetDesignSurface.SelectedObject.Tag, True)
-                ChildParent.FormProps.LblNomeObj.Text = Me.FlowsheetDesignSurface.SelectedObject.Tag
-                ChildParent.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString(ChildParent.Collections.ObjectCollection.Item(Me.FlowsheetDesignSurface.SelectedObject.Name).Descricao)
+                Dim nodes = Flowsheet.FormObjList.TreeViewObj.Nodes.Find(Me.FlowsheetDesignSurface.SelectedObject.Tag, True)
+                Flowsheet.FormProps.LblNomeObj.Text = Me.FlowsheetDesignSurface.SelectedObject.Tag
+                Flowsheet.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString(Flowsheet.Collections.ObjectCollection.Item(Me.FlowsheetDesignSurface.SelectedObject.Name).Descricao)
                 Select Case Me.FlowsheetDesignSurface.SelectedObject.Status
                     Case Status.Calculated
-                        ChildParent.FormProps.LblStatusObj.Text = DWSIM.App.GetLocalString("Calculado")
-                        ChildParent.FormProps.LblStatusObj.ForeColor = Color.SteelBlue
+                        Flowsheet.FormProps.LblStatusObj.Text = DWSIM.App.GetLocalString("Calculado")
+                        Flowsheet.FormProps.LblStatusObj.ForeColor = Color.SteelBlue
                     Case Status.Calculating
-                        ChildParent.FormProps.LblStatusObj.Text = DWSIM.App.GetLocalString("Calculando")
-                        ChildParent.FormProps.LblStatusObj.ForeColor = Color.YellowGreen
+                        Flowsheet.FormProps.LblStatusObj.Text = DWSIM.App.GetLocalString("Calculando")
+                        Flowsheet.FormProps.LblStatusObj.ForeColor = Color.YellowGreen
                     Case Status.ErrorCalculating
-                        ChildParent.FormProps.LblStatusObj.Text = DWSIM.App.GetLocalString("NoCalculado")
-                        ChildParent.FormProps.LblStatusObj.ForeColor = Color.Red
+                        Flowsheet.FormProps.LblStatusObj.Text = DWSIM.App.GetLocalString("NoCalculado")
+                        Flowsheet.FormProps.LblStatusObj.ForeColor = Color.Red
                     Case Status.Inactive
-                        ChildParent.FormProps.LblStatusObj.Text = DWSIM.App.GetLocalString("Inativo")
-                        ChildParent.FormProps.LblStatusObj.ForeColor = Color.Gray
+                        Flowsheet.FormProps.LblStatusObj.Text = DWSIM.App.GetLocalString("Inativo")
+                        Flowsheet.FormProps.LblStatusObj.ForeColor = Color.Gray
                     Case Status.Idle
-                        ChildParent.FormProps.LblStatusObj.Text = DWSIM.App.GetLocalString("Calculado")
-                        ChildParent.FormProps.LblStatusObj.ForeColor = Color.SteelBlue
+                        Flowsheet.FormProps.LblStatusObj.Text = DWSIM.App.GetLocalString("Calculado")
+                        Flowsheet.FormProps.LblStatusObj.ForeColor = Color.SteelBlue
                 End Select
             End If
-            ChildParent.PopulatePGEx2(Me.FlowsheetDesignSurface.SelectedObject)
+            Flowsheet.PopulatePGEx2(Me.FlowsheetDesignSurface.SelectedObject)
             Try
                 If Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_Tabela Then
                     CType(Me.FlowsheetDesignSurface.SelectedObject, DWSIM.GraphicObjects.TableGraphic).PopulateGrid(PGEx1)
                 ElseIf Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_MasterTable Then
-                    CType(Me.FlowsheetDesignSurface.SelectedObject, DWSIM.GraphicObjects.MasterTableGraphic).PopulateGrid(PGEx1, ChildParent)
+                    CType(Me.FlowsheetDesignSurface.SelectedObject, DWSIM.GraphicObjects.MasterTableGraphic).PopulateGrid(PGEx1, Flowsheet)
                 Else
-                    ChildParent.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name).PopulatePropertyGrid(PGEx1, ChildParent.Options.SelectedUnitSystem)
+                    Flowsheet.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name).PopulatePropertyGrid(PGEx1, Flowsheet.Options.SelectedUnitSystem)
                 End If
-                ChildParent.FormProps.ResumeLayout()
+                Flowsheet.FormProps.ResumeLayout()
             Catch ex As Exception
                 PGEx1.SelectedObject = Nothing
                 MessageBox.Show(ex.Message & " - " & ex.StackTrace, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -167,7 +167,7 @@ Public Class frmSurface
     End Sub
 
     Private Sub FlowsheetDesignSurface_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles FlowsheetDesignSurface.KeyDown
-      
+
         If e.KeyCode = Keys.Delete Then
             Dim n As Integer = Me.FlowsheetDesignSurface.SelectedObjects.Count
             If n > 1 Then
@@ -178,15 +178,15 @@ Public Class frmSurface
                     Next
                     For Each s As String In indexes
                         Dim gobj As GraphicObject
-                        gobj = ChildParent.GetFlowsheetGraphicObject(s)
+                        gobj = Flowsheet.GetFlowsheetGraphicObject(s)
                         If Not gobj Is Nothing Then
-                            Me.ChildParent.DeleteSelectedObject(sender, e, gobj, False)
+                            Me.Flowsheet.DeleteSelectedObject(sender, e, gobj, False)
                             Me.FlowsheetDesignSurface.SelectedObjects.Remove(gobj.Name)
                         End If
                     Next
                 End If
             ElseIf n = 1 Then
-                Me.ChildParent.DeleteSelectedObject(sender, e, Me.FlowsheetDesignSurface.SelectedObject)
+                Me.Flowsheet.DeleteSelectedObject(sender, e, Me.FlowsheetDesignSurface.SelectedObject)
             End If
         ElseIf e.KeyCode = Keys.R And e.Control Then
             Call Me.RecalcularToolStripMenuItem_Click(sender, e)
@@ -194,9 +194,9 @@ Public Class frmSurface
             Call Me.EditCompTSMI_Click(sender, e)
         ElseIf e.KeyCode = Keys.F5 Then
             If My.Computer.Keyboard.ShiftKeyDown Then
-                CalculateAll(Me.ChildParent)
+                CalculateAll(Me.Flowsheet)
             Else
-                CalculateAll2(Me.ChildParent, My.Settings.SolverMode)
+                CalculateAll2(Me.Flowsheet, My.Settings.SolverMode)
             End If
         End If
 
@@ -254,74 +254,74 @@ Public Class frmSurface
     End Sub
 
     Private Sub FlowsheetDesignSurface_SelectionChanged(ByVal sender As Object, _
-            ByVal e As Microsoft.MSDN.Samples.DesignSurface.SelectionChangedEventArgs) Handles FlowsheetDesignSurface.SelectionChanged
+            ByVal e As Microsoft.Msdn.Samples.DesignSurface.SelectionChangedEventArgs) Handles FlowsheetDesignSurface.SelectionChanged
 
         'Try
         If Not e.SelectedObject Is Nothing Then
             If Not e.SelectedObject.IsConnector Then
                 If Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_Tabela Then
-                    ChildParent.FormProps.LblNomeObj.Text = DWSIM.App.GetLocalString("Tabela")
-                    ChildParent.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString("TabeladeDados")
-                    ChildParent.FormProps.LblStatusObj.Text = "-"
-                    ChildParent.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
+                    Flowsheet.FormProps.LblNomeObj.Text = DWSIM.App.GetLocalString("Tabela")
+                    Flowsheet.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString("TabeladeDados")
+                    Flowsheet.FormProps.LblStatusObj.Text = "-"
+                    Flowsheet.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
                 ElseIf Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_MasterTable Then
-                    ChildParent.FormProps.LblNomeObj.Text = "MasterTable"
-                    ChildParent.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString("MasterTable")
-                    ChildParent.FormProps.LblStatusObj.Text = "-"
-                    ChildParent.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
+                    Flowsheet.FormProps.LblNomeObj.Text = "MasterTable"
+                    Flowsheet.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString("MasterTable")
+                    Flowsheet.FormProps.LblStatusObj.Text = "-"
+                    Flowsheet.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
                 ElseIf Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_Figura Then
-                    ChildParent.FormProps.LblNomeObj.Text = DWSIM.App.GetLocalString("Figura")
-                    ChildParent.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString("ImagemBitmap")
-                    ChildParent.FormProps.LblStatusObj.Text = "-"
-                    ChildParent.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
+                    Flowsheet.FormProps.LblNomeObj.Text = DWSIM.App.GetLocalString("Figura")
+                    Flowsheet.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString("ImagemBitmap")
+                    Flowsheet.FormProps.LblStatusObj.Text = "-"
+                    Flowsheet.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
                 ElseIf Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_Texto Then
-                    ChildParent.FormProps.LblNomeObj.Text = DWSIM.App.GetLocalString("Texto")
-                    ChildParent.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString("CaixadeTexto")
-                    ChildParent.FormProps.LblStatusObj.Text = "-"
-                    ChildParent.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
+                    Flowsheet.FormProps.LblNomeObj.Text = DWSIM.App.GetLocalString("Texto")
+                    Flowsheet.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString("CaixadeTexto")
+                    Flowsheet.FormProps.LblStatusObj.Text = "-"
+                    Flowsheet.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
                 Else
-                    Dim nodes = ChildParent.FormObjList.TreeViewObj.Nodes.Find(e.SelectedObject.Tag, True)
-                    ChildParent.FormProps.LblNomeObj.Text = e.SelectedObject.Tag
-                    ChildParent.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString(ChildParent.Collections.ObjectCollection.Item(e.SelectedObject.Name).Descricao)
+                    Dim nodes = Flowsheet.FormObjList.TreeViewObj.Nodes.Find(e.SelectedObject.Tag, True)
+                    Flowsheet.FormProps.LblNomeObj.Text = e.SelectedObject.Tag
+                    Flowsheet.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString(Flowsheet.Collections.ObjectCollection.Item(e.SelectedObject.Name).Descricao)
                     If e.SelectedObject.Active = False Then
-                        ChildParent.FormProps.LblStatusObj.Text = DWSIM.App.GetLocalString("Inativo")
-                        ChildParent.FormProps.LblStatusObj.ForeColor = Color.DimGray
+                        Flowsheet.FormProps.LblStatusObj.Text = DWSIM.App.GetLocalString("Inativo")
+                        Flowsheet.FormProps.LblStatusObj.ForeColor = Color.DimGray
                     Else
                         Select Case Me.FlowsheetDesignSurface.SelectedObject.Status
                             Case Status.Calculated
-                                ChildParent.FormProps.LblStatusObj.Text = DWSIM.App.GetLocalString("Calculado")
-                                ChildParent.FormProps.LblStatusObj.ForeColor = Color.SteelBlue
+                                Flowsheet.FormProps.LblStatusObj.Text = DWSIM.App.GetLocalString("Calculado")
+                                Flowsheet.FormProps.LblStatusObj.ForeColor = Color.SteelBlue
                             Case Status.Calculating
-                                ChildParent.FormProps.LblStatusObj.Text = DWSIM.App.GetLocalString("Calculando")
-                                ChildParent.FormProps.LblStatusObj.ForeColor = Color.YellowGreen
+                                Flowsheet.FormProps.LblStatusObj.Text = DWSIM.App.GetLocalString("Calculando")
+                                Flowsheet.FormProps.LblStatusObj.ForeColor = Color.YellowGreen
                             Case Status.ErrorCalculating
-                                ChildParent.FormProps.LblStatusObj.Text = DWSIM.App.GetLocalString("NoCalculado")
-                                ChildParent.FormProps.LblStatusObj.ForeColor = Color.Red
+                                Flowsheet.FormProps.LblStatusObj.Text = DWSIM.App.GetLocalString("NoCalculado")
+                                Flowsheet.FormProps.LblStatusObj.ForeColor = Color.Red
                             Case Status.Inactive
-                                ChildParent.FormProps.LblStatusObj.Text = DWSIM.App.GetLocalString("Inativo")
-                                ChildParent.FormProps.LblStatusObj.ForeColor = Color.Gray
+                                Flowsheet.FormProps.LblStatusObj.Text = DWSIM.App.GetLocalString("Inativo")
+                                Flowsheet.FormProps.LblStatusObj.ForeColor = Color.Gray
                             Case Status.Idle
-                                ChildParent.FormProps.LblStatusObj.Text = DWSIM.App.GetLocalString("Calculado")
-                                ChildParent.FormProps.LblStatusObj.ForeColor = Color.SteelBlue
+                                Flowsheet.FormProps.LblStatusObj.Text = DWSIM.App.GetLocalString("Calculado")
+                                Flowsheet.FormProps.LblStatusObj.ForeColor = Color.SteelBlue
                         End Select
                     End If
                 End If
                 If Not Me.FlowsheetDesignSurface.SelectedObject Is Nothing Then
                     If Me.FlowsheetDesignSurface.SelectedObject.IsConnector = False Then
-                        ChildParent.PopulatePGEx2(Me.FlowsheetDesignSurface.SelectedObject)
+                        Flowsheet.PopulatePGEx2(Me.FlowsheetDesignSurface.SelectedObject)
                         Try
                             If Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_Tabela Then
                                 CType(Me.FlowsheetDesignSurface.SelectedObject, DWSIM.GraphicObjects.TableGraphic).PopulateGrid(PGEx1)
                             ElseIf Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_MasterTable Then
-                                CType(Me.FlowsheetDesignSurface.SelectedObject, DWSIM.GraphicObjects.MasterTableGraphic).PopulateGrid(PGEx1, ChildParent)
+                                CType(Me.FlowsheetDesignSurface.SelectedObject, DWSIM.GraphicObjects.MasterTableGraphic).PopulateGrid(PGEx1, Flowsheet)
                             Else
-                                ChildParent.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name).PopulatePropertyGrid(PGEx1, ChildParent.Options.SelectedUnitSystem)
+                                Flowsheet.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name).PopulatePropertyGrid(PGEx1, Flowsheet.Options.SelectedUnitSystem)
                             End If
-                            'ChildParent.FormProps.ResumeLayout()
+                            'Flowsheet.FormProps.ResumeLayout()
                         Catch ex As Exception
                             PGEx1.SelectedObject = Nothing
                         Finally
-                            ChildParent.FormSurface.Select()
+                            Flowsheet.FormSurface.Select()
                         End Try
                     Else
                         Me.FlowsheetDesignSurface.SelectedObject = Nothing
@@ -334,26 +334,26 @@ Public Class frmSurface
                 PGEx1.Refresh()
             Else
                 Me.FlowsheetDesignSurface.SelectedObject = Nothing
-                'ChildParent.FormProps.LblNomeObj.Text = DWSIM.App.GetLocalString("Nenhumselecionado")
-                'ChildParent.FormProps.LblTipoObj.Text = "-"
-                'ChildParent.FormProps.LblStatusObj.Text = "-"
-                'ChildParent.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
-                'ChildParent.FormObjList.TreeViewObj.CollapseAll()
-                'ChildParent.FormObjList.TreeViewObj.SelectedNode = Nothing
+                'Flowsheet.FormProps.LblNomeObj.Text = DWSIM.App.GetLocalString("Nenhumselecionado")
+                'Flowsheet.FormProps.LblTipoObj.Text = "-"
+                'Flowsheet.FormProps.LblStatusObj.Text = "-"
+                'Flowsheet.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
+                'Flowsheet.FormObjList.TreeViewObj.CollapseAll()
+                'Flowsheet.FormObjList.TreeViewObj.SelectedNode = Nothing
             End If
         Else
             PGEx2.SelectedObject = Nothing
             PGEx1.SelectedObject = Nothing
         End If
         'Catch
-        '    ChildParent.FormObjList.TreeViewObj.CollapseAll()
-        '    ChildParent.FormObjList.TreeViewObj.SelectedNode = Nothing
+        '    Flowsheet.FormObjList.TreeViewObj.CollapseAll()
+        '    Flowsheet.FormObjList.TreeViewObj.SelectedNode = Nothing
         'End Try
         If Me.FlowsheetDesignSurface.SelectedObject Is Nothing Then
-            ChildParent.FormProps.LblNomeObj.Text = DWSIM.App.GetLocalString("Nenhumselecionado")
-            ChildParent.FormProps.LblTipoObj.Text = "-"
-            ChildParent.FormProps.LblStatusObj.Text = "-"
-            ChildParent.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
+            Flowsheet.FormProps.LblNomeObj.Text = DWSIM.App.GetLocalString("Nenhumselecionado")
+            Flowsheet.FormProps.LblTipoObj.Text = "-"
+            Flowsheet.FormProps.LblStatusObj.Text = "-"
+            Flowsheet.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
         End If
     End Sub
 
@@ -384,8 +384,8 @@ Public Class frmSurface
         Me.FlowsheetDesignSurface.Invalidate()
     End Sub
 
-    Private Sub FlowsheetDesignSurface_StatusUpdate(ByVal sender As Object, ByVal e As Microsoft.MSDN.Samples.DesignSurface.StatusUpdateEventArgs) Handles FlowsheetDesignSurface.StatusUpdate
-        ChildParent.TSTBZoom.Text = Format(FlowsheetDesignSurface.Zoom, "#%")
+    Private Sub FlowsheetDesignSurface_StatusUpdate(ByVal sender As Object, ByVal e As Microsoft.Msdn.Samples.DesignSurface.StatusUpdateEventArgs) Handles FlowsheetDesignSurface.StatusUpdate
+        Flowsheet.TSTBZoom.Text = Format(FlowsheetDesignSurface.Zoom, "#%")
     End Sub
 
     Private Sub FlowsheetDesignSurface_MouseClick(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles FlowsheetDesignSurface.MouseDown
@@ -393,7 +393,7 @@ Public Class frmSurface
         If e.Button = Windows.Forms.MouseButtons.Left Then
 
             If Me.FlowsheetDesignSurface.QuickConnect And My.Computer.Keyboard.CtrlKeyDown Then
-                Dim mousePT As New Point(ChildParent.gscTogoc(e.X, e.Y))
+                Dim mousePT As New Point(Flowsheet.gscTogoc(e.X, e.Y))
                 Dim mpx = mousePT.X
                 Dim mpy = mousePT.Y
                 Me.m_stPoint = mousePT
@@ -422,30 +422,30 @@ Public Class frmSurface
 
             Me.FlowsheetDesignSurface.drawingObjects.Remove(Me.FlowsheetDesignSurface.drawingObjects.FindObjectWithName("CTOOL1234567890"))
 
-            Me.m_endobj = Me.FlowsheetDesignSurface.drawingObjects.FindObjectAtPoint(ChildParent.gscTogoc(e.X, e.Y))
+            Me.m_endobj = Me.FlowsheetDesignSurface.drawingObjects.FindObjectAtPoint(Flowsheet.gscTogoc(e.X, e.Y))
 
             Me.FlowsheetDesignSurface.SelectRectangle = True
             Me.FlowsheetDesignSurface.Invalidate()
 
             If Not m_startobj Is Nothing And Not m_endobj Is Nothing Then
-                If m_startobj.Name <> m_endobj.Name Then Call ChildParent.ConnectObject(Me.m_startobj, Me.m_endobj)
+                If m_startobj.Name <> m_endobj.Name Then Call Flowsheet.ConnectObject(Me.m_startobj, Me.m_endobj)
             End If
         End If
 
         If e.Button = Windows.Forms.MouseButtons.Left Then
 
-            If Not ChildParent.ClickedToolStripMenuItem Is Nothing Then
-                If ChildParent.InsertingObjectToPFD Then
+            If Not Flowsheet.ClickedToolStripMenuItem Is Nothing Then
+                If Flowsheet.InsertingObjectToPFD Then
 
                     Dim gObj As GraphicObject = Nothing
                     Dim fillclr As Color = Color.WhiteSmoke
                     Dim lineclr As Color = Color.Red
-                    Dim mousePT As Point = ChildParent.gscTogoc(e.X, e.Y)
+                    Dim mousePT As Point = Flowsheet.gscTogoc(e.X, e.Y)
                     Dim mpx = mousePT.X '- SplitContainer1.SplitterDistance
                     Dim mpy = mousePT.Y '- ToolStripContainer1.TopToolStripPanel.Height
                     Dim tobj As TipoObjeto = TipoObjeto.Nenhum
 
-                    Select Case ChildParent.ClickedToolStripMenuItem.Name
+                    Select Case Flowsheet.ClickedToolStripMenuItem.Name
 
                         Case "TSMIMaterialStream"
                             tobj = TipoObjeto.MaterialStream
@@ -523,8 +523,8 @@ Public Class frmSurface
 
                     AddObjectToSurface(tobj, mpx, mpy)
 
-                    ChildParent.ClickedToolStripMenuItem = Nothing
-                    ChildParent.InsertingObjectToPFD = False
+                    Flowsheet.ClickedToolStripMenuItem = Nothing
+                    Flowsheet.InsertingObjectToPFD = False
 
                     If tobj = TipoObjeto.MaterialStream Then
                         Call Me.EditCompTSMI_Click(Me.FlowsheetDesignSurface, New EventArgs())
@@ -538,15 +538,15 @@ Public Class frmSurface
 
             '    If Me.FlowsheetDesignSurface.SelectedObject.IsConnector = False Then
 
-            '        ChildParent.PopulatePGEx2(Me.FlowsheetDesignSurface.SelectedObject)
+            '        Flowsheet.PopulatePGEx2(Me.FlowsheetDesignSurface.SelectedObject)
             '        Try
-            '            ChildParent.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name).PopulatePropertyGrid(PGEx1, ChildParent.Options.SelectedUnitSystem)
-            '            ChildParent.FormProps.ResumeLayout()
+            '            Flowsheet.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name).PopulatePropertyGrid(PGEx1, Flowsheet.Options.SelectedUnitSystem)
+            '            Flowsheet.FormProps.ResumeLayout()
             '        Catch ex As Exception
             '            PGEx1.SelectedObject = Nothing
             '            'MessageBox.Show(ex.Message & " - " & ex.StackTrace, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             '        Finally
-            '            ChildParent.FormSurface.Select()
+            '            Flowsheet.FormSurface.Select()
             '        End Try
 
             '    Else
@@ -584,14 +584,14 @@ Public Class frmSurface
 
     Private Sub FlowsheetDesignSurface_MouseMove(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles FlowsheetDesignSurface.MouseMove
 
-        Dim px As Point = ChildParent.gscTogoc(e.Location.X, e.Location.Y)
-        Dim px2 As Point = ChildParent.gscTogoc(e.Location.X + 20, e.Location.Y + 20)
+        Dim px As Point = Flowsheet.gscTogoc(e.Location.X, e.Location.Y)
+        Dim px2 As Point = Flowsheet.gscTogoc(e.Location.X + 20, e.Location.Y + 20)
 
         If Me.m_connecting Then
 
             Dim myCTool As ConnectToolGraphic = Me.FlowsheetDesignSurface.drawingObjects.FindObjectWithName("CTOOL1234567890")
 
-            Dim mousePT As New Point(ChildParent.gscTogoc(e.X, e.Y))
+            Dim mousePT As New Point(Flowsheet.gscTogoc(e.X, e.Y))
 
             myCTool.Width = mousePT.X
             myCTool.Height = mousePT.Y
@@ -614,9 +614,9 @@ Public Class frmSurface
                     If gobj.Calculated Then
 
 
-                        If ChildParent.Collections.ObjectCollection.ContainsKey(gobj.Name) Then
+                        If Flowsheet.Collections.ObjectCollection.ContainsKey(gobj.Name) Then
 
-                            Dim obj As SimulationObjects_BaseClass = ChildParent.Collections.ObjectCollection(gobj.Name)
+                            Dim obj As SimulationObjects_BaseClass = Flowsheet.Collections.ObjectCollection(gobj.Name)
 
                             If obj.TabelaRapida Is Nothing Then
 
@@ -705,9 +705,9 @@ Public Class frmSurface
 
         Dim fct As New FormConfigureTable
 
-        ChildParent = My.Application.ActiveSimulation
+        Flowsheet = My.Application.ActiveSimulation
 
-        Dim obj As SimulationObjects_BaseClass = ChildParent.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name)
+        Dim obj As SimulationObjects_BaseClass = Flowsheet.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name)
         'obj.FillNodeItems()
         Dim ni As DWSIM.Outros.NodeItem
         If obj.NodeTableItems.Count > 0 Then
@@ -735,7 +735,7 @@ Public Class frmSurface
     Private Sub MostrarToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MostrarToolStripMenuItem.Click
         If Not Me.FlowsheetDesignSurface.SelectedObject Is Nothing Then
             If Me.MostrarToolStripMenuItem.Checked = True Then
-                Dim obj As SimulationObjects_BaseClass = ChildParent.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name)
+                Dim obj As SimulationObjects_BaseClass = Flowsheet.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name)
                 Dim tabela As New DWSIM.GraphicObjects.TableGraphic(obj, Me.FlowsheetDesignSurface.SelectedObject.X + Me.FlowsheetDesignSurface.SelectedObject.Width, Me.FlowsheetDesignSurface.SelectedObject.Y + Me.FlowsheetDesignSurface.SelectedObject.Height)
                 obj.Tabela = tabela
                 tabela.Tag = obj.Nome
@@ -744,7 +744,7 @@ Public Class frmSurface
                 Me.FlowsheetDesignSurface.drawingObjects.Add(tabela)
                 Me.FlowsheetDesignSurface.Invalidate()
             Else
-                Dim obj As SimulationObjects_BaseClass = ChildParent.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name)
+                Dim obj As SimulationObjects_BaseClass = Flowsheet.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name)
                 Me.FlowsheetDesignSurface.drawingObjects.Remove(obj.Tabela)
                 obj.Tabela = Nothing
                 Me.FlowsheetDesignSurface.Invalidate()
@@ -785,7 +785,7 @@ Public Class frmSurface
 
             Try
 
-                Dim obj As SimulationObjects_BaseClass = ChildParent.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name)
+                Dim obj As SimulationObjects_BaseClass = Flowsheet.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name)
 
                 If Me.IsObjectDownstreamConnectable(obj.GraphicObject.Tag) Then
                     Dim arr As ArrayList = Me.ReturnDownstreamConnectibles(obj.GraphicObject.Tag)
@@ -862,7 +862,7 @@ Public Class frmSurface
 
                     If cancopy Then
                         Me.CopyFromTSMI.Visible = True
-                        For Each mstr As Streams.MaterialStream In ChildParent.Collections.CLCS_MaterialStreamCollection.Values
+                        For Each mstr As Streams.MaterialStream In Flowsheet.Collections.CLCS_MaterialStreamCollection.Values
                             If mstr.GraphicObject.Tag <> obj.GraphicObject.Tag Then
                                 Dim newtsmi As New ToolStripMenuItem(mstr.GraphicObject.Tag)
                                 If mstr.GraphicObject.Calculated Then CopyFromTSMI.DropDownItems.Add(newtsmi)
@@ -897,7 +897,7 @@ Public Class frmSurface
             Me.ClonarToolStripMenuItem.Visible = True
             Me.ExcluirToolStripMenuItem.Visible = True
             Me.HorizontalmenteToolStripMenuItem.Visible = True
-            Dim obj As SimulationObjects_BaseClass = ChildParent.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name)
+            Dim obj As SimulationObjects_BaseClass = Flowsheet.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name)
 
             If obj.GraphicObject.FlippedH Then
                 Me.HorizontalmenteToolStripMenuItem.Checked = True
@@ -929,9 +929,9 @@ Public Class frmSurface
 
     Sub MaterialStreamClickHandler(ByVal sender As System.Object, ByVal e As ToolStripItemClickedEventArgs)
 
-        Dim obj1 As Streams.MaterialStream = ChildParent.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name)
+        Dim obj1 As Streams.MaterialStream = Flowsheet.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name)
 
-        Dim obj2 As Streams.MaterialStream = ChildParent.GetFlowsheetSimulationObject(e.ClickedItem.Text)
+        Dim obj2 As Streams.MaterialStream = Flowsheet.GetFlowsheetSimulationObject(e.ClickedItem.Text)
 
         obj1.Assign(obj2)
 
@@ -939,22 +939,22 @@ Public Class frmSurface
 
         Application.DoEvents()
 
-        CalculateObject(ChildParent, obj1.Nome)
+        CalculateObject(Flowsheet, obj1.Nome)
 
     End Sub
 
     Private Sub ToolStripMenuItem2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripMenuItem2.Click
-        Me.ChildParent = My.Application.ActiveSimulation
-        With ChildParent.FormProps
+        Me.Flowsheet = My.Application.ActiveSimulation
+        With Flowsheet.FormProps
             .LblStatusObj.Text = "-"
             .LblStatusObj.ForeColor = Color.Black
             .LblNomeObj.Text = DWSIM.App.GetLocalString("Fluxograma")
             .LblTipoObj.Text = "-"
         End With
 
-        ChildParent.FormProps.FTSProps.SelectedItem = ChildParent.FormProps.TSObj
+        Flowsheet.FormProps.FTSProps.SelectedItem = Flowsheet.FormProps.TSObj
 
-        With ChildParent.FormProps.PGEx2
+        With Flowsheet.FormProps.PGEx2
 
             .PropertySort = PropertySort.NoSort
             .ShowCustomProperties = True
@@ -995,9 +995,9 @@ Public Class frmSurface
 
     Private Sub ClonarToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ClonarToolStripMenuItem.Click
 
-        ChildParent = My.Application.ActiveSimulation
+        Flowsheet = My.Application.ActiveSimulation
 
-        Dim obj As SimulationObjects_BaseClass = ChildParent.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name)
+        Dim obj As SimulationObjects_BaseClass = Flowsheet.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name)
         Dim gObj As GraphicObject = Me.FlowsheetDesignSurface.SelectedObject
         Dim newobj As SimulationObjects_BaseClass = obj.Clone
         newobj.Tabela = Nothing
@@ -1034,9 +1034,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.AdjustCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_AdjustCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.AdjustCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_AdjustCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.OT_Especificacao
                 Dim myDWOBJ As DWSIM.SimulationObjects.SpecialOps.Spec = CType(newobj, DWSIM.SimulationObjects.SpecialOps.Spec)
@@ -1064,9 +1064,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.SpecCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_SpecCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.SpecCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_SpecCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.OT_Reciclo
                 Dim myDWOBJ As DWSIM.SimulationObjects.SpecialOps.Recycle = CType(newobj, DWSIM.SimulationObjects.SpecialOps.Recycle)
@@ -1094,9 +1094,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.RecycleCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_RecycleCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.RecycleCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_RecycleCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.OT_EnergyRecycle
                 Dim myDWOBJ As DWSIM.SimulationObjects.SpecialOps.EnergyRecycle = CType(newobj, DWSIM.SimulationObjects.SpecialOps.EnergyRecycle)
@@ -1124,9 +1124,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.EnergyRecycleCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_EnergyRecycleCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.EnergyRecycleCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_EnergyRecycleCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.NodeIn
                 Dim myDWOBJ As DWSIM.SimulationObjects.UnitOps.Mixer = CType(newobj, DWSIM.SimulationObjects.UnitOps.Mixer)
@@ -1136,8 +1136,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -1156,9 +1156,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.MixerCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_MixerCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.MixerCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_MixerCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.NodeEn
                 Dim myDWOBJ As DWSIM.SimulationObjects.UnitOps.EnergyMixer = CType(newobj, DWSIM.SimulationObjects.UnitOps.EnergyMixer)
@@ -1168,8 +1168,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeME").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeME").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeME").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeME").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -1188,9 +1188,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.MixerENCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_EnergyMixerCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.MixerENCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_EnergyMixerCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.NodeOut
                 Dim myDWOBJ As DWSIM.SimulationObjects.UnitOps.Splitter = CType(newobj, DWSIM.SimulationObjects.UnitOps.Splitter)
@@ -1200,8 +1200,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeSP").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeSP").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeSP").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeSP").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -1220,9 +1220,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.SplitterCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_SplitterCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.SplitterCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_SplitterCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.Pump
                 Dim myDWOBJ As DWSIM.SimulationObjects.UnitOps.Pump = CType(newobj, DWSIM.SimulationObjects.UnitOps.Pump)
@@ -1232,8 +1232,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodePU").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodePU").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodePU").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodePU").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -1252,9 +1252,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.PumpCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_PumpCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.PumpCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_PumpCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.Tank
                 Dim myDWOBJ As DWSIM.SimulationObjects.UnitOps.Tank = CType(newobj, DWSIM.SimulationObjects.UnitOps.Tank)
@@ -1264,8 +1264,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeTQ").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeTQ").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeTQ").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeTQ").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -1284,9 +1284,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.TankCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_TankCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.TankCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_TankCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.Vessel
                 Dim myDWOBJ As DWSIM.SimulationObjects.UnitOps.Vessel = CType(newobj, DWSIM.SimulationObjects.UnitOps.Vessel)
@@ -1296,8 +1296,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeSE").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeSE").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeSE").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeSE").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -1316,9 +1316,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.SeparatorCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_VesselCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.SeparatorCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_VesselCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.MaterialStream
                 Dim myDWOBJ As DWSIM.SimulationObjects.Streams.MaterialStream = CType(newobj, DWSIM.SimulationObjects.Streams.MaterialStream)
@@ -1328,8 +1328,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeMS").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeMS").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMS").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMS").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -1348,9 +1348,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.MaterialStreamCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_MaterialStreamCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.MaterialStreamCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_MaterialStreamCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.EnergyStream
                 Dim myDWOBJ As DWSIM.SimulationObjects.Streams.EnergyStream = CType(newobj, DWSIM.SimulationObjects.Streams.EnergyStream)
@@ -1360,8 +1360,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeEN").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeEN").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeEN").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeEN").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -1380,9 +1380,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.EnergyStreamCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_EnergyStreamCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.EnergyStreamCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_EnergyStreamCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.Compressor
                 Dim myDWOBJ As DWSIM.SimulationObjects.UnitOps.Compressor = CType(newobj, DWSIM.SimulationObjects.UnitOps.Compressor)
@@ -1392,8 +1392,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeCO").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeCO").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeCO").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeCO").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -1412,9 +1412,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.CompressorCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_CompressorCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CompressorCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_CompressorCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.Expander
                 Dim myDWOBJ As DWSIM.SimulationObjects.UnitOps.Expander = CType(newobj, DWSIM.SimulationObjects.UnitOps.Expander)
@@ -1424,8 +1424,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeTU").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeTU").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeTU").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeTU").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -1444,9 +1444,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.TurbineCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_TurbineCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.TurbineCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_TurbineCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.Cooler
                 Dim myDWOBJ As DWSIM.SimulationObjects.UnitOps.Cooler = CType(newobj, DWSIM.SimulationObjects.UnitOps.Cooler)
@@ -1456,8 +1456,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeCL").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeCL").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeCL").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeCL").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -1476,9 +1476,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.CoolerCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_CoolerCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CoolerCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_CoolerCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.Heater
                 Dim myDWOBJ As DWSIM.SimulationObjects.UnitOps.Heater = CType(newobj, DWSIM.SimulationObjects.UnitOps.Heater)
@@ -1488,8 +1488,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeHT").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeHT").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeHT").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeHT").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -1508,9 +1508,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.HeaterCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_HeaterCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.HeaterCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_HeaterCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.Pipe
                 Dim myDWOBJ As DWSIM.SimulationObjects.UnitOps.Pipe = CType(newobj, DWSIM.SimulationObjects.UnitOps.Pipe)
@@ -1520,8 +1520,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodePI").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodePI").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodePI").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodePI").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -1540,9 +1540,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.PipeCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_PipeCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.PipeCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_PipeCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.Valve
                 Dim myDWOBJ As DWSIM.SimulationObjects.UnitOps.Valve = CType(newobj, DWSIM.SimulationObjects.UnitOps.Valve)
@@ -1552,8 +1552,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeVA").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeVA").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeVA").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeVA").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -1572,9 +1572,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.ValveCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_ValveCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.ValveCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_ValveCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.RCT_Conversion
                 Dim myDWOBJ As DWSIM.SimulationObjects.Reactors.Reactor_Conversion = CType(newobj, DWSIM.SimulationObjects.Reactors.Reactor_Conversion)
@@ -1584,8 +1584,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeRCONV").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeRCONV").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRCONV").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRCONV").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -1604,9 +1604,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.ReactorConversionCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_ReactorConversionCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.ReactorConversionCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_ReactorConversionCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.RCT_Equilibrium
                 Dim myDWOBJ As DWSIM.SimulationObjects.Reactors.Reactor_Equilibrium = CType(newobj, DWSIM.SimulationObjects.Reactors.Reactor_Equilibrium)
@@ -1616,8 +1616,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeREQ").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeREQ").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeREQ").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeREQ").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -1636,9 +1636,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.ReactorEquilibriumCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_ReactorEquilibriumCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.ReactorEquilibriumCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_ReactorEquilibriumCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.RCT_Gibbs
                 Dim myDWOBJ As DWSIM.SimulationObjects.Reactors.Reactor_Gibbs = CType(newobj, DWSIM.SimulationObjects.Reactors.Reactor_Gibbs)
@@ -1648,8 +1648,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeRGIB").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeRGIB").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRGIB").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRGIB").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -1668,9 +1668,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.ReactorGibbsCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_ReactorGibbsCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.ReactorGibbsCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_ReactorGibbsCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.RCT_CSTR
                 Dim myDWOBJ As DWSIM.SimulationObjects.Reactors.Reactor_CSTR = CType(newobj, DWSIM.SimulationObjects.Reactors.Reactor_CSTR)
@@ -1680,8 +1680,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeRCSTR").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeRCSTR").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRCSTR").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRCSTR").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -1700,9 +1700,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.ReactorCSTRCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_ReactorCSTRCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.ReactorCSTRCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_ReactorCSTRCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.RCT_PFR
                 Dim myDWOBJ As DWSIM.SimulationObjects.Reactors.Reactor_PFR = CType(newobj, DWSIM.SimulationObjects.Reactors.Reactor_PFR)
@@ -1712,8 +1712,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeRPFR").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeRPFR").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRPFR").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRPFR").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -1732,9 +1732,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.ReactorPFRCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_ReactorPFRCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.ReactorPFRCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_ReactorPFRCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.HeatExchanger
                 Dim myDWOBJ As DWSIM.SimulationObjects.UnitOps.HeatExchanger = CType(newobj, DWSIM.SimulationObjects.UnitOps.HeatExchanger)
@@ -1744,8 +1744,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeHE").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeHE").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeHE").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeHE").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -1764,9 +1764,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.HeatExchangerCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_HeatExchangerCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.HeatExchangerCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_HeatExchangerCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.ShortcutColumn
                 Dim myDWOBJ As DWSIM.SimulationObjects.UnitOps.ShortcutColumn = CType(newobj, DWSIM.SimulationObjects.UnitOps.ShortcutColumn)
@@ -1776,8 +1776,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeSC").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeSC").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeSC").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeSC").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -1796,9 +1796,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.ShortcutColumnCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_ShortcutColumnCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.ShortcutColumnCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_ShortcutColumnCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.DistillationColumn
                 Dim myDWOBJ As DWSIM.SimulationObjects.UnitOps.DistillationColumn = CType(newobj, DWSIM.SimulationObjects.UnitOps.DistillationColumn)
@@ -1808,8 +1808,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeDC").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeDC").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeDC").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeDC").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -1828,9 +1828,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.DistillationColumnCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_DistillationColumnCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.DistillationColumnCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_DistillationColumnCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.AbsorptionColumn
                 Dim myDWOBJ As DWSIM.SimulationObjects.UnitOps.AbsorptionColumn = CType(newobj, DWSIM.SimulationObjects.UnitOps.AbsorptionColumn)
@@ -1840,8 +1840,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeAC").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeAC").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeAC").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeAC").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -1860,9 +1860,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.AbsorptionColumnCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_AbsorptionColumnCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.AbsorptionColumnCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_AbsorptionColumnCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.ReboiledAbsorber
                 Dim myDWOBJ As DWSIM.SimulationObjects.UnitOps.ReboiledAbsorber = CType(newobj, DWSIM.SimulationObjects.UnitOps.ReboiledAbsorber)
@@ -1872,8 +1872,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeRBA").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeRBA").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRBA").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRBA").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -1892,9 +1892,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.ReboiledAbsorberCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_ReboiledAbsorberCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.ReboiledAbsorberCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_ReboiledAbsorberCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.RefluxedAbsorber
                 Dim myDWOBJ As DWSIM.SimulationObjects.UnitOps.RefluxedAbsorber = CType(newobj, DWSIM.SimulationObjects.UnitOps.RefluxedAbsorber)
@@ -1904,8 +1904,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeRFA").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeRFA").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRFA").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRFA").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -1924,9 +1924,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.RefluxedAbsorberCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_RefluxedAbsorberCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.RefluxedAbsorberCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_RefluxedAbsorberCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.ComponentSeparator
                 Dim myDWOBJ As DWSIM.SimulationObjects.UnitOps.ComponentSeparator = CType(newobj, DWSIM.SimulationObjects.UnitOps.ComponentSeparator)
@@ -1936,8 +1936,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeCSEP").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeCSEP").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeCSEP").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeCSEP").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -1956,9 +1956,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.ComponentSeparatorCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_ComponentSeparatorCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.ComponentSeparatorCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_ComponentSeparatorCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.SolidSeparator
                 Dim myDWOBJ As DWSIM.SimulationObjects.UnitOps.SolidsSeparator = CType(newobj, DWSIM.SimulationObjects.UnitOps.SolidsSeparator)
@@ -1968,8 +1968,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeSS").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeSS").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeSS").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeSS").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -1988,9 +1988,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.SolidsSeparatorCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_SolidsSeparatorCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.SolidsSeparatorCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_SolidsSeparatorCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.Filter
                 Dim myDWOBJ As DWSIM.SimulationObjects.UnitOps.Filter = CType(newobj, DWSIM.SimulationObjects.UnitOps.Filter)
@@ -2000,8 +2000,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeFT").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeFT").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeFT").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeFT").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -2020,9 +2020,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.FilterCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_FilterCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.FilterCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_FilterCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.OrificePlate
                 Dim myDWOBJ As DWSIM.SimulationObjects.UnitOps.OrificePlate = CType(newobj, DWSIM.SimulationObjects.UnitOps.OrificePlate)
@@ -2032,8 +2032,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeOPL").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeOPL").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeOPL").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeOPL").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -2052,9 +2052,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.OrificePlateCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_OrificePlateCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.OrificePlateCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_OrificePlateCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.CustomUO
                 Dim myDWOBJ As DWSIM.SimulationObjects.UnitOps.CustomUO = CType(newobj, DWSIM.SimulationObjects.UnitOps.CustomUO)
@@ -2064,8 +2064,8 @@ Public Class frmSurface
                     .Tag = gObj.Tag & "_CLONE"
                     .X = mpx
                     .Y = mpy
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeUO").Nodes.Add(.Name, .Tag).Name = .Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeUO").Nodes(.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeUO").Nodes.Add(.Name, .Tag).Name = .Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeUO").Nodes(.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                     For Each con As ConnectionPoint In .InputConnectors
                         con.AttachedConnector = Nothing
                         con.IsAttached = False
@@ -2084,9 +2084,9 @@ Public Class frmSurface
                     .EnergyConnector.IsAttached = False
                 End With
                 myDWOBJ.Nome = myDWOBJ.GraphicObject.Name
-                ChildParent.Collections.CustomUOCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
-                ChildParent.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
-                ChildParent.Collections.CLCS_CustomUOCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CustomUOCollection.Add(myDWOBJ.GraphicObject.Name, myDWOBJ.GraphicObject)
+                Flowsheet.Collections.ObjectCollection.Add(myDWOBJ.Nome, myDWOBJ)
+                Flowsheet.Collections.CLCS_CustomUOCollection.Add(myDWOBJ.Nome, myDWOBJ)
                 Me.FlowsheetDesignSurface.drawingObjects.Add(myDWOBJ.GraphicObject)
             Case TipoObjeto.CapeOpenUO, TipoObjeto.FlowsheetUO
                 MessageBox.Show("Cloning is not supported by CAPE-OPEN/Flowsheet Unit Operations.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -2094,31 +2094,31 @@ Public Class frmSurface
         Me.FlowsheetDesignSurface.Invalidate()
 
         If Not DWSIM.App.IsRunningOnMono Then
-            Dim arrays(ChildParent.Collections.ObjectCollection.Count - 1) As String
+            Dim arrays(Flowsheet.Collections.ObjectCollection.Count - 1) As String
             Dim aNode, aNode2 As TreeNode
             Dim i As Integer = 0
-            For Each aNode In ChildParent.FormObjList.TreeViewObj.Nodes
+            For Each aNode In Flowsheet.FormObjList.TreeViewObj.Nodes
                 For Each aNode2 In aNode.Nodes
                     arrays(i) = aNode2.Text
                     i += 1
                 Next
             Next
-            ChildParent.FormObjList.ACSC.Clear()
-            ChildParent.FormObjList.ACSC.AddRange(arrays)
-            ChildParent.FormObjList.TBSearch.AutoCompleteCustomSource = ChildParent.FormObjList.ACSC
+            Flowsheet.FormObjList.ACSC.Clear()
+            Flowsheet.FormObjList.ACSC.AddRange(arrays)
+            Flowsheet.FormObjList.TBSearch.AutoCompleteCustomSource = Flowsheet.FormObjList.ACSC
         End If
 
     End Sub
 
     Private Sub CMS_ItemsToDisconnect_ItemClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ToolStripItemClickedEventArgs) Handles CMS_ItemsToDisconnect.ItemClicked
 
-        Call Me.ChildParent.DisconnectObject(Me.FlowsheetDesignSurface.SelectedObject, FormFlowsheet.SearchSurfaceObjectsByTag(e.ClickedItem.Text, Me.FlowsheetDesignSurface))
+        Call Me.Flowsheet.DisconnectObject(Me.FlowsheetDesignSurface.SelectedObject, FormFlowsheet.SearchSurfaceObjectsByTag(e.ClickedItem.Text, Me.FlowsheetDesignSurface))
 
     End Sub
 
     Private Sub CMS_ItemsToConnect_ItemClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ToolStripItemClickedEventArgs) Handles CMS_ItemsToConnect.ItemClicked
 
-        Call Me.ChildParent.ConnectObject(Me.FlowsheetDesignSurface.SelectedObject, FormFlowsheet.SearchSurfaceObjectsByTag(e.ClickedItem.Text, Me.FlowsheetDesignSurface))
+        Call Me.Flowsheet.ConnectObject(Me.FlowsheetDesignSurface.SelectedObject, FormFlowsheet.SearchSurfaceObjectsByTag(e.ClickedItem.Text, Me.FlowsheetDesignSurface))
 
     End Sub
 
@@ -2165,7 +2165,7 @@ Public Class frmSurface
 
         Dim conables As New ArrayList
 
-        For Each obj In Me.ChildParent.Collections.ObjectCollection.Values
+        For Each obj In Me.Flowsheet.Collections.ObjectCollection.Values
             If obj.GraphicObject.Tag <> refobj.Tag Then
                 If obj.GraphicObject.TipoObjeto <> TipoObjeto.GO_Texto And _
                     obj.GraphicObject.TipoObjeto <> TipoObjeto.GO_TabelaRapida And _
@@ -2275,7 +2275,7 @@ Public Class frmSurface
     End Sub
 
     Private Sub ExcluirToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ExcluirToolStripMenuItem.Click
-        Call Me.ChildParent.DeleteSelectedObject(sender, e, Me.FlowsheetDesignSurface.SelectedObject)
+        Call Me.Flowsheet.DeleteSelectedObject(sender, e, Me.FlowsheetDesignSurface.SelectedObject)
     End Sub
 
     Private Sub HorizontalmenteToolStripMenuItem_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles HorizontalmenteToolStripMenuItem.Click
@@ -2289,9 +2289,9 @@ Public Class frmSurface
 
     Public Function AddObjectToSurface(ByVal type As TipoObjeto, ByVal x As Integer, ByVal y As Integer, Optional ByVal tag As String = "") As String
 
-        ChildParent = My.Application.ActiveSimulation
+        Flowsheet = My.Application.ActiveSimulation
 
-        If ChildParent.Collections.ObjectCounter Is Nothing Then ChildParent.Collections.InitializeCounter()
+        If Flowsheet.Collections.ObjectCounter Is Nothing Then Flowsheet.Collections.InitializeCounter()
 
         Dim gObj As GraphicObject = Nothing
         Dim fillclr As Color = Color.WhiteSmoke
@@ -2307,19 +2307,19 @@ Public Class frmSurface
                 myNode.Fill = True
                 myNode.FillColor = fillclr
                 myNode.LineColor = lineclr
-                myNode.Tag = "ADJ-" & Format(ChildParent.Collections.ObjectCounter("ADJU"), "00#")
-                ChildParent.Collections.UpdateCounter("ADJU")
+                myNode.Tag = "ADJ-" & Format(Flowsheet.Collections.ObjectCounter("ADJU"), "00#")
+                Flowsheet.Collections.UpdateCounter("ADJU")
                 If tag <> "" Then myNode.Tag = tag
                 gObj = myNode
                 gObj.Name = DWSIM.App.GetLocalString("AJ") & Guid.NewGuid.ToString
-                ChildParent.Collections.AdjustCollection.Add(gObj.Name, myNode)
-                'If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                'If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.AdjustCollection.Add(gObj.Name, myNode)
+                'If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                'If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myADJ As DWSIM.SimulationObjects.SpecialOps.Adjust = New DWSIM.SimulationObjects.SpecialOps.Adjust(myNode.Name, "Ajuste")
                 myADJ.GraphicObject = myNode
-                ChildParent.Collections.ObjectCollection.Add(myNode.Name, myADJ)
-                ChildParent.Collections.CLCS_AdjustCollection.Add(myNode.Name, myADJ)
+                Flowsheet.Collections.ObjectCollection.Add(myNode.Name, myADJ)
+                Flowsheet.Collections.CLCS_AdjustCollection.Add(myNode.Name, myADJ)
 
             Case TipoObjeto.OT_Especificacao
                 Dim myNode As New SpecGraphic(mpx, mpy, 20, 20, 0)
@@ -2327,19 +2327,19 @@ Public Class frmSurface
                 myNode.Fill = True
                 myNode.FillColor = fillclr
                 myNode.LineColor = lineclr
-                myNode.Tag = "SPEC-" & Format(ChildParent.Collections.ObjectCounter("SPEC"), "00#")
-                ChildParent.Collections.UpdateCounter("SPEC")
+                myNode.Tag = "SPEC-" & Format(Flowsheet.Collections.ObjectCounter("SPEC"), "00#")
+                Flowsheet.Collections.UpdateCounter("SPEC")
                 If tag <> "" Then myNode.Tag = tag
                 gObj = myNode
                 gObj.Name = "ES-" & Guid.NewGuid.ToString
-                ChildParent.Collections.SpecCollection.Add(gObj.Name, myNode)
-                'If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                'If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.SpecCollection.Add(gObj.Name, myNode)
+                'If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                'If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myADJ As DWSIM.SimulationObjects.SpecialOps.Spec = New DWSIM.SimulationObjects.SpecialOps.Spec(myNode.Name, "Especificao")
                 myADJ.GraphicObject = myNode
-                ChildParent.Collections.ObjectCollection.Add(myNode.Name, myADJ)
-                ChildParent.Collections.CLCS_SpecCollection.Add(myNode.Name, myADJ)
+                Flowsheet.Collections.ObjectCollection.Add(myNode.Name, myADJ)
+                Flowsheet.Collections.CLCS_SpecCollection.Add(myNode.Name, myADJ)
 
             Case TipoObjeto.OT_Reciclo
                 Dim myNode As New RecycleGraphic(mpx, mpy, 20, 20, 0)
@@ -2347,19 +2347,19 @@ Public Class frmSurface
                 myNode.Fill = True
                 myNode.FillColor = fillclr
                 myNode.LineColor = lineclr
-                myNode.Tag = "REC-" & Format(ChildParent.Collections.ObjectCounter("RECY"), "00#")
-                ChildParent.Collections.UpdateCounter("RECY")
+                myNode.Tag = "REC-" & Format(Flowsheet.Collections.ObjectCounter("RECY"), "00#")
+                Flowsheet.Collections.UpdateCounter("RECY")
                 If tag <> "" Then myNode.Tag = tag
                 gObj = myNode
                 gObj.Name = "REC-" & Guid.NewGuid.ToString
-                ChildParent.Collections.RecycleCollection.Add(gObj.Name, myNode)
-                'If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                'If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.RecycleCollection.Add(gObj.Name, myNode)
+                'If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                'If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myADJ As DWSIM.SimulationObjects.SpecialOps.Recycle = New DWSIM.SimulationObjects.SpecialOps.Recycle(myNode.Name, "Reciclo")
                 myADJ.GraphicObject = myNode
-                ChildParent.Collections.ObjectCollection.Add(myNode.Name, myADJ)
-                ChildParent.Collections.CLCS_RecycleCollection.Add(myNode.Name, myADJ)
+                Flowsheet.Collections.ObjectCollection.Add(myNode.Name, myADJ)
+                Flowsheet.Collections.CLCS_RecycleCollection.Add(myNode.Name, myADJ)
 
             Case TipoObjeto.OT_EnergyRecycle
                 Dim myNode As New EnergyRecycleGraphic(mpx, mpy, 20, 20, 0)
@@ -2367,22 +2367,22 @@ Public Class frmSurface
                 myNode.Fill = True
                 myNode.FillColor = fillclr
                 myNode.LineColor = lineclr
-                If Not ChildParent.Collections.ObjectCounter.ContainsKey("EREC") Then
-                    ChildParent.Collections.ObjectCounter.Add("EREC", 0)
+                If Not Flowsheet.Collections.ObjectCounter.ContainsKey("EREC") Then
+                    Flowsheet.Collections.ObjectCounter.Add("EREC", 0)
                 End If
-                myNode.Tag = "EREC-" & Format(ChildParent.Collections.ObjectCounter("EREC"), "00#")
-                ChildParent.Collections.UpdateCounter("EREC")
+                myNode.Tag = "EREC-" & Format(Flowsheet.Collections.ObjectCounter("EREC"), "00#")
+                Flowsheet.Collections.UpdateCounter("EREC")
                 If tag <> "" Then myNode.Tag = tag
                 gObj = myNode
                 gObj.Name = "EREC-" & Guid.NewGuid.ToString
-                ChildParent.Collections.EnergyRecycleCollection.Add(gObj.Name, myNode)
-                'If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                'If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.EnergyRecycleCollection.Add(gObj.Name, myNode)
+                'If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                'If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myADJ As DWSIM.SimulationObjects.SpecialOps.EnergyRecycle = New DWSIM.SimulationObjects.SpecialOps.EnergyRecycle(myNode.Name, "EnergyRecycle")
                 myADJ.GraphicObject = myNode
-                ChildParent.Collections.ObjectCollection.Add(myNode.Name, myADJ)
-                ChildParent.Collections.CLCS_EnergyRecycleCollection.Add(myNode.Name, myADJ)
+                Flowsheet.Collections.ObjectCollection.Add(myNode.Name, myADJ)
+                Flowsheet.Collections.CLCS_EnergyRecycleCollection.Add(myNode.Name, myADJ)
 
             Case TipoObjeto.NodeIn
                 Dim myNode As New NodeInGraphic(mpx, mpy, 20, 20, 0)
@@ -2390,19 +2390,19 @@ Public Class frmSurface
                 myNode.Fill = True
                 myNode.FillColor = fillclr
                 myNode.LineColor = lineclr
-                myNode.Tag = "MIX-" & Format(ChildParent.Collections.ObjectCounter("MIXR"), "00#")
-                ChildParent.Collections.UpdateCounter("MIXR")
+                myNode.Tag = "MIX-" & Format(Flowsheet.Collections.ObjectCounter("MIXR"), "00#")
+                Flowsheet.Collections.UpdateCounter("MIXR")
                 If tag <> "" Then myNode.Tag = tag
                 gObj = myNode
                 gObj.Name = "MIST-" & Guid.NewGuid.ToString
-                ChildParent.Collections.MixerCollection.Add(gObj.Name, myNode)
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.MixerCollection.Add(gObj.Name, myNode)
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myCOMIX As DWSIM.SimulationObjects.UnitOps.Mixer = New DWSIM.SimulationObjects.UnitOps.Mixer(myNode.Name, "Misturador")
                 myCOMIX.GraphicObject = myNode
-                ChildParent.Collections.ObjectCollection.Add(myNode.Name, myCOMIX)
-                ChildParent.Collections.CLCS_MixerCollection.Add(myNode.Name, myCOMIX)
+                Flowsheet.Collections.ObjectCollection.Add(myNode.Name, myCOMIX)
+                Flowsheet.Collections.CLCS_MixerCollection.Add(myNode.Name, myCOMIX)
 
             Case TipoObjeto.NodeEn
                 Dim myNode As New NodeEnGraphic(mpx, mpy, 20, 20, 0)
@@ -2411,19 +2411,19 @@ Public Class frmSurface
                 myNode.GradientMode = False
                 myNode.FillColor = Color.LightYellow
                 myNode.LineColor = lineclr
-                myNode.Tag = "MIX-ME-" & Format(ChildParent.Collections.ObjectCounter("MXEN"), "00#")
-                ChildParent.Collections.UpdateCounter("MXEN")
+                myNode.Tag = "MIX-ME-" & Format(Flowsheet.Collections.ObjectCounter("MXEN"), "00#")
+                Flowsheet.Collections.UpdateCounter("MXEN")
                 If tag <> "" Then myNode.Tag = tag
                 gObj = myNode
                 gObj.Name = "MIST_ME-" & Guid.NewGuid.ToString
-                ChildParent.Collections.MixerENCollection.Add(gObj.Name, myNode)
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeME").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeME").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.MixerENCollection.Add(gObj.Name, myNode)
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeME").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeME").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myCOMIX As DWSIM.SimulationObjects.UnitOps.EnergyMixer = New DWSIM.SimulationObjects.UnitOps.EnergyMixer(myNode.Name, "MisturadorMATEN")
                 myCOMIX.GraphicObject = myNode
-                ChildParent.Collections.ObjectCollection.Add(myNode.Name, myCOMIX)
-                ChildParent.Collections.CLCS_EnergyMixerCollection.Add(myNode.Name, myCOMIX)
+                Flowsheet.Collections.ObjectCollection.Add(myNode.Name, myCOMIX)
+                Flowsheet.Collections.CLCS_EnergyMixerCollection.Add(myNode.Name, myCOMIX)
 
             Case TipoObjeto.NodeOut
                 Dim myNodeo As New NodeOutGraphic(mpx, mpy, 20, 20, 0)
@@ -2431,19 +2431,19 @@ Public Class frmSurface
                 myNodeo.Fill = True
                 myNodeo.FillColor = fillclr
                 myNodeo.LineColor = lineclr
-                myNodeo.Tag = "SPLT-" & Format(ChildParent.Collections.ObjectCounter("SPLI"), "00#")
-                ChildParent.Collections.UpdateCounter("SPLI")
+                myNodeo.Tag = "SPLT-" & Format(Flowsheet.Collections.ObjectCounter("SPLI"), "00#")
+                Flowsheet.Collections.UpdateCounter("SPLI")
                 If tag <> "" Then myNodeo.Tag = tag
                 gObj = myNodeo
                 gObj.Name = "DIV-" & Guid.NewGuid.ToString
-                ChildParent.Collections.SplitterCollection.Add(gObj.Name, myNodeo)
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeSP").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeSP").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.SplitterCollection.Add(gObj.Name, myNodeo)
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeSP").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeSP").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myCOSP As DWSIM.SimulationObjects.UnitOps.Splitter = New DWSIM.SimulationObjects.UnitOps.Splitter(myNodeo.Name, "Divisor")
                 myCOSP.GraphicObject = myNodeo
-                ChildParent.Collections.ObjectCollection.Add(myNodeo.Name, myCOSP)
-                ChildParent.Collections.CLCS_SplitterCollection.Add(myNodeo.Name, myCOSP)
+                Flowsheet.Collections.ObjectCollection.Add(myNodeo.Name, myCOSP)
+                Flowsheet.Collections.CLCS_SplitterCollection.Add(myNodeo.Name, myCOSP)
 
             Case TipoObjeto.Pump
                 Dim myPump As New PumpGraphic(mpx, mpy, 25, 25, 0)
@@ -2451,19 +2451,19 @@ Public Class frmSurface
                 myPump.Fill = True
                 myPump.FillColor = fillclr
                 myPump.LineColor = lineclr
-                myPump.Tag = "PUMP-" & Format(ChildParent.Collections.ObjectCounter("PUMP"), "00#")
-                ChildParent.Collections.UpdateCounter("PUMP")
+                myPump.Tag = "PUMP-" & Format(Flowsheet.Collections.ObjectCounter("PUMP"), "00#")
+                Flowsheet.Collections.UpdateCounter("PUMP")
                 If tag <> "" Then myPump.Tag = tag
                 gObj = myPump
                 gObj.Name = "BB-" & Guid.NewGuid.ToString
-                ChildParent.Collections.PumpCollection.Add(gObj.Name, myPump)
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodePU").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodePU").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.PumpCollection.Add(gObj.Name, myPump)
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodePU").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodePU").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myCOSP As DWSIM.SimulationObjects.UnitOps.Pump = New DWSIM.SimulationObjects.UnitOps.Pump(myPump.Name, "Bomba")
                 myCOSP.GraphicObject = myPump
-                ChildParent.Collections.ObjectCollection.Add(myPump.Name, myCOSP)
-                ChildParent.Collections.CLCS_PumpCollection.Add(myPump.Name, myCOSP)
+                Flowsheet.Collections.ObjectCollection.Add(myPump.Name, myCOSP)
+                Flowsheet.Collections.CLCS_PumpCollection.Add(myPump.Name, myCOSP)
 
             Case TipoObjeto.Tank
                 Dim myTank As New TankGraphic(mpx, mpy, 50, 50, 0)
@@ -2471,19 +2471,19 @@ Public Class frmSurface
                 myTank.Fill = True
                 myTank.FillColor = fillclr
                 myTank.LineColor = lineclr
-                myTank.Tag = "TANK-" & Format(ChildParent.Collections.ObjectCounter("TANK"), "00#")
-                ChildParent.Collections.UpdateCounter("TANK")
+                myTank.Tag = "TANK-" & Format(Flowsheet.Collections.ObjectCounter("TANK"), "00#")
+                Flowsheet.Collections.UpdateCounter("TANK")
                 If tag <> "" Then myTank.Tag = tag
                 gObj = myTank
                 gObj.Name = "TQ-" & Guid.NewGuid.ToString
-                ChildParent.Collections.TankCollection.Add(gObj.Name, myTank)
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeTQ").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeTQ").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.TankCollection.Add(gObj.Name, myTank)
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeTQ").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeTQ").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myCOTK As DWSIM.SimulationObjects.UnitOps.Tank = New DWSIM.SimulationObjects.UnitOps.Tank(myTank.Name, "Tanque")
                 myCOTK.GraphicObject = myTank
-                ChildParent.Collections.ObjectCollection.Add(myTank.Name, myCOTK)
-                ChildParent.Collections.CLCS_TankCollection.Add(myTank.Name, myCOTK)
+                Flowsheet.Collections.ObjectCollection.Add(myTank.Name, myCOTK)
+                Flowsheet.Collections.CLCS_TankCollection.Add(myTank.Name, myCOTK)
 
             Case TipoObjeto.Vessel
                 Dim myVessel As New VesselGraphic(mpx, mpy, 50, 50, 0)
@@ -2491,19 +2491,19 @@ Public Class frmSurface
                 myVessel.Fill = True
                 myVessel.FillColor = fillclr
                 myVessel.LineColor = lineclr
-                myVessel.Tag = "SEP-" & Format(ChildParent.Collections.ObjectCounter("VESS"), "00#")
-                ChildParent.Collections.UpdateCounter("VESS")
+                myVessel.Tag = "SEP-" & Format(Flowsheet.Collections.ObjectCounter("VESS"), "00#")
+                Flowsheet.Collections.UpdateCounter("VESS")
                 If tag <> "" Then myVessel.Tag = tag
                 gObj = myVessel
                 gObj.Name = "SEP-" & Guid.NewGuid.ToString
-                ChildParent.Collections.SeparatorCollection.Add(gObj.Name, myVessel)
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeSE").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeSE").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.SeparatorCollection.Add(gObj.Name, myVessel)
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeSE").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeSE").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myCOVESSEL As DWSIM.SimulationObjects.UnitOps.Vessel = New DWSIM.SimulationObjects.UnitOps.Vessel(myVessel.Name, "VasoSeparadorGL")
                 myCOVESSEL.GraphicObject = myVessel
-                ChildParent.Collections.ObjectCollection.Add(myVessel.Name, myCOVESSEL)
-                ChildParent.Collections.CLCS_VesselCollection.Add(myVessel.Name, myCOVESSEL)
+                Flowsheet.Collections.ObjectCollection.Add(myVessel.Name, myCOVESSEL)
+                Flowsheet.Collections.CLCS_VesselCollection.Add(myVessel.Name, myCOVESSEL)
 
             Case TipoObjeto.TPVessel
                 Dim myVessel As New TPVesselGraphic(mpx, mpy, 50, 50, 0)
@@ -2511,14 +2511,14 @@ Public Class frmSurface
                 myVessel.Fill = True
                 myVessel.FillColor = fillclr
                 myVessel.LineColor = lineclr
-                myVessel.Tag = "SEPTF-" & Format(ChildParent.Collections.ObjectCounter("VES3"), "00#")
-                ChildParent.Collections.UpdateCounter("VES3")
+                myVessel.Tag = "SEPTF-" & Format(Flowsheet.Collections.ObjectCounter("VES3"), "00#")
+                Flowsheet.Collections.UpdateCounter("VES3")
                 If tag <> "" Then myVessel.Tag = tag
                 gObj = myVessel
                 gObj.Name = "SEPTF-" & Guid.NewGuid.ToString
-                ChildParent.Collections.TPSeparatorCollection.Add(gObj.Name, myVessel)
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeTP").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeTP").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.TPSeparatorCollection.Add(gObj.Name, myVessel)
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeTP").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeTP").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
 
             Case TipoObjeto.MaterialStream
                 Dim myMStr As New MaterialStreamGraphic(mpx, mpy, 20, 20, 0)
@@ -2526,39 +2526,39 @@ Public Class frmSurface
                 myMStr.Fill = True
                 myMStr.FillColor = fillclr
                 myMStr.LineColor = lineclr
-                myMStr.Tag = "MSTR-" & Format(ChildParent.Collections.ObjectCounter("MSTR"), "00#")
-                ChildParent.Collections.UpdateCounter("MSTR")
+                myMStr.Tag = "MSTR-" & Format(Flowsheet.Collections.ObjectCounter("MSTR"), "00#")
+                Flowsheet.Collections.UpdateCounter("MSTR")
                 If tag <> "" Then myMStr.Tag = tag
                 gObj = myMStr
                 gObj.Name = "MAT-" & Guid.NewGuid.ToString
-                ChildParent.Collections.MaterialStreamCollection.Add(gObj.Name, myMStr)
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeMS").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeMS").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.MaterialStreamCollection.Add(gObj.Name, myMStr)
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMS").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMS").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
-                Dim myCOMS As DWSIM.SimulationObjects.Streams.MaterialStream = New DWSIM.SimulationObjects.Streams.MaterialStream(myMStr.Name, "CorrentedeMatria", ChildParent, Nothing)
+                Dim myCOMS As DWSIM.SimulationObjects.Streams.MaterialStream = New DWSIM.SimulationObjects.Streams.MaterialStream(myMStr.Name, "CorrentedeMatria", Flowsheet, Nothing)
                 myCOMS.GraphicObject = myMStr
-                ChildParent.AddComponentsRows(myCOMS)
-                ChildParent.Collections.ObjectCollection.Add(myCOMS.Nome, myCOMS)
-                ChildParent.Collections.CLCS_MaterialStreamCollection.Add(myCOMS.Nome, myCOMS)
+                Flowsheet.AddComponentsRows(myCOMS)
+                Flowsheet.Collections.ObjectCollection.Add(myCOMS.Nome, myCOMS)
+                Flowsheet.Collections.CLCS_MaterialStreamCollection.Add(myCOMS.Nome, myCOMS)
             Case TipoObjeto.EnergyStream
                 Dim myMStr As New EnergyStreamGraphic(mpx, mpy, 20, 20, 0)
                 myMStr.LineWidth = 2
                 myMStr.Fill = True
                 myMStr.FillColor = Color.LightYellow
                 myMStr.LineColor = lineclr
-                myMStr.Tag = "ESTR-" & Format(ChildParent.Collections.ObjectCounter("ESTR"), "00#")
-                ChildParent.Collections.UpdateCounter("ESTR")
+                myMStr.Tag = "ESTR-" & Format(Flowsheet.Collections.ObjectCounter("ESTR"), "00#")
+                Flowsheet.Collections.UpdateCounter("ESTR")
                 If tag <> "" Then myMStr.Tag = tag
                 gObj = myMStr
                 gObj.Name = "EN-" & Guid.NewGuid.ToString
-                ChildParent.Collections.EnergyStreamCollection.Add(gObj.Name, myMStr)
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeEN").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeEN").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.EnergyStreamCollection.Add(gObj.Name, myMStr)
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeEN").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeEN").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myCOES As DWSIM.SimulationObjects.Streams.EnergyStream = New DWSIM.SimulationObjects.Streams.EnergyStream(myMStr.Name, "Correntedeenergia")
                 myCOES.GraphicObject = myMStr
-                ChildParent.Collections.ObjectCollection.Add(myCOES.Nome, myCOES)
-                ChildParent.Collections.CLCS_EnergyStreamCollection.Add(myCOES.Nome, myCOES)
+                Flowsheet.Collections.ObjectCollection.Add(myCOES.Nome, myCOES)
+                Flowsheet.Collections.CLCS_EnergyStreamCollection.Add(myCOES.Nome, myCOES)
 
             Case TipoObjeto.Compressor
                 Dim myComp As New CompressorGraphic(mpx, mpy, 25, 25, 0)
@@ -2566,19 +2566,19 @@ Public Class frmSurface
                 myComp.Fill = True
                 myComp.FillColor = fillclr
                 myComp.LineColor = lineclr
-                myComp.Tag = "COMP-" & Format(ChildParent.Collections.ObjectCounter("COMP"), "00#")
-                ChildParent.Collections.UpdateCounter("COMP")
+                myComp.Tag = "COMP-" & Format(Flowsheet.Collections.ObjectCounter("COMP"), "00#")
+                Flowsheet.Collections.UpdateCounter("COMP")
                 If tag <> "" Then myComp.Tag = tag
                 gObj = myComp
                 gObj.Name = "COMP-" & Guid.NewGuid.ToString
-                ChildParent.Collections.CompressorCollection.Add(gObj.Name, myComp)
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeCO").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeCO").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.CompressorCollection.Add(gObj.Name, myComp)
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeCO").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeCO").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myCOCP As DWSIM.SimulationObjects.UnitOps.Compressor = New DWSIM.SimulationObjects.UnitOps.Compressor(myComp.Name, "CompressorAdiabtico")
                 myCOCP.GraphicObject = myComp
-                ChildParent.Collections.ObjectCollection.Add(myComp.Name, myCOCP)
-                ChildParent.Collections.CLCS_CompressorCollection.Add(myComp.Name, myCOCP)
+                Flowsheet.Collections.ObjectCollection.Add(myComp.Name, myCOCP)
+                Flowsheet.Collections.CLCS_CompressorCollection.Add(myComp.Name, myCOCP)
 
             Case TipoObjeto.Expander
                 Dim myComp As New TurbineGraphic(mpx, mpy, 25, 25, 0)
@@ -2586,19 +2586,19 @@ Public Class frmSurface
                 myComp.Fill = True
                 myComp.FillColor = fillclr
                 myComp.LineColor = lineclr
-                myComp.Tag = "EXP-" & Format(ChildParent.Collections.ObjectCounter("EXPN"), "00#")
-                ChildParent.Collections.UpdateCounter("EXPN")
+                myComp.Tag = "EXP-" & Format(Flowsheet.Collections.ObjectCounter("EXPN"), "00#")
+                Flowsheet.Collections.UpdateCounter("EXPN")
                 If tag <> "" Then myComp.Tag = tag
                 gObj = myComp
                 gObj.Name = "TURB-" & Guid.NewGuid.ToString
-                ChildParent.Collections.TurbineCollection.Add(gObj.Name, myComp)
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeTU").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeTU").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.TurbineCollection.Add(gObj.Name, myComp)
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeTU").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeTU").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myCOCP As DWSIM.SimulationObjects.UnitOps.Expander = New DWSIM.SimulationObjects.UnitOps.Expander(myComp.Name, "TurbinaAdiabtica")
                 myCOCP.GraphicObject = myComp
-                ChildParent.Collections.ObjectCollection.Add(myComp.Name, myCOCP)
-                ChildParent.Collections.CLCS_TurbineCollection.Add(myComp.Name, myCOCP)
+                Flowsheet.Collections.ObjectCollection.Add(myComp.Name, myCOCP)
+                Flowsheet.Collections.CLCS_TurbineCollection.Add(myComp.Name, myCOCP)
 
             Case TipoObjeto.Cooler
                 Dim myCool As New CoolerGraphic(mpx, mpy, 25, 25, 0)
@@ -2606,19 +2606,19 @@ Public Class frmSurface
                 myCool.Fill = True
                 myCool.FillColor = fillclr
                 myCool.LineColor = lineclr
-                myCool.Tag = "COOL-" & Format(ChildParent.Collections.ObjectCounter("COOL"), "00#")
-                ChildParent.Collections.UpdateCounter("COOL")
+                myCool.Tag = "COOL-" & Format(Flowsheet.Collections.ObjectCounter("COOL"), "00#")
+                Flowsheet.Collections.UpdateCounter("COOL")
                 If tag <> "" Then myCool.Tag = tag
                 gObj = myCool
                 gObj.Name = "RESF-" & Guid.NewGuid.ToString
-                ChildParent.Collections.CoolerCollection.Add(gObj.Name, myCool)
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeCL").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeCL").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.CoolerCollection.Add(gObj.Name, myCool)
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeCL").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeCL").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myCOCL As DWSIM.SimulationObjects.UnitOps.Cooler = New DWSIM.SimulationObjects.UnitOps.Cooler(myCool.Name, "Resfriador")
                 myCOCL.GraphicObject = myCool
-                ChildParent.Collections.ObjectCollection.Add(myCool.Name, myCOCL)
-                ChildParent.Collections.CLCS_CoolerCollection.Add(myCool.Name, myCOCL)
+                Flowsheet.Collections.ObjectCollection.Add(myCool.Name, myCOCL)
+                Flowsheet.Collections.CLCS_CoolerCollection.Add(myCool.Name, myCOCL)
 
             Case TipoObjeto.Heater
                 Dim myHeat As New HeaterGraphic(mpx, mpy, 25, 25, 0)
@@ -2626,19 +2626,19 @@ Public Class frmSurface
                 myHeat.Fill = True
                 myHeat.FillColor = fillclr
                 myHeat.LineColor = lineclr
-                myHeat.Tag = "HEAT-" & Format(ChildParent.Collections.ObjectCounter("HEAT"), "00#")
-                ChildParent.Collections.UpdateCounter("HEAT")
+                myHeat.Tag = "HEAT-" & Format(Flowsheet.Collections.ObjectCounter("HEAT"), "00#")
+                Flowsheet.Collections.UpdateCounter("HEAT")
                 If tag <> "" Then myHeat.Tag = tag
                 gObj = myHeat
                 gObj.Name = "AQ-" & Guid.NewGuid.ToString
-                ChildParent.Collections.HeaterCollection.Add(gObj.Name, myHeat)
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeHT").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeHT").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.HeaterCollection.Add(gObj.Name, myHeat)
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeHT").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeHT").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myCOCL As DWSIM.SimulationObjects.UnitOps.Heater = New DWSIM.SimulationObjects.UnitOps.Heater(myHeat.Name, "Aquecedor")
                 myCOCL.GraphicObject = myHeat
-                ChildParent.Collections.ObjectCollection.Add(myHeat.Name, myCOCL)
-                ChildParent.Collections.CLCS_HeaterCollection.Add(myHeat.Name, myCOCL)
+                Flowsheet.Collections.ObjectCollection.Add(myHeat.Name, myCOCL)
+                Flowsheet.Collections.CLCS_HeaterCollection.Add(myHeat.Name, myCOCL)
 
             Case TipoObjeto.Pipe
                 Dim myPipe As New PipeGraphic(mpx, mpy, 50, 10, 0)
@@ -2646,19 +2646,19 @@ Public Class frmSurface
                 myPipe.Fill = True
                 myPipe.FillColor = fillclr
                 myPipe.LineColor = lineclr
-                myPipe.Tag = "PIPE-" & Format(ChildParent.Collections.ObjectCounter("PIPE"), "00#")
-                ChildParent.Collections.UpdateCounter("PIPE")
+                myPipe.Tag = "PIPE-" & Format(Flowsheet.Collections.ObjectCounter("PIPE"), "00#")
+                Flowsheet.Collections.UpdateCounter("PIPE")
                 If tag <> "" Then myPipe.Tag = tag
                 gObj = myPipe
                 gObj.Name = "TUB-" & Guid.NewGuid.ToString
-                ChildParent.Collections.PipeCollection.Add(gObj.Name, myPipe)
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodePI").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodePI").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.PipeCollection.Add(gObj.Name, myPipe)
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodePI").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodePI").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myCOPIPE As DWSIM.SimulationObjects.UnitOps.Pipe = New DWSIM.SimulationObjects.UnitOps.Pipe(myPipe.Name, "Tubulao")
                 myCOPIPE.GraphicObject = myPipe
-                ChildParent.Collections.ObjectCollection.Add(myPipe.Name, myCOPIPE)
-                ChildParent.Collections.CLCS_PipeCollection.Add(myPipe.Name, myCOPIPE)
+                Flowsheet.Collections.ObjectCollection.Add(myPipe.Name, myCOPIPE)
+                Flowsheet.Collections.CLCS_PipeCollection.Add(myPipe.Name, myCOPIPE)
 
             Case TipoObjeto.Valve
                 Dim myValve As New ValveGraphic(mpx, mpy, 20, 20, 0)
@@ -2666,19 +2666,19 @@ Public Class frmSurface
                 myValve.Fill = True
                 myValve.FillColor = fillclr
                 myValve.LineColor = lineclr
-                myValve.Tag = "VALV-" & Format(ChildParent.Collections.ObjectCounter("VALV"), "00#")
-                ChildParent.Collections.UpdateCounter("VALV")
+                myValve.Tag = "VALV-" & Format(Flowsheet.Collections.ObjectCounter("VALV"), "00#")
+                Flowsheet.Collections.UpdateCounter("VALV")
                 If tag <> "" Then myValve.Tag = tag
                 gObj = myValve
                 gObj.Name = "VALV-" & Guid.NewGuid.ToString
-                ChildParent.Collections.ValveCollection.Add(gObj.Name, myValve)
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeVA").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeVA").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.ValveCollection.Add(gObj.Name, myValve)
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeVA").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeVA").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myCOVALVE As DWSIM.SimulationObjects.UnitOps.Valve = New DWSIM.SimulationObjects.UnitOps.Valve(myValve.Name, "Vlvula")
                 myCOVALVE.GraphicObject = myValve
-                ChildParent.Collections.ObjectCollection.Add(myValve.Name, myCOVALVE)
-                ChildParent.Collections.CLCS_ValveCollection.Add(myValve.Name, myCOVALVE)
+                Flowsheet.Collections.ObjectCollection.Add(myValve.Name, myCOVALVE)
+                Flowsheet.Collections.CLCS_ValveCollection.Add(myValve.Name, myCOVALVE)
 
             Case TipoObjeto.RCT_Conversion
                 Dim myRconv As New ReactorConversionGraphic(mpx, mpy, 50, 50, 0)
@@ -2686,19 +2686,19 @@ Public Class frmSurface
                 myRconv.Fill = True
                 myRconv.FillColor = fillclr
                 myRconv.LineColor = lineclr
-                myRconv.Tag = "RC-" & Format(ChildParent.Collections.ObjectCounter("RCON"), "00#")
-                ChildParent.Collections.UpdateCounter("RCON")
+                myRconv.Tag = "RC-" & Format(Flowsheet.Collections.ObjectCounter("RCON"), "00#")
+                Flowsheet.Collections.UpdateCounter("RCON")
                 If tag <> "" Then myRconv.Tag = tag
                 gObj = myRconv
                 gObj.Name = "RC-" & Guid.NewGuid.ToString
-                ChildParent.Collections.ReactorConversionCollection.Add(gObj.Name, myRconv)
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeRCONV").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeRCONV").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.ReactorConversionCollection.Add(gObj.Name, myRconv)
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRCONV").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRCONV").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myCORCONV As DWSIM.SimulationObjects.Reactors.Reactor_Conversion = New DWSIM.SimulationObjects.Reactors.Reactor_Conversion(myRconv.Name, "ReatorConversao")
                 myCORCONV.GraphicObject = myRconv
-                ChildParent.Collections.ObjectCollection.Add(myRconv.Name, myCORCONV)
-                ChildParent.Collections.CLCS_ReactorConversionCollection.Add(myRconv.Name, myCORCONV)
+                Flowsheet.Collections.ObjectCollection.Add(myRconv.Name, myCORCONV)
+                Flowsheet.Collections.CLCS_ReactorConversionCollection.Add(myRconv.Name, myCORCONV)
 
             Case TipoObjeto.RCT_Equilibrium
                 Dim myReq As New ReactorEquilibriumGraphic(mpx, mpy, 50, 50, 0)
@@ -2706,19 +2706,19 @@ Public Class frmSurface
                 myReq.Fill = True
                 myReq.FillColor = fillclr
                 myReq.LineColor = lineclr
-                myReq.Tag = "RE-" & Format(ChildParent.Collections.ObjectCounter("REQL"), "00#")
-                ChildParent.Collections.UpdateCounter("REQL")
+                myReq.Tag = "RE-" & Format(Flowsheet.Collections.ObjectCounter("REQL"), "00#")
+                Flowsheet.Collections.UpdateCounter("REQL")
                 If tag <> "" Then myReq.Tag = tag
                 gObj = myReq
                 gObj.Name = "RE-" & Guid.NewGuid.ToString
-                ChildParent.Collections.ReactorEquilibriumCollection.Add(gObj.Name, myReq)
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeREQ").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeREQ").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.ReactorEquilibriumCollection.Add(gObj.Name, myReq)
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeREQ").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeREQ").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myCOREQ As DWSIM.SimulationObjects.Reactors.Reactor_Equilibrium = New DWSIM.SimulationObjects.Reactors.Reactor_Equilibrium(myReq.Name, "ReatorEquilibrio")
                 myCOREQ.GraphicObject = myReq
-                ChildParent.Collections.ObjectCollection.Add(myReq.Name, myCOREQ)
-                ChildParent.Collections.CLCS_ReactorEquilibriumCollection.Add(myReq.Name, myCOREQ)
+                Flowsheet.Collections.ObjectCollection.Add(myReq.Name, myCOREQ)
+                Flowsheet.Collections.CLCS_ReactorEquilibriumCollection.Add(myReq.Name, myCOREQ)
 
             Case TipoObjeto.RCT_Gibbs
                 Dim myRgibbs As New ReactorGibbsGraphic(mpx, mpy, 50, 50, 0)
@@ -2726,19 +2726,19 @@ Public Class frmSurface
                 myRgibbs.Fill = True
                 myRgibbs.FillColor = fillclr
                 myRgibbs.LineColor = lineclr
-                myRgibbs.Tag = "RG-" & Format(ChildParent.Collections.ObjectCounter("RGIB"), "00#")
-                ChildParent.Collections.UpdateCounter("RGIB")
+                myRgibbs.Tag = "RG-" & Format(Flowsheet.Collections.ObjectCounter("RGIB"), "00#")
+                Flowsheet.Collections.UpdateCounter("RGIB")
                 If tag <> "" Then myRgibbs.Tag = tag
                 gObj = myRgibbs
                 gObj.Name = "RG-" & Guid.NewGuid.ToString
-                ChildParent.Collections.ReactorGibbsCollection.Add(gObj.Name, myRgibbs)
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeRGIB").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeRGIB").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.ReactorGibbsCollection.Add(gObj.Name, myRgibbs)
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRGIB").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRGIB").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myCORGIBBS As DWSIM.SimulationObjects.Reactors.Reactor_Gibbs = New DWSIM.SimulationObjects.Reactors.Reactor_Gibbs(myRgibbs.Name, "ReatorGibbs")
                 myCORGIBBS.GraphicObject = myRgibbs
-                ChildParent.Collections.ObjectCollection.Add(myRgibbs.Name, myCORGIBBS)
-                ChildParent.Collections.CLCS_ReactorGibbsCollection.Add(myRgibbs.Name, myCORGIBBS)
+                Flowsheet.Collections.ObjectCollection.Add(myRgibbs.Name, myCORGIBBS)
+                Flowsheet.Collections.CLCS_ReactorGibbsCollection.Add(myRgibbs.Name, myCORGIBBS)
 
             Case TipoObjeto.RCT_CSTR
                 Dim myRcstr As New ReactorCSTRGraphic(mpx, mpy, 50, 50, 0)
@@ -2746,19 +2746,19 @@ Public Class frmSurface
                 myRcstr.Fill = True
                 myRcstr.FillColor = fillclr
                 myRcstr.LineColor = lineclr
-                myRcstr.Tag = "CSTR-" & Format(ChildParent.Collections.ObjectCounter("CSTR"), "00#")
-                ChildParent.Collections.UpdateCounter("CSTR")
+                myRcstr.Tag = "CSTR-" & Format(Flowsheet.Collections.ObjectCounter("CSTR"), "00#")
+                Flowsheet.Collections.UpdateCounter("CSTR")
                 If tag <> "" Then myRcstr.Tag = tag
                 gObj = myRcstr
                 gObj.Name = "CSTR-" & Guid.NewGuid.ToString
-                ChildParent.Collections.ReactorCSTRCollection.Add(gObj.Name, myRcstr)
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeRCSTR").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeRCSTR").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.ReactorCSTRCollection.Add(gObj.Name, myRcstr)
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRCSTR").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRCSTR").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myCORCSTR As DWSIM.SimulationObjects.Reactors.Reactor_CSTR = New DWSIM.SimulationObjects.Reactors.Reactor_CSTR(myRcstr.Name, "ReatorCSTR")
                 myCORCSTR.GraphicObject = myRcstr
-                ChildParent.Collections.ObjectCollection.Add(myRcstr.Name, myCORCSTR)
-                ChildParent.Collections.CLCS_ReactorCSTRCollection.Add(myRcstr.Name, myCORCSTR)
+                Flowsheet.Collections.ObjectCollection.Add(myRcstr.Name, myCORCSTR)
+                Flowsheet.Collections.CLCS_ReactorCSTRCollection.Add(myRcstr.Name, myCORCSTR)
 
             Case TipoObjeto.RCT_PFR
                 Dim myRpfr As New ReactorPFRGraphic(mpx, mpy, 70, 20, 0)
@@ -2766,19 +2766,19 @@ Public Class frmSurface
                 myRpfr.Fill = True
                 myRpfr.FillColor = fillclr
                 myRpfr.LineColor = lineclr
-                myRpfr.Tag = "PFR-" & Format(ChildParent.Collections.ObjectCounter("PFR_"), "00#")
-                ChildParent.Collections.UpdateCounter("PFR_")
+                myRpfr.Tag = "PFR-" & Format(Flowsheet.Collections.ObjectCounter("PFR_"), "00#")
+                Flowsheet.Collections.UpdateCounter("PFR_")
                 If tag <> "" Then myRpfr.Tag = tag
                 gObj = myRpfr
                 gObj.Name = "PFR-" & Guid.NewGuid.ToString
-                ChildParent.Collections.ReactorPFRCollection.Add(gObj.Name, myRpfr)
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeRPFR").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeRPFR").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.ReactorPFRCollection.Add(gObj.Name, myRpfr)
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRPFR").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRPFR").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myCOPFR As DWSIM.SimulationObjects.Reactors.Reactor_PFR = New DWSIM.SimulationObjects.Reactors.Reactor_PFR(myRpfr.Name, "ReatorPFR")
                 myCOPFR.GraphicObject = myRpfr
-                ChildParent.Collections.ObjectCollection.Add(myRpfr.Name, myCOPFR)
-                ChildParent.Collections.CLCS_ReactorPFRCollection.Add(myRpfr.Name, myCOPFR)
+                Flowsheet.Collections.ObjectCollection.Add(myRpfr.Name, myCOPFR)
+                Flowsheet.Collections.CLCS_ReactorPFRCollection.Add(myRpfr.Name, myCOPFR)
 
             Case TipoObjeto.HeatExchanger
                 Dim myHeatExchanger As New HeatExchangerGraphic(mpx, mpy, 30, 30, 0)
@@ -2786,19 +2786,19 @@ Public Class frmSurface
                 myHeatExchanger.Fill = True
                 myHeatExchanger.FillColor = fillclr
                 myHeatExchanger.LineColor = lineclr
-                myHeatExchanger.Tag = "HE-" & Format(ChildParent.Collections.ObjectCounter("HXCG"), "00#")
-                ChildParent.Collections.UpdateCounter("HXCG")
+                myHeatExchanger.Tag = "HE-" & Format(Flowsheet.Collections.ObjectCounter("HXCG"), "00#")
+                Flowsheet.Collections.UpdateCounter("HXCG")
                 If tag <> "" Then myHeatExchanger.Tag = tag
                 gObj = myHeatExchanger
                 gObj.Name = "HE-" & Guid.NewGuid.ToString
-                ChildParent.Collections.HeatExchangerCollection.Add(gObj.Name, myHeatExchanger)
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeHE").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeHE").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.HeatExchangerCollection.Add(gObj.Name, myHeatExchanger)
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeHE").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeHE").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myCOHE As DWSIM.SimulationObjects.UnitOps.HeatExchanger = New DWSIM.SimulationObjects.UnitOps.HeatExchanger(myHeatExchanger.Name, "HeatExchanger")
                 myCOHE.GraphicObject = myHeatExchanger
-                ChildParent.Collections.ObjectCollection.Add(myHeatExchanger.Name, myCOHE)
-                ChildParent.Collections.CLCS_HeatExchangerCollection.Add(myHeatExchanger.Name, myCOHE)
+                Flowsheet.Collections.ObjectCollection.Add(myHeatExchanger.Name, myCOHE)
+                Flowsheet.Collections.CLCS_HeatExchangerCollection.Add(myHeatExchanger.Name, myCOHE)
 
             Case TipoObjeto.ShortcutColumn
                 Dim mySC As New ShorcutColumnGraphic(mpx, mpy, 144, 180, 0)
@@ -2806,19 +2806,19 @@ Public Class frmSurface
                 mySC.Fill = True
                 mySC.FillColor = fillclr
                 mySC.LineColor = lineclr
-                mySC.Tag = "SC-" & Format(ChildParent.Collections.ObjectCounter("SCOL"), "00#")
-                ChildParent.Collections.UpdateCounter("SCOL")
+                mySC.Tag = "SC-" & Format(Flowsheet.Collections.ObjectCounter("SCOL"), "00#")
+                Flowsheet.Collections.UpdateCounter("SCOL")
                 If tag <> "" Then mySC.Tag = tag
                 gObj = mySC
                 gObj.Name = "SC-" & Guid.NewGuid.ToString
-                ChildParent.Collections.ShortcutColumnCollection.Add(gObj.Name, mySC)
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeSC").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeSC").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.ShortcutColumnCollection.Add(gObj.Name, mySC)
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeSC").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeSC").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myCOSC As DWSIM.SimulationObjects.UnitOps.ShortcutColumn = New DWSIM.SimulationObjects.UnitOps.ShortcutColumn(mySC.Name, "ShortcutColumn")
                 myCOSC.GraphicObject = mySC
-                ChildParent.Collections.ObjectCollection.Add(mySC.Name, myCOSC)
-                ChildParent.Collections.CLCS_ShortcutColumnCollection.Add(mySC.Name, myCOSC)
+                Flowsheet.Collections.ObjectCollection.Add(mySC.Name, myCOSC)
+                Flowsheet.Collections.CLCS_ShortcutColumnCollection.Add(mySC.Name, myCOSC)
 
             Case TipoObjeto.DistillationColumn
                 Dim mySC As New DistillationColumnGraphic(mpx, mpy, 144, 180, 0)
@@ -2826,19 +2826,19 @@ Public Class frmSurface
                 mySC.Fill = True
                 mySC.FillColor = fillclr
                 mySC.LineColor = lineclr
-                mySC.Tag = "DC-" & Format(ChildParent.Collections.ObjectCounter("DCOL"), "00#")
-                ChildParent.Collections.UpdateCounter("DCOL")
+                mySC.Tag = "DC-" & Format(Flowsheet.Collections.ObjectCounter("DCOL"), "00#")
+                Flowsheet.Collections.UpdateCounter("DCOL")
                 If tag <> "" Then mySC.Tag = tag
                 gObj = mySC
                 gObj.Name = "DC-" & Guid.NewGuid.ToString
-                ChildParent.Collections.DistillationColumnCollection.Add(gObj.Name, mySC)
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeDC").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeDC").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.DistillationColumnCollection.Add(gObj.Name, mySC)
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeDC").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeDC").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myCOSC As DWSIM.SimulationObjects.UnitOps.DistillationColumn = New DWSIM.SimulationObjects.UnitOps.DistillationColumn(mySC.Name, "DistillationColumn")
                 myCOSC.GraphicObject = mySC
-                ChildParent.Collections.ObjectCollection.Add(mySC.Name, myCOSC)
-                ChildParent.Collections.CLCS_DistillationColumnCollection.Add(mySC.Name, myCOSC)
+                Flowsheet.Collections.ObjectCollection.Add(mySC.Name, myCOSC)
+                Flowsheet.Collections.CLCS_DistillationColumnCollection.Add(mySC.Name, myCOSC)
 
             Case TipoObjeto.AbsorptionColumn
                 Dim mySC As New AbsorptionColumnGraphic(mpx, mpy, 144, 180, 0)
@@ -2846,19 +2846,19 @@ Public Class frmSurface
                 mySC.Fill = True
                 mySC.FillColor = fillclr
                 mySC.LineColor = lineclr
-                mySC.Tag = "ABS-" & Format(ChildParent.Collections.ObjectCounter("ACOL"), "00#")
-                ChildParent.Collections.UpdateCounter("ACOL")
+                mySC.Tag = "ABS-" & Format(Flowsheet.Collections.ObjectCounter("ACOL"), "00#")
+                Flowsheet.Collections.UpdateCounter("ACOL")
                 If tag <> "" Then mySC.Tag = tag
                 gObj = mySC
                 gObj.Name = "ABS-" & Guid.NewGuid.ToString
-                ChildParent.Collections.AbsorptionColumnCollection.Add(gObj.Name, mySC)
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeAC").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeAC").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.AbsorptionColumnCollection.Add(gObj.Name, mySC)
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeAC").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeAC").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myCOSC As DWSIM.SimulationObjects.UnitOps.AbsorptionColumn = New DWSIM.SimulationObjects.UnitOps.AbsorptionColumn(mySC.Name, "AbsorptionColumn")
                 myCOSC.GraphicObject = mySC
-                ChildParent.Collections.ObjectCollection.Add(mySC.Name, myCOSC)
-                ChildParent.Collections.CLCS_AbsorptionColumnCollection.Add(mySC.Name, myCOSC)
+                Flowsheet.Collections.ObjectCollection.Add(mySC.Name, myCOSC)
+                Flowsheet.Collections.CLCS_AbsorptionColumnCollection.Add(mySC.Name, myCOSC)
 
             Case TipoObjeto.ReboiledAbsorber
                 Dim mySC As New ReboiledAbsorberGraphic(mpx, mpy, 144, 180, 0)
@@ -2866,19 +2866,19 @@ Public Class frmSurface
                 mySC.Fill = True
                 mySC.FillColor = fillclr
                 mySC.LineColor = lineclr
-                mySC.Tag = "RBA-" & Format(ChildParent.Collections.ObjectCounter("RBAB"), "00#")
-                ChildParent.Collections.UpdateCounter("RBAB")
+                mySC.Tag = "RBA-" & Format(Flowsheet.Collections.ObjectCounter("RBAB"), "00#")
+                Flowsheet.Collections.UpdateCounter("RBAB")
                 If tag <> "" Then mySC.Tag = tag
                 gObj = mySC
                 gObj.Name = "RBA-" & Guid.NewGuid.ToString
-                ChildParent.Collections.ReboiledAbsorberCollection.Add(gObj.Name, mySC)
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeRBA").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeRBA").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.ReboiledAbsorberCollection.Add(gObj.Name, mySC)
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRBA").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRBA").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myCOSC As DWSIM.SimulationObjects.UnitOps.ReboiledAbsorber = New DWSIM.SimulationObjects.UnitOps.ReboiledAbsorber(mySC.Name, "ReboiledAbsorber")
                 myCOSC.GraphicObject = mySC
-                ChildParent.Collections.ObjectCollection.Add(mySC.Name, myCOSC)
-                ChildParent.Collections.CLCS_ReboiledAbsorberCollection.Add(mySC.Name, myCOSC)
+                Flowsheet.Collections.ObjectCollection.Add(mySC.Name, myCOSC)
+                Flowsheet.Collections.CLCS_ReboiledAbsorberCollection.Add(mySC.Name, myCOSC)
 
             Case TipoObjeto.RefluxedAbsorber
 
@@ -2887,19 +2887,19 @@ Public Class frmSurface
                 mySC.Fill = True
                 mySC.FillColor = fillclr
                 mySC.LineColor = lineclr
-                mySC.Tag = "RFA-" & Format(ChildParent.Collections.ObjectCounter("RFAB"), "00#")
-                ChildParent.Collections.UpdateCounter("RFAB")
+                mySC.Tag = "RFA-" & Format(Flowsheet.Collections.ObjectCounter("RFAB"), "00#")
+                Flowsheet.Collections.UpdateCounter("RFAB")
                 If tag <> "" Then mySC.Tag = tag
                 gObj = mySC
                 gObj.Name = "RFA-" & Guid.NewGuid.ToString
-                ChildParent.Collections.RefluxedAbsorberCollection.Add(gObj.Name, mySC)
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeRFA").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeRFA").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.RefluxedAbsorberCollection.Add(gObj.Name, mySC)
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRFA").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRFA").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myCOSC As DWSIM.SimulationObjects.UnitOps.RefluxedAbsorber = New DWSIM.SimulationObjects.UnitOps.RefluxedAbsorber(mySC.Name, "RefluxedAbsorber")
                 myCOSC.GraphicObject = mySC
-                ChildParent.Collections.ObjectCollection.Add(mySC.Name, myCOSC)
-                ChildParent.Collections.CLCS_RefluxedAbsorberCollection.Add(mySC.Name, myCOSC)
+                Flowsheet.Collections.ObjectCollection.Add(mySC.Name, myCOSC)
+                Flowsheet.Collections.CLCS_RefluxedAbsorberCollection.Add(mySC.Name, myCOSC)
 
             Case TipoObjeto.ComponentSeparator
                 Dim myCSep As New ComponentSeparatorGraphic(mpx, mpy, 50, 50, 0)
@@ -2907,22 +2907,22 @@ Public Class frmSurface
                 myCSep.Fill = True
                 myCSep.FillColor = fillclr
                 myCSep.LineColor = lineclr
-                If Not ChildParent.Collections.ObjectCounter.ContainsKey("CSEP") Then
-                    ChildParent.Collections.ObjectCounter.Add("CSEP", 0)
+                If Not Flowsheet.Collections.ObjectCounter.ContainsKey("CSEP") Then
+                    Flowsheet.Collections.ObjectCounter.Add("CSEP", 0)
                 End If
-                myCSep.Tag = "CS-" & Format(ChildParent.Collections.ObjectCounter("CSEP"), "00#")
-                ChildParent.Collections.UpdateCounter("CSEP")
+                myCSep.Tag = "CS-" & Format(Flowsheet.Collections.ObjectCounter("CSEP"), "00#")
+                Flowsheet.Collections.UpdateCounter("CSEP")
                 If tag <> "" Then myCSep.Tag = tag
                 gObj = myCSep
                 gObj.Name = "CS-" & Guid.NewGuid.ToString
-                ChildParent.Collections.ComponentSeparatorCollection.Add(gObj.Name, myCSep)
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeCSEP").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeCSEP").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.ComponentSeparatorCollection.Add(gObj.Name, myCSep)
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeCSEP").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeCSEP").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myCOCSEP As DWSIM.SimulationObjects.UnitOps.ComponentSeparator = New DWSIM.SimulationObjects.UnitOps.ComponentSeparator(myCSep.Name, "ComponentSeparator")
                 myCOCSEP.GraphicObject = myCSep
-                ChildParent.Collections.ObjectCollection.Add(myCSep.Name, myCOCSEP)
-                ChildParent.Collections.CLCS_ComponentSeparatorCollection.Add(myCSep.Name, myCOCSEP)
+                Flowsheet.Collections.ObjectCollection.Add(myCSep.Name, myCOCSEP)
+                Flowsheet.Collections.CLCS_ComponentSeparatorCollection.Add(myCSep.Name, myCOCSEP)
 
             Case TipoObjeto.SolidSeparator
                 Dim myCSep As New SolidSeparatorGraphic(mpx, mpy, 50, 50, 0)
@@ -2930,25 +2930,25 @@ Public Class frmSurface
                 myCSep.Fill = True
                 myCSep.FillColor = fillclr
                 myCSep.LineColor = lineclr
-                If Not ChildParent.Collections.ObjectCounter.ContainsKey("SOLS") Then
-                    ChildParent.Collections.ObjectCounter.Add("SOLS", 0)
+                If Not Flowsheet.Collections.ObjectCounter.ContainsKey("SOLS") Then
+                    Flowsheet.Collections.ObjectCounter.Add("SOLS", 0)
                 End If
-                myCSep.Tag = "SS-" & Format(ChildParent.Collections.ObjectCounter("SOLS"), "00#")
-                ChildParent.Collections.UpdateCounter("SOLS")
+                myCSep.Tag = "SS-" & Format(Flowsheet.Collections.ObjectCounter("SOLS"), "00#")
+                Flowsheet.Collections.UpdateCounter("SOLS")
                 If tag <> "" Then myCSep.Tag = tag
                 gObj = myCSep
                 gObj.Name = "SS-" & Guid.NewGuid.ToString
-                ChildParent.Collections.SolidsSeparatorCollection.Add(gObj.Name, myCSep)
+                Flowsheet.Collections.SolidsSeparatorCollection.Add(gObj.Name, myCSep)
                 Try
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeSS").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeSS").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeSS").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeSS").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 Catch ex As Exception
                 End Try
                 'OBJETO DWSIM
                 Dim myCOCSEP As DWSIM.SimulationObjects.UnitOps.SolidsSeparator = New DWSIM.SimulationObjects.UnitOps.SolidsSeparator(myCSep.Name, "SolidsSeparator")
                 myCOCSEP.GraphicObject = myCSep
-                ChildParent.Collections.ObjectCollection.Add(myCSep.Name, myCOCSEP)
-                ChildParent.Collections.CLCS_SolidsSeparatorCollection.Add(myCSep.Name, myCOCSEP)
+                Flowsheet.Collections.ObjectCollection.Add(myCSep.Name, myCOCSEP)
+                Flowsheet.Collections.CLCS_SolidsSeparatorCollection.Add(myCSep.Name, myCOCSEP)
 
             Case TipoObjeto.Filter
                 Dim myCSep As New FilterGraphic(mpx, mpy, 50, 50, 0)
@@ -2956,25 +2956,25 @@ Public Class frmSurface
                 myCSep.Fill = True
                 myCSep.FillColor = fillclr
                 myCSep.LineColor = lineclr
-                If Not ChildParent.Collections.ObjectCounter.ContainsKey("FILT") Then
-                    ChildParent.Collections.ObjectCounter.Add("FILT", 0)
+                If Not Flowsheet.Collections.ObjectCounter.ContainsKey("FILT") Then
+                    Flowsheet.Collections.ObjectCounter.Add("FILT", 0)
                 End If
-                myCSep.Tag = "FT-" & Format(ChildParent.Collections.ObjectCounter("FILT"), "00#")
-                ChildParent.Collections.UpdateCounter("FILT")
+                myCSep.Tag = "FT-" & Format(Flowsheet.Collections.ObjectCounter("FILT"), "00#")
+                Flowsheet.Collections.UpdateCounter("FILT")
                 If tag <> "" Then myCSep.Tag = tag
                 gObj = myCSep
                 gObj.Name = "FT-" & Guid.NewGuid.ToString
-                ChildParent.Collections.FilterCollection.Add(gObj.Name, myCSep)
+                Flowsheet.Collections.FilterCollection.Add(gObj.Name, myCSep)
                 Try
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeFT").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeFT").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeFT").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeFT").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 Catch ex As Exception
                 End Try
                 'OBJETO DWSIM
                 Dim myCOCSEP As DWSIM.SimulationObjects.UnitOps.Filter = New DWSIM.SimulationObjects.UnitOps.Filter(myCSep.Name, "Filter")
                 myCOCSEP.GraphicObject = myCSep
-                ChildParent.Collections.ObjectCollection.Add(myCSep.Name, myCOCSEP)
-                ChildParent.Collections.CLCS_FilterCollection.Add(myCSep.Name, myCOCSEP)
+                Flowsheet.Collections.ObjectCollection.Add(myCSep.Name, myCOCSEP)
+                Flowsheet.Collections.CLCS_FilterCollection.Add(myCSep.Name, myCOCSEP)
 
             Case TipoObjeto.OrificePlate
                 Dim myOPL As New OrificePlateGraphic(mpx, mpy, 25, 25, 0)
@@ -2982,22 +2982,22 @@ Public Class frmSurface
                 myOPL.Fill = True
                 myOPL.FillColor = fillclr
                 myOPL.LineColor = lineclr
-                If Not ChildParent.Collections.ObjectCounter.ContainsKey("ORIF") Then
-                    ChildParent.Collections.ObjectCounter.Add("ORIF", 0)
+                If Not Flowsheet.Collections.ObjectCounter.ContainsKey("ORIF") Then
+                    Flowsheet.Collections.ObjectCounter.Add("ORIF", 0)
                 End If
-                myOPL.Tag = "OP-" & Format(ChildParent.Collections.ObjectCounter("ORIF"), "00#")
-                ChildParent.Collections.UpdateCounter("ORIF")
+                myOPL.Tag = "OP-" & Format(Flowsheet.Collections.ObjectCounter("ORIF"), "00#")
+                Flowsheet.Collections.UpdateCounter("ORIF")
                 If tag <> "" Then myOPL.Tag = tag
                 gObj = myOPL
                 gObj.Name = "OP-" & Guid.NewGuid.ToString
-                ChildParent.Collections.OrificePlateCollection.Add(gObj.Name, myOPL)
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeOPL").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeOPL").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                Flowsheet.Collections.OrificePlateCollection.Add(gObj.Name, myOPL)
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeOPL").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeOPL").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 'OBJETO DWSIM
                 Dim myCOOPL As DWSIM.SimulationObjects.UnitOps.OrificePlate = New DWSIM.SimulationObjects.UnitOps.OrificePlate(myOPL.Name, "OrificePlate")
                 myCOOPL.GraphicObject = myOPL
-                ChildParent.Collections.ObjectCollection.Add(myOPL.Name, myCOOPL)
-                ChildParent.Collections.CLCS_OrificePlateCollection.Add(myOPL.Name, myCOOPL)
+                Flowsheet.Collections.ObjectCollection.Add(myOPL.Name, myCOOPL)
+                Flowsheet.Collections.CLCS_OrificePlateCollection.Add(myOPL.Name, myCOOPL)
 
             Case TipoObjeto.CustomUO
                 Dim myCUO As New CustomUOGraphic(mpx, mpy, 25, 25, 0)
@@ -3005,25 +3005,25 @@ Public Class frmSurface
                 myCUO.Fill = True
                 myCUO.FillColor = fillclr
                 myCUO.LineColor = lineclr
-                If Not ChildParent.Collections.ObjectCounter.ContainsKey("CUOP") Then
-                    ChildParent.Collections.ObjectCounter.Add("CUOP", 0)
+                If Not Flowsheet.Collections.ObjectCounter.ContainsKey("CUOP") Then
+                    Flowsheet.Collections.ObjectCounter.Add("CUOP", 0)
                 End If
-                myCUO.Tag = "UO-" & Format(ChildParent.Collections.ObjectCounter("CUOP"), "00#")
-                ChildParent.Collections.UpdateCounter("CUOP")
+                myCUO.Tag = "UO-" & Format(Flowsheet.Collections.ObjectCounter("CUOP"), "00#")
+                Flowsheet.Collections.UpdateCounter("CUOP")
                 If tag <> "" Then myCUO.Tag = tag
                 gObj = myCUO
                 gObj.Name = "UO-" & Guid.NewGuid.ToString
-                ChildParent.Collections.CustomUOCollection.Add(gObj.Name, myCUO)
+                Flowsheet.Collections.CustomUOCollection.Add(gObj.Name, myCUO)
                 Try
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeUO").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeUO").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeUO").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeUO").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 Catch ex As Exception
                 End Try
                 'OBJETO DWSIM
                 Dim myCOCUO As DWSIM.SimulationObjects.UnitOps.CustomUO = New DWSIM.SimulationObjects.UnitOps.CustomUO(myCUO.Name, "CustomUnitOp")
                 myCOCUO.GraphicObject = myCUO
-                ChildParent.Collections.ObjectCollection.Add(myCUO.Name, myCOCUO)
-                ChildParent.Collections.CLCS_CustomUOCollection.Add(myCUO.Name, myCOCUO)
+                Flowsheet.Collections.ObjectCollection.Add(myCUO.Name, myCOCUO)
+                Flowsheet.Collections.CLCS_CustomUOCollection.Add(myCUO.Name, myCOCUO)
 
             Case TipoObjeto.ExcelUO
                 Dim myEUO As New ExcelUOGraphic(mpx, mpy, 25, 25, 0)
@@ -3031,25 +3031,25 @@ Public Class frmSurface
                 myEUO.Fill = True
                 myEUO.FillColor = fillclr
                 myEUO.LineColor = lineclr
-                If Not ChildParent.Collections.ObjectCounter.ContainsKey("CEOP") Then
-                    ChildParent.Collections.ObjectCounter.Add("CEOP", 0)
+                If Not Flowsheet.Collections.ObjectCounter.ContainsKey("CEOP") Then
+                    Flowsheet.Collections.ObjectCounter.Add("CEOP", 0)
                 End If
-                myEUO.Tag = "EXL-" & Format(ChildParent.Collections.ObjectCounter("CEOP"), "00#")
-                ChildParent.Collections.UpdateCounter("CEOP")
+                myEUO.Tag = "EXL-" & Format(Flowsheet.Collections.ObjectCounter("CEOP"), "00#")
+                Flowsheet.Collections.UpdateCounter("CEOP")
                 If tag <> "" Then myEUO.Tag = tag
                 gObj = myEUO
                 gObj.Name = "EXL-" & Guid.NewGuid.ToString
-                ChildParent.Collections.ExcelUOCollection.Add(gObj.Name, myEUO)
+                Flowsheet.Collections.ExcelUOCollection.Add(gObj.Name, myEUO)
                 Try
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeExcel").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeExcel").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeExcel").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeExcel").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 Catch ex As Exception
                 End Try
                 'OBJETO DWSIM
                 Dim myCOEUO As DWSIM.SimulationObjects.UnitOps.ExcelUO = New DWSIM.SimulationObjects.UnitOps.ExcelUO(myEUO.Name, "ExcelUnitOp")
                 myCOEUO.GraphicObject = myEUO
-                ChildParent.Collections.ObjectCollection.Add(myEUO.Name, myCOEUO)
-                ChildParent.Collections.CLCS_ExcelUOCollection.Add(myEUO.Name, myCOEUO)
+                Flowsheet.Collections.ObjectCollection.Add(myEUO.Name, myCOEUO)
+                Flowsheet.Collections.CLCS_ExcelUOCollection.Add(myEUO.Name, myCOEUO)
 
             Case TipoObjeto.FlowsheetUO
                 Dim myEUO As New FlowsheetUOGraphic(mpx, mpy, 25, 25, 0)
@@ -3057,25 +3057,25 @@ Public Class frmSurface
                 myEUO.Fill = True
                 myEUO.FillColor = fillclr
                 myEUO.LineColor = lineclr
-                If Not ChildParent.Collections.ObjectCounter.ContainsKey("FLST") Then
-                    ChildParent.Collections.ObjectCounter.Add("FLST", 0)
+                If Not Flowsheet.Collections.ObjectCounter.ContainsKey("FLST") Then
+                    Flowsheet.Collections.ObjectCounter.Add("FLST", 0)
                 End If
-                myEUO.Tag = "FS-" & Format(ChildParent.Collections.ObjectCounter("FLST"), "00#")
-                ChildParent.Collections.UpdateCounter("FLST")
+                myEUO.Tag = "FS-" & Format(Flowsheet.Collections.ObjectCounter("FLST"), "00#")
+                Flowsheet.Collections.UpdateCounter("FLST")
                 If tag <> "" Then myEUO.Tag = tag
                 gObj = myEUO
                 gObj.Name = "FS-" & Guid.NewGuid.ToString
-                ChildParent.Collections.FlowsheetUOCollection.Add(gObj.Name, myEUO)
+                Flowsheet.Collections.FlowsheetUOCollection.Add(gObj.Name, myEUO)
                 Try
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeFS").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeFS").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeFS").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeFS").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 Catch ex As Exception
                 End Try
                 'OBJETO DWSIM
                 Dim myCOEUO As DWSIM.SimulationObjects.UnitOps.Flowsheet = New DWSIM.SimulationObjects.UnitOps.Flowsheet(myEUO.Name, "FlowsheetUnitOp")
                 myCOEUO.GraphicObject = myEUO
-                ChildParent.Collections.ObjectCollection.Add(myEUO.Name, myCOEUO)
-                ChildParent.Collections.CLCS_FlowsheetUOCollection.Add(myEUO.Name, myCOEUO)
+                Flowsheet.Collections.ObjectCollection.Add(myEUO.Name, myCOEUO)
+                Flowsheet.Collections.CLCS_FlowsheetUOCollection.Add(myEUO.Name, myCOEUO)
 
             Case TipoObjeto.CapeOpenUO
                 Dim myCUO As New CapeOpenUOGraphic(mpx, mpy, 40, 40, 0)
@@ -3083,29 +3083,29 @@ Public Class frmSurface
                 myCUO.Fill = True
                 myCUO.FillColor = fillclr
                 myCUO.LineColor = lineclr
-                If Not ChildParent.Collections.ObjectCounter.ContainsKey("COOP") Then
-                    ChildParent.Collections.ObjectCounter.Add("COOP", 0)
+                If Not Flowsheet.Collections.ObjectCounter.ContainsKey("COOP") Then
+                    Flowsheet.Collections.ObjectCounter.Add("COOP", 0)
                 End If
-                myCUO.Tag = "COUO-" & Format(ChildParent.Collections.ObjectCounter("COOP"), "00#")
-                ChildParent.Collections.UpdateCounter("COOP")
+                myCUO.Tag = "COUO-" & Format(Flowsheet.Collections.ObjectCounter("COOP"), "00#")
+                Flowsheet.Collections.UpdateCounter("COOP")
                 If tag <> "" Then myCUO.Tag = tag
                 gObj = myCUO
                 gObj.Name = "COUO-" & Guid.NewGuid.ToString
-                ChildParent.Collections.CapeOpenUOCollection.Add(gObj.Name, myCUO)
+                Flowsheet.Collections.CapeOpenUOCollection.Add(gObj.Name, myCUO)
                 Try
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeCOUO").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
-                    If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Nodes("NodeCOUO").Nodes(gObj.Name).ContextMenuStrip = ChildParent.FormObjList.ContextMenuStrip1
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeCOUO").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
+                    If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeCOUO").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
                 Catch ex As Exception
                 End Try
                 'OBJETO DWSIM
                 Dim myCOCUO As DWSIM.SimulationObjects.UnitOps.CapeOpenUO = New DWSIM.SimulationObjects.UnitOps.CapeOpenUO(myCUO.Name, "CapeOpenUnitOperation", gObj)
                 myCOCUO.GraphicObject = myCUO
-                ChildParent.Collections.ObjectCollection.Add(myCUO.Name, myCOCUO)
-                ChildParent.Collections.CLCS_CapeOpenUOCollection.Add(myCUO.Name, myCOCUO)
+                Flowsheet.Collections.ObjectCollection.Add(myCUO.Name, myCOCUO)
+                Flowsheet.Collections.CLCS_CapeOpenUOCollection.Add(myCUO.Name, myCOCUO)
 
 
         End Select
-        If Not DWSIM.App.IsRunningOnMono Then ChildParent.FormObjList.TreeViewObj.Refresh()
+        If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Refresh()
 
         If Not gObj Is Nothing Then
             Me.FlowsheetDesignSurface.drawingObjects.Add(gObj)
@@ -3114,18 +3114,18 @@ Public Class frmSurface
             Me.FlowsheetDesignSurface.Invalidate()
             Application.DoEvents()
             If Not DWSIM.App.IsRunningOnMono Then
-                Dim arrays(ChildParent.Collections.ObjectCollection.Count - 1) As String
+                Dim arrays(Flowsheet.Collections.ObjectCollection.Count - 1) As String
                 Dim aNode, aNode2 As TreeNode
                 Dim i As Integer = 0
-                For Each aNode In ChildParent.FormObjList.TreeViewObj.Nodes
+                For Each aNode In Flowsheet.FormObjList.TreeViewObj.Nodes
                     For Each aNode2 In aNode.Nodes
                         arrays(i) = aNode2.Text
                         i += 1
                     Next
                 Next
-                ChildParent.FormObjList.ACSC.Clear()
-                ChildParent.FormObjList.ACSC.AddRange(arrays)
-                ChildParent.FormObjList.TBSearch.AutoCompleteCustomSource = ChildParent.FormObjList.ACSC
+                Flowsheet.FormObjList.ACSC.Clear()
+                Flowsheet.FormObjList.ACSC.AddRange(arrays)
+                Flowsheet.FormObjList.TBSearch.AutoCompleteCustomSource = Flowsheet.FormObjList.ACSC
             End If
 
         End If
@@ -3153,10 +3153,10 @@ Public Class frmSurface
             Dim obj As DataGridViewRow = e.Data.GetData("System.Windows.Forms.DataGridViewRow")
             Dim tobj As TipoObjeto = TipoObjeto.Nenhum
             Dim p As Point = Me.FlowsheetDesignSurface.PointToClient(New Point(e.X, e.Y))
-            Dim mousePT As Point = ChildParent.gscTogoc(p.X, p.Y)
+            Dim mousePT As Point = Flowsheet.gscTogoc(p.X, p.Y)
             Dim mpx = mousePT.X
             Dim mpy = mousePT.Y
-            Dim text As String = ChildParent.FormObjListView.DataGridView1.Rows(obj.Index).Cells(0).Value.ToString.TrimEnd(" ")
+            Dim text As String = Flowsheet.FormObjListView.DataGridView1.Rows(obj.Index).Cells(0).Value.ToString.TrimEnd(" ")
             Select Case text
                 Case "Ajuste"
                     tobj = TipoObjeto.OT_Ajuste
@@ -3254,9 +3254,9 @@ Public Class frmSurface
 
     Private Sub RecalcularToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RecalcularToolStripMenuItem.Click
 
-        ChildParent = My.Application.ActiveSimulation
-        Dim obj As SimulationObjects_BaseClass = ChildParent.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name)
-        CalculateObject(ChildParent, obj.Nome)
+        Flowsheet = My.Application.ActiveSimulation
+        Dim obj As SimulationObjects_BaseClass = Flowsheet.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name)
+        CalculateObject(Flowsheet, obj.Nome)
 
     End Sub
 
@@ -3265,7 +3265,7 @@ Public Class frmSurface
         If Not Me.FlowsheetDesignSurface.SelectedObject Is Nothing Then
             If Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.MaterialStream Then
 
-                Dim mystr As DWSIM.SimulationObjects.Streams.MaterialStream = ChildParent.Collections.CLCS_MaterialStreamCollection(ChildParent.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
+                Dim mystr As DWSIM.SimulationObjects.Streams.MaterialStream = Flowsheet.Collections.CLCS_MaterialStreamCollection(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
 
                 If Not mystr.GraphicObject.InputConnectors(0).IsAttached Then
 
@@ -3296,13 +3296,13 @@ Public Class frmSurface
                     Me.FlowsheetDesignSurface.SelectedObjects.Clear()
 
                     Application.DoEvents()
-                    CalculateMaterialStream(ChildParent, mystr)
+                    CalculateMaterialStream(Flowsheet, mystr)
                     Application.DoEvents()
-                    Call ChildParent.FormSurface.UpdateSelectedObject()
+                    Call Flowsheet.FormSurface.UpdateSelectedObject()
                     Application.DoEvents()
-                    Call ChildParent.FormSurface.FlowsheetDesignSurface.Invalidate()
+                    Call Flowsheet.FormSurface.FlowsheetDesignSurface.Invalidate()
                     Application.DoEvents()
-                    ProcessCalculationQueue(ChildParent)
+                    ProcessCalculationQueue(Flowsheet)
                     Application.DoEvents()
 
                 Else
@@ -3378,11 +3378,11 @@ Public Class frmSurface
 
             Clipboard.SetImage(img)
 
-            Me.ChildParent.WriteToLog("Image created and sent to clipboard sucessfully.", Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
+            Me.Flowsheet.WriteToLog("Image created and sent to clipboard sucessfully.", Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
 
         Catch ex As Exception
 
-            Me.ChildParent.WriteToLog("Error capturing flowsheet snapshot: " & ex.ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
+            Me.Flowsheet.WriteToLog("Error capturing flowsheet snapshot: " & ex.ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
 
         Finally
 
@@ -3403,8 +3403,65 @@ Public Class frmSurface
 
     Private Sub FlowsheetDesignSurface_MouseDoubleClick(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles FlowsheetDesignSurface.MouseDoubleClick
 
-        Application.DoEvents()
-        EditCompTSMI_Click(sender, e)
+        If Not Me.FlowsheetDesignSurface.SelectedObject Is Nothing Then
+            Select Case Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto
+                Case TipoObjeto.MaterialStream
+                    EditCompTSMI_Click(sender, e)
+                Case TipoObjeto.FlowsheetUO
+                    Dim myobj As DWSIM.SimulationObjects.UnitOps.Flowsheet = Flowsheet.Collections.CLCS_FlowsheetUOCollection(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
+                    If myobj.Initialized Then
+                        Dim viewform As New FlowsheetUOViewerForm
+                        With viewform
+                            .Text = Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag
+                            .fsuo = myobj
+                            .ShowDialog()
+                        End With
+                    Else
+                        Dim viewform As New FlowsheetUOEditorForm
+                        With viewform
+                            .Text = Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag
+                            .fsuo = myobj
+                            .ShowDialog()
+                        End With
+                    End If
+                Case TipoObjeto.CapeOpenUO
+                    Dim myobj As DWSIM.SimulationObjects.UnitOps.CapeOpenUO = Flowsheet.Collections.CLCS_CapeOpenUOCollection(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
+                    myobj.Edit(Me, New EventArgs)
+                Case TipoObjeto.ExcelUO
+                    Dim myobj As DWSIM.SimulationObjects.UnitOps.ExcelUO = Flowsheet.Collections.CLCS_ExcelUOCollection(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
+                    Dim selectionControl As New ExcelUOEditorForm
+                    selectionControl.Text = Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag & " - " & "Excel UO Specification"
+                    selectionControl.TbFileName.Text = myobj.Filename
+                    selectionControl.ShowDialog()
+                Case TipoObjeto.CustomUO
+                    Dim myobj As DWSIM.SimulationObjects.UnitOps.CustomUO = Flowsheet.Collections.CLCS_CustomUOCollection(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
+                    If Not DWSIM.App.IsRunningOnMono Then
+                        Dim selectionControl As New ScriptEditorForm
+                        selectionControl.scripttext = myobj.ScriptText
+                        selectionControl.language = myobj.Language
+                        selectionControl.fontname = myobj.FontName
+                        selectionControl.fontsize = myobj.FontSize
+                        selectionControl.includes = myobj.Includes
+                        selectionControl.Text = Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag & " - " & DWSIM.App.GetLocalString("ScriptEditor")
+                        selectionControl.ShowDialog()
+                        myobj.FontName = selectionControl.tscb1.SelectedItem
+                        myobj.FontSize = selectionControl.tscb2.SelectedItem
+                        myobj.Includes = selectionControl.includes
+                    Else
+                        Dim selectionControl As New ScriptEditorFormMono
+                        selectionControl.scripttext = myobj.ScriptText
+                        selectionControl.language = myobj.Language
+                        selectionControl.fontname = myobj.FontName
+                        selectionControl.fontsize = myobj.FontSize
+                        selectionControl.includes = myobj.Includes
+                        selectionControl.Text = Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag & " - " & DWSIM.App.GetLocalString("ScriptEditor")
+                        selectionControl.ShowDialog()
+                        myobj.FontName = selectionControl.tscb1.SelectedItem
+                        myobj.FontSize = selectionControl.tscb2.SelectedItem
+                        myobj.Includes = selectionControl.includes
+                    End If
+            End Select
+        End If
 
     End Sub
 
@@ -3412,9 +3469,9 @@ Public Class frmSurface
 
         'copy all simulation properties from the selected object to clipboard
         Try
-            ChildParent.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name).CopyDataToClipboard(ChildParent.Options.SelectedUnitSystem, ChildParent.Options.NumberFormat)
+            Flowsheet.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name).CopyDataToClipboard(Flowsheet.Options.SelectedUnitSystem, Flowsheet.Options.NumberFormat)
         Catch ex As Exception
-            Me.ChildParent.WriteToLog("Error copying data to clipboard: " & ex.ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
+            Me.Flowsheet.WriteToLog("Error copying data to clipboard: " & ex.ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
         End Try
 
     End Sub
@@ -3425,7 +3482,7 @@ Public Class frmSurface
 
             If Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.MaterialStream Then
 
-                Dim mystr As DWSIM.SimulationObjects.Streams.MaterialStream = ChildParent.Collections.CLCS_MaterialStreamCollection(ChildParent.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
+                Dim mystr As DWSIM.SimulationObjects.Streams.MaterialStream = Flowsheet.Collections.CLCS_MaterialStreamCollection(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
 
                 If Not mystr.GraphicObject.InputConnectors(0).IsAttached Then
 
@@ -3437,13 +3494,13 @@ Public Class frmSurface
                     mystr.EqualizeOverallComposition()
 
                     Application.DoEvents()
-                    CalculateMaterialStream(ChildParent, mystr)
+                    CalculateMaterialStream(Flowsheet, mystr)
                     Application.DoEvents()
-                    Call ChildParent.FormSurface.UpdateSelectedObject()
+                    Call Flowsheet.FormSurface.UpdateSelectedObject()
                     Application.DoEvents()
-                    Call ChildParent.FormSurface.FlowsheetDesignSurface.Invalidate()
+                    Call Flowsheet.FormSurface.FlowsheetDesignSurface.Invalidate()
                     Application.DoEvents()
-                    ProcessCalculationQueue(ChildParent)
+                    ProcessCalculationQueue(Flowsheet)
                     Application.DoEvents()
 
                 ElseIf mystr.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.TipoObjeto = TipoObjeto.OT_Reciclo Then
@@ -3456,13 +3513,13 @@ Public Class frmSurface
                     mystr.EqualizeOverallComposition()
 
                     Application.DoEvents()
-                    CalculateMaterialStream(ChildParent, mystr)
+                    CalculateMaterialStream(Flowsheet, mystr)
                     Application.DoEvents()
-                    Call ChildParent.FormSurface.UpdateSelectedObject()
+                    Call Flowsheet.FormSurface.UpdateSelectedObject()
                     Application.DoEvents()
-                    Call ChildParent.FormSurface.FlowsheetDesignSurface.Invalidate()
+                    Call Flowsheet.FormSurface.FlowsheetDesignSurface.Invalidate()
                     Application.DoEvents()
-                    ProcessCalculationQueue(ChildParent)
+                    ProcessCalculationQueue(Flowsheet)
                     Application.DoEvents()
 
                 Else
