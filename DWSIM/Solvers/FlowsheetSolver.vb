@@ -1527,16 +1527,15 @@ Namespace DWSIM.Flowsheet
 
                 Dim myinfo As DWSIM.Outros.StatusChangeEventArgs = form.CalculationQueue.Peek()
 
-                UpdateDisplayStatus(form, myinfo.Nome, True)
+                UpdateDisplayStatus(form, New String() {myinfo.Nome}, True)
 
                 If myinfo.Tipo = TipoObjeto.MaterialStream Then
                     CalculateMaterialStreamAsync(form, form.Collections.CLCS_MaterialStreamCollection(myinfo.Nome), ct)
                 Else
                     CalculateFlowsheetAsync(form, myinfo, ct)
                 End If
-                form.Collections.ObjectCollection(myinfo.Nome).GraphicObject.Calculated = True
-
-                UpdateDisplayStatus(form, myinfo.Nome)
+          
+                UpdateDisplayStatus(form, New String() {myinfo.Nome})
 
                 If form.CalculationQueue.Count = 1 Then form.FormSpreadsheet.InternalCounter = 0
                 If form.CalculationQueue.Count > 0 Then form.CalculationQueue.Dequeue()
@@ -1567,16 +1566,19 @@ Namespace DWSIM.Flowsheet
             Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism}
 
             For Each li In orderedlist
+                Dim objlist As New ArrayList
+                For Each item In li.Value
+                    objlist.Add(item.Nome)
+                Next
+                If form.Visible Then UpdateDisplayStatus(form, objlist.ToArray(Type.GetType("System.String")), True)
                 Parallel.ForEach(li.Value, poptions, Sub(myinfo)
-                                                         UpdateDisplayStatus(form, myinfo.Nome, True)
                                                          If myinfo.Tipo = TipoObjeto.MaterialStream Then
                                                              CalculateMaterialStreamAsync(form, form.Collections.CLCS_MaterialStreamCollection(myinfo.Nome), ct)
                                                          Else
                                                              CalculateFlowsheetAsync(form, myinfo, ct)
                                                          End If
-                                                         form.Collections.ObjectCollection(myinfo.Nome).GraphicObject.Calculated = True
-                                                         UpdateDisplayStatus(form, myinfo.Nome)
                                                      End Sub)
+                If form.Visible Then UpdateDisplayStatus(form, objlist.ToArray(Type.GetType("System.String")))
             Next
 
             For Each obj In form.Collections.ObjectCollection.Values
@@ -1611,32 +1613,32 @@ Namespace DWSIM.Flowsheet
 
         End Sub
 
-        Shared Sub UpdateDisplayStatus(form As FormFlowsheet, Optional ByVal ObjID As String = "", Optional ByVal calculating As Boolean = False)
+        Shared Sub UpdateDisplayStatus(form As FormFlowsheet, Optional ByVal ObjIDlist() As String = Nothing, Optional ByVal calculating As Boolean = False)
             If form.Visible Then
-                form.UIThread(Sub()
-                                  form.FormSurface.Enabled = True
-                                  If ObjID = "" Then
-                                      For Each baseobj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
-                                          If Not baseobj.GraphicObject Is Nothing Then
-                                              baseobj.GraphicObject.Calculated = baseobj.Calculated
-                                              If baseobj.Calculated Then baseobj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                                          End If
-                                      Next
-                                  Else
-                                      If form.Collections.ObjectCollection.ContainsKey(ObjID) Then
-                                          Dim baseobj As SimulationObjects_BaseClass = form.Collections.ObjectCollection(ObjID)
-                                          If Not baseobj.GraphicObject Is Nothing Then
-                                              If calculating Then
-                                                  baseobj.GraphicObject.Status = Status.Calculating
-                                              Else
-                                                  baseobj.GraphicObject.Calculated = baseobj.Calculated
-                                                  If baseobj.Calculated Then baseobj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                                              End If
-                                          End If
-                                      End If
-                                  End If
-                                  form.FormSurface.Enabled = False
-                              End Sub)
+                form.FormSurface.Enabled = True
+                If ObjIDlist Is Nothing Then
+                    For Each baseobj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
+                        If Not baseobj.GraphicObject Is Nothing Then
+                            baseobj.GraphicObject.Calculated = baseobj.Calculated
+                            If baseobj.Calculated Then baseobj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
+                        End If
+                    Next
+                Else
+                    For Each ObjID In ObjIDlist
+                        If form.Collections.ObjectCollection.ContainsKey(ObjID) Then
+                            Dim baseobj As SimulationObjects_BaseClass = form.Collections.ObjectCollection(ObjID)
+                            If Not baseobj.GraphicObject Is Nothing Then
+                                If calculating Then
+                                    baseobj.GraphicObject.Status = Status.Calculating
+                                Else
+                                    baseobj.GraphicObject.Calculated = baseobj.Calculated
+                                    If baseobj.Calculated Then baseobj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
+                                End If
+                            End If
+                        End If
+                    Next
+                End If
+                form.FormSurface.Enabled = False
             End If
         End Sub
 
