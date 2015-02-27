@@ -150,7 +150,7 @@ Module TCPServer
         Dim errmsg As String = ""
         Using bytestream As New MemoryStream(bytes)
             Using form As FormFlowsheet = DWSIM.DWSIM.SimulationObjects.UnitOps.Flowsheet.InitializeFlowsheet(bytestream)
-                DWSIM.DWSIM.Flowsheet.FlowsheetSolver.CalculateAll2(form, 1, ts)
+                DWSIM.DWSIM.Flowsheet.FlowsheetSolver.CalculateAll2(form, 2, ts)
                 Dim retbytes As MemoryStream = DWSIM.DWSIM.SimulationObjects.UnitOps.Flowsheet.ReturnProcessData(form)
                 Using retbytes
                     Dim uncompressedbytes As Byte() = retbytes.ToArray
