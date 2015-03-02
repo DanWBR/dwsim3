@@ -412,7 +412,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             fi_ant2 = 0
             fi_ant = 0
             fi = 0
-            If TIPO = "L" Then Vr = 0.05 Else Vr = Tr / Pr * 0.3
+            If TIPO = "L" Then Vr = 0.05 Else Vr = 1.0# 'Tr / Pr * 0.3
             Do
                 fi_ant2 = fi_ant
                 fi_ant = fi
