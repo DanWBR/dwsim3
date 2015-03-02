@@ -2494,10 +2494,10 @@ restart:            fx = Me.FunctionValue(xvar)
 
                 If ic >= maxits Then Throw New Exception(DWSIM.App.GetLocalString("DCMaxIterationsReached"))
                 If Double.IsNaN(t_error) Then Throw New Exception(DWSIM.App.GetLocalString("DCGeneralError"))
-                If Abs((t_error - t_error_ant) / t_error) < tol(1) Then
-                    My.Application.ActiveSimulation.WriteToLog("The column temperature profile isn't changing anymore. Final sum of temperature errors is " & t_error & " K.", Color.Green, FormClasses.TipoAviso.Aviso)
-                    Exit Do
-                End If
+                'If Abs((t_error - t_error_ant) / t_error) < tol(1) Then
+                '    My.Application.ActiveSimulation.WriteToLog("The column temperature profile isn't changing anymore. Final sum of temperature errors is " & t_error & " K.", Color.Green, FormClasses.TipoAviso.Aviso)
+                '    Exit Do
+                'End If
                 If ic = stopatitnumber - 1 Then Exit Do
 
                 CheckCalculatorStatus()

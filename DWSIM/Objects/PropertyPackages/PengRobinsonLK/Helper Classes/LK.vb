@@ -360,7 +360,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             fi_ant2 = 0
             fi_ant = 0
             fi = 0
-            If TIPO = "L" Then Vr = 0.05 Else Vr = Tr / Pr * 0.3
+            If TIPO = "L" Then Vr = 0.05 Else Vr = 1.0# ' Tr / Pr * 0.3
             Do
                 fi_ant2 = fi_ant
                 fi_ant = fi
@@ -385,117 +385,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Loop Until Math.Abs(fi) < 0.001 Or cnt >= 100
 
             Return Vr
-
-        End Function
-
-        Function ESTIMAR_Vr2(ByVal TIPO, ByVal Pr, ByVal Tr, ByVal B, ByVal C, ByVal D, ByVal c4, ByVal beta, ByVal gamma)
-
-            Dim i As Integer
-
-            Dim Tinf, Tsup, Vr As Double
-
-            Dim fT, fT_inf, nsub, delta_T As Double
-
-            If TIPO = "L" Then
-                Tinf = 0
-                Tsup = 10
-                nsub = 1000
-            Else
-                Tinf = 1001
-                Tsup = 0
-                nsub = 100
-            End If
-
-            delta_T = (Tsup - Tinf) / nsub
-
-            i = 0
-            Do
-                i = i + 1
-                Vr = Tinf
-                fT = Pr * Vr / Tr - (1 + B / Vr + C / Vr ^ 2 + D / Vr ^ 5 + c4 / Tr ^ 3 / Vr ^ 2 * (beta + gamma / Vr ^ 2) * Math.Exp(-gamma / Vr ^ 2))
-                Tinf = Tinf + delta_T
-                Vr = Tinf
-                fT_inf = Pr * Vr / Tr - (1 + B / Vr + C / Vr ^ 2 + D / Vr ^ 5 + c4 / Tr ^ 3 / Vr ^ 2 * (beta + gamma / Vr ^ 2) * Math.Exp(-gamma / Vr ^ 2))
-            Loop Until fT * fT_inf < 0 Or i >= 1000
-            Tsup = Tinf
-            Tinf = Tinf - delta_T
-
-            'método de Brent para encontrar Vc
-
-            Dim aaa, bbb, ccc, ddd, eee, min11, min22, faa, fbb, fcc, ppp, qqq, rrr, sss, tol11, xmm As Double
-            Dim ITMAX2 As Integer = 100
-            Dim iter2 As Integer
-
-            aaa = Tinf
-            bbb = Tsup
-            ccc = Tsup
-
-            faa = Pr * aaa / Tr - (1 + B / aaa + C / aaa ^ 2 + D / aaa ^ 5 + c4 / Tr ^ 3 / aaa ^ 2 * (beta + gamma / aaa ^ 2) * Math.Exp(-gamma / aaa ^ 2))
-            fbb = Pr * bbb / Tr - (1 + B / bbb + C / bbb ^ 2 + D / bbb ^ 5 + c4 / Tr ^ 3 / bbb ^ 2 * (beta + gamma / bbb ^ 2) * Math.Exp(-gamma / bbb ^ 2))
-            fcc = fbb
-            iter2 = 0
-            Do
-                If (fbb > 0 And fcc > 0) Or (fbb < 0 And fcc < 0) Then
-                    ccc = aaa
-                    fcc = faa
-                    ddd = bbb - aaa
-                    eee = ddd
-                End If
-                If Math.Abs(fcc) < Math.Abs(fbb) Then
-                    aaa = bbb
-                    bbb = ccc
-                    ccc = aaa
-                    faa = fbb
-                    fbb = fcc
-                    fcc = faa
-                End If
-                tol11 = 0.0000001
-                xmm = 0.5 * (ccc - bbb)
-                If (Math.Abs(xmm) <= tol11) Or (fbb = 0) Then GoTo Final3
-                'If Math.Abs(fbb) < 0.1 Then GoTo Final3
-                If (Math.Abs(eee) >= tol11) And (Math.Abs(faa) > Math.Abs(fbb)) Then
-                    sss = fbb / faa
-                    If aaa = ccc Then
-                        ppp = 2 * xmm * sss
-                        qqq = 1 - sss
-                    Else
-                        qqq = faa / fcc
-                        rrr = fbb / fcc
-                        ppp = sss * (2 * xmm * qqq * (qqq - rrr) - (bbb - aaa) * (rrr - 1))
-                        qqq = (qqq - 1) * (rrr - 1) * (sss - 1)
-                    End If
-                    If ppp > 0 Then qqq = -qqq
-                    ppp = Math.Abs(ppp)
-                    min11 = 3 * xmm * qqq - Math.Abs(tol11 * qqq)
-                    min22 = Math.Abs(eee * qqq)
-                    Dim tvar2 As Double
-                    If min11 < min22 Then tvar2 = min11
-                    If min11 > min22 Then tvar2 = min22
-                    If 2 * ppp < tvar2 Then
-                        eee = ddd
-                        ddd = ppp / qqq
-                    Else
-                        ddd = xmm
-                        eee = ddd
-                    End If
-                Else
-                    ddd = xmm
-                    eee = ddd
-                End If
-                aaa = bbb
-                faa = fbb
-                If (Math.Abs(ddd) > tol11) Then
-                    bbb += ddd
-                Else
-                    bbb += Math.Sign(xmm) * tol11
-                End If
-                fbb = Pr * bbb / Tr - (1 + B / bbb + C / bbb ^ 2 + D / bbb ^ 5 + c4 / Tr ^ 3 / bbb ^ 2 * (beta + gamma / bbb ^ 2) * Math.Exp(-gamma / bbb ^ 2))
-                iter2 += 1
-            Loop Until iter2 = ITMAX2
-
-Final3:
-
-            Return bbb
 
         End Function
 

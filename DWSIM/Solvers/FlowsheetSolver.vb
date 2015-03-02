@@ -1414,7 +1414,7 @@ Namespace DWSIM.Flowsheet
 
             If mode = 0 Then
                 'UI thread
-                ProcessQueueInternal(form, Isolated, FlowsheetSolverMode)
+                ProcessQueueInternal(form, Isolated, FlowsheetSolverMode, ct)
             ElseIf mode = 1 Then
                 'bg thread
                 ProcessQueueInternalAsync(form, ct)
@@ -1426,7 +1426,9 @@ Namespace DWSIM.Flowsheet
 
         End Sub
 
-        Private Shared Sub ProcessQueueInternal(ByVal form As FormFlowsheet, Optional ByVal Isolated As Boolean = False, Optional ByVal FlowsheetSolverMode As Boolean = False)
+        Private Shared Sub ProcessQueueInternal(ByVal form As FormFlowsheet, Optional ByVal Isolated As Boolean = False, Optional ByVal FlowsheetSolverMode As Boolean = False, Optional ByVal ct As Threading.CancellationToken = Nothing)
+
+            If ct.IsCancellationRequested = True Then ct.ThrowIfCancellationRequested()
 
             form.FormSurface.LabelTime.Text = ""
             form.FormSurface.calcstart = Date.Now
@@ -1608,6 +1610,7 @@ Namespace DWSIM.Flowsheet
                         If My.MyApplication.TaskCancellationTokenSource IsNot Nothing Then
                             My.MyApplication.TaskCancellationTokenSource.Cancel()
                         Else
+                            Throw New Exception(DWSIM.App.GetLocalString("CalculationAborted"))
                         End If
                     End If
                 End If
