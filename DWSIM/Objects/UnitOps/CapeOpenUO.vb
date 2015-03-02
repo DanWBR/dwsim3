@@ -394,8 +394,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 Dim p As New OptionParameter(id.ComponentName, id.ComponentDescription, ip.value, ips.DefaultValue, ips.OptionList, ips.RestrictedToList, ip.Mode)
                                 _params.Add(p)
                             Case CapeParamType.CAPE_ARRAY
-                                Dim ip As ICapeParameter = CType(myparam, ICapeParameter)
-                                _params.Add(ip)
+                                'Dim ip As ICapeParameter = CType(myparam, ICapeParameter)
+                                '_params.Add(ip)
                         End Select
                     Next
                 End If
