@@ -327,7 +327,7 @@ End Namespace
 Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen
 
     ''' <summary>
-    ''' This class if for legacy compatibility only. It should NOT be used. Use CapePen.RealParameter instead if necessary.
+    ''' This class if for legacy compatibility only. It should NOT be used. Use CapeOpen.RealParameter instead if necessary.
     ''' </summary>
     ''' <remarks></remarks>
     <System.Serializable()> Public Class CRealParameter
@@ -415,6 +415,61 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen
         Public Function Validate1(ByVal value As Double, ByRef message As String) As Boolean Implements Global.CapeOpen.ICapeRealParameterSpec.Validate
             Return _par.Validate(value, message)
         End Function
+    End Class
+
+    <System.Serializable> Public Class CapeArrayParameter
+
+        Inherits Global.CapeOpen.CapeParameter
+
+        Implements Global.CapeOpen.ICapeArrayParameterSpec
+
+        Public Property value As Object
+        <NonSerialized> Private ispecs As Object
+        Private numdim As Integer
+
+        Sub New(ByVal name As String, description As String, ByVal value As Object, ispecs As Object, numdim As Integer)
+            MyBase.New(name, description)
+            Me.value = value
+            Me.ispecs = ispecs
+            Me.numdim = numdim
+        End Sub
+
+        Public ReadOnly Property ItemsSpecifications As Object Implements ICapeArrayParameterSpec.ItemsSpecifications
+            Get
+                Return ispecs
+            End Get
+        End Property
+
+        Public ReadOnly Property NumDimensions As Integer Implements ICapeArrayParameterSpec.NumDimensions
+            Get
+                Return 1
+            End Get
+        End Property
+
+        Public ReadOnly Property Size As Object Implements ICapeArrayParameterSpec.Size
+            Get
+                Return value.Length
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property Type As CapeParamType
+            Get
+                Return CapeParamType.CAPE_ARRAY
+            End Get
+        End Property
+
+        Public Overrides Sub Reset()
+            value = Nothing
+        End Sub
+
+        Public Function Validate1(inputArray As Object, ByRef value As Object) As Object Implements ICapeArrayParameterSpec.Validate
+            Return TypeOf inputArray Is System.Array
+        End Function
+
+        Public Overrides Function Validate(ByRef message As String) As Boolean
+            Return True
+        End Function
+
     End Class
 
 End Namespace

@@ -31,6 +31,7 @@ Imports DWSIM.DWSIM.SimulationObjects
 Imports System.Reflection
 Imports System.Runtime.Serialization.Formatters.Binary
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
+Imports DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen
 
 Namespace DWSIM.SimulationObjects.UnitOps
 
@@ -392,9 +393,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 Dim p As New OptionParameter(id.ComponentName, id.ComponentDescription, ip.value, ips.DefaultValue, ips.OptionList, ips.RestrictedToList, ip.Mode)
                                 _params.Add(p)
                             Case CapeParamType.CAPE_ARRAY
-                                'Dim ip As ICapeParameter = CType(myparam, ICapeParameter)
-                                'ip.value = New arrayparameter
-                                '_params.Add(ip)
+                                Dim ips As ICapeArrayParameterSpec = CType(myparam, ICapeArrayParameterSpec)
+                                Dim ip As ICapeParameter = CType(myparam, ICapeParameter)
+                                Dim p As New CapeArrayParameter(id.ComponentName, id.ComponentDescription, ip.value, ips.ItemsSpecifications, ips.NumDimensions)
+                                _params.Add(p)
                         End Select
                     Next
                 End If
@@ -1153,7 +1155,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Dim myp As ICapeParameterSpec = TryCast(p, ICapeParameterSpec)
                     Select Case myp.Type
                         Case CapeParamType.CAPE_ARRAY
-                            Dim par As ICapeParameter = p
+                            Dim par As CapeArrayParameter = p
                             .Item.Add(id, par.value, If(par.Mode = CapeParamMode.CAPE_OUTPUT, True, False), "4. Parameters", desc, True)
                         Case CapeParamType.CAPE_BOOLEAN
                             Dim par As BooleanParameter = TryCast(p, BooleanParameter)
