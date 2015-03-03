@@ -223,45 +223,43 @@ Namespace DWSIM.SimulationObjects.UnitOps
             'If the Unit Operation doesn't implement any of the IPersist interfaces, the _istr variable will be null.
             'The Object will have to be restored using the parameters and ports stored information only.
 
-            If My.Settings.UseCOPersistenceSupport Then
-                If Not _couo Is Nothing Then
-                    Dim myuo As Interfaces.IPersistStreamInit = TryCast(_couo, Interfaces.IPersistStreamInit)
-                    If Not myuo Is Nothing Then
-                        Dim myuo2 As Interfaces.IPersistStreamInit = TryCast(_couo, Interfaces.IPersistStreamInit)
-                        If myuo2 IsNot Nothing Then
-                            _istr = New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.ComIStreamWrapper(New MemoryStream())
-                            Try
+            If Not _couo Is Nothing Then
+                Dim myuo As Interfaces.IPersistStreamInit = TryCast(_couo, Interfaces.IPersistStreamInit)
+                If Not myuo Is Nothing Then
+                    Dim myuo2 As Interfaces.IPersistStreamInit = TryCast(_couo, Interfaces.IPersistStreamInit)
+                    If myuo2 IsNot Nothing Then
+                        _istr = New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.ComIStreamWrapper(New MemoryStream())
+                        Try
+                            _istr.baseStream.Position = 0
+                            myuo2.Save(_istr, True)
+                            Using ms As New MemoryStream()
                                 _istr.baseStream.Position = 0
-                                myuo2.Save(_istr, True)
-                                Using ms As New MemoryStream()
-                                    _istr.baseStream.Position = 0
-                                    _istr.baseStream.CopyTo(ms)
-                                    _persisteddata = ms.ToArray()
-                                End Using
-                            Catch ex As Exception
-                                Dim ecu As CapeOpen.ECapeUser = _couo
-                                Me.FlowSheet.WriteToLog(Me.ComponentName & ": CAPE-OPEN Exception " & ecu.code & " at " & ecu.interfaceName & "." & ecu.scope & ". Reason: " & ecu.description, Color.Red, FormClasses.TipoAviso.Erro)
-                                Me.FlowSheet.WriteToLog(Me.GraphicObject.Tag + ": Error saving data from CAPE-OPEN Object - " + ex.Message.ToString(), Color.Red, FormClasses.TipoAviso.Erro)
-                            End Try
-                        End If
-                    Else
-                        Dim myuo2 As Interfaces2.IPersistStream = TryCast(_couo, Interfaces2.IPersistStream)
-                        If myuo2 IsNot Nothing Then
-                            _istr = New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.ComIStreamWrapper(New MemoryStream())
-                            Try
+                                _istr.baseStream.CopyTo(ms)
+                                _persisteddata = ms.ToArray()
+                            End Using
+                        Catch ex As Exception
+                            Dim ecu As CapeOpen.ECapeUser = _couo
+                            Me.FlowSheet.WriteToLog(Me.ComponentName & ": CAPE-OPEN Exception " & ecu.code & " at " & ecu.interfaceName & "." & ecu.scope & ". Reason: " & ecu.description, Color.Red, FormClasses.TipoAviso.Erro)
+                            Me.FlowSheet.WriteToLog(Me.GraphicObject.Tag + ": Error saving data from CAPE-OPEN Object - " + ex.Message.ToString(), Color.Red, FormClasses.TipoAviso.Erro)
+                        End Try
+                    End If
+                Else
+                    Dim myuo2 As Interfaces2.IPersistStream = TryCast(_couo, Interfaces2.IPersistStream)
+                    If myuo2 IsNot Nothing Then
+                        _istr = New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.ComIStreamWrapper(New MemoryStream())
+                        Try
+                            _istr.baseStream.Position = 0
+                            myuo2.Save(_istr, True)
+                            Using ms As New MemoryStream()
                                 _istr.baseStream.Position = 0
-                                myuo2.Save(_istr, True)
-                                Using ms As New MemoryStream()
-                                    _istr.baseStream.Position = 0
-                                    _istr.baseStream.CopyTo(ms)
-                                    _persisteddata = ms.ToArray()
-                                End Using
-                            Catch ex As Exception
-                                Dim ecu As CapeOpen.ECapeUser = _couo
-                                Me.FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": CAPE-OPEN Exception " & ecu.code & " at " & ecu.interfaceName & "." & ecu.scope & ". Reason: " & ecu.description, Color.Red, FormClasses.TipoAviso.Erro)
-                                Me.FlowSheet.WriteToLog(Me.GraphicObject.Tag + ": Error saving data from CAPE-OPEN Object - " + ex.Message.ToString(), Color.Red, FormClasses.TipoAviso.Erro)
-                            End Try
-                        End If
+                                _istr.baseStream.CopyTo(ms)
+                                _persisteddata = ms.ToArray()
+                            End Using
+                        Catch ex As Exception
+                            Dim ecu As CapeOpen.ECapeUser = _couo
+                            Me.FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": CAPE-OPEN Exception " & ecu.code & " at " & ecu.interfaceName & "." & ecu.scope & ". Reason: " & ecu.description, Color.Red, FormClasses.TipoAviso.Erro)
+                            Me.FlowSheet.WriteToLog(Me.GraphicObject.Tag + ": Error saving data from CAPE-OPEN Object - " + ex.Message.ToString(), Color.Red, FormClasses.TipoAviso.Erro)
+                        End Try
                     End If
                 End If
             End If
@@ -395,6 +393,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 _params.Add(p)
                             Case CapeParamType.CAPE_ARRAY
                                 'Dim ip As ICapeParameter = CType(myparam, ICapeParameter)
+                                'ip.value = New arrayparameter
                                 '_params.Add(ip)
                         End Select
                     Next
@@ -464,11 +463,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     For i = 1 To paramcount
                         Dim myparam As ICapeParameterSpec = myparms.Item(i)
                         Dim ip As ICapeParameter = CType(myparam, ICapeParameter)
-                        Try
-                            _params(i - 1).value = ip.value
-                        Catch ex As Exception
-                            'Console.WriteLine(ex.ToString)
-                        End Try
+                        If Not myparam.Type = CapeParamType.CAPE_ARRAY Then
+                            Try
+                                _params(i - 1).value = ip.value
+                            Catch ex As Exception
+                                Console.WriteLine(ex.ToString)
+                            End Try
+                        End If
                     Next
                 End If
             End If
