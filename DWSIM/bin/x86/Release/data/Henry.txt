@@ -1,8 +1,11 @@
-ID;Name;KHpx;C
-1;Hydrogen;7.099e4;500
-2;Helium;14.97e4;230
-3;Nitrogen;9.077e4;1300
-4;Oxygen;4.259e4;1700
-5;Neon;12.3e4;490
-6;Argon;3.955e4;1300
-7;Carbonmonoxide;5.828e4;1300
+Data: http://www.atmos-chem-phys-discuss.net/14/29615/2014/acpd-14-29615-2014.pdf
+ID;Name;KHcp;C
+1;Hydrogen;7.8e-6;530
+2;Helium;3.9e-6;15
+3;Nitrogen;6.4e-6;1600
+4;Oxygen;1.2e-5;1700
+5;Ozone;1.0e-4;2800
+6;Neon;4.5e-6;430
+7;Argon;1.4e-5;1700
+8;Methane;1.4e-5;1900
+9;Ammonia;5.9e-1;4200

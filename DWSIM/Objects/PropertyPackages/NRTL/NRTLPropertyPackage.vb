@@ -928,7 +928,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 ativ = Me.m_uni.GAMMA_MR(T, Vx, Me.RET_VNAMES)
                 For i = 0 To n
                     If T / Tc(i) >= 1 Then
-                        lnfug(i) = Math.Log(Me.AUX_PVAPi(i, T) / P)
+                        lnfug(i) = Math.Log(AUX_KHenry(Me.RET_VNAMES(i), T) / P)
+                        'lnfug(i) = Math.Log(Me.AUX_PVAPi(i, T) / P)
                     Else
                         lnfug(i) = Math.Log(ativ(i) * Me.AUX_PVAPi(i, T) / (P))
                     End If
