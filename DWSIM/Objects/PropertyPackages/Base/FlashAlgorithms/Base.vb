@@ -593,11 +593,30 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Tinv = tmp(1)
 
             If Tinv < 500 Then
-                Dim fx, dfdx As Double
+                Dim fx, fx2, dfdx As Double
                 Dim i As Integer = 0
                 Do
-                    fx = 1 - CalcPIP(Vx, P, Tinv, pp, eos)(0)
-                    dfdx = (fx - (1 - CalcPIP(Vx, P, Tinv - 1, pp, eos)(0)))
+                    If My.Settings.EnableParallelProcessing Then
+                        My.MyApplication.IsRunningParallelTasks = True
+                        Try
+                            Dim task1 As Task = New Task(Sub()
+                                                             fx = 1 - CalcPIP(Vx, P, Tinv, pp, eos)(0)
+                                                         End Sub)
+                            Dim task2 As Task = New Task(Sub()
+                                                             fx2 = 1 - CalcPIP(Vx, P, Tinv - 1, pp, eos)(0)
+                                                         End Sub)
+                            task1.Start()
+                            task2.Start()
+                            Task.WaitAll(task1, task2)
+                        Catch ae As AggregateException
+                            Throw ae.Flatten().InnerException
+                        End Try
+                        My.MyApplication.IsRunningParallelTasks = False
+                    Else
+                        fx = 1 - CalcPIP(Vx, P, Tinv, pp, eos)(0)
+                        fx2 = 1 - CalcPIP(Vx, P, Tinv - 1, pp, eos)(0)
+                    End If
+                    dfdx = (fx - fx2)
                     Tinv = Tinv - fx / dfdx
                     i += 1
                 Loop Until Math.Abs(fx) < 0.000001 Or i = 25
@@ -684,7 +703,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Dim brent As New MathEx.BrentOpt.Brent
             brent.DefineFuncDelegate(AddressOf PIPressureF)
 
-            P = brent.BrentOpt(101325, Pest, 1000, 0.0000000001, 1000, New Object() {Vx, T, pp, eos})
+            P = brent.BrentOpt(101325, Pest, 100, 0.001, 1000, New Object() {Vx, T, pp, eos})
 
             PIP = CalcPIP(Vx, P, T, pp, eos)(0)
 
