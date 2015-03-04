@@ -1,5 +1,5 @@
 '    DWSIM Excel Interface Shared Methods
-'    Copyright 2011-2014 Daniel Wagner O. de Medeiros
+'    Copyright 2011-2015 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -639,8 +639,18 @@ Namespace Interfaces
                 ms._pp = pp
                 pp.SetMaterial(ms)
 
+                If My.Settings.EnableGPUProcessing Then
+                    DWSIM.App.InitComputeDevice()
+                    My.MyApplication.gpu.EnableMultithreading()
+                End If
+
                 If prop.ToLower <> "molecularweight" Then
                     pp.CalcSinglePhaseProp(New Object() {prop}, phaselabel)
+                End If
+
+                If My.Settings.EnableGPUProcessing Then
+                    My.MyApplication.gpu.DisableMultithreading()
+                    My.MyApplication.gpu.FreeAll()
                 End If
 
                 Dim results As Double() = Nothing
@@ -742,15 +752,6 @@ Namespace Interfaces
 
                 pp.FlashAlgorithm = flashalg
 
-                'Select Case flashalg
-                '    Case 1
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
-                '    Case 2
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
-                '    Case 3
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
-                'End Select
-
                 pp._ioquick = False
                 pp._tpseverity = 2
                 Dim comps(compounds.Length - 1) As String
@@ -761,7 +762,17 @@ Namespace Interfaces
                 Next
                 pp._tpcompids = comps
 
+                If My.Settings.EnableGPUProcessing Then
+                    DWSIM.App.InitComputeDevice()
+                    My.MyApplication.gpu.EnableMultithreading()
+                End If
+
                 pp.CalcEquilibrium(ms, "TP", "UNDEFINED")
+
+                If My.Settings.EnableGPUProcessing Then
+                    My.MyApplication.gpu.DisableMultithreading()
+                    My.MyApplication.gpu.FreeAll()
+                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
@@ -950,15 +961,6 @@ Namespace Interfaces
 
                 pp.FlashAlgorithm = flashalg
 
-                'Select Case flashalg
-                '    Case 1
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
-                '    Case 2
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
-                '    Case 3
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
-                'End Select
-
                 pp._ioquick = False
                 pp._tpseverity = 2
                 Dim comps(compounds.Length - 1) As String
@@ -971,7 +973,17 @@ Namespace Interfaces
 
                 ms.Fases(0).SPMProperties.temperature = InitialEstimate
 
+                If My.Settings.EnableGPUProcessing Then
+                    DWSIM.App.InitComputeDevice()
+                    My.MyApplication.gpu.EnableMultithreading()
+                End If
+
                 pp.CalcEquilibrium(ms, "PH", "UNDEFINED")
+
+                If My.Settings.EnableGPUProcessing Then
+                    My.MyApplication.gpu.DisableMultithreading()
+                    My.MyApplication.gpu.FreeAll()
+                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
@@ -1074,15 +1086,6 @@ Namespace Interfaces
 
                 pp.FlashAlgorithm = flashalg
 
-                'Select Case flashalg
-                '    Case 1
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
-                '    Case 2
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
-                '    Case 3
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
-                'End Select
-
                 pp._ioquick = False
                 pp._tpseverity = 2
                 Dim comps(compounds.Length - 1) As String
@@ -1095,7 +1098,17 @@ Namespace Interfaces
 
                 ms.Fases(0).SPMProperties.temperature = InitialEstimate
 
+                If My.Settings.EnableGPUProcessing Then
+                    DWSIM.App.InitComputeDevice()
+                    My.MyApplication.gpu.EnableMultithreading()
+                End If
+
                 pp.CalcEquilibrium(ms, "PS", "UNDEFINED")
+
+                If My.Settings.EnableGPUProcessing Then
+                    My.MyApplication.gpu.DisableMultithreading()
+                    My.MyApplication.gpu.FreeAll()
+                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
@@ -1198,15 +1211,6 @@ Namespace Interfaces
 
                 pp.FlashAlgorithm = flashalg
 
-                'Select Case flashalg
-                '    Case 1
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
-                '    Case 2
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
-                '    Case 3
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
-                'End Select
-
                 pp._ioquick = False
                 pp._tpseverity = 2
                 Dim comps(compounds.Length - 1) As String
@@ -1219,7 +1223,17 @@ Namespace Interfaces
 
                 ms.Fases(0).SPMProperties.temperature = InitialEstimate
 
+                If My.Settings.EnableGPUProcessing Then
+                    DWSIM.App.InitComputeDevice()
+                    My.MyApplication.gpu.EnableMultithreading()
+                End If
+
                 pp.CalcEquilibrium(ms, "PVF", "UNDEFINED")
+
+                If My.Settings.EnableGPUProcessing Then
+                    My.MyApplication.gpu.DisableMultithreading()
+                    My.MyApplication.gpu.FreeAll()
+                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
@@ -1322,15 +1336,6 @@ Namespace Interfaces
 
                 pp.FlashAlgorithm = flashalg
 
-                'Select Case flashalg
-                '    Case 1
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
-                '    Case 2
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
-                '    Case 3
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
-                'End Select
-
                 pp._ioquick = False
                 pp._tpseverity = 2
                 Dim comps(compounds.Length - 1) As String
@@ -1343,7 +1348,17 @@ Namespace Interfaces
 
                 ms.Fases(0).SPMProperties.pressure = InitialEstimate
 
+                If My.Settings.EnableGPUProcessing Then
+                    DWSIM.App.InitComputeDevice()
+                    My.MyApplication.gpu.EnableMultithreading()
+                End If
+
                 pp.CalcEquilibrium(ms, "TVF", "UNDEFINED")
+
+                If My.Settings.EnableGPUProcessing Then
+                    My.MyApplication.gpu.DisableMultithreading()
+                    My.MyApplication.gpu.FreeAll()
+                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
@@ -1795,15 +1810,6 @@ Namespace Interfaces
 
                 pp.FlashAlgorithm = flashalg
 
-                'Select Case flashalg
-                '    Case 1
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
-                '    Case 2
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
-                '    Case 3
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
-                'End Select
-
                 pp._ioquick = False
                 pp._tpseverity = 2
                 Dim comps(compounds.Length - 1) As String
@@ -1814,7 +1820,17 @@ Namespace Interfaces
                 Next
                 pp._tpcompids = comps
 
+                If My.Settings.EnableGPUProcessing Then
+                    DWSIM.App.InitComputeDevice()
+                    My.MyApplication.gpu.EnableMultithreading()
+                End If
+
                 pp.CalcEquilibrium(ms, "TP", "UNDEFINED")
+
+                If My.Settings.EnableGPUProcessing Then
+                    My.MyApplication.gpu.DisableMultithreading()
+                    My.MyApplication.gpu.FreeAll()
+                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
@@ -1908,15 +1924,6 @@ Namespace Interfaces
 
                 pp.FlashAlgorithm = flashalg
 
-                'Select Case flashalg
-                '    Case 1
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
-                '    Case 2
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
-                '    Case 3
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
-                'End Select
-
                 pp._ioquick = False
                 pp._tpseverity = 2
                 Dim comps(compounds.Length - 1) As String
@@ -1927,7 +1934,17 @@ Namespace Interfaces
                 Next
                 pp._tpcompids = comps
 
+                If My.Settings.EnableGPUProcessing Then
+                    DWSIM.App.InitComputeDevice()
+                    My.MyApplication.gpu.EnableMultithreading()
+                End If
+
                 pp.CalcEquilibrium(ms, "PH", "UNDEFINED")
+
+                If My.Settings.EnableGPUProcessing Then
+                    My.MyApplication.gpu.DisableMultithreading()
+                    My.MyApplication.gpu.FreeAll()
+                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
@@ -2023,15 +2040,6 @@ Namespace Interfaces
 
                 pp.FlashAlgorithm = flashalg
 
-                'Select Case flashalg
-                '    Case 1
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
-                '    Case 2
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
-                '    Case 3
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
-                'End Select
-
                 pp._ioquick = False
                 pp._tpseverity = 2
                 Dim comps(compounds.Length - 1) As String
@@ -2042,7 +2050,17 @@ Namespace Interfaces
                 Next
                 pp._tpcompids = comps
 
+                If My.Settings.EnableGPUProcessing Then
+                    DWSIM.App.InitComputeDevice()
+                    My.MyApplication.gpu.EnableMultithreading()
+                End If
+
                 pp.CalcEquilibrium(ms, "PS", "UNDEFINED")
+
+                If My.Settings.EnableGPUProcessing Then
+                    My.MyApplication.gpu.DisableMultithreading()
+                    My.MyApplication.gpu.FreeAll()
+                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
@@ -2138,15 +2156,6 @@ Namespace Interfaces
 
                 pp.FlashAlgorithm = flashalg
 
-                'Select Case flashalg
-                '    Case 1
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
-                '    Case 2
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
-                '    Case 3
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
-                'End Select
-
                 pp._ioquick = False
                 pp._tpseverity = 2
                 Dim comps(compounds.Length - 1) As String
@@ -2157,7 +2166,17 @@ Namespace Interfaces
                 Next
                 pp._tpcompids = comps
 
+                If My.Settings.EnableGPUProcessing Then
+                    DWSIM.App.InitComputeDevice()
+                    My.MyApplication.gpu.EnableMultithreading()
+                End If
+
                 pp.CalcEquilibrium(ms, "PVF", "UNDEFINED")
+
+                If My.Settings.EnableGPUProcessing Then
+                    My.MyApplication.gpu.DisableMultithreading()
+                    My.MyApplication.gpu.FreeAll()
+                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing
@@ -2253,15 +2272,6 @@ Namespace Interfaces
 
                 pp.FlashAlgorithm = flashalg
 
-                'Select Case flashalg
-                '    Case 1
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.DWSIMDefault
-                '    Case 2
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut
-                '    Case 3
-                '        pp.FlashAlgorithm = PropertyPackages.FlashMethod.InsideOut3P
-                'End Select
-
                 pp._ioquick = False
                 pp._tpseverity = 2
                 Dim comps(compounds.Length - 1) As String
@@ -2272,7 +2282,17 @@ Namespace Interfaces
                 Next
                 pp._tpcompids = comps
 
+                If My.Settings.EnableGPUProcessing Then
+                    DWSIM.App.InitComputeDevice()
+                    My.MyApplication.gpu.EnableMultithreading()
+                End If
+
                 pp.CalcEquilibrium(ms, "TVF", "UNDEFINED")
+
+                If My.Settings.EnableGPUProcessing Then
+                    My.MyApplication.gpu.DisableMultithreading()
+                    My.MyApplication.gpu.FreeAll()
+                End If
 
                 Dim labels As String() = Nothing
                 Dim statuses As CapeOpen.CapePhaseStatus() = Nothing

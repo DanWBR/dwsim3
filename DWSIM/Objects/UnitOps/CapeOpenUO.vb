@@ -776,6 +776,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 UpdateParams()
                 UpdatePorts()
                 UpdateConnectors()
+                Me.FlowSheet.FormSurface.UpdateSelectedObject()
             End If
             Return "click to show ->"
         End Function
@@ -1156,7 +1157,20 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Select Case myp.Type
                         Case CapeParamType.CAPE_ARRAY
                             Dim par As CapeArrayParameter = p
-                            .Item.Add(id, par.value, If(par.Mode = CapeParamMode.CAPE_OUTPUT, True, False), "4. Parameters", desc, True)
+                            Dim m2 As New PropertyGridEx.CustomPropertyCollection()
+                            Dim i As Integer = 0
+                            For Each o In DirectCast(par.value, System.Array)
+                                m2.Add(i.ToString, o, True, "", "", True)
+                                m2.Item(m2.Count - 1).IsReadOnly = True
+                                i += 1
+                            Next
+                            .Item.Add(id, m2, If(par.Mode = CapeParamMode.CAPE_OUTPUT, True, False), "4. Parameters", desc, True)
+                            With .Item(.Item.Count - 1)
+                                .IsReadOnly = True
+                                .IsBrowsable = True
+                                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
+                                .CustomEditor = New System.Drawing.Design.UITypeEditor
+                            End With
                         Case CapeParamType.CAPE_BOOLEAN
                             Dim par As BooleanParameter = TryCast(p, BooleanParameter)
                             .Item.Add(id, par, "Value", If(par.Mode = CapeParamMode.CAPE_OUTPUT, True, False), "4. Parameters", desc, True)

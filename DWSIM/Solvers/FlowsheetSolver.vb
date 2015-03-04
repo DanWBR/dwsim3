@@ -54,6 +54,11 @@ Namespace DWSIM.Flowsheet
 
             If form.Options.CalculatorActivated Then
 
+                If My.Settings.EnableGPUProcessing Then
+                    DWSIM.App.InitComputeDevice()
+                    My.MyApplication.gpu.EnableMultithreading()
+                End If
+
                 RaiseEvent UnitOpCalculationStarted(form, New System.EventArgs(), objArgs)
 
                 form.ProcessScripts(Script.EventType.ObjectCalculationStarted, Script.ObjectType.FlowsheetObject, objArgs.Nome)
@@ -221,6 +226,11 @@ Namespace DWSIM.Flowsheet
                         End If
                 End Select
 
+                If My.Settings.EnableGPUProcessing Then
+                    My.MyApplication.gpu.DisableMultithreading()
+                    My.MyApplication.gpu.FreeAll()
+                End If
+
                 form.ProcessScripts(Script.EventType.ObjectCalculationFinished, Script.ObjectType.FlowsheetObject, objArgs.Nome)
 
                 RaiseEvent UnitOpCalculationFinished(form, New System.EventArgs(), objArgs)
@@ -268,67 +278,96 @@ Namespace DWSIM.Flowsheet
         ''' <remarks></remarks>
         Public Shared Sub CalculateMaterialStream(ByVal form As FormFlowsheet, ByVal ms As DWSIM.SimulationObjects.Streams.MaterialStream, Optional ByVal DoNotCalcFlash As Boolean = False, Optional ByVal OnlyMe As Boolean = False)
 
-            ms.Calculated = False
+            If form.Options.CalculatorActivated Then
 
-            RaiseEvent MaterialStreamCalculationStarted(form, New System.EventArgs(), ms)
+                ms.Calculated = False
 
-            form.ProcessScripts(Script.EventType.ObjectCalculationStarted, Script.ObjectType.FlowsheetObject, ms.Nome)
+                RaiseEvent MaterialStreamCalculationStarted(form, New System.EventArgs(), ms)
 
-            If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
+                form.ProcessScripts(Script.EventType.ObjectCalculationStarted, Script.ObjectType.FlowsheetObject, ms.Nome)
 
-            Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
+                If My.Settings.EnableGPUProcessing Then
+                    DWSIM.App.InitComputeDevice()
+                    My.MyApplication.gpu.EnableMultithreading()
+                End If
 
-            Dim preLab As String = form.FormSurface.LabelCalculator.Text
+                Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
 
-            Try
-                form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & ms.GraphicObject.Tag & "... (PP: " & ms.PropertyPackage.Tag & " [" & ms.PropertyPackage.ComponentName & "])")
-            Catch ex As Exception
-                form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & "...")
-            End Try
+                Dim preLab As String = form.FormSurface.LabelCalculator.Text
 
-            Dim sobj As Microsoft.Msdn.Samples.GraphicObjects.GraphicObject = form.Collections.MaterialStreamCollection(ms.Nome)
+                Try
+                    form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & ms.GraphicObject.Tag & "... (PP: " & ms.PropertyPackage.Tag & " [" & ms.PropertyPackage.ComponentName & "])")
+                Catch ex As Exception
+                    form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & "...")
+                End Try
 
-            Dim T As Double = ms.Fases(0).SPMProperties.temperature.GetValueOrDefault
-            Dim P As Double = ms.Fases(0).SPMProperties.pressure.GetValueOrDefault
-            Dim W As Nullable(Of Double) = ms.Fases(0).SPMProperties.massflow
-            Dim Q As Nullable(Of Double) = ms.Fases(0).SPMProperties.molarflow
-            Dim QV As Nullable(Of Double) = ms.Fases(0).SPMProperties.volumetric_flow
-            Dim H As Double = ms.Fases(0).SPMProperties.enthalpy.GetValueOrDefault
+                Dim sobj As Microsoft.Msdn.Samples.GraphicObjects.GraphicObject = form.Collections.MaterialStreamCollection(ms.Nome)
 
-            Dim subs As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim comp As Double = 0
-            For Each subs In ms.Fases(0).Componentes.Values
-                comp += subs.FracaoMolar.GetValueOrDefault
-            Next
+                Dim T As Double = ms.Fases(0).SPMProperties.temperature.GetValueOrDefault
+                Dim P As Double = ms.Fases(0).SPMProperties.pressure.GetValueOrDefault
+                Dim W As Nullable(Of Double) = ms.Fases(0).SPMProperties.massflow
+                Dim Q As Nullable(Of Double) = ms.Fases(0).SPMProperties.molarflow
+                Dim QV As Nullable(Of Double) = ms.Fases(0).SPMProperties.volumetric_flow
+                Dim H As Double = ms.Fases(0).SPMProperties.enthalpy.GetValueOrDefault
 
-            Dim calculated As Boolean
+                Dim subs As DWSIM.ClassesBasicasTermodinamica.Substancia
+                Dim comp As Double = 0
+                For Each subs In ms.Fases(0).Componentes.Values
+                    comp += subs.FracaoMolar.GetValueOrDefault
+                Next
 
-            If W.HasValue And comp >= 0 Then
-                With ms.PropertyPackage
-                    .CurrentMaterialStream = ms
-                    .DW_CalcVazaoMolar()
-                    If DoNotCalcFlash Then
-                        'do not do a flash calculation...
-                    ElseIf form.Options.SempreCalcularFlashPH And H <> 0 Then
-                        Try
-                            .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
-                        Catch ex As Exception
-                            Dim st As New StackTrace(ex, True)
-                            If st.FrameCount > 0 Then
-                                form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
-                            Else
-                                form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                            End If
-                        End Try
-                    Else
-                        If .AUX_IS_SINGLECOMP(PropertyPackages.Fase.Mixture) Or .IsElectrolytePP Then
-                            If ms.GraphicObject.InputConnectors(0).IsAttached Then
-                                Try
-                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
-                                Catch ex As Exception
-                                    form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
-                                    form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                                End Try
+                Dim calculated As Boolean
+
+                If W.HasValue And comp >= 0 Then
+                    With ms.PropertyPackage
+                        .CurrentMaterialStream = ms
+                        .DW_CalcVazaoMolar()
+                        If DoNotCalcFlash Then
+                            'do not do a flash calculation...
+                        ElseIf form.Options.SempreCalcularFlashPH And H <> 0 Then
+                            Try
+                                .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                            Catch ex As Exception
+                                Dim st As New StackTrace(ex, True)
+                                If st.FrameCount > 0 Then
+                                    form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                                Else
+                                    form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                End If
+                            End Try
+                        Else
+                            If .AUX_IS_SINGLECOMP(PropertyPackages.Fase.Mixture) Or .IsElectrolytePP Then
+                                If ms.GraphicObject.InputConnectors(0).IsAttached Then
+                                    Try
+                                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                                    Catch ex As Exception
+                                        form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
+                                        form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                    End Try
+                                Else
+                                    Try
+                                        Select Case ms.SpecType
+                                            Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_Pressure
+                                                .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
+                                            Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
+                                                .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                                            Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_Entropy
+                                                .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.S)
+                                            Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_VaporFraction
+                                                .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
+                                            Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_VaporFraction
+                                                .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
+                                        End Select
+                                    Catch ex As Exception
+                                        form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
+                                        Dim st As New StackTrace(ex, True)
+                                        If st.FrameCount > 0 Then
+                                            form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                                        Else
+                                            form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                        End If
+                                    End Try
+                                End If
                             Else
                                 Try
                                     Select Case ms.SpecType
@@ -353,20 +392,167 @@ Namespace DWSIM.Flowsheet
                                     End If
                                 End Try
                             End If
-                        Else
+                        End If
+                        If doparallel Then
+                            My.MyApplication.IsRunningParallelTasks = True
+                            If My.Settings.EnableGPUProcessing Then
+                                ' My.MyApplication.gpu.EnableMultithreading()
+                            End If
                             Try
-                                Select Case ms.SpecType
-                                    Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_Pressure
-                                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
-                                    Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
-                                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
-                                    Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_Entropy
-                                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.S)
-                                    Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_VaporFraction
-                                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
-                                    Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_VaporFraction
-                                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
+                                Dim task1 As Task = New Task(Sub()
+                                                                 If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                     .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                                                                 Else
+                                                                     .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                                                                 End If
+                                                             End Sub)
+                                Dim task2 As Task = New Task(Sub()
+                                                                 If ms.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                     .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                                                                 Else
+                                                                     .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                                                                 End If
+                                                             End Sub)
+                                Dim task3 As Task = New Task(Sub()
+                                                                 If ms.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                     .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
+                                                                 Else
+                                                                     .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
+                                                                 End If
+                                                             End Sub)
+                                Dim task4 As Task = New Task(Sub()
+                                                                 If ms.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                     .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
+                                                                 Else
+                                                                     .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
+                                                                 End If
+                                                             End Sub)
+                                Dim task5 As Task = New Task(Sub()
+                                                                 If ms.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                     .DW_CalcSolidPhaseProps()
+                                                                 Else
+                                                                     .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
+                                                                 End If
+                                                             End Sub)
+                                Dim task6 As Task = New Task(Sub()
+                                                                 If ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                     .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                                                                 Else
+                                                                     .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                                                                 End If
+                                                             End Sub)
+                                Select Case My.Settings.MaxDegreeOfParallelism
+                                    Case 1
+                                        task1.Start()
+                                        task1.Wait()
+                                        task2.Start()
+                                        task2.Wait()
+                                        task3.Start()
+                                        task3.Wait()
+                                        task4.Start()
+                                        task4.Wait()
+                                        task5.Start()
+                                        task5.Wait()
+                                        task6.Start()
+                                        task6.Wait()
+                                    Case 2
+                                        task1.Start()
+                                        task2.Start()
+                                        Task.WaitAll(task1, task2)
+                                        task3.Start()
+                                        task4.Start()
+                                        Task.WaitAll(task3, task4)
+                                        task5.Start()
+                                        task6.Start()
+                                        Task.WaitAll(task5, task6)
+                                    Case 3
+                                        task1.Start()
+                                        task2.Start()
+                                        task3.Start()
+                                        Task.WaitAll(task1, task2, task3)
+                                        task4.Start()
+                                        task5.Start()
+                                        task6.Start()
+                                        Task.WaitAll(task4, task5, task6)
+                                    Case Else
+                                        task1.Start()
+                                        task2.Start()
+                                        task3.Start()
+                                        task4.Start()
+                                        task5.Start()
+                                        task6.Start()
+                                        Task.WaitAll(task1, task2, task3, task4, task5, task6)
                                 End Select
+                            Catch ae As AggregateException
+                                form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
+                                Throw ae.Flatten().InnerException
+                            Finally
+                                'If My.Settings.EnableGPUProcessing Then
+                                '    My.MyApplication.gpu.DisableMultithreading()
+                                '    My.MyApplication.gpu.FreeAll()
+                                'End If
+                            End Try
+                            My.MyApplication.IsRunningParallelTasks = False
+                        Else
+                            If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                            Else
+                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                            End If
+                            If ms.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                            Else
+                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                            End If
+                            If ms.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
+                            Else
+                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
+                            End If
+                            If ms.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
+                            Else
+                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
+                            End If
+                            If ms.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                .DW_CalcSolidPhaseProps()
+                            Else
+                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
+                            End If
+                            If ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                            Else
+                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                            End If
+                        End If
+                        If ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault >= 0 And ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault <= 1 Then
+                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
+                        Else
+                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
+                        End If
+                        .DW_CalcCompMolarFlow(-1)
+                        .DW_CalcCompMassFlow(-1)
+                        .DW_CalcCompVolFlow(-1)
+                        .DW_CalcOverallProps()
+                        .DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                        .DW_CalcVazaoVolumetrica()
+                        .DW_CalcKvalue()
+                        .CurrentMaterialStream = Nothing
+                        ms.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
+                        If ms.IsSpecAttached = True And ms.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(ms.AttachedSpecId).Calculate()
+                    End With
+                    sobj.Calculated = True
+                    form.UpdateStatusLabel(preLab)
+                    calculated = True
+                ElseIf Q.HasValue And comp >= 0 Then
+                    With ms.PropertyPackage
+                        .CurrentMaterialStream = ms
+                        .DW_CalcVazaoMassica()
+                        If DoNotCalcFlash Then
+                            'do not do a flash calculation...
+                        ElseIf form.Options.SempreCalcularFlashPH And H <> 0 Then
+                            Try
+                                .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
                             Catch ex As Exception
                                 form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
                                 Dim st As New StackTrace(ex, True)
@@ -376,413 +562,47 @@ Namespace DWSIM.Flowsheet
                                     form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
                                 End If
                             End Try
-                        End If
-                    End If
-                    If doparallel Then
-                        My.MyApplication.IsRunningParallelTasks = True
-                        If My.Settings.EnableGPUProcessing Then
-                            ' My.MyApplication.gpu.EnableMultithreading()
-                        End If
-                        Try
-                            Dim task1 As Task = New Task(Sub()
-                                                             If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
-                                                             Else
-                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
-                                                             End If
-                                                         End Sub)
-                            Dim task2 As Task = New Task(Sub()
-                                                             If ms.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
-                                                             Else
-                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
-                                                             End If
-                                                         End Sub)
-                            Dim task3 As Task = New Task(Sub()
-                                                             If ms.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
-                                                             Else
-                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
-                                                             End If
-                                                         End Sub)
-                            Dim task4 As Task = New Task(Sub()
-                                                             If ms.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
-                                                             Else
-                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
-                                                             End If
-                                                         End Sub)
-                            Dim task5 As Task = New Task(Sub()
-                                                             If ms.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                                                 .DW_CalcSolidPhaseProps()
-                                                             Else
-                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
-                                                             End If
-                                                         End Sub)
-                            Dim task6 As Task = New Task(Sub()
-                                                             If ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                                                             Else
-                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                                                             End If
-                                                         End Sub)
-                            Select Case My.Settings.MaxDegreeOfParallelism
-                                Case 1
-                                    task1.Start()
-                                    task1.Wait()
-                                    task2.Start()
-                                    task2.Wait()
-                                    task3.Start()
-                                    task3.Wait()
-                                    task4.Start()
-                                    task4.Wait()
-                                    task5.Start()
-                                    task5.Wait()
-                                    task6.Start()
-                                    task6.Wait()
-                                Case 2
-                                    task1.Start()
-                                    task2.Start()
-                                    Task.WaitAll(task1, task2)
-                                    task3.Start()
-                                    task4.Start()
-                                    Task.WaitAll(task3, task4)
-                                    task5.Start()
-                                    task6.Start()
-                                    Task.WaitAll(task5, task6)
-                                Case 3
-                                    task1.Start()
-                                    task2.Start()
-                                    task3.Start()
-                                    Task.WaitAll(task1, task2, task3)
-                                    task4.Start()
-                                    task5.Start()
-                                    task6.Start()
-                                    Task.WaitAll(task4, task5, task6)
-                                Case Else
-                                    task1.Start()
-                                    task2.Start()
-                                    task3.Start()
-                                    task4.Start()
-                                    task5.Start()
-                                    task6.Start()
-                                    Task.WaitAll(task1, task2, task3, task4, task5, task6)
-                            End Select
-                        Catch ae As AggregateException
-                            form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
-                            Throw ae.Flatten().InnerException
-                        Finally
-                            'If My.Settings.EnableGPUProcessing Then
-                            '    My.MyApplication.gpu.DisableMultithreading()
-                            '    My.MyApplication.gpu.FreeAll()
-                            'End If
-                        End Try
-                        My.MyApplication.IsRunningParallelTasks = False
-                    Else
-                        If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
                         Else
-                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
-                        End If
-                        If ms.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
-                        Else
-                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
-                        End If
-                        If ms.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
-                        Else
-                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
-                        End If
-                        If ms.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
-                        Else
-                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
-                        End If
-                        If ms.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .DW_CalcSolidPhaseProps()
-                        Else
-                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
-                        End If
-                        If ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                        Else
-                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                        End If
-                    End If
-                    If ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault >= 0 And ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault <= 1 Then
-                        .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
-                    Else
-                        .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
-                    End If
-                    .DW_CalcCompMolarFlow(-1)
-                    .DW_CalcCompMassFlow(-1)
-                    .DW_CalcCompVolFlow(-1)
-                    .DW_CalcOverallProps()
-                    .DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                    .DW_CalcVazaoVolumetrica()
-                    .DW_CalcKvalue()
-                    .CurrentMaterialStream = Nothing
-                    ms.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                    If ms.IsSpecAttached = True And ms.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(ms.AttachedSpecId).Calculate()
-                End With
-                sobj.Calculated = True
-                form.UpdateStatusLabel(preLab)
-                calculated = True
-            ElseIf Q.HasValue And comp >= 0 Then
-                With ms.PropertyPackage
-                    .CurrentMaterialStream = ms
-                    .DW_CalcVazaoMassica()
-                    If DoNotCalcFlash Then
-                        'do not do a flash calculation...
-                    ElseIf form.Options.SempreCalcularFlashPH And H <> 0 Then
-                        Try
-                            .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
-                        Catch ex As Exception
-                            form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
-                            Dim st As New StackTrace(ex, True)
-                            If st.FrameCount > 0 Then
-                                form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
-                            Else
-                                form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                            End If
-                        End Try
-                    Else
-                        If .AUX_IS_SINGLECOMP(PropertyPackages.Fase.Mixture) Or .IsElectrolytePP Then
-                            If ms.GraphicObject.InputConnectors(0).IsAttached Then
-                                Try
-                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
-                                Catch ex As Exception
-                                    form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
-                                    Dim st As New StackTrace(ex, True)
-                                    If st.FrameCount > 0 Then
-                                        form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
-                                    Else
-                                        form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                                    End If
-                                End Try
-                            Else
-                                Try
-                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
-                                Catch ex As Exception
-                                    form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
-                                    Dim st As New StackTrace(ex, True)
-                                    If st.FrameCount > 0 Then
-                                        form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
-                                    Else
-                                        form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                                    End If
-                                End Try
-                            End If
-                        Else
-                            Try
-                                Select Case ms.SpecType
-                                    Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_Pressure
-                                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
-                                    Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
+                            If .AUX_IS_SINGLECOMP(PropertyPackages.Fase.Mixture) Or .IsElectrolytePP Then
+                                If ms.GraphicObject.InputConnectors(0).IsAttached Then
+                                    Try
                                         .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
-                                    Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_Entropy
-                                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.S)
-                                    Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_VaporFraction
-                                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
-                                    Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_VaporFraction
-                                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
-                                End Select
-                            Catch ex As Exception
-                                form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
-                                Dim st As New StackTrace(ex, True)
-                                If st.FrameCount > 0 Then
-                                    form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                                    Catch ex As Exception
+                                        form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
+                                        Dim st As New StackTrace(ex, True)
+                                        If st.FrameCount > 0 Then
+                                            form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                                        Else
+                                            form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                        End If
+                                    End Try
                                 Else
-                                    form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                    Try
+                                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
+                                    Catch ex As Exception
+                                        form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
+                                        Dim st As New StackTrace(ex, True)
+                                        If st.FrameCount > 0 Then
+                                            form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                                        Else
+                                            form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                        End If
+                                    End Try
                                 End If
-                            End Try
-                        End If
-                    End If
-                    If doparallel Then
-                        My.MyApplication.IsRunningParallelTasks = True
-                        If My.Settings.EnableGPUProcessing Then
-                            ' My.MyApplication.gpu.EnableMultithreading()
-                        End If
-                        Try
-                            Dim task1 As Task = New Task(Sub()
-                                                             If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
-                                                             Else
-                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
-                                                             End If
-                                                         End Sub)
-                            Dim task2 As Task = New Task(Sub()
-                                                             If ms.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
-                                                             Else
-                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
-                                                             End If
-                                                         End Sub)
-                            Dim task3 As Task = New Task(Sub()
-                                                             If ms.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
-                                                             Else
-                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
-                                                             End If
-                                                         End Sub)
-                            Dim task4 As Task = New Task(Sub()
-                                                             If ms.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
-                                                             Else
-                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
-                                                             End If
-                                                         End Sub)
-                            Dim task5 As Task = New Task(Sub()
-                                                             If ms.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                                                 .DW_CalcSolidPhaseProps()
-                                                             Else
-                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
-                                                             End If
-                                                         End Sub)
-                            Dim task6 As Task = New Task(Sub()
-                                                             If ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                                                             Else
-                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                                                             End If
-                                                         End Sub)
-                            Select Case My.Settings.MaxDegreeOfParallelism
-                                Case 1
-                                    task1.Start()
-                                    task1.Wait()
-                                    task2.Start()
-                                    task2.Wait()
-                                    task3.Start()
-                                    task3.Wait()
-                                    task4.Start()
-                                    task4.Wait()
-                                    task5.Start()
-                                    task5.Wait()
-                                    task6.Start()
-                                    task6.Wait()
-                                Case 2
-                                    task1.Start()
-                                    task2.Start()
-                                    Task.WaitAll(task1, task2)
-                                    task3.Start()
-                                    task4.Start()
-                                    Task.WaitAll(task3, task4)
-                                    task5.Start()
-                                    task6.Start()
-                                    Task.WaitAll(task5, task6)
-                                Case 3
-                                    task1.Start()
-                                    task2.Start()
-                                    task3.Start()
-                                    Task.WaitAll(task1, task2, task3)
-                                    task4.Start()
-                                    task5.Start()
-                                    task6.Start()
-                                    Task.WaitAll(task4, task5, task6)
-                                Case Else
-                                    task1.Start()
-                                    task2.Start()
-                                    task3.Start()
-                                    task4.Start()
-                                    task5.Start()
-                                    task6.Start()
-                                    Task.WaitAll(task1, task2, task3, task4, task5, task6)
-                            End Select
-                        Catch ae As AggregateException
-                            form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
-                            Throw ae.Flatten().InnerException
-                        Finally
-                            'If My.Settings.EnableGPUProcessing Then
-                            '    My.MyApplication.gpu.DisableMultithreading()
-                            '    My.MyApplication.gpu.FreeAll()
-                            'End If
-                        End Try
-                        My.MyApplication.IsRunningParallelTasks = False
-                    Else
-                        If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
-                        Else
-                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
-                        End If
-                        If ms.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
-                        Else
-                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
-                        End If
-                        If ms.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
-                        Else
-                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
-                        End If
-                        If ms.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
-                        Else
-                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
-                        End If
-                        If ms.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .DW_CalcSolidPhaseProps()
-                        Else
-                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
-                        End If
-                        If ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                        Else
-                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                        End If
-                    End If
-                    If ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault >= 0 And ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault <= 1 Then
-                        .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
-                    Else
-                        .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
-                    End If
-                    .DW_CalcCompMolarFlow(-1)
-                    .DW_CalcCompMassFlow(-1)
-                    .DW_CalcCompVolFlow(-1)
-                    .DW_CalcOverallProps()
-                    .DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                    .DW_CalcVazaoVolumetrica()
-                    .DW_CalcKvalue()
-                    .CurrentMaterialStream = Nothing
-                    ms.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                    If ms.IsSpecAttached = True And ms.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(ms.AttachedSpecId).Calculate()
-                End With
-                sobj.Calculated = True
-                form.UpdateStatusLabel(preLab)
-                calculated = True
-            ElseIf QV.HasValue And comp >= 0 Then
-                With ms.PropertyPackage
-                    .CurrentMaterialStream = ms
-
-                    ms.Fases(0).SPMProperties.molarflow = 1.0#
-                    ms.Fases(0).SPMProperties.massflow = 1.0#
-
-                    If DoNotCalcFlash Then
-                        'do not do a flash calculation...
-                    ElseIf form.Options.SempreCalcularFlashPH And H <> 0 Then
-                        Try
-                            .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
-                        Catch ex As Exception
-                            form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
-                            Dim st As New StackTrace(ex, True)
-                            If st.FrameCount > 0 Then
-                                form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
-                            Else
-                                form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                            End If
-                        End Try
-                    Else
-                        If .AUX_IS_SINGLECOMP(PropertyPackages.Fase.Mixture) Or .IsElectrolytePP Then
-                            If ms.GraphicObject.InputConnectors(0).IsAttached Then
-                                Try
-                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
-                                Catch ex As Exception
-                                    form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
-                                    form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                                End Try
                             Else
                                 Try
-                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
+                                    Select Case ms.SpecType
+                                        Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_Pressure
+                                            .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
+                                        Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
+                                            .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                                        Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_Entropy
+                                            .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.S)
+                                        Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_VaporFraction
+                                            .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
+                                        Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_VaporFraction
+                                            .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
+                                    End Select
                                 Catch ex As Exception
                                     form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
                                     Dim st As New StackTrace(ex, True)
@@ -793,20 +613,170 @@ Namespace DWSIM.Flowsheet
                                     End If
                                 End Try
                             End If
-                        Else
+                        End If
+                        If doparallel Then
+                            My.MyApplication.IsRunningParallelTasks = True
+                            If My.Settings.EnableGPUProcessing Then
+                                ' My.MyApplication.gpu.EnableMultithreading()
+                            End If
                             Try
-                                Select Case ms.SpecType
-                                    Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_Pressure
-                                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
-                                    Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
-                                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
-                                    Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_Entropy
-                                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.S)
-                                    Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_VaporFraction
-                                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
-                                    Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_VaporFraction
-                                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
+                                Dim task1 As Task = New Task(Sub()
+                                                                 If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                     .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                                                                 Else
+                                                                     .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                                                                 End If
+                                                             End Sub)
+                                Dim task2 As Task = New Task(Sub()
+                                                                 If ms.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                     .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                                                                 Else
+                                                                     .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                                                                 End If
+                                                             End Sub)
+                                Dim task3 As Task = New Task(Sub()
+                                                                 If ms.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                     .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
+                                                                 Else
+                                                                     .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
+                                                                 End If
+                                                             End Sub)
+                                Dim task4 As Task = New Task(Sub()
+                                                                 If ms.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                     .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
+                                                                 Else
+                                                                     .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
+                                                                 End If
+                                                             End Sub)
+                                Dim task5 As Task = New Task(Sub()
+                                                                 If ms.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                     .DW_CalcSolidPhaseProps()
+                                                                 Else
+                                                                     .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
+                                                                 End If
+                                                             End Sub)
+                                Dim task6 As Task = New Task(Sub()
+                                                                 If ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                     .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                                                                 Else
+                                                                     .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                                                                 End If
+                                                             End Sub)
+                                Select Case My.Settings.MaxDegreeOfParallelism
+                                    Case 1
+                                        task1.Start()
+                                        task1.Wait()
+                                        task2.Start()
+                                        task2.Wait()
+                                        task3.Start()
+                                        task3.Wait()
+                                        task4.Start()
+                                        task4.Wait()
+                                        task5.Start()
+                                        task5.Wait()
+                                        task6.Start()
+                                        task6.Wait()
+                                    Case 2
+                                        task1.Start()
+                                        task2.Start()
+                                        Task.WaitAll(task1, task2)
+                                        task3.Start()
+                                        task4.Start()
+                                        Task.WaitAll(task3, task4)
+                                        task5.Start()
+                                        task6.Start()
+                                        Task.WaitAll(task5, task6)
+                                    Case 3
+                                        task1.Start()
+                                        task2.Start()
+                                        task3.Start()
+                                        Task.WaitAll(task1, task2, task3)
+                                        task4.Start()
+                                        task5.Start()
+                                        task6.Start()
+                                        Task.WaitAll(task4, task5, task6)
+                                    Case Else
+                                        task1.Start()
+                                        task2.Start()
+                                        task3.Start()
+                                        task4.Start()
+                                        task5.Start()
+                                        task6.Start()
+                                        Task.WaitAll(task1, task2, task3, task4, task5, task6)
                                 End Select
+                            Catch ae As AggregateException
+                                form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
+                                Throw ae.Flatten().InnerException
+                            Finally
+                                'If My.Settings.EnableGPUProcessing Then
+                                '    My.MyApplication.gpu.DisableMultithreading()
+                                '    My.MyApplication.gpu.FreeAll()
+                                'End If
+                            End Try
+                            My.MyApplication.IsRunningParallelTasks = False
+                        Else
+                            If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                            Else
+                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                            End If
+                            If ms.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                            Else
+                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                            End If
+                            If ms.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
+                            Else
+                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
+                            End If
+                            If ms.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
+                            Else
+                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
+                            End If
+                            If ms.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                .DW_CalcSolidPhaseProps()
+                            Else
+                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
+                            End If
+                            If ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                            Else
+                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                            End If
+                        End If
+                        If ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault >= 0 And ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault <= 1 Then
+                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
+                        Else
+                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
+                        End If
+                        .DW_CalcCompMolarFlow(-1)
+                        .DW_CalcCompMassFlow(-1)
+                        .DW_CalcCompVolFlow(-1)
+                        .DW_CalcOverallProps()
+                        .DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                        .DW_CalcVazaoVolumetrica()
+                        .DW_CalcKvalue()
+                        .CurrentMaterialStream = Nothing
+                        ms.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
+                        If ms.IsSpecAttached = True And ms.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(ms.AttachedSpecId).Calculate()
+                    End With
+                    sobj.Calculated = True
+                    form.UpdateStatusLabel(preLab)
+                    calculated = True
+                ElseIf QV.HasValue And comp >= 0 Then
+                    With ms.PropertyPackage
+                        .CurrentMaterialStream = ms
+
+                        ms.Fases(0).SPMProperties.molarflow = 1.0#
+                        ms.Fases(0).SPMProperties.massflow = 1.0#
+
+                        If DoNotCalcFlash Then
+                            'do not do a flash calculation...
+                        ElseIf form.Options.SempreCalcularFlashPH And H <> 0 Then
+                            Try
+                                .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
                             Catch ex As Exception
                                 form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
                                 Dim st As New StackTrace(ex, True)
@@ -816,208 +786,260 @@ Namespace DWSIM.Flowsheet
                                     form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
                                 End If
                             End Try
-                        End If
-                    End If
-                    If doparallel Then
-                        My.MyApplication.IsRunningParallelTasks = True
-                        If My.Settings.EnableGPUProcessing Then
-                            'My.MyApplication.gpu.EnableMultithreading()
-                        End If
-                        Try
-                            Dim task1 As Task = New Task(Sub()
-                                                             If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
-                                                             Else
-                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
-                                                             End If
-                                                         End Sub)
-                            Dim task2 As Task = New Task(Sub()
-                                                             If ms.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
-                                                             Else
-                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
-                                                             End If
-                                                         End Sub)
-                            Dim task3 As Task = New Task(Sub()
-                                                             If ms.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
-                                                             Else
-                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
-                                                             End If
-                                                         End Sub)
-                            Dim task4 As Task = New Task(Sub()
-                                                             If ms.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
-                                                             Else
-                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
-                                                             End If
-                                                         End Sub)
-                            Dim task5 As Task = New Task(Sub()
-                                                             If ms.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                                                 .DW_CalcSolidPhaseProps()
-                                                             Else
-                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
-                                                             End If
-                                                         End Sub)
-                            Dim task6 As Task = New Task(Sub()
-                                                             If ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                                                             Else
-                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                                                             End If
-                                                         End Sub)
-                            Select Case My.Settings.MaxDegreeOfParallelism
-                                Case 1
-                                    task1.Start()
-                                    task1.Wait()
-                                    task2.Start()
-                                    task2.Wait()
-                                    task3.Start()
-                                    task3.Wait()
-                                    task4.Start()
-                                    task4.Wait()
-                                    task5.Start()
-                                    task5.Wait()
-                                    task6.Start()
-                                    task6.Wait()
-                                Case 2
-                                    task1.Start()
-                                    task2.Start()
-                                    Task.WaitAll(task1, task2)
-                                    task3.Start()
-                                    task4.Start()
-                                    Task.WaitAll(task3, task4)
-                                    task5.Start()
-                                    task6.Start()
-                                    Task.WaitAll(task5, task6)
-                                Case 3
-                                    task1.Start()
-                                    task2.Start()
-                                    task3.Start()
-                                    Task.WaitAll(task1, task2, task3)
-                                    task4.Start()
-                                    task5.Start()
-                                    task6.Start()
-                                    Task.WaitAll(task4, task5, task6)
-                                Case Else
-                                    task1.Start()
-                                    task2.Start()
-                                    task3.Start()
-                                    task4.Start()
-                                    task5.Start()
-                                    task6.Start()
-                                    Task.WaitAll(task1, task2, task3, task4, task5, task6)
-                            End Select
-                        Catch ae As AggregateException
-                            form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
-                            Throw ae.Flatten().InnerException
-                        Finally
-                            'If My.Settings.EnableGPUProcessing Then
-                            '    My.MyApplication.gpu.DisableMultithreading()
-                            '    My.MyApplication.gpu.FreeAll()
-                            'End If
-                        End Try
-                        My.MyApplication.IsRunningParallelTasks = False
-                    Else
-                        If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
                         Else
-                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                            If .AUX_IS_SINGLECOMP(PropertyPackages.Fase.Mixture) Or .IsElectrolytePP Then
+                                If ms.GraphicObject.InputConnectors(0).IsAttached Then
+                                    Try
+                                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                                    Catch ex As Exception
+                                        form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
+                                        form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                    End Try
+                                Else
+                                    Try
+                                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
+                                    Catch ex As Exception
+                                        form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
+                                        Dim st As New StackTrace(ex, True)
+                                        If st.FrameCount > 0 Then
+                                            form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                                        Else
+                                            form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                        End If
+                                    End Try
+                                End If
+                            Else
+                                Try
+                                    Select Case ms.SpecType
+                                        Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_Pressure
+                                            .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
+                                        Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
+                                            .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
+                                        Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_Entropy
+                                            .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.S)
+                                        Case SimulationObjects.Streams.MaterialStream.Flashspec.Pressure_and_VaporFraction
+                                            .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
+                                        Case SimulationObjects.Streams.MaterialStream.Flashspec.Temperature_and_VaporFraction
+                                            .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.VAP)
+                                    End Select
+                                Catch ex As Exception
+                                    form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
+                                    Dim st As New StackTrace(ex, True)
+                                    If st.FrameCount > 0 Then
+                                        form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                                    Else
+                                        form.WriteToLog(ms.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                    End If
+                                End Try
+                            End If
                         End If
-                        If ms.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                        If doparallel Then
+                            My.MyApplication.IsRunningParallelTasks = True
+                            If My.Settings.EnableGPUProcessing Then
+                                'My.MyApplication.gpu.EnableMultithreading()
+                            End If
+                            Try
+                                Dim task1 As Task = New Task(Sub()
+                                                                 If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                     .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                                                                 Else
+                                                                     .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                                                                 End If
+                                                             End Sub)
+                                Dim task2 As Task = New Task(Sub()
+                                                                 If ms.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                     .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                                                                 Else
+                                                                     .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                                                                 End If
+                                                             End Sub)
+                                Dim task3 As Task = New Task(Sub()
+                                                                 If ms.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                     .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
+                                                                 Else
+                                                                     .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
+                                                                 End If
+                                                             End Sub)
+                                Dim task4 As Task = New Task(Sub()
+                                                                 If ms.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                     .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
+                                                                 Else
+                                                                     .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
+                                                                 End If
+                                                             End Sub)
+                                Dim task5 As Task = New Task(Sub()
+                                                                 If ms.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                     .DW_CalcSolidPhaseProps()
+                                                                 Else
+                                                                     .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
+                                                                 End If
+                                                             End Sub)
+                                Dim task6 As Task = New Task(Sub()
+                                                                 If ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                     .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                                                                 Else
+                                                                     .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                                                                 End If
+                                                             End Sub)
+                                Select Case My.Settings.MaxDegreeOfParallelism
+                                    Case 1
+                                        task1.Start()
+                                        task1.Wait()
+                                        task2.Start()
+                                        task2.Wait()
+                                        task3.Start()
+                                        task3.Wait()
+                                        task4.Start()
+                                        task4.Wait()
+                                        task5.Start()
+                                        task5.Wait()
+                                        task6.Start()
+                                        task6.Wait()
+                                    Case 2
+                                        task1.Start()
+                                        task2.Start()
+                                        Task.WaitAll(task1, task2)
+                                        task3.Start()
+                                        task4.Start()
+                                        Task.WaitAll(task3, task4)
+                                        task5.Start()
+                                        task6.Start()
+                                        Task.WaitAll(task5, task6)
+                                    Case 3
+                                        task1.Start()
+                                        task2.Start()
+                                        task3.Start()
+                                        Task.WaitAll(task1, task2, task3)
+                                        task4.Start()
+                                        task5.Start()
+                                        task6.Start()
+                                        Task.WaitAll(task4, task5, task6)
+                                    Case Else
+                                        task1.Start()
+                                        task2.Start()
+                                        task3.Start()
+                                        task4.Start()
+                                        task5.Start()
+                                        task6.Start()
+                                        Task.WaitAll(task1, task2, task3, task4, task5, task6)
+                                End Select
+                            Catch ae As AggregateException
+                                form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
+                                Throw ae.Flatten().InnerException
+                            Finally
+                                'If My.Settings.EnableGPUProcessing Then
+                                '    My.MyApplication.gpu.DisableMultithreading()
+                                '    My.MyApplication.gpu.FreeAll()
+                                'End If
+                            End Try
+                            My.MyApplication.IsRunningParallelTasks = False
                         Else
-                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                            If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                            Else
+                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                            End If
+                            If ms.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                            Else
+                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                            End If
+                            If ms.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
+                            Else
+                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
+                            End If
+                            If ms.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
+                            Else
+                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
+                            End If
+                            If ms.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                .DW_CalcSolidPhaseProps()
+                            Else
+                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
+                            End If
+                            If ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                            Else
+                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                            End If
                         End If
-                        If ms.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
-                        Else
-                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
-                        End If
-                        If ms.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
-                        Else
-                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
-                        End If
-                        If ms.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .DW_CalcSolidPhaseProps()
-                        Else
-                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
-                        End If
-                        If ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                        Else
-                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                        End If
-                    End If
 
-                    If ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault >= 0 And ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault <= 1 Then
-                        .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
-                    Else
+                        If ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault >= 0 And ms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault <= 1 Then
+                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
+                        Else
+                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
+                        End If
+
+                        .DW_CalcOverallProps()
+
+                        ms.Fases(0).SPMProperties.massflow = QV * ms.Fases(0).SPMProperties.density.GetValueOrDefault
+
+                        .DW_CalcVazaoMolar()
+
+                        .DW_CalcCompMolarFlow(-1)
+                        .DW_CalcCompMassFlow(-1)
+                        .DW_CalcCompVolFlow(-1)
+                        .DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                        .DW_CalcKvalue()
+                        .CurrentMaterialStream = Nothing
+                        ms.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
+                        If ms.IsSpecAttached = True And ms.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(ms.AttachedSpecId).Calculate()
+                    End With
+                    sobj.Calculated = True
+                    form.UpdateStatusLabel(preLab)
+                    calculated = True
+                Else
+                    With ms.PropertyPackage
+                        .CurrentMaterialStream = ms
+                        .DW_ZerarVazaoMolar()
+                        .DW_ZerarTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
                         .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
-                    End If
-
-                    .DW_CalcOverallProps()
-
-                    ms.Fases(0).SPMProperties.massflow = QV * ms.Fases(0).SPMProperties.density.GetValueOrDefault
-
-                    .DW_CalcVazaoMolar()
-
-                    .DW_CalcCompMolarFlow(-1)
-                    .DW_CalcCompMassFlow(-1)
-                    .DW_CalcCompVolFlow(-1)
-                    .DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                    .DW_CalcKvalue()
-                    .CurrentMaterialStream = Nothing
+                        .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                        .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                        .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
+                        .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
+                        .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
+                        .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                        .DW_ZerarComposicoes(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
+                        .DW_ZerarComposicoes(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                        .DW_ZerarComposicoes(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                        .DW_ZerarComposicoes(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
+                        .DW_ZerarComposicoes(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
+                        .DW_ZerarComposicoes(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
+                        .DW_ZerarComposicoes(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                        .DW_ZerarOverallProps()
+                        .CurrentMaterialStream = Nothing
+                    End With
                     ms.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                    If ms.IsSpecAttached = True And ms.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(ms.AttachedSpecId).Calculate()
-                End With
-                sobj.Calculated = True
-                form.UpdateStatusLabel(preLab)
-                calculated = True
-            Else
-                With ms.PropertyPackage
-                    .CurrentMaterialStream = ms
-                    .DW_ZerarVazaoMolar()
-                    .DW_ZerarTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
-                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
-                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
-                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
-                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
-                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
-                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                    .DW_ZerarComposicoes(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
-                    .DW_ZerarComposicoes(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
-                    .DW_ZerarComposicoes(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
-                    .DW_ZerarComposicoes(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
-                    .DW_ZerarComposicoes(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
-                    .DW_ZerarComposicoes(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
-                    .DW_ZerarComposicoes(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                    .DW_ZerarOverallProps()
-                    .CurrentMaterialStream = Nothing
-                End With
-                ms.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                sobj.Calculated = False
-                form.UpdateStatusLabel(preLab)
-                calculated = False
-            End If
+                    sobj.Calculated = False
+                    form.UpdateStatusLabel(preLab)
+                    calculated = False
+                End If
 
-            form.ProcessScripts(Script.EventType.ObjectCalculationFinished, Script.ObjectType.FlowsheetObject, ms.Nome)
+                If My.Settings.EnableGPUProcessing Then
+                    My.MyApplication.gpu.DisableMultithreading()
+                    My.MyApplication.gpu.FreeAll()
+                End If
 
-            RaiseEvent MaterialStreamCalculationFinished(form, New System.EventArgs(), ms)
+                form.ProcessScripts(Script.EventType.ObjectCalculationFinished, Script.ObjectType.FlowsheetObject, ms.Nome)
 
-            If calculated Then ms.LastUpdated = Date.Now
-            ms.Calculated = calculated
+                RaiseEvent MaterialStreamCalculationFinished(form, New System.EventArgs(), ms)
 
-            If Not OnlyMe Then
-                Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
-                With objargs
-                    .Calculado = calculated
-                    .Nome = ms.Nome
-                    .Tipo = TipoObjeto.MaterialStream
-                End With
-                CalculateFlowsheet(form, objargs, Nothing)
+                If calculated Then ms.LastUpdated = Date.Now
+                ms.Calculated = calculated
+
+                If Not OnlyMe Then
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Calculado = calculated
+                        .Nome = ms.Nome
+                        .Tipo = TipoObjeto.MaterialStream
+                    End With
+                    CalculateFlowsheet(form, objargs, Nothing)
+                End If
+
             End If
 
         End Sub
