@@ -1,0 +1,8 @@
+ID;Name;KHpx;C
+1;Hydrogen;7.099e4;500
+2;Helium;14.97e4;230
+3;Nitrogen;9.077e4;1300
+4;Oxygen;4.259e4;1700
+5;Neon;12.3e4;490
+6;Argon;3.955e4;1300
+7;Carbonmonoxide;5.828e4;1300
