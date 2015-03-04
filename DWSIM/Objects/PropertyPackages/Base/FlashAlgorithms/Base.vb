@@ -194,7 +194,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             If My.Settings.EnableParallelProcessing Then
                 My.MyApplication.IsRunningParallelTasks = True
                 If My.Settings.EnableGPUProcessing Then
-                    My.MyApplication.gpu.EnableMultithreading()
+                    'My.MyApplication.gpu.EnableMultithreading()
                 End If
                 Try
                     Dim task1 As Task = New Task(Sub()
@@ -209,10 +209,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Catch ae As AggregateException
                     Throw ae.Flatten().InnerException
                 Finally
-                    If My.Settings.EnableGPUProcessing Then
-                        My.MyApplication.gpu.DisableMultithreading()
-                        My.MyApplication.gpu.FreeAll()
-                    End If
+                    'If My.Settings.EnableGPUProcessing Then
+                    '    My.MyApplication.gpu.DisableMultithreading()
+                    '    My.MyApplication.gpu.FreeAll()
+                    'End If
                 End Try
                 My.MyApplication.IsRunningParallelTasks = False
             Else
@@ -329,7 +329,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         If My.Settings.EnableParallelProcessing Then
                             My.MyApplication.IsRunningParallelTasks = True
                             If My.Settings.EnableGPUProcessing Then
-                                My.MyApplication.gpu.EnableMultithreading()
+                                '   My.MyApplication.gpu.EnableMultithreading()
                             End If
                             Try
                                 Dim task1 As Task = New Task(Sub()
@@ -343,11 +343,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                                 Task.WaitAll(task1, task2)
                             Catch ae As AggregateException
                                 Throw ae.Flatten().InnerException
-                            Finally
-                                If My.Settings.EnableGPUProcessing Then
-                                    My.MyApplication.gpu.DisableMultithreading()
-                                    My.MyApplication.gpu.FreeAll()
-                                End If
+                                'Finally
+                                '    If My.Settings.EnableGPUProcessing Then
+                                '        My.MyApplication.gpu.DisableMultithreading()
+                                '        My.MyApplication.gpu.FreeAll()
+                                '    End If
                             End Try
                             My.MyApplication.IsRunningParallelTasks = False
                         Else

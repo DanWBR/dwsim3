@@ -381,7 +381,7 @@ Namespace DWSIM.Flowsheet
                     If doparallel Then
                         My.MyApplication.IsRunningParallelTasks = True
                         If My.Settings.EnableGPUProcessing Then
-                            My.MyApplication.gpu.EnableMultithreading()
+                            ' My.MyApplication.gpu.EnableMultithreading()
                         End If
                         Try
                             Dim task1 As Task = New Task(Sub()
@@ -472,10 +472,10 @@ Namespace DWSIM.Flowsheet
                             form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
                             Throw ae.Flatten().InnerException
                         Finally
-                            If My.Settings.EnableGPUProcessing Then
-                                My.MyApplication.gpu.DisableMultithreading()
-                                My.MyApplication.gpu.FreeAll()
-                            End If
+                            'If My.Settings.EnableGPUProcessing Then
+                            '    My.MyApplication.gpu.DisableMultithreading()
+                            '    My.MyApplication.gpu.FreeAll()
+                            'End If
                         End Try
                         My.MyApplication.IsRunningParallelTasks = False
                     Else
@@ -602,7 +602,7 @@ Namespace DWSIM.Flowsheet
                     If doparallel Then
                         My.MyApplication.IsRunningParallelTasks = True
                         If My.Settings.EnableGPUProcessing Then
-                            My.MyApplication.gpu.EnableMultithreading()
+                            ' My.MyApplication.gpu.EnableMultithreading()
                         End If
                         Try
                             Dim task1 As Task = New Task(Sub()
@@ -693,10 +693,10 @@ Namespace DWSIM.Flowsheet
                             form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
                             Throw ae.Flatten().InnerException
                         Finally
-                            If My.Settings.EnableGPUProcessing Then
-                                My.MyApplication.gpu.DisableMultithreading()
-                                My.MyApplication.gpu.FreeAll()
-                            End If
+                            'If My.Settings.EnableGPUProcessing Then
+                            '    My.MyApplication.gpu.DisableMultithreading()
+                            '    My.MyApplication.gpu.FreeAll()
+                            'End If
                         End Try
                         My.MyApplication.IsRunningParallelTasks = False
                     Else
@@ -821,7 +821,7 @@ Namespace DWSIM.Flowsheet
                     If doparallel Then
                         My.MyApplication.IsRunningParallelTasks = True
                         If My.Settings.EnableGPUProcessing Then
-                            My.MyApplication.gpu.EnableMultithreading()
+                            'My.MyApplication.gpu.EnableMultithreading()
                         End If
                         Try
                             Dim task1 As Task = New Task(Sub()
@@ -912,10 +912,10 @@ Namespace DWSIM.Flowsheet
                             form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
                             Throw ae.Flatten().InnerException
                         Finally
-                            If My.Settings.EnableGPUProcessing Then
-                                My.MyApplication.gpu.DisableMultithreading()
-                                My.MyApplication.gpu.FreeAll()
-                            End If
+                            'If My.Settings.EnableGPUProcessing Then
+                            '    My.MyApplication.gpu.DisableMultithreading()
+                            '    My.MyApplication.gpu.FreeAll()
+                            'End If
                         End Try
                         My.MyApplication.IsRunningParallelTasks = False
                     Else
@@ -1101,7 +1101,7 @@ Namespace DWSIM.Flowsheet
                 If doparallel Then
                     My.MyApplication.IsRunningParallelTasks = True
                     If My.Settings.EnableGPUProcessing Then
-                        My.MyApplication.gpu.EnableMultithreading()
+                        'My.MyApplication.gpu.EnableMultithreading()
                     End If
                     Try
                         Dim task1 As Task = New Task(Sub()
@@ -1192,10 +1192,10 @@ Namespace DWSIM.Flowsheet
                         form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
                         Throw ae.Flatten().InnerException
                     Finally
-                        If My.Settings.EnableGPUProcessing Then
-                            My.MyApplication.gpu.DisableMultithreading()
-                            My.MyApplication.gpu.FreeAll()
-                        End If
+                        'If My.Settings.EnableGPUProcessing Then
+                        '    My.MyApplication.gpu.DisableMultithreading()
+                        '    My.MyApplication.gpu.FreeAll()
+                        'End If
                     End Try
                     My.MyApplication.IsRunningParallelTasks = False
                 Else
@@ -1700,6 +1700,11 @@ Namespace DWSIM.Flowsheet
 
                 Application.DoEvents()
 
+                If My.Settings.EnableGPUProcessing Then
+                    DWSIM.App.InitComputeDevice()
+                    My.MyApplication.gpu.EnableMultithreading()
+                End If
+
                 Select Case mode
 
                     Case 0, 1, 2
@@ -1930,6 +1935,11 @@ Namespace DWSIM.Flowsheet
                         End Try
 
                 End Select
+
+                If My.Settings.EnableGPUProcessing Then
+                    My.MyApplication.gpu.DisableMultithreading()
+                    My.MyApplication.gpu.FreeAll()
+                End If
 
                 UpdateDisplayStatus(form)
 

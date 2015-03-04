@@ -32,7 +32,7 @@ Namespace DWSIM.SimulationObjects.SpecialOps
         Protected m_ConvHist As ConvergenceHistory
         Protected m_AccelMethod As AccelMethod = AccelMethod.Wegstein
         Protected m_WegPars As WegsteinParameters
-        Protected m_FlashType As FlashType
+        Protected m_FlashType As FlashType = Helpers.Recycle.FlashType.None
 
         Protected m_MaxIterations As Integer = 10
         Protected m_IterationCount As Integer = 0
@@ -291,7 +291,7 @@ Namespace DWSIM.SimulationObjects.SpecialOps
 
             If Me.IterationCount <= 3 Then
 
-SS:             Tnew = Me.ConvergenceHistory.Temperatura
+                Tnew = Me.ConvergenceHistory.Temperatura
                 Pnew = Me.ConvergenceHistory.Pressao
                 Wnew = Me.ConvergenceHistory.VazaoMassica
 
@@ -301,7 +301,9 @@ SS:             Tnew = Me.ConvergenceHistory.Temperatura
 
                     Case AccelMethod.None
 
-                        GoTo SS
+                        Tnew = Me.ConvergenceHistory.Temperatura
+                        Pnew = Me.ConvergenceHistory.Pressao
+                        Wnew = Me.ConvergenceHistory.VazaoMassica
 
                     Case AccelMethod.Wegstein
 
@@ -339,7 +341,9 @@ SS:             Tnew = Me.ConvergenceHistory.Temperatura
 
                         Else
 
-                            GoTo SS
+                            Tnew = Me.ConvergenceHistory.Temperatura
+                            Pnew = Me.ConvergenceHistory.Pressao
+                            Wnew = Me.ConvergenceHistory.VazaoMassica
 
                         End If
 
@@ -375,7 +379,7 @@ SS:             Tnew = Me.ConvergenceHistory.Temperatura
 
             End If
 
-            Dim tmp As Object
+            Dim tmp As Object = Nothing
             Me.PropertyPackage.CurrentMaterialStream = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name)
 
             Select Case Me.FlashType
@@ -385,84 +389,98 @@ SS:             Tnew = Me.ConvergenceHistory.Temperatura
                     tmp = form.Options.SelectedPropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.S, Pnew, Snew, Tnew)
                 Case Helpers.Recycle.FlashType.FlashPH
                     tmp = form.Options.SelectedPropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pnew, Hnew, Tnew)
-                Case Else
+                Case Helpers.Recycle.FlashType.None
                     tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Tnew, Pnew, 0)
             End Select
 
-            'Return New Object() {xl, xv, T, P, H, S, 1, 1, Vx, Vy}
-            Dim xl, xv, T, P, H, S, wtotalx, wtotaly As Double
-            Dim Vx(ems.Fases(0).Componentes.Count - 1), Vy(ems.Fases(0).Componentes.Count - 1), Vwx(ems.Fases(0).Componentes.Count - 1), Vwy(ems.Fases(0).Componentes.Count - 1) As Double
-            xl = tmp(0)
-            xv = tmp(1)
-            T = tmp(2)
-            P = tmp(3)
-            H = tmp(4)
-            S = tmp(5)
-            Vx = tmp(8)
-            Vy = tmp(9)
+            Select Case Me.FlashType
 
-            Dim i As Integer = 0
-            Dim j As Integer = 0
+                Case Helpers.Recycle.FlashType.FlashPH, Helpers.Recycle.FlashType.FlashPS, Helpers.Recycle.FlashType.FlashTP
 
-            Dim ms As DWSIM.SimulationObjects.Streams.MaterialStream
-            Dim cp As ConnectionPoint
-            cp = Me.GraphicObject.InputConnectors(0)
-            If cp.IsAttached Then
-                ms = form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedFrom.Name)
-                Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
-                i = 0
-                For Each comp In ms.Fases(0).Componentes.Values
-                    wtotalx += Vx(i) * comp.ConstantProperties.Molar_Weight
-                    wtotaly += Vy(i) * comp.ConstantProperties.Molar_Weight
-                    i += 1
-                Next
-                i = 0
-                For Each comp In ms.Fases(0).Componentes.Values
-                    Vwx(i) = Vx(i) * comp.ConstantProperties.Molar_Weight / wtotalx
-                    Vwy(i) = Vy(i) * comp.ConstantProperties.Molar_Weight / wtotaly
-                    i += 1
-                Next
-            End If
+                    Dim xl, xv, T, P, H, S, wtotalx, wtotaly As Double
+                    Dim Vx(ems.Fases(0).Componentes.Count - 1), Vy(ems.Fases(0).Componentes.Count - 1), Vwx(ems.Fases(0).Componentes.Count - 1), Vwy(ems.Fases(0).Componentes.Count - 1) As Double
+                    xl = tmp(0)
+                    xv = tmp(1)
+                    T = tmp(2)
+                    P = tmp(3)
+                    H = tmp(4)
+                    S = tmp(5)
+                    Vx = tmp(8)
+                    Vy = tmp(9)
 
-            cp = Me.GraphicObject.OutputConnectors(0)
-            If cp.IsAttached Then
-                ms = form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name)
-                With ms
-                    .PropertyPackage.CurrentMaterialStream = ms
-                    .Fases(0).SPMProperties.temperature = Tnew
-                    .Fases(0).SPMProperties.pressure = Pnew
-                    .Fases(0).SPMProperties.massflow = Wnew
-                    .Fases(0).SPMProperties.enthalpy = H
-                    Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
-                    j = 0
-                    For Each comp In .Fases(0).Componentes.Values
-                        comp.FracaoMolar = ems.Fases(0).Componentes(comp.Nome).FracaoMolar
-                        comp.FracaoMassica = ems.Fases(0).Componentes(comp.Nome).FracaoMassica
-                        j += 1
-                    Next
-                    ms.PropertyPackage.DW_CalcVazaoMolar()
-                    j = 0
-                    For Each comp In .Fases(1).Componentes.Values
-                        comp.FracaoMolar = Vx(j)
-                        comp.FracaoMassica = Vwx(j)
-                        j += 1
-                    Next
-                    j = 0
-                    For Each comp In .Fases(2).Componentes.Values
-                        comp.FracaoMolar = Vy(j)
-                        comp.FracaoMassica = Vwy(j)
-                        j += 1
-                    Next
-                    .Fases(0).SPMProperties.massfraction = 1
-                    .Fases(0).SPMProperties.molarfraction = 1
-                    .Fases(1).SPMProperties.massfraction = wtotalx
-                    .Fases(1).SPMProperties.molarfraction = xl
-                    .Fases(2).SPMProperties.massfraction = wtotaly
-                    .Fases(2).SPMProperties.molarfraction = xv
-                End With
-            End If
+                    Dim i As Integer = 0
+                    Dim j As Integer = 0
+
+                    Dim ms As DWSIM.SimulationObjects.Streams.MaterialStream
+                    Dim cp As ConnectionPoint
+                    cp = Me.GraphicObject.InputConnectors(0)
+                    If cp.IsAttached Then
+                        ms = form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedFrom.Name)
+                        Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
+                        i = 0
+                        For Each comp In ms.Fases(0).Componentes.Values
+                            wtotalx += Vx(i) * comp.ConstantProperties.Molar_Weight
+                            wtotaly += Vy(i) * comp.ConstantProperties.Molar_Weight
+                            i += 1
+                        Next
+                        i = 0
+                        For Each comp In ms.Fases(0).Componentes.Values
+                            Vwx(i) = Vx(i) * comp.ConstantProperties.Molar_Weight / wtotalx
+                            Vwy(i) = Vy(i) * comp.ConstantProperties.Molar_Weight / wtotaly
+                            i += 1
+                        Next
+                    End If
+
+                    cp = Me.GraphicObject.OutputConnectors(0)
+                    If cp.IsAttached Then
+                        ms = form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name)
+                        With ms
+                            .PropertyPackage.CurrentMaterialStream = ms
+                            .Fases(0).SPMProperties.temperature = Tnew
+                            .Fases(0).SPMProperties.pressure = Pnew
+                            .Fases(0).SPMProperties.massflow = Wnew
+                            .Fases(0).SPMProperties.enthalpy = H
+                            Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
+                            j = 0
+                            For Each comp In .Fases(0).Componentes.Values
+                                comp.FracaoMolar = ems.Fases(0).Componentes(comp.Nome).FracaoMolar
+                                comp.FracaoMassica = ems.Fases(0).Componentes(comp.Nome).FracaoMassica
+                                j += 1
+                            Next
+                            ms.PropertyPackage.DW_CalcVazaoMolar()
+                            j = 0
+                            For Each comp In .Fases(1).Componentes.Values
+                                comp.FracaoMolar = Vx(j)
+                                comp.FracaoMassica = Vwx(j)
+                                j += 1
+                            Next
+                            j = 0
+                            For Each comp In .Fases(2).Componentes.Values
+                                comp.FracaoMolar = Vy(j)
+                                comp.FracaoMassica = Vwy(j)
+                                j += 1
+                            Next
+                            .Fases(0).SPMProperties.massfraction = 1
+                            .Fases(0).SPMProperties.molarfraction = 1
+                            .Fases(1).SPMProperties.massfraction = wtotalx
+                            .Fases(1).SPMProperties.molarfraction = xl
+                            .Fases(2).SPMProperties.massfraction = wtotaly
+                            .Fases(2).SPMProperties.molarfraction = xv
+                        End With
+                    End If
+
+                Case Helpers.Recycle.FlashType.None
+
+                    Dim msfrom, msto As DWSIM.SimulationObjects.Streams.MaterialStream
+                    msfrom = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name)
+                    msto = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name)
+                    msto.Assign(msfrom)
+                    msto.AssignProps(msfrom)
+
+            End Select
 
             If Me.IterationCount >= Me.MaximumIterations Then
+                Me.IterationCount = 0
                 Throw New TimeoutException(DWSIM.App.GetLocalString("RecycleMaxItsReached"))
             End If
 
@@ -484,7 +502,8 @@ SS:             Tnew = Me.ConvergenceHistory.Temperatura
                 form.CalculationQueue.Enqueue(objargs)
 
             Else
-final:          Me.IterationsTaken = Me.IterationCount.ToString
+
+                Me.IterationsTaken = Me.IterationCount
                 Me.IterationCount = 0
 
                 Me.Converged = True
@@ -779,6 +798,7 @@ End Namespace
 Namespace DWSIM.SimulationObjects.SpecialOps.Helpers.Recycle
 
     Public Enum FlashType
+        None
         FlashTP
         FlashPH
         FlashPS

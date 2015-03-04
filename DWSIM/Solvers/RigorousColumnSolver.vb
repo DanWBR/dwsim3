@@ -1759,7 +1759,7 @@ restart:            fx = Me.FunctionValue(xvar)
 
                 If doparallel Then
                     If My.Settings.EnableGPUProcessing Then
-                        My.MyApplication.gpu.EnableMultithreading()
+                        'My.MyApplication.gpu.EnableMultithreading()
                     End If
                     My.MyApplication.IsRunningParallelTasks = True
                     Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
@@ -1781,10 +1781,10 @@ restart:            fx = Me.FunctionValue(xvar)
                         Kbj_ant(i) = Kbj(i)
                     Next
                     My.MyApplication.IsRunningParallelTasks = False
-                    If My.Settings.EnableGPUProcessing Then
-                        My.MyApplication.gpu.DisableMultithreading()
-                        My.MyApplication.gpu.FreeAll()
-                    End If
+                    'If My.Settings.EnableGPUProcessing Then
+                    '    My.MyApplication.gpu.DisableMultithreading()
+                    '    My.MyApplication.gpu.FreeAll()
+                    'End If
                 Else
                     For i = 0 To ns
                         If llextr Then
@@ -1836,7 +1836,7 @@ restart:            fx = Me.FunctionValue(xvar)
                 If doparallel Then
                     My.MyApplication.IsRunningParallelTasks = True
                     If My.Settings.EnableGPUProcessing Then
-                        My.MyApplication.gpu.EnableMultithreading()
+                        ' My.MyApplication.gpu.EnableMultithreading()
                     End If
                     Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                              Sub(ipar)
@@ -1853,10 +1853,10 @@ restart:            fx = Me.FunctionValue(xvar)
                         Next
                     Next
                     My.MyApplication.IsRunningParallelTasks = False
-                    If My.Settings.EnableGPUProcessing Then
-                        My.MyApplication.gpu.DisableMultithreading()
-                        My.MyApplication.gpu.FreeAll()
-                    End If
+                    'If My.Settings.EnableGPUProcessing Then
+                    '    My.MyApplication.gpu.DisableMultithreading()
+                    '    My.MyApplication.gpu.FreeAll()
+                    'End If
                 Else
                     For i = 0 To ns
 
@@ -1874,7 +1874,7 @@ restart:            fx = Me.FunctionValue(xvar)
                 If doparallel Then
                     My.MyApplication.IsRunningParallelTasks = True
                     If My.Settings.EnableGPUProcessing Then
-                        My.MyApplication.gpu.EnableMultithreading()
+                        'My.MyApplication.gpu.EnableMultithreading()
                     End If
                     Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                               Sub(ipar)
@@ -1893,10 +1893,10 @@ restart:            fx = Me.FunctionValue(xvar)
                         Application.DoEvents()
                     End While
                     My.MyApplication.IsRunningParallelTasks = False
-                    If My.Settings.EnableGPUProcessing Then
-                        My.MyApplication.gpu.DisableMultithreading()
-                        My.MyApplication.gpu.FreeAll()
-                    End If
+                    'If My.Settings.EnableGPUProcessing Then
+                    '    My.MyApplication.gpu.DisableMultithreading()
+                    '    My.MyApplication.gpu.FreeAll()
+                    'End If
                 Else
                     For i = 0 To ns
 
@@ -2087,7 +2087,7 @@ restart:            fx = Me.FunctionValue(xvar)
 
             If doparallel Then
                 My.MyApplication.IsRunningParallelTasks = True
-                If My.Settings.EnableGPUProcessing Then My.MyApplication.gpu.EnableMultithreading()
+                'If My.Settings.EnableGPUProcessing Then My.MyApplication.gpu.EnableMultithreading()
                 Try
                     Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                          Sub(ipar)
@@ -2098,10 +2098,10 @@ restart:            fx = Me.FunctionValue(xvar)
                 Catch ae As AggregateException
                     Throw ae.Flatten().InnerException
                 Finally
-                    If My.Settings.EnableGPUProcessing Then
-                        My.MyApplication.gpu.DisableMultithreading()
-                        My.MyApplication.gpu.FreeAll()
-                    End If
+                    'If My.Settings.EnableGPUProcessing Then
+                    '    My.MyApplication.gpu.DisableMultithreading()
+                    '    My.MyApplication.gpu.FreeAll()
+                    'End If
                 End Try
                 My.MyApplication.IsRunningParallelTasks = False
             Else
@@ -2219,7 +2219,7 @@ restart:            fx = Me.FunctionValue(xvar)
                 'tomich
                 If doparallel Then
                     My.MyApplication.IsRunningParallelTasks = True
-                    If My.Settings.EnableGPUProcessing Then My.MyApplication.gpu.EnableMultithreading()
+                    'If My.Settings.EnableGPUProcessing Then My.MyApplication.gpu.EnableMultithreading()
                     Try
                         Dim t1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, nc, poptions,
                                                                  Sub(ipar)
@@ -2229,10 +2229,10 @@ restart:            fx = Me.FunctionValue(xvar)
                     Catch ae As AggregateException
                         Throw ae.Flatten().InnerException
                     Finally
-                        If My.Settings.EnableGPUProcessing Then
-                            My.MyApplication.gpu.DisableMultithreading()
-                            My.MyApplication.gpu.FreeAll()
-                        End If
+                        'If My.Settings.EnableGPUProcessing Then
+                        '    My.MyApplication.gpu.DisableMultithreading()
+                        '    My.MyApplication.gpu.FreeAll()
+                        'End If
                     End Try
                     My.MyApplication.IsRunningParallelTasks = False
                 Else
@@ -2277,7 +2277,7 @@ restart:            fx = Me.FunctionValue(xvar)
 
                 If doparallel Then
                     My.MyApplication.IsRunningParallelTasks = True
-                    If My.Settings.EnableGPUProcessing Then My.MyApplication.gpu.EnableMultithreading()
+                    'If My.Settings.EnableGPUProcessing Then My.MyApplication.gpu.EnableMultithreading()
                     Try
                         Dim t1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                                  Sub(ipar)
@@ -2289,10 +2289,10 @@ restart:            fx = Me.FunctionValue(xvar)
                     Catch ae As AggregateException
                         Throw ae.Flatten().InnerException
                     Finally
-                        If My.Settings.EnableGPUProcessing Then
-                            My.MyApplication.gpu.DisableMultithreading()
-                            My.MyApplication.gpu.FreeAll()
-                        End If
+                        'If My.Settings.EnableGPUProcessing Then
+                        '    My.MyApplication.gpu.DisableMultithreading()
+                        '    My.MyApplication.gpu.FreeAll()
+                        'End If
                     End Try
                     My.MyApplication.IsRunningParallelTasks = False
                 Else
@@ -2341,7 +2341,7 @@ restart:            fx = Me.FunctionValue(xvar)
 
                 If doparallel Then
                     My.MyApplication.IsRunningParallelTasks = True
-                    If My.Settings.EnableGPUProcessing Then My.MyApplication.gpu.EnableMultithreading()
+                    'If My.Settings.EnableGPUProcessing Then My.MyApplication.gpu.EnableMultithreading()
                     Try
                         Dim t1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                                                      Sub(ipar)
@@ -2352,10 +2352,10 @@ restart:            fx = Me.FunctionValue(xvar)
                     Catch ae As AggregateException
                         Throw ae.Flatten().InnerException
                     Finally
-                        If My.Settings.EnableGPUProcessing Then
-                            My.MyApplication.gpu.DisableMultithreading()
-                            My.MyApplication.gpu.FreeAll()
-                        End If
+                        'If My.Settings.EnableGPUProcessing Then
+                        '    My.MyApplication.gpu.DisableMultithreading()
+                        '    My.MyApplication.gpu.FreeAll()
+                        'End If
                     End Try
                     My.MyApplication.IsRunningParallelTasks = False
                 Else

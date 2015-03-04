@@ -203,7 +203,7 @@ out:        Return New Object() {xl1, V, Vx1, Vy, ecount, xl2, Vx2, 0.0#, PP.RET
                 If My.Settings.EnableParallelProcessing Then
                     My.MyApplication.IsRunningParallelTasks = True
                     If My.Settings.EnableGPUProcessing Then
-                        My.MyApplication.gpu.EnableMultithreading()
+                        'My.MyApplication.gpu.EnableMultithreading()
                     End If
                     Try
                         Dim task1 As Task = New Task(Sub()
@@ -218,10 +218,10 @@ out:        Return New Object() {xl1, V, Vx1, Vy, ecount, xl2, Vx2, 0.0#, PP.RET
                     Catch ae As AggregateException
                         Throw ae.Flatten().InnerException
                     Finally
-                        If My.Settings.EnableGPUProcessing Then
-                            My.MyApplication.gpu.DisableMultithreading()
-                            My.MyApplication.gpu.FreeAll()
-                        End If
+                        'If My.Settings.EnableGPUProcessing Then
+                        '    My.MyApplication.gpu.DisableMultithreading()
+                        '    My.MyApplication.gpu.FreeAll()
+                        'End If
                     End Try
                     My.MyApplication.IsRunningParallelTasks = False
                 Else
