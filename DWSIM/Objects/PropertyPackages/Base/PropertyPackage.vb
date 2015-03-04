@@ -5464,9 +5464,15 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
             Dim val As Double = 0
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
+            Dim Tc As Double
 
             For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                val += subst.FracaoMolar.GetValueOrDefault * Me.AUX_PVAPi(subst.Nome, T)
+                Tc = subst.ConstantProperties.Critical_Temperature
+                If T / Tc <= 1.5 Then
+                    val += subst.FracaoMolar.GetValueOrDefault * Me.AUX_PVAPi(subst.Nome, T)
+                Else
+                    val += subst.FracaoMolar.GetValueOrDefault * Me.AUX_PVAPi(subst.Nome, Tc * 1.5)
+                End If
             Next
 
             Return val
