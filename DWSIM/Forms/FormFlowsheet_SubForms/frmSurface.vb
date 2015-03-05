@@ -3414,7 +3414,7 @@ Public Class frmSurface
                         With viewform
                             .Text = Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag
                             .fsuo = myobj
-                            .ShowDialog()
+                            .Show(Flowsheet.dckPanel)
                         End With
                     Else
                         Dim viewform As New FlowsheetUOEditorForm

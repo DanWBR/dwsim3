@@ -41,19 +41,14 @@ Namespace DWSIM.Editors.FlowsheetUO
 
             Dim form As FormFlowsheet = My.Application.ActiveSimulation
 
-            If (editorService IsNot Nothing) Then
+            Dim selectionControl As New FlowsheetUOViewerForm
 
-                Dim selectionControl As New FlowsheetUOViewerForm
+            selectionControl.Text = form.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag
+            selectionControl.TabText = form.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag
 
-                selectionControl.Text = form.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag
+            selectionControl.fsuo = form.Collections.CLCS_FlowsheetUOCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
 
-                selectionControl.fsuo = form.Collections.CLCS_FlowsheetUOCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
-
-                editorService.ShowDialog(selectionControl)
-
-                value = ""
-
-            End If
+            selectionControl.Show(form.dckPanel)
 
             Return value
 
