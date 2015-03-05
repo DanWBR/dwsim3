@@ -5461,6 +5461,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
         End Function
 
         Public Function AUX_KHenry(ByVal CompName As String, ByVal T As Double) As Double
+
             Dim Kh As Double
             Dim MW As Double = 18 'mol weight of water [g/mol]
             Dim DW As Double = 996 'density of water at 298.15 K [Kg/m3]
@@ -5470,6 +5471,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
             Kh = 1 / (KHCP * MW / DW / 1000 * Exp(C * (1 / T - 1 / 298.15)))
 
             Return Kh '[Pa]
+
         End Function
 
         Public Function AUX_PVAPM(ByVal T) As Double
@@ -5479,12 +5481,11 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
             Dim Tc As Double
 
             For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                Tc = AUX_KHenry(subst.Nome, 298.15)
                 Tc = subst.ConstantProperties.Critical_Temperature
                 If T / Tc <= 1 Then
                     val += subst.FracaoMolar.GetValueOrDefault * Me.AUX_PVAPi(subst.Nome, T)
                 Else
-                    val += subst.FracaoMolar.GetValueOrDefault * Me.AUX_PVAPi(subst.Nome, Tc)
+                    val += subst.FracaoMolar.GetValueOrDefault * Me.AUX_KHenry(subst.Nome, T)
                 End If
             Next
 
