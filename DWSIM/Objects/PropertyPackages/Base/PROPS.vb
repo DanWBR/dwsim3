@@ -135,12 +135,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Pc = Pc / 100000
 
             Tr = T / Tc
+            If Tr > 0.99 Then Tr = 0.5 'estimation for supercritical gases solved in liquid phase
 
             If ZRa = 0 Then ZRa = 0.29056 - 0.08775 * w
 
             Dim tmp = R * Tc / Pc * ZRa ^ (1 + (1 - Tr) ^ (2 / 7))
 
-            If Pvp <> 0 Then
+            If Pvp <> 0 And T < Tc Then
 
                 'Modified HBT method - Thomson (para líquidos comprimidos)
                 Dim a, b, c, d, e, f, g, h, j, k As Double

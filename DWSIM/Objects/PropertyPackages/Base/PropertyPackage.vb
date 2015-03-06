@@ -5462,15 +5462,15 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
         Public Function AUX_KHenry(ByVal CompName As String, ByVal T As Double) As Double
 
-            Dim Kh As Double
+            Dim KHx As Double
             Dim MW As Double = 18 'mol weight of water [g/mol]
             Dim DW As Double = 996 'density of water at 298.15 K [Kg/m3]
-            Dim KHCP As Double = 0.0000064 'nitrogen [mol/m3/Pa9
+            Dim KHCP As Double = 0.0000064 'nitrogen [mol/m3/Pa]
             Dim C As Double = 1600 'nitrogen
 
-            Kh = 1 / (KHCP * MW / DW / 1000 * Exp(C * (1 / T - 1 / 298.15)))
+            KHx = 1 / (KHCP * MW / DW / 1000 * Exp(C * (1 / T - 1 / 298.15)))
 
-            Return Kh '[Pa]
+            Return KHx '[Pa]
 
         End Function
 
@@ -5485,7 +5485,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                 If T / Tc <= 1 Then
                     val += subst.FracaoMolar.GetValueOrDefault * Me.AUX_PVAPi(subst.Nome, T)
                 Else
-                    val += subst.FracaoMolar.GetValueOrDefault * Me.AUX_KHenry(subst.Nome, T)
+                    val += subst.FracaoMolar.GetValueOrDefault * Me.AUX_PVAPi(subst.Nome, 0.5 * Tc)
                 End If
             Next
 
@@ -6530,14 +6530,15 @@ Final3:
                             For Each subst As Substancia In Me.CurrentMaterialStream.Fases(phaseid).Componentes.Values
                                 If Me.Parameters.ContainsKey("PP_USEEXPLIQDENS") Then
                                     If CInt(Me.Parameters("PP_USEEXPLIQDENS")) = 1 Then
-                                        If subst.ConstantProperties.LiquidDensityEquation <> "" And subst.ConstantProperties.LiquidDensityEquation <> "0" And Not subst.ConstantProperties.IsIon And Not subst.ConstantProperties.IsSalt Then
+                                        If T < subst.ConstantProperties.Critical_Temperature And subst.ConstantProperties.LiquidDensityEquation <> "" And subst.ConstantProperties.LiquidDensityEquation <> "0" And Not subst.ConstantProperties.IsIon And Not subst.ConstantProperties.IsSalt Then
                                             vk(i) = Me.CalcCSTDepProp(subst.ConstantProperties.LiquidDensityEquation, subst.ConstantProperties.Liquid_Density_Const_A, subst.ConstantProperties.Liquid_Density_Const_B, subst.ConstantProperties.Liquid_Density_Const_C, subst.ConstantProperties.Liquid_Density_Const_D, subst.ConstantProperties.Liquid_Density_Const_E, T, subst.ConstantProperties.Critical_Temperature)
                                             vk(i) = subst.ConstantProperties.Molar_Weight * vk(i)
+                                        ElseIf T > subst.ConstantProperties.Critical_Temperature Then
+                                            vk(i) = 800
+                                        ElseIf subst.ConstantProperties.IsIon Or subst.ConstantProperties.IsSalt Then
+                                            vk(i) = 1.0E+20
                                         Else
                                             vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
-                                        End If
-                                        If subst.ConstantProperties.IsIon Or subst.ConstantProperties.IsSalt Then
-                                            vk(i) = 1.0E+20
                                         End If
                                     Else
                                         vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
@@ -6776,13 +6777,18 @@ Final3:
         Public Overridable Function AUX_LIQ_Cpi(ByVal cprop As ConstantProperties, ByVal T As Double) As Double
 
             Dim val As Double
-
-            If cprop.LiquidHeatCapacityEquation <> "" And cprop.LiquidHeatCapacityEquation <> "0" And Not cprop.IsIon And Not cprop.IsSalt Then
-                val = Me.CalcCSTDepProp(cprop.LiquidHeatCapacityEquation, cprop.Liquid_Heat_Capacity_Const_A, cprop.Liquid_Heat_Capacity_Const_B, cprop.Liquid_Heat_Capacity_Const_C, cprop.Liquid_Heat_Capacity_Const_D, cprop.Liquid_Heat_Capacity_Const_E, T, cprop.Critical_Temperature)
+            If T >= cprop.Critical_Temperature Then
+                'surrogate for supercritical gases solved in liquid
+                val = Me.CalcCSTDepProp(cprop.IdealgasCpEquation, cprop.Ideal_Gas_Heat_Capacity_Const_A, cprop.Ideal_Gas_Heat_Capacity_Const_B, cprop.Ideal_Gas_Heat_Capacity_Const_C, cprop.Ideal_Gas_Heat_Capacity_Const_D, cprop.Ideal_Gas_Heat_Capacity_Const_E, T, cprop.Critical_Temperature)
                 val = val / 1000 / cprop.Molar_Weight 'kJ/kg.K
             Else
-                'estimate using Rownlinson/Bondi correlation
-                val = Me.m_props.Cpl_rb(AUX_CPi(cprop.Name, T), T, cprop.Critical_Temperature, cprop.Acentric_Factor, cprop.Molar_Weight) 'kJ/kg.K
+                If cprop.LiquidHeatCapacityEquation <> "" And cprop.LiquidHeatCapacityEquation <> "0" And Not cprop.IsIon And Not cprop.IsSalt Then
+                    val = Me.CalcCSTDepProp(cprop.LiquidHeatCapacityEquation, cprop.Liquid_Heat_Capacity_Const_A, cprop.Liquid_Heat_Capacity_Const_B, cprop.Liquid_Heat_Capacity_Const_C, cprop.Liquid_Heat_Capacity_Const_D, cprop.Liquid_Heat_Capacity_Const_E, T, cprop.Critical_Temperature)
+                    val = val / 1000 / cprop.Molar_Weight 'kJ/kg.K
+                Else
+                    'estimate using Rownlinson/Bondi correlation
+                    val = Me.m_props.Cpl_rb(AUX_CPi(cprop.Name, T), T, cprop.Critical_Temperature, cprop.Acentric_Factor, cprop.Molar_Weight) 'kJ/kg.K
+                End If
             End If
 
             Return val
@@ -6826,13 +6832,20 @@ Final3:
         Public Function AUX_INT_CPDTi_L(ByVal T1 As Double, ByVal T2 As Double, ByVal subst As String) As Double
 
             Dim deltaT As Double = (T2 - T1) / 10
-            Dim Ti As Double
+            Dim Ti, Tc As Double
             Dim i As Integer = 0
             Dim integral As Double = 0
 
             Ti = T1 + deltaT
+            Tc = Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Critical_Temperature
             For i = 0 To 9
-                integral += Me.AUX_LIQ_Cpi(Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties, Ti) * deltaT
+                If Ti > Tc Then
+                    'integral += Me.AUX_LIQ_Cpi(Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties, Ti) * deltaT
+                    integral += Me.AUX_CPi(Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Name, Ti) * deltaT
+                Else
+                    integral += Me.AUX_LIQ_Cpi(Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties, Ti) * deltaT
+                End If
+
                 Ti += deltaT
             Next
 
