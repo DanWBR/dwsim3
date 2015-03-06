@@ -5462,13 +5462,12 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
         Public Function AUX_KHenry(ByVal CompName As String, ByVal T As Double) As Double
 
-            Dim KHx, KHcpt As Double
+            Dim KHx As Double
             Dim MW As Double = 18 'mol weight of water [g/mol]
             Dim DW As Double = 996 'density of water at 298.15 K [Kg/m3]
             Dim KHCP As Double = 0.0000064 'nitrogen [mol/m3/Pa]
             Dim C As Double = 1600 'nitrogen
 
-            KHcpt = KHCP * Exp(C * (1 / T - 1 / 298.15))
             KHx = 1 / (KHCP * MW / DW / 1000 * Exp(C * (1 / T - 1 / 298.15)))
 
             Return KHx '[Pa]
@@ -5486,7 +5485,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                 If T / Tc <= 1 Then
                     val += subst.FracaoMolar.GetValueOrDefault * Me.AUX_PVAPi(subst.Nome, T)
                 Else
-                    val += subst.FracaoMolar.GetValueOrDefault * Me.AUX_KHenry(subst.Nome, T)
+                    val += subst.FracaoMolar.GetValueOrDefault * Me.AUX_PVAPi(subst.Nome, 0.5 * Tc)
                 End If
             Next
 
