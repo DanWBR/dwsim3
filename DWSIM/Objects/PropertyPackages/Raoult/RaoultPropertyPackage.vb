@@ -650,8 +650,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim fugcoeff(n) As Double
 
             If st = State.Liquid Then
+                Dim Tc As Object = Me.RET_VTC()
                 For i = 0 To n
-                    fugcoeff(i) = Me.AUX_PVAPi(i, T) / P
+                    If T / Tc(i) >= 1 Then
+                        fugcoeff(i) = AUX_KHenry(Me.RET_VNAMES(i), T) / P
+                    Else
+                        fugcoeff(i) = Me.AUX_PVAPi(i, T) / P
+                    End If
                 Next
             Else
                 For i = 0 To n
