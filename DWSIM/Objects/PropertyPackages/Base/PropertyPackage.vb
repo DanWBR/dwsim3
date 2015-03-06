@@ -36,6 +36,12 @@ Imports DWSIM.DWSIM.MathEx
 Namespace DWSIM.SimulationObjects.PropertyPackages
 
 #Region "    Global Enumerations"
+    <System.Serializable()> Public Class HenryParam
+        Public Component As String
+        Public CAS As String
+        Public KHcp As Double
+        Public C As Double
+    End Class
 
     Public Enum Fase
 
@@ -136,6 +142,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         Private m_configurable As Boolean = False
 
         Public m_par As New System.Collections.Generic.Dictionary(Of String, Double)
+        Public m_Henry As New System.Collections.Generic.Dictionary(Of String, HenryParam)
 
         Private _tag As String = ""
         Private _uniqueID As String = ""
@@ -268,7 +275,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         End Try
                     Next
                 End If
-
 
             End If
 
@@ -5467,7 +5473,14 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
             Dim DW As Double = 996 'density of water at 298.15 K [Kg/m3]
             Dim KHCP As Double = 0.0000064 'nitrogen [mol/m3/Pa]
             Dim C As Double = 1600 'nitrogen
+            Dim CAS As String
 
+            CAS = Me.CurrentMaterialStream.Fases(0).Componentes(CompName).ConstantProperties.CAS_Number
+
+            If m_Henry.ContainsKey(CAS) Then
+                KHCP = m_Henry(CAS).KHcp
+                C = m_Henry(CAS).C
+            End If
             KHx = 1 / (KHCP * MW / DW / 1000 * Exp(C * (1 / T - 1 / 298.15)))
 
             Return KHx '[Pa]
@@ -10274,6 +10287,20 @@ Final3:
             Me.m_ip = New DataTable
             Me.m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
             ConfigParameters()
+
+            'load Henry Coefficients
+            Dim pathsep = IO.Path.DirectorySeparatorChar
+            Dim filename As String = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "Henry.txt"
+            Dim HenryLines() As String = IO.File.ReadAllLines(filename)
+
+            For i = 2 To HenryLines.Length - 1
+                Dim HP As New HenryParam
+                HP.Component = HenryLines(i).Split(";")(1)
+                HP.CAS = HenryLines(i).Split(";")(2)
+                HP.KHcp = Val(HenryLines(i).Split(";")(3))
+                HP.C = Val(HenryLines(i).Split(";")(4))
+                m_Henry.Add(HP.CAS, HP)
+            Next
 
         End Sub
 
