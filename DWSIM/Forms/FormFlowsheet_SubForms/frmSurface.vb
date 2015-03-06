@@ -24,6 +24,8 @@ Public Class frmSurface
 
     Public ticks As Integer
 
+    Public Event ObjectSelected(ByVal sender As FormFlowsheet)
+
     Public Function ReturnForm(ByVal str As String) As IDockContent
 
         If str = Me.ToString Then
@@ -83,19 +85,10 @@ Public Class frmSurface
 
     End Sub
 
-    '
-    '
-    '
-    '
-    '   FUNCAO MOUSECLICK NO FLUXOGRAMA / UPDATE SELECTED OBJECT
-    '
-    '
-    '
-    '
-
     Public Sub UpdateSelectedObject()
 
         If Not Me.FlowsheetDesignSurface.SelectedObject Is Nothing Then
+
             Flowsheet.FormProps.SuspendLayout()
             If Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_Tabela Then
                 Flowsheet.FormProps.LblNomeObj.Text = DWSIM.App.GetLocalString("Tabela")
@@ -332,7 +325,9 @@ Public Class frmSurface
                 End If
                 PGEx2.Refresh()
                 PGEx1.Refresh()
+
             Else
+
                 Me.FlowsheetDesignSurface.SelectedObject = Nothing
                 'Flowsheet.FormProps.LblNomeObj.Text = DWSIM.App.GetLocalString("Nenhumselecionado")
                 'Flowsheet.FormProps.LblTipoObj.Text = "-"
@@ -340,21 +335,32 @@ Public Class frmSurface
                 'Flowsheet.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
                 'Flowsheet.FormObjList.TreeViewObj.CollapseAll()
                 'Flowsheet.FormObjList.TreeViewObj.SelectedNode = Nothing
+
             End If
+
         Else
+
             PGEx2.SelectedObject = Nothing
             PGEx1.SelectedObject = Nothing
+
         End If
+
         'Catch
         '    Flowsheet.FormObjList.TreeViewObj.CollapseAll()
         '    Flowsheet.FormObjList.TreeViewObj.SelectedNode = Nothing
         'End Try
+
         If Me.FlowsheetDesignSurface.SelectedObject Is Nothing Then
+
             Flowsheet.FormProps.LblNomeObj.Text = DWSIM.App.GetLocalString("Nenhumselecionado")
             Flowsheet.FormProps.LblTipoObj.Text = "-"
             Flowsheet.FormProps.LblStatusObj.Text = "-"
             Flowsheet.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
+
         End If
+
+        RaiseEvent ObjectSelected(Flowsheet)
+
     End Sub
 
     Private Sub ToolStripMenuItem6_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripMenuItem6.Click
