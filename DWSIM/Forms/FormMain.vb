@@ -2737,17 +2737,33 @@ Public Class FormMain
         xel.Add(New XElement("OSInfo", My.Computer.Info.OSFullName & ", Version " & My.Computer.Info.OSVersion & ", " & My.Computer.Info.OSPlatform & " Platform"))
         xel.Add(New XElement("SavedOn", Date.Now))
 
-        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("Settings"))
-        xel = xdoc.Element("DWSIM_Simulation_Data").Element("Settings")
-
-        xel.Add(form.Options.SaveData().ToArray())
-
         xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("SimulationObjects"))
         xel = xdoc.Element("DWSIM_Simulation_Data").Element("SimulationObjects")
 
         For Each so As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
             xel.Add(New XElement("SimulationObject", {so.SaveData().ToArray()}))
         Next
+
+        'update the flowsheet key for usage in server solution storage. 
+
+        'if the key doesn't change, it means that the flowsheet data wasn't modified 
+        'and a previous solution stored in the server may be returned instead of recalculating 
+        'the entire flowsheet, saving time and resources.
+
+        Dim hash As String = ""
+        Using md5 As System.Security.Cryptography.MD5 = System.Security.Cryptography.MD5.Create()
+            hash = BitConverter.ToString(md5.ComputeHash(Encoding.UTF8.GetBytes(xel.ToString)))
+        End Using
+
+        form.Options.Key = hash.Replace("-", "")
+
+        'save settings 
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("Settings"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("Settings")
+
+        xel.Add(form.Options.SaveData().ToArray())
+
 
         xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("GraphicObjects"))
         xel = xdoc.Element("DWSIM_Simulation_Data").Element("GraphicObjects")

@@ -323,6 +323,8 @@ Namespace DWSIM.FormClasses
         Public Password As String = ""
         Public UsePassword As Boolean = False
 
+        Public Key As String = ""
+
         Sub New()
 
             SelectedComponents = New Dictionary(Of String, DWSIM.ClassesBasicasTermodinamica.ConstantProperties)
