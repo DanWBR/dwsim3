@@ -59,7 +59,7 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
     Protected m_showqtable As Boolean = True
 
     Public Property Calculated As Boolean = False
-    Public Property LastUpdated As New Date
+    <Xml.Serialization.XmlIgnore> Public Property LastUpdated As New Date
 
     Public MustOverride Sub UpdatePropertyNodes(ByVal su As DWSIM.SistemasDeUnidades.Unidades, ByVal nf As String)
 

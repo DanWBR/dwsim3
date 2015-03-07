@@ -24,6 +24,7 @@ Imports Microsoft.ServiceBus
 Imports Microsoft.ServiceBus.Messaging
 Imports System.Linq
 Imports System.Reflection
+Imports System.Runtime.Serialization.Formatters.Binary
 
 Module AzureServer
 
@@ -32,9 +33,13 @@ Module AzureServer
     Private queueNameS As String = "DWSIMserver"
     Private queueNameC As String = "DWSIMclient"
 
+    Private solutions As Dictionary(Of String, Byte())
+
     Dim ts As CancellationTokenSource
 
     Sub Main()
+
+        solutions = New Dictionary(Of String, Byte())
 
         Console.WriteLine()
         Console.WriteLine("DWSIM - Open Source Process Simulator")
@@ -89,6 +94,8 @@ Module AzureServer
             Console.WriteLine("[" & Date.Now.ToString & "] " & "Server is running and listening to incoming data on queue '" & queueNameC & "'...")
 
             Dim bytearr As New List(Of Byte())
+
+            Dim icounter As Integer = 100
 
             While True
 
@@ -207,6 +214,20 @@ Module AzureServer
 
                 End If
 
+                icounter += 1
+
+                If Math.IEEERemainder(icounter, 100) = 0 Then
+
+                    Dim binFormatter = New BinaryFormatter()
+                    Dim mStream = New MemoryStream()
+                    binFormatter.Serialize(mStream, solutions)
+
+                    If mStream.Length > 100 * 1024 * 1024 Then
+                        solutions.Clear()
+                    End If
+
+                End If
+
             End While
 
             qcc.Close()
@@ -223,42 +244,45 @@ Module AzureServer
     Sub ProcessData(bytes As Byte(), requestID As String)
         Using bytestream As New MemoryStream(bytes)
             Using form As FormFlowsheet = DWSIM.DWSIM.SimulationObjects.UnitOps.Flowsheet.InitializeFlowsheet(bytestream)
-                DWSIM.DWSIM.Flowsheet.FlowsheetSolver.CalculateAll2(form, 2, ts)
-                Using retbytes As MemoryStream = DWSIM.DWSIM.SimulationObjects.UnitOps.Flowsheet.ReturnProcessData(form)
-                    Dim uncompressedbytes As Byte() = retbytes.ToArray
-                    Using compressedstream As New MemoryStream()
-                        Using gzs As New BufferedStream(New Compression.GZipStream(compressedstream, Compression.CompressionMode.Compress, True), 64 * 1024)
-                            gzs.Write(uncompressedbytes, 0, uncompressedbytes.Length)
-                            gzs.Close()
-                            If compressedstream.Length < 220 * 1024 Then
-                                Dim msg As New BrokeredMessage(compressedstream.ToArray)
-                                msg.Properties.Add("multipart", False)
-                                msg.Properties.Add("requestID", requestID)
-                                msg.Properties.Add("origin", "server")
-                                msg.Properties.Add("type", "data")
-                                qcs.Send(msg)
-                                Console.WriteLine("[" & Date.Now.ToString & "] " & "Sent data to the queue: " & compressedstream.Length & " B, Request ID = " & requestID)
-                            Else
-                                Dim i, n As Integer
-                                Dim bytearray As ArrayList = Split(compressedstream.ToArray, 220)
-                                n = bytearray.Count
-                                i = 1
-                                For Each b As Byte() In bytearray
-                                    Dim msg As New BrokeredMessage(b)
-                                    msg.Properties.Add("multipart", True)
-                                    msg.Properties.Add("partnumber", i)
-                                    msg.Properties.Add("totalparts", n)
-                                    msg.Properties.Add("type", "data")
-                                    msg.Properties.Add("requestID", requestID)
-                                    msg.Properties.Add("origin", "server")
-                                    qcs.Send(msg)
-                                    i += 1
-                                    Console.WriteLine("[" & Date.Now.ToString & "] " & "Sent data to the queue: " & b.Length & " B, Request ID = " & requestID)
-                                Next
-                            End If
+                If Not solutions.ContainsKey(form.Options.Key) Then
+                    DWSIM.DWSIM.Flowsheet.FlowsheetSolver.CalculateAll2(form, 2, ts)
+                    Using retbytes As MemoryStream = DWSIM.DWSIM.SimulationObjects.UnitOps.Flowsheet.ReturnProcessData(form)
+                        Dim uncompressedbytes As Byte() = retbytes.ToArray
+                        Using compressedstream As New MemoryStream()
+                            Using gzs As New BufferedStream(New Compression.GZipStream(compressedstream, Compression.CompressionMode.Compress, True), 64 * 1024)
+                                gzs.Write(uncompressedbytes, 0, uncompressedbytes.Length)
+                                gzs.Close()
+                                solutions.Add(form.Options.Key, compressedstream.ToArray)
+                            End Using
                         End Using
                     End Using
-                End Using
+                End If
+                If solutions(form.Options.Key).Length < 220 * 1024 Then
+                    Dim msg As New BrokeredMessage(solutions(form.Options.Key))
+                    msg.Properties.Add("multipart", False)
+                    msg.Properties.Add("requestID", requestID)
+                    msg.Properties.Add("origin", "server")
+                    msg.Properties.Add("type", "data")
+                    qcs.Send(msg)
+                    Console.WriteLine("[" & Date.Now.ToString & "] " & "Sent data to the queue: " & solutions(form.Options.Key).Length & " B, Request ID = " & requestID)
+                Else
+                    Dim i, n As Integer
+                    Dim bytearray As ArrayList = Split(solutions(form.Options.Key), 220)
+                    n = bytearray.Count
+                    i = 1
+                    For Each b As Byte() In bytearray
+                        Dim msg As New BrokeredMessage(b)
+                        msg.Properties.Add("multipart", True)
+                        msg.Properties.Add("partnumber", i)
+                        msg.Properties.Add("totalparts", n)
+                        msg.Properties.Add("type", "data")
+                        msg.Properties.Add("requestID", requestID)
+                        msg.Properties.Add("origin", "server")
+                        qcs.Send(msg)
+                        i += 1
+                        Console.WriteLine("[" & Date.Now.ToString & "] " & "Sent data to the queue: " & b.Length & " B, Request ID = " & requestID)
+                    Next
+                End If
             End Using
         End Using
     End Sub
