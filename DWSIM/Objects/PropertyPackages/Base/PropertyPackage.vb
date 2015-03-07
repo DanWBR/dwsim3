@@ -5608,7 +5608,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     E = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_E
                     'Cp = A + B*T + C*T^2 + D*T^3 + E*T^4 where Cp in kJ/kg-mol , T in K 
                     result = A + B * T + C * T ^ 2 + D * T ^ 3 + E * T ^ 4
-                    Return result / Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Molar_Weight
+                    Return result / Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Molar_Weight 'kJ/kg.K
                 ElseIf Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "CheResources" Then
                     Dim A, B, C, D, E, result As Double
                     A = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_A
@@ -5618,7 +5618,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     E = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_E
                     'CAL/MOL.K [CP=A+(B*T)+(C*T^2)+(D*T^3)], T in K
                     result = A + B * T + C * T ^ 2 + D * T ^ 3
-                    Return result / Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Molar_Weight * 4.1868
+                    Return result / Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Molar_Weight * 4.1868 'kJ/kg.K
                 ElseIf Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "ChemSep" Or _
                 Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "User" Then
                     Dim A, B, C, D, E, result As Double
@@ -5659,7 +5659,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                 val += subst.FracaoMassica.GetValueOrDefault * Me.AUX_CPi(subst.Nome, T)
             Next
 
-            Return val
+            Return val 'KJ/Kg/K
 
         End Function
 
@@ -6810,35 +6810,19 @@ Final3:
 
         Public MustOverride Function AUX_VAPDENS(ByVal T As Double, ByVal P As Double) As Double
 
-        Public Function AUX_INT_CPDTi(ByVal T1 As Double, ByVal T2 As Double, ByVal subst As String)
-
-            Dim A, B, C, D, E, result As Double
-            A = Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_A
-            B = Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_B
-            C = Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_C
-            D = Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_D
-            E = Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_E
-
-            result = A * (T2 - T1) + B / 2 * (T2 ^ 2 - T1 ^ 2) + C / 3 * (T2 ^ 3 - T1 ^ 3) + D / 4 * (T2 ^ 4 - T1 ^ 4) + E / 5 * (T2 ^ 5 - T1 ^ 5)
+        Public Function AUX_INT_CPDTi(ByVal T1 As Double, ByVal T2 As Double, ByVal subst As String) As Double
 
             Dim deltaT As Double = (T2 - T1) / 10
-            Dim result2, Ti As Double
-            Dim i As Integer = 0
-            Dim integral As Double = 0
+            Dim i As Integer
+            Dim integral, Ti As Double
 
-            Ti = T1 + deltaT
+            Ti = T1 + deltaT / 2
             For i = 0 To 9
                 integral += Me.AUX_CPi(subst, Ti) * deltaT
                 Ti += deltaT
             Next
 
-            'result = Me.IntegralSimpsonCp(T1, T2, 0.001, subst)
-
-            result = result / Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Molar_Weight
-
-            result2 = integral '/ Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Molar_Weight
-
-            Return result2
+            Return integral
 
         End Function
 
@@ -6849,12 +6833,11 @@ Final3:
             Dim i As Integer = 0
             Dim integral As Double = 0
 
-            Ti = T1 + deltaT
+            Ti = T1 + deltaT / 2
             Tc = Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Critical_Temperature
             For i = 0 To 9
                 If Ti > Tc Then
-                    'integral += Me.AUX_LIQ_Cpi(Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties, Ti) * deltaT
-                    integral += Me.AUX_CPi(Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Name, Ti) * deltaT
+                    integral += Me.AUX_CPi(subst, Ti) * deltaT
                 Else
                     integral += Me.AUX_LIQ_Cpi(Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties, Ti) * deltaT
                 End If
@@ -6862,40 +6845,23 @@ Final3:
                 Ti += deltaT
             Next
 
-            Return integral
+            Return integral 'KJ/Kg
 
         End Function
 
 
         Public Function AUX_INT_CPDT_Ti(ByVal T1 As Double, ByVal T2 As Double, ByVal subst As String) As Double
 
-            Dim A, B, C, D, E, result As Double
-            A = Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_A
-            B = Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_B
-            C = Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_C
-            D = Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_D
-            E = Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Ideal_Gas_Heat_Capacity_Const_E
-
-            result = A * Log(T2 / T1) + B * (T2 - T1) + C / 2 * (T2 ^ 2 - T1 ^ 2) + D / 3 * (T2 ^ 3 - T1 ^ 3) + E / 4 * (T2 ^ 4 - T1 ^ 4)
-
             Dim deltaT As Double = (T2 - T1) / 10
-            Dim result2, Ti As Double
-            Dim i As Integer = 0
-            Dim integral As Double = 0
+            Dim i As Integer
+            Dim integral, Ti As Double
 
-            Ti = T1 + deltaT
+            Ti = T1 + deltaT / 2
             For i = 0 To 9
-                integral += Me.AUX_CPi(subst, Ti) * deltaT / (Ti - deltaT) '* Log(Ti / (Ti - deltaT))
+                integral += Me.AUX_CPi(subst, Ti) * deltaT / (Ti - deltaT)
                 Ti += deltaT
             Next
-
-            'result = Me.IntegralSimpsonCp(T1, T2, 0.001, subst)
-
-            result = result / Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Molar_Weight
-
-            result2 = integral '/ Me.CurrentMaterialStream.Fases(0).Componentes(subst).ConstantProperties.Molar_Weight
-
-            Return result2
+            Return integral 'KJ/Kg
 
         End Function
 
