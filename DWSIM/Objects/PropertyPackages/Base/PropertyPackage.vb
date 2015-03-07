@@ -5052,7 +5052,8 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     'do nothing
                 Case 1
                     Console.WriteLine(text)
-                Case 2
+                Case Else
+                    Console.WriteLine(text)
             End Select
 
         End Sub

@@ -30,8 +30,6 @@ Partial Class FormOptions
         Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip()
         Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
-        Me.cbDebugLevel = New System.Windows.Forms.ComboBox()
-        Me.Label13 = New System.Windows.Forms.Label()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.tbSolverTimeout = New System.Windows.Forms.TextBox()
         Me.Label11 = New System.Windows.Forms.Label()
@@ -101,9 +99,12 @@ Partial Class FormOptions
         Me.tbaddpath = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.FaTabStripItem7 = New FarsiLibrary.Win.FATabStripItem()
+        Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+        Me.cbDebugLevel = New System.Windows.Forms.ComboBox()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.chkconsole = New System.Windows.Forms.CheckBox()
         Me.KryptonCheckBox1 = New System.Windows.Forms.CheckBox()
         Me.chkUpdates = New System.Windows.Forms.CheckBox()
-        Me.chkconsole = New System.Windows.Forms.CheckBox()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
         Me.ofdcs = New System.Windows.Forms.OpenFileDialog()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
@@ -132,6 +133,7 @@ Partial Class FormOptions
         Me.FaTabStripItem5.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
         Me.FaTabStripItem7.SuspendLayout()
+        Me.GroupBox6.SuspendLayout()
         Me.SuspendLayout()
         '
         'FaTabStrip1
@@ -162,8 +164,6 @@ Partial Class FormOptions
         'GroupBox2
         '
         resources.ApplyResources(Me.GroupBox2, "GroupBox2")
-        Me.GroupBox2.Controls.Add(Me.cbDebugLevel)
-        Me.GroupBox2.Controls.Add(Me.Label13)
         Me.GroupBox2.Controls.Add(Me.Label12)
         Me.GroupBox2.Controls.Add(Me.tbSolverTimeout)
         Me.GroupBox2.Controls.Add(Me.Label11)
@@ -176,25 +176,6 @@ Partial Class FormOptions
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox2, System.Drawing.Color.Empty)
         Me.GroupBox2.TabStop = False
         Me.SuperToolTip1.SetToolTip(Me.GroupBox2, resources.GetString("GroupBox2.ToolTip"))
-        '
-        'cbDebugLevel
-        '
-        resources.ApplyResources(Me.cbDebugLevel, "cbDebugLevel")
-        Me.cbDebugLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbDebugLevel.FormattingEnabled = True
-        Me.cbDebugLevel.Items.AddRange(New Object() {resources.GetString("cbDebugLevel.Items"), resources.GetString("cbDebugLevel.Items1"), resources.GetString("cbDebugLevel.Items2"), resources.GetString("cbDebugLevel.Items3")})
-        Me.cbDebugLevel.Name = "cbDebugLevel"
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.cbDebugLevel, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.cbDebugLevel, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.cbDebugLevel, resources.GetString("cbDebugLevel.ToolTip"))
-        '
-        'Label13
-        '
-        resources.ApplyResources(Me.Label13, "Label13")
-        Me.Label13.Name = "Label13"
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label13, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label13, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.Label13, resources.GetString("Label13.ToolTip"))
         '
         'Label12
         '
@@ -902,14 +883,53 @@ Partial Class FormOptions
         '
         resources.ApplyResources(Me.FaTabStripItem7, "FaTabStripItem7")
         Me.FaTabStripItem7.CanClose = False
+        Me.FaTabStripItem7.Controls.Add(Me.GroupBox6)
         Me.FaTabStripItem7.Controls.Add(Me.KryptonCheckBox1)
         Me.FaTabStripItem7.Controls.Add(Me.chkUpdates)
-        Me.FaTabStripItem7.Controls.Add(Me.chkconsole)
         Me.FaTabStripItem7.IsDrawn = True
         Me.FaTabStripItem7.Name = "FaTabStripItem7"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.FaTabStripItem7, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.FaTabStripItem7, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetToolTip(Me.FaTabStripItem7, resources.GetString("FaTabStripItem7.ToolTip"))
+        '
+        'GroupBox6
+        '
+        resources.ApplyResources(Me.GroupBox6, "GroupBox6")
+        Me.GroupBox6.Controls.Add(Me.cbDebugLevel)
+        Me.GroupBox6.Controls.Add(Me.Label13)
+        Me.GroupBox6.Controls.Add(Me.chkconsole)
+        Me.GroupBox6.Name = "GroupBox6"
+        Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox6, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox6, System.Drawing.Color.Empty)
+        Me.GroupBox6.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox6, resources.GetString("GroupBox6.ToolTip"))
+        '
+        'cbDebugLevel
+        '
+        resources.ApplyResources(Me.cbDebugLevel, "cbDebugLevel")
+        Me.cbDebugLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbDebugLevel.FormattingEnabled = True
+        Me.cbDebugLevel.Items.AddRange(New Object() {resources.GetString("cbDebugLevel.Items"), resources.GetString("cbDebugLevel.Items1"), resources.GetString("cbDebugLevel.Items2"), resources.GetString("cbDebugLevel.Items3")})
+        Me.cbDebugLevel.Name = "cbDebugLevel"
+        Me.SuperToolTip1.SetSuperToolTipColor1(Me.cbDebugLevel, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetSuperToolTipColor2(Me.cbDebugLevel, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.cbDebugLevel, resources.GetString("cbDebugLevel.ToolTip"))
+        '
+        'Label13
+        '
+        resources.ApplyResources(Me.Label13, "Label13")
+        Me.Label13.Name = "Label13"
+        Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label13, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label13, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label13, resources.GetString("Label13.ToolTip"))
+        '
+        'chkconsole
+        '
+        resources.ApplyResources(Me.chkconsole, "chkconsole")
+        Me.chkconsole.Name = "chkconsole"
+        Me.SuperToolTip1.SetSuperToolTipColor1(Me.chkconsole, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetSuperToolTipColor2(Me.chkconsole, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.chkconsole, resources.GetString("chkconsole.ToolTip"))
         '
         'KryptonCheckBox1
         '
@@ -926,14 +946,6 @@ Partial Class FormOptions
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.chkUpdates, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.chkUpdates, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetToolTip(Me.chkUpdates, resources.GetString("chkUpdates.ToolTip"))
-        '
-        'chkconsole
-        '
-        resources.ApplyResources(Me.chkconsole, "chkconsole")
-        Me.chkconsole.Name = "chkconsole"
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.chkconsole, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.chkconsole, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.chkconsole, resources.GetString("chkconsole.ToolTip"))
         '
         'FolderBrowserDialog1
         '
@@ -1004,6 +1016,8 @@ Partial Class FormOptions
         Me.GroupBox5.PerformLayout()
         Me.FaTabStripItem7.ResumeLayout(False)
         Me.FaTabStripItem7.PerformLayout()
+        Me.GroupBox6.ResumeLayout(False)
+        Me.GroupBox6.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1046,7 +1060,6 @@ Partial Class FormOptions
     Public WithEvents btnrmpath As System.Windows.Forms.Button
     Public WithEvents lbpaths As System.Windows.Forms.ListBox
     Public WithEvents SuperToolTip1 As Omarslvd.Windows.Forms.SuperToolTip
-    Public WithEvents chkconsole As System.Windows.Forms.CheckBox
     Public WithEvents chkUpdates As System.Windows.Forms.CheckBox
     Public WithEvents GroupBox7 As System.Windows.Forms.GroupBox
     Public WithEvents chkEnableParallelCalcs As System.Windows.Forms.CheckBox
@@ -1081,11 +1094,13 @@ Partial Class FormOptions
     Friend WithEvents Label12 As System.Windows.Forms.Label
     Friend WithEvents tbSolverTimeout As System.Windows.Forms.TextBox
     Friend WithEvents Label11 As System.Windows.Forms.Label
-    Friend WithEvents cbDebugLevel As System.Windows.Forms.ComboBox
-    Friend WithEvents Label13 As System.Windows.Forms.Label
     Friend WithEvents GroupBoxNetworkComputerConfig As System.Windows.Forms.GroupBox
     Friend WithEvents tbServerPort As System.Windows.Forms.TextBox
     Friend WithEvents tbServerIP As System.Windows.Forms.TextBox
     Friend WithEvents Label15 As System.Windows.Forms.Label
     Friend WithEvents Label16 As System.Windows.Forms.Label
+    Friend WithEvents GroupBox6 As System.Windows.Forms.GroupBox
+    Friend WithEvents cbDebugLevel As System.Windows.Forms.ComboBox
+    Friend WithEvents Label13 As System.Windows.Forms.Label
+    Public WithEvents chkconsole As System.Windows.Forms.CheckBox
 End Class

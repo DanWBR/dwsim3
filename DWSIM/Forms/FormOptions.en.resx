@@ -117,31 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="cbDebugLevel.Items" xml:space="preserve">
-    <value>None</value>
-  </data>
-  <data name="cbDebugLevel.Items1" xml:space="preserve">
-    <value>Low</value>
-  </data>
-  <data name="cbDebugLevel.Items2" xml:space="preserve">
-    <value>Medium</value>
-  </data>
-  <data name="cbDebugLevel.Items3" xml:space="preserve">
-    <value>High</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="cbDebugLevel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>746, 20</value>
-  </data>
-  <data name="Label13.Location" type="System.Drawing.Point, System.Drawing">
-    <value>677, 24</value>
-  </data>
-  <data name="Label13.Size" type="System.Drawing.Size, System.Drawing">
-    <value>63, 13</value>
-  </data>
-  <data name="Label13.Text" xml:space="preserve">
-    <value>Debug level</value>
-  </data>
   <data name="Label12.Location" type="System.Drawing.Point, System.Drawing">
     <value>520, 24</value>
   </data>
@@ -151,8 +127,14 @@
   <data name="Label12.Text" xml:space="preserve">
     <value>seconds</value>
   </data>
+  <data name="Label12.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="tbSolverTimeout.Location" type="System.Drawing.Point, System.Drawing">
     <value>463, 21</value>
+  </data>
+  <data name="tbSolverTimeout.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="Label11.Size" type="System.Drawing.Size, System.Drawing">
     <value>76, 13</value>
@@ -160,14 +142,26 @@
   <data name="Label11.Text" xml:space="preserve">
     <value>Solver timeout</value>
   </data>
+  <data name="Label11.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbServiceBusNamespace.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="Label8.Size" type="System.Drawing.Size, System.Drawing">
     <value>92, 13</value>
   </data>
   <data name="Label8.Text" xml:space="preserve">
     <value>Connection String</value>
   </data>
+  <data name="Label8.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="GroupBoxAzureConfig.Text" xml:space="preserve">
     <value>Azure Service Bus Settings</value>
+  </data>
+  <data name="GroupBoxAzureConfig.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="cbSolverMode.Items" xml:space="preserve">
     <value>Main Thread</value>
@@ -181,11 +175,23 @@
   <data name="cbSolverMode.Items4" xml:space="preserve">
     <value>Network Computer</value>
   </data>
+  <data name="cbSolverMode.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>88, 13</value>
   </data>
   <data name="Label2.Text" xml:space="preserve">
     <value>Calculation Mode</value>
+  </data>
+  <data name="Label2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbServerPort.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbServerIP.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="Label15.Size" type="System.Drawing.Size, System.Drawing">
     <value>89, 13</value>
@@ -193,20 +199,41 @@
   <data name="Label15.Text" xml:space="preserve">
     <value>TCP Port Number</value>
   </data>
+  <data name="Label15.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="Label16.Size" type="System.Drawing.Size, System.Drawing">
     <value>59, 13</value>
   </data>
   <data name="Label16.Text" xml:space="preserve">
     <value>IP Address</value>
   </data>
+  <data name="Label16.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="GroupBoxNetworkComputerConfig.Text" xml:space="preserve">
     <value>Network Computer connection settings</value>
+  </data>
+  <data name="GroupBoxNetworkComputerConfig.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Solver Options</value>
   </data>
+  <data name="GroupBox2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbGPUCaps.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="GroupBox8.Text" xml:space="preserve">
     <value>OpenCL/CUDA device info</value>
+  </data>
+  <data name="GroupBox8.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cbGPU.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
     <value>83, 13</value>
@@ -214,11 +241,20 @@
   <data name="Label7.Text" xml:space="preserve">
     <value>Selected Device</value>
   </data>
+  <data name="Label7.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="chkEnableGPUProcessing.Size" type="System.Drawing.Size, System.Drawing">
     <value>222, 17</value>
   </data>
   <data name="chkEnableGPUProcessing.Text" xml:space="preserve">
     <value>Enable OpenCL/CUDA Parallel Processing</value>
+  </data>
+  <data name="chkEnableGPUProcessing.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cbParallelism.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>103, 13</value>
@@ -226,17 +262,29 @@
   <data name="Label6.Text" xml:space="preserve">
     <value>Maximum Parallelism</value>
   </data>
+  <data name="Label6.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="chkEnableParallelCalcs.Size" type="System.Drawing.Size, System.Drawing">
     <value>172, 17</value>
   </data>
   <data name="chkEnableParallelCalcs.Text" xml:space="preserve">
     <value>Enable CPU Parallel Processing</value>
   </data>
+  <data name="chkEnableParallelCalcs.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="GroupBox7.Text" xml:space="preserve">
     <value>Local Calculation Engine Settings</value>
   </data>
+  <data name="GroupBox7.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="FaTabStripItem1.Title" xml:space="preserve">
     <value>Solver Configuration</value>
+  </data>
+  <data name="FaTabStripItem1.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="cbudb.Size" type="System.Drawing.Size, System.Drawing">
     <value>268, 17</value>
@@ -244,14 +292,26 @@
   <data name="cbudb.Text" xml:space="preserve">
     <value>Replace components when loading user databases</value>
   </data>
+  <data name="cbudb.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="Button11.Text" xml:space="preserve">
     <value>Add ChemSep™ Database</value>
+  </data>
+  <data name="Button11.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="Button7.Text" xml:space="preserve">
     <value>Add User Database</value>
   </data>
+  <data name="Button7.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="GroupBox11.Text" xml:space="preserve">
     <value>Tasks</value>
+  </data>
+  <data name="GroupBox11.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="DataGridViewCellStyle1.NullValue" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -287,17 +347,32 @@
         hIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEAAA=
 </value>
   </data>
+  <data name="dgvdb.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="GroupBox4.Text" xml:space="preserve">
-    <value>Compound Databases</value>
+    <value>Component Databases</value>
+  </data>
+  <data name="GroupBox4.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="FaTabStripItem3.Title" xml:space="preserve">
-    <value>Compound Databases</value>
+    <value>Component Databases</value>
+  </data>
+  <data name="FaTabStripItem3.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="Button4.Text" xml:space="preserve">
     <value>Add user database</value>
   </data>
+  <data name="Button4.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="GroupBox12.Text" xml:space="preserve">
     <value>Tasks</value>
+  </data>
+  <data name="GroupBox12.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="DataGridViewCellStyle3.NullValue" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -316,11 +391,23 @@
         hIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEAAA=
 </value>
   </data>
+  <data name="dgvIPDB.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="GroupBox10.Text" xml:space="preserve">
     <value>Interaction Parameter Databases</value>
   </data>
+  <data name="GroupBox10.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="FaTabStripItem6.Title" xml:space="preserve">
     <value>Interaction Parameters</value>
+  </data>
+  <data name="FaTabStripItem6.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Button1.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="ListView1.Items" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
@@ -330,7 +417,7 @@
         PWIwM2Y1ZjdmMTFkNTBhM2EFAQAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0HAAAA
         BFRleHQKSW1hZ2VJbmRleAlCYWNrQ29sb3IHQ2hlY2tlZARGb250CUZvcmVDb2xvchdVc2VJdGVtU3R5
         bGVGb3JTdWJJdGVtcwEABAAEBAAIFFN5c3RlbS5EcmF3aW5nLkNvbG9yAwAAAAETU3lzdGVtLkRyYXdp
-        bmcuRm9udAMAAAAUU3lzdGVtLkRyYXdpbmcuQ29sb3IDAAAAAQIAAAAGBAAAABNQb3J0dWd1w6pzIChC
+        bmcuRm9udAMAAAAUU3lzdGVtLkRyYXdpbmcuQ29sb3IDAAAAAQIAAAAGBAAAABNQb3J0dWd1ZXNlIChC
         cmFzaWwpAAAAAAX7////FFN5c3RlbS5EcmF3aW5nLkNvbG9yBAAAAARuYW1lBXZhbHVlCmtub3duQ29s
         b3IFc3RhdGUBAAAACQcHAwAAAAoAAAAAAAAAABgAAQAACQYAAAAB+f////v///8KAAAAAAAAAAAaAAEA
         AQUGAAAAE1N5c3RlbS5EcmF3aW5nLkZvbnQEAAAABE5hbWUEU2l6ZQVTdHlsZQRVbml0AQAEBAsYU3lz
@@ -348,14 +435,13 @@
         PWIwM2Y1ZjdmMTFkNTBhM2EFAQAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0HAAAA
         BFRleHQKSW1hZ2VJbmRleAlCYWNrQ29sb3IHQ2hlY2tlZARGb250CUZvcmVDb2xvchdVc2VJdGVtU3R5
         bGVGb3JTdWJJdGVtcwEABAAEBAAIFFN5c3RlbS5EcmF3aW5nLkNvbG9yAwAAAAETU3lzdGVtLkRyYXdp
-        bmcuRm9udAMAAAAUU3lzdGVtLkRyYXdpbmcuQ29sb3IDAAAAAQIAAAAGBAAAABhJbmdsw6pzIChFc3Rh
-        ZG9zIFVuaWRvcykCAAAABfv///8UU3lzdGVtLkRyYXdpbmcuQ29sb3IEAAAABG5hbWUFdmFsdWUKa25v
-        d25Db2xvcgVzdGF0ZQEAAAAJBwcDAAAACgAAAAAAAAAAGAABAAAJBgAAAAH5////+////woAAAAAAAAA
-        ABoAAQABBQYAAAATU3lzdGVtLkRyYXdpbmcuRm9udAQAAAAETmFtZQRTaXplBVN0eWxlBFVuaXQBAAQE
-        CxhTeXN0ZW0uRHJhd2luZy5Gb250U3R5bGUDAAAAG1N5c3RlbS5EcmF3aW5nLkdyYXBoaWNzVW5pdAMA
-        AAADAAAABggAAAAGVGFob21hAAAEQQX3////GFN5c3RlbS5EcmF3aW5nLkZvbnRTdHlsZQEAAAAHdmFs
-        dWVfXwAIAwAAAAAAAAAF9v///xtTeXN0ZW0uRHJhd2luZy5HcmFwaGljc1VuaXQBAAAAB3ZhbHVlX18A
-        CAMAAAADAAAACw==
+        bmcuRm9udAMAAAAUU3lzdGVtLkRyYXdpbmcuQ29sb3IDAAAAAQIAAAAGBAAAAA1FbmdsaXNoIChVU0Ep
+        AgAAAAX7////FFN5c3RlbS5EcmF3aW5nLkNvbG9yBAAAAARuYW1lBXZhbHVlCmtub3duQ29sb3IFc3Rh
+        dGUBAAAACQcHAwAAAAoAAAAAAAAAABgAAQAACQYAAAAB+f////v///8KAAAAAAAAAAAaAAEAAQUGAAAA
+        E1N5c3RlbS5EcmF3aW5nLkZvbnQEAAAABE5hbWUEU2l6ZQVTdHlsZQRVbml0AQAEBAsYU3lzdGVtLkRy
+        YXdpbmcuRm9udFN0eWxlAwAAABtTeXN0ZW0uRHJhd2luZy5HcmFwaGljc1VuaXQDAAAAAwAAAAYIAAAA
+        BlRhaG9tYQAABEEF9////xhTeXN0ZW0uRHJhd2luZy5Gb250U3R5bGUBAAAAB3ZhbHVlX18ACAMAAAAA
+        AAAABfb///8bU3lzdGVtLkRyYXdpbmcuR3JhcGhpY3NVbml0AQAAAAd2YWx1ZV9fAAgDAAAAAwAAAAs=
 </value>
   </data>
   <data name="ListView1.Items2" mimetype="application/x-microsoft.net.object.binary.base64">
@@ -366,13 +452,13 @@
         PWIwM2Y1ZjdmMTFkNTBhM2EFAQAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0HAAAA
         BFRleHQKSW1hZ2VJbmRleAlCYWNrQ29sb3IHQ2hlY2tlZARGb250CUZvcmVDb2xvchdVc2VJdGVtU3R5
         bGVGb3JTdWJJdGVtcwEABAAEBAAIFFN5c3RlbS5EcmF3aW5nLkNvbG9yAwAAAAETU3lzdGVtLkRyYXdp
-        bmcuRm9udAMAAAAUU3lzdGVtLkRyYXdpbmcuQ29sb3IDAAAAAQIAAAAGBAAAAAhFc3BhbmhvbAQAAAAF
-        +////xRTeXN0ZW0uRHJhd2luZy5Db2xvcgQAAAAEbmFtZQV2YWx1ZQprbm93bkNvbG9yBXN0YXRlAQAA
-        AAkHBwMAAAAKAAAAAAAAAAAYAAEAAAkGAAAAAfn////7////CgAAAAAAAAAAGgABAAEFBgAAABNTeXN0
-        ZW0uRHJhd2luZy5Gb250BAAAAAROYW1lBFNpemUFU3R5bGUEVW5pdAEABAQLGFN5c3RlbS5EcmF3aW5n
-        LkZvbnRTdHlsZQMAAAAbU3lzdGVtLkRyYXdpbmcuR3JhcGhpY3NVbml0AwAAAAMAAAAGCAAAAAZUYWhv
-        bWEAAARBBff///8YU3lzdGVtLkRyYXdpbmcuRm9udFN0eWxlAQAAAAd2YWx1ZV9fAAgDAAAAAAAAAAX2
-        ////G1N5c3RlbS5EcmF3aW5nLkdyYXBoaWNzVW5pdAEAAAAHdmFsdWVfXwAIAwAAAAMAAAAL
+        bmcuRm9udAMAAAAUU3lzdGVtLkRyYXdpbmcuQ29sb3IDAAAAAQIAAAAGBAAAAAdTcGFuaXNoBAAAAAX7
+        ////FFN5c3RlbS5EcmF3aW5nLkNvbG9yBAAAAARuYW1lBXZhbHVlCmtub3duQ29sb3IFc3RhdGUBAAAA
+        CQcHAwAAAAoAAAAAAAAAABgAAQAACQYAAAAB+f////v///8KAAAAAAAAAAAaAAEAAQUGAAAAE1N5c3Rl
+        bS5EcmF3aW5nLkZvbnQEAAAABE5hbWUEU2l6ZQVTdHlsZQRVbml0AQAEBAsYU3lzdGVtLkRyYXdpbmcu
+        Rm9udFN0eWxlAwAAABtTeXN0ZW0uRHJhd2luZy5HcmFwaGljc1VuaXQDAAAAAwAAAAYIAAAABlRhaG9t
+        YQAABEEF9////xhTeXN0ZW0uRHJhd2luZy5Gb250U3R5bGUBAAAAB3ZhbHVlX18ACAMAAAAAAAAABfb/
+        //8bU3lzdGVtLkRyYXdpbmcuR3JhcGhpY3NVbml0AQAAAAd2YWx1ZV9fAAgDAAAAAwAAAAs=
 </value>
   </data>
   <data name="ListView1.Items3" mimetype="application/x-microsoft.net.object.binary.base64">
@@ -383,13 +469,13 @@
         PWIwM2Y1ZjdmMTFkNTBhM2EFAQAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0HAAAA
         BFRleHQKSW1hZ2VJbmRleAlCYWNrQ29sb3IHQ2hlY2tlZARGb250CUZvcmVDb2xvchdVc2VJdGVtU3R5
         bGVGb3JTdWJJdGVtcwEABAAEBAAIFFN5c3RlbS5EcmF3aW5nLkNvbG9yAwAAAAETU3lzdGVtLkRyYXdp
-        bmcuRm9udAMAAAAUU3lzdGVtLkRyYXdpbmcuQ29sb3IDAAAAAQIAAAAGBAAAAAdBbGVtw6NvBwAAAAX7
-        ////FFN5c3RlbS5EcmF3aW5nLkNvbG9yBAAAAARuYW1lBXZhbHVlCmtub3duQ29sb3IFc3RhdGUBAAAA
-        CQcHAwAAAAoAAAAAAAAAABgAAQAACQYAAAAB+f////v///8KAAAAAAAAAAAaAAEAAQUGAAAAE1N5c3Rl
-        bS5EcmF3aW5nLkZvbnQEAAAABE5hbWUEU2l6ZQVTdHlsZQRVbml0AQAEBAsYU3lzdGVtLkRyYXdpbmcu
-        Rm9udFN0eWxlAwAAABtTeXN0ZW0uRHJhd2luZy5HcmFwaGljc1VuaXQDAAAAAwAAAAYIAAAABlRhaG9t
-        YQAABEEF9////xhTeXN0ZW0uRHJhd2luZy5Gb250U3R5bGUBAAAAB3ZhbHVlX18ACAMAAAAAAAAABfb/
-        //8bU3lzdGVtLkRyYXdpbmcuR3JhcGhpY3NVbml0AQAAAAd2YWx1ZV9fAAgDAAAAAwAAAAs=
+        bmcuRm9udAMAAAAUU3lzdGVtLkRyYXdpbmcuQ29sb3IDAAAAAQIAAAAGBAAAAAZHZXJtYW4HAAAABfv/
+        //8UU3lzdGVtLkRyYXdpbmcuQ29sb3IEAAAABG5hbWUFdmFsdWUKa25vd25Db2xvcgVzdGF0ZQEAAAAJ
+        BwcDAAAACgAAAAAAAAAAGAABAAAJBgAAAAH5////+////woAAAAAAAAAABoAAQABBQYAAAATU3lzdGVt
+        LkRyYXdpbmcuRm9udAQAAAAETmFtZQRTaXplBVN0eWxlBFVuaXQBAAQECxhTeXN0ZW0uRHJhd2luZy5G
+        b250U3R5bGUDAAAAG1N5c3RlbS5EcmF3aW5nLkdyYXBoaWNzVW5pdAMAAAADAAAABggAAAAGVGFob21h
+        AAAEQQX3////GFN5c3RlbS5EcmF3aW5nLkZvbnRTdHlsZQEAAAAHdmFsdWVfXwAIAwAAAAAAAAAF9v//
+        /xtTeXN0ZW0uRHJhd2luZy5HcmFwaGljc1VuaXQBAAAAB3ZhbHVlX18ACAMAAAADAAAACw==
 </value>
   </data>
   <data name="ImageList1.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
@@ -397,7 +483,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABo
-        KgAAAk1TRnQBSQFMAgEBCgEAAbABAwGwAQMBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        KgAAAk1TRnQBSQFMAgEBCgEAAdABAwHQAQMBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABMAMAAQEBAAEYBgABJBIAAekCpwHpAqcB5wKlAeUCowHlAqMB5QKjAeQCogHiAqAB4QKfAd4CnAHe
         ApwB3AKaAdoCmAHaApgB2gKYAdoCmAHkAqIB4gKgAeECnwHeApwB3AGcAZoB2gKYAdoCmAHZApcB1wKV
         AdYClAHTApEB0wKRAdECjwHPAo0BzwKNAc8CjWAABvYD9APzAfIB8wHyA/ED8APuA+0D6wPpA+gB5wLm
@@ -587,11 +673,17 @@
   <data name="ListView1.Size" type="System.Drawing.Size, System.Drawing">
     <value>363, 114</value>
   </data>
+  <data name="ListView1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>54, 13</value>
   </data>
   <data name="Label3.Text" xml:space="preserve">
     <value>Language</value>
+  </data>
+  <data name="Label3.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>384, 13</value>
@@ -599,11 +691,20 @@
   <data name="Label1.Text" xml:space="preserve">
     <value>Select an User Interface Language from the list below and click 'OK' to confirm:</value>
   </data>
+  <data name="Label1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>UI Language</value>
   </data>
+  <data name="GroupBox1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="FaTabStripItem4.Title" xml:space="preserve">
     <value>UI Language</value>
+  </data>
+  <data name="FaTabStripItem4.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="Button2.Location" type="System.Drawing.Point, System.Drawing">
     <value>598, 56</value>
@@ -614,11 +715,17 @@
   <data name="Button2.Text" xml:space="preserve">
     <value>Delete All ".dwbak" Files in Backup Folder</value>
   </data>
+  <data name="Button2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="KryptonLabel3.Location" type="System.Drawing.Point, System.Drawing">
     <value>135, 112</value>
   </data>
   <data name="KryptonLabel3.Text" xml:space="preserve">
     <value>5 minutes</value>
+  </data>
+  <data name="KryptonLabel3.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="TrackBar1.Location" type="System.Drawing.Point, System.Drawing">
     <value>138, 90</value>
@@ -626,8 +733,14 @@
   <data name="TrackBar1.Size" type="System.Drawing.Size, System.Drawing">
     <value>706, 19</value>
   </data>
+  <data name="TrackBar1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="KryptonLabel2.Text" xml:space="preserve">
     <value>Interval between saves:</value>
+  </data>
+  <data name="KryptonLabel2.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="KryptonButton1.Location" type="System.Drawing.Point, System.Drawing">
     <value>509, 56</value>
@@ -635,8 +748,14 @@
   <data name="KryptonButton1.Text" xml:space="preserve">
     <value>Select</value>
   </data>
+  <data name="KryptonButton1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="KryptonTextBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>138, 59</value>
+  </data>
+  <data name="KryptonTextBox1.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="KryptonLabel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>79, 13</value>
@@ -644,17 +763,32 @@
   <data name="KryptonLabel1.Text" xml:space="preserve">
     <value>Save to folder:</value>
   </data>
+  <data name="KryptonLabel1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="KryptonCheckBox6.Location" type="System.Drawing.Point, System.Drawing">
     <value>9, 27</value>
   </data>
   <data name="KryptonCheckBox6.Text" xml:space="preserve">
     <value>Enable backup copies</value>
   </data>
+  <data name="KryptonCheckBox6.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="GroupBox3.Text" xml:space="preserve">
     <value>Backup Copies</value>
   </data>
+  <data name="GroupBox3.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="FaTabStripItem2.Title" xml:space="preserve">
     <value>Backups</value>
+  </data>
+  <data name="FaTabStripItem2.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbpaths.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>33, 13</value>
@@ -662,11 +796,23 @@
   <data name="Label5.Text" xml:space="preserve">
     <value>Path:</value>
   </data>
+  <data name="Label5.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="btnrmpath.Text" xml:space="preserve">
     <value>Remove selected</value>
   </data>
+  <data name="btnrmpath.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="btnaddpath.Text" xml:space="preserve">
     <value>Add</value>
+  </data>
+  <data name="btnaddpath.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tbaddpath.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
     <value>396, 13</value>
@@ -674,20 +820,47 @@
   <data name="Label4.Text" xml:space="preserve">
     <value>Manage the paths were the compiler should search files for importing into scripts:</value>
   </data>
+  <data name="Label4.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="GroupBox5.Text" xml:space="preserve">
     <value>IronPython and IronRuby</value>
   </data>
-  <data name="KryptonCheckBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>203, 17</value>
+  <data name="GroupBox5.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="KryptonCheckBox1.Text" xml:space="preserve">
-    <value>Show the welcome screen on startup</value>
+  <data name="FaTabStripItem5.ToolTip" xml:space="preserve">
+    <value />
   </data>
-  <data name="chkUpdates.Size" type="System.Drawing.Size, System.Drawing">
-    <value>167, 17</value>
+  <data name="cbDebugLevel.Items" xml:space="preserve">
+    <value>None</value>
   </data>
-  <data name="chkUpdates.Text" xml:space="preserve">
-    <value>Check for updates on startup</value>
+  <data name="cbDebugLevel.Items1" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="cbDebugLevel.Items2" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="cbDebugLevel.Items3" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="cbDebugLevel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>72, 49</value>
+  </data>
+  <data name="cbDebugLevel.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label13.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 53</value>
+  </data>
+  <data name="Label13.Size" type="System.Drawing.Size, System.Drawing">
+    <value>63, 13</value>
+  </data>
+  <data name="Label13.Text" xml:space="preserve">
+    <value>Debug level</value>
+  </data>
+  <data name="Label13.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="chkconsole.Size" type="System.Drawing.Size, System.Drawing">
     <value>140, 17</value>
@@ -695,8 +868,41 @@
   <data name="chkconsole.Text" xml:space="preserve">
     <value>Redirect console output</value>
   </data>
+  <data name="chkconsole.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GroupBox6.Text" xml:space="preserve">
+    <value>Protocol output</value>
+  </data>
+  <data name="GroupBox6.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="KryptonCheckBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>203, 17</value>
+  </data>
+  <data name="KryptonCheckBox1.Text" xml:space="preserve">
+    <value>Show the welcome screen on startup</value>
+  </data>
+  <data name="KryptonCheckBox1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkUpdates.Size" type="System.Drawing.Size, System.Drawing">
+    <value>167, 17</value>
+  </data>
+  <data name="chkUpdates.Text" xml:space="preserve">
+    <value>Check for updates on startup</value>
+  </data>
+  <data name="chkUpdates.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="FaTabStripItem7.Title" xml:space="preserve">
     <value>Other</value>
+  </data>
+  <data name="FaTabStripItem7.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="FaTabStrip1.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="FolderBrowserDialog1.Description" xml:space="preserve">
     <value>Select a folder...</value>
@@ -715,5 +921,8 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>DWSIM - General Settings</value>
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
   </data>
 </root>

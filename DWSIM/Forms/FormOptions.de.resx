@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="FaTabStripItem1.Title" xml:space="preserve">
-    <value>Funktionen</value>
+    <value>Solver Konfiguration</value>
   </data>
   <data name="FaTabStripItem3.Title" xml:space="preserve">
     <value>Komponenten</value>
@@ -132,36 +132,21 @@
   <data name="FaTabStripItem2.Title" xml:space="preserve">
     <value>Backups</value>
   </data>
+  <data name="FaTabStripItem7.Title" xml:space="preserve">
+    <value>Andere Optionen</value>
+  </data>
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Solver-Optionen</value>
   </data>
-  <data name="cbDebugLevel.Items" xml:space="preserve">
-    <value>Keine</value>
-  </data>
-  <data name="cbDebugLevel.Items1" xml:space="preserve">
-    <value>Niedrig</value>
-  </data>
-  <data name="cbDebugLevel.Items2" xml:space="preserve">
-    <value>Durchschnitt</value>
-  </data>
-  <data name="cbDebugLevel.Items3" xml:space="preserve">
-    <value>Hoch</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="Label13.Location" type="System.Drawing.Point, System.Drawing">
-    <value>682, 24</value>
-  </data>
-  <data name="Label13.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 13</value>
-  </data>
-  <data name="Label13.Text" xml:space="preserve">
-    <value>Debuglevel</value>
-  </data>
   <data name="Label12.Location" type="System.Drawing.Point, System.Drawing">
     <value>504, 24</value>
   </data>
+  <data name="Label12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 13</value>
+  </data>
   <data name="Label12.Text" xml:space="preserve">
-    <value>sekunden</value>
+    <value>Sekunden</value>
   </data>
   <data name="tbSolverTimeout.Location" type="System.Drawing.Point, System.Drawing">
     <value>447, 20</value>
@@ -182,13 +167,13 @@
     <value>Connection String</value>
   </data>
   <data name="cbSolverMode.Items" xml:space="preserve">
-    <value>Haupt Gang</value>
+    <value>Haupt Thread</value>
   </data>
   <data name="cbSolverMode.Items1" xml:space="preserve">
-    <value>Hintergrund Gang</value>
+    <value>Hintergrund Thread</value>
   </data>
   <data name="cbSolverMode.Items2" xml:space="preserve">
-    <value>Hintergrund Parallel Gang</value>
+    <value>Hintergrund Parallel Thread</value>
   </data>
   <data name="cbSolverMode.Items4" xml:space="preserve">
     <value>Netzwerkcomputer</value>
@@ -218,7 +203,7 @@
     <value>8, 178</value>
   </data>
   <data name="GroupBox7.Text" xml:space="preserve">
-    <value>Mittel</value>
+    <value>Einstellunge für lokalen Solver</value>
   </data>
   <data name="GroupBox8.Text" xml:space="preserve">
     <value>Informationen GPU gewählt</value>
@@ -345,14 +330,14 @@
         PWIwM2Y1ZjdmMTFkNTBhM2EFAQAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0HAAAA
         BFRleHQKSW1hZ2VJbmRleAlCYWNrQ29sb3IHQ2hlY2tlZARGb250CUZvcmVDb2xvchdVc2VJdGVtU3R5
         bGVGb3JTdWJJdGVtcwEABAAEBAAIFFN5c3RlbS5EcmF3aW5nLkNvbG9yAwAAAAETU3lzdGVtLkRyYXdp
-        bmcuRm9udAMAAAAUU3lzdGVtLkRyYXdpbmcuQ29sb3IDAAAAAQIAAAAGBAAAABNQb3J0dWd1w6pzIChC
-        cmFzaWwpAAAAAAX7////FFN5c3RlbS5EcmF3aW5nLkNvbG9yBAAAAARuYW1lBXZhbHVlCmtub3duQ29s
-        b3IFc3RhdGUBAAAACQcHAwAAAAoAAAAAAAAAABgAAQAACQYAAAAB+f////v///8KAAAAAAAAAAAaAAEA
-        AQUGAAAAE1N5c3RlbS5EcmF3aW5nLkZvbnQEAAAABE5hbWUEU2l6ZQVTdHlsZQRVbml0AQAEBAsYU3lz
-        dGVtLkRyYXdpbmcuRm9udFN0eWxlAwAAABtTeXN0ZW0uRHJhd2luZy5HcmFwaGljc1VuaXQDAAAAAwAA
-        AAYIAAAABlRhaG9tYQAABEEF9////xhTeXN0ZW0uRHJhd2luZy5Gb250U3R5bGUBAAAAB3ZhbHVlX18A
-        CAMAAAAAAAAABfb///8bU3lzdGVtLkRyYXdpbmcuR3JhcGhpY3NVbml0AQAAAAd2YWx1ZV9fAAgDAAAA
-        AwAAAAs=
+        bmcuRm9udAMAAAAUU3lzdGVtLkRyYXdpbmcuQ29sb3IDAAAAAQIAAAAGBAAAABhQb3J0dWdpc2lzY2gg
+        KEJyYXNpbGllbikAAAAABfv///8UU3lzdGVtLkRyYXdpbmcuQ29sb3IEAAAABG5hbWUFdmFsdWUKa25v
+        d25Db2xvcgVzdGF0ZQEAAAAJBwcDAAAACgAAAAAAAAAAGAABAAAJBgAAAAH5////+////woAAAAAAAAA
+        ABoAAQABBQYAAAATU3lzdGVtLkRyYXdpbmcuRm9udAQAAAAETmFtZQRTaXplBVN0eWxlBFVuaXQBAAQE
+        CxhTeXN0ZW0uRHJhd2luZy5Gb250U3R5bGUDAAAAG1N5c3RlbS5EcmF3aW5nLkdyYXBoaWNzVW5pdAMA
+        AAADAAAABggAAAAGVGFob21hAAAEQQX3////GFN5c3RlbS5EcmF3aW5nLkZvbnRTdHlsZQEAAAAHdmFs
+        dWVfXwAIAwAAAAAAAAAF9v///xtTeXN0ZW0uRHJhd2luZy5HcmFwaGljc1VuaXQBAAAAB3ZhbHVlX18A
+        CAMAAAADAAAACw==
 </value>
   </data>
   <data name="ListView1.Items1" mimetype="application/x-microsoft.net.object.binary.base64">
@@ -363,14 +348,13 @@
         PWIwM2Y1ZjdmMTFkNTBhM2EFAQAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0HAAAA
         BFRleHQKSW1hZ2VJbmRleAlCYWNrQ29sb3IHQ2hlY2tlZARGb250CUZvcmVDb2xvchdVc2VJdGVtU3R5
         bGVGb3JTdWJJdGVtcwEABAAEBAAIFFN5c3RlbS5EcmF3aW5nLkNvbG9yAwAAAAETU3lzdGVtLkRyYXdp
-        bmcuRm9udAMAAAAUU3lzdGVtLkRyYXdpbmcuQ29sb3IDAAAAAQIAAAAGBAAAABhJbmdsw6pzIChFc3Rh
-        ZG9zIFVuaWRvcykCAAAABfv///8UU3lzdGVtLkRyYXdpbmcuQ29sb3IEAAAABG5hbWUFdmFsdWUKa25v
-        d25Db2xvcgVzdGF0ZQEAAAAJBwcDAAAACgAAAAAAAAAAGAABAAAJBgAAAAH5////+////woAAAAAAAAA
-        ABoAAQABBQYAAAATU3lzdGVtLkRyYXdpbmcuRm9udAQAAAAETmFtZQRTaXplBVN0eWxlBFVuaXQBAAQE
-        CxhTeXN0ZW0uRHJhd2luZy5Gb250U3R5bGUDAAAAG1N5c3RlbS5EcmF3aW5nLkdyYXBoaWNzVW5pdAMA
-        AAADAAAABggAAAAGVGFob21hAAAEQQX3////GFN5c3RlbS5EcmF3aW5nLkZvbnRTdHlsZQEAAAAHdmFs
-        dWVfXwAIAwAAAAAAAAAF9v///xtTeXN0ZW0uRHJhd2luZy5HcmFwaGljc1VuaXQBAAAAB3ZhbHVlX18A
-        CAMAAAADAAAACw==
+        bmcuRm9udAMAAAAUU3lzdGVtLkRyYXdpbmcuQ29sb3IDAAAAAQIAAAAGBAAAAA5FbmdsaXNjaCAoVVNB
+        KQIAAAAF+////xRTeXN0ZW0uRHJhd2luZy5Db2xvcgQAAAAEbmFtZQV2YWx1ZQprbm93bkNvbG9yBXN0
+        YXRlAQAAAAkHBwMAAAAKAAAAAAAAAAAYAAEAAAkGAAAAAfn////7////CgAAAAAAAAAAGgABAAEFBgAA
+        ABNTeXN0ZW0uRHJhd2luZy5Gb250BAAAAAROYW1lBFNpemUFU3R5bGUEVW5pdAEABAQLGFN5c3RlbS5E
+        cmF3aW5nLkZvbnRTdHlsZQMAAAAbU3lzdGVtLkRyYXdpbmcuR3JhcGhpY3NVbml0AwAAAAMAAAAGCAAA
+        AAZUYWhvbWEAAARBBff///8YU3lzdGVtLkRyYXdpbmcuRm9udFN0eWxlAQAAAAd2YWx1ZV9fAAgDAAAA
+        AAAAAAX2////G1N5c3RlbS5EcmF3aW5nLkdyYXBoaWNzVW5pdAEAAAAHdmFsdWVfXwAIAwAAAAMAAAAL
 </value>
   </data>
   <data name="ListView1.Items2" mimetype="application/x-microsoft.net.object.binary.base64">
@@ -381,7 +365,7 @@
         PWIwM2Y1ZjdmMTFkNTBhM2EFAQAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0HAAAA
         BFRleHQKSW1hZ2VJbmRleAlCYWNrQ29sb3IHQ2hlY2tlZARGb250CUZvcmVDb2xvchdVc2VJdGVtU3R5
         bGVGb3JTdWJJdGVtcwEABAAEBAAIFFN5c3RlbS5EcmF3aW5nLkNvbG9yAwAAAAETU3lzdGVtLkRyYXdp
-        bmcuRm9udAMAAAAUU3lzdGVtLkRyYXdpbmcuQ29sb3IDAAAAAQIAAAAGBAAAAAhFc3BhbmhvbAQAAAAF
+        bmcuRm9udAMAAAAUU3lzdGVtLkRyYXdpbmcuQ29sb3IDAAAAAQIAAAAGBAAAAAhTcGFuaXNjaAQAAAAF
         +////xRTeXN0ZW0uRHJhd2luZy5Db2xvcgQAAAAEbmFtZQV2YWx1ZQprbm93bkNvbG9yBXN0YXRlAQAA
         AAkHBwMAAAAKAAAAAAAAAAAYAAEAAAkGAAAAAfn////7////CgAAAAAAAAAAGgABAAEFBgAAABNTeXN0
         ZW0uRHJhd2luZy5Gb250BAAAAAROYW1lBFNpemUFU3R5bGUEVW5pdAEABAQLGFN5c3RlbS5EcmF3aW5n
@@ -398,7 +382,7 @@
         PWIwM2Y1ZjdmMTFkNTBhM2EFAQAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0HAAAA
         BFRleHQKSW1hZ2VJbmRleAlCYWNrQ29sb3IHQ2hlY2tlZARGb250CUZvcmVDb2xvchdVc2VJdGVtU3R5
         bGVGb3JTdWJJdGVtcwEABAAEBAAIFFN5c3RlbS5EcmF3aW5nLkNvbG9yAwAAAAETU3lzdGVtLkRyYXdp
-        bmcuRm9udAMAAAAUU3lzdGVtLkRyYXdpbmcuQ29sb3IDAAAAAQIAAAAGBAAAAAdBbGVtw6NvBwAAAAX7
+        bmcuRm9udAMAAAAUU3lzdGVtLkRyYXdpbmcuQ29sb3IDAAAAAQIAAAAGBAAAAAdEZXV0c2NoBwAAAAX7
         ////FFN5c3RlbS5EcmF3aW5nLkNvbG9yBAAAAARuYW1lBXZhbHVlCmtub3duQ29sb3IFc3RhdGUBAAAA
         CQcHAwAAAAoAAAAAAAAAABgAAQAACQYAAAAB+f////v///8KAAAAAAAAAAAaAAEAAQUGAAAAE1N5c3Rl
         bS5EcmF3aW5nLkZvbnQEAAAABE5hbWUEU2l6ZQVTdHlsZQRVbml0AQAEBAsYU3lzdGVtLkRyYXdpbmcu
@@ -412,7 +396,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABo
-        KgAAAk1TRnQBSQFMAgEBCgEAAZQBAwGUAQMBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        KgAAAk1TRnQBSQFMAgEBCgEAAZwBAwGcAQMBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABMAMAAQEBAAEYBgABJBIAAekCpwHpAqcB5wKlAeUCowHlAqMB5QKjAeQCogHiAqAB4QKfAd4CnAHe
         ApwB3AKaAdoCmAHaApgB2gKYAdoCmAHkAqIB4gKgAeECnwHeApwB3AGcAZoB2gKYAdoCmAHZApcB1wKV
         AdYClAHTApEB0wKRAdECjwHPAo0BzwKNAc8CjWAABvYD9APzAfIB8wHyA/ED8APuA+0D6wPpA+gB5wLm
@@ -659,11 +643,17 @@
   <data name="KryptonCheckBox1.Text" xml:space="preserve">
     <value>Zeige beim Start den Eröffnungsbildschirm</value>
   </data>
+  <data name="chkUpdates.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 44</value>
+  </data>
   <data name="chkUpdates.Size" type="System.Drawing.Size, System.Drawing">
     <value>196, 17</value>
   </data>
   <data name="chkUpdates.Text" xml:space="preserve">
     <value>Beim Starten nach Updates suchen </value>
+  </data>
+  <data name="chkconsole.Location" type="System.Drawing.Point, System.Drawing">
+    <value>21, 108</value>
   </data>
   <data name="chkconsole.Size" type="System.Drawing.Size, System.Drawing">
     <value>179, 17</value>
@@ -685,6 +675,37 @@
   </data>
   <data name="OpenFileDialog1.Title" xml:space="preserve">
     <value>Anwenderdatenbank hinzufügen</value>
+  </data>
+  <data name="cbDebugLevel.Items" xml:space="preserve">
+    <value>Keine Ausgabe</value>
+  </data>
+  <data name="cbDebugLevel.Items1" xml:space="preserve">
+    <value>Niedrig</value>
+  </data>
+  <data name="cbDebugLevel.Items2" xml:space="preserve">
+    <value>Durchschnitt</value>
+  </data>
+  <data name="cbDebugLevel.Items3" xml:space="preserve">
+    <value>Hoch</value>
+  </data>
+  <data name="cbDebugLevel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>342, 105</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="cbDebugLevel.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="Label13.Location" type="System.Drawing.Point, System.Drawing">
+    <value>277, 109</value>
+  </data>
+  <data name="Label13.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 13</value>
+  </data>
+  <data name="Label13.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="Label13.Text" xml:space="preserve">
+    <value>Debuglevel</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>DWSIM - Allgemeine Einstellungen</value>

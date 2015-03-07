@@ -42,9 +42,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Select Case My.Settings.DebugLevel
                 Case 0
                     'do nothing
-                Case 1
+                Case Else
                     Console.WriteLine(text)
-                Case 2
             End Select
 
         End Sub

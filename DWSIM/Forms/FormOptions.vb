@@ -508,8 +508,16 @@ Public Class FormOptions
         End If
     End Sub
 
-    Private Sub chkconsole_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkconsole.CheckedChanged
+    Private Sub chkconsole_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         My.Settings.RedirectOutput = chkconsole.Checked
+        If chkconsole.Checked Then
+            Dim txtwriter As New ConsoleRedirection.TextBoxStreamWriter()
+            Console.SetOut(txtwriter)
+        Else
+            Dim standardOutput As New StreamWriter(Console.OpenStandardOutput())
+            standardOutput.AutoFlush = True
+            Console.SetOut(standardOutput)
+        End If
     End Sub
 
     Private Sub chkUpdates_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkUpdates.CheckedChanged
@@ -586,7 +594,7 @@ Public Class FormOptions
         My.Settings.ServiceBusConnectionString = tbServiceBusNamespace.Text
     End Sub
 
-    Private Sub cbDebugLevel_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbDebugLevel.SelectedIndexChanged
+    Private Sub cbDebugLevel_SelectedIndexChanged(sender As Object, e As EventArgs)
         My.Settings.DebugLevel = cbDebugLevel.SelectedIndex
     End Sub
 
@@ -604,4 +612,23 @@ Public Class FormOptions
         My.Settings.ServerPort = tbServerPort.Text
     End Sub
 
+    Private Sub FormOptions_HelpRequested(sender As Object, hlpevent As HelpEventArgs) Handles MyBase.HelpRequested
+        Select Case FaTabStrip1.SelectedItem.Name
+            Case "FaTabStripItem1"
+                DWSIM.App.HelpRequested("CONF_GlobalSettings1.htm")
+            Case "FaTabStripItem3"
+                DWSIM.App.HelpRequested("CONF_GlobalSettings2.htm")
+            Case "FaTabStripItem6"
+                DWSIM.App.HelpRequested("CONF_GlobalSettings3.htm")
+            Case "FaTabStripItem4"
+                DWSIM.App.HelpRequested("CONF_GlobalSettings4.htm")
+            Case "FaTabStripItem2"
+                DWSIM.App.HelpRequested("CONF_GlobalSettings5.htm")
+            Case "FaTabStripItem5"
+                DWSIM.App.HelpRequested("CONF_GlobalSettings6.htm")
+            Case "FaTabStripItem7"
+                DWSIM.App.HelpRequested("CONF_GlobalSettings7.htm")
+        End Select
+
+    End Sub
 End Class
