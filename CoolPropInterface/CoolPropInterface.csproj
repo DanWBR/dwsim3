@@ -54,11 +54,14 @@
     <Compile Include="source\SS.cs" />
     <Compile Include="source\SsatSimpleState.cs" />
     <Compile Include="source\SWIGTYPE_p_bool.cs" />
+    <Compile Include="source\SWIGTYPE_p_CoolPropDbl.cs" />
     <Compile Include="source\SWIGTYPE_p_CoolProp__parameters.cs" />
     <Compile Include="source\SWIGTYPE_p_long_double.cs" />
     <Compile Include="source\SWIGTYPE_p_std__mapT_configuration_keys_CoolProp__ConfigurationItem_t.cs" />
     <Compile Include="source\SWIGTYPE_p_std__string.cs" />
+    <Compile Include="source\SWIGTYPE_p_std__vectorT_CoolPropDbl_t.cs" />
     <Compile Include="source\SWIGTYPE_p_std__vectorT_std__string_t.cs" />
+    <Compile Include="source\SWIGTYPE_p_std__vectorT_std__vectorT_CoolPropDbl_t_t.cs" />
     <Compile Include="source\SWIGTYPE_p_std__vectorT_std__vectorT_double_t_t.cs" />
     <Compile Include="source\SWIGTYPE_p_std__vectorT_std__vectorT_long_double_t_t.cs" />
   </ItemGroup>

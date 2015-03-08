@@ -74,13 +74,23 @@ public class AbstractState : global::System.IDisposable {
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public virtual void set_volu_fractions(LongDoubleVector mass_fractions) {
-    CoolPropPINVOKE.AbstractState_set_volu_fractions__SWIG_0(swigCPtr, LongDoubleVector.getCPtr(mass_fractions));
+  public virtual void set_mole_fractions(SWIGTYPE_p_std__vectorT_CoolPropDbl_t mole_fractions) {
+    CoolPropPINVOKE.AbstractState_set_mole_fractions__SWIG_0(swigCPtr, SWIGTYPE_p_std__vectorT_CoolPropDbl_t.getCPtr(mole_fractions));
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public virtual LongDoubleVector get_mole_fractions() {
-    LongDoubleVector ret = new LongDoubleVector(CoolPropPINVOKE.AbstractState_get_mole_fractions(swigCPtr), false);
+  public virtual void set_mass_fractions(SWIGTYPE_p_std__vectorT_CoolPropDbl_t mass_fractions) {
+    CoolPropPINVOKE.AbstractState_set_mass_fractions__SWIG_0(swigCPtr, SWIGTYPE_p_std__vectorT_CoolPropDbl_t.getCPtr(mass_fractions));
+    if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public virtual void set_volu_fractions(SWIGTYPE_p_std__vectorT_CoolPropDbl_t mass_fractions) {
+    CoolPropPINVOKE.AbstractState_set_volu_fractions__SWIG_0(swigCPtr, SWIGTYPE_p_std__vectorT_CoolPropDbl_t.getCPtr(mass_fractions));
+    if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public virtual SWIGTYPE_p_std__vectorT_CoolPropDbl_t get_mole_fractions() {
+    SWIGTYPE_p_std__vectorT_CoolPropDbl_t ret = new SWIGTYPE_p_std__vectorT_CoolPropDbl_t(CoolPropPINVOKE.AbstractState_get_mole_fractions(swigCPtr), false);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -98,12 +108,12 @@ public class AbstractState : global::System.IDisposable {
   }
 
   public void set_mole_fractions(DoubleVector mole_fractions) {
-    CoolPropPINVOKE.AbstractState_set_mole_fractions(swigCPtr, DoubleVector.getCPtr(mole_fractions));
+    CoolPropPINVOKE.AbstractState_set_mole_fractions__SWIG_1(swigCPtr, DoubleVector.getCPtr(mole_fractions));
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_mass_fractions(DoubleVector mass_fractions) {
-    CoolPropPINVOKE.AbstractState_set_mass_fractions(swigCPtr, DoubleVector.getCPtr(mass_fractions));
+    CoolPropPINVOKE.AbstractState_set_mass_fractions__SWIG_1(swigCPtr, DoubleVector.getCPtr(mass_fractions));
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -290,6 +300,12 @@ public class AbstractState : global::System.IDisposable {
     return ret;
   }
 
+  public double acentric_factor() {
+    double ret = CoolPropPINVOKE.AbstractState_acentric_factor(swigCPtr);
+    if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
   public double gas_constant() {
     double ret = CoolPropPINVOKE.AbstractState_gas_constant(swigCPtr);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
@@ -428,38 +444,56 @@ public class AbstractState : global::System.IDisposable {
     return ret;
   }
 
-  public LongDoubleVector mole_fractions_liquid() {
-    LongDoubleVector ret = new LongDoubleVector(CoolPropPINVOKE.AbstractState_mole_fractions_liquid(swigCPtr), true);
+  public SWIGTYPE_p_std__vectorT_CoolPropDbl_t mole_fractions_liquid() {
+    SWIGTYPE_p_std__vectorT_CoolPropDbl_t ret = new SWIGTYPE_p_std__vectorT_CoolPropDbl_t(CoolPropPINVOKE.AbstractState_mole_fractions_liquid(swigCPtr), true);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public LongDoubleVector mole_fractions_vapor() {
-    LongDoubleVector ret = new LongDoubleVector(CoolPropPINVOKE.AbstractState_mole_fractions_vapor(swigCPtr), true);
+  public SWIGTYPE_p_std__vectorT_CoolPropDbl_t mole_fractions_vapor() {
+    SWIGTYPE_p_std__vectorT_CoolPropDbl_t ret = new SWIGTYPE_p_std__vectorT_CoolPropDbl_t(CoolPropPINVOKE.AbstractState_mole_fractions_vapor(swigCPtr), true);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_long_double first_partial_deriv(parameters Of, parameters Wrt, parameters Constant) {
-    SWIGTYPE_p_long_double ret = new SWIGTYPE_p_long_double(CoolPropPINVOKE.AbstractState_first_partial_deriv(swigCPtr, (int)Of, (int)Wrt, (int)Constant), true);
+  public SWIGTYPE_p_CoolPropDbl first_partial_deriv(parameters Of, parameters Wrt, parameters Constant) {
+    SWIGTYPE_p_CoolPropDbl ret = new SWIGTYPE_p_CoolPropDbl(CoolPropPINVOKE.AbstractState_first_partial_deriv(swigCPtr, (int)Of, (int)Wrt, (int)Constant), true);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_long_double second_partial_deriv(parameters Of1, parameters Wrt1, parameters Constant1, parameters Of2, parameters Constant2) {
-    SWIGTYPE_p_long_double ret = new SWIGTYPE_p_long_double(CoolPropPINVOKE.AbstractState_second_partial_deriv(swigCPtr, (int)Of1, (int)Wrt1, (int)Constant1, (int)Of2, (int)Constant2), true);
+  public SWIGTYPE_p_CoolPropDbl second_partial_deriv(parameters Of1, parameters Wrt1, parameters Constant1, parameters Of2, parameters Constant2) {
+    SWIGTYPE_p_CoolPropDbl ret = new SWIGTYPE_p_CoolPropDbl(CoolPropPINVOKE.AbstractState_second_partial_deriv(swigCPtr, (int)Of1, (int)Wrt1, (int)Constant1, (int)Of2, (int)Constant2), true);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_long_double first_saturation_deriv(parameters Of1, parameters Wrt1) {
-    SWIGTYPE_p_long_double ret = new SWIGTYPE_p_long_double(CoolPropPINVOKE.AbstractState_first_saturation_deriv(swigCPtr, (int)Of1, (int)Wrt1), true);
+  public SWIGTYPE_p_CoolPropDbl first_saturation_deriv(parameters Of1, parameters Wrt1) {
+    SWIGTYPE_p_CoolPropDbl ret = new SWIGTYPE_p_CoolPropDbl(CoolPropPINVOKE.AbstractState_first_saturation_deriv(swigCPtr, (int)Of1, (int)Wrt1), true);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_long_double second_saturation_deriv(parameters Of1, parameters Wrt1, parameters Of2, parameters Wrt2) {
-    SWIGTYPE_p_long_double ret = new SWIGTYPE_p_long_double(CoolPropPINVOKE.AbstractState_second_saturation_deriv(swigCPtr, (int)Of1, (int)Wrt1, (int)Of2, (int)Wrt2), true);
+  public SWIGTYPE_p_CoolPropDbl second_saturation_deriv(parameters Of1, parameters Wrt1, parameters Of2, parameters Wrt2) {
+    SWIGTYPE_p_CoolPropDbl ret = new SWIGTYPE_p_CoolPropDbl(CoolPropPINVOKE.AbstractState_second_saturation_deriv(swigCPtr, (int)Of1, (int)Wrt1, (int)Of2, (int)Wrt2), true);
+    if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public double first_two_phase_deriv(parameters Of, parameters Wrt, parameters Constant) {
+    double ret = CoolPropPINVOKE.AbstractState_first_two_phase_deriv(swigCPtr, (int)Of, (int)Wrt, (int)Constant);
+    if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public double second_two_phase_deriv(parameters Of, parameters Wrt1, parameters Constant1, parameters Wrt2, parameters Constant2) {
+    double ret = CoolPropPINVOKE.AbstractState_second_two_phase_deriv(swigCPtr, (int)Of, (int)Wrt1, (int)Constant1, (int)Wrt2, (int)Constant2);
+    if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public double first_two_phase_deriv_splined(parameters Of, parameters Wrt, parameters Constant, double x_end) {
+    double ret = CoolPropPINVOKE.AbstractState_first_two_phase_deriv_splined(swigCPtr, (int)Of, (int)Wrt, (int)Constant, x_end);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -517,122 +551,122 @@ public class AbstractState : global::System.IDisposable {
     return ret;
   }
 
-  public SWIGTYPE_p_long_double alpha0() {
-    SWIGTYPE_p_long_double ret = new SWIGTYPE_p_long_double(CoolPropPINVOKE.AbstractState_alpha0(swigCPtr), true);
+  public SWIGTYPE_p_CoolPropDbl alpha0() {
+    SWIGTYPE_p_CoolPropDbl ret = new SWIGTYPE_p_CoolPropDbl(CoolPropPINVOKE.AbstractState_alpha0(swigCPtr), true);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_long_double dalpha0_dDelta() {
-    SWIGTYPE_p_long_double ret = new SWIGTYPE_p_long_double(CoolPropPINVOKE.AbstractState_dalpha0_dDelta(swigCPtr), true);
+  public SWIGTYPE_p_CoolPropDbl dalpha0_dDelta() {
+    SWIGTYPE_p_CoolPropDbl ret = new SWIGTYPE_p_CoolPropDbl(CoolPropPINVOKE.AbstractState_dalpha0_dDelta(swigCPtr), true);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_long_double dalpha0_dTau() {
-    SWIGTYPE_p_long_double ret = new SWIGTYPE_p_long_double(CoolPropPINVOKE.AbstractState_dalpha0_dTau(swigCPtr), true);
+  public SWIGTYPE_p_CoolPropDbl dalpha0_dTau() {
+    SWIGTYPE_p_CoolPropDbl ret = new SWIGTYPE_p_CoolPropDbl(CoolPropPINVOKE.AbstractState_dalpha0_dTau(swigCPtr), true);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_long_double d2alpha0_dDelta2() {
-    SWIGTYPE_p_long_double ret = new SWIGTYPE_p_long_double(CoolPropPINVOKE.AbstractState_d2alpha0_dDelta2(swigCPtr), true);
+  public SWIGTYPE_p_CoolPropDbl d2alpha0_dDelta2() {
+    SWIGTYPE_p_CoolPropDbl ret = new SWIGTYPE_p_CoolPropDbl(CoolPropPINVOKE.AbstractState_d2alpha0_dDelta2(swigCPtr), true);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_long_double d2alpha0_dDelta_dTau() {
-    SWIGTYPE_p_long_double ret = new SWIGTYPE_p_long_double(CoolPropPINVOKE.AbstractState_d2alpha0_dDelta_dTau(swigCPtr), true);
+  public SWIGTYPE_p_CoolPropDbl d2alpha0_dDelta_dTau() {
+    SWIGTYPE_p_CoolPropDbl ret = new SWIGTYPE_p_CoolPropDbl(CoolPropPINVOKE.AbstractState_d2alpha0_dDelta_dTau(swigCPtr), true);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_long_double d2alpha0_dTau2() {
-    SWIGTYPE_p_long_double ret = new SWIGTYPE_p_long_double(CoolPropPINVOKE.AbstractState_d2alpha0_dTau2(swigCPtr), true);
+  public SWIGTYPE_p_CoolPropDbl d2alpha0_dTau2() {
+    SWIGTYPE_p_CoolPropDbl ret = new SWIGTYPE_p_CoolPropDbl(CoolPropPINVOKE.AbstractState_d2alpha0_dTau2(swigCPtr), true);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_long_double d3alpha0_dTau3() {
-    SWIGTYPE_p_long_double ret = new SWIGTYPE_p_long_double(CoolPropPINVOKE.AbstractState_d3alpha0_dTau3(swigCPtr), true);
+  public SWIGTYPE_p_CoolPropDbl d3alpha0_dTau3() {
+    SWIGTYPE_p_CoolPropDbl ret = new SWIGTYPE_p_CoolPropDbl(CoolPropPINVOKE.AbstractState_d3alpha0_dTau3(swigCPtr), true);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_long_double d3alpha0_dDelta_dTau2() {
-    SWIGTYPE_p_long_double ret = new SWIGTYPE_p_long_double(CoolPropPINVOKE.AbstractState_d3alpha0_dDelta_dTau2(swigCPtr), true);
+  public SWIGTYPE_p_CoolPropDbl d3alpha0_dDelta_dTau2() {
+    SWIGTYPE_p_CoolPropDbl ret = new SWIGTYPE_p_CoolPropDbl(CoolPropPINVOKE.AbstractState_d3alpha0_dDelta_dTau2(swigCPtr), true);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_long_double d3alpha0_dDelta2_dTau() {
-    SWIGTYPE_p_long_double ret = new SWIGTYPE_p_long_double(CoolPropPINVOKE.AbstractState_d3alpha0_dDelta2_dTau(swigCPtr), true);
+  public SWIGTYPE_p_CoolPropDbl d3alpha0_dDelta2_dTau() {
+    SWIGTYPE_p_CoolPropDbl ret = new SWIGTYPE_p_CoolPropDbl(CoolPropPINVOKE.AbstractState_d3alpha0_dDelta2_dTau(swigCPtr), true);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_long_double d3alpha0_dDelta3() {
-    SWIGTYPE_p_long_double ret = new SWIGTYPE_p_long_double(CoolPropPINVOKE.AbstractState_d3alpha0_dDelta3(swigCPtr), true);
+  public SWIGTYPE_p_CoolPropDbl d3alpha0_dDelta3() {
+    SWIGTYPE_p_CoolPropDbl ret = new SWIGTYPE_p_CoolPropDbl(CoolPropPINVOKE.AbstractState_d3alpha0_dDelta3(swigCPtr), true);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_long_double alphar() {
-    SWIGTYPE_p_long_double ret = new SWIGTYPE_p_long_double(CoolPropPINVOKE.AbstractState_alphar(swigCPtr), true);
+  public SWIGTYPE_p_CoolPropDbl alphar() {
+    SWIGTYPE_p_CoolPropDbl ret = new SWIGTYPE_p_CoolPropDbl(CoolPropPINVOKE.AbstractState_alphar(swigCPtr), true);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_long_double dalphar_dDelta() {
-    SWIGTYPE_p_long_double ret = new SWIGTYPE_p_long_double(CoolPropPINVOKE.AbstractState_dalphar_dDelta(swigCPtr), true);
+  public SWIGTYPE_p_CoolPropDbl dalphar_dDelta() {
+    SWIGTYPE_p_CoolPropDbl ret = new SWIGTYPE_p_CoolPropDbl(CoolPropPINVOKE.AbstractState_dalphar_dDelta(swigCPtr), true);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_long_double dalphar_dTau() {
-    SWIGTYPE_p_long_double ret = new SWIGTYPE_p_long_double(CoolPropPINVOKE.AbstractState_dalphar_dTau(swigCPtr), true);
+  public SWIGTYPE_p_CoolPropDbl dalphar_dTau() {
+    SWIGTYPE_p_CoolPropDbl ret = new SWIGTYPE_p_CoolPropDbl(CoolPropPINVOKE.AbstractState_dalphar_dTau(swigCPtr), true);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_long_double d2alphar_dDelta2() {
-    SWIGTYPE_p_long_double ret = new SWIGTYPE_p_long_double(CoolPropPINVOKE.AbstractState_d2alphar_dDelta2(swigCPtr), true);
+  public SWIGTYPE_p_CoolPropDbl d2alphar_dDelta2() {
+    SWIGTYPE_p_CoolPropDbl ret = new SWIGTYPE_p_CoolPropDbl(CoolPropPINVOKE.AbstractState_d2alphar_dDelta2(swigCPtr), true);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_long_double d2alphar_dDelta_dTau() {
-    SWIGTYPE_p_long_double ret = new SWIGTYPE_p_long_double(CoolPropPINVOKE.AbstractState_d2alphar_dDelta_dTau(swigCPtr), true);
+  public SWIGTYPE_p_CoolPropDbl d2alphar_dDelta_dTau() {
+    SWIGTYPE_p_CoolPropDbl ret = new SWIGTYPE_p_CoolPropDbl(CoolPropPINVOKE.AbstractState_d2alphar_dDelta_dTau(swigCPtr), true);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_long_double d2alphar_dTau2() {
-    SWIGTYPE_p_long_double ret = new SWIGTYPE_p_long_double(CoolPropPINVOKE.AbstractState_d2alphar_dTau2(swigCPtr), true);
+  public SWIGTYPE_p_CoolPropDbl d2alphar_dTau2() {
+    SWIGTYPE_p_CoolPropDbl ret = new SWIGTYPE_p_CoolPropDbl(CoolPropPINVOKE.AbstractState_d2alphar_dTau2(swigCPtr), true);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_long_double d3alphar_dDelta3() {
-    SWIGTYPE_p_long_double ret = new SWIGTYPE_p_long_double(CoolPropPINVOKE.AbstractState_d3alphar_dDelta3(swigCPtr), true);
+  public SWIGTYPE_p_CoolPropDbl d3alphar_dDelta3() {
+    SWIGTYPE_p_CoolPropDbl ret = new SWIGTYPE_p_CoolPropDbl(CoolPropPINVOKE.AbstractState_d3alphar_dDelta3(swigCPtr), true);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_long_double d3alphar_dDelta2_dTau() {
-    SWIGTYPE_p_long_double ret = new SWIGTYPE_p_long_double(CoolPropPINVOKE.AbstractState_d3alphar_dDelta2_dTau(swigCPtr), true);
+  public SWIGTYPE_p_CoolPropDbl d3alphar_dDelta2_dTau() {
+    SWIGTYPE_p_CoolPropDbl ret = new SWIGTYPE_p_CoolPropDbl(CoolPropPINVOKE.AbstractState_d3alphar_dDelta2_dTau(swigCPtr), true);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_long_double d3alphar_dDelta_dTau2() {
-    SWIGTYPE_p_long_double ret = new SWIGTYPE_p_long_double(CoolPropPINVOKE.AbstractState_d3alphar_dDelta_dTau2(swigCPtr), true);
+  public SWIGTYPE_p_CoolPropDbl d3alphar_dDelta_dTau2() {
+    SWIGTYPE_p_CoolPropDbl ret = new SWIGTYPE_p_CoolPropDbl(CoolPropPINVOKE.AbstractState_d3alphar_dDelta_dTau2(swigCPtr), true);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_long_double d3alphar_dTau3() {
-    SWIGTYPE_p_long_double ret = new SWIGTYPE_p_long_double(CoolPropPINVOKE.AbstractState_d3alphar_dTau3(swigCPtr), true);
+  public SWIGTYPE_p_CoolPropDbl d3alphar_dTau3() {
+    SWIGTYPE_p_CoolPropDbl ret = new SWIGTYPE_p_CoolPropDbl(CoolPropPINVOKE.AbstractState_d3alphar_dTau3(swigCPtr), true);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }

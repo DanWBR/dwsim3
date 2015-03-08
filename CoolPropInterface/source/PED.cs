@@ -97,222 +97,222 @@ public class PED : global::System.IDisposable {
     } 
   }
 
-  public SWIGTYPE_p_std__vectorT_std__vectorT_long_double_t_t K {
+  public SWIGTYPE_p_std__vectorT_std__vectorT_CoolPropDbl_t_t K {
     set {
-      CoolPropPINVOKE.PED_K_set(swigCPtr, SWIGTYPE_p_std__vectorT_std__vectorT_long_double_t_t.getCPtr(value));
+      CoolPropPINVOKE.PED_K_set(swigCPtr, SWIGTYPE_p_std__vectorT_std__vectorT_CoolPropDbl_t_t.getCPtr(value));
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     } 
     get {
       global::System.IntPtr cPtr = CoolPropPINVOKE.PED_K_get(swigCPtr);
-      SWIGTYPE_p_std__vectorT_std__vectorT_long_double_t_t ret = (cPtr == global::System.IntPtr.Zero) ? null : new SWIGTYPE_p_std__vectorT_std__vectorT_long_double_t_t(cPtr, false);
+      SWIGTYPE_p_std__vectorT_std__vectorT_CoolPropDbl_t_t ret = (cPtr == global::System.IntPtr.Zero) ? null : new SWIGTYPE_p_std__vectorT_std__vectorT_CoolPropDbl_t_t(cPtr, false);
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
       return ret;
     } 
   }
 
-  public SWIGTYPE_p_std__vectorT_std__vectorT_long_double_t_t lnK {
+  public SWIGTYPE_p_std__vectorT_std__vectorT_CoolPropDbl_t_t lnK {
     set {
-      CoolPropPINVOKE.PED_lnK_set(swigCPtr, SWIGTYPE_p_std__vectorT_std__vectorT_long_double_t_t.getCPtr(value));
+      CoolPropPINVOKE.PED_lnK_set(swigCPtr, SWIGTYPE_p_std__vectorT_std__vectorT_CoolPropDbl_t_t.getCPtr(value));
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     } 
     get {
       global::System.IntPtr cPtr = CoolPropPINVOKE.PED_lnK_get(swigCPtr);
-      SWIGTYPE_p_std__vectorT_std__vectorT_long_double_t_t ret = (cPtr == global::System.IntPtr.Zero) ? null : new SWIGTYPE_p_std__vectorT_std__vectorT_long_double_t_t(cPtr, false);
+      SWIGTYPE_p_std__vectorT_std__vectorT_CoolPropDbl_t_t ret = (cPtr == global::System.IntPtr.Zero) ? null : new SWIGTYPE_p_std__vectorT_std__vectorT_CoolPropDbl_t_t(cPtr, false);
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
       return ret;
     } 
   }
 
-  public SWIGTYPE_p_std__vectorT_std__vectorT_long_double_t_t x {
+  public SWIGTYPE_p_std__vectorT_std__vectorT_CoolPropDbl_t_t x {
     set {
-      CoolPropPINVOKE.PED_x_set(swigCPtr, SWIGTYPE_p_std__vectorT_std__vectorT_long_double_t_t.getCPtr(value));
+      CoolPropPINVOKE.PED_x_set(swigCPtr, SWIGTYPE_p_std__vectorT_std__vectorT_CoolPropDbl_t_t.getCPtr(value));
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     } 
     get {
       global::System.IntPtr cPtr = CoolPropPINVOKE.PED_x_get(swigCPtr);
-      SWIGTYPE_p_std__vectorT_std__vectorT_long_double_t_t ret = (cPtr == global::System.IntPtr.Zero) ? null : new SWIGTYPE_p_std__vectorT_std__vectorT_long_double_t_t(cPtr, false);
+      SWIGTYPE_p_std__vectorT_std__vectorT_CoolPropDbl_t_t ret = (cPtr == global::System.IntPtr.Zero) ? null : new SWIGTYPE_p_std__vectorT_std__vectorT_CoolPropDbl_t_t(cPtr, false);
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
       return ret;
     } 
   }
 
-  public SWIGTYPE_p_std__vectorT_std__vectorT_long_double_t_t y {
+  public SWIGTYPE_p_std__vectorT_std__vectorT_CoolPropDbl_t_t y {
     set {
-      CoolPropPINVOKE.PED_y_set(swigCPtr, SWIGTYPE_p_std__vectorT_std__vectorT_long_double_t_t.getCPtr(value));
+      CoolPropPINVOKE.PED_y_set(swigCPtr, SWIGTYPE_p_std__vectorT_std__vectorT_CoolPropDbl_t_t.getCPtr(value));
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     } 
     get {
       global::System.IntPtr cPtr = CoolPropPINVOKE.PED_y_get(swigCPtr);
-      SWIGTYPE_p_std__vectorT_std__vectorT_long_double_t_t ret = (cPtr == global::System.IntPtr.Zero) ? null : new SWIGTYPE_p_std__vectorT_std__vectorT_long_double_t_t(cPtr, false);
+      SWIGTYPE_p_std__vectorT_std__vectorT_CoolPropDbl_t_t ret = (cPtr == global::System.IntPtr.Zero) ? null : new SWIGTYPE_p_std__vectorT_std__vectorT_CoolPropDbl_t_t(cPtr, false);
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
       return ret;
     } 
   }
 
-  public LongDoubleVector T {
+  public SWIGTYPE_p_std__vectorT_CoolPropDbl_t T {
     set {
-      CoolPropPINVOKE.PED_T_set(swigCPtr, LongDoubleVector.getCPtr(value));
+      CoolPropPINVOKE.PED_T_set(swigCPtr, SWIGTYPE_p_std__vectorT_CoolPropDbl_t.getCPtr(value));
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     } 
     get {
       global::System.IntPtr cPtr = CoolPropPINVOKE.PED_T_get(swigCPtr);
-      LongDoubleVector ret = (cPtr == global::System.IntPtr.Zero) ? null : new LongDoubleVector(cPtr, false);
+      SWIGTYPE_p_std__vectorT_CoolPropDbl_t ret = (cPtr == global::System.IntPtr.Zero) ? null : new SWIGTYPE_p_std__vectorT_CoolPropDbl_t(cPtr, false);
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
       return ret;
     } 
   }
 
-  public LongDoubleVector p {
+  public SWIGTYPE_p_std__vectorT_CoolPropDbl_t p {
     set {
-      CoolPropPINVOKE.PED_p_set(swigCPtr, LongDoubleVector.getCPtr(value));
+      CoolPropPINVOKE.PED_p_set(swigCPtr, SWIGTYPE_p_std__vectorT_CoolPropDbl_t.getCPtr(value));
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     } 
     get {
       global::System.IntPtr cPtr = CoolPropPINVOKE.PED_p_get(swigCPtr);
-      LongDoubleVector ret = (cPtr == global::System.IntPtr.Zero) ? null : new LongDoubleVector(cPtr, false);
+      SWIGTYPE_p_std__vectorT_CoolPropDbl_t ret = (cPtr == global::System.IntPtr.Zero) ? null : new SWIGTYPE_p_std__vectorT_CoolPropDbl_t(cPtr, false);
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
       return ret;
     } 
   }
 
-  public LongDoubleVector lnT {
+  public SWIGTYPE_p_std__vectorT_CoolPropDbl_t lnT {
     set {
-      CoolPropPINVOKE.PED_lnT_set(swigCPtr, LongDoubleVector.getCPtr(value));
+      CoolPropPINVOKE.PED_lnT_set(swigCPtr, SWIGTYPE_p_std__vectorT_CoolPropDbl_t.getCPtr(value));
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     } 
     get {
       global::System.IntPtr cPtr = CoolPropPINVOKE.PED_lnT_get(swigCPtr);
-      LongDoubleVector ret = (cPtr == global::System.IntPtr.Zero) ? null : new LongDoubleVector(cPtr, false);
+      SWIGTYPE_p_std__vectorT_CoolPropDbl_t ret = (cPtr == global::System.IntPtr.Zero) ? null : new SWIGTYPE_p_std__vectorT_CoolPropDbl_t(cPtr, false);
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
       return ret;
     } 
   }
 
-  public LongDoubleVector lnp {
+  public SWIGTYPE_p_std__vectorT_CoolPropDbl_t lnp {
     set {
-      CoolPropPINVOKE.PED_lnp_set(swigCPtr, LongDoubleVector.getCPtr(value));
+      CoolPropPINVOKE.PED_lnp_set(swigCPtr, SWIGTYPE_p_std__vectorT_CoolPropDbl_t.getCPtr(value));
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     } 
     get {
       global::System.IntPtr cPtr = CoolPropPINVOKE.PED_lnp_get(swigCPtr);
-      LongDoubleVector ret = (cPtr == global::System.IntPtr.Zero) ? null : new LongDoubleVector(cPtr, false);
+      SWIGTYPE_p_std__vectorT_CoolPropDbl_t ret = (cPtr == global::System.IntPtr.Zero) ? null : new SWIGTYPE_p_std__vectorT_CoolPropDbl_t(cPtr, false);
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
       return ret;
     } 
   }
 
-  public LongDoubleVector rhomolar_liq {
+  public SWIGTYPE_p_std__vectorT_CoolPropDbl_t rhomolar_liq {
     set {
-      CoolPropPINVOKE.PED_rhomolar_liq_set(swigCPtr, LongDoubleVector.getCPtr(value));
+      CoolPropPINVOKE.PED_rhomolar_liq_set(swigCPtr, SWIGTYPE_p_std__vectorT_CoolPropDbl_t.getCPtr(value));
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     } 
     get {
       global::System.IntPtr cPtr = CoolPropPINVOKE.PED_rhomolar_liq_get(swigCPtr);
-      LongDoubleVector ret = (cPtr == global::System.IntPtr.Zero) ? null : new LongDoubleVector(cPtr, false);
+      SWIGTYPE_p_std__vectorT_CoolPropDbl_t ret = (cPtr == global::System.IntPtr.Zero) ? null : new SWIGTYPE_p_std__vectorT_CoolPropDbl_t(cPtr, false);
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
       return ret;
     } 
   }
 
-  public LongDoubleVector rhomolar_vap {
+  public SWIGTYPE_p_std__vectorT_CoolPropDbl_t rhomolar_vap {
     set {
-      CoolPropPINVOKE.PED_rhomolar_vap_set(swigCPtr, LongDoubleVector.getCPtr(value));
+      CoolPropPINVOKE.PED_rhomolar_vap_set(swigCPtr, SWIGTYPE_p_std__vectorT_CoolPropDbl_t.getCPtr(value));
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     } 
     get {
       global::System.IntPtr cPtr = CoolPropPINVOKE.PED_rhomolar_vap_get(swigCPtr);
-      LongDoubleVector ret = (cPtr == global::System.IntPtr.Zero) ? null : new LongDoubleVector(cPtr, false);
+      SWIGTYPE_p_std__vectorT_CoolPropDbl_t ret = (cPtr == global::System.IntPtr.Zero) ? null : new SWIGTYPE_p_std__vectorT_CoolPropDbl_t(cPtr, false);
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
       return ret;
     } 
   }
 
-  public LongDoubleVector lnrhomolar_liq {
+  public SWIGTYPE_p_std__vectorT_CoolPropDbl_t lnrhomolar_liq {
     set {
-      CoolPropPINVOKE.PED_lnrhomolar_liq_set(swigCPtr, LongDoubleVector.getCPtr(value));
+      CoolPropPINVOKE.PED_lnrhomolar_liq_set(swigCPtr, SWIGTYPE_p_std__vectorT_CoolPropDbl_t.getCPtr(value));
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     } 
     get {
       global::System.IntPtr cPtr = CoolPropPINVOKE.PED_lnrhomolar_liq_get(swigCPtr);
-      LongDoubleVector ret = (cPtr == global::System.IntPtr.Zero) ? null : new LongDoubleVector(cPtr, false);
+      SWIGTYPE_p_std__vectorT_CoolPropDbl_t ret = (cPtr == global::System.IntPtr.Zero) ? null : new SWIGTYPE_p_std__vectorT_CoolPropDbl_t(cPtr, false);
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
       return ret;
     } 
   }
 
-  public LongDoubleVector lnrhomolar_vap {
+  public SWIGTYPE_p_std__vectorT_CoolPropDbl_t lnrhomolar_vap {
     set {
-      CoolPropPINVOKE.PED_lnrhomolar_vap_set(swigCPtr, LongDoubleVector.getCPtr(value));
+      CoolPropPINVOKE.PED_lnrhomolar_vap_set(swigCPtr, SWIGTYPE_p_std__vectorT_CoolPropDbl_t.getCPtr(value));
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     } 
     get {
       global::System.IntPtr cPtr = CoolPropPINVOKE.PED_lnrhomolar_vap_get(swigCPtr);
-      LongDoubleVector ret = (cPtr == global::System.IntPtr.Zero) ? null : new LongDoubleVector(cPtr, false);
+      SWIGTYPE_p_std__vectorT_CoolPropDbl_t ret = (cPtr == global::System.IntPtr.Zero) ? null : new SWIGTYPE_p_std__vectorT_CoolPropDbl_t(cPtr, false);
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
       return ret;
     } 
   }
 
-  public LongDoubleVector hmolar_liq {
+  public SWIGTYPE_p_std__vectorT_CoolPropDbl_t hmolar_liq {
     set {
-      CoolPropPINVOKE.PED_hmolar_liq_set(swigCPtr, LongDoubleVector.getCPtr(value));
+      CoolPropPINVOKE.PED_hmolar_liq_set(swigCPtr, SWIGTYPE_p_std__vectorT_CoolPropDbl_t.getCPtr(value));
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     } 
     get {
       global::System.IntPtr cPtr = CoolPropPINVOKE.PED_hmolar_liq_get(swigCPtr);
-      LongDoubleVector ret = (cPtr == global::System.IntPtr.Zero) ? null : new LongDoubleVector(cPtr, false);
+      SWIGTYPE_p_std__vectorT_CoolPropDbl_t ret = (cPtr == global::System.IntPtr.Zero) ? null : new SWIGTYPE_p_std__vectorT_CoolPropDbl_t(cPtr, false);
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
       return ret;
     } 
   }
 
-  public LongDoubleVector hmolar_vap {
+  public SWIGTYPE_p_std__vectorT_CoolPropDbl_t hmolar_vap {
     set {
-      CoolPropPINVOKE.PED_hmolar_vap_set(swigCPtr, LongDoubleVector.getCPtr(value));
+      CoolPropPINVOKE.PED_hmolar_vap_set(swigCPtr, SWIGTYPE_p_std__vectorT_CoolPropDbl_t.getCPtr(value));
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     } 
     get {
       global::System.IntPtr cPtr = CoolPropPINVOKE.PED_hmolar_vap_get(swigCPtr);
-      LongDoubleVector ret = (cPtr == global::System.IntPtr.Zero) ? null : new LongDoubleVector(cPtr, false);
+      SWIGTYPE_p_std__vectorT_CoolPropDbl_t ret = (cPtr == global::System.IntPtr.Zero) ? null : new SWIGTYPE_p_std__vectorT_CoolPropDbl_t(cPtr, false);
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
       return ret;
     } 
   }
 
-  public LongDoubleVector smolar_liq {
+  public SWIGTYPE_p_std__vectorT_CoolPropDbl_t smolar_liq {
     set {
-      CoolPropPINVOKE.PED_smolar_liq_set(swigCPtr, LongDoubleVector.getCPtr(value));
+      CoolPropPINVOKE.PED_smolar_liq_set(swigCPtr, SWIGTYPE_p_std__vectorT_CoolPropDbl_t.getCPtr(value));
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     } 
     get {
       global::System.IntPtr cPtr = CoolPropPINVOKE.PED_smolar_liq_get(swigCPtr);
-      LongDoubleVector ret = (cPtr == global::System.IntPtr.Zero) ? null : new LongDoubleVector(cPtr, false);
+      SWIGTYPE_p_std__vectorT_CoolPropDbl_t ret = (cPtr == global::System.IntPtr.Zero) ? null : new SWIGTYPE_p_std__vectorT_CoolPropDbl_t(cPtr, false);
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
       return ret;
     } 
   }
 
-  public LongDoubleVector smolar_vap {
+  public SWIGTYPE_p_std__vectorT_CoolPropDbl_t smolar_vap {
     set {
-      CoolPropPINVOKE.PED_smolar_vap_set(swigCPtr, LongDoubleVector.getCPtr(value));
+      CoolPropPINVOKE.PED_smolar_vap_set(swigCPtr, SWIGTYPE_p_std__vectorT_CoolPropDbl_t.getCPtr(value));
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     } 
     get {
       global::System.IntPtr cPtr = CoolPropPINVOKE.PED_smolar_vap_get(swigCPtr);
-      LongDoubleVector ret = (cPtr == global::System.IntPtr.Zero) ? null : new LongDoubleVector(cPtr, false);
+      SWIGTYPE_p_std__vectorT_CoolPropDbl_t ret = (cPtr == global::System.IntPtr.Zero) ? null : new SWIGTYPE_p_std__vectorT_CoolPropDbl_t(cPtr, false);
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
       return ret;
     } 
   }
 
-  public LongDoubleVector Q {
+  public SWIGTYPE_p_std__vectorT_CoolPropDbl_t Q {
     set {
-      CoolPropPINVOKE.PED_Q_set(swigCPtr, LongDoubleVector.getCPtr(value));
+      CoolPropPINVOKE.PED_Q_set(swigCPtr, SWIGTYPE_p_std__vectorT_CoolPropDbl_t.getCPtr(value));
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     } 
     get {
       global::System.IntPtr cPtr = CoolPropPINVOKE.PED_Q_get(swigCPtr);
-      LongDoubleVector ret = (cPtr == global::System.IntPtr.Zero) ? null : new LongDoubleVector(cPtr, false);
+      SWIGTYPE_p_std__vectorT_CoolPropDbl_t ret = (cPtr == global::System.IntPtr.Zero) ? null : new SWIGTYPE_p_std__vectorT_CoolPropDbl_t(cPtr, false);
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
       return ret;
     } 
@@ -332,13 +332,13 @@ public class PED : global::System.IDisposable {
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void insert_variables(SWIGTYPE_p_long_double T, SWIGTYPE_p_long_double p, SWIGTYPE_p_long_double rhomolar_liq, SWIGTYPE_p_long_double rhomolar_vap, SWIGTYPE_p_long_double hmolar_liq, SWIGTYPE_p_long_double hmolar_vap, SWIGTYPE_p_long_double smolar_liq, SWIGTYPE_p_long_double smolar_vap, LongDoubleVector x, LongDoubleVector y, uint i) {
-    CoolPropPINVOKE.PED_insert_variables(swigCPtr, SWIGTYPE_p_long_double.getCPtr(T), SWIGTYPE_p_long_double.getCPtr(p), SWIGTYPE_p_long_double.getCPtr(rhomolar_liq), SWIGTYPE_p_long_double.getCPtr(rhomolar_vap), SWIGTYPE_p_long_double.getCPtr(hmolar_liq), SWIGTYPE_p_long_double.getCPtr(hmolar_vap), SWIGTYPE_p_long_double.getCPtr(smolar_liq), SWIGTYPE_p_long_double.getCPtr(smolar_vap), LongDoubleVector.getCPtr(x), LongDoubleVector.getCPtr(y), i);
+  public void insert_variables(SWIGTYPE_p_CoolPropDbl T, SWIGTYPE_p_CoolPropDbl p, SWIGTYPE_p_CoolPropDbl rhomolar_liq, SWIGTYPE_p_CoolPropDbl rhomolar_vap, SWIGTYPE_p_CoolPropDbl hmolar_liq, SWIGTYPE_p_CoolPropDbl hmolar_vap, SWIGTYPE_p_CoolPropDbl smolar_liq, SWIGTYPE_p_CoolPropDbl smolar_vap, SWIGTYPE_p_std__vectorT_CoolPropDbl_t x, SWIGTYPE_p_std__vectorT_CoolPropDbl_t y, uint i) {
+    CoolPropPINVOKE.PED_insert_variables(swigCPtr, SWIGTYPE_p_CoolPropDbl.getCPtr(T), SWIGTYPE_p_CoolPropDbl.getCPtr(p), SWIGTYPE_p_CoolPropDbl.getCPtr(rhomolar_liq), SWIGTYPE_p_CoolPropDbl.getCPtr(rhomolar_vap), SWIGTYPE_p_CoolPropDbl.getCPtr(hmolar_liq), SWIGTYPE_p_CoolPropDbl.getCPtr(hmolar_vap), SWIGTYPE_p_CoolPropDbl.getCPtr(smolar_liq), SWIGTYPE_p_CoolPropDbl.getCPtr(smolar_vap), SWIGTYPE_p_std__vectorT_CoolPropDbl_t.getCPtr(x), SWIGTYPE_p_std__vectorT_CoolPropDbl_t.getCPtr(y), i);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void store_variables(SWIGTYPE_p_long_double T, SWIGTYPE_p_long_double p, SWIGTYPE_p_long_double rhomolar_liq, SWIGTYPE_p_long_double rhomolar_vap, SWIGTYPE_p_long_double hmolar_liq, SWIGTYPE_p_long_double hmolar_vap, SWIGTYPE_p_long_double smolar_liq, SWIGTYPE_p_long_double smolar_vap, LongDoubleVector x, LongDoubleVector y) {
-    CoolPropPINVOKE.PED_store_variables(swigCPtr, SWIGTYPE_p_long_double.getCPtr(T), SWIGTYPE_p_long_double.getCPtr(p), SWIGTYPE_p_long_double.getCPtr(rhomolar_liq), SWIGTYPE_p_long_double.getCPtr(rhomolar_vap), SWIGTYPE_p_long_double.getCPtr(hmolar_liq), SWIGTYPE_p_long_double.getCPtr(hmolar_vap), SWIGTYPE_p_long_double.getCPtr(smolar_liq), SWIGTYPE_p_long_double.getCPtr(smolar_vap), LongDoubleVector.getCPtr(x), LongDoubleVector.getCPtr(y));
+  public void store_variables(SWIGTYPE_p_CoolPropDbl T, SWIGTYPE_p_CoolPropDbl p, SWIGTYPE_p_CoolPropDbl rhomolar_liq, SWIGTYPE_p_CoolPropDbl rhomolar_vap, SWIGTYPE_p_CoolPropDbl hmolar_liq, SWIGTYPE_p_CoolPropDbl hmolar_vap, SWIGTYPE_p_CoolPropDbl smolar_liq, SWIGTYPE_p_CoolPropDbl smolar_vap, SWIGTYPE_p_std__vectorT_CoolPropDbl_t x, SWIGTYPE_p_std__vectorT_CoolPropDbl_t y) {
+    CoolPropPINVOKE.PED_store_variables(swigCPtr, SWIGTYPE_p_CoolPropDbl.getCPtr(T), SWIGTYPE_p_CoolPropDbl.getCPtr(p), SWIGTYPE_p_CoolPropDbl.getCPtr(rhomolar_liq), SWIGTYPE_p_CoolPropDbl.getCPtr(rhomolar_vap), SWIGTYPE_p_CoolPropDbl.getCPtr(hmolar_liq), SWIGTYPE_p_CoolPropDbl.getCPtr(hmolar_vap), SWIGTYPE_p_CoolPropDbl.getCPtr(smolar_liq), SWIGTYPE_p_CoolPropDbl.getCPtr(smolar_vap), SWIGTYPE_p_std__vectorT_CoolPropDbl_t.getCPtr(x), SWIGTYPE_p_std__vectorT_CoolPropDbl_t.getCPtr(y));
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
   }
 

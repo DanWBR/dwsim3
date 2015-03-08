@@ -56,9 +56,9 @@ public class CoolProp {
     return ret;
   }
 
-  public static SWIGTYPE_p_long_double R_u_CODATA {
+  public static SWIGTYPE_p_CoolPropDbl R_u_CODATA {
     get {
-      SWIGTYPE_p_long_double ret = new SWIGTYPE_p_long_double(CoolPropPINVOKE.R_u_CODATA_get(), true);
+      SWIGTYPE_p_CoolPropDbl ret = new SWIGTYPE_p_CoolPropDbl(CoolPropPINVOKE.R_u_CODATA_get(), true);
       if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
       return ret;
     } 
@@ -80,6 +80,11 @@ public class CoolProp {
     string ret = CoolPropPINVOKE.get_input_pair_long_desc(pair);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     return ret;
+  }
+
+  public static void split_input_pair(input_pairs pair, SWIGTYPE_p_CoolProp__parameters p1, SWIGTYPE_p_CoolProp__parameters p2) {
+    CoolPropPINVOKE.split_input_pair((int)pair, SWIGTYPE_p_CoolProp__parameters.getCPtr(p1), SWIGTYPE_p_CoolProp__parameters.getCPtr(p2));
+    if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
   }
 
   public static string get_mixture_binary_pair_data(string CAS1, string CAS2, string param) {
@@ -145,8 +150,8 @@ public class CoolProp {
     return ret;
   }
 
-  public static bool is_valid_fluid_string(SWIGTYPE_p_std__string fluidstring) {
-    bool ret = CoolPropPINVOKE.is_valid_fluid_string(SWIGTYPE_p_std__string.getCPtr(fluidstring));
+  public static bool is_valid_fluid_string(string fluidstring) {
+    bool ret = CoolPropPINVOKE.is_valid_fluid_string(fluidstring);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -229,9 +234,65 @@ public class CoolProp {
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public static void set_config_as_json_string(SWIGTYPE_p_std__string s) {
-    CoolPropPINVOKE.set_config_as_json_string(SWIGTYPE_p_std__string.getCPtr(s));
+  public static void set_config_as_json_string(string s) {
+    CoolPropPINVOKE.set_config_as_json_string(s);
     if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public static double HAPropsSI(string OutputName, string Input1Name, double Input1, string Input2Name, double Input2, string Input3Name, double Input3) {
+    double ret = CoolPropPINVOKE.HAPropsSI(OutputName, Input1Name, Input1, Input2Name, Input2, Input3Name, Input3);
+    if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public static double HAProps(string OutputName, string Input1Name, double Input1, string Input2Name, double Input2, string Input3Name, double Input3) {
+    double ret = CoolPropPINVOKE.HAProps(OutputName, Input1Name, Input1, Input2Name, Input2, Input3Name, Input3);
+    if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public static double HAProps_Aux(string OutputName, double T, double p, double W, string units) {
+    double ret = CoolPropPINVOKE.HAProps_Aux(OutputName, T, p, W, units);
+    if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public static double IceProps(string Name, double T, double p) {
+    double ret = CoolPropPINVOKE.IceProps(Name, T, p);
+    if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public static void UseVirialCorrelations(int flag) {
+    CoolPropPINVOKE.UseVirialCorrelations(flag);
+    if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public static void UseIsothermCompressCorrelation(int flag) {
+    CoolPropPINVOKE.UseIsothermCompressCorrelation(flag);
+    if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public static void UseIdealGasEnthalpyCorrelations(int flag) {
+    CoolPropPINVOKE.UseIdealGasEnthalpyCorrelations(flag);
+    if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public static void HAHelp() {
+    CoolPropPINVOKE.HAHelp();
+    if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public static int returnHumAirCode(string Code) {
+    int ret = CoolPropPINVOKE.returnHumAirCode(Code);
+    if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public static double cair_sat(double T) {
+    double ret = CoolPropPINVOKE.cair_sat(T);
+    if (CoolPropPINVOKE.SWIGPendingException.Pending) throw CoolPropPINVOKE.SWIGPendingException.Retrieve();
+    return ret;
   }
 
 }

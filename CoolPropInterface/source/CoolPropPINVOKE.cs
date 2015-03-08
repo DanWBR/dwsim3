@@ -428,6 +428,9 @@ class CoolPropPINVOKE {
   [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_get_input_pair_long_desc")]
   public static extern string get_input_pair_long_desc(int jarg1);
 
+  [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_split_input_pair")]
+  public static extern void split_input_pair(int jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+
   [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_get_mixture_binary_pair_data")]
   public static extern string get_mixture_binary_pair_data(string jarg1, string jarg2, string jarg3);
 
@@ -452,6 +455,12 @@ class CoolPropPINVOKE {
   [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_AbstractState_update")]
   public static extern void AbstractState_update(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, double jarg3, double jarg4);
 
+  [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_AbstractState_set_mole_fractions__SWIG_0")]
+  public static extern void AbstractState_set_mole_fractions__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_AbstractState_set_mass_fractions__SWIG_0")]
+  public static extern void AbstractState_set_mass_fractions__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
   [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_AbstractState_set_volu_fractions__SWIG_0")]
   public static extern void AbstractState_set_volu_fractions__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
@@ -464,11 +473,11 @@ class CoolPropPINVOKE {
   [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_AbstractState_clear")]
   public static extern bool AbstractState_clear(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_AbstractState_set_mole_fractions")]
-  public static extern void AbstractState_set_mole_fractions(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_AbstractState_set_mole_fractions__SWIG_1")]
+  public static extern void AbstractState_set_mole_fractions__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
-  [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_AbstractState_set_mass_fractions")]
-  public static extern void AbstractState_set_mass_fractions(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_AbstractState_set_mass_fractions__SWIG_1")]
+  public static extern void AbstractState_set_mass_fractions__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_AbstractState_set_volu_fractions__SWIG_1")]
   public static extern void AbstractState_set_volu_fractions__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
@@ -563,6 +572,9 @@ class CoolPropPINVOKE {
   [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_AbstractState_molar_mass")]
   public static extern double AbstractState_molar_mass(global::System.Runtime.InteropServices.HandleRef jarg1);
 
+  [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_AbstractState_acentric_factor")]
+  public static extern double AbstractState_acentric_factor(global::System.Runtime.InteropServices.HandleRef jarg1);
+
   [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_AbstractState_gas_constant")]
   public static extern double AbstractState_gas_constant(global::System.Runtime.InteropServices.HandleRef jarg1);
 
@@ -649,6 +661,15 @@ class CoolPropPINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_AbstractState_second_saturation_deriv")]
   public static extern global::System.IntPtr AbstractState_second_saturation_deriv(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3, int jarg4, int jarg5);
+
+  [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_AbstractState_first_two_phase_deriv")]
+  public static extern double AbstractState_first_two_phase_deriv(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3, int jarg4);
+
+  [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_AbstractState_second_two_phase_deriv")]
+  public static extern double AbstractState_second_two_phase_deriv(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3, int jarg4, int jarg5, int jarg6);
+
+  [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_AbstractState_first_two_phase_deriv_splined")]
+  public static extern double AbstractState_first_two_phase_deriv_splined(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3, int jarg4, double jarg5);
 
   [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_AbstractState_build_phase_envelope")]
   public static extern void AbstractState_build_phase_envelope(global::System.Runtime.InteropServices.HandleRef jarg1, string jarg2);
@@ -768,7 +789,7 @@ class CoolPropPINVOKE {
   public static extern string get_fluid_param_string(string jarg1, string jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_is_valid_fluid_string")]
-  public static extern bool is_valid_fluid_string(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern bool is_valid_fluid_string(string jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_get_BibTeXKey")]
   public static extern string get_BibTeXKey(string jarg1, string jarg2);
@@ -1017,7 +1038,37 @@ class CoolPropPINVOKE {
   public static extern void set_config_string(int jarg1, string jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_set_config_as_json_string")]
-  public static extern void set_config_as_json_string(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern void set_config_as_json_string(string jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_HAPropsSI")]
+  public static extern double HAPropsSI(string jarg1, string jarg2, double jarg3, string jarg4, double jarg5, string jarg6, double jarg7);
+
+  [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_HAProps")]
+  public static extern double HAProps(string jarg1, string jarg2, double jarg3, string jarg4, double jarg5, string jarg6, double jarg7);
+
+  [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_HAProps_Aux")]
+  public static extern double HAProps_Aux(string jarg1, double jarg2, double jarg3, double jarg4, string jarg5);
+
+  [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_IceProps")]
+  public static extern double IceProps(string jarg1, double jarg2, double jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_UseVirialCorrelations")]
+  public static extern void UseVirialCorrelations(int jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_UseIsothermCompressCorrelation")]
+  public static extern void UseIsothermCompressCorrelation(int jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_UseIdealGasEnthalpyCorrelations")]
+  public static extern void UseIdealGasEnthalpyCorrelations(int jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_HAHelp")]
+  public static extern void HAHelp();
+
+  [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_returnHumAirCode")]
+  public static extern int returnHumAirCode(string jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_cair_sat")]
+  public static extern double cair_sat(double jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("CoolProp", EntryPoint="CSharp_SsatSimpleState_SWIGUpcast")]
   public static extern global::System.IntPtr SsatSimpleState_SWIGUpcast(global::System.IntPtr jarg1);
