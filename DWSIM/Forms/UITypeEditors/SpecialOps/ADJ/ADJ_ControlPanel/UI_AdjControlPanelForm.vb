@@ -94,7 +94,6 @@ Public Class UI_AdjControlPanelForm
                 rfVal = Me.GetMnpVarValue()
             End If
         End If
-        If Not cvVal = Nothing And Not mvVal = Nothing Then
             Dim tol, maxit, adjval, stepsize, max, min As Double
             With myADJ
                 If myADJ.Referenced Then
@@ -494,13 +493,6 @@ Final3:
                     Loop Until k = py1.Count
                 End If
             End With
-
-        Else
-
-            myADJ.GraphicObject.Calculated = False
-            Throw New Exception(DWSIM.App.GetLocalString("Existeumerronaconfig2"))
-
-        End If
 
     End Sub
 

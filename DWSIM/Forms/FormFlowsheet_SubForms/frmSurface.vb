@@ -3466,6 +3466,9 @@ Public Class frmSurface
                         myobj.FontSize = selectionControl.tscb2.SelectedItem
                         myobj.Includes = selectionControl.includes
                     End If
+                Case TipoObjeto.OT_Ajuste
+                    Dim selectionControl As New UI_AdjControlPanelForm
+                    selectionControl.ShowDialog()
             End Select
         End If
 
