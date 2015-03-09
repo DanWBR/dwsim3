@@ -39,4 +39,46 @@ Module ControlExtensions
         Return Height
     End Function
 
+    <System.Runtime.CompilerServices.Extension()> _
+    Public Function ToArrayString(vector As Double()) As String
+
+        Dim retstr As String = "{ "
+        For Each d In vector
+            retstr += d.ToString + ", "
+        Next
+        retstr.TrimEnd(",")
+        retstr += "}"
+
+        Return retstr
+
+    End Function
+
+    <System.Runtime.CompilerServices.Extension()> _
+    Public Function ToArrayString(vector As String()) As String
+
+        Dim retstr As String = "{ "
+        For Each s In vector
+            retstr += s + ", "
+        Next
+        retstr.TrimEnd(",")
+        retstr += "}"
+
+        Return retstr
+
+    End Function
+
+    <System.Runtime.CompilerServices.Extension()> _
+    Public Function ToArrayString(vector As Object()) As String
+
+        Dim retstr As String = "{ "
+        For Each d In vector
+            retstr += d.ToString + ", "
+        Next
+        retstr.TrimEnd(",")
+        retstr += "}"
+
+        Return retstr
+
+    End Function
+
 End Module

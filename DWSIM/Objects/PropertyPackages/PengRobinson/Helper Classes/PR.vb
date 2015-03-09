@@ -125,6 +125,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
         Shared Function ZtoMinG(ByVal Z_ As Array, ByVal T As Double, ByVal P As Double, ByVal Vz As Array, ByVal VKij As Object, ByVal VTc As Array, ByVal VPc As Array, ByVal Vw As Array) As Object
 
+            DWSIM.App.WriteToConsole("PR min-G root finder (Z) for T = " & T & " K, P = " & P & " Pa and Z = " & DirectCast(Z_, Object()).ToArrayString, 3)
+
             Dim S, H, Z As Double
 
             Dim ai(), bi(), ci() As Double
@@ -239,6 +241,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
                 l = l + 1
 
             Next
+
+            DWSIM.App.WriteToConsole("Result: Min-G Z Index = " & k, 3)
 
             Return New Object() {k, G(k)}
 

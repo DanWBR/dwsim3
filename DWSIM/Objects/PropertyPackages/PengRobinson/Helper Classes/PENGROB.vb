@@ -197,6 +197,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         Function Z_PR(ByVal T, ByVal P, ByVal Vx, ByVal VKij, ByVal VTc, ByVal VPc, ByVal Vw, ByVal TIPO)
 
+            DWSIM.App.WriteToConsole("PR cubic equation root finder (Z) for T = " & T & " K, P = " & P & " Pa and Phase = " & TIPO, 3)
+            DWSIM.App.WriteToConsole("Mole fractions: " & DirectCast(Vx, Double()).ToArrayString, 3)
+
             Dim ai(), bi(), aml2(), amv2() As Double
             Dim n, R, coeff(3), tmp() As Double
             Dim Tc(), Pc(), W(), alpha(), Vant(0, 4), m(), a(,), b(,), Tr() As Double
@@ -331,6 +334,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             ElseIf TIPO = "V" Then
                 Z_PR = temp1(2, 0)
             End If
+
+            DWSIM.App.WriteToConsole("Result: Z = " & Z_PR, 3)
 
         End Function
 

@@ -396,7 +396,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABo
-        KgAAAk1TRnQBSQFMAgEBCgEAAZwBAwGcAQMBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        KgAAAk1TRnQBSQFMAgEBCgEAAaQBAwGkAQMBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABMAMAAQEBAAEYBgABJBIAAekCpwHpAqcB5wKlAeUCowHlAqMB5QKjAeQCogHiAqAB4QKfAd4CnAHe
         ApwB3AKaAdoCmAHaApgB2gKYAdoCmAHkAqIB4gKgAeECnwHeApwB3AGcAZoB2gKYAdoCmAHZApcB1wKV
         AdYClAHTApEB0wKRAdECjwHPAo0BzwKNAc8CjWAABvYD9APzAfIB8wHyA/ED8APuA+0D6wPpA+gB5wLm
@@ -637,6 +637,9 @@
   <data name="Label4.Text" xml:space="preserve">
     <value>Verwalten Sie die Pfade, wo der Compiler nach Dateien suchen soll, um die Skripte zu importieren:</value>
   </data>
+  <data name="GroupBox9.Text" xml:space="preserve">
+    <value>Nachrichten</value>
+  </data>
   <data name="KryptonCheckBox1.Size" type="System.Drawing.Size, System.Drawing">
     <value>227, 17</value>
   </data>
@@ -644,7 +647,7 @@
     <value>Zeige beim Start den Eröffnungsbildschirm</value>
   </data>
   <data name="chkUpdates.Location" type="System.Drawing.Point, System.Drawing">
-    <value>21, 44</value>
+    <value>13, 49</value>
   </data>
   <data name="chkUpdates.Size" type="System.Drawing.Size, System.Drawing">
     <value>196, 17</value>
@@ -652,8 +655,45 @@
   <data name="chkUpdates.Text" xml:space="preserve">
     <value>Beim Starten nach Updates suchen </value>
   </data>
+  <data name="GroupBox6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>845, 69</value>
+  </data>
+  <data name="GroupBox6.Text" xml:space="preserve">
+    <value>Debug</value>
+  </data>
+  <data name="cbDebugLevel.Items" xml:space="preserve">
+    <value>Keine Ausgabe</value>
+  </data>
+  <data name="cbDebugLevel.Items1" xml:space="preserve">
+    <value>Niedrig</value>
+  </data>
+  <data name="cbDebugLevel.Items2" xml:space="preserve">
+    <value>Durchschnitt</value>
+  </data>
+  <data name="cbDebugLevel.Items3" xml:space="preserve">
+    <value>Hoch</value>
+  </data>
+  <data name="cbDebugLevel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>264, 28</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="cbDebugLevel.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="Label13.Location" type="System.Drawing.Point, System.Drawing">
+    <value>198, 32</value>
+  </data>
+  <data name="Label13.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 13</value>
+  </data>
+  <data name="Label13.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="Label13.Text" xml:space="preserve">
+    <value>Debuglevel</value>
+  </data>
   <data name="chkconsole.Location" type="System.Drawing.Point, System.Drawing">
-    <value>21, 108</value>
+    <value>13, 31</value>
   </data>
   <data name="chkconsole.Size" type="System.Drawing.Size, System.Drawing">
     <value>179, 17</value>
@@ -675,37 +715,6 @@
   </data>
   <data name="OpenFileDialog1.Title" xml:space="preserve">
     <value>Anwenderdatenbank hinzufügen</value>
-  </data>
-  <data name="cbDebugLevel.Items" xml:space="preserve">
-    <value>Keine Ausgabe</value>
-  </data>
-  <data name="cbDebugLevel.Items1" xml:space="preserve">
-    <value>Niedrig</value>
-  </data>
-  <data name="cbDebugLevel.Items2" xml:space="preserve">
-    <value>Durchschnitt</value>
-  </data>
-  <data name="cbDebugLevel.Items3" xml:space="preserve">
-    <value>Hoch</value>
-  </data>
-  <data name="cbDebugLevel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>342, 105</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="cbDebugLevel.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="Label13.Location" type="System.Drawing.Point, System.Drawing">
-    <value>277, 109</value>
-  </data>
-  <data name="Label13.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 13</value>
-  </data>
-  <data name="Label13.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="Label13.Text" xml:space="preserve">
-    <value>Debuglevel</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>DWSIM - Allgemeine Einstellungen</value>

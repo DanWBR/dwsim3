@@ -29,6 +29,18 @@ Namespace DWSIM
 
     <System.Serializable()> Public Class App
 
+        Public Shared Sub WriteToConsole(text As String, minlevel As Integer)
+
+            If My.Settings.RedirectOutput Then
+                My.Application.OpenForms(0).UIThread(Sub()
+                                                         If My.Settings.DebugLevel >= minlevel Then Console.WriteLine(text)
+                                                     End Sub)
+            Else
+                If My.Settings.DebugLevel >= minlevel Then Console.WriteLine(text)
+            End If
+
+        End Sub
+
         Public Shared Sub HelpRequested(topic As String)
             Dim pathsep = System.IO.Path.DirectorySeparatorChar
             Dim filename As String = My.Application.Info.DirectoryPath & pathsep & "help" & pathsep & topic

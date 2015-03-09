@@ -798,6 +798,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Overrides Function DW_CalcFugCoeff(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double()
 
+            DWSIM.App.WriteToConsole("Chao-Seader fugacity calculation requested at T = " & T & " K and P = " & P & " Pa for the following compounds: ", 2)
+            DWSIM.App.WriteToConsole(Me.RET_VNAMES.ToArrayString, 2)
+
             Dim n As Integer = UBound(Vx)
             Dim i As Integer
 
@@ -812,6 +815,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Else
                 fugcoef = Me.m_cs.CalcVapFugCoeff(T, P, Vx, Me.RET_VTC, Me.RET_VPC, Me.RET_VW)
             End If
+
+            DWSIM.App.WriteToConsole("Chao-Seader fugacity calculation results at T = " & T & " K and P = " & P & " Pa: ", 2)
+            DWSIM.App.WriteToConsole(fugcoef.ToArrayString, 2)
 
             Return fugcoef
 

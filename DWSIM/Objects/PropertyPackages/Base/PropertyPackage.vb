@@ -220,7 +220,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     End If
                     cspath += Path.DirectorySeparatorChar + "pcd" + pathsep + "chemsep1.xml"
                 Catch ex As Exception
-                    WriteDebugInfo(ex.ToString)
+                    DWSIM.App.WriteToConsole(ex.ToString, 1)
                 Finally
                     If Not File.Exists(cspath) Then
                         cspath = My.Application.Info.DirectoryPath & pathsep & "chemsepdb" & pathsep & "chemsep1.xml"
@@ -235,7 +235,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Try
                     If File.Exists(My.Settings.ChemSepDatabasePath) Then Me.LoadCSDB(My.Settings.ChemSepDatabasePath)
                 Catch ex As Exception
-                    WriteDebugInfo(ex.ToString)
+                    DWSIM.App.WriteToConsole(ex.ToString, 1)
                 End Try
 
                 'load DWSIM XML database
@@ -243,7 +243,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Try
                     Me.LoadDWSIMDB(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "dwsim.xml")
                 Catch ex As Exception
-                    WriteDebugInfo(ex.ToString)
+                    DWSIM.App.WriteToConsole(ex.ToString, 1)
                 End Try
 
                 'load user databases
@@ -5044,19 +5044,6 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 #End Region
 
 #Region "   Commmon Functions"
-
-        Public Sub WriteDebugInfo(text As String)
-
-            Select Case My.Settings.DebugLevel
-                Case 0
-                    'do nothing
-                Case 1
-                    Console.WriteLine(text)
-                Case Else
-                    Console.WriteLine(text)
-            End Select
-
-        End Sub
 
         Public Overloads Sub DW_CalcKvalue()
 

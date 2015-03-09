@@ -508,7 +508,7 @@ Public Class FormOptions
         End If
     End Sub
 
-    Private Sub chkconsole_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub chkconsole_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkconsole.CheckedChanged
         My.Settings.RedirectOutput = chkconsole.Checked
         If chkconsole.Checked Then
             Dim txtwriter As New ConsoleRedirection.TextBoxStreamWriter()
@@ -594,7 +594,7 @@ Public Class FormOptions
         My.Settings.ServiceBusConnectionString = tbServiceBusNamespace.Text
     End Sub
 
-    Private Sub cbDebugLevel_SelectedIndexChanged(sender As Object, e As EventArgs)
+    Private Sub cbDebugLevel_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbDebugLevel.SelectedIndexChanged
         My.Settings.DebugLevel = cbDebugLevel.SelectedIndex
     End Sub
 

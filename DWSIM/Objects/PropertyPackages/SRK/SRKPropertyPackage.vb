@@ -1801,6 +1801,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Overrides Function DW_CalcFugCoeff(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double()
 
+            DWSIM.App.WriteToConsole("SRK fugacity calculation requested at T = " & T & " K and P = " & P & " Pa for the following compounds: ", 2)
+            DWSIM.App.WriteToConsole(Me.RET_VNAMES.ToArrayString, 2)
+
             Dim srkn As New PropertyPackages.ThermoPlugs.SRK
 
             Dim lnfug As Object
@@ -1819,8 +1822,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 fugcoeff(i) = Exp(lnfug(i))
             Next
 
-            Return fugcoeff
+            DWSIM.App.WriteToConsole("SRK fugacity calculation results at T = " & T & " K and P = " & P & " Pa: ", 2)
+            DWSIM.App.WriteToConsole(fugcoeff.ToArrayString, 2)
 
+            Return fugcoeff
 
         End Function
 
