@@ -1934,6 +1934,9 @@ Namespace DWSIM.Flowsheet
                         Try
                             form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & DWSIM.App.GetLocalString("Fluxograma") & "...")
                             azureclient.SolveFlowsheet(form)
+                            For Each baseobj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
+                                If baseobj.Calculated Then baseobj.LastUpdated = Date.Now
+                            Next
                         Catch ex As Exception
                             age = New AggregateException(ex.Message.ToString, ex)
                         Finally
@@ -1950,6 +1953,9 @@ Namespace DWSIM.Flowsheet
                         Try
                             form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & DWSIM.App.GetLocalString("Fluxograma") & "...")
                             tcpclient.SolveFlowsheet(form)
+                            For Each baseobj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
+                                If baseobj.Calculated Then baseobj.LastUpdated = Date.Now
+                            Next
                         Catch ex As Exception
                             age = New AggregateException(ex.Message.ToString, ex)
                         Finally
