@@ -238,6 +238,20 @@ Imports DWSIM.DWSIM.Outros
 
         End If
 
+        Dim array1(FormMain.AvailableUnitSystems.Count - 1) As String
+        FormMain.AvailableUnitSystems.Keys.CopyTo(array1, 0)
+        Me.ToolStripComboBoxUnitSystem.Items.Clear()
+        Me.ToolStripComboBoxUnitSystem.Items.AddRange(array1)
+
+        If Me.Options.SelectedUnitSystem.nome <> "" Then
+            Me.ToolStripComboBoxUnitSystem.SelectedItem = Me.Options.SelectedUnitSystem.nome
+        Else
+            Me.ToolStripComboBoxUnitSystem.SelectedIndex = 0
+        End If
+
+        Me.ToolStripComboBoxNumberFormatting.SelectedItem = Me.Options.NumberFormat
+        Me.ToolStripComboBoxNumberFractionFormatting.SelectedItem = Me.Options.FractionNumberFormat
+
         'load plugins
         CreatePluginsList()
 
