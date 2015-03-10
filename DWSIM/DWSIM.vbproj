@@ -1264,9 +1264,6 @@
     <EmbeddedResource Include="Forms\FormDBManager.resx">
       <DependentUpon>FormDBManager.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormFlowsheet_SubForms\frmMatList.en-US.resx">
-      <DependentUpon>frmMatList.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormMain.resx">
       <SubType>Designer</SubType>
       <DependentUpon>FormMain.vb</DependentUpon>
