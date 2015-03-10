@@ -1663,6 +1663,7 @@ restart:            fx = Me.FunctionValue(xvar)
                     If Double.IsNaN(il_err) Then Throw New Exception(DWSIM.App.GetLocalString("DCGeneralError"))
                     If MathEx.Common.AbsSum(dx) = 0.0# Or Abs((il_err - il_err_ant) / il_err) < itol Then Exit Do
 
+                    DWSIM.App.WriteToConsole("Inside-Out solver internal loop error = " & il_err, 1)
 
                     CheckCalculatorStatus()
 
@@ -1948,6 +1949,8 @@ restart:            fx = Me.FunctionValue(xvar)
                 Sb = 1
 
                 CheckCalculatorStatus()
+
+                DWSIM.App.WriteToConsole("Inside-Out solver external loop error = " & il_err, 1)
 
             Loop Until Abs(el_err) < tol(1) * el
 
@@ -2494,13 +2497,11 @@ restart:            fx = Me.FunctionValue(xvar)
 
                 If ic >= maxits Then Throw New Exception(DWSIM.App.GetLocalString("DCMaxIterationsReached"))
                 If Double.IsNaN(t_error) Then Throw New Exception(DWSIM.App.GetLocalString("DCGeneralError"))
-                'If Abs((t_error - t_error_ant) / t_error) < tol(1) Then
-                '    My.Application.ActiveSimulation.WriteToLog("The column temperature profile isn't changing anymore. Final sum of temperature errors is " & t_error & " K.", Color.Green, FormClasses.TipoAviso.Aviso)
-                '    Exit Do
-                'End If
                 If ic = stopatitnumber - 1 Then Exit Do
 
                 CheckCalculatorStatus()
+
+                DWSIM.App.WriteToConsole("Bubble Point solver T error = " & t_error, 1)
 
             Loop Until t_error < tol(1)
 
@@ -2820,6 +2821,9 @@ restart:            fx = Me.FunctionValue(xvar)
                 If Double.IsNaN(comperror) Then Throw New Exception(DWSIM.App.GetLocalString("DCGeneralError"))
 
                 CheckCalculatorStatus()
+
+                DWSIM.App.WriteToConsole("Sum Rates solver T error = " & t_error, 1)
+                DWSIM.App.WriteToConsole("Sum Rates solver composition error = " & comperror, 1)
 
             Loop Until t_error <= tol(1) And comperror <= tol(1)
 
@@ -3857,6 +3861,8 @@ restart:            fx = Me.FunctionValue(xvar)
                 If Abs(MathEx.Common.AbsSum(dxvar)) < tol(0) Then Exit Do
 
                 CheckCalculatorStatus()
+
+                DWSIM.App.WriteToConsole("Full Newton solver loop error = " & il_err, 1)
 
             Loop
 
