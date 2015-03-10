@@ -41,7 +41,16 @@ Namespace DWSIM.Flowsheet
 
             client = New TcpComm.Client(AddressOf Update, True, 30)
 
-            If client.Connect(My.Settings.ServerIPAddress, My.Settings.ServerPort, My.User.Name & "@" & My.Computer.Name, errMsg) Then
+            Dim user, computer As String
+            If Not DWSIM.App.IsRunningOnMono Then
+                user = My.User.Name
+                computer = My.Computer.Name
+            Else
+                user = "user"
+                computer = "computer"""
+            End If
+
+            If client.Connect(My.Settings.ServerIPAddress, My.Settings.ServerPort, user & "@" & computer, errMsg) Then
 
                 fs.WriteToLog(DWSIM.App.GetLocalString("ClientConnected"), Color.Brown, FormClasses.TipoAviso.Informacao)
 

@@ -35,6 +35,14 @@ Public Class FormOptions
 
     Private Sub FormOptions_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
+        Try
+            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormOptions))
+            Me.ListView1.Items.Clear()
+            Me.ListView1.Items.AddRange(New System.Windows.Forms.ListViewItem() {CType(Resources.GetObject("ListView1.Items"), System.Windows.Forms.ListViewItem), CType(Resources.GetObject("ListView1.Items1"), System.Windows.Forms.ListViewItem), CType(Resources.GetObject("ListView1.Items2"), System.Windows.Forms.ListViewItem), CType(Resources.GetObject("ListView1.Items3"), System.Windows.Forms.ListViewItem)})
+        Catch ex As Exception
+
+        End Try
+
         Dim i As Integer = 0
         Me.cbParallelism.Items.Clear()
         Me.cbParallelism.Items.Add("Default")

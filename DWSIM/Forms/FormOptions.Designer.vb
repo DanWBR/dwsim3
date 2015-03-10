@@ -625,7 +625,6 @@ Partial Class FormOptions
         'ListView1
         '
         Me.ListView1.FullRowSelect = True
-        Me.ListView1.Items.AddRange(New System.Windows.Forms.ListViewItem() {CType(resources.GetObject("ListView1.Items"), System.Windows.Forms.ListViewItem), CType(resources.GetObject("ListView1.Items1"), System.Windows.Forms.ListViewItem), CType(resources.GetObject("ListView1.Items2"), System.Windows.Forms.ListViewItem), CType(resources.GetObject("ListView1.Items3"), System.Windows.Forms.ListViewItem)})
         Me.ListView1.LargeImageList = Me.ImageList1
         resources.ApplyResources(Me.ListView1, "ListView1")
         Me.ListView1.MultiSelect = False
