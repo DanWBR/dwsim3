@@ -7,6 +7,8 @@ Imports DWSIM
 Imports System.Windows.Forms
 Imports System.Linq
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
+Imports System.Threading.Tasks
+Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
 
 Public Class Form1
 
@@ -63,7 +65,7 @@ Public Class Form1
         If Not fsheet.FormSurface.FlowsheetDesignSurface.SelectedObject Is Nothing Then
 
             'check if the selected object is a material stream.
-            If fsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.TipoObjeto = Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.MaterialStream Then
+            If fsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.TipoObjeto = Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.MaterialStream Then
 
                 'get a reference to the material stream graphic object.
                 Dim gobj As GraphicObject = fsheet.FormSurface.FlowsheetDesignSurface.SelectedObject
@@ -161,6 +163,12 @@ Public Class Form1
                     vxnw = vx.Clone
                 End If
 
+                Me.pg.ShowCustomProperties = True
+                Me.pg.Item.Clear()
+                Me.pg.Item.Add("Calculating", "please wait...", True, "Natural Gas Properties", "", True)
+                Me.pg.PropertySort = PropertySort.Categorized
+                Me.pg.ShowCustomProperties = True
+
                 'wdp    =   Water dew point (real, not reliable)
                 'hdp    =   Hydrocarbon dew point
                 '           Calculated using the dry composition and a normal PV-Flash.
@@ -171,30 +179,49 @@ Public Class Form1
                 '           to return the saturation temperature (dew point).
                 Dim wdp, hdp, iwdp, wc0, wc15, wc20, wcb, wdp1, iwdp1, hdp1 As Double
                 Dim fa As New DWSIM.DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms.NestedLoops3PV2
+                Dim fa2 As New DWSIM.DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms.NestedLoops3PV2
                 fa.StabSearchCompIDs = New String() {"Agua", "Water"}
                 fa.StabSearchSeverity = 0
+
+                Dim pp1 As PropertyPackage = tmpms.PropertyPackage
+                Dim pp2 As PropertyPackage = tmpms.PropertyPackage.Clone
+
+                pp1.CurrentMaterialStream = tmpms
+                pp2.CurrentMaterialStream = tmpms.Clone
+
                 Try
-                    With tmpms.PropertyPackage
-                        If iw <> -1 Then
-                            If vx(iw) <> 0.0# Then
-                                Dim result As Object = .FlashBase.Flash_PV(vx, tmpms.Fases(0).SPMProperties.pressure, 1, 273.15, tmpms.PropertyPackage)
-                                wdp = fa.Flash_PV_3P(vx, result(1), result(0), 0, result(3), result(2), vxw, tmpms.Fases(0).SPMProperties.pressure, 1, result(4), tmpms.PropertyPackage)(4)
-                                iwdp = .AUX_TSATi(vx(iw) * tmpms.Fases(0).SPMProperties.pressure.GetValueOrDefault, iw)
-                                hdp = .FlashBase.Flash_PV(vxnw, tmpms.Fases(0).SPMProperties.pressure, 1, result(4), tmpms.PropertyPackage)(4)
-                                'hdp = fa.Flash_PV_3P(vx, 1 - vx(iw), 0, vx(iw), result(3), result(2), vxw, tmpms.Fases(0).SPMProperties.pressure, 1, result(4), tmpms.PropertyPackage)(4)
-                                result = .FlashBase.Flash_PV(vx, 101325, 1, 253.15, tmpms.PropertyPackage)
-                                wdp1 = fa.Flash_PV_3P(vx, result(1), result(0), 0, result(3), result(2), vxw, 101325, 1, result(4), tmpms.PropertyPackage)(4)
-                                iwdp1 = .AUX_TSATi(vx(iw) * 101325, iw)
-                                hdp1 = .FlashBase.Flash_PV(vxnw, 101325, 1, result(4), tmpms.PropertyPackage)(4)
-                                'hdp1 = fa.Flash_PV_3P(vx, 1 - vx(iw), 0, vx(iw), result(3), result(2), vxw, 101325, 1, result(4) - 30, tmpms.PropertyPackage)(4)
-                            End If
-                        Else
-                            wdp = -1.0E+20
-                            iwdp = -1.0E+20
+                    If iw <> -1 Then
+                        If vx(iw) <> 0.0# Then
+                            Dim t1 As Task = Task.Factory.StartNew(Sub()
+                                                                       Dim result As Object = pp1.FlashBase.Flash_PV(vx, tmpms.Fases(0).SPMProperties.pressure, 1, 273.15, pp1)
+                                                                       wdp = fa.Flash_PV_3P(vx, result(1), result(0), 0, result(3), result(2), vxw, tmpms.Fases(0).SPMProperties.pressure, 1, result(4), pp1)(4)
+                                                                       iwdp = pp1.AUX_TSATi(vx(iw) * tmpms.Fases(0).SPMProperties.pressure.GetValueOrDefault, iw)
+                                                                       hdp = pp1.FlashBase.Flash_PV(vxnw, tmpms.Fases(0).SPMProperties.pressure, 1, result(4), pp1)(4)
+                                                                   End Sub)
+                            Dim t2 As Task = Task.Factory.StartNew(Sub()
+                                                                       Dim result As Object = pp2.FlashBase.Flash_PV(vx, 101325, 1, 253.15, pp2)
+                                                                       wdp1 = fa2.Flash_PV_3P(vx, result(1), result(0), 0, result(3), result(2), vxw, 101325, 1, result(4), pp2)(4)
+                                                                       iwdp1 = pp2.AUX_TSATi(vx(iw) * 101325, iw)
+                                                                       hdp1 = pp2.FlashBase.Flash_PV(vxnw, 101325, 1, result(4), pp2)(4)
+                                                                   End Sub)
+                            Threading.Thread.Sleep(500)
+                            While t1.Status = TaskStatus.Running Or t2.Status = TaskStatus.Running
+                                Threading.Thread.Sleep(500)
+                                Application.DoEvents()
+                            End While
                         End If
-                    End With
+                    Else
+                        wdp = -1.0E+20
+                        iwdp = -1.0E+20
+                    End If
                 Catch ex As Exception
                     fsheet.WriteToLog(ex.ToString, Drawing.Color.Red, DWSIM.DWSIM.FormClasses.TipoAviso.Erro)
+                Finally
+                    fa = Nothing
+                    fa2 = Nothing
+                    pp2.Dispose()
+                    pp2.CurrentMaterialStream = Nothing
+                    pp2 = Nothing
                 End Try
 
                 'set stream pressure
@@ -308,7 +335,6 @@ Public Class Form1
 
                 With Me.pg
 
-                    .ShowCustomProperties = True
                     .Item.Clear()
                     .Item.Add("Molar Weight", Format(mw, nf), True, "Natural Gas Properties", "", True)
                     .Item.Add("Ideal Gas Specific Gravity", Format(d, nf), True, "Natural Gas Properties", "", True)
