@@ -1867,8 +1867,7 @@ Namespace DWSIM.Flowsheet
                                                                                                                      filteredlist2,
                                                                                                                      ct)
                                                                                          End Sub,
-                                                                                             ct,
-                                                                                             TaskCreationOptions.LongRunning)
+                                                                                         ct)
                                                                        If Not t.IsCanceled Then t.Start()
                                                                        If Not t.Wait(My.Settings.SolverTimeoutSeconds * 1000, ct) Then
                                                                            Throw New TimeoutException(DWSIM.App.GetLocalString("SolverTimeout"))
