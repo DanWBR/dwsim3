@@ -1976,7 +1976,7 @@ Namespace DWSIM.Flowsheet
                     form.UpdateStatusLabel(preLab)
                     If age Is Nothing Then
                         form.WriteToLog(DWSIM.App.GetLocalString("FSfinishedsolvingok"), Color.Blue, FormClasses.TipoAviso.Informacao)
-                        form.WriteToLog(DWSIM.App.GetLocalString("Runtime") & ": " & Format((Date.Now - d1).TotalSeconds, "0.##") & "s", Color.MediumBlue, DWSIM.FormClasses.TipoAviso.Informacao)
+                        form.WriteToLog(DWSIM.App.GetLocalString("Runtime") & ": " & (Date.Now - d1).ToString("g"), Color.MediumBlue, DWSIM.FormClasses.TipoAviso.Informacao)
                     Else
                         form.WriteToLog(DWSIM.App.GetLocalString("FSfinishedsolvingerror"), Color.Red, FormClasses.TipoAviso.Erro)
                         For Each ex In age.Flatten().InnerExceptions
