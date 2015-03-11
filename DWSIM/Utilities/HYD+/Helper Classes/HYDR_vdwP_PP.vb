@@ -486,9 +486,12 @@ Namespace DWSIM.Utilities.HYD
                     i = i + 1
                 Loop Until i = n + 1
 
-                If T < Td Then PQHYD = R * T * sum2sI
-                If T > Td Then PQHYD = R * T * sum2sI + R * T * Math.Log(Vxaq(pos) * act)
-
+                If T < Td Or vaporonly Then
+                    PQHYD = R * T * sum2sI
+                Else
+                    PQHYD = R * T * sum2sI + R * T * Math.Log(Vxaq(pos) * act)
+                End If
+                
             ElseIf TIPO_HIDRATO = "sII" Then
 
                 'CALCULO DAS CONSTANTES DE LANGMUIR PARA HIDRATO TIPO "SII"
@@ -557,8 +560,11 @@ Namespace DWSIM.Utilities.HYD
                     i = i + 1
                 Loop Until i = n + 1
 
-                If T < Td Then PQHYD = R * T * sum2sII
-                If T > Td Then PQHYD = R * T * sum2sII + R * T * Math.Log(Vxaq(pos) * act)
+                If T < Td Or vaporonly Then
+                    PQHYD = R * T * sum2sII
+                Else
+                    PQHYD = R * T * sum2sII + R * T * Math.Log(Vxaq(pos) * act)
+                End If
 
             End If
 
@@ -741,9 +747,9 @@ STEP2:
 START_LOOP:
 
             Tinf = 350
-            Tsup = 200
+            Tsup = 100
 
-            nsub = 5
+            nsub = 25
 
             delta_T = (Tsup - Tinf) / nsub
 
@@ -1264,8 +1270,11 @@ STEP2:
 
                 Vh = VsI
 
-                If T < Td Then PQHYD = R * T * sum2sI
-                If T >= Td Then PQHYD = R * T * sum2sI + R * T * Math.Log(Vxaq(pos) * act)
+                If T < Td Or vaporonly Then
+                    PQHYD = R * T * sum2sI
+                Else
+                    PQHYD = R * T * sum2sI + R * T * Math.Log(Vxaq(pos) * act)
+                End If
 
             ElseIf TIPO_HIDRATO = "sII" Then
 
@@ -1337,8 +1346,11 @@ STEP2:
 
                 Vh = VsII
 
-                If T <= Td Then PQHYD = R * T * sum2sII
-                If T > Td Then PQHYD = R * T * sum2sII + R * T * Math.Log(Vxaq(pos) * act)
+                If T < Td Or vaporonly Then
+                    PQHYD = R * T * sum2sII
+                Else
+                    PQHYD = R * T * sum2sII + R * T * Math.Log(Vxaq(pos) * act)
+                End If
 
             End If
 

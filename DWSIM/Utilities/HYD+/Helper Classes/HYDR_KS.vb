@@ -910,10 +910,10 @@ STEP2:
 
 START_LOOP:
 
-            Tinf = 350
-            Tsup = 200
+            Tinf = 100
+            Tsup = 350
 
-            nsub = 5
+            nsub = 25
 
             delta_T = (Tsup - Tinf) / nsub
 
@@ -921,10 +921,10 @@ START_LOOP:
                 fT = OBJ_FUNC_HYD_KS(TIPO_HIDRATO, P, Tinf, Vz, Vids, vaporonly)
                 Tinf = Tinf + delta_T
                 fT_inf = OBJ_FUNC_HYD_KS(TIPO_HIDRATO, P, Tinf, Vz, Vids, vaporonly)
-            Loop Until fT * fT_inf < 0 Or Tinf < Tsup
-            If Tinf < Tsup Then GoTo Final4
-            Tsup = Tinf
+            Loop Until fT * fT_inf < 0 Or Tinf > Tsup
+            If Tinf > Tsup Then GoTo Final4
             Tinf = Tinf - delta_T
+            Tsup = Tinf + delta_T
 
             'método de Brent para encontrar Vc
 
