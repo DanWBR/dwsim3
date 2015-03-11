@@ -2087,11 +2087,92 @@ Namespace DWSIM.Flowsheet
                 form.FormSurface.PanelSimultAdjust.Visible = True
 
                 Try
+
                     Dim n As Integer = 0
 
                     For Each adj As SimulationObjects.SpecialOps.Adjust In form.Collections.CLCS_AdjustCollection.Values
                         If adj.SimultaneousAdjust Then n += 1
                     Next
+
+                    If n > 0 Then
+
+                        n -= 1
+
+                        Dim i As Integer = 0
+                        Dim dfdx(n, n), dx(n), fx(n), x(n) As Double
+                        Dim il_err_ant As Double = 10000000000.0
+                        Dim il_err As Double = 10000000000.0
+                        Dim ic As Integer
+
+                        i = 0
+                        For Each adj As SimulationObjects.SpecialOps.Adjust In form.Collections.CLCS_AdjustCollection.Values
+                            If adj.SimultaneousAdjust Then
+                                x(i) = GetMnpVarValue(form, adj)
+                                i += 1
+                            End If
+                        Next
+
+                        ic = 0
+                        Do
+
+                            fx = FunctionValue(form, x)
+
+                            il_err_ant = il_err
+                            il_err = 0
+                            For i = 0 To x.Length - 1
+                                il_err += (fx(i) / x(i)) ^ 2
+                            Next
+
+                            form.FormSurface.LabelSimultAdjInfo.Text = "Iteration #" & ic + 1 & ", NSSE: " & il_err
+
+                            Application.DoEvents()
+
+                            If il_err < 0.0000000001 Then Exit Do
+
+                            dfdx = FunctionGradient(form, x)
+
+                            Dim success As Boolean
+                            success = MathEx.SysLin.rsolve.rmatrixsolve(dfdx, fx, x.Length, dx)
+                            If success Then
+                                For i = 0 To x.Length - 1
+                                    dx(i) = -dx(i)
+                                    x(i) += dx(i)
+                                Next
+                            End If
+
+                            ic += 1
+
+                            If ic >= 100 Then Throw New Exception(DWSIM.App.GetLocalString("SADJMaxIterationsReached"))
+                            If Double.IsNaN(il_err) Then Throw New Exception(DWSIM.App.GetLocalString("SADJGeneralError"))
+                            If Math.Abs(MathEx.Common.AbsSum(dx)) < 0.000001 Then Exit Do
+
+                        Loop
+
+                    End If
+
+                Catch ex As Exception
+                    form.WriteToLog(DWSIM.App.GetLocalString("SADJGeneralError") & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                Finally
+                    form.FormSurface.LabelSimultAdjInfo.Text = ""
+                    form.FormSurface.PanelSimultAdjust.Visible = False
+                End Try
+
+
+            End If
+
+        End Sub
+
+        Private Shared Sub SolveSimultaneousAdjustsAsync(ByVal form As FormFlowsheet)
+
+            If form.m_simultadjustsolverenabled Then
+
+                Dim n As Integer = 0
+
+                For Each adj As SimulationObjects.SpecialOps.Adjust In form.Collections.CLCS_AdjustCollection.Values
+                    If adj.SimultaneousAdjust Then n += 1
+                Next
+
+                If n > 0 Then
 
                     n -= 1
 
@@ -2120,10 +2201,6 @@ Namespace DWSIM.Flowsheet
                             il_err += (fx(i) / x(i)) ^ 2
                         Next
 
-                        form.FormSurface.LabelSimultAdjInfo.Text = "Iteration #" & ic + 1 & ", NSSE: " & il_err
-
-                        Application.DoEvents()
-
                         If il_err < 0.0000000001 Then Exit Do
 
                         dfdx = FunctionGradient(form, x)
@@ -2144,75 +2221,8 @@ Namespace DWSIM.Flowsheet
                         If Math.Abs(MathEx.Common.AbsSum(dx)) < 0.000001 Then Exit Do
 
                     Loop
-                Catch ex As Exception
-                    form.WriteToLog(DWSIM.App.GetLocalString("SADJGeneralError") & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                Finally
-                    form.FormSurface.LabelSimultAdjInfo.Text = ""
-                    form.FormSurface.PanelSimultAdjust.Visible = False
-                End Try
 
-
-            End If
-
-        End Sub
-
-        Private Shared Sub SolveSimultaneousAdjustsAsync(ByVal form As FormFlowsheet)
-
-            If form.m_simultadjustsolverenabled Then
-
-                Dim n As Integer = 0
-
-                For Each adj As SimulationObjects.SpecialOps.Adjust In form.Collections.CLCS_AdjustCollection.Values
-                    If adj.SimultaneousAdjust Then n += 1
-                Next
-
-                n -= 1
-
-                Dim i As Integer = 0
-                Dim dfdx(n, n), dx(n), fx(n), x(n) As Double
-                Dim il_err_ant As Double = 10000000000.0
-                Dim il_err As Double = 10000000000.0
-                Dim ic As Integer
-
-                i = 0
-                For Each adj As SimulationObjects.SpecialOps.Adjust In form.Collections.CLCS_AdjustCollection.Values
-                    If adj.SimultaneousAdjust Then
-                        x(i) = GetMnpVarValue(form, adj)
-                        i += 1
-                    End If
-                Next
-
-                ic = 0
-                Do
-
-                    fx = FunctionValue(form, x)
-
-                    il_err_ant = il_err
-                    il_err = 0
-                    For i = 0 To x.Length - 1
-                        il_err += (fx(i) / x(i)) ^ 2
-                    Next
-
-                    If il_err < 0.0000000001 Then Exit Do
-
-                    dfdx = FunctionGradient(form, x)
-
-                    Dim success As Boolean
-                    success = MathEx.SysLin.rsolve.rmatrixsolve(dfdx, fx, x.Length, dx)
-                    If success Then
-                        For i = 0 To x.Length - 1
-                            dx(i) = -dx(i)
-                            x(i) += dx(i)
-                        Next
-                    End If
-
-                    ic += 1
-
-                    If ic >= 100 Then Throw New Exception(DWSIM.App.GetLocalString("SADJMaxIterationsReached"))
-                    If Double.IsNaN(il_err) Then Throw New Exception(DWSIM.App.GetLocalString("SADJGeneralError"))
-                    If Math.Abs(MathEx.Common.AbsSum(dx)) < 0.000001 Then Exit Do
-
-                Loop
+                End If
 
             End If
 
