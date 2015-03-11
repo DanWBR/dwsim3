@@ -4084,4 +4084,8 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
 #End Region
 
 
+    Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
+        Me.OpenFileDialog1.InitialDirectory = My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "samples"
+        LoadFileDialog()
+    End Sub
 End Class

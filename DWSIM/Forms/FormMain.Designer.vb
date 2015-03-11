@@ -33,6 +33,7 @@ Partial Class FormMain
         Me.NovoEstudoDoCriadorDeComponentesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NovoEstudoDeRegressãoDeDadosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OpenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.toolStripSeparator = New System.Windows.Forms.ToolStripSeparator()
         Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaveAllToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -112,7 +113,7 @@ Partial Class FormMain
         'FileToolStripMenuItem
         '
         resources.ApplyResources(Me.FileToolStripMenuItem, "FileToolStripMenuItem")
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripMenuItem, Me.NovoEstudoDoCriadorDeComponentesToolStripMenuItem, Me.NovoEstudoDeRegressãoDeDadosToolStripMenuItem, Me.OpenToolStripMenuItem, Me.toolStripSeparator, Me.SaveToolStripMenuItem, Me.SaveAllToolStripMenuItem, Me.SaveAsToolStripMenuItem, Me.ToolStripSeparator2, Me.CloseAllToolstripMenuItem, Me.toolStripSeparator1, Me.ExitToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripMenuItem, Me.NovoEstudoDoCriadorDeComponentesToolStripMenuItem, Me.NovoEstudoDeRegressãoDeDadosToolStripMenuItem, Me.OpenToolStripMenuItem, Me.ToolStripMenuItem1, Me.toolStripSeparator, Me.SaveToolStripMenuItem, Me.SaveAllToolStripMenuItem, Me.SaveAsToolStripMenuItem, Me.ToolStripSeparator2, Me.CloseAllToolstripMenuItem, Me.toolStripSeparator1, Me.ExitToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Overflow = System.Windows.Forms.ToolStripItemOverflow.AsNeeded
         Me.StatusBarTextProvider1.SetStatusBarText(Me.FileToolStripMenuItem, resources.GetString("FileToolStripMenuItem.StatusBarText"))
@@ -144,6 +145,13 @@ Partial Class FormMain
         Me.OpenToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.folder_page_white
         Me.OpenToolStripMenuItem.Name = "OpenToolStripMenuItem"
         Me.StatusBarTextProvider1.SetStatusBarText(Me.OpenToolStripMenuItem, resources.GetString("OpenToolStripMenuItem.StatusBarText"))
+        '
+        'ToolStripMenuItem1
+        '
+        resources.ApplyResources(Me.ToolStripMenuItem1, "ToolStripMenuItem1")
+        Me.ToolStripMenuItem1.Image = Global.DWSIM.My.Resources.Resources.folder_page_white
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripMenuItem1, resources.GetString("ToolStripMenuItem1.StatusBarText"))
         '
         'toolStripSeparator
         '
@@ -520,7 +528,6 @@ Partial Class FormMain
         Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
         Me.ToolStripStatusLabel1.Spring = True
         Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripStatusLabel1, resources.GetString("ToolStripStatusLabel1.StatusBarText"))
-        Me.ToolStripStatusLabel1.Text = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'tslupd
         '
@@ -530,7 +537,6 @@ Partial Class FormMain
         Me.tslupd.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
         Me.tslupd.Name = "tslupd"
         Me.StatusBarTextProvider1.SetStatusBarText(Me.tslupd, resources.GetString("tslupd.StatusBarText"))
-        Me.tslupd.Text = Global.DWSIM.My.Resources.DWSIM.String1
         '
         'TimerBackup
         '
@@ -729,5 +735,6 @@ Partial Class FormMain
     Friend WithEvents SaveStudyDlg As System.Windows.Forms.SaveFileDialog
     Friend WithEvents SaveRegStudyDlg As System.Windows.Forms.SaveFileDialog
     Friend WithEvents DatabaseManagerToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Public WithEvents ToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
 
 End Class

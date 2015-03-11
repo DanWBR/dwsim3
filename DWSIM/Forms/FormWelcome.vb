@@ -140,7 +140,7 @@ Public Class FormWelcome
         Me.Close()
         Application.DoEvents()
         Application.DoEvents()
-        FormMain.OpenFileDialog1.InitialDirectory = My.Application.Info.DirectoryPath & "\samples\"
+        FormMain.OpenFileDialog1.InitialDirectory = My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "samples"
         Call FormMain.LoadFileDialog()
     End Sub
 
