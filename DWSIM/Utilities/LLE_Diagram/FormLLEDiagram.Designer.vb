@@ -331,6 +331,7 @@ Partial Class FormLLEDiagram
         Me.Controls.Add(Me.Panel1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
         Me.Name = "FormLLEDiagram"
+        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Float
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.Panel1.ResumeLayout(False)
