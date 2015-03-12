@@ -237,6 +237,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             End Select
 
             Dim oms As DWSIM.SimulationObjects.Streams.MaterialStream = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Clone
+            oms.SetFlowsheet(Me.FlowSheet)
             Me.PropertyPackage.CurrentMaterialStream = oms
 
             Dim Tin, Pin, Tout, Pout, Tout_ant, Pout_ant, Tout_ant2, Pout_ant2, Toutj, Text, Win, Qin, Qvin, Qlin, TinP, PinP, _
@@ -320,8 +321,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                     Do
 
-                        FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": Calculating pipe segment #" & segmento.Indice & ", distance " & (j + 1) * segmento.Comprimento / segmento.Incrementos & "/" & segmento.Comprimento & "m", Color.DarkBlue, FormClasses.TipoAviso.Informacao)
-
+                        FlowSheet.UIThread(Sub()
+                                               FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": Calculating pipe segment #" & segmento.Indice & ", distance " & (j + 1) * segmento.Comprimento / segmento.Incrementos & "/" & segmento.Comprimento & "m", Color.DarkBlue, FormClasses.TipoAviso.Informacao)
+                                           End Sub)
+                        
                         If Text > Tin Then
                             Tout = Tin * 1.005
                         Else
@@ -393,7 +396,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 If Pout <= 0 Then
                                     Throw New Exception(DWSIM.App.GetLocalString("Pressonegativadentro"))
                                 End If
+
                                 If Double.IsNaN(Pout) Then Throw New Exception(DWSIM.App.GetLocalString("Erronoclculodapresso"))
+
                                 If cntP > Me.MaxPressureIterations Then Throw New Exception(DWSIM.App.GetLocalString("Ocalculadorexcedeuon"))
 
                                 CheckCalculatorStatus()

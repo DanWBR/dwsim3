@@ -47,7 +47,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Private _seluo As DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.CapeOpenUnitOpInfo
         Private Shadows _ports As List(Of ICapeUnitPort)
-        Private _params As List(Of ICapeParameter)
+        <System.NonSerialized()> Private _params As List(Of ICapeParameter)
 
         <System.NonSerialized()> Private _istr As DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.ComIStreamWrapper
         Private _persisteddata As Byte()

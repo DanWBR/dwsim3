@@ -373,7 +373,7 @@ Namespace DWSIM.Utilities.HYD
 
                 Td = 273.15
 
-                PQAG = unfPP.AUX_DELGF_T(298.15, T, unfPP.RET_VNAMES()(pos)) * 18 + R * T * Math.Log(PHIV(pos) / (Vy(pos) * 101325))
+                PQAG = (unfPP.AUX_DELGF_T(298.14999999999998, T, unfPP.RET_VNAMES()(pos)) * 18 + R * T * Math.Log(PHIV(pos) / (101325))) / 4.1799999999999997
 
             Else
 
@@ -1125,7 +1125,7 @@ STEP2:
 
                 Td = 273.15
 
-                PQAG = unfPP.AUX_DELGF_T(298.15, T, unfPP.RET_VNAMES()(pos)) * 18 + R * T * Math.Log(PHIV(pos) / (Vy(pos) * 101325))
+                PQAG = (unfPP.AUX_DELGF_T(298.14999999999998, T, unfPP.RET_VNAMES()(pos)) * 18 + R * T * Math.Log(PHIV(pos) / (101325))) / 4.1799999999999997
 
                 i = 0
                 Do

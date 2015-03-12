@@ -115,7 +115,7 @@ Namespace DWSIM.Utilities.HYD
             Dim vm(1, 1), sumTETAsI, sumTETAsII
             Dim C1(1, n), C2(1, n)
             Dim DT, Tnfp, DHm, Td
-            Dim Vx(n), t1, t2, t3, t4, t5 As Double
+            Dim Vx(n), Vx2(n), t1, t2, t3, t4, t5 As Double
             Dim ZLinf(n), ZV
             Dim H(n), tmp2(3)
             Dim TETA1(1, n), TETA2(1, n)
@@ -159,12 +159,14 @@ Namespace DWSIM.Utilities.HYD
             'CALCULAR EQUILIBRIO L-V
 
             prPP.Parameters("PP_FLASHALGORITHM") = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
+           
             Dim eqtmp = prPP.FlashBase.Flash_PT(Vz, P, T, prPP)
 
             Dim L = eqtmp(0)
             Dim V = eqtmp(1)
             Vx = eqtmp(2)
             Vy = eqtmp(3)
+            Vx2 = eqtmp(6)
 
             'PR
 

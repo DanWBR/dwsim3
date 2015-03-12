@@ -934,6 +934,7 @@ Imports DWSIM.DWSIM.Outros
     End Sub
 
     Private Sub HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem.Click
+        Me.FormHid = New FormHYD
         Me.FormHid.Show(Me.dckPanel)
     End Sub
 
