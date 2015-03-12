@@ -934,20 +934,20 @@ Imports DWSIM.DWSIM.Outros
     End Sub
 
     Private Sub HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem.Click
-        Me.FormHid.ShowDialog(Me)
+        Me.FormHid.Show(Me.dckPanel)
     End Sub
 
     Private Sub DiagramaDeFasesToolStripMenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DiagramaDeFasesToolStripMenuItem1.Click
         Me.FormPE = New FormPhEnv
-        Me.FormPE.ShowDialog(Me)
+        Me.FormPE.Show(Me.dckPanel)
     End Sub
     Private Sub LLEDiagramToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles LLEDiagramToolStripMenuItem.Click
         Me.FormLLEDiag = New FormLLEDiagram
-        Me.FormLLEDiag.ShowDialog(Me)
+        Me.FormLLEDiag.Show(Me.dckPanel)
     End Sub
     Private Sub DiagramaBinárioToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DiagramaBinárioToolStripMenuItem.Click
         Me.FormBE = New FormBinEnv
-        Me.FormBE.ShowDialog(Me)
+        Me.FormBE.Show(Me.dckPanel)
     End Sub
     Private Sub FecharSimulaçãoAtualToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CloseToolStripMenuItem.Click
         Me.Close()
@@ -962,7 +962,7 @@ Imports DWSIM.DWSIM.Outros
     End Sub
 
     Private Sub PropriedadesDePetróleosToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PropriedadesDePetróleosToolStripMenuItem.Click
-        Me.FormColdP.ShowDialog(Me)
+        Me.FormColdP.Show(Me.dckPanel)
     End Sub
 
     Private Sub ToolStripButton14_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton14.Click
@@ -982,7 +982,7 @@ Imports DWSIM.DWSIM.Outros
     End Sub
 
     Private Sub AnáliseDeSensibilidadeToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AnáliseDeSensibilidadeToolStripMenuItem.Click
-        Me.FormSensAnalysis0.ShowDialog(Me)
+        Me.FormSensAnalysis0.Show(Me.dckPanel)
     End Sub
 
     Private Sub MultivariateOptimizerToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MultivariateOptimizerToolStripMenuItem.Click

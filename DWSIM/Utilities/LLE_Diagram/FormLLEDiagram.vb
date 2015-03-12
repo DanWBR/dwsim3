@@ -21,6 +21,8 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
 
 Public Class FormLLEDiagram
 
+    Inherits WeifenLuo.WinFormsUI.Docking.DockContent
+
     Dim mat As DWSIM.SimulationObjects.Streams.MaterialStream
     Dim Frm As FormFlowsheet
 
@@ -37,6 +39,11 @@ Public Class FormLLEDiagram
     Dim P, T As Double
 
     Private Sub FormLLEDiagram_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+
+        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Float
+
+        Me.TabText = Me.Text
+
         Dim i As Integer
 
         Frm = My.Application.ActiveSimulation

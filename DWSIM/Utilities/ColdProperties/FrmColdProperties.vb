@@ -22,6 +22,8 @@ Imports System.Math
 
 Public Class FrmColdProperties
 
+    Inherits WeifenLuo.WinFormsUI.Docking.DockContent
+
     Dim mat As DWSIM.SimulationObjects.Streams.MaterialStream
     Dim frm As FormFlowsheet
 
@@ -30,6 +32,10 @@ Public Class FrmColdProperties
     Public nf As String
 
     Private Sub FrmColdProperties_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
+        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Float
+
+        Me.TabText = Me.Text
 
         frm = My.Application.ActiveSimulation
 

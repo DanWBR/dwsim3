@@ -133,6 +133,9 @@
   <data name="Label2.Text" xml:space="preserve">
     <value>Model</value>
   </data>
+  <data name="GroupBox6.Text" xml:space="preserve">
+    <value>Configure</value>
+  </data>
   <data name="CheckBox1.Size" type="System.Drawing.Size, System.Drawing">
     <value>78, 17</value>
   </data>
@@ -151,8 +154,11 @@
   <data name="Label23.Text" xml:space="preserve">
     <value>Material Stream</value>
   </data>
-  <data name="GroupBox6.Text" xml:space="preserve">
-    <value>Configure</value>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Results</value>
+  </data>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Equilibrium conditions at stream pressure</value>
   </data>
   <data name="KryptonButton3.Text" xml:space="preserve">
     <value>Details</value>
@@ -172,8 +178,8 @@
   <data name="Label13.Text" xml:space="preserve">
     <value>Temperature:</value>
   </data>
-  <data name="GroupBox4.Text" xml:space="preserve">
-    <value>Equilibrium conditions at stream pressure</value>
+  <data name="GroupBox3.Text" xml:space="preserve">
+    <value>Equilibrium conditions at stream temperature</value>
   </data>
   <data name="KryptonButton2.Text" xml:space="preserve">
     <value>Details</value>
@@ -193,8 +199,8 @@
   <data name="Label7.Text" xml:space="preserve">
     <value>Temperature:</value>
   </data>
-  <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Equilibrium conditions at stream temperature</value>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Equilibrium at stream conditions</value>
   </data>
   <data name="Label18.Size" type="System.Drawing.Size, System.Drawing">
     <value>72, 13</value>
@@ -208,10 +214,10 @@
   <data name="Label19.Text" xml:space="preserve">
     <value>Hydrate type</value>
   </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Equilibrium at stream conditions</value>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>521, 395</value>
   </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Results</value>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
 </root>

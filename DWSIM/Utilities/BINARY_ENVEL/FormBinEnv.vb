@@ -22,7 +22,7 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
 
 Public Class FormBinEnv
 
-    Inherits System.Windows.Forms.Form
+    Inherits WeifenLuo.WinFormsUI.Docking.DockContent
 
     Dim mat As DWSIM.SimulationObjects.Streams.MaterialStream
     Dim Frm As FormFlowsheet
@@ -40,7 +40,11 @@ Public Class FormBinEnv
 
     Private Sub FormBinEnv_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
+        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Float
+
         Me.Text = DWSIM.App.GetLocalString("DWSIMUtilitriosDiagr")
+
+        Me.TabText = Me.Text
 
         Me.Frm = My.Application.ActiveSimulation
 

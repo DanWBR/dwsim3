@@ -1,6 +1,6 @@
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class FormHYD
-    Inherits System.Windows.Forms.Form
+    Inherits WeifenLuo.WinFormsUI.Docking.DockContent
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -285,6 +285,7 @@ Partial Class FormHYD
         Me.Controls.Add(Me.GroupBox6)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "FormHYD"
+        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Float
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.GroupBox6.ResumeLayout(False)

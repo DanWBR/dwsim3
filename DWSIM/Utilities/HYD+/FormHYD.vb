@@ -19,7 +19,7 @@ Imports System.Linq
 
 Public Class FormHYD
 
-    Inherits System.Windows.Forms.Form
+    Inherits WeifenLuo.WinFormsUI.Docking.DockContent
 
     Public m_aux As DWSIM.Utilities.HYD.AuxMethods
 
@@ -35,11 +35,13 @@ Public Class FormHYD
 
     Private Sub FormHYD_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
+        Me.Text = DWSIM.App.GetLocalString("DWSIMUtilitriosCondi")
+
+        Me.TabText = Me.Text
+
         Me.ComboBox1.SelectedIndex = 0
 
         GroupBox1.Enabled = False
-
-        Me.Text = DWSIM.App.GetLocalString("DWSIMUtilitriosCondi")
 
         Me.m_aux = New DWSIM.Utilities.HYD.AuxMethods
 

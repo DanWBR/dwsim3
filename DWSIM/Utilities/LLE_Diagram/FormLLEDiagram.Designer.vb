@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class FormLLEDiagram
-    Inherits System.Windows.Forms.Form
+    Inherits WeifenLuo.WinFormsUI.Docking.DockContent
 
     'Das Formular überschreibt den Löschvorgang, um die Komponentenliste zu bereinigen.
     <System.Diagnostics.DebuggerNonUserCode()> _

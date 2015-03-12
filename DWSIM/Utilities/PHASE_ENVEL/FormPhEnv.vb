@@ -19,7 +19,7 @@ Imports System.Linq
 
 Public Class FormPhEnv
 
-    Inherits System.Windows.Forms.Form
+    Inherits WeifenLuo.WinFormsUI.Docking.DockContent
 
     Dim mat As DWSIM.SimulationObjects.Streams.MaterialStream
     Dim Frm As FormFlowsheet
@@ -48,6 +48,8 @@ Public Class FormPhEnv
 
     Private Sub FormPhEnv_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
+        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Float
+
         Me.ComboBox1.SelectedIndex = 0
         Me.ComboBox2.SelectedIndex = 0
 
@@ -66,6 +68,8 @@ Public Class FormPhEnv
         If Me.ComboBox3.Items.Count > 0 Then Me.ComboBox3.SelectedIndex = 0
 
         Me.Text = DWSIM.App.GetLocalString("DWSIMUtilitriosDiagr1")
+
+        Me.TabText = Me.Text
 
         Try
             Me.chkhyd.Enabled = Frm.Options.SelectedPropertyPackage.RET_VCAS().Contains("7732-18-5")

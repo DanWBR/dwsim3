@@ -26,6 +26,8 @@ Imports System.Linq
 
 Public Class FormSensAnalysis
 
+    Inherits WeifenLuo.WinFormsUI.Docking.DockContent
+
     Public nf As String
     Public su As DWSIM.SistemasDeUnidades.Unidades
     Public cv As DWSIM.SistemasDeUnidades.Conversor
@@ -40,6 +42,10 @@ Public Class FormSensAnalysis
     Public cbc2, cbc3, cbc0, cbc1 As DataGridViewComboBoxCell
 
     Private Sub FormSensAnalysis_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
+        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document
+
+        Me.tabtext = Me.Text
 
         form = My.Application.ActiveSimulation
 
