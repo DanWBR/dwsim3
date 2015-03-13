@@ -124,7 +124,7 @@ Namespace DWSIM.Utilities.HYD
             Dim PQHYD, PQAG, PQRL, PQRG As Double
             Dim vm(1, 1), sumvmsI(1), sumvmsII(1)
             Dim C1(1, n), C2(1, n)
-            Dim DT, Tnfp, DHm, Td
+            Dim DT, Tnfp, DHm, Td, Nbw, VbsI, VbsII, FUGH, PWSAT, FUGW As Double
             Dim Vxaq(n), t1, t2, t3, t4, t5 As Double
             Dim ZLinf(n), ZV
             Dim act As Double
@@ -373,7 +373,7 @@ Namespace DWSIM.Utilities.HYD
 
                 Td = 273.15
 
-                PQAG = (unfPP.AUX_DELGF_T(298.14999999999998, T, unfPP.RET_VNAMES()(pos)) * 18 + R * T * Math.Log(PHIV(pos) / (101325))) / 4.1799999999999997
+                FUGW = PHIV(pos)
 
             Else
 
@@ -491,6 +491,14 @@ Namespace DWSIM.Utilities.HYD
                 Else
                     PQHYD = R * T * sum2sI + R * T * Math.Log(Vxaq(pos) * act)
                 End If
+
+                'CALCULO DO VOLUME MOLAR DO HIDRATO "sI"
+                Nbw = 46
+                VbsI = (11.835 + 0.00002217 * T + 0.000002242 * T ^ 2) * 1.0E-30 * 6.02E+23 / Nbw - 0.000000008006 * P / 1000000.0 + 0.000000000005448 * P ^ 2 / 1000000000000.0
+
+                PWSAT = Math.Exp(17.44 - 6003.9 / T) * 1000
+
+                FUGH = PWSAT * 1.0# * Math.Exp(VbsI * (P - PWSAT) / (R * T)) * Math.Exp(sum2sI)
                 
             ElseIf TIPO_HIDRATO = "sII" Then
 
@@ -566,9 +574,21 @@ Namespace DWSIM.Utilities.HYD
                     PQHYD = R * T * sum2sII + R * T * Math.Log(Vxaq(pos) * act)
                 End If
 
+                'CALCULO DO VOLUME MOLAR DO HIDRATO "sII"
+                Nbw = 136
+                VbsII = (17.13 + 0.0002249 * T + 0.000002013 * T ^ 2 + 0.000000001009 * T ^ 3) * 1.0E-30 * 6.02E+23 / Nbw - 0.000000008006 * P / 1000000.0 + 0.000000000005448 * P ^ 2 / 1000000000000.0
+
+                PWSAT = Math.Exp(17.332 - 6017.6 / T) * 1000
+
+                FUGH = PWSAT * 1.0# * Math.Exp(VbsII * (P - PWSAT) / (R * T)) * Math.Exp(sum2sII)
+
             End If
 
-            OBJ_FUNC_HYD_vdwP = -PQAG + PQHYD
+            If vaporonly Then
+                OBJ_FUNC_HYD_vdwP = FUGW - FUGH
+            Else
+                OBJ_FUNC_HYD_vdwP = -PQAG + PQHYD
+            End If
 
         End Function
 
@@ -875,7 +895,7 @@ STEP2:
             Dim PQHYD, PQAG, PQRL, PQRG As Double
             Dim vm(1, 1), sumvmsI(1), sumvmsII(1)
             Dim C1(1, n), C2(1, n)
-            Dim DT, Tnfp, DHm, Td
+            Dim DT, Tnfp, DHm, Td, VbsI, VbsII, PWSAT, Nbw As Double
             Dim Vxaq(n), t1, t2, t3, t4, t5 As Double
             Dim ZLinf(n), ZV
             Dim act As Double
@@ -1125,7 +1145,7 @@ STEP2:
 
                 Td = 273.15
 
-                PQAG = (unfPP.AUX_DELGF_T(298.14999999999998, T, unfPP.RET_VNAMES()(pos)) * 18 + R * T * Math.Log(PHIV(pos) / (101325))) / 4.1799999999999997
+                PQAG = PHIV(pos)
 
                 i = 0
                 Do
@@ -1276,6 +1296,14 @@ STEP2:
                     PQHYD = R * T * sum2sI + R * T * Math.Log(Vxaq(pos) * act)
                 End If
 
+                'CALCULO DO VOLUME MOLAR DO HIDRATO "sI"
+                Nbw = 46
+                VbsI = (11.835 + 0.00002217 * T + 0.000002242 * T ^ 2) * 1.0E-30 * 6.02E+23 / Nbw - 0.000000008006 * P / 1000000.0 + 0.000000000005448 * P ^ 2 / 1000000000000.0
+
+                PWSAT = Math.Exp(17.44 - 6003.9 / T) * 1000
+
+                PQHYD = PWSAT * 1.0# * Math.Exp(VbsI * (P - PWSAT) / (R * T)) * Math.Exp(sum2sI)
+
             ElseIf TIPO_HIDRATO = "sII" Then
 
                 'CALCULO DAS CONSTANTES DE LANGMUIR PARA HIDRATO TIPO "SII"
@@ -1351,6 +1379,14 @@ STEP2:
                 Else
                     PQHYD = R * T * sum2sII + R * T * Math.Log(Vxaq(pos) * act)
                 End If
+
+                'CALCULO DO VOLUME MOLAR DO HIDRATO "sII"
+                Nbw = 136
+                VbsII = (17.13 + 0.0002249 * T + 0.000002013 * T ^ 2 + 0.000000001009 * T ^ 3) * 1.0E-30 * 6.02E+23 / Nbw - 0.000000008006 * P / 1000000.0 + 0.000000000005448 * P ^ 2 / 1000000000000.0
+
+                PWSAT = Math.Exp(17.332 - 6017.6 / T) * 1000
+
+                PQHYD = PWSAT * 1.0# * Math.Exp(VbsII * (P - PWSAT) / (R * T)) * Math.Exp(sum2sII)
 
             End If
 
