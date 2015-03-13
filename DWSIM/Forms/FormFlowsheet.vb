@@ -534,16 +534,20 @@ Imports DWSIM.DWSIM.Outros
 
     Public Sub WriteToLog(ByVal texto As String, ByVal cor As Color, ByVal tipo As DWSIM.FormClasses.TipoAviso)
 
-        If Me.Visible Then
+        Dim frsht As FormFlowsheet
+        If Not Me.MasterFlowsheet Is Nothing And Me.RedirectMessages Then
+            frsht = Me.MasterFlowsheet
+        Else
+            frsht = Me
+        End If
+
+        If frsht.Visible Then
+
             Me.UIThread(New System.Action(Sub()
 
                                               If Not My.MyApplication.CommandLineMode Then
-                                                  Dim frlog As frmLog
-                                                  If Not Me.MasterFlowsheet Is Nothing And Me.RedirectMessages Then
-                                                      frlog = Me.MasterFlowsheet.FormLog
-                                                  Else
-                                                      frlog = Me.FormLog
-                                                  End If
+
+                                                  Dim frlog = frsht.FormLog
 
                                                   Dim img As Bitmap
                                                   Dim strtipo As String
@@ -596,6 +600,7 @@ Imports DWSIM.DWSIM.Outros
                                               End If
 
                                           End Sub))
+
         End If
 
     End Sub
