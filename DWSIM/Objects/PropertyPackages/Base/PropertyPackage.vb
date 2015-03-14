@@ -297,9 +297,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 .Add("PP_PTFMII", 100)
                 .Add("PP_PTFILT", 0.001)
                 .Add("PP_PTFELT", 0.001)
-                '.Add("PP_RIG_BUB_DEW_FLASH_INIT", 0)
                 .Add("PP_FLASHALGORITHM", 2)
-                .Add("PP_FLASHALGORITHMFASTMODE", 0)
+                .Add("PP_FLASHALGORITHMFASTMODE", 1)
                 .Add("PP_IDEAL_MIXRULE_LIQDENS", 0)
                 .Add("PP_USEEXPLIQDENS", 0)
             End With
