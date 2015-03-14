@@ -1841,10 +1841,21 @@ Namespace DWSIM.Flowsheet
                                 Next
 
                                 If mode = 0 Then
-                                    t0 = New Task(Sub()
-                                                      ProcessCalculationQueue(form, True, True, 0)
-                                                  End Sub, ct)
-                                    t0.RunSynchronously()
+                                    Try
+                                        t0 = New Task(Sub()
+                                                          ProcessCalculationQueue(form, True, True, 0)
+                                                      End Sub, ct)
+                                        t0.RunSynchronously()
+                                    Catch agex As AggregateException
+                                        age = agex
+                                        Exit While
+                                    Catch ex As OperationCanceledException
+                                        age = New AggregateException(DWSIM.App.GetLocalString("CalculationAborted"), ex)
+                                        Exit While
+                                    Catch ex As Exception
+                                        age = New AggregateException(ex.Message.ToString, ex)
+                                        Exit While
+                                    End Try
                                 ElseIf mode = 1 Or mode = 2 Then
                                     filteredlist2.Clear()
                                     For Each li In filteredlist
@@ -1972,44 +1983,40 @@ Namespace DWSIM.Flowsheet
 
                 If form.Visible Then form.FormSurface.Enabled = True
 
-                If mode > 0 Then
+                form.UpdateStatusLabel(preLab)
 
-                    form.UpdateStatusLabel(preLab)
+                If age Is Nothing Then
 
-                    If age Is Nothing Then
+                    form.WriteToLog(DWSIM.App.GetLocalString("FSfinishedsolvingok"), Color.Blue, FormClasses.TipoAviso.Informacao)
+                    form.WriteToLog(DWSIM.App.GetLocalString("Runtime") & ": " & (Date.Now - d1).ToString("g"), Color.MediumBlue, DWSIM.FormClasses.TipoAviso.Informacao)
 
-                        form.WriteToLog(DWSIM.App.GetLocalString("FSfinishedsolvingok"), Color.Blue, FormClasses.TipoAviso.Informacao)
-                        form.WriteToLog(DWSIM.App.GetLocalString("Runtime") & ": " & (Date.Now - d1).ToString("g"), Color.MediumBlue, DWSIM.FormClasses.TipoAviso.Informacao)
-
-                        Dim retbytes As MemoryStream = DWSIM.SimulationObjects.UnitOps.Flowsheet.ReturnProcessData(form)
-                        Using retbytes
-                            Dim uncompressedbytes As Byte() = retbytes.ToArray
-                            Using compressedstream As New MemoryStream()
-                                Using gzs As New BufferedStream(New Compression.GZipStream(compressedstream, Compression.CompressionMode.Compress, True), 64 * 1024)
-                                    gzs.Write(uncompressedbytes, 0, uncompressedbytes.Length)
-                                    gzs.Close()
-                                    Dim id As String = Date.Now.ToBinary.ToString
-                                    If form.PreviousSolutions Is Nothing Then form.PreviousSolutions = New Dictionary(Of String, FormClasses.FlowsheetSolution)
-                                    form.PreviousSolutions.Add(id, New DWSIM.FormClasses.FlowsheetSolution() With {.ID = id, .SaveDate = Date.Now, .Solution = compressedstream.ToArray})
-                                    form.UpdateSolutionsList()
-                                 End Using
+                    Dim retbytes As MemoryStream = DWSIM.SimulationObjects.UnitOps.Flowsheet.ReturnProcessData(form)
+                    Using retbytes
+                        Dim uncompressedbytes As Byte() = retbytes.ToArray
+                        Using compressedstream As New MemoryStream()
+                            Using gzs As New BufferedStream(New Compression.GZipStream(compressedstream, Compression.CompressionMode.Compress, True), 64 * 1024)
+                                gzs.Write(uncompressedbytes, 0, uncompressedbytes.Length)
+                                gzs.Close()
+                                Dim id As String = Date.Now.ToBinary.ToString
+                                If form.PreviousSolutions Is Nothing Then form.PreviousSolutions = New Dictionary(Of String, FormClasses.FlowsheetSolution)
+                                form.PreviousSolutions.Add(id, New DWSIM.FormClasses.FlowsheetSolution() With {.ID = id, .SaveDate = Date.Now, .Solution = compressedstream.ToArray})
+                                form.UpdateSolutionsList()
                             End Using
                         End Using
+                    End Using
 
-                    Else
+                Else
 
-                        form.WriteToLog(DWSIM.App.GetLocalString("FSfinishedsolvingerror"), Color.Red, FormClasses.TipoAviso.Erro)
-                        For Each ex In age.Flatten().InnerExceptions
-                            Dim st As New StackTrace(ex, True)
-                            If st.FrameCount > 0 Then
-                                form.WriteToLog(ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
-                            Else
-                                form.WriteToLog(ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                            End If
-                        Next
-                        If Not form.Visible Then Throw age Else age = Nothing
-
-                    End If
+                    form.WriteToLog(DWSIM.App.GetLocalString("FSfinishedsolvingerror"), Color.Red, FormClasses.TipoAviso.Erro)
+                    For Each ex In age.Flatten().InnerExceptions
+                        Dim st As New StackTrace(ex, True)
+                        If st.FrameCount > 0 Then
+                            form.WriteToLog(ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                        Else
+                            form.WriteToLog(ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                        End If
+                    Next
+                    If Not form.Visible Then Throw age Else age = Nothing
 
                 End If
 
