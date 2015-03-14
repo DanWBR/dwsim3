@@ -22,6 +22,7 @@ Partial Class FormLLEDiagram
     'Das Bearbeiten mit dem Code-Editor ist nicht möglich.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormLLEDiagram))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -61,6 +62,18 @@ Partial Class FormLLEDiagram
         Me.TSB_Print = New System.Windows.Forms.ToolStripButton()
         Me.TSB_PrinterSetup = New System.Windows.Forms.ToolStripButton()
         Me.TSB_CalcDiagr = New System.Windows.Forms.ToolStripButton()
+        Me.dckMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.FloatToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DockLeftToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DockRightToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DockTopToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DockBottomToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DockLeftAutoHideToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DockRightAutoHideToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DockTopAutoHideToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DockBottomAutoHideToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DocumentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.HiddenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Panel1.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
@@ -68,6 +81,7 @@ Partial Class FormLLEDiagram
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelMenu.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
+        Me.dckMenu.SuspendLayout()
         Me.SuspendLayout()
         '
         'PrintDocument1
@@ -323,6 +337,67 @@ Partial Class FormLLEDiagram
         resources.ApplyResources(Me.TSB_CalcDiagr, "TSB_CalcDiagr")
         Me.TSB_CalcDiagr.Name = "TSB_CalcDiagr"
         '
+        'dckMenu
+        '
+        Me.dckMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FloatToolStripMenuItem, Me.DockLeftToolStripMenuItem, Me.DockRightToolStripMenuItem, Me.DockTopToolStripMenuItem, Me.DockBottomToolStripMenuItem, Me.DockLeftAutoHideToolStripMenuItem, Me.DockRightAutoHideToolStripMenuItem, Me.DockTopAutoHideToolStripMenuItem, Me.DockBottomAutoHideToolStripMenuItem, Me.DocumentToolStripMenuItem, Me.HiddenToolStripMenuItem})
+        Me.dckMenu.Name = "dckMenu"
+        resources.ApplyResources(Me.dckMenu, "dckMenu")
+        '
+        'FloatToolStripMenuItem
+        '
+        Me.FloatToolStripMenuItem.Name = "FloatToolStripMenuItem"
+        resources.ApplyResources(Me.FloatToolStripMenuItem, "FloatToolStripMenuItem")
+        '
+        'DockLeftToolStripMenuItem
+        '
+        Me.DockLeftToolStripMenuItem.Name = "DockLeftToolStripMenuItem"
+        resources.ApplyResources(Me.DockLeftToolStripMenuItem, "DockLeftToolStripMenuItem")
+        '
+        'DockRightToolStripMenuItem
+        '
+        Me.DockRightToolStripMenuItem.Name = "DockRightToolStripMenuItem"
+        resources.ApplyResources(Me.DockRightToolStripMenuItem, "DockRightToolStripMenuItem")
+        '
+        'DockTopToolStripMenuItem
+        '
+        Me.DockTopToolStripMenuItem.Name = "DockTopToolStripMenuItem"
+        resources.ApplyResources(Me.DockTopToolStripMenuItem, "DockTopToolStripMenuItem")
+        '
+        'DockBottomToolStripMenuItem
+        '
+        Me.DockBottomToolStripMenuItem.Name = "DockBottomToolStripMenuItem"
+        resources.ApplyResources(Me.DockBottomToolStripMenuItem, "DockBottomToolStripMenuItem")
+        '
+        'DockLeftAutoHideToolStripMenuItem
+        '
+        Me.DockLeftAutoHideToolStripMenuItem.Name = "DockLeftAutoHideToolStripMenuItem"
+        resources.ApplyResources(Me.DockLeftAutoHideToolStripMenuItem, "DockLeftAutoHideToolStripMenuItem")
+        '
+        'DockRightAutoHideToolStripMenuItem
+        '
+        Me.DockRightAutoHideToolStripMenuItem.Name = "DockRightAutoHideToolStripMenuItem"
+        resources.ApplyResources(Me.DockRightAutoHideToolStripMenuItem, "DockRightAutoHideToolStripMenuItem")
+        '
+        'DockTopAutoHideToolStripMenuItem
+        '
+        Me.DockTopAutoHideToolStripMenuItem.Name = "DockTopAutoHideToolStripMenuItem"
+        resources.ApplyResources(Me.DockTopAutoHideToolStripMenuItem, "DockTopAutoHideToolStripMenuItem")
+        '
+        'DockBottomAutoHideToolStripMenuItem
+        '
+        Me.DockBottomAutoHideToolStripMenuItem.Name = "DockBottomAutoHideToolStripMenuItem"
+        resources.ApplyResources(Me.DockBottomAutoHideToolStripMenuItem, "DockBottomAutoHideToolStripMenuItem")
+        '
+        'DocumentToolStripMenuItem
+        '
+        Me.DocumentToolStripMenuItem.Name = "DocumentToolStripMenuItem"
+        resources.ApplyResources(Me.DocumentToolStripMenuItem, "DocumentToolStripMenuItem")
+        '
+        'HiddenToolStripMenuItem
+        '
+        Me.HiddenToolStripMenuItem.Name = "HiddenToolStripMenuItem"
+        resources.ApplyResources(Me.HiddenToolStripMenuItem, "HiddenToolStripMenuItem")
+        '
         'FormLLEDiagram
         '
         resources.ApplyResources(Me, "$this")
@@ -343,6 +418,7 @@ Partial Class FormLLEDiagram
         Me.PanelMenu.PerformLayout()
         Me.ToolStrip1.ResumeLayout(False)
         Me.ToolStrip1.PerformLayout()
+        Me.dckMenu.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -381,4 +457,16 @@ Partial Class FormLLEDiagram
     Friend WithEvents X12 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents X21 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents X22 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents dckMenu As System.Windows.Forms.ContextMenuStrip
+    Friend WithEvents FloatToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents DockLeftToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents DockRightToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents DockTopToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents DockBottomToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents DockLeftAutoHideToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents DockRightAutoHideToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents DockTopAutoHideToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents DockBottomAutoHideToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents DocumentToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents HiddenToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 End Class

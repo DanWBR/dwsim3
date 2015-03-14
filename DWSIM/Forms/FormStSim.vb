@@ -50,6 +50,8 @@ Public Class FormStSim
 
         If DWSIM.App.IsRunningOnMono Then
             Me.ListViewPP.View = View.List
+            Me.ogc1.SelectionMode = DataGridViewSelectionMode.CellSelect
+            Me.dgvpp.SelectionMode = DataGridViewSelectionMode.CellSelect
         Else
             Me.ListViewPP.View = View.Tile
         End If
@@ -929,7 +931,13 @@ Public Class FormStSim
     End Sub
 
     Private Sub btnConfigPP_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnConfigPP.Click
-        Dim pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage = FrmChild.Options.PropertyPackages(dgvpp.SelectedRows(0).Cells(0).Value)
+        Dim ppid As String = ""
+        If DWSIM.App.IsRunningOnMono Then
+            ppid = dgvpp.Rows(dgvpp.SelectedCells(0).RowIndex).Cells(0).Value
+        Else
+            ppid = dgvpp.SelectedRows(0).Cells(0).Value
+        End If
+        Dim pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage = FrmChild.Options.PropertyPackages(ppid)
         pp.ReconfigureConfigForm()
         pp.ConfigForm._pp = pp
         pp.ConfigForm._comps = FrmChild.Options.SelectedComponents
@@ -938,9 +946,18 @@ Public Class FormStSim
     End Sub
 
     Private Sub btnDeletePP_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnDeletePP.Click
-        If Not dgvpp.SelectedRows.Count = 0 Then
-            FrmChild.Options.PropertyPackages.Remove(dgvpp.SelectedRows(0).Cells(0).Value)
-            dgvpp.Rows.Remove(dgvpp.SelectedRows(0))
+        If DWSIM.App.IsRunningOnMono Then
+            If dgvpp.SelectedCells.Count > 0 Then
+                If dgvpp.SelectedCells(0).RowIndex > -0 Then
+                    FrmChild.Options.PropertyPackages.Remove(dgvpp.Rows(dgvpp.SelectedCells(0).RowIndex).Cells(0).Value)
+                    dgvpp.Rows.Remove(dgvpp.Rows(dgvpp.SelectedCells(0).RowIndex))
+                End If
+            End If
+        Else
+            If Not dgvpp.SelectedRows.Count = 0 Then
+                FrmChild.Options.PropertyPackages.Remove(dgvpp.SelectedRows(0).Cells(0).Value)
+                dgvpp.Rows.Remove(dgvpp.SelectedRows(0))
+            End If
         End If
     End Sub
 
@@ -969,11 +986,25 @@ Public Class FormStSim
     End Sub
 
     Private Sub dgvpp_SelectionChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles dgvpp.SelectionChanged
-        If dgvpp.SelectedRows.Count > 0 Then
-            btnDeletePP.Enabled = True
-            If FrmChild.Options.PropertyPackages.ContainsKey(dgvpp.SelectedRows(0).Cells(0).Value) Then
-                If FrmChild.Options.PropertyPackages(dgvpp.SelectedRows(0).Cells(0).Value).IsConfigurable And Not DWSIM.App.IsRunningOnMono Then btnConfigPP.Enabled = True Else btnConfigPP.Enabled = False
-                btnCopyPP.Enabled = True
+        If DWSIM.App.IsRunningOnMono Then
+            If dgvpp.SelectedCells.Count > 0 Then
+                If dgvpp.SelectedCells(0).RowIndex >= 0 Then
+                    If dgvpp.Rows(dgvpp.SelectedCells(0).RowIndex).Cells(0).Value <> Nothing Then
+                        btnDeletePP.Enabled = True
+                        If FrmChild.Options.PropertyPackages.ContainsKey(dgvpp.Rows(dgvpp.SelectedCells(0).RowIndex).Cells(0).Value) Then
+                            If FrmChild.Options.PropertyPackages(dgvpp.Rows(dgvpp.SelectedCells(0).RowIndex).Cells(0).Value).IsConfigurable And Not DWSIM.App.IsRunningOnMono Then btnConfigPP.Enabled = True Else btnConfigPP.Enabled = False
+                            btnCopyPP.Enabled = True
+                        End If
+                    End If
+                End If
+            End If
+        Else
+            If dgvpp.SelectedRows.Count > 0 Then
+                btnDeletePP.Enabled = True
+                If FrmChild.Options.PropertyPackages.ContainsKey(dgvpp.SelectedRows(0).Cells(0).Value) Then
+                    If FrmChild.Options.PropertyPackages(dgvpp.SelectedRows(0).Cells(0).Value).IsConfigurable And Not DWSIM.App.IsRunningOnMono Then btnConfigPP.Enabled = True Else btnConfigPP.Enabled = False
+                    btnCopyPP.Enabled = True
+                End If
             End If
         End If
     End Sub
@@ -984,8 +1015,14 @@ Public Class FormStSim
     End Sub
 
     Private Sub Button7_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button7.Click
-        If Me.ogc1.SelectedRows.Count > 0 Then
-            Me.AddCompToSimulation(Me.ogc1.SelectedRows(0).Index)
+        If DWSIM.App.IsRunningOnMono Then
+            If Me.ogc1.SelectedCells.Count > 0 Then
+                Me.AddCompToSimulation(Me.ogc1.SelectedCells(0).RowIndex)
+            End If
+        Else
+            If Me.ogc1.SelectedRows.Count > 0 Then
+                Me.AddCompToSimulation(Me.ogc1.SelectedRows(0).Index)
+            End If
         End If
         'If Me.ogc1.SelectedRows.Count > 0 Then
         '    For Each r As DataGridViewRow In Me.ogc1.SelectedRows
@@ -1017,9 +1054,12 @@ Public Class FormStSim
     End Sub
 
     Sub AddCompToSimulation(ByVal index As Integer)
+
         ' TODO Add code to check that index is within range. If it is out of range, don't do anything.
         If Me.loaded Then
+
             If Not Me.FrmChild.Options.SelectedComponents.ContainsKey(ogc1.Rows(index).Cells(0).Value) Then
+
                 Dim tmpcomp As New DWSIM.ClassesBasicasTermodinamica.ConstantProperties
                 tmpcomp = Me.FrmChild.Options.NotSelectedComponents(ogc1.Rows(index).Cells(0).Value)
 
@@ -1054,9 +1094,14 @@ Public Class FormStSim
                 Next
 
                 Me.ListViewA.Items.Add(tmpcomp.Name, DWSIM.App.GetComponentName(tmpcomp.Name), 0).Tag = tmpcomp.Name
-                Me.ogc1.Rows.RemoveAt(index)
+
+                If Not DWSIM.App.IsRunningOnMono Then Me.ogc1.Rows.RemoveAt(index)
+
+                SetupKeyCompounds()
+
             End If
-            SetupKeyCompounds()
+
+            
         End If
 
     End Sub
@@ -1069,7 +1114,7 @@ Public Class FormStSim
         Me.FrmChild.Options.SelectedComponents.Remove(tmpcomp.Name)
         Me.ListViewA.Items.RemoveByKey(tmpcomp.Name)
         Me.FrmChild.Options.NotSelectedComponents.Add(tmpcomp.Name, tmpcomp)
-        Me.AddCompToGrid(tmpcomp)
+        If Not DWSIM.App.IsRunningOnMono Then Me.AddCompToGrid(tmpcomp)
         Dim ms As DWSIM.SimulationObjects.Streams.MaterialStream
         Dim proplist As New ArrayList
 
@@ -1114,8 +1159,8 @@ Public Class FormStSim
     End Sub
 
     Private Sub Button8_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button8.Click
-        Dim pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage
 
+        Dim pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage
         pp = FormMain.PropertyPackages(ListViewPP.SelectedItems(0).Text).Clone
 
         With pp
@@ -1125,6 +1170,7 @@ Public Class FormStSim
 
         FrmChild.Options.PropertyPackages.Add(pp.UniqueID, pp)
         Me.dgvpp.Rows.Add(New Object() {pp.UniqueID, pp.Tag, pp.ComponentName})
+
     End Sub
 
     Private Sub ListViewPP_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ListViewPP.SelectedIndexChanged
