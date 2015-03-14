@@ -497,6 +497,7 @@ Partial Class SpreadsheetForm
         Me.HideOnClose = True
         Me.Name = "SpreadsheetForm"
         Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document
+        Me.TabPageContextMenuStrip = Me.dckMenu
         Me.TableLayoutPanel1.ResumeLayout(False)
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStrip1.ResumeLayout(False)

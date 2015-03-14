@@ -10265,6 +10265,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Algoritmo Flash no Modo Rápido.
+        '''</summary>
+        Friend Shared ReadOnly Property PP_FLASHALGORITHMFASTMODE() As String
+            Get
+                Return ResourceManager.GetString("PP_FLASHALGORITHMFASTMODE", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Usar Regra de Mistura Ideal para Densidade da Fase Líquida (0 = Desativar, 1 = Ativar).
         '''</summary>
         Friend Shared ReadOnly Property PP_IDEAL_MIXRULE_LIQDENS() As String

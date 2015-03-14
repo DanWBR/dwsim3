@@ -638,7 +638,7 @@ out:
                     x(i) = ui2(i - n - 1)
                 Next
 
-                If PP._ioquick Then
+                If PP.Parameters("PP_FLASHALGORITHMFASTMODE") = 1 Then
 
                     If ecount = 0 Then
                         For i = 0 To 2 * n + 1

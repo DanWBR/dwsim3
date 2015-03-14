@@ -297,7 +297,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
         End Function
 
         Public Overrides Function Flash_PH(ByVal Vz As Double(), ByVal P As Double, ByVal H As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
-            If PP._ioquick Then
+            If PP.Parameters("PP_FLASHALGORITHMFASTMODE") = 1 Then
                 Return Flash_PH_1(Vz, P, H, Tref, PP, ReuseKI, PrevKi)
             Else
                 Return Flash_PH_2(Vz, P, H, Tref, PP, ReuseKI, PrevKi)
@@ -305,7 +305,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
         End Function
 
         Public Overrides Function Flash_PS(ByVal Vz As Double(), ByVal P As Double, ByVal S As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
-            If PP._ioquick Then
+            If PP.Parameters("PP_FLASHALGORITHMFASTMODE") = 1 Then
                 Return Flash_PS_1(Vz, P, S, Tref, PP, ReuseKI, PrevKi)
             Else
                 Return Flash_PS_2(Vz, P, S, Tref, PP, ReuseKI, PrevKi)

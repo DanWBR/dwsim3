@@ -299,8 +299,8 @@ Namespace DWSIM.FormClasses
 
         Public CalculateBubbleAndDewPoints As Boolean = False
 
-        Public ValidateEquilibriumCalc As Boolean = True
-        Public UsePhaseIdentificationAlgorithm As Boolean = True
+        Public ValidateEquilibriumCalc As Boolean = False
+        Public UsePhaseIdentificationAlgorithm As Boolean = False
 
         Public SimNome As String = "simulation_title"
         Public SimAutor As String = "simulation_author"
@@ -320,8 +320,8 @@ Namespace DWSIM.FormClasses
 
         Public FlashValidationDGETolerancePct As Double = 0.01
 
-        Public Password As String = ""
-        Public UsePassword As Boolean = False
+        <Xml.Serialization.XmlIgnore> Public Password As String = ""
+        <Xml.Serialization.XmlIgnore> Public UsePassword As Boolean = False
 
         Public Key As String = ""
 
@@ -382,6 +382,24 @@ Namespace DWSIM.FormClasses
         Public Snapshot As Bitmap
         Public Description As String = ""
         Public SaveDate As Date
+
+    End Class
+
+    <System.Serializable()> Public Class FlowsheetSolution
+
+        Implements XMLSerializer.Interfaces.ICustomXMLSerialization
+
+        Public Solution As Byte()
+        Public ID As String = ""
+        Public SaveDate As Date
+
+        Public Function LoadData(data As List(Of XElement)) As Boolean Implements XMLSerializer.Interfaces.ICustomXMLSerialization.LoadData
+            XMLSerializer.XMLSerializer.Deserialize(Me, data, True)
+        End Function
+
+        Public Function SaveData() As List(Of XElement) Implements XMLSerializer.Interfaces.ICustomXMLSerialization.SaveData
+            Return XMLSerializer.XMLSerializer.Serialize(Me, True)
+        End Function
 
     End Class
 

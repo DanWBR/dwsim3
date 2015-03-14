@@ -70,7 +70,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Dim nwm As Double = 0
             Dim wid As Integer = 0
 
-            If PP._ioquick Then
+            If PP.Parameters("PP_FLASHALGORITHMFASTMODE") = 1 Then
 
                 For i = 0 To n
                     If CompoundProperties(i).Name = PP._tpcompids(0) Then

@@ -5062,4 +5062,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="LastUpdatedOn" xml:space="preserve">
     <value>Last successful calculation on</value>
   </data>
+  <data name="PP_FLASHALGORITHMFASTMODE" xml:space="preserve">
+    <value>Enable Flash Algorithm Fast Mode</value>
+  </data>
 </root>

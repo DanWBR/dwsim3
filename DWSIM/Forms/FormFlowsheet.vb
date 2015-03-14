@@ -90,6 +90,8 @@ Imports DWSIM.DWSIM.Outros
 
     Public FlowsheetStates As Dictionary(Of Date, FlowsheetState)
 
+    Public PreviousSolutions As Dictionary(Of String, FlowsheetSolution)
+
     Public ScriptCollection As Dictionary(Of String, Script)
 
     Public CheckedToolstripButton As ToolStripButton
@@ -287,6 +289,7 @@ Imports DWSIM.DWSIM.Outros
                 End With
             End If
         Else
+
             Dim array1(FormMain.AvailableUnitSystems.Count - 1) As String
             FormMain.AvailableUnitSystems.Keys.CopyTo(array1, 0)
             Me.ToolStripComboBoxUnitSystem.Items.Clear()
@@ -306,6 +309,7 @@ Imports DWSIM.DWSIM.Outros
             End If
             Me.ToolStripComboBoxNumberFormatting.SelectedItem = Me.Options.NumberFormat
             Me.ToolStripComboBoxNumberFractionFormatting.SelectedItem = Me.Options.FractionNumberFormat
+
         End If
 
         Me.FormLog.Grid1.Sort(Me.FormLog.Grid1.Columns(1), ListSortDirection.Descending)
@@ -1237,6 +1241,55 @@ Imports DWSIM.DWSIM.Outros
         FlowsheetStates.Remove(tsmi.Tag)
 
         UpdateStateList()
+
+    End Sub
+
+    Private Sub RestoreSolution_ItemClick(ByVal sender As System.Object, ByVal e As System.EventArgs)
+
+        Dim tsmi As ToolStripMenuItem = sender
+
+        Dim solutionkey As String = tsmi.Tag
+
+        Using ms As New MemoryStream(Me.PreviousSolutions(solutionkey).Solution)
+            Using decompressedstream As New IO.MemoryStream
+                Using gzs As New IO.BufferedStream(New Compression.GZipStream(ms, Compression.CompressionMode.Decompress, True), 64 * 1024)
+                    gzs.CopyTo(decompressedstream)
+                    gzs.Close()
+                    Me.WriteToLog(DWSIM.App.GetLocalString("ClientUpdatingData") & " " & Math.Round(decompressedstream.Length / 1024).ToString & " KB", Color.Brown, TipoAviso.Informacao)
+                    decompressedstream.Position = 0
+                    Dim xdoc As XDocument = XDocument.Load(decompressedstream)
+                    DWSIM.SimulationObjects.UnitOps.Flowsheet.UpdateProcessData(Me, xdoc)
+                    Me.WriteToLog(DWSIM.App.GetLocalString("ClientUpdatedDataOK"), Color.Brown, TipoAviso.Informacao)
+                End Using
+            End Using
+        End Using
+
+    End Sub
+
+    Sub UpdateSolutionsList()
+
+        With Me.tsbRestoreSolutions.DropDownItems
+
+            .Clear()
+
+            While Me.PreviousSolutions.Count > 15
+                Dim idtoremove As String = ""
+                For Each s In Me.PreviousSolutions.Values
+                    idtoremove = s.ID
+                    Exit For
+                Next
+                If Me.PreviousSolutions.ContainsKey(idtoremove) Then Me.PreviousSolutions.Remove(idtoremove)
+            End While
+
+            For Each k As Long In Me.PreviousSolutions.Keys
+
+                Dim tsmi As ToolStripMenuItem = .Add(Me.PreviousSolutions(k).SaveDate.ToString)
+                tsmi.Tag = k
+                AddHandler tsmi.Click, AddressOf RestoreSolution_ItemClick
+
+            Next
+
+        End With
 
     End Sub
 

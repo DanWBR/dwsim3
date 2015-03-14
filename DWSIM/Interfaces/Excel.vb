@@ -752,7 +752,6 @@ Namespace Interfaces
 
                 pp.FlashAlgorithm = flashalg
 
-                pp._ioquick = False
                 pp._tpseverity = 2
                 Dim comps(compounds.Length - 1) As String
                 Dim k As Integer
@@ -961,7 +960,6 @@ Namespace Interfaces
 
                 pp.FlashAlgorithm = flashalg
 
-                pp._ioquick = False
                 pp._tpseverity = 2
                 Dim comps(compounds.Length - 1) As String
                 Dim k As Integer
@@ -1086,7 +1084,6 @@ Namespace Interfaces
 
                 pp.FlashAlgorithm = flashalg
 
-                pp._ioquick = False
                 pp._tpseverity = 2
                 Dim comps(compounds.Length - 1) As String
                 Dim k As Integer
@@ -1211,7 +1208,6 @@ Namespace Interfaces
 
                 pp.FlashAlgorithm = flashalg
 
-                pp._ioquick = False
                 pp._tpseverity = 2
                 Dim comps(compounds.Length - 1) As String
                 Dim k As Integer
@@ -1336,7 +1332,6 @@ Namespace Interfaces
 
                 pp.FlashAlgorithm = flashalg
 
-                pp._ioquick = False
                 pp._tpseverity = 2
                 Dim comps(compounds.Length - 1) As String
                 Dim k As Integer
@@ -1810,7 +1805,6 @@ Namespace Interfaces
 
                 pp.FlashAlgorithm = flashalg
 
-                pp._ioquick = False
                 pp._tpseverity = 2
                 Dim comps(compounds.Length - 1) As String
                 Dim k As Integer
@@ -1924,7 +1918,6 @@ Namespace Interfaces
 
                 pp.FlashAlgorithm = flashalg
 
-                pp._ioquick = False
                 pp._tpseverity = 2
                 Dim comps(compounds.Length - 1) As String
                 Dim k As Integer
@@ -2040,7 +2033,6 @@ Namespace Interfaces
 
                 pp.FlashAlgorithm = flashalg
 
-                pp._ioquick = False
                 pp._tpseverity = 2
                 Dim comps(compounds.Length - 1) As String
                 Dim k As Integer
@@ -2156,7 +2148,6 @@ Namespace Interfaces
 
                 pp.FlashAlgorithm = flashalg
 
-                pp._ioquick = False
                 pp._tpseverity = 2
                 Dim comps(compounds.Length - 1) As String
                 Dim k As Integer
@@ -2272,7 +2263,6 @@ Namespace Interfaces
 
                 pp.FlashAlgorithm = flashalg
 
-                pp._ioquick = False
                 pp._tpseverity = 2
                 Dim comps(compounds.Length - 1) As String
                 Dim k As Integer

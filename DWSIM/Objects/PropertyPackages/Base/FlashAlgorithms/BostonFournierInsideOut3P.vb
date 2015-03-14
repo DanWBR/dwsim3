@@ -1163,7 +1163,7 @@ restart:    Do
                     x(i) = ui2(i - n - 1)
                 Next
 
-                If PP._ioquick Then
+                If PP.Parameters("PP_FLASHALGORITHMFASTMODE") = 1 Then
 
                     fx(2 * n + 2) = (A - Ac)
                     fx(2 * n + 3) = (B - Bc)
@@ -1427,7 +1427,7 @@ restart:    Do
                     x(i) = ui2(i - n - 1)
                 Next
 
-                If PP._ioquick Then
+                If PP.Parameters("PP_FLASHALGORITHMFASTMODE") = 1 Then
 
                     fx(2 * n + 2) = (A - Ac)
                     fx(2 * n + 3) = (B - Bc)
@@ -1707,7 +1707,7 @@ restart:    Do
                     x(i) = ui2(i - n - 1)
                 Next
 
-                If PP._ioquick Then
+                If PP.Parameters("PP_FLASHALGORITHMFASTMODE") = 1 Then
 
                     If ecount = 0 Then
                         For i = 0 To 2 * n + 1
@@ -2030,7 +2030,7 @@ out:
                 x(2 * n + 2) = A
                 x(2 * n + 3) = B
 
-                If PP._ioquick Then
+                If PP.Parameters("PP_FLASHALGORITHMFASTMODE") = 1 Then
 
                     If ecount = 0 Then
                         For i = 0 To 2 * n + 3

@@ -79,6 +79,9 @@ Partial Class FormFlowsheet
         Me.tsbSaveState = New System.Windows.Forms.ToolStripButton()
         Me.tsbRestoreStates = New System.Windows.Forms.ToolStripSplitButton()
         Me.tsbClearStates = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator7 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripLabel5 = New System.Windows.Forms.ToolStripLabel()
+        Me.tsbRestoreSolutions = New System.Windows.Forms.ToolStripDropDownButton()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripLabel3 = New System.Windows.Forms.ToolStripLabel()
         Me.ToolStripComboBoxUnitSystem = New System.Windows.Forms.ToolStripComboBox()
@@ -462,7 +465,7 @@ Partial Class FormFlowsheet
         'ToolStrip2
         '
         resources.ApplyResources(Me.ToolStrip2, "ToolStrip2")
-        Me.ToolStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel8, Me.tsbSaveState, Me.tsbRestoreStates, Me.tsbClearStates})
+        Me.ToolStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel8, Me.tsbSaveState, Me.tsbRestoreStates, Me.tsbClearStates, Me.ToolStripSeparator7, Me.ToolStripLabel5, Me.tsbRestoreSolutions})
         Me.ToolStrip2.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow
         Me.ToolStrip2.Name = "ToolStrip2"
         '
@@ -491,6 +494,23 @@ Partial Class FormFlowsheet
         Me.tsbClearStates.Image = Global.DWSIM.My.Resources.Resources.bullet_delete
         resources.ApplyResources(Me.tsbClearStates, "tsbClearStates")
         Me.tsbClearStates.Name = "tsbClearStates"
+        '
+        'ToolStripSeparator7
+        '
+        Me.ToolStripSeparator7.Name = "ToolStripSeparator7"
+        resources.ApplyResources(Me.ToolStripSeparator7, "ToolStripSeparator7")
+        '
+        'ToolStripLabel5
+        '
+        resources.ApplyResources(Me.ToolStripLabel5, "ToolStripLabel5")
+        Me.ToolStripLabel5.Name = "ToolStripLabel5"
+        '
+        'tsbRestoreSolutions
+        '
+        Me.tsbRestoreSolutions.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsbRestoreSolutions.Image = Global.DWSIM.My.Resources.Resources.bullet_arrow_top
+        resources.ApplyResources(Me.tsbRestoreSolutions, "tsbRestoreSolutions")
+        Me.tsbRestoreSolutions.Name = "tsbRestoreSolutions"
         '
         'ToolStrip1
         '
@@ -1351,4 +1371,7 @@ Partial Class FormFlowsheet
     Friend WithEvents TimerScripts15 As System.Windows.Forms.Timer
     Friend WithEvents TimerScripts30 As System.Windows.Forms.Timer
     Friend WithEvents TimerScripts60 As System.Windows.Forms.Timer
+    Friend WithEvents ToolStripSeparator7 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents ToolStripLabel5 As System.Windows.Forms.ToolStripLabel
+    Friend WithEvents tsbRestoreSolutions As System.Windows.Forms.ToolStripDropDownButton
 End Class

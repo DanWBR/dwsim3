@@ -155,8 +155,6 @@ Public Class FormConfigCAPEOPEN2
                 ComboBoxFlashAlg.SelectedIndex = 0
         End Select
 
-        chkIOmode.Checked = _pp._ioquick
-
         Dim comps, selected As New ArrayList
         If _pp._tpcompids Is Nothing Then _pp._tpcompids = New String() {}
         For Each c As ConstantProperties In _selcomps.Values
@@ -255,10 +253,6 @@ Public Class FormConfigCAPEOPEN2
                 Me.chkIOmode.Enabled = False
                 Me.GroupBox11.Enabled = True
         End Select
-    End Sub
-
-    Private Sub chkIOmode_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkIOmode.CheckedChanged
-        Me._pp._ioquick = chkIOmode.Checked
     End Sub
 
     Private Sub RadioButton1_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RadioButton1.CheckedChanged, RadioButton2.CheckedChanged, RadioButton3.CheckedChanged

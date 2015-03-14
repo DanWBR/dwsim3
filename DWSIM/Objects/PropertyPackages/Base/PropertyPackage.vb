@@ -162,7 +162,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         <System.NonSerialized()> Public _nli As Auxiliary.FlashAlgorithms.NestedLoopsImmiscible
         <System.NonSerialized()> Public _simplelle As Auxiliary.FlashAlgorithms.SimpleLLE
 
-        Public _ioquick As Boolean = True
         Public _tpseverity As Integer = 0
         Public _tpcompids As String() = New String() {}
 
@@ -300,6 +299,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 .Add("PP_PTFELT", 0.001)
                 '.Add("PP_RIG_BUB_DEW_FLASH_INIT", 0)
                 .Add("PP_FLASHALGORITHM", 2)
+                .Add("PP_FLASHALGORITHMFASTMODE", 0)
                 .Add("PP_IDEAL_MIXRULE_LIQDENS", 0)
                 .Add("PP_USEEXPLIQDENS", 0)
             End With
@@ -1281,13 +1281,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             If Not My.Application.CAPEOPENMode Then
                 Try
-                    Me._ioquick = Me.CurrentMaterialStream.Flowsheet.Options.PropertyPackageIOFlashQuickMode
                     Me._tpseverity = Me.CurrentMaterialStream.Flowsheet.Options.ThreePhaseFlashStabTestSeverity
                     Me._tpcompids = Me.CurrentMaterialStream.Flowsheet.Options.ThreePhaseFlashStabTestCompIds
                 Catch ex As Exception
                     Me._tpseverity = 0
                     Me._tpcompids = New String() {}
-                    Me._ioquick = True
                 Finally
                 End Try
             End If
@@ -2271,13 +2269,11 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
         Public Overridable Function DW_CalcEquilibrio_ISOL(ByVal spec1 As FlashSpec, ByVal spec2 As FlashSpec, ByVal val1 As Double, ByVal val2 As Double, ByVal estimate As Double) As Object
 
             Try
-                Me._ioquick = Me.CurrentMaterialStream.Flowsheet.Options.PropertyPackageIOFlashQuickMode
                 Me._tpseverity = Me.CurrentMaterialStream.Flowsheet.Options.ThreePhaseFlashStabTestSeverity
                 Me._tpcompids = Me.CurrentMaterialStream.Flowsheet.Options.ThreePhaseFlashStabTestCompIds
             Catch ex As Exception
                 Me._tpseverity = 0
                 Me._tpcompids = New String() {}
-                Me._ioquick = True
             End Try
 
             Dim P, T, H, S, xv, xl, xl2 As Double
@@ -10399,7 +10395,7 @@ Final3:
 
                 _availablecomps = myarr(0)
                 _selectedcomps = myarr(1)
-                _ioquick = myarr(2)
+                '_ioquick = myarr(2)
                 _tpseverity = myarr(3)
                 _tpcompids = TryCast(myarr(4), String())
                 m_par = myarr(5)
@@ -10471,7 +10467,7 @@ Final3:
 
                 .Add(_availablecomps)
                 .Add(_selectedcomps)
-                .Add(_ioquick)
+                .Add("")
                 .Add(_tpseverity)
                 .Add(_tpcompids)
                 .Add(m_par)
@@ -10671,7 +10667,6 @@ Final3:
             Me.ComponentName = (From el As XElement In data Select el Where el.Name = "ComponentName").SingleOrDefault.Value
             Me.ComponentDescription = (From el As XElement In data Select el Where el.Name = "ComponentDescription").SingleOrDefault.Value
             Me.Tag = (From el As XElement In data Select el Where el.Name = "Tag").SingleOrDefault.Value
-            Me._ioquick = IIf((From el As XElement In data Select el Where el.Name = "IOQUick").Value <> "", (From el As XElement In data Select el Where el.Name = "IOQUick").SingleOrDefault.Value, False)
             Me._tpseverity = (From el As XElement In data Select el Where el.Name = "TPSeverity").SingleOrDefault.Value
             Me._tpcompids = XMLSerializer.XMLSerializer.StringToArray2((From el As XElement In data Select el Where el.Name = "TPCompIDs").SingleOrDefault.Value, ci, Type.GetType("System.String"))
 
@@ -10963,7 +10958,6 @@ Final3:
                 .Add(New XElement("ComponentName", ComponentName))
                 .Add(New XElement("ComponentDescription", ComponentDescription))
                 .Add(New XElement("Tag", Tag))
-                .Add(New XElement("IOQUick", _ioquick))
                 .Add(New XElement("TPSeverity", _tpseverity))
                 .Add(New XElement("TPCompIDs", XMLSerializer.XMLSerializer.ArrayToString2(_tpcompids, ci)))
 

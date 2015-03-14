@@ -691,7 +691,8 @@ restart:    Do
                 refx(n + 6) = Fc
 
                 err = 0
-                If Not PP._ioquick Then err = bo3.brentoptimize(0, 2, 0.0001, alpha)
+
+                If PP.Parameters("PP_FLASHALGORITHMFASTMODE") = 0 Then err = bo3.brentoptimize(0, 2, 0.0001, alpha)
 
                 For i = 0 To n
                     ui(i) = ui(i) + alpha * dx(i)
@@ -1108,7 +1109,7 @@ restart:    Do
                 refx(n + 6) = Fc
 
                 err = 0
-                If Not PP._ioquick Then err = bo3.brentoptimize(0, 2, 0.0001, alpha)
+                If PP.Parameters("PP_FLASHALGORITHMFASTMODE") = 0 Then err = bo3.brentoptimize(0, 2, 0.0001, alpha)
 
                 For i = 0 To n
                     ui(i) = ui(i) + alpha * dx(i)
@@ -1434,7 +1435,7 @@ restart:    Do
                 refx(n + 2) = Bc
 
                 err = 0
-                If Not PP._ioquick Then err = bo2.brentoptimize(0, 2, 0.0001, alpha)
+                If PP.Parameters("PP_FLASHALGORITHMFASTMODE") = 0 Then err = bo2.brentoptimize(0, 2, 0.0001, alpha)
 
                 For i = 0 To n
                     ui(i) = ui(i) + alpha * dx(i)
@@ -1722,7 +1723,7 @@ final:      d2 = Date.Now
                 refx(n + 2) = Bc
 
                 err = 0
-                If Not PP._ioquick Then err = bo2.brentoptimize(0, 2, 0.0001, alpha)
+                If PP.Parameters("PP_FLASHALGORITHMFASTMODE") = 0 Then err = bo2.brentoptimize(0, 2, 0.0001, alpha)
 
                 For i = 0 To n
                     ui(i) = ui(i) + alpha * dx(i)
