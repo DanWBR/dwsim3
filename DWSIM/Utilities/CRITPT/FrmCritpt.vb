@@ -39,32 +39,6 @@ Public Class FrmCritpt
 
         Me.Text = DWSIM.App.GetLocalString("DWSIMUtilitriosPonto")
 
-        If Frm.Options.SelectedPropertyPackage.ComponentName.Contains("Peng-Robinson (PR)") Or _
-        Frm.Options.SelectedPropertyPackage.ComponentName.Contains("SRK") Then
-
-            Me.su = Frm.Options.SelectedUnitSystem
-            Me.nf = Frm.Options.NumberFormat
-
-            Me.ComboBox3.Items.Clear()
-            For Each mat2 In Me.Frm.Collections.CLCS_MaterialStreamCollection.Values
-                Me.ComboBox3.Items.Add(mat2.GraphicObject.Tag.ToString)
-            Next
-
-            If Me.ComboBox3.Items.Count > 0 Then Me.ComboBox3.SelectedIndex = 0
-
-            With Me.Grid1.Columns
-                .Item(2).HeaderText = "Tc (" & su.spmp_temperature & ")"
-                .Item(3).HeaderText = "Pc (" & su.spmp_pressure & ")"
-                .Item(4).HeaderText = "Vc (" & su.molar_volume & ")"
-            End With
-
-        Else
-
-            MessageBox.Show(DWSIM.App.GetLocalString("CritptPRSRKOnly"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            Me.Close()
-
-        End If
-
     End Sub
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
@@ -182,5 +156,33 @@ Public Class FrmCritpt
 
     Private Sub FrmCritpt_HelpRequested(sender As System.Object, hlpevent As System.Windows.Forms.HelpEventArgs) Handles MyBase.HelpRequested
         DWSIM.App.HelpRequested("UT_TrueCriticalPoint.htm")
+    End Sub
+
+    Private Sub FrmCritpt_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        If Frm.Options.SelectedPropertyPackage.ComponentName.Contains("Peng-Robinson (PR)") Or _
+      Frm.Options.SelectedPropertyPackage.ComponentName.Contains("SRK") Then
+
+            Me.su = Frm.Options.SelectedUnitSystem
+            Me.nf = Frm.Options.NumberFormat
+
+            Me.ComboBox3.Items.Clear()
+            For Each mat2 In Me.Frm.Collections.CLCS_MaterialStreamCollection.Values
+                Me.ComboBox3.Items.Add(mat2.GraphicObject.Tag.ToString)
+            Next
+
+            If Me.ComboBox3.Items.Count > 0 Then Me.ComboBox3.SelectedIndex = 0
+
+            With Me.Grid1.Columns
+                .Item(2).HeaderText = "Tc (" & su.spmp_temperature & ")"
+                .Item(3).HeaderText = "Pc (" & su.spmp_pressure & ")"
+                .Item(4).HeaderText = "Vc (" & su.molar_volume & ")"
+            End With
+
+        Else
+
+            MessageBox.Show(DWSIM.App.GetLocalString("CritptPRSRKOnly"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Me.Close()
+
+        End If
     End Sub
 End Class

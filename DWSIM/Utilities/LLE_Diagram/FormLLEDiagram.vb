@@ -54,56 +54,6 @@ Public Class FormLLEDiagram
             End If
         End If
 
-        Dim i As Integer
-
-        Frm = My.Application.ActiveSimulation
-        mat = New MaterialStream("", "")
-
-        If Me.Frm.Options.SelectedComponents.Count > 2 Then
-            ReDim Names(Me.Frm.Options.SelectedComponents.Count - 1)
-
-            su = Frm.Options.SelectedUnitSystem
-            nf = Frm.Options.NumberFormat
-
-            cbComp1.Items.Clear()
-            cbComp2.Items.Clear()
-            cbComp3.Items.Clear()
-
-            For Each co As ConstantProperties In Frm.Options.SelectedComponents.Values
-                cbComp1.Items.Add(DWSIM.App.GetComponentName(co.Name))
-                cbComp2.Items.Add(DWSIM.App.GetComponentName(co.Name))
-                cbComp3.Items.Add(DWSIM.App.GetComponentName(co.Name))
-                Names(i) = co.Name
-                i += 1
-            Next
-
-            cbComp1.SelectedIndex = 0
-            cbComp2.SelectedIndex = 1
-            cbComp3.SelectedIndex = 2
-
-            Me.cbPropPack.Items.Clear()
-            For Each pp As PropertyPackage In Me.Frm.Options.PropertyPackages.Values
-                Me.cbPropPack.Items.Add(pp.Tag & " (" & pp.ComponentName & ")")
-            Next
-            cbPropPack.SelectedIndex = 0
-
-            Me.lblT.Text = su.spmp_temperature
-            Me.tbT.Text = Format(cv.ConverterDoSI(su.spmp_temperature, 298.15), nf)
-
-            Me.lblP.Text = su.spmp_pressure
-            Me.tbP.Text = Format(cv.ConverterDoSI(su.spmp_pressure, 101400), nf)
-
-            DataGridView1.Columns(0).HeaderText = "[1] " & cbComp1.Text
-            DataGridView1.Columns(1).HeaderText = "[1] " & cbComp2.Text
-            DataGridView1.Columns(2).HeaderText = "[2] " & cbComp1.Text
-            DataGridView1.Columns(3).HeaderText = "[2] " & cbComp2.Text
-
-        Else
-
-            MessageBox.Show(DWSIM.App.GetLocalString("LLEEnvError_ThreeCompoundsMinimum"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Me.Close()
-
-        End If
 
     End Sub
 
@@ -619,6 +569,59 @@ Public Class FormLLEDiagram
 
         ' Fügen Sie Initialisierungen nach dem InitializeComponent()-Aufruf hinzu.
 
+    End Sub
+
+    Private Sub FormLLEDiagram_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        Dim i As Integer
+
+        Frm = My.Application.ActiveSimulation
+        mat = New MaterialStream("", "")
+
+        If Me.Frm.Options.SelectedComponents.Count > 2 Then
+            ReDim Names(Me.Frm.Options.SelectedComponents.Count - 1)
+
+            su = Frm.Options.SelectedUnitSystem
+            nf = Frm.Options.NumberFormat
+
+            cbComp1.Items.Clear()
+            cbComp2.Items.Clear()
+            cbComp3.Items.Clear()
+
+            For Each co As ConstantProperties In Frm.Options.SelectedComponents.Values
+                cbComp1.Items.Add(DWSIM.App.GetComponentName(co.Name))
+                cbComp2.Items.Add(DWSIM.App.GetComponentName(co.Name))
+                cbComp3.Items.Add(DWSIM.App.GetComponentName(co.Name))
+                Names(i) = co.Name
+                i += 1
+            Next
+
+            cbComp1.SelectedIndex = 0
+            cbComp2.SelectedIndex = 1
+            cbComp3.SelectedIndex = 2
+
+            Me.cbPropPack.Items.Clear()
+            For Each pp As PropertyPackage In Me.Frm.Options.PropertyPackages.Values
+                Me.cbPropPack.Items.Add(pp.Tag & " (" & pp.ComponentName & ")")
+            Next
+            cbPropPack.SelectedIndex = 0
+
+            Me.lblT.Text = su.spmp_temperature
+            Me.tbT.Text = Format(cv.ConverterDoSI(su.spmp_temperature, 298.15), nf)
+
+            Me.lblP.Text = su.spmp_pressure
+            Me.tbP.Text = Format(cv.ConverterDoSI(su.spmp_pressure, 101400), nf)
+
+            DataGridView1.Columns(0).HeaderText = "[1] " & cbComp1.Text
+            DataGridView1.Columns(1).HeaderText = "[1] " & cbComp2.Text
+            DataGridView1.Columns(2).HeaderText = "[2] " & cbComp1.Text
+            DataGridView1.Columns(3).HeaderText = "[2] " & cbComp2.Text
+
+        Else
+
+            MessageBox.Show(DWSIM.App.GetLocalString("LLEEnvError_ThreeCompoundsMinimum"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Me.Close()
+
+        End If
     End Sub
 End Class
 Public Class Rec
