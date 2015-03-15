@@ -53,6 +53,16 @@ Public Class FormOptimization
 
     Private Sub FormOptimization_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
+        If Not Me.DockHandler Is Nothing OrElse Not Me.DockHandler.FloatPane Is Nothing Then
+            ' set the bounds of this form's FloatWindow to our desired position and size
+            If Me.DockState = WeifenLuo.WinFormsUI.Docking.DockState.Float Then
+                Dim floatWin = Me.DockHandler.FloatPane.FloatWindow
+                If Not floatWin Is Nothing Then
+                    floatWin.SetBounds(floatWin.Location.X, floatWin.Location.Y, 771, 616)
+                End If
+            End If
+        End If
+
         Me.ComboBox1.SelectedIndex = 0
 
         keysind = New ArrayList

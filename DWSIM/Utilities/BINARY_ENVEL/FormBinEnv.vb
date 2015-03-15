@@ -46,6 +46,16 @@ Public Class FormBinEnv
 
         Me.TabText = Me.Text
 
+        If Not Me.DockHandler Is Nothing OrElse Not Me.DockHandler.FloatPane Is Nothing Then
+            ' set the bounds of this form's FloatWindow to our desired position and size
+            If Me.DockState = WeifenLuo.WinFormsUI.Docking.DockState.Float Then
+                Dim floatWin = Me.DockHandler.FloatPane.FloatWindow
+                If Not floatWin Is Nothing Then
+                    floatWin.SetBounds(floatWin.Location.X, floatWin.Location.Y, 714, 752)
+                End If
+            End If
+        End If
+
         Me.Frm = My.Application.ActiveSimulation
 
         If Me.Frm.Options.SelectedComponents.Count > 1 Then

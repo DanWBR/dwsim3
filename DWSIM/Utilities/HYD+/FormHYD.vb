@@ -39,6 +39,16 @@ Public Class FormHYD
 
         Me.TabText = Me.Text
 
+        If Not Me.DockHandler Is Nothing OrElse Not Me.DockHandler.FloatPane Is Nothing Then
+            ' set the bounds of this form's FloatWindow to our desired position and size
+            If Me.DockState = WeifenLuo.WinFormsUI.Docking.DockState.Float Then
+                Dim floatWin = Me.DockHandler.FloatPane.FloatWindow
+                If Not floatWin Is Nothing Then
+                    floatWin.SetBounds(floatWin.Location.X, floatWin.Location.Y, 544, 443)
+                End If
+            End If
+        End If
+
         Me.ComboBox1.SelectedIndex = 0
 
         GroupBox1.Enabled = False

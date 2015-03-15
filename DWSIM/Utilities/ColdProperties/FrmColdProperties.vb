@@ -37,6 +37,16 @@ Public Class FrmColdProperties
 
         Me.TabText = Me.Text
 
+        If Not Me.DockHandler Is Nothing OrElse Not Me.DockHandler.FloatPane Is Nothing Then
+            ' set the bounds of this form's FloatWindow to our desired position and size
+            If Me.DockState = WeifenLuo.WinFormsUI.Docking.DockState.Float Then
+                Dim floatWin = Me.DockHandler.FloatPane.FloatWindow
+                If Not floatWin Is Nothing Then
+                    floatWin.SetBounds(floatWin.Location.X, floatWin.Location.Y, 497, 395)
+                End If
+            End If
+        End If
+
         frm = My.Application.ActiveSimulation
 
         Me.ComboBox3.Items.Clear()

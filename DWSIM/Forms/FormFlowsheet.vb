@@ -972,6 +972,7 @@ Imports DWSIM.DWSIM.Outros
     End Sub
 
     Private Sub PropriedadesDePetróleosToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PropriedadesDePetróleosToolStripMenuItem.Click
+        Me.FormColdP = New FrmColdProperties
         Me.FormColdP.Show(Me.dckPanel)
     End Sub
 
@@ -992,10 +993,12 @@ Imports DWSIM.DWSIM.Outros
     End Sub
 
     Private Sub AnáliseDeSensibilidadeToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AnáliseDeSensibilidadeToolStripMenuItem.Click
+        Me.FormSensAnalysis0 = New FormSensAnalysis
         Me.FormSensAnalysis0.Show(Me.dckPanel)
     End Sub
 
     Private Sub MultivariateOptimizerToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MultivariateOptimizerToolStripMenuItem.Click
+        Me.FormOptimization0 = New FormOptimization
         Me.FormOptimization0.Show(Me.dckPanel)
     End Sub
 

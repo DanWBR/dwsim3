@@ -71,6 +71,17 @@ Public Class FormPhEnv
 
         Me.TabText = Me.Text
 
+
+        If Not Me.DockHandler Is Nothing OrElse Not Me.DockHandler.FloatPane Is Nothing Then
+            ' set the bounds of this form's FloatWindow to our desired position and size
+            If Me.DockState = WeifenLuo.WinFormsUI.Docking.DockState.Float Then
+                Dim floatWin = Me.DockHandler.FloatPane.FloatWindow
+                If Not floatWin Is Nothing Then
+                    floatWin.SetBounds(floatWin.Location.X, floatWin.Location.Y, 583, 819)
+                End If
+            End If
+        End If
+
         Try
             Me.chkhyd.Enabled = Frm.Options.SelectedPropertyPackage.RET_VCAS().Contains("7732-18-5")
         Catch ex As Exception
