@@ -926,6 +926,7 @@ Partial Class FormSensAnalysis
         Me.Controls.Add(Me.TabControl1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
         Me.Name = "FormSensAnalysis"
+        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Float
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.TabPageContextMenuStrip = Me.dckMenu

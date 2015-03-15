@@ -43,8 +43,6 @@ Public Class FormSensAnalysis
 
     Private Sub FormSensAnalysis_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document
-
         Me.tabtext = Me.Text
 
         If Not Me.DockHandler Is Nothing OrElse Not Me.DockHandler.FloatPane Is Nothing Then

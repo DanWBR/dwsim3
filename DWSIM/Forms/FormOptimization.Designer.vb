@@ -623,7 +623,7 @@ Partial Class FormOptimization
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
         Me.HideOnClose = True
         Me.Name = "FormOptimization"
-        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document
+        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Float
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.TabPageContextMenuStrip = Me.dckMenu
