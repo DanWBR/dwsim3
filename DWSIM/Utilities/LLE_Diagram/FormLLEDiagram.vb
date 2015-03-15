@@ -491,7 +491,7 @@ Public Class FormLLEDiagram
         '===============================
         For Each IPt As PointF In InitialPoints
             Ko = CalcKonode(IPt)
-            If Ko.Distance > 0 Then
+            If Ko.Distance > 0.01 Then
                 'starting points with 2 liquids was found
                 first = True
                 Pt.X = IPt.X

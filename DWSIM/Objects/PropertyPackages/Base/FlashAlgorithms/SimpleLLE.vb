@@ -66,7 +66,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 For i = 0 To n
                     If Vz(i) > 0 Then
                         j += 1
-                        L1 += (Vz(i) - InitialEstimatesForPhase2(i)) / (InitialEstimatesForPhase1(i) - InitialEstimatesForPhase2(i))
+                        If InitialEstimatesForPhase1(i) = InitialEstimatesForPhase2(i) Then
+                            L1 += 0.5
+                        Else
+                            L1 += (Vz(i) - InitialEstimatesForPhase2(i)) / (InitialEstimatesForPhase1(i) - InitialEstimatesForPhase2(i))
+                        End If
                     End If
                 Next
                 L1 = L1 / j
@@ -157,7 +161,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 If Double.IsNaN(err) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
 
-                If ecount > 0 And (Abs(err) < 0.000001 Or L1 < 0.0001 Or L2 < 0.0001) Then Exit Do
+                If ecount > 0 And (Abs(err) < 0.000001 Or L1 < 0.0001 Or L2 < 0.0001 Or S < 0.0001) Then Exit Do
 
                 For i = 0 To n
                     Vn1(i) = Vz(i) / (1 + gamma1(i) * L2 / (gamma2(i) * L1))
@@ -169,9 +173,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 ecount += 1
 
-                If ecount > 10000 Then
-                    Throw New Exception(DWSIM.App.GetLocalString("Nmeromximodeiteraesa3"))
-                End If
+                If ecount > 10000 Then Throw New Exception(DWSIM.App.GetLocalString("Nmeromximodeiteraesa3"))
+
             Loop
 
 out:        d2 = Date.Now
@@ -180,7 +183,10 @@ out:        d2 = Date.Now
 
             WriteDebugInfo("PT Flash [SimpleLLE]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Error function value: " & err)
 
-            If S > itol Then
+            If L1 < 0.0001 Or L2 < 0.0001 Or S < 0.0001 Then
+                'merge phases - both phases are identical
+                Return New Object() {1, V, Vz, PP.RET_NullVector, ecount, 0, Vx2, 0.0#, PP.RET_NullVector, gamma1, gamma2}
+            Else
                 'order liquid phases by mixture NBP
                 Dim VNBP = PP.RET_VTB()
                 Dim nbp1 As Double = 0
@@ -196,9 +202,6 @@ out:        d2 = Date.Now
                 Else
                     Return New Object() {L2, V, Vx2, PP.RET_NullVector, ecount, L1, Vx1, 0.0#, PP.RET_NullVector, gamma1, gamma2}
                 End If
-            Else
-                'merge phases - both phases are identical
-                Return New Object() {1, V, Vz, PP.RET_NullVector, ecount, 0, Vx2, 0.0#, PP.RET_NullVector, gamma1, gamma2}
             End If
 
 
