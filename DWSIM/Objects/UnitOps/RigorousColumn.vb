@@ -106,6 +106,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps
         Private _l As New Dictionary(Of String, Parameter)
         Private _v As New Dictionary(Of String, Parameter)
         Private _name As String = ""
+        Private _id As String = ""
 
         Public Property Name() As String
             Get
@@ -113,6 +114,14 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps
             End Get
             Set(ByVal value As String)
                 _name = value
+            End Set
+        End Property
+        Public Property ID() As String
+            Get
+                Return _id
+            End Get
+            Set(ByVal value As String)
+                _id = value
             End Set
         End Property
 
@@ -233,7 +242,9 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps
             End Set
         End Property
 
-        Sub New()
+        Sub New(id As String)
+
+            _id = id
 
             _k = New Dictionary(Of String, Parameter)
             _l = New Dictionary(Of String, Parameter)
@@ -359,7 +370,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps
 
             Dim i As Integer
             For i = 0 To stages - 1
-                _st.Add(New Stage)
+                _st.Add(New Stage(Guid.NewGuid().ToString))
             Next
 
         End Sub
@@ -379,7 +390,11 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps
             XMLSerializer.XMLSerializer.Deserialize(Me, data)
 
             For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "Stages").Elements.ToList
-                Dim st As New Stage()
+                Dim id As String = xel.@ID
+                If id = "" Then
+                    id = Guid.NewGuid().ToString
+                End If
+                Dim st As New Stage(id)
                 st.LoadData(xel.Elements.ToList)
                 _st.Add(st)
             Next
@@ -480,7 +495,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps
 
             Dim i As Integer
             For i = 0 To stages - 1
-                Me.Stages.Add(New Stage)
+                Me.Stages.Add(New Stage(Guid.NewGuid().ToString))
             Next
 
         End Sub
@@ -562,7 +577,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps
 
             Dim i As Integer
             For i = 0 To stages - 1
-                Me.Stages.Add(New Stage)
+                Me.Stages.Add(New Stage(Guid.NewGuid().ToString))
             Next
 
         End Sub
@@ -644,7 +659,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps
 
             Dim i As Integer
             For i = 0 To stages - 1
-                Me.Stages.Add(New Stage)
+                Me.Stages.Add(New Stage(Guid.NewGuid().ToString))
             Next
 
         End Sub
@@ -888,8 +903,6 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps
         End Enum
 
         Dim _as As String = ""
-        Dim _name As String = ""
-        Dim _tag As String = ""
         Dim _id As String = ""
         Dim _sideopid As String = ""
         Dim _t As Type = Type.Material
@@ -899,7 +912,13 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps
 
         Public Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean Implements XMLSerializer.Interfaces.ICustomXMLSerialization.LoadData
 
-            Return XMLSerializer.XMLSerializer.Deserialize(Me, data)
+            Dim xel = (From xe In data Select xe Where xe.Name = "Name").SingleOrDefault
+
+            XMLSerializer.XMLSerializer.Deserialize(Me, data)
+
+            If Not xel Is Nothing Then Me.ID = xel.Value
+
+            Return True
 
         End Function
 
@@ -963,24 +982,6 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps
             End Set
         End Property
 
-        Public Property Tag() As String
-            Get
-                Return _tag
-            End Get
-            Set(ByVal value As String)
-                _tag = value
-            End Set
-        End Property
-
-        Public Property Name() As String
-            Get
-                Return _name
-            End Get
-            Set(ByVal value As String)
-                _name = value
-            End Set
-        End Property
-
         Public Property AssociatedStage() As String
             Get
                 Return _as
@@ -994,12 +995,10 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps
             _flow = New Parameter
         End Sub
 
-        Sub New(ByVal id As String, ByVal associatedstage As String, ByVal name As String, ByVal tag As String, ByVal t As Type, ByVal bhv As Behavior, ByVal ph As Phase)
+        Sub New(ByVal id As String, ByVal associatedstage As String, ByVal t As Type, ByVal bhv As Behavior, ByVal ph As Phase)
             Me.New()
             _id = id
             _as = associatedstage
-            _name = name
-            _tag = tag
             _t = t
             _bhv = bhv
             _ph = ph
@@ -1756,7 +1755,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
         'condenser (when applicable) is the 0th stage.
         'reboiler (when applicable) is the nth stage. 
 
-        Private _cond, _reb As New Stage
+        Private _cond As New Stage(Guid.NewGuid().ToString)
+        Private _reb As New Stage(Guid.NewGuid().ToString)
+
 
         'stream collections (for the *entire* column, including side operations)
 
@@ -1820,7 +1821,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             If Not Stages Is Nothing Then Stages.Clear()
             For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "Stages").SingleOrDefault.Elements.ToList
-                Dim var As New Stage()
+                Dim id As String = xel.@ID
+                If id = "" Then id = Guid.NewGuid().ToString
+                Dim var As New Stage(id)
                 var.LoadData(xel.Elements.ToList)
                 Stages.Add(var)
             Next
@@ -1952,8 +1955,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             _ie = New InitialEstimates
 
-            _cond = New Stage()
-            _reb = New Stage()
+            _cond = New Stage(Guid.NewGuid().ToString)
+            _reb = New Stage(Guid.NewGuid().ToString)
 
         End Sub
 
@@ -1972,7 +1975,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Sub AddStages()
             Dim i As Integer
             For i = 0 To Me.NumberOfStages - 1
-                _st.Add(New Stage)
+                _st.Add(New Stage(Guid.NewGuid().ToString))
                 Select Case Me.ColumnType
                     Case ColType.DistillationColumn
                         If i = 0 Then
@@ -2912,7 +2915,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 ElseIf dif > 0 Then
                     Dim i As Integer
                     For i = 1 To dif
-                        Me.Stages.Insert(Me.Stages.Count - 1, New Stage())
+                        Me.Stages.Insert(Me.Stages.Count - 1, New Stage(Guid.NewGuid().ToString))
                         Me.Stages(Me.Stages.Count - 2).Name = DWSIM.App.GetLocalString("DCStage") & "_" & _st.Count - 2
                         With Me.InitialEstimates
                             Dim d As New Dictionary(Of String, Parameter)
@@ -2958,9 +2961,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         For Each si As StreamInformation In Me.MaterialStreams.Values
                             If si.StreamBehavior = StreamInformation.Behavior.Distillate Then
                                 'disconnect and remove from collection
-                                If FlowSheet.Collections.MaterialStreamCollection.ContainsKey(si.Name) Then
-                                    Dim idx As Integer = FormFlowsheet.SearchSurfaceObjectsByName(Me.MaterialStreams(si.ID).Name, FlowSheet.FormSurface.FlowsheetDesignSurface).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex
-                                    FlowSheet.DisconnectObject(Me.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByTag(Me.MaterialStreams(si.ID).Tag, FlowSheet.FormSurface.FlowsheetDesignSurface))
+                                If FlowSheet.Collections.MaterialStreamCollection.ContainsKey(si.ID) Then
+                                    Dim idx As Integer = FormFlowsheet.SearchSurfaceObjectsByName(si.ID, FlowSheet.FormSurface.FlowsheetDesignSurface).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex
+                                    FlowSheet.DisconnectObject(Me.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(si.ID, FlowSheet.FormSurface.FlowsheetDesignSurface))
                                     'Me.GraphicObject.OutputConnectors.RemoveAt(idx)
                                 End If
                                 Me.MaterialStreams.Remove(si.ID)
@@ -2975,9 +2978,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         For Each si As StreamInformation In Me.MaterialStreams.Values
                             If si.StreamBehavior = StreamInformation.Behavior.OverheadVapor Then
                                 'disconnect and remove from collection
-                                If FlowSheet.Collections.MaterialStreamCollection.ContainsKey(si.Name) Then
-                                    Dim idx As Integer = FormFlowsheet.SearchSurfaceObjectsByName(Me.MaterialStreams(si.ID).Name, FlowSheet.FormSurface.FlowsheetDesignSurface).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex
-                                    FlowSheet.DisconnectObject(Me.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByTag(Me.MaterialStreams(si.ID).Tag, FlowSheet.FormSurface.FlowsheetDesignSurface))
+                                If FlowSheet.Collections.MaterialStreamCollection.ContainsKey(si.ID) Then
+                                    Dim idx As Integer = FormFlowsheet.SearchSurfaceObjectsByName(si.ID, FlowSheet.FormSurface.FlowsheetDesignSurface).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex
+                                    FlowSheet.DisconnectObject(Me.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(si.ID, FlowSheet.FormSurface.FlowsheetDesignSurface))
                                     'Me.GraphicObject.OutputConnectors.RemoveAt(idx)
                                 End If
                                 Me.MaterialStreams.Remove(si.ID)
@@ -3038,7 +3041,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Dim idx As Integer
             For Each strinfo As StreamInformation In Me.MaterialStreams.Values
                 Try
-                    idx = FlowSheet.Collections.MaterialStreamCollection(strinfo.Name).OutputConnectors(0).AttachedConnector.AttachedToConnectorIndex
+                    idx = FlowSheet.Collections.MaterialStreamCollection(strinfo.ID).OutputConnectors(0).AttachedConnector.AttachedToConnectorIndex
                     Select Case strinfo.StreamBehavior
                         Case StreamInformation.Behavior.Feed
                             If Me.GraphicObject.FlippedH Then
@@ -3077,7 +3080,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             For Each strinfo As StreamInformation In Me.EnergyStreams.Values
                 Try
-                    idx = FlowSheet.Collections.EnergyStreamCollection(strinfo.Name).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex
+                    idx = FlowSheet.Collections.EnergyStreamCollection(strinfo.ID).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex
                     Select Case strinfo.StreamBehavior
                         Case StreamInformation.Behavior.Distillate
                             If Me.GraphicObject.FlippedH Then
@@ -3185,7 +3188,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             For Each ms As StreamInformation In Me.MaterialStreams.Values
                 Select Case ms.StreamBehavior
                     Case StreamInformation.Behavior.Feed
-                        stream = FlowSheet.Collections.CLCS_MaterialStreamCollection(ms.Name)
+                        stream = FlowSheet.Collections.CLCS_MaterialStreamCollection(ms.ID)
                         pp.CurrentMaterialStream = stream
                         F(StageIndex(ms.AssociatedStage)) = stream.Fases(0).SPMProperties.molarflow.GetValueOrDefault
                         HF(StageIndex(ms.AssociatedStage)) = stream.Fases(0).SPMProperties.enthalpy.GetValueOrDefault * _
@@ -3207,7 +3210,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             VSS(StageIndex(ms.AssociatedStage)) = ms.FlowRate.Value
                         End If
                     Case StreamInformation.Behavior.InterExchanger
-                        Q(StageIndex(ms.AssociatedStage)) = -FlowSheet.Collections.CLCS_EnergyStreamCollection(ms.Name).Energia.GetValueOrDefault
+                        Q(StageIndex(ms.AssociatedStage)) = -FlowSheet.Collections.CLCS_EnergyStreamCollection(ms.ID).Energia.GetValueOrDefault
                 End Select
                 i += 1
             Next
@@ -3574,7 +3577,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             For Each sinf In Me.MaterialStreams.Values
                 Select Case sinf.StreamBehavior
                     Case StreamInformation.Behavior.Distillate
-                        msm = FlowSheet.Collections.CLCS_MaterialStreamCollection(sinf.Name)
+                        msm = FlowSheet.Collections.CLCS_MaterialStreamCollection(sinf.ID)
                         With msm
                             .Fases(0).SPMProperties.massflow = LSSf(0) * pp.AUX_MMM(xf(0)) / 1000
                             .Fases(0).SPMProperties.molarflow = LSSf(0)
@@ -3592,7 +3595,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             Next
                         End With
                     Case StreamInformation.Behavior.OverheadVapor
-                        msm = FlowSheet.Collections.CLCS_MaterialStreamCollection(sinf.Name)
+                        msm = FlowSheet.Collections.CLCS_MaterialStreamCollection(sinf.ID)
                         With msm
                             .Fases(0).SPMProperties.massflow = Vf(0) * pp.AUX_MMM(yf(0)) / 1000
                             .Fases(0).SPMProperties.temperature = Tf(0)
@@ -3609,7 +3612,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             Next
                         End With
                     Case StreamInformation.Behavior.BottomsLiquid
-                        msm = FlowSheet.Collections.CLCS_MaterialStreamCollection(sinf.Name)
+                        msm = FlowSheet.Collections.CLCS_MaterialStreamCollection(sinf.ID)
                         With msm
                             .Fases(0).SPMProperties.massflow = Lf(ns) * pp.AUX_MMM(xf(ns)) / 1000
                             .Fases(0).SPMProperties.temperature = Tf(ns)
@@ -3627,7 +3630,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         End With
                     Case StreamInformation.Behavior.Sidedraw
                         Dim sidx As Integer = StageIndex(sinf.AssociatedStage)
-                        msm = FlowSheet.Collections.CLCS_MaterialStreamCollection(sinf.Name)
+                        msm = FlowSheet.Collections.CLCS_MaterialStreamCollection(sinf.ID)
                         If sinf.StreamPhase = StreamInformation.Phase.L Then
                             With msm
                                 .Fases(0).SPMProperties.massflow = LSSf(sidx) * pp.AUX_MMM(xf(sidx)) / 1000
@@ -3671,12 +3674,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
             For Each sinf In Me.EnergyStreams.Values
                 If sinf.StreamBehavior = StreamInformation.Behavior.Distillate Then
                     'condenser
-                    esm = FlowSheet.Collections.CLCS_EnergyStreamCollection(sinf.Name)
+                    esm = FlowSheet.Collections.CLCS_EnergyStreamCollection(sinf.ID)
                     esm.Energia = Q(0)
                     esm.GraphicObject.Calculated = True
                 ElseIf sinf.StreamBehavior = StreamInformation.Behavior.BottomsLiquid Then
                     'reboiler
-                    esm = FlowSheet.Collections.CLCS_EnergyStreamCollection(sinf.Name)
+                    esm = FlowSheet.Collections.CLCS_EnergyStreamCollection(sinf.ID)
                     esm.Energia = Q(Me.NumberOfStages - 1)
                     esm.GraphicObject.Calculated = True
                 End If
@@ -3739,10 +3742,10 @@ final:      FlowSheet.CalculationQueue.Enqueue(objargs)
             Dim sinf As StreamInformation
 
             For Each sinf In Me.MaterialStreams.Values
-                If FlowSheet.Collections.ObjectCollection.ContainsKey(sinf.Name) Then
+                If FlowSheet.Collections.ObjectCollection.ContainsKey(sinf.ID) Then
                     Select Case sinf.StreamBehavior
                         Case StreamInformation.Behavior.Distillate
-                            msm = FlowSheet.Collections.CLCS_MaterialStreamCollection(sinf.Name)
+                            msm = FlowSheet.Collections.CLCS_MaterialStreamCollection(sinf.ID)
                             With msm
                                 .Fases(0).SPMProperties.massflow = 0
                                 .Fases(0).SPMProperties.temperature = 0
@@ -3754,7 +3757,7 @@ final:      FlowSheet.CalculationQueue.Enqueue(objargs)
                                 Next
                             End With
                         Case StreamInformation.Behavior.OverheadVapor
-                            msm = FlowSheet.Collections.CLCS_MaterialStreamCollection(sinf.Name)
+                            msm = FlowSheet.Collections.CLCS_MaterialStreamCollection(sinf.ID)
                             With msm
                                 .Fases(0).SPMProperties.massflow = 0
                                 .Fases(0).SPMProperties.temperature = 0
@@ -3766,7 +3769,7 @@ final:      FlowSheet.CalculationQueue.Enqueue(objargs)
                                 Next
                             End With
                         Case StreamInformation.Behavior.BottomsLiquid
-                            msm = FlowSheet.Collections.CLCS_MaterialStreamCollection(sinf.Name)
+                            msm = FlowSheet.Collections.CLCS_MaterialStreamCollection(sinf.ID)
                             With msm
                                 .Fases(0).SPMProperties.massflow = 0
                                 .Fases(0).SPMProperties.temperature = 0
@@ -3779,7 +3782,7 @@ final:      FlowSheet.CalculationQueue.Enqueue(objargs)
                             End With
                         Case StreamInformation.Behavior.Sidedraw
                             Dim sidx As Integer = StageIndex(sinf.AssociatedStage)
-                            msm = FlowSheet.Collections.CLCS_MaterialStreamCollection(sinf.Name)
+                            msm = FlowSheet.Collections.CLCS_MaterialStreamCollection(sinf.ID)
                             If sinf.StreamPhase = StreamInformation.Phase.L Then
                                 With msm
                                     .Fases(0).SPMProperties.massflow = 0
@@ -3812,15 +3815,15 @@ final:      FlowSheet.CalculationQueue.Enqueue(objargs)
             Dim esm As New Streams.EnergyStream("", "")
 
             For Each sinf In Me.EnergyStreams.Values
-                If FlowSheet.Collections.ObjectCollection.ContainsKey(sinf.Name) Then
+                If FlowSheet.Collections.ObjectCollection.ContainsKey(sinf.ID) Then
                     If sinf.StreamBehavior = StreamInformation.Behavior.Distillate Then
                         'condenser
-                        esm = FlowSheet.Collections.CLCS_EnergyStreamCollection(sinf.Name)
+                        esm = FlowSheet.Collections.CLCS_EnergyStreamCollection(sinf.ID)
                         esm.Energia = 0
                         esm.GraphicObject.Calculated = False
                     ElseIf sinf.StreamBehavior = StreamInformation.Behavior.BottomsLiquid Then
                         'reboiler
-                        esm = FlowSheet.Collections.CLCS_EnergyStreamCollection(sinf.Name)
+                        esm = FlowSheet.Collections.CLCS_EnergyStreamCollection(sinf.ID)
                         esm.Energia = 0
                         esm.GraphicObject.Calculated = False
                     End If
@@ -3853,12 +3856,12 @@ final:      FlowSheet.CalculationQueue.Enqueue(objargs)
             'check existence/status of all specified material streams
 
             For Each sinf In Me.MaterialStreams.Values
-                If Not FlowSheet.Collections.CLCS_MaterialStreamCollection.ContainsKey(sinf.Name) Then
+                If Not FlowSheet.Collections.CLCS_MaterialStreamCollection.ContainsKey(sinf.ID) Then
                     Throw New Exception(DWSIM.App.GetLocalString("DCStreamMissingException"))
                 Else
                     Select Case sinf.StreamBehavior
                         Case StreamInformation.Behavior.Feed
-                            If Not FlowSheet.Collections.CLCS_MaterialStreamCollection(sinf.Name).GraphicObject.Calculated Then
+                            If Not FlowSheet.Collections.CLCS_MaterialStreamCollection(sinf.ID).GraphicObject.Calculated Then
                                 Throw New Exception(DWSIM.App.GetLocalString("DCStreamNotCalculatedException"))
                             Else
                                 feedok = True
@@ -3874,12 +3877,12 @@ final:      FlowSheet.CalculationQueue.Enqueue(objargs)
             Next
 
             For Each sinf In Me.EnergyStreams.Values
-                If Not FlowSheet.Collections.CLCS_EnergyStreamCollection.ContainsKey(sinf.Name) Then
+                If Not FlowSheet.Collections.CLCS_EnergyStreamCollection.ContainsKey(sinf.ID) Then
                     Throw New Exception(DWSIM.App.GetLocalString("DCStreamMissingException"))
                 Else
                     Select Case sinf.StreamBehavior
                         Case StreamInformation.Behavior.InterExchanger
-                            If Not FlowSheet.Collections.CLCS_EnergyStreamCollection(sinf.Name).GraphicObject.Calculated Then
+                            If Not FlowSheet.Collections.CLCS_EnergyStreamCollection(sinf.ID).GraphicObject.Calculated Then
                                 Throw New Exception(DWSIM.App.GetLocalString("DCStreamNotCalculatedException"))
                             End If
                         Case StreamInformation.Behavior.Distillate

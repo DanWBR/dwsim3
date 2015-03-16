@@ -38,16 +38,11 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.DGVCBSelectors
 
             With dgcbc.Items
                 .Clear()
-
+                .Add("")
                 For Each mstr As MaterialStream In fc.Collections.CLCS_MaterialStreamCollection.Values
-                    If Not mstr.GraphicObject.OutputConnectors(0).IsAttached Then
-                        .Add(mstr.GraphicObject.Tag.ToString)
-                    End If
-                Next
-                For Each str As StreamInformation In dc.MaterialStreams.Values
-                    If str.StreamBehavior = StreamInformation.Behavior.Feed Then
-                        .Add(str.Tag.ToString)
-                    End If
+                    'If Not mstr.GraphicObject.OutputConnectors(0).IsAttached Then
+                    .Add(mstr.GraphicObject.Tag.ToString)
+                    'End If
                 Next
             End With
 
@@ -62,14 +57,15 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.DGVCBSelectors
 
             With dgcbc.Items
                 .Clear()
+                .Add("")
                 For Each mstr As MaterialStream In fc.Collections.CLCS_MaterialStreamCollection.Values
-                    If Not mstr.GraphicObject.InputConnectors(0).IsAttached Then
-                        .Add(mstr.GraphicObject.Tag.ToString)
-                    End If
-                Next
-                For Each str As StreamInformation In dc.MaterialStreams.Values
-                    If (str.Name <> "0") And (str.StreamBehavior <> StreamInformation.Behavior.Feed) Then
-                        .Add(str.Tag.ToString)
+                    'If Not mstr.GraphicObject.InputConnectors(0).IsAttached Then
+                    .Add(mstr.GraphicObject.Tag.ToString)
+                    'End If
+                    If dc.MaterialStreams.ContainsKey(mstr.Name) Then
+                        If dc.MaterialStreams(mstr.Name).StreamBehavior <> StreamInformation.Behavior.Feed Then
+                            .Add(mstr.GraphicObject.Tag.ToString)
+                        End If
                     End If
                 Next
             End With
@@ -85,14 +81,13 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.DGVCBSelectors
 
             With dgcbc.Items
                 .Clear()
+                .Add("")
                 For Each estr As EnergyStream In fc.Collections.CLCS_EnergyStreamCollection.Values
-                    If Not estr.GraphicObject.InputConnectors(0).IsAttached Then
+                    'If Not estr.GraphicObject.InputConnectors(0).IsAttached Then
+                    .Add(estr.GraphicObject.Tag.ToString)
+                    'End If
+                    If dc.EnergyStreams.ContainsKey(estr.Nome) Then
                         .Add(estr.GraphicObject.Tag.ToString)
-                    End If
-                Next
-                For Each str As StreamInformation In dc.EnergyStreams.Values
-                    If str.Name <> "0" Then
-                        .Add(str.Tag.ToString)
                     End If
                 Next
             End With
@@ -108,14 +103,13 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.DGVCBSelectors
 
             With dgcbc.Items
                 .Clear()
+                .Add("")
                 For Each estr As EnergyStream In fc.Collections.CLCS_EnergyStreamCollection.Values
-                    If Not estr.GraphicObject.OutputConnectors(0).IsAttached Then
+                    'If Not estr.GraphicObject.OutputConnectors(0).IsAttached Then
+                    .Add(estr.GraphicObject.Tag.ToString)
+                    'End If
+                    If dc.EnergyStreams.ContainsKey(estr.Nome) Then
                         .Add(estr.GraphicObject.Tag.ToString)
-                    End If
-                Next
-                For Each str As StreamInformation In dc.EnergyStreams.Values
-                    If str.Name <> "0" Then
-                        .Add(str.Tag.ToString)
                     End If
                 Next
             End With

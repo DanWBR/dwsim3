@@ -1930,7 +1930,7 @@ Namespace DWSIM.SimulationObjects.Streams
                 If Not Me.GraphicObject Is Nothing Then Return Me.GraphicObject.Tag Else Return "temporary stream"
             End Get
             Set(ByVal value As String)
-                If Not Me.GraphicObject Is Nothing Then Me.GraphicObject.Tag = value Else Me._name = value
+                If Not Me.GraphicObject Is Nothing Then Me.GraphicObject.Tag = value Else Me.Nome = value
             End Set
         End Property
 
@@ -4855,7 +4855,6 @@ Namespace DWSIM.SimulationObjects.Streams
 
         Sub ThrowCAPEException(ByRef ex As Exception, ByVal name As String, ByVal description As String, ByVal interf As String, ByVal moreinfo As String, ByVal operation As String, ByVal scope As String, ByVal code As Integer)
 
-            _name = name
             _code = code
             _description = description
             _interfacename = interf
@@ -4867,11 +4866,11 @@ Namespace DWSIM.SimulationObjects.Streams
 
         End Sub
 
-        Private _name, _description, _interfacename, _moreinfo, _operation, _scope As String, _code As Integer
+        Private _description, _interfacename, _moreinfo, _operation, _scope As String, _code As Integer
 
         Public ReadOnly Property Name() As String Implements CapeOpen.ECapeRoot.Name
             Get
-                Return _name
+                Return Me.Nome
             End Get
         End Property
 

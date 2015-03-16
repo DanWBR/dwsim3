@@ -40,7 +40,7 @@ Public Class UIReboiledSideStripperEditorForm
             .Clear()
             For Each rss As ReboiledSideStripper In dc.RebSStrCol.Collection.Values
                 If dc.MaterialStreams.ContainsKey(rss.ProductStreamID) Then
-                    .Add(New Object() {.Count + 1, rss.Name, rss.Stages.Count, rss.FromStage, rss.ToStage, cvt.ConverterDoSI(form.Options.SelectedUnitSystem.spmp_molarflow, rss.ProductRate), rss.BoilUpRatio, dc.MaterialStreams(rss.ProductStreamID).Tag, rss.ID})
+                    '.Add(New Object() {.Count + 1, rss.Name, rss.Stages.Count, rss.FromStage, rss.ToStage, cvt.ConverterDoSI(form.Options.SelectedUnitSystem.spmp_molarflow, rss.ProductRate), rss.BoilUpRatio, dc.MaterialStreams(rss.ProductStreamID).Tag, rss.ID})
                 Else
                     .Add(New Object() {.Count + 1, rss.Name, rss.Stages.Count, rss.FromStage, rss.ToStage, rss.BoilUpRatio, cvt.ConverterDoSI(form.Options.SelectedUnitSystem.spmp_molarflow, rss.ProductRate), "", rss.ID})
                 End If
@@ -76,7 +76,7 @@ Public Class UIReboiledSideStripperEditorForm
             .Add(New Object() {.Count + 1, "", 5, "", "", 0.75, "", 0, id})
             dc.RebSStrCol.Collection.Add(id, New ReboiledSideStripper(id, 5))
             Dim msid As String = Guid.NewGuid.ToString
-            dc.MaterialStreams.Add(msid.ToString, New StreamInformation(msid.ToString, "0", "", "", StreamInformation.Type.Material, StreamInformation.Behavior.SideOpLiquidProduct, StreamInformation.Phase.L))
+            'dc.MaterialStreams.Add(msid.ToString, New StreamInformation(msid.ToString, "0", "", "", StreamInformation.Type.Material, StreamInformation.Behavior.SideOpLiquidProduct, StreamInformation.Phase.L))
         End With
     End Sub
 
@@ -112,13 +112,12 @@ Public Class UIReboiledSideStripperEditorForm
                 Case 7
                     Dim msid As String = dc.RebSStrCol.Collection(id).ProductStreamID
                     If dc.MaterialStreams.ContainsKey(msid) Then
-                        dc.MaterialStreams(msid).Tag = value
-                        dc.MaterialStreams(msid).Name = FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Name
-                        dc.MaterialStreams(msid).ID = dc.MaterialStreams(msid).Name.ToString
+                        'dc.MaterialStreams(msid).Name = FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Name
+                        'dc.MaterialStreams(msid).ID = dc.MaterialStreams(msid).Name.ToString
                     Else
                         Dim id2 = Guid.NewGuid.ToString
                         msid = FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Name
-                        dc.MaterialStreams.Add(id2.ToString, New StreamInformation(id2.ToString, "0", FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Name, FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Tag, StreamInformation.Type.Material, StreamInformation.Behavior.SideOpLiquidProduct, StreamInformation.Phase.L))
+                        'dc.MaterialStreams.Add(id2.ToString, New StreamInformation(id2.ToString, "0", FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Name, FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Tag, StreamInformation.Type.Material, StreamInformation.Behavior.SideOpLiquidProduct, StreamInformation.Phase.L))
                         dc.RebSStrCol.Collection(id).ProductStreamID = id2
                     End If
             End Select

@@ -2939,7 +2939,6 @@ End Class
 
     Sub ThrowCAPEException(ByRef ex As Exception, ByVal name As String, ByVal description As String, ByVal interf As String, ByVal moreinfo As String, ByVal operation As String, ByVal scope As String, ByVal code As Integer)
 
-        _name = name
         _code = code
         _description = description
         _interfacename = interf
@@ -2955,7 +2954,7 @@ End Class
 
     Public ReadOnly Property Name() As String Implements CapeOpen.ECapeRoot.Name
         Get
-            Return _name
+            Return Me.Nome
         End Get
     End Property
 

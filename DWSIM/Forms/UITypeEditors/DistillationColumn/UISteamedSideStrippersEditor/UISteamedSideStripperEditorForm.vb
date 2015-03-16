@@ -58,7 +58,7 @@ Public Class UISteamedSideStripperEditorForm
             .Clear()
             For Each sss As SteamedSideStripper In dc.StmSStrCol.Collection.Values
                 If dc.MaterialStreams.ContainsKey(sss.ProductStreamID) And dc.MaterialStreams.ContainsKey(sss.SteamStreamID) Then
-                    .Add(New Object() {.Count + 1, sss.Name, sss.Stages.Count, sss.FromStage, sss.ToStage, cvt.ConverterDoSI(form.Options.SelectedUnitSystem.spmp_molarflow, sss.ProductRate), dc.MaterialStreams(sss.ProductStreamID).Tag, dc.MaterialStreams(sss.SteamStreamID).Tag, sss.ID})
+                    '.Add(New Object() {.Count + 1, sss.Name, sss.Stages.Count, sss.FromStage, sss.ToStage, cvt.ConverterDoSI(form.Options.SelectedUnitSystem.spmp_molarflow, sss.ProductRate), dc.MaterialStreams(sss.ProductStreamID).Tag, dc.MaterialStreams(sss.SteamStreamID).Tag, sss.ID})
                 Else
                     .Add(New Object() {.Count + 1, sss.Name, sss.Stages.Count, sss.FromStage, sss.ToStage, cvt.ConverterDoSI(form.Options.SelectedUnitSystem.spmp_molarflow, sss.ProductRate), "", "", sss.ID})
                 End If
@@ -93,9 +93,9 @@ Public Class UISteamedSideStripperEditorForm
             .Add(New Object() {.Count + 1, "", 5, "", "", "", "", 0, id})
             dc.StmSStrCol.Collection.Add(id, New SteamedSideStripper(id, 5))
             Dim msid As String = Guid.NewGuid.ToString
-            dc.MaterialStreams.Add(msid.ToString, New StreamInformation(msid.ToString, "0", "", "", StreamInformation.Type.Material, StreamInformation.Behavior.SideOpLiquidProduct, StreamInformation.Phase.L))
+            'dc.MaterialStreams.Add(msid.ToString, New StreamInformation(msid.ToString, "0", "", "", StreamInformation.Type.Material, StreamInformation.Behavior.SideOpLiquidProduct, StreamInformation.Phase.L))
             Dim msid2 As String = Guid.NewGuid.ToString
-            dc.MaterialStreams.Add(msid2.ToString, New StreamInformation(msid2.ToString, "0", "", "", StreamInformation.Type.Material, StreamInformation.Behavior.Steam, StreamInformation.Phase.V))
+            'dc.MaterialStreams.Add(msid2.ToString, New StreamInformation(msid2.ToString, "0", "", "", StreamInformation.Type.Material, StreamInformation.Behavior.Steam, StreamInformation.Phase.V))
         End With
     End Sub
 
@@ -130,25 +130,25 @@ Public Class UISteamedSideStripperEditorForm
                 Case 6
                     Dim msid As String = dc.StmSStrCol.Collection(id).ProductStreamID
                     If dc.MaterialStreams.ContainsKey(msid) Then
-                        dc.MaterialStreams(msid).Tag = value
-                        dc.MaterialStreams(msid).Name = FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Name
-                        dc.MaterialStreams(msid).ID = dc.MaterialStreams(msid).Name.ToString
+                        'dc.MaterialStreams(msid).Tag = value
+                        'dc.MaterialStreams(msid).Name = FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Name
+                        'dc.MaterialStreams(msid).ID = dc.MaterialStreams(msid).Name.ToString
                     Else
                         Dim id2 = Guid.NewGuid.ToString
                         msid = FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Name
-                        dc.MaterialStreams.Add(id2.ToString, New StreamInformation(id2.ToString, "0", FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Name, FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Tag, StreamInformation.Type.Material, StreamInformation.Behavior.SideOpLiquidProduct, StreamInformation.Phase.L))
+                        'dc.MaterialStreams.Add(id2.ToString, New StreamInformation(id2.ToString, "0", FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Name, FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Tag, StreamInformation.Type.Material, StreamInformation.Behavior.SideOpLiquidProduct, StreamInformation.Phase.L))
                         dc.StmSStrCol.Collection(id).ProductStreamID = id2
                     End If
                 Case 7
                     Dim msid As String = dc.StmSStrCol.Collection(id).SteamStreamID
                     If dc.MaterialStreams.ContainsKey(msid) Then
-                        dc.MaterialStreams(msid).Tag = value
-                        dc.MaterialStreams(msid).Name = FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Name
-                        dc.MaterialStreams(msid).ID = dc.MaterialStreams(msid).Name.ToString
+                        'dc.MaterialStreams(msid).Tag = value
+                        'dc.MaterialStreams(msid).Name = FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Name
+                        'dc.MaterialStreams(msid).ID = dc.MaterialStreams(msid).Name.ToString
                     Else
                         Dim id2 = Guid.NewGuid.ToString
                         msid = FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Name
-                        dc.MaterialStreams.Add(id2.ToString, New StreamInformation(id2.ToString, "", FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Name, FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Tag, StreamInformation.Type.Material, StreamInformation.Behavior.Steam, StreamInformation.Phase.L))
+                        'dc.MaterialStreams.Add(id2.ToString, New StreamInformation(id2.ToString, "", FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Name, FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Tag, StreamInformation.Type.Material, StreamInformation.Behavior.Steam, StreamInformation.Phase.L))
                         dc.StmSStrCol.Collection(id).SteamStreamID = id2
                     End If
 

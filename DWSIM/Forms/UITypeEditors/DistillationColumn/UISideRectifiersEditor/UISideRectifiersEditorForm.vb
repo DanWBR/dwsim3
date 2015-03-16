@@ -58,7 +58,7 @@ Public Class UISideRectifiersEditorForm
             .Clear()
             For Each rss As SideRectifier In dc.SideRectCol.Collection.Values
                 If dc.MaterialStreams.ContainsKey(rss.LiquidProductStreamID) And dc.MaterialStreams.ContainsKey(rss.VaporProductStreamID) Then
-                    .Add(New Object() {.Count + 1, rss.Name, rss.Stages.Count, rss.FromStage, rss.ToStage, rss.RefluxRatio, cvt.ConverterDoSI(form.Options.SelectedUnitSystem.spmp_molarflow, rss.VaporRate), dc.MaterialStreams(rss.VaporProductStreamID).Tag, cvt.ConverterDoSI(form.Options.SelectedUnitSystem.spmp_molarflow, rss.LiquidRate), dc.MaterialStreams(rss.LiquidProductStreamID).Tag, rss.ID})
+                    '.Add(New Object() {.Count + 1, rss.Name, rss.Stages.Count, rss.FromStage, rss.ToStage, rss.RefluxRatio, cvt.ConverterDoSI(form.Options.SelectedUnitSystem.spmp_molarflow, rss.VaporRate), dc.MaterialStreams(rss.VaporProductStreamID).Tag, cvt.ConverterDoSI(form.Options.SelectedUnitSystem.spmp_molarflow, rss.LiquidRate), dc.MaterialStreams(rss.LiquidProductStreamID).Tag, rss.ID})
                 Else
                     .Add(New Object() {.Count + 1, rss.Name, rss.Stages.Count, rss.FromStage, rss.ToStage, rss.RefluxRatio, cvt.ConverterDoSI(form.Options.SelectedUnitSystem.spmp_molarflow, rss.VaporRate), "", cvt.ConverterDoSI(form.Options.SelectedUnitSystem.spmp_molarflow, rss.LiquidRate), "", rss.ID})
                 End If
@@ -94,9 +94,9 @@ Public Class UISideRectifiersEditorForm
             .Add(New Object() {.Count + 1, "", 5, "", "", 5, "", 0, "", 0, id})
             dc.SideRectCol.Collection.Add(id, New SideRectifier(id, 5))
             Dim msid As String = Guid.NewGuid.ToString
-            dc.MaterialStreams.Add(msid.ToString, New StreamInformation(msid.ToString, "0", "", "", StreamInformation.Type.Material, StreamInformation.Behavior.SideOpLiquidProduct, StreamInformation.Phase.L))
+            'dc.MaterialStreams.Add(msid.ToString, New StreamInformation(msid.ToString, "0", "", "", StreamInformation.Type.Material, StreamInformation.Behavior.SideOpLiquidProduct, StreamInformation.Phase.L))
             Dim msid2 As String = Guid.NewGuid.ToString
-            dc.MaterialStreams.Add(msid2.ToString, New StreamInformation(msid2.ToString, "0", "", "", StreamInformation.Type.Material, StreamInformation.Behavior.SideOpVaporProduct, StreamInformation.Phase.V))
+            'dc.MaterialStreams.Add(msid2.ToString, New StreamInformation(msid2.ToString, "0", "", "", StreamInformation.Type.Material, StreamInformation.Behavior.SideOpVaporProduct, StreamInformation.Phase.V))
         End With
     End Sub
 
@@ -133,13 +133,12 @@ Public Class UISideRectifiersEditorForm
                 Case 7
                     Dim msid As String = dc.SideRectCol.Collection(id).VaporProductStreamID
                     If dc.MaterialStreams.ContainsKey(msid) Then
-                        dc.MaterialStreams(msid).Tag = value
-                        dc.MaterialStreams(msid).Name = FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Name
-                        dc.MaterialStreams(msid).ID = dc.MaterialStreams(msid).Name.ToString
+                        'dc.MaterialStreams(msid).Name = FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Name
+                        'dc.MaterialStreams(msid).ID = dc.MaterialStreams(msid).Name.ToString
                     Else
                         Dim id2 = Guid.NewGuid.ToString
                         msid = FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Name
-                        dc.MaterialStreams.Add(id2.ToString, New StreamInformation(id2.ToString, "0", FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Name, FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Tag, StreamInformation.Type.Material, StreamInformation.Behavior.SideOpVaporProduct, StreamInformation.Phase.V))
+                        'dc.MaterialStreams.Add(id2.ToString, New StreamInformation(id2.ToString, "0", FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Name, FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Tag, StreamInformation.Type.Material, StreamInformation.Behavior.SideOpVaporProduct, StreamInformation.Phase.V))
                         dc.SideRectCol.Collection(id).VaporProductStreamID = id2
                     End If
                 Case 8
@@ -147,13 +146,13 @@ Public Class UISideRectifiersEditorForm
                 Case 9
                     Dim msid As String = dc.SideRectCol.Collection(id).LiquidProductStreamID
                     If dc.MaterialStreams.ContainsKey(msid) Then
-                        dc.MaterialStreams(msid).Tag = value
-                        dc.MaterialStreams(msid).Name = FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Name
-                        dc.MaterialStreams(msid).ID = dc.MaterialStreams(msid).Name.ToString
+                        'dc.MaterialStreams(msid).Tag = value
+                        'dc.MaterialStreams(msid).Name = FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Name
+                        'dc.MaterialStreams(msid).ID = dc.MaterialStreams(msid).Name.ToString
                     Else
                         Dim id2 = Guid.NewGuid.ToString
                         msid = FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Name
-                        dc.MaterialStreams.Add(id2.ToString, New StreamInformation(id2.ToString, "0", FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Name, FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Tag, StreamInformation.Type.Material, StreamInformation.Behavior.SideOpLiquidProduct, StreamInformation.Phase.L))
+                        'dc.MaterialStreams.Add(id2.ToString, New StreamInformation(id2.ToString, "0", FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Name, FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface).Tag, StreamInformation.Type.Material, StreamInformation.Behavior.SideOpLiquidProduct, StreamInformation.Phase.L))
                         dc.SideRectCol.Collection(id).LiquidProductStreamID = id2
                     End If
             End Select
