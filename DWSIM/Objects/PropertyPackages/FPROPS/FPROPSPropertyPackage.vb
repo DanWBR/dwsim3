@@ -794,14 +794,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 dfdx = (f2 - f1) / (0.01 * x1)
 
                 If Abs(dfdx) < 0.0000000001 Or Double.IsNaN(f1) Or Double.IsInfinity(f1) Then
-                    Console.WriteLine("FPROPS WARNING: compound: " & fluidstruct.name & ", state: " & fluidstate.ToString)
-                    Console.WriteLine("FPROPS WARNING: unable to calculate density at P = " & P & " Pa and T = " & T & " K")
+                    DWSIM.App.WriteToConsole("FPROPS WARNING: compound: " & fluidstruct.name & ", state: " & fluidstate.ToString, 2)
+                    DWSIM.App.WriteToConsole("FPROPS WARNING: unable to calculate density at P = " & P & " Pa and T = " & T & " K", 2)
                     fprops.fprops_sat_p(P, satt, rhof, rhog, fluidstruct)
                     If fluidstate = State.Liquid Then
-                        Console.WriteLine("FPROPS WARNING: returning calculated density @ saturation temperature (" & satt & " K => " & rhof & " kg/m3")
+                        DWSIM.App.WriteToConsole("FPROPS WARNING: returning calculated density @ saturation temperature (" & satt & " K => " & rhof & " kg/m3", 2)
                         Return rhof
                     Else
-                        Console.WriteLine("FPROPS WARNING: returning calculated density @ saturation temperature (" & satt & " K => " & rhog & " kg/m3")
+                        DWSIM.App.WriteToConsole("FPROPS WARNING: returning calculated density @ saturation temperature (" & satt & " K => " & rhog & " kg/m3", 2)
                         Return rhog
                     End If
                 End If

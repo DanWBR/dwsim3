@@ -1043,7 +1043,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         End If
                         If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
                         vk(i) = Vxw(i) * vk(i)
-                        i = i + 1
                     Next
                 Case State.Vapor
                     For i = 0 To n
@@ -1082,7 +1081,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         End If
                         If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
                         vk(i) = Vxw(i) * vk(i)
-                        i = i + 1
                     Next
             End Select
 
@@ -1146,7 +1144,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         End If
                         If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
                         vk(i) = Vxw(i) * vk(i)
-                        i = i + 1
                     Next
                 Case State.Vapor
                     For i = 0 To n
@@ -1185,7 +1182,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         End If
                         If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
                         vk(i) = Vxw(i) * vk(i)
-                        i = i + 1
                     Next
             End Select
 
