@@ -1867,13 +1867,13 @@ Namespace DWSIM.Flowsheet
                     With fobj
                         .Calculated = False
                         If Not fobj.GraphicObject Is Nothing Then fobj.GraphicObject.Calculated = False
-                        If fobj.GraphicObject.TipoObjeto = TipoObjeto.MaterialStream Then
-                            If fobj.GraphicObject.InputConnectors(0).IsAttached Then
-                                If fobj.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.TipoObjeto <> TipoObjeto.OT_Reciclo Then
-                                    DirectCast(fobj, Streams.MaterialStream).Clear()
-                                End If
-                            End If
-                        End If
+                        'If fobj.GraphicObject.TipoObjeto = TipoObjeto.MaterialStream Then
+                        '    If fobj.GraphicObject.InputConnectors(0).IsAttached Then
+                        '        If fobj.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.TipoObjeto <> TipoObjeto.OT_Reciclo Then
+                        '            DirectCast(fobj, Streams.MaterialStream).Clear()
+                        '        End If
+                        '    End If
+                        'End If
                     End With
                 Next
 
