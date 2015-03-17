@@ -93,96 +93,98 @@ Public Class UIConnectionsEditorForm
 
         For Each str As StreamInformation In dc.MaterialStreams.Values
             If str.StreamBehavior = StreamInformation.Behavior.Feed Then
-                Dim st = (From st2 As Stage In dc.Stages Select st2 Where st2.Name = str.AssociatedStage).FirstOrDefault
-                Me.dgv1.Rows.Add(New Object() {dgv1.Rows.Count + 1, st.Name, ReturnObjTag(str.ID), str.ID})
+                Dim st = (From st2 As Stage In dc.Stages Select st2 Where st2.ID = str.AssociatedStage).FirstOrDefault
+                If st Is Nothing Then st = (From st2 As Stage In dc.Stages Select st2 Where st2.Name = str.AssociatedStage).FirstOrDefault
+                Me.dgv1.Rows.Add(New Object() {dgv1.Rows.Count + 1, st.Name, ReturnObjTag(str.StreamID), str.ID})
                 Me.dgv1.Rows(Me.dgv1.Rows.Count - 1).Cells(2).Tag = st.ID
             End If
         Next
 
         For Each str As StreamInformation In dc.MaterialStreams.Values
             If str.StreamBehavior = StreamInformation.Behavior.Sidedraw Then
-                Dim st = (From st2 As Stage In dc.Stages Select st2 Where st2.Name = str.AssociatedStage).FirstOrDefault
-                Me.dgv2.Rows.Add(New Object() {dgv2.Rows.Count + 1, st.Name, ReturnObjTag(str.ID), str.StreamPhase.ToString, cvt.ConverterDoSI(form.Options.SelectedUnitSystem.spmp_molarflow, str.FlowRate.Value), str.ID})
+                Dim st = (From st2 As Stage In dc.Stages Select st2 Where st2.ID = str.AssociatedStage).FirstOrDefault
+                If st Is Nothing Then st = (From st2 As Stage In dc.Stages Select st2 Where st2.Name = str.AssociatedStage).FirstOrDefault
+                Me.dgv2.Rows.Add(New Object() {dgv2.Rows.Count + 1, st.Name, ReturnObjTag(str.StreamID), str.StreamPhase.ToString, cvt.ConverterDoSI(form.Options.SelectedUnitSystem.spmp_molarflow, str.FlowRate.Value), str.ID})
                 Me.dgv2.Rows(Me.dgv2.Rows.Count - 1).Cells(2).Tag = st.ID
             End If
         Next
 
-        'Select Case dc.ColumnType
-        '    Case Column.ColType.DistillationColumn
-        '        Dim id As String = Guid.NewGuid.ToString
-        '        Select Case dc.CondenserType
-        '            Case Column.condtype.Full_Reflux
-        '                If Not dc.StreamExists(StreamInformation.Behavior.OverheadVapor) Then
-        '                    id = Guid.NewGuid.ToString
-        '                    dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "0", "0", "0", StreamInformation.Type.Material, StreamInformation.Behavior.OverheadVapor, StreamInformation.Phase.V))
-        '                End If
-        '            Case Column.condtype.Partial_Condenser
-        '                If Not dc.StreamExists(StreamInformation.Behavior.Distillate) Then
-        '                    id = Guid.NewGuid.ToString
-        '                    dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "0", "0", "0", StreamInformation.Type.Material, StreamInformation.Behavior.Distillate, StreamInformation.Phase.L))
-        '                End If
-        '                If Not dc.StreamExists(StreamInformation.Behavior.OverheadVapor) Then
-        '                    id = Guid.NewGuid.ToString
-        '                    dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "0", "0", "0", StreamInformation.Type.Material, StreamInformation.Behavior.OverheadVapor, StreamInformation.Phase.V))
-        '                End If
-        '            Case Column.condtype.Total_Condenser
-        '                If Not dc.StreamExists(StreamInformation.Behavior.Distillate) Then
-        '                    id = Guid.NewGuid.ToString
-        '                    dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "0", "0", "0", StreamInformation.Type.Material, StreamInformation.Behavior.Distillate, StreamInformation.Phase.L))
-        '                End If
-        '        End Select
-        '        If Not dc.StreamExists(StreamInformation.Behavior.BottomsLiquid) Then
-        '            id = Guid.NewGuid.ToString
-        '            dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "0", "0", "0", StreamInformation.Type.Material, StreamInformation.Behavior.BottomsLiquid, StreamInformation.Phase.L))
-        '        End If
-        '    Case Column.ColType.AbsorptionColumn
-        '        Dim id As String = Guid.NewGuid.ToString
-        '        If Not dc.StreamExists(StreamInformation.Behavior.BottomsLiquid) Then
-        '            id = Guid.NewGuid.ToString
-        '            dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "0", "0", "0", StreamInformation.Type.Material, StreamInformation.Behavior.BottomsLiquid, StreamInformation.Phase.L))
-        '        End If
-        '        If Not dc.StreamExists(StreamInformation.Behavior.OverheadVapor) Then
-        '            id = Guid.NewGuid.ToString
-        '            dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "0", "0", "0", StreamInformation.Type.Material, StreamInformation.Behavior.OverheadVapor, StreamInformation.Phase.V))
-        '        End If
-        '    Case Column.ColType.ReboiledAbsorber
-        '        Dim id As String = Guid.NewGuid.ToString
-        '        If Not dc.StreamExists(StreamInformation.Behavior.OverheadVapor) Then
-        '            id = Guid.NewGuid.ToString
-        '            dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "0", "0", "0", StreamInformation.Type.Material, StreamInformation.Behavior.OverheadVapor, StreamInformation.Phase.V))
-        '        End If
-        '        If Not dc.StreamExists(StreamInformation.Behavior.BottomsLiquid) Then
-        '            id = Guid.NewGuid.ToString
-        '            dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "0", "0", "0", StreamInformation.Type.Material, StreamInformation.Behavior.BottomsLiquid, StreamInformation.Phase.L))
-        '        End If
-        '    Case Column.ColType.RefluxedAbsorber
-        '        Dim id As String = Guid.NewGuid.ToString
-        '        Select Case dc.CondenserType
-        '            Case Column.condtype.Full_Reflux
-        '                If Not dc.StreamExists(StreamInformation.Behavior.OverheadVapor) Then
-        '                    id = Guid.NewGuid.ToString
-        '                    dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "0", "0", "0", StreamInformation.Type.Material, StreamInformation.Behavior.OverheadVapor, StreamInformation.Phase.V))
-        '                End If
-        '            Case Column.condtype.Partial_Condenser
-        '                If Not dc.StreamExists(StreamInformation.Behavior.Distillate) Then
-        '                    id = Guid.NewGuid.ToString
-        '                    dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "0", "0", "0", StreamInformation.Type.Material, StreamInformation.Behavior.Distillate, StreamInformation.Phase.L))
-        '                End If
-        '                If Not dc.StreamExists(StreamInformation.Behavior.OverheadVapor) Then
-        '                    id = Guid.NewGuid.ToString
-        '                    dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "0", "0", "0", StreamInformation.Type.Material, StreamInformation.Behavior.OverheadVapor, StreamInformation.Phase.V))
-        '                End If
-        '            Case Column.condtype.Total_Condenser
-        '                If Not dc.StreamExists(StreamInformation.Behavior.Distillate) Then
-        '                    id = Guid.NewGuid.ToString
-        '                    dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "0", "0", "0", StreamInformation.Type.Material, StreamInformation.Behavior.Distillate, StreamInformation.Phase.L))
-        '                End If
-        '        End Select
-        '        If Not dc.StreamExists(StreamInformation.Behavior.BottomsLiquid) Then
-        '            id = Guid.NewGuid.ToString
-        '            dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "0", "0", "0", StreamInformation.Type.Material, StreamInformation.Behavior.BottomsLiquid, StreamInformation.Phase.L))
-        '        End If
-        'End Select
+        Select Case dc.ColumnType
+            Case Column.ColType.DistillationColumn
+                Dim id As String = Guid.NewGuid.ToString
+                Select Case dc.CondenserType
+                    Case Column.condtype.Full_Reflux
+                        If Not dc.StreamExists(StreamInformation.Behavior.OverheadVapor) Then
+                            id = Guid.NewGuid.ToString
+                            dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "", "", StreamInformation.Type.Material, StreamInformation.Behavior.OverheadVapor, StreamInformation.Phase.V))
+                        End If
+                    Case Column.condtype.Partial_Condenser
+                        If Not dc.StreamExists(StreamInformation.Behavior.Distillate) Then
+                            id = Guid.NewGuid.ToString
+                            dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "", "", StreamInformation.Type.Material, StreamInformation.Behavior.Distillate, StreamInformation.Phase.L))
+                        End If
+                        If Not dc.StreamExists(StreamInformation.Behavior.OverheadVapor) Then
+                            id = Guid.NewGuid.ToString
+                            dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "", "", StreamInformation.Type.Material, StreamInformation.Behavior.OverheadVapor, StreamInformation.Phase.V))
+                        End If
+                    Case Column.condtype.Total_Condenser
+                        If Not dc.StreamExists(StreamInformation.Behavior.Distillate) Then
+                            id = Guid.NewGuid.ToString
+                            dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "", "", StreamInformation.Type.Material, StreamInformation.Behavior.Distillate, StreamInformation.Phase.L))
+                        End If
+                End Select
+                If Not dc.StreamExists(StreamInformation.Behavior.BottomsLiquid) Then
+                    id = Guid.NewGuid.ToString
+                    dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "", "", StreamInformation.Type.Material, StreamInformation.Behavior.BottomsLiquid, StreamInformation.Phase.L))
+                End If
+            Case Column.ColType.AbsorptionColumn
+                Dim id As String = Guid.NewGuid.ToString
+                If Not dc.StreamExists(StreamInformation.Behavior.BottomsLiquid) Then
+                    id = Guid.NewGuid.ToString
+                    dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "", "", StreamInformation.Type.Material, StreamInformation.Behavior.BottomsLiquid, StreamInformation.Phase.L))
+                End If
+                If Not dc.StreamExists(StreamInformation.Behavior.OverheadVapor) Then
+                    id = Guid.NewGuid.ToString
+                    dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "", "", StreamInformation.Type.Material, StreamInformation.Behavior.OverheadVapor, StreamInformation.Phase.V))
+                End If
+            Case Column.ColType.ReboiledAbsorber
+                Dim id As String = Guid.NewGuid.ToString
+                If Not dc.StreamExists(StreamInformation.Behavior.OverheadVapor) Then
+                    id = Guid.NewGuid.ToString
+                    dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "", "", StreamInformation.Type.Material, StreamInformation.Behavior.OverheadVapor, StreamInformation.Phase.V))
+                End If
+                If Not dc.StreamExists(StreamInformation.Behavior.BottomsLiquid) Then
+                    id = Guid.NewGuid.ToString
+                    dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "", "", StreamInformation.Type.Material, StreamInformation.Behavior.BottomsLiquid, StreamInformation.Phase.L))
+                End If
+            Case Column.ColType.RefluxedAbsorber
+                Dim id As String = Guid.NewGuid.ToString
+                Select Case dc.CondenserType
+                    Case Column.condtype.Full_Reflux
+                        If Not dc.StreamExists(StreamInformation.Behavior.OverheadVapor) Then
+                            id = Guid.NewGuid.ToString
+                            dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "", "", StreamInformation.Type.Material, StreamInformation.Behavior.OverheadVapor, StreamInformation.Phase.V))
+                        End If
+                    Case Column.condtype.Partial_Condenser
+                        If Not dc.StreamExists(StreamInformation.Behavior.Distillate) Then
+                            id = Guid.NewGuid.ToString
+                            dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "", "", StreamInformation.Type.Material, StreamInformation.Behavior.Distillate, StreamInformation.Phase.L))
+                        End If
+                        If Not dc.StreamExists(StreamInformation.Behavior.OverheadVapor) Then
+                            id = Guid.NewGuid.ToString
+                            dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "", "", StreamInformation.Type.Material, StreamInformation.Behavior.OverheadVapor, StreamInformation.Phase.V))
+                        End If
+                    Case Column.condtype.Total_Condenser
+                        If Not dc.StreamExists(StreamInformation.Behavior.Distillate) Then
+                            id = Guid.NewGuid.ToString
+                            dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "", "", StreamInformation.Type.Material, StreamInformation.Behavior.Distillate, StreamInformation.Phase.L))
+                        End If
+                End Select
+                If Not dc.StreamExists(StreamInformation.Behavior.BottomsLiquid) Then
+                    id = Guid.NewGuid.ToString
+                    dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "", "", StreamInformation.Type.Material, StreamInformation.Behavior.BottomsLiquid, StreamInformation.Phase.L))
+                End If
+        End Select
 
         Me.dgv3.Rows.Clear()
 
@@ -226,85 +228,85 @@ Public Class UIConnectionsEditorForm
                     Select Case dc.CondenserType
                         Case Column.condtype.Full_Reflux
                             If str.StreamBehavior = StreamInformation.Behavior.OverheadVapor Then
-                                Me.dgv3.Rows(0).Cells(1).Value = ReturnObjTag(str.ID)
+                                Me.dgv3.Rows(0).Cells(1).Value = ReturnObjTag(str.StreamID)
                                 Me.dgv3.Rows(0).Cells(2).Value = str.ID
                             End If
                             If str.StreamBehavior = StreamInformation.Behavior.BottomsLiquid Then
-                                Me.dgv3.Rows(1).Cells(1).Value = ReturnObjTag(str.ID)
+                                Me.dgv3.Rows(1).Cells(1).Value = ReturnObjTag(str.StreamID)
                                 Me.dgv3.Rows(1).Cells(2).Value = str.ID
                             End If
                         Case Column.condtype.Partial_Condenser
                             If str.StreamBehavior = StreamInformation.Behavior.Distillate Then
-                                Me.dgv3.Rows(0).Cells(1).Value = ReturnObjTag(str.ID)
+                                Me.dgv3.Rows(0).Cells(1).Value = ReturnObjTag(str.StreamID)
                                 Me.dgv3.Rows(0).Cells(2).Value = str.ID
                             End If
                             If str.StreamBehavior = StreamInformation.Behavior.OverheadVapor Then
-                                Me.dgv3.Rows(1).Cells(1).Value = ReturnObjTag(str.ID)
+                                Me.dgv3.Rows(1).Cells(1).Value = ReturnObjTag(str.StreamID)
                                 Me.dgv3.Rows(1).Cells(2).Value = str.ID
                             End If
                             If str.StreamBehavior = StreamInformation.Behavior.BottomsLiquid Then
-                                Me.dgv3.Rows(2).Cells(1).Value = ReturnObjTag(str.ID)
+                                Me.dgv3.Rows(2).Cells(1).Value = ReturnObjTag(str.StreamID)
                                 Me.dgv3.Rows(2).Cells(2).Value = str.ID
                             End If
                         Case Column.condtype.Total_Condenser
                             If str.StreamBehavior = StreamInformation.Behavior.Distillate Then
-                                Me.dgv3.Rows(0).Cells(1).Value = ReturnObjTag(str.ID)
+                                Me.dgv3.Rows(0).Cells(1).Value = ReturnObjTag(str.StreamID)
                                 Me.dgv3.Rows(0).Cells(2).Value = str.ID
                             End If
                             If str.StreamBehavior = StreamInformation.Behavior.BottomsLiquid Then
-                                Me.dgv3.Rows(1).Cells(1).Value = ReturnObjTag(str.ID)
+                                Me.dgv3.Rows(1).Cells(1).Value = ReturnObjTag(str.StreamID)
                                 Me.dgv3.Rows(1).Cells(2).Value = str.ID
                             End If
                     End Select
                 Case Column.ColType.AbsorptionColumn
                     If str.StreamBehavior = StreamInformation.Behavior.OverheadVapor Then
-                        Me.dgv3.Rows(0).Cells(1).Value = ReturnObjTag(str.ID)
+                        Me.dgv3.Rows(0).Cells(1).Value = ReturnObjTag(str.StreamID)
                         Me.dgv3.Rows(0).Cells(2).Value = str.ID
                     End If
                     If str.StreamBehavior = StreamInformation.Behavior.BottomsLiquid Then
-                        Me.dgv3.Rows(1).Cells(1).Value = ReturnObjTag(str.ID)
+                        Me.dgv3.Rows(1).Cells(1).Value = ReturnObjTag(str.StreamID)
                         Me.dgv3.Rows(1).Cells(2).Value = str.ID
                     End If
                 Case Column.ColType.ReboiledAbsorber
                     If str.StreamBehavior = StreamInformation.Behavior.OverheadVapor Then
-                        Me.dgv3.Rows(0).Cells(1).Value = ReturnObjTag(str.ID)
+                        Me.dgv3.Rows(0).Cells(1).Value = ReturnObjTag(str.StreamID)
                         Me.dgv3.Rows(0).Cells(2).Value = str.ID
                     End If
                     If str.StreamBehavior = StreamInformation.Behavior.BottomsLiquid Then
-                        Me.dgv3.Rows(1).Cells(1).Value = ReturnObjTag(str.ID)
+                        Me.dgv3.Rows(1).Cells(1).Value = ReturnObjTag(str.StreamID)
                         Me.dgv3.Rows(1).Cells(2).Value = str.ID
                     End If
                 Case Column.ColType.RefluxedAbsorber
                     Select Case dc.CondenserType
                         Case Column.condtype.Full_Reflux
                             If str.StreamBehavior = StreamInformation.Behavior.OverheadVapor Then
-                                Me.dgv3.Rows(0).Cells(1).Value = ReturnObjTag(str.ID)
+                                Me.dgv3.Rows(0).Cells(1).Value = ReturnObjTag(str.StreamID)
                                 Me.dgv3.Rows(0).Cells(2).Value = str.ID
                             End If
                             If str.StreamBehavior = StreamInformation.Behavior.BottomsLiquid Then
-                                Me.dgv3.Rows(1).Cells(1).Value = ReturnObjTag(str.ID)
+                                Me.dgv3.Rows(1).Cells(1).Value = ReturnObjTag(str.StreamID)
                                 Me.dgv3.Rows(1).Cells(2).Value = str.ID
                             End If
                         Case Column.condtype.Partial_Condenser
                             If str.StreamBehavior = StreamInformation.Behavior.Distillate Then
-                                Me.dgv3.Rows(0).Cells(1).Value = ReturnObjTag(str.ID)
+                                Me.dgv3.Rows(0).Cells(1).Value = ReturnObjTag(str.StreamID)
                                 Me.dgv3.Rows(0).Cells(2).Value = str.ID
                             End If
                             If str.StreamBehavior = StreamInformation.Behavior.OverheadVapor Then
-                                Me.dgv3.Rows(1).Cells(1).Value = ReturnObjTag(str.ID)
+                                Me.dgv3.Rows(1).Cells(1).Value = ReturnObjTag(str.StreamID)
                                 Me.dgv3.Rows(1).Cells(2).Value = str.ID
                             End If
                             If str.StreamBehavior = StreamInformation.Behavior.BottomsLiquid Then
-                                Me.dgv3.Rows(2).Cells(1).Value = ReturnObjTag(str.ID)
+                                Me.dgv3.Rows(2).Cells(1).Value = ReturnObjTag(str.StreamID)
                                 Me.dgv3.Rows(2).Cells(2).Value = str.ID
                             End If
                         Case Column.condtype.Total_Condenser
                             If str.StreamBehavior = StreamInformation.Behavior.Distillate Then
-                                Me.dgv3.Rows(0).Cells(1).Value = ReturnObjTag(str.ID)
+                                Me.dgv3.Rows(0).Cells(1).Value = ReturnObjTag(str.StreamID)
                                 Me.dgv3.Rows(0).Cells(2).Value = str.ID
                             End If
                             If str.StreamBehavior = StreamInformation.Behavior.BottomsLiquid Then
-                                Me.dgv3.Rows(1).Cells(1).Value = ReturnObjTag(str.ID)
+                                Me.dgv3.Rows(1).Cells(1).Value = ReturnObjTag(str.StreamID)
                                 Me.dgv3.Rows(1).Cells(2).Value = str.ID
                             End If
                     End Select
@@ -313,45 +315,45 @@ Public Class UIConnectionsEditorForm
 
         For Each str As StreamInformation In dc.EnergyStreams.Values
             If str.StreamBehavior = StreamInformation.Behavior.Distillate Then
-                Me.dgv4.Rows.Add(New Object() {dc.Stages(0).Name, ReturnObjTag(str.ID), str.ID})
+                Me.dgv4.Rows.Add(New Object() {dc.Stages(0).Name, ReturnObjTag(str.StreamID), str.ID})
                 Me.dgv4.Rows(Me.dgv4.Rows.Count - 1).Cells(0).ReadOnly = True
             ElseIf str.StreamBehavior = StreamInformation.Behavior.BottomsLiquid Then
-                Me.dgv4.Rows.Add(New Object() {dc.Stages(dc.Stages.Count - 1).Name, ReturnObjTag(str.ID), str.ID})
+                Me.dgv4.Rows.Add(New Object() {dc.Stages(dc.Stages.Count - 1).Name, ReturnObjTag(str.StreamID), str.ID})
                 Me.dgv4.Rows(Me.dgv4.Rows.Count - 1).Cells(0).ReadOnly = True
             ElseIf str.StreamBehavior = StreamInformation.Behavior.InterExchanger Then
                 Dim st = (From st2 As Stage In dc.Stages Select st2 Where st2.Name = str.AssociatedStage).FirstOrDefault
-                Me.dgv4.Rows.Add(New Object() {st.Name, ReturnObjTag(str.ID), str.ID})
+                Me.dgv4.Rows.Add(New Object() {st.Name, ReturnObjTag(str.StreamID), str.ID})
                 Me.dgv4.Rows(Me.dgv4.Rows.Count - 1).Cells(0).Tag = st.ID
             End If
         Next
 
-        'Select Case dc.ColumnType
-        '    Case Column.ColType.DistillationColumn
-        '        If dgv4.Rows.Count = 0 Then
-        '            Dim id As String = Guid.NewGuid.ToString
-        '            dc.EnergyStreams.Add(id.ToString, New StreamInformation(id.ToString, "0", "0", "0", StreamInformation.Type.Energy, StreamInformation.Behavior.Distillate, StreamInformation.Phase.None))
-        '            Me.dgv4.Rows.Add(New Object() {DWSIM.App.GetLocalString("DCCondenser"), "", id})
-        '            Me.dgv4.Rows(Me.dgv4.Rows.Count - 1).Cells(0).ReadOnly = True
-        '            id = Guid.NewGuid.ToString
-        '            dc.EnergyStreams.Add(id.ToString, New StreamInformation(id.ToString, "0", "0", "0", StreamInformation.Type.Energy, StreamInformation.Behavior.BottomsLiquid, StreamInformation.Phase.None))
-        '            Me.dgv4.Rows.Add(New Object() {DWSIM.App.GetLocalString("DCReboiler"), "", id})
-        '            Me.dgv4.Rows(Me.dgv4.Rows.Count - 1).Cells(0).ReadOnly = True
-        '        End If
-        '    Case Column.ColType.ReboiledAbsorber
-        '        If dgv4.Rows.Count = 0 Then
-        '            Dim id As String = Guid.NewGuid.ToString
-        '            dc.EnergyStreams.Add(id.ToString, New StreamInformation(id.ToString, "0", "0", "0", StreamInformation.Type.Energy, StreamInformation.Behavior.BottomsLiquid, StreamInformation.Phase.None))
-        '            Me.dgv4.Rows.Add(New Object() {DWSIM.App.GetLocalString("DCReboiler"), "", id})
-        '            Me.dgv4.Rows(Me.dgv4.Rows.Count - 1).Cells(0).ReadOnly = True
-        '        End If
-        '    Case Column.ColType.RefluxedAbsorber
-        '        If dgv4.Rows.Count = 0 Then
-        '            Dim id As String = Guid.NewGuid.ToString
-        '            dc.EnergyStreams.Add(id.ToString, New StreamInformation(id.ToString, "0", "0", "0", StreamInformation.Type.Energy, StreamInformation.Behavior.Distillate, StreamInformation.Phase.None))
-        '            Me.dgv4.Rows.Add(New Object() {DWSIM.App.GetLocalString("DCCondenser"), "", id})
-        '            Me.dgv4.Rows(Me.dgv4.Rows.Count - 1).Cells(0).ReadOnly = True
-        '        End If
-        'End Select
+        Select Case dc.ColumnType
+            Case Column.ColType.DistillationColumn
+                If dgv4.Rows.Count = 0 Then
+                    Dim id As String = Guid.NewGuid.ToString
+                    dc.EnergyStreams.Add(id.ToString, New StreamInformation(id.ToString, "", "", StreamInformation.Type.Energy, StreamInformation.Behavior.Distillate, StreamInformation.Phase.None))
+                    Me.dgv4.Rows.Add(New Object() {DWSIM.App.GetLocalString("DCCondenser"), "", id})
+                    Me.dgv4.Rows(Me.dgv4.Rows.Count - 1).Cells(0).ReadOnly = True
+                    id = Guid.NewGuid.ToString
+                    dc.EnergyStreams.Add(id.ToString, New StreamInformation(id.ToString, "", "", StreamInformation.Type.Energy, StreamInformation.Behavior.BottomsLiquid, StreamInformation.Phase.None))
+                    Me.dgv4.Rows.Add(New Object() {DWSIM.App.GetLocalString("DCReboiler"), "", id})
+                    Me.dgv4.Rows(Me.dgv4.Rows.Count - 1).Cells(0).ReadOnly = True
+                End If
+            Case Column.ColType.ReboiledAbsorber
+                If dgv4.Rows.Count = 0 Then
+                    Dim id As String = Guid.NewGuid.ToString
+                    dc.EnergyStreams.Add(id.ToString, New StreamInformation(id.ToString, "", "", StreamInformation.Type.Energy, StreamInformation.Behavior.BottomsLiquid, StreamInformation.Phase.None))
+                    Me.dgv4.Rows.Add(New Object() {DWSIM.App.GetLocalString("DCReboiler"), "", id})
+                    Me.dgv4.Rows(Me.dgv4.Rows.Count - 1).Cells(0).ReadOnly = True
+                End If
+            Case Column.ColType.RefluxedAbsorber
+                If dgv4.Rows.Count = 0 Then
+                    Dim id As String = Guid.NewGuid.ToString
+                    dc.EnergyStreams.Add(id.ToString, New StreamInformation(id.ToString, "", "", StreamInformation.Type.Energy, StreamInformation.Behavior.Distillate, StreamInformation.Phase.None))
+                    Me.dgv4.Rows.Add(New Object() {DWSIM.App.GetLocalString("DCCondenser"), "", id})
+                    Me.dgv4.Rows(Me.dgv4.Rows.Count - 1).Cells(0).ReadOnly = True
+                End If
+        End Select
 
         loaded = True
 
@@ -359,24 +361,27 @@ Public Class UIConnectionsEditorForm
 
     Private Sub ToolStripButton1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton1.Click
         With Me.dgv1.Rows
-            .Add(New Object() {dgv1.Rows.Count + 1, dc.Stages(0), "", ""})
-            'dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "0", "", "", StreamInformation.Type.Material, StreamInformation.Behavior.Feed, StreamInformation.Phase.B))
+            Dim id = Guid.NewGuid().ToString
+            .Add(New Object() {dgv1.Rows.Count + 1, dc.Stages(0), "", id})
+            dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "", dc.Stages(0).ID, StreamInformation.Type.Material, StreamInformation.Behavior.Feed, StreamInformation.Phase.B))
         End With
     End Sub
 
     Private Sub ToolStripButton3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton3.Click
         With Me.dgv2.Rows
-            .Add(New Object() {dgv2.Rows.Count + 1, dc.Stages(0), "", "L", 0, ""})
-            'dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "0", "", "", StreamInformation.Type.Material, StreamInformation.Behavior.Sidedraw, StreamInformation.Phase.L))
+            Dim id = Guid.NewGuid().ToString
+            .Add(New Object() {dgv2.Rows.Count + 1, dc.Stages(0), "", "L", 0, id})
+            dc.MaterialStreams.Add(id.ToString, New StreamInformation(id.ToString, "", dc.Stages(0).ID, StreamInformation.Type.Material, StreamInformation.Behavior.Sidedraw, StreamInformation.Phase.L))
         End With
     End Sub
 
     Private Sub ToolStripButton2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton2.Click
         Dim id As String = dgv1.Rows(dgv1.SelectedCells(0).RowIndex).Cells(3).Value
+        Dim sid As String = dc.MaterialStreams(id).StreamID
         With Me.dgv1.Rows
             If Not id = "" Then
-                Dim idx As Integer = FormFlowsheet.SearchSurfaceObjectsByName(id, form.FormSurface.FlowsheetDesignSurface).OutputConnectors(0).AttachedConnector.AttachedToConnectorIndex
-                form.DisconnectObject(FormFlowsheet.SearchSurfaceObjectsByName(id, form.FormSurface.FlowsheetDesignSurface), dc.GraphicObject)
+                Dim idx As Integer = FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface).OutputConnectors(0).AttachedConnector.AttachedToConnectorIndex
+                form.DisconnectObject(FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface), dc.GraphicObject)
                 dc.GraphicObject.InputConnectors.RemoveAt(idx)
             End If
             If dc.MaterialStreams.ContainsKey(id) Then dc.MaterialStreams.Remove(id)
@@ -386,10 +391,11 @@ Public Class UIConnectionsEditorForm
 
     Private Sub ToolStripButton4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton4.Click
         Dim id As String = dgv2.Rows(dgv2.SelectedCells(0).RowIndex).Cells(5).Value
+        Dim sid As String = dc.MaterialStreams(id).StreamID
         With Me.dgv2.Rows
             If Not id = "" Then
                 Dim idx As Integer = FormFlowsheet.SearchSurfaceObjectsByName(id, form.FormSurface.FlowsheetDesignSurface).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex
-                form.DisconnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(id, form.FormSurface.FlowsheetDesignSurface))
+                form.DisconnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface))
                 dc.GraphicObject.OutputConnectors.RemoveAt(idx)
             End If
             If dc.MaterialStreams.ContainsKey(id) Then dc.MaterialStreams.Remove(id)
@@ -433,8 +439,7 @@ Public Class UIConnectionsEditorForm
                             End Try
                         End If
                         Dim obj = FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface)
-                        id = obj.Name
-                        dc.MaterialStreams.Add(obj.Name, New StreamInformation(obj.Name, dgv1.Rows(e.RowIndex).Cells(e.ColumnIndex).Tag, StreamInformation.Type.Material, StreamInformation.Behavior.Feed, StreamInformation.Phase.B))
+                        Dim sid = obj.Name
                         Dim fidx, tidx As Integer
                         With dc.GraphicObject
                             .InputConnectors.Add(New ConnectionPoint())
@@ -446,7 +451,8 @@ Public Class UIConnectionsEditorForm
                             Else
                                 .InputConnectors(.InputConnectors.Count - 1).Position = New Point(dc.GraphicObject.X, dc.GraphicObject.Y + dc.StageIndex(dc.MaterialStreams(id).AssociatedStage) / dc.NumberOfStages * dc.GraphicObject.Height)
                             End If
-                            form.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByName(id, form.FormSurface.FlowsheetDesignSurface), dc.GraphicObject, fidx, tidx)
+                            form.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface), dc.GraphicObject, fidx, tidx)
+                            If dc.MaterialStreams.ContainsKey(id) Then dc.MaterialStreams(id).StreamID = sid
                         End With
                     End If
                 Case 1
@@ -462,7 +468,7 @@ Public Class UIConnectionsEditorForm
 
     Private Sub dgv2_CellValueChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv2.CellValueChanged
         If loaded Then
-            Dim id As String = dgv2.Rows(e.RowIndex).Cells(3).Value
+            Dim id As String = dgv2.Rows(e.RowIndex).Cells(5).Value
             Dim value As String = dgv2.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
             Select Case e.ColumnIndex
                 Case 2
@@ -476,8 +482,7 @@ Public Class UIConnectionsEditorForm
                             End Try
                         End If
                         Dim obj = FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface)
-                        id = obj.Name
-                        dc.MaterialStreams.Add(obj.Name, New StreamInformation(obj.Name, dgv2.Rows(e.RowIndex).Cells(e.ColumnIndex).Tag, StreamInformation.Type.Material, StreamInformation.Behavior.Sidedraw, StreamInformation.Phase.L))
+                        Dim sid = obj.Name
                         Dim fidx, tidx As Integer
                         With dc.GraphicObject
                             .OutputConnectors.Add(New ConnectionPoint())
@@ -489,7 +494,8 @@ Public Class UIConnectionsEditorForm
                             Else
                                 .OutputConnectors(.OutputConnectors.Count - 1).Position = New Point(dc.GraphicObject.X + dc.GraphicObject.Width, dc.GraphicObject.Y + dc.StageIndex(dc.MaterialStreams(id).AssociatedStage) / dc.NumberOfStages * dc.GraphicObject.Height)
                             End If
-                            form.ConnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(id, form.FormSurface.FlowsheetDesignSurface), fidx, tidx)
+                            form.ConnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface), fidx, tidx)
+                            If dc.MaterialStreams.ContainsKey(id) Then dc.MaterialStreams(id).StreamID = sid
                         End With
                     End If
                 Case 1
@@ -514,53 +520,59 @@ Public Class UIConnectionsEditorForm
     Private Sub dgv3_CellValueChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv3.CellValueChanged
         If loaded Then
             Dim id As String = dgv3.Rows(e.RowIndex).Cells(2).Value
+            Dim value As String = dgv3.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
             Select Case e.ColumnIndex
                 Case 1
-                    If Not id = "" Then
-                        Try
-                            Dim idx As Integer = FormFlowsheet.SearchSurfaceObjectsByName(id, form.FormSurface.FlowsheetDesignSurface).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex
-                            form.DisconnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(id, form.FormSurface.FlowsheetDesignSurface))
-                            dc.GraphicObject.OutputConnectors.RemoveAt(idx)
-                        Catch ex As Exception
-                        End Try
+                    If value <> "" Then
+                        If Not id = "" Then
+                            Try
+                                Dim idx As Integer = FormFlowsheet.SearchSurfaceObjectsByName(id, form.FormSurface.FlowsheetDesignSurface).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex
+                                form.DisconnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(id, form.FormSurface.FlowsheetDesignSurface))
+                                dc.GraphicObject.OutputConnectors.RemoveAt(idx)
+                            Catch ex As Exception
+                            End Try
+                        End If
+                        Dim obj = FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface)
+                        Dim sid = obj.Name
+                        Dim fidx, tidx As Integer
+                        With dc.GraphicObject
+                            .OutputConnectors.Add(New ConnectionPoint())
+                            .OutputConnectors(.OutputConnectors.Count - 1).Type = ConType.ConOut
+                            fidx = .OutputConnectors.Count - 1
+                            tidx = 0
+                            Dim pos As Point
+                            Select Case dc.MaterialStreams(id).StreamBehavior
+                                Case StreamInformation.Behavior.OverheadVapor
+                                    If Not dc.GraphicObject.FlippedH Then
+                                        pos = New Point(dc.GraphicObject.X + dc.GraphicObject.Width, dc.GraphicObject.Y + 0.02 * dc.GraphicObject.Height)
+                                    Else
+                                        pos = New Point(dc.GraphicObject.X, dc.GraphicObject.Y + 0.02 * dc.GraphicObject.Height)
+                                    End If
+                                Case StreamInformation.Behavior.Distillate
+                                    If Not dc.GraphicObject.FlippedH Then
+                                        pos = New Point(dc.GraphicObject.X + dc.GraphicObject.Width, dc.GraphicObject.Y + 0.3 * dc.GraphicObject.Height)
+                                    Else
+                                        pos = New Point(dc.GraphicObject.X, dc.GraphicObject.Y + 0.3 * dc.GraphicObject.Height)
+                                    End If
+                                Case StreamInformation.Behavior.BottomsLiquid
+                                    If Not dc.GraphicObject.FlippedH Then
+                                        pos = New Point(dc.GraphicObject.X + dc.GraphicObject.Width, dc.GraphicObject.Y + 0.98 * dc.GraphicObject.Height)
+                                    Else
+                                        pos = New Point(dc.GraphicObject.X, dc.GraphicObject.Y + 0.98 * dc.GraphicObject.Height)
+                                    End If
+                            End Select
+                            .OutputConnectors(.OutputConnectors.Count - 1).Position = pos
+
+                            Dim k As Integer
+                            For k = 0 To .OutputConnectors.Count - 2
+                                .OutputConnectors.Item(k).AttachedConnector.AttachedFromConnectorIndex = k
+                            Next
+
+                            form.ConnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface), fidx, tidx)
+                            If dc.MaterialStreams.ContainsKey(id) Then dc.MaterialStreams(id).StreamID = sid
+
+                        End With
                     End If
-                    Dim fidx, tidx As Integer
-                    With dc.GraphicObject
-                        .OutputConnectors.Add(New ConnectionPoint())
-                        .OutputConnectors(.OutputConnectors.Count - 1).Type = ConType.ConOut
-                        fidx = .OutputConnectors.Count - 1
-                        tidx = 0
-                        Dim pos As Point
-                        Select Case dc.MaterialStreams(id).StreamBehavior
-                            Case StreamInformation.Behavior.OverheadVapor
-                                If Not dc.GraphicObject.FlippedH Then
-                                    pos = New Point(dc.GraphicObject.X + dc.GraphicObject.Width, dc.GraphicObject.Y + 0.02 * dc.GraphicObject.Height)
-                                Else
-                                    pos = New Point(dc.GraphicObject.X, dc.GraphicObject.Y + 0.02 * dc.GraphicObject.Height)
-                                End If
-                            Case StreamInformation.Behavior.Distillate
-                                If Not dc.GraphicObject.FlippedH Then
-                                    pos = New Point(dc.GraphicObject.X + dc.GraphicObject.Width, dc.GraphicObject.Y + 0.3 * dc.GraphicObject.Height)
-                                Else
-                                    pos = New Point(dc.GraphicObject.X, dc.GraphicObject.Y + 0.3 * dc.GraphicObject.Height)
-                                End If
-                            Case StreamInformation.Behavior.BottomsLiquid
-                                If Not dc.GraphicObject.FlippedH Then
-                                    pos = New Point(dc.GraphicObject.X + dc.GraphicObject.Width, dc.GraphicObject.Y + 0.98 * dc.GraphicObject.Height)
-                                Else
-                                    pos = New Point(dc.GraphicObject.X, dc.GraphicObject.Y + 0.98 * dc.GraphicObject.Height)
-                                End If
-                        End Select
-                        .OutputConnectors(.OutputConnectors.Count - 1).Position = pos
-
-                        Dim k As Integer
-                        For k = 0 To .OutputConnectors.Count - 2
-                            .OutputConnectors.Item(k).AttachedConnector.AttachedFromConnectorIndex = k
-                        Next
-
-                        form.ConnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(id, form.FormSurface.FlowsheetDesignSurface), fidx, tidx)
-                       
-                    End With
             End Select
 
             dc.CheckConnPos()
@@ -584,8 +596,7 @@ Public Class UIConnectionsEditorForm
                             End Try
                         End If
                         Dim obj = FormFlowsheet.SearchSurfaceObjectsByTag(value, form.FormSurface.FlowsheetDesignSurface)
-                        id = obj.Name
-                        dc.EnergyStreams.Add(id.ToString, New StreamInformation(id, dgv4.Rows(e.RowIndex).Cells(e.ColumnIndex).Tag, StreamInformation.Type.Energy, StreamInformation.Behavior.InterExchanger, StreamInformation.Phase.None))
+                        Dim sid = obj.Name
                         Dim fidx, tidx As Integer
                         With dc.GraphicObject
                             Select Case dc.EnergyStreams(id).StreamBehavior
@@ -599,7 +610,7 @@ Public Class UIConnectionsEditorForm
                                     Else
                                         .OutputConnectors(.OutputConnectors.Count - 1).Position = New Point(dc.GraphicObject.X + dc.GraphicObject.Width, dc.GraphicObject.Y + 0.08 * dc.GraphicObject.Height)
                                     End If
-                                    form.ConnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(id, form.FormSurface.FlowsheetDesignSurface), fidx, tidx)
+                                    form.ConnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface), fidx, tidx)
                                 Case StreamInformation.Behavior.BottomsLiquid
                                     .OutputConnectors.Add(New ConnectionPoint())
                                     .OutputConnectors(.OutputConnectors.Count - 1).Type = ConType.ConEn
@@ -610,7 +621,7 @@ Public Class UIConnectionsEditorForm
                                     Else
                                         .OutputConnectors(.OutputConnectors.Count - 1).Position = New Point(dc.GraphicObject.X + dc.GraphicObject.Width, dc.GraphicObject.Y + 0.825 * dc.GraphicObject.Height)
                                     End If
-                                    form.ConnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(id, form.FormSurface.FlowsheetDesignSurface), fidx, tidx)
+                                    form.ConnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface), fidx, tidx)
                                 Case StreamInformation.Behavior.InterExchanger
                                     .InputConnectors.Add(New ConnectionPoint())
                                     .InputConnectors(.InputConnectors.Count - 1).Type = ConType.ConEn
@@ -621,8 +632,9 @@ Public Class UIConnectionsEditorForm
                                     Else
                                         .InputConnectors(.InputConnectors.Count - 1).Position = New Point(dc.GraphicObject.X + dc.GraphicObject.Width, dc.GraphicObject.Y + dc.StageIndex(dc.EnergyStreams(id).AssociatedStage) / dc.NumberOfStages * dc.GraphicObject.Height)
                                     End If
-                                    form.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByName(id, form.FormSurface.FlowsheetDesignSurface), dc.GraphicObject, fidx, tidx)
+                                    form.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface), dc.GraphicObject, fidx, tidx)
                             End Select
+                            If dc.EnergyStreams.ContainsKey(id) Then dc.EnergyStreams(id).StreamID = sid
                             Dim k As Integer
                             For k = 0 To .OutputConnectors.Count - 2
                                 .OutputConnectors.Item(k).AttachedConnector.AttachedFromConnectorIndex = k
@@ -660,13 +672,15 @@ Public Class UIConnectionsEditorForm
 
     Private Sub ToolStripButton5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton5.Click
         With Me.dgv4.Rows
-            .Add(New Object() {dc.Stages(0), "", ""})
-            'dc.EnergyStreams.Add(id.ToString, New StreamInformation(id.ToString, "0", "", "", StreamInformation.Type.Energy, StreamInformation.Behavior.InterExchanger, StreamInformation.Phase.None))
+            Dim id = Guid.NewGuid().ToString
+            .Add(New Object() {dc.Stages(0), "", id})
+            dc.EnergyStreams.Add(id.ToString, New StreamInformation(id.ToString, "", dc.Stages(0).ID, StreamInformation.Type.Energy, StreamInformation.Behavior.InterExchanger, StreamInformation.Phase.None))
         End With
     End Sub
 
     Private Sub ToolStripButton6_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton6.Click
         Dim id As String = dgv4.Rows(dgv4.SelectedCells(0).RowIndex).Cells(2).Value
+        Dim sid As String = dc.EnergyStreams(id).StreamID
         With Me.dgv4.Rows
             Dim idx2 As Integer
             Select Case dc.ColumnType
@@ -681,8 +695,8 @@ Public Class UIConnectionsEditorForm
             End Select
             If dgv4.SelectedRows(0).Index >= idx2 Then
                 If Not id = "" Then
-                    Dim idx As Integer = FormFlowsheet.SearchSurfaceObjectsByName(id, form.FormSurface.FlowsheetDesignSurface).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex
-                    form.DisconnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(id, form.FormSurface.FlowsheetDesignSurface))
+                    Dim idx As Integer = FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex
+                    form.DisconnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface))
                     dc.GraphicObject.OutputConnectors.RemoveAt(idx)
                 End If
                 If dc.EnergyStreams.ContainsKey(id) Then dc.EnergyStreams.Remove(id)

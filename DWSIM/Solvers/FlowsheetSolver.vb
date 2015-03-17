@@ -1878,7 +1878,7 @@ Namespace DWSIM.Flowsheet
                                                                                                                      filteredlist2,
                                                                                                                      ct)
                                                                                          End Sub,
-                                                                                         ct)
+                                                                                     ct)
                                                                        If Not t.IsCanceled Then t.Start()
                                                                        If Not t.Wait(My.Settings.SolverTimeoutSeconds * 1000, ct) Then
                                                                            Throw New TimeoutException(DWSIM.App.GetLocalString("SolverTimeout"))
@@ -1938,8 +1938,8 @@ Namespace DWSIM.Flowsheet
 
                     Case 3
 
-                        'Azure Service Bus
-                        Dim azureclient As New Flowsheet.AzureSolverClient()
+        'Azure Service Bus
+        Dim azureclient As New Flowsheet.AzureSolverClient()
 
                         Try
                             form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & DWSIM.App.GetLocalString("Fluxograma") & "...")
@@ -1956,9 +1956,9 @@ Namespace DWSIM.Flowsheet
 
                     Case 4
 
-                        'Network Computer
+        'Network Computer
 
-                        Dim tcpclient As New Flowsheet.TCPSolverClient()
+        Dim tcpclient As New Flowsheet.TCPSolverClient()
 
                         Try
                             form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & DWSIM.App.GetLocalString("Fluxograma") & "...")
@@ -1990,14 +1990,14 @@ Namespace DWSIM.Flowsheet
                     form.WriteToLog(DWSIM.App.GetLocalString("FSfinishedsolvingok"), Color.Blue, FormClasses.TipoAviso.Informacao)
                     form.WriteToLog(DWSIM.App.GetLocalString("Runtime") & ": " & (Date.Now - d1).ToString("g"), Color.MediumBlue, DWSIM.FormClasses.TipoAviso.Informacao)
 
-                    Dim retbytes As MemoryStream = DWSIM.SimulationObjects.UnitOps.Flowsheet.ReturnProcessData(form)
+        Dim retbytes As MemoryStream = DWSIM.SimulationObjects.UnitOps.Flowsheet.ReturnProcessData(Form)
                     Using retbytes
-                        Dim uncompressedbytes As Byte() = retbytes.ToArray
+        Dim uncompressedbytes As Byte() = retbytes.ToArray
                         Using compressedstream As New MemoryStream()
                             Using gzs As New BufferedStream(New Compression.GZipStream(compressedstream, Compression.CompressionMode.Compress, True), 64 * 1024)
                                 gzs.Write(uncompressedbytes, 0, uncompressedbytes.Length)
                                 gzs.Close()
-                                Dim id As String = Date.Now.ToBinary.ToString
+        Dim id As String = Date.Now.ToBinary.ToString
                                 If form.PreviousSolutions Is Nothing Then form.PreviousSolutions = New Dictionary(Of String, FormClasses.FlowsheetSolution)
                                 form.PreviousSolutions.Add(id, New DWSIM.FormClasses.FlowsheetSolution() With {.ID = id, .SaveDate = Date.Now, .Solution = compressedstream.ToArray})
                                 form.UpdateSolutionsList()
@@ -2009,7 +2009,7 @@ Namespace DWSIM.Flowsheet
 
                     form.WriteToLog(DWSIM.App.GetLocalString("FSfinishedsolvingerror"), Color.Red, FormClasses.TipoAviso.Erro)
                     For Each ex In age.Flatten().InnerExceptions
-                        Dim st As New StackTrace(ex, True)
+        Dim st As New StackTrace(ex, True)
                         If st.FrameCount > 0 Then
                             form.WriteToLog(ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
                         Else
@@ -2040,7 +2040,7 @@ Namespace DWSIM.Flowsheet
         Public Shared Sub CalculateAll(ByVal form As FormFlowsheet)
 
             CalculateAll2(form, My.Settings.SolverMode)
-         
+
         End Sub
 
         ''' <summary>
