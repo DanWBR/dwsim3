@@ -1262,6 +1262,7 @@ Imports DWSIM.DWSIM.Outros
                     decompressedstream.Position = 0
                     Dim xdoc As XDocument = XDocument.Load(decompressedstream)
                     DWSIM.SimulationObjects.UnitOps.Flowsheet.UpdateProcessData(Me, xdoc)
+                    DWSIM.Flowsheet.FlowsheetSolver.UpdateDisplayStatus(Me)
                     Me.WriteToLog(DWSIM.App.GetLocalString("ClientUpdatedDataOK"), Color.Brown, TipoAviso.Informacao)
                 End Using
             End Using

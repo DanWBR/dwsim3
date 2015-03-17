@@ -1841,16 +1841,6 @@ Namespace DWSIM.Flowsheet
 
                 form.WriteToLog(DWSIM.App.GetLocalString("FSstartedsolving"), Color.Blue, FormClasses.TipoAviso.Informacao)
 
-                'find recycles
-
-                Dim recycles As New List(Of String)
-
-                For Each baseobj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
-                    If baseobj.GraphicObject.TipoObjeto = TipoObjeto.OT_Reciclo Then
-                        recycles.Add(baseobj.Nome)
-                    End If
-                Next
-
                 Dim filteredlist2 As New Dictionary(Of Integer, List(Of StatusChangeEventArgs))
 
                 Dim objl = GetSolvingList(form, frompgrid)
@@ -1858,6 +1848,17 @@ Namespace DWSIM.Flowsheet
                 Dim lists As Dictionary(Of Integer, List(Of String)) = objl(1)
                 Dim filteredlist As Dictionary(Of Integer, List(Of String)) = objl(2)
                 Dim objstack As List(Of String) = objl(0)
+
+                'find recycles
+
+                Dim recycles As New List(Of String)
+
+                For Each r In objstack
+                    Dim robj = form.Collections.ObjectCollection(r)
+                    If robj.GraphicObject.TipoObjeto = TipoObjeto.OT_Reciclo Then
+                        recycles.Add(robj.Nome)
+                    End If
+                Next
 
                 'set all objects' status to not calculated (red) and clear material streams in the list
 
@@ -1925,9 +1926,8 @@ Namespace DWSIM.Flowsheet
                                     End With
                                 Next
 
-                                For Each o In objstack
-                                    obj = form.Collections.ObjectCollection(o)
-                                    obj.SetFlowsheet(form)
+                                For Each o In form.Collections.ObjectCollection.Values
+                                    o.SetFlowsheet(form)
                                 Next
 
                                 If mode = 0 Then

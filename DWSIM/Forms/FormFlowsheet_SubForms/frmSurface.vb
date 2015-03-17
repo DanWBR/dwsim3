@@ -3254,7 +3254,7 @@ Public Class frmSurface
 
         Dim ts As TimeSpan = Date.Now - calcstart
 
-        Me.LabelTime.Text = Format(ts.Hours, "0#") & ":" & Format(ts.Minutes, "0#") & ":" & Format(ts.Seconds, "0#") & "." & Format(ts.Milliseconds, "####")
+        Me.LabelTime.Text = ts.ToString("g")
 
     End Sub
 
