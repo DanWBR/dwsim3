@@ -47,13 +47,6 @@ Namespace DWSIM.Editors.Distillation
 
             End If
 
-            Dim dc As SimulationObjects.UnitOps.Column
-            Dim form As FormFlowsheet
-            form = My.Application.ActiveSimulation
-            dc = form.Collections.ObjectCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
-            Application.DoEvents()
-            dc.CheckCalc2()
-
             Return value
 
         End Function

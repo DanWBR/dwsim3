@@ -1670,12 +1670,146 @@ Namespace DWSIM.Flowsheet
             End If
         End Sub
 
+        Private Shared Function GetSolvingList(form As FormFlowsheet, frompgrid As Boolean)
+
+            Dim obj As SimulationObjects_BaseClass
+
+            Dim lists As New Dictionary(Of Integer, List(Of String))
+            Dim filteredlist As New Dictionary(Of Integer, List(Of String))
+            Dim objstack As New List(Of String)
+           
+            Dim onqueue As DWSIM.Outros.StatusChangeEventArgs = Nothing
+
+            Dim listidx As Integer = 0
+            Dim maxidx As Integer = 0
+
+            If frompgrid And form.CalculationQueue.Count > 0 Then
+
+                onqueue = form.CalculationQueue.Dequeue()
+                form.CalculationQueue.Clear()
+
+                lists.Add(0, New List(Of String))
+
+                lists(0).Add(onqueue.Nome)
+
+                'now start walking through the flowsheet until it reaches its end starting from this particular object.
+
+                Do
+                    listidx += 1
+                    If lists(listidx - 1).Count > 0 Then
+                        lists.Add(listidx, New List(Of String))
+                        maxidx = listidx
+                        For Each o As String In lists(listidx - 1)
+                            obj = form.Collections.ObjectCollection(o)
+                            For Each c As ConnectionPoint In obj.GraphicObject.OutputConnectors
+                                If c.IsAttached Then
+                                    If obj.GraphicObject.TipoObjeto = TipoObjeto.OT_Reciclo Then Exit Do
+                                    lists(listidx).Add(c.AttachedConnector.AttachedTo.Name)
+                                End If
+                            Next
+                        Next
+                    Else
+                        Exit Do
+                    End If
+                Loop
+
+                'process the lists , adding objects to the stack, discarding duplicate entries.
+
+                listidx = 0
+
+                Do
+                    If lists.ContainsKey(listidx) Then
+                        filteredlist.Add(listidx, New List(Of String)(lists(listidx).ToArray))
+                        For Each o As String In lists(listidx)
+                            If Not objstack.Contains(o) Then
+                                objstack.Add(o)
+                            Else
+                                filteredlist(listidx).Remove(o)
+                            End If
+                        Next
+                    Else
+                        Exit Do
+                    End If
+                    listidx += 1
+                Loop Until listidx > maxidx
+
+            Else
+
+                'add endpoint material streams and recycle ops to the list, they will be the last objects to be calculated.
+
+                lists.Add(0, New List(Of String))
+
+                For Each baseobj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
+                    If baseobj.GraphicObject.TipoObjeto = TipoObjeto.MaterialStream Then
+                        Dim ms As Streams.MaterialStream = baseobj
+                        If ms.GraphicObject.OutputConnectors(0).IsAttached = False Then
+                            lists(0).Add(baseobj.Nome)
+                        End If
+                    ElseIf baseobj.GraphicObject.TipoObjeto = TipoObjeto.EnergyStream Then
+                        lists(0).Add(baseobj.Nome)
+                    ElseIf baseobj.GraphicObject.TipoObjeto = TipoObjeto.OT_Reciclo Then
+                        lists(0).Add(baseobj.Nome)
+                    End If
+                Next
+
+                'now start processing the list at each level, until it reaches the beginning of the flowsheet.
+
+                Do
+                    listidx += 1
+                    If lists(listidx - 1).Count > 0 Then
+                        lists.Add(listidx, New List(Of String))
+                        maxidx = listidx
+                        For Each o As String In lists(listidx - 1)
+                            obj = form.Collections.ObjectCollection(o)
+                            If Not onqueue Is Nothing Then
+                                If onqueue.Nome = obj.Nome Then Exit Do
+                            End If
+                            For Each c As ConnectionPoint In obj.GraphicObject.InputConnectors
+                                If c.IsAttached Then
+                                    If c.AttachedConnector.AttachedFrom.TipoObjeto <> TipoObjeto.OT_Reciclo Then
+                                        lists(listidx).Add(c.AttachedConnector.AttachedFrom.Name)
+                                    End If
+                                End If
+                            Next
+                        Next
+                    Else
+                        Exit Do
+                    End If
+                Loop
+
+                'process the lists backwards, adding objects to the stack, discarding duplicate entries.
+
+                listidx = maxidx
+
+                Do
+                    If lists.ContainsKey(listidx) Then
+                        filteredlist.Add(maxidx - listidx, New List(Of String)(lists(listidx).ToArray))
+                        For Each o As String In lists(listidx)
+                            If Not objstack.Contains(o) Then
+                                objstack.Add(o)
+                            Else
+                                filteredlist(maxidx - listidx).Remove(o)
+                            End If
+                        Next
+                    Else
+                        Exit Do
+                    End If
+                    listidx -= 1
+                Loop
+
+            End If
+
+            Return New Object() {objstack, lists, filteredlist}
+
+        End Function
+
+
         ''' <summary>
         ''' Calculate all objects in the Flowsheet using a ordering method.
         ''' </summary>
         ''' <param name="form">Flowsheet to be calculated (FormChild object)</param>
         ''' <remarks></remarks>
-        Public Shared Sub CalculateAll2(ByVal form As FormFlowsheet, mode As Integer, Optional ByVal ts As CancellationTokenSource = Nothing)
+        Public Shared Sub CalculateAll2(ByVal form As FormFlowsheet, mode As Integer, Optional ByVal ts As CancellationTokenSource = Nothing, Optional frompgrid As Boolean = False)
 
             If form.Options.CalculatorActivated Then
 
@@ -1686,20 +1820,14 @@ Namespace DWSIM.Flowsheet
                 My.MyApplication.TaskCancellationTokenSource = ts
                 ct = ts.Token
 
+                Dim obj As SimulationObjects_BaseClass
+
                 'mode:
                 '0 = Synchronous (main thread)
                 '1 = Asynchronous (background thread)
                 '2 = Asynchronous Parallel (background thread)
                 '3 = Azure Service Bus
                 '4 = Network Computer
-
-                Dim lists As New Dictionary(Of Integer, List(Of String))
-                Dim filteredlist As New Dictionary(Of Integer, List(Of String))
-                Dim filteredlist2 As New Dictionary(Of Integer, List(Of StatusChangeEventArgs))
-                Dim objstack As New List(Of String)
-                Dim recycles As New List(Of String)
-
-                Dim obj As SimulationObjects_BaseClass
 
                 'process scripts associated with the solverstarted event
 
@@ -1713,11 +1841,39 @@ Namespace DWSIM.Flowsheet
 
                 form.WriteToLog(DWSIM.App.GetLocalString("FSstartedsolving"), Color.Blue, FormClasses.TipoAviso.Informacao)
 
-                'set all objects status to not calculated (red)
+                'find recycles
+
+                Dim recycles As New List(Of String)
 
                 For Each baseobj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
-                    baseobj.Calculated = False
-                    If Not baseobj.GraphicObject Is Nothing Then baseobj.GraphicObject.Calculated = baseobj.Calculated
+                    If baseobj.GraphicObject.TipoObjeto = TipoObjeto.OT_Reciclo Then
+                        recycles.Add(baseobj.Nome)
+                    End If
+                Next
+
+                Dim filteredlist2 As New Dictionary(Of Integer, List(Of StatusChangeEventArgs))
+
+                Dim objl = GetSolvingList(form, frompgrid)
+
+                Dim lists As Dictionary(Of Integer, List(Of String)) = objl(1)
+                Dim filteredlist As Dictionary(Of Integer, List(Of String)) = objl(2)
+                Dim objstack As List(Of String) = objl(0)
+
+                'set all objects' status to not calculated (red) and clear material streams in the list
+
+                For Each o In objstack
+                    Dim fobj = form.Collections.ObjectCollection(o)
+                    With fobj
+                        .Calculated = False
+                        If Not fobj.GraphicObject Is Nothing Then fobj.GraphicObject.Calculated = False
+                        If fobj.GraphicObject.TipoObjeto = TipoObjeto.MaterialStream Then
+                            If fobj.GraphicObject.InputConnectors(0).IsAttached Then
+                                If fobj.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.TipoObjeto <> TipoObjeto.OT_Reciclo Then
+                                    DirectCast(fobj, Streams.MaterialStream).Clear()
+                                End If
+                            End If
+                        End If
+                    End With
                 Next
 
                 Application.DoEvents()
@@ -1733,79 +1889,12 @@ Namespace DWSIM.Flowsheet
 
                         '0 = main thread, 1 = bg thread, 2 = bg parallel threads
 
-                        'find recycles.
-
-                        For Each baseobj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
-                            If baseobj.GraphicObject.TipoObjeto = TipoObjeto.OT_Reciclo Then
-                                recycles.Add(baseobj.Nome)
-                            End If
-                        Next
-
-                        'add endpoint material streams and recycle ops to the list, they will be the last objects to be calculated.
-
-                        lists.Add(0, New List(Of String))
-
-                        For Each baseobj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
-                            If baseobj.GraphicObject.TipoObjeto = TipoObjeto.MaterialStream Then
-                                Dim ms As Streams.MaterialStream = baseobj
-                                If ms.GraphicObject.OutputConnectors(0).IsAttached = False Then
-                                    lists(0).Add(baseobj.Nome)
-                                End If
-                            ElseIf baseobj.GraphicObject.TipoObjeto = TipoObjeto.EnergyStream Then
-                                lists(0).Add(baseobj.Nome)
-                            ElseIf baseobj.GraphicObject.TipoObjeto = TipoObjeto.OT_Reciclo Then
-                                lists(0).Add(baseobj.Nome)
-                            End If
-                        Next
-
-                        'now start processing the list at each level, until it reaches the beginning of the flowsheet.
-
-                        Dim listidx As Integer = 0
-                        Dim maxidx As Integer = 0
-
-                        Do
-                            listidx += 1
-                            If lists(listidx - 1).Count > 0 Then
-                                lists.Add(listidx, New List(Of String))
-                                maxidx = listidx
-                                For Each o As String In lists(listidx - 1)
-                                    obj = form.Collections.ObjectCollection(o)
-                                    For Each c As ConnectionPoint In obj.GraphicObject.InputConnectors
-                                        If c.IsAttached Then
-                                            If c.AttachedConnector.AttachedFrom.TipoObjeto <> TipoObjeto.OT_Reciclo Then
-                                                lists(listidx).Add(c.AttachedConnector.AttachedFrom.Name)
-                                            End If
-                                        End If
-                                    Next
-                                Next
-                            Else
-                                Exit Do
-                            End If
-                        Loop
-
-                        'process the lists backwards, adding objects to the stack, discarding duplicate entries.
-
-                        listidx = maxidx
-
-                        Do
-                            If lists.ContainsKey(listidx) Then
-                                filteredlist.Add(maxidx - listidx, New List(Of String)(lists(listidx).ToArray))
-                                For Each o As String In lists(listidx)
-                                    If Not objstack.Contains(o) Then
-                                        objstack.Add(o)
-                                    Else
-                                        filteredlist(maxidx - listidx).Remove(o)
-                                    End If
-                                Next
-                            Else
-                                Exit Do
-                            End If
-                            listidx -= 1
-                        Loop
 
                         'define variable to check for flowsheet convergence if there are recycle ops
 
                         Dim converged As Boolean = False
+
+                        Dim loopidx As Integer = 0
 
                         'process/calculate the stack.
 
@@ -1836,7 +1925,8 @@ Namespace DWSIM.Flowsheet
                                     End With
                                 Next
 
-                                For Each obj In form.Collections.ObjectCollection.Values
+                                For Each o In objstack
+                                    obj = form.Collections.ObjectCollection(o)
                                     obj.SetFlowsheet(form)
                                 Next
 
@@ -1922,13 +2012,22 @@ Namespace DWSIM.Flowsheet
 
                             CheckCalculatorStatus()
 
+                            If converged Then Exit While
+
+                            If frompgrid Then
+                                objl = GetSolvingList(form, False)
+                                lists = objl(1)
+                                filteredlist = objl(2)
+                                objstack = objl(0)
+                            End If
+
                         End While
 
                         form.CalculationQueue.Clear()
 
                         If form.Visible Then
                             ts.Dispose()
-                       End If
+                        End If
 
                         My.MyApplication.TaskCancellationTokenSource = Nothing
 
@@ -1938,8 +2037,8 @@ Namespace DWSIM.Flowsheet
 
                     Case 3
 
-        'Azure Service Bus
-        Dim azureclient As New Flowsheet.AzureSolverClient()
+                        'Azure Service Bus
+                        Dim azureclient As New Flowsheet.AzureSolverClient()
 
                         Try
                             form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & DWSIM.App.GetLocalString("Fluxograma") & "...")
@@ -1956,9 +2055,9 @@ Namespace DWSIM.Flowsheet
 
                     Case 4
 
-        'Network Computer
+                        'Network Computer
 
-        Dim tcpclient As New Flowsheet.TCPSolverClient()
+                        Dim tcpclient As New Flowsheet.TCPSolverClient()
 
                         Try
                             form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & DWSIM.App.GetLocalString("Fluxograma") & "...")
@@ -1979,7 +2078,7 @@ Namespace DWSIM.Flowsheet
                     My.MyApplication.gpu.FreeAll()
                 End If
 
-                UpdateDisplayStatus(form)
+                UpdateDisplayStatus(form, objstack.ToArray)
 
                 If form.Visible Then form.FormSurface.Enabled = True
 
@@ -1990,14 +2089,14 @@ Namespace DWSIM.Flowsheet
                     form.WriteToLog(DWSIM.App.GetLocalString("FSfinishedsolvingok"), Color.Blue, FormClasses.TipoAviso.Informacao)
                     form.WriteToLog(DWSIM.App.GetLocalString("Runtime") & ": " & (Date.Now - d1).ToString("g"), Color.MediumBlue, DWSIM.FormClasses.TipoAviso.Informacao)
 
-        Dim retbytes As MemoryStream = DWSIM.SimulationObjects.UnitOps.Flowsheet.ReturnProcessData(Form)
+                    Dim retbytes As MemoryStream = DWSIM.SimulationObjects.UnitOps.Flowsheet.ReturnProcessData(form)
                     Using retbytes
-        Dim uncompressedbytes As Byte() = retbytes.ToArray
+                        Dim uncompressedbytes As Byte() = retbytes.ToArray
                         Using compressedstream As New MemoryStream()
                             Using gzs As New BufferedStream(New Compression.GZipStream(compressedstream, Compression.CompressionMode.Compress, True), 64 * 1024)
                                 gzs.Write(uncompressedbytes, 0, uncompressedbytes.Length)
                                 gzs.Close()
-        Dim id As String = Date.Now.ToBinary.ToString
+                                Dim id As String = Date.Now.ToBinary.ToString
                                 If form.PreviousSolutions Is Nothing Then form.PreviousSolutions = New Dictionary(Of String, FormClasses.FlowsheetSolution)
                                 form.PreviousSolutions.Add(id, New DWSIM.FormClasses.FlowsheetSolution() With {.ID = id, .SaveDate = Date.Now, .Solution = compressedstream.ToArray})
                                 form.UpdateSolutionsList()
@@ -2009,7 +2108,7 @@ Namespace DWSIM.Flowsheet
 
                     form.WriteToLog(DWSIM.App.GetLocalString("FSfinishedsolvingerror"), Color.Red, FormClasses.TipoAviso.Erro)
                     For Each ex In age.Flatten().InnerExceptions
-        Dim st As New StackTrace(ex, True)
+                        Dim st As New StackTrace(ex, True)
                         If st.FrameCount > 0 Then
                             form.WriteToLog(ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
                         Else
@@ -2056,52 +2155,17 @@ Namespace DWSIM.Flowsheet
 
                 Dim baseobj As SimulationObjects_BaseClass = form.Collections.ObjectCollection(ObjID)
 
-                If baseobj.GraphicObject.TipoObjeto = TipoObjeto.MaterialStream Then
-                    Dim ms As Streams.MaterialStream = baseobj
-                    If ms.GraphicObject.InputConnectors(0).IsAttached = False Then
-                        'add this stream to the calculator queue list
-                        Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
-                        With objargs
-                            .Calculado = True
-                            .Nome = ms.Nome
-                            .Tipo = TipoObjeto.MaterialStream
-                            .Tag = ms.GraphicObject.Tag
-                        End With
-                        If ms.IsSpecAttached = True And ms.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then
-                            form.Collections.CLCS_SpecCollection(ms.AttachedSpecId).Calculate()
-                        End If
-                        form.CalculationQueue.Enqueue(objargs)
-                        ProcessQueueInternal(form)
-                    Else
-                        If ms.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.TipoObjeto = TipoObjeto.OT_Reciclo Then
-                            'add this stream to the calculator queue list
-                            Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
-                            With objargs
-                                .Calculado = True
-                                .Nome = ms.Nome
-                                .Tipo = TipoObjeto.MaterialStream
-                                .Tag = ms.GraphicObject.Tag
-                            End With
-                            If ms.IsSpecAttached = True And ms.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then
-                                form.Collections.CLCS_SpecCollection(ms.AttachedSpecId).Calculate()
-                            End If
-                            form.CalculationQueue.Enqueue(objargs)
-                            ProcessQueueInternal(form)
-                        End If
-                    End If
-                Else
-                    Dim unit As SimulationObjects_UnitOpBaseClass = baseobj
-                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
-                    With objargs
-                        .Emissor = "PropertyGrid"
-                        .Calculado = True
-                        .Nome = unit.Nome
-                        .Tipo = unit.GraphicObject.TipoObjeto
-                        .Tag = unit.GraphicObject.Tag
-                    End With
-                    form.CalculationQueue.Enqueue(objargs)
-                    ProcessQueueInternal(form)
-                End If
+                Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                With objargs
+                    .Calculado = True
+                    .Nome = baseobj.Nome
+                    .Tipo = baseobj.GraphicObject.TipoObjeto
+                    .Tag = baseobj.GraphicObject.Tag
+                End With
+              
+                form.CalculationQueue.Enqueue(objargs)
+
+                CalculateAll2(form, My.Settings.SolverMode, , True)
 
             End If
 

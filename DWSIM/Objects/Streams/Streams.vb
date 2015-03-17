@@ -461,6 +461,8 @@ Namespace DWSIM.SimulationObjects.Streams
 
             Next
 
+            AtEquilibrium = False
+
             GraphicObject.Calculated = False
 
         End Sub

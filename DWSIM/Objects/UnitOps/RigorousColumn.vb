@@ -2999,42 +2999,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Me.SC_MaximumTemperatureChange = cv.ConverterParaSI(su.spmp_deltaT, e.ChangedItem.Value)
             End If
 
-            CheckCalc2()
-
-        End Sub
-
-        Public Sub CheckCalc2()
-
-            If FlowSheet.Options.CalculatorActivated Then
-
-                'Call function to calculate flowsheet
-                Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
-                With objargs
-                    .Tag = Me.GraphicObject.Tag
-                    .Calculado = False
-                    .Nome = Me.GraphicObject.Name
-                    Select Case Me.ColumnType
-                        Case ColType.AbsorptionColumn
-                            .Tipo = TipoObjeto.AbsorptionColumn
-                        Case ColType.DistillationColumn
-                            .Tipo = TipoObjeto.DistillationColumn
-                        Case ColType.ReboiledAbsorber
-                            .Tipo = TipoObjeto.ReboiledAbsorber
-                        Case ColType.RefluxedAbsorber
-                            .Tipo = TipoObjeto.RefluxedAbsorber
-                    End Select
-                    .Emissor = "PropertyGrid"
-                End With
-
-                If Me.IsSpecAttached = True And Me.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then FlowSheet.Collections.CLCS_SpecCollection(Me.AttachedSpecId).Calculate()
-                FlowSheet.CalculationQueue.Enqueue(objargs)
-
-                FlowSheet.FormSurface.UpdateSelectedObject()
-                FlowSheet.FormSurface.FlowsheetDesignSurface.Invalidate()
-                Application.DoEvents()
-                ProcessCalculationQueue(FlowSheet)
-
-            End If
 
         End Sub
 

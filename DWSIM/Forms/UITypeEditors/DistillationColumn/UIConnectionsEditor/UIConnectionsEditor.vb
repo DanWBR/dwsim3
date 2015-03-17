@@ -47,12 +47,6 @@ Namespace DWSIM.Editors.Distillation
 
             End If
 
-            Dim dc As SimulationObjects.UnitOps.Column
-            Dim form As FormFlowsheet = DirectCast(editorService, Control).FindForm.FindForm.ParentForm
-            dc = Form.Collections.ObjectCollection(Form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
-            Application.DoEvents()
-            dc.CheckCalc2()
-
             Return value
 
         End Function

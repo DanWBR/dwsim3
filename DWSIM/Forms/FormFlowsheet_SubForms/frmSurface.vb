@@ -3262,7 +3262,20 @@ Public Class frmSurface
 
         Flowsheet = My.Application.ActiveSimulation
         Dim obj As SimulationObjects_BaseClass = Flowsheet.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name)
-        CalculateObject(Flowsheet, obj.Nome)
+
+        'Call function to calculate flowsheet
+        Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+        With objargs
+            .Calculado = False
+            .Tag = obj.GraphicObject.Tag
+            .Nome = obj.Nome
+            .Tipo = obj.GraphicObject.TipoObjeto
+            .Emissor = "PropertyGrid"
+        End With
+
+        Flowsheet.CalculationQueue.Enqueue(objargs)
+
+        CalculateAll2(Flowsheet, My.Settings.SolverMode, , True)
 
     End Sub
 

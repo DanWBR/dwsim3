@@ -150,11 +150,17 @@ Public Class frmProps
                         ms.Fases(2).SPMProperties.molarfraction = VF
                     End If
 
-                    If ChildParent.Options.CalculatorActivated Then
+                    'Call function to calculate flowsheet
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Calculado = False
+                        .Nome = sobj.Name
+                        .Tag = sobj.Tag
+                        .Tipo = TipoObjeto.MaterialStream
+                        .Emissor = "PropertyGrid"
+                    End With
 
-                        CalculateObject(ChildParent, sobj.Name)
-
-                    End If
+                    ChildParent.CalculationQueue.Enqueue(objargs)
 
                 End If
 
@@ -964,13 +970,41 @@ Public Class frmProps
                     ChildParent.CalculationQueue.Enqueue(objargs)
 
                 End If
+
+            ElseIf sobj.TipoObjeto = TipoObjeto.DistillationColumn Or sobj.TipoObjeto = TipoObjeto.AbsorptionColumn Or sobj.TipoObjeto = TipoObjeto.ReboiledAbsorber Or
+                sobj.TipoObjeto = TipoObjeto.RefluxedAbsorber Or sobj.TipoObjeto = TipoObjeto.CapeOpenUO Then
+
+
+                If ChildParent.Options.CalculatorActivated Then
+
+                    sobj.Calculated = True
+                    RaiseEvent ObjectStatusChanged(sobj)
+
+                    'Call function to calculate flowsheet
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Calculado = True
+                        .Nome = sobj.Name
+                        .Tag = sobj.Tag
+                        .Tipo = sobj.TipoObjeto
+                        .Emissor = "PropertyGrid"
+                    End With
+
+                    Dim obj = ChildParent.Collections.ObjectCollection.Item(sobj.Name)
+
+                    If obj.IsSpecAttached = True And obj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then ChildParent.Collections.CLCS_SpecCollection(obj.AttachedSpecId).Calculate()
+                    ChildParent.CalculationQueue.Enqueue(objargs)
+
+                End If
+
             End If
+
         End If
 
         Call ChildParent.FormSurface.UpdateSelectedObject()
         Call ChildParent.FormSurface.FlowsheetDesignSurface.Invalidate()
 
-        If ChildParent.Options.CalculatorActivated Then ProcessCalculationQueue(ChildParent)
+        CalculateAll2(ChildParent, My.Settings.SolverMode, , True)
 
     End Sub
 

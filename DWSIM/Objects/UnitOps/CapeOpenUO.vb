@@ -1205,29 +1205,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
             MyBase.PropertyValueChanged(s, e)
 
             If e.ChangedItem.Parent.Label.Contains("Parameters") Then
+
                 RestoreParams()
-                If Me.FlowSheet.Options.CalculatorActivated Then
 
-                    Me.GraphicObject.Calculated = True
-
-                    'Call function to calculate flowsheet
-                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
-                    With objargs
-                        .Calculado = False
-                        .Nome = Me.GraphicObject.Name
-                        .Tag = Me.GraphicObject.Tag
-                        .Tipo = TipoObjeto.CapeOpenUO
-                        .Emissor = "PropertyGrid"
-                    End With
-
-                    Me.FlowSheet.CalculationQueue.Enqueue(objargs)
-
-                    Me.FlowSheet.FormSurface.UpdateSelectedObject()
-                    Me.FlowSheet.FormSurface.FlowsheetDesignSurface.Invalidate()
-                    Application.DoEvents()
-                    If Me.FlowSheet.Options.CalculatorActivated Then ProcessCalculationQueue(Me.FlowSheet)
-
-                End If
             ElseIf e.ChangedItem.Parent.Label.Contains("Ports") Then
                 Dim index, indexc, i As Integer
                 i = 0
@@ -1375,10 +1355,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         End If
                     End If
                 End If
+
                 UpdateConnectorPositions()
-                RestorePorts()
-                Calculate()
+
             End If
+
         End Sub
 
         Public Overrides Function GetProperties(ByVal proptype As SimulationObjects_BaseClass.PropertyType) As String()

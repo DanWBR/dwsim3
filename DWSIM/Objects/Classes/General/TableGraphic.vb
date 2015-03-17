@@ -1252,7 +1252,13 @@ Namespace DWSIM.GraphicObjects
                     maxL3 = 0
                     maxH = 0
                     count = 1
+
                     Dim size, size2 As SizeF
+
+                    size = g.MeasureString(Me.BaseOwner.GraphicObject.Tag.ToUpper, New Font(Me.HeaderFont, FontStyle.Bold))
+                    If size.Width > maxL1 Then maxL1 = size.Width
+                    If size.Height > maxH Then maxH = size.Height
+
                     Dim ni As DWSIM.Outros.NodeItem
                     For Each ni In Me.BaseOwner.QTNodeTableItems.Values
                         size = g.MeasureString(ni.Text, New Font(Me.HeaderFont, FontStyle.Bold), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
@@ -1266,9 +1272,7 @@ Namespace DWSIM.GraphicObjects
                         If size.Height > maxH Then maxH = size.Height
                         count += 1
                     Next
-                    'size = g.MeasureString(Me.HeaderText, Me.HeaderFont, New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
-                    'If size.Width > maxL1 Then maxL1 = size.Width
-                    'If size.Height > maxH Then maxH = size.Height
+                    
                     Me.Padding = 3 / Me.AdditionalInfo
 
                     If maxH = 0 Then maxH = 20
