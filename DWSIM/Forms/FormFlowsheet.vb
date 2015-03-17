@@ -905,28 +905,22 @@ Imports DWSIM.DWSIM.Outros
     End Sub
 
     Private Sub tsbAtivar_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles tsbAtivar.Click
-        'If Me.tsbAtivar.Checked = True Then
-        Me.tsbDesat.Checked = False
+       Me.tsbDesat.Checked = False
         Me.tsbAtivar.Checked = True
         Me.Options.CalculatorActivated = True
         Me.FormSurface.LabelCalculator.Text = DWSIM.App.GetLocalString("CalculadorOcioso")
         Me.WriteToLog(DWSIM.App.GetLocalString("Calculadorativado"), Color.DimGray, DWSIM.FormClasses.TipoAviso.Informacao)
         If Not Me.CalculationQueue Is Nothing Then
-            If Me.CalculationQueue.Count >= 1 Then
-                Dim msgres As MsgBoxResult = MessageBox.Show(DWSIM.App.GetLocalString("Existemobjetosespera"), _
-                DWSIM.App.GetLocalString("Objetosnafiladeclcul"), _
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-                If msgres = MsgBoxResult.Yes Then
-                    ProcessCalculationQueue(Me)
-                End If
-            End If
+            Me.CalculationQueue.Clear()
+            'If Me.CalculationQueue.Count >= 1 Then
+            'Dim msgres As MsgBoxResult = MessageBox.Show(DWSIM.App.GetLocalString("Existemobjetosespera"), _
+            'DWSIM.App.GetLocalString("Objetosnafiladeclcul"), _
+            'MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+            'If msgres = MsgBoxResult.Yes Then
+            '    ProcessCalculationQueue(Me)
+            'End If
+            'End If
         End If
-        'Else
-        '    Me.tsbDesat.Checked = True
-        '    Me.Options.CalculatorActivated = False
-        '    Me.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("CalculadorDesativado1")
-        '    Me.WriteToLog(DWSIM.App.GetLocalString("Calculadordesativado"), Color.DimGray, DWSIM.FormClasses.TipoAviso.Informacao)
-        'End If
     End Sub
 
     Private Sub tsbDesat_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsbDesat.Click

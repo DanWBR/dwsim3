@@ -1551,17 +1551,17 @@ Namespace DWSIM.Flowsheet
 
                 Dim myinfo As DWSIM.Outros.StatusChangeEventArgs = form.CalculationQueue.Peek()
 
-                'UpdateDisplayStatus(form, New String() {myinfo.Nome}, True)
-
-                If myinfo.Tipo = TipoObjeto.MaterialStream Then
-                    CalculateMaterialStreamAsync(form, form.Collections.CLCS_MaterialStreamCollection(myinfo.Nome), ct)
-                Else
-                    CalculateFlowsheetAsync(form, myinfo, ct)
-                End If
+                Try
+                    If myinfo.Tipo = TipoObjeto.MaterialStream Then
+                        CalculateMaterialStreamAsync(form, form.Collections.CLCS_MaterialStreamCollection(myinfo.Nome), ct)
+                    Else
+                        CalculateFlowsheetAsync(form, myinfo, ct)
+                    End If
+                Catch ex As Exception
+                    Throw New Exception(myinfo.Tag & ": " & ex.Message.ToString, ex)
+                End Try
 
                 form.Collections.ObjectCollection(myinfo.Nome).GraphicObject.Calculated = True
-
-                'UpdateDisplayStatus(form, New String() {myinfo.Nome})
 
                 If form.CalculationQueue.Count = 1 Then form.FormSpreadsheet.InternalCounter = 0
                 If form.CalculationQueue.Count > 0 Then form.CalculationQueue.Dequeue()
@@ -1596,17 +1596,23 @@ Namespace DWSIM.Flowsheet
                 For Each item In li.Value
                     objlist.Add(item.Nome)
                 Next
-                'If form.Visible Then UpdateDisplayStatus(form, objlist.ToArray(Type.GetType("System.String")), True)
                 Parallel.ForEach(li.Value, poptions, Sub(myinfo)
                                                          If myinfo.Tipo = TipoObjeto.MaterialStream Then
-                                                             CalculateMaterialStreamAsync(form, form.Collections.CLCS_MaterialStreamCollection(myinfo.Nome), ct)
+                                                             Try
+                                                                 CalculateMaterialStreamAsync(form, form.Collections.CLCS_MaterialStreamCollection(myinfo.Nome), ct)
+                                                             Catch ex As Exception
+                                                                 Throw New Exception(myinfo.Tag & ": " & ex.Message.ToString, ex)
+                                                             End Try
                                                          Else
-                                                             CalculateFlowsheetAsync(form, myinfo, ct)
+                                                             Try
+                                                                 CalculateFlowsheetAsync(form, myinfo, ct)
+                                                             Catch ex As Exception
+                                                                 Throw New Exception(myinfo.Tag & ": " & ex.Message.ToString, ex)
+                                                             End Try
                                                          End If
                                                          form.Collections.ObjectCollection(myinfo.Nome).GraphicObject.Calculated = True
                                                      End Sub)
-                'If form.Visible Then UpdateDisplayStatus(form, objlist.ToArray(Type.GetType("System.String")))
-            Next
+             Next
 
             For Each obj In form.Collections.ObjectCollection.Values
                 If TypeOf obj Is SimulationObjects_UnitOpBaseClass Then
