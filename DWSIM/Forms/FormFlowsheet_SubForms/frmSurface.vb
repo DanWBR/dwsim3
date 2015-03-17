@@ -272,7 +272,7 @@ Public Class frmSurface
                     Flowsheet.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString("CaixadeTexto")
                     Flowsheet.FormProps.LblStatusObj.Text = "-"
                     Flowsheet.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
-                Else
+                ElseIf Not Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_TabelaRapida Then
                     Dim nodes = Flowsheet.FormObjList.TreeViewObj.Nodes.Find(e.SelectedObject.Tag, True)
                     Flowsheet.FormProps.LblNomeObj.Text = e.SelectedObject.Tag
                     Flowsheet.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString(Flowsheet.Collections.ObjectCollection.Item(e.SelectedObject.Name).Descricao)

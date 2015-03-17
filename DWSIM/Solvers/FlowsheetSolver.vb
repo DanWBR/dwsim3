@@ -1703,7 +1703,7 @@ Namespace DWSIM.Flowsheet
                             obj = form.Collections.ObjectCollection(o)
                             For Each c As ConnectionPoint In obj.GraphicObject.OutputConnectors
                                 If c.IsAttached Then
-                                    If obj.GraphicObject.TipoObjeto = TipoObjeto.OT_Reciclo Then Exit Do
+                                    If obj.GraphicObject.TipoObjeto = TipoObjeto.OT_Reciclo Then Exit For
                                     lists(listidx).Add(c.AttachedConnector.AttachedTo.Name)
                                 End If
                             Next

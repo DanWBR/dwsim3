@@ -918,6 +918,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps
             XMLSerializer.XMLSerializer.Deserialize(Me, data)
 
             If Not xel Is Nothing Then Me.StreamID = xel.Value
+            If Me.StreamID = "" Then Me.StreamID = Me.ID
 
             Return True
 
