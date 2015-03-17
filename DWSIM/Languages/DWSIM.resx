@@ -1070,7 +1070,7 @@ Tensão Superficial da Fase Líquida: Método Brock-Bird</value>
     <value>Energia necessária</value>
   </data>
   <data name="Energiaporunidadedet" xml:space="preserve">
-    <value>Energia por unidade de tempo</value>
+    <value>Potência</value>
   </data>
   <data name="EntalpiadeFormaodoGs" xml:space="preserve">
     <value>Entalpia de Formação do Gás Ideal a 25°C</value>
@@ -4250,7 +4250,7 @@ Tensão Superficial da Fase Líquida: Método Brock-Bird</value>
     <value>Placa de Orifício</value>
   </data>
   <data name="RGFinalG" xml:space="preserve">
-    <value>Energia LIvre de Gibbs (final)</value>
+    <value>Energia Livre de Gibbs (final)</value>
   </data>
   <data name="RGFinalG_description" xml:space="preserve">
     <value>Energia Livre de Gibbs da mistura final, depois da reação.</value>
