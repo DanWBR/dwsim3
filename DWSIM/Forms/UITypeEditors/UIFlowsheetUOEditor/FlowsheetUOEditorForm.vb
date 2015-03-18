@@ -343,4 +343,11 @@ Public Class FlowsheetUOEditorForm
         Clipboard.SetText("[O][" & id & "]")
     End Sub
 
+    Private Sub dgvInputPars_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles dgvInputPars.DataError
+
+    End Sub
+
+    Private Sub dgvOutputPars_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles dgvOutputPars.DataError
+
+    End Sub
 End Class

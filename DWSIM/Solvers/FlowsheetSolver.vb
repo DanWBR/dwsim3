@@ -1689,55 +1689,59 @@ Namespace DWSIM.Flowsheet
             Dim listidx As Integer = 0
             Dim maxidx As Integer = 0
 
-            If frompgrid And form.CalculationQueue.Count > 0 Then
+            If frompgrid Then
 
-                onqueue = form.CalculationQueue.Dequeue()
-                form.CalculationQueue.Clear()
+                If form.CalculationQueue.Count > 0 Then
 
-                lists.Add(0, New List(Of String))
+                    onqueue = form.CalculationQueue.Dequeue()
+                    form.CalculationQueue.Clear()
 
-                lists(0).Add(onqueue.Nome)
+                    lists.Add(0, New List(Of String))
 
-                'now start walking through the flowsheet until it reaches its end starting from this particular object.
+                    lists(0).Add(onqueue.Nome)
 
-                Do
-                    listidx += 1
-                    If lists(listidx - 1).Count > 0 Then
-                        lists.Add(listidx, New List(Of String))
-                        maxidx = listidx
-                        For Each o As String In lists(listidx - 1)
-                            obj = form.Collections.ObjectCollection(o)
-                            For Each c As ConnectionPoint In obj.GraphicObject.OutputConnectors
-                                If c.IsAttached Then
-                                    If obj.GraphicObject.TipoObjeto = TipoObjeto.OT_Reciclo Then Exit For
-                                    lists(listidx).Add(c.AttachedConnector.AttachedTo.Name)
+                    'now start walking through the flowsheet until it reaches its end starting from this particular object.
+
+                    Do
+                        listidx += 1
+                        If lists(listidx - 1).Count > 0 Then
+                            lists.Add(listidx, New List(Of String))
+                            maxidx = listidx
+                            For Each o As String In lists(listidx - 1)
+                                obj = form.Collections.ObjectCollection(o)
+                                For Each c As ConnectionPoint In obj.GraphicObject.OutputConnectors
+                                    If c.IsAttached Then
+                                        If obj.GraphicObject.TipoObjeto = TipoObjeto.OT_Reciclo Then Exit For
+                                        lists(listidx).Add(c.AttachedConnector.AttachedTo.Name)
+                                    End If
+                                Next
+                            Next
+                        Else
+                            Exit Do
+                        End If
+                    Loop
+
+                    'process the lists , adding objects to the stack, discarding duplicate entries.
+
+                    listidx = 0
+
+                    Do
+                        If lists.ContainsKey(listidx) Then
+                            filteredlist.Add(listidx, New List(Of String)(lists(listidx).ToArray))
+                            For Each o As String In lists(listidx)
+                                If Not objstack.Contains(o) Then
+                                    objstack.Add(o)
+                                Else
+                                    filteredlist(listidx).Remove(o)
                                 End If
                             Next
-                        Next
-                    Else
-                        Exit Do
-                    End If
-                Loop
+                        Else
+                            Exit Do
+                        End If
+                        listidx += 1
+                    Loop Until listidx > maxidx
 
-                'process the lists , adding objects to the stack, discarding duplicate entries.
-
-                listidx = 0
-
-                Do
-                    If lists.ContainsKey(listidx) Then
-                        filteredlist.Add(listidx, New List(Of String)(lists(listidx).ToArray))
-                        For Each o As String In lists(listidx)
-                            If Not objstack.Contains(o) Then
-                                objstack.Add(o)
-                            Else
-                                filteredlist(listidx).Remove(o)
-                            End If
-                        Next
-                    Else
-                        Exit Do
-                    End If
-                    listidx += 1
-                Loop Until listidx > maxidx
+                End If
 
             Else
 
