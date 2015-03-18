@@ -3399,19 +3399,9 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
                     Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Salvandosimulao") + " (" + Me.filename + ")"
                     Application.DoEvents()
                     If Path.GetExtension(Me.filename).ToLower = ".dwxml" Then
-                        Dim t As Task = Task.Factory.StartNew(Sub()
-                                                                  Me.SaveXML(Me.filename, Me.ActiveMdiChild)
-                                                              End Sub)
-                        While Not t.IsCompleted
-                            Application.DoEvents()
-                        End While
+                        Task.Factory.StartNew(Sub() SaveXML(Me.filename, Me.ActiveMdiChild)).ContinueWith(Sub() Me.ToolStripStatusLabel1.Text = "", TaskContinuationOptions.ExecuteSynchronously)
                     ElseIf Path.GetExtension(Me.filename).ToLower = ".dwxmz" Then
-                        Dim t As Task = Task.Factory.StartNew(Sub()
-                                                                  Me.SaveXMLZIP(Me.filename, Me.ActiveMdiChild)
-                                                              End Sub)
-                        While Not t.IsCompleted
-                            Application.DoEvents()
-                        End While
+                        Task.Factory.StartNew(Sub() SaveXMLZIP(Me.filename, Me.ActiveMdiChild)).ContinueWith(Sub() Me.ToolStripStatusLabel1.Text = "", TaskContinuationOptions.ExecuteSynchronously)
                     Else
                         Me.bgSaveFile.RunWorkerAsync()
                     End If
@@ -3438,8 +3428,6 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
                 Me.ActiveMdiChild.Text = Me.filename
             End If
         End If
-
-
 
     End Sub
 
@@ -3690,17 +3678,19 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
                         Dim form2 As FormFlowsheet = form0
                         If form2.Options.FilePath <> "" Then
                             Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Salvandosimulao") + " (" + Me.filename + ")"
-                            Try
-                                If Path.GetExtension(form2.Options.FilePath).ToLower = ".dwsim" Then
+                            If Path.GetExtension(form2.Options.FilePath).ToLower = ".dwsim" Then
+                                Try
                                     SaveF(form2.Options.FilePath, form2)
-                                Else
-                                    SaveXML(form2.Options.FilePath, form2)
-                                End If
-                            Catch ex As Exception
-                                MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-                            Finally
-                                Me.ToolStripStatusLabel1.Text = ""
-                            End Try
+                                Catch ex As Exception
+                                    MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                Finally
+                                    Me.ToolStripStatusLabel1.Text = ""
+                                End Try
+                            ElseIf Path.GetExtension(form2.Options.FilePath).ToLower = ".dwxml" Then
+                                Task.Factory.StartNew(Sub() SaveXML(form2.Options.FilePath, form2)).ContinueWith(Sub() Me.ToolStripStatusLabel1.Text = "", TaskContinuationOptions.ExecuteSynchronously)
+                            ElseIf Path.GetExtension(form2.Options.FilePath).ToLower = ".dwxmz" Then
+                                Task.Factory.StartNew(Sub() SaveXMLZIP(form2.Options.FilePath, form2)).ContinueWith(Sub() Me.ToolStripStatusLabel1.Text = "", TaskContinuationOptions.ExecuteSynchronously)
+                            End If
                         Else
                             Dim myStream As System.IO.FileStream
                             If Me.SaveFileDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
@@ -3708,17 +3698,19 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
                                 myStream.Close()
                                 If Not (myStream Is Nothing) Then
                                     Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Salvandosimulao") + " (" + Me.filename + ")"
-                                    Try
-                                        If Path.GetExtension(myStream.Name).ToLower = ".dwsim" Then
+                                    If Path.GetExtension(myStream.Name).ToLower = ".dwsim" Then
+                                        Try
                                             SaveF(myStream.Name, form2)
-                                        Else
-                                            SaveXML(myStream.Name, form2)
-                                        End If
-                                    Catch ex As Exception
-                                        MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-                                    Finally
-                                        Me.ToolStripStatusLabel1.Text = ""
-                                    End Try
+                                        Catch ex As Exception
+                                            MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                        Finally
+                                            Me.ToolStripStatusLabel1.Text = ""
+                                        End Try
+                                    ElseIf Path.GetExtension(form2.Options.FilePath).ToLower = ".dwxml" Then
+                                        Task.Factory.StartNew(Sub() SaveXML(myStream.Name, form2)).ContinueWith(Sub() Me.ToolStripStatusLabel1.Text = "", TaskContinuationOptions.ExecuteSynchronously)
+                                    ElseIf Path.GetExtension(form2.Options.FilePath).ToLower = ".dwxmz" Then
+                                        Task.Factory.StartNew(Sub() SaveXMLZIP(myStream.Name, form2)).ContinueWith(Sub() Me.ToolStripStatusLabel1.Text = "", TaskContinuationOptions.ExecuteSynchronously)
+                                    End If
                                 End If
                             End If
                         End If
@@ -3765,18 +3757,20 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
                 If form2.Options.FilePath <> "" Then
                     Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Salvandosimulao") + " (" + Me.filename + ")"
                     Application.DoEvents()
-                    Try
-                        Me.filename = form2.Options.FilePath
-                        If Path.GetExtension(Me.filename).ToLower = ".dwsim" Then
+                    Me.filename = form2.Options.FilePath
+                    If Path.GetExtension(Me.filename).ToLower = ".dwsim" Then
+                        Try
                             SaveF(form2.Options.FilePath, form2)
-                        Else
-                            SaveXML(form2.Options.FilePath, form2)
-                        End If
-                    Catch ex As Exception
-                        MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-                    Finally
-                        Me.ToolStripStatusLabel1.Text = ""
-                    End Try
+                        Catch ex As Exception
+                            MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        Finally
+                            Me.ToolStripStatusLabel1.Text = ""
+                        End Try
+                    ElseIf Path.GetExtension(form2.Options.FilePath).ToLower = ".dwxml" Then
+                        Task.Factory.StartNew(Sub() SaveXML(form2.Options.FilePath, form2)).ContinueWith(Sub() Me.ToolStripStatusLabel1.Text = "", TaskContinuationOptions.ExecuteSynchronously)
+                    ElseIf Path.GetExtension(form2.Options.FilePath).ToLower = ".dwxmz" Then
+                        Task.Factory.StartNew(Sub() SaveXMLZIP(form2.Options.FilePath, form2)).ContinueWith(Sub() Me.ToolStripStatusLabel1.Text = "", TaskContinuationOptions.ExecuteSynchronously)
+                    End If
                 Else
                     Dim myStream As System.IO.FileStream
                     If Me.SaveFileDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
@@ -3786,17 +3780,19 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
                         If Not (myStream Is Nothing) Then
                             Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Salvandosimulao") + " (" + Me.filename + ")"
                             Application.DoEvents()
-                            Try
-                                If Path.GetExtension(Me.filename).ToLower = ".dwsim" Then
+                            If Path.GetExtension(Me.filename).ToLower = ".dwsim" Then
+                                Try
                                     SaveF(myStream.Name, form2)
-                                Else
-                                    SaveXML(myStream.Name, form2)
-                                End If
-                            Catch ex As Exception
-                                MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-                            Finally
-                                Me.ToolStripStatusLabel1.Text = ""
-                            End Try
+                                Catch ex As Exception
+                                    MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                Finally
+                                    Me.ToolStripStatusLabel1.Text = ""
+                                End Try
+                            ElseIf Path.GetExtension(form2.Options.FilePath).ToLower = ".dwxml" Then
+                                Task.Factory.StartNew(Sub() SaveXML(myStream.Name, form2)).ContinueWith(Sub() Me.ToolStripStatusLabel1.Text = "", TaskContinuationOptions.ExecuteSynchronously)
+                            ElseIf Path.GetExtension(form2.Options.FilePath).ToLower = ".dwxmz" Then
+                                Task.Factory.StartNew(Sub() SaveXMLZIP(myStream.Name, form2)).ContinueWith(Sub() Me.ToolStripStatusLabel1.Text = "", TaskContinuationOptions.ExecuteSynchronously)
+                            End If
                         End If
                     End If
                 End If
