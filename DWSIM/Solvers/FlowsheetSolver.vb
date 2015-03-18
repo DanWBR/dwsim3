@@ -2086,10 +2086,6 @@ Namespace DWSIM.Flowsheet
 
                 UpdateDisplayStatus(form, objstack.ToArray)
 
-                If form.Visible Then form.FormSurface.Enabled = True
-
-                form.UpdateStatusLabel(preLab)
-
                 If age Is Nothing Then
 
                     form.WriteToLog(DWSIM.App.GetLocalString("FSfinishedsolvingok"), Color.Blue, FormClasses.TipoAviso.Informacao)
@@ -2127,6 +2123,8 @@ Namespace DWSIM.Flowsheet
 
                 If form.Visible Then
 
+                    form.FormSurface.Enabled = True
+
                     form.FormWatch.UpdateList()
 
                     form.FormQueue.TextBox1.Clear()
@@ -2141,14 +2139,14 @@ Namespace DWSIM.Flowsheet
                         If form.FormSpreadsheet.chkUpdate.Checked Then form.FormSpreadsheet.EvaluateAll()
                     End If
 
+                    form.UpdateStatusLabel(preLab)
+
                     If form.FormSurface.Timer2.Enabled = True Then form.FormSurface.Timer2.Stop()
                     form.FormSurface.PictureBox3.Image = My.Resources.tick
                     form.FormSurface.PictureBox4.Visible = False
                     form.FormSurface.LabelTime.Text = ""
 
                     If Not form.FormSurface.FlowsheetDesignSurface.SelectedObject Is Nothing Then Call form.FormSurface.UpdateSelectedObject()
-
-                    form.FormSurface.LabelCalculator.Text = DWSIM.App.GetLocalString("CalculadorOcioso")
 
                     Application.DoEvents()
 

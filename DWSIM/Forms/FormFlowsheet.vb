@@ -562,6 +562,9 @@ Imports DWSIM.DWSIM.Outros
                                                       Case DWSIM.FormClasses.TipoAviso.Erro
                                                           img = My.Resources.exclamation
                                                           strtipo = DWSIM.App.GetLocalString("Erro")
+                                                      Case DWSIM.FormClasses.TipoAviso.Dica
+                                                          img = My.Resources.lightbulb
+                                                          strtipo = DWSIM.App.GetLocalString("Dica")
                                                       Case Else
                                                           img = My.Resources.information
                                                           strtipo = DWSIM.App.GetLocalString("Mensagem")
@@ -592,8 +595,9 @@ Imports DWSIM.DWSIM.Outros
 
                                                   If DWSIM.App.IsRunningOnMono Then
                                                       frlog.Grid1.Rows.Add(New Object() {img, frlog.GridDT.Rows.Count, Date.Now, strtipo, texto})
-                                                      frlog.Grid1.Sort(frlog.Grid1.Columns(1), ListSortDirection.Descending)
                                                   End If
+
+                                                  frlog.Grid1.Sort(frlog.Grid1.Columns(1), ListSortDirection.Descending)
 
                                               Else
 

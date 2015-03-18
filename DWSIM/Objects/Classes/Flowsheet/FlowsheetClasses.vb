@@ -27,6 +27,7 @@ Namespace DWSIM.FormClasses
         Informacao
         Aviso
         Erro
+        Dica
     End Enum
 
     <System.Serializable()> Public Class ClsObjectCollections
