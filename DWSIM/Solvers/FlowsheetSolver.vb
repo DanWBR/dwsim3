@@ -2158,6 +2158,9 @@ Namespace DWSIM.Flowsheet
                     form.FormSurface.PictureBox4.Visible = False
                     form.FormSurface.LabelTime.Text = ""
 
+                    form.FormSurface.LabelSimultAdjInfo.Text = ""
+                    form.FormSurface.PanelSimultAdjust.Visible = False
+
                     If Not form.FormSurface.FlowsheetDesignSurface.SelectedObject Is Nothing Then Call form.FormSurface.UpdateSelectedObject()
 
                     Application.DoEvents()
