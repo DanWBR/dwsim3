@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <DWSIM_Simulation_Data>
   <GeneralInfo>
-    <BuildVersion>3.4.5543.41575</BuildVersion>
-    <BuildDate>2015-03-06T23:05:50</BuildDate>
+    <BuildVersion>3.4.5555.35386</BuildVersion>
+    <BuildDate>2015-03-18T19:39:32</BuildDate>
     <OSInfo>Microsoft Windows 7 Home Premium , Version 6.1.7601.65536, Win32NT Platform</OSInfo>
-    <SavedOn>2015-03-06T23:26:19.6466098-04:00</SavedOn>
+    <SavedOn>2015-03-18T19:47:50.7453422-04:00</SavedOn>
   </GeneralInfo>
   <SimulationObjects>
     <SimulationObject>
@@ -19,6 +19,7 @@
       <ComponentDescription>Misturador</ComponentDescription>
       <ComponentName>MIST-232a645d-0907-47a9-8886-f9807eff86c1</ComponentName>
       <ValStatus>CAPE_VALID</ValStatus>
+      <Name>MIST-232a645d-0907-47a9-8886-f9807eff86c1</Name>
       <code>0</code>
       <selectedReport></selectedReport>
       <Calculated>true</Calculated>
@@ -44,6 +45,7 @@
       <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-1b11dc98-84af-47c8-b6da-0b853bcfd2e3</ComponentDescription>
       <ComponentName>1</ComponentName>
+      <Name>MAT-1b11dc98-84af-47c8-b6da-0b853bcfd2e3</Name>
       <code>0</code>
       <Calculated>true</Calculated>
       <IsAdjustAttached>false</IsAdjustAttached>
@@ -2560,6 +2562,7 @@
       <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-4622d4b3-de4a-4bd4-abe1-8409c5c5d7db</ComponentDescription>
       <ComponentName>2</ComponentName>
+      <Name>MAT-4622d4b3-de4a-4bd4-abe1-8409c5c5d7db</Name>
       <code>0</code>
       <Calculated>true</Calculated>
       <IsAdjustAttached>false</IsAdjustAttached>
@@ -5060,6 +5063,7 @@
       <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-29789d5b-80cb-412d-a1cc-e9b8ac1058e6</ComponentDescription>
       <ComponentName>3</ComponentName>
+      <Name>MAT-29789d5b-80cb-412d-a1cc-e9b8ac1058e6</Name>
       <code>0</code>
       <Calculated>true</Calculated>
       <IsAdjustAttached>false</IsAdjustAttached>
@@ -7552,6 +7556,7 @@
       <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-a422c2f4-9572-48ed-93f2-bf46b7fa5846</ComponentDescription>
       <ComponentName>4</ComponentName>
+      <Name>MAT-a422c2f4-9572-48ed-93f2-bf46b7fa5846</Name>
       <code>0</code>
       <Calculated>true</Calculated>
       <IsAdjustAttached>false</IsAdjustAttached>
@@ -10078,6 +10083,7 @@
       <ComponentDescription>Vaso Separador G-L</ComponentDescription>
       <ComponentName>SEP-2a7f8f21-ff64-4978-bf65-2c6e6716f0f7</ComponentName>
       <ValStatus>CAPE_VALID</ValStatus>
+      <Name>SEP-2a7f8f21-ff64-4978-bf65-2c6e6716f0f7</Name>
       <code>0</code>
       <selectedReport></selectedReport>
       <Calculated>true</Calculated>
@@ -10103,6 +10109,7 @@
       <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-a3cdea29-d682-4a7f-8096-2aecbaea55ff</ComponentDescription>
       <ComponentName>5</ComponentName>
+      <Name>MAT-a3cdea29-d682-4a7f-8096-2aecbaea55ff</Name>
       <code>0</code>
       <Calculated>true</Calculated>
       <IsAdjustAttached>false</IsAdjustAttached>
@@ -12595,6 +12602,7 @@
       <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-4b3e07be-5d35-460a-a750-319f3a446564</ComponentDescription>
       <ComponentName>6</ComponentName>
+      <Name>MAT-4b3e07be-5d35-460a-a750-319f3a446564</Name>
       <code>0</code>
       <Calculated>true</Calculated>
       <IsAdjustAttached>false</IsAdjustAttached>
@@ -15111,6 +15119,7 @@
       <ComponentDescription>Compressor Adiabático</ComponentDescription>
       <ComponentName>COMP-fe4cc69b-32a6-493c-9f25-b69899f0e9c3</ComponentName>
       <ValStatus>CAPE_VALID</ValStatus>
+      <Name>COMP-fe4cc69b-32a6-493c-9f25-b69899f0e9c3</Name>
       <code>0</code>
       <selectedReport></selectedReport>
       <Calculated>true</Calculated>
@@ -15136,6 +15145,7 @@
       <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-e5153f4a-3656-4223-b4be-21a2f64c1d81</ComponentDescription>
       <ComponentName>7</ComponentName>
+      <Name>MAT-e5153f4a-3656-4223-b4be-21a2f64c1d81</Name>
       <code>0</code>
       <Calculated>true</Calculated>
       <IsAdjustAttached>false</IsAdjustAttached>
@@ -17670,6 +17680,7 @@
       <ComponentDescription>Vaso Separador G-L</ComponentDescription>
       <ComponentName>SEP-09f4e0e1-6a08-4bb3-b795-94d51363b7b4</ComponentName>
       <ValStatus>CAPE_VALID</ValStatus>
+      <Name>SEP-09f4e0e1-6a08-4bb3-b795-94d51363b7b4</Name>
       <code>0</code>
       <selectedReport></selectedReport>
       <Calculated>true</Calculated>
@@ -17695,6 +17706,7 @@
       <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-c5cbfddb-d3fd-4252-8066-6c02a0b16dc0</ComponentDescription>
       <ComponentName>8</ComponentName>
+      <Name>MAT-c5cbfddb-d3fd-4252-8066-6c02a0b16dc0</Name>
       <code>0</code>
       <Calculated>true</Calculated>
       <IsAdjustAttached>false</IsAdjustAttached>
@@ -20187,6 +20199,7 @@
       <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-8ca24c36-6a22-4956-8554-7d8f4bd0c938</ComponentDescription>
       <ComponentName>9</ComponentName>
+      <Name>MAT-8ca24c36-6a22-4956-8554-7d8f4bd0c938</Name>
       <code>0</code>
       <Calculated>true</Calculated>
       <IsAdjustAttached>false</IsAdjustAttached>
@@ -22700,6 +22713,7 @@
       <ComponentDescription>Válvula</ComponentDescription>
       <ComponentName>VALV-9a1895df-e639-480d-8717-7a807e931de4</ComponentName>
       <ValStatus>CAPE_VALID</ValStatus>
+      <Name>VALV-9a1895df-e639-480d-8717-7a807e931de4</Name>
       <code>0</code>
       <selectedReport></selectedReport>
       <Calculated>true</Calculated>
@@ -22725,6 +22739,7 @@
       <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-3472bd89-ed8c-4536-a14a-ba7aaeada428</ComponentDescription>
       <ComponentName>10</ComponentName>
+      <Name>MAT-3472bd89-ed8c-4536-a14a-ba7aaeada428</Name>
       <code>0</code>
       <Calculated>true</Calculated>
       <IsAdjustAttached>false</IsAdjustAttached>
@@ -25275,6 +25290,7 @@
       <ComponentDescription>Reciclo</ComponentDescription>
       <ComponentName>REC-f5ba6034-d804-4914-8b4b-c070058ba4c3</ComponentName>
       <ValStatus>CAPE_VALID</ValStatus>
+      <Name>REC-f5ba6034-d804-4914-8b4b-c070058ba4c3</Name>
       <code>0</code>
       <selectedReport></selectedReport>
       <Calculated>true</Calculated>
@@ -25289,9 +25305,9 @@
       <ShowQuickTable>true</ShowQuickTable>
       <Annotation></Annotation>
       <NodeItems>
-        <NodeItem ID="408438348" Checked="true" Text="PROP_RY_4" Value="0.00513678129019901" Unit="kg/s" />
-        <NodeItem ID="1039843182" Checked="true" Text="PROP_RY_5" Value="-0.00140724354781696" Unit="K" />
-        <NodeItem ID="1779158785" Checked="true" Text="PROP_RY_6" Value="0" Unit="Pa" />
+        <NodeItem ID="1528024463" Checked="true" Text="PROP_RY_4" Value="0.00513678129019901" Unit="kg/s" />
+        <NodeItem ID="808599283" Checked="true" Text="PROP_RY_5" Value="-0.00140724354781696" Unit="K" />
+        <NodeItem ID="362450862" Checked="true" Text="PROP_RY_6" Value="0" Unit="Pa" />
       </NodeItems>
       <PropertyPackage>PP-89d2cade-4f79-4a90-aac8-d9e503a7ee31</PropertyPackage>
       <WegPars AccelDelay="2" AccelFreq="4" Qmax="0" Qmin="-20" />
@@ -25311,6 +25327,7 @@
       <ComponentDescription>Válvula</ComponentDescription>
       <ComponentName>VALV-c3abd255-da00-439c-abb2-3b90a53adf26</ComponentName>
       <ValStatus>CAPE_VALID</ValStatus>
+      <Name>VALV-c3abd255-da00-439c-abb2-3b90a53adf26</Name>
       <code>0</code>
       <selectedReport></selectedReport>
       <Calculated>true</Calculated>
@@ -25336,6 +25353,7 @@
       <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-e331966d-c3ad-4d0f-be99-d0cf85948ebb</ComponentDescription>
       <ComponentName>11</ComponentName>
+      <Name>MAT-e331966d-c3ad-4d0f-be99-d0cf85948ebb</Name>
       <code>0</code>
       <Calculated>true</Calculated>
       <IsAdjustAttached>false</IsAdjustAttached>
@@ -27848,6 +27866,7 @@
       <ComponentDescription>Misturador</ComponentDescription>
       <ComponentName>MIST-7308dd8a-f3f7-4028-8e2a-025b5dd9289a</ComponentName>
       <ValStatus>CAPE_VALID</ValStatus>
+      <Name>MIST-7308dd8a-f3f7-4028-8e2a-025b5dd9289a</Name>
       <code>0</code>
       <selectedReport></selectedReport>
       <Calculated>true</Calculated>
@@ -27873,6 +27892,7 @@
       <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-bec7147a-9f18-44e4-a11a-520dd1ea6590</ComponentDescription>
       <ComponentName>20</ComponentName>
+      <Name>MAT-bec7147a-9f18-44e4-a11a-520dd1ea6590</Name>
       <code>0</code>
       <Calculated>true</Calculated>
       <IsAdjustAttached>false</IsAdjustAttached>
@@ -30365,6 +30385,7 @@
       <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-55d30c06-7766-404f-94bf-1a78f43d3fce</ComponentDescription>
       <ComponentName>12</ComponentName>
+      <Name>MAT-55d30c06-7766-404f-94bf-1a78f43d3fce</Name>
       <code>0</code>
       <Calculated>true</Calculated>
       <IsAdjustAttached>false</IsAdjustAttached>
@@ -32884,6 +32905,7 @@
       <ComponentDescription>Vaso Separador G-L</ComponentDescription>
       <ComponentName>SEP-2a8e9d2d-65bd-4944-9e11-50321a112e26</ComponentName>
       <ValStatus>CAPE_VALID</ValStatus>
+      <Name>SEP-2a8e9d2d-65bd-4944-9e11-50321a112e26</Name>
       <code>0</code>
       <selectedReport></selectedReport>
       <Calculated>true</Calculated>
@@ -32909,6 +32931,7 @@
       <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-39ee305b-e1a7-46ba-9735-7624ad1b3350</ComponentDescription>
       <ComponentName>13</ComponentName>
+      <Name>MAT-39ee305b-e1a7-46ba-9735-7624ad1b3350</Name>
       <code>0</code>
       <Calculated>true</Calculated>
       <IsAdjustAttached>false</IsAdjustAttached>
@@ -35401,6 +35424,7 @@
       <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-47fbaee7-a98a-495b-9947-0b33f1c9b522</ComponentDescription>
       <ComponentName>14</ComponentName>
+      <Name>MAT-47fbaee7-a98a-495b-9947-0b33f1c9b522</Name>
       <code>0</code>
       <Calculated>true</Calculated>
       <IsAdjustAttached>false</IsAdjustAttached>
@@ -37917,6 +37941,7 @@
       <ComponentDescription>Compressor Adiabático</ComponentDescription>
       <ComponentName>COMP-e5b7c77d-2a1b-43b3-a8c4-6fecfca2677b</ComponentName>
       <ValStatus>CAPE_VALID</ValStatus>
+      <Name>COMP-e5b7c77d-2a1b-43b3-a8c4-6fecfca2677b</Name>
       <code>0</code>
       <selectedReport></selectedReport>
       <Calculated>true</Calculated>
@@ -37942,6 +37967,7 @@
       <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-bd8954cf-bce3-4124-a3ee-c502b0cd2710</ComponentDescription>
       <ComponentName>15</ComponentName>
+      <Name>MAT-bd8954cf-bce3-4124-a3ee-c502b0cd2710</Name>
       <code>0</code>
       <Calculated>true</Calculated>
       <IsAdjustAttached>false</IsAdjustAttached>
@@ -40507,6 +40533,7 @@
       <ComponentDescription>Reciclo</ComponentDescription>
       <ComponentName>REC-3bb7db3c-26d6-411c-97be-b50fc7557d25</ComponentName>
       <ValStatus>CAPE_VALID</ValStatus>
+      <Name>REC-3bb7db3c-26d6-411c-97be-b50fc7557d25</Name>
       <code>0</code>
       <selectedReport></selectedReport>
       <Calculated>true</Calculated>
@@ -40521,9 +40548,9 @@
       <ShowQuickTable>true</ShowQuickTable>
       <Annotation></Annotation>
       <NodeItems>
-        <NodeItem ID="855122607" Checked="true" Text="PROP_RY_4" Value="0.00977717926918587" Unit="kg/s" />
-        <NodeItem ID="1782213108" Checked="true" Text="PROP_RY_5" Value="-0.00758263829902717" Unit="K" />
-        <NodeItem ID="1194909364" Checked="true" Text="PROP_RY_6" Value="0" Unit="Pa" />
+        <NodeItem ID="307771434" Checked="true" Text="PROP_RY_4" Value="0.00977717926918587" Unit="kg/s" />
+        <NodeItem ID="1513098135" Checked="true" Text="PROP_RY_5" Value="-0.00758263829902717" Unit="K" />
+        <NodeItem ID="140926808" Checked="true" Text="PROP_RY_6" Value="0" Unit="Pa" />
       </NodeItems>
       <PropertyPackage>PP-89d2cade-4f79-4a90-aac8-d9e503a7ee31</PropertyPackage>
       <WegPars AccelDelay="2" AccelFreq="4" Qmax="0" Qmin="-20" />
@@ -40543,6 +40570,7 @@
       <ComponentDescription>Válvula</ComponentDescription>
       <ComponentName>VALV-1e077a9b-a749-49f3-bc02-11e232dd8b25</ComponentName>
       <ValStatus>CAPE_VALID</ValStatus>
+      <Name>VALV-1e077a9b-a749-49f3-bc02-11e232dd8b25</Name>
       <code>0</code>
       <selectedReport></selectedReport>
       <Calculated>true</Calculated>
@@ -40568,6 +40596,7 @@
       <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-c513b442-4980-428e-aed2-09aac43309ae</ComponentDescription>
       <ComponentName>16</ComponentName>
+      <Name>MAT-c513b442-4980-428e-aed2-09aac43309ae</Name>
       <code>0</code>
       <Calculated>true</Calculated>
       <IsAdjustAttached>false</IsAdjustAttached>
@@ -43087,6 +43116,7 @@
       <ComponentDescription>Vaso Separador G-L</ComponentDescription>
       <ComponentName>SEP-84150fde-3106-4f35-8208-26c3f055758e</ComponentName>
       <ValStatus>CAPE_VALID</ValStatus>
+      <Name>SEP-84150fde-3106-4f35-8208-26c3f055758e</Name>
       <code>0</code>
       <selectedReport></selectedReport>
       <Calculated>true</Calculated>
@@ -43112,6 +43142,7 @@
       <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-2b2dff5c-aed6-49bf-bb80-ca5954eb72a3</ComponentDescription>
       <ComponentName>17</ComponentName>
+      <Name>MAT-2b2dff5c-aed6-49bf-bb80-ca5954eb72a3</Name>
       <code>0</code>
       <Calculated>true</Calculated>
       <IsAdjustAttached>false</IsAdjustAttached>
@@ -45604,6 +45635,7 @@
       <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-a8fe4e38-1f33-43c8-9bef-92ef98d18a33</ComponentDescription>
       <ComponentName>18</ComponentName>
+      <Name>MAT-a8fe4e38-1f33-43c8-9bef-92ef98d18a33</Name>
       <code>0</code>
       <Calculated>true</Calculated>
       <IsAdjustAttached>false</IsAdjustAttached>
@@ -48120,6 +48152,7 @@
       <ComponentDescription>Compressor Adiabático</ComponentDescription>
       <ComponentName>COMP-cc585a9d-9a87-4db7-b7b9-fc5fc401662a</ComponentName>
       <ValStatus>CAPE_VALID</ValStatus>
+      <Name>COMP-cc585a9d-9a87-4db7-b7b9-fc5fc401662a</Name>
       <code>0</code>
       <selectedReport></selectedReport>
       <Calculated>true</Calculated>
@@ -48145,6 +48178,7 @@
       <CompositionBasis>Molar_Fractions</CompositionBasis>
       <ComponentDescription>MAT-b7b2d693-35eb-4000-81d0-e760840a5170</ComponentDescription>
       <ComponentName>19</ComponentName>
+      <Name>MAT-b7b2d693-35eb-4000-81d0-e760840a5170</Name>
       <code>0</code>
       <Calculated>true</Calculated>
       <IsAdjustAttached>false</IsAdjustAttached>
@@ -50692,6 +50726,7 @@
       <ComponentDescription>Reciclo</ComponentDescription>
       <ComponentName>REC-b51e6a75-f578-499c-94b6-3cc16971f440</ComponentName>
       <ValStatus>CAPE_VALID</ValStatus>
+      <Name>REC-b51e6a75-f578-499c-94b6-3cc16971f440</Name>
       <code>0</code>
       <selectedReport></selectedReport>
       <Calculated>true</Calculated>
@@ -50706,9 +50741,9 @@
       <ShowQuickTable>true</ShowQuickTable>
       <Annotation></Annotation>
       <NodeItems>
-        <NodeItem ID="1310272391" Checked="true" Text="PROP_RY_4" Value="0.00310295389964121" Unit="kg/s" />
-        <NodeItem ID="182039137" Checked="true" Text="PROP_RY_5" Value="-0.00328293111755329" Unit="K" />
-        <NodeItem ID="847403640" Checked="true" Text="PROP_RY_6" Value="0" Unit="Pa" />
+        <NodeItem ID="282374859" Checked="true" Text="PROP_RY_4" Value="0.00310295389964121" Unit="kg/s" />
+        <NodeItem ID="2098278885" Checked="true" Text="PROP_RY_5" Value="-0.00328293111755329" Unit="K" />
+        <NodeItem ID="1578179364" Checked="true" Text="PROP_RY_6" Value="0" Unit="Pa" />
       </NodeItems>
       <PropertyPackage>PP-89d2cade-4f79-4a90-aac8-d9e503a7ee31</PropertyPackage>
       <WegPars AccelDelay="2" AccelFreq="4" Qmax="0" Qmin="-20" />
@@ -50884,15 +50919,13 @@
     <SimAutor>DV6880SE\Daniel</SimAutor>
     <SimComentario>Solution for the Cavett Problem in DWSIM</SimComentario>
     <FilePath>C:\Users\Daniel\Documents\Visual Studio 2013\Projects\DWSIM3\DWSIM\bin\x86\Release\samples\Cavett's Problem.dwxml</FilePath>
-    <BackupFileName>59650372.dwbcs</BackupFileName>
+    <BackupFileName>79689705.dwbcs</BackupFileName>
     <CalculatorActivated>true</CalculatorActivated>
     <PropertyPackageFlashAlgorithm>DWSIMDefault</PropertyPackageFlashAlgorithm>
     <PropertyPackageIOFlashQuickMode>true</PropertyPackageIOFlashQuickMode>
     <ThreePhaseFlashStabTestSeverity>0</ThreePhaseFlashStabTestSeverity>
     <FlashValidationDGETolerancePct>0.01</FlashValidationDGETolerancePct>
-    <Password></Password>
-    <UsePassword>false</UsePassword>
-    <Key>489433644A9B4FFFFE3EF76D0D8B6EE3</Key>
+    <Key>E5E4B3332D1C939581B629E59F5AE11E</Key>
   </Settings>
   <GraphicObjects>
     <GraphicObject>
@@ -52705,7 +52738,7 @@
       <Y>3552</Y>
       <Name>TAB-6d317c56-fa8b-42a1-b97c-d0399689dde6</Name>
       <Height>68</Height>
-      <Width>166</Width>
+      <Width>231</Width>
       <Rotation>0</Rotation>
       <InputConnectors />
       <OutputConnectors />
@@ -52758,7 +52791,7 @@
       <Y>3651</Y>
       <Name>TAB-1837ac2d-f291-4a81-b858-d3c2a5972293</Name>
       <Height>68</Height>
-      <Width>166</Width>
+      <Width>231</Width>
       <Rotation>0</Rotation>
       <InputConnectors />
       <OutputConnectors />
@@ -52811,7 +52844,7 @@
       <Y>3750</Y>
       <Name>TAB-2828d08b-137a-4d32-ae5f-d5187d41380f</Name>
       <Height>68</Height>
-      <Width>166</Width>
+      <Width>231</Width>
       <Rotation>0</Rotation>
       <InputConnectors />
       <OutputConnectors />
@@ -52834,7 +52867,6 @@ Liquid Thermal Conductivity: Latini et al Method
 Vapor Thermal Conductivity: Ely-Hanley Method
 Liquid Surface Tension: Brock-Bird Method</ComponentDescription>
       <Tag>PP_1</Tag>
-      <IOQUick>true</IOQUick>
       <TPSeverity>0</TPSeverity>
       <TPCompIDs></TPCompIDs>
       <Parameters>
@@ -52851,6 +52883,7 @@ Liquid Surface Tension: Brock-Bird Method</ComponentDescription>
         <Parameter ID="PP_PTFILT" Value="0.001" />
         <Parameter ID="PP_PTFELT" Value="0.001" />
         <Parameter ID="PP_FLASHALGORITHM" Value="2" />
+        <Parameter ID="PP_FLASHALGORITHMFASTMODE" Value="1" />
         <Parameter ID="PP_IDEAL_MIXRULE_LIQDENS" Value="0" />
         <Parameter ID="PP_USEEXPLIQDENS" Value="0" />
         <Parameter ID="PP_USE_EOS_LIQDENS" Value="0" />
