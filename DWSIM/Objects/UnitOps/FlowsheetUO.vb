@@ -935,7 +935,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             Fsheet.Options.CalculatorActivated = True
 
-            DWSIM.Flowsheet.FlowsheetSolver.CalculateAll2(Fsheet, My.Settings.SolverMode)
+            DWSIM.Flowsheet.FlowsheetSolver.CalculateAll2(Fsheet, My.Settings.SolverMode, My.MyApplication.TaskCancellationTokenSource)
 
             wout = 0.0#
             For Each c In Me.GraphicObject.OutputConnectors
