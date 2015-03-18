@@ -254,14 +254,17 @@ Namespace DWSIM.Flowsheet
                         Dim myObj As DWSIM.SimulationObjects.Streams.MaterialStream = form.Collections.CLCS_MaterialStreamCollection(objArgs.Nome)
                         RaiseEvent MaterialStreamCalculationStarted(form, New System.EventArgs(), myObj)
                         CalculateMaterialStreamAsync(form, myObj, ct)
+                        myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
                         RaiseEvent MaterialStreamCalculationFinished(form, New System.EventArgs(), myObj)
                     Case TipoObjeto.EnergyStream
                         Dim myObj As DWSIM.SimulationObjects.Streams.EnergyStream = form.Collections.CLCS_EnergyStreamCollection(objArgs.Nome)
+                        myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
                         myObj.Calculated = True
                     Case Else
                         RaiseEvent UnitOpCalculationStarted(form, New System.EventArgs(), objArgs)
                         Dim myObj As SimulationObjects_UnitOpBaseClass = form.Collections.ObjectCollection(objArgs.Nome)
                         myObj.Solve()
+                        myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
                         RaiseEvent UnitOpCalculationFinished(form, New System.EventArgs(), objArgs)
                 End Select
                 form.ProcessScripts(Script.EventType.ObjectCalculationFinished, Script.ObjectType.FlowsheetObject, objArgs.Nome)
@@ -1441,11 +1444,11 @@ Namespace DWSIM.Flowsheet
             ElseIf mode = 1 Then
                 'bg thread
                 ProcessQueueInternalAsync(form, ct)
-                SolveSimultaneousAdjustsAsync(form)
+                SolveSimultaneousAdjustsAsync(form, ct)
             ElseIf mode = 2 Then
                 'bg parallel thread
                 ProcessQueueInternalAsyncParallel(form, orderedlist, ct)
-                SolveSimultaneousAdjustsAsync(form)
+                SolveSimultaneousAdjustsAsync(form, ct)
             End If
            
         End Sub
@@ -2270,6 +2273,48 @@ Namespace DWSIM.Flowsheet
 
         End Sub
 
+        Public Shared Sub CalculateObjectAsync(ByVal form As FormFlowsheet, ByVal ObjID As String, ByVal ct As CancellationToken)
+
+            If form.Collections.ObjectCollection.ContainsKey(ObjID) Then
+
+                Dim baseobj As SimulationObjects_BaseClass = form.Collections.ObjectCollection(ObjID)
+
+                Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                With objargs
+                    .Emissor = "PropertyGrid"
+                    .Calculado = True
+                    .Nome = baseobj.Nome
+                    .Tipo = TipoObjeto.MaterialStream
+                    .Tag = baseobj.GraphicObject.Tag
+                End With
+                form.CalculationQueue.Enqueue(objargs)
+
+                Dim objl = GetSolvingList(form, True)
+
+                Dim objstack As List(Of String) = objl(0)
+
+                For Each o As String In objstack
+                    Dim obj = form.Collections.ObjectCollection(o)
+                    objargs = New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Emissor = "FlowsheetSolver"
+                        .Calculado = True
+                        .Nome = obj.Nome
+                        .Tipo = obj.GraphicObject.TipoObjeto
+                        .Tag = obj.GraphicObject.Tag
+                        form.CalculationQueue.Enqueue(objargs)
+                    End With
+                Next
+
+                For Each o In form.Collections.ObjectCollection.Values
+                    o.SetFlowsheet(form)
+                Next
+
+                ProcessQueueInternalAsync(form, ct)
+
+            End If
+
+        End Sub
 
         'Simultaneous Adjust Solver
         Private Shared Sub SolveSimultaneousAdjusts(ByVal form As FormFlowsheet)
@@ -2308,7 +2353,7 @@ Namespace DWSIM.Flowsheet
                         ic = 0
                         Do
 
-                            fx = FunctionValue(form, x)
+                            fx = FunctionValueSync(form, x)
 
                             il_err_ant = il_err
                             il_err = 0
@@ -2322,7 +2367,7 @@ Namespace DWSIM.Flowsheet
 
                             If il_err < 0.0000000001 Then Exit Do
 
-                            dfdx = FunctionGradient(form, x)
+                            dfdx = FunctionGradientSync(form, x)
 
                             Dim success As Boolean
                             success = MathEx.SysLin.rsolve.rmatrixsolve(dfdx, fx, x.Length, dx)
@@ -2355,9 +2400,11 @@ Namespace DWSIM.Flowsheet
 
         End Sub
 
-        Private Shared Sub SolveSimultaneousAdjustsAsync(ByVal form As FormFlowsheet)
+        Private Shared Sub SolveSimultaneousAdjustsAsync(ByVal form As FormFlowsheet, ct As CancellationToken)
 
             If form.m_simultadjustsolverenabled Then
+
+                'this is the cancellation token for background threads. it checks for calculator stop requests and passes the request to the tasks.
 
                 Dim n As Integer = 0
 
@@ -2366,6 +2413,11 @@ Namespace DWSIM.Flowsheet
                 Next
 
                 If n > 0 Then
+
+                    form.UIThread(Sub()
+                                      form.FormSurface.LabelSimultAdjInfo.Text = ""
+                                      form.FormSurface.PanelSimultAdjust.Visible = True
+                                  End Sub)
 
                     n -= 1
 
@@ -2386,7 +2438,7 @@ Namespace DWSIM.Flowsheet
                     ic = 0
                     Do
 
-                        fx = FunctionValue(form, x)
+                        fx = FunctionValueAsync(form, x, ct)
 
                         il_err_ant = il_err
                         il_err = 0
@@ -2394,9 +2446,11 @@ Namespace DWSIM.Flowsheet
                             il_err += (fx(i) / x(i)) ^ 2
                         Next
 
+                        form.UIThread(Sub() form.FormSurface.LabelSimultAdjInfo.Text = "Iteration #" & ic + 1 & ", NSSE: " & il_err)
+
                         If il_err < 0.0000000001 Then Exit Do
 
-                        dfdx = FunctionGradient(form, x)
+                        dfdx = FunctionGradientAsync(form, x, ct)
 
                         Dim success As Boolean
                         success = MathEx.SysLin.rsolve.rmatrixsolve(dfdx, fx, x.Length, dx)
@@ -2415,13 +2469,18 @@ Namespace DWSIM.Flowsheet
 
                     Loop
 
+                    form.UIThread(Sub()
+                                      form.FormSurface.LabelSimultAdjInfo.Text = ""
+                                      form.FormSurface.PanelSimultAdjust.Visible = False
+                                  End Sub)
+
                 End If
 
             End If
 
         End Sub
 
-        Private Shared Function FunctionValue(ByVal form As FormFlowsheet, ByVal x() As Double) As Double()
+        Private Shared Function FunctionValueSync(ByVal form As FormFlowsheet, ByVal x() As Double) As Double()
 
             Dim i As Integer = 0
             For Each adj As SimulationObjects.SpecialOps.Adjust In form.Collections.CLCS_AdjustCollection.Values
@@ -2433,7 +2492,7 @@ Namespace DWSIM.Flowsheet
 
             For Each adj As SimulationObjects.SpecialOps.Adjust In form.Collections.CLCS_AdjustCollection.Values
                 If adj.SimultaneousAdjust Then
-                    form.UIThread(Sub() CalculateObjectSync(form, adj.ManipulatedObject.Nome))
+                    CalculateObjectSync(form, adj.ManipulatedObject.Nome)
                 End If
             Next
 
@@ -2454,7 +2513,7 @@ Namespace DWSIM.Flowsheet
 
         End Function
 
-        Private Shared Function FunctionGradient(ByVal form As FormFlowsheet, ByVal x() As Double) As Double(,)
+        Private Shared Function FunctionGradientSync(ByVal form As FormFlowsheet, ByVal x() As Double) As Double(,)
 
             Dim epsilon As Double = 0.01
 
@@ -2477,8 +2536,75 @@ Namespace DWSIM.Flowsheet
                         End If
                     End If
                 Next
-                f2 = FunctionValue(form, x2)
-                f3 = FunctionValue(form, x3)
+                f2 = FunctionValueSync(form, x2)
+                f3 = FunctionValueSync(form, x3)
+                For k = 0 To x.Length - 1
+                    g(k, i) = (f2(k) - f3(k)) / (x2(i) - x3(i))
+                Next
+            Next
+
+            Return g
+
+        End Function
+
+        Private Shared Function FunctionValueAsync(ByVal form As FormFlowsheet, ByVal x() As Double, ct As CancellationToken) As Double()
+
+            Dim i As Integer = 0
+            For Each adj As SimulationObjects.SpecialOps.Adjust In form.Collections.CLCS_AdjustCollection.Values
+                If adj.SimultaneousAdjust Then
+                    SetMnpVarValue(x(i), form, adj)
+                    i += 1
+                End If
+            Next
+
+            For Each adj As SimulationObjects.SpecialOps.Adjust In form.Collections.CLCS_AdjustCollection.Values
+                If adj.SimultaneousAdjust Then
+                    CalculateObjectAsync(form, adj.ManipulatedObject.Nome, ct)
+                End If
+            Next
+
+            Dim fx(x.Length - 1) As Double
+            i = 0
+            For Each adj As SimulationObjects.SpecialOps.Adjust In form.Collections.CLCS_AdjustCollection.Values
+                If adj.SimultaneousAdjust Then
+                    If adj.Referenced Then
+                        fx(i) = adj.AdjustValue + GetRefVarValue(form, adj) - GetCtlVarValue(form, adj)
+                    Else
+                        fx(i) = adj.AdjustValue - GetCtlVarValue(form, adj)
+                    End If
+                    i += 1
+                End If
+            Next
+
+            Return fx
+
+        End Function
+
+        Private Shared Function FunctionGradientAsync(ByVal form As FormFlowsheet, ByVal x() As Double, ct As CancellationToken) As Double(,)
+
+            Dim epsilon As Double = 0.01
+
+            Dim f2(), f3() As Double
+            Dim g(x.Length - 1, x.Length - 1), x1(x.Length - 1), x2(x.Length - 1), x3(x.Length - 1), x4(x.Length - 1) As Double
+            Dim i, j, k As Integer
+
+            For i = 0 To x.Length - 1
+                For j = 0 To x.Length - 1
+                    If i <> j Then
+                        x2(j) = x(j)
+                        x3(j) = x(j)
+                    Else
+                        If x(j) <> 0.0# Then
+                            x2(j) = x(j) * (1 + epsilon)
+                            x3(j) = x(j) * (1 - epsilon)
+                        Else
+                            x2(j) = x(j) + epsilon
+                            x3(j) = x(j)
+                        End If
+                    End If
+                Next
+                f2 = FunctionValueAsync(form, x2, ct)
+                f3 = FunctionValueAsync(form, x3, ct)
                 For k = 0 To x.Length - 1
                     g(k, i) = (f2(k) - f3(k)) / (x2(i) - x3(i))
                 Next
