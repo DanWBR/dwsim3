@@ -3766,9 +3766,9 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
                         Finally
                             Me.ToolStripStatusLabel1.Text = ""
                         End Try
-                    ElseIf Path.GetExtension(form2.Options.FilePath).ToLower = ".dwxml" Then
+                    ElseIf Path.GetExtension(Me.filename).ToLower = ".dwxml" Then
                         Task.Factory.StartNew(Sub() SaveXML(form2.Options.FilePath, form2)).ContinueWith(Sub() Me.ToolStripStatusLabel1.Text = "", TaskContinuationOptions.ExecuteSynchronously)
-                    ElseIf Path.GetExtension(form2.Options.FilePath).ToLower = ".dwxmz" Then
+                    ElseIf Path.GetExtension(Me.filename).ToLower = ".dwxmz" Then
                         Task.Factory.StartNew(Sub() SaveXMLZIP(form2.Options.FilePath, form2)).ContinueWith(Sub() Me.ToolStripStatusLabel1.Text = "", TaskContinuationOptions.ExecuteSynchronously)
                     End If
                 Else

@@ -1437,15 +1437,17 @@ Namespace DWSIM.Flowsheet
             If mode = 0 Then
                 'UI thread
                 ProcessQueueInternal(form, Isolated, FlowsheetSolverMode, ct)
+                SolveSimultaneousAdjusts(form)
             ElseIf mode = 1 Then
                 'bg thread
                 ProcessQueueInternalAsync(form, ct)
+                SolveSimultaneousAdjustsAsync(form)
             ElseIf mode = 2 Then
                 'bg parallel thread
                 ProcessQueueInternalAsyncParallel(form, orderedlist, ct)
+                SolveSimultaneousAdjustsAsync(form)
             End If
-            SolveSimultaneousAdjustsAsync(form)
-
+           
         End Sub
 
         Private Shared Sub ProcessQueueInternal(ByVal form As FormFlowsheet, Optional ByVal Isolated As Boolean = False, Optional ByVal FlowsheetSolverMode As Boolean = False, Optional ByVal ct As Threading.CancellationToken = Nothing)
@@ -2211,6 +2213,64 @@ Namespace DWSIM.Flowsheet
 
         End Sub
 
+        Public Shared Sub CalculateObjectSync(ByVal form As FormFlowsheet, ByVal ObjID As String)
+
+            If form.Collections.ObjectCollection.ContainsKey(ObjID) Then
+
+                Dim baseobj As SimulationObjects_BaseClass = form.Collections.ObjectCollection(ObjID)
+
+                If baseobj.GraphicObject.TipoObjeto = TipoObjeto.MaterialStream Then
+                    Dim ms As Streams.MaterialStream = baseobj
+                    If ms.GraphicObject.InputConnectors(0).IsAttached = False Then
+                        'add this stream to the calculator queue list
+                        Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                        With objargs
+                            .Calculado = True
+                            .Nome = ms.Nome
+                            .Tipo = TipoObjeto.MaterialStream
+                            .Tag = ms.GraphicObject.Tag
+                        End With
+                        If ms.IsSpecAttached = True And ms.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then
+                            form.Collections.CLCS_SpecCollection(ms.AttachedSpecId).Calculate()
+                        End If
+                        form.CalculationQueue.Enqueue(objargs)
+                        ProcessQueueInternal(form)
+                    Else
+                        If ms.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.TipoObjeto = TipoObjeto.OT_Reciclo Then
+                            'add this stream to the calculator queue list
+                            Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                            With objargs
+                                .Calculado = True
+                                .Nome = ms.Nome
+                                .Tipo = TipoObjeto.MaterialStream
+                                .Tag = ms.GraphicObject.Tag
+                            End With
+                            If ms.IsSpecAttached = True And ms.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then
+                                form.Collections.CLCS_SpecCollection(ms.AttachedSpecId).Calculate()
+                            End If
+                            form.CalculationQueue.Enqueue(objargs)
+                            ProcessQueueInternal(form)
+                        End If
+                    End If
+                Else
+                    Dim unit As SimulationObjects_UnitOpBaseClass = baseobj
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Emissor = "PropertyGrid"
+                        .Calculado = True
+                        .Nome = unit.Nome
+                        .Tipo = unit.GraphicObject.TipoObjeto
+                        .Tag = unit.GraphicObject.Tag
+                    End With
+                    form.CalculationQueue.Enqueue(objargs)
+                    ProcessQueueInternal(form)
+                End If
+
+            End If
+
+        End Sub
+
+
         'Simultaneous Adjust Solver
         Private Shared Sub SolveSimultaneousAdjusts(ByVal form As FormFlowsheet)
 
@@ -2373,7 +2433,7 @@ Namespace DWSIM.Flowsheet
 
             For Each adj As SimulationObjects.SpecialOps.Adjust In form.Collections.CLCS_AdjustCollection.Values
                 If adj.SimultaneousAdjust Then
-                    CalculateObject(form, adj.ManipulatedObject.Nome)
+                    form.UIThread(Sub() CalculateObjectSync(form, adj.ManipulatedObject.Nome))
                 End If
             Next
 

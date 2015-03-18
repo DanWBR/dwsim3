@@ -321,9 +321,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                     Do
 
-                        FlowSheet.UIThread(Sub()
-                                               FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": Calculating pipe segment #" & segmento.Indice & ", distance " & (j + 1) * segmento.Comprimento / segmento.Incrementos & "/" & segmento.Comprimento & "m", Color.DarkBlue, FormClasses.TipoAviso.Informacao)
-                                           End Sub)
+                        'FlowSheet.UIThread(Sub()
+                        '                       FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": Calculating pipe segment #" & segmento.Indice & ", distance " & (j + 1) * segmento.Comprimento / segmento.Incrementos & "/" & segmento.Comprimento & "m", Color.DarkBlue, FormClasses.TipoAviso.Informacao)
+                        '                   End Sub)
                         
                         If Text > Tin Then
                             Tout = Tin * 1.005
