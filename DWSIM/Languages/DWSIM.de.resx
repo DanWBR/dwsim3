@@ -5057,4 +5057,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="PP_FLASHALGORITHMFASTMODE" xml:space="preserve">
     <value>Enable Flash Algorithm Fast Mode</value>
   </data>
+  <data name="RecycleStreamNotCalculated" xml:space="preserve">
+    <value>Der Rückführung Inlet Stream ist nicht im Gleichgewicht berechnet oder nicht.</value>
+  </data>
 </root>

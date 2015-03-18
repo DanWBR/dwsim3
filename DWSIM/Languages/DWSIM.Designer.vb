@@ -11435,6 +11435,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to A corrente de entrada do Reciclo não está calculada ou não está em equilíbrio..
+        '''</summary>
+        Friend Shared ReadOnly Property RecycleStreamNotCalculated() As String
+            Get
+                Return ResourceManager.GetString("RecycleStreamNotCalculated", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Redirecionar mensagens.
         '''</summary>
         Friend Shared ReadOnly Property RedirectOutput() As String

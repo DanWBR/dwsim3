@@ -5068,4 +5068,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="PP_FLASHALGORITHMFASTMODE" xml:space="preserve">
     <value>Algoritmo Flash no Modo Rápido</value>
   </data>
+  <data name="RecycleStreamNotCalculated" xml:space="preserve">
+    <value>A corrente de entrada do Reciclo não está calculada ou não está em equilíbrio.</value>
+  </data>
 </root>

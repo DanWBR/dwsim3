@@ -2125,6 +2125,35 @@ Namespace DWSIM.Flowsheet
 
                 End If
 
+                If form.Visible Then
+
+                    form.FormWatch.UpdateList()
+
+                    form.FormQueue.TextBox1.Clear()
+
+                    For Each g As GraphicObject In form.FormSurface.FlowsheetDesignSurface.drawingObjects
+                        If g.TipoObjeto = TipoObjeto.GO_MasterTable Then
+                            CType(g, DWSIM.GraphicObjects.MasterTableGraphic).Update(form)
+                        End If
+                    Next
+
+                    If Not form.FormSpreadsheet Is Nothing Then
+                        If form.FormSpreadsheet.chkUpdate.Checked Then form.FormSpreadsheet.EvaluateAll()
+                    End If
+
+                    If form.FormSurface.Timer2.Enabled = True Then form.FormSurface.Timer2.Stop()
+                    form.FormSurface.PictureBox3.Image = My.Resources.tick
+                    form.FormSurface.PictureBox4.Visible = False
+                    form.FormSurface.LabelTime.Text = ""
+
+                    If Not form.FormSurface.FlowsheetDesignSurface.SelectedObject Is Nothing Then Call form.FormSurface.UpdateSelectedObject()
+
+                    form.FormSurface.LabelCalculator.Text = DWSIM.App.GetLocalString("CalculadorOcioso")
+
+                    Application.DoEvents()
+
+                End If
+
                 form.ProcessScripts(Script.EventType.SolverFinished, Script.ObjectType.Solver)
 
                 RaiseEvent FlowsheetCalculationFinished(form, New System.EventArgs(), Nothing)

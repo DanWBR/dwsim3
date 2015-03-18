@@ -390,7 +390,7 @@ Namespace DWSIM.SimulationObjects.SpecialOps
                 Case Helpers.Recycle.FlashType.FlashPH
                     tmp = form.Options.SelectedPropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pnew, Hnew, Tnew)
                 Case Helpers.Recycle.FlashType.None
-                    tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Tnew, Pnew, 0)
+                    'tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Tnew, Pnew, 0)
             End Select
 
             Select Case Me.FlashType
@@ -473,6 +473,11 @@ Namespace DWSIM.SimulationObjects.SpecialOps
 
                     Dim msfrom, msto As DWSIM.SimulationObjects.Streams.MaterialStream
                     msfrom = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name)
+
+                    If Not msfrom.Calculated And Not msfrom.AtEquilibrium Then
+                        Throw New Exception(DWSIM.App.GetLocalString("RecycleStreamNotCalculated"))
+                    End If
+
                     msto = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name)
                     msto.Assign(msfrom)
                     msto.AssignProps(msfrom)
@@ -483,8 +488,6 @@ Namespace DWSIM.SimulationObjects.SpecialOps
                 Me.IterationCount = 0
                 Throw New TimeoutException(DWSIM.App.GetLocalString("RecycleMaxItsReached"))
             End If
-
-            Me.IterationCount += 1
 
             If Math.Abs(Me.ConvergenceHistory.TemperaturaE) > Me.ConvergenceParameters.Temperatura Or _
                 Math.Abs(Me.ConvergenceHistory.PressaoE) > Me.ConvergenceParameters.Pressao Or _
@@ -503,12 +506,14 @@ Namespace DWSIM.SimulationObjects.SpecialOps
 
             Else
 
-                Me.IterationsTaken = Me.IterationCount
+                If Me.IterationCount <> 0 Then Me.IterationsTaken = Me.IterationCount
                 Me.IterationCount = 0
 
                 Me.Converged = True
 
             End If
+
+            Me.IterationCount += 1
 
             Me.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
 
