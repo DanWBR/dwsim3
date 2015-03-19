@@ -1556,6 +1556,8 @@ Namespace DWSIM.Flowsheet
 
                 Dim myinfo As DWSIM.Outros.StatusChangeEventArgs = form.CalculationQueue.Peek()
 
+                form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}, True))
+
                 Try
                     If myinfo.Tipo = TipoObjeto.MaterialStream Then
                         CalculateMaterialStreamAsync(form, form.Collections.CLCS_MaterialStreamCollection(myinfo.Nome), ct)
@@ -1567,6 +1569,8 @@ Namespace DWSIM.Flowsheet
                 End Try
 
                 form.Collections.ObjectCollection(myinfo.Nome).GraphicObject.Calculated = True
+
+                form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}))
 
                 If form.CalculationQueue.Count = 1 Then form.FormSpreadsheet.InternalCounter = 0
                 If form.CalculationQueue.Count > 0 Then form.CalculationQueue.Dequeue()
@@ -1602,6 +1606,7 @@ Namespace DWSIM.Flowsheet
                     objlist.Add(item.Nome)
                 Next
                 Parallel.ForEach(li.Value, poptions, Sub(myinfo)
+                                                         form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}, True))
                                                          If myinfo.Tipo = TipoObjeto.MaterialStream Then
                                                              Try
                                                                  CalculateMaterialStreamAsync(form, form.Collections.CLCS_MaterialStreamCollection(myinfo.Nome), ct)
@@ -1616,6 +1621,7 @@ Namespace DWSIM.Flowsheet
                                                              End Try
                                                          End If
                                                          form.Collections.ObjectCollection(myinfo.Nome).GraphicObject.Calculated = True
+                                                         form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}))
                                                      End Sub)
              Next
 
@@ -2162,6 +2168,8 @@ Namespace DWSIM.Flowsheet
                     form.FormSurface.PanelSimultAdjust.Visible = False
 
                     If Not form.FormSurface.FlowsheetDesignSurface.SelectedObject Is Nothing Then Call form.FormSurface.UpdateSelectedObject()
+
+                    form.FormSurface.FlowsheetDesignSurface.Focus()
 
                     Application.DoEvents()
 

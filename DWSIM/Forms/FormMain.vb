@@ -2741,6 +2741,7 @@ Public Class FormMain
         xel = xdoc.Element("DWSIM_Simulation_Data").Element("SimulationObjects")
 
         For Each so As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
+            so.SetFlowsheet(form)
             xel.Add(New XElement("SimulationObject", {so.SaveData().ToArray()}))
         Next
 
