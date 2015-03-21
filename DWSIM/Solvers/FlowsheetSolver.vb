@@ -2369,7 +2369,7 @@ Namespace DWSIM.Flowsheet
                             il_err_ant = il_err
                             il_err = 0
                             For i = 0 To x.Length - 1
-                                il_err += (fx(i) / x(i)) ^ 2
+                                il_err += (fx(i)) ^ 2
                             Next
 
                             form.FormSurface.LabelSimultAdjInfo.Text = "Iteration #" & ic + 1 & ", NSSE: " & il_err
@@ -2454,7 +2454,7 @@ Namespace DWSIM.Flowsheet
                         il_err_ant = il_err
                         il_err = 0
                         For i = 0 To x.Length - 1
-                            il_err += (fx(i) / x(i)) ^ 2
+                            il_err += (fx(i)) ^ 2
                         Next
 
                         form.UIThread(Sub() form.FormSurface.LabelSimultAdjInfo.Text = "Iteration #" & ic + 1 & ", NSSE: " & il_err)

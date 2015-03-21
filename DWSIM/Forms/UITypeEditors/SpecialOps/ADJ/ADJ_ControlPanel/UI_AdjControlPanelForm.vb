@@ -127,372 +127,305 @@ Public Class UI_AdjControlPanelForm
                 co.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
             Next
 
-            If Me.rbSecante.Checked Then
+        If Me.rbSecante.Checked Then
 
-                Dim cnt As Integer = 0
-                Dim var, varAnt, varAnt2, fi, fi_ant, fi_ant2 As Double
-                var = mvVal
-                Do
-                    fi_ant2 = fi_ant
-                    fi_ant = fi
-                    fi = cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), cvVal - adjval)
+            Dim cnt As Integer = 0
+            Dim var, varAnt, varAnt2, fi, fi_ant, fi_ant2 As Double
+            var = mvVal
+            Do
+                fi_ant2 = fi_ant
+                fi_ant = fi
+                fi = cvVal - adjval
 
-                    Me.lblStatus.Text = DWSIM.App.GetLocalString("Ajustando")
-                    Me.lblItXdeY.Text = DWSIM.App.GetLocalString("Iterao") & " " & (cnt + 1) & " " & DWSIM.App.GetLocalString("de") & " " & maxit
-                    Me.tbErro.Text = fi
+                Me.lblStatus.Text = DWSIM.App.GetLocalString("Ajustando")
+                Me.lblItXdeY.Text = DWSIM.App.GetLocalString("Iterao") & " " & (cnt + 1) & " " & DWSIM.App.GetLocalString("de") & " " & maxit
+                Me.tbErro.Text = fi
 
-                    If cnt <= 2 Then
-                        varAnt2 = varAnt
-                        varAnt = var
-                        If cnt > 1 And fi > fi_ant Then
-                            var = var - 2 * stepsize
-                        Else
-                            var = var + stepsize
-                        End If
+                If cnt <= 2 Then
+                    varAnt2 = varAnt
+                    varAnt = var
+                    If cnt > 1 And fi > fi_ant Then
+                        var = var - 2 * stepsize
                     Else
-                        varAnt2 = varAnt
-                        varAnt = var
-                        If fi <> fi_ant2 Then
-                            var = var - fi * (var - varAnt2) / (fi - fi_ant2)
-                        End If
+                        var = var + stepsize
                     End If
-
-                    If Me.usemaxmin Then
-                        If var <= min Or var >= max Then
-                            Dim msgres As MsgBoxResult = MessageBox.Show(DWSIM.App.GetLocalString("Avarivelmanipuladaat") _
-                                         & vbCrLf & DWSIM.App.GetLocalString("Desejacontinuaroproc"), _
-                                         DWSIM.App.GetLocalString("Limitesdavarivelmani"), MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-                            If msgres = MsgBoxResult.No Then
-                                cancelar = True
-                                Exit Do
-                            End If
-                        End If
+                Else
+                    varAnt2 = varAnt
+                    varAnt = var
+                    If fi <> fi_ant2 Then
+                        var = var - fi * (var - varAnt2) / (fi - fi_ant2)
                     End If
+                End If
 
-                    Me.SetMnpVarValue(var)
-                    'If myADJ.ManipulatedObject.GraphicObject.TipoObjeto = Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.MaterialStream Then
-                    '    CalculateMaterialStream(formC, myADJ.ManipulatedObject)
-                    'Else
-                    'Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
-                    ''Call function to calculate flowsheet
-                    'With objargs
-                    '    .Calculado = False
-                    '    .Nome = myADJ.ManipulatedObject.GraphicObject.Name
-                    '    .Tag = myADJ.ManipulatedObject.GraphicObject.Tag
-                    '    .Tipo = myADJ.ManipulatedObject.GraphicObject.TipoObjeto
-                    '    .Emissor = "Adjust"
-                    'End With
-                    'formC.CalculationQueue.Enqueue(objargs)
-                    'Call formC.FormSurface.UpdateSelectedObject()
-                    'Call formC.FormSurface.FlowsheetDesignSurface.Invalidate()
-                    'Application.DoEvents()
-                    'ProcessCalculationQueue(formC)
-                    'End If
-
-                    DWSIM.Flowsheet.FlowsheetSolver.CalculateObject(My.Application.ActiveSimulation, myADJ.ManipulatedObject.GraphicObject.Name)
-
-                    cvVal = Me.GetCtlVarValue()
-                    cnt += 1
-
-                    py1.Add(cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), adjval))
-                    py2.Add(cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), cvVal))
-
-                    AtualizaGrafico()
-
-                    If fi = fi_ant Then
-                        Dim msgres As MsgBoxResult = MessageBox.Show(DWSIM.App.GetLocalString("Avarivelmanipuladano") _
-                                     & vbCrLf & DWSIM.App.GetLocalString("Desejacontinuaroproc"), _
-                                     DWSIM.App.GetLocalString("Problemasnaconvergnc"), MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                If Me.usemaxmin Then
+                    If var <= min Or var >= max Then
+                        Dim msgres As MsgBoxResult = MessageBox.Show(DWSIM.App.GetLocalString("Avarivelmanipuladaat") _
+                                        & vbCrLf & DWSIM.App.GetLocalString("Desejacontinuaroproc"), _
+                                        DWSIM.App.GetLocalString("Limitesdavarivelmani"), MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                         If msgres = MsgBoxResult.No Then
                             cancelar = True
                             Exit Do
                         End If
                     End If
-
-                    If cnt >= maxit Then
-                        Dim msgres As MsgBoxResult = MessageBox.Show(DWSIM.App.GetLocalString("Onmeromximodeiteraes"), _
-                                                        DWSIM.App.GetLocalString("Nmeromximodeiteraesa3"), _
-                                                        MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-                        If msgres = MsgBoxResult.No Then
-                            cancelar = False
-                            Me.lblStatus.Text = DWSIM.App.GetLocalString("Mximodeiteraesatingi")
-                            Me.btnIniciar.Enabled = True
-                            Me.myADJ.GraphicObject.Calculated = False
-                            Exit Sub
-                        Else
-                            cnt = 1
-                        End If
-                    End If
-                    Application.DoEvents()
-                    If cancelar = True Then Exit Do
-                Loop Until Math.Abs(fi) < tol Or Double.IsNaN(var)
-
-                If cancelar = True Then
-                    Me.lblStatus.Text = DWSIM.App.GetLocalString("Ajustecanceladopelou")
-                    Me.myADJ.GraphicObject.Calculated = False
-                Else
-                    Me.lblStatus.Text = DWSIM.App.GetLocalString("Valorajustadocomsuce")
-                    Me.myADJ.GraphicObject.Calculated = True
                 End If
 
-            ElseIf Me.rbBrent.Checked Then
+                Me.SetMnpVarValue(var)
 
-                minval = myADJ.MinVal.GetValueOrDefault
-                maxval = myADJ.MaxVal.GetValueOrDefault
+                DWSIM.Flowsheet.FlowsheetSolver.CalculateObject(My.Application.ActiveSimulation, myADJ.ManipulatedObject.GraphicObject.Name)
 
-                Dim l As Integer = 0
-                Dim i As Integer = 0
+                cvVal = Me.GetCtlVarValue()
+                cnt += 1
 
-                Dim f, f_inf, nsub, delta As Double
+                py1.Add(cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), adjval))
+                py2.Add(cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), cvVal))
 
-                nsub = 5
+                AtualizaGrafico()
 
-                delta = (maxval - minval) / nsub
+                If fi = fi_ant Then
+                    Dim msgres As MsgBoxResult = MessageBox.Show(DWSIM.App.GetLocalString("Avarivelmanipuladano") _
+                                    & vbCrLf & DWSIM.App.GetLocalString("Desejacontinuaroproc"), _
+                                    DWSIM.App.GetLocalString("Problemasnaconvergnc"), MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If msgres = MsgBoxResult.No Then
+                        cancelar = True
+                        Exit Do
+                    End If
+                End If
 
-                Do
-                    Me.SetMnpVarValue(minval)
-                    'If myADJ.ManipulatedObject.GraphicObject.TipoObjeto = Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.MaterialStream Then
-                    '    CalculateMaterialStream(formC, myADJ.ManipulatedObject)
-                    'Else
-                    '    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
-                    '    'Call function to calculate flowsheet
-                    '    With objargs
-                    '        .Calculado = False
-                    '        .Nome = myADJ.ManipulatedObject.GraphicObject.Name
-                    '        .Tag = myADJ.ManipulatedObject.GraphicObject.Tag
-                    '        .Tipo = myADJ.ManipulatedObject.GraphicObject.TipoObjeto
-                    '    End With
-                    '    CalculateFlowsheet(formC, objargs, Nothing)
-                    'End If
-
-                    DWSIM.Flowsheet.FlowsheetSolver.CalculateObject(My.Application.ActiveSimulation, myADJ.ManipulatedObject.GraphicObject.Name)
-
-                    cvVal = Me.GetCtlVarValue()
-                    f = cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), cvVal - adjval)
-                    Me.lblStatus.Text = DWSIM.App.GetLocalString("Ajustando")
-                    Me.lblItXdeY.Text = DWSIM.App.GetLocalString("Procurandosubinterva")
-                    Me.tbErro.Text = f
-                    py1.Add(cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), adjval))
-                    py2.Add(cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), cvVal))
-                    AtualizaGrafico()
-                    minval = minval + delta
-                    Me.SetMnpVarValue(minval)
-                    'If myADJ.ManipulatedObject.GraphicObject.TipoObjeto = Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.MaterialStream Then
-                    '    CalculateMaterialStream(formC, myADJ.ManipulatedObject)
-                    'Else
-                    '    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
-                    '    'Call function to calculate flowsheet
-                    '    With objargs
-                    '        .Calculado = False
-                    '        .Nome = myADJ.ManipulatedObject.GraphicObject.Name
-                    '        .Tag = myADJ.ManipulatedObject.GraphicObject.Tag
-                    '        .Tipo = myADJ.ManipulatedObject.GraphicObject.TipoObjeto
-                    '        .Emissor = "Adjust"
-                    '    End With
-                    '    formC.CalculationQueue.Enqueue(objargs)
-                    '    Call formC.FormSurface.UpdateSelectedObject()
-                    '    Call formC.FormSurface.FlowsheetDesignSurface.Invalidate()
-                    '    Application.DoEvents()
-                    '    ProcessCalculationQueue(formC)
-                    'End If
-
-                    DWSIM.Flowsheet.FlowsheetSolver.CalculateObject(My.Application.ActiveSimulation, myADJ.ManipulatedObject.GraphicObject.Name)
-
-                    cvVal = Me.GetCtlVarValue()
-                    f_inf = cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), cvVal - adjval)
-                    Me.lblStatus.Text = DWSIM.App.GetLocalString("Ajustando")
-                    Me.lblItXdeY.Text = DWSIM.App.GetLocalString("Procurandosubinterva")
-                    Me.tbErro.Text = f_inf
-                    py1.Add(cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), adjval))
-                    py2.Add(cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), cvVal))
-                    AtualizaGrafico()
-                    l += 1
-                    If l > 5 Then
-                        MessageBox.Show(DWSIM.App.GetLocalString("Oajustenoencontrouum"), DWSIM.App.GetLocalString("Semsoluo"), MessageBoxButtons.OK, MessageBoxIcon.Information)
-                        Me.lblStatus.Text = DWSIM.App.GetLocalString("Noexistesoluonointer")
-                        Me.lblItXdeY.Text = ""
+                If cnt >= maxit Then
+                    Dim msgres As MsgBoxResult = MessageBox.Show(DWSIM.App.GetLocalString("Onmeromximodeiteraes"), _
+                                                    DWSIM.App.GetLocalString("Nmeromximodeiteraesa3"), _
+                                                    MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If msgres = MsgBoxResult.No Then
                         cancelar = False
+                        Me.lblStatus.Text = DWSIM.App.GetLocalString("Mximodeiteraesatingi")
+                        Me.btnIniciar.Enabled = True
+                        Me.myADJ.GraphicObject.Calculated = False
+                        Exit Sub
+                    Else
+                        cnt = 1
+                    End If
+                End If
+                Application.DoEvents()
+                If cancelar = True Then Exit Do
+            Loop Until Math.Abs(fi) < tol Or Double.IsNaN(var)
+
+            If cancelar = True Then
+                Me.lblStatus.Text = DWSIM.App.GetLocalString("Ajustecanceladopelou")
+                Me.myADJ.GraphicObject.Calculated = False
+            Else
+                Me.lblStatus.Text = DWSIM.App.GetLocalString("Valorajustadocomsuce")
+                Me.myADJ.GraphicObject.Calculated = True
+            End If
+
+        ElseIf Me.rbBrent.Checked Then
+
+            minval = myADJ.MinVal.GetValueOrDefault
+            maxval = myADJ.MaxVal.GetValueOrDefault
+
+            Dim l As Integer = 0
+            Dim i As Integer = 0
+
+            Dim f, f_inf, nsub, delta As Double
+
+            nsub = 5
+
+            delta = (maxval - minval) / nsub
+
+            Do
+                Me.SetMnpVarValue(minval)
+
+                DWSIM.Flowsheet.FlowsheetSolver.CalculateObject(My.Application.ActiveSimulation, myADJ.ManipulatedObject.GraphicObject.Name)
+
+                cvVal = Me.GetCtlVarValue()
+                f = cvVal - adjval
+                Me.lblStatus.Text = DWSIM.App.GetLocalString("Ajustando")
+                Me.lblItXdeY.Text = DWSIM.App.GetLocalString("Procurandosubinterva")
+                Me.tbErro.Text = f
+                py1.Add(cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), adjval))
+                py2.Add(cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), cvVal))
+                AtualizaGrafico()
+                minval = minval + delta
+                Me.SetMnpVarValue(minval)
+
+                DWSIM.Flowsheet.FlowsheetSolver.CalculateObject(My.Application.ActiveSimulation, myADJ.ManipulatedObject.GraphicObject.Name)
+
+                cvVal = Me.GetCtlVarValue()
+                f_inf = cvVal - adjval
+                Me.lblStatus.Text = DWSIM.App.GetLocalString("Ajustando")
+                Me.lblItXdeY.Text = DWSIM.App.GetLocalString("Procurandosubinterva")
+                Me.tbErro.Text = f_inf
+                py1.Add(cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), adjval))
+                py2.Add(cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), cvVal))
+                AtualizaGrafico()
+                l += 1
+                If l > 5 Then
+                    MessageBox.Show(DWSIM.App.GetLocalString("Oajustenoencontrouum"), DWSIM.App.GetLocalString("Semsoluo"), MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Me.lblStatus.Text = DWSIM.App.GetLocalString("Noexistesoluonointer")
+                    Me.lblItXdeY.Text = ""
+                    cancelar = False
+                    Me.btnIniciar.Enabled = True
+                    Me.myADJ.GraphicObject.Calculated = False
+                    Exit Sub
+                End If
+                If f = f_inf Then
+                    Dim msgres As MsgBoxResult = MessageBox.Show(DWSIM.App.GetLocalString("Avarivelmanipuladano") _
+                                    & vbCrLf & DWSIM.App.GetLocalString("Desejacontinuaroproc"), _
+                                    DWSIM.App.GetLocalString("Problemasnaconvergnc"), MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If msgres = MsgBoxResult.No Then
+                        Me.lblStatus.Text = DWSIM.App.GetLocalString("Ajustecanceladopelou")
                         Me.btnIniciar.Enabled = True
                         Me.myADJ.GraphicObject.Calculated = False
                         Exit Sub
                     End If
-                    If f = f_inf Then
-                        Dim msgres As MsgBoxResult = MessageBox.Show(DWSIM.App.GetLocalString("Avarivelmanipuladano") _
-                                     & vbCrLf & DWSIM.App.GetLocalString("Desejacontinuaroproc"), _
-                                     DWSIM.App.GetLocalString("Problemasnaconvergnc"), MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-                        If msgres = MsgBoxResult.No Then
-                            Me.lblStatus.Text = DWSIM.App.GetLocalString("Ajustecanceladopelou")
-                            Me.btnIniciar.Enabled = True
-                            Me.myADJ.GraphicObject.Calculated = False
-                            Exit Sub
-                        End If
+                End If
+            Loop Until f * f_inf < 0
+            maxval = minval
+            minval = minval - delta
+
+            'método de Brent
+            Dim aaa, bbb, ccc, ddd, eee, min11, min22, faa, fbb, fcc, ppp, qqq, rrr, sss, tol11, xmm As Double
+            Dim ITMAX2 As Integer = maxit
+            Dim iter2 As Integer
+            aaa = minval
+            bbb = maxval
+            ccc = maxval
+            faa = f
+            fbb = f_inf
+            fcc = fbb
+            iter2 = 0
+            Do
+                Me.lblStatus.Text = DWSIM.App.GetLocalString("Ajustando")
+                Me.lblItXdeY.Text = DWSIM.App.GetLocalString("Iterao") & " " & (iter2 + l + 1) & " " & DWSIM.App.GetLocalString("de") & " " & maxit
+                Me.tbErro.Text = fbb
+                Application.DoEvents()
+
+                If (fbb > 0 And fcc > 0) Or (fbb < 0 And fcc < 0) Then
+                    ccc = aaa
+                    fcc = faa
+                    ddd = bbb - aaa
+                    eee = ddd
+                End If
+                If Math.Abs(fcc) < Math.Abs(fbb) Then
+                    aaa = bbb
+                    bbb = ccc
+                    ccc = aaa
+                    faa = fbb
+                    fbb = fcc
+                    fcc = faa
+                End If
+                tol11 = tol
+                xmm = 0.5 * (ccc - bbb)
+                If Math.Abs(fbb) < tol Then GoTo Final3
+                If (Math.Abs(eee) >= tol11) And (Math.Abs(faa) > Math.Abs(fbb)) Then
+                    sss = fbb / faa
+                    If aaa = ccc Then
+                        ppp = 2 * xmm * sss
+                        qqq = 1 - sss
+                    Else
+                        qqq = faa / fcc
+                        rrr = fbb / fcc
+                        ppp = sss * (2 * xmm * qqq * (qqq - rrr) - (bbb - aaa) * (rrr - 1))
+                        qqq = (qqq - 1) * (rrr - 1) * (sss - 1)
                     End If
-                Loop Until f * f_inf < 0
-                maxval = minval
-                minval = minval - delta
-
-                'método de Brent
-                Dim aaa, bbb, ccc, ddd, eee, min11, min22, faa, fbb, fcc, ppp, qqq, rrr, sss, tol11, xmm As Double
-                Dim ITMAX2 As Integer = maxit
-                Dim iter2 As Integer
-                aaa = minval
-                bbb = maxval
-                ccc = maxval
-                faa = f
-                fbb = f_inf
-                fcc = fbb
-                iter2 = 0
-                Do
-                    Me.lblStatus.Text = DWSIM.App.GetLocalString("Ajustando")
-                    Me.lblItXdeY.Text = DWSIM.App.GetLocalString("Iterao") & " " & (iter2 + l + 1) & " " & DWSIM.App.GetLocalString("de") & " " & maxit
-                    Me.tbErro.Text = fbb
-                    Application.DoEvents()
-
-                    If (fbb > 0 And fcc > 0) Or (fbb < 0 And fcc < 0) Then
-                        ccc = aaa
-                        fcc = faa
-                        ddd = bbb - aaa
+                    If ppp > 0 Then qqq = -qqq
+                    ppp = Math.Abs(ppp)
+                    min11 = 3 * xmm * qqq - Math.Abs(tol11 * qqq)
+                    min22 = Math.Abs(eee * qqq)
+                    Dim tvar2 As Double
+                    If min11 < min22 Then tvar2 = min11
+                    If min11 > min22 Then tvar2 = min22
+                    If 2 * ppp < tvar2 Then
                         eee = ddd
-                    End If
-                    If Math.Abs(fcc) < Math.Abs(fbb) Then
-                        aaa = bbb
-                        bbb = ccc
-                        ccc = aaa
-                        faa = fbb
-                        fbb = fcc
-                        fcc = faa
-                    End If
-                    tol11 = tol
-                    xmm = 0.5 * (ccc - bbb)
-                    If Math.Abs(fbb) < tol Then GoTo Final3
-                    If (Math.Abs(eee) >= tol11) And (Math.Abs(faa) > Math.Abs(fbb)) Then
-                        sss = fbb / faa
-                        If aaa = ccc Then
-                            ppp = 2 * xmm * sss
-                            qqq = 1 - sss
-                        Else
-                            qqq = faa / fcc
-                            rrr = fbb / fcc
-                            ppp = sss * (2 * xmm * qqq * (qqq - rrr) - (bbb - aaa) * (rrr - 1))
-                            qqq = (qqq - 1) * (rrr - 1) * (sss - 1)
-                        End If
-                        If ppp > 0 Then qqq = -qqq
-                        ppp = Math.Abs(ppp)
-                        min11 = 3 * xmm * qqq - Math.Abs(tol11 * qqq)
-                        min22 = Math.Abs(eee * qqq)
-                        Dim tvar2 As Double
-                        If min11 < min22 Then tvar2 = min11
-                        If min11 > min22 Then tvar2 = min22
-                        If 2 * ppp < tvar2 Then
-                            eee = ddd
-                            ddd = ppp / qqq
-                        Else
-                            ddd = xmm
-                            eee = ddd
-                        End If
+                        ddd = ppp / qqq
                     Else
                         ddd = xmm
                         eee = ddd
                     End If
-                    aaa = bbb
-                    faa = fbb
-                    If (Math.Abs(ddd) > tol11) Then
-                        bbb += ddd
+                Else
+                    ddd = xmm
+                    eee = ddd
+                End If
+                aaa = bbb
+                faa = fbb
+                If (Math.Abs(ddd) > tol11) Then
+                    bbb += ddd
+                Else
+                    bbb += Math.Sign(xmm) * tol11
+                End If
+                Me.SetMnpVarValue(bbb)
+
+                DWSIM.Flowsheet.FlowsheetSolver.CalculateObject(My.Application.ActiveSimulation, myADJ.ManipulatedObject.GraphicObject.Name)
+
+                cvVal = Me.GetCtlVarValue()
+                fbb = cvVal - adjval
+                Me.tbErro.Text = fbb
+                iter2 += 1
+
+                py1.Add(cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), adjval))
+                py2.Add(cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), cvVal))
+
+                AtualizaGrafico()
+
+                If iter2 + l - 1 >= maxit Then
+                    Dim msgres As MsgBoxResult = MessageBox.Show(DWSIM.App.GetLocalString("Onmeromximodeiteraes"), _
+                                                    DWSIM.App.GetLocalString("Nmeromximodeiteraesa3"), _
+                                                    MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If msgres = MsgBoxResult.No Then
+                        cancelar = False
+                        Me.lblStatus.Text = DWSIM.App.GetLocalString("Mximodeiteraesatingi")
+                        Me.btnIniciar.Enabled = True
+                        Me.myADJ.GraphicObject.Calculated = False
+                        Exit Sub
                     Else
-                        bbb += Math.Sign(xmm) * tol11
+                        iter2 = 1
                     End If
-                    Me.SetMnpVarValue(bbb)
-                    'If myADJ.ManipulatedObject.GraphicObject.TipoObjeto = Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.MaterialStream Then
-                    '    CalculateMaterialStream(formC, myADJ.ManipulatedObject)
-                    'Else
-                    '    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
-                    '    'Call function to calculate flowsheet
-                    '    With objargs
-                    '        .Calculado = False
-                    '        .Nome = myADJ.ManipulatedObject.GraphicObject.Name
-                    '        .Tag = myADJ.ManipulatedObject.GraphicObject.Tag
-                    '        .Tipo = myADJ.ManipulatedObject.GraphicObject.TipoObjeto
-                    '        .Emissor = "Adjust"
-                    '    End With
-                    '    formC.CalculationQueue.Enqueue(objargs)
-                    '    Call formC.FormSurface.UpdateSelectedObject()
-                    '    Call formC.FormSurface.FlowsheetDesignSurface.Invalidate()
-                    '    Application.DoEvents()
-                    '    ProcessCalculationQueue(formC)
-                    'End If
-
-                    DWSIM.Flowsheet.FlowsheetSolver.CalculateObject(My.Application.ActiveSimulation, myADJ.ManipulatedObject.GraphicObject.Name)
-
-                    cvVal = Me.GetCtlVarValue()
-                    fbb = cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), cvVal - adjval)
-                    Me.tbErro.Text = fbb
-                    iter2 += 1
-
-                    py1.Add(cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), adjval))
-                    py2.Add(cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), cvVal))
-
-                    AtualizaGrafico()
-
-                    If iter2 + l - 1 >= maxit Then
-                        Dim msgres As MsgBoxResult = MessageBox.Show(DWSIM.App.GetLocalString("Onmeromximodeiteraes"), _
-                                                        DWSIM.App.GetLocalString("Nmeromximodeiteraesa3"), _
-                                                        MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-                        If msgres = MsgBoxResult.No Then
-                            cancelar = False
-                            Me.lblStatus.Text = DWSIM.App.GetLocalString("Mximodeiteraesatingi")
-                            Me.btnIniciar.Enabled = True
-                            Me.myADJ.GraphicObject.Calculated = False
-                            Exit Sub
-                        Else
-                            iter2 = 1
-                        End If
-                    End If
-                    If cancelar = True Then Exit Do
-                Loop Until iter2 >= ITMAX2
+                End If
+                If cancelar = True Then Exit Do
+            Loop Until iter2 >= ITMAX2
 
 Final3:
-                If cancelar = True Then
-                    Me.lblStatus.Text = DWSIM.App.GetLocalString("Ajustecanceladopelou")
-                    Me.myADJ.GraphicObject.Calculated = False
-                Else
-                    Me.lblStatus.Text = DWSIM.App.GetLocalString("Valorajustadocomsuce")
-                    Me.myADJ.GraphicObject.Calculated = True
-                End If
-
+            If cancelar = True Then
+                Me.lblStatus.Text = DWSIM.App.GetLocalString("Ajustecanceladopelou")
+                Me.myADJ.GraphicObject.Calculated = False
+            Else
+                Me.lblStatus.Text = DWSIM.App.GetLocalString("Valorajustadocomsuce")
+                Me.myADJ.GraphicObject.Calculated = True
             End If
 
-            Me.btnIniciar.Enabled = True
+        End If
 
-            cancelar = False
+        Me.btnIniciar.Enabled = True
 
-            Dim j, k As Integer
-            Dim data(2, py1.Count - 1) As String
-            j = 0
-            For Each d As Double In py1
-                data(0, j) = j
-                data(1, j) = py2(j)
-                data(2, j) = -py1(j) + py2(j)
-                j = j + 1
-            Next
-            With Me.Grid1.Rows
-                .Clear()
-                If data.Length > 0 Then
-                    k = 0
+        cancelar = False
+
+        Dim j, k As Integer
+        Dim data(2, py1.Count - 1) As String
+        j = 0
+        For Each d As Double In py1
+            data(0, j) = j
+            data(1, j) = py2(j)
+            data(2, j) = -py1(j) + py2(j)
+            j = j + 1
+        Next
+        With Me.Grid1.Rows
+            .Clear()
+            If data.Length > 0 Then
+                k = 0
+                Do
+                    .Add()
+                    j = 0
                     Do
-                        .Add()
-                        j = 0
-                        Do
-                            If Double.TryParse(data(j, k), New Double) Then
-                                .Item(k).Cells(j).Value = Format(CDbl(data(j, k)), nf)
-                            Else
-                                .Item(k).Cells(j).Value = data(j, k)
-                            End If
-                            j = j + 1
-                        Loop Until j = 3
-                        k = k + 1
-                    Loop Until k = py1.Count
-                End If
-            End With
+                        If Double.TryParse(data(j, k), New Double) Then
+                            .Item(k).Cells(j).Value = Format(CDbl(data(j, k)), nf)
+                        Else
+                            .Item(k).Cells(j).Value = data(j, k)
+                        End If
+                        j = j + 1
+                    Loop Until j = 3
+                    k = k + 1
+                Loop Until k = py1.Count
+            End If
+        End With
 
     End Sub
 
