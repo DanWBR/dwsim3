@@ -747,6 +747,8 @@
     <Compile Include="Objects\PropertyPackages\LeeKeslerPlocker\LKPPropertyPackage.vb" />
     <Compile Include="Objects\PropertyPackages\LIQUAC2\LIQUAC2PropertyPackage.vb" />
     <Compile Include="Objects\PropertyPackages\LIQUAC2\Model\LIQUAC2.vb" />
+    <Compile Include="Objects\PropertyPackages\NIST-MODFAC\Helper Classes\NISTMFAC.vb" />
+    <Compile Include="Objects\PropertyPackages\NIST-MODFAC\NISTMFACPropertyPackage.vb" />
     <Compile Include="Objects\PropertyPackages\PengRobinson\Helper Classes\PR.vb" />
     <Compile Include="Objects\PropertyPackages\PRSV2\PRSV2-VL.vb" />
     <Compile Include="Objects\PropertyPackages\PRSV2\PRSV2.vb" />

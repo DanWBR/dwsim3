@@ -476,6 +476,12 @@ Public Class FormMain
 
         PropertyPackages.Add(MUPP.ComponentName.ToString, MUPP)
 
+        Dim NUPP As NISTMFACPropertyPackage = New NISTMFACPropertyPackage()
+        NUPP.ComponentName = "Modified UNIFAC (NIST)"
+        NUPP.ComponentDescription = DWSIM.App.GetLocalString("DescNUPP")
+
+        PropertyPackages.Add(NUPP.ComponentName.ToString, NUPP)
+
         Dim NRTLPP As NRTLPropertyPackage = New NRTLPropertyPackage()
         NRTLPP.ComponentName = "NRTL"
         NRTLPP.ComponentDescription = DWSIM.App.GetLocalString("DescNRTLPP")
