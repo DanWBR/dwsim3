@@ -102,7 +102,6 @@ Partial Class FormConfigWizard
         'WizardPage1
         '
         Me.WizardPage1.AllowBack = False
-        Me.WizardPage1.AllowCancel = False
         Me.WizardPage1.Controls.Add(Me.Button1)
         Me.WizardPage1.Controls.Add(Me.Label1)
         Me.WizardPage1.Name = "WizardPage1"
@@ -122,7 +121,6 @@ Partial Class FormConfigWizard
         '
         'WizardPage2
         '
-        Me.WizardPage2.AllowCancel = False
         Me.WizardPage2.Controls.Add(Me.GroupBox4)
         Me.WizardPage2.Controls.Add(Me.Label2)
         Me.WizardPage2.Controls.Add(Me.Button11)
@@ -279,7 +277,6 @@ Partial Class FormConfigWizard
         '
         'WizardPage3
         '
-        Me.WizardPage3.AllowCancel = False
         Me.WizardPage3.Controls.Add(Me.LinkLabelPropertyMethods)
         Me.WizardPage3.Controls.Add(Me.GroupBox6)
         Me.WizardPage3.Controls.Add(Me.GroupBox12)
@@ -372,7 +369,6 @@ Partial Class FormConfigWizard
         '
         'WizardPage4
         '
-        Me.WizardPage4.AllowCancel = False
         Me.WizardPage4.Controls.Add(Me.ListBoxPP)
         Me.WizardPage4.Controls.Add(Me.Label6)
         Me.WizardPage4.Controls.Add(Me.LinkLabel1)
