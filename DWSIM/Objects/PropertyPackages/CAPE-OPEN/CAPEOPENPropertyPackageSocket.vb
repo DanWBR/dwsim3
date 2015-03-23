@@ -1347,72 +1347,72 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 #Region "    CAPE-OPEN 1.1 Thermo & Physical Properties"
 
         Public Overrides Function GetCompoundConstant(ByVal props As Object, ByVal compIds As Object) As Object
-            Me.SetMaterial(Me.CurrentMaterialStream)
+            'Me.SetMaterial(Me.CurrentMaterialStream)
             Return CType(_copp, ICapeThermoCompounds).GetCompoundConstant(props, compIds)
         End Function
 
         Public Overrides Sub GetCompoundList(ByRef compIds As Object, ByRef formulae As Object, ByRef names As Object, ByRef boilTemps As Object, ByRef molwts As Object, ByRef casnos As Object)
-            Me.SetMaterial(Me.CurrentMaterialStream)
+            'Me.SetMaterial(Me.CurrentMaterialStream)
             CType(_copp, ICapeThermoCompounds).GetCompoundList(compIds, formulae, names, boilTemps, molwts, casnos)
         End Sub
 
         Public Overrides Function GetConstPropList() As Object
-            Me.SetMaterial(Me.CurrentMaterialStream)
+            'Me.SetMaterial(Me.CurrentMaterialStream)
             Return CType(_copp, ICapeThermoCompounds).GetConstPropList()
         End Function
 
         Public Overrides Function GetNumCompounds() As Integer
-            Me.SetMaterial(Me.CurrentMaterialStream)
+            'Me.SetMaterial(Me.CurrentMaterialStream)
             Return CType(_copp, ICapeThermoCompounds).GetNumCompounds()
         End Function
 
         Public Overrides Sub GetPDependentProperty(ByVal props As Object, ByVal pressure As Double, ByVal compIds As Object, ByRef propVals As Object)
-            Me.SetMaterial(Me.CurrentMaterialStream)
+            'Me.SetMaterial(Me.CurrentMaterialStream)
             CType(_copp, ICapeThermoCompounds).GetPDependentProperty(props, pressure, compIds, propVals)
         End Sub
 
         Public Overrides Function GetPDependentPropList() As Object
-            Me.SetMaterial(Me.CurrentMaterialStream)
+            'Me.SetMaterial(Me.CurrentMaterialStream)
             Return CType(_copp, ICapeThermoCompounds).GetPDependentPropList
         End Function
 
         Public Overrides Sub GetTDependentProperty(ByVal props As Object, ByVal temperature As Double, ByVal compIds As Object, ByRef propVals As Object)
-            Me.SetMaterial(Me.CurrentMaterialStream)
+            'Me.SetMaterial(Me.CurrentMaterialStream)
             CType(_copp, ICapeThermoCompounds).GetTDependentProperty(props, temperature, compIds, propVals)
         End Sub
 
         Public Overrides Function GetTDependentPropList() As Object
-            Me.SetMaterial(Me.CurrentMaterialStream)
+            'Me.SetMaterial(Me.CurrentMaterialStream)
             Return CType(_copp, ICapeThermoCompounds).GetTDependentPropList
         End Function
 
         Public Overrides Function GetNumPhases() As Integer
-            Me.SetMaterial(Me.CurrentMaterialStream)
+            'Me.SetMaterial(Me.CurrentMaterialStream)
             Return CType(_copp, ICapeThermoPhases).GetNumPhases
         End Function
 
         Public Overrides Function GetPhaseInfo(ByVal phaseLabel As String, ByVal phaseAttribute As String) As Object
-            Me.SetMaterial(Me.CurrentMaterialStream)
+            'Me.SetMaterial(Me.CurrentMaterialStream)
             Return CType(_copp, ICapeThermoPhases).GetPhaseInfo(phaseLabel, phaseAttribute)
         End Function
 
         Public Overrides Sub GetPhaseList1(ByRef phaseLabels As Object, ByRef stateOfAggregation As Object, ByRef keyCompoundId As Object)
-            Me.SetMaterial(Me.CurrentMaterialStream)
+            'Me.SetMaterial(Me.CurrentMaterialStream)
             CType(_copp, ICapeThermoPhases).GetPhaseList(phaseLabels, stateOfAggregation, keyCompoundId)
         End Sub
 
         Public Overrides Sub CalcAndGetLnPhi(ByVal phaseLabel As String, ByVal temperature As Double, ByVal pressure As Double, ByVal moleNumbers As Object, ByVal fFlags As Integer, ByRef lnPhi As Object, ByRef lnPhiDT As Object, ByRef lnPhiDP As Object, ByRef lnPhiDn As Object)
-            Me.SetMaterial(Me.CurrentMaterialStream)
+            'Me.SetMaterial(Me.CurrentMaterialStream)
             CType(_copp, ICapeThermoPropertyRoutine).CalcAndGetLnPhi(phaseLabel, temperature, pressure, moleNumbers, fFlags, lnPhi, lnPhiDT, lnPhiDP, lnPhiDn)
         End Sub
 
         Public Overrides Sub CalcSinglePhaseProp(ByVal props As Object, ByVal phaseLabel As String)
-            Me.SetMaterial(Me.CurrentMaterialStream)
+            'Me.SetMaterial(Me.CurrentMaterialStream)
             CType(_copp, ICapeThermoPropertyRoutine).CalcSinglePhaseProp(props, phaseLabel)
         End Sub
 
         Public Overrides Sub CalcTwoPhaseProp(ByVal props As Object, ByVal phaseLabels As Object)
-            Me.SetMaterial(Me.CurrentMaterialStream)
+            'Me.SetMaterial(Me.CurrentMaterialStream)
             CType(_copp, ICapeThermoPropertyRoutine).CalcTwoPhaseProp(props, phaseLabels)
         End Sub
 
@@ -1441,7 +1441,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         End Function
 
         Public Overrides Sub CalcEquilibrium1(ByVal specification1 As Object, ByVal specification2 As Object, ByVal solutionType As String)
-            Me.SetMaterial(Me.CurrentMaterialStream)
+            'Me.SetMaterial(Me.CurrentMaterialStream)
 
             Me.DW_ZerarPhaseProps(Fase.Vapor)
             Me.DW_ZerarPhaseProps(Fase.Liquid)

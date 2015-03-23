@@ -5037,4 +5037,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="RecycleStreamNotCalculated" xml:space="preserve">
     <value>A corrente de entrada do Reciclo não está calculada ou não está em equilíbrio.</value>
   </data>
+  <data name="DescNUPP" xml:space="preserve">
+    <value>New modified UNIFAC property prediction model parameters are reported for 89 main groups and 984 group–group interactions by using critically evaluated phase equilibrium data including vapor–liquid equilibrium (VLE), liquid–liquid equilibrium (LLE), solid–liquid equilibrium (SLE), excess enthalpy (HE), infinite dilution activity coefficient (AINF) and excess heat capacity (CPE) data. Obtained parameters are recommended primarily for correlations of the VLE data.</value>
+  </data>
 </root>

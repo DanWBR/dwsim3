@@ -3,6 +3,7 @@ Imports DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen
 Imports CapeOpen
 Imports DWSIM.Interfaces
 Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
+Imports System.Linq
 
 <System.Serializable()> Public Class FormConfigCAPEOPEN
 
@@ -143,6 +144,8 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
         Dim staggr As Object = Nothing
         Dim kci As Object = Nothing
 
+        Dim i As Integer = 0
+
         If Not _copp Is Nothing Then
             If _coversion = "1.0" Then
                 CType(_copp, ICapeThermoPropertyPackage).GetComponentList(complist, formulae, names, boiltemps, molwts, casids)
@@ -155,11 +158,17 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
                 cb.Items.Add(s)
             Next
             dgmap.Columns(2).CellTemplate = cb
-            For Each s As String In complist
-                If _mappings.ContainsKey(s) Then
-                    If _mappings(s) = "" Then _mappings(s) = s
-                End If
+            Dim comps = _mappings.Keys.ToArray()
+            For Each s As String In comps
+                i = 0
+                For Each c As String In casids
+                    If My.Application.ActiveSimulation.Options.SelectedComponents(s).CAS_Number = c Then
+                        _mappings(s) = complist(i)
+                    End If
+                    i += 1
+                Next
             Next
+
             Me.dgmap.Rows.Clear()
             For Each kvp As KeyValuePair(Of String, String) In _mappings
                 Me.dgmap.Rows.Add(New Object() {kvp.Key, DWSIM.App.GetComponentName(kvp.Key), kvp.Value})

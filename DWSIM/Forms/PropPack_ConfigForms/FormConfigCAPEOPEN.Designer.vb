@@ -22,6 +22,7 @@ Partial Class FormConfigCAPEOPEN
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormConfigCAPEOPEN))
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.lblAbout2 = New System.Windows.Forms.Label()
@@ -264,7 +265,6 @@ Partial Class FormConfigCAPEOPEN
         '
         'col2
         '
-        Me.col2.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         resources.ApplyResources(Me.col2, "col2")
         Me.col2.Name = "col2"
         '
@@ -311,7 +311,6 @@ Partial Class FormConfigCAPEOPEN
         '
         'DataGridViewComboBoxColumn1
         '
-        Me.DataGridViewComboBoxColumn1.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         resources.ApplyResources(Me.DataGridViewComboBoxColumn1, "DataGridViewComboBoxColumn1")
         Me.DataGridViewComboBoxColumn1.Name = "DataGridViewComboBoxColumn1"
         '
@@ -387,15 +386,15 @@ Partial Class FormConfigCAPEOPEN
     Friend WithEvents FaTabStripItem2 As FarsiLibrary.Win.FATabStripItem
     Friend WithEvents dgmap As System.Windows.Forms.DataGridView
     Friend WithEvents Label4 As System.Windows.Forms.Label
-    Friend WithEvents id As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents col1 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents col2 As System.Windows.Forms.DataGridViewComboBoxColumn
     Friend WithEvents FaTabStripItem3 As FarsiLibrary.Win.FATabStripItem
     Friend WithEvents dgvph As System.Windows.Forms.DataGridView
     Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents btnCancel As System.Windows.Forms.Button
+    Friend WithEvents btnOK As System.Windows.Forms.Button
+    Friend WithEvents id As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents col1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents col2 As System.Windows.Forms.DataGridViewComboBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn2 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewComboBoxColumn1 As System.Windows.Forms.DataGridViewComboBoxColumn
-    Friend WithEvents btnCancel As System.Windows.Forms.Button
-    Friend WithEvents btnOK As System.Windows.Forms.Button
 End Class

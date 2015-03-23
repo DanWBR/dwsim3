@@ -26,8 +26,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
     <System.Serializable()> Public Class NISTMFAC
 
-        Inherits Modfac
-
         Public Shadows ModfGroups As NistModfacGroups
 
         Sub New()
@@ -36,6 +34,328 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Sub
 
+
+        Function ID2Group(ByVal id As Integer) As String
+
+            For Each group As ModfacGroup In Me.ModfGroups.Groups.Values
+                If group.Secondary_Group = id Then Return group.GroupName
+            Next
+
+            Return ""
+
+        End Function
+
+        Function Group2ID(ByVal groupname As String) As String
+
+            For Each group As ModfacGroup In Me.ModfGroups.Groups.Values
+                If group.GroupName = groupname Then
+                    Return group.Secondary_Group
+                End If
+            Next
+
+            Return 0
+
+        End Function
+
+        Function GAMMA(ByVal T, ByVal Vx, ByVal VQ, ByVal VR, ByVal VEKI, ByVal id)
+
+            Return GAMMA_MR(T, Vx, VQ, VR, VEKI)(id)
+
+        End Function
+
+        Function GAMMA_MR(ByVal T, ByVal Vx, ByVal VQ, ByVal VR, ByVal VEKI)
+
+            CheckParameters(VEKI)
+
+            Dim i, k, m As Integer
+
+            Dim n = UBound(Vx)
+            Dim n2 = UBound(VEKI, 2)
+
+            Dim teta(n2), s(n2) As Double
+            Dim beta(n, n2), Vgammac(n), Vgammar(n), Vgamma(n), b(n, n2) As Double
+            Dim Q(n), R(n), j(n), L(n) As Double
+            Dim j_(n)
+
+            i = 0
+            Do
+                k = 0
+                Do
+                    beta(i, k) = 0.0#
+                    m = 0
+                    Do
+                        If VEKI(i, m) <> 0.0# And Not Double.IsNaN(VEKI(i, m)) Then
+                            beta(i, k) = beta(i, k) + VEKI(i, m) * TAU(m, k, T)
+                        End If
+                        m = m + 1
+                    Loop Until m = n2 + 1
+                    If beta(i, k) = 0.0# Then beta(i, k) = 1.0#
+                    k = k + 1
+                Loop Until k = n2 + 1
+                i = i + 1
+            Loop Until i = n + 1
+
+            Dim soma_xq = 0.0#
+            i = 0
+            Do
+                Q(i) = VQ(i)
+                soma_xq = soma_xq + Vx(i) * Q(i)
+                i = i + 1
+            Loop Until i = n + 1
+
+            k = 0
+            Do
+                i = 0
+                Do
+                    teta(k) = teta(k) + Vx(i) * Q(i) * VEKI(i, k)
+                    i = i + 1
+                Loop Until i = n + 1
+                teta(k) = teta(k) / soma_xq
+                k = k + 1
+            Loop Until k = n2 + 1
+
+            k = 0
+            Do
+                m = 0
+                Do
+                    If teta(m) <> 0.0# And Not Double.IsNaN(teta(m)) Then s(k) = s(k) + teta(m) * TAU(m, k, T)
+                    m = m + 1
+                Loop Until m = n2 + 1
+                k = k + 1
+            Loop Until k = n2 + 1
+
+            Dim soma_xr = 0.0#
+            Dim soma_xr_ = 0.0#
+            i = 0
+            Do
+                R(i) = VR(i)
+                soma_xr = soma_xr + Vx(i) * R(i)
+                soma_xr_ = soma_xr_ + Vx(i) * R(i) ^ (3 / 4)
+                i = i + 1
+            Loop Until i = n + 1
+
+            i = 0
+            Do
+                j(i) = R(i) / soma_xr
+                j_(i) = R(i) ^ (3 / 4) / soma_xr_
+                L(i) = Q(i) / soma_xq
+                Vgammac(i) = 1 - j_(i) + Math.Log(j_(i)) - 5 * Q(i) * (1 - j(i) / L(i) + Math.Log(j(i) / L(i)))
+                k = 0
+                Dim tmpsum = 0.0#
+                Do
+                    tmpsum = tmpsum + teta(k) * beta(i, k) / s(k) - VEKI(i, k) * Math.Log(beta(i, k) / s(k))
+                    k = k + 1
+                Loop Until k = n2 + 1
+                Vgammar(i) = Q(i) * (1 - tmpsum)
+                Vgamma(i) = Math.Exp(Vgammac(i) + Vgammar(i))
+                If Vgamma(i) = 0 Then Vgamma(i) = 0.000001
+                i = i + 1
+            Loop Until i = n + 1
+
+            Return Vgamma
+
+        End Function
+
+        Sub CheckParameters(ByVal VEKI)
+
+            Dim i, j As Integer
+
+            Dim n1 = UBound(VEKI, 1)
+            Dim n2 = UBound(VEKI, 2)
+
+            Dim ids As New ArrayList
+
+            For i = 0 To n1
+                For j = 0 To n2
+                    If VEKI(i, j) <> 0.0# And Not Double.IsNaN(VEKI(i, j)) And Not ids.Contains(j) Then ids.Add(j)
+                Next
+            Next
+
+            For Each id1 As Integer In ids
+                For Each id2 As Integer In ids
+                    If id1 <> id2 Then
+                        Dim g1, g2 As Integer
+                        g1 = Me.ModfGroups.Groups(id1 + 1).PrimaryGroup
+                        g2 = Me.ModfGroups.Groups(id2 + 1).PrimaryGroup
+                        If Me.ModfGroups.InteracParam_aij.ContainsKey(g1) Then
+                            If Not Me.ModfGroups.InteracParam_aij(g1).ContainsKey(g2) Then
+                                If Me.ModfGroups.InteracParam_aij.ContainsKey(g2) Then
+                                    If Not Me.ModfGroups.InteracParam_aij(g2).ContainsKey(g1) And g2 <> g1 Then
+                                        Throw New Exception("MODFAC Error: Could not find interaction parameter for groups " & Me.ModfGroups.Groups(id1 + 1).GroupName & " / " & _
+                                                            Me.ModfGroups.Groups(id2 + 1).GroupName & ". Activity coefficient calculation will give you inconsistent results for this system.")
+                                    End If
+                                End If
+                            End If
+                        Else
+                            If Me.ModfGroups.InteracParam_aij.ContainsKey(g2) Then
+                                If Not Me.ModfGroups.InteracParam_aij(g2).ContainsKey(g1) And g2 <> g1 Then
+                                    Throw New Exception("MODFAC Error: Could not find interaction parameter for groups " & Me.ModfGroups.Groups(id1 + 1).GroupName & " / " & _
+                                                        Me.ModfGroups.Groups(id2 + 1).GroupName & ". Activity coefficient calculation will give you inconsistent results for this system.")
+                                End If
+                            Else
+                                Throw New Exception("MODFAC Error: Could not find interaction parameter for groups " & Me.ModfGroups.Groups(id1 + 1).GroupName & " / " & _
+                                                    Me.ModfGroups.Groups(id2 + 1).GroupName & ". Activity coefficient calculation will give you inconsistent results for this system.")
+                            End If
+                        End If
+                    End If
+                Next
+            Next
+
+        End Sub
+
+        Function TAU(ByVal group_1, ByVal group_2, ByVal T)
+
+            Dim g1, g2 As Integer
+            Dim res As Double
+            g1 = Me.ModfGroups.Groups(group_1 + 1).PrimaryGroup
+            g2 = Me.ModfGroups.Groups(group_2 + 1).PrimaryGroup
+
+            If g1 <> g2 Then
+                If Me.ModfGroups.InteracParam_aij.ContainsKey(g1) Then
+                    If Me.ModfGroups.InteracParam_aij(g1).ContainsKey(g2) Then
+                        res = Me.ModfGroups.InteracParam_aij(g1)(g2) + Me.ModfGroups.InteracParam_bij(g1)(g2) * T + Me.ModfGroups.InteracParam_cij(g1)(g2) * T ^ 2
+                    Else
+                        If Me.ModfGroups.InteracParam_aij.ContainsKey(g2) Then
+                            If Me.ModfGroups.InteracParam_aij(g2).ContainsKey(g1) Then
+                                res = Me.ModfGroups.InteracParam_aij(g2)(g1) + Me.ModfGroups.InteracParam_bij(g2)(g1) * T + Me.ModfGroups.InteracParam_cij(g2)(g1) * T ^ 2
+                            Else
+                                res = 0.0#
+                            End If
+                        Else
+                            res = 0.0#
+                        End If
+                    End If
+                ElseIf Me.ModfGroups.InteracParam_aij.ContainsKey(g2) Then
+                    If Me.ModfGroups.InteracParam_aij(g2).ContainsKey(g1) Then
+                        res = Me.ModfGroups.InteracParam_aij(g2)(g1) + Me.ModfGroups.InteracParam_bij(g2)(g1) * T + Me.ModfGroups.InteracParam_cij(g2)(g1) * T ^ 2
+                    Else
+                        res = 0.0#
+                    End If
+                Else
+                    res = 0.0#
+                End If
+            Else
+                res = 0.0#
+            End If
+
+            Return Math.Exp(-res / T)
+
+        End Function
+
+        Function RET_Ri(ByVal VN As Object) As Double
+
+            Dim i As Integer = 0
+            Dim res As Double
+
+            For Each group As ModfacGroup In Me.ModfGroups.Groups.Values
+                res += group.R * VN(i)
+                i += 1
+            Next
+
+            Return res
+
+        End Function
+
+        Function RET_Qi(ByVal VN As Object) As Double
+
+            Dim i As Integer = 0
+            Dim res As Double
+
+            For Each group As ModfacGroup In Me.ModfGroups.Groups.Values
+                res += group.Q * VN(i)
+                i += 1
+            Next
+
+            Return res
+
+        End Function
+
+        Function RET_EKI(ByVal VN As Object, ByVal Q As Double) As Object
+
+            Dim i As Integer = 0
+            Dim res As New ArrayList
+
+            For Each group As ModfacGroup In Me.ModfGroups.Groups.Values
+                res.Add(group.Q * VN(i) / Q)
+                i += 1
+            Next
+
+            Return res.ToArray(Type.GetType("System.Double"))
+
+        End Function
+
+        Function RET_VN(ByVal cp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties)
+
+            Dim i As Integer = 0
+            Dim res As New ArrayList
+            Dim added As Boolean = False
+
+            res.Clear()
+
+            For Each group As ModfacGroup In Me.ModfGroups.Groups.Values
+                For Each s As String In cp.MODFACGroups.Collection.Keys
+                    If s = group.GroupName Then
+                        res.Add(cp.MODFACGroups.Collection(s))
+                        added = True
+                        Exit For
+                    End If
+                Next
+                If Not added Then res.Add(0)
+                added = False
+            Next
+
+            Return res.ToArray
+
+        End Function
+
+        Function DLNGAMMA_DT(ByVal T As Double, ByVal Vx As Array, ByVal VQ As Double(), ByVal VR As Double(), ByVal VEKI As Double(,)) As Array
+
+            Dim gamma1, gamma2 As Double()
+
+            Dim epsilon As Double = 0.001
+
+            gamma1 = GAMMA_MR(T, Vx, VQ, VR, VEKI)
+            gamma2 = GAMMA_MR(T + epsilon, Vx, VQ, VR, VEKI)
+
+            Dim dgamma(gamma1.Length - 1) As Double
+
+            For i As Integer = 0 To Vx.Length - 1
+                dgamma(i) = (gamma2(i) - gamma1(i)) / (epsilon)
+            Next
+
+            Return dgamma
+
+        End Function
+
+        Function HEX_MIX(ByVal T As Double, ByVal Vx As Array, ByVal VQ As Double(), ByVal VR As Double(), ByVal VEKI As Double(,)) As Double
+
+            Dim dgamma As Double() = DLNGAMMA_DT(T, Vx, VQ, VR, VEKI)
+
+            Dim hex As Double = 0.0#
+
+            For i As Integer = 0 To Vx.Length - 1
+                hex += -8.314 * T ^ 2 * Vx(i) * dgamma(i)
+            Next
+
+            Return hex 'kJ/kmol
+
+        End Function
+
+        Function CPEX_MIX(ByVal T As Double, ByVal Vx As Array, ByVal VQ As Double(), ByVal VR As Double(), ByVal VEKI As Double(,)) As Double
+
+            Dim hex1, hex2, cpex As Double
+
+            Dim epsilon As Double = 0.001
+
+            hex1 = HEX_MIX(T, Vx, VQ, VR, VEKI)
+            hex2 = HEX_MIX(T + epsilon, Vx, VQ, VR, VEKI)
+
+            cpex = (hex2 - hex1) / epsilon
+
+            Return cpex 'kJ/kmol.K
+
+        End Function
+
     End Class
 
     <System.Serializable()> Public Class NistModfacGroups
@@ -43,9 +363,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
         Public InteracParam_aij As System.Collections.Generic.Dictionary(Of Integer, System.Collections.Generic.Dictionary(Of Integer, Double))
         Public InteracParam_bij As System.Collections.Generic.Dictionary(Of Integer, System.Collections.Generic.Dictionary(Of Integer, Double))
         Public InteracParam_cij As System.Collections.Generic.Dictionary(Of Integer, System.Collections.Generic.Dictionary(Of Integer, Double))
-        Public InteracParam_aji As System.Collections.Generic.Dictionary(Of Integer, System.Collections.Generic.Dictionary(Of Integer, Double))
-        Public InteracParam_bji As System.Collections.Generic.Dictionary(Of Integer, System.Collections.Generic.Dictionary(Of Integer, Double))
-        Public InteracParam_cji As System.Collections.Generic.Dictionary(Of Integer, System.Collections.Generic.Dictionary(Of Integer, Double))
 
         Protected m_groups As System.Collections.Generic.Dictionary(Of Integer, ModfacGroup)
 
@@ -57,9 +374,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             InteracParam_aij = New System.Collections.Generic.Dictionary(Of Integer, System.Collections.Generic.Dictionary(Of Integer, Double))
             InteracParam_bij = New System.Collections.Generic.Dictionary(Of Integer, System.Collections.Generic.Dictionary(Of Integer, Double))
             InteracParam_cij = New System.Collections.Generic.Dictionary(Of Integer, System.Collections.Generic.Dictionary(Of Integer, Double))
-            InteracParam_aji = New System.Collections.Generic.Dictionary(Of Integer, System.Collections.Generic.Dictionary(Of Integer, Double))
-            InteracParam_bji = New System.Collections.Generic.Dictionary(Of Integer, System.Collections.Generic.Dictionary(Of Integer, Double))
-            InteracParam_cji = New System.Collections.Generic.Dictionary(Of Integer, System.Collections.Generic.Dictionary(Of Integer, Double))
 
             Dim cult As Globalization.CultureInfo = New Globalization.CultureInfo("en-US")
 
