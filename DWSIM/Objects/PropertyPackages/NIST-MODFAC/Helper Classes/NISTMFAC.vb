@@ -57,20 +57,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function GAMMA(ByVal T, ByVal Vx, ByVal VQ, ByVal VR, ByVal VEKI, ByVal id)
-
-            Return GAMMA_MR(T, Vx, VQ, VR, VEKI)(id)
-
-        End Function
-
-        Function GAMMA_MR(ByVal T, ByVal Vx, ByVal VQ, ByVal VR, ByVal VEKI)
+        Function GAMMA_MR(ByVal T As Double, ByVal Vx As Double(), ByVal VQ As Double(), ByVal VR As Double(), ByVal VEKI As List(Of Dictionary(Of Integer, Double))) As Double()
 
             CheckParameters(VEKI)
 
             Dim i, k, m As Integer
 
             Dim n = UBound(Vx)
-            Dim n2 = UBound(VEKI, 2)
+
+            Dim n2 = Me.ModfGroups.Groups.Count - 1
 
             Dim teta(n2), s(n2) As Double
             Dim beta(n, n2), Vgammac(n), Vgammar(n), Vgamma(n), b(n, n2) As Double
@@ -84,8 +79,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                     beta(i, k) = 0.0#
                     m = 0
                     Do
-                        If VEKI(i, m) <> 0.0# And Not Double.IsNaN(VEKI(i, m)) Then
-                            beta(i, k) = beta(i, k) + VEKI(i, m) * TAU(m, k, T)
+                        If VEKI(i).ContainsKey(m + 1) Then
+                            beta(i, k) = beta(i, k) + VEKI(i)(m + 1) * TAU(m, k, T)
                         End If
                         m = m + 1
                     Loop Until m = n2 + 1
@@ -107,7 +102,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Do
                 i = 0
                 Do
-                    teta(k) = teta(k) + Vx(i) * Q(i) * VEKI(i, k)
+                    If VEKI(i).ContainsKey(k + 1) Then
+                        teta(k) = teta(k) + Vx(i) * Q(i) * VEKI(i)(k + 1)
+                    End If
                     i = i + 1
                 Loop Until i = n + 1
                 teta(k) = teta(k) / soma_xq
@@ -143,7 +140,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 k = 0
                 Dim tmpsum = 0.0#
                 Do
-                    tmpsum = tmpsum + teta(k) * beta(i, k) / s(k) - VEKI(i, k) * Math.Log(beta(i, k) / s(k))
+                    If VEKI(i).ContainsKey(k + 1) Then
+                        tmpsum = tmpsum + teta(k) * beta(i, k) / s(k) - VEKI(i)(k + 1) * Math.Log(beta(i, k) / s(k))
+                    End If
                     k = k + 1
                 Loop Until k = n2 + 1
                 Vgammar(i) = Q(i) * (1 - tmpsum)
@@ -156,18 +155,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Sub CheckParameters(ByVal VEKI)
-
-            Dim i, j As Integer
-
-            Dim n1 = UBound(VEKI, 1)
-            Dim n2 = UBound(VEKI, 2)
+        Sub CheckParameters(ByVal VEKI As List(Of Dictionary(Of Integer, Double)))
 
             Dim ids As New ArrayList
 
-            For i = 0 To n1
-                For j = 0 To n2
-                    If VEKI(i, j) <> 0.0# And Not Double.IsNaN(VEKI(i, j)) And Not ids.Contains(j) Then ids.Add(j)
+            For Each item In VEKI
+                For Each item2 In item
+                    If item(item2.Key) <> 0.0# And Not ids.Contains(item(item2.Key)) Then ids.Add(item(item2.Key))
                 Next
             Next
 
@@ -207,6 +201,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             Dim g1, g2 As Integer
             Dim res As Double
+
+            If Not Me.ModfGroups.Groups.ContainsKey(group_1 + 1) Or Not Me.ModfGroups.Groups.ContainsKey(group_2 + 1) Then Return 0.0#
+
             g1 = Me.ModfGroups.Groups(group_1 + 1).PrimaryGroup
             g2 = Me.ModfGroups.Groups(group_2 + 1).PrimaryGroup
 
@@ -242,13 +239,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function RET_Ri(ByVal VN As Object) As Double
+        Function RET_Ri(ByVal VN As Dictionary(Of Integer, Double)) As Double
 
             Dim i As Integer = 0
             Dim res As Double
 
-            For Each group As ModfacGroup In Me.ModfGroups.Groups.Values
-                res += group.R * VN(i)
+            For Each kvp In VN
+                res += Me.ModfGroups.Groups(kvp.Key).R * VN(kvp.Key)
                 i += 1
             Next
 
@@ -256,13 +253,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function RET_Qi(ByVal VN As Object) As Double
+        Function RET_Qi(ByVal VN As Dictionary(Of Integer, Double)) As Double
 
             Dim i As Integer = 0
             Dim res As Double
 
-            For Each group As ModfacGroup In Me.ModfGroups.Groups.Values
-                res += group.Q * VN(i)
+            For Each kvp In VN
+                res += Me.ModfGroups.Groups(kvp.Key).Q * VN(kvp.Key)
                 i += 1
             Next
 
@@ -270,24 +267,24 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function RET_EKI(ByVal VN As Object, ByVal Q As Double) As Object
+        Function RET_EKI(ByVal VN As Dictionary(Of Integer, Double), ByVal Q As Double) As Dictionary(Of Integer, Double)
 
             Dim i As Integer = 0
-            Dim res As New ArrayList
+            Dim res As New Dictionary(Of Integer, Double)
 
-            For Each group As ModfacGroup In Me.ModfGroups.Groups.Values
-                res.Add(group.Q * VN(i) / Q)
+            For Each kvp In VN
+                res.Add(kvp.Key, Me.ModfGroups.Groups(kvp.Key).Q * VN(kvp.Key) / Q)
                 i += 1
             Next
 
-            Return res.ToArray(Type.GetType("System.Double"))
+            Return res
 
         End Function
 
-        Function RET_VN(ByVal cp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties)
+        Function RET_VN(ByVal cp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties) As Dictionary(Of Integer, Double)
 
             Dim i As Integer = 0
-            Dim res As New ArrayList
+            Dim res As New Dictionary(Of Integer, Double)
             Dim added As Boolean = False
 
             res.Clear()
@@ -295,20 +292,17 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             For Each group As ModfacGroup In Me.ModfGroups.Groups.Values
                 For Each s As String In cp.MODFACGroups.Collection.Keys
                     If s = group.GroupName Then
-                        res.Add(cp.MODFACGroups.Collection(s))
-                        added = True
+                        res.Add(group.Secondary_Group, cp.MODFACGroups.Collection(s))
                         Exit For
                     End If
                 Next
-                If Not added Then res.Add(0)
-                added = False
             Next
 
-            Return res.ToArray
+            Return res
 
         End Function
 
-        Function DLNGAMMA_DT(ByVal T As Double, ByVal Vx As Array, ByVal VQ As Double(), ByVal VR As Double(), ByVal VEKI As Double(,)) As Array
+        Function DLNGAMMA_DT(ByVal T As Double, ByVal Vx As Array, ByVal VQ As Double(), ByVal VR As Double(), ByVal VEKI As List(Of Dictionary(Of Integer, Double))) As Array
 
             Dim gamma1, gamma2 As Double()
 
@@ -327,7 +321,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function HEX_MIX(ByVal T As Double, ByVal Vx As Array, ByVal VQ As Double(), ByVal VR As Double(), ByVal VEKI As Double(,)) As Double
+        Function HEX_MIX(ByVal T As Double, ByVal Vx As Array, ByVal VQ As Double(), ByVal VR As Double(), ByVal VEKI As List(Of Dictionary(Of Integer, Double))) As Double
 
             Dim dgamma As Double() = DLNGAMMA_DT(T, Vx, VQ, VR, VEKI)
 
@@ -341,7 +335,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function CPEX_MIX(ByVal T As Double, ByVal Vx As Array, ByVal VQ As Double(), ByVal VR As Double(), ByVal VEKI As Double(,)) As Double
+        Function CPEX_MIX(ByVal T As Double, ByVal Vx As Array, ByVal VQ As Double(), ByVal VR As Double(), ByVal VEKI As List(Of Dictionary(Of Integer, Double))) As Double
 
             Dim hex1, hex2, cpex As Double
 
@@ -386,13 +380,16 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 parser.SetDelimiters(delimiter)
                 parser.ReadLine()
                 parser.ReadLine()
+                Dim i As Integer = 1
                 While Not parser.EndOfData
                     fields = parser.ReadFields()
                     If fields(0).StartsWith("(") Then
                         maingroup = fields(0).Split(")")(0).Substring(1)
                         mainname = fields(0).Trim().Split(")")(1).Trim
                     Else
+                        'Me.Groups.Add(i, New ModfacGroup(fields(1), mainname, maingroup, fields(0), Double.Parse(fields(3), cult), Double.Parse(fields(2), cult)))
                         Me.Groups.Add(fields(0), New ModfacGroup(fields(1), mainname, maingroup, fields(0), Double.Parse(fields(3), cult), Double.Parse(fields(2), cult)))
+                        i += 1
                     End If
                 End While
             End Using

@@ -663,10 +663,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         End Function
 
-        Function RET_VEKI() As Object
+        Function RET_VEKI() As List(Of Dictionary(Of Integer, Double))
 
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim VEKI(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1, Me.m_uni.ModfGroups.Groups.Count - 1) As Double
+            Dim VEKI As New List(Of Dictionary(Of Integer, Double))
             Dim i As Integer = 0
             Dim sum As Double
             For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
@@ -674,13 +674,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 For Each s As String In subst.ConstantProperties.MODFACGroups.Collection.Keys
                     sum += subst.ConstantProperties.MODFACGroups.Collection(s) * Me.m_uni.ModfGroups.Groups(Me.m_uni.Group2ID(s)).Q
                 Next
-                Dim obj As Object = Me.m_uni.RET_EKI(Me.RET_VN(subst), sum)
-                Dim j As Integer = 0
-                Do
-                    VEKI(i, j) = obj(j)
-                    j += 1
-                Loop Until j = Me.m_uni.ModfGroups.Groups.Count
-                i += 1
+                Dim obj = Me.m_uni.RET_EKI(Me.RET_VN(subst), sum)
+                VEKI.Add(obj)
             Next
 
             Return VEKI

@@ -20,9 +20,9 @@ No.	Sub-group Name	Qk	Rk	Example
 13	ACCH	0.91	0.3769	isopropylbenzene	2 CH3, 5 ACH, 1 ACCH	
 195	ACC	0.5847	0.12	tert-butylbenzene	3 CH3, 5 ACH, 1 ACC	
 (5) OH							
-14	OH prim	1.2302	0.8927	1-propanol	1 CH3, 2 CH2, 1 OH(p)	
-81	OH sec	1.063	0.8663	2-propanol	2 CH3, 1 CH, 1 OH(s)	
-82	OH tert	0.6895	0.8345	tert-butanol	3 CH3, 1 C , 1 OH(t)	
+14	OH	1.2302	0.8927	1-propanol	1 CH3, 2 CH2, 1 OH(p)	
+81	OH(e)	1.063	0.8663	2-propanol	2 CH3, 1 CH, 1 OH(s)	
+82	OH(t)	0.6895	0.8345	tert-butanol	3 CH3, 1 C , 1 OH(t)	
 (6) CH3OH						
 15	CH3OH	0.8585	0.9938	methanol	1 CH3OH	
 (7) H2O						

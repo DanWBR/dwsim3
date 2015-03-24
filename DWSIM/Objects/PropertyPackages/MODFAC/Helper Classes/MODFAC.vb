@@ -361,13 +361,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
         Public InteracParam_bji As System.Collections.Generic.Dictionary(Of Integer, System.Collections.Generic.Dictionary(Of Integer, Double))
         Public InteracParam_cji As System.Collections.Generic.Dictionary(Of Integer, System.Collections.Generic.Dictionary(Of Integer, Double))
 
-        Protected m_groups As System.Collections.Generic.Dictionary(Of Integer, ModfacGroup)
+        Protected m_groups As System.Collections.Generic.SortedDictionary(Of Integer, ModfacGroup)
 
         Sub New()
 
             Dim pathsep = System.IO.Path.DirectorySeparatorChar
 
-            m_groups = New System.Collections.Generic.Dictionary(Of Integer, ModfacGroup)
+            m_groups = New System.Collections.Generic.SortedDictionary(Of Integer, ModfacGroup)
             InteracParam_aij = New System.Collections.Generic.Dictionary(Of Integer, System.Collections.Generic.Dictionary(Of Integer, Double))
             InteracParam_bij = New System.Collections.Generic.Dictionary(Of Integer, System.Collections.Generic.Dictionary(Of Integer, Double))
             InteracParam_cij = New System.Collections.Generic.Dictionary(Of Integer, System.Collections.Generic.Dictionary(Of Integer, Double))
@@ -442,7 +442,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Sub
 
-        Public ReadOnly Property Groups() As System.Collections.Generic.Dictionary(Of Integer, ModfacGroup)
+        Public ReadOnly Property Groups() As System.Collections.Generic.SortedDictionary(Of Integer, ModfacGroup)
             Get
                 Return m_groups
             End Get
