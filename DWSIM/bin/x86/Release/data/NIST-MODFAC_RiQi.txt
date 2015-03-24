@@ -1,5 +1,5 @@
 (Main Group No.) Main Group Name							
-No.	Sub-group Name	Qk	Rk	Example		
+No.	Sub-group Name	Ri	Qi	Example		
 (1) CH2							
 1	CH3	0.6325	1.0608	hexane	2 CH3, 4 CH2	
 2	CH2	0.6325	0.7081	octane	2 CH3, 6 CH2	

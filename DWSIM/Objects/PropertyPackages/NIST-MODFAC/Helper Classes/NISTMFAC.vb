@@ -61,34 +61,28 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             CheckParameters(VEKI)
 
-            Dim i, k, m As Integer
+            Dim i, k As Integer
 
             Dim n = UBound(Vx)
 
-            Dim n2 = Me.ModfGroups.Groups.Count - 1
-
-            Dim teta(n2), s(n2) As Double
-            Dim beta(n, n2), Vgammac(n), Vgammar(n), Vgamma(n), b(n, n2) As Double
-            Dim Q(n), R(n), j(n), L(n) As Double
+            Dim Vgammac(n), Vgammar(n), Vgamma(n) As Double
+            Dim Q(n), R(n), j(n), L(n), val As Double
             Dim j_(n)
 
+            Dim teta, s As New Dictionary(Of Integer, Double)
+            Dim beta As New List(Of Dictionary(Of Integer, Double))
+
             i = 0
-            Do
-                k = 0
-                Do
-                    beta(i, k) = 0.0#
-                    m = 0
-                    Do
-                        If VEKI(i).ContainsKey(m + 1) Then
-                            beta(i, k) = beta(i, k) + VEKI(i)(m + 1) * TAU(m, k, T)
-                        End If
-                        m = m + 1
-                    Loop Until m = n2 + 1
-                    If beta(i, k) = 0.0# Then beta(i, k) = 1.0#
-                    k = k + 1
-                Loop Until k = n2 + 1
-                i = i + 1
-            Loop Until i = n + 1
+            For Each item In VEKI
+                beta.Add(New Dictionary(Of Integer, Double))
+                For Each item2 In item
+                    For Each item3 In item
+                        val = item(item3.Key) * TAU(item3.Key, item2.Key, T)
+                        If Not beta(i).ContainsKey(item2.Key) Then beta(i).Add(item2.Key, val) Else beta(i)(item2.Key) += val
+                    Next
+                Next
+                i += 1
+            Next
 
             Dim soma_xq = 0.0#
             i = 0
@@ -98,28 +92,21 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 i = i + 1
             Loop Until i = n + 1
 
-            k = 0
-            Do
-                i = 0
-                Do
-                    If VEKI(i).ContainsKey(k + 1) Then
-                        teta(k) = teta(k) + Vx(i) * Q(i) * VEKI(i)(k + 1)
-                    End If
-                    i = i + 1
-                Loop Until i = n + 1
-                teta(k) = teta(k) / soma_xq
-                k = k + 1
-            Loop Until k = n2 + 1
+            i = 0
+            For Each item In VEKI
+                For Each item2 In item
+                    val = Vx(i) * Q(i) * VEKI(i)(item2.Key) / soma_xq
+                    If Not teta.ContainsKey(item2.Key) Then teta.Add(item2.Key, val) Else teta(item2.Key) += val
+                Next
+                i += 1
+            Next
 
-            k = 0
-            Do
-                m = 0
-                Do
-                    If teta(m) <> 0.0# And Not Double.IsNaN(teta(m)) Then s(k) = s(k) + teta(m) * TAU(m, k, T)
-                    m = m + 1
-                Loop Until m = n2 + 1
-                k = k + 1
-            Loop Until k = n2 + 1
+            For Each item In teta
+                For Each item2 In teta
+                    val = teta(item2.Key) * TAU(item2.Key, item.Key, T)
+                    If Not s.ContainsKey(item.Key) Then s.Add(item.Key, val) Else s(item.Key) += val
+                Next
+            Next
 
             Dim soma_xr = 0.0#
             Dim soma_xr_ = 0.0#
@@ -139,12 +126,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 Vgammac(i) = 1 - j_(i) + Math.Log(j_(i)) - 5 * Q(i) * (1 - j(i) / L(i) + Math.Log(j(i) / L(i)))
                 k = 0
                 Dim tmpsum = 0.0#
-                Do
-                    If VEKI(i).ContainsKey(k + 1) Then
-                        tmpsum = tmpsum + teta(k) * beta(i, k) / s(k) - VEKI(i)(k + 1) * Math.Log(beta(i, k) / s(k))
+                For Each item2 In teta
+                    If VEKI(i).ContainsKey(item2.Key) Then
+                        tmpsum += item2.Value * beta(i)(item2.Key) / s(item2.Key) - VEKI(i)(item2.Key) * Math.Log(beta(i)(item2.Key) / s(item2.Key))
                     End If
-                    k = k + 1
-                Loop Until k = n2 + 1
+                Next
                 Vgammar(i) = Q(i) * (1 - tmpsum)
                 Vgamma(i) = Math.Exp(Vgammac(i) + Vgammar(i))
                 If Vgamma(i) = 0 Then Vgamma(i) = 0.000001
@@ -175,7 +161,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                             If Not Me.ModfGroups.InteracParam_aij(g1).ContainsKey(g2) Then
                                 If Me.ModfGroups.InteracParam_aij.ContainsKey(g2) Then
                                     If Not Me.ModfGroups.InteracParam_aij(g2).ContainsKey(g1) And g2 <> g1 Then
-                                        Throw New Exception("MODFAC Error: Could not find interaction parameter for groups " & Me.ModfGroups.Groups(id1 + 1).GroupName & " / " & _
+                                        Throw New Exception("NIST-MODFAC Error: Could not find interaction parameter for groups " & Me.ModfGroups.Groups(id1 + 1).GroupName & " / " & _
                                                             Me.ModfGroups.Groups(id2 + 1).GroupName & ". Activity coefficient calculation will give you inconsistent results for this system.")
                                     End If
                                 End If
@@ -183,11 +169,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                         Else
                             If Me.ModfGroups.InteracParam_aij.ContainsKey(g2) Then
                                 If Not Me.ModfGroups.InteracParam_aij(g2).ContainsKey(g1) And g2 <> g1 Then
-                                    Throw New Exception("MODFAC Error: Could not find interaction parameter for groups " & Me.ModfGroups.Groups(id1 + 1).GroupName & " / " & _
+                                    Throw New Exception("NIST-MODFAC Error: Could not find interaction parameter for groups " & Me.ModfGroups.Groups(id1 + 1).GroupName & " / " & _
                                                         Me.ModfGroups.Groups(id2 + 1).GroupName & ". Activity coefficient calculation will give you inconsistent results for this system.")
                                 End If
                             Else
-                                Throw New Exception("MODFAC Error: Could not find interaction parameter for groups " & Me.ModfGroups.Groups(id1 + 1).GroupName & " / " & _
+                                Throw New Exception("NIST-MODFAC Error: Could not find interaction parameter for groups " & Me.ModfGroups.Groups(id1 + 1).GroupName & " / " & _
                                                     Me.ModfGroups.Groups(id2 + 1).GroupName & ". Activity coefficient calculation will give you inconsistent results for this system.")
                             End If
                         End If
@@ -202,10 +188,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Dim g1, g2 As Integer
             Dim res As Double
 
-            If Not Me.ModfGroups.Groups.ContainsKey(group_1 + 1) Or Not Me.ModfGroups.Groups.ContainsKey(group_2 + 1) Then Return 0.0#
+            If Not Me.ModfGroups.Groups.ContainsKey(group_1) Or Not Me.ModfGroups.Groups.ContainsKey(group_2) Then Return 0.0#
 
-            g1 = Me.ModfGroups.Groups(group_1 + 1).PrimaryGroup
-            g2 = Me.ModfGroups.Groups(group_2 + 1).PrimaryGroup
+            g1 = Me.ModfGroups.Groups(group_1).PrimaryGroup
+            g2 = Me.ModfGroups.Groups(group_2).PrimaryGroup
 
             If g1 <> g2 Then
                 If Me.ModfGroups.InteracParam_aij.ContainsKey(g1) Then
@@ -388,7 +374,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                         mainname = fields(0).Trim().Split(")")(1).Trim
                     Else
                         'Me.Groups.Add(i, New ModfacGroup(fields(1), mainname, maingroup, fields(0), Double.Parse(fields(3), cult), Double.Parse(fields(2), cult)))
-                        Me.Groups.Add(fields(0), New ModfacGroup(fields(1), mainname, maingroup, fields(0), Double.Parse(fields(3), cult), Double.Parse(fields(2), cult)))
+                        Me.Groups.Add(fields(0), New ModfacGroup(fields(1), mainname, maingroup, fields(0), Double.Parse(fields(2), cult), Double.Parse(fields(3), cult)))
                         i += 1
                     End If
                 End While

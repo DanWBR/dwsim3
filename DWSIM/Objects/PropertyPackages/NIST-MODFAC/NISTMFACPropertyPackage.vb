@@ -631,11 +631,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim sum As Double = 0
 
             For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                sum = 0
-                For Each s As String In subst.ConstantProperties.MODFACGroups.Collection.Keys
-                    sum += subst.ConstantProperties.MODFACGroups.Collection(s) * Me.m_uni.ModfGroups.Groups(Me.m_uni.Group2ID(s)).Q
-                Next
-                VQ(i) = sum
+                VQ(i) = Me.m_uni.RET_Qi(Me.RET_VN(subst))
                 i += 1
             Next
 
@@ -650,12 +646,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim i As Integer = 0
             Dim sum As Double = 0
 
-            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                sum = 0
-                For Each s As String In subst.ConstantProperties.MODFACGroups.Collection.Keys
-                    sum += subst.ConstantProperties.MODFACGroups.Collection(s) * Me.m_uni.ModfGroups.Groups(Me.m_uni.Group2ID(s)).R
-                Next
-                VR(i) = sum
+           For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
+                VR(i) = Me.m_uni.RET_Ri(Me.RET_VN(subst))
                 i += 1
             Next
 
