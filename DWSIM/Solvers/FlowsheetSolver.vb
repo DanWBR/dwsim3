@@ -2169,7 +2169,7 @@ Namespace DWSIM.Flowsheet
 
                     If Not form.FormSurface.FlowsheetDesignSurface.SelectedObject Is Nothing Then Call form.FormSurface.UpdateSelectedObject()
 
-                    form.FormSurface.FlowsheetDesignSurface.Focus()
+                    'form.FormSurface.FlowsheetDesignSurface.Focus()
 
                     Application.DoEvents()
 
