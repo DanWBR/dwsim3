@@ -1556,21 +1556,19 @@ Namespace DWSIM.Flowsheet
 
                 Dim myinfo As DWSIM.Outros.StatusChangeEventArgs = form.CalculationQueue.Peek()
 
-                form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}, True))
-
                 Try
+                    form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}, True))
                     If myinfo.Tipo = TipoObjeto.MaterialStream Then
                         CalculateMaterialStreamAsync(form, form.Collections.CLCS_MaterialStreamCollection(myinfo.Nome), ct)
                     Else
                         CalculateFlowsheetAsync(form, myinfo, ct)
                     End If
+                    form.Collections.ObjectCollection(myinfo.Nome).GraphicObject.Calculated = True
                 Catch ex As Exception
                     Throw New Exception(myinfo.Tag & ": " & ex.Message.ToString, ex)
+                Finally
+                    form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}))
                 End Try
-
-                form.Collections.ObjectCollection(myinfo.Nome).GraphicObject.Calculated = True
-
-                form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}))
 
                 If form.CalculationQueue.Count = 1 Then form.FormSpreadsheet.InternalCounter = 0
                 If form.CalculationQueue.Count > 0 Then form.CalculationQueue.Dequeue()
@@ -1606,24 +1604,20 @@ Namespace DWSIM.Flowsheet
                     objlist.Add(item.Nome)
                 Next
                 Parallel.ForEach(li.Value, poptions, Sub(myinfo)
-                                                         form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}, True))
-                                                         If myinfo.Tipo = TipoObjeto.MaterialStream Then
-                                                             Try
+                                                         Try
+                                                             form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}, True))
+                                                             If myinfo.Tipo = TipoObjeto.MaterialStream Then
                                                                  CalculateMaterialStreamAsync(form, form.Collections.CLCS_MaterialStreamCollection(myinfo.Nome), ct)
-                                                             Catch ex As Exception
-                                                                 Throw New Exception(myinfo.Tag & ": " & ex.Message.ToString, ex)
-                                                             End Try
-                                                         Else
-                                                             Try
+                                                             Else
                                                                  CalculateFlowsheetAsync(form, myinfo, ct)
-                                                             Catch ex As Exception
-                                                                 Throw New Exception(myinfo.Tag & ": " & ex.Message.ToString, ex)
-                                                             End Try
-                                                         End If
-                                                         form.Collections.ObjectCollection(myinfo.Nome).GraphicObject.Calculated = True
-                                                         form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}))
+                                                             End If
+                                                             form.Collections.ObjectCollection(myinfo.Nome).GraphicObject.Calculated = True
+                                                         Catch ex As Exception
+                                                             form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}))
+                                                             Throw New Exception(myinfo.Tag & ": " & ex.Message.ToString, ex)
+                                                         End Try
                                                      End Sub)
-             Next
+            Next
 
             For Each obj In form.Collections.ObjectCollection.Values
                 If TypeOf obj Is SimulationObjects_UnitOpBaseClass Then
