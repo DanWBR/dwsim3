@@ -392,7 +392,7 @@ Imports DWSIM.DWSIM.Outros
 
             If x = MsgBoxResult.Yes Then
 
-                Call FormMain.SaveToolStripButton_Click(sender, e)
+                FormMain.SaveFile(False)
                 Me.m_overrideCloseQuestion = True
                 Me.Close()
 
@@ -1016,12 +1016,20 @@ Imports DWSIM.DWSIM.Outros
 
     Private Sub ToolStripComboBoxNumberFormatting_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles ToolStripComboBoxNumberFormatting.SelectedIndexChanged
         Me.Options.NumberFormat = Me.ToolStripComboBoxNumberFormatting.SelectedItem
-        Me.FormSurface.UpdateSelectedObject()
+        Try
+            Me.FormSurface.UpdateSelectedObject()
+        Catch ex As Exception
+
+        End Try
     End Sub
 
     Private Sub ToolStripComboBoxNumberFractionFormatting_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripComboBoxNumberFractionFormatting.SelectedIndexChanged
         Me.Options.FractionNumberFormat = Me.ToolStripComboBoxNumberFractionFormatting.SelectedItem
-        Me.FormSurface.UpdateSelectedObject()
+        Try
+            Me.FormSurface.UpdateSelectedObject()
+        Catch ex As Exception
+
+        End Try
     End Sub
 
     Private Sub ToolStripComboBoxUnitSystem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripComboBoxUnitSystem.SelectedIndexChanged
