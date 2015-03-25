@@ -1556,8 +1556,8 @@ Namespace DWSIM.Flowsheet
 
                 Dim myinfo As DWSIM.Outros.StatusChangeEventArgs = form.CalculationQueue.Peek()
 
+                'form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}, True))
                 Try
-                    form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}, True))
                     If myinfo.Tipo = TipoObjeto.MaterialStream Then
                         CalculateMaterialStreamAsync(form, form.Collections.CLCS_MaterialStreamCollection(myinfo.Nome), ct)
                     Else
@@ -1604,8 +1604,8 @@ Namespace DWSIM.Flowsheet
                     objlist.Add(item.Nome)
                 Next
                 Parallel.ForEach(li.Value, poptions, Sub(myinfo)
+                                                         'form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}, True))
                                                          Try
-                                                             form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}, True))
                                                              If myinfo.Tipo = TipoObjeto.MaterialStream Then
                                                                  CalculateMaterialStreamAsync(form, form.Collections.CLCS_MaterialStreamCollection(myinfo.Nome), ct)
                                                              Else
@@ -1613,8 +1613,9 @@ Namespace DWSIM.Flowsheet
                                                              End If
                                                              form.Collections.ObjectCollection(myinfo.Nome).GraphicObject.Calculated = True
                                                          Catch ex As Exception
-                                                             form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}))
                                                              Throw New Exception(myinfo.Tag & ": " & ex.Message.ToString, ex)
+                                                         Finally
+                                                             form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}))
                                                          End Try
                                                      End Sub)
             Next
