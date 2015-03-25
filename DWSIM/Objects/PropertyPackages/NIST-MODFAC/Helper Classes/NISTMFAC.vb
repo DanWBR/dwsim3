@@ -21,6 +21,7 @@
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
 Imports Microsoft.VisualBasic.FileIO
+Imports System.Linq
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
@@ -61,7 +62,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             CheckParameters(VEKI)
 
-            Dim i, k As Integer
+            Dim i, m, k As Integer
 
             Dim n = UBound(Vx)
 
@@ -75,10 +76,30 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             i = 0
             For Each item In VEKI
                 beta.Add(New Dictionary(Of Integer, Double))
+                For Each item2 In VEKI
+                    For Each item3 In item2
+                        If Not beta(i).ContainsKey(item3.Key) Then beta(i).Add(item3.Key, 0.0#)
+                    Next
+                Next
+                i += 1
+            Next
+
+            Dim ids As Integer() = beta(0).Keys.ToArray
+
+            Dim n2 As Integer = ids.Length - 1
+
+            For i = 0 To n
+                For m = 0 To n2
+                    For k = 0 To n2
+                        If VEKI(i).ContainsKey(ids(k)) Then beta(i)(ids(m)) += VEKI(i)(ids(k)) * TAU(ids(k), ids(m), T)
+                    Next
+                Next
+            Next
+
+            i = 0
+            For Each item In VEKI
                 For Each item2 In item
                     For Each item3 In item
-                        val = item(item3.Key) * TAU(item3.Key, item2.Key, T)
-                        If Not beta(i).ContainsKey(item2.Key) Then beta(i).Add(item2.Key, val) Else beta(i)(item2.Key) += val
                     Next
                 Next
                 i += 1
@@ -129,6 +150,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 For Each item2 In teta
                     If VEKI(i).ContainsKey(item2.Key) Then
                         tmpsum += item2.Value * beta(i)(item2.Key) / s(item2.Key) - VEKI(i)(item2.Key) * Math.Log(beta(i)(item2.Key) / s(item2.Key))
+                    Else
+                        tmpsum += item2.Value * beta(i)(item2.Key) / s(item2.Key)
                     End If
                 Next
                 Vgammar(i) = Q(i) * (1 - tmpsum)
@@ -188,7 +211,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Dim g1, g2 As Integer
             Dim res As Double
 
-            If Not Me.ModfGroups.Groups.ContainsKey(group_1) Or Not Me.ModfGroups.Groups.ContainsKey(group_2) Then Return 0.0#
+            'If Not Me.ModfGroups.Groups.ContainsKey(group_1) Or Not Me.ModfGroups.Groups.ContainsKey(group_2) Then Return 0.0#
 
             g1 = Me.ModfGroups.Groups(group_1).PrimaryGroup
             g2 = Me.ModfGroups.Groups(group_2).PrimaryGroup
