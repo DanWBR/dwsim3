@@ -324,7 +324,22 @@ Public Class FormLLEDiagram
         mat.Fases(0).Componentes(Names(cbComp2.SelectedIndex)).FracaoMolar = Pt.Y
         mat.Fases(0).Componentes(Names(cbComp3.SelectedIndex)).FracaoMolar = 1 - Pt.X - Pt.Y
 
-        mat.CalcEquilibrium("tp", Nothing)
+        If My.Settings.EnableGPUProcessing Then
+            DWSIM.App.InitComputeDevice()
+            My.MyApplication.gpu.EnableMultithreading()
+        End If
+
+        Try
+            mat.CalcEquilibrium("tp", Nothing)
+        Catch ex As Exception
+            MessageBox.Show(ex.Message.ToString, "Error", MessageBoxButtons.OK)
+        Finally
+            If My.Settings.EnableGPUProcessing Then
+                My.MyApplication.gpu.DisableMultithreading()
+                My.MyApplication.gpu.FreeAll()
+            End If
+        End Try
+
 
         'added .GetValueOrDefault to avoid null object errors
 

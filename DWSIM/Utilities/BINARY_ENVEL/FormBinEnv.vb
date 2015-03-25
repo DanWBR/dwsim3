@@ -167,6 +167,11 @@ Public Class FormBinEnv
 
             Me.Enabled = False
 
+            If My.Settings.EnableGPUProcessing Then
+                DWSIM.App.InitComputeDevice()
+                My.MyApplication.gpu.EnableMultithreading()
+            End If
+
             Me.BackgroundWorker1.RunWorkerAsync(New Object() {tipocalc, P, T, chkVLE.Checked, lle, chkSLE.Checked, chkCritical.Checked, rbSolidSolution.Checked})
 
             fpec = New FormPEC
@@ -209,6 +214,11 @@ Public Class FormBinEnv
     End Sub
 
     Private Sub BackgroundWorker1_RunWorkerCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
+
+        If My.Settings.EnableGPUProcessing Then
+            My.MyApplication.gpu.DisableMultithreading()
+            My.MyApplication.gpu.FreeAll()
+        End If
 
         Me.Enabled = True
 

@@ -136,7 +136,14 @@ exec:       With Me.GraphControl.GraphPane.Legend
             Me.phaseidentification = chkpip.Checked
             Me.hydratecalc = chkhyd.Checked
             Me.Enabled = False
+
+            If My.Settings.EnableGPUProcessing Then
+                DWSIM.App.InitComputeDevice()
+                My.MyApplication.gpu.EnableMultithreading()
+            End If
+
             Me.BackgroundWorker1.RunWorkerAsync(New Object() {0, Me.TextBox1.Text, Me.CheckBox1.Checked, Me.CheckBox3.Checked, Me.chkpip.Checked, Me.chkhyd.Checked, Me.CheckBoxHYDVAP.Checked})
+
             fpec = New FormPEC
             fpec.bw = Me.BackgroundWorker1
             fpec.Label2.Tag = fpec.Label2.Text
@@ -977,6 +984,11 @@ exec:       With Me.GraphControl.GraphPane.Legend
     End Sub
 
     Private Sub BackgroundWorker1_RunWorkerCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
+
+        If My.Settings.EnableGPUProcessing Then
+            My.MyApplication.gpu.DisableMultithreading()
+            My.MyApplication.gpu.FreeAll()
+        End If
 
         Me.Enabled = True
 
