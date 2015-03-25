@@ -45,6 +45,8 @@ Public Class FormConfigPP
                 uni = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UnifacLL
             Case "MODFAC"
                 uni = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Modfac
+            Case "NIST-MODFAC"
+                uni = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NISTMFAC
         End Select
 
         'create list of all subgroups and primary groups
@@ -82,8 +84,11 @@ Public Class FormConfigPP
             IPGrid.Item(k, _comps.Count).Style.ForeColor = Color.Yellow
             k += 1
         Next
+        IPGrid.Item(0, _comps.Count).Style.ForeColor = Color.Yellow
         IPGrid.Item(0, _comps.Count).Style.BackColor = Color.Crimson
         IPGrid.Item(0, _comps.Count).Selected = True
+        IPGrid.Item(0, _comps.Count).Value = "Interaction Parameters"
+        IPGrid.Item(0, _comps.Count).Style.Alignment = DataGridViewContentAlignment.MiddleRight
 
         For k = 1 To PrimaryGroups.Count
             For l = 0 To _comps.Count - 1
@@ -204,17 +209,22 @@ Public Class FormConfigPP
         If TypeOf _pp Is UNIFACPropertyPackage Then
             TabStripUNIFAC.Visible = True
             FaTabStrip1.SelectedItem = Me.TabStripUNIFAC
-            TabStripUNIFAC.Title = "UNIFAC Interaction Parameters"
+            TabStripUNIFAC.Title = "UNIFAC"
         End If
         If TypeOf _pp Is UNIFACLLPropertyPackage Then
             TabStripUNIFAC.Visible = True
             FaTabStrip1.SelectedItem = Me.TabStripUNIFAC
-            TabStripUNIFAC.Title = "UNIFAC-LL Interaction Parameters"
+            TabStripUNIFAC.Title = "UNIFAC-LL"
         End If
         If TypeOf _pp Is MODFACPropertyPackage Then
             TabStripUNIFAC.Visible = True
             FaTabStrip1.SelectedItem = Me.TabStripUNIFAC
-            TabStripUNIFAC.Title = "MODFAC Interaction Parameters"
+            TabStripUNIFAC.Title = "MODFAC (Dortmund)"
+        End If
+        If TypeOf _pp Is NISTMFACPropertyPackage Then
+            TabStripUNIFAC.Visible = True
+            FaTabStrip1.SelectedItem = Me.TabStripUNIFAC
+            TabStripUNIFAC.Title = "MODFAC (NIST)"
         End If
         Me.KryptonDataGridView2.Rows.Clear()
 
@@ -372,6 +382,44 @@ gtmu:           If ppu.m_pr.InteractionParameters.ContainsKey(cp.Name) Then
                 Else
                     ppu.m_pr.InteractionParameters.Add(cp.Name, New Dictionary(Of String, DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PR_IPData))
                     GoTo gtmu
+                End If
+            Next
+        ElseIf TypeOf _pp Is NISTMFACPropertyPackage Then
+
+            Dim ppu As NISTMFACPropertyPackage = _pp
+
+            FillUNIFACParamTable("NIST-MODFAC")
+
+            For Each cp As ConstantProperties In _comps.Values
+gtmun:          If ppu.m_pr.InteractionParameters.ContainsKey(cp.Name) Then
+                    For Each cp2 As ConstantProperties In _comps.Values
+                        If cp.Name <> cp2.Name Then
+                            If Not ppu.m_pr.InteractionParameters(cp.Name).ContainsKey(cp2.Name) Then
+                                'check if collection has id2 as primary id
+                                If ppu.m_pr.InteractionParameters.ContainsKey(cp2.Name) Then
+                                    If Not ppu.m_pr.InteractionParameters(cp2.Name).ContainsKey(cp.Name) Then
+                                        ppu.m_pr.InteractionParameters(cp.Name).Add(cp2.Name, New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PR_IPData)
+                                        Dim a12 As Double = ppu.m_pr.InteractionParameters(cp.Name)(cp2.Name).kij
+                                        KryptonDataGridView2.Rows.Add(New Object() {DWSIM.App.GetComponentName(cp.Name), DWSIM.App.GetComponentName(cp2.Name), Format(a12, nf)})
+                                        With KryptonDataGridView2.Rows(KryptonDataGridView2.Rows.Count - 1)
+                                            .Cells(0).Tag = cp.Name
+                                            .Cells(1).Tag = cp2.Name
+                                        End With
+                                    End If
+                                End If
+                            Else
+                                Dim a12 As Double = ppu.m_pr.InteractionParameters(cp.Name)(cp2.Name).kij
+                                KryptonDataGridView2.Rows.Add(New Object() {DWSIM.App.GetComponentName(cp.Name), DWSIM.App.GetComponentName(cp2.Name), Format(a12, nf)})
+                                With KryptonDataGridView2.Rows(KryptonDataGridView2.Rows.Count - 1)
+                                    .Cells(0).Tag = cp.Name
+                                    .Cells(1).Tag = cp2.Name
+                                End With
+                            End If
+                        End If
+                    Next
+                Else
+                    ppu.m_pr.InteractionParameters.Add(cp.Name, New Dictionary(Of String, DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PR_IPData))
+                    GoTo gtmun
                 End If
             Next
 
