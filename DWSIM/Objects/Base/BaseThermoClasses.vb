@@ -2284,17 +2284,33 @@ Namespace DWSIM.ClassesBasicasTermodinamica
 
             XMLSerializer.XMLSerializer.Deserialize(Me, data, True)
 
+            Dim unif As New SimulationObjects.PropertyPackages.Auxiliary.Unifac
+            Dim modf As New SimulationObjects.PropertyPackages.Auxiliary.Modfac
+
             For Each xel2 As XElement In (From xel As XElement In data Select xel Where xel.Name = "UNIFACGroups").Elements
-                Me.UNIFACGroups.Collection.Add(xel2.@Name, xel2.@Value)
+                If xel2.@Name Is Nothing Then
+                    Me.UNIFACGroups.Collection.Add(xel2.@GroupID.ToString, xel2.@Value)
+                Else
+                    Dim id As Integer = unif.Group2ID(xel2.@Name)
+                    Me.UNIFACGroups.Collection.Add(id.ToString, xel2.@Value)
+                End If
             Next
 
             For Each xel2 As XElement In (From xel As XElement In data Select xel Where xel.Name = "MODFACGroups").Elements
-                Me.MODFACGroups.Collection.Add(xel2.@Name, xel2.@Value)
+                If xel2.@Name Is Nothing Then
+                    Me.MODFACGroups.Collection.Add(xel2.@GroupID.ToString, xel2.@Value)
+                Else
+                    Dim id As Integer = modf.Group2ID(xel2.@Name)
+                    Me.MODFACGroups.Collection.Add(id.ToString, xel2.@Value)
+                End If
             Next
 
             For Each xel2 As XElement In (From xel As XElement In data Select xel Where xel.Name = "Elements").Elements
                 Me.Elements.Collection.Add(xel2.@Name, xel2.@Value)
             Next
+
+            unif = Nothing
+            modf = Nothing
 
             Return True
 
@@ -2302,17 +2318,17 @@ Namespace DWSIM.ClassesBasicasTermodinamica
 
         Public Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement) Implements XMLSerializer.Interfaces.ICustomXMLSerialization.SaveData
 
-            Dim elements As List(Of System.Xml.Linq.XElement) = XMLSerializer.XMLSerializer.Serialize(Me, True)
+            Dim xelements As List(Of System.Xml.Linq.XElement) = XMLSerializer.XMLSerializer.Serialize(Me, True)
             Dim ci As CultureInfo = CultureInfo.InvariantCulture
 
-            With elements
+            With xelements
 
                 .Add(New XElement("UNIFACGroups"))
 
                 If Not UNIFACGroups Is Nothing Then
 
                     For Each key As String In UNIFACGroups.Collection.Keys
-                        .Item(elements.Count - 1).Add(New XElement("Item", New XAttribute("Name", key), New XAttribute("Value", UNIFACGroups.Collection(key))))
+                        .Item(xelements.Count - 1).Add(New XElement("Item", New XAttribute("GroupID", key), New XAttribute("Value", UNIFACGroups.Collection(key.ToString))))
                     Next
 
                 End If
@@ -2322,7 +2338,7 @@ Namespace DWSIM.ClassesBasicasTermodinamica
                 If Not MODFACGroups Is Nothing Then
 
                     For Each key As String In MODFACGroups.Collection.Keys
-                        .Item(elements.Count - 1).Add(New XElement("Item", New XAttribute("Name", key), New XAttribute("Value", MODFACGroups.Collection(key))))
+                        .Item(xelements.Count - 1).Add(New XElement("Item", New XAttribute("GroupID", key), New XAttribute("Value", MODFACGroups.Collection(key.ToString))))
                     Next
 
                 End If
@@ -2332,14 +2348,14 @@ Namespace DWSIM.ClassesBasicasTermodinamica
                 If Not Me.Elements Is Nothing Then
 
                     For Each key As String In Me.Elements.Collection.Keys
-                        .Item(elements.Count - 1).Add(New XElement("Item", New XAttribute("Name", key), New XAttribute("Value", Me.Elements.Collection(key))))
+                        .Item(xelements.Count - 1).Add(New XElement("Item", New XAttribute("Name", key), New XAttribute("Value", Me.Elements.Collection(key))))
                     Next
 
                 End If
 
             End With
 
-            Return elements
+            Return xelements
 
         End Function
 

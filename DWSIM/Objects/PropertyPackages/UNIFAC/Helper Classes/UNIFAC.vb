@@ -533,7 +533,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             For Each group As UnifacGroup In Me.UnifGroups.Groups.Values
                 For Each s As String In cp.UNIFACGroups.Collection.Keys
-                    If s = group.GroupName Then
+                    If s = group.Secondary_Group Then
                         res.Add(cp.UNIFACGroups.Collection(s))
                         added = True
                         Exit For

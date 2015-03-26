@@ -633,8 +633,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
                 sum = 0
                 For Each s As String In subst.ConstantProperties.UNIFACGroups.Collection.Keys
-                    If Me.m_uni.UnifGroups.Groups.ContainsKey(Me.m_uni.Group2ID(s)) Then
-                        sum += subst.ConstantProperties.UNIFACGroups.Collection(s) * Me.m_uni.UnifGroups.Groups(Me.m_uni.Group2ID(s)).Q
+                    If Me.m_uni.UnifGroups.Groups.ContainsKey(s) Then
+                        sum += subst.ConstantProperties.UNIFACGroups.Collection(s) * Me.m_uni.UnifGroups.Groups(s).Q
                     End If
                 Next
                 VQ(i) = sum
@@ -655,8 +655,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
                 sum = 0
                 For Each s As String In subst.ConstantProperties.UNIFACGroups.Collection.Keys
-                    If Me.m_uni.UnifGroups.Groups.ContainsKey(Me.m_uni.Group2ID(s)) Then
-                        sum += subst.ConstantProperties.UNIFACGroups.Collection(s) * Me.m_uni.UnifGroups.Groups(Me.m_uni.Group2ID(s)).R
+                    If Me.m_uni.UnifGroups.Groups.ContainsKey(s) Then
+                        sum += subst.ConstantProperties.UNIFACGroups.Collection(s) * Me.m_uni.UnifGroups.Groups(s).R
                     End If
                 Next
                 VR(i) = sum
@@ -676,8 +676,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
                 sum = 0
                 For Each s As String In subst.ConstantProperties.UNIFACGroups.Collection.Keys
-                    If Me.m_uni.UnifGroups.Groups.ContainsKey(Me.m_uni.Group2ID(s)) Then
-                        sum += subst.ConstantProperties.UNIFACGroups.Collection(s) * Me.m_uni.UnifGroups.Groups(Me.m_uni.Group2ID(s)).Q
+                    If Me.m_uni.UnifGroups.Groups.ContainsKey(s) Then
+                        sum += subst.ConstantProperties.UNIFACGroups.Collection(s) * Me.m_uni.UnifGroups.Groups(s).Q
                     End If
                 Next
                 Dim obj As Object = Me.m_uni.RET_EKI(Me.RET_VN(subst), sum)
