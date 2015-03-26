@@ -90,6 +90,11 @@ Public Class FormBinEnv
 
             Me.GraphControl.IsShowPointValues = True
 
+            Me.GridExpData.Columns(1).HeaderText = "x1 (" & DWSIM.App.GetLocalString("FraoMolar1") & ")"
+            Me.GridExpData.Columns(2).HeaderText = "y1 (" & DWSIM.App.GetLocalString("FraoMolar1") & ")"
+            Me.GridExpData.Columns(3).HeaderText = "T (" & su.spmp_temperature & ")"
+            Me.GridExpData.Columns(4).HeaderText = "P (" & su.spmp_pressure & ")"
+
         Else
 
             MessageBox.Show(DWSIM.App.GetLocalString("BinEnvError_TwoCompoundsMinimum"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -270,6 +275,28 @@ Public Class FormBinEnv
             With Me.GraphControl.GraphPane
                 If vxexp.Count > 0 Then
                     With .AddCurve(DWSIM.App.GetLocalString("ExpData"), vxexp.ToArray(GetType(Double)), vtexp.ToArray(GetType(Double)), Color.Black, ZedGraph.SymbolType.Circle)
+                        .Line.IsVisible = False
+                        .Symbol.IsVisible = True
+                        .Symbol.Type = ZedGraph.SymbolType.Circle
+                        .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                    End With
+                End If
+            End With
+        ElseIf Me.RadioButton2.Checked Then
+            With Me.GraphControl.GraphPane
+                If vxexp.Count > 0 Then
+                    With .AddCurve(DWSIM.App.GetLocalString("ExpData"), vxexp.ToArray(GetType(Double)), vpexp.ToArray(GetType(Double)), Color.Black, ZedGraph.SymbolType.Circle)
+                        .Line.IsVisible = False
+                        .Symbol.IsVisible = True
+                        .Symbol.Type = ZedGraph.SymbolType.Circle
+                        .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                    End With
+                End If
+            End With
+        ElseIf Me.RadioButton3.Checked Or Me.RadioButton4.Checked Then
+            With Me.GraphControl.GraphPane
+                If vxexp.Count > 0 Then
+                    With .AddCurve(DWSIM.App.GetLocalString("ExpData"), vxexp.ToArray(GetType(Double)), vyexp.ToArray(GetType(Double)), Color.Black, ZedGraph.SymbolType.Circle)
                         .Line.IsVisible = False
                         .Symbol.IsVisible = True
                         .Symbol.Type = ZedGraph.SymbolType.Circle
