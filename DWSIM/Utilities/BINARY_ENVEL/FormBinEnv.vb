@@ -307,7 +307,8 @@ Public Class FormBinEnv
         End If
 
         Dim ridx As Integer = 0
-       
+        Dim lidx As Integer = 0
+
         For Each res In e.Result
 
             Dim i As Integer
@@ -315,6 +316,8 @@ Public Class FormBinEnv
             Dim r = res(0)
             Dim ppname As String = res(1)
             Dim rand = New Random()
+
+            Dim linetype As Integer = lidx
 
             'convert x+y axis
             Select Case cbXAxisBasis.SelectedIndex
@@ -526,44 +529,58 @@ Public Class FormBinEnv
                     .Title.Text = c(0) & " / " & c(1) & vbCrLf & "P = " & cv.ConverterDoSI(su.spmp_pressure, P) & " " & su.spmp_pressure
                     With .AddCurve("[" & ppname & "] " & DWSIM.App.GetLocalString("PontosdeBolha"), vx1.ToArray(GetType(Double)), vy1.ToArray(GetType(Double)), Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256)), ZedGraph.SymbolType.Circle)
                         .Line.IsSmooth = True
+                        .Line.Style = linetype
+                        .Line.Width = 2
                         .Symbol.IsVisible = False
                     End With
                     With .AddCurve("[" & ppname & "] " & DWSIM.App.GetLocalString("PontosdeOrvalho"), vx2.ToArray(GetType(Double)), vy2.ToArray(GetType(Double)), Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256)), ZedGraph.SymbolType.Circle)
                         .Line.IsSmooth = True
+                        .Line.Style = linetype
+                        .Line.Width = 2
                         .Symbol.IsVisible = False
                     End With
                     If vx1l1.Count > 0 Then
                         With .AddCurve(DWSIM.App.GetLocalString("[" & ppname & "] " & "LLE LP1"), vx1l1.ToArray(GetType(Double)), vy3.ToArray(GetType(Double)), Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256)), ZedGraph.SymbolType.Circle)
                             .Line.IsSmooth = True
+                            .Line.Style = linetype
+                            .Line.Width = 2
                             .Symbol.IsVisible = False
                         End With
                         With .AddCurve(DWSIM.App.GetLocalString("[" & ppname & "] " & "LLE LP2"), vx1l2.ToArray(GetType(Double)), vy3.ToArray(GetType(Double)), Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256)), ZedGraph.SymbolType.Circle)
                             .Line.IsSmooth = True
+                            .Line.Style = linetype
+                            .Line.Width = 2
                             .Symbol.IsVisible = False
                         End With
                     End If
                     If pys1.Count > 0 Then
                         With .AddCurve(DWSIM.App.GetLocalString("[" & ppname & "] " & "SLE SL/S"), vxs1.ToArray(GetType(Double)), vys1.ToArray(GetType(Double)), Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256)), ZedGraph.SymbolType.Circle)
                             .Line.IsSmooth = True
+                            .Line.Style = linetype
+                            .Line.Width = 2
                             .Symbol.IsVisible = False
                         End With
                     End If
                     If pys2.Count > 0 Then
                         With .AddCurve(DWSIM.App.GetLocalString("[" & ppname & "] " & "SLE L/SL"), vxs2.ToArray(GetType(Double)), vys2.ToArray(GetType(Double)), Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256)), ZedGraph.SymbolType.Circle)
                             .Line.IsSmooth = True
+                            .Line.Style = linetype
+                            .Line.Width = 2
                             .Symbol.IsVisible = False
                         End With
                     End If
                     If pxc.Count > 0 Then
                         With .AddCurve(DWSIM.App.GetLocalString("[" & ppname & "] " & "Critical"), vxc.ToArray(GetType(Double)), vyc.ToArray(GetType(Double)), Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256)), ZedGraph.SymbolType.Circle)
                             .Line.IsSmooth = True
+                            .Line.Style = linetype
+                            .Line.Width = 2
                             .Symbol.IsVisible = False
                         End With
                     End If
                     .XAxis.Title.Text = cbXAxisBasis.SelectedItem.ToString & " / " & c(0)
                     .YAxis.Title.Text = "T / " & su.spmp_temperature
                     .Legend.IsVisible = True
-                    .Legend.Position = ZedGraph.LegendPos.BottomCenter
+                    .Legend.Position = ZedGraph.LegendPos.BottomFlushLeft
                     Me.GraphControl.IsAutoScrollRange = True
                     Select Case cbXAxisBasis.SelectedIndex
                         Case 0, 1
@@ -616,6 +633,9 @@ Public Class FormBinEnv
                     .Add("[" & ppname & "] ""c3", "[" & ppname & "] " & "x (" & c(0) & ")")
                     .Add("[" & ppname & "] ""c4", "[" & ppname & "] " & "Pdew (" & su.spmp_pressure & ")")
                 End With
+
+                If Me.Grid1.Rows.Count = 0 Then Me.Grid1.Rows.Add(100)
+
                 For Each co As DataGridViewColumn In Me.Grid1.Columns
                     co.SortMode = DataGridViewColumnSortMode.NotSortable
                     co.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -636,16 +656,14 @@ Public Class FormBinEnv
                     j = j + 1
                 Next
                 With Me.Grid1.Rows
-                    .Clear()
                     k = 0
                     Do
-                        .Add()
                         j = 0
                         Do
                             If Double.TryParse(data(j, k), New Double) Then
-                                .Item(k).Cells(j).Value = Format(CDbl(data(j, k)), nf)
+                                .Item(k).Cells(j + (ridx * 4)).Value = Format(CDbl(data(j, k)), nf)
                             Else
-                                .Item(k).Cells(j).Value = data(j, k)
+                                .Item(k).Cells(j + (ridx * 4)).Value = data(j, k)
                             End If
                             j = j + 1
                         Loop Until j = 4
@@ -655,28 +673,36 @@ Public Class FormBinEnv
 
                 With Me.GraphControl.GraphPane
                     .Title.Text = c(0) & " / " & c(1) & vbCrLf & "T = " & cv.ConverterDoSI(su.spmp_temperature, T) & " " & su.spmp_temperature
-                    With .AddCurve(DWSIM.App.GetLocalString("PontosdeBolha"), vx1.ToArray(GetType(Double)), vy1.ToArray(GetType(Double)), Color.DeepSkyBlue, ZedGraph.SymbolType.Circle)
-                        .Color = Color.SteelBlue
+                    With .AddCurve("[" & ppname & "] " & DWSIM.App.GetLocalString("PontosdeBolha"), vx1.ToArray(GetType(Double)), vy1.ToArray(GetType(Double)), Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256)), ZedGraph.SymbolType.Circle)
                         .Line.IsSmooth = True
-                        .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                        .Line.Style = linetype
+                        .Line.Width = 2
+                        .Symbol.IsVisible = False
                     End With
-                    With .AddCurve(DWSIM.App.GetLocalString("PontosdeOrvalho"), vx2.ToArray(GetType(Double)), vy2.ToArray(GetType(Double)), Color.SlateBlue, ZedGraph.SymbolType.Circle)
-                        .Color = Color.YellowGreen
+                    With .AddCurve("[" & ppname & "] " & DWSIM.App.GetLocalString("PontosdeOrvalho"), vx2.ToArray(GetType(Double)), vy2.ToArray(GetType(Double)), Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256)), ZedGraph.SymbolType.Circle)
                         .Line.IsSmooth = True
-                        .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                        .Line.Style = linetype
+                        .Line.Width = 2
+                        .Symbol.IsVisible = False
                     End With
                     If vx1l1.Count > 0 Then
-                        With .AddCurve(DWSIM.App.GetLocalString("LLE LP1"), vx1l1.ToArray(GetType(Double)), vy3.ToArray(GetType(Double)), Color.Red, ZedGraph.SymbolType.Diamond)
-                            .Line.IsVisible = False
-                            .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                        With .AddCurve("[" & ppname & "] " & DWSIM.App.GetLocalString("LLE LP1"), vx1l1.ToArray(GetType(Double)), vy3.ToArray(GetType(Double)), Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256)), ZedGraph.SymbolType.Diamond)
+                            .Line.IsSmooth = True
+                            .Line.Style = linetype
+                            .Line.Width = 2
+                            .Symbol.IsVisible = False
                         End With
-                        With .AddCurve(DWSIM.App.GetLocalString("LLE LP2"), vx1l2.ToArray(GetType(Double)), vy3.ToArray(GetType(Double)), Color.Red, ZedGraph.SymbolType.Diamond)
-                            .Line.IsVisible = False
-                            .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                        With .AddCurve("[" & ppname & "] " & DWSIM.App.GetLocalString("LLE LP2"), vx1l2.ToArray(GetType(Double)), vy3.ToArray(GetType(Double)), Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256)), ZedGraph.SymbolType.Diamond)
+                            .Line.IsSmooth = True
+                            .Line.Style = linetype
+                            .Line.Width = 2
+                            .Symbol.IsVisible = False
                         End With
                     End If
                     .XAxis.Title.Text = cbXAxisBasis.SelectedItem.ToString & " / " & c(0)
                     .YAxis.Title.Text = "P / " & su.spmp_pressure
+                    .Legend.IsVisible = True
+                    .Legend.Position = ZedGraph.LegendPos.BottomFlushLeft
                     Me.GraphControl.IsAutoScrollRange = True
                     Select Case cbXAxisBasis.SelectedIndex
                         Case 0, 1
@@ -707,6 +733,9 @@ Public Class FormBinEnv
                     .Add("[" & ppname & "] ""c1", "[" & ppname & "] " & "x (" & c(0) & ")")
                     .Add("[" & ppname & "] ""c2", "[" & ppname & "] " & "y (" & c(0) & ")")
                 End With
+
+                If Me.Grid1.Rows.Count = 0 Then Me.Grid1.Rows.Add(100)
+
                 For Each co As DataGridViewColumn In Me.Grid1.Columns
                     co.SortMode = DataGridViewColumnSortMode.NotSortable
                     co.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -721,16 +750,14 @@ Public Class FormBinEnv
                     j = j + 1
                 Next
                 With Me.Grid1.Rows
-                    .Clear()
                     k = 0
                     Do
-                        .Add()
                         j = 0
                         Do
                             If Double.TryParse(data(j, k), New Double) Then
-                                .Item(k).Cells(j).Value = Format(CDbl(data(j, k)), nf)
+                                .Item(k).Cells(j + (ridx * 2)).Value = Format(CDbl(data(j, k)), nf)
                             Else
-                                .Item(k).Cells(j).Value = data(j, k)
+                                .Item(k).Cells(j + (ridx * 2)).Value = data(j, k)
                             End If
                             j = j + 1
                         Loop Until j = 2
@@ -740,22 +767,25 @@ Public Class FormBinEnv
 
                 With Me.GraphControl.GraphPane
                     .Title.Text = c(0) & " / " & c(1) & vbCrLf & "P = " & cv.ConverterDoSI(su.spmp_pressure, P) & " " & su.spmp_pressure
-                    With .AddCurve("", vx.ToArray(GetType(Double)), vy.ToArray(GetType(Double)), Color.SlateBlue, ZedGraph.SymbolType.Circle)
-                        .Color = Color.SteelBlue
+                    With .AddCurve("[" & ppname & "]", vx.ToArray(GetType(Double)), vy.ToArray(GetType(Double)), Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256)), ZedGraph.SymbolType.Circle)
                         .Line.IsSmooth = True
-                        .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                        .Line.Style = linetype
+                        .Line.Width = 2
+                        .Symbol.IsVisible = False
                     End With
                     vx.Clear()
                     vx.Add(0.0)
                     vx.Add(1.0)
-                    With .AddCurve("", vx.ToArray(GetType(Double)), vx.ToArray(GetType(Double)), Color.Black, ZedGraph.SymbolType.None)
-                        .Color = Color.Black
-                        .Line.Style = Drawing2D.DashStyle.Solid
+                    With .AddCurve("[" & ppname & "]", vx.ToArray(GetType(Double)), vx.ToArray(GetType(Double)), Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256)), ZedGraph.SymbolType.None)
+                        .Line.IsSmooth = True
+                        .Line.Style = linetype
+                        .Line.Width = 2
                         .Symbol.IsVisible = False
                     End With
-
                     .XAxis.Title.Text = cbXAxisBasis.SelectedItem.ToString & " (X) - " & c(0)
                     .YAxis.Title.Text = cbXAxisBasis.SelectedItem.ToString & " (Y) - " & c(0)
+                    .Legend.IsVisible = True
+                    .Legend.Position = ZedGraph.LegendPos.BottomFlushLeft
                     Me.GraphControl.IsAutoScrollRange = True
                     Select Case cbXAxisBasis.SelectedIndex
                         Case 0, 1
@@ -786,6 +816,9 @@ Public Class FormBinEnv
                     .Add("[" & ppname & "] ""c1", "[" & ppname & "] " & "x (" & c(0) & ")")
                     .Add("[" & ppname & "] ""c2", "[" & ppname & "] " & "y (" & c(0) & ")")
                 End With
+
+                If Me.Grid1.Rows.Count = 0 Then Me.Grid1.Rows.Add(100)
+
                 For Each co As DataGridViewColumn In Me.Grid1.Columns
                     co.SortMode = DataGridViewColumnSortMode.NotSortable
                     co.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -800,16 +833,14 @@ Public Class FormBinEnv
                     j = j + 1
                 Next
                 With Me.Grid1.Rows
-                    .Clear()
                     k = 0
                     Do
-                        .Add()
                         j = 0
                         Do
                             If Double.TryParse(data(j, k), New Double) Then
-                                .Item(k).Cells(j).Value = Format(CDbl(data(j, k)), nf)
+                                .Item(k).Cells(j + (ridx * 2)).Value = Format(CDbl(data(j, k)), nf)
                             Else
-                                .Item(k).Cells(j).Value = data(j, k)
+                                .Item(k).Cells(j + (ridx * 2)).Value = data(j, k)
                             End If
                             j = j + 1
                         Loop Until j = 2
@@ -819,23 +850,25 @@ Public Class FormBinEnv
 
                 With Me.GraphControl.GraphPane
                     .Title.Text = c(0) & " / " & c(1) & vbCrLf & "T = " & cv.ConverterDoSI(su.spmp_temperature, T) & " " & su.spmp_temperature
-                    With .AddCurve("", vx.ToArray(GetType(Double)), vy.ToArray(GetType(Double)), Color.SlateBlue, ZedGraph.SymbolType.Circle)
-                        .Color = Color.SteelBlue
+                    With .AddCurve("[" & ppname & "]", vx.ToArray(GetType(Double)), vy.ToArray(GetType(Double)), Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256)), ZedGraph.SymbolType.Circle)
                         .Line.IsSmooth = True
-                        .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                        .Line.Style = linetype
+                        .Line.Width = 2
+                        .Symbol.IsVisible = False
                     End With
-
                     vx.Clear()
                     vx.Add(0.0)
                     vx.Add(1.0)
-                    With .AddCurve("", vx.ToArray(GetType(Double)), vx.ToArray(GetType(Double)), Color.Black, ZedGraph.SymbolType.None)
-                        .Color = Color.Black
-                        .Line.Style = Drawing2D.DashStyle.Solid
+                    With .AddCurve("[" & ppname & "]", vx.ToArray(GetType(Double)), vx.ToArray(GetType(Double)), Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256)), ZedGraph.SymbolType.None)
+                        .Line.IsSmooth = True
+                        .Line.Style = linetype
+                        .Line.Width = 2
                         .Symbol.IsVisible = False
                     End With
                     .XAxis.Title.Text = cbXAxisBasis.SelectedItem.ToString & " (X) - " & c(0)
                     .YAxis.Title.Text = cbXAxisBasis.SelectedItem.ToString & " (Y) - " & c(0)
-
+                    .Legend.IsVisible = True
+                    .Legend.Position = ZedGraph.LegendPos.BottomFlushLeft
                     Me.GraphControl.IsAutoScrollRange = True
                     Select Case cbXAxisBasis.SelectedIndex
                         Case 0, 1
@@ -866,6 +899,9 @@ Public Class FormBinEnv
                     .Add("[" & ppname & "] ""c1", "[" & ppname & "] " & "x (" & c(0) & ")")
                     .Add("[" & ppname & "] ""c2", "[" & ppname & "] " & DWSIM.App.GetLocalString("DeltaGRT"))
                 End With
+
+                If Me.Grid1.Rows.Count = 0 Then Me.Grid1.Rows.Add(100)
+
                 For Each co As DataGridViewColumn In Me.Grid1.Columns
                     co.SortMode = DataGridViewColumnSortMode.NotSortable
                     co.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -880,16 +916,14 @@ Public Class FormBinEnv
                     j = j + 1
                 Next
                 With Me.Grid1.Rows
-                    .Clear()
                     k = 0
                     Do
-                        .Add()
                         j = 0
                         Do
                             If Double.TryParse(data(j, k), New Double) Then
-                                .Item(k).Cells(j).Value = Format(CDbl(data(j, k)), nf)
+                                .Item(k).Cells(j + (ridx * 14)).Value = Format(CDbl(data(j, k)), nf)
                             Else
-                                .Item(k).Cells(j).Value = data(j, k)
+                                .Item(k).Cells(j + (ridx * 14)).Value = data(j, k)
                             End If
                             j = j + 1
                         Loop Until j = 2
@@ -899,13 +933,16 @@ Public Class FormBinEnv
 
                 With Me.GraphControl.GraphPane
                     .Title.Text = c(0) & " / " & c(1) & vbCrLf & "T = " & cv.ConverterDoSI(su.spmp_temperature, T) & " " & su.spmp_temperature & ", P = " & cv.ConverterDoSI(su.spmp_pressure, P) & " " & su.spmp_pressure
-                    With .AddCurve("", vx.ToArray(GetType(Double)), vy.ToArray(GetType(Double)), Color.SlateBlue, ZedGraph.SymbolType.Circle)
-                        .Color = Color.SteelBlue
+                    With .AddCurve("[" & ppname & "]", vx.ToArray(GetType(Double)), vy.ToArray(GetType(Double)), Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256)), ZedGraph.SymbolType.Circle)
                         .Line.IsSmooth = True
-                        .Symbol.Fill.Type = ZedGraph.FillType.Solid
+                        .Line.Style = linetype
+                        .Line.Width = 2
+                        .Symbol.IsVisible = False
                     End With
                     .XAxis.Title.Text = DWSIM.App.GetLocalString("FraoMolarx") & c(0)
                     .YAxis.Title.Text = DWSIM.App.GetLocalString("DeltaGRT")
+                    .Legend.IsVisible = True
+                    .Legend.Position = ZedGraph.LegendPos.BottomFlushLeft
                     .AxisChange(Me.CreateGraphics)
                     Me.GraphControl.IsAutoScrollRange = True
                     Select Case cbXAxisBasis.SelectedIndex
@@ -920,6 +957,9 @@ Public Class FormBinEnv
             End If
 
             ridx += 1
+            lidx += 1
+
+            If lidx > 4 Then lidx = 0
 
         Next
 
