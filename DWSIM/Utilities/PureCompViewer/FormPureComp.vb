@@ -616,8 +616,9 @@ Public Class FormPureComp
         'UNIFAC
         tbUNIFAC.Text = ""
         If Not constprop.UNIFACGroups Is Nothing Then
+            Dim unif As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac
             For Each s As String In constprop.UNIFACGroups.Collection.Keys
-                tbUNIFAC.Text += constprop.UNIFACGroups.Collection(s) & " " & s & ", "
+                tbUNIFAC.Text += unif.ID2Group(s) & " " & constprop.UNIFACGroups.Collection(s) & ", "
             Next
             tbUNIFAC.Text = tbUNIFAC.Text.TrimEnd(New Char() {",", " "})
         End If
@@ -625,10 +626,21 @@ Public Class FormPureComp
         'MODFAC
         tbMODFAC.Text = ""
         If Not constprop.MODFACGroups Is Nothing Then
+            Dim unif As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Modfac
             For Each s As String In constprop.MODFACGroups.Collection.Keys
-                tbMODFAC.Text += constprop.MODFACGroups.Collection(s) & " " & s & ", "
+                tbMODFAC.Text += unif.ID2Group(s) & " " & constprop.MODFACGroups.Collection(s) & ", "
             Next
             tbMODFAC.Text = tbMODFAC.Text.TrimEnd(New Char() {",", " "})
+        End If
+
+        'MODFAC
+        tbMODFACNIST.Text = ""
+        If Not constprop.NISTMODFACGroups Is Nothing Then
+            Dim unif As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NISTMFAC
+            For Each s As String In constprop.NISTMODFACGroups.Collection.Keys
+                tbMODFACNIST.Text += unif.ID2Group(s) & " " & constprop.NISTMODFACGroups.Collection(s) & ", "
+            Next
+            tbMODFACNIST.Text = tbMODFACNIST.Text.TrimEnd(New Char() {",", " "})
         End If
 
         tbFormula.Text = constprop.Formula

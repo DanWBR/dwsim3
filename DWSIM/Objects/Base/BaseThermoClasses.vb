@@ -2161,6 +2161,7 @@ Namespace DWSIM.ClassesBasicasTermodinamica
 
         Public UNIFACGroups As UNIFACGroupCollection
         Public MODFACGroups As UNIFACGroupCollection
+        Public NISTMODFACGroups As UNIFACGroupCollection
         Public Elements As New ElementCollection
 
         Public VaporPressureEquation As String = ""
@@ -2256,6 +2257,7 @@ Namespace DWSIM.ClassesBasicasTermodinamica
         Public Sub New()
             UNIFACGroups = New UNIFACGroupCollection
             MODFACGroups = New UNIFACGroupCollection
+            NISTMODFACGroups = New UNIFACGroupCollection
         End Sub
 
 
@@ -2286,7 +2288,7 @@ Namespace DWSIM.ClassesBasicasTermodinamica
 
             Dim unif As New SimulationObjects.PropertyPackages.Auxiliary.Unifac
             Dim modf As New SimulationObjects.PropertyPackages.Auxiliary.Modfac
-
+        
             For Each xel2 As XElement In (From xel As XElement In data Select xel Where xel.Name = "UNIFACGroups").Elements
                 If xel2.@Name Is Nothing Then
                     Me.UNIFACGroups.Collection.Add(xel2.@GroupID.ToString, xel2.@Value)
@@ -2303,6 +2305,10 @@ Namespace DWSIM.ClassesBasicasTermodinamica
                     Dim id As Integer = modf.Group2ID(xel2.@Name)
                     Me.MODFACGroups.Collection.Add(id.ToString, xel2.@Value)
                 End If
+            Next
+
+            For Each xel2 As XElement In (From xel As XElement In data Select xel Where xel.Name = "NISTMODFACGroups").Elements
+                Me.NISTMODFACGroups.Collection.Add(xel2.@GroupID.ToString, xel2.@Value)
             Next
 
             For Each xel2 As XElement In (From xel As XElement In data Select xel Where xel.Name = "Elements").Elements
@@ -2339,6 +2345,16 @@ Namespace DWSIM.ClassesBasicasTermodinamica
 
                     For Each key As String In MODFACGroups.Collection.Keys
                         .Item(xelements.Count - 1).Add(New XElement("Item", New XAttribute("GroupID", key), New XAttribute("Value", MODFACGroups.Collection(key.ToString))))
+                    Next
+
+                End If
+
+                .Add(New XElement("NISTMODFACGroups"))
+
+                If Not MODFACGroups Is Nothing Then
+
+                    For Each key As String In NISTMODFACGroups.Collection.Keys
+                        .Item(xelements.Count - 1).Add(New XElement("Item", New XAttribute("GroupID", key), New XAttribute("Value", NISTMODFACGroups.Collection(key.ToString))))
                     Next
 
                 End If

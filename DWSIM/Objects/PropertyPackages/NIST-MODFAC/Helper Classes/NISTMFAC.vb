@@ -297,12 +297,21 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             res.Clear()
 
             For Each group As ModfacGroup In Me.ModfGroups.Groups.Values
-                For Each s As String In cp.MODFACGroups.Collection.Keys
-                    If s = group.Secondary_Group Then
-                        res.Add(group.Secondary_Group, cp.MODFACGroups.Collection(s))
-                        Exit For
-                    End If
-                Next
+                If cp.NISTMODFACGroups.Collection.Count > 0 Then
+                    For Each s As String In cp.NISTMODFACGroups.Collection.Keys
+                        If s = group.Secondary_Group Then
+                            res.Add(group.Secondary_Group, cp.NISTMODFACGroups.Collection(s))
+                            Exit For
+                        End If
+                    Next
+                Else
+                    For Each s As String In cp.MODFACGroups.Collection.Keys
+                        If s = group.Secondary_Group Then
+                            res.Add(group.Secondary_Group, cp.MODFACGroups.Collection(s))
+                            Exit For
+                        End If
+                    Next
+                End If
             Next
 
             Return res
