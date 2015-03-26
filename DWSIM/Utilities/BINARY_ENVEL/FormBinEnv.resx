@@ -841,7 +841,7 @@
     <value>Top, Right</value>
   </data>
   <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>371, 209</value>
+    <value>371, 210</value>
   </data>
   <data name="Button1.Size" type="System.Drawing.Size, System.Drawing">
     <value>116, 23</value>
