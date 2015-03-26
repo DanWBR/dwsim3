@@ -529,12 +529,14 @@ Public Class FormBinEnv
                     .Title.Text = c(0) & " / " & c(1) & vbCrLf & "P = " & cv.ConverterDoSI(su.spmp_pressure, P) & " " & su.spmp_pressure
                     With .AddCurve("[" & ppname & "] " & DWSIM.App.GetLocalString("PontosdeBolha"), vx1.ToArray(GetType(Double)), vy1.ToArray(GetType(Double)), Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256)), ZedGraph.SymbolType.Circle)
                         .Line.IsSmooth = True
+                        .Line.SmoothTension = 0.3
                         .Line.Style = linetype
                         .Line.Width = 2
                         .Symbol.IsVisible = False
                     End With
                     With .AddCurve("[" & ppname & "] " & DWSIM.App.GetLocalString("PontosdeOrvalho"), vx2.ToArray(GetType(Double)), vy2.ToArray(GetType(Double)), Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256)), ZedGraph.SymbolType.Circle)
                         .Line.IsSmooth = True
+                        .Line.SmoothTension = 0.3
                         .Line.Style = linetype
                         .Line.Width = 2
                         .Symbol.IsVisible = False
@@ -542,12 +544,14 @@ Public Class FormBinEnv
                     If vx1l1.Count > 0 Then
                         With .AddCurve(DWSIM.App.GetLocalString("[" & ppname & "] " & "LLE LP1"), vx1l1.ToArray(GetType(Double)), vy3.ToArray(GetType(Double)), Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256)), ZedGraph.SymbolType.Circle)
                             .Line.IsSmooth = True
+                            .Line.SmoothTension = 0.3
                             .Line.Style = linetype
                             .Line.Width = 2
                             .Symbol.IsVisible = False
                         End With
                         With .AddCurve(DWSIM.App.GetLocalString("[" & ppname & "] " & "LLE LP2"), vx1l2.ToArray(GetType(Double)), vy3.ToArray(GetType(Double)), Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256)), ZedGraph.SymbolType.Circle)
                             .Line.IsSmooth = True
+                            .Line.SmoothTension = 0.3
                             .Line.Style = linetype
                             .Line.Width = 2
                             .Symbol.IsVisible = False
@@ -556,6 +560,7 @@ Public Class FormBinEnv
                     If pys1.Count > 0 Then
                         With .AddCurve(DWSIM.App.GetLocalString("[" & ppname & "] " & "SLE SL/S"), vxs1.ToArray(GetType(Double)), vys1.ToArray(GetType(Double)), Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256)), ZedGraph.SymbolType.Circle)
                             .Line.IsSmooth = True
+                            .Line.SmoothTension = 0.3
                             .Line.Style = linetype
                             .Line.Width = 2
                             .Symbol.IsVisible = False
@@ -564,6 +569,7 @@ Public Class FormBinEnv
                     If pys2.Count > 0 Then
                         With .AddCurve(DWSIM.App.GetLocalString("[" & ppname & "] " & "SLE L/SL"), vxs2.ToArray(GetType(Double)), vys2.ToArray(GetType(Double)), Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256)), ZedGraph.SymbolType.Circle)
                             .Line.IsSmooth = True
+                            .Line.SmoothTension = 0.3
                             .Line.Style = linetype
                             .Line.Width = 2
                             .Symbol.IsVisible = False

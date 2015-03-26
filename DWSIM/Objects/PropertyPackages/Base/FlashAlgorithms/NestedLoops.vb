@@ -1291,6 +1291,8 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
 
             dt = d2 - d1
 
+            If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
+
             If PP.AUX_CheckTrivial(Ki) Then Throw New Exception("TV Flash [NL]: Invalid result: converged to the trivial solution (P = " & P & " ).")
 
             WriteDebugInfo("TV Flash [NL]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
@@ -1491,10 +1493,10 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     Dim K1(n), K2(n), dKdT(n) As Double
 
                     K1 = PP.DW_CalcKvalue(Vx, Vy, T, P)
-                    K2 = PP.DW_CalcKvalue(Vx, Vy, T + 0.5, P)
+                    K2 = PP.DW_CalcKvalue(Vx, Vy, T + 0.01, P)
 
                     For i = 0 To n
-                        dKdT(i) = (K2(i) - K1(i)) / 0.5
+                        dKdT(i) = (K2(i) - K1(i)) / 0.01
                     Next
 
                     fval = stmp4 - 1
@@ -1646,6 +1648,8 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             d2 = Date.Now
 
             dt = d2 - d1
+
+            If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
 
             If PP.AUX_CheckTrivial(Ki) Then Throw New Exception("PV Flash [NL]: Invalid result: converged to the trivial solution (T = " & T & " ).")
 
