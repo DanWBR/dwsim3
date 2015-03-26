@@ -5061,6 +5061,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Der Rückführung Inlet Stream ist nicht im Gleichgewicht berechnet oder nicht.</value>
   </data>
   <data name="DescNUPP" xml:space="preserve">
-    <value>New modified UNIFAC property prediction model parameters are reported for 89 main groups and 984 group–group interactions by using critically evaluated phase equilibrium data including vapor–liquid equilibrium (VLE), liquid–liquid equilibrium (LLE), solid–liquid equilibrium (SLE), excess enthalpy (HE), infinite dilution activity coefficient (AINF) and excess heat capacity (CPE) data. Obtained parameters are recommended primarily for correlations of the VLE data.</value>
+    <value>Vom NIST werden 89 neue Hauptgruppen und 984 Interaktionsparameter und  für das ModifiedUNIFAC Modell veröffentlicht. Hierzu wurden kritsch ausgewählte Phasengleichgewichtsdaten ausgewertet, welche Gleichgewichtsdaten aus Dampf-Flüssig (VLE), Flüssig-Flüssig (LLE), Feststoff-Flüssig (SLE), Excess-Enthalpie (HE), Excess-Wärmekapizität (CPE) und Aktivitätskoeffizienten bei unendlicher Verdünnung (AINF) beinhalten. 
+Die erhaltenen Daten werden hauptsächlich für die Berechnung von VLE-Daten empfohlen.</value>
   </data>
 </root>
