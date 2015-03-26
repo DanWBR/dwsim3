@@ -307,12 +307,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         Public Sub CreatePhaseMappings()
             Me._phasemappings = New Dictionary(Of String, PhaseInfo)
             With Me._phasemappings
-                .Add("Vapor", New PhaseInfo("Disabled", 2, Fase.Vapor))
-                .Add("Liquid1", New PhaseInfo("Disabled", 3, Fase.Liquid1))
-                .Add("Liquid2", New PhaseInfo("Disabled", 4, Fase.Liquid2))
-                .Add("Liquid3", New PhaseInfo("Disabled", 5, Fase.Liquid3))
-                .Add("Aqueous", New PhaseInfo("Disabled", 6, Fase.Aqueous))
-                .Add("Solid", New PhaseInfo("Disabled", 7, Fase.Solid))
+                .Add("Vapor", New PhaseInfo("", 2, Fase.Vapor))
+                .Add("Liquid1", New PhaseInfo("", 3, Fase.Liquid1))
+                .Add("Liquid2", New PhaseInfo("", 4, Fase.Liquid2))
+                .Add("Liquid3", New PhaseInfo("", 5, Fase.Liquid3))
+                .Add("Aqueous", New PhaseInfo("", 6, Fase.Aqueous))
+                .Add("Solid", New PhaseInfo("", 7, Fase.Solid))
             End With
         End Sub
 

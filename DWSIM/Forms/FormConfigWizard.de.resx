@@ -204,12 +204,10 @@ Klicken Sie "Weiter" um fortzufahren.</value>
     <value>18, 4</value>
   </data>
   <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>679, 96</value>
+    <value>679, 67</value>
   </data>
   <data name="Label4.Text" xml:space="preserve">
     <value>Wählen Sie die PropertyPackages die Sie für die Berechnung der Eigenschaften verwenden möchten. Das erste in der Liste wird standardmäßig für die Berechnung der Objekte verwendet.
-
-Sie können das PropertyPackage nach Beendigung des Assistenten im Konfigurationsdialog konfigurieren.
 
 Klicken Sie "Weiter" um fortzufahren.</value>
   </data>
@@ -239,9 +237,6 @@ Klicken Sie "Weiter" um fortzufahren.</value>
   </data>
   <data name="ListBoxPP.Items8" xml:space="preserve">
     <value>Nested Loops (VLLE - Immiscible Liquids)</value>
-  </data>
-  <data name="ListBoxPP.Items9" xml:space="preserve">
-    <value>Nested Loops (VLLE, Alternate)</value>
   </data>
   <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>103, 15</value>

@@ -357,7 +357,7 @@ Public Class FormConfigWizard
             pp.UniqueID = "PP-" & Guid.NewGuid.ToString
         End With
         FrmChild.Options.PropertyPackages.Add(pp.UniqueID, pp)
-        Me.dgvpp.Rows.Add(New Object() {pp.UniqueID, pp.Tag, pp.ComponentName})
+        Me.dgvpp.Rows.Add(New Object() {pp.UniqueID, pp.Tag, pp.ComponentName, "..."})
     End Sub
 
     Private Sub ComboBox2_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ComboBox2.SelectedIndexChanged
@@ -473,6 +473,19 @@ Public Class FormConfigWizard
         If dgvpp.Rows.Count = 0 Then
             MessageBox.Show(DWSIM.App.GetLocalString("NoexistemPacotesdePr"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             e.Cancel = True
+        End If
+    End Sub
+
+    Private Sub dgvpp_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvpp.CellContentClick
+        If e.ColumnIndex = 3 Then
+            Dim ppid As String = ""
+            ppid = dgvpp.SelectedRows(0).Cells(0).Value
+            Dim pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage = FrmChild.Options.PropertyPackages(ppid)
+            pp.ReconfigureConfigForm()
+            pp.ConfigForm._pp = pp
+            pp.ConfigForm._comps = FrmChild.Options.SelectedComponents
+            pp.ConfigForm._form = FrmChild
+            pp.ShowConfigForm(FrmChild)
         End If
     End Sub
 End Class

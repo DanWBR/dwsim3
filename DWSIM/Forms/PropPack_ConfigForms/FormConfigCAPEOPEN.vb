@@ -110,9 +110,12 @@ Imports System.Linq
         If _mappings Is Nothing Then _mappings = New Dictionary(Of String, String)
 
         'check mappings
+
         Dim nc As Integer = My.Application.ActiveSimulation.Options.SelectedComponents.Count
         Dim mc As Integer = _mappings.Count
+
         Dim remap As Boolean = False
+
         If nc <> mc Then
             'remapping necessary
             remap = True
@@ -147,6 +150,7 @@ Imports System.Linq
         Dim i As Integer = 0
 
         If Not _copp Is Nothing Then
+
             If _coversion = "1.0" Then
                 CType(_copp, ICapeThermoPropertyPackage).GetComponentList(complist, formulae, names, boiltemps, molwts, casids)
                 plist = CType(_copp, ICapeThermoPropertyPackage).GetPhaseList()
@@ -157,8 +161,11 @@ Imports System.Linq
             For Each s As String In complist
                 cb.Items.Add(s)
             Next
+
             dgmap.Columns(2).CellTemplate = cb
+
             Dim comps = _mappings.Keys.ToArray()
+
             For Each s As String In comps
                 i = 0
                 For Each c As String In casids
@@ -179,8 +186,97 @@ Imports System.Linq
             For Each s As String In plist
                 cb2.Items.Add(s)
             Next
+
             dgvph.Columns(2).CellTemplate = cb2
+
             Me.dgvph.Rows.Clear()
+
+            'try to find matching phases
+
+            Dim alreadymapped(cb2.Items.Count - 3) As Boolean
+
+            For Each b In alreadymapped
+                b = False
+            Next
+
+            If _phasemappings("Vapor").PhaseLabel = "" Then
+                i = 0
+                For Each s In staggr
+                    If s = "Vapor" And Not alreadymapped(i) Then
+                        _phasemappings("Vapor").PhaseLabel = plist(i)
+                        alreadymapped(i) = True
+                        Exit For
+                    End If
+                    i += 1
+                Next
+                If _phasemappings("Vapor").PhaseLabel = "" Then _phasemappings("Vapor").PhaseLabel = "Disabled"
+            End If
+
+            If _phasemappings("Liquid1").PhaseLabel = "" Then
+                i = 0
+                For Each s In staggr
+                    If s = "Liquid" And Not alreadymapped(i) Then
+                        _phasemappings("Liquid1").PhaseLabel = plist(i)
+                        alreadymapped(i) = True
+                        Exit For
+                    End If
+                    i += 1
+                Next
+                If _phasemappings("Liquid1").PhaseLabel = "" Then _phasemappings("Liquid1").PhaseLabel = "Disabled"
+            End If
+
+            If _phasemappings("Liquid2").PhaseLabel = "" Then
+                i = 0
+                For Each s In staggr
+                    If s = "Liquid" And Not alreadymapped(i) Then
+                        _phasemappings("Liquid2").PhaseLabel = plist(i)
+                        alreadymapped(i) = True
+                        Exit For
+                    End If
+                    i += 1
+                Next
+                If _phasemappings("Liquid2").PhaseLabel = "" Then _phasemappings("Liquid2").PhaseLabel = "Disabled"
+            End If
+
+            If _phasemappings("Liquid3").PhaseLabel = "" Then
+                i = 0
+                For Each s In staggr
+                    If s = "Liquid" And Not alreadymapped(i) Then
+                        _phasemappings("Liquid3").PhaseLabel = plist(i)
+                        alreadymapped(i) = True
+                        Exit For
+                    End If
+                    i += 1
+                Next
+                If _phasemappings("Liquid3").PhaseLabel = "" Then _phasemappings("Liquid3").PhaseLabel = "Disabled"
+            End If
+
+            If _phasemappings("Aqueous").PhaseLabel = "" Then
+                i = 0
+                For Each s In staggr
+                    If s = "Liquid" And Not alreadymapped(i) Then
+                        _phasemappings("Aqueous").PhaseLabel = plist(i)
+                        alreadymapped(i) = True
+                        Exit For
+                    End If
+                    i += 1
+                Next
+                If _phasemappings("Aqueous").PhaseLabel = "" Then _phasemappings("Aqueous").PhaseLabel = "Disabled"
+            End If
+
+            If _phasemappings("Solid").PhaseLabel = "" Then
+                i = 0
+                For Each s In staggr
+                    If s = "Solid" And Not alreadymapped(i) Then
+                        _phasemappings("Solid").PhaseLabel = plist(i)
+                        alreadymapped(i) = True
+                        Exit For
+                    End If
+                    i += 1
+                Next
+                If _phasemappings("Solid").PhaseLabel = "" Then _phasemappings("Solid").PhaseLabel = "Disabled"
+            End If
+
             For Each kvp As KeyValuePair(Of String, PhaseInfo) In _phasemappings
                 Me.dgvph.Rows.Add(New Object() {kvp.Key, kvp.Key, kvp.Value.PhaseLabel})
             Next

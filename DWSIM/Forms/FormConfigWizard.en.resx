@@ -182,10 +182,11 @@ Click "Next" to continue.</value>
   <data name="GroupBox12.Text" xml:space="preserve">
     <value>Added Property Packages</value>
   </data>
+  <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>679, 69</value>
+  </data>
   <data name="Label4.Text" xml:space="preserve">
     <value>Select and Add the Property Packages that you want to use in your simulation. The first on the list will be used by default by all flowsheet objects.
-
-You can configure the Property Packages in the configuration window after finishing this wizard.
 
 Click "Next" to continue.</value>
   </data>
@@ -215,9 +216,6 @@ Click "Next" to continue.</value>
   </data>
   <data name="ListBoxPP.Items8" xml:space="preserve">
     <value>Nested Loops (VLLE - Immiscible Liquids)</value>
-  </data>
-  <data name="ListBoxPP.Items9" xml:space="preserve">
-    <value>Nested Loops (VLLE, Alternate)</value>
   </data>
   <data name="Label6.Text" xml:space="preserve">
     <value>Flash Algorithm</value>
