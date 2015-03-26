@@ -53,16 +53,14 @@ Public Class FormConfigPP
         PrimaryGroups.Clear()
         For Each cp As ConstantProperties In _comps.Values
             If type = "UNIFAC" Or type = "UNIFACLL" Then
-                For Each ufg As String In cp.UNIFACGroups.Collection.Keys
-                    g1 = uni.Group2ID(ufg)
-                    pg = uni.UnifGroups.Groups(g1).PrimGroupName
-                    If Not PrimaryGroups.ContainsKey(pg) Then PrimaryGroups.Add(pg, uni.UnifGroups.Groups(g1).PrimaryGroup)
+                For Each ufg In cp.UNIFACGroups.Collection.Keys
+                    pg = uni.UnifGroups.Groups(Integer.Parse(ufg)).PrimGroupName
+                    If Not PrimaryGroups.ContainsKey(pg) Then PrimaryGroups.Add(pg, uni.UnifGroups.Groups(ufg).PrimaryGroup)
                 Next
             Else
-                For Each ufg As String In cp.MODFACGroups.Collection.Keys
-                    g1 = uni.Group2ID(ufg)
-                    pg = uni.ModfGroups.Groups(g1).MainGroupName
-                    If Not PrimaryGroups.ContainsKey(pg) Then PrimaryGroups.Add(pg, uni.ModfGroups.Groups(g1).PrimaryGroup)
+                For Each ufg In cp.MODFACGroups.Collection.Keys
+                    pg = uni.ModfGroups.Groups(Integer.Parse(ufg)).MainGroupName
+                    If Not PrimaryGroups.ContainsKey(pg) Then PrimaryGroups.Add(pg, uni.ModfGroups.Groups(ufg).PrimaryGroup)
                 Next
             End If
         Next
@@ -151,7 +149,7 @@ Public Class FormConfigPP
             If type = "UNIFAC" Or type = "UNIFACLL" Then
                 If cp.UNIFACGroups.Collection.Count > 0 Then
                     For Each ufg As String In cp.UNIFACGroups.Collection.Keys
-                        l = uni.Group2ID(ufg)
+                        l = Integer.Parse(ufg)
                         pg = uni.UnifGroups.Groups(l).PrimGroupName
                         l = PrimaryGroups.IndexOfKey(pg)
                         IPGrid.Item(l + 1, k).Value = IPGrid.Item(l + 1, k).Value + cp.UNIFACGroups.Collection.Item(ufg)
@@ -164,7 +162,7 @@ Public Class FormConfigPP
             Else
                 If cp.MODFACGroups.Collection.Count > 0 Then
                     For Each ufg As String In cp.MODFACGroups.Collection.Keys
-                        l = uni.Group2ID(ufg)
+                        l = Integer.Parse(ufg)
                         pg = uni.ModfGroups.Groups(l).MainGroupName
                         l = PrimaryGroups.IndexOfKey(pg)
                         g1 = IPGrid.Item(l + 1, k).Value
