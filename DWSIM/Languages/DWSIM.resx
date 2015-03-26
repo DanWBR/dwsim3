@@ -5074,4 +5074,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="DescNUPP" xml:space="preserve">
     <value>Novos parâmetros do modelo de previsão de propriedade modificado UNIFAC são relatados para 89 grupos principais e 984 interações de grupo em grupo, utilizando dados de equilíbrio de fases criticamente avaliados incluindo equilíbrio líquido-vapor (ELV), o equilíbrio líquido-líquido (ELL), equilíbrio sólido-líquido (ESL) , excesso de entalpia (HE), coeficiente de atividade infinita de diluição (AINF) e dados de excesso de capacidade de calor (CPE). Os parâmetros obtidos são recomendados principalmente para correlações de dados de ELV.</value>
   </data>
+  <data name="ExpData" xml:space="preserve">
+    <value>Dados experimentais</value>
+  </data>
 </root>

@@ -122,6 +122,37 @@
     <value>Top, Left, Right</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="chkCompareModels.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="chkCompareModels.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="chkCompareModels.Location" type="System.Drawing.Point, System.Drawing">
+    <value>359, 213</value>
+  </data>
+  <data name="chkCompareModels.Size" type="System.Drawing.Size, System.Drawing">
+    <value>114, 17</value>
+  </data>
+  <data name="chkCompareModels.TabIndex" type="System.Int32, mscorlib">
+    <value>27</value>
+  </data>
+  <data name="chkCompareModels.Text" xml:space="preserve">
+    <value>Comparar Modelos</value>
+  </data>
+  <data name="&gt;&gt;chkCompareModels.Name" xml:space="preserve">
+    <value>chkCompareModels</value>
+  </data>
+  <data name="&gt;&gt;chkCompareModels.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;chkCompareModels.Parent" xml:space="preserve">
+    <value>GroupBox6</value>
+  </data>
+  <data name="&gt;&gt;chkCompareModels.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="FlowLayoutPanel1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -134,7 +165,6 @@
   <data name="chkSLE.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="chkSLE.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 3</value>
   </data>
@@ -238,7 +268,7 @@
     <value>GroupBox6</value>
   </data>
   <data name="&gt;&gt;FlowLayoutPanel1.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="chkCritical.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -268,7 +298,7 @@
     <value>GroupBox6</value>
   </data>
   <data name="&gt;&gt;chkCritical.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="chkLLE.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -298,7 +328,7 @@
     <value>GroupBox6</value>
   </data>
   <data name="&gt;&gt;chkLLE.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="chkVLE.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -325,7 +355,7 @@
     <value>GroupBox6</value>
   </data>
   <data name="&gt;&gt;chkVLE.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="Label7.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -355,10 +385,7 @@
     <value>GroupBox6</value>
   </data>
   <data name="&gt;&gt;Label7.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="cbPropPack.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
+    <value>5</value>
   </data>
   <data name="cbPropPack.ItemHeight" type="System.Int32, mscorlib">
     <value>13</value>
@@ -394,7 +421,7 @@
     <value>GroupBox6</value>
   </data>
   <data name="&gt;&gt;cbPropPack.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="Label6.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -424,7 +451,7 @@
     <value>GroupBox6</value>
   </data>
   <data name="&gt;&gt;Label6.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="lblT.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -454,7 +481,7 @@
     <value>GroupBox6</value>
   </data>
   <data name="&gt;&gt;lblT.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="lblP.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -484,7 +511,7 @@
     <value>GroupBox6</value>
   </data>
   <data name="&gt;&gt;lblP.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="tbT.Location" type="System.Drawing.Point, System.Drawing">
     <value>143, 185</value>
@@ -508,7 +535,7 @@
     <value>GroupBox6</value>
   </data>
   <data name="&gt;&gt;tbT.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="tbP.Location" type="System.Drawing.Point, System.Drawing">
     <value>143, 158</value>
@@ -532,7 +559,7 @@
     <value>GroupBox6</value>
   </data>
   <data name="&gt;&gt;tbP.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="Label5.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -562,7 +589,7 @@
     <value>GroupBox6</value>
   </data>
   <data name="&gt;&gt;Label5.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>12</value>
   </data>
   <data name="Label4.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -592,7 +619,7 @@
     <value>GroupBox6</value>
   </data>
   <data name="&gt;&gt;Label4.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>13</value>
   </data>
   <data name="cbXAxisBasis.ItemHeight" type="System.Int32, mscorlib">
     <value>13</value>
@@ -628,7 +655,7 @@
     <value>GroupBox6</value>
   </data>
   <data name="&gt;&gt;cbXAxisBasis.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>14</value>
   </data>
   <data name="Label3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -658,7 +685,7 @@
     <value>GroupBox6</value>
   </data>
   <data name="&gt;&gt;Label3.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>15</value>
   </data>
   <data name="cbComp2.ItemHeight" type="System.Int32, mscorlib">
     <value>13</value>
@@ -682,7 +709,7 @@
     <value>GroupBox6</value>
   </data>
   <data name="&gt;&gt;cbComp2.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>16</value>
   </data>
   <data name="Label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -712,7 +739,7 @@
     <value>GroupBox6</value>
   </data>
   <data name="&gt;&gt;Label2.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>17</value>
   </data>
   <data name="RadioButton4.Location" type="System.Drawing.Point, System.Drawing">
     <value>299, 77</value>
@@ -736,7 +763,7 @@
     <value>GroupBox6</value>
   </data>
   <data name="&gt;&gt;RadioButton4.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>18</value>
   </data>
   <data name="RadioButton3.Location" type="System.Drawing.Point, System.Drawing">
     <value>244, 77</value>
@@ -760,7 +787,7 @@
     <value>GroupBox6</value>
   </data>
   <data name="&gt;&gt;RadioButton3.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>19</value>
   </data>
   <data name="RadioButton2.Location" type="System.Drawing.Point, System.Drawing">
     <value>195, 77</value>
@@ -784,7 +811,7 @@
     <value>GroupBox6</value>
   </data>
   <data name="&gt;&gt;RadioButton2.ZOrder" xml:space="preserve">
-    <value>19</value>
+    <value>20</value>
   </data>
   <data name="RadioButton1.Location" type="System.Drawing.Point, System.Drawing">
     <value>141, 77</value>
@@ -808,7 +835,7 @@
     <value>GroupBox6</value>
   </data>
   <data name="&gt;&gt;RadioButton1.ZOrder" xml:space="preserve">
-    <value>20</value>
+    <value>21</value>
   </data>
   <data name="Label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -835,16 +862,13 @@
     <value>GroupBox6</value>
   </data>
   <data name="&gt;&gt;Label1.ZOrder" xml:space="preserve">
-    <value>21</value>
-  </data>
-  <data name="Button1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+    <value>22</value>
   </data>
   <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>371, 210</value>
+    <value>479, 209</value>
   </data>
   <data name="Button1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>116, 23</value>
+    <value>95, 23</value>
   </data>
   <data name="Button1.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -862,7 +886,7 @@
     <value>GroupBox6</value>
   </data>
   <data name="&gt;&gt;Button1.ZOrder" xml:space="preserve">
-    <value>22</value>
+    <value>23</value>
   </data>
   <data name="cbComp1.ItemHeight" type="System.Int32, mscorlib">
     <value>13</value>
@@ -886,7 +910,7 @@
     <value>GroupBox6</value>
   </data>
   <data name="&gt;&gt;cbComp1.ZOrder" xml:space="preserve">
-    <value>23</value>
+    <value>24</value>
   </data>
   <data name="Label23.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -913,7 +937,7 @@
     <value>GroupBox6</value>
   </data>
   <data name="&gt;&gt;Label23.ZOrder" xml:space="preserve">
-    <value>24</value>
+    <value>25</value>
   </data>
   <data name="GroupBox6.Location" type="System.Drawing.Point, System.Drawing">
     <value>5, 27</value>
@@ -996,6 +1020,90 @@
   <data name="&gt;&gt;FaTabStripItem1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <metadata name="check.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="check.HeaderText" xml:space="preserve">
+    <value> </value>
+  </data>
+  <data name="check.ToolTipText" xml:space="preserve">
+    <value>Include to regression</value>
+  </data>
+  <metadata name="colx1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="colx1.HeaderText" xml:space="preserve">
+    <value>x1</value>
+  </data>
+  <data name="colx1.ToolTipText" xml:space="preserve">
+    <value>Compound 1 Mole Fraction in Liquid Phase 1</value>
+  </data>
+  <metadata name="coly1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="coly1.HeaderText" xml:space="preserve">
+    <value>y1</value>
+  </data>
+  <data name="coly1.ToolTipText" xml:space="preserve">
+    <value>Compound 1 Mole Fraction in Vapor Phase</value>
+  </data>
+  <metadata name="colT.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="colT.HeaderText" xml:space="preserve">
+    <value>T</value>
+  </data>
+  <metadata name="colP.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="colP.HeaderText" xml:space="preserve">
+    <value>P</value>
+  </data>
+  <data name="GridExpData.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="GridExpData.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="GridExpData.Size" type="System.Drawing.Size, System.Drawing">
+    <value>679, 394</value>
+  </data>
+  <data name="GridExpData.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="&gt;&gt;GridExpData.Name" xml:space="preserve">
+    <value>GridExpData</value>
+  </data>
+  <data name="&gt;&gt;GridExpData.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GridExpData.Parent" xml:space="preserve">
+    <value>FaTabStripItem3</value>
+  </data>
+  <data name="&gt;&gt;GridExpData.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="FaTabStripItem3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>679, 394</value>
+  </data>
+  <data name="FaTabStripItem3.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="FaTabStripItem3.Title" xml:space="preserve">
+    <value>Dados Exp</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem3.Name" xml:space="preserve">
+    <value>FaTabStripItem3</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem3.Type" xml:space="preserve">
+    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem3.Parent" xml:space="preserve">
+    <value>FaTabStrip1</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem3.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="Grid1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -1003,7 +1111,7 @@
     <value>0, 0</value>
   </data>
   <data name="Grid1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>507, 379</value>
+    <value>679, 394</value>
   </data>
   <data name="Grid1.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -1021,7 +1129,7 @@
     <value>0</value>
   </data>
   <data name="FaTabStripItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>507, 379</value>
+    <value>679, 394</value>
   </data>
   <data name="FaTabStripItem2.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1039,7 +1147,7 @@
     <value>FaTabStrip1</value>
   </data>
   <data name="&gt;&gt;FaTabStripItem2.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="FaTabStrip1.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 16</value>
@@ -1415,6 +1523,36 @@
   </data>
   <data name="&gt;&gt;HiddenToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;check.Name" xml:space="preserve">
+    <value>check</value>
+  </data>
+  <data name="&gt;&gt;check.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewCheckBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colx1.Name" xml:space="preserve">
+    <value>colx1</value>
+  </data>
+  <data name="&gt;&gt;colx1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;coly1.Name" xml:space="preserve">
+    <value>coly1</value>
+  </data>
+  <data name="&gt;&gt;coly1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colT.Name" xml:space="preserve">
+    <value>colT</value>
+  </data>
+  <data name="&gt;&gt;colT.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;colP.Name" xml:space="preserve">
+    <value>colP</value>
+  </data>
+  <data name="&gt;&gt;colP.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FormBinEnv</value>

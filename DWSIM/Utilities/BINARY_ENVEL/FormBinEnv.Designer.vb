@@ -24,8 +24,11 @@ Partial Class FormBinEnv
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormBinEnv))
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+        Me.chkCompareModels = New System.Windows.Forms.CheckBox()
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
         Me.chkSLE = New System.Windows.Forms.CheckBox()
         Me.rbEutectic = New System.Windows.Forms.RadioButton()
@@ -58,6 +61,7 @@ Partial Class FormBinEnv
         Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip()
         Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem()
         Me.GraphControl = New ZedGraph.ZedGraphControl()
+        Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem()
         Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem()
         Me.Grid1 = New System.Windows.Forms.DataGridView()
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
@@ -80,21 +84,30 @@ Partial Class FormBinEnv
         Me.DockBottomAutoHideToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DocumentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HiddenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.GridExpData = New System.Windows.Forms.DataGridView()
+        Me.check = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.colx1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.coly1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colT = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colP = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.GroupBox6.SuspendLayout()
         Me.FlowLayoutPanel1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStrip1.SuspendLayout()
         Me.FaTabStripItem1.SuspendLayout()
+        Me.FaTabStripItem3.SuspendLayout()
         Me.FaTabStripItem2.SuspendLayout()
         CType(Me.Grid1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ToolStrip1.SuspendLayout()
         Me.dckMenu.SuspendLayout()
+        CType(Me.GridExpData, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GroupBox6
         '
         resources.ApplyResources(Me.GroupBox6, "GroupBox6")
+        Me.GroupBox6.Controls.Add(Me.chkCompareModels)
         Me.GroupBox6.Controls.Add(Me.FlowLayoutPanel1)
         Me.GroupBox6.Controls.Add(Me.chkCritical)
         Me.GroupBox6.Controls.Add(Me.chkLLE)
@@ -123,6 +136,12 @@ Partial Class FormBinEnv
         Me.GroupBox6.Name = "GroupBox6"
         Me.GroupBox6.TabStop = False
         '
+        'chkCompareModels
+        '
+        resources.ApplyResources(Me.chkCompareModels, "chkCompareModels")
+        Me.chkCompareModels.Name = "chkCompareModels"
+        Me.chkCompareModels.UseVisualStyleBackColor = True
+        '
         'FlowLayoutPanel1
         '
         resources.ApplyResources(Me.FlowLayoutPanel1, "FlowLayoutPanel1")
@@ -134,8 +153,6 @@ Partial Class FormBinEnv
         'chkSLE
         '
         resources.ApplyResources(Me.chkSLE, "chkSLE")
-        Me.chkSLE.Checked = True
-        Me.chkSLE.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chkSLE.Name = "chkSLE"
         Me.chkSLE.UseVisualStyleBackColor = True
         '
@@ -154,16 +171,12 @@ Partial Class FormBinEnv
         'chkCritical
         '
         resources.ApplyResources(Me.chkCritical, "chkCritical")
-        Me.chkCritical.Checked = True
-        Me.chkCritical.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chkCritical.Name = "chkCritical"
         Me.chkCritical.UseVisualStyleBackColor = True
         '
         'chkLLE
         '
         resources.ApplyResources(Me.chkLLE, "chkLLE")
-        Me.chkLLE.Checked = True
-        Me.chkLLE.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chkLLE.Name = "chkLLE"
         Me.chkLLE.UseVisualStyleBackColor = True
         '
@@ -182,9 +195,9 @@ Partial Class FormBinEnv
         '
         'cbPropPack
         '
-        resources.ApplyResources(Me.cbPropPack, "cbPropPack")
         Me.cbPropPack.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbPropPack.DropDownWidth = 222
+        resources.ApplyResources(Me.cbPropPack, "cbPropPack")
         Me.cbPropPack.Items.AddRange(New Object() {resources.GetString("cbPropPack.Items"), resources.GetString("cbPropPack.Items1"), resources.GetString("cbPropPack.Items2"), resources.GetString("cbPropPack.Items3")})
         Me.cbPropPack.Name = "cbPropPack"
         '
@@ -304,9 +317,9 @@ Partial Class FormBinEnv
         Me.FaTabStrip1.AlwaysShowClose = False
         Me.FaTabStrip1.AlwaysShowMenuGlyph = False
         resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
-        Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem2})
+        Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem3, Me.FaTabStripItem2})
         Me.FaTabStrip1.Name = "FaTabStrip1"
-        Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem1
+        Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem3
         '
         'FaTabStripItem1
         '
@@ -314,7 +327,6 @@ Partial Class FormBinEnv
         Me.FaTabStripItem1.Controls.Add(Me.GraphControl)
         Me.FaTabStripItem1.IsDrawn = True
         Me.FaTabStripItem1.Name = "FaTabStripItem1"
-        Me.FaTabStripItem1.Selected = True
         resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
         '
         'GraphControl
@@ -332,6 +344,15 @@ Partial Class FormBinEnv
         Me.GraphControl.ScrollMinY = 0.0R
         Me.GraphControl.ScrollMinY2 = 0.0R
         '
+        'FaTabStripItem3
+        '
+        Me.FaTabStripItem3.CanClose = False
+        Me.FaTabStripItem3.Controls.Add(Me.GridExpData)
+        Me.FaTabStripItem3.IsDrawn = True
+        Me.FaTabStripItem3.Name = "FaTabStripItem3"
+        Me.FaTabStripItem3.Selected = True
+        resources.ApplyResources(Me.FaTabStripItem3, "FaTabStripItem3")
+        '
         'FaTabStripItem2
         '
         Me.FaTabStripItem2.CanClose = False
@@ -346,9 +367,9 @@ Partial Class FormBinEnv
         Me.Grid1.AllowUserToDeleteRows = False
         Me.Grid1.AllowUserToOrderColumns = True
         Me.Grid1.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.Grid1.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
-        Me.Grid1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        DataGridViewCellStyle3.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.Grid1.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
+        Me.Grid1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.Grid1.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
         Me.Grid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         resources.ApplyResources(Me.Grid1, "Grid1")
@@ -468,6 +489,51 @@ Partial Class FormBinEnv
         Me.HiddenToolStripMenuItem.Name = "HiddenToolStripMenuItem"
         resources.ApplyResources(Me.HiddenToolStripMenuItem, "HiddenToolStripMenuItem")
         '
+        'GridExpData
+        '
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.GridExpData.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        Me.GridExpData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.GridExpData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.GridExpData.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.check, Me.colx1, Me.coly1, Me.colT, Me.colP})
+        resources.ApplyResources(Me.GridExpData, "GridExpData")
+        Me.GridExpData.Name = "GridExpData"
+        Me.GridExpData.RowHeadersVisible = False
+        '
+        'check
+        '
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.check.DefaultCellStyle = DataGridViewCellStyle2
+        Me.check.FillWeight = 20.0!
+        resources.ApplyResources(Me.check, "check")
+        Me.check.Name = "check"
+        Me.check.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.check.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        '
+        'colx1
+        '
+        Me.colx1.FillWeight = 107.8173!
+        resources.ApplyResources(Me.colx1, "colx1")
+        Me.colx1.Name = "colx1"
+        '
+        'coly1
+        '
+        Me.coly1.FillWeight = 107.8173!
+        resources.ApplyResources(Me.coly1, "coly1")
+        Me.coly1.Name = "coly1"
+        '
+        'colT
+        '
+        Me.colT.FillWeight = 107.8173!
+        resources.ApplyResources(Me.colT, "colT")
+        Me.colT.Name = "colT"
+        '
+        'colP
+        '
+        Me.colP.FillWeight = 107.8173!
+        resources.ApplyResources(Me.colP, "colP")
+        Me.colP.Name = "colP"
+        '
         'FormBinEnv
         '
         resources.ApplyResources(Me, "$this")
@@ -488,11 +554,13 @@ Partial Class FormBinEnv
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FaTabStrip1.ResumeLayout(False)
         Me.FaTabStripItem1.ResumeLayout(False)
+        Me.FaTabStripItem3.ResumeLayout(False)
         Me.FaTabStripItem2.ResumeLayout(False)
         CType(Me.Grid1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ToolStrip1.ResumeLayout(False)
         Me.ToolStrip1.PerformLayout()
         Me.dckMenu.ResumeLayout(False)
+        CType(Me.GridExpData, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -551,4 +619,12 @@ Partial Class FormBinEnv
     Friend WithEvents DockBottomAutoHideToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents DocumentToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents HiddenToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents FaTabStripItem3 As FarsiLibrary.Win.FATabStripItem
+    Friend WithEvents chkCompareModels As System.Windows.Forms.CheckBox
+    Public WithEvents GridExpData As System.Windows.Forms.DataGridView
+    Friend WithEvents check As System.Windows.Forms.DataGridViewCheckBoxColumn
+    Friend WithEvents colx1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents coly1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents colT As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents colP As System.Windows.Forms.DataGridViewTextBoxColumn
 End Class

@@ -5064,4 +5064,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Vom NIST werden 89 neue Hauptgruppen und 984 Interaktionsparameter und  für das ModifiedUNIFAC Modell veröffentlicht. Hierzu wurden kritsch ausgewählte Phasengleichgewichtsdaten ausgewertet, welche Gleichgewichtsdaten aus Dampf-Flüssig (VLE), Flüssig-Flüssig (LLE), Feststoff-Flüssig (SLE), Excess-Enthalpie (HE), Excess-Wärmekapizität (CPE) und Aktivitätskoeffizienten bei unendlicher Verdünnung (AINF) beinhalten. 
 Die erhaltenen Daten werden hauptsächlich für die Berechnung von VLE-Daten empfohlen.</value>
   </data>
+  <data name="ExpData" xml:space="preserve">
+    <value>Experimental data</value>
+  </data>
 </root>
