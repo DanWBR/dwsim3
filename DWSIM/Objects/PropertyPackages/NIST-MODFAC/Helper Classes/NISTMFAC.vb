@@ -170,7 +170,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             For Each item In VEKI
                 For Each item2 In item
-                    If item(item2.Key) <> 0.0# And Not ids.Contains(item(item2.Key)) Then ids.Add(item(item2.Key))
+                    If item(item2.Key) <> 0.0# And Not ids.Contains(item2.Key) Then ids.Add(item2.Key)
                 Next
             Next
 
@@ -178,8 +178,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 For Each id2 As Integer In ids
                     If id1 <> id2 Then
                         Dim g1, g2 As Integer
-                        g1 = Me.ModfGroups.Groups(id1 + 1).PrimaryGroup
-                        g2 = Me.ModfGroups.Groups(id2 + 1).PrimaryGroup
+                        g1 = Me.ModfGroups.Groups(id1).PrimaryGroup
+                        g2 = Me.ModfGroups.Groups(id2).PrimaryGroup
                         If Me.ModfGroups.InteracParam_aij.ContainsKey(g1) Then
                             If Not Me.ModfGroups.InteracParam_aij(g1).ContainsKey(g2) Then
                                 If Me.ModfGroups.InteracParam_aij.ContainsKey(g2) Then
@@ -210,8 +210,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             Dim g1, g2 As Integer
             Dim res As Double
-
-            'If Not Me.ModfGroups.Groups.ContainsKey(group_1) Or Not Me.ModfGroups.Groups.ContainsKey(group_2) Then Return 0.0#
 
             g1 = Me.ModfGroups.Groups(group_1).PrimaryGroup
             g2 = Me.ModfGroups.Groups(group_2).PrimaryGroup

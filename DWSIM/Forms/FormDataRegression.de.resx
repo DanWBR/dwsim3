@@ -118,9 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="ContextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>220, 158</value>
-  </data>
   <data name="ToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>219, 22</value>
   </data>
@@ -163,6 +160,9 @@
   <data name="ToolStripMenuItem7.Text" xml:space="preserve">
     <value>Erzeuge Punkte (PRSV2-VL)</value>
   </data>
+  <data name="ContextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>220, 158</value>
+  </data>
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Regression Ergebnisse</value>
   </data>
@@ -174,9 +174,6 @@
   </data>
   <data name="btnDoReg.Text" xml:space="preserve">
     <value>Regression starten</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Regression Informationen</value>
   </data>
   <data name="chkDoTDepRegression.Size" type="System.Drawing.Size, System.Drawing">
     <value>264, 17</value>
@@ -327,8 +324,8 @@
   <data name="LabelWithDivider2.Text" xml:space="preserve">
     <value>Experimentelle Daten</value>
   </data>
-  <data name="GroupBox4.Text" xml:space="preserve">
-    <value>Information</value>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Regression Informationen</value>
   </data>
   <data name="BtnSelectIPDB.Location" type="System.Drawing.Point, System.Drawing">
     <value>176, 50</value>
@@ -383,6 +380,9 @@
   </data>
   <data name="Label10.Text" xml:space="preserve">
     <value>Titel</value>
+  </data>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Information</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

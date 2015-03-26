@@ -169,14 +169,35 @@
   <data name="GroupBox3.Text" xml:space="preserve">
     <value>Interaction Parameters</value>
   </data>
+  <data name="Button6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>874, 17</value>
+  </data>
+  <data name="Button6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>145, 23</value>
+  </data>
+  <data name="Button6.Text" xml:space="preserve">
+    <value>Estimate (MODFAC-NIST)</value>
+  </data>
+  <data name="chkTdep.Location" type="System.Drawing.Point, System.Drawing">
+    <value>404, 21</value>
+  </data>
+  <data name="Button5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>464, 17</value>
+  </data>
   <data name="Button5.Text" xml:space="preserve">
     <value>Estimate (UNIFAC-LL)</value>
   </data>
   <data name="Button4.Text" xml:space="preserve">
     <value>Open IPD File</value>
   </data>
+  <data name="Button2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>732, 17</value>
+  </data>
   <data name="Button2.Text" xml:space="preserve">
-    <value>Estimate (Modified UNIFAC)</value>
+    <value>Estimate (MODFAC-Do)</value>
+  </data>
+  <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>598, 17</value>
   </data>
   <data name="Button1.Text" xml:space="preserve">
     <value>Estimate (UNIFAC)</value>

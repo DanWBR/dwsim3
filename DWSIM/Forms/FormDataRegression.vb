@@ -2564,6 +2564,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 End With
                 Button1.Enabled = False
                 Button2.Enabled = False
+                Button3.Enabled = False
                 chkIdealVaporPhase.Enabled = False
                 chkDoTDepRegression.Enabled = False
                 chkDoTDepRegression.Checked = False
@@ -2574,6 +2575,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 End With
                 Button1.Enabled = False
                 Button2.Enabled = False
+                Button3.Enabled = False
                 chkIdealVaporPhase.Enabled = False
                 chkDoTDepRegression.Enabled = False
                 chkDoTDepRegression.Checked = False
@@ -2585,6 +2587,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 End With
                 Button1.Enabled = False
                 Button2.Enabled = False
+                Button3.Enabled = False
                 chkIdealVaporPhase.Enabled = False
                 chkDoTDepRegression.Enabled = False
                 chkDoTDepRegression.Checked = False
@@ -2596,6 +2599,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 End With
                 Button1.Enabled = False
                 Button2.Enabled = False
+                Button3.Enabled = False
                 chkIdealVaporPhase.Enabled = False
                 chkDoTDepRegression.Enabled = False
                 chkDoTDepRegression.Checked = False
@@ -2607,6 +2611,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 End With
                 Button1.Enabled = True
                 Button2.Enabled = True
+                Button3.Enabled = True
                 chkIdealVaporPhase.Enabled = True
                 chkDoTDepRegression.Enabled = True
             Case "NRTL"
@@ -2618,6 +2623,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 End With
                 Button1.Enabled = True
                 Button2.Enabled = True
+                Button3.Enabled = True
                 chkIdealVaporPhase.Enabled = True
                 chkDoTDepRegression.Enabled = True
         End Select
@@ -2804,9 +2810,12 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             Case "UNIFAC-LL"
                 ppuf = New DWSIM.SimulationObjects.PropertyPackages.UNIFACLLPropertyPackage(True)
                 unifac = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UnifacLL
-            Case Else
+            Case "MODFAC"
                 ppuf = New DWSIM.SimulationObjects.PropertyPackages.MODFACPropertyPackage(True)
                 unifac = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Modfac
+            Case Else
+                ppuf = New DWSIM.SimulationObjects.PropertyPackages.NISTMFACPropertyPackage(True)
+                unifac = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NISTMFAC
         End Select
 
         Dim comp1, comp2 As ConstantProperties
@@ -2923,9 +2932,12 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             Case "UNIFAC-LL"
                 ppuf = New DWSIM.SimulationObjects.PropertyPackages.UNIFACLLPropertyPackage(True)
                 unifac = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UnifacLL
-            Case Else
+            Case "MODFAC"
                 ppuf = New DWSIM.SimulationObjects.PropertyPackages.MODFACPropertyPackage(True)
                 unifac = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Modfac
+            Case Else
+                ppuf = New DWSIM.SimulationObjects.PropertyPackages.NISTMFACPropertyPackage(True)
+                unifac = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NISTMFAC
         End Select
 
         Dim comp1, comp2 As ConstantProperties
@@ -3478,6 +3490,29 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             Me.tbIPDBName.Text = Me.DBOpenDlg.FileName
         End If
     End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        Select Case cbModel.SelectedItem.ToString
+            Case "NRTL"
+                Try
+                    Dim estimates As Double() = EstimateNRTL(cbCompound1.SelectedItem.ToString, cbCompound2.SelectedItem.ToString, "MODFAC-NIST")
+                    Me.gridInEst.Rows(0).Cells(1).Value = estimates(0)
+                    Me.gridInEst.Rows(1).Cells(1).Value = estimates(1)
+                    Me.gridInEst.Rows(2).Cells(1).Value = estimates(2)
+                Catch ex As Exception
+                    MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
+            Case "UNIQUAC"
+                Try
+                    Dim estimates As Double() = EstimateUNIQUAC(cbCompound1.SelectedItem.ToString, cbCompound2.SelectedItem.ToString, "MODFAC-NIST")
+                    Me.gridInEst.Rows(0).Cells(1).Value = estimates(0)
+                    Me.gridInEst.Rows(1).Cells(1).Value = estimates(1)
+                Catch ex As Exception
+                    MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
+        End Select
+    End Sub
+
 End Class
 
 Namespace DWSIM.Optimization.DatRegression

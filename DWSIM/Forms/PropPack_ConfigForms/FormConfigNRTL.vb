@@ -319,7 +319,7 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
 
     End Function
 
-    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click, Button2.Click, Button5.Click
+    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click, Button2.Click, Button5.Click, Button6.Click
 
         Dim row As Integer = dgvu1.SelectedCells(0).RowIndex
         Dim x(1) As Double
@@ -335,6 +335,9 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
         ElseIf sender.Name = "Button5" Then
             ppu = New DWSIM.SimulationObjects.PropertyPackages.UNIFACLLPropertyPackage
             unifac = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UnifacLL
+        ElseIf sender.Name = "Button6" Then
+            ppu = New DWSIM.SimulationObjects.PropertyPackages.NISTMFACPropertyPackage
+            unifac = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NISTMFAC
         Else
             ppu = New DWSIM.SimulationObjects.PropertyPackages.MODFACPropertyPackage
             unifac = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Modfac
@@ -438,11 +441,13 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
                 Next
 
                 If sender.Name = "Button1" Then
-                    ppu.CurrentMaterialStream.Flowsheet.WriteToLog("UNIQUAC interaction parameter estimation @ T = " & Format(T1, "N2") & " K using UNIFAC finished, average activity coefficient error = " & Format(avgerr, "N2") & "%.", Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
+                    ppu.CurrentMaterialStream.Flowsheet.WriteToLog("NRTL interaction parameter estimation @ T = " & Format(T1, "N2") & " K using UNIFAC finished, average activity coefficient error = " & Format(avgerr, "N2") & "%.", Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
                 ElseIf sender.Name = "Button5" Then
-                    ppu.CurrentMaterialStream.Flowsheet.WriteToLog("UNIQUAC interaction parameter estimation @ T = " & Format(T1, "N2") & " K using UNIFAC-LL finished, average activity coefficient error = " & Format(avgerr, "N2") & "%.", Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
+                    ppu.CurrentMaterialStream.Flowsheet.WriteToLog("NRTL interaction parameter estimation @ T = " & Format(T1, "N2") & " K using UNIFAC-LL finished, average activity coefficient error = " & Format(avgerr, "N2") & "%.", Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
+                ElseIf sender.Name = "Button6" Then
+                    ppu.CurrentMaterialStream.Flowsheet.WriteToLog("NRTL interaction parameter estimation @ T = " & Format(T1, "N2") & " K using NIST-MODFAC finished, average activity coefficient error = " & Format(avgerr, "N2") & "%.", Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
                 Else
-                    ppu.CurrentMaterialStream.Flowsheet.WriteToLog("UNIQUAC interaction parameter estimation @ T = " & Format(T1, "N2") & " K using MODFAC finished, average activity coefficient error = " & Format(avgerr, "N2") & "%.", Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
+                    ppu.CurrentMaterialStream.Flowsheet.WriteToLog("NRTL interaction parameter estimation @ T = " & Format(T1, "N2") & " K using MODFAC finished, average activity coefficient error = " & Format(avgerr, "N2") & "%.", Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
                 End If
 
                 dgvu1.Rows(row).Cells(3).Value = finalval2(0)
@@ -456,7 +461,7 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
 
             Catch ex As Exception
 
-                ppu.CurrentMaterialStream.Flowsheet.WriteToLog("NRTL interaction parameter estimation using MODFAC finished with an error: " & ex.ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Informacao)
+                ppu.CurrentMaterialStream.Flowsheet.WriteToLog("NRTL interaction parameter estimation finished with an error: " & ex.ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Informacao)
 
             Finally
 

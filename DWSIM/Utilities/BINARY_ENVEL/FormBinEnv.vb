@@ -1009,6 +1009,7 @@ Public Class FormBinEnv
     End Sub
 
     Public Sub PasteData(ByRef dgv As DataGridView)
+
         Dim tArr() As String
         Dim arT() As String
         Dim i, ii As Integer
@@ -1023,19 +1024,20 @@ Public Class FormBinEnv
             r = 0
             c = 0
         End If
+
         For i = 0 To tArr.Length - 1
             If tArr(i) <> "" Then
                 arT = tArr(i).Split(vbTab)
                 For ii = 0 To arT.Length - 1
                     If r > dgv.Rows.Count - 1 Then
-                        dgv.Rows.Add()
-                        dgv.Rows(0).Cells(0).Value = True
+                        dgv.Rows.Add(New Object() {"True"})
                         dgv.Rows(0).Cells(1).Selected = True
                     End If
                 Next
                 r = r + 1
             End If
         Next
+
         If dgv.SelectedCells.Count > 0 Then
             r = dgv.SelectedCells(0).RowIndex
             c = dgv.SelectedCells(0).ColumnIndex
@@ -1043,6 +1045,7 @@ Public Class FormBinEnv
             r = 0
             c = 0
         End If
+
         For i = 0 To tArr.Length - 1
             If tArr(i) <> "" Then
                 arT = tArr(i).Split(vbTab)

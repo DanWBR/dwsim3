@@ -614,7 +614,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         End Function
 
 #End Region
-
+        
 #Region "    Auxiliary Functions"
 
         Function RET_VN(ByVal subst As DWSIM.ClassesBasicasTermodinamica.Substancia) As Object
@@ -631,13 +631,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim sum As Double = 0
 
             For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                sum = 0
-                For Each s As String In subst.ConstantProperties.UNIFACGroups.Collection.Keys
-                    If Me.m_uni.UnifGroups.Groups.ContainsKey(s) Then
-                        sum += subst.ConstantProperties.UNIFACGroups.Collection(s) * Me.m_uni.UnifGroups.Groups(s).Q
-                    End If
-                Next
-                VQ(i) = sum
+                VQ(i) = Me.m_uni.RET_Qi(Me.RET_VN(subst))
                 i += 1
             Next
 
@@ -653,13 +647,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim sum As Double = 0
 
             For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                sum = 0
-                For Each s As String In subst.ConstantProperties.UNIFACGroups.Collection.Keys
-                    If Me.m_uni.UnifGroups.Groups.ContainsKey(s) Then
-                        sum += subst.ConstantProperties.UNIFACGroups.Collection(s) * Me.m_uni.UnifGroups.Groups(s).R
-                    End If
-                Next
-                VR(i) = sum
+                VR(i) = Me.m_uni.RET_Ri(Me.RET_VN(subst))
                 i += 1
             Next
 
@@ -667,26 +655,19 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         End Function
 
-        Function RET_VEKI() As Object
+        Function RET_VEKI() As List(Of Dictionary(Of Integer, Double))
 
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
-            Dim VEKI(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1, Me.m_uni.UnifGroups.Groups.Count - 1) As Double
+            Dim VEKI As New List(Of Dictionary(Of Integer, Double))
             Dim i As Integer = 0
             Dim sum As Double
             For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
                 sum = 0
-                For Each s As String In subst.ConstantProperties.UNIFACGroups.Collection.Keys
-                    If Me.m_uni.UnifGroups.Groups.ContainsKey(s) Then
-                        sum += subst.ConstantProperties.UNIFACGroups.Collection(s) * Me.m_uni.UnifGroups.Groups(s).Q
-                    End If
+                For Each s As String In subst.ConstantProperties.MODFACGroups.Collection.Keys
+                    sum += subst.ConstantProperties.MODFACGroups.Collection(s) * Me.m_uni.UnifGroups.Groups(s).Q
                 Next
-                Dim obj As Object = Me.m_uni.RET_EKI(Me.RET_VN(subst), sum)
-                Dim j As Integer = 0
-                Do
-                    If Not Double.IsNaN(obj(j)) Then VEKI(i, j) = obj(j) Else VEKI(i, j) = 0.0#
-                    j += 1
-                Loop Until j = Me.m_uni.UnifGroups.Groups.Count
-                i += 1
+                Dim obj = Me.m_uni.RET_EKI(Me.RET_VN(subst), sum)
+                VEKI.Add(obj)
             Next
 
             Return VEKI

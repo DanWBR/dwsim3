@@ -124,6 +124,18 @@
   <data name="chkCompareModels.Text" xml:space="preserve">
     <value>Compare Models</value>
   </data>
+  <data name="chkSLE.Text" xml:space="preserve">
+    <value>SLE</value>
+  </data>
+  <data name="rbEutectic.Text" xml:space="preserve">
+    <value>Eutectic</value>
+  </data>
+  <data name="rbSolidSolution.Size" type="System.Drawing.Size, System.Drawing">
+    <value>89, 17</value>
+  </data>
+  <data name="rbSolidSolution.Text" xml:space="preserve">
+    <value>Solid Solution</value>
+  </data>
   <data name="FlowLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>217, 25</value>
   </data>
@@ -223,29 +235,17 @@
   <data name="GroupBox6.Text" xml:space="preserve">
     <value>Diagram Settings</value>
   </data>
-  <data name="chkSLE.Text" xml:space="preserve">
-    <value>SLE</value>
-  </data>
-  <data name="rbEutectic.Text" xml:space="preserve">
-    <value>Eutectic</value>
-  </data>
-  <data name="rbSolidSolution.Size" type="System.Drawing.Size, System.Drawing">
-    <value>89, 17</value>
-  </data>
-  <data name="rbSolidSolution.Text" xml:space="preserve">
-    <value>Solid Solution</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Results</value>
+  <data name="FaTabStripItem3.Title" xml:space="preserve">
+    <value>Exp. Data</value>
   </data>
   <data name="FaTabStripItem1.Title" xml:space="preserve">
     <value>Graph</value>
   </data>
-  <data name="FaTabStripItem3.Title" xml:space="preserve">
-    <value>Exp. Data</value>
-  </data>
   <data name="FaTabStripItem2.Title" xml:space="preserve">
     <value>Table</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Results</value>
   </data>
   <data name="TSB_Print.Text" xml:space="preserve">
     <value>Print </value>
