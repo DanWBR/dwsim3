@@ -148,7 +148,7 @@ exec:       With Me.GraphControl.GraphPane.Legend
             fpec.bw = Me.BackgroundWorker1
             fpec.Label2.Tag = fpec.Label2.Text
             Try
-                fpec.ShowDialog(Me.Frm)
+                fpec.Show()
             Catch ex As Exception
                 fpec.Close()
                 Me.Frm.WriteToLog(ex.ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)

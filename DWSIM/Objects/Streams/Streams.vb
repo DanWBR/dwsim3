@@ -710,6 +710,13 @@ Namespace DWSIM.SimulationObjects.Streams
                 Me.PropertyPackage.CurrentMaterialStream = Me
                 Me.PropertyPackage.PopulatePropertyGrid(pgrid, Flowsheet, su)
 
+                If Not Me.Annotation Is Nothing Then
+                    .Item.Add(DWSIM.App.GetLocalString("Anotaes"), Me, "Annotation", False, DWSIM.App.GetLocalString("Outros"), DWSIM.App.GetLocalString("Cliquenobotocomretic"), True)
+                    With .Item(.Item.Count - 1)
+                        .IsBrowsable = False
+                        .CustomEditor = New DWSIM.Editors.Annotation.UIAnnotationEditor
+                    End With
+                End If
                 .Item.Add("ID", Me.Nome, True, DWSIM.App.GetLocalString("Outros"), "", True)
                 .Item.Add(DWSIM.App.GetLocalString("LastUpdatedOn"), Me.LastUpdated.ToString("O"), True, DWSIM.App.GetLocalString("Outros"), "", True)
 

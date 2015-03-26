@@ -183,7 +183,7 @@ Public Class FormBinEnv
             fpec.Label2.Tag = fpec.Label2.Text
             fpec.bw = Me.BackgroundWorker1
             Try
-                fpec.ShowDialog(Me.Frm)
+                fpec.Show()
             Catch ex As Exception
                 fpec.Close()
                 Throw ex

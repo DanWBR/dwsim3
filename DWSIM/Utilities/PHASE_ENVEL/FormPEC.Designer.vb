@@ -32,30 +32,26 @@ Partial Class FormPEC
         'Label2
         '
         resources.ApplyResources(Me.Label2, "Label2")
-        Me.Label2.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label2.Name = "Label2"
         '
         'Label1
         '
         resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label1.Name = "Label1"
         '
         'SpinningProgress1
         '
-        resources.ApplyResources(Me.SpinningProgress1, "SpinningProgress1")
         Me.SpinningProgress1.ActiveSegmentColour = System.Drawing.Color.RoyalBlue
         Me.SpinningProgress1.AutoIncrementFrequency = 75.0R
-        Me.SpinningProgress1.BehindTransistionSegmentIsActive = False
         Me.SpinningProgress1.InactiveSegmentColour = System.Drawing.Color.LightSteelBlue
+        resources.ApplyResources(Me.SpinningProgress1, "SpinningProgress1")
         Me.SpinningProgress1.Name = "SpinningProgress1"
-        Me.SpinningProgress1.TransistionSegment = 10
+        Me.SpinningProgress1.TransistionSegment = 7
         Me.SpinningProgress1.TransistionSegmentColour = System.Drawing.Color.LightSteelBlue
         '
         'btnCancel
         '
         resources.ApplyResources(Me.btnCancel, "btnCancel")
-        Me.btnCancel.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.btnCancel.Name = "btnCancel"
         Me.btnCancel.UseVisualStyleBackColor = True
         '
@@ -75,6 +71,7 @@ Partial Class FormPEC
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
+        Me.TopMost = True
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
