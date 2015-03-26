@@ -220,8 +220,6 @@ Public Class FormStSim
                 ComboBoxFlashAlg.SelectedIndex = 0
         End Select
 
-        chkIOmode.Checked = Me.FrmChild.Options.PropertyPackageIOFlashQuickMode
-
         FrmChild.ToolStripComboBoxNumberFormatting.SelectedItem = Me.FrmChild.Options.NumberFormat
         FrmChild.ToolStripComboBoxNumberFractionFormatting.SelectedItem = Me.FrmChild.Options.FractionNumberFormat
 
@@ -1190,51 +1188,38 @@ Public Class FormStSim
         Select Case ComboBoxFlashAlg.SelectedIndex
             Case 0
                 Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
-                Me.chkIOmode.Enabled = True
                 Me.GroupBox11.Enabled = False
             Case 1
                 Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoops3PV3
-                Me.chkIOmode.Enabled = False
                 Me.GroupBox11.Enabled = True
             Case 2
                 Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.InsideOut
-                Me.chkIOmode.Enabled = True
                 Me.GroupBox11.Enabled = False
             Case 3
                 Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.InsideOut3P
-                Me.chkIOmode.Enabled = True
                 Me.GroupBox11.Enabled = True
             Case 4
                 Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.GibbsMin2P
-                Me.chkIOmode.Enabled = False
                 Me.GroupBox11.Enabled = False
             Case 5
                 Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.GibbsMin3P
-                Me.chkIOmode.Enabled = False
-                Me.GroupBox11.Enabled = True
+               Me.GroupBox11.Enabled = True
             Case 6
                 Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsSLE
-                Me.chkIOmode.Enabled = False
                 Me.GroupBox11.Enabled = False
                 Me.chkValidateEqCalc.Enabled = False
             Case 7
                 Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsSLE_SS
-                Me.chkIOmode.Enabled = False
-                Me.GroupBox11.Enabled = False
+               Me.GroupBox11.Enabled = False
                 Me.chkValidateEqCalc.Enabled = False
             Case 8
                 Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsImmiscible
-                Me.chkIOmode.Enabled = True
                 Me.GroupBox11.Enabled = True
         End Select
     End Sub
 
     Private Sub CheckBox1_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBox1.CheckedChanged
         Me.FrmChild.Options.CalculateBubbleAndDewPoints = Me.CheckBox1.Checked
-    End Sub
-
-    Private Sub chkIOmode_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkIOmode.CheckedChanged
-        Me.FrmChild.Options.PropertyPackageIOFlashQuickMode = chkIOmode.Checked
     End Sub
 
     Private Sub RadioButton1_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RadioButton1.CheckedChanged, RadioButton2.CheckedChanged, RadioButton3.CheckedChanged
