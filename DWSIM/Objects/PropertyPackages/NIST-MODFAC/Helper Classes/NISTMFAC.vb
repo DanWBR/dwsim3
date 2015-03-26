@@ -416,16 +416,16 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                         Me.InteracParam_bij.Add(fields(0), New System.Collections.Generic.Dictionary(Of Integer, Double))
                         Me.InteracParam_bij(fields(0)).Add(fields(1), Double.Parse(fields(3), cult))
                         Me.InteracParam_cij.Add(fields(0), New System.Collections.Generic.Dictionary(Of Integer, Double))
-                        Me.InteracParam_cij(fields(0)).Add(fields(1), Double.Parse(fields(4) / 1000, cult))
-                      Else
+                        Me.InteracParam_cij(fields(0)).Add(fields(1), Double.Parse(fields(4), cult) / 1000)
+                    Else
                         If Not Me.InteracParam_aij(fields(0)).ContainsKey(fields(1)) Then
                             Me.InteracParam_aij(fields(0)).Add(fields(1), Double.Parse(fields(2), cult))
                             Me.InteracParam_bij(fields(0)).Add(fields(1), Double.Parse(fields(3), cult))
-                            Me.InteracParam_cij(fields(0)).Add(fields(1), Double.Parse(fields(4) / 1000, cult))
-                         Else
+                            Me.InteracParam_cij(fields(0)).Add(fields(1), Double.Parse(fields(4), cult) / 1000)
+                        Else
                             Me.InteracParam_aij(fields(0))(fields(1)) = Double.Parse(fields(2), cult)
                             Me.InteracParam_bij(fields(0))(fields(1)) = Double.Parse(fields(3), cult)
-                            Me.InteracParam_cij(fields(0))(fields(1)) = Double.Parse(fields(4) / 1000, cult)
+                            Me.InteracParam_cij(fields(0))(fields(1)) = Double.Parse(fields(4), cult) / 1000
                         End If
                     End If
                 End While

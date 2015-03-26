@@ -2631,17 +2631,22 @@ Public Class FormMain
             form.FormWatch.DockPanel = Nothing
             form.FormSurface.DockPanel = Nothing
 
+            Dim myfile As String = My.Computer.FileSystem.GetTempFileName()
             Try
                 Dim pnl As String = xdoc.Element("DWSIM_Simulation_Data").Element("PanelLayout").Value
-                Dim myfile As String = My.Computer.FileSystem.GetTempFileName()
                 File.WriteAllText(myfile, pnl)
                 form.dckPanel.LoadFromXml(myfile, New DeserializeDockContent(AddressOf Me.ReturnForm))
+            Catch ex As Exception
+                excs.Add(New Exception("Error Restoring Window Layout", ex))
+            Finally
                 File.Delete(myfile)
+            End Try
+
+            Try
                 form.FormLog.Show(form.dckPanel)
                 form.FormObjListView.Show(form.dckPanel)
                 form.FormObjList.Show(form.dckPanel)
                 form.FormProps.Show(form.dckPanel)
-                'form.FormMatList.Show(form.dckPanel)
                 form.FormSpreadsheet.Show(form.dckPanel)
                 form.FormSurface.Show(form.dckPanel)
                 form.dckPanel.BringToFront()
@@ -3758,6 +3763,12 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
 
     Public Sub SaveToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SaveToolStripButton.Click, SaveToolStripMenuItem.Click
 
+        SaveFile(True)
+
+    End Sub
+
+    Public Sub SaveFile(ByVal saveasync As Boolean)
+
         If Not Me.ActiveMdiChild Is Nothing Then
             If TypeOf Me.ActiveMdiChild Is FormFlowsheet Then
                 Dim form2 As FormFlowsheet = Me.ActiveMdiChild
@@ -3774,9 +3785,19 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
                             Me.ToolStripStatusLabel1.Text = ""
                         End Try
                     ElseIf Path.GetExtension(Me.filename).ToLower = ".dwxml" Then
-                        Task.Factory.StartNew(Sub() SaveXML(form2.Options.FilePath, form2)).ContinueWith(Sub() Me.ToolStripStatusLabel1.Text = "", TaskContinuationOptions.ExecuteSynchronously)
+                        If saveasync Then
+                            Task.Factory.StartNew(Sub() SaveXML(form2.Options.FilePath, form2)).ContinueWith(Sub() Me.ToolStripStatusLabel1.Text = "", TaskContinuationOptions.ExecuteSynchronously)
+                        Else
+                            SaveXML(form2.Options.FilePath, form2)
+                            Me.ToolStripStatusLabel1.Text = ""
+                        End If
                     ElseIf Path.GetExtension(Me.filename).ToLower = ".dwxmz" Then
-                        Task.Factory.StartNew(Sub() SaveXMLZIP(form2.Options.FilePath, form2)).ContinueWith(Sub() Me.ToolStripStatusLabel1.Text = "", TaskContinuationOptions.ExecuteSynchronously)
+                        If saveasync Then
+                            Task.Factory.StartNew(Sub() SaveXMLZIP(form2.Options.FilePath, form2)).ContinueWith(Sub() Me.ToolStripStatusLabel1.Text = "", TaskContinuationOptions.ExecuteSynchronously)
+                        Else
+                            SaveXMLZIP(form2.Options.FilePath, form2)
+                            Me.ToolStripStatusLabel1.Text = ""
+                        End If
                     End If
                 Else
                     Dim myStream As System.IO.FileStream
@@ -3796,9 +3817,19 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
                                     Me.ToolStripStatusLabel1.Text = ""
                                 End Try
                             ElseIf Path.GetExtension(Me.filename).ToLower = ".dwxml" Then
-                                Task.Factory.StartNew(Sub() SaveXML(myStream.Name, form2)).ContinueWith(Sub() Me.ToolStripStatusLabel1.Text = "", TaskContinuationOptions.ExecuteSynchronously)
+                                If saveasync Then
+                                    Task.Factory.StartNew(Sub() SaveXML(myStream.Name, form2)).ContinueWith(Sub() Me.ToolStripStatusLabel1.Text = "", TaskContinuationOptions.ExecuteSynchronously)
+                                Else
+                                    SaveXML(myStream.Name, form2)
+                                    Me.ToolStripStatusLabel1.Text = ""
+                                End If
                             ElseIf Path.GetExtension(Me.filename).ToLower = ".dwxmz" Then
-                                Task.Factory.StartNew(Sub() SaveXMLZIP(myStream.Name, form2)).ContinueWith(Sub() Me.ToolStripStatusLabel1.Text = "", TaskContinuationOptions.ExecuteSynchronously)
+                                If saveasync Then
+                                    Task.Factory.StartNew(Sub() SaveXMLZIP(myStream.Name, form2)).ContinueWith(Sub() Me.ToolStripStatusLabel1.Text = "", TaskContinuationOptions.ExecuteSynchronously)
+                                Else
+                                    SaveXMLZIP(myStream.Name, form2)
+                                    Me.ToolStripStatusLabel1.Text = ""
+                                End If
                             End If
                         End If
                     End If
@@ -3842,6 +3873,7 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
         End If
 
     End Sub
+
 
     Private Sub ToolStripButton1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton1.Click, SaveAsToolStripMenuItem.Click
         Call Me.SaveFileDialog()
