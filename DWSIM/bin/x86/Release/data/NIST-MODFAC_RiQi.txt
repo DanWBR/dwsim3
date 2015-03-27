@@ -1,22 +1,22 @@
 (Main Group No.) Main Group Name							
 No.	Sub-group Name	Ri	Qi	Example		
 (1) CH2							
-1	CH3	0.6325	1.0608	hexane	2 CH3, 4 CH2	
-2	CH2	0.6325	0.7081	octane	2 CH3, 6 CH2	
+1	CH3	0.6325	1.0608	Hexane	2 CH3, 4 CH2	
+2	CH2	0.6325	0.7081	Octane	2 CH3, 6 CH2	
 3	CH	0.6325	0.3554	Isobutane	3 CH3, 1 CH	
-4	C	0.6325	0	neopentane	4 CH3, 1 C	
+4	C	0.6325	0	Neopentane	4 CH3, 1 C	
 (2)  C=C							
-5	CH2=CH	1.2832	1.6016	1-hexene	1 CH3, 3 CH2, 1 CH2=CH	
+5	CH2=CH	1.2832	1.6016	1-Hexene	1 CH3, 3 CH2, 1 CH2=CH	
 6	CH=CH	1.2832	1.2489	2-Hexene	2 CH3, 2 CH2, 1 CH=CH	
-7	CH2=C	1.2832	1.2489	2-methyl-1-butene	2 CH3, 1 CH2, 1 CH2=C	
-8	CH=C	1.2832	0.8962	2-methyl-2-butene	3 CH3, 1 CH=C	
+7	CH2=C	1.2832	1.2489	2-Methyl-1-Butene	2 CH3, 1 CH2, 1 CH2=C	
+8	CH=C	1.2832	0.8962	2-Methyl-2-Butene	3 CH3, 1 CH=C	
 70	C=C	1.2832	0.4582	2-3-Dimethyl-2-Butene	4 CH3, 1 C=C	
 (3) ACH							
-9	ACH	0.3763	0.4321	naphthalene	8 ACH, 2 AC	
+9	ACH	0.3763	0.4321	Naphthalene	8 ACH, 2 AC	
 10	AC	0.3763	0.2113	styrene	1 CH2=CH, 5 ACH, 1 AC	
 (4) ACCH2							
-11	ACCH3	0.91	0.949	toluene	5 ACH, 1 ACCH3	
-12	ACCH2	0.91	0.7962	ethylbenzene	1 CH3, 5 ACH, 1 ACCH2	
+11	ACCH3	0.91	0.949	Toluene	5 ACH, 1 ACCH3	
+12	ACCH2	0.91	0.7962	Ethylbenzene	1 CH3, 5 ACH, 1 ACCH2	
 13	ACCH	0.91	0.3769	Cumene	2 CH3, 5 ACH, 1 ACCH	
 195	ACC	0.5847	0.12	Tert-Butylbenzene	3 CH3, 5 ACH, 1 ACC	
 (5) OH							
@@ -24,11 +24,11 @@ No.	Sub-group Name	Ri	Qi	Example
 81	OH(e)	1.063	0.8663	Isopropylalkohol	2 CH3, 1 CH, 1 OH(e)	
 82	OH(t)	0.6895	0.8345	Tert-Butanol	3 CH3, 1 C , 1 OH(t)	
 (6) CH3OH						
-15	CH3OH	0.8585	0.9938	methanol	1 CH3OH	
+15	CH3OH	0.8585	0.9938	Methanol	1 CH3OH	
 (7) H2O						
-16	H2O	1.7334	2.4561	water	1 H2O	
+16	H2O	1.7334	2.4561	Water	1 H2O	
 (8) ACOH							
-17	ACOH	1.08	0.975	phenol	5 ACH, 1 ACOH	
+17	ACOH	1.08	0.975	Phenol	5 ACH, 1 ACOH	
 (9) CH2CO							
 18	CH3CO	1.7048	1.67	Butanone	1 CH3, 1 CH2, 1 CH3CO	
 19	CH2CO	1.7048	1.5542	3-pentanone	2 CH3, 1 CH2, 1 CH2CO	
@@ -129,7 +129,7 @@ No.	Sub-group Name	Ri	Qi	Example
 (37) Cl-[C=C]							
 69	Cl-[C=C]	0.5229	0.7391	Trichloroethylene	1 CH=C, 3 Cl(C=C)	
 (38) ACF							
-71	ACF	0.8814	0.7269	hexafluorobenzene		6 ACF
+71	ACF	0.8814	0.7269	Hexafluorobenzene		6 ACF
 (39) DMF							
 72	DMF	2	2.093	N-N-Dimethylformamide	1 DMF	
 73	HCON(CH2)2	2.381	1.522	N-N-Diethylformamide	2 CH3, 1 HCON(CH2)2	
@@ -157,29 +157,29 @@ No.	Sub-group Name	Ri	Qi	Example
 88	c-CON-CH	3.5268	2.58	N-Isopropylpyrrolidone	1 c-CON-CH, 3 c-CH2, 2 CH3	
 89	c-CON-C	3.2994	2.352	N-Tert-Butylpyrrolidone	1 c-CON-C, 3 c-CH2, 3 CH3	
 (47) CONR							
-92	CONHCH3	1.5	1.08	N-methylacetamide	1 CH3, 1 CONHCH3	
-100	CONHCH2	1.5	1.08	N-ethylacetamide	2 CH3, 1 CONHCH2	
+92	CONHCH3	1.5	1.08	N-Methylacetamide	1 CH3, 1 CONHCH3	
+100	CONHCH2	1.5	1.08	N-Ethylacetamide	2 CH3, 1 CONHCH2	
 (48) CONR2							
-101	CON(CH3)2	2.4748	1.9643	N,N-dimethylacetamide	1 CH3, 1 CON(CH3)2	
-102	CON(CH3)CH2	2.2739	1.5754	N,N-methylethylacetamide	2 CH3, 1 CONCH2(CH3)	
-103	CON(CH2)2	2.0767	1.1866	N,N-diethylacetamide	3 CH3, 1 CON(CH2)2	
+101	CON(CH3)2	2.4748	1.9643	N.N-Dimethylacetamide	1 CH3, 1 CON(CH3)2	
+102	CON(CH3)CH2	2.2739	1.5754	N-N-Methylethylacetamide	2 CH3, 1 CONCH2(CH3)	
+103	CON(CH2)2	2.0767	1.1866	N-N-Diethylacetamide	3 CH3, 1 CON(CH2)2	
 (49) HCONR							
-93	HCONHCH3	2.4617	2.192	N-methylformamide	1 HCONHCH3	
-94	HCONHCH2	2.4617	1.842	N-ethylformamide	1 CH3, 1 HCONHCH2	
+93	HCONHCH3	2.4617	2.192	N-Methylformamide	1 HCONHCH3	
+94	HCONHCH2	2.4617	1.842	N-Ethylformamide	1 CH3, 1 HCONHCH2	
 (50) ACCN							
-116	ACCN	1.2815	0.96	benzonitrile	1 ACCN,  5 ACH	
+116	ACCN	1.2815	0.96	Benzonitrile	1 ACCN,  5 ACH	
 (51) NCO							
-117	CH3NCO	1.9578	1.58	methyl isocyanate	1 CH3NCO	
-118	CH2NCO	1.731	1.272	ethyl isocyanate	1 CH2NCO, 1 CH3	
-119	CHNCO	1.5036	0.96	isopropyl isocyanate	1 CHNCO, 2 CH3	
-120	ACNCO	1.4219	0.852	phenyl isocyanate	1 ACNCO, 5 ACH	
+117	CH3NCO	1.9578	1.58	Methylisocyanate	1 CH3NCO	
+118	CH2NCO	1.731	1.272	Ethylisocyanate	1 CH2NCO, 1 CH3	
+119	CHNCO	1.5036	0.96	Isopropylisocyanate	1 CHNCO, 2 CH3	
+120	ACNCO	1.4219	0.852	Phenylisocyanate	1 ACNCO, 5 ACH	
 (52) ACS							
-104	AC2H2S	1.7943	1.34	thiophene	2 ACH, 1 AC2H2S	
-105	AC2HS	1.6282	1.06	2-methylthiophene	1 CH3, 2 ACH, 1 AC2S	
-106	AC2S	1.4621	0.78	2,5-dimethylthiophene	2 CH3, 2 ACH, 1 AC2S	
+104	AC2H2S	1.7943	1.34	Thiophene	2 ACH, 1 AC2H2S	
+105	AC2HS	1.6282	1.06	2-Methylthiophene	1 CH3, 2 ACH, 1 AC2HS	
+106	AC2S	1.4621	0.78	2,5-Dimethylthiophene	2 CH3, 2 ACH, 1 AC2S	
 (53) Epoxy							
-107	H2COCH	1.3601	1.8031	propylene oxide	1 H2COCH, 1 CH3	
-109	HCOCH	0.9104	0.6538	2,3-epoxybutane	1 HCOCH, 2 CH3	
+107	H2COCH	1.3601	1.8031	1.2-Propyleneoxide	1 H2COCH, 1 CH3	
+109	HCOCH	0.9104	0.6538	2.3-Epoxybutane	1 HCOCH, 2 CH3	
 (54) Anhydride							
 121	COOCO	1.7732	1.52	acetic anhydride	1 COOCO, 2 CH3	
 (55) Carbonate							
