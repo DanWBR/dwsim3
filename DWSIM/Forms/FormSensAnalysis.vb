@@ -912,8 +912,7 @@ Public Class FormSensAnalysis
                                                                              DockLeftToolStripMenuItem.Click, DockLeftAutoHideToolStripMenuItem.Click,
                                                                              DockRightAutoHideToolStripMenuItem.Click, DockRightToolStripMenuItem.Click,
                                                                              DockTopAutoHideToolStripMenuItem.Click, DockTopToolStripMenuItem.Click,
-                                                                             DockBottomAutoHideToolStripMenuItem.Click, DockBottomToolStripMenuItem.Click,
-                                                                             HiddenToolStripMenuItem.Click
+                                                                             DockBottomAutoHideToolStripMenuItem.Click, DockBottomToolStripMenuItem.Click
 
         For Each ts As ToolStripMenuItem In dckMenu.Items
             ts.Checked = False
