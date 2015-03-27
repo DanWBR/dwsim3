@@ -24,6 +24,7 @@ Imports DWSIM.DWSIM.MathEx.Common
 Imports System.IO
 Imports System.Runtime.Serialization.Formatters.Binary
 Imports System.Math
+Imports Microsoft.VisualBasic.FileIO
 
 Public Class FormCompoundCreator
 
@@ -56,7 +57,7 @@ Public Class FormCompoundCreator
         Dim filename As String = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "unifac.txt"
 
         Dim i As Integer
-        Dim ID, GroupType, GroupName As String
+        Dim ID, GroupType, GroupName, S As String
         Dim L As Boolean = True
 
 
@@ -92,47 +93,99 @@ Public Class FormCompoundCreator
 
         'Grid MODFAC
         L = True
-        filename = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "modfac.txt"
+        'filename = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "modfac.txt"
+        'MODFACLines = IO.File.ReadAllLines(filename)
+        filename = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "NIST-MODFAC_RiQi.txt"
         MODFACLines = IO.File.ReadAllLines(filename)
-        GroupName = MODFACLines(1).Split(";")(1)
-        Dim s As String
-        With Me.GridMODFAC.Rows
-            .Clear()
-            For i = 1 To MODFACLines.Length - 1
-                
+        Dim cult As Globalization.CultureInfo = New Globalization.CultureInfo("en-US")
+        Dim fields As String()
+        Dim delimiter As String = vbTab
+        Dim maingroup As Integer = 1
+        Dim mainname As String = ""
 
-                s = picpath & MODFACLines(i).Split(";")(6) & ".png"
-                If Not My.Computer.FileSystem.FileExists(s) Then s = picpath & "empty.png"
+        Me.GridMODFAC.Rows.Clear()
 
-                .Add(New Object() {CInt(0), CInt(0), CInt(0), Image.FromFile(s)})
-                .Item(.Count - 1).HeaderCell.Value = "ID" & i
-                .Item(.Count - 1).Cells(0).Value = MODFACLines(i).Split(";")(1)
-                .Item(.Count - 1).Cells(1).Value = MODFACLines(i).Split(";")(2)
-                .Item(.Count - 1).Cells(2).Value = 0
+        Using parser As New TextFieldParser(filename)
+            parser.SetDelimiters(delimiter)
+            parser.ReadLine()
+            parser.ReadLine()
 
-                s = MODFACLines(i).Split(";")(7) & ": " & MODFACLines(i).Split(";")(8)
-                If MODFACLines(i).Split(";")(9) <> "" Then s = s & vbCrLf & MODFACLines(i).Split(";")(9) & ": " & MODFACLines(i).Split(";")(10)
-                If MODFACLines(i).Split(";")(11) <> "" Then s = s & vbCrLf & MODFACLines(i).Split(";")(11) & ": " & MODFACLines(i).Split(";")(12)
-                If MODFACLines(i).Split(";")(13) <> "" Then s = s & vbCrLf & MODFACLines(i).Split(";")(13) & ": " & MODFACLines(i).Split(";")(14)
+            While Not parser.EndOfData
+                fields = parser.ReadFields()
+                If fields(0).StartsWith("(") Then
+                    maingroup = fields(0).Split(")")(0).Substring(1)
+                    mainname = fields(0).Trim().Split(")")(1).Trim
 
-                .Item(.Count - 1).Cells(3).ToolTipText = "Rk / Qk: " & MODFACLines(i).Split(";")(4) & " / " & MODFACLines(i).Split(";")(5) & vbCrLf & _
-                                                         "Example Compound: " & MODFACLines(i).Split(";")(6) & vbCrLf & s
-
-                If GroupName <> MODFACLines(i).Split(";")(1) Then
+                    
                     L = Not L
-                    GroupName = MODFACLines(i).Split(";")(1)
-                End If
-                If L Then
-                    .Item(.Count - 1).Cells(0).Style.BackColor = Color.FromArgb(230, 230, 200)
-                    .Item(.Count - 1).Cells(1).Style.BackColor = Color.FromArgb(230, 230, 200)
                 Else
-                    .Item(.Count - 1).Cells(0).Style.BackColor = Color.FromArgb(200, 230, 230)
-                    .Item(.Count - 1).Cells(1).Style.BackColor = Color.FromArgb(200, 230, 230)
+                    'Me.Groups.Add(i, New ModfacGroup(fields(1), mainname, maingroup, fields(0), Double.Parse(fields(3), cult), Double.Parse(fields(2), cult)))
+                    'Me.Groups.Add(fields(0), New ModfacGroup(fields(1), mainname, maingroup, fields(0), Double.Parse(fields(2), cult), Double.Parse(fields(3), cult)))
+                    With Me.GridMODFAC.Rows
+                        S = picpath & fields(4) & ".png"
+                        If Not My.Computer.FileSystem.FileExists(S) Then S = picpath & "empty.png"
+
+                        .Add(New Object() {CInt(0), CInt(0), CInt(0), Image.FromFile(S)})
+                        .Item(.Count - 1).HeaderCell.Value = "ID" & maingroup
+                        .Item(.Count - 1).Cells(0).Value = mainname
+                        .Item(.Count - 1).Cells(1).Value = fields(1)
+                        .Item(.Count - 1).Cells(2).Value = 0
+                   
+                        If L Then
+                            .Item(.Count - 1).Cells(0).Style.BackColor = Color.FromArgb(230, 230, 200)
+                            .Item(.Count - 1).Cells(1).Style.BackColor = Color.FromArgb(230, 230, 200)
+                        Else
+                            .Item(.Count - 1).Cells(0).Style.BackColor = Color.FromArgb(200, 230, 230)
+                            .Item(.Count - 1).Cells(1).Style.BackColor = Color.FromArgb(200, 230, 230)
+                        End If
+
+                        .Item(.Count - 1).Cells(3).ToolTipText = "Rk / Qk: " & fields(2) & " / " & fields(3) & vbCrLf & _
+                                                                 "Example Compound: " & fields(4) & vbCrLf & fields(5)
+                    End With
                 End If
+            End While
+        End Using
 
 
-            Next
-        End With
+        'GroupName = MODFACLines(1).Split(";")(1)
+        'Dim s As String
+        'With Me.GridMODFAC.Rows
+        '    .Clear()
+        '    For i = 1 To MODFACLines.Length - 1
+
+
+        '        s = picpath & MODFACLines(i).Split(";")(6) & ".png"
+        '        If Not My.Computer.FileSystem.FileExists(s) Then s = picpath & "empty.png"
+
+        '        .Add(New Object() {CInt(0), CInt(0), CInt(0), Image.FromFile(s)})
+        '        .Item(.Count - 1).HeaderCell.Value = "ID" & i
+        '        .Item(.Count - 1).Cells(0).Value = MODFACLines(i).Split(";")(1)
+        '        .Item(.Count - 1).Cells(1).Value = MODFACLines(i).Split(";")(2)
+        '        .Item(.Count - 1).Cells(2).Value = 0
+
+        '        s = MODFACLines(i).Split(";")(7) & ": " & MODFACLines(i).Split(";")(8)
+        '        If MODFACLines(i).Split(";")(9) <> "" Then s = s & vbCrLf & MODFACLines(i).Split(";")(9) & ": " & MODFACLines(i).Split(";")(10)
+        '        If MODFACLines(i).Split(";")(11) <> "" Then s = s & vbCrLf & MODFACLines(i).Split(";")(11) & ": " & MODFACLines(i).Split(";")(12)
+        '        If MODFACLines(i).Split(";")(13) <> "" Then s = s & vbCrLf & MODFACLines(i).Split(";")(13) & ": " & MODFACLines(i).Split(";")(14)
+
+        '        .Item(.Count - 1).Cells(3).ToolTipText = "Rk / Qk: " & MODFACLines(i).Split(";")(4) & " / " & MODFACLines(i).Split(";")(5) & vbCrLf & _
+        '                                                 "Example Compound: " & MODFACLines(i).Split(";")(6) & vbCrLf & s
+
+        '        If GroupName <> MODFACLines(i).Split(";")(1) Then
+        '            L = Not L
+        '            GroupName = MODFACLines(i).Split(";")(1)
+        '        End If
+        '        If L Then
+        '            .Item(.Count - 1).Cells(0).Style.BackColor = Color.FromArgb(230, 230, 200)
+        '            .Item(.Count - 1).Cells(1).Style.BackColor = Color.FromArgb(230, 230, 200)
+        '        Else
+        '            .Item(.Count - 1).Cells(0).Style.BackColor = Color.FromArgb(200, 230, 230)
+        '            .Item(.Count - 1).Cells(1).Style.BackColor = Color.FromArgb(200, 230, 230)
+        '        End If
+
+
+        '    Next
+        'End With
 
         'Grid Joback
         filename = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "JobackGroups.txt"

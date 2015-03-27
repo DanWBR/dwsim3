@@ -84,7 +84,7 @@
 43,82,SiO,SiH2O,1.4838,1.062,1-3-Dimethyldisiloxane: 3*CH3 1*SiH2O 1*SiH2,SiH2O 1.3-Dimethyildisiloxane,///,Si:1/H:2/O:1
 43,83,SiO,SiHO,1.303,0.764,1-1-3-3-Tetramethyldisiloxane: 4*CH3 1*SiHO 1*SiH,SiHO 1.1.3.3-Tetramethyldisiloxane,///,Si:1/H:1/O:1
 43,84,SiO,SiO,1.1044,0.466,Octamethylcyclotetrasiloxane:  8*CH3 4*SiO,SiO Octamethylcyclotetrasiloxane,///,Si:1/O:1
-44,85,NMP,NMP,3.981,3.2,N-Methylpyrrolidone: 1*NMP,NMP n-Methylpyrolidone,///,
+44,85,NMP,NMP,3.981,3.2,N-Methylpyrrolidone: 1*NMP,n-Methylpyrrolidone,///,
 45,86,CClF,CCl3F,3.0356,2.644,Trichlorofluoromethane: 1*CCl3F,CCl3F Trichlorofluoromethane,1:4/3:17/1:16/,
 45,87,CClF,CCl2F,2.2287,1.916,Tetrachloro-1.2-difluoroethane: 2*CCl2F,CCl2F 1.1.2.2-Tetrachloro-1.2-difluoroethan,1:4/2:17/1:16/,
 45,88,CClF,HCCl2F,2.406,2.116,Dichlorofluoromethane: 1*HCCl2F,HCCl2F Dichlorofluoromethane,1:3/2:17/1:16/,
