@@ -53,6 +53,16 @@ Imports System.Linq
                 Dim t As Type = Type.GetTypeFromProgID(_selts.TypeName)
                 _pptpl = Activator.CreateInstance(t)
             End If
+            Dim myppm As CapeOpen.ICapeUtilities = TryCast(_pptpl, CapeOpen.ICapeUtilities)
+            If Not myppm Is Nothing Then
+                Try
+                    myppm.Initialize()
+                Catch ex As Exception
+                    Dim ecu As CapeOpen.ECapeUser = _pptpl
+                    MessageBox.Show("Error initializing CAPE-OPEN Property Package - " + ex.Message.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    MessageBox.Show("CAPE-OPEN Exception " & ecu.code & " at " & ecu.interfaceName & "." & ecu.scope & ". Reason: " & ecu.description)
+                End Try
+            End If
             Dim proppacks As String()
             If _coversion = "1.0" Then
                 proppacks = CType(_pptpl, ICapeThermoSystem).GetPropertyPackages

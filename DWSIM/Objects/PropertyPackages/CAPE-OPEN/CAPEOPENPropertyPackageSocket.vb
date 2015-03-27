@@ -1516,6 +1516,17 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                 If Not _pptpl Is Nothing Then
 
+                    Dim myppm As CapeOpen.ICapeUtilities = TryCast(_pptpl, CapeOpen.ICapeUtilities)
+                    If Not myppm Is Nothing Then
+                        Try
+                            myppm.Initialize()
+                        Catch ex As Exception
+                            Dim ecu As CapeOpen.ECapeUser = _pptpl
+                            MessageBox.Show(Me.ComponentName + ": error initializing CAPE-OPEN Property Package - " + ex.Message.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            MessageBox.Show(Me.ComponentName & ": CAPE-OPEN Exception " & ecu.code & " at " & ecu.interfaceName & "." & ecu.scope & ". Reason: " & ecu.description)
+                        End Try
+                    End If
+
                     Dim pplist As String()
 
                     If _coversion = "1.0" Then
