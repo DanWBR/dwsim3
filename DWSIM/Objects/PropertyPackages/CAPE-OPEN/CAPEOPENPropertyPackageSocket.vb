@@ -1047,8 +1047,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         Public Overrides Function AUX_MMM(fase As Fase) As Double
 
             Dim complist As Object = Nothing
-            Me.GetCompoundList(complist, Nothing, Nothing, Nothing, Nothing, Nothing)
-            Dim mw = Me.CurrentMaterialStream.GetCompoundConstant(New String() {"molecularWeight"}, complist)
+            Dim mw As Object = Nothing
+            Me.GetCompoundList(complist, Nothing, Nothing, Nothing, mw, Nothing)
+
             Dim mwt As Double = 0.0#
             Dim i As Integer = 0
             For Each c As Substancia In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes.Values
@@ -1063,8 +1064,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         Public Overrides Function AUX_CONVERT_MOL_TO_MASS(ByVal subst As String, ByVal phasenumber As Integer) As Double
 
             Dim complist As Object = Nothing
-            Me.GetCompoundList(complist, Nothing, Nothing, Nothing, Nothing, Nothing)
-            Dim mw = Me.CurrentMaterialStream.GetCompoundConstant(New String() {"molecularWeight"}, complist)
+            Dim mw As Object = Nothing
+            Me.GetCompoundList(complist, Nothing, Nothing, Nothing, mw, Nothing)
 
             Dim mol_x_mm As Double
             Dim sub1 As DWSIM.ClassesBasicasTermodinamica.Substancia
@@ -1088,8 +1089,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         Public Overrides Function AUX_CONVERT_MASS_TO_MOL(ByVal subst As String, ByVal phasenumber As Integer) As Double
 
             Dim complist As Object = Nothing
-            Me.GetCompoundList(complist, Nothing, Nothing, Nothing, Nothing, Nothing)
-            Dim mw = Me.CurrentMaterialStream.GetCompoundConstant(New String() {"molecularWeight"}, complist)
+            Dim mw As Object = Nothing
+            Me.GetCompoundList(complist, Nothing, Nothing, Nothing, mw, Nothing)
 
             Dim mass_div_mm As Double
             Dim sub1 As DWSIM.ClassesBasicasTermodinamica.Substancia
@@ -1109,8 +1110,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         Public Overrides Function AUX_CONVERT_MOL_TO_MASS(ByVal Vz As Object) As Double()
 
             Dim complist As Object = Nothing
-            Me.GetCompoundList(complist, Nothing, Nothing, Nothing, Nothing, Nothing)
-            Dim mw = Me.CurrentMaterialStream.GetCompoundConstant(New String() {"molecularWeight"}, complist)
+            Dim mw As Object = Nothing
+            Me.GetCompoundList(complist, Nothing, Nothing, Nothing, mw, Nothing)
 
             Dim Vwe(UBound(Vz)) As Double
             Dim mol_x_mm As Double = 0.0#

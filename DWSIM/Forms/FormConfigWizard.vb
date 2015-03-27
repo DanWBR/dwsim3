@@ -358,6 +358,14 @@ Public Class FormConfigWizard
         End With
         FrmChild.Options.PropertyPackages.Add(pp.UniqueID, pp)
         Me.dgvpp.Rows.Add(New Object() {pp.UniqueID, pp.Tag, pp.ComponentName, "..."})
+        Me.dgvpp.Rows(Me.dgvpp.Rows.Count - 1).Selected = True
+        If TypeOf pp Is DWSIM.SimulationObjects.PropertyPackages.CAPEOPENPropertyPackage Then
+            pp.ReconfigureConfigForm()
+            pp.ConfigForm._pp = pp
+            pp.ConfigForm._comps = FrmChild.Options.SelectedComponents
+            pp.ConfigForm._form = FrmChild
+            pp.ShowConfigForm(FrmChild)
+        End If
     End Sub
 
     Private Sub ComboBox2_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ComboBox2.SelectedIndexChanged
