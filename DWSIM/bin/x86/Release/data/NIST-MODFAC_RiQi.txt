@@ -70,7 +70,7 @@ No.	Sub-group Name	Ri	Qi	Example
 196	AC2H2NH	1.325	0.752	Pyrrole	1 AC2H2NH, 2 ACH	
 197	AC2HNH	1.0976	0.44	2-Methylpyrrole	1 AC2HNH, 2 ACH, 1 CH3	
 198	AC2NH	0.8701	0.212	2,3-Dimethylpyrrole	1 AC2NH, 2 ACH, 2 CH3	
-(19) CCN							
+(19) Nitrile							
 40	CH3CN	1.5575	1.5193	Acetonitrile	1 CH3CN	
 41	CH2CN	1.5575	1.1666	Propionitrile	1 CH3, 1 CH2CN	
 303	CHCN	1.5575	1.1666	Isobutyronitrile	2 CH3, 1 CHCN	
@@ -91,12 +91,12 @@ No.	Sub-group Name	Ri	Qi	Example
 52	CCl4	2.618	3.1863	Tetrachloromethane	1 CCl4	
 (25) ACCl							
 53	ACCl	0.5365	0.3177	Chlorobenzene	5 ACH, 1 ACCl	
-(26) CNO2							
+(26) Nitro							
 54	CH3NO2	2.644	2.5	Nitromethane	1 CH3NO2	
 55	CH2NO2	2.5	2.304	1-Nitropropane	1 CH3, 1 CH2, 1 CH2NO2	
 56	CHNO2	2.887	2.241	2-Nitropropane	2 CH3, 1 CHNO2	
 305	CNO2	2.887	2.241	2-Methylnitropropane	3 CH3, 1 CNO2	
-(27) ACNO2							
+(27) Aromatic Nitro							
 57	ACNO2	0.4656	0.3589	Nitrobenzene	5 ACH, 1 ACNO2	
 (28) CS2							
 58	CS2	1.24	1.068	Carbondisulfide	1 CS2	
@@ -130,7 +130,7 @@ No.	Sub-group Name	Ri	Qi	Example
 69	Cl-[C=C]	0.5229	0.7391	Trichloroethylene	1 CH=C, 3 Cl(C=C)	
 (38) ACF							
 71	ACF	0.8814	0.7269	Hexafluorobenzene		6 ACF
-(39) DMF							
+(39) Formamide							
 72	DMF	2	2.093	N-N-Dimethylformamide	1 DMF	
 73	HCON(CH2)2	2.381	1.522	N-N-Diethylformamide	2 CH3, 1 HCON(CH2)2	
 (40) CF2							
@@ -166,14 +166,14 @@ No.	Sub-group Name	Ri	Qi	Example
 (49) HCONR							
 93	HCONHCH3	2.4617	2.192	N-Methylformamide	1 HCONHCH3	
 94	HCONHCH2	2.4617	1.842	N-Ethylformamide	1 CH3, 1 HCONHCH2	
-(50) ACCN							
+(50) Aromatic Nitrile							
 116	ACCN	1.2815	0.96	Benzonitrile	1 ACCN,  5 ACH	
-(51) NCO							
+(51) Isocyanate							
 117	CH3NCO	1.9578	1.58	Methylisocyanate	1 CH3NCO	
 118	CH2NCO	1.731	1.272	Ethylisocyanate	1 CH2NCO, 1 CH3	
 119	CHNCO	1.5036	0.96	Isopropylisocyanate	1 CHNCO, 2 CH3	
 120	ACNCO	1.4219	0.852	Phenylisocyanate	1 ACNCO, 5 ACH	
-(52) ACS							
+(52) Thiophene							
 104	AC2H2S	1.7943	1.34	Thiophene	2 ACH, 1 AC2H2S	
 105	AC2HS	1.6282	1.06	2-Methylthiophene	1 CH3, 2 ACH, 1 AC2HS	
 106	AC2S	1.4621	0.78	2,5-Dimethylthiophene	2 CH3, 2 ACH, 1 AC2S	
@@ -181,46 +181,46 @@ No.	Sub-group Name	Ri	Qi	Example
 107	H2COCH	1.3601	1.8031	1.2-Propyleneoxide	1 H2COCH, 1 CH3	
 109	HCOCH	0.9104	0.6538	2.3-Epoxybutane	1 HCOCH, 2 CH3	
 (54) Anhydride							
-121	COOCO	1.7732	1.52	acetic anhydride	1 COOCO, 2 CH3	
+121	COOCO	1.7732	1.52	Aceticanhydride	1 COOCO, 2 CH3	
 (55) Carbonate							
-112	(CH3O)2CO	3.0613	2.816	dimethyl carbonate	1 (CH3O)2CO	
-113	(CH2O)2CO	2.6078	2.2	diethyl carbonate	1 (CH2O)2CO, 2 CH3	
-114	(CH3O)COOCH2	2.8214	2.508	ethyl methyl carbonate	1 (CH3O) COOCH2, 1 CH3	
-199	(ACO)COOCH2	2.2854	1.78	ethyl phenyl carbonate	1 (ACO)COOCH2, 5 ACH, 1 CH3	
-200	(ACO)CO(OAC)	1.9895	1.36	diphenyl carbonate	1 (ACO)COOCH2, 10 ACH	
+112	(CH3O)2CO	3.0613	2.816	Dimethylcarbonate	1 (CH3O)2CO	
+113	(CH2O)2CO	2.6078	2.2	Diethylcarbonate	1 (CH2O)2CO, 2 CH3	
+114	(CH3O)COOCH2	2.8214	2.508	Ethylmethylcarbonate	1 (CH3O) COOCH2, 1 CH3	
+199	(ACO)COOCH2	2.2854	1.78	Ethylphenylcarbonate	1 (ACO)COOCH2, 5 ACH, 1 CH3	
+200	(ACO)CO(OAC)	1.9895	1.36	Diphenylcarbonate	1 (ACO)COOCH2, 10 ACH	
 (56) Sulfone							
-110	CH2SuCH2	2.687	2.12	sulfolane	1 CH2SuCH2, 2 cy-CH2	
-111	CH2SuCH 	2.46	1.808	2,4-dimethylsulfolane	1 CH2SuCH, 2 CH3, 1 cy-CH2, 1 cy-CH	
-122	ACSO2	1.7034	1.16	methyl phenyl sulfone	1 (AC) SO2, 5 ACH, 1 CH3	
-(57) ACCHO							
-123	ACCHO	1.3632	1.068	benzaldehyde	1 ACCHO,  5 ACH	
+110	CH2SuCH2	2.687	2.12	Sulfolane	1 CH2SuCH2, 2 cy-CH2	
+111	CH2SuCH 	2.46	1.808	2.4-Dimethylsulfolane	1 CH2SuCH, 2 CH3, 1 cy-CH2, 1 cy-CH	
+122	ACSO2	1.7034	1.16	Methylphenylsulfone	1 (AC) SO2, 5 ACH, 1 CH3	
+(57) Benzaldehyde							
+123	ACCHO	1.3632	1.068	Benzaldehyde	1 ACCHO,  5 ACH	
 (58) ACCOOH							
-124	ACCOOH	1.6664	1.344	benzoic acid	1 ACCOOH, 5 ACH	
+124	ACCOOH	1.6664	1.344	Benzoicacid	1 ACCOOH, 5 ACH	
 (59) AC-O-CO							
-127	AC-O-CO-CH3 	2.2815	1.848	phenyl acetate	1 ACOOCH3, 5 ACH	
-128	AC-O-CO-CH2	2.0547	1.54	phenyl propionate	1 ACCOOCH2, 5 ACH, 1 CH3	
-129	AC-O-CO-CH	1.8273	1.228	phenyl isobutyrate	1 ACCOOCH, 5 ACH, 2 CH3	
-130	AC-O-CO-C	1.5999	1	phenyl tert-pentanoate	1 ACCOOC, 5 ACH, 3 CH3	
+127	AC-O-CO-CH3 	2.2815	1.848	Phenylacetate	1 ACOOCH3, 5 ACH	
+128	AC-O-CO-CH2	2.0547	1.54	Phenylpropionate	1 ACCOOCH2, 5 ACH, 1 CH3	
+129	AC-O-CO-CH	1.8273	1.228	Phenylisobutyrate	1 ACCOOCH, 5 ACH, 2 CH3	
+130	AC-O-CO-C	1.5999	1	Phenyl-Tert-Pentanoate	1 ACCOOC, 5 ACH, 3 CH3	
 (60) OCCOH							
-131	-O-CH2-CH2-OH	2.1226	1.904	2-ethoxyethanol	1 -O-CH2-CH2-OH, 1 CH3, 1 CH2 	
-132	-O-CH-CH2-OH	1.8952	1.592	2-ethoxy-1-propanol	1 -O-CH-CH2-OH, 2 CH3, 1 CH2 	
-133	-O-CH2-CH-OH	1.8952	1.592	1-methoxy-2-propanol	1 -O-CH2-CH-OH, 2 CH3	
-(61) CH2S							
+131	-O-CH2-CH2-OH	2.1226	1.904	2-Ethoxyethanol	1 -O-CH2-CH2-OH, 1 CH3, 1 CH2 	
+132	-O-CH-CH2-OH	1.8952	1.592	2-Ethoxy-1-Propanol	1 -O-CH-CH2-OH, 2 CH3, 1 CH2 	
+133	-O-CH2-CH-OH	1.8952	1.592	1-Methoxy-2-Propanol	1 -O-CH2-CH-OH, 2 CH3	
+(61) Sulfide							
 134	CH3-S-	1.6131	1.368	dimethyl sulfide	1 CH3-S-, 1 CH3	
 135	-CH2-S-	1.3863 	1.06	diethyl sulfide	1 -CH2-S-, 1 CH2,  2 CH3	
 136	>CH-S-	1.1589	0.748	diisopropyl sulfide 	1 >CH-S-. 1 CH, 4 CH3	
 137	->C-S-	0.9314	0.52	methyl tert-butyl sulfide	1 ->C-S-, 4 CH3	
 187	ACS	1.0771	0.64	methyl phenyl sulfide	1 ACS, 5 ACH, 1 CH3	
 (62) Lactam							
-125	c-CO-NH	1.3039	1.036	propiolactam	1 c-CONH, 2 c-CH2	
+125	c-CO-NH	1.3039	1.036	Propiolactam	1 c-CONH, 2 c-CH2	
 (63) Lactone							
-126	c-CO-O	1.0152	0.88	propiolactone	1 c-CO-O, 2 c-CH2	
+126	c-CO-O	1.0152	0.88	Propiolactone	1 c-CO-O, 2 c-CH2	
 (64) Peroxide							
-138	CH3O-(O)	1.3889	1.328	dimethyl peroxide	1 CH3-O-(O), 1 CH3	
-139	CH2O-(O)	1.1622	1.02	diethyl peroxide	1 CH2O-(O), 2 CH3, 1 CH2	
-140	CHO-(O)	0.9347	0.708	diisopropyl peroxide	1 CHO-(O), 4 CH3, 1 CH	
-141	CO-(O)	1.0152	0.88	di-tert-butyl peroxide	1 CO-(O), 6 CH3, 1 C	
-142	ACO-(O)	0.853	0.6	acetyl benzoyl peroxide	1 ACO-(O), C=O, Ph	
+138	CH3O-(O)	1.3889	1.328	Dimethylperoxide	1 CH3-O-(O), 1 CH3	
+139	CH2O-(O)	1.1622	1.02	Diethylperoxide	1 CH2O-(O), 2 CH3, 1 CH2	
+140	CHO-(O)	0.9347	0.708	Diisopropylperoxide	1 CHO-(O), 4 CH3, 1 CH	
+141	CO-(O)	1.0152	0.88	Di-Tert-Butylperoxide	1 CO-(O), 6 CH3, 1 C	
+142	ACO-(O)	0.853	0.6	Acetylbenzoylperoxide	1 ACO-(O), C=O, Ph	
 (65) CFH						
 143	CFH	0.5966	0.44	fluoromethylene	1 CFH	
 (66) CFCl						
