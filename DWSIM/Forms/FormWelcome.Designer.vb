@@ -24,7 +24,6 @@ Partial Class FormWelcome
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormWelcome))
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.Button7 = New System.Windows.Forms.Button()
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.Label11 = New System.Windows.Forms.Label()
@@ -52,14 +51,6 @@ Partial Class FormWelcome
         Me.Label15 = New System.Windows.Forms.Label()
         Me.Button8 = New System.Windows.Forms.Button()
         Me.SuspendLayout()
-        '
-        'CheckBox1
-        '
-        resources.ApplyResources(Me.CheckBox1, "CheckBox1")
-        Me.CheckBox1.BackColor = System.Drawing.Color.Transparent
-        Me.CheckBox1.ForeColor = System.Drawing.Color.White
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.UseVisualStyleBackColor = False
         '
         'Button7
         '
@@ -281,7 +272,6 @@ Partial Class FormWelcome
         Me.Controls.Add(Me.Label13)
         Me.Controls.Add(Me.Label14)
         Me.Controls.Add(Me.Button6)
-        Me.Controls.Add(Me.CheckBox1)
         Me.Controls.Add(Me.Button7)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.Label11)
@@ -311,7 +301,6 @@ Partial Class FormWelcome
         Me.PerformLayout()
 
     End Sub
-    Public WithEvents CheckBox1 As System.Windows.Forms.CheckBox
     Public WithEvents Button7 As System.Windows.Forms.Button
     Public WithEvents Label10 As System.Windows.Forms.Label
     Public WithEvents Label9 As System.Windows.Forms.Label

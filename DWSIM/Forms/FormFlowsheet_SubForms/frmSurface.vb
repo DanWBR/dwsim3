@@ -2546,6 +2546,11 @@ Public Class frmSurface
                 Flowsheet.AddComponentsRows(myCOMS)
                 Flowsheet.Collections.ObjectCollection.Add(myCOMS.Nome, myCOMS)
                 Flowsheet.Collections.CLCS_MaterialStreamCollection.Add(myCOMS.Nome, myCOMS)
+
+                Flowsheet.WriteToLog(DWSIM.App.GetLocalTipString("MSTR001"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+                Flowsheet.WriteToLog(DWSIM.App.GetLocalTipString("MSTR002"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+                Flowsheet.WriteToLog(DWSIM.App.GetLocalTipString("MSTR003"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+
             Case TipoObjeto.EnergyStream
                 Dim myMStr As New EnergyStreamGraphic(mpx, mpy, 20, 20, 0)
                 myMStr.LineWidth = 2

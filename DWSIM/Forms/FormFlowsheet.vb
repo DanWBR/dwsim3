@@ -329,6 +329,10 @@ Imports DWSIM.DWSIM.Outros
 
         Me.ProcessScripts(Script.EventType.SimulationOpened, Script.ObjectType.Simulation)
 
+        WriteToLog(DWSIM.App.GetLocalTipString("FLSH003"), Color.Black, TipoAviso.Dica)
+        WriteToLog(DWSIM.App.GetLocalTipString("FLSH001"), Color.Black, TipoAviso.Dica)
+        WriteToLog(DWSIM.App.GetLocalTipString("FLSH002"), Color.Black, TipoAviso.Dica)
+
     End Sub
 
     Private Sub FormChild2_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
