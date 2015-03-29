@@ -116,7 +116,7 @@ Imports DWSIM.DWSIM.Outros
         scope = engine.CreateScope()
         scope.SetVariable("Plugins", FormMain.UtilityPlugins)
         scope.SetVariable("Flowsheet", fsheet)
-        Dim Solver As New DWSIM.Flowsheet.COMSolver
+        Dim Solver As New DWSIM.Flowsheet.FlowsheetSolver
         scope.SetVariable("Solver", Solver)
         For Each obj As SimulationObjects_BaseClass In fsheet.Collections.ObjectCollection.Values
             scope.SetVariable(obj.GraphicObject.Tag.Replace("-", "_"), obj)

@@ -34,18 +34,29 @@ Namespace DWSIM.Flowsheet
 
         Public Sub SolveFlowsheet(fs As FormFlowsheet)
 
+            'gets the service bus connection string 
+
             Dim connectionString As String = My.Settings.ServiceBusConnectionString
           
             Try
 
                 fs.WriteToLog(DWSIM.App.GetLocalString("AzureClientConnectingtoSB"), Color.Brown, FormClasses.TipoAviso.Informacao)
 
+                'creates the namespace manager instance
+
                 nm = NamespaceManager.CreateFromConnectionString(connectionString)
                 If Not nm.QueueExists(queueNameS) Then nm.CreateQueue(queueNameS)
                 If Not nm.QueueExists(queueNameC) Then nm.CreateQueue(queueNameC)
 
+                'gets the client and server queues.
+                'the client queue is where the client messages come from.
+                'the server queue is where the server messages go to.
+                'clients listen to messages in the server queue, while the server listens to messages in the client queue.
+
                 qcs = QueueClient.CreateFromConnectionString(connectionString, queueNameS)
                 qcc = QueueClient.CreateFromConnectionString(connectionString, queueNameC)
+
+                'process and delete any residual messages in the queues.
 
                 While (qcc.Peek() IsNot Nothing)
                     Dim brokeredMessage = qcc.Receive(New TimeSpan(0, 0, 0))
@@ -55,6 +66,8 @@ Namespace DWSIM.Flowsheet
                     Dim brokeredMessage = qcs.Receive(New TimeSpan(0, 0, 0))
                     If Not brokeredMessage Is Nothing Then brokeredMessage.Complete()
                 End While
+
+                'checks if there is a server listening in the client queue.
 
                 Dim message As BrokeredMessage
 
@@ -82,12 +95,16 @@ Namespace DWSIM.Flowsheet
                     Throw New TimeoutException(DWSIM.App.GetLocalString("SolverTimeout"))
                 End If
 
+                'send the flowsheet data to be calculated on the server.
             
                 Dim tmpfile As String = My.Computer.FileSystem.GetTempFileName
                 fs.WriteToLog(DWSIM.App.GetLocalString("ClientSavingTempFile"), Color.Brown, FormClasses.TipoAviso.Informacao)
                 FormMain.SaveXML(tmpfile, fs)
                 Dim uncompressedbytes As Byte() = IO.File.ReadAllBytes(tmpfile)
                 File.Delete(tmpfile)
+
+                'the byte array is compressed before sending to the client queue.
+                'due the message size limit of 256 KB, the flowsheet data is divided in pieces and each part is sent to the queue sequentially, if required.  
 
                 Using compressedstream As New MemoryStream()
                     Using gzs As New BufferedStream(New Compression.GZipStream(compressedstream, Compression.CompressionMode.Compress, True), 64 * 1024)
@@ -126,11 +143,15 @@ Namespace DWSIM.Flowsheet
                 Dim time As Integer = 0
                 Dim sleeptime As Integer = 1
 
+                'wait for the results from the server.
+
                 fs.WriteToLog(DWSIM.App.GetLocalString("ClientWaitingForResults"), Color.Brown, FormClasses.TipoAviso.Informacao)
 
                 Dim bytearr As New List(Of Byte())
 
                 While (True)
+
+                    'the user requested the calculation to be cancelled.
 
                     If My.MyApplication.CalculatorStopRequested = True Then
                         My.MyApplication.CalculatorStopRequested = False
@@ -143,9 +164,13 @@ Namespace DWSIM.Flowsheet
 
                     Application.DoEvents()
 
+                    'the server didn't sent an answer within the time limit.
+
                     Thread.Sleep(1000)
                     time += sleeptime
                     If time >= My.Settings.SolverTimeoutSeconds Then Throw New TimeoutException(DWSIM.App.GetLocalString("SolverTimeout"))
+
+                    'the server sent us something, let's check what it is.
 
                     message = qcs.Receive(New TimeSpan(0, 0, 0))
 
@@ -155,6 +180,8 @@ Namespace DWSIM.Flowsheet
 
                             If message.Properties("type") = "data" Then
 
+                                'the server sent us the results.
+
                                 Dim bytes As Byte() = message.GetBody(Of Byte())()
                                 message.Complete()
 
@@ -162,10 +189,14 @@ Namespace DWSIM.Flowsheet
 
                                 If message.Properties("multipart") = False Then
 
+                                    'all data came in a single message.
+
                                     i = 0
                                     n = 0
 
                                 Else
+
+                                    'the data came in multiple messages.
 
                                     i = message.Properties("partnumber")
                                     n = message.Properties("totalparts")
@@ -183,6 +214,8 @@ Namespace DWSIM.Flowsheet
                                 End If
 
                                 If i = n Then
+
+                                    'the data was reconstructed/read from server message(s) correctly, let's update the flowsheet data.
 
                                     Try
                                         Using ms As New MemoryStream(bytes)
@@ -208,10 +241,14 @@ Namespace DWSIM.Flowsheet
 
                             ElseIf message.Properties("type") = "text" Then
 
+                                'the server sent us a text to be displayed in the log window.
+
                                 message.Complete()
                                 fs.WriteToLog(DWSIM.App.GetLocalString("ClientMessageFromServer") & ": " & message.GetBody(Of String)(), Color.Brown, FormClasses.TipoAviso.Informacao)
 
                             ElseIf message.Properties("type") = "exception" Then
+
+                                'something went wrong on server side.
 
                                 message.Complete()
                                 Throw New ServerErrorException(message.GetBody(Of String)())

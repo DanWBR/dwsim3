@@ -149,7 +149,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Dim lscript As New Lua
                     lscript("Flowsheet") = FlowSheet
                     lscript("Spreadsheet") = FlowSheet.FormSpreadsheet
-                    Dim Solver As New DWSIM.Flowsheet.COMSolver
+                    Dim Solver As New DWSIM.Flowsheet.FlowsheetSolver
                     lscript("Solver") = Solver
                     lscript("Me") = Me
                     If Me.GraphicObject.InputConnectors(0).IsAttached Then lscript("ims1") = ims1
@@ -200,7 +200,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     If Me.GraphicObject.OutputConnectors(2).IsAttached Then scope.SetVariable("oms3", oms3)
                     If Me.GraphicObject.InputConnectors(3).IsAttached Then scope.SetVariable("ies1", ies1)
                     If Me.GraphicObject.OutputConnectors(3).IsAttached Then scope.SetVariable("oes1", oes1)
-                    Dim Solver As New DWSIM.Flowsheet.COMSolver
+                    Dim Solver As New DWSIM.Flowsheet.FlowsheetSolver
                     scope.SetVariable("Solver", Solver)
                     Dim txtcode As String = ""
                     If Not Includes Is Nothing Then

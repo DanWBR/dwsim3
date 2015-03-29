@@ -42,7 +42,7 @@ Namespace DWSIM.Flowsheet
         Public Shared Event MaterialStreamCalculationFinished As CustomEvent
 
         ''' <summary>
-        ''' Flowsheet calculation routine 1. Calculates the object sent by the queue and updates the flowsheet.
+        ''' Flowsheet calculation routine 1. Calculates the object using information sent by the queue and updates the flowsheet.
         ''' </summary>
         ''' <param name="form">Flowsheet to calculate (FormChild object).</param>
         ''' <param name="objArgs">A StatusChangeEventArgs object containing information about the object to be calculated and its current status.</param>
@@ -243,6 +243,13 @@ Namespace DWSIM.Flowsheet
 
         End Sub
 
+        ''' <summary>
+        ''' Calculates the flowsheet objects asynchronously. This function is always called from a task or a different thread other than UI's.
+        ''' </summary>
+        ''' <param name="form">Flowsheet to calculate (FormChild object).</param>
+        ''' <param name="objArgs">A StatusChangeEventArgs object containing information about the object to be calculated and its current status.</param>
+        ''' <param name="ct">The cancellation token, used to listen for calculation cancellation requests from the user.</param>
+        ''' <remarks></remarks>
         Public Shared Sub CalculateFlowsheetAsync(ByVal form As FormFlowsheet, ByVal objArgs As DWSIM.Outros.StatusChangeEventArgs, ct As Threading.CancellationToken)
 
             If ct.IsCancellationRequested = True Then ct.ThrowIfCancellationRequested()
@@ -1047,6 +1054,13 @@ Namespace DWSIM.Flowsheet
 
         End Sub
 
+        ''' <summary>
+        ''' Calculates a material stream object asynchronously. This function is always called from a task or a different thread other than UI's.
+        ''' </summary>
+        ''' <param name="form">Flowsheet to what the stream belongs to.</param>
+        ''' <param name="ms">Material Stream object to be calculated.</param>
+        ''' <param name="ct">The cancellation token, used to listen for calculation cancellation requests from the user.</param>
+        ''' <remarks></remarks>
         Public Shared Sub CalculateMaterialStreamAsync(ByVal form As FormFlowsheet, ByVal ms As DWSIM.SimulationObjects.Streams.MaterialStream, ct As Threading.CancellationToken)
 
             If ct.IsCancellationRequested = True Then ct.ThrowIfCancellationRequested()
@@ -1292,6 +1306,12 @@ Namespace DWSIM.Flowsheet
 
         End Sub
 
+        ''' <summary>
+        ''' Calls the cleaning routine for the object sent as an argument.
+        ''' </summary>
+        ''' <param name="form">Flowsheet to what the stream belongs to.</param>
+        ''' <param name="obj">Object to be decalculated.</param>
+        ''' <remarks></remarks>
         Public Shared Sub DeCalculateObject(ByVal form As FormFlowsheet, ByVal obj As GraphicObject)
 
             If obj.TipoObjeto = TipoObjeto.MaterialStream Then
@@ -1340,6 +1360,13 @@ Namespace DWSIM.Flowsheet
 
         End Sub
 
+        ''' <summary>
+        ''' Calls the cleaning routine for the object sent as an argument.
+        ''' </summary>
+        ''' <param name="form">Flowsheet to what the stream belongs to.</param>
+        ''' <param name="obj">Object to be decalculated.</param>
+        ''' <param name="side"></param>
+        ''' <remarks></remarks>
         Public Shared Sub DeCalculateDisconnectedObject(ByVal form As FormFlowsheet, ByVal obj As GraphicObject, ByVal side As String)
 
             If obj.TipoObjeto = TipoObjeto.MaterialStream Then
@@ -1434,7 +1461,6 @@ Namespace DWSIM.Flowsheet
         ''' </summary>
         ''' <param name="form">Flowsheet to be calculated (FormChild object)</param>
         ''' <remarks></remarks>
-
         Public Shared Sub ProcessCalculationQueue(ByVal form As FormFlowsheet, Optional ByVal Isolated As Boolean = False, Optional ByVal FlowsheetSolverMode As Boolean = False, Optional ByVal mode As Integer = 0, Optional orderedlist As Object = Nothing, Optional ByVal ct As Threading.CancellationToken = Nothing)
 
             If mode = 0 Then
@@ -1450,9 +1476,17 @@ Namespace DWSIM.Flowsheet
                 ProcessQueueInternalAsyncParallel(form, orderedlist, ct)
                 SolveSimultaneousAdjustsAsync(form, ct)
             End If
-           
+
         End Sub
 
+        ''' <summary>
+        ''' This is the internal routine called by ProcessCalculationQueue when the UI thread is used to calculate the flowsheet.
+        ''' </summary>
+        ''' <param name="form">Flowsheet to be calculated (FormChild object)</param>
+        ''' <param name="Isolated">Tells to the calculator that only the objects in the queue must be calculated without checking the outlet connections, that is, no more objects will be added to the queue</param>
+        ''' <param name="FlowsheetSolverMode">Only objects added by the flowsheet solving routine to the queue will be calculated.</param>
+        ''' <param name="ct">The cancellation token, used to listen for calculation cancellation requests from the user.</param>
+        ''' <remarks></remarks>
         Private Shared Sub ProcessQueueInternal(ByVal form As FormFlowsheet, Optional ByVal Isolated As Boolean = False, Optional ByVal FlowsheetSolverMode As Boolean = False, Optional ByVal ct As Threading.CancellationToken = Nothing)
 
             If ct.IsCancellationRequested = True Then ct.ThrowIfCancellationRequested()
@@ -1546,6 +1580,12 @@ Namespace DWSIM.Flowsheet
 
         End Sub
 
+        ''' <summary>
+        ''' This is the internal routine called by ProcessCalculationQueue when a background thread is used to calculate the flowsheet.
+        ''' </summary>
+        ''' <param name="form">Flowsheet to be calculated (FormChild object)</param>
+        ''' <param name="ct">The cancellation token, used to listen for calculation cancellation requests from the user.</param>
+        ''' <remarks></remarks>
         Private Shared Sub ProcessQueueInternalAsync(ByVal form As FormFlowsheet, ByVal ct As Threading.CancellationToken)
 
             If ct.IsCancellationRequested = True Then ct.ThrowIfCancellationRequested()
@@ -1577,6 +1617,12 @@ Namespace DWSIM.Flowsheet
 
         End Sub
 
+        ''' <summary>
+        ''' This is the internal routine called by ProcessCalculationQueue when background parallel threads are used to calculate the flowsheet.
+        ''' </summary>
+        ''' <param name="form">Flowsheet to be calculated (FormChild object)</param>
+        ''' <param name="ct">The cancellation token, used to listen for calculation cancellation requests from the user.</param>
+        ''' <remarks></remarks>
         Private Shared Sub ProcessQueueInternalAsyncParallel(ByVal form As FormFlowsheet, ByVal orderedlist As Dictionary(Of Integer, List(Of StatusChangeEventArgs)), ct As Threading.CancellationToken)
 
             If ct.IsCancellationRequested = True Then ct.ThrowIfCancellationRequested()
@@ -1653,6 +1699,13 @@ Namespace DWSIM.Flowsheet
 
         End Sub
 
+        ''' <summary>
+        ''' This routine updates the display status of a list of graphic objects in the flowsheet according to their calculated status.
+        ''' </summary>
+        ''' <param name="form">Flowsheet to be calculated (FormChild object).</param>
+        ''' <param name="ObjIDlist">List of object IDs to be updated.</param>
+        ''' <param name="calculating">Tell the routine that the objects in the list are being calculated at the moment.</param>
+        ''' <remarks></remarks>
         Shared Sub UpdateDisplayStatus(form As FormFlowsheet, Optional ByVal ObjIDlist() As String = Nothing, Optional ByVal calculating As Boolean = False)
             If form.Visible Then
                 form.FormSurface.Enabled = True
@@ -1682,6 +1735,13 @@ Namespace DWSIM.Flowsheet
             End If
         End Sub
 
+        ''' <summary>
+        ''' Retrieves the list of objects to be solved in the flowsheet.
+        ''' </summary>
+        ''' <param name="form">Flowsheet to be calculated (FormChild object)</param>
+        ''' <param name="frompgrid">Starts the search from the edited object if the propert was changed from the property grid.</param>
+        ''' <returns>A list of objects to be calculated in the flowsheet.</returns>
+        ''' <remarks></remarks>
         Private Shared Function GetSolvingList(form As FormFlowsheet, frompgrid As Boolean)
 
             Dim obj As SimulationObjects_BaseClass
@@ -1819,13 +1879,14 @@ Namespace DWSIM.Flowsheet
 
         End Function
 
-
         ''' <summary>
         ''' Calculate all objects in the Flowsheet using a ordering method.
         ''' </summary>
         ''' <param name="form">Flowsheet to be calculated (FormChild object)</param>
         ''' <remarks></remarks>
         Public Shared Sub CalculateAll2(ByVal form As FormFlowsheet, mode As Integer, Optional ByVal ts As CancellationTokenSource = Nothing, Optional frompgrid As Boolean = False)
+
+            'checks if the calculator is activated.
 
             If form.Options.CalculatorActivated Then
 
@@ -1855,11 +1916,21 @@ Namespace DWSIM.Flowsheet
                 Dim preLab As String = form.FormSurface.LabelCalculator.Text
                 Dim age As AggregateException = Nothing
 
+                'adds a message to the log window to indicate that the flowsheet started solving
+
                 form.WriteToLog(DWSIM.App.GetLocalString("FSstartedsolving"), Color.Blue, FormClasses.TipoAviso.Informacao)
+
+                'gets a list of objects to be solved in the flowsheet
+
+                Dim objl = GetSolvingList(form, frompgrid)
+
+                'declare a filteredlist dictionary. this will hold the sequence of grouped objects that can be calculated 
+                'this way if the user selects the background parallel threads solver option
 
                 Dim filteredlist2 As New Dictionary(Of Integer, List(Of StatusChangeEventArgs))
 
-                Dim objl = GetSolvingList(form, frompgrid)
+                'assign the list of objects, the filtered list (which contains no duplicate elements) and the object stack
+                'which contains the ordered list of objects to be calculated.
 
                 Dim lists As Dictionary(Of Integer, List(Of String)) = objl(1)
                 Dim filteredlist As Dictionary(Of Integer, List(Of String)) = objl(2)
@@ -1876,24 +1947,19 @@ Namespace DWSIM.Flowsheet
                     End If
                 Next
 
-                'set all objects' status to not calculated (red) and clear material streams in the list
+                'set all objects' status to 'not calculated' (red) in the list
 
                 For Each o In objstack
                     Dim fobj = form.Collections.ObjectCollection(o)
                     With fobj
                         .Calculated = False
                         If Not fobj.GraphicObject Is Nothing Then fobj.GraphicObject.Calculated = False
-                        'If fobj.GraphicObject.TipoObjeto = TipoObjeto.MaterialStream Then
-                        '    If fobj.GraphicObject.InputConnectors(0).IsAttached Then
-                        '        If fobj.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.TipoObjeto <> TipoObjeto.OT_Reciclo Then
-                        '            DirectCast(fobj, Streams.MaterialStream).Clear()
-                        '        End If
-                        '    End If
-                        'End If
                     End With
                 Next
 
                 Application.DoEvents()
+
+                'gets the GPU ready if option enabled
 
                 If My.Settings.EnableGPUProcessing Then
                     DWSIM.App.InitComputeDevice()
@@ -1905,7 +1971,6 @@ Namespace DWSIM.Flowsheet
                     Case 0, 1, 2
 
                         '0 = main thread, 1 = bg thread, 2 = bg parallel threads
-
 
                         'define variable to check for flowsheet convergence if there are recycle ops
 
@@ -1921,13 +1986,17 @@ Namespace DWSIM.Flowsheet
 
                         Dim objargs As DWSIM.Outros.StatusChangeEventArgs = Nothing
 
+                        'creates a task object which will be responsible for the calculation of all objects in the queue.
+
                         Dim t0 As task = Nothing
 
                         While Not converged
 
                             If t0 Is Nothing Then
 
-                                'if the task hasn't been created yet...
+                                'if the task hasn't been created yet, then do it...
+
+                                'add the objects to the calculation queue.
 
                                 For Each o As String In objstack
                                     obj = form.Collections.ObjectCollection(o)
@@ -1942,11 +2011,16 @@ Namespace DWSIM.Flowsheet
                                     End With
                                 Next
 
+                                'set the flowsheet instance for all objects, this is required for the async threads
+
                                 For Each o In form.Collections.ObjectCollection.Values
                                     o.SetFlowsheet(form)
                                 Next
 
                                 If mode = 0 Then
+
+                                    ' this task will run synchronously with the UI thread.
+
                                     Try
                                         t0 = New Task(Sub()
                                                           ProcessCalculationQueue(form, True, True, 0)
@@ -1962,8 +2036,14 @@ Namespace DWSIM.Flowsheet
                                         age = New AggregateException(ex.Message.ToString, ex)
                                         Exit While
                                     End Try
+
                                 ElseIf mode = 1 Or mode = 2 Then
+
+                                    'this task will run asynchronously. the filteredlist contains the list of grouped objects to be calculated by
+                                    'the parallel solver if selected by the user.
+
                                     filteredlist2.Clear()
+
                                     For Each li In filteredlist
                                         Dim objcalclist As New List(Of StatusChangeEventArgs)
                                         For Each o In li.Value
@@ -1972,6 +2052,9 @@ Namespace DWSIM.Flowsheet
                                         Next
                                         filteredlist2.Add(li.Key, objcalclist)
                                     Next
+
+                                    'starts the calculation task asynchronously.
+
                                     Try
                                         If form.Visible Then form.FormSurface.Enabled = False
                                         form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & DWSIM.App.GetLocalString("Fluxograma") & "...")
@@ -2004,29 +2087,52 @@ Namespace DWSIM.Flowsheet
 
                             Else
 
+                                'checks for the status of the task.
+
                                 If t0.IsCanceled Then
+
+                                    'user cancelled the operation.
+
                                     age = New AggregateException(DWSIM.App.GetLocalString("CalculationAborted"), New OperationCanceledException(DWSIM.App.GetLocalString("CalculationAborted")))
                                     Exit While
+
                                 ElseIf t0.IsFaulted And ts.IsCancellationRequested Then
+
+                                    'an error occurred during the calculation because of the cancellation request.
+
                                     age = New AggregateException(DWSIM.App.GetLocalString("CalculationAborted"), t0.Exception)
                                     Exit While
+
                                 ElseIf t0.IsFaulted Then
+
+                                    'an error occurred during the calculation.
+
                                     age = New AggregateException(DWSIM.App.GetLocalString("FSfinishedsolvingerror"), t0.Exception)
                                     Exit While
+
                                 ElseIf t0.Status = TaskStatus.RanToCompletion Then
+
+                                    'the calculation finished succesfully.
+
+                                    'checks for recycle convergence.
+
                                     converged = True
                                     For Each r As String In recycles
                                         obj = form.Collections.CLCS_RecycleCollection(r)
                                         converged = DirectCast(obj, SpecialOps.Recycle).Converged
                                         If Not converged Then Exit For
                                     Next
-                                    't0.Dispose()
                                     t0 = Nothing
+
+                                    'process the scripts associated with the recycle loop event.
+
                                     form.ProcessScripts(Script.EventType.SolverRecycleLoop, Script.ObjectType.Solver)
                                 End If
                             End If
 
                             CheckCalculatorStatus()
+
+                            'if the all recycles have converged (if any), then exit the loop.
 
                             If converged Then Exit While
 
@@ -2039,13 +2145,19 @@ Namespace DWSIM.Flowsheet
 
                         End While
 
+                        'clears the calculation queue.
+
                         form.CalculationQueue.Clear()
+
+                        'disposes the cancellation token source.
 
                         If form.Visible Then
                             ts.Dispose()
                         End If
 
                         My.MyApplication.TaskCancellationTokenSource = Nothing
+
+                        'clears the object lists.
 
                         objstack.Clear()
                         lists.Clear()
@@ -2054,6 +2166,7 @@ Namespace DWSIM.Flowsheet
                     Case 3
 
                         'Azure Service Bus
+
                         Dim azureclient As New Flowsheet.AzureSolverClient()
 
                         Try
@@ -2071,7 +2184,7 @@ Namespace DWSIM.Flowsheet
 
                     Case 4
 
-                        'Network Computer
+                        'TCP/IP Solver
 
                         Dim tcpclient As New Flowsheet.TCPSolverClient()
 
@@ -2089,17 +2202,26 @@ Namespace DWSIM.Flowsheet
 
                 End Select
 
+                'Frees GPU memory if enabled.
+
                 If My.Settings.EnableGPUProcessing Then
                     My.MyApplication.gpu.DisableMultithreading()
                     My.MyApplication.gpu.FreeAll()
                 End If
 
+                'updates the display status of all objects in the calculation list.
+
                 UpdateDisplayStatus(form, objstack.ToArray)
+
+                'checks if exceptions were thrown during the calculation and displays them in the log window.
 
                 If age Is Nothing Then
 
                     form.WriteToLog(DWSIM.App.GetLocalString("FSfinishedsolvingok"), Color.Blue, FormClasses.TipoAviso.Informacao)
                     form.WriteToLog(DWSIM.App.GetLocalString("Runtime") & ": " & (Date.Now - d1).ToString("g"), Color.MediumBlue, DWSIM.FormClasses.TipoAviso.Informacao)
+
+                    'adds the current solution to the valid solution list.
+                    'the XML data is converted to a compressed byte array before being added to the collection.
 
                     Dim stask As Task = Task.Factory.StartNew(Sub()
                                                                   Dim retbytes As MemoryStream = DWSIM.SimulationObjects.UnitOps.Flowsheet.ReturnProcessData(form)
@@ -2133,6 +2255,8 @@ Namespace DWSIM.Flowsheet
                     If Not form.Visible Then Throw age Else age = Nothing
 
                 End If
+
+                'updates the flowsheet display information if the form is visible.
 
                 If form.Visible Then
 
@@ -2199,7 +2323,6 @@ Namespace DWSIM.Flowsheet
         ''' <param name="form">Flowsheet where the object belongs to.</param>
         ''' <param name="ObjID">Unique Id of the object ("Name" or "GraphicObject.Name" properties). This is not the object's Flowsheet display name ("Tag" property or its GraphicObject object).</param>
         ''' <remarks></remarks>
-
         Public Shared Sub CalculateObject(ByVal form As FormFlowsheet, ByVal ObjID As String)
 
             If form.Collections.ObjectCollection.ContainsKey(ObjID) Then
@@ -2213,7 +2336,7 @@ Namespace DWSIM.Flowsheet
                     .Tipo = baseobj.GraphicObject.TipoObjeto
                     .Tag = baseobj.GraphicObject.Tag
                 End With
-              
+
                 form.CalculationQueue.Enqueue(objargs)
 
                 CalculateAll2(form, My.Settings.SolverMode, , True)
@@ -2222,6 +2345,12 @@ Namespace DWSIM.Flowsheet
 
         End Sub
 
+        ''' <summary>
+        ''' Calculates a single object in the Flowsheet.
+        ''' </summary>
+        ''' <param name="form">Flowsheet where the object belongs to.</param>
+        ''' <param name="ObjID">Unique Id of the object ("Name" or "GraphicObject.Name" properties). This is not the object's Flowsheet display name ("Tag" property or its GraphicObject object).</param>
+        ''' <remarks></remarks>
         Public Shared Sub CalculateObjectSync(ByVal form As FormFlowsheet, ByVal ObjID As String)
 
             If form.Collections.ObjectCollection.ContainsKey(ObjID) Then
@@ -2279,6 +2408,13 @@ Namespace DWSIM.Flowsheet
 
         End Sub
 
+        ''' <summary>
+        ''' Calculates a single object in the Flowsheet.
+        ''' </summary>
+        ''' <param name="form">Flowsheet where the object belongs to.</param>
+        ''' <param name="ObjID">Unique Id of the object ("Name" or "GraphicObject.Name" properties). This is not the object's Flowsheet display name ("Tag" property or its GraphicObject object).</param>
+        ''' <param name="ct">The cancellation token, used to listen for calculation cancellation requests from the user.</param>
+        ''' <remarks></remarks>
         Public Shared Sub CalculateObjectAsync(ByVal form As FormFlowsheet, ByVal ObjID As String, ByVal ct As CancellationToken)
 
             If form.Collections.ObjectCollection.ContainsKey(ObjID) Then
@@ -2322,7 +2458,11 @@ Namespace DWSIM.Flowsheet
 
         End Sub
 
-        'Simultaneous Adjust Solver
+        ''' <summary>
+        ''' Simultaneous adjust solver routine.
+        ''' </summary>
+        ''' <param name="form">Flowsheet where the object belongs to.</param>
+        ''' <remarks>Solves all marked Adjust objects in the flowsheet simultaneously using Netwon's method.</remarks>
         Private Shared Sub SolveSimultaneousAdjusts(ByVal form As FormFlowsheet)
 
             If form.m_simultadjustsolverenabled Then
@@ -2406,6 +2546,12 @@ Namespace DWSIM.Flowsheet
 
         End Sub
 
+        ''' <summary>
+        ''' Async simultaneous adjust solver routine.
+        ''' </summary>
+        ''' <param name="form">Flowsheet where the object belongs to.</param>
+        ''' <param name="ct">The cancellation token, used to listen for calculation cancellation requests from the user.</param>
+        ''' <remarks>Solves all marked Adjust objects in the flowsheet simultaneously using Netwon's method.</remarks>
         Private Shared Sub SolveSimultaneousAdjustsAsync(ByVal form As FormFlowsheet, ct As CancellationToken)
 
             If form.m_simultadjustsolverenabled Then
@@ -2486,6 +2632,13 @@ Namespace DWSIM.Flowsheet
 
         End Sub
 
+        ''' <summary>
+        ''' Function called by the simultaneous adjust solver. Retrieves the error function value for each adjust object.
+        ''' </summary>
+        ''' <param name="form">Flowsheet where the object belongs to.</param>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
         Private Shared Function FunctionValueSync(ByVal form As FormFlowsheet, ByVal x() As Double) As Double()
 
             Dim i As Integer = 0
@@ -2519,6 +2672,13 @@ Namespace DWSIM.Flowsheet
 
         End Function
 
+        ''' <summary>
+        ''' Gradient function called by the simultaneous adjust solver. Retrieves the gradient of the error function value for each adjust object.
+        ''' </summary>
+        ''' <param name="form">Flowsheet where the object belongs to.</param>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
         Private Shared Function FunctionGradientSync(ByVal form As FormFlowsheet, ByVal x() As Double) As Double(,)
 
             Dim epsilon As Double = 0.01
@@ -2553,6 +2713,14 @@ Namespace DWSIM.Flowsheet
 
         End Function
 
+        ''' <summary>
+        ''' Function called asynchronously by the simultaneous adjust solver. Retrieves the error function value for each adjust object.
+        ''' </summary>
+        ''' <param name="form">Flowsheet where the object belongs to.</param>
+        ''' <param name="x"></param>
+        ''' <param name="ct">The cancellation token, used to listen for calculation cancellation requests from the user.</param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
         Private Shared Function FunctionValueAsync(ByVal form As FormFlowsheet, ByVal x() As Double, ct As CancellationToken) As Double()
 
             Dim i As Integer = 0
@@ -2586,6 +2754,14 @@ Namespace DWSIM.Flowsheet
 
         End Function
 
+        ''' <summary>
+        ''' Gradient function called asynchronously by the simultaneous adjust solver. Retrieves the gradient of the error function value for each adjust object.
+        ''' </summary>
+        ''' <param name="form">Flowsheet where the object belongs to.</param>
+        ''' <param name="x"></param>
+        ''' <param name="ct">The cancellation token, used to listen for calculation cancellation requests from the user.</param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
         Private Shared Function FunctionGradientAsync(ByVal form As FormFlowsheet, ByVal x() As Double, ct As CancellationToken) As Double(,)
 
             Dim epsilon As Double = 0.01
@@ -2620,6 +2796,13 @@ Namespace DWSIM.Flowsheet
 
         End Function
 
+        ''' <summary>
+        ''' Gets the controlled variable value for the selected adjust op.
+        ''' </summary>
+        ''' <param name="form"></param>
+        ''' <param name="adj"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
         Private Shared Function GetCtlVarValue(ByVal form As FormFlowsheet, ByVal adj As SimulationObjects.SpecialOps.Adjust)
 
             With adj.ControlledObjectData
@@ -2628,6 +2811,13 @@ Namespace DWSIM.Flowsheet
 
         End Function
 
+        ''' <summary>
+        ''' Gets the manipulated variable value for the selected adjust op.
+        ''' </summary>
+        ''' <param name="form"></param>
+        ''' <param name="adj"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
         Private Shared Function GetMnpVarValue(ByVal form As FormFlowsheet, ByVal adj As SimulationObjects.SpecialOps.Adjust)
 
             With adj.ManipulatedObjectData()
@@ -2636,6 +2826,13 @@ Namespace DWSIM.Flowsheet
 
         End Function
 
+        ''' <summary>
+        ''' Sets the manipulated variable value for the selected adjust op.
+        ''' </summary>
+        ''' <param name="form"></param>
+        ''' <param name="adj"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
         Private Shared Function SetMnpVarValue(ByVal val As Nullable(Of Double), ByVal form As FormFlowsheet, ByVal adj As SimulationObjects.SpecialOps.Adjust)
 
             With adj.ManipulatedObjectData()
@@ -2646,6 +2843,13 @@ Namespace DWSIM.Flowsheet
 
         End Function
 
+        ''' <summary>
+        ''' Gets the referenced variable value for the selected adjust op.
+        ''' </summary>
+        ''' <param name="form"></param>
+        ''' <param name="adj"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
         Private Shared Function GetRefVarValue(ByVal form As FormFlowsheet, ByVal adj As SimulationObjects.SpecialOps.Adjust)
 
             With adj.ManipulatedObjectData
@@ -2655,42 +2859,6 @@ Namespace DWSIM.Flowsheet
             End With
 
         End Function
-
-    End Class
-
-    <System.Serializable()> Public Class COMSolver
-
-        Public Sub CalculateFlowsheet(ByVal form As FormFlowsheet, ByVal objArgs As DWSIM.Outros.StatusChangeEventArgs, ByVal sender As Object)
-            FlowsheetSolver.CalculateFlowsheet(form, objArgs, sender)
-        End Sub
-
-        Public Sub CalculateMaterialStream(ByVal form As FormFlowsheet, ByVal ms As DWSIM.SimulationObjects.Streams.MaterialStream, Optional ByVal DoNotCalcFlash As Boolean = False)
-            FlowsheetSolver.CalculateMaterialStream(form, ms, DoNotCalcFlash)
-        End Sub
-
-        Public Sub DeCalculateObject(ByVal form As FormFlowsheet, ByVal obj As GraphicObject)
-            FlowsheetSolver.DeCalculateObject(form, obj)
-        End Sub
-
-        Public Sub DeCalculateDisconnectedObject(ByVal form As FormFlowsheet, ByVal obj As GraphicObject, ByVal side As String)
-            FlowsheetSolver.DeCalculateDisconnectedObject(form, obj, side)
-        End Sub
-
-        Public Sub ProcessCalculationQueue(ByVal form As FormFlowsheet)
-            FlowsheetSolver.ProcessCalculationQueue(form)
-        End Sub
-
-        Public Sub CheckCalculatorStatus()
-            FlowsheetSolver.CheckCalculatorStatus()
-        End Sub
-
-        Public Sub CalculateAll(ByVal form As FormFlowsheet)
-            FlowsheetSolver.CalculateAll(form)
-        End Sub
-
-        Public Sub CalculateObject(ByVal form As FormFlowsheet, ByVal ObjID As String)
-            FlowsheetSolver.CalculateObject(form, ObjID)
-        End Sub
 
     End Class
 

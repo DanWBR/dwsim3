@@ -2403,7 +2403,7 @@ End Class
                 scope.SetVariable("Flowsheet", FlowSheet)
                 scope.SetVariable("Spreadsheet", FlowSheet.FormSpreadsheet)
                 scope.SetVariable("Me", Me)
-                Dim Solver As New DWSIM.Flowsheet.COMSolver
+                Dim Solver As New DWSIM.Flowsheet.FlowsheetSolver
                 scope.SetVariable("Solver", Solver)
                 Dim txtcode As String = ""
                 If Not ScriptExt_Includes Is Nothing Then
@@ -2452,7 +2452,7 @@ End Class
                 scope.SetVariable("Flowsheet", FlowSheet)
                 scope.SetVariable("Spreadsheet", FlowSheet.FormSpreadsheet)
                 scope.SetVariable("Me", Me)
-                Dim Solver As New DWSIM.Flowsheet.COMSolver
+                Dim Solver As New DWSIM.Flowsheet.FlowsheetSolver
                 scope.SetVariable("Solver", Solver)
                 Dim txtcode As String = ""
                 If Not ScriptExt_Includes Is Nothing Then
