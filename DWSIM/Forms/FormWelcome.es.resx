@@ -132,7 +132,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAACU
-        JQAAAk1TRnQBSQFMAgEBBAEAARABAAEQAQABHAEAARwBAAT/AREBAAj/AUIBTQE2BwABNgMAASgDAAFw
+        JQAAAk1TRnQBSQFMAgEBBAEAAQgBAAEIAQABHAEAARwBAAT/AREBAAj/AUIBTQE2BwABNgMAASgDAAFw
         AwABOAMAAQEBAAEQBgABMf8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A
         /wD/ALIAAVwBWwE7AU8BOwFPATsBTwE7AU8BOwFPATsBTwE7AU8BOwFPATsBTwE7AU8BOwFPATsBTwE7
         AU8BOwFPATsBTwE7AU8BOwFPATsBTwE7AVMQAAFcAVsBOwFPATsBTwE7AU8BOwFPATsBTwE7AU8BOwFP
@@ -295,17 +295,11 @@
         AgAB/wIAAQ8B8AIAAf8CAAEPAgAO/wIACw==
 </value>
   </data>
-  <data name="Label11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>95, 166</value>
-  </data>
   <data name="Label11.Size" type="System.Drawing.Size, System.Drawing">
     <value>282, 13</value>
   </data>
   <data name="Label11.Text" xml:space="preserve">
     <value>Abre una nueva ventana del creador de los componentes.</value>
-  </data>
-  <data name="Label12.Location" type="System.Drawing.Point, System.Drawing">
-    <value>95, 145</value>
   </data>
   <data name="Label12.Size" type="System.Drawing.Size, System.Drawing">
     <value>190, 17</value>
@@ -328,17 +322,11 @@
   <data name="Button4.Location" type="System.Drawing.Point, System.Drawing">
     <value>413, 144</value>
   </data>
-  <data name="Label6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>95, 214</value>
-  </data>
   <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>257, 13</value>
   </data>
   <data name="Label6.Text" xml:space="preserve">
     <value>Abre la utilidad de regresión de datos experimentales.</value>
-  </data>
-  <data name="Label7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>95, 193</value>
   </data>
   <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
     <value>246, 17</value>

@@ -132,7 +132,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAACU
-        JQAAAk1TRnQBSQFMAgEBBAEAARgBAAEYAQABHAEAARwBAAT/AREBAAj/AUIBTQE2BwABNgMAASgDAAFw
+        JQAAAk1TRnQBSQFMAgEBBAEAARABAAEQAQABHAEAARwBAAT/AREBAAj/AUIBTQE2BwABNgMAASgDAAFw
         AwABOAMAAQEBAAEQBgABMf8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A
         /wD/ALIAAVwBWwE7AU8BOwFPATsBTwE7AU8BOwFPATsBTwE7AU8BOwFPATsBTwE7AU8BOwFPATsBTwE7
         AU8BOwFPATsBTwE7AU8BOwFPATsBTwE7AVMQAAFcAVsBOwFPATsBTwE7AU8BOwFPATsBTwE7AU8BOwFP
@@ -295,17 +295,11 @@
         AgAB/wIAAQ8B8AIAAf8CAAEPAgAO/wIACw==
 </value>
   </data>
-  <data name="Label11.Location" type="System.Drawing.Point, System.Drawing">
-    <value>95, 169</value>
-  </data>
   <data name="Label11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>215, 13</value>
+    <value>224, 13</value>
   </data>
   <data name="Label11.Text" xml:space="preserve">
-    <value>Definition eigener Komponenten (Reinstoffe)</value>
-  </data>
-  <data name="Label12.Location" type="System.Drawing.Point, System.Drawing">
-    <value>95, 148</value>
+    <value>Verwaltung eigener Komponenten (Reinstoffe)</value>
   </data>
   <data name="Label12.Size" type="System.Drawing.Size, System.Drawing">
     <value>162, 17</value>
@@ -325,17 +319,11 @@
   <data name="Label8.Text" xml:space="preserve">
     <value>Beispiele</value>
   </data>
-  <data name="Label6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>95, 214</value>
-  </data>
   <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>236, 13</value>
   </data>
   <data name="Label6.Text" xml:space="preserve">
     <value>Regression von Gleichgewichtsdaten (VLE/LLE)</value>
-  </data>
-  <data name="Label7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>95, 193</value>
   </data>
   <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
     <value>169, 17</value>

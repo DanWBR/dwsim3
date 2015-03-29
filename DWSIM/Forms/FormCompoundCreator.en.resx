@@ -173,12 +173,14 @@
   <data name="Column4.HeaderText" xml:space="preserve">
     <value>Amount</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="GridUNIFAC.RowHeadersWidth" type="System.Int32, mscorlib">
-    <value>60</value>
+  <data name="Column1.HeaderText" xml:space="preserve">
+    <value>Example</value>
   </data>
   <data name="DataGridViewTextBoxColumn13.HeaderText" xml:space="preserve">
     <value>Amount</value>
+  </data>
+  <data name="DataGridViewImageColumn1.HeaderText" xml:space="preserve">
+    <value>Example</value>
   </data>
   <data name="Label85.Size" type="System.Drawing.Size, System.Drawing">
     <value>398, 13</value>
@@ -225,6 +227,7 @@
   <data name="Column2.HeaderText" xml:space="preserve">
     <value>Type</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Column2.Width" type="System.Int32, mscorlib">
     <value>37</value>
   </data>

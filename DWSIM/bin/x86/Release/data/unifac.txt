@@ -77,22 +77,22 @@
 40,75,CF2,CF2,1.0105,0.92,Perfluorohexane: 2*CF3 4*CF2,Perfluorohexane,1:4/2:16//,
 40,76,CF2,CF,0.615,0.46,Perfluoromethylcyclohexane: 1*CF3 5*CF2 1*CF,Perfluoromethylcyclohexane,1:4/1:16//,
 41,77,COO,COO,1.38,1.2,Methylacrylate: 1*CH3 1*CH2=CH 1*COO,Methylacrylate,1:28///,
-42,78,SiH2,SiH3,1.6035,1.263,Methylsilane: 1*CH3 1*SiH3,Methylsilane,///,Si:1/H:3
-42,79,SiH2,SiH2,1.4443,1.006,Diethylsilane: 2*CH3 2*CH2 1*SiH2,Diethylsilane,///,Si:1/H:2
-42,80,SiH2,SiH,1.2853,0.749,Heptamethyltrisiloxane:  7*CH3 2*SiO 1*SiH,Heptamethyltrisiloxane,///,Si:1/H:1
-42,81,SiH2,Si,1.047,0.41,Hexamethyldisiloxane:  6*CH3 1*SiO 1*Si,Hexamethyldisiloxane,///,Si:1
+42,78,SiH2,SiH3,1.6035,1.263,Methylsilane: 1*CH3 1*SiH3,SiH3 Methylsilane,///,Si:1/H:3
+42,79,SiH2,SiH2,1.4443,1.006,Diethylsilane: 2*CH3 2*CH2 1*SiH2,SiH2 Diethylsilane,///,Si:1/H:2
+42,80,SiH2,SiH,1.2853,0.749,Heptamethyltrisiloxane:  7*CH3 2*SiO 1*SiH,SIH Heptamethyltrisiloxane,///,Si:1/H:1
+42,81,SiH2,Si,1.047,0.41,Hexamethyldisiloxane:  6*CH3 1*SiO 1*Si,Si Hexamethyldisiloxane,///,Si:1
 43,82,SiO,SiH2O,1.4838,1.062,1-3-Dimethyldisiloxane: 3*CH3 1*SiH2O 1*SiH2,SiH2O 1.3-Dimethyildisiloxane,///,Si:1/H:2/O:1
 43,83,SiO,SiHO,1.303,0.764,1-1-3-3-Tetramethyldisiloxane: 4*CH3 1*SiHO 1*SiH,SiHO 1.1.3.3-Tetramethyldisiloxane,///,Si:1/H:1/O:1
 43,84,SiO,SiO,1.1044,0.466,Octamethylcyclotetrasiloxane:  8*CH3 4*SiO,SiO Octamethylcyclotetrasiloxane,///,Si:1/O:1
 44,85,NMP,NMP,3.981,3.2,N-Methylpyrrolidone: 1*NMP,n-Methylpyrrolidone,///,
 45,86,CClF,CCl3F,3.0356,2.644,Trichlorofluoromethane: 1*CCl3F,CCl3F Trichlorofluoromethane,1:4/3:17/1:16/,
-45,87,CClF,CCl2F,2.2287,1.916,Tetrachloro-1.2-difluoroethane: 2*CCl2F,Tetrachloro-1.2-Difluoroethan,1:4/2:17/1:16/,
+45,87,CClF,CCl2F,2.2287,1.916,Tetrachloro-1.2-difluoroethane: 2*CCl2F,CCl2F 1.1.2.2-Tetrachloro-1.2-difluoroethan,1:4/2:17/1:16/,
 45,88,CClF,HCCl2F,2.406,2.116,Dichlorofluoromethane: 1*HCCl2F,HCCl2F Dichlorofluoromethane,1:3/2:17/1:16/,
 45,89,CClF,HCClF,1.6493,1.416,1-Chloro-1-2-2-2-Tetrafluoroethane: 1*CF3 1*HCClF,HCClF 1-Chloro-1.2.2.2-Tetrafluoroethane,1:3/1:17/1:16/,
 45,90,CClF,CClF2,1.8174,1.648,1-2-Dichlorotetrafluoroethane: 2*CClF2,CClF2 1.2-Dichlorotetrafluoroethane,1:4/1:17/2:16/,
-45,91,CClF,HCClF2,1.967,1.828,Chlorodifluoromethane: 1*HCClF2,Difluorochloromethane,1:3/1:17/2:16/,
-45,92,CClF,CClF3,2.1721,2.1,Chlorotrifluoromethane: 1*CClF3,Chlorotrifluoromethane,1:4/1:17/3:16/,
-45,93,CClF,CCl2F2,2.6243,2.376,Dichlorodifluoromethane: 1*CCl2F2,Dichlorodifluoromethane,1:4/2:17/2:16/,
+45,91,CClF,HCClF2,1.967,1.828,Chlorodifluoromethane: 1*HCClF2,HCClF2 Difluorochloromethane,1:3/1:17/2:16/,
+45,92,CClF,CClF3,2.1721,2.1,Chlorotrifluoromethane: 1*CClF3,CClF3 Chlorotrifluoromethane,1:4/1:17/3:16/,
+45,93,CClF,CCl2F2,2.6243,2.376,Dichlorodifluoromethane: 1*CCl2F2,CCl2F2 Dichlorodifluoromethane,1:4/2:17/2:16/,
 46,94,CON,CONH2,1.4515,1.248,Acetamide: 1*CH3 1*CONH2,Acetamide,1:24/1:30//,
 46,95,CON,CONHCH3,2.1905,1.796,N-Methylacetamide: 1*CH3 1*CONHCH3,n-Methylacetamide,1:24/1:31/1:1/,
 46,96,CON,CONHCH2,1.9637,1.488,N-Ethylacetamide: 2*CH3 1*CONHCH2,n-Ethylacetamide,1:24/1:31/1:2/,
@@ -101,9 +101,9 @@
 46,99,CON,CON(CH2)2,2.4054,1.812,n.n-diethylacetamid: 3*CH3 1*CON(CH2)2,N.N-Diethylacetamid,1:24/1:33/2:2/,
 47,100,OCCOH,C2H5O2,2.1226,1.904,2-ethoxyethanol: 1*CH3 1*CH2 1*C2H5O2,C2H5O2 2-Ethoxyethanol,2:2/1:20/1:22/,
 47,101,OCCOH,C2H4O2,1.8952,1.592,2-ethoxy-1-propanol: 2*CH3 1*CH2 1*C2H4O2,C2H4O2 2-Ethoxy-1-Propanol,1:2/1:20/1:22/1:3,
-48,102,CH2S,CH3S,1.613,1.368,dimethylsulphide: 1*CH3 1*CH3S,Dimethylsulfide,1:1/1:40//,
-48,103,CH2S,CH2S,1.3863,1.06,diethylsulphide: 2*CH3 1*CH2 1*CH2S,Diethylsulfide,1:2/1:40//,
-48,104,CH2S,CHS,1.1589,0.748,diisopropylsulphide: 4*CH3 1*CH 1*CHS,Diisopropylsulfide,1:3/1:40//,
+48,102,CH2S,CH3S,1.613,1.368,dimethylsulphide: 1*CH3 1*CH3S,CH3S Dimethylsulfide,1:1/1:40//,
+48,103,CH2S,CH2S,1.3863,1.06,diethylsulphide: 2*CH3 1*CH2 1*CH2S,CH2S Diethylsulfide,1:2/1:40//,
+48,104,CH2S,CHS,1.1589,0.748,diisopropylsulphide: 4*CH3 1*CH 1*CHS,CHS Diisopropylsulfide,1:3/1:40//,
 49,105,Morpholine,morpholine,3.474,2.796,morpholine: 1*MORPH,MORPH Morpholine,1:23/1:32/4:11/,
 50,106,Thiophene,C4H4S,2.8569,2.14,thiophene: 1*C4H4S,C4H4S Thiophene,1:41/4:14//,
 50,107,Thiophene,C4H3S,2.6908,1.86,2-methylthiophene: 1*CH3 1*C4H3S,C4H3S 2-Methylthiophene,1:41/3:14/1:15/,

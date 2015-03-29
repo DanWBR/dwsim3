@@ -56,8 +56,8 @@ No.	Sub-group Name	Ri	Qi	Example
 32	CH2NH	1.368	1.0805	Diethylamine	2 CH3, 1 CH2, 1 CH2NH	
 33	CHNH	1.368	0.7278	Diisopropylamine	4 CH3, 1 CH, 1 CHNH	
 (16) (C)3N						
-34	CH3N	1.0746	1.176	Trimethylamine	2 CH3, 1 CH3N	
-35	CH2N	1.0746	0.824	Triethylamine	3 CH3, 2 CH2, 1 CH2N	
+34	CH3N	1.0746	1.176	trimethylamine	2 CH3, 1 CH3N	
+35	CH2N	1.0746	0.824	triethylamine	3 CH3, 2 CH2, 1 CH2N	
 (17) ACNH2							
 36	ACNH2	1.1849	0.8067	Aniline	5 ACH, 1 ACNH2	
 306	ACNH	1.1849	0.732	n-Methylaniline	5 ACH, 1 ACNH, 1 CH3	
@@ -206,11 +206,11 @@ No.	Sub-group Name	Ri	Qi	Example
 132	-O-CH-CH2-OH	1.8952	1.592	2-Ethoxy-1-Propanol	1 -O-CH-CH2-OH, 2 CH3, 1 CH2 	
 133	-O-CH2-CH-OH	1.8952	1.592	1-Methoxy-2-Propanol	1 -O-CH2-CH-OH, 2 CH3	
 (61) Sulfide							
-134	CH3-S-	1.6131	1.368	Dimethylsulfide	1 CH3-S-, 1 CH3	
-135	-CH2-S-	1.3863 	1.06	Diethylsulfide	1 -CH2-S-, 1 CH2,  2 CH3	
-136	>CH-S-	1.1589	0.748	Diisopropylsulfide 	1 >CH-S-. 1 CH, 4 CH3	
-137	->C-S-	0.9314	0.52	Methyl tert-Butylsulfide	1 ->C-S-, 4 CH3	
-187	ACS	1.0771	0.64	Methyl Phenylsulfide	1 ACS, 5 ACH, 1 CH3	
+134	CH3-S-	1.6131	1.368	dimethyl sulfide	1 CH3-S-, 1 CH3	
+135	-CH2-S-	1.3863 	1.06	diethyl sulfide	1 -CH2-S-, 1 CH2,  2 CH3	
+136	>CH-S-	1.1589	0.748	diisopropyl sulfide 	1 >CH-S-. 1 CH, 4 CH3	
+137	->C-S-	0.9314	0.52	methyl tert-butyl sulfide	1 ->C-S-, 4 CH3	
+187	ACS	1.0771	0.64	methyl phenyl sulfide	1 ACS, 5 ACH, 1 CH3	
 (62) Lactam							
 125	c-CO-NH	1.3039	1.036	Propiolactam	1 c-CONH, 2 c-CH2	
 (63) Lactone							
@@ -222,55 +222,54 @@ No.	Sub-group Name	Ri	Qi	Example
 141	CO-(O)	1.0152	0.88	Di-Tert-Butylperoxide	1 CO-(O), 6 CH3, 1 C	
 142	ACO-(O)	0.853	0.6	Acetylbenzoylperoxide	1 ACO-(O), C=O, Ph	
 (65) CFH						
-143	CFH	0.5966	0.44	Fluoromethylene	1 CFH	
+143	CFH	0.5966	0.44	fluoromethylene	1 CFH	
 (66) CFCl						
-144	CFCl	1.4034	1.168	Chlorofluoromethylene	1 CFCl	
+144	CFCl	1.4034	1.168	chlorofluoromethylene	1 CFCl	
 (67) CFCl2						
-145	CFCl2	2.2103	1.896	Tetrachloro-1.2-Difluoroethan	2 CFCl2	
+145	CFCl2	2.2103	1.896	tetrachloro-1,2-difluoroethane	2 CFCl2	
 (68) CF2H						
-146	CF2H	0.9736	0.88	Difluoromethyl	1 CF2H	
+146	CF2H	0.9736	0.88	difluoromethyl	1 CF2H	
 (69) CF2ClH						
-147	CF2ClH	1.7396	1.6	Difluorochloromethane	1 CF2ClH	
+147	CF2ClH	1.7396	1.6	chlorodifluoromethane	1 CF2ClH	
 (70) CF2Cl2						
-148	CF2Cl2	2.5873	2.336	Dichlorodifluoromethane	1 CF2Cl2	
+148	CF2Cl2	2.5873	2.336	dichlorodifluoromethane	1 CF2Cl2	
 (71) CF3H						
-149	CF3H	1.3507	1.32	Fluoroform	1 CHF3	
+149	CF3H	1.3507	1.32	fluoroform	1 CHF3	
 (72) CF3Cl						
-150	CF3Cl	2.1575	2.048	Chlorotrifluoromethane	1 CF3Cl 	
+150	CF3Cl	2.1575	2.048	chlorotrifluoromethane	1 CF3Cl 	
 (73) CF4						
-151	CF4	1.7278	1.76	Tetrafluoromethane	1 CF4	
+151	CF4	1.7278	1.76	tetrafluoromethane	1 CF4	
 (74) Acetal						
-152	C(O)2	0.7073	0.48	1,1-Diethoxyethane	2 C(O)2, 3 CH3	
-186	CH(O)2	0.9347	0.708	Aspirin	2 CH(O)2, 1 CH3, 4 ACH, 2 AC	
-310	CH2(O)2	0.9347	0.708	Empty	No Example available
+152	C(O)2	0.7073	0.48	ethane, 1,1-diethoxy-	2 C(O)2, 3 CH3	
+186	CH(O)2	0.9347	0.708	aspirin	2 CH(O)2, 1 CH3, 4 ACH, 2 AC	
 (75) ACNR2						
-153	ACN(CH3)2	2.4529	1.908	n,n-Dimetylaniline	1 ACN(CH3)2, 5 ACH	
-154	ACN(CH3)CH2	2.2261	1.6	n-Ethyl-n-Methylaniline	1 ACN(CH3)(CH2), 5 ACH, 1 CH3	
-155	ACN(CH2)2	1.9993	1.292	n,n-Diethylaniline	1 ACN(CH2)2, 5 ACH, 2 CH3	
+153	ACN(CH3)2	2.4529	1.908	n,n-dimetylaniline	1 ACN(CH3)2, 5 ACH	
+154	ACN(CH3)CH2	2.2261	1.6	n-ethyl-n-methyl aniline	1 ACN(CH3)(CH2), 5 ACH, 1 CH3	
+155	ACN(CH2)2	1.9993	1.292	n,n-diethylaniline	1 ACN(CH2)2, 5 ACH, 2 CH3	
 (76) ACNR						
 156	ACNHCH3	1.7989	1.364	n-Methylaniline	1 ACNCH3, 5 5ACH	
 157	ACNHCH2	1.5722	1.056	n-Ethylaniline	1 ACNCH2, 5 ACH, 1 CH3	
-158	ACNHCH	1.3448	0.744	n-Isopropylaniline	1 ACNCH, 5 ACH, 2 CH3	
+158	ACNHCH	1.3448	0.744	n-Isopropyanline	1 ACNCH, 5 ACH, 2 CH3	
 (77) Furan						
 159	AC2H2O	1.3065	1.04	Furan	1 AC2H2O, 2 ACH	
-160	AC2HO	1.1404	0.76	2-(-Oxoethenyl)-Benzaldehyde	1 AC2HO, 1 ACHO, 2 AC, 4 ACH	
-161	AC2O	0.9743	0.48	Dibenzofuran	1 AC2O, 8 ACH, 2 AC	
+160	AC2HO	1.1404	0.76	benzaldehyde,2-(-oxoethenyl)-	1 AC2HO, 1 ACHO, 2 AC, 4 ACH	
+161	AC2O	0.9743	0.48	dibenzofuran	1 AC2O, 8 ACH, 2 AC	
 (78) c-CNH						
-188	c-CH2-NH	1.207	0.936	Piperazine	1 c-CH2-NH, 2 c-CH2	
-162	c-CH-NH	0.9796	0.624	2,6-Lupetidine	1 c-CH-NH, 2 CH3, 3 c-CH2	
-163	c-C-NH	0.7521	0.396	6-Aminohexanoicacid	1 c-C-NH, 1 c-C, 1 CO, 5 c-CH	
+188	c-CH2-NH	1.207	0.936	piperazine	1 c-CH2-NH, 2 c-CH2	
+162	c-CH-NH	0.9796	0.624	2,6-lupetidine	1 c-CH-NH, 2 CH3, 3 c-CH2	
+163	c-C-NH	0.7521	0.396	6-aminohexanoic acid	1 C-NH, 1 c-C, 1 CO, 5 c-CH	
 (79) c-CNR						
-189	c-CH2-NCH3	1.8609	1.48	n-Methylpiperidine	1 c-CH2-NCH3, 4 c-CH2	
-190	c-CH2-NCH2	1.6341	1.172	n-Ethylpiperidine	1 c-CH2-NCH2, 4 c-CH2, 1 CH3	
-191	c-CH2-NCH	1.4067	0.86	n-Isopropylpiperidine	1 c-CH2-NCH, 4 c-CH2, 2 CH3	
-164	c-CH-NCH3	1.6335	1.168	1,2-Dimethylpiperidine	1 c-CH-NCH3, 4 c-CH2, 1 CH3	
-165	c-CH-NCH2	1.4067	0.86	1-Ethyl-2-Methylpiperidine	1 c-CH-NCH2, 4 c-CH2, 2 CH3	
-166	c-CH-NCH	1.1793	0.548	n-Isopropyl-2-Methylpiperidine	1 c-CH-NCH, 4 c-CH2, 3 CH3	
+189	c-CH2-NCH3	1.8609	1.48	n-methylpiperidine	1 c-CH2-NCH3, 4 c-CH2	
+190	c-CH2-NCH2	1.6341	1.172	n-ethylpiperidine	1 c-CH2-NCH2, 4 c-CH2, 1 CH3	
+191	c-CH2-NCH	1.4067	0.86	n-isopropyl-piperidine	1 c-CH2-NCH, 4 c-CH2, 2 CH3	
+164	c-CH-NCH3	1.6335	1.168	1,2-dimethyl-piperidine	1 c-CH-NCH3, 4 c-CH2, 1 CH3	
+165	c-CH-NCH2	1.4067	0.86	1-ethyl-2-methyl-piperidine	1 c-CH-NCH2, 4 c-CH2, 2 CH3	
+166	c-CH-NCH	1.1793	0.548	n-isopropyl-2-methyl-piperidine	1 c-CH-NCH, 4 c-CH2, 3 CH3	
 (80) SiH							
-170	SiH3-	1.6035	1.263	Methylsilane	1 SiH3-, 1 CH3	
-171	-SiH2-	1.4443	1.006	Diethylsilane	1 -SiH2-. 2 CH2, 2 CH3	
-172	>SiH-	1.2853	0.749	Heptamethyltrisiloxane	1 >SiH-. 7 CH3, 2 ->SiO-	
-173	>Si<	1.047	0.41	Hexamethyldisiloxane	1 >Si<, 6 CH3, 1 ->SiO-	
+170	SiH3-	1.6035	1.263	methylsilane	1 SiH3-, 1 CH3	
+171	-SiH2-	1.4443	1.006	diethylsilane	1 -SiH2-. 2 CH2, 2 CH3	
+172	>SiH-	1.2853	0.749	heptamethyltrisiloxane	1 >SiH-. 7 CH3, 2 ->SiO-	
+173	>Si<	1.047	0.41	hexamethyldisiloxane	1 >Si<, 6 CH3, 1 ->SiO-	
 (81) SiO						
 174	-SiH2-O-	1.4838 	1.062	1,3-dimethyldisiloxane	1 -SiH2-O-, 2 CH3, 1 -SiH2-	
 175	>SiH-O-	1.303	0.764	1,1,3,3-tetramethyldisiloxane	1 >SiH-O-, 4 CH3, 1 >SiH-	
