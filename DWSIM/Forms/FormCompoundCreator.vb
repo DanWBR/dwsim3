@@ -57,7 +57,7 @@ Public Class FormCompoundCreator
         Dim filename As String = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "unifac.txt"
 
         Dim i As Integer
-        Dim ID, GroupType, GroupName, S As String
+        Dim ID, GroupType, GroupName, S, TT As String
         Dim L As Boolean = True
 
 
@@ -67,14 +67,17 @@ Public Class FormCompoundCreator
         With Me.GridUNIFAC.Rows
             .Clear()
             For i = 2 To UNIFAClines.Length - 1
-                .Add(New Object() {" ", " ", CInt(0), Image.FromFile(picpath & UNIFAClines(i).Split(",")(7) & ".png")})
+                S = picpath & UNIFAClines(i).Split(",")(7) & ".png"
+                If Not My.Computer.FileSystem.FileExists(S) Then S = picpath & "empty.png"
+
+                .Add(New Object() {" ", " ", CInt(0), Image.FromFile(S)})
                 .Item(.Count - 1).HeaderCell.Value = "ID" & i - 1
                 .Item(.Count - 1).Cells(0).Value = UNIFAClines(i).Split(",")(2) 'MainGroup
                 .Item(.Count - 1).Cells(1).Value = UNIFAClines(i).Split(",")(3) 'SubGroup
-
-                .Item(.Count - 1).Cells(3).ToolTipText = "Rk / Qk: " & UNIFAClines(i).Split(",")(4) & " / " & UNIFAClines(i).Split(",")(5) & vbCrLf & _
+                TT = "Rk / Qk: " & UNIFAClines(i).Split(",")(4) & " / " & UNIFAClines(i).Split(",")(5) & vbCrLf & _
                                                          "Example Compound: " & UNIFAClines(i).Split(",")(6) & vbCrLf & _
                                                          "Joback subgroups: " & UNIFAClines(i).Split(",")(8)
+                .Item(.Count - 1).Cells(3).Tag = {S, TT}
 
                 If GroupName <> UNIFAClines(i).Split(",")(2) Then
                     L = Not L
@@ -93,8 +96,6 @@ Public Class FormCompoundCreator
 
         'Grid MODFAC
         L = True
-        'filename = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "modfac.txt"
-        'MODFACLines = IO.File.ReadAllLines(filename)
         filename = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "NIST-MODFAC_RiQi.txt"
         MODFACLines = IO.File.ReadAllLines(filename)
         Dim cult As Globalization.CultureInfo = New Globalization.CultureInfo("en-US")
@@ -119,8 +120,6 @@ Public Class FormCompoundCreator
                     
                     L = Not L
                 Else
-                    'Me.Groups.Add(i, New ModfacGroup(fields(1), mainname, maingroup, fields(0), Double.Parse(fields(3), cult), Double.Parse(fields(2), cult)))
-                    'Me.Groups.Add(fields(0), New ModfacGroup(fields(1), mainname, maingroup, fields(0), Double.Parse(fields(2), cult), Double.Parse(fields(3), cult)))
                     With Me.GridMODFAC.Rows
                         S = picpath & fields(4) & ".png"
                         If Not My.Computer.FileSystem.FileExists(S) Then S = picpath & "empty.png"
@@ -130,7 +129,10 @@ Public Class FormCompoundCreator
                         .Item(.Count - 1).Cells(0).Value = mainname
                         .Item(.Count - 1).Cells(1).Value = fields(1)
                         .Item(.Count - 1).Cells(2).Value = 0
-                   
+                        TT = "Rk / Qk: " & fields(2) & " / " & fields(3) & vbCrLf & _
+                                                                 "Example Compound: " & fields(4) & vbCrLf & fields(5)
+                        .Item(.Count - 1).Cells(3).Tag = {S, TT}
+
                         If L Then
                             .Item(.Count - 1).Cells(0).Style.BackColor = Color.FromArgb(230, 230, 200)
                             .Item(.Count - 1).Cells(1).Style.BackColor = Color.FromArgb(230, 230, 200)
@@ -138,9 +140,6 @@ Public Class FormCompoundCreator
                             .Item(.Count - 1).Cells(0).Style.BackColor = Color.FromArgb(200, 230, 230)
                             .Item(.Count - 1).Cells(1).Style.BackColor = Color.FromArgb(200, 230, 230)
                         End If
-
-                        .Item(.Count - 1).Cells(3).ToolTipText = "Rk / Qk: " & fields(2) & " / " & fields(3) & vbCrLf & _
-                                                                 "Example Compound: " & fields(4) & vbCrLf & fields(5)
                     End With
                 End If
             End While
@@ -2769,6 +2768,30 @@ Public Class FormCompoundCreator
                 DWSIM.App.HelpRequested("Component Creator.htm")
         End Select
 
+    End Sub
+
+    Private Sub GridMODFAC_CellMouseEnter(sender As Object, e As DataGridViewCellEventArgs) Handles GridMODFAC.CellMouseEnter
+        If e.RowIndex >= 0 Then
+            PicMODFAC.Image = Image.FromFile(GridMODFAC.Rows(e.RowIndex).Cells(3).Tag(0))
+            TBModfac.Text = GridMODFAC.Rows(e.RowIndex).Cells(3).Tag(1)
+        End If
+    End Sub
+
+    Private Sub GridMODFAC_CellMouseLeave(sender As Object, e As DataGridViewCellEventArgs) Handles GridMODFAC.CellMouseLeave
+        PicMODFAC.Image = Nothing
+        TBModfac.Text = ""
+    End Sub
+
+    Private Sub GridUNIFAC_CellMouseEnter(sender As Object, e As DataGridViewCellEventArgs) Handles GridUNIFAC.CellMouseEnter
+        If e.RowIndex >= 0 Then
+            PicUNIFAC.Image = Image.FromFile(GridUNIFAC.Rows(e.RowIndex).Cells(3).Tag(0))
+            TBUnifac.Text = GridUNIFAC.Rows(e.RowIndex).Cells(3).Tag(1)
+        End If
+    End Sub
+
+    Private Sub GridUNIFAC_CellMouseLeave(sender As Object, e As DataGridViewCellEventArgs) Handles GridUNIFAC.CellMouseLeave
+        PicUNIFAC.Image = Nothing
+        TBUnifac.Text = ""
     End Sub
 End Class
 
