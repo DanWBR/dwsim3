@@ -620,10 +620,8 @@ Public Class FormMain
                 Me.FrmRec = New FormRecoverFiles
                 Me.FrmRec.ShowDialog(Me)
             Else
-                If My.Settings.ShowTips Then
-                    Dim frmw As New FormWelcome
-                    frmw.ShowDialog(Me)
-                End If
+                Dim frmw As New FormWelcome
+                frmw.ShowDialog(Me)
             End If
 
         End If

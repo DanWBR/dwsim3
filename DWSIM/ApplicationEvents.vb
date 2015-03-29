@@ -83,7 +83,7 @@ Namespace My
             _ResourceManager = New System.Resources.ResourceManager("DWSIM.DWSIM", System.Reflection.Assembly.GetExecutingAssembly())
 
             'loads the help manager
-            _HelpManager = New System.Resources.ResourceManager("DWSIM.Help", System.Reflection.Assembly.GetExecutingAssembly())
+            _HelpManager = New System.Resources.ResourceManager("DWSIM.Tips", System.Reflection.Assembly.GetExecutingAssembly())
 
             'loads the property name manager
             _PropertyNameManager = New System.Resources.ResourceManager("DWSIM.Properties", System.Reflection.Assembly.GetExecutingAssembly())

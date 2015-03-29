@@ -327,9 +327,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         If Not Me.GraphicObject Is Nothing Then myuo2.ComponentName = Me.GraphicObject.Tag
                         If Not Me.GraphicObject Is Nothing Then myuo2.ComponentDescription = Me.GraphicObject.Name
                     End If
-                    If My.Settings.SetCOSimulationContext Then
-                        myuo.simulationContext = Me.FlowSheet
-                    End If
+                    myuo.simulationContext = Me.FlowSheet
                 End If
 
             End If

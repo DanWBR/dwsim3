@@ -28,8 +28,6 @@ Public Class FormWelcome
 
         If DWSIM.App.IsRunningOnMono Then Me.BackgroundImageLayout = ImageLayout.Stretch
 
-        CheckBox1.Checked = My.Settings.ShowTips
-
         For Each f As String In My.Settings.MostRecentFiles
             If File.Exists(f) And Path.GetExtension(f).ToLower <> ".dwbcs" Then
                 Me.lvlatest.Items.Add(f, 0).Tag = f
@@ -50,10 +48,6 @@ Public Class FormWelcome
             Me.lvlatest.View = View.List
         End If
 
-    End Sub
-
-    Private Sub CheckBox1_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CheckBox1.CheckedChanged
-        My.Settings.ShowTips = CheckBox1.Checked
     End Sub
 
     Private Sub KryptonButton3_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button7.Click

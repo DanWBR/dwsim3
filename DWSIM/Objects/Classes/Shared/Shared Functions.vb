@@ -47,6 +47,29 @@ Namespace DWSIM
             System.Diagnostics.Process.Start(filename)
         End Sub
 
+        Public Shared Function GetLocalTipString(ByVal id As String) As String
+
+            If My.MyApplication._HelpManager Is Nothing Then
+
+                'loads the current language
+                My.MyApplication._CultureInfo = New Globalization.CultureInfo(My.Settings.CultureInfo)
+                My.Application.ChangeUICulture(My.Settings.CultureInfo)
+
+                'loads the resource manager
+                My.MyApplication._HelpManager = New System.Resources.ResourceManager("DWSIM.Tips", System.Reflection.Assembly.GetExecutingAssembly())
+
+            End If
+
+            If id <> "" Then
+                Dim retstr As String
+                retstr = My.MyApplication._HelpManager.GetString(id, My.MyApplication._CultureInfo)
+                If retstr Is Nothing Then Return id Else Return retstr
+            Else
+                Return ""
+            End If
+        End Function
+
+
         Public Shared Function GetLocalString(ByVal id As String) As String
 
             If My.MyApplication._ResourceManager Is Nothing Then
@@ -215,8 +238,7 @@ Namespace DWSIM
             My.Settings.BackupInterval = source.Configs("Backup").GetInt("BackupInterval", 5)
 
             My.Settings.CultureInfo = source.Configs("Localization").Get("CultureInfo", "en-US")
-            My.Settings.ShowLangForm = source.Configs("Localization").GetBoolean("ShowLangForm", True)
-
+         
             My.Settings.ChemSepDatabasePath = source.Configs("Databases").Get("ChemSepDBPath", "")
             My.Settings.ReplaceComps = source.Configs("Databases").GetBoolean("ReplaceComps", True)
 
@@ -230,6 +252,14 @@ Namespace DWSIM
             My.Settings.SelectedGPU = source.Configs("Misc").Get("SelectedGPU", "")
             My.Settings.CudafyTarget = source.Configs("Misc").GetInt("CudafyTarget", 1)
             My.Settings.CudafyDeviceID = source.Configs("Misc").GetInt("CudafyDeviceID", 0)
+
+            My.Settings.DebugLevel = source.Configs("Misc").GetInt("DebugLevel", 0)
+            My.Settings.SolverMode = source.Configs("Misc").GetInt("SolverMode", 0)
+            My.Settings.ServiceBusConnectionString = source.Configs("Misc").Get("ServiceBusConnectionString", "")
+            My.Settings.ServerIPAddress = source.Configs("Misc").Get("ServerIPAddress", "")
+            My.Settings.ServerPort = source.Configs("Misc").Get("ServerPort", "")
+            My.Settings.SolverTimeoutSeconds = source.Configs("Misc").GetInt("SolverTimeoutSeconds", 300)
+
 
         End Sub
 
@@ -270,8 +300,7 @@ Namespace DWSIM
             source.Configs("Backup").Set("BackupInterval", My.Settings.BackupInterval)
 
             source.Configs("Localization").Set("CultureInfo", My.Settings.CultureInfo)
-            source.Configs("Localization").Set("ShowLangForm", My.Settings.ShowLangForm)
-
+          
             source.Configs("Databases").Set("ChemSepDBPath", My.Settings.ChemSepDatabasePath)
             source.Configs("Databases").Set("ReplaceComps", My.Settings.ReplaceComps)
 
@@ -285,6 +314,13 @@ Namespace DWSIM
             source.Configs("Misc").Set("SelectedGPU", My.Settings.SelectedGPU)
             source.Configs("Misc").Set("CudafyTarget", My.Settings.CudafyTarget)
             source.Configs("Misc").Set("CudafyDeviceID", My.Settings.CudafyDeviceID)
+
+            source.Configs("Misc").Set("DebugLevel", My.Settings.DebugLevel)
+            source.Configs("Misc").Set("SolverMode", My.Settings.SolverMode)
+            source.Configs("Misc").Set("ServiceBusConnectionString", My.Settings.ServiceBusConnectionString)
+            source.Configs("Misc").Set("ServerIPAddress", My.Settings.ServerIPAddress)
+            source.Configs("Misc").Set("ServerPort", My.Settings.ServerPort)
+            source.Configs("Misc").Set("SolverTimeoutSeconds", My.Settings.SolverTimeoutSeconds)
 
             source.Save(configfile)
 

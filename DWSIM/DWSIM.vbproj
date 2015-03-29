@@ -464,6 +464,11 @@
     </Compile>
     <Compile Include="Interfaces\Excel.vb" />
     <Compile Include="Interfaces\IPersistStream.vb" />
+    <Compile Include="Languages\Tips.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Tips.resx</DependentUpon>
+    </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1341,6 +1346,14 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\UITypeEditors\UIScriptEditor\ScriptEditorFormMono.resx">
       <DependentUpon>ScriptEditorFormMono.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Languages\Tips.de.resx" />
+    <EmbeddedResource Include="Languages\Tips.en.resx" />
+    <EmbeddedResource Include="Languages\Tips.es.resx" />
+    <EmbeddedResource Include="Languages\Tips.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Tips.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
