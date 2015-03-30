@@ -73,13 +73,6 @@ Partial Class FormOptions
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewImageColumn1 = New System.Windows.Forms.DataGridViewImageColumn()
-        Me.FaTabStripItem4 = New FarsiLibrary.Win.FATabStripItem()
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.ListView1 = New System.Windows.Forms.ListView()
-        Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.Button2 = New System.Windows.Forms.Button()
@@ -99,6 +92,9 @@ Partial Class FormOptions
         Me.tbaddpath = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.FaTabStripItem7 = New FarsiLibrary.Win.FATabStripItem()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.ComboBoxUILanguage = New System.Windows.Forms.ComboBox()
+        Me.Label3 = New System.Windows.Forms.Label()
         Me.GroupBox9 = New System.Windows.Forms.GroupBox()
         Me.KryptonCheckBox1 = New System.Windows.Forms.CheckBox()
         Me.chkUpdates = New System.Windows.Forms.CheckBox()
@@ -106,6 +102,7 @@ Partial Class FormOptions
         Me.cbDebugLevel = New System.Windows.Forms.ComboBox()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.chkconsole = New System.Windows.Forms.CheckBox()
+        Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
         Me.ofdcs = New System.Windows.Forms.OpenFileDialog()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
@@ -126,14 +123,13 @@ Partial Class FormOptions
         Me.GroupBox12.SuspendLayout()
         Me.GroupBox10.SuspendLayout()
         CType(Me.dgvIPDB, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.FaTabStripItem4.SuspendLayout()
-        Me.GroupBox1.SuspendLayout()
         Me.FaTabStripItem2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStripItem5.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
         Me.FaTabStripItem7.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
         Me.GroupBox9.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
         Me.SuspendLayout()
@@ -143,7 +139,7 @@ Partial Class FormOptions
         resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
         Me.FaTabStrip1.AlwaysShowClose = False
         Me.FaTabStrip1.AlwaysShowMenuGlyph = False
-        Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem3, Me.FaTabStripItem6, Me.FaTabStripItem4, Me.FaTabStripItem2, Me.FaTabStripItem5, Me.FaTabStripItem7})
+        Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem3, Me.FaTabStripItem6, Me.FaTabStripItem2, Me.FaTabStripItem5, Me.FaTabStripItem7})
         Me.FaTabStrip1.Name = "FaTabStrip1"
         Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem1
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.FaTabStrip1, System.Drawing.Color.Empty)
@@ -629,84 +625,6 @@ Partial Class FormOptions
         Me.DataGridViewImageColumn1.ReadOnly = True
         Me.DataGridViewImageColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         '
-        'FaTabStripItem4
-        '
-        resources.ApplyResources(Me.FaTabStripItem4, "FaTabStripItem4")
-        Me.FaTabStripItem4.CanClose = False
-        Me.FaTabStripItem4.Controls.Add(Me.GroupBox1)
-        Me.FaTabStripItem4.IsDrawn = True
-        Me.FaTabStripItem4.Name = "FaTabStripItem4"
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.FaTabStripItem4, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.FaTabStripItem4, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.FaTabStripItem4, resources.GetString("FaTabStripItem4.ToolTip"))
-        '
-        'GroupBox1
-        '
-        resources.ApplyResources(Me.GroupBox1, "GroupBox1")
-        Me.GroupBox1.Controls.Add(Me.Button1)
-        Me.GroupBox1.Controls.Add(Me.ListView1)
-        Me.GroupBox1.Controls.Add(Me.Label3)
-        Me.GroupBox1.Controls.Add(Me.Label1)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox1, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox1, System.Drawing.Color.Empty)
-        Me.GroupBox1.TabStop = False
-        Me.SuperToolTip1.SetToolTip(Me.GroupBox1, resources.GetString("GroupBox1.ToolTip"))
-        '
-        'Button1
-        '
-        resources.ApplyResources(Me.Button1, "Button1")
-        Me.Button1.Name = "Button1"
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.Button1, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.Button1, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.Button1, resources.GetString("Button1.ToolTip"))
-        Me.Button1.UseVisualStyleBackColor = True
-        '
-        'ListView1
-        '
-        resources.ApplyResources(Me.ListView1, "ListView1")
-        Me.ListView1.FullRowSelect = True
-        Me.ListView1.LargeImageList = Me.ImageList1
-        Me.ListView1.MultiSelect = False
-        Me.ListView1.Name = "ListView1"
-        Me.ListView1.SmallImageList = Me.ImageList1
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.ListView1, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.ListView1, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.ListView1, resources.GetString("ListView1.ToolTip"))
-        Me.ListView1.UseCompatibleStateImageBehavior = False
-        Me.ListView1.View = System.Windows.Forms.View.List
-        '
-        'ImageList1
-        '
-        Me.ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
-        Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
-        Me.ImageList1.Images.SetKeyName(0, "br.png")
-        Me.ImageList1.Images.SetKeyName(1, "gb.png")
-        Me.ImageList1.Images.SetKeyName(2, "us.png")
-        Me.ImageList1.Images.SetKeyName(3, "ru.png")
-        Me.ImageList1.Images.SetKeyName(4, "fr.png")
-        Me.ImageList1.Images.SetKeyName(5, "de.png")
-        Me.ImageList1.Images.SetKeyName(6, "jp.png")
-        Me.ImageList1.Images.SetKeyName(7, "id.png")
-        Me.ImageList1.Images.SetKeyName(8, "es.png")
-        Me.ImageList1.Images.SetKeyName(9, "cn.png")
-        '
-        'Label3
-        '
-        resources.ApplyResources(Me.Label3, "Label3")
-        Me.Label3.Name = "Label3"
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label3, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label3, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.Label3, resources.GetString("Label3.ToolTip"))
-        '
-        'Label1
-        '
-        resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.Name = "Label1"
-        Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label1, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label1, System.Drawing.Color.Empty)
-        Me.SuperToolTip1.SetToolTip(Me.Label1, resources.GetString("Label1.ToolTip"))
-        '
         'FaTabStripItem2
         '
         resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
@@ -884,6 +802,7 @@ Partial Class FormOptions
         '
         resources.ApplyResources(Me.FaTabStripItem7, "FaTabStripItem7")
         Me.FaTabStripItem7.CanClose = False
+        Me.FaTabStripItem7.Controls.Add(Me.GroupBox1)
         Me.FaTabStripItem7.Controls.Add(Me.GroupBox9)
         Me.FaTabStripItem7.Controls.Add(Me.GroupBox6)
         Me.FaTabStripItem7.IsDrawn = True
@@ -891,6 +810,36 @@ Partial Class FormOptions
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.FaTabStripItem7, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.FaTabStripItem7, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetToolTip(Me.FaTabStripItem7, resources.GetString("FaTabStripItem7.ToolTip"))
+        '
+        'GroupBox1
+        '
+        resources.ApplyResources(Me.GroupBox1, "GroupBox1")
+        Me.GroupBox1.Controls.Add(Me.ComboBoxUILanguage)
+        Me.GroupBox1.Controls.Add(Me.Label3)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox1, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox1, System.Drawing.Color.Empty)
+        Me.GroupBox1.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox1, resources.GetString("GroupBox1.ToolTip"))
+        '
+        'ComboBoxUILanguage
+        '
+        resources.ApplyResources(Me.ComboBoxUILanguage, "ComboBoxUILanguage")
+        Me.ComboBoxUILanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBoxUILanguage.FormattingEnabled = True
+        Me.ComboBoxUILanguage.Items.AddRange(New Object() {resources.GetString("ComboBoxUILanguage.Items"), resources.GetString("ComboBoxUILanguage.Items1"), resources.GetString("ComboBoxUILanguage.Items2"), resources.GetString("ComboBoxUILanguage.Items3")})
+        Me.ComboBoxUILanguage.Name = "ComboBoxUILanguage"
+        Me.SuperToolTip1.SetSuperToolTipColor1(Me.ComboBoxUILanguage, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetSuperToolTipColor2(Me.ComboBoxUILanguage, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.ComboBoxUILanguage, resources.GetString("ComboBoxUILanguage.ToolTip"))
+        '
+        'Label3
+        '
+        resources.ApplyResources(Me.Label3, "Label3")
+        Me.Label3.Name = "Label3"
+        Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label3, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label3, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label3, resources.GetString("Label3.ToolTip"))
         '
         'GroupBox9
         '
@@ -958,6 +907,21 @@ Partial Class FormOptions
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.chkconsole, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetToolTip(Me.chkconsole, resources.GetString("chkconsole.ToolTip"))
         '
+        'ImageList1
+        '
+        Me.ImageList1.ImageStream = CType(resources.GetObject("ImageList1.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.ImageList1.TransparentColor = System.Drawing.Color.Transparent
+        Me.ImageList1.Images.SetKeyName(0, "br.png")
+        Me.ImageList1.Images.SetKeyName(1, "gb.png")
+        Me.ImageList1.Images.SetKeyName(2, "us.png")
+        Me.ImageList1.Images.SetKeyName(3, "ru.png")
+        Me.ImageList1.Images.SetKeyName(4, "fr.png")
+        Me.ImageList1.Images.SetKeyName(5, "de.png")
+        Me.ImageList1.Images.SetKeyName(6, "jp.png")
+        Me.ImageList1.Images.SetKeyName(7, "id.png")
+        Me.ImageList1.Images.SetKeyName(8, "es.png")
+        Me.ImageList1.Images.SetKeyName(9, "cn.png")
+        '
         'FolderBrowserDialog1
         '
         resources.ApplyResources(Me.FolderBrowserDialog1, "FolderBrowserDialog1")
@@ -1015,9 +979,6 @@ Partial Class FormOptions
         Me.GroupBox12.ResumeLayout(False)
         Me.GroupBox10.ResumeLayout(False)
         CType(Me.dgvIPDB, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.FaTabStripItem4.ResumeLayout(False)
-        Me.GroupBox1.ResumeLayout(False)
-        Me.GroupBox1.PerformLayout()
         Me.FaTabStripItem2.ResumeLayout(False)
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()
@@ -1026,6 +987,8 @@ Partial Class FormOptions
         Me.GroupBox5.ResumeLayout(False)
         Me.GroupBox5.PerformLayout()
         Me.FaTabStripItem7.ResumeLayout(False)
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
         Me.GroupBox9.ResumeLayout(False)
         Me.GroupBox9.PerformLayout()
         Me.GroupBox6.ResumeLayout(False)
@@ -1055,13 +1018,9 @@ Partial Class FormOptions
     Public WithEvents dgvdb As System.Windows.Forms.DataGridView
     Public WithEvents ofdcs As System.Windows.Forms.OpenFileDialog
     Public WithEvents OpenFileDialog1 As System.Windows.Forms.OpenFileDialog
-    Public WithEvents FaTabStripItem4 As FarsiLibrary.Win.FATabStripItem
     Public WithEvents GroupBox1 As System.Windows.Forms.GroupBox
-    Public WithEvents Button1 As System.Windows.Forms.Button
-    Public WithEvents ListView1 As System.Windows.Forms.ListView
     Public WithEvents ImageList1 As System.Windows.Forms.ImageList
     Public WithEvents Label3 As System.Windows.Forms.Label
-    Public WithEvents Label1 As System.Windows.Forms.Label
     Public WithEvents Button2 As System.Windows.Forms.Button
     Public WithEvents FaTabStripItem5 As FarsiLibrary.Win.FATabStripItem
     Public WithEvents GroupBox5 As System.Windows.Forms.GroupBox
@@ -1116,4 +1075,5 @@ Partial Class FormOptions
     Public WithEvents chkconsole As System.Windows.Forms.CheckBox
     Friend WithEvents GroupBox9 As System.Windows.Forms.GroupBox
     Friend WithEvents GroupBox6 As System.Windows.Forms.GroupBox
+    Friend WithEvents ComboBoxUILanguage As System.Windows.Forms.ComboBox
 End Class

@@ -2305,9 +2305,13 @@ Public Class frmSurface
         Dim mpx = x '- SplitContainer1.SplitterDistance
         Dim mpy = y '- ToolStripContainer1.TopToolStripPanel.Height
 
+        Flowsheet.WriteToLog(DWSIM.App.GetLocalTipString("FLSH004"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+        Flowsheet.WriteToLog(DWSIM.App.GetLocalTipString("FLSH006"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+
         Select Case type
 
             Case TipoObjeto.OT_Ajuste
+
                 Dim myNode As New AdjustGraphic(mpx, mpy, 20, 20, 0)
                 myNode.LineWidth = 2
                 myNode.Fill = True
@@ -2327,7 +2331,10 @@ Public Class frmSurface
                 Flowsheet.Collections.ObjectCollection.Add(myNode.Name, myADJ)
                 Flowsheet.Collections.CLCS_AdjustCollection.Add(myNode.Name, myADJ)
 
+                Flowsheet.WriteToLog(DWSIM.App.GetLocalTipString("ADJT001"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+
             Case TipoObjeto.OT_Especificacao
+
                 Dim myNode As New SpecGraphic(mpx, mpy, 20, 20, 0)
                 myNode.LineWidth = 2
                 myNode.Fill = True
@@ -2348,6 +2355,7 @@ Public Class frmSurface
                 Flowsheet.Collections.CLCS_SpecCollection.Add(myNode.Name, myADJ)
 
             Case TipoObjeto.OT_Reciclo
+
                 Dim myNode As New RecycleGraphic(mpx, mpy, 20, 20, 0)
                 myNode.LineWidth = 2
                 myNode.Fill = True
@@ -2367,7 +2375,10 @@ Public Class frmSurface
                 Flowsheet.Collections.ObjectCollection.Add(myNode.Name, myADJ)
                 Flowsheet.Collections.CLCS_RecycleCollection.Add(myNode.Name, myADJ)
 
+                Flowsheet.WriteToLog(DWSIM.App.GetLocalTipString("RECY001"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+
             Case TipoObjeto.OT_EnergyRecycle
+
                 Dim myNode As New EnergyRecycleGraphic(mpx, mpy, 20, 20, 0)
                 myNode.LineWidth = 2
                 myNode.Fill = True
@@ -2391,6 +2402,7 @@ Public Class frmSurface
                 Flowsheet.Collections.CLCS_EnergyRecycleCollection.Add(myNode.Name, myADJ)
 
             Case TipoObjeto.NodeIn
+
                 Dim myNode As New NodeInGraphic(mpx, mpy, 20, 20, 0)
                 myNode.LineWidth = 2
                 myNode.Fill = True
@@ -2411,6 +2423,7 @@ Public Class frmSurface
                 Flowsheet.Collections.CLCS_MixerCollection.Add(myNode.Name, myCOMIX)
 
             Case TipoObjeto.NodeEn
+
                 Dim myNode As New NodeEnGraphic(mpx, mpy, 20, 20, 0)
                 myNode.LineWidth = 2
                 myNode.Fill = True
@@ -2432,6 +2445,7 @@ Public Class frmSurface
                 Flowsheet.Collections.CLCS_EnergyMixerCollection.Add(myNode.Name, myCOMIX)
 
             Case TipoObjeto.NodeOut
+
                 Dim myNodeo As New NodeOutGraphic(mpx, mpy, 20, 20, 0)
                 myNodeo.LineWidth = 2
                 myNodeo.Fill = True
@@ -2452,6 +2466,7 @@ Public Class frmSurface
                 Flowsheet.Collections.CLCS_SplitterCollection.Add(myNodeo.Name, myCOSP)
 
             Case TipoObjeto.Pump
+
                 Dim myPump As New PumpGraphic(mpx, mpy, 25, 25, 0)
                 myPump.LineWidth = 2
                 myPump.Fill = True
@@ -2472,6 +2487,7 @@ Public Class frmSurface
                 Flowsheet.Collections.CLCS_PumpCollection.Add(myPump.Name, myCOSP)
 
             Case TipoObjeto.Tank
+
                 Dim myTank As New TankGraphic(mpx, mpy, 50, 50, 0)
                 myTank.LineWidth = 2
                 myTank.Fill = True
@@ -2492,6 +2508,7 @@ Public Class frmSurface
                 Flowsheet.Collections.CLCS_TankCollection.Add(myTank.Name, myCOTK)
 
             Case TipoObjeto.Vessel
+
                 Dim myVessel As New VesselGraphic(mpx, mpy, 50, 50, 0)
                 myVessel.LineWidth = 2
                 myVessel.Fill = True
@@ -2512,6 +2529,7 @@ Public Class frmSurface
                 Flowsheet.Collections.CLCS_VesselCollection.Add(myVessel.Name, myCOVESSEL)
 
             Case TipoObjeto.TPVessel
+
                 Dim myVessel As New TPVesselGraphic(mpx, mpy, 50, 50, 0)
                 myVessel.LineWidth = 2
                 myVessel.Fill = True
@@ -2527,6 +2545,7 @@ Public Class frmSurface
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeTP").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
 
             Case TipoObjeto.MaterialStream
+
                 Dim myMStr As New MaterialStreamGraphic(mpx, mpy, 20, 20, 0)
                 myMStr.LineWidth = 2
                 myMStr.Fill = True
@@ -2552,6 +2571,7 @@ Public Class frmSurface
                 Flowsheet.WriteToLog(DWSIM.App.GetLocalTipString("MSTR003"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
 
             Case TipoObjeto.EnergyStream
+
                 Dim myMStr As New EnergyStreamGraphic(mpx, mpy, 20, 20, 0)
                 myMStr.LineWidth = 2
                 myMStr.Fill = True
@@ -2572,6 +2592,7 @@ Public Class frmSurface
                 Flowsheet.Collections.CLCS_EnergyStreamCollection.Add(myCOES.Nome, myCOES)
 
             Case TipoObjeto.Compressor
+
                 Dim myComp As New CompressorGraphic(mpx, mpy, 25, 25, 0)
                 myComp.LineWidth = 2
                 myComp.Fill = True
@@ -2592,6 +2613,7 @@ Public Class frmSurface
                 Flowsheet.Collections.CLCS_CompressorCollection.Add(myComp.Name, myCOCP)
 
             Case TipoObjeto.Expander
+
                 Dim myComp As New TurbineGraphic(mpx, mpy, 25, 25, 0)
                 myComp.LineWidth = 2
                 myComp.Fill = True
@@ -2612,6 +2634,7 @@ Public Class frmSurface
                 Flowsheet.Collections.CLCS_TurbineCollection.Add(myComp.Name, myCOCP)
 
             Case TipoObjeto.Cooler
+
                 Dim myCool As New CoolerGraphic(mpx, mpy, 25, 25, 0)
                 myCool.LineWidth = 2
                 myCool.Fill = True
@@ -2632,6 +2655,7 @@ Public Class frmSurface
                 Flowsheet.Collections.CLCS_CoolerCollection.Add(myCool.Name, myCOCL)
 
             Case TipoObjeto.Heater
+
                 Dim myHeat As New HeaterGraphic(mpx, mpy, 25, 25, 0)
                 myHeat.LineWidth = 2
                 myHeat.Fill = True
@@ -2652,6 +2676,7 @@ Public Class frmSurface
                 Flowsheet.Collections.CLCS_HeaterCollection.Add(myHeat.Name, myCOCL)
 
             Case TipoObjeto.Pipe
+
                 Dim myPipe As New PipeGraphic(mpx, mpy, 50, 10, 0)
                 myPipe.LineWidth = 2
                 myPipe.Fill = True
@@ -2672,6 +2697,7 @@ Public Class frmSurface
                 Flowsheet.Collections.CLCS_PipeCollection.Add(myPipe.Name, myCOPIPE)
 
             Case TipoObjeto.Valve
+
                 Dim myValve As New ValveGraphic(mpx, mpy, 20, 20, 0)
                 myValve.LineWidth = 2
                 myValve.Fill = True
@@ -2692,6 +2718,7 @@ Public Class frmSurface
                 Flowsheet.Collections.CLCS_ValveCollection.Add(myValve.Name, myCOVALVE)
 
             Case TipoObjeto.RCT_Conversion
+
                 Dim myRconv As New ReactorConversionGraphic(mpx, mpy, 50, 50, 0)
                 myRconv.LineWidth = 2
                 myRconv.Fill = True
@@ -2711,7 +2738,10 @@ Public Class frmSurface
                 Flowsheet.Collections.ObjectCollection.Add(myRconv.Name, myCORCONV)
                 Flowsheet.Collections.CLCS_ReactorConversionCollection.Add(myRconv.Name, myCORCONV)
 
+                Flowsheet.WriteToLog(DWSIM.App.GetLocalTipString("RCON001"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+
             Case TipoObjeto.RCT_Equilibrium
+
                 Dim myReq As New ReactorEquilibriumGraphic(mpx, mpy, 50, 50, 0)
                 myReq.LineWidth = 2
                 myReq.Fill = True
@@ -2731,7 +2761,10 @@ Public Class frmSurface
                 Flowsheet.Collections.ObjectCollection.Add(myReq.Name, myCOREQ)
                 Flowsheet.Collections.CLCS_ReactorEquilibriumCollection.Add(myReq.Name, myCOREQ)
 
+                Flowsheet.WriteToLog(DWSIM.App.GetLocalTipString("REQL001"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+
             Case TipoObjeto.RCT_Gibbs
+
                 Dim myRgibbs As New ReactorGibbsGraphic(mpx, mpy, 50, 50, 0)
                 myRgibbs.LineWidth = 2
                 myRgibbs.Fill = True
@@ -2751,7 +2784,10 @@ Public Class frmSurface
                 Flowsheet.Collections.ObjectCollection.Add(myRgibbs.Name, myCORGIBBS)
                 Flowsheet.Collections.CLCS_ReactorGibbsCollection.Add(myRgibbs.Name, myCORGIBBS)
 
+                Flowsheet.WriteToLog(DWSIM.App.GetLocalTipString("RGIB001"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+
             Case TipoObjeto.RCT_CSTR
+
                 Dim myRcstr As New ReactorCSTRGraphic(mpx, mpy, 50, 50, 0)
                 myRcstr.LineWidth = 2
                 myRcstr.Fill = True
@@ -2771,7 +2807,10 @@ Public Class frmSurface
                 Flowsheet.Collections.ObjectCollection.Add(myRcstr.Name, myCORCSTR)
                 Flowsheet.Collections.CLCS_ReactorCSTRCollection.Add(myRcstr.Name, myCORCSTR)
 
+                Flowsheet.WriteToLog(DWSIM.App.GetLocalTipString("CSTR001"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+
             Case TipoObjeto.RCT_PFR
+
                 Dim myRpfr As New ReactorPFRGraphic(mpx, mpy, 70, 20, 0)
                 myRpfr.LineWidth = 2
                 myRpfr.Fill = True
@@ -2791,7 +2830,10 @@ Public Class frmSurface
                 Flowsheet.Collections.ObjectCollection.Add(myRpfr.Name, myCOPFR)
                 Flowsheet.Collections.CLCS_ReactorPFRCollection.Add(myRpfr.Name, myCOPFR)
 
+                Flowsheet.WriteToLog(DWSIM.App.GetLocalTipString("PFR001"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+
             Case TipoObjeto.HeatExchanger
+
                 Dim myHeatExchanger As New HeatExchangerGraphic(mpx, mpy, 30, 30, 0)
                 myHeatExchanger.LineWidth = 2
                 myHeatExchanger.Fill = True
@@ -2812,6 +2854,7 @@ Public Class frmSurface
                 Flowsheet.Collections.CLCS_HeatExchangerCollection.Add(myHeatExchanger.Name, myCOHE)
 
             Case TipoObjeto.ShortcutColumn
+
                 Dim mySC As New ShorcutColumnGraphic(mpx, mpy, 144, 180, 0)
                 mySC.LineWidth = 2
                 mySC.Fill = True
@@ -2832,6 +2875,7 @@ Public Class frmSurface
                 Flowsheet.Collections.CLCS_ShortcutColumnCollection.Add(mySC.Name, myCOSC)
 
             Case TipoObjeto.DistillationColumn
+
                 Dim mySC As New DistillationColumnGraphic(mpx, mpy, 144, 180, 0)
                 mySC.LineWidth = 2
                 mySC.Fill = True
@@ -2851,7 +2895,12 @@ Public Class frmSurface
                 Flowsheet.Collections.ObjectCollection.Add(mySC.Name, myCOSC)
                 Flowsheet.Collections.CLCS_DistillationColumnCollection.Add(mySC.Name, myCOSC)
 
+                Flowsheet.WriteToLog(DWSIM.App.GetLocalTipString("DCOL001"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+                Flowsheet.WriteToLog(DWSIM.App.GetLocalTipString("DCOL002"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+                Flowsheet.WriteToLog(DWSIM.App.GetLocalTipString("DCOL003"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+
             Case TipoObjeto.AbsorptionColumn
+
                 Dim mySC As New AbsorptionColumnGraphic(mpx, mpy, 144, 180, 0)
                 mySC.LineWidth = 2
                 mySC.Fill = True
@@ -2871,7 +2920,12 @@ Public Class frmSurface
                 Flowsheet.Collections.ObjectCollection.Add(mySC.Name, myCOSC)
                 Flowsheet.Collections.CLCS_AbsorptionColumnCollection.Add(mySC.Name, myCOSC)
 
+                Flowsheet.WriteToLog(DWSIM.App.GetLocalTipString("DCOL001"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+                Flowsheet.WriteToLog(DWSIM.App.GetLocalTipString("DCOL002"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+                Flowsheet.WriteToLog(DWSIM.App.GetLocalTipString("DCOL003"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+
             Case TipoObjeto.ReboiledAbsorber
+
                 Dim mySC As New ReboiledAbsorberGraphic(mpx, mpy, 144, 180, 0)
                 mySC.LineWidth = 2
                 mySC.Fill = True
@@ -2890,6 +2944,10 @@ Public Class frmSurface
                 myCOSC.GraphicObject = mySC
                 Flowsheet.Collections.ObjectCollection.Add(mySC.Name, myCOSC)
                 Flowsheet.Collections.CLCS_ReboiledAbsorberCollection.Add(mySC.Name, myCOSC)
+
+                Flowsheet.WriteToLog(DWSIM.App.GetLocalTipString("DCOL001"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+                Flowsheet.WriteToLog(DWSIM.App.GetLocalTipString("DCOL002"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+                Flowsheet.WriteToLog(DWSIM.App.GetLocalTipString("DCOL003"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
 
             Case TipoObjeto.RefluxedAbsorber
 
@@ -2912,7 +2970,12 @@ Public Class frmSurface
                 Flowsheet.Collections.ObjectCollection.Add(mySC.Name, myCOSC)
                 Flowsheet.Collections.CLCS_RefluxedAbsorberCollection.Add(mySC.Name, myCOSC)
 
+                Flowsheet.WriteToLog(DWSIM.App.GetLocalTipString("DCOL001"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+                Flowsheet.WriteToLog(DWSIM.App.GetLocalTipString("DCOL002"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+                Flowsheet.WriteToLog(DWSIM.App.GetLocalTipString("DCOL003"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+
             Case TipoObjeto.ComponentSeparator
+
                 Dim myCSep As New ComponentSeparatorGraphic(mpx, mpy, 50, 50, 0)
                 myCSep.LineWidth = 2
                 myCSep.Fill = True
@@ -2936,6 +2999,7 @@ Public Class frmSurface
                 Flowsheet.Collections.CLCS_ComponentSeparatorCollection.Add(myCSep.Name, myCOCSEP)
 
             Case TipoObjeto.SolidSeparator
+
                 Dim myCSep As New SolidSeparatorGraphic(mpx, mpy, 50, 50, 0)
                 myCSep.LineWidth = 2
                 myCSep.Fill = True
@@ -2962,6 +3026,7 @@ Public Class frmSurface
                 Flowsheet.Collections.CLCS_SolidsSeparatorCollection.Add(myCSep.Name, myCOCSEP)
 
             Case TipoObjeto.Filter
+
                 Dim myCSep As New FilterGraphic(mpx, mpy, 50, 50, 0)
                 myCSep.LineWidth = 2
                 myCSep.Fill = True
@@ -2988,6 +3053,7 @@ Public Class frmSurface
                 Flowsheet.Collections.CLCS_FilterCollection.Add(myCSep.Name, myCOCSEP)
 
             Case TipoObjeto.OrificePlate
+
                 Dim myOPL As New OrificePlateGraphic(mpx, mpy, 25, 25, 0)
                 myOPL.LineWidth = 2
                 myOPL.Fill = True
@@ -3011,6 +3077,7 @@ Public Class frmSurface
                 Flowsheet.Collections.CLCS_OrificePlateCollection.Add(myOPL.Name, myCOOPL)
 
             Case TipoObjeto.CustomUO
+
                 Dim myCUO As New CustomUOGraphic(mpx, mpy, 25, 25, 0)
                 myCUO.LineWidth = 2
                 myCUO.Fill = True
@@ -3036,7 +3103,10 @@ Public Class frmSurface
                 Flowsheet.Collections.ObjectCollection.Add(myCUO.Name, myCOCUO)
                 Flowsheet.Collections.CLCS_CustomUOCollection.Add(myCUO.Name, myCOCUO)
 
+                Flowsheet.WriteToLog(DWSIM.App.GetLocalTipString("CSUO001"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+
             Case TipoObjeto.ExcelUO
+
                 Dim myEUO As New ExcelUOGraphic(mpx, mpy, 25, 25, 0)
                 myEUO.LineWidth = 2
                 myEUO.Fill = True
@@ -3063,6 +3133,7 @@ Public Class frmSurface
                 Flowsheet.Collections.CLCS_ExcelUOCollection.Add(myEUO.Name, myCOEUO)
 
             Case TipoObjeto.FlowsheetUO
+
                 Dim myEUO As New FlowsheetUOGraphic(mpx, mpy, 25, 25, 0)
                 myEUO.LineWidth = 2
                 myEUO.Fill = True
@@ -3089,6 +3160,7 @@ Public Class frmSurface
                 Flowsheet.Collections.CLCS_FlowsheetUOCollection.Add(myEUO.Name, myCOEUO)
 
             Case TipoObjeto.CapeOpenUO
+
                 Dim myCUO As New CapeOpenUOGraphic(mpx, mpy, 40, 40, 0)
                 myCUO.LineWidth = 2
                 myCUO.Fill = True
@@ -3114,6 +3186,7 @@ Public Class frmSurface
                 Flowsheet.Collections.ObjectCollection.Add(myCUO.Name, myCOCUO)
                 Flowsheet.Collections.CLCS_CapeOpenUOCollection.Add(myCUO.Name, myCOCUO)
 
+                Flowsheet.WriteToLog(DWSIM.App.GetLocalTipString("CAPE001"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
 
         End Select
         If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Refresh()

@@ -95,6 +95,10 @@ Public Class FormBinEnv
             Me.GridExpData.Columns(3).HeaderText = "T (" & su.spmp_temperature & ")"
             Me.GridExpData.Columns(4).HeaderText = "P (" & su.spmp_pressure & ")"
 
+            Frm.WriteToLog(DWSIM.App.GetLocalTipString("BENV001"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+            Frm.WriteToLog(DWSIM.App.GetLocalTipString("BENV002"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+            Frm.WriteToLog(DWSIM.App.GetLocalTipString("BENV003"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+
         Else
 
             MessageBox.Show(DWSIM.App.GetLocalString("BinEnvError_TwoCompoundsMinimum"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)

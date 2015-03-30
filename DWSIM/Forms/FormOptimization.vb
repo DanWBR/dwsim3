@@ -125,6 +125,8 @@ Public Class FormOptimization
 
         If Me.lbCases.Items.Count > 0 Then Me.lbCases.SelectedIndex = 0
 
+        form.WriteToLog(DWSIM.App.GetLocalTipString("FOPT001"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+
     End Sub
 
     Private Sub btnDeleteCase_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnDeleteCase.Click

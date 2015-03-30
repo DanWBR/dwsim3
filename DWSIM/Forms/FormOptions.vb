@@ -35,14 +35,6 @@ Public Class FormOptions
 
     Private Sub FormOptions_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        Try
-            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormOptions))
-            Me.ListView1.Items.Clear()
-            Me.ListView1.Items.AddRange(New System.Windows.Forms.ListViewItem() {CType(Resources.GetObject("ListView1.Items"), System.Windows.Forms.ListViewItem), CType(Resources.GetObject("ListView1.Items1"), System.Windows.Forms.ListViewItem), CType(Resources.GetObject("ListView1.Items2"), System.Windows.Forms.ListViewItem), CType(Resources.GetObject("ListView1.Items3"), System.Windows.Forms.ListViewItem)})
-        Catch ex As Exception
-
-        End Try
-
         Dim i As Integer = 0
         Me.cbParallelism.Items.Clear()
         Me.cbParallelism.Items.Add("Default")
@@ -136,6 +128,17 @@ Public Class FormOptions
         Else
             If Me.cbGPU.Items.Count > 0 Then Me.cbGPU.SelectedIndex = 0
         End If
+
+        Select Case My.Settings.CultureInfo
+            Case "pt-BR"
+                Me.ComboBoxUILanguage.SelectedIndex = 0
+            Case "en"
+                Me.ComboBoxUILanguage.SelectedIndex = 1
+            Case "de"
+                Me.ComboBoxUILanguage.SelectedIndex = 2
+            Case "es"
+                Me.ComboBoxUILanguage.SelectedIndex = 3
+        End Select
 
         loaded = True
 
@@ -452,23 +455,6 @@ Public Class FormOptions
         End If
 
     End Sub
-    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
-        If Me.ListView1.SelectedIndices.Count > 0 Then
-            Select Case Me.ListView1.SelectedIndices.Item(0)
-                Case 0
-                    My.Settings.CultureInfo = "pt-BR"
-                Case 1
-                    My.Settings.CultureInfo = "en"
-                Case 2
-                    My.Settings.CultureInfo = "es"
-                Case 3
-                    My.Settings.CultureInfo = "de"
-            End Select
-            My.Settings.Save()
-            My.Application.ChangeUICulture(My.Settings.CultureInfo)
-            MessageBox.Show(DWSIM.App.GetLocalString("NextStartupOnly"))
-        End If
-    End Sub
 
     Private Sub cbudb_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbudb.CheckedChanged
         My.Settings.ReplaceComps = cbudb.Checked
@@ -546,14 +532,25 @@ Public Class FormOptions
     End Sub
 
     Private Sub cbGPU_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles cbGPU.SelectedIndexChanged
+        If cbGPU.SelectedItem.ToString.Contains("Emulator") Then
+            My.Settings.CudafyTarget = eGPUType.Emulator
+        ElseIf cbGPU.SelectedItem.ToString.Contains("CUDA") Then
+            My.Settings.CudafyTarget = eGPUType.Cuda
+        Else
+            My.Settings.CudafyTarget = eGPUType.OpenCL
+        End If
+        Try
+            For Each prop As GPGPUProperties In CudafyHost.GetDeviceProperties(CudafyModes.Target, False)
+                If Me.cbGPU.SelectedItem.ToString.Split("|")(1).Contains(prop.Name) Then
+                    GetCUDACaps(prop)
+                    Exit For
+                End If
+            Next
+        Catch ex As Exception
+
+        End Try
+
         If loaded Then
-            If cbGPU.SelectedItem.ToString.Contains("Emulator") Then
-                My.Settings.CudafyTarget = eGPUType.Emulator
-            ElseIf cbGPU.SelectedItem.ToString.Contains("CUDA") Then
-                My.Settings.CudafyTarget = eGPUType.Cuda
-            Else
-                My.Settings.CudafyTarget = eGPUType.OpenCL
-            End If
             Try
                 For Each prop As GPGPUProperties In CudafyHost.GetDeviceProperties(CudafyModes.Target, False)
                     If Me.cbGPU.SelectedItem.ToString.Split("|")(1).Contains(prop.Name) Then
@@ -568,6 +565,7 @@ Public Class FormOptions
             End Try
             MessageBox.Show(DWSIM.App.GetLocalString("NextStartupOnly"))
         End If
+
     End Sub
 
     Private Sub chkEnableGPUProcessing_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkEnableGPUProcessing.CheckedChanged
@@ -638,5 +636,23 @@ Public Class FormOptions
                 DWSIM.App.HelpRequested("CONF_GlobalSettings7.htm")
         End Select
 
+    End Sub
+
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBoxUILanguage.SelectedIndexChanged
+        If loaded Then
+            Select Case Me.ComboBoxUILanguage.SelectedIndex
+                Case 0
+                    My.Settings.CultureInfo = "pt-BR"
+                Case 1
+                    My.Settings.CultureInfo = "en"
+                Case 2
+                    My.Settings.CultureInfo = "de"
+                Case 3
+                    My.Settings.CultureInfo = "es"
+            End Select
+            My.Settings.Save()
+            My.Application.ChangeUICulture(My.Settings.CultureInfo)
+            MessageBox.Show(DWSIM.App.GetLocalString("NextStartupOnly"))
+        End If
     End Sub
 End Class

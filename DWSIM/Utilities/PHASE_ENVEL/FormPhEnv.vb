@@ -900,6 +900,8 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
         Me.loaded = True
 
+        Frm.WriteToLog(DWSIM.App.GetLocalTipString("PENV001"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+
     End Sub
 
     Private Sub BackgroundWorker1_DoWork(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork

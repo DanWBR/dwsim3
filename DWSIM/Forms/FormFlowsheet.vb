@@ -332,6 +332,7 @@ Imports DWSIM.DWSIM.Outros
         WriteToLog(DWSIM.App.GetLocalTipString("FLSH003"), Color.Black, TipoAviso.Dica)
         WriteToLog(DWSIM.App.GetLocalTipString("FLSH001"), Color.Black, TipoAviso.Dica)
         WriteToLog(DWSIM.App.GetLocalTipString("FLSH002"), Color.Black, TipoAviso.Dica)
+        WriteToLog(DWSIM.App.GetLocalTipString("FLSH005"), Color.Black, TipoAviso.Dica)
 
     End Sub
 

@@ -128,7 +128,7 @@ Public Class FormSensAnalysis
 
         If Me.lbCases.Items.Count > 0 Then Me.lbCases.SelectedIndex = Me.lbCases.Items.Count - 1
 
-
+        form.WriteToLog(DWSIM.App.GetLocalTipString("FSAN001"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
 
     End Sub
 

@@ -649,7 +649,7 @@
     <value>0, 0</value>
   </data>
   <data name="Grid1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>540, 412</value>
+    <value>548, 494</value>
   </data>
   <data name="Grid1.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -667,7 +667,7 @@
     <value>0</value>
   </data>
   <data name="FaTabStripItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>540, 412</value>
+    <value>548, 494</value>
   </data>
   <data name="FaTabStripItem2.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -832,7 +832,7 @@
     <value>Document</value>
   </data>
   <data name="dckMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>197, 246</value>
+    <value>197, 224</value>
   </data>
   <data name="&gt;&gt;dckMenu.Name" xml:space="preserve">
     <value>dckMenu</value>

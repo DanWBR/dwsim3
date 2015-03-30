@@ -54,10 +54,10 @@ Public Class FormPureComp
 
         If ChildParent.Options.SelectedPropertyPackage Is Nothing Then
             MessageBox.Show(DWSIM.App.GetLocalString("NoPropPackDefined"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-
             Me.Close()
         Else
             Me.ComboBox1.SelectedIndex = 0
+            ChildParent.WriteToLog(DWSIM.App.GetLocalTipString("PURE001"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
         End If
 
     End Sub

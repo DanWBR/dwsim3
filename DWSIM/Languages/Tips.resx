@@ -117,6 +117,36 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ADJT001" xml:space="preserve">
+    <value>Se desejar que o Ajuste seja automaticamente resolvido pelo Calculador do DWSIM, defina a propriedade "Ajuste Simultâneo" para "True". Assim você não precisará abrir o Painel de Controle e sua variável será ajustada automaticamente sempre que o fluxograma for calculado por completo. </value>
+  </data>
+  <data name="BENV001" xml:space="preserve">
+    <value>Se você deseja adicionar algum dado experimental ao diagrama, insira os dados na tabela correspondente antes de solicitar o cálculo.</value>
+  </data>
+  <data name="BENV002" xml:space="preserve">
+    <value>A coluna de dados experimentais "y" só é utilizada nos diagramas x-y. Para mostrar ambos os pontos de bolha e orvalho em um diagrama T/P-xy, insira todas as frações molares na coluna de dados "x".</value>
+  </data>
+  <data name="BENV003" xml:space="preserve">
+    <value>Os dados experimentais podem ser copiados e colados diretamente do Microsoft Excel.</value>
+  </data>
+  <data name="CAPE001" xml:space="preserve">
+    <value>Ao carregar suas simulações contendo operações unitárias CAPE-OPEN em outros computadores, certifique-se de que esses componentes estejam instalados e corretamente registrados nos mesmos.</value>
+  </data>
+  <data name="CSTR001" xml:space="preserve">
+    <value>Apenas reações do tipo cinética serão consideradas pelo CSTR.</value>
+  </data>
+  <data name="CSUO001" xml:space="preserve">
+    <value>Para obter ajuda com os scripts, consulte os exemplos de Membrana e Hidrociclone, localizados na pasta de amostras (samples) do DWSIM.</value>
+  </data>
+  <data name="DCOL001" xml:space="preserve">
+    <value>Recomenda-se que as edições das propriedades da coluna sejam realizadas com o Calculador desativado.</value>
+  </data>
+  <data name="DCOL002" xml:space="preserve">
+    <value>Ao editar as conexões da coluna, lembre-se de clicar em alguma célula que não seja a que esteja em edição, para que as mudanças sejam reconhecidas pelo DWSIM.</value>
+  </data>
+  <data name="DCOL003" xml:space="preserve">
+    <value>Lembre-se de configurar a pressão dos estágios intermediários da coluna.</value>
+  </data>
   <data name="FLSH001" xml:space="preserve">
     <value>Para calcular o fluxograma rapidamente, clique em qualquer área livre e pressione F5.</value>
   </data>
@@ -126,6 +156,21 @@
   <data name="FLSH003" xml:space="preserve">
     <value>Pressione SHIFT durante a inicialização do DWSIM para fazer com que as configurações voltem aos seus valores-padrão.</value>
   </data>
+  <data name="FLSH004" xml:space="preserve">
+    <value>Consulte a ajuda específica para o objeto sendo adicionado selecionando-o no fluxograma e pressionando a tecla F1. Os utilitários também possuem ajuda específica.</value>
+  </data>
+  <data name="FLSH005" xml:space="preserve">
+    <value>Para visualizar os resultados detalhados dos cálculos em tempo real, ative o redirecionamento do console e selecione um modo de depuração. É necessário reiniciar o DWSIM para que as alterações tenham efeito.</value>
+  </data>
+  <data name="FLSH006" xml:space="preserve">
+    <value>Alguns tipos de objetos exibem sua janela principal de edição de propriedades em resposta a um duplo clique no seu ícone no fluxograma.</value>
+  </data>
+  <data name="FOPT001" xml:space="preserve">
+    <value>A janela do otimizador também pode ser reposicionada livremente como as principais janelas da simulação.</value>
+  </data>
+  <data name="FSAN001" xml:space="preserve">
+    <value>A janela da ferramenta para análise de sensibilidade também pode ser reposicionada livremente como as principais janelas da simulação.</value>
+  </data>
   <data name="MSTR001" xml:space="preserve">
     <value>Você pode editar a composição de uma corrente de matéria através de um duplo clique com o botão esquerdo do mouse em seu objeto no fluxograma.</value>
   </data>
@@ -134,5 +179,26 @@
   </data>
   <data name="MSTR003" xml:space="preserve">
     <value>Para evitar que a caixa de edição de composição da corrente de matéria apareça ao inserir uma no fluxograma, pressione SHIFTenquanto executa esta ação.</value>
+  </data>
+  <data name="PENV001" xml:space="preserve">
+    <value>Ao solicitar o cálculo, todos os tipos de diagrama são calculados ao mesmo tempo. Para mudar o diagrama em exibição não é necessário solicitar o cálculo novamente.</value>
+  </data>
+  <data name="PFR001" xml:space="preserve">
+    <value>Apenas reações do tipo cinética serão consideradas pelo PFR.</value>
+  </data>
+  <data name="PURE001" xml:space="preserve">
+    <value>As propriedades exibidas nesta ferramenta correspondem às informações dos componentes do DWSIM. Não serão exibidas propriedades dos componentes CAPE-OPEN aqui, caso esteja sendo utilizado um Pacote de Propriedades CAPE-OPEN.</value>
+  </data>
+  <data name="RCON001" xml:space="preserve">
+    <value>Somente as reações do tipo "conversão" serão consideradas pelo reator de conversão.</value>
+  </data>
+  <data name="RECY001" xml:space="preserve">
+    <value>É importante definir bem a localização do Reciclo no fluxograma, para evitar cálculos desnecessários. Insira-o o mais próximo do ponto onde o fluxo de cálculo retorna a um ponto já calculado.</value>
+  </data>
+  <data name="REQL001" xml:space="preserve">
+    <value>O reator de equilíbrio é utilizado quando se tem conhecimento das reações que irão ocorrer. Quando não for o caso, utilize o reator de gibbs.</value>
+  </data>
+  <data name="RGIB001" xml:space="preserve">
+    <value>O reator de gibbs é útil quando não se tem informações a respeito das reações que poderão ocorrer no sistema. Lembre-se de que o simples fato de o resultado indicar algum tipo de reação não significa que essa reação será espontânea!</value>
   </data>
 </root>
