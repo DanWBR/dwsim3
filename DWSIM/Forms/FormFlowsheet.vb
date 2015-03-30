@@ -568,6 +568,7 @@ Imports DWSIM.DWSIM.Outros
                                                           img = My.Resources.exclamation
                                                           strtipo = DWSIM.App.GetLocalString("Erro")
                                                       Case DWSIM.FormClasses.TipoAviso.Dica
+                                                          If Not My.Settings.ShowTips Then Exit Sub
                                                           img = My.Resources.lightbulb
                                                           strtipo = DWSIM.App.GetLocalString("Dica")
                                                       Case Else

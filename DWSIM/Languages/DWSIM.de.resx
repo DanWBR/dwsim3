@@ -5067,4 +5067,7 @@ Die erhaltenen Daten werden hauptsächlich für die Berechnung von VLE-Daten emp
   <data name="ExpData" xml:space="preserve">
     <value>Experimental data</value>
   </data>
+  <data name="Dica" xml:space="preserve">
+    <value>Tipp</value>
+  </data>
 </root>
