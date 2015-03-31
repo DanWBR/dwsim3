@@ -505,8 +505,8 @@ Public Class FormOptions
     Private Sub chkconsole_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkconsole.CheckedChanged
         My.Settings.RedirectOutput = chkconsole.Checked
         If chkconsole.Checked Then
-            Dim txtwriter As New ConsoleRedirection.TextBoxStreamWriter()
-            Console.SetOut(txtwriter)
+            'Dim txtwriter As New ConsoleRedirection.TextBoxStreamWriter()
+            'Console.SetOut(txtwriter)
         Else
             Dim standardOutput As New StreamWriter(Console.OpenStandardOutput())
             standardOutput.AutoFlush = True

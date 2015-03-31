@@ -33,7 +33,13 @@ Namespace DWSIM
 
             If My.Settings.RedirectOutput Then
                 My.Application.OpenForms(0).UIThread(Sub()
-                                                         If My.Settings.DebugLevel >= minlevel Then Console.WriteLine(text)
+                                                         If My.Settings.DebugLevel >= minlevel Then
+                                                             If Not My.Application.ActiveSimulation Is Nothing Then
+                                                                 If Not My.Application.ActiveSimulation.FormOutput Is Nothing Then
+                                                                     My.Application.ActiveSimulation.FormOutput.TextBox1.AppendText(text & vbCrLf)
+                                                                 End If
+                                                             End If
+                                                         End If
                                                      End Sub)
             Else
                 If My.Settings.DebugLevel >= minlevel Then Console.WriteLine(text)

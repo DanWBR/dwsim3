@@ -645,8 +645,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Overrides Function DW_CalcFugCoeff(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double()
 
-            DWSIM.App.WriteToConsole("Raoult's Law fugacity calculation requested at T = " & T & " K and P = " & P & " Pa for the following compounds: ", 2)
-            DWSIM.App.WriteToConsole(Me.RET_VNAMES.ToArrayString, 2)
+            DWSIM.App.WriteToConsole(Me.ComponentName & " fugacity coefficient calculation for phase '" & st.ToString & "' requested at T = " & T & " K and P = " & P & " Pa.", 2)
+            DWSIM.App.WriteToConsole("Compounds: " & Me.RET_VNAMES.ToArrayString, 2)
+            DWSIM.App.WriteToConsole("Mole fractions: " & Vx.ToArrayString(), 2)
 
             Dim n As Integer = UBound(Vx)
             Dim i As Integer
@@ -667,8 +668,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Next
             End If
 
-            DWSIM.App.WriteToConsole("Raoult's Law fugacity calculation results at T = " & T & " K and P = " & P & " Pa: ", 2)
-            DWSIM.App.WriteToConsole(fugcoeff.ToArrayString, 2)
+            DWSIM.App.WriteToConsole("Result: " & fugcoeff.ToArrayString(), 2)
 
             Return fugcoeff
 

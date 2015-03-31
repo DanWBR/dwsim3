@@ -475,7 +475,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Objects\Classes\Databases\Databases.vb" />
-    <Compile Include="Objects\Classes\General\ConsoleRedirection.vb" />
     <Compile Include="Objects\Classes\MAPI\MAPI.vb" />
     <Compile Include="Objects\Classes\Math\AP.vb" />
     <Compile Include="Objects\Classes\Math\Brent.vb" />

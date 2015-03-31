@@ -103,8 +103,8 @@ Namespace My
 
             'direct console output to collection
             If My.Settings.RedirectOutput And Not CommandLineMode Then
-                Dim txtwriter As New ConsoleRedirection.TextBoxStreamWriter()
-                Console.SetOut(txtwriter)
+                'Dim txtwriter As New ConsoleRedirection.TextBoxStreamWriter()
+                'Console.SetOut(txtwriter)
             Else
                 If Not DWSIM.App.IsRunningOnMono Then
                     AttachConsole(ATTACH_PARENT_PROCESS)
