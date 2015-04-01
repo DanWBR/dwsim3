@@ -135,6 +135,7 @@ Imports DWSIM.DWSIM.Outros
                 fsheet.WriteToLog("Error running script: " & ops.FormatException(ex).ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
             End If
         Finally
+            engine.Runtime.Shutdown()
             engine = Nothing
             scope = Nothing
             source = Nothing
