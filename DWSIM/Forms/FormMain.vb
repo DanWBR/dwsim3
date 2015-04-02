@@ -275,11 +275,13 @@ Public Class FormMain
 
             If Not files Is Nothing Then
                 For Each fi As FileInfo In files
-                    Try
-                        pluginassemblylist.Add(Assembly.LoadFile(fi.FullName))
-                    Catch ex As Exception
+                    If fi.Extension.ToLower = ".exe" Or fi.Extension.ToLower = ".dll" Then
+                        Try
+                            pluginassemblylist.Add(Assembly.LoadFile(fi.FullName))
+                        Catch ex As Exception
 
-                    End Try
+                        End Try
+                    End If
                 Next
             End If
 

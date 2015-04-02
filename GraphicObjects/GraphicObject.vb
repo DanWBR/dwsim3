@@ -232,11 +232,8 @@ Namespace GraphicObjects
                 Return m_active
             End Get
             Set(ByVal Value As Boolean)
-                Try
-                    m_active = Value
-                Catch ex As Exception
-                    MsgBox("Erro ao ativar objeto.", MsgBoxStyle.Critical, "Erro")
-                End Try
+                m_active = Value
+                If Value Then Me.Status = GraphicObjects.Status.NotCalculated Else Me.Status = GraphicObjects.Status.Inactive
             End Set
         End Property
 
@@ -355,7 +352,6 @@ Namespace GraphicObjects
             Dim gpRect As Rectangle = Rectangle.Round(gp.GetBounds)
             Return rect.Contains(gpRect)
         End Function
-
 
 #Region "Constructors"
         Protected Sub New()

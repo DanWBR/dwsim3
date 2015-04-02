@@ -697,6 +697,10 @@ Namespace DWSIM.SimulationObjects.Streams
                     End If
                 End If
 
+                If Not Me.GraphicObject Is Nothing Then
+                    .Item.Add(DWSIM.App.GetLocalString("Ativo"), Me.GraphicObject, "Active", False, DWSIM.App.GetLocalString("Miscelnea4"), "", True)
+                End If
+
                 If Me.IsSpecAttached = True Then
                     .Item.Add(DWSIM.App.GetLocalString("ObjetoUtilizadopor"), Flowsheet.Collections.ObjectCollection(Me.AttachedSpecId).GraphicObject.Tag, True, DWSIM.App.GetLocalString("Miscelnea4"), "", True)
                     Select Case Me.SpecVarType

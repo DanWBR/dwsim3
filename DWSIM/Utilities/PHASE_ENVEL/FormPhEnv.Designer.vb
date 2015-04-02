@@ -312,6 +312,7 @@ Partial Class FormPhEnv
         Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Float
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
+        Me.TabPageContextMenuStrip = Me.dckMenu
         Me.GroupBox6.ResumeLayout(False)
         Me.GroupBox6.PerformLayout()
         CType(Me.TextBox1, System.ComponentModel.ISupportInitialize).EndInit()

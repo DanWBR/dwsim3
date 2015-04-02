@@ -462,6 +462,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Hc2 = tmp(4)
                         Q = Wc * (Hc2 - Hc1)
                         Dim tms As MaterialStream = StInCold.Clone
+                        tms.SetFlowsheet(StInCold.FlowSheet)
                         tms.Fases(0).SPMProperties.temperature = Tcm
                         With tms.PropertyPackage
                             .CurrentMaterialStream = tms
@@ -488,6 +489,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         kc = tms.Fases(0).SPMProperties.thermalConductivity.GetValueOrDefault
                         muc = tms.Fases(1).SPMProperties.viscosity.GetValueOrDefault * tms.Fases(1).SPMProperties.molarfraction.GetValueOrDefault + tms.Fases(2).SPMProperties.viscosity.GetValueOrDefault * tms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
                         tms = StInHot.Clone
+                        tms.SetFlowsheet(StInHot.FlowSheet)
                         tms.Fases(0).SPMProperties.temperature = Thm
                         tms.PropertyPackage.CurrentMaterialStream = tms
                         With tms.PropertyPackage
@@ -563,13 +565,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             dpt = fric * L * STProperties.Tube_PassesPerShell / di * vt ^ 2 / 2 * rhoh
                         End If
                         'tube heat transfer coeff
-                        Dim mypipe As New Pipe("", "")
                         If STProperties.Tube_Fluid = 0 Then
                             'cold
-                            hi = mypipe.hint_petukhov(kc, di, fric, Ret, Prt)
+                            hi = Pipe.hint_petukhov(kc, di, fric, Ret, Prt)
                         Else
                             'hot
-                            hi = mypipe.hint_petukhov(kh, di, fric, Ret, Prt)
+                            hi = Pipe.hint_petukhov(kh, di, fric, Ret, Prt)
                         End If
                         'shell internal diameter
                         Dim Dsi, Dsf, nsc, HDi, Nb As Double

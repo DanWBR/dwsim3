@@ -1257,31 +1257,31 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         End Function
 
-        Function NRe(ByVal rho As Double, ByVal v As Double, ByVal D As Double, ByVal mu As Double) As Double
+        Shared Function NRe(ByVal rho As Double, ByVal v As Double, ByVal D As Double, ByVal mu As Double) As Double
 
             NRe = rho * v * D / mu
 
         End Function
 
-        Function NPr(ByVal Cp As Double, ByVal mu As Double, ByVal k As Double) As Double
+        Shared Function NPr(ByVal Cp As Double, ByVal mu As Double, ByVal k As Double) As Double
 
             NPr = Cp * mu / k
 
         End Function
 
-        Function hext_holman(ByVal k As Double, ByVal Dext As Double, ByVal NRe As Double, ByVal NPr As Double) As Double
+        Shared Function hext_holman(ByVal k As Double, ByVal Dext As Double, ByVal NRe As Double, ByVal NPr As Double) As Double
 
             hext_holman = k / Dext * 0.25 * NRe ^ 0.6 * NPr ^ 0.38
 
         End Function
 
-        Function hint_petukhov(ByVal k, ByVal D, ByVal f, ByVal NRe, ByVal NPr)
+        Shared Function hint_petukhov(ByVal k, ByVal D, ByVal f, ByVal NRe, ByVal NPr)
 
             hint_petukhov = k / D * (f / 8) * NRe * NPr / (1.07 + 12.7 * (f / 8) ^ 0.5 * (NPr ^ (2 / 3) - 1))
 
         End Function
 
-        Function PropsAR(ByVal Tamb As Double, ByVal Pamb As Double)
+        Shared Function PropsAR(ByVal Tamb As Double, ByVal Pamb As Double)
 
             Dim T = Tamb
 

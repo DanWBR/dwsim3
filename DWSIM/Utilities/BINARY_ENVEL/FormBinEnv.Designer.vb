@@ -541,6 +541,7 @@ Partial Class FormBinEnv
         Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Float
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
+        Me.TabPageContextMenuStrip = Me.dckMenu
         Me.GroupBox6.ResumeLayout(False)
         Me.GroupBox6.PerformLayout()
         Me.FlowLayoutPanel1.ResumeLayout(False)

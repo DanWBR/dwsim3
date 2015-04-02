@@ -268,8 +268,8 @@ Namespace DWSIM.Flowsheet
                         myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
                         myObj.Calculated = True
                     Case Else
-                        RaiseEvent UnitOpCalculationStarted(form, New System.EventArgs(), objArgs)
                         Dim myObj As SimulationObjects_UnitOpBaseClass = form.Collections.ObjectCollection(objArgs.Nome)
+                        RaiseEvent UnitOpCalculationStarted(form, New System.EventArgs(), objArgs)
                         myObj.Solve()
                         myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
                         RaiseEvent UnitOpCalculationFinished(form, New System.EventArgs(), objArgs)
@@ -1514,21 +1514,24 @@ Namespace DWSIM.Flowsheet
                 End Try
 
                 Try
-                    If FlowsheetSolverMode Then
-                        If myinfo.Emissor = "FlowsheetSolver" Then
+                    Dim myobj = form.Collections.ObjectCollection(myinfo.Nome)
+                    If myobj.GraphicObject.Active Then
+                        If FlowsheetSolverMode Then
+                            If myinfo.Emissor = "FlowsheetSolver" Then
+                                If myinfo.Tipo = TipoObjeto.MaterialStream Then
+                                    CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(myinfo.Nome), , Isolated)
+                                Else
+                                    If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
+                                    CalculateFlowsheet(form, myinfo, Nothing, Isolated)
+                                End If
+                            End If
+                        Else
                             If myinfo.Tipo = TipoObjeto.MaterialStream Then
                                 CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(myinfo.Nome), , Isolated)
                             Else
                                 If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
                                 CalculateFlowsheet(form, myinfo, Nothing, Isolated)
                             End If
-                        End If
-                    Else
-                        If myinfo.Tipo = TipoObjeto.MaterialStream Then
-                            CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(myinfo.Nome), , Isolated)
-                        Else
-                            If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
-                            CalculateFlowsheet(form, myinfo, Nothing, Isolated)
                         End If
                     End If
                 Catch ex As Exception
@@ -1598,12 +1601,15 @@ Namespace DWSIM.Flowsheet
 
                 'form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}, True))
                 Try
-                    If myinfo.Tipo = TipoObjeto.MaterialStream Then
-                        CalculateMaterialStreamAsync(form, form.Collections.CLCS_MaterialStreamCollection(myinfo.Nome), ct)
-                    Else
-                        CalculateFlowsheetAsync(form, myinfo, ct)
+                    Dim myobj = form.Collections.ObjectCollection(myinfo.Nome)
+                    If myobj.GraphicObject.Active Then
+                        If myinfo.Tipo = TipoObjeto.MaterialStream Then
+                            CalculateMaterialStreamAsync(form, myobj, ct)
+                        Else
+                            CalculateFlowsheetAsync(form, myinfo, ct)
+                        End If
+                        myobj.GraphicObject.Calculated = True
                     End If
-                    form.Collections.ObjectCollection(myinfo.Nome).GraphicObject.Calculated = True
                 Catch ex As Exception
                     Throw New Exception(myinfo.Tag & ": " & ex.Message.ToString, ex)
                 Finally
@@ -1652,12 +1658,15 @@ Namespace DWSIM.Flowsheet
                 Parallel.ForEach(li.Value, poptions, Sub(myinfo)
                                                          'form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}, True))
                                                          Try
-                                                             If myinfo.Tipo = TipoObjeto.MaterialStream Then
-                                                                 CalculateMaterialStreamAsync(form, form.Collections.CLCS_MaterialStreamCollection(myinfo.Nome), ct)
-                                                             Else
-                                                                 CalculateFlowsheetAsync(form, myinfo, ct)
+                                                             Dim myobj = form.Collections.ObjectCollection(myinfo.Nome)
+                                                             If myobj.GraphicObject.Active Then
+                                                                 If myinfo.Tipo = TipoObjeto.MaterialStream Then
+                                                                     CalculateMaterialStreamAsync(form, myobj, ct)
+                                                                 Else
+                                                                     CalculateFlowsheetAsync(form, myinfo, ct)
+                                                                 End If
+                                                                 myobj.GraphicObject.Calculated = True
                                                              End If
-                                                             form.Collections.ObjectCollection(myinfo.Nome).GraphicObject.Calculated = True
                                                          Catch ex As Exception
                                                              Throw New Exception(myinfo.Tag & ": " & ex.Message.ToString, ex)
                                                          Finally
@@ -1712,8 +1721,12 @@ Namespace DWSIM.Flowsheet
                 If ObjIDlist Is Nothing Then
                     For Each baseobj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
                         If Not baseobj.GraphicObject Is Nothing Then
-                            baseobj.GraphicObject.Calculated = baseobj.Calculated
-                            If baseobj.Calculated Then baseobj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
+                            If Not baseobj.GraphicObject.Active Then
+                                baseobj.GraphicObject.Status = Status.Inactive
+                            Else
+                                baseobj.GraphicObject.Calculated = baseobj.Calculated
+                                If baseobj.Calculated Then baseobj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
+                            End If
                         End If
                     Next
                 Else
@@ -1724,8 +1737,12 @@ Namespace DWSIM.Flowsheet
                                 If calculating Then
                                     baseobj.GraphicObject.Status = Status.Calculating
                                 Else
-                                    baseobj.GraphicObject.Calculated = baseobj.Calculated
-                                    If baseobj.Calculated Then baseobj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
+                                    If Not baseobj.GraphicObject.Active Then
+                                        baseobj.GraphicObject.Status = Status.Inactive
+                                    Else
+                                        baseobj.GraphicObject.Calculated = baseobj.Calculated
+                                        If baseobj.Calculated Then baseobj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
+                                    End If
                                 End If
                             End If
                         End If
@@ -1775,12 +1792,14 @@ Namespace DWSIM.Flowsheet
                             maxidx = listidx
                             For Each o As String In lists(listidx - 1)
                                 obj = form.Collections.ObjectCollection(o)
-                                For Each c As ConnectionPoint In obj.GraphicObject.OutputConnectors
-                                    If c.IsAttached Then
-                                        If obj.GraphicObject.TipoObjeto = TipoObjeto.OT_Reciclo Then Exit For
-                                        lists(listidx).Add(c.AttachedConnector.AttachedTo.Name)
-                                    End If
-                                Next
+                                If obj.GraphicObject.Active Then
+                                    For Each c As ConnectionPoint In obj.GraphicObject.OutputConnectors
+                                        If c.IsAttached Then
+                                            If obj.GraphicObject.TipoObjeto = TipoObjeto.OT_Reciclo Then Exit For
+                                            lists(listidx).Add(c.AttachedConnector.AttachedTo.Name)
+                                        End If
+                                    Next
+                                End If
                             Next
                         Else
                             Exit Do
@@ -1953,7 +1972,13 @@ Namespace DWSIM.Flowsheet
                     Dim fobj = form.Collections.ObjectCollection(o)
                     With fobj
                         .Calculated = False
-                        If Not fobj.GraphicObject Is Nothing Then fobj.GraphicObject.Calculated = False
+                        If Not fobj.GraphicObject Is Nothing Then
+                            If fobj.GraphicObject.Active Then
+                                fobj.GraphicObject.Calculated = False
+                            Else
+                                fobj.GraphicObject.Status = Status.Inactive
+                            End If
+                        End If
                     End With
                 Next
 
