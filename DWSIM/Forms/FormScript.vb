@@ -30,7 +30,13 @@ Imports DWSIM.DWSIM.Outros
         tscb2.Items.AddRange(New Object() {6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16})
 
         tscb2.SelectedItem = 10
-        tscb1.SelectedItem = "Courier New"
+        If tscb1.Items.Contains("Consolas") Then
+            tscb1.SelectedItem = "Consolas"
+        ElseIf tscb1.Items.Contains("Courier New") Then
+            tscb1.SelectedItem = "Courier New"
+        Else
+            tscb1.SelectedIndex = 0
+        End If
 
         'load existing scripts
         For Each s As Script In fc.ScriptCollection.Values
