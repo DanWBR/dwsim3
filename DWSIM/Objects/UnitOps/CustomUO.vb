@@ -149,6 +149,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Dim lscript As New Lua
                     lscript("Flowsheet") = FlowSheet
                     lscript("Spreadsheet") = FlowSheet.FormSpreadsheet
+                    lscript("Plugins") = FormMain.UtilityPlugins
                     Dim Solver As New DWSIM.Flowsheet.FlowsheetSolver
                     lscript("Solver") = Solver
                     lscript("Me") = Me
@@ -191,6 +192,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     scope = engine.CreateScope()
                     scope.SetVariable("Flowsheet", FlowSheet)
                     scope.SetVariable("Spreadsheet", FlowSheet.FormSpreadsheet)
+                    scope.SetVariable("Plugins", FormMain.UtilityPlugins)
                     scope.SetVariable("Me", Me)
                     If Me.GraphicObject.InputConnectors(0).IsAttached Then scope.SetVariable("ims1", ims1)
                     If Me.GraphicObject.InputConnectors(1).IsAttached Then scope.SetVariable("ims2", ims2)

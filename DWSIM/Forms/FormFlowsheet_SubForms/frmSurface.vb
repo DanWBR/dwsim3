@@ -3544,7 +3544,7 @@ Public Class frmSurface
                         myobj.FontName = selectionControl.tscb1.SelectedItem
                         myobj.FontSize = selectionControl.tscb2.SelectedItem
                         myobj.Includes = selectionControl.includes
-                        myobj.ScriptText = selectionControl.scripttext
+                        myobj.ScriptText = selectionControl.txtScript.Document.Text
                     Else
                         Dim selectionControl As New ScriptEditorFormMono
                         selectionControl.scripttext = myobj.ScriptText
@@ -3557,7 +3557,7 @@ Public Class frmSurface
                         myobj.FontName = selectionControl.tscb1.SelectedItem
                         myobj.FontSize = selectionControl.tscb2.SelectedItem
                         myobj.Includes = selectionControl.includes
-                        myobj.ScriptText = selectionControl.scripttext
+                        myobj.ScriptText = selectionControl.txtScript.Text
                     End If
                 Case TipoObjeto.OT_Ajuste
                     Dim selectionControl As New UI_AdjControlPanelForm
