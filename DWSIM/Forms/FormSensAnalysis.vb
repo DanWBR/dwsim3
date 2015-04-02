@@ -591,7 +591,7 @@ Public Class FormSensAnalysis
             Me.tbStats.ScrollToCaret()
             Me.BtnDrawChart.Enabled = True
 
-            If FormMain.UtilityPlugins.ContainsKey("DF7368D6-5A06-4856-9B7A-D7F09D81F71F") Then
+            If My.MyApplication.UtilityPlugins.ContainsKey("DF7368D6-5A06-4856-9B7A-D7F09D81F71F") Then
 
                 btnRegressData.Enabled = True
 
@@ -792,7 +792,7 @@ Public Class FormSensAnalysis
     Private Sub btnRegressData_Click(sender As System.Object, e As System.EventArgs) Handles btnRegressData.Click
 
         'data fitting plugin is available
-        Dim myUPlugin As Interfaces.IUtilityPlugin = FormMain.UtilityPlugins.Item("DF7368D6-5A06-4856-9B7A-D7F09D81F71F")
+        Dim myUPlugin As Interfaces.IUtilityPlugin = My.MyApplication.UtilityPlugins.Item("DF7368D6-5A06-4856-9B7A-D7F09D81F71F")
 
         myUPlugin.SetFlowsheet(form)
 

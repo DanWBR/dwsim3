@@ -120,7 +120,7 @@ Imports DWSIM.DWSIM.Outros
             engine.Runtime.IO.SetOutput(New DataGridViewTextStream(fsheet), UTF8Encoding.UTF8)
         End If
         scope = engine.CreateScope()
-        scope.SetVariable("Plugins", TryCast(fsheet.ParentForm, FormMain).UtilityPlugins)
+        scope.SetVariable("Plugins", My.MyApplication.UtilityPlugins)
         scope.SetVariable("Flowsheet", fsheet)
         Dim Solver As New DWSIM.Flowsheet.FlowsheetSolver
         scope.SetVariable("Solver", Solver)

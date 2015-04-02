@@ -70,7 +70,6 @@ Public Class FormMain
     Public AvailableUnitSystems As New Dictionary(Of String, DWSIM.SistemasDeUnidades.Unidades)
     Public PropertyPackages As New Dictionary(Of String, DWSIM.SimulationObjects.PropertyPackages.PropertyPackage)
 
-    Public UtilityPlugins As New Dictionary(Of String, Interfaces.IUtilityPlugin)
     Public COMonitoringObjects As New Dictionary(Of String, DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.CapeOpenUnitOpInfo)
 
 #Region "    Form Events"
@@ -204,7 +203,7 @@ Public Class FormMain
         Dim pluginlist As List(Of Interfaces.IUtilityPlugin) = GetPlugins(LoadPluginAssemblies())
 
         For Each ip As Interfaces.IUtilityPlugin In pluginlist
-            Me.UtilityPlugins.Add(ip.UniqueID, ip)
+            My.MyApplication.UtilityPlugins.Add(ip.UniqueID, ip)
         Next
 
         'load external property packages from 'propertypackages' folder, if there is any

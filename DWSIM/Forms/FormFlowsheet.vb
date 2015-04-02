@@ -2312,7 +2312,7 @@ Imports DWSIM.DWSIM.Outros
 
         'process plugin list
 
-        For Each iplugin As Interfaces.IUtilityPlugin In FormMain.UtilityPlugins.Values
+        For Each iplugin As Interfaces.IUtilityPlugin In My.MyApplication.UtilityPlugins.Values
 
             Dim tsmi As New ToolStripMenuItem
             With tsmi
@@ -2331,7 +2331,7 @@ Imports DWSIM.DWSIM.Outros
 
         Dim tsmi As ToolStripMenuItem = CType(sender, ToolStripMenuItem)
 
-        Dim myUPlugin As Interfaces.IUtilityPlugin = FormMain.UtilityPlugins.Item(tsmi.Tag)
+        Dim myUPlugin As Interfaces.IUtilityPlugin = My.MyApplication.UtilityPlugins.Item(tsmi.Tag)
 
         myUPlugin.SetFlowsheet(Me)
         Select Case myUPlugin.DisplayMode

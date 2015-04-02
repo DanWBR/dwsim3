@@ -23,6 +23,8 @@ Namespace My
         Public Shared MasterCalculatorStopRequested As Boolean = False
         Public Shared CommandLineMode As Boolean = False
 
+        Public Shared UtilityPlugins As Dictionary(Of String, Interfaces.IUtilityPlugin)
+
         Public Shared IsRunningParallelTasks As Boolean = False
         Public Shared TaskCancellationTokenSource As Threading.CancellationTokenSource
 
@@ -121,6 +123,8 @@ Namespace My
             'load user unit systems
 
             UserUnitSystems = New Dictionary(Of String, DWSIM.SistemasDeUnidades.Unidades)
+
+            UtilityPlugins = New Dictionary(Of String, Interfaces.IUtilityPlugin)
 
             Dim xdoc As New XDocument()
             Dim xel As XElement
