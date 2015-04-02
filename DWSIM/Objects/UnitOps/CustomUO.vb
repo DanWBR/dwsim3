@@ -192,7 +192,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     scope = engine.CreateScope()
                     scope.SetVariable("Flowsheet", FlowSheet)
                     scope.SetVariable("Spreadsheet", FlowSheet.FormSpreadsheet)
-                    scope.SetVariable("Plugins", FormMain.UtilityPlugins)
+                    scope.SetVariable("Plugins", TryCast(FlowSheet.ParentForm, FormMain).UtilityPlugins)
                     scope.SetVariable("Me", Me)
                     If Me.GraphicObject.InputConnectors(0).IsAttached Then scope.SetVariable("ims1", ims1)
                     If Me.GraphicObject.InputConnectors(1).IsAttached Then scope.SetVariable("ims2", ims2)
