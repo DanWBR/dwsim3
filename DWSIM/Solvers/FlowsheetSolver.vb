@@ -1496,6 +1496,8 @@ Namespace DWSIM.Flowsheet
             form.FormSurface.PictureBox3.Image = My.Resources.weather_lightning
             form.FormSurface.PictureBox4.Visible = True
 
+            Dim loopex As Exception = Nothing
+
             While form.CalculationQueue.Count >= 1
 
                 My.MyApplication.CalculatorStopRequested = False
@@ -1541,6 +1543,7 @@ Namespace DWSIM.Flowsheet
                     Else
                         form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
                     End If
+                    loopex = ex
                 End Try
 
                 form.FormWatch.UpdateList()
@@ -1557,6 +1560,10 @@ Namespace DWSIM.Flowsheet
                 CheckCalculatorStatus()
 
                 Application.DoEvents()
+
+                If Not loopex Is Nothing Then
+                    form.CalculationQueue.Clear()
+                End If
 
             End While
 
@@ -1580,6 +1587,8 @@ Namespace DWSIM.Flowsheet
             form.FormSurface.LabelCalculator.Text = DWSIM.App.GetLocalString("CalculadorOcioso")
 
             Application.DoEvents()
+
+            If Not loopex Is Nothing Then Throw loopex
 
         End Sub
 
