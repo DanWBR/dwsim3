@@ -71,13 +71,13 @@ Public Class FormCompoundCreator
                 If Not My.Computer.FileSystem.FileExists(S) Then S = picpath & "empty.png"
 
                 .Add(New Object() {" ", " ", CInt(0), Image.FromFile(S)})
-                .Item(.Count - 1).HeaderCell.Value = "ID" & i - 1
+                .Item(.Count - 1).HeaderCell.Value = "ID " & UNIFAClines(i).Split(",")(1) 'SubGroup
                 .Item(.Count - 1).Cells(0).Value = UNIFAClines(i).Split(",")(2) 'MainGroup
                 .Item(.Count - 1).Cells(1).Value = UNIFAClines(i).Split(",")(3) 'SubGroup
                 TT = "Rk / Qk: " & UNIFAClines(i).Split(",")(4) & " / " & UNIFAClines(i).Split(",")(5) & vbCrLf & _
                                                          "Example Compound: " & UNIFAClines(i).Split(",")(6) & vbCrLf & _
                                                          "Joback subgroups: " & UNIFAClines(i).Split(",")(8)
-                .Item(.Count - 1).Cells(3).Tag = {S, TT}
+                .Item(.Count - 1).Cells(3).Tag = {S, TT, UNIFAClines(i).Split(",")(1)}
 
                 If GroupName <> UNIFAClines(i).Split(",")(2) Then
                     L = Not L
@@ -93,18 +93,55 @@ Public Class FormCompoundCreator
             Next
         End With
 
-
         'Grid MODFAC
         L = True
-        filename = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "NIST-MODFAC_RiQi.txt"
+        filename = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "modfac.txt"
         MODFACLines = IO.File.ReadAllLines(filename)
         Dim cult As Globalization.CultureInfo = New Globalization.CultureInfo("en-US")
         Dim fields As String()
-        Dim delimiter As String = vbTab
+        Dim delimiter As String = ";"
         Dim maingroup As Integer = 1
         Dim mainname As String = ""
 
         Me.GridMODFAC.Rows.Clear()
+
+        Using parser As New TextFieldParser(filename)
+            parser.SetDelimiters(delimiter)
+            parser.ReadLine()
+
+            While Not parser.EndOfData
+                fields = parser.ReadFields()
+                With Me.GridMODFAC.Rows
+                    S = picpath & fields(6) & ".png"
+                    If Not My.Computer.FileSystem.FileExists(S) Then S = picpath & "empty.png"
+
+                    .Add(New Object() {CInt(0), CInt(0), CInt(0), Image.FromFile(S)})
+                    .Item(.Count - 1).HeaderCell.Value = "ID " & fields(3)
+                    .Item(.Count - 1).Cells(0).Value = fields(1)
+                    .Item(.Count - 1).Cells(1).Value = fields(2)
+                    .Item(.Count - 1).Cells(2).Value = 0
+                    TT = "Rk / Qk: " & fields(4) & " / " & fields(5) & vbCrLf & _
+                                                             "Example Compound: " & fields(6) & vbCrLf & fields(7)
+                    .Item(.Count - 1).Cells(3).Tag = {S, TT, fields(3)}
+
+                    If L Then
+                        .Item(.Count - 1).Cells(0).Style.BackColor = Color.FromArgb(230, 230, 200)
+                        .Item(.Count - 1).Cells(1).Style.BackColor = Color.FromArgb(230, 230, 200)
+                    Else
+                        .Item(.Count - 1).Cells(0).Style.BackColor = Color.FromArgb(200, 230, 230)
+                        .Item(.Count - 1).Cells(1).Style.BackColor = Color.FromArgb(200, 230, 230)
+                    End If
+                End With
+            End While
+        End Using
+
+
+        'Grid NIST-MODFAC
+        L = True
+        filename = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "NIST-MODFAC_RiQi.txt"
+        MODFACLines = IO.File.ReadAllLines(filename)
+        delimiter = vbTab
+        Me.GridNISTMODFAC.Rows.Clear()
 
         Using parser As New TextFieldParser(filename)
             parser.SetDelimiters(delimiter)
@@ -116,22 +153,20 @@ Public Class FormCompoundCreator
                 If fields(0).StartsWith("(") Then
                     maingroup = fields(0).Split(")")(0).Substring(1)
                     mainname = fields(0).Trim().Split(")")(1).Trim
-
-                    
                     L = Not L
                 Else
-                    With Me.GridMODFAC.Rows
+                    With Me.GridNISTMODFAC.Rows
                         S = picpath & fields(4) & ".png"
                         If Not My.Computer.FileSystem.FileExists(S) Then S = picpath & "empty.png"
 
                         .Add(New Object() {CInt(0), CInt(0), CInt(0), Image.FromFile(S)})
-                        .Item(.Count - 1).HeaderCell.Value = "ID" & maingroup
+                        .Item(.Count - 1).HeaderCell.Value = "ID " & fields(0)
                         .Item(.Count - 1).Cells(0).Value = mainname
                         .Item(.Count - 1).Cells(1).Value = fields(1)
                         .Item(.Count - 1).Cells(2).Value = 0
                         TT = "Rk / Qk: " & fields(2) & " / " & fields(3) & vbCrLf & _
                                                                  "Example Compound: " & fields(4) & vbCrLf & fields(5)
-                        .Item(.Count - 1).Cells(3).Tag = {S, TT}
+                        .Item(.Count - 1).Cells(3).Tag = {S, TT, fields(0)}
 
                         If L Then
                             .Item(.Count - 1).Cells(0).Style.BackColor = Color.FromArgb(230, 230, 200)
@@ -469,12 +504,41 @@ Public Class FormCompoundCreator
 
             populating = True
             For Each r As DataGridViewRow In Me.GridUNIFAC.Rows
-                r.Cells(2).Value = .cp.UNIFACGroups.Collection(r.Cells(1).Value)
+                If .cp.UNIFACGroups.Collection(r.Cells(1).Value) <> "" Then r.Cells(2).Value = .cp.UNIFACGroups.Collection(r.Cells(1).Value) 'old file format - Subgroup name
+                If .cp.UNIFACGroups.Collection(r.Cells(3).Tag(2)) <> "" Then r.Cells(2).Value = .cp.UNIFACGroups.Collection(r.Cells(3).Tag(2)) 'new file format - Subgroup ID
+
+                If r.Cells(2).Value > 0 Then
+                    r.Cells(2).Style.BackColor = Color.PaleGreen
+                Else
+                    r.Cells(2).Style.BackColor = Color.White
+                End If
+
             Next
             For Each r As DataGridViewRow In Me.GridMODFAC.Rows
-                r.Cells(2).Value = .cp.MODFACGroups.Collection(r.Cells(1).Value)
+                If .cp.MODFACGroups.Collection(r.Cells(1).Value) <> "" Then r.Cells(2).Value = .cp.MODFACGroups.Collection(r.Cells(1).Value) 'old file format - Subgroup name
+                If .cp.MODFACGroups.Collection(r.Cells(3).Tag(2)) <> "" Then r.Cells(2).Value = .cp.MODFACGroups.Collection(r.Cells(3).Tag(2)) 'new file format - Subgroup ID
+
+                If r.Cells(2).Value > 0 Then
+                    r.Cells(2).Style.BackColor = Color.PaleGreen
+                Else
+                    r.Cells(2).Style.BackColor = Color.White
+                End If
             Next
 
+            If .cp.NISTMODFACGroups Is Nothing Then
+                .cp.NISTMODFACGroups = New DWSIM.ClassesBasicasTermodinamica.UNIFACGroupCollection
+            End If
+
+            For Each r As DataGridViewRow In Me.GridNISTMODFAC.Rows
+                If .cp.NISTMODFACGroups.Collection(r.Cells(1).Value) <> "" Then r.Cells(2).Value = .cp.NISTMODFACGroups.Collection(r.Cells(1).Value) 'old file format - Subgroup name
+                If .cp.NISTMODFACGroups.Collection(r.Cells(3).Tag(2)) <> "" Then r.Cells(2).Value = .cp.NISTMODFACGroups.Collection(r.Cells(3).Tag(2)) 'new file format - Subgroup ID
+
+                If r.Cells(2).Value > 0 Then
+                    r.Cells(2).Style.BackColor = Color.PaleGreen
+                Else
+                    r.Cells(2).Style.BackColor = Color.White
+                End If
+            Next
 
             FillUnifacSubGroups()
 
@@ -548,12 +612,12 @@ Public Class FormCompoundCreator
         For Each r As DataGridViewRow In Me.GridJoback.Rows
             r.Cells(2).Value = Nothing
         Next
-        For Each r As DataGridViewRow In Me.GridUNIFAC.Rows
-            ugc = mycase.cp.UNIFACGroups.Collection(r.Cells(1).Value)
 
+        For Each r As DataGridViewRow In Me.GridUNIFAC.Rows
             'Joback groups from UNIFAC subgroups
-            JG = UNIFAClines(r.Index + 2).Split(",")(8) 'Joback Subgroup List
             If r.Cells(2).Value > 0 Then
+                ugc = mycase.cp.UNIFACGroups.Collection(r.Cells(3).Tag(2))
+                JG = UNIFAClines(r.Index + 2).Split(",")(8) 'Joback Subgroup List
                 For k = 0 To 3
                     JSG = JG.Split("/")(k)
                     If Not JSG = "" Then
@@ -573,7 +637,7 @@ Public Class FormCompoundCreator
             .su = Me.su
             .database = tbDBPath.Text
             .cp.Acentric_Factor = CheckEmptyTextBox(TextBoxAF)
-            .cp.CAS_Number = CheckEmptyTextBox(TextBoxCAS)
+            .cp.CAS_Number = TextBoxCAS.Text
             .cp.CompCreatorStudyFile = .Filename
             .cp.Chao_Seader_Acentricity = CheckEmptyTextBox(TextBoxCSAF)
             .cp.Chao_Seader_Liquid_Molar_Volume = CheckEmptyTextBox(TextBoxCSLV)
@@ -687,12 +751,17 @@ Public Class FormCompoundCreator
 
             .cp.UNIFACGroups.Collection.Clear()
             For Each r As DataGridViewRow In Me.GridUNIFAC.Rows
-                If CInt(r.Cells(2).Value) <> 0 Then .cp.UNIFACGroups.Collection(r.Cells(1).Value) = r.Cells(2).Value
+                If CInt(r.Cells(2).Value) <> 0 Then .cp.UNIFACGroups.Collection(r.Cells(3).Tag(2)) = r.Cells(2).Value
             Next
 
             .cp.MODFACGroups.Collection.Clear()
             For Each r As DataGridViewRow In Me.GridMODFAC.Rows
-                If CInt(r.Cells(2).Value) <> 0 Then .cp.MODFACGroups.Collection(r.Cells(1).Value) = r.Cells(2).Value
+                If CInt(r.Cells(2).Value) <> 0 Then .cp.MODFACGroups.Collection(r.Cells(3).Tag(2)) = r.Cells(2).Value
+            Next
+
+            .cp.NISTMODFACGroups.Collection.Clear()
+            For Each r As DataGridViewRow In Me.GridNISTMODFAC.Rows
+                If CInt(r.Cells(2).Value) <> 0 Then .cp.NISTMODFACGroups.Collection(r.Cells(3).Tag(2)) = r.Cells(2).Value
             Next
 
             Dim JC As Integer
@@ -1041,9 +1110,12 @@ Public Class FormCompoundCreator
                 If Not r.Cells(2).Value Is Nothing Then
                     If CInt(r.Cells(2).Value) <> 0 Then
                         If Not populating Then
-                            mycase.cp.UNIFACGroups.Collection.Add(r.Cells(1).Value, r.Cells(2).Value)
+                            mycase.cp.UNIFACGroups.Collection.Add(r.Cells(3).Tag(2), r.Cells(2).Value)
+                            r.Cells(2).Style.BackColor = Color.PaleGreen
                         End If
                     End If
+                Else
+                    r.Cells(2).Style.BackColor = Color.White
                 End If
             Next
             loaded = False
@@ -1054,9 +1126,29 @@ Public Class FormCompoundCreator
         BothSaveStatusModified(sender, e)
     End Sub
     Private Sub GridMODFAC_CellValueChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GridMODFAC.CellValueChanged
-        BothSaveStatusModified(sender, e)
-    End Sub
+        If loaded Then
+            Dim c As DataGridViewCell = Me.GridMODFAC.Rows(e.RowIndex).Cells(e.ColumnIndex)
+            If c.Value > 0 Then
+                c.Style.BackColor = Color.PaleGreen
+            Else
+                c.Style.BackColor = Color.White
+            End If
 
+            BothSaveStatusModified(sender, e)
+        End If
+    End Sub
+    Private Sub GridNISTMODFAC_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles GridNISTMODFAC.CellValueChanged
+        If loaded Then
+            Dim c As DataGridViewCell = Me.GridNISTMODFAC.Rows(e.RowIndex).Cells(e.ColumnIndex)
+            If c.Value > 0 Then
+                c.Style.BackColor = Color.PaleGreen
+            Else
+                c.Style.BackColor = Color.White
+            End If
+
+            BothSaveStatusModified(sender, e)
+        End If
+    End Sub
     Private Sub Grid_CellValueChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GridJoback.CellValueChanged, AddAtomDataGrid.CellValueChanged
         If loaded Then
             CalcJobackParams()
@@ -2547,6 +2639,7 @@ Public Class FormCompoundCreator
             If Not PureUNIFACCompound Then
                 mycase.cp.UNIFACGroups.Collection.Clear()
                 mycase.cp.MODFACGroups.Collection.Clear()
+                mycase.cp.NISTMODFACGroups.Collection.Clear()
             End If
 
             DWSIM.Databases.UserDB.AddCompounds(New DWSIM.ClassesBasicasTermodinamica.ConstantProperties() {mycase.cp}, tbDBPath.Text, chkReplaceComps.Checked)
@@ -2604,7 +2697,7 @@ Public Class FormCompoundCreator
         System.Diagnostics.Process.Start("http://webbook.nist.gov/cgi/cbook.cgi?ID=" & TextBoxCAS.Text)
     End Sub
 
-    Private Sub LinkLabel2_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabel2.LinkClicked
+    Private Sub LinkLabel2_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabel2.LinkClicked, LinkLabel4.LinkClicked
         System.Diagnostics.Process.Start("http://www.ddbst.com/unifacga.html")
     End Sub
     Private Sub LinkLabel3_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles LinkLabel3.LinkClicked
@@ -2751,6 +2844,26 @@ Public Class FormCompoundCreator
         PicUNIFAC.Image = Nothing
         TBUnifac.Text = ""
     End Sub
+    Private Sub GridNISTMODFAC_CellMouseEnter(sender As Object, e As DataGridViewCellEventArgs) Handles GridNISTMODFAC.CellMouseEnter
+        If e.RowIndex >= 0 Then
+            PicNISTMODFAC.Image = Image.FromFile(GridNISTMODFAC.Rows(e.RowIndex).Cells(3).Tag(0))
+            TbNISTMODFAC.Text = GridNISTMODFAC.Rows(e.RowIndex).Cells(3).Tag(1)
+        End If
+    End Sub
+    Private Sub GridNISTMODFAC_CellMouseLeave(sender As Object, e As DataGridViewCellEventArgs) Handles GridNISTMODFAC.CellMouseLeave
+        PicNISTMODFAC.Image = Nothing
+        TbNISTMODFAC.Text = ""
+    End Sub
+    Public Sub New()
+
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+
+    End Sub
+
+    
 End Class
 
 <System.Serializable()> Public Class CompoundGeneratorCase

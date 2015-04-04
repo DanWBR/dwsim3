@@ -36,7 +36,6 @@ No.	Sub-group Name	Ri	Qi	Example
 302	CCO	1.7048	1.5542	Methyl-Tert-Butyl-Ketone	1 CCO, 4 CH3	
 (10) CHO							
 20	CHO	0.7173	0.771	Propanal	1 CH3, 1 CH2, 1 CHO	
-308	HCHO	0.7173	0.771	Formaldehyde	1 HCHO	
 (11) CCOO							
 21	CH3COO	1.27	1.6286	Butylacetate	1 CH3, 3 CH2, 1 CH3COO	
 22	CH2COO	1.27	1.4228	Methylpropionate	2 CH3, 1 CH2COO	
@@ -60,12 +59,12 @@ No.	Sub-group Name	Ri	Qi	Example
 35	CH2N	1.0746	0.824	Triethylamine	3 CH3, 2 CH2, 1 CH2N	
 (17) ACNH2							
 36	ACNH2	1.1849	0.8067	Aniline	5 ACH, 1 ACNH2	
-306	ACNH	1.1849	0.732	n-Methylaniline	5 ACH, 1 ACNH, 1 CH3	
+306	ACNH	1.1849	0.732	empty	empty	
 307	ACN	1.1849	0.61	Dimethylaniline	5 ACH, 1 ACN, 2 CH3	
 (18) Pyridine							
-37	AC2H2N	1.4578	0.9022	Pyridine	1 AC2H2N, 3 ACH	
+37	AC2H2N	1.4578	0.9022	Pyridine_	1 AC2H2N, 3 ACH	
 38	AC2HN	1.2393	0.633	2 Methylpyridine	1 AC2HN, 3 ACH, 1 CH3	
-39	AC2N	1.0731	0.353	2-3 Dimethylpyridine	1 AC2N, 3ACH, 2 CH3	
+39	AC2N	1.0731	0.353	2,6-Dimethylpyridine	1 AC2N, 3ACH, 2 CH3	
 (94) Pyrrole							
 196	AC2H2NH	1.325	0.752	Pyrrole	1 AC2H2NH, 2 ACH	
 197	AC2HNH	1.0976	0.44	2-Methylpyrrole	1 AC2HNH, 2 ACH, 1 CH3	
@@ -240,9 +239,9 @@ No.	Sub-group Name	Ri	Qi	Example
 (73) CF4						
 151	CF4	1.7278	1.76	Tetrafluoromethane	1 CF4	
 (74) Acetal						
-152	C(O)2	0.7073	0.48	1,1-Diethoxyethane	2 C(O)2, 3 CH3	
-186	CH(O)2	0.9347	0.708	Aspirin	2 CH(O)2, 1 CH3, 4 ACH, 2 AC	
-310	CH2(O)2	0.9347	0.708	Empty	No Example available
+152	C(O)2	0.7073	0.48	1,1-Diethoxypropane	2 C(O)2, 2 CH3, 2 CH2	
+186	CH(O)2	0.9347	0.708	1,1-Diethoxyethane	2 CH(O)2, 2 CH3, 2 CH2	
+309	CH2(O)2	0.9347	0.708	1,1-Diethoxymethane	2 CH2(O)2, 2 CH3, 2 CH2
 (75) ACNR2						
 153	ACN(CH3)2	2.4529	1.908	n,n-Dimetylaniline	1 ACN(CH3)2, 5 ACH	
 154	ACN(CH3)CH2	2.2261	1.6	n-Ethyl-n-Methylaniline	1 ACN(CH3)(CH2), 5 ACH, 1 CH3	
@@ -253,12 +252,12 @@ No.	Sub-group Name	Ri	Qi	Example
 158	ACNHCH	1.3448	0.744	n-Isopropylaniline	1 ACNCH, 5 ACH, 2 CH3	
 (77) Furan						
 159	AC2H2O	1.3065	1.04	Furan	1 AC2H2O, 2 ACH	
-160	AC2HO	1.1404	0.76	2-(-Oxoethenyl)-Benzaldehyde	1 AC2HO, 1 ACHO, 2 AC, 4 ACH	
+160	AC2HO	1.1404	0.76	Benzofuran	1 AC2HO, 1 AC, 5 ACH	
 161	AC2O	0.9743	0.48	Dibenzofuran	1 AC2O, 8 ACH, 2 AC	
 (78) c-CNH						
-188	c-CH2-NH	1.207	0.936	Piperazine	1 c-CH2-NH, 2 c-CH2	
-162	c-CH-NH	0.9796	0.624	2,6-Lupetidine	1 c-CH-NH, 2 CH3, 3 c-CH2	
-163	c-C-NH	0.7521	0.396	6-Aminohexanoicacid	1 c-C-NH, 1 c-C, 1 CO, 5 c-CH	
+188	c-CH2-NH	1.207	0.936	Piperazine	2 c-CH2-NH, 2 c-CH2	
+162	c-CH-NH	0.9796	0.624	2,6-Lupetidine	1 c-CH-NH, 2 CH3, 1c-CH, 3 c-CH2	
+163	c-C-NH	0.7521	0.396	2,2-Dimethylpiperidine	1 c-C-NH, 4 c-CH2, 2 CH3	
 (79) c-CNR						
 189	c-CH2-NCH3	1.8609	1.48	n-Methylpiperidine	1 c-CH2-NCH3, 4 c-CH2	
 190	c-CH2-NCH2	1.6341	1.172	n-Ethylpiperidine	1 c-CH2-NCH2, 4 c-CH2, 1 CH3	
@@ -272,21 +271,21 @@ No.	Sub-group Name	Ri	Qi	Example
 172	>SiH-	1.2853	0.749	Heptamethyltrisiloxane	1 >SiH-. 7 CH3, 2 ->SiO-	
 173	>Si<	1.047	0.41	Hexamethyldisiloxane	1 >Si<, 6 CH3, 1 ->SiO-	
 (81) SiO						
-174	-SiH2-O-	1.4838 	1.062	1,3-dimethyldisiloxane	1 -SiH2-O-, 2 CH3, 1 -SiH2-	
-175	>SiH-O-	1.303	0.764	1,1,3,3-tetramethyldisiloxane	1 >SiH-O-, 4 CH3, 1 >SiH-	
-176	->Si-O-	1.1044	0.466	octamethylcyclotetrasiloxane	4 ->Si-O-, 8 CH3	
+174	-SiH2-O-	1.4838 	1.062	1.3-Dimethyldisiloxane	1 -SiH2-O-, 2 CH3, 1 -SiH2-	
+175	>SiH-O-	1.303	0.764	1.1.3.3-Tetramethyldisiloxane	1 >SiH-O-, 4 CH3, 1 >SiH-	
+176	->Si-O-	1.1044	0.466	Octamethylcyclotetrasiloxane	4 ->Si-O-, 8 CH3	
 (82) Oxime						
-309	CH=NOH	1.499	1.46	propanal oxime	1 CH=NOH, 1 CH3, 1 CH2	
-177	C=NOH	1.499	1.46	2-propanone oxime	1 C=NOH, 2 CH3	
+310	CH=NOH	1.499	1.46	Propanaloxime	1 CH=NOH, 1 CH3, 1 CH2	
+177	C=NOH	1.499	1.46	2-Propanoneoxime	1 C=NOH, 2 CH3	
 (83) ACCOO						
-178	ACCO	1.1365	0.76	acetophenone	1 ACCO, 5 ACH, 1 CH3	
-(84) C2Cl4						
-179	C2Cl4	3.381	3.5845	tetrachloroethene	1 C2Cl4	
+178	ACCO	1.1365	0.76	Acetophenone	1 ACCO, 5 ACH, 1 CH3	
+(86) C2Cl4						
+179	C2Cl4	3.381	3.5845	Tetrachloroethene	1 C2Cl4	
 (92) c-CHNH2						
-180	c-CHH2	1.2261	1.096	cyclohexylamine	1 c-CHNH2, 5 c-CH2	
+180	c-CHH2	1.2261	1.096	Cyclohexylamine	1 c-CHNH2, 5 c-CH2	
 (95) c-C=C						
-201	c-CH=CH	1.0897	0.832	cyclohexene	1 c-CH=CH, 4 c-CH2	
-202	c-CH=C	0.8616	0.644	1-methylcyclohexene	1 c-CH-C, 1 CH3, 4 c-CH2	
-203	c-C=C	0.5498	0.244	1,2-dimethylcyclohexene	1 c-C=C, 2 CH3, 4 c-CH2	
+201	c-CH=CH	1.0897	0.832	Cyclohexene	1 c-CH=CH, 4 c-CH2	
+202	c-CH=C	0.8616	0.644	1-Methylcyclohexene	1 c-CH=C, 1 CH3, 4 c-CH2	
+203	c-C=C	0.5498	0.244	1.2-Dimethylcyclohexene	1 c-C=C, 2 CH3, 4 c-CH2	
 (96) Glycerol						
 204	Glycerol	5.4209	4.4227	Glycerol	1 Glycerol	

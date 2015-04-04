@@ -81,9 +81,9 @@
 42,79,SiH2,SiH2,1.4443,1.006,Diethylsilane: 2*CH3 2*CH2 1*SiH2,Diethylsilane,///,Si:1/H:2
 42,80,SiH2,SiH,1.2853,0.749,Heptamethyltrisiloxane:  7*CH3 2*SiO 1*SiH,Heptamethyltrisiloxane,///,Si:1/H:1
 42,81,SiH2,Si,1.047,0.41,Hexamethyldisiloxane:  6*CH3 1*SiO 1*Si,Hexamethyldisiloxane,///,Si:1
-43,82,SiO,SiH2O,1.4838,1.062,1-3-Dimethyldisiloxane: 3*CH3 1*SiH2O 1*SiH2,SiH2O 1.3-Dimethyildisiloxane,///,Si:1/H:2/O:1
-43,83,SiO,SiHO,1.303,0.764,1-1-3-3-Tetramethyldisiloxane: 4*CH3 1*SiHO 1*SiH,SiHO 1.1.3.3-Tetramethyldisiloxane,///,Si:1/H:1/O:1
-43,84,SiO,SiO,1.1044,0.466,Octamethylcyclotetrasiloxane:  8*CH3 4*SiO,SiO Octamethylcyclotetrasiloxane,///,Si:1/O:1
+43,82,SiO,SiH2O,1.4838,1.062,1-3-Dimethyldisiloxane: 3*CH3 1*SiH2O 1*SiH2,1.3-Dimethyldisiloxane,///,Si:1/H:2/O:1
+43,83,SiO,SiHO,1.303,0.764,1-1-3-3-Tetramethyldisiloxane: 4*CH3 1*SiHO 1*SiH,1.1.3.3-Tetramethyldisiloxane,///,Si:1/H:1/O:1
+43,84,SiO,SiO,1.1044,0.466,Octamethylcyclotetrasiloxane:  8*CH3 4*SiO,Octamethylcyclotetrasiloxane,///,Si:1/O:1
 44,85,NMP,NMP,3.981,3.2,N-Methylpyrrolidone: 1*NMP,n-Methylpyrrolidone,///,
 45,86,CClF,CCl3F,3.0356,2.644,Trichlorofluoromethane: 1*CCl3F,CCl3F Trichlorofluoromethane,1:4/3:17/1:16/,
 45,87,CClF,CCl2F,2.2287,1.916,Tetrachloro-1.2-difluoroethane: 2*CCl2F,Tetrachloro-1.2-Difluoroethan,1:4/2:17/1:16/,
