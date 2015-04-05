@@ -663,8 +663,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim sum As Double
             For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
                 sum = 0
-                For Each s As String In subst.ConstantProperties.MODFACGroups.Collection.Keys
-                    sum += subst.ConstantProperties.MODFACGroups.Collection(s) * Me.m_uni.UnifGroups.Groups(s).Q
+                For Each s As String In subst.ConstantProperties.UNIFACGroups.Collection.Keys
+                    sum += subst.ConstantProperties.UNIFACGroups.Collection(s) * Me.m_uni.UnifGroups.Groups(s).Q
                 Next
                 Dim obj = Me.m_uni.RET_EKI(Me.RET_VN(subst), sum)
                 VEKI.Add(obj)

@@ -158,7 +158,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         Sub CheckParameters(ByVal VEKI)
 
-              Dim ids As New ArrayList
+            Dim ids As New ArrayList
 
             For Each item In VEKI
                 For Each item2 In item
@@ -221,12 +221,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         Function RET_Ri(ByVal VN As Dictionary(Of Integer, Double)) As Double
 
-            Dim i As Integer = 0
             Dim res As Double
-
             For Each kvp In VN
                 res += Me.UnifGroups.Groups(kvp.Key).R * VN(kvp.Key)
-                i += 1
             Next
 
             Return res
@@ -235,12 +232,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         Function RET_Qi(ByVal VN As Dictionary(Of Integer, Double)) As Double
 
-            Dim i As Integer = 0
             Dim res As Double
-
             For Each kvp In VN
                 res += Me.UnifGroups.Groups(kvp.Key).Q * VN(kvp.Key)
-                i += 1
             Next
 
             Return res
@@ -249,12 +243,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         Function RET_EKI(ByVal VN As Dictionary(Of Integer, Double), ByVal Q As Double) As Dictionary(Of Integer, Double)
 
-            Dim i As Integer = 0
             Dim res As New Dictionary(Of Integer, Double)
-
             For Each kvp In VN
                 res.Add(kvp.Key, Me.UnifGroups.Groups(kvp.Key).Q * VN(kvp.Key) / Q)
-                i += 1
             Next
 
             Return res
@@ -263,19 +254,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         Function RET_VN(ByVal cp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties) As Dictionary(Of Integer, Double)
 
-            Dim i As Integer = 0
             Dim res As New Dictionary(Of Integer, Double)
-            Dim added As Boolean = False
-
-            res.Clear()
-
-            For Each group As UnifacGroup In Me.UnifGroups.Groups.Values
-                For Each s As String In cp.MODFACGroups.Collection.Keys
-                    If s = group.Secondary_Group Then
-                        res.Add(group.Secondary_Group, cp.MODFACGroups.Collection(s))
-                        Exit For
-                    End If
-                Next
+            For Each s As String In cp.UNIFACGroups.Collection.Keys
+                res.Add(s, cp.UNIFACGroups.Collection(s))
             Next
 
             Return res
@@ -541,7 +522,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         Sub CheckParameters(ByVal VEKI)
 
-           Dim ids As New ArrayList
+            Dim ids As New ArrayList
 
             For Each item In VEKI
                 For Each item2 In item
@@ -602,7 +583,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-     
+
         Function RET_Ri(ByVal VN As Dictionary(Of Integer, Double)) As Double
 
             Dim i As Integer = 0

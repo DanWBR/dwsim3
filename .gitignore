@@ -135,6 +135,8 @@ obj
 /DWSIM/bin/x86/Release/Microsoft.Scripting.Metadata.dll
 /DWSIM/bin/x86/Release/Microsoft.Scripting.Metadata.xml
 /DWSIM/bin/x86/Release/Microsoft.Scripting.pdb
+/DWSIM/bin/x86/Release/Microsoft.ServiceBus.dll
+/DWSIM/bin/x86/Release/TcpComm.*
 /DWSIM/Thumbs.db
 /DWSIM/bin/Release/DWSIM.exe.config
 /DWSIM/bin/Release/DWSIM.vshost.exe

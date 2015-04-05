@@ -59,7 +59,7 @@ No.	Sub-group Name	Ri	Qi	Example
 35	CH2N	1.0746	0.824	Triethylamine	3 CH3, 2 CH2, 1 CH2N	
 (17) ACNH2							
 36	ACNH2	1.1849	0.8067	Aniline	5 ACH, 1 ACNH2	
-306	ACNH	1.1849	0.732	empty	empty	
+306	ACNH	1.1849	0.732	n-Methylaniline	5 ACH, 1 ACNH, 1 CH3	
 307	ACN	1.1849	0.61	Dimethylaniline	5 ACH, 1 ACN, 2 CH3	
 (18) Pyridine							
 37	AC2H2N	1.4578	0.9022	Pyridine_	1 AC2H2N, 3 ACH	
@@ -239,16 +239,16 @@ No.	Sub-group Name	Ri	Qi	Example
 (73) CF4						
 151	CF4	1.7278	1.76	Tetrafluoromethane	1 CF4	
 (74) Acetal						
-152	C(O)2	0.7073	0.48	1,1-Diethoxypropane	2 C(O)2, 2 CH3, 2 CH2	
-186	CH(O)2	0.9347	0.708	1,1-Diethoxyethane	2 CH(O)2, 2 CH3, 2 CH2	
-309	CH2(O)2	0.9347	0.708	1,1-Diethoxymethane	2 CH2(O)2, 2 CH3, 2 CH2
+152	C(O)2	0.7073	0.48	2,2-Diethoxypropane	2 C(O)2, 4 CH3, 2 CH2	
+186	CH(O)2	0.9347	0.708	2,2-Diethoxyethane	2 CH(O)2, 3 CH3, 2 CH2	
+309	CH2(O)2	0.9347	0.708	2,2-Diethoxymethane	2 CH2(O)2, 2 CH3, 2 CH2
 (75) ACNR2						
 153	ACN(CH3)2	2.4529	1.908	n,n-Dimetylaniline	1 ACN(CH3)2, 5 ACH	
 154	ACN(CH3)CH2	2.2261	1.6	n-Ethyl-n-Methylaniline	1 ACN(CH3)(CH2), 5 ACH, 1 CH3	
 155	ACN(CH2)2	1.9993	1.292	n,n-Diethylaniline	1 ACN(CH2)2, 5 ACH, 2 CH3	
 (76) ACNR						
-156	ACNHCH3	1.7989	1.364	n-Methylaniline	1 ACNCH3, 5 5ACH	
-157	ACNHCH2	1.5722	1.056	n-Ethylaniline	1 ACNCH2, 5 ACH, 1 CH3	
+156	ACNHCH3	1.7989	1.364	n-Methylaniline_	1 ACNHCH3, 5 5ACH	
+157	ACNHCH2	1.5722	1.056	n-Ethylaniline	1 ACNHCH2, 5 ACH, 1 CH3	
 158	ACNHCH	1.3448	0.744	n-Isopropylaniline	1 ACNCH, 5 ACH, 2 CH3	
 (77) Furan						
 159	AC2H2O	1.3065	1.04	Furan	1 AC2H2O, 2 ACH	
