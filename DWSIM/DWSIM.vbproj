@@ -179,6 +179,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\FileHelpers.dll</HintPath>
     </Reference>
+    <Reference Include="GenericDictionaryEditor">
+      <HintPath>..\packages\GenDictEdit.1.1.0\lib\net20\GenericDictionaryEditor.dll</HintPath>
+    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.4.369, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\ICSharpCode.SharpZipLib.dll</HintPath>
@@ -1376,6 +1379,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="packages.config" />
     <None Include="Resources\node_in copy.png" />
   </ItemGroup>
   <ItemGroup>

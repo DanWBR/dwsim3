@@ -24,6 +24,7 @@ Imports System.Runtime.InteropServices
 Imports CapeOpen
 Imports System.Runtime.Serialization.Formatters
 Imports LuaInterface
+Imports System.Linq
 
 Namespace DWSIM.SimulationObjects.UnitOps
 
@@ -40,6 +41,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Public Shadows Const ClassId As String = "1FD2DC53-DC7B-4c4d-BBEE-F37F4E5ADDFB"
 
 #Region "   DWSIM Methods"
+
+        Public Property InputVariables As Dictionary(Of String, Double)
+        Public Property OutputVariables As Dictionary(Of String, Double)
 
         Public Property FontName() As String
             Get
@@ -88,10 +92,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Public Sub New()
             MyBase.New()
+            InputVariables = New Dictionary(Of String, Double)
+            OutputVariables = New Dictionary(Of String, Double)
         End Sub
 
         Public Sub New(ByVal nome As String, ByVal descricao As String)
             MyBase.CreateNew()
+            InputVariables = New Dictionary(Of String, Double)
+            OutputVariables = New Dictionary(Of String, Double)
             Me.m_ComponentName = nome
             Me.m_ComponentDescription = descricao
             Me.FillNodeItems()
@@ -153,6 +161,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Dim Solver As New DWSIM.Flowsheet.FlowsheetSolver
                     lscript("Solver") = Solver
                     lscript("Me") = Me
+                    For Each variable In InputVariables
+                        lscript(variable.Key) = variable.Value
+                    Next
                     If Me.GraphicObject.InputConnectors(0).IsAttached Then lscript("ims1") = ims1
                     If Me.GraphicObject.InputConnectors(1).IsAttached Then lscript("ims2") = ims2
                     If Me.GraphicObject.InputConnectors(2).IsAttached Then lscript("ims3") = ims3
@@ -171,6 +182,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         End If
                         txtcode += Me.ScriptText
                         lscript.DoString(txtcode)
+                        OutputVariables.Clear()
                     Catch ex As Exception
                         Me.ErrorMessage = ex.ToString
                         Me.DeCalculate()
@@ -194,6 +206,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     scope.SetVariable("Spreadsheet", FlowSheet.FormSpreadsheet)
                     scope.SetVariable("Plugins", My.MyApplication.UtilityPlugins)
                     scope.SetVariable("Me", Me)
+                    For Each variable In InputVariables
+                        scope.SetVariable(variable.Key, variable.Value)
+                    Next
                     If Me.GraphicObject.InputConnectors(0).IsAttached Then scope.SetVariable("ims1", ims1)
                     If Me.GraphicObject.InputConnectors(1).IsAttached Then scope.SetVariable("ims2", ims2)
                     If Me.GraphicObject.InputConnectors(2).IsAttached Then scope.SetVariable("ims3", ims3)
@@ -215,6 +230,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Try
                         Me.ErrorMessage = ""
                         source.Execute(Me.scope)
+                        OutputVariables.Clear()
+                        For Each variable In scope.GetVariableNames
+                            If TypeOf scope.GetVariable(variable) Is Double Or TypeOf scope.GetVariable(variable) Is Integer Then OutputVariables.Add(variable, scope.GetVariable(variable))
+                        Next
                     Catch ex As Exception
                         Dim ops As ExceptionOperations = engine.GetService(Of ExceptionOperations)()
                         Me.ErrorMessage = ops.FormatException(ex).ToString
@@ -244,6 +263,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
             End With
 
             FlowSheet.CalculationQueue.Enqueue(objargs)
+
+            Me.QTFillNodeItems()
 
         End Function
 
@@ -368,6 +389,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 .Item.Add(DWSIM.App.GetLocalString("CUO_ScriptLanguage"), Me, "Language", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "", True)
 
+                .Item.Add(DWSIM.App.GetLocalString("InputVariables"), Me, "InputVariables", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "", True)
+                With .Item(.Item.Count - 1)
+                    .CustomEditor = New Wexman.Design.GenericDictionaryEditor(Of String, Double)(Type.GetType("Dictionary(Of String, Double)"))
+                End With
+
                 .Item.Add(DWSIM.App.GetLocalString("CUO_ScriptText"), Me, "ScriptText", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Cliquenobotocomretic"), True)
                 With .Item(.Item.Count - 1)
                     .CustomEditor = New DWSIM.Editors.CustomUO.UIScriptEditor
@@ -378,10 +404,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     With .Item(.Item.Count - 1)
                         .DefaultType = GetType(System.String)
                     End With
+                Else
+                    For Each p In OutputVariables
+                        .Item.Add(p.Key, p.Value, True, DWSIM.App.GetLocalString("OutputVariables"), DWSIM.App.GetLocalString(""), True)
+                    Next
                 End If
 
             End With
-
 
         End Sub
 
@@ -390,28 +419,119 @@ Namespace DWSIM.SimulationObjects.UnitOps
         End Sub
 
         Public Overrides Function GetProperties(ByVal proptype As SimulationObjects_BaseClass.PropertyType) As String()
-            Return New String() {}
+            Select Case proptype
+                Case PropertyType.ALL
+                    Return Me.OutputVariables.Keys.ToArray.Union(Me.InputVariables.Keys.ToArray).ToArray
+                Case PropertyType.RO
+                    Return Me.OutputVariables.Keys.ToArray
+                Case PropertyType.WR
+                    Return Me.InputVariables.Keys.ToArray
+                Case Else
+                    Return New String() {}
+            End Select
         End Function
 
         Public Overrides Function GetPropertyUnit(ByVal prop As String, Optional ByVal su As SistemasDeUnidades.Unidades = Nothing) As Object
-            Return Nothing
+            Return ""
         End Function
 
         Public Overrides Function GetPropertyValue(ByVal prop As String, Optional ByVal su As SistemasDeUnidades.Unidades = Nothing) As Object
+            If Me.OutputVariables.ContainsKey(prop) Then Return Me.OutputVariables(prop)
+            If Me.InputVariables.ContainsKey(prop) Then Return Me.InputVariables(prop)
             Return Nothing
         End Function
 
         Public Overrides Sub QTFillNodeItems()
-
+            If Me.QTNodeTableItems Is Nothing Then Me.QTNodeTableItems = New System.Collections.Generic.Dictionary(Of Integer, DWSIM.Outros.NodeItem)
+            With Me.QTNodeTableItems
+                .Clear()
+                Dim i As Integer = 0
+                For Each item In Me.OutputVariables
+                    .Add(i, New DWSIM.Outros.NodeItem(item.Key, Format(item.Value, FlowSheet.Options.NumberFormat), "", i, 0, ""))
+                    i += 1
+                Next
+            End With
         End Sub
 
         Public Overrides Function SetPropertyValue(ByVal prop As String, ByVal propval As Object, Optional ByVal su As SistemasDeUnidades.Unidades = Nothing) As Object
+            If Me.InputVariables.ContainsKey(prop) Then Me.InputVariables(prop) = propval
             Return Nothing
         End Function
 
         Public Overrides Sub UpdatePropertyNodes(ByVal su As SistemasDeUnidades.Unidades, ByVal nf As String)
 
+            Dim Conversor As New DWSIM.SistemasDeUnidades.Conversor
+            If Me.NodeTableItems Is Nothing Then
+                Me.NodeTableItems = New System.Collections.Generic.Dictionary(Of Integer, DWSIM.Outros.NodeItem)
+                Me.FillNodeItems()
+            End If
+
+            For Each nti As Outros.NodeItem In Me.NodeTableItems.Values
+                If Me.OutputVariables.ContainsKey(nti.Text) Then nti.Value = Me.OutputVariables(nti.Text)
+                nti.Unit = ""
+            Next
+
+            If Me.QTNodeTableItems Is Nothing Then
+                Me.QTNodeTableItems = New System.Collections.Generic.Dictionary(Of Integer, DWSIM.Outros.NodeItem)
+                Me.QTFillNodeItems()
+            End If
+
+            For Each nti As Outros.NodeItem In Me.QTNodeTableItems.Values
+                If Me.OutputVariables.ContainsKey(nti.Text) Then nti.Value = Format(Me.OutputVariables(nti.Text), Me.FlowSheet.Options.NumberFormat)
+                nti.Unit = ""
+            Next
+
         End Sub
+
+        Public Overrides Function LoadData(data As List(Of XElement)) As Boolean
+
+            XMLSerializer.XMLSerializer.Deserialize(Me, data)
+
+            Dim ci As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
+
+            Me.InputVariables.Clear()
+            For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InputVariables").Elements.ToList
+                Me.InputVariables.Add(xel.@Key, Double.Parse(xel.@Value, ci))
+            Next
+
+            Me.OutputVariables.Clear()
+            For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "OutputVariables").Elements.ToList
+                Me.OutputVariables.Add(xel.@Key, Double.Parse(xel.@Value, ci))
+            Next
+
+            m_nodeitems = Nothing
+            FillNodeItems(True)
+            QTFillNodeItems()
+
+            For Each xel2 As XElement In (From xel As XElement In data Select xel Where xel.Name = "NodeItems").Elements
+                Dim text As String = xel2.@Text
+                Dim ni2 As DWSIM.Outros.NodeItem = (From ni As DWSIM.Outros.NodeItem In m_nodeitems.Values Select ni Where ni.Text = text).SingleOrDefault
+                If Not ni2 Is Nothing Then
+                    ni2.Checked = True
+                End If
+            Next
+
+        End Function
+
+        Public Overrides Function SaveData() As List(Of XElement)
+
+            Dim elements As List(Of System.Xml.Linq.XElement) = MyBase.SaveData()
+            Dim ci As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
+
+            With elements
+                .Add(New XElement("InputVariables"))
+                For Each p In InputVariables
+                    .Item(.Count - 1).Add(New XElement("Variable", New XAttribute("Key", p.Key), New XAttribute("Value", p.Value.ToString(ci))))
+                Next
+                .Add(New XElement("OutputVariables"))
+                For Each p In OutputVariables
+                    .Item(.Count - 1).Add(New XElement("Variable", New XAttribute("Key", p.Key), New XAttribute("Value", p.Value.ToString(ci))))
+                Next
+            End With
+
+            Return elements
+
+        End Function
 
 #End Region
 

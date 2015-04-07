@@ -7484,6 +7484,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Variáveis de Entrada.
+        '''</summary>
+        Friend Shared ReadOnly Property InputVariables() As String
+            Get
+                Return ResourceManager.GetString("InputVariables", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Intermitente.
         '''</summary>
         Friend Shared ReadOnly Property Intermitente() As String
@@ -9622,6 +9631,15 @@ Namespace My.Resources
         Friend Shared ReadOnly Property OutletStream2() As String
             Get
                 Return ResourceManager.GetString("OutletStream2", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to 3. Variáveis de Saída.
+        '''</summary>
+        Friend Shared ReadOnly Property OutputVariables() As String
+            Get
+                Return ResourceManager.GetString("OutputVariables", resourceCulture)
             End Get
         End Property
         

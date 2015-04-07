@@ -5043,4 +5043,10 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="ExpData" xml:space="preserve">
     <value>Dados experimentais</value>
   </data>
+  <data name="InputVariables" xml:space="preserve">
+    <value>Variáveis de Entrada</value>
+  </data>
+  <data name="OutputVariables" xml:space="preserve">
+    <value>3. Variáveis de Saída</value>
+  </data>
 </root>
