@@ -485,6 +485,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Public Overrides Function LoadData(data As List(Of XElement)) As Boolean
 
+            If InputVariables Is Nothing Then InputVariables = New Dictionary(Of String, Double)
+            If OutputVariables Is Nothing Then OutputVariables = New Dictionary(Of String, Double)
+
             XMLSerializer.XMLSerializer.Deserialize(Me, data)
 
             Dim ci As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
