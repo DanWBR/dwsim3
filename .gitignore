@@ -144,3 +144,17 @@ obj
 /DWSIM/bin/Release/DWSIM.vshost.exe.manifest
 /CoolPropInterface/bin/Release/CoolPropInterface.pdb
 /CoolPropInterface/bin/Release/CoolPropInterface.dll
+/DWSIM/bin/x86/Release/plugins/NaturalGas.dll.config
+/DWSIM/bin/x86/Release/version.txt
+/DWSIM/bin/x86/Release/AzureServer.exe
+/DWSIM/bin/x86/Release/AzureServer.exe.config
+/DWSIM/bin/x86/Release/AzureServer.pdb
+/DWSIM/bin/x86/Release/AzureServer.xml
+/DWSIM/bin/x86/Release/GenericDictionaryEditor.dll
+/DWSIM/bin/x86/Release/releasenotes.txt
+/DWSIM/bin/x86/Release/TCPServer.exe
+/DWSIM/bin/x86/Release/TCPServer.exe.config
+/DWSIM/bin/x86/Release/TCPServer.pdb
+/DWSIM/bin/x86/Release/TCPServer.xml
+/PropertyGridEx
+/NaturalGas/NaturalGas.sln.cache

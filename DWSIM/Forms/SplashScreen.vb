@@ -40,7 +40,7 @@ Public NotInheritable Class SplashScreen
                             AddDays(My.Application.Info.Version.Build). _
                             AddSeconds(My.Application.Info.Version.Revision * 2)
         Version.Text = "Version " & My.Application.Info.Version.Major & "." & My.Application.Info.Version.Minor
-        Version.Text += ", Build " & My.Application.Info.Version.Build & " (" & Format(dt, "dd/MM/yyyy") & ")"
+        Version.Text += ", Build " & My.Application.Info.Version.Build & " [" & DWSIM.App.GetGitHash() & "] (" & Format(dt, "dd/MM/yyyy") & ")"
 
         'Copyright info
         'Copyright.Text = My.Application.Info.Copyright

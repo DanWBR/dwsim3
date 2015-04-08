@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Language Name="6502" Startblock="Code">
+<FileTypes>
+	<FileType Extension=".asm" Name="6502 asm file"/>
+</FileTypes>
+
+
+
+
+	<Block Name="Code" Style="Code" EscapeChar="" IsMultiline="true">
+
+		<!-- Keywords that can exist inside this block -->
+		<Keywords>
+			<PatternGroup Name="Opcodes" Style="Opcodes" CaseSensitive="false">
+				<Patterns>
+ADC AND ASL
+BCC BCS BEQ BIT BMI BNE BPL BRA BRK BVC BVS
+CLC CLD CLI CLV CMP CPX CPY
+DEC DEX DEY
+EOR
+INC INX INY
+JMP JSR
+LDA LDX LDY LSR
+NOP
+ORA
+PHA PHP PHX PHY PLA PLP PLX PLY
+ROL ROR RTI RTS
+SBC SEC SED SEI STA STX STY STZ
+TAX TAY TSX TXA TXS TYA
+				</Patterns>
+			</PatternGroup>
+
+
+			<PatternGroup Name="Opcodes" Style="Keywords" CaseSensitive="false">
+				<Patterns>
+.byte .text .word .asc .scrl .scru .include .incbin .label .goto .if .end .enrty .opt 
+.set .title
+X
+Y
+C
+				</Patterns>
+			</PatternGroup>
+
+			<PatternGroup Name="Numbers" Style="Number">
+				<Pattern Text="([0-9]+)" IsComplex="true" />
+				<Pattern Text="([0-9a-fA-F]+)" IsComplex="true" />
+			</PatternGroup>
+		</Keywords>
+
+
+		<!-- Operators that can exist inside this block -->
+		<Operators>
+			<PatternGroup name="Operators" Style="Operator">
+				<Patterns>
+#
+$
+%
+(
+)
++
+,
+;
+*=
+*
+=
+				</Patterns>
+			</PatternGroup>
+		</Operators>
+		<!-- Blocks that can exist inside this block -->
+		<ChildBlocks>
+			<Child Name="Singleline Comment" />
+			<Child Name="String" />
+			<Child Name="Code" />
+		</ChildBlocks>
+	</Block>
+
+	<Block Name="Singleline Comment" Style="Comment" EscapeChar="" IsMultiline="false">
+		<Scope Start=";" End="" Style="Comment" />
+	</Block>
+	<Block Name="String" Style="String" EscapeChar="\" IsMultiline="false">
+		<Scope Start="&quot;" End="&quot;"  Style="String" />
+	</Block>
+
+	<Style Name="Code" ForeColor="" BackColor="" Bold="false" Italic="false" Underline="false" />
+	<Style Name="Scope" ForeColor="" BackColor="" Bold="false" Italic="false" Underline="false" />
+	<Style Name="Comment" ForeColor="Green" BackColor="" Bold="false" Italic="false" Underline="false" />
+	<Style Name="String" ForeColor="SteelBlue" BackColor="" Bold="false" Italic="false" Underline="false" />
+	<Style Name="Number" ForeColor="Teal" BackColor="" Bold="true" Italic="false" Underline="false" />
+	<Style Name="Opcodes" ForeColor="Blue" BackColor="" Bold="true" Italic="false" Underline="false" />
+	<Style Name="Keywords" ForeColor="DarkBlue" BackColor="" Bold="true" Italic="false" Underline="false" />
+	<Style Name="Operator" ForeColor="Red" BackColor="" Bold="false" Italic="false" Underline="false" />
+</Language>
