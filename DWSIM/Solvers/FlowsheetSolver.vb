@@ -1489,8 +1489,6 @@ Namespace DWSIM.Flowsheet
         ''' <remarks></remarks>
         Private Shared Sub ProcessQueueInternal(ByVal form As FormFlowsheet, Optional ByVal Isolated As Boolean = False, Optional ByVal FlowsheetSolverMode As Boolean = False, Optional ByVal ct As Threading.CancellationToken = Nothing)
 
-            If ct.IsCancellationRequested = True Then ct.ThrowIfCancellationRequested()
-
             form.FormSurface.LabelTime.Text = ""
             form.FormSurface.calcstart = Date.Now
             form.FormSurface.PictureBox3.Image = My.Resources.weather_lightning
@@ -1499,6 +1497,8 @@ Namespace DWSIM.Flowsheet
             Dim loopex As Exception = Nothing
 
             While form.CalculationQueue.Count >= 1
+
+                If ct.IsCancellationRequested = True Then ct.ThrowIfCancellationRequested()
 
                 My.MyApplication.CalculatorStopRequested = False
 
@@ -1600,11 +1600,11 @@ Namespace DWSIM.Flowsheet
         ''' <remarks></remarks>
         Private Shared Sub ProcessQueueInternalAsync(ByVal form As FormFlowsheet, ByVal ct As Threading.CancellationToken)
 
-            If ct.IsCancellationRequested = True Then ct.ThrowIfCancellationRequested()
-
             If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
 
             While form.CalculationQueue.Count >= 1
+
+                If ct.IsCancellationRequested = True Then ct.ThrowIfCancellationRequested()
 
                 Dim myinfo As DWSIM.Outros.StatusChangeEventArgs = form.CalculationQueue.Peek()
 
@@ -1640,8 +1640,6 @@ Namespace DWSIM.Flowsheet
         ''' <remarks></remarks>
         Private Shared Sub ProcessQueueInternalAsyncParallel(ByVal form As FormFlowsheet, ByVal orderedlist As Dictionary(Of Integer, List(Of StatusChangeEventArgs)), ct As Threading.CancellationToken)
 
-            If ct.IsCancellationRequested = True Then ct.ThrowIfCancellationRequested()
-
             If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
 
             For Each obj In form.Collections.ObjectCollection.Values
@@ -1665,6 +1663,7 @@ Namespace DWSIM.Flowsheet
                     objlist.Add(item.Nome)
                 Next
                 Parallel.ForEach(li.Value, poptions, Sub(myinfo)
+                                                         If ct.IsCancellationRequested = True Then ct.ThrowIfCancellationRequested()
                                                          'form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}, True))
                                                          Try
                                                              Dim myobj = form.Collections.ObjectCollection(myinfo.Nome)
