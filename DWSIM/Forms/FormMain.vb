@@ -1887,15 +1887,15 @@ Public Class FormMain
 
     Sub LoadXML(ByVal path As String, Optional ByVal simulationfilename As String = "", Optional ByVal forcommandline As Boolean = False)
 
-        Dim fls As New FormLS
+        'Dim fls As New FormLS
         Dim ci As CultureInfo = CultureInfo.InvariantCulture
 
-        If Not forcommandline Then
-            fls.Show(Me)
-            fls.Label1.Text = "Restoring Simulation from XML file"
-            fls.Label2.Text = "Loading XML document..."
-            Application.DoEvents()
-        End If
+        'If Not forcommandline Then
+        '    fls.Show(Me)
+        '    fls.Label1.Text = "Restoring Simulation from XML file"
+        '    fls.Label2.Text = "Loading XML document..."
+        '    Application.DoEvents()
+        'End If
 
         Dim excs As New List(Of Exception)
 
@@ -1907,10 +1907,10 @@ Public Class FormMain
         My.Application.CAPEOPENMode = False
         My.Application.ActiveSimulation = form
 
-        If Not forcommandline Then
-            fls.Label2.Text = "Loading Flowsheet Settings..."
-            Application.DoEvents()
-        End If
+        'If Not forcommandline Then
+        '    fls.Label2.Text = "Loading Flowsheet Settings..."
+        Application.DoEvents()
+        'End If
 
         Dim data As List(Of XElement) = xdoc.Element("DWSIM_Simulation_Data").Element("Settings").Elements.ToList
 
@@ -1924,10 +1924,10 @@ Public Class FormMain
 
         form.Options.FilePath = Me.filename
 
-        If Not forcommandline Then
-            fls.Label2.Text = "Loading Flowsheet Graphic Objects..."
-            Application.DoEvents()
-        End If
+        'If Not forcommandline Then
+        '    fls.Label2.Text = "Loading Flowsheet Graphic Objects..."
+        '    Application.DoEvents()
+        'End If
 
         data = xdoc.Element("DWSIM_Simulation_Data").Element("GraphicObjects").Elements.ToList
 
@@ -2201,10 +2201,10 @@ Public Class FormMain
             End Try
         Next
 
-        If Not forcommandline Then
-            fls.Label2.Text = "Loading Compounds..."
-            Application.DoEvents()
-        End If
+        'If Not forcommandline Then
+        '    fls.Label2.Text = "Loading Compounds..."
+        '    Application.DoEvents()
+        'End If
 
         data = xdoc.Element("DWSIM_Simulation_Data").Element("Compounds").Elements.ToList
 
@@ -2223,10 +2223,10 @@ Public Class FormMain
             End Try
         Next
 
-        If Not forcommandline Then
-            fls.Label2.Text = "Loading Property Packages..."
-            Application.DoEvents()
-        End If
+        'If Not forcommandline Then
+        '    fls.Label2.Text = "Loading Property Packages..."
+        '    Application.DoEvents()
+        'End If
 
         data = xdoc.Element("DWSIM_Simulation_Data").Element("PropertyPackages").Elements.ToList
 
@@ -2245,10 +2245,10 @@ Public Class FormMain
 
         My.Application.ActiveSimulation = form
 
-        If Not forcommandline Then
-            fls.Label2.Text = "Loading Flowsheet Unit Operations and Streams..."
-            Application.DoEvents()
-        End If
+        'If Not forcommandline Then
+        '    fls.Label2.Text = "Loading Flowsheet Unit Operations and Streams..."
+        '    Application.DoEvents()
+        'End If
 
         data = xdoc.Element("DWSIM_Simulation_Data").Element("SimulationObjects").Elements.ToList
 
@@ -2438,8 +2438,8 @@ Public Class FormMain
                 End Try
             Next
 
-            fls.Label2.Text = "Loading Reaction Sets..."
-            Application.DoEvents()
+            'fls.Label2.Text = "Loading Reaction Sets..."
+            'Application.DoEvents()
 
         End If
 
@@ -2469,10 +2469,10 @@ Public Class FormMain
             End Try
         Next
 
-        If Not forcommandline Then
-            fls.Label2.Text = "Loading Optimization Cases..."
-            Application.DoEvents()
-        End If
+        'If Not forcommandline Then
+        '    fls.Label2.Text = "Loading Optimization Cases..."
+        '    Application.DoEvents()
+        'End If
 
         data = xdoc.Element("DWSIM_Simulation_Data").Element("OptimizationCases").Elements.ToList
 
@@ -2486,10 +2486,10 @@ Public Class FormMain
             End Try
         Next
 
-        If Not forcommandline Then
-            fls.Label2.Text = "Loading Sensitivity Analysis Cases..."
-            Application.DoEvents()
-        End If
+        'If Not forcommandline Then
+        '    fls.Label2.Text = "Loading Sensitivity Analysis Cases..."
+        '    Application.DoEvents()
+        'End If
 
         data = xdoc.Element("DWSIM_Simulation_Data").Element("SensitivityAnalysis").Elements.ToList
 
@@ -2503,10 +2503,10 @@ Public Class FormMain
             End Try
         Next
 
-        If Not forcommandline Then
-            fls.Label2.Text = "Loading Petroleum Assays..."
-            Application.DoEvents()
-        End If
+        'If Not forcommandline Then
+        '    fls.Label2.Text = "Loading Petroleum Assays..."
+        '    Application.DoEvents()
+        'End If
 
         data = xdoc.Element("DWSIM_Simulation_Data").Element("PetroleumAssays").Elements.ToList
 
@@ -2520,10 +2520,10 @@ Public Class FormMain
             End Try
         Next
 
-        If Not forcommandline Then
-            fls.Label2.Text = "Loading Watch Items..."
-            Application.DoEvents()
-        End If
+        'If Not forcommandline Then
+        '    fls.Label2.Text = "Loading Watch Items..."
+        '    Application.DoEvents()
+        'End If
 
         If xdoc.Element("DWSIM_Simulation_Data").Element("WatchItems") IsNot Nothing Then
 
@@ -2545,10 +2545,10 @@ Public Class FormMain
 
         End If
 
-        If Not forcommandline Then
-            fls.Label2.Text = "Loading Script Items..."
-            Application.DoEvents()
-        End If
+        'If Not forcommandline Then
+        '    fls.Label2.Text = "Loading Script Items..."
+        '    Application.DoEvents()
+        'End If
 
         form.ScriptCollection = New Dictionary(Of String, Script)
 
@@ -2570,10 +2570,10 @@ Public Class FormMain
 
         End If
 
-        If Not forcommandline Then
-            fls.Label2.Text = "Loading Spreadsheet Data..."
-            Application.DoEvents()
-        End If
+        'If Not forcommandline Then
+        '    fls.Label2.Text = "Loading Spreadsheet Data..."
+        '    Application.DoEvents()
+        'End If
 
         Try
             Dim data1 As String = xdoc.Element("DWSIM_Simulation_Data").Element("Spreadsheet").Element("Data1").Value
@@ -2605,8 +2605,8 @@ Public Class FormMain
 
         If Not forcommandline Then
 
-            fls.Label2.Text = "Restoring Window Layout..."
-            Application.DoEvents()
+            'fls.Label2.Text = "Restoring Window Layout..."
+            'Application.DoEvents()
 
             My.Application.ActiveSimulation = form
 
@@ -2654,8 +2654,8 @@ Public Class FormMain
                 excs.Add(New Exception("Error Restoring Window Layout", ex))
             End Try
 
-            fls.Label2.Text = "Done!"
-            Application.DoEvents()
+            'fls.Label2.Text = "Done!"
+            'Application.DoEvents()
 
             Me.Invalidate()
             Application.DoEvents()
@@ -2702,8 +2702,8 @@ Public Class FormMain
 
         End If
 
-        fls.Close()
-        fls = Nothing
+        'fls.Close()
+        'fls = Nothing
 
         If excs.Count > 0 Then
             form.WriteToLog("Some errors where found while parsing the XML file. The simulation might not work as expected. Please read the subsequent messages for more details.", Color.DarkRed, TipoAviso.Erro)
@@ -3520,6 +3520,11 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
 
 #Region "    Click Handlers"
 
+    Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
+        Me.OpenFileDialog1.InitialDirectory = My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "samples"
+        LoadFileDialog()
+    End Sub
+
     Private Sub LR1_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs)
 
         Dim myLink As LinkLabel = CType(sender, LinkLabel)
@@ -4117,9 +4122,4 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
 
 #End Region
 
-
-    Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
-        Me.OpenFileDialog1.InitialDirectory = My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "samples"
-        LoadFileDialog()
-    End Sub
 End Class

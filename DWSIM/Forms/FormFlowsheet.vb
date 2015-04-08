@@ -1760,11 +1760,7 @@ Imports DWSIM.DWSIM.Outros
         Dim conObj As ConnectorGraphic = Nothing
         Dim SelObj As GraphicObject = gObjFrom
         Dim ObjToDisconnect As GraphicObject = Nothing
-        Try
-            ObjToDisconnect = gObjTo
-        Catch
-            MessageBox.Show(DWSIM.App.GetLocalString("Erroaodeterminarobje"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
+        ObjToDisconnect = gObjTo
         If Not ObjToDisconnect Is Nothing Then
             Dim conptObj As ConnectionPoint = Nothing
             For Each conptObj In SelObj.InputConnectors
@@ -1835,22 +1831,17 @@ Imports DWSIM.DWSIM.Outros
             If Not gObjFrom Is Nothing Then
                 If Not gObjTo Is Nothing Then
                     If gObjFrom.TipoObjeto = TipoObjeto.MaterialStream And gObjTo.TipoObjeto = TipoObjeto.MaterialStream Then
-                        MessageBox.Show(DWSIM.App.GetLocalString("Nopossvelrealizaress"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-                        Exit Sub
-                    ElseIf gObjFrom.TipoObjeto = TipoObjeto.EnergyStream And gObjTo.TipoObjeto = TipoObjeto.EnergyStream Then
-                        MessageBox.Show(DWSIM.App.GetLocalString("Nopossvelrealizaress"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-                        Exit Sub
+                        Throw New Exception(DWSIM.App.GetLocalString("Nopossvelrealizaress"))
+                     ElseIf gObjFrom.TipoObjeto = TipoObjeto.EnergyStream And gObjTo.TipoObjeto = TipoObjeto.EnergyStream Then
+                        Throw New Exception(DWSIM.App.GetLocalString("Nopossvelrealizaress"))
                     ElseIf Not gObjFrom.TipoObjeto = TipoObjeto.MaterialStream And Not gObjFrom.TipoObjeto = TipoObjeto.EnergyStream Then
                         If Not gObjTo.TipoObjeto = TipoObjeto.EnergyStream And Not gObjTo.TipoObjeto = TipoObjeto.MaterialStream Then
-                            MessageBox.Show(DWSIM.App.GetLocalString("Nopossvelrealizaress"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-                            Exit Sub
+                            Throw New Exception(DWSIM.App.GetLocalString("Nopossvelrealizaress"))
                         End If
                     ElseIf gObjFrom.TipoObjeto = TipoObjeto.MaterialStream And gObjTo.TipoObjeto = TipoObjeto.EnergyStream Then
-                        MessageBox.Show(DWSIM.App.GetLocalString("Nopossvelrealizaress"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-                        Exit Sub
+                        Throw New Exception(DWSIM.App.GetLocalString("Nopossvelrealizaress"))
                     ElseIf gObjFrom.TipoObjeto = TipoObjeto.EnergyStream And gObjTo.TipoObjeto = TipoObjeto.MaterialStream Then
-                        MessageBox.Show(DWSIM.App.GetLocalString("Nopossvelrealizaress"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-                        Exit Sub
+                        Throw New Exception(DWSIM.App.GetLocalString("Nopossvelrealizaress"))
                     End If
                     If gObjTo.IsEnergyStream = False Then
                         If Not gObjFrom.IsEnergyStream Then
@@ -1890,7 +1881,7 @@ Imports DWSIM.DWSIM.Outros
                                 End If
                             End If
                             If Not con2OK Then
-                                MessageBox.Show(DWSIM.App.GetLocalString("Correntesdeenergiasp") & vbCrLf & DWSIM.App.GetLocalString("MisturadoresMatriaEn"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                Throw New Exception(DWSIM.App.GetLocalString("Correntesdeenergiasp"))
                                 Exit Sub
                             End If
                         End If
@@ -1918,9 +1909,8 @@ Imports DWSIM.DWSIM.Outros
                                 TipoObjeto.Filter, TipoObjeto.CustomUO, TipoObjeto.CapeOpenUO, TipoObjeto.FlowsheetUO
                                 GoTo 100
                             Case Else
-                                MessageBox.Show(DWSIM.App.GetLocalString("Correntesdeenergiasp2") & vbCrLf & DWSIM.App.GetLocalString("TubulaesTurbinaseRes"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-                                Exit Sub
-                        End Select
+                                Throw New Exception(DWSIM.App.GetLocalString("Correntesdeenergiasp2") & DWSIM.App.GetLocalString("TubulaesTurbinaseRes"))
+                         End Select
 100:                    If gObjFrom.TipoObjeto <> TipoObjeto.CapeOpenUO And gObjFrom.TipoObjeto <> TipoObjeto.CustomUO And gObjFrom.TipoObjeto <> TipoObjeto.DistillationColumn _
                             And gObjFrom.TipoObjeto <> TipoObjeto.AbsorptionColumn And gObjFrom.TipoObjeto <> TipoObjeto.OT_EnergyRecycle _
                             And gObjFrom.TipoObjeto <> TipoObjeto.RefluxedAbsorber And gObjFrom.TipoObjeto <> TipoObjeto.ReboiledAbsorber Then
@@ -1972,11 +1962,11 @@ Imports DWSIM.DWSIM.Outros
                         End If
                     End If
                 Else
-                    MessageBox.Show(DWSIM.App.GetLocalString("Nohobjetosaseremcone"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Me.WriteToLog(DWSIM.App.GetLocalString("Nohobjetosaseremcone"), Color.Blue, TipoAviso.Informacao)
                     Exit Sub
                 End If
             Else
-                MessageBox.Show(DWSIM.App.GetLocalString("Nohobjetosaseremcone"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Me.WriteToLog(DWSIM.App.GetLocalString("Nohobjetosaseremcone"), Color.Blue, TipoAviso.Informacao)
                 Exit Sub
             End If
             If con1OK = True And con2OK = True Then
@@ -2002,7 +1992,7 @@ Imports DWSIM.DWSIM.Outros
                     End If
                 End With
             Else
-                MessageBox.Show(DWSIM.App.GetLocalString("Todasasconexespossve"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Throw New Exception(DWSIM.App.GetLocalString("Todasasconexespossve"))
             End If
 
         Else

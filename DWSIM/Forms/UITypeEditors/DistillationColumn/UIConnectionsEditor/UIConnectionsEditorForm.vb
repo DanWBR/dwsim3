@@ -223,29 +223,33 @@ Public Class UIConnectionsEditorForm
         End Select
 
         For Each str As StreamInformation In dc.MaterialStreams.Values
+            Dim tag As String = ReturnObjTag(str.StreamID)
+            If tag = "" Then
+                str.StreamID = ""
+            End If
             Select Case dc.ColumnType
                 Case Column.ColType.DistillationColumn
                     Select Case dc.CondenserType
                         Case Column.condtype.Full_Reflux
                             If str.StreamBehavior = StreamInformation.Behavior.OverheadVapor Then
-                                Me.dgv3.Rows(0).Cells(1).Value = ReturnObjTag(str.StreamID)
+                                Me.dgv3.Rows(0).Cells(1).Value = tag
                                 Me.dgv3.Rows(0).Cells(2).Value = str.ID
                             End If
                             If str.StreamBehavior = StreamInformation.Behavior.BottomsLiquid Then
-                                Me.dgv3.Rows(1).Cells(1).Value = ReturnObjTag(str.StreamID)
+                                Me.dgv3.Rows(1).Cells(1).Value = tag
                                 Me.dgv3.Rows(1).Cells(2).Value = str.ID
                             End If
                         Case Column.condtype.Partial_Condenser
                             If str.StreamBehavior = StreamInformation.Behavior.Distillate Then
-                                Me.dgv3.Rows(0).Cells(1).Value = ReturnObjTag(str.StreamID)
+                                Me.dgv3.Rows(0).Cells(1).Value = tag
                                 Me.dgv3.Rows(0).Cells(2).Value = str.ID
                             End If
                             If str.StreamBehavior = StreamInformation.Behavior.OverheadVapor Then
-                                Me.dgv3.Rows(1).Cells(1).Value = ReturnObjTag(str.StreamID)
+                                Me.dgv3.Rows(1).Cells(1).Value = tag
                                 Me.dgv3.Rows(1).Cells(2).Value = str.ID
                             End If
                             If str.StreamBehavior = StreamInformation.Behavior.BottomsLiquid Then
-                                Me.dgv3.Rows(2).Cells(1).Value = ReturnObjTag(str.StreamID)
+                                Me.dgv3.Rows(2).Cells(1).Value = tag
                                 Me.dgv3.Rows(2).Cells(2).Value = str.ID
                             End If
                         Case Column.condtype.Total_Condenser
@@ -254,59 +258,59 @@ Public Class UIConnectionsEditorForm
                                 Me.dgv3.Rows(0).Cells(2).Value = str.ID
                             End If
                             If str.StreamBehavior = StreamInformation.Behavior.BottomsLiquid Then
-                                Me.dgv3.Rows(1).Cells(1).Value = ReturnObjTag(str.StreamID)
+                                Me.dgv3.Rows(1).Cells(1).Value = tag
                                 Me.dgv3.Rows(1).Cells(2).Value = str.ID
                             End If
                     End Select
                 Case Column.ColType.AbsorptionColumn
                     If str.StreamBehavior = StreamInformation.Behavior.OverheadVapor Then
-                        Me.dgv3.Rows(0).Cells(1).Value = ReturnObjTag(str.StreamID)
+                        Me.dgv3.Rows(0).Cells(1).Value = tag
                         Me.dgv3.Rows(0).Cells(2).Value = str.ID
                     End If
                     If str.StreamBehavior = StreamInformation.Behavior.BottomsLiquid Then
-                        Me.dgv3.Rows(1).Cells(1).Value = ReturnObjTag(str.StreamID)
+                        Me.dgv3.Rows(1).Cells(1).Value = tag
                         Me.dgv3.Rows(1).Cells(2).Value = str.ID
                     End If
                 Case Column.ColType.ReboiledAbsorber
                     If str.StreamBehavior = StreamInformation.Behavior.OverheadVapor Then
-                        Me.dgv3.Rows(0).Cells(1).Value = ReturnObjTag(str.StreamID)
+                        Me.dgv3.Rows(0).Cells(1).Value = tag
                         Me.dgv3.Rows(0).Cells(2).Value = str.ID
                     End If
                     If str.StreamBehavior = StreamInformation.Behavior.BottomsLiquid Then
-                        Me.dgv3.Rows(1).Cells(1).Value = ReturnObjTag(str.StreamID)
+                        Me.dgv3.Rows(1).Cells(1).Value = tag
                         Me.dgv3.Rows(1).Cells(2).Value = str.ID
                     End If
                 Case Column.ColType.RefluxedAbsorber
                     Select Case dc.CondenserType
                         Case Column.condtype.Full_Reflux
                             If str.StreamBehavior = StreamInformation.Behavior.OverheadVapor Then
-                                Me.dgv3.Rows(0).Cells(1).Value = ReturnObjTag(str.StreamID)
+                                Me.dgv3.Rows(0).Cells(1).Value = tag
                                 Me.dgv3.Rows(0).Cells(2).Value = str.ID
                             End If
                             If str.StreamBehavior = StreamInformation.Behavior.BottomsLiquid Then
-                                Me.dgv3.Rows(1).Cells(1).Value = ReturnObjTag(str.StreamID)
+                                Me.dgv3.Rows(1).Cells(1).Value = tag
                                 Me.dgv3.Rows(1).Cells(2).Value = str.ID
                             End If
                         Case Column.condtype.Partial_Condenser
                             If str.StreamBehavior = StreamInformation.Behavior.Distillate Then
-                                Me.dgv3.Rows(0).Cells(1).Value = ReturnObjTag(str.StreamID)
+                                Me.dgv3.Rows(0).Cells(1).Value = tag
                                 Me.dgv3.Rows(0).Cells(2).Value = str.ID
                             End If
                             If str.StreamBehavior = StreamInformation.Behavior.OverheadVapor Then
-                                Me.dgv3.Rows(1).Cells(1).Value = ReturnObjTag(str.StreamID)
+                                Me.dgv3.Rows(1).Cells(1).Value = tag
                                 Me.dgv3.Rows(1).Cells(2).Value = str.ID
                             End If
                             If str.StreamBehavior = StreamInformation.Behavior.BottomsLiquid Then
-                                Me.dgv3.Rows(2).Cells(1).Value = ReturnObjTag(str.StreamID)
+                                Me.dgv3.Rows(2).Cells(1).Value = tag
                                 Me.dgv3.Rows(2).Cells(2).Value = str.ID
                             End If
                         Case Column.condtype.Total_Condenser
                             If str.StreamBehavior = StreamInformation.Behavior.Distillate Then
-                                Me.dgv3.Rows(0).Cells(1).Value = ReturnObjTag(str.StreamID)
+                                Me.dgv3.Rows(0).Cells(1).Value = tag
                                 Me.dgv3.Rows(0).Cells(2).Value = str.ID
                             End If
                             If str.StreamBehavior = StreamInformation.Behavior.BottomsLiquid Then
-                                Me.dgv3.Rows(1).Cells(1).Value = ReturnObjTag(str.StreamID)
+                                Me.dgv3.Rows(1).Cells(1).Value = tag
                                 Me.dgv3.Rows(1).Cells(2).Value = str.ID
                             End If
                     End Select
@@ -314,15 +318,19 @@ Public Class UIConnectionsEditorForm
         Next
 
         For Each str As StreamInformation In dc.EnergyStreams.Values
+            Dim tag As String = ReturnObjTag(str.StreamID)
+            If tag = "" Then
+                str.StreamID = ""
+            End If
             If str.StreamBehavior = StreamInformation.Behavior.Distillate Then
-                Me.dgv4.Rows.Add(New Object() {dc.Stages(0).Name, ReturnObjTag(str.StreamID), str.ID})
+                Me.dgv4.Rows.Add(New Object() {dc.Stages(0).Name, tag, str.ID})
                 Me.dgv4.Rows(Me.dgv4.Rows.Count - 1).Cells(0).ReadOnly = True
             ElseIf str.StreamBehavior = StreamInformation.Behavior.BottomsLiquid Then
-                Me.dgv4.Rows.Add(New Object() {dc.Stages(dc.Stages.Count - 1).Name, ReturnObjTag(str.StreamID), str.ID})
+                Me.dgv4.Rows.Add(New Object() {dc.Stages(dc.Stages.Count - 1).Name, tag, str.ID})
                 Me.dgv4.Rows(Me.dgv4.Rows.Count - 1).Cells(0).ReadOnly = True
             ElseIf str.StreamBehavior = StreamInformation.Behavior.InterExchanger Then
                 Dim st = (From st2 As Stage In dc.Stages Select st2 Where st2.Name = str.AssociatedStage).FirstOrDefault
-                Me.dgv4.Rows.Add(New Object() {st.Name, ReturnObjTag(str.StreamID), str.ID})
+                Me.dgv4.Rows.Add(New Object() {st.Name, tag, str.ID})
                 Me.dgv4.Rows(Me.dgv4.Rows.Count - 1).Cells(0).Tag = st.ID
             End If
         Next
@@ -382,7 +390,9 @@ Public Class UIConnectionsEditorForm
             If Not id = "" Then
                 Dim idx As Integer = FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface).OutputConnectors(0).AttachedConnector.AttachedToConnectorIndex
                 form.DisconnectObject(FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface), dc.GraphicObject)
-                dc.GraphicObject.InputConnectors.RemoveAt(idx)
+                'dc.GraphicObject.InputConnectors.RemoveAt(idx)
+                dc.GraphicObject.InputConnectors(idx).AttachedConnector = Nothing
+                dc.GraphicObject.InputConnectors(idx).IsAttached = False
             End If
             If dc.MaterialStreams.ContainsKey(id) Then dc.MaterialStreams.Remove(id)
             .RemoveAt(dgv1.SelectedCells(0).RowIndex)
@@ -394,9 +404,11 @@ Public Class UIConnectionsEditorForm
         Dim sid As String = dc.MaterialStreams(id).StreamID
         With Me.dgv2.Rows
             If Not id = "" Then
-                Dim idx As Integer = FormFlowsheet.SearchSurfaceObjectsByName(id, form.FormSurface.FlowsheetDesignSurface).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex
+                Dim idx As Integer = FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex
                 form.DisconnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface))
-                dc.GraphicObject.OutputConnectors.RemoveAt(idx)
+                'dc.GraphicObject.OutputConnectors.RemoveAt(idx)
+                dc.GraphicObject.OutputConnectors(idx).AttachedConnector = Nothing
+                dc.GraphicObject.OutputConnectors(idx).IsAttached = False
             End If
             If dc.MaterialStreams.ContainsKey(id) Then dc.MaterialStreams.Remove(id)
             .RemoveAt(dgv2.SelectedCells(0).RowIndex)
@@ -454,6 +466,20 @@ Public Class UIConnectionsEditorForm
                             form.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface), dc.GraphicObject, fidx, tidx)
                             If dc.MaterialStreams.ContainsKey(id) Then dc.MaterialStreams(id).StreamID = sid
                         End With
+                    Else
+                        If Not id = "" Then
+                            Try
+                                Dim sid As String = dc.MaterialStreams(id).StreamID
+                                If form.Collections.ObjectCollection.ContainsKey(sid) Then
+                                    Dim idx As Integer = FormFlowsheet.SearchSurfaceObjectsByName(id, form.FormSurface.FlowsheetDesignSurface).OutputConnectors(0).AttachedConnector.AttachedToConnectorIndex
+                                    form.DisconnectObject(FormFlowsheet.SearchSurfaceObjectsByName(id, form.FormSurface.FlowsheetDesignSurface), dc.GraphicObject)
+                                    dc.GraphicObject.InputConnectors(idx).AttachedConnector = Nothing
+                                    dc.GraphicObject.InputConnectors(idx).IsAttached = False
+                                    dc.MaterialStreams(id).StreamID = ""
+                                End If
+                            Catch ex As Exception
+                            End Try
+                        End If
                     End If
                 Case 1
                     If value <> "" Then
@@ -497,6 +523,20 @@ Public Class UIConnectionsEditorForm
                             form.ConnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface), fidx, tidx)
                             If dc.MaterialStreams.ContainsKey(id) Then dc.MaterialStreams(id).StreamID = sid
                         End With
+                    Else
+                        If Not id = "" Then
+                            Try
+                                Dim sid As String = dc.MaterialStreams(id).StreamID
+                                If form.Collections.ObjectCollection.ContainsKey(sid) Then
+                                    Dim idx As Integer = FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex
+                                    form.DisconnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface))
+                                    dc.GraphicObject.OutputConnectors(idx).AttachedConnector = Nothing
+                                    dc.GraphicObject.OutputConnectors(idx).IsAttached = False
+                                    dc.MaterialStreams(id).StreamID = ""
+                                End If
+                            Catch ex As Exception
+                            End Try
+                        End If
                     End If
                 Case 1
                     If value <> "" Then
@@ -572,6 +612,20 @@ Public Class UIConnectionsEditorForm
                             If dc.MaterialStreams.ContainsKey(id) Then dc.MaterialStreams(id).StreamID = sid
 
                         End With
+                    Else
+                        If Not id = "" Then
+                            Try
+                                Dim sid As String = dc.MaterialStreams(id).StreamID
+                                If form.Collections.ObjectCollection.ContainsKey(sid) Then
+                                    Dim idx As Integer = FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex
+                                    form.DisconnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface))
+                                    dc.GraphicObject.OutputConnectors(idx).AttachedConnector = Nothing
+                                    dc.GraphicObject.OutputConnectors(idx).IsAttached = False
+                                    dc.MaterialStreams(id).StreamID = ""
+                                End If
+                            Catch ex As Exception
+                            End Try
+                        End If
                     End If
             End Select
 
@@ -610,7 +664,13 @@ Public Class UIConnectionsEditorForm
                                     Else
                                         .OutputConnectors(.OutputConnectors.Count - 1).Position = New Point(dc.GraphicObject.X + dc.GraphicObject.Width, dc.GraphicObject.Y + 0.08 * dc.GraphicObject.Height)
                                     End If
-                                    form.ConnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface), fidx, tidx)
+                                    Try
+                                        form.ConnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface), fidx, tidx)
+                                    Catch ex As Exception
+                                        form.WriteToLog(ex.Message.ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
+                                        dgv4.Rows(e.RowIndex).Cells(e.ColumnIndex).Value = ""
+                                        Exit Sub
+                                    End Try
                                 Case StreamInformation.Behavior.BottomsLiquid
                                     .OutputConnectors.Add(New ConnectionPoint())
                                     .OutputConnectors(.OutputConnectors.Count - 1).Type = ConType.ConEn
@@ -621,7 +681,13 @@ Public Class UIConnectionsEditorForm
                                     Else
                                         .OutputConnectors(.OutputConnectors.Count - 1).Position = New Point(dc.GraphicObject.X + dc.GraphicObject.Width, dc.GraphicObject.Y + 0.825 * dc.GraphicObject.Height)
                                     End If
-                                    form.ConnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface), fidx, tidx)
+                                    Try
+                                        form.ConnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface), fidx, tidx)
+                                    Catch ex As Exception
+                                        form.WriteToLog(ex.Message.ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
+                                        dgv4.Rows(e.RowIndex).Cells(e.ColumnIndex).Value = ""
+                                        Exit Sub
+                                    End Try
                                 Case StreamInformation.Behavior.InterExchanger
                                     .InputConnectors.Add(New ConnectionPoint())
                                     .InputConnectors(.InputConnectors.Count - 1).Type = ConType.ConEn
@@ -632,14 +698,36 @@ Public Class UIConnectionsEditorForm
                                     Else
                                         .InputConnectors(.InputConnectors.Count - 1).Position = New Point(dc.GraphicObject.X + dc.GraphicObject.Width, dc.GraphicObject.Y + dc.StageIndex(dc.EnergyStreams(id).AssociatedStage) / dc.NumberOfStages * dc.GraphicObject.Height)
                                     End If
-                                    form.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface), dc.GraphicObject, fidx, tidx)
+                                    Try
+                                        form.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface), dc.GraphicObject, fidx, tidx)
+                                    Catch ex As Exception
+                                        form.WriteToLog(ex.Message.ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
+                                        dgv4.Rows(e.RowIndex).Cells(e.ColumnIndex).Value = ""
+                                        Exit Sub
+                                    End Try
                             End Select
                             If dc.EnergyStreams.ContainsKey(id) Then dc.EnergyStreams(id).StreamID = sid
                             Dim k As Integer
                             For k = 0 To .OutputConnectors.Count - 2
-                                .OutputConnectors.Item(k).AttachedConnector.AttachedFromConnectorIndex = k
+                                If Not .OutputConnectors.Item(k).AttachedConnector Is Nothing Then
+                                    .OutputConnectors.Item(k).AttachedConnector.AttachedFromConnectorIndex = k
+                                End If
                             Next
                         End With
+                    Else
+                        If Not id = "" Then
+                            Try
+                                Dim sid As String = dc.EnergyStreams(id).StreamID
+                                If form.Collections.ObjectCollection.ContainsKey(sid) Then
+                                    Dim idx As Integer = FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex
+                                    form.DisconnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface))
+                                    dc.GraphicObject.OutputConnectors(idx).AttachedConnector = Nothing
+                                    dc.GraphicObject.OutputConnectors(idx).IsAttached = False
+                                    dc.EnergyStreams(id).StreamID = ""
+                                End If
+                            Catch ex As Exception
+                            End Try
+                        End If
                     End If
                 Case 0
                     If value <> "" Then
@@ -697,7 +785,9 @@ Public Class UIConnectionsEditorForm
                 If Not id = "" Then
                     Dim idx As Integer = FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex
                     form.DisconnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface))
-                    dc.GraphicObject.OutputConnectors.RemoveAt(idx)
+                    'dc.GraphicObject.OutputConnectors.RemoveAt(idx)
+                    dc.GraphicObject.OutputConnectors(idx).AttachedConnector = Nothing
+                    dc.GraphicObject.OutputConnectors(idx).IsAttached = False
                 End If
                 If dc.EnergyStreams.ContainsKey(id) Then dc.EnergyStreams.Remove(id)
                 .RemoveAt(dgv4.SelectedCells(0).RowIndex)
