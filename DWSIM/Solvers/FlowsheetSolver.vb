@@ -1496,11 +1496,11 @@ Namespace DWSIM.Flowsheet
 
             Dim loopex As Exception = Nothing
 
+            My.MyApplication.CalculatorStopRequested = False
+
             While form.CalculationQueue.Count >= 1
 
                 If ct.IsCancellationRequested = True Then ct.ThrowIfCancellationRequested()
-
-                My.MyApplication.CalculatorStopRequested = False
 
                 If form.FormSurface.Timer2.Enabled = False Then form.FormSurface.Timer2.Start()
 
@@ -1922,7 +1922,7 @@ Namespace DWSIM.Flowsheet
                 Dim ct As CancellationToken
                 If ts Is Nothing Then ts = New CancellationTokenSource
                 My.MyApplication.TaskCancellationTokenSource = ts
-                ct = ts.Token
+                ct = My.MyApplication.TaskCancellationTokenSource.Token
 
                 Dim obj As SimulationObjects_BaseClass
 
@@ -2056,7 +2056,7 @@ Namespace DWSIM.Flowsheet
 
                                     Try
                                         t0 = New Task(Sub()
-                                                          ProcessCalculationQueue(form, True, True, 0)
+                                                          ProcessCalculationQueue(form, True, True, 0, , ct)
                                                       End Sub, ct)
                                         t0.RunSynchronously()
                                     Catch agex As AggregateException
