@@ -80,6 +80,7 @@ Public Class FormOptions
         cbDebugLevel.SelectedIndex = My.Settings.DebugLevel
         tbServerIP.Text = My.Settings.ServerIPAddress
         tbServerPort.Text = My.Settings.ServerPort
+        chkSolverBreak.Checked = My.Settings.SolverBreakOnException
 
         'databases
         Me.PopulateDBGrid()
@@ -654,5 +655,9 @@ Public Class FormOptions
             My.Application.ChangeUICulture(My.Settings.CultureInfo)
             MessageBox.Show(DWSIM.App.GetLocalString("NextStartupOnly"))
         End If
+    End Sub
+
+    Private Sub chkSolverBreak_CheckedChanged(sender As Object, e As EventArgs) Handles chkSolverBreak.CheckedChanged
+        My.Settings.SolverBreakOnException = chkSolverBreak.Checked
     End Sub
 End Class

@@ -76,45 +76,15 @@ Namespace DWSIM.Flowsheet
                                     myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
                                 Else
                                     If objArgs.Calculado = True Then
-                                        Dim gObjA As GraphicObject = Nothing
-                                        Try
-                                            gobj = myUnitOp.GraphicObject
-                                            gobj.Calculated = True
-                                            preLab = form.FormSurface.LabelCalculator.Text
-                                            form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & gobj.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])")
-                                            Dim imgA = My.Resources.green_down
-                                            If Not imgA Is Nothing Then
-                                                Dim myEmbeddedImage As New EmbeddedImageGraphic(gobj.X + gobj.Width / 2 - 8, gobj.Y - 18, imgA)
-                                                gObjA = myEmbeddedImage
-                                                gObjA.AutoSize = False
-                                                gObjA.Height = 16
-                                                gObjA.Width = 16
-                                                gobj.Status = Status.Calculating
-                                            End If
-                                            form.FormSurface.FlowsheetDesignSurface.drawingObjects.Add(gObjA)
-                                            form.FormSurface.FlowsheetDesignSurface.Invalidate()
-                                            myUnitOp.Solve()
-                                            gobj.Status = Status.Calculated
-                                            If myUnitOp.IsSpecAttached = True And myUnitOp.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myUnitOp.AttachedSpecId).Calculate()
-                                            form.WriteToLog(gobj.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                                            form.UpdateStatusLabel(preLab)
-                                        Catch ex As Exception
-                                            form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, objArgs.Nome)
-                                            form.UpdateStatusLabel(preLab)
-                                            myUnitOp.ErrorMessage = ex.Message
-                                            Dim st As New StackTrace(ex, True)
-                                            If st.FrameCount > 0 Then
-                                                form.WriteToLog(gobj.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
-                                            Else
-                                                form.WriteToLog(gobj.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                                            End If
-                                            gobj = myUnitOp.GraphicObject
-                                            gobj.Calculated = False
-                                            myUnitOp.Unsolve()
-                                        Finally
-                                            form.FormSurface.FlowsheetDesignSurface.drawingObjects.Remove(gObjA)
-                                            form.FormSurface.FlowsheetDesignSurface.Invalidate()
-                                        End Try
+                                        gobj = myUnitOp.GraphicObject
+                                        gobj.Calculated = True
+                                        preLab = form.FormSurface.LabelCalculator.Text
+                                        form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & gobj.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])")
+                                        myUnitOp.Solve()
+                                        gobj.Status = Status.Calculated
+                                        If myUnitOp.IsSpecAttached = True And myUnitOp.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myUnitOp.AttachedSpecId).Calculate()
+                                        form.WriteToLog(gobj.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
+                                        form.UpdateStatusLabel(preLab)
                                     Else
                                         myUnitOp.Unsolve()
                                         gobj = myUnitOp.GraphicObject
@@ -133,35 +103,17 @@ Namespace DWSIM.Flowsheet
                                 Dim myUnitOp As SimulationObjects_UnitOpBaseClass
                                 myUnitOp = form.Collections.ObjectCollection(myObj.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name)
                                 If objArgs.Calculado = True Then
-                                    Try
-                                        preLab = form.FormSurface.LabelCalculator.Text
-                                        myUnitOp.GraphicObject.Calculated = False
-                                        form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & gobj.Tag & "... (PP: " & myUnitOp.PropertyPackage.Tag & " [" & myUnitOp.PropertyPackage.ComponentName & "])")
-                                        myUnitOp.Solve()
-                                        myUnitOp.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                                        form.WriteToLog(gobj.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                                        myUnitOp.GraphicObject.Calculated = True
-                                        If myUnitOp.IsSpecAttached = True And myUnitOp.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myUnitOp.AttachedSpecId).Calculate()
-                                        form.UpdateStatusLabel(preLab)
-                                        gobj = myUnitOp.GraphicObject
-                                        gobj.Calculated = True
-                                    Catch ex As Exception
-                                        form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, objArgs.Nome)
-                                        form.UpdateStatusLabel(preLab)
-                                        myUnitOp.GraphicObject.Calculated = False
-                                        myUnitOp.ErrorMessage = ex.Message
-                                        Dim st As New StackTrace(ex, True)
-                                        If st.FrameCount > 0 Then
-                                            form.WriteToLog(gobj.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
-                                        Else
-                                            form.WriteToLog(gobj.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                                        End If
-                                        gobj = myUnitOp.GraphicObject
-                                        gobj.Calculated = False
-                                        myUnitOp.Unsolve()
-                                        myUnitOp.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                                    Finally
-                                    End Try
+                                    preLab = form.FormSurface.LabelCalculator.Text
+                                    myUnitOp.GraphicObject.Calculated = False
+                                    form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & gobj.Tag & "... (PP: " & myUnitOp.PropertyPackage.Tag & " [" & myUnitOp.PropertyPackage.ComponentName & "])")
+                                    myUnitOp.Solve()
+                                    myUnitOp.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
+                                    form.WriteToLog(gobj.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
+                                    myUnitOp.GraphicObject.Calculated = True
+                                    If myUnitOp.IsSpecAttached = True And myUnitOp.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myUnitOp.AttachedSpecId).Calculate()
+                                    form.UpdateStatusLabel(preLab)
+                                    gobj = myUnitOp.GraphicObject
+                                    gobj.Calculated = True
                                 Else
                                     myUnitOp.Unsolve()
                                     myUnitOp.GraphicObject.Calculated = False
@@ -175,22 +127,12 @@ Namespace DWSIM.Flowsheet
                             Dim myObj As SimulationObjects_UnitOpBaseClass = form.Collections.ObjectCollection(objArgs.Nome)
                             myObj.GraphicObject.Calculated = False
                             form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])")
-                            Try
-                                myObj.Solve()
-                                form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
-                                myObj.GraphicObject.Calculated = True
-                                If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
-                                form.FormProps.PGEx1.Refresh()
-                                myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                            Catch ex As Exception
-                                form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, objArgs.Nome)
-                                Dim st As New StackTrace(ex, True)
-                                If st.FrameCount > 0 Then
-                                    form.WriteToLog(myObj.GraphicObject.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
-                                Else
-                                    form.WriteToLog(myObj.GraphicObject.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                                End If
-                            End Try
+                            myObj.Solve()
+                            form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
+                            myObj.GraphicObject.Calculated = True
+                            If myObj.IsSpecAttached = True And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
+                            form.FormProps.PGEx1.Refresh()
+                            myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
                         Else
                             Dim myObj As SimulationObjects_UnitOpBaseClass = form.Collections.ObjectCollection(objArgs.Nome)
                             Dim gobj As GraphicObject = FormFlowsheet.SearchSurfaceObjectsByName(objArgs.Nome, form.FormSurface.FlowsheetDesignSurface)
@@ -200,24 +142,10 @@ Namespace DWSIM.Flowsheet
                                         Dim obj As SimulationObjects_BaseClass = form.Collections.ObjectCollection(cp.AttachedConnector.AttachedTo.Name)
                                         If TypeOf obj Is Streams.MaterialStream Then
                                             Dim ms As Streams.MaterialStream = CType(obj, Streams.MaterialStream)
-                                            Try
-                                                ms.GraphicObject.Calculated = False
-                                                form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & ms.GraphicObject.Tag & "... (PP: " & ms.PropertyPackage.Tag & " [" & ms.PropertyPackage.ComponentName & "])")
-                                                CalculateMaterialStream(form, ms)
-                                                ms.GraphicObject.Calculated = True
-                                            Catch ex As Exception
-                                                form.ProcessScripts(Script.EventType.ObjectCalculationError, Script.ObjectType.FlowsheetObject, ms.Name)
-                                                ms.GraphicObject.Calculated = False
-                                                ms.Clear()
-                                                ms.ClearAllProps()
-                                                ms.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                                                Dim st As New StackTrace(ex, True)
-                                                If st.FrameCount > 0 Then
-                                                    form.WriteToLog(gobj.Tag & ": " & ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
-                                                Else
-                                                    form.WriteToLog(gobj.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                                                End If
-                                            End Try
+                                            ms.GraphicObject.Calculated = False
+                                            form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & ms.GraphicObject.Tag & "... (PP: " & ms.PropertyPackage.Tag & " [" & ms.PropertyPackage.ComponentName & "])")
+                                            CalculateMaterialStream(form, ms)
+                                            ms.GraphicObject.Calculated = True
                                         End If
                                     End If
                                 Next
@@ -1544,6 +1472,7 @@ Namespace DWSIM.Flowsheet
                         form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
                     End If
                     loopex = ex
+                    If My.Settings.SolverBreakOnException Then Exit While
                 End Try
 
                 form.FormWatch.UpdateList()
@@ -1560,10 +1489,6 @@ Namespace DWSIM.Flowsheet
                 CheckCalculatorStatus()
 
                 Application.DoEvents()
-
-                If Not loopex Is Nothing Then
-                    form.CalculationQueue.Clear()
-                End If
 
             End While
 
@@ -1602,6 +1527,8 @@ Namespace DWSIM.Flowsheet
 
             If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
 
+            Dim loopex As Exception = Nothing
+
             While form.CalculationQueue.Count >= 1
 
                 If ct.IsCancellationRequested = True Then ct.ThrowIfCancellationRequested()
@@ -1620,7 +1547,14 @@ Namespace DWSIM.Flowsheet
                         myobj.GraphicObject.Calculated = True
                     End If
                 Catch ex As Exception
-                    Throw New Exception(myinfo.Tag & ": " & ex.Message.ToString, ex)
+                    Dim st As New StackTrace(ex, True)
+                    If st.FrameCount > 0 Then
+                        form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                    Else
+                        form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                    End If
+                    loopex = ex
+                    If My.Settings.SolverBreakOnException Then Exit While
                 Finally
                     form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}))
                 End Try
@@ -1629,6 +1563,8 @@ Namespace DWSIM.Flowsheet
                 If form.CalculationQueue.Count > 0 Then form.CalculationQueue.Dequeue()
 
             End While
+
+            If Not loopex Is Nothing Then Throw loopex
 
         End Sub
 
@@ -1641,6 +1577,8 @@ Namespace DWSIM.Flowsheet
         Private Shared Sub ProcessQueueInternalAsyncParallel(ByVal form As FormFlowsheet, ByVal orderedlist As Dictionary(Of Integer, List(Of StatusChangeEventArgs)), ct As Threading.CancellationToken)
 
             If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
+
+            Dim loopex As Exception = Nothing
 
             For Each obj In form.Collections.ObjectCollection.Values
                 If TypeOf obj Is SimulationObjects_UnitOpBaseClass Then
@@ -1662,7 +1600,7 @@ Namespace DWSIM.Flowsheet
                 For Each item In li.Value
                     objlist.Add(item.Nome)
                 Next
-                Parallel.ForEach(li.Value, poptions, Sub(myinfo)
+                Parallel.ForEach(li.Value, poptions, Sub(myinfo, state)
                                                          If ct.IsCancellationRequested = True Then ct.ThrowIfCancellationRequested()
                                                          'form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}, True))
                                                          Try
@@ -1676,7 +1614,14 @@ Namespace DWSIM.Flowsheet
                                                                  myobj.GraphicObject.Calculated = True
                                                              End If
                                                          Catch ex As Exception
-                                                             Throw New Exception(myinfo.Tag & ": " & ex.Message.ToString, ex)
+                                                             Dim st As New StackTrace(ex, True)
+                                                             If st.FrameCount > 0 Then
+                                                                 form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                                                             Else
+                                                                 form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                                             End If
+                                                             loopex = ex
+                                                             If My.Settings.SolverBreakOnException Then state.Break()
                                                          Finally
                                                              form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}))
                                                          End Try
@@ -1690,6 +1635,8 @@ Namespace DWSIM.Flowsheet
                     DirectCast(obj, Streams.MaterialStream).PropertyPackage = Nothing
                 End If
             Next
+
+            If Not loopex Is Nothing Then Throw loopex
 
         End Sub
 
@@ -1706,6 +1653,7 @@ Namespace DWSIM.Flowsheet
                         My.MyApplication.CalculatorStopRequested = False
                         If My.MyApplication.TaskCancellationTokenSource IsNot Nothing Then
                             My.MyApplication.TaskCancellationTokenSource.Cancel()
+                            My.MyApplication.TaskCancellationTokenSource.Token.ThrowIfCancellationRequested()
                         Else
                             Throw New Exception(DWSIM.App.GetLocalString("CalculationAborted"))
                         End If

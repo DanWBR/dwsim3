@@ -24,12 +24,13 @@ Partial Class FormOptions
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormOptions))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip()
         Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.chkSolverBreak = New System.Windows.Forms.CheckBox()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.tbSolverTimeout = New System.Windows.Forms.TextBox()
         Me.Label11 = New System.Windows.Forms.Label()
@@ -136,29 +137,33 @@ Partial Class FormOptions
         '
         'FaTabStrip1
         '
+        resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
         Me.FaTabStrip1.AlwaysShowClose = False
         Me.FaTabStrip1.AlwaysShowMenuGlyph = False
-        resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
         Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem3, Me.FaTabStripItem6, Me.FaTabStripItem2, Me.FaTabStripItem5, Me.FaTabStripItem7})
         Me.FaTabStrip1.Name = "FaTabStrip1"
         Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem1
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.FaTabStrip1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.FaTabStrip1, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.FaTabStrip1, resources.GetString("FaTabStrip1.ToolTip"))
         '
         'FaTabStripItem1
         '
+        resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
         Me.FaTabStripItem1.CanClose = False
         Me.FaTabStripItem1.Controls.Add(Me.GroupBox2)
         Me.FaTabStripItem1.Controls.Add(Me.GroupBox7)
         Me.FaTabStripItem1.IsDrawn = True
         Me.FaTabStripItem1.Name = "FaTabStripItem1"
         Me.FaTabStripItem1.Selected = True
-        resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.FaTabStripItem1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.FaTabStripItem1, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.FaTabStripItem1, resources.GetString("FaTabStripItem1.ToolTip"))
         '
         'GroupBox2
         '
+        resources.ApplyResources(Me.GroupBox2, "GroupBox2")
+        Me.GroupBox2.Controls.Add(Me.chkSolverBreak)
         Me.GroupBox2.Controls.Add(Me.Label12)
         Me.GroupBox2.Controls.Add(Me.tbSolverTimeout)
         Me.GroupBox2.Controls.Add(Me.Label11)
@@ -166,11 +171,19 @@ Partial Class FormOptions
         Me.GroupBox2.Controls.Add(Me.cbSolverMode)
         Me.GroupBox2.Controls.Add(Me.Label2)
         Me.GroupBox2.Controls.Add(Me.GroupBoxNetworkComputerConfig)
-        resources.ApplyResources(Me.GroupBox2, "GroupBox2")
         Me.GroupBox2.Name = "GroupBox2"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox2, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox2, System.Drawing.Color.Empty)
         Me.GroupBox2.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox2, resources.GetString("GroupBox2.ToolTip"))
+        '
+        'chkSolverBreak
+        '
+        resources.ApplyResources(Me.chkSolverBreak, "chkSolverBreak")
+        Me.chkSolverBreak.Name = "chkSolverBreak"
+        Me.SuperToolTip1.SetSuperToolTipColor1(Me.chkSolverBreak, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetSuperToolTipColor2(Me.chkSolverBreak, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.chkSolverBreak, resources.GetString("chkSolverBreak.ToolTip"))
         '
         'Label12
         '
@@ -178,6 +191,7 @@ Partial Class FormOptions
         Me.Label12.Name = "Label12"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label12, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label12, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label12, resources.GetString("Label12.ToolTip"))
         '
         'tbSolverTimeout
         '
@@ -185,6 +199,7 @@ Partial Class FormOptions
         Me.tbSolverTimeout.Name = "tbSolverTimeout"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.tbSolverTimeout, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.tbSolverTimeout, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.tbSolverTimeout, resources.GetString("tbSolverTimeout.ToolTip"))
         '
         'Label11
         '
@@ -192,16 +207,18 @@ Partial Class FormOptions
         Me.Label11.Name = "Label11"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label11, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label11, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label11, resources.GetString("Label11.ToolTip"))
         '
         'GroupBoxAzureConfig
         '
+        resources.ApplyResources(Me.GroupBoxAzureConfig, "GroupBoxAzureConfig")
         Me.GroupBoxAzureConfig.Controls.Add(Me.tbServiceBusNamespace)
         Me.GroupBoxAzureConfig.Controls.Add(Me.Label8)
-        resources.ApplyResources(Me.GroupBoxAzureConfig, "GroupBoxAzureConfig")
         Me.GroupBoxAzureConfig.Name = "GroupBoxAzureConfig"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBoxAzureConfig, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBoxAzureConfig, System.Drawing.Color.Empty)
         Me.GroupBoxAzureConfig.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.GroupBoxAzureConfig, resources.GetString("GroupBoxAzureConfig.ToolTip"))
         '
         'tbServiceBusNamespace
         '
@@ -209,6 +226,7 @@ Partial Class FormOptions
         Me.tbServiceBusNamespace.Name = "tbServiceBusNamespace"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.tbServiceBusNamespace, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.tbServiceBusNamespace, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.tbServiceBusNamespace, resources.GetString("tbServiceBusNamespace.ToolTip"))
         '
         'Label8
         '
@@ -216,16 +234,18 @@ Partial Class FormOptions
         Me.Label8.Name = "Label8"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label8, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label8, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label8, resources.GetString("Label8.ToolTip"))
         '
         'cbSolverMode
         '
+        resources.ApplyResources(Me.cbSolverMode, "cbSolverMode")
         Me.cbSolverMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbSolverMode.FormattingEnabled = True
         Me.cbSolverMode.Items.AddRange(New Object() {resources.GetString("cbSolverMode.Items"), resources.GetString("cbSolverMode.Items1"), resources.GetString("cbSolverMode.Items2"), resources.GetString("cbSolverMode.Items3"), resources.GetString("cbSolverMode.Items4")})
-        resources.ApplyResources(Me.cbSolverMode, "cbSolverMode")
         Me.cbSolverMode.Name = "cbSolverMode"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.cbSolverMode, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.cbSolverMode, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.cbSolverMode, resources.GetString("cbSolverMode.ToolTip"))
         '
         'Label2
         '
@@ -233,18 +253,20 @@ Partial Class FormOptions
         Me.Label2.Name = "Label2"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label2, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label2, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label2, resources.GetString("Label2.ToolTip"))
         '
         'GroupBoxNetworkComputerConfig
         '
+        resources.ApplyResources(Me.GroupBoxNetworkComputerConfig, "GroupBoxNetworkComputerConfig")
         Me.GroupBoxNetworkComputerConfig.Controls.Add(Me.tbServerPort)
         Me.GroupBoxNetworkComputerConfig.Controls.Add(Me.tbServerIP)
         Me.GroupBoxNetworkComputerConfig.Controls.Add(Me.Label15)
         Me.GroupBoxNetworkComputerConfig.Controls.Add(Me.Label16)
-        resources.ApplyResources(Me.GroupBoxNetworkComputerConfig, "GroupBoxNetworkComputerConfig")
         Me.GroupBoxNetworkComputerConfig.Name = "GroupBoxNetworkComputerConfig"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBoxNetworkComputerConfig, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBoxNetworkComputerConfig, System.Drawing.Color.Empty)
         Me.GroupBoxNetworkComputerConfig.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.GroupBoxNetworkComputerConfig, resources.GetString("GroupBoxNetworkComputerConfig.ToolTip"))
         '
         'tbServerPort
         '
@@ -252,6 +274,7 @@ Partial Class FormOptions
         Me.tbServerPort.Name = "tbServerPort"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.tbServerPort, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.tbServerPort, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.tbServerPort, resources.GetString("tbServerPort.ToolTip"))
         '
         'tbServerIP
         '
@@ -259,6 +282,7 @@ Partial Class FormOptions
         Me.tbServerIP.Name = "tbServerIP"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.tbServerIP, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.tbServerIP, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.tbServerIP, resources.GetString("tbServerIP.ToolTip"))
         '
         'Label15
         '
@@ -266,6 +290,7 @@ Partial Class FormOptions
         Me.Label15.Name = "Label15"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label15, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label15, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label15, resources.GetString("Label15.ToolTip"))
         '
         'Label16
         '
@@ -273,6 +298,7 @@ Partial Class FormOptions
         Me.Label16.Name = "Label16"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label16, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label16, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label16, resources.GetString("Label16.ToolTip"))
         '
         'GroupBox7
         '
@@ -288,15 +314,17 @@ Partial Class FormOptions
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox7, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox7, System.Drawing.Color.Empty)
         Me.GroupBox7.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox7, resources.GetString("GroupBox7.ToolTip"))
         '
         'GroupBox8
         '
-        Me.GroupBox8.Controls.Add(Me.tbGPUCaps)
         resources.ApplyResources(Me.GroupBox8, "GroupBox8")
+        Me.GroupBox8.Controls.Add(Me.tbGPUCaps)
         Me.GroupBox8.Name = "GroupBox8"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox8, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox8, System.Drawing.Color.Empty)
         Me.GroupBox8.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox8, resources.GetString("GroupBox8.ToolTip"))
         '
         'tbGPUCaps
         '
@@ -305,15 +333,17 @@ Partial Class FormOptions
         Me.tbGPUCaps.ReadOnly = True
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.tbGPUCaps, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.tbGPUCaps, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.tbGPUCaps, resources.GetString("tbGPUCaps.ToolTip"))
         '
         'cbGPU
         '
+        resources.ApplyResources(Me.cbGPU, "cbGPU")
         Me.cbGPU.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbGPU.FormattingEnabled = True
-        resources.ApplyResources(Me.cbGPU, "cbGPU")
         Me.cbGPU.Name = "cbGPU"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.cbGPU, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.cbGPU, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.cbGPU, resources.GetString("cbGPU.ToolTip"))
         '
         'Label7
         '
@@ -321,6 +351,7 @@ Partial Class FormOptions
         Me.Label7.Name = "Label7"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label7, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label7, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label7, resources.GetString("Label7.ToolTip"))
         '
         'chkEnableGPUProcessing
         '
@@ -328,15 +359,17 @@ Partial Class FormOptions
         Me.chkEnableGPUProcessing.Name = "chkEnableGPUProcessing"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.chkEnableGPUProcessing, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.chkEnableGPUProcessing, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.chkEnableGPUProcessing, resources.GetString("chkEnableGPUProcessing.ToolTip"))
         '
         'cbParallelism
         '
+        resources.ApplyResources(Me.cbParallelism, "cbParallelism")
         Me.cbParallelism.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbParallelism.FormattingEnabled = True
-        resources.ApplyResources(Me.cbParallelism, "cbParallelism")
         Me.cbParallelism.Name = "cbParallelism"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.cbParallelism, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.cbParallelism, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.cbParallelism, resources.GetString("cbParallelism.ToolTip"))
         '
         'Label6
         '
@@ -344,6 +377,7 @@ Partial Class FormOptions
         Me.Label6.Name = "Label6"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label6, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label6, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label6, resources.GetString("Label6.ToolTip"))
         '
         'chkEnableParallelCalcs
         '
@@ -351,17 +385,19 @@ Partial Class FormOptions
         Me.chkEnableParallelCalcs.Name = "chkEnableParallelCalcs"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.chkEnableParallelCalcs, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.chkEnableParallelCalcs, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.chkEnableParallelCalcs, resources.GetString("chkEnableParallelCalcs.ToolTip"))
         '
         'FaTabStripItem3
         '
+        resources.ApplyResources(Me.FaTabStripItem3, "FaTabStripItem3")
         Me.FaTabStripItem3.CanClose = False
         Me.FaTabStripItem3.Controls.Add(Me.GroupBox11)
         Me.FaTabStripItem3.Controls.Add(Me.GroupBox4)
         Me.FaTabStripItem3.IsDrawn = True
         Me.FaTabStripItem3.Name = "FaTabStripItem3"
-        resources.ApplyResources(Me.FaTabStripItem3, "FaTabStripItem3")
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.FaTabStripItem3, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.FaTabStripItem3, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.FaTabStripItem3, resources.GetString("FaTabStripItem3.ToolTip"))
         '
         'GroupBox11
         '
@@ -373,6 +409,7 @@ Partial Class FormOptions
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox11, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox11, System.Drawing.Color.Empty)
         Me.GroupBox11.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox11, resources.GetString("GroupBox11.ToolTip"))
         '
         'cbudb
         '
@@ -380,6 +417,7 @@ Partial Class FormOptions
         Me.cbudb.Name = "cbudb"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.cbudb, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.cbudb, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.cbudb, resources.GetString("cbudb.ToolTip"))
         Me.cbudb.UseVisualStyleBackColor = True
         '
         'Button11
@@ -388,6 +426,7 @@ Partial Class FormOptions
         Me.Button11.Name = "Button11"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Button11, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Button11, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Button11, resources.GetString("Button11.ToolTip"))
         Me.Button11.UseVisualStyleBackColor = True
         '
         'Button7
@@ -396,6 +435,7 @@ Partial Class FormOptions
         Me.Button7.Name = "Button7"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Button7, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Button7, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Button7, resources.GetString("Button7.ToolTip"))
         Me.Button7.UseVisualStyleBackColor = True
         '
         'GroupBox4
@@ -406,9 +446,11 @@ Partial Class FormOptions
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox4, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox4, System.Drawing.Color.Empty)
         Me.GroupBox4.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox4, resources.GetString("GroupBox4.ToolTip"))
         '
         'dgvdb
         '
+        resources.ApplyResources(Me.dgvdb, "dgvdb")
         Me.dgvdb.AllowUserToAddRows = False
         Me.dgvdb.AllowUserToDeleteRows = False
         Me.dgvdb.AllowUserToResizeColumns = False
@@ -420,7 +462,6 @@ Partial Class FormOptions
         Me.dgvdb.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvdb.ColumnHeadersVisible = False
         Me.dgvdb.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column12, Me.Column14, Me.Column15, Me.Column13, Me.BtnEdit})
-        resources.ApplyResources(Me.dgvdb, "dgvdb")
         Me.dgvdb.GridColor = System.Drawing.SystemColors.Control
         Me.dgvdb.Name = "dgvdb"
         Me.dgvdb.ReadOnly = True
@@ -432,6 +473,7 @@ Partial Class FormOptions
         Me.dgvdb.ShowCellErrors = False
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.dgvdb, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.dgvdb, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.dgvdb, resources.GetString("dgvdb.ToolTip"))
         '
         'Column12
         '
@@ -462,10 +504,10 @@ Partial Class FormOptions
         'Column13
         '
         Me.Column13.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-        DataGridViewCellStyle1.NullValue = CType(resources.GetObject("DataGridViewCellStyle1.NullValue"), Object)
-        Me.Column13.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        DataGridViewCellStyle4.NullValue = CType(resources.GetObject("DataGridViewCellStyle4.NullValue"), Object)
+        Me.Column13.DefaultCellStyle = DataGridViewCellStyle4
         Me.Column13.FillWeight = 10.0!
         resources.ApplyResources(Me.Column13, "Column13")
         Me.Column13.Name = "Column13"
@@ -475,10 +517,10 @@ Partial Class FormOptions
         'BtnEdit
         '
         Me.BtnEdit.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-        DataGridViewCellStyle2.NullValue = CType(resources.GetObject("DataGridViewCellStyle2.NullValue"), Object)
-        Me.BtnEdit.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        DataGridViewCellStyle5.NullValue = CType(resources.GetObject("DataGridViewCellStyle5.NullValue"), Object)
+        Me.BtnEdit.DefaultCellStyle = DataGridViewCellStyle5
         Me.BtnEdit.FillWeight = 10.0!
         resources.ApplyResources(Me.BtnEdit, "BtnEdit")
         Me.BtnEdit.Image = Global.DWSIM.My.Resources.Resources.cross
@@ -488,14 +530,15 @@ Partial Class FormOptions
         '
         'FaTabStripItem6
         '
+        resources.ApplyResources(Me.FaTabStripItem6, "FaTabStripItem6")
         Me.FaTabStripItem6.CanClose = False
         Me.FaTabStripItem6.Controls.Add(Me.GroupBox12)
         Me.FaTabStripItem6.Controls.Add(Me.GroupBox10)
         Me.FaTabStripItem6.IsDrawn = True
         Me.FaTabStripItem6.Name = "FaTabStripItem6"
-        resources.ApplyResources(Me.FaTabStripItem6, "FaTabStripItem6")
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.FaTabStripItem6, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.FaTabStripItem6, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.FaTabStripItem6, resources.GetString("FaTabStripItem6.ToolTip"))
         '
         'GroupBox12
         '
@@ -505,6 +548,7 @@ Partial Class FormOptions
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox12, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox12, System.Drawing.Color.Empty)
         Me.GroupBox12.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox12, resources.GetString("GroupBox12.ToolTip"))
         '
         'Button4
         '
@@ -512,6 +556,7 @@ Partial Class FormOptions
         Me.Button4.Name = "Button4"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Button4, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Button4, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Button4, resources.GetString("Button4.ToolTip"))
         Me.Button4.UseVisualStyleBackColor = True
         '
         'GroupBox10
@@ -522,9 +567,11 @@ Partial Class FormOptions
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox10, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox10, System.Drawing.Color.Empty)
         Me.GroupBox10.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox10, resources.GetString("GroupBox10.ToolTip"))
         '
         'dgvIPDB
         '
+        resources.ApplyResources(Me.dgvIPDB, "dgvIPDB")
         Me.dgvIPDB.AllowUserToAddRows = False
         Me.dgvIPDB.AllowUserToDeleteRows = False
         Me.dgvIPDB.AllowUserToResizeColumns = False
@@ -536,7 +583,6 @@ Partial Class FormOptions
         Me.dgvIPDB.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvIPDB.ColumnHeadersVisible = False
         Me.dgvIPDB.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.DataGridViewImageColumn1})
-        resources.ApplyResources(Me.dgvIPDB, "dgvIPDB")
         Me.dgvIPDB.GridColor = System.Drawing.SystemColors.Control
         Me.dgvIPDB.Name = "dgvIPDB"
         Me.dgvIPDB.ReadOnly = True
@@ -548,6 +594,7 @@ Partial Class FormOptions
         Me.dgvIPDB.ShowCellErrors = False
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.dgvIPDB, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.dgvIPDB, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.dgvIPDB, resources.GetString("dgvIPDB.ToolTip"))
         '
         'DataGridViewTextBoxColumn1
         '
@@ -578,10 +625,10 @@ Partial Class FormOptions
         'DataGridViewImageColumn1
         '
         Me.DataGridViewImageColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-        DataGridViewCellStyle3.NullValue = CType(resources.GetObject("DataGridViewCellStyle3.NullValue"), Object)
-        Me.DataGridViewImageColumn1.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        DataGridViewCellStyle6.NullValue = CType(resources.GetObject("DataGridViewCellStyle6.NullValue"), Object)
+        Me.DataGridViewImageColumn1.DefaultCellStyle = DataGridViewCellStyle6
         Me.DataGridViewImageColumn1.FillWeight = 10.0!
         resources.ApplyResources(Me.DataGridViewImageColumn1, "DataGridViewImageColumn1")
         Me.DataGridViewImageColumn1.Name = "DataGridViewImageColumn1"
@@ -590,13 +637,14 @@ Partial Class FormOptions
         '
         'FaTabStripItem2
         '
+        resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
         Me.FaTabStripItem2.CanClose = False
         Me.FaTabStripItem2.Controls.Add(Me.GroupBox3)
         Me.FaTabStripItem2.IsDrawn = True
         Me.FaTabStripItem2.Name = "FaTabStripItem2"
-        resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.FaTabStripItem2, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.FaTabStripItem2, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.FaTabStripItem2, resources.GetString("FaTabStripItem2.ToolTip"))
         '
         'GroupBox3
         '
@@ -613,6 +661,7 @@ Partial Class FormOptions
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox3, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox3, System.Drawing.Color.Empty)
         Me.GroupBox3.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox3, resources.GetString("GroupBox3.ToolTip"))
         '
         'Button2
         '
@@ -620,6 +669,7 @@ Partial Class FormOptions
         Me.Button2.Name = "Button2"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Button2, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Button2, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Button2, resources.GetString("Button2.ToolTip"))
         '
         'KryptonLabel3
         '
@@ -627,6 +677,7 @@ Partial Class FormOptions
         Me.KryptonLabel3.Name = "KryptonLabel3"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.KryptonLabel3, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.KryptonLabel3, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.KryptonLabel3, resources.GetString("KryptonLabel3.ToolTip"))
         '
         'TrackBar1
         '
@@ -636,6 +687,7 @@ Partial Class FormOptions
         Me.TrackBar1.Name = "TrackBar1"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.TrackBar1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.TrackBar1, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.TrackBar1, resources.GetString("TrackBar1.ToolTip"))
         Me.TrackBar1.Value = 5
         '
         'KryptonLabel2
@@ -644,6 +696,7 @@ Partial Class FormOptions
         Me.KryptonLabel2.Name = "KryptonLabel2"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.KryptonLabel2, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.KryptonLabel2, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.KryptonLabel2, resources.GetString("KryptonLabel2.ToolTip"))
         '
         'KryptonButton1
         '
@@ -651,6 +704,7 @@ Partial Class FormOptions
         Me.KryptonButton1.Name = "KryptonButton1"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.KryptonButton1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.KryptonButton1, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.KryptonButton1, resources.GetString("KryptonButton1.ToolTip"))
         '
         'KryptonTextBox1
         '
@@ -659,6 +713,7 @@ Partial Class FormOptions
         Me.KryptonTextBox1.ReadOnly = True
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.KryptonTextBox1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.KryptonTextBox1, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.KryptonTextBox1, resources.GetString("KryptonTextBox1.ToolTip"))
         '
         'KryptonLabel1
         '
@@ -666,6 +721,7 @@ Partial Class FormOptions
         Me.KryptonLabel1.Name = "KryptonLabel1"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.KryptonLabel1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.KryptonLabel1, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.KryptonLabel1, resources.GetString("KryptonLabel1.ToolTip"))
         '
         'KryptonCheckBox6
         '
@@ -673,38 +729,42 @@ Partial Class FormOptions
         Me.KryptonCheckBox6.Name = "KryptonCheckBox6"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.KryptonCheckBox6, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.KryptonCheckBox6, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.KryptonCheckBox6, resources.GetString("KryptonCheckBox6.ToolTip"))
         '
         'FaTabStripItem5
         '
+        resources.ApplyResources(Me.FaTabStripItem5, "FaTabStripItem5")
         Me.FaTabStripItem5.CanClose = False
         Me.FaTabStripItem5.Controls.Add(Me.GroupBox5)
         Me.FaTabStripItem5.IsDrawn = True
         Me.FaTabStripItem5.Name = "FaTabStripItem5"
-        resources.ApplyResources(Me.FaTabStripItem5, "FaTabStripItem5")
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.FaTabStripItem5, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.FaTabStripItem5, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.FaTabStripItem5, resources.GetString("FaTabStripItem5.ToolTip"))
         '
         'GroupBox5
         '
+        resources.ApplyResources(Me.GroupBox5, "GroupBox5")
         Me.GroupBox5.Controls.Add(Me.lbpaths)
         Me.GroupBox5.Controls.Add(Me.Label5)
         Me.GroupBox5.Controls.Add(Me.btnrmpath)
         Me.GroupBox5.Controls.Add(Me.btnaddpath)
         Me.GroupBox5.Controls.Add(Me.tbaddpath)
         Me.GroupBox5.Controls.Add(Me.Label4)
-        resources.ApplyResources(Me.GroupBox5, "GroupBox5")
         Me.GroupBox5.Name = "GroupBox5"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox5, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox5, System.Drawing.Color.Empty)
         Me.GroupBox5.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox5, resources.GetString("GroupBox5.ToolTip"))
         '
         'lbpaths
         '
-        Me.lbpaths.FormattingEnabled = True
         resources.ApplyResources(Me.lbpaths, "lbpaths")
+        Me.lbpaths.FormattingEnabled = True
         Me.lbpaths.Name = "lbpaths"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.lbpaths, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.lbpaths, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.lbpaths, resources.GetString("lbpaths.ToolTip"))
         '
         'Label5
         '
@@ -712,6 +772,7 @@ Partial Class FormOptions
         Me.Label5.Name = "Label5"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label5, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label5, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label5, resources.GetString("Label5.ToolTip"))
         '
         'btnrmpath
         '
@@ -719,6 +780,7 @@ Partial Class FormOptions
         Me.btnrmpath.Name = "btnrmpath"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.btnrmpath, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.btnrmpath, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.btnrmpath, resources.GetString("btnrmpath.ToolTip"))
         Me.btnrmpath.UseVisualStyleBackColor = True
         '
         'btnaddpath
@@ -727,6 +789,7 @@ Partial Class FormOptions
         Me.btnaddpath.Name = "btnaddpath"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.btnaddpath, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.btnaddpath, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.btnaddpath, resources.GetString("btnaddpath.ToolTip"))
         Me.btnaddpath.UseVisualStyleBackColor = True
         '
         'tbaddpath
@@ -735,6 +798,7 @@ Partial Class FormOptions
         Me.tbaddpath.Name = "tbaddpath"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.tbaddpath, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.tbaddpath, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.tbaddpath, resources.GetString("tbaddpath.ToolTip"))
         '
         'Label4
         '
@@ -742,18 +806,20 @@ Partial Class FormOptions
         Me.Label4.Name = "Label4"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label4, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label4, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label4, resources.GetString("Label4.ToolTip"))
         '
         'FaTabStripItem7
         '
+        resources.ApplyResources(Me.FaTabStripItem7, "FaTabStripItem7")
         Me.FaTabStripItem7.CanClose = False
         Me.FaTabStripItem7.Controls.Add(Me.GroupBox1)
         Me.FaTabStripItem7.Controls.Add(Me.GroupBox9)
         Me.FaTabStripItem7.Controls.Add(Me.GroupBox6)
         Me.FaTabStripItem7.IsDrawn = True
         Me.FaTabStripItem7.Name = "FaTabStripItem7"
-        resources.ApplyResources(Me.FaTabStripItem7, "FaTabStripItem7")
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.FaTabStripItem7, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.FaTabStripItem7, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.FaTabStripItem7, resources.GetString("FaTabStripItem7.ToolTip"))
         '
         'GroupBox1
         '
@@ -764,16 +830,18 @@ Partial Class FormOptions
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox1, System.Drawing.Color.Empty)
         Me.GroupBox1.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox1, resources.GetString("GroupBox1.ToolTip"))
         '
         'ComboBoxUILanguage
         '
+        resources.ApplyResources(Me.ComboBoxUILanguage, "ComboBoxUILanguage")
         Me.ComboBoxUILanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBoxUILanguage.FormattingEnabled = True
         Me.ComboBoxUILanguage.Items.AddRange(New Object() {resources.GetString("ComboBoxUILanguage.Items"), resources.GetString("ComboBoxUILanguage.Items1"), resources.GetString("ComboBoxUILanguage.Items2"), resources.GetString("ComboBoxUILanguage.Items3")})
-        resources.ApplyResources(Me.ComboBoxUILanguage, "ComboBoxUILanguage")
         Me.ComboBoxUILanguage.Name = "ComboBoxUILanguage"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.ComboBoxUILanguage, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.ComboBoxUILanguage, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.ComboBoxUILanguage, resources.GetString("ComboBoxUILanguage.ToolTip"))
         '
         'Label3
         '
@@ -781,16 +849,18 @@ Partial Class FormOptions
         Me.Label3.Name = "Label3"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label3, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label3, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label3, resources.GetString("Label3.ToolTip"))
         '
         'GroupBox9
         '
+        resources.ApplyResources(Me.GroupBox9, "GroupBox9")
         Me.GroupBox9.Controls.Add(Me.KryptonCheckBox1)
         Me.GroupBox9.Controls.Add(Me.chkUpdates)
-        resources.ApplyResources(Me.GroupBox9, "GroupBox9")
         Me.GroupBox9.Name = "GroupBox9"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox9, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox9, System.Drawing.Color.Empty)
         Me.GroupBox9.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox9, resources.GetString("GroupBox9.ToolTip"))
         '
         'KryptonCheckBox1
         '
@@ -798,6 +868,7 @@ Partial Class FormOptions
         Me.KryptonCheckBox1.Name = "KryptonCheckBox1"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.KryptonCheckBox1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.KryptonCheckBox1, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.KryptonCheckBox1, resources.GetString("KryptonCheckBox1.ToolTip"))
         '
         'chkUpdates
         '
@@ -805,27 +876,30 @@ Partial Class FormOptions
         Me.chkUpdates.Name = "chkUpdates"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.chkUpdates, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.chkUpdates, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.chkUpdates, resources.GetString("chkUpdates.ToolTip"))
         '
         'GroupBox6
         '
+        resources.ApplyResources(Me.GroupBox6, "GroupBox6")
         Me.GroupBox6.Controls.Add(Me.cbDebugLevel)
         Me.GroupBox6.Controls.Add(Me.Label13)
         Me.GroupBox6.Controls.Add(Me.chkconsole)
-        resources.ApplyResources(Me.GroupBox6, "GroupBox6")
         Me.GroupBox6.Name = "GroupBox6"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox6, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox6, System.Drawing.Color.Empty)
         Me.GroupBox6.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox6, resources.GetString("GroupBox6.ToolTip"))
         '
         'cbDebugLevel
         '
+        resources.ApplyResources(Me.cbDebugLevel, "cbDebugLevel")
         Me.cbDebugLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbDebugLevel.FormattingEnabled = True
         Me.cbDebugLevel.Items.AddRange(New Object() {resources.GetString("cbDebugLevel.Items"), resources.GetString("cbDebugLevel.Items1"), resources.GetString("cbDebugLevel.Items2"), resources.GetString("cbDebugLevel.Items3")})
-        resources.ApplyResources(Me.cbDebugLevel, "cbDebugLevel")
         Me.cbDebugLevel.Name = "cbDebugLevel"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.cbDebugLevel, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.cbDebugLevel, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.cbDebugLevel, resources.GetString("cbDebugLevel.ToolTip"))
         '
         'Label13
         '
@@ -833,6 +907,7 @@ Partial Class FormOptions
         Me.Label13.Name = "Label13"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label13, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label13, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label13, resources.GetString("Label13.ToolTip"))
         '
         'chkconsole
         '
@@ -840,6 +915,7 @@ Partial Class FormOptions
         Me.chkconsole.Name = "chkconsole"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.chkconsole, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.chkconsole, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.chkconsole, resources.GetString("chkconsole.ToolTip"))
         '
         'ImageList1
         '
@@ -890,6 +966,7 @@ Partial Class FormOptions
         Me.ShowInTaskbar = False
         Me.SuperToolTip1.SetSuperToolTipColor1(Me, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me, resources.GetString("$this.ToolTip"))
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FaTabStrip1.ResumeLayout(False)
         Me.FaTabStripItem1.ResumeLayout(False)
@@ -1009,4 +1086,5 @@ Partial Class FormOptions
     Friend WithEvents GroupBox9 As System.Windows.Forms.GroupBox
     Friend WithEvents GroupBox6 As System.Windows.Forms.GroupBox
     Friend WithEvents ComboBoxUILanguage As System.Windows.Forms.ComboBox
+    Public WithEvents chkSolverBreak As System.Windows.Forms.CheckBox
 End Class
