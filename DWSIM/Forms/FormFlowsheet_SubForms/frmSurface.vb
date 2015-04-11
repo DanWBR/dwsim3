@@ -3530,6 +3530,7 @@ Public Class frmSurface
                     selectionControl.Text = Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag & " - " & "Excel UO Specification"
                     selectionControl.TbFileName.Text = myobj.Filename
                     selectionControl.ShowDialog()
+                    myobj.Filename = selectionControl.TbFileName.Text
                 Case TipoObjeto.CustomUO
                     Dim myobj As DWSIM.SimulationObjects.UnitOps.CustomUO = Flowsheet.Collections.CLCS_CustomUOCollection(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
                     If Not DWSIM.App.IsRunningOnMono Then

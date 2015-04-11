@@ -106,9 +106,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
             Dim k, ci, co As Integer
 
-            If Not DWSIM.App.IsRunningOnMono Then
+            Dim excelType As Type = Nothing
 
-                Dim excelType As Type = Type.GetTypeFromProgID("Excel.Application")
+            If Not DWSIM.App.IsRunningOnMono Then excelType = Type.GetTypeFromProgID("Excel.Application")
+
+            If Not DWSIM.App.IsRunningOnMono And Not excelType Is Nothing Then
+
                 Dim excelProxy As Object = Activator.CreateInstance(excelType)
 
                 Using xcl As New Excel.Application(Nothing, excelProxy)
@@ -463,14 +466,19 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 xcl.Save(Filename)
 
-                Dim p As New Process()
-                With p
-                    .StartInfo.FileName = "xdg-open"
-                    .StartInfo.Arguments = Filename
-                    .StartInfo.UseShellExecute = False
-                    .Start()
+                If DWSIM.App.IsRunningOnMono Then
+                    Dim p As New Process()
+                    With p
+                        .StartInfo.FileName = "xdg-open"
+                        .StartInfo.Arguments = Filename
+                        .StartInfo.UseShellExecute = False
+                        .Start()
+                        MessageBox.Show("Click 'OK' once the spreadsheet formula updating process is finished.")
+                    End With
+                Else
+                    Process.Start(Filename)
                     MessageBox.Show("Click 'OK' once the spreadsheet formula updating process is finished.")
-                End With
+                End If
 
                 'Load Excel definition file
                 xcl = GS.ExcelFile.Load(Filename)
@@ -648,9 +656,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
             'read input and output parameters from associated Excel table if not existing yet (=during loading from file)
             If Filename <> "" And InputParams.Count = 0 And OutputParams.Count = 0 Then
 
-                If Not DWSIM.App.IsRunningOnMono Then
+                Dim excelType As Type = Nothing
 
-                    Dim excelType As Type = Type.GetTypeFromProgID("Excel.Application")
+                If Not DWSIM.App.IsRunningOnMono Then excelType = Type.GetTypeFromProgID("Excel.Application")
+
+                If Not DWSIM.App.IsRunningOnMono And Not excelType Is Nothing Then
+
                     Dim excelProxy As Object = Activator.CreateInstance(excelType)
 
                     Using xcl As New Excel.Application(Nothing, excelProxy)

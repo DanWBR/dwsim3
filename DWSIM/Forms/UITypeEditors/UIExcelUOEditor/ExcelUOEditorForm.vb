@@ -27,7 +27,7 @@ Public Class ExcelUOEditorForm
 
     Private Sub BtnSearch_Click(sender As System.Object, e As System.EventArgs) Handles BtnSearch.Click
         OpenFileDialog1.FileName = TbFileName.Text
-        OpenFileDialog1.Filter = "XLS/X files|*.xlsx; *xls|ODS files|*.ods"
+        OpenFileDialog1.Filter = "Spreadsheet files|*.xlsx; *xls; *.ods"
 
         OpenFileDialog1.ValidateNames = True
         OpenFileDialog1.CheckFileExists = True
@@ -39,21 +39,11 @@ Public Class ExcelUOEditorForm
     End Sub
 
     Private Sub BtnEdit_Click(sender As System.Object, e As System.EventArgs) Handles BtnEdit.Click
+
         If TbFileName.Text <> "" Then
             If My.Computer.FileSystem.FileExists(TbFileName.Text) Then
                 If Not DWSIM.App.IsRunningOnMono Then
-                    Dim excelType As Type = Type.GetTypeFromProgID("Excel.Application")
-                    Dim excelProxy As Object = Activator.CreateInstance(excelType)
-                    Using xcl As New Excel.Application(Nothing, excelProxy)
-                        For Each CurrAddin As Excel.AddIn In xcl.AddIns
-                            If CurrAddin.Installed Then
-                                CurrAddin.Installed = False
-                                CurrAddin.Installed = True
-                            End If
-                        Next
-                        xcl.Visible = True
-                        xcl.Workbooks.Open(TbFileName.Text, True, False)
-                    End Using
+                    Process.Start(TbFileName.Text)
                 Else
                     Process.Start(New ProcessStartInfo("xdg-open", TbFileName.Text) With {.UseShellExecute = False})
                 End If
@@ -61,12 +51,14 @@ Public Class ExcelUOEditorForm
                 MessageBox.Show(DWSIM.App.GetLocalString("Oarquivonoexisteoufo"), DWSIM.App.GetLocalString("Erroaoabrirarquivo"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
         End If
+
     End Sub
 
     Private Sub BtnNew_Click(sender As System.Object, e As System.EventArgs) Handles BtnNew.Click
+
         Dim FileName As String = My.Application.ActiveSimulation.Text
         OpenFileDialog1.Title = "New Filename"
-        OpenFileDialog1.Filter = "XLS/X files|*.xlsx; *xls|ODS files|*.ods"
+        OpenFileDialog1.Filter = "Spreadsheet files|*.xlsx; *xls; *.ods"
         OpenFileDialog1.ValidateNames = False
         OpenFileDialog1.CheckFileExists = False
         OpenFileDialog1.CheckPathExists = True
@@ -76,14 +68,14 @@ Public Class ExcelUOEditorForm
             Dim s As String = OpenFileDialog1.FileName
             If IO.Path.GetExtension(s).ToLower = ".ods" Then
                 FileCopy(My.Application.Info.DirectoryPath & IO.Path.DirectorySeparatorChar & "TemplateExcelUO.ods", s)
+            ElseIf IO.Path.GetExtension(s).ToLower = ".xls" Then
+                FileCopy(My.Application.Info.DirectoryPath & IO.Path.DirectorySeparatorChar & "TemplateExcelUO.xls", s)
             Else
                 FileCopy(My.Application.Info.DirectoryPath & IO.Path.DirectorySeparatorChar & "TemplateExcelUO.xlsx", s)
             End If
             TbFileName.Text = s
         End If
-    End Sub
-
-    Private Sub ExcelUOEditorForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
     End Sub
+
 End Class
