@@ -121,8 +121,15 @@
   <data name="ToolStripLabel4.Size" type="System.Drawing.Size, System.Drawing">
     <value>55, 22</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ToolStripLabel4.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="ToolStripLabel4.Text" xml:space="preserve">
     <value>PFD Area</value>
+  </data>
+  <data name="TSBtabela.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="TSBtabela.Text" xml:space="preserve">
     <value>Insert Image</value>
@@ -130,14 +137,23 @@
   <data name="TSBtabela.ToolTipText" xml:space="preserve">
     <value>Insert Image</value>
   </data>
+  <data name="TSBTexto.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="TSBTexto.Text" xml:space="preserve">
     <value>Insert Text</value>
   </data>
   <data name="TSBTexto.ToolTipText" xml:space="preserve">
     <value>Insert Text</value>
   </data>
+  <data name="ToolStripButton19.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="ToolStripButton19.Text" xml:space="preserve">
     <value>Master Property Table</value>
+  </data>
+  <data name="ToolStripButton12.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="ToolStripButton12.Text" xml:space="preserve">
     <value>Insert Rectangle</value>
@@ -145,35 +161,77 @@
   <data name="ToolStripButton12.ToolTipText" xml:space="preserve">
     <value>Insert Rectangle</value>
   </data>
+  <data name="ToolStripSeparator5.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="ToolStripButton1.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="ToolStripButton1.Text" xml:space="preserve">
     <value>Unzoom flowsheet</value>
+  </data>
+  <data name="TSTBZoom.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="TSTBZoom.ToolTipText" xml:space="preserve">
     <value>Zoom level flowchart</value>
   </data>
+  <data name="ToolStripButton2.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="ToolStripButton2.Text" xml:space="preserve">
     <value>Zoom flowsheet</value>
+  </data>
+  <data name="ToolStripButton20.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="ToolStripButton20.Text" xml:space="preserve">
     <value>Zoom All</value>
   </data>
+  <data name="ToolStripButton3.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="ToolStripButton3.Text" xml:space="preserve">
     <value>Default Zoom (100%)</value>
+  </data>
+  <data name="ToolStripSeparator6.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="ToolStripButton18.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="ToolStripButton18.Text" xml:space="preserve">
     <value>Save as Image</value>
   </data>
+  <data name="ToolStripButton6.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="ToolStripButton6.Text" xml:space="preserve">
     <value>Configure Page</value>
+  </data>
+  <data name="ToolStripButton11.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="ToolStripButton11.Text" xml:space="preserve">
     <value>Configure Printer</value>
   </data>
+  <data name="ToolStripButton10.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="ToolStripButton10.Text" xml:space="preserve">
     <value>View and Print Flowsheet</value>
   </data>
+  <data name="ToolStripSeparator4.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="ToolStripButton16.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="ToolStripButton16.Text" xml:space="preserve">
     <value>Snap Objects to Grid</value>
+  </data>
+  <data name="ToolStripButton17.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="ToolStripButton17.Text" xml:space="preserve">
     <value>Quick Connect Mode</value>
@@ -184,35 +242,80 @@
   <data name="ToolStrip4.Text" xml:space="preserve">
     <value>Flowchart</value>
   </data>
+  <data name="ToolStripLabel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>61, 22</value>
+  </data>
+  <data name="ToolStripLabel1.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="ToolStripLabel1.Text" xml:space="preserve">
+    <value>Calculator</value>
+  </data>
+  <data name="tsbAtivar.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="tsbAtivar.Text" xml:space="preserve">
+    <value>Activate</value>
+  </data>
+  <data name="tsbDesat.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="tsbDesat.Text" xml:space="preserve">
+    <value>Deactivate</value>
+  </data>
+  <data name="ToolStripButton13.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="ToolStripButton13.Text" xml:space="preserve">
+    <value>Recalculate All</value>
+  </data>
+  <data name="ToolStripButton14.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="ToolStripButton14.Text" xml:space="preserve">
+    <value>Abort Calculation</value>
+  </data>
+  <data name="ToolStripButton15.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="ToolStripButton15.Text" xml:space="preserve">
+    <value>Clear Calculation Queue</value>
+  </data>
+  <data name="tsbSimultAdjustSolver.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="tsbSimultAdjustSolver.Text" xml:space="preserve">
+    <value>Activate the Simultaneous Adjust Solver</value>
+  </data>
   <data name="ToolStrip7.Location" type="System.Drawing.Point, System.Drawing">
     <value>128, 0</value>
   </data>
   <data name="ToolStrip7.Size" type="System.Drawing.Size, System.Drawing">
     <value>211, 25</value>
   </data>
-  <data name="ToolStripLabel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>61, 22</value>
+  <data name="ToolStripLabel2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>64, 22</value>
   </data>
-  <data name="ToolStripLabel1.Text" xml:space="preserve">
-    <value>Calculator</value>
+  <data name="ToolStripLabel2.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
-  <data name="tsbAtivar.Text" xml:space="preserve">
-    <value>Activate</value>
+  <data name="ToolStripLabel2.Text" xml:space="preserve">
+    <value>Simulation</value>
   </data>
-  <data name="tsbDesat.Text" xml:space="preserve">
-    <value>Deactivate</value>
+  <data name="ToolStripButton5.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
-  <data name="ToolStripButton13.Text" xml:space="preserve">
-    <value>Recalculate All</value>
+  <data name="ToolStripButton5.Text" xml:space="preserve">
+    <value>Configure Simulation</value>
   </data>
-  <data name="ToolStripButton14.Text" xml:space="preserve">
-    <value>Abort Calculation</value>
+  <data name="ToolStripSeparator1.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
-  <data name="ToolStripButton15.Text" xml:space="preserve">
-    <value>Clear Calculation Queue</value>
+  <data name="ToolStripButton8.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
-  <data name="tsbSimultAdjustSolver.Text" xml:space="preserve">
-    <value>Activate the Simultaneous Adjust Solver</value>
+  <data name="ToolStripButton8.Text" xml:space="preserve">
+    <value>Results - Report</value>
   </data>
   <data name="ToolStrip6.Size" type="System.Drawing.Size, System.Drawing">
     <value>128, 25</value>
@@ -220,23 +323,23 @@
   <data name="ToolStrip6.Text" xml:space="preserve">
     <value>Simulation</value>
   </data>
-  <data name="ToolStripLabel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>64, 22</value>
+  <data name="DataGridView1.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
-  <data name="ToolStripLabel2.Text" xml:space="preserve">
-    <value>Simulation</value>
-  </data>
-  <data name="ToolStripButton5.Text" xml:space="preserve">
-    <value>Configure Simulation</value>
-  </data>
-  <data name="ToolStripButton8.Text" xml:space="preserve">
-    <value>Results - Report</value>
+  <data name="TSTable.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="ToolStripLabel8.Size" type="System.Drawing.Size, System.Drawing">
     <value>38, 22</value>
   </data>
+  <data name="ToolStripLabel8.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="ToolStripLabel8.Text" xml:space="preserve">
     <value>States</value>
+  </data>
+  <data name="tsbSaveState.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="tsbSaveState.Text" xml:space="preserve">
     <value>Save State</value>
@@ -244,20 +347,35 @@
   <data name="tsbSaveState.ToolTipText" xml:space="preserve">
     <value>Save State</value>
   </data>
+  <data name="tsbRestoreStates.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="tsbRestoreStates.Text" xml:space="preserve">
     <value>Restore State</value>
   </data>
   <data name="tsbRestoreStates.ToolTipText" xml:space="preserve">
     <value>Restore State</value>
   </data>
+  <data name="tsbClearStates.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="tsbClearStates.Text" xml:space="preserve">
     <value>Clear Saved States</value>
+  </data>
+  <data name="ToolStripSeparator7.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="ToolStripLabel5.Size" type="System.Drawing.Size, System.Drawing">
     <value>56, 22</value>
   </data>
+  <data name="ToolStripLabel5.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="ToolStripLabel5.Text" xml:space="preserve">
     <value>Solutions</value>
+  </data>
+  <data name="tsbRestoreSolutions.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="tsbRestoreSolutions.Text" xml:space="preserve">
     <value>Restore Solution</value>
@@ -268,35 +386,56 @@
   <data name="ToolStrip2.Size" type="System.Drawing.Size, System.Drawing">
     <value>219, 25</value>
   </data>
-  <data name="ToolStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>730, 25</value>
-  </data>
   <data name="ToolStripLabel3.Size" type="System.Drawing.Size, System.Drawing">
     <value>89, 22</value>
+  </data>
+  <data name="ToolStripLabel3.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="ToolStripLabel3.Text" xml:space="preserve">
     <value>System of Units</value>
   </data>
+  <data name="ToolStripComboBoxUnitSystem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="ToolStripButton7.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="ToolStripButton7.Text" xml:space="preserve">
     <value>Add Unit System</value>
+  </data>
+  <data name="ToolStripSeparator2.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="ToolStripLabel6.Size" type="System.Drawing.Size, System.Drawing">
     <value>113, 22</value>
   </data>
+  <data name="ToolStripLabel6.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="ToolStripLabel6.Text" xml:space="preserve">
     <value>Number Formatting</value>
+  </data>
+  <data name="ToolStripComboBoxNumberFormatting.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="ToolStripSeparator3.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="ToolStripLabel7.Size" type="System.Drawing.Size, System.Drawing">
     <value>112, 22</value>
   </data>
+  <data name="ToolStripLabel7.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="ToolStripLabel7.Text" xml:space="preserve">
     <value>Fraction Formatting</value>
   </data>
-  <data name="ConfiguraçõesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>61, 20</value>
+  <data name="ToolStripComboBoxNumberFractionFormatting.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
-  <data name="ConfiguraçõesToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Settings</value>
+  <data name="ToolStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>730, 25</value>
   </data>
   <data name="ComponentesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>176, 22</value>
@@ -307,14 +446,20 @@
   <data name="ComponentesToolStripMenuItem.Text" xml:space="preserve">
     <value>Simulation Settings</value>
   </data>
-  <data name="ExibirToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 20</value>
+  <data name="ConfiguraçõesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>61, 20</value>
   </data>
-  <data name="ExibirToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;View</value>
+  <data name="ConfiguraçõesToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="ConfiguraçõesToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Settings</value>
   </data>
   <data name="ExibirSaídaDoConsoleToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>220, 22</value>
+  </data>
+  <data name="ExibirSaídaDoConsoleToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="ExibirSaídaDoConsoleToolStripMenuItem.Text" xml:space="preserve">
     <value>Console Output</value>
@@ -322,11 +467,17 @@
   <data name="ExibirListaDeItensACalcularToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>220, 22</value>
   </data>
+  <data name="ExibirListaDeItensACalcularToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="ExibirListaDeItensACalcularToolStripMenuItem.Text" xml:space="preserve">
     <value>Calculation Queue</value>
   </data>
   <data name="PainelDeVariáveisToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>220, 22</value>
+  </data>
+  <data name="PainelDeVariáveisToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="PainelDeVariáveisToolStripMenuItem.Text" xml:space="preserve">
     <value>Watch Panel</value>
@@ -334,23 +485,26 @@
   <data name="ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>220, 22</value>
   </data>
+  <data name="ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem.Text" xml:space="preserve">
     <value>CAPE-OPEN Object Reports</value>
   </data>
-  <data name="InserirToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 20</value>
+  <data name="ExibirToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 20</value>
   </data>
-  <data name="InserirToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Insert</value>
+  <data name="ExibirToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
-  <data name="CorrentesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>173, 22</value>
-  </data>
-  <data name="CorrentesToolStripMenuItem.Text" xml:space="preserve">
-    <value>Streams</value>
+  <data name="ExibirToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;View</value>
   </data>
   <data name="TSMIMaterialStream.Size" type="System.Drawing.Size, System.Drawing">
     <value>157, 22</value>
+  </data>
+  <data name="TSMIMaterialStream.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="TSMIMaterialStream.Text" xml:space="preserve">
     <value>Material Stream</value>
@@ -358,17 +512,26 @@
   <data name="TSMIEnergyStream.Size" type="System.Drawing.Size, System.Drawing">
     <value>157, 22</value>
   </data>
+  <data name="TSMIEnergyStream.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="TSMIEnergyStream.Text" xml:space="preserve">
     <value>Energy Stream</value>
   </data>
-  <data name="OperaçõesUnitáriasToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="CorrentesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>173, 22</value>
   </data>
-  <data name="OperaçõesUnitáriasToolStripMenuItem.Text" xml:space="preserve">
-    <value>Unit Operations</value>
+  <data name="CorrentesToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="CorrentesToolStripMenuItem.Text" xml:space="preserve">
+    <value>Streams</value>
   </data>
   <data name="TSMIMixer.Size" type="System.Drawing.Size, System.Drawing">
     <value>220, 22</value>
+  </data>
+  <data name="TSMIMixer.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="TSMIMixer.Text" xml:space="preserve">
     <value>Mixer</value>
@@ -376,11 +539,17 @@
   <data name="TSMISplitter.Size" type="System.Drawing.Size, System.Drawing">
     <value>220, 22</value>
   </data>
+  <data name="TSMISplitter.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="TSMISplitter.Text" xml:space="preserve">
     <value>Splitter</value>
   </data>
   <data name="TSMICompressor.Size" type="System.Drawing.Size, System.Drawing">
     <value>220, 22</value>
+  </data>
+  <data name="TSMICompressor.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="TSMICompressor.Text" xml:space="preserve">
     <value>Adiabatic Compressor</value>
@@ -388,11 +557,17 @@
   <data name="TSMIExpander.Size" type="System.Drawing.Size, System.Drawing">
     <value>220, 22</value>
   </data>
+  <data name="TSMIExpander.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="TSMIExpander.Text" xml:space="preserve">
     <value>Adiabatic Expander</value>
   </data>
   <data name="TSMIPump.Size" type="System.Drawing.Size, System.Drawing">
     <value>220, 22</value>
+  </data>
+  <data name="TSMIPump.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="TSMIPump.Text" xml:space="preserve">
     <value>Adiabatic Pump</value>
@@ -400,11 +575,17 @@
   <data name="TSMIPipe.Size" type="System.Drawing.Size, System.Drawing">
     <value>220, 22</value>
   </data>
+  <data name="TSMIPipe.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="TSMIPipe.Text" xml:space="preserve">
     <value>Pipe Segment</value>
   </data>
   <data name="TSMIValve.Size" type="System.Drawing.Size, System.Drawing">
     <value>220, 22</value>
+  </data>
+  <data name="TSMIValve.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="TSMIValve.Text" xml:space="preserve">
     <value>Valve (Isenthalpic)</value>
@@ -412,11 +593,17 @@
   <data name="TSMISeparator.Size" type="System.Drawing.Size, System.Drawing">
     <value>220, 22</value>
   </data>
+  <data name="TSMISeparator.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="TSMISeparator.Text" xml:space="preserve">
     <value>Separator (Vessel)</value>
   </data>
   <data name="TSMIHeater.Size" type="System.Drawing.Size, System.Drawing">
     <value>220, 22</value>
+  </data>
+  <data name="TSMIHeater.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="TSMIHeater.Text" xml:space="preserve">
     <value>Heater</value>
@@ -424,11 +611,17 @@
   <data name="TSMICooler.Size" type="System.Drawing.Size, System.Drawing">
     <value>220, 22</value>
   </data>
+  <data name="TSMICooler.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="TSMICooler.Text" xml:space="preserve">
     <value>Cooler</value>
   </data>
   <data name="TSMIOrificePlate.Size" type="System.Drawing.Size, System.Drawing">
     <value>220, 22</value>
+  </data>
+  <data name="TSMIOrificePlate.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="TSMIOrificePlate.Text" xml:space="preserve">
     <value>Orifice Plate</value>
@@ -436,11 +629,17 @@
   <data name="TSMIComponentSeparator.Size" type="System.Drawing.Size, System.Drawing">
     <value>220, 22</value>
   </data>
+  <data name="TSMIComponentSeparator.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="TSMIComponentSeparator.Text" xml:space="preserve">
     <value>Component Separator</value>
   </data>
   <data name="TSMIHeatExchanger.Size" type="System.Drawing.Size, System.Drawing">
     <value>220, 22</value>
+  </data>
+  <data name="TSMIHeatExchanger.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="TSMIHeatExchanger.Text" xml:space="preserve">
     <value>Heat Exchanger</value>
@@ -448,14 +647,26 @@
   <data name="TSMITank.Size" type="System.Drawing.Size, System.Drawing">
     <value>220, 22</value>
   </data>
+  <data name="TSMITank.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="TSMITank.Text" xml:space="preserve">
     <value>Tank</value>
   </data>
   <data name="TSMIExcelUO.Size" type="System.Drawing.Size, System.Drawing">
     <value>220, 22</value>
   </data>
+  <data name="TSMIExcelUO.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="TSMIExcelUO.Text" xml:space="preserve">
+    <value>Spreadsheet Unit Operation</value>
+  </data>
   <data name="TSMICUO.Size" type="System.Drawing.Size, System.Drawing">
     <value>220, 22</value>
+  </data>
+  <data name="TSMICUO.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="TSMICUO.Text" xml:space="preserve">
     <value>Custom Unit Operation</value>
@@ -463,11 +674,17 @@
   <data name="TSMICOUO.Size" type="System.Drawing.Size, System.Drawing">
     <value>220, 22</value>
   </data>
+  <data name="TSMICOUO.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="TSMICOUO.Text" xml:space="preserve">
     <value>CAPE-OPEN Unit Operation</value>
   </data>
   <data name="TSMISolidsSeparator.Size" type="System.Drawing.Size, System.Drawing">
     <value>220, 22</value>
+  </data>
+  <data name="TSMISolidsSeparator.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="TSMISolidsSeparator.Text" xml:space="preserve">
     <value>Solids Separator</value>
@@ -475,23 +692,35 @@
   <data name="TSMIFilter.Size" type="System.Drawing.Size, System.Drawing">
     <value>220, 22</value>
   </data>
+  <data name="TSMIFilter.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="TSMIFilter.Text" xml:space="preserve">
     <value>Filter</value>
   </data>
   <data name="TSMIFlowsheet.Size" type="System.Drawing.Size, System.Drawing">
     <value>220, 22</value>
   </data>
+  <data name="TSMIFlowsheet.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="TSMIFlowsheet.Text" xml:space="preserve">
     <value>Flowsheet (UO)</value>
   </data>
-  <data name="ColunasToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="OperaçõesUnitáriasToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>173, 22</value>
   </data>
-  <data name="ColunasToolStripMenuItem.Text" xml:space="preserve">
-    <value>Columns (Towers)</value>
+  <data name="OperaçõesUnitáriasToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="OperaçõesUnitáriasToolStripMenuItem.Text" xml:space="preserve">
+    <value>Unit Operations</value>
   </data>
   <data name="TSMIColShortcut.Size" type="System.Drawing.Size, System.Drawing">
     <value>179, 22</value>
+  </data>
+  <data name="TSMIColShortcut.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="TSMIColShortcut.Text" xml:space="preserve">
     <value>Shortcut Column</value>
@@ -499,11 +728,17 @@
   <data name="TSMIColDist.Size" type="System.Drawing.Size, System.Drawing">
     <value>179, 22</value>
   </data>
+  <data name="TSMIColDist.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="TSMIColDist.Text" xml:space="preserve">
     <value>Distillation Column</value>
   </data>
   <data name="TSMIColAbs.Size" type="System.Drawing.Size, System.Drawing">
     <value>179, 22</value>
+  </data>
+  <data name="TSMIColAbs.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="TSMIColAbs.Text" xml:space="preserve">
     <value>Absorption Column</value>
@@ -511,23 +746,35 @@
   <data name="TSMIColAbsReb.Size" type="System.Drawing.Size, System.Drawing">
     <value>179, 22</value>
   </data>
+  <data name="TSMIColAbsReb.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="TSMIColAbsReb.Text" xml:space="preserve">
     <value>Reboiled Absorber</value>
   </data>
   <data name="TSMIColAbsCond.Size" type="System.Drawing.Size, System.Drawing">
     <value>179, 22</value>
   </data>
+  <data name="TSMIColAbsCond.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="TSMIColAbsCond.Text" xml:space="preserve">
     <value>Refluxed Absorber</value>
   </data>
-  <data name="ReatoresToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="ColunasToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>173, 22</value>
   </data>
-  <data name="ReatoresToolStripMenuItem.Text" xml:space="preserve">
-    <value>Reactors</value>
+  <data name="ColunasToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="ColunasToolStripMenuItem.Text" xml:space="preserve">
+    <value>Columns (Towers)</value>
   </data>
   <data name="TSMIReactorConv.Size" type="System.Drawing.Size, System.Drawing">
     <value>178, 22</value>
+  </data>
+  <data name="TSMIReactorConv.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="TSMIReactorConv.Text" xml:space="preserve">
     <value>Conversion Reactor</value>
@@ -535,11 +782,17 @@
   <data name="TSMIReactorEquilibrium.Size" type="System.Drawing.Size, System.Drawing">
     <value>178, 22</value>
   </data>
+  <data name="TSMIReactorEquilibrium.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="TSMIReactorEquilibrium.Text" xml:space="preserve">
     <value>Equilibrium Reactor</value>
   </data>
   <data name="TSMIReactorGibbs.Size" type="System.Drawing.Size, System.Drawing">
     <value>178, 22</value>
+  </data>
+  <data name="TSMIReactorGibbs.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="TSMIReactorGibbs.Text" xml:space="preserve">
     <value>Gibbs Reactor</value>
@@ -547,17 +800,29 @@
   <data name="TSMIReactorCSTR.Size" type="System.Drawing.Size, System.Drawing">
     <value>178, 22</value>
   </data>
+  <data name="TSMIReactorCSTR.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="TSMIReactorPFR.Size" type="System.Drawing.Size, System.Drawing">
     <value>178, 22</value>
   </data>
-  <data name="OperaçõesLógicasToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="TSMIReactorPFR.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="ReatoresToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>173, 22</value>
   </data>
-  <data name="OperaçõesLógicasToolStripMenuItem.Text" xml:space="preserve">
-    <value>Logical Operations</value>
+  <data name="ReatoresToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="ReatoresToolStripMenuItem.Text" xml:space="preserve">
+    <value>Reactors</value>
   </data>
   <data name="TSMIRecycle.Size" type="System.Drawing.Size, System.Drawing">
     <value>168, 22</value>
+  </data>
+  <data name="TSMIRecycle.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="TSMIRecycle.Text" xml:space="preserve">
     <value>Recycle (Material)</value>
@@ -565,11 +830,17 @@
   <data name="TSMIEnergyRecycle.Size" type="System.Drawing.Size, System.Drawing">
     <value>168, 22</value>
   </data>
+  <data name="TSMIEnergyRecycle.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="TSMIEnergyRecycle.Text" xml:space="preserve">
     <value>Recycle (Energy)</value>
   </data>
   <data name="TSMIAdjust.Size" type="System.Drawing.Size, System.Drawing">
     <value>168, 22</value>
+  </data>
+  <data name="TSMIAdjust.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="TSMIAdjust.Text" xml:space="preserve">
     <value>Adjust</value>
@@ -577,14 +848,29 @@
   <data name="TSMISpecification.Size" type="System.Drawing.Size, System.Drawing">
     <value>168, 22</value>
   </data>
+  <data name="TSMISpecification.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="TSMISpecification.Text" xml:space="preserve">
     <value>Specification</value>
   </data>
-  <data name="SuplementosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>58, 20</value>
+  <data name="OperaçõesLógicasToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>173, 22</value>
   </data>
-  <data name="SuplementosToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Utilities</value>
+  <data name="OperaçõesLógicasToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="OperaçõesLógicasToolStripMenuItem.Text" xml:space="preserve">
+    <value>Logical Operations</value>
+  </data>
+  <data name="InserirToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 20</value>
+  </data>
+  <data name="InserirToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="InserirToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Insert</value>
   </data>
   <data name="PontoCríticoRealToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>242, 22</value>
@@ -706,6 +992,9 @@
   <data name="LLEDiagramToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>242, 22</value>
   </data>
+  <data name="LLEDiagramToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="LLEDiagramToolStripMenuItem.Text" xml:space="preserve">
     <value>Triangular Phase Envelope (LLE)</value>
   </data>
@@ -781,14 +1070,20 @@
   <data name="PropriedadesDePetróleosToolStripMenuItem.Text" xml:space="preserve">
     <value>Petroleum Cold Flow Properties</value>
   </data>
-  <data name="OtimizaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>88, 20</value>
+  <data name="SuplementosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>58, 20</value>
   </data>
-  <data name="OtimizaToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Optimization</value>
+  <data name="SuplementosToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="SuplementosToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Utilities</value>
   </data>
   <data name="AnáliseDeSensibilidadeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>192, 22</value>
+  </data>
+  <data name="AnáliseDeSensibilidadeToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="AnáliseDeSensibilidadeToolStripMenuItem.Text" xml:space="preserve">
     <value>Sensitivity Analysis</value>
@@ -796,14 +1091,20 @@
   <data name="MultivariateOptimizerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>192, 22</value>
   </data>
+  <data name="MultivariateOptimizerToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="MultivariateOptimizerToolStripMenuItem.Text" xml:space="preserve">
     <value>Multivariate Optimizer</value>
   </data>
-  <data name="ResultadosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>56, 20</value>
+  <data name="OtimizaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>88, 20</value>
   </data>
-  <data name="ResultadosToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Results</value>
+  <data name="OtimizaToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="OtimizaToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Optimization</value>
   </data>
   <data name="GerarRelatórioToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>139, 22</value>
@@ -814,26 +1115,38 @@
   <data name="GerarRelatórioToolStripMenuItem.Text" xml:space="preserve">
     <value>Build Report</value>
   </data>
-  <data name="ArquivoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 20</value>
+  <data name="ResultadosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 20</value>
   </data>
-  <data name="ArquivoToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;File</value>
+  <data name="ResultadosToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="ResultadosToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Results</value>
   </data>
   <data name="CloseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>199, 22</value>
   </data>
+  <data name="CloseToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="CloseToolStripMenuItem.Text" xml:space="preserve">
     <value>Close Active Simulation</value>
   </data>
-  <data name="FerramentasToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 20</value>
+  <data name="ArquivoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 20</value>
   </data>
-  <data name="FerramentasToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Tools</value>
+  <data name="ArquivoToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="ArquivoToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;File</value>
   </data>
   <data name="CaracterizaçãoDePetróleosFraçõesC7ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>333, 22</value>
+  </data>
+  <data name="CaracterizaçãoDePetróleosFraçõesC7ToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="CaracterizaçãoDePetróleosFraçõesC7ToolStripMenuItem.Text" xml:space="preserve">
     <value>Petroleum Characterization (C7+ Bulk Properties)</value>
@@ -841,11 +1154,17 @@
   <data name="CaracterizaçãoDePetróleosCurvasDeDestilaçãoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>333, 22</value>
   </data>
+  <data name="CaracterizaçãoDePetróleosCurvasDeDestilaçãoToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="CaracterizaçãoDePetróleosCurvasDeDestilaçãoToolStripMenuItem.Text" xml:space="preserve">
     <value>Petroleum Characterization (Distillation Curves)</value>
   </data>
   <data name="GerenciadorDeAmostrasDePetróleoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>333, 22</value>
+  </data>
+  <data name="GerenciadorDeAmostrasDePetróleoToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="GerenciadorDeAmostrasDePetróleoToolStripMenuItem.Text" xml:space="preserve">
     <value>Petroleum Assay Manager</value>
@@ -853,24 +1172,63 @@
   <data name="GerenciadorDeReaçõesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>333, 22</value>
   </data>
+  <data name="GerenciadorDeReaçõesToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="GerenciadorDeReaçõesToolStripMenuItem.Text" xml:space="preserve">
     <value>Reactions Manager</value>
+  </data>
+  <data name="FerramentasToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 20</value>
+  </data>
+  <data name="FerramentasToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="FerramentasToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Tools</value>
+  </data>
+  <data name="CAPEOPENFlowsheetMonitoringObjectsMOsToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="CAPEOPENFlowsheetMonitoringObjectsMOsToolStripMenuItem.Text" xml:space="preserve">
     <value>CAPE-OPEN Plugins</value>
   </data>
+  <data name="PluginsToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="IronRubyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>154, 22</value>
+  </data>
+  <data name="IronRubyToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="IronRubyToolStripMenuItem.Text" xml:space="preserve">
     <value>Script Manager</value>
   </data>
+  <data name="ScriptsToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="ToolStripMenuItem1.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="ToolStripMenuItem2.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="ToolStripMenuItem3.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="ToolStripMenuItem3.Text" xml:space="preserve">
     <value>This.toolStripMenuItem3</value>
+  </data>
+  <data name="dckPanel.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="dckPanel.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
+  </data>
+  <data name="FlowLayoutPanel1.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Simulation</value>

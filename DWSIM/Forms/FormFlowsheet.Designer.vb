@@ -208,129 +208,148 @@ Partial Class FormFlowsheet
         '
         resources.ApplyResources(Me.ToolStripLabel4, "ToolStripLabel4")
         Me.ToolStripLabel4.Name = "ToolStripLabel4"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripLabel4, resources.GetString("ToolStripLabel4.StatusBarText"))
         '
         'TSBtabela
         '
+        resources.ApplyResources(Me.TSBtabela, "TSBtabela")
         Me.TSBtabela.CheckOnClick = True
         Me.TSBtabela.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.TSBtabela.Image = Global.DWSIM.My.Resources.Resources.picture
-        resources.ApplyResources(Me.TSBtabela, "TSBtabela")
         Me.TSBtabela.Name = "TSBtabela"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSBtabela, resources.GetString("TSBtabela.StatusBarText"))
         '
         'TSBTexto
         '
+        resources.ApplyResources(Me.TSBTexto, "TSBTexto")
         Me.TSBTexto.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.TSBTexto.Image = Global.DWSIM.My.Resources.Resources.font
-        resources.ApplyResources(Me.TSBTexto, "TSBTexto")
         Me.TSBTexto.Name = "TSBTexto"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSBTexto, resources.GetString("TSBTexto.StatusBarText"))
         '
         'ToolStripButton19
         '
+        resources.ApplyResources(Me.ToolStripButton19, "ToolStripButton19")
         Me.ToolStripButton19.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton19.Image = Global.DWSIM.My.Resources.Resources.table
-        resources.ApplyResources(Me.ToolStripButton19, "ToolStripButton19")
         Me.ToolStripButton19.Name = "ToolStripButton19"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripButton19, resources.GetString("ToolStripButton19.StatusBarText"))
         '
         'ToolStripButton12
         '
+        resources.ApplyResources(Me.ToolStripButton12, "ToolStripButton12")
         Me.ToolStripButton12.CheckOnClick = True
         Me.ToolStripButton12.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton12.Image = Global.DWSIM.My.Resources.Resources.shape_square
-        resources.ApplyResources(Me.ToolStripButton12, "ToolStripButton12")
         Me.ToolStripButton12.Name = "ToolStripButton12"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripButton12, resources.GetString("ToolStripButton12.StatusBarText"))
         '
         'ToolStripSeparator5
         '
-        Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
         resources.ApplyResources(Me.ToolStripSeparator5, "ToolStripSeparator5")
+        Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripSeparator5, resources.GetString("ToolStripSeparator5.StatusBarText"))
         '
         'ToolStripButton1
         '
+        resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
         Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton1.Image = Global.DWSIM.My.Resources.Resources.zoom_out
-        resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
         Me.ToolStripButton1.Name = "ToolStripButton1"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripButton1, resources.GetString("ToolStripButton1.StatusBarText"))
         '
         'TSTBZoom
         '
+        resources.ApplyResources(Me.TSTBZoom, "TSTBZoom")
         Me.TSTBZoom.BackColor = System.Drawing.SystemColors.Control
         Me.TSTBZoom.Name = "TSTBZoom"
-        resources.ApplyResources(Me.TSTBZoom, "TSTBZoom")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSTBZoom, resources.GetString("TSTBZoom.StatusBarText"))
         '
         'ToolStripButton2
         '
+        resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
         Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton2.Image = Global.DWSIM.My.Resources.Resources.zoom_in
-        resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
         Me.ToolStripButton2.Name = "ToolStripButton2"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripButton2, resources.GetString("ToolStripButton2.StatusBarText"))
         '
         'ToolStripButton20
         '
+        resources.ApplyResources(Me.ToolStripButton20, "ToolStripButton20")
         Me.ToolStripButton20.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton20.Image = Global.DWSIM.My.Resources.Resources.zoom_extend
-        resources.ApplyResources(Me.ToolStripButton20, "ToolStripButton20")
         Me.ToolStripButton20.Name = "ToolStripButton20"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripButton20, resources.GetString("ToolStripButton20.StatusBarText"))
         '
         'ToolStripButton3
         '
+        resources.ApplyResources(Me.ToolStripButton3, "ToolStripButton3")
         Me.ToolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton3.Image = Global.DWSIM.My.Resources.Resources.zoom_refresh
-        resources.ApplyResources(Me.ToolStripButton3, "ToolStripButton3")
         Me.ToolStripButton3.Name = "ToolStripButton3"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripButton3, resources.GetString("ToolStripButton3.StatusBarText"))
         '
         'ToolStripSeparator6
         '
-        Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
         resources.ApplyResources(Me.ToolStripSeparator6, "ToolStripSeparator6")
+        Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripSeparator6, resources.GetString("ToolStripSeparator6.StatusBarText"))
         '
         'ToolStripButton18
         '
+        resources.ApplyResources(Me.ToolStripButton18, "ToolStripButton18")
         Me.ToolStripButton18.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton18.Image = Global.DWSIM.My.Resources.Resources.images
-        resources.ApplyResources(Me.ToolStripButton18, "ToolStripButton18")
         Me.ToolStripButton18.Name = "ToolStripButton18"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripButton18, resources.GetString("ToolStripButton18.StatusBarText"))
         '
         'ToolStripButton6
         '
+        resources.ApplyResources(Me.ToolStripButton6, "ToolStripButton6")
         Me.ToolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton6.Image = Global.DWSIM.My.Resources.Resources.page_gear
-        resources.ApplyResources(Me.ToolStripButton6, "ToolStripButton6")
         Me.ToolStripButton6.Name = "ToolStripButton6"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripButton6, resources.GetString("ToolStripButton6.StatusBarText"))
         '
         'ToolStripButton11
         '
+        resources.ApplyResources(Me.ToolStripButton11, "ToolStripButton11")
         Me.ToolStripButton11.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton11.Image = Global.DWSIM.My.Resources.Resources.printer
-        resources.ApplyResources(Me.ToolStripButton11, "ToolStripButton11")
         Me.ToolStripButton11.Name = "ToolStripButton11"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripButton11, resources.GetString("ToolStripButton11.StatusBarText"))
         '
         'ToolStripButton10
         '
+        resources.ApplyResources(Me.ToolStripButton10, "ToolStripButton10")
         Me.ToolStripButton10.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton10.Image = Global.DWSIM.My.Resources.Resources.printer_add
-        resources.ApplyResources(Me.ToolStripButton10, "ToolStripButton10")
         Me.ToolStripButton10.Name = "ToolStripButton10"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripButton10, resources.GetString("ToolStripButton10.StatusBarText"))
         '
         'ToolStripSeparator4
         '
-        Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
         resources.ApplyResources(Me.ToolStripSeparator4, "ToolStripSeparator4")
+        Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripSeparator4, resources.GetString("ToolStripSeparator4.StatusBarText"))
         '
         'ToolStripButton16
         '
+        resources.ApplyResources(Me.ToolStripButton16, "ToolStripButton16")
         Me.ToolStripButton16.CheckOnClick = True
         Me.ToolStripButton16.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton16.Image = Global.DWSIM.My.Resources.Resources.shading
-        resources.ApplyResources(Me.ToolStripButton16, "ToolStripButton16")
         Me.ToolStripButton16.Name = "ToolStripButton16"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripButton16, resources.GetString("ToolStripButton16.StatusBarText"))
         '
         'ToolStripButton17
         '
+        resources.ApplyResources(Me.ToolStripButton17, "ToolStripButton17")
         Me.ToolStripButton17.CheckOnClick = True
         Me.ToolStripButton17.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton17.Image = Global.DWSIM.My.Resources.Resources.connect
-        resources.ApplyResources(Me.ToolStripButton17, "ToolStripButton17")
         Me.ToolStripButton17.Name = "ToolStripButton17"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripButton17, resources.GetString("ToolStripButton17.StatusBarText"))
         '
         'ToolStrip7
         '
@@ -343,55 +362,62 @@ Partial Class FormFlowsheet
         '
         resources.ApplyResources(Me.ToolStripLabel1, "ToolStripLabel1")
         Me.ToolStripLabel1.Name = "ToolStripLabel1"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripLabel1, resources.GetString("ToolStripLabel1.StatusBarText"))
         '
         'tsbAtivar
         '
+        resources.ApplyResources(Me.tsbAtivar, "tsbAtivar")
         Me.tsbAtivar.Checked = True
         Me.tsbAtivar.CheckOnClick = True
         Me.tsbAtivar.CheckState = System.Windows.Forms.CheckState.Checked
         Me.tsbAtivar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.tsbAtivar.Image = Global.DWSIM.My.Resources.Resources.control_play
-        resources.ApplyResources(Me.tsbAtivar, "tsbAtivar")
         Me.tsbAtivar.Name = "tsbAtivar"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.tsbAtivar, resources.GetString("tsbAtivar.StatusBarText"))
         '
         'tsbDesat
         '
+        resources.ApplyResources(Me.tsbDesat, "tsbDesat")
         Me.tsbDesat.CheckOnClick = True
         Me.tsbDesat.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.tsbDesat.Image = Global.DWSIM.My.Resources.Resources.control_stop
-        resources.ApplyResources(Me.tsbDesat, "tsbDesat")
         Me.tsbDesat.Name = "tsbDesat"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.tsbDesat, resources.GetString("tsbDesat.StatusBarText"))
         '
         'ToolStripButton13
         '
+        resources.ApplyResources(Me.ToolStripButton13, "ToolStripButton13")
         Me.ToolStripButton13.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton13.Image = Global.DWSIM.My.Resources.Resources.control_repeat_blue
-        resources.ApplyResources(Me.ToolStripButton13, "ToolStripButton13")
         Me.ToolStripButton13.Name = "ToolStripButton13"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripButton13, resources.GetString("ToolStripButton13.StatusBarText"))
         '
         'ToolStripButton14
         '
+        resources.ApplyResources(Me.ToolStripButton14, "ToolStripButton14")
         Me.ToolStripButton14.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton14.Image = Global.DWSIM.My.Resources.Resources.control_stop_blue1
-        resources.ApplyResources(Me.ToolStripButton14, "ToolStripButton14")
         Me.ToolStripButton14.Name = "ToolStripButton14"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripButton14, resources.GetString("ToolStripButton14.StatusBarText"))
         '
         'ToolStripButton15
         '
+        resources.ApplyResources(Me.ToolStripButton15, "ToolStripButton15")
         Me.ToolStripButton15.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton15.Image = Global.DWSIM.My.Resources.Resources.control_eject_blue
-        resources.ApplyResources(Me.ToolStripButton15, "ToolStripButton15")
         Me.ToolStripButton15.Name = "ToolStripButton15"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripButton15, resources.GetString("ToolStripButton15.StatusBarText"))
         '
         'tsbSimultAdjustSolver
         '
+        resources.ApplyResources(Me.tsbSimultAdjustSolver, "tsbSimultAdjustSolver")
         Me.tsbSimultAdjustSolver.Checked = True
         Me.tsbSimultAdjustSolver.CheckOnClick = True
         Me.tsbSimultAdjustSolver.CheckState = System.Windows.Forms.CheckState.Checked
         Me.tsbSimultAdjustSolver.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.tsbSimultAdjustSolver.Image = Global.DWSIM.My.Resources.Resources.control_equalizer
-        resources.ApplyResources(Me.tsbSimultAdjustSolver, "tsbSimultAdjustSolver")
         Me.tsbSimultAdjustSolver.Name = "tsbSimultAdjustSolver"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.tsbSimultAdjustSolver, resources.GetString("tsbSimultAdjustSolver.StatusBarText"))
         '
         'ToolStrip6
         '
@@ -404,28 +430,33 @@ Partial Class FormFlowsheet
         '
         resources.ApplyResources(Me.ToolStripLabel2, "ToolStripLabel2")
         Me.ToolStripLabel2.Name = "ToolStripLabel2"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripLabel2, resources.GetString("ToolStripLabel2.StatusBarText"))
         '
         'ToolStripButton5
         '
+        resources.ApplyResources(Me.ToolStripButton5, "ToolStripButton5")
         Me.ToolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton5.Image = Global.DWSIM.My.Resources.Resources.brick
-        resources.ApplyResources(Me.ToolStripButton5, "ToolStripButton5")
         Me.ToolStripButton5.Name = "ToolStripButton5"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripButton5, resources.GetString("ToolStripButton5.StatusBarText"))
         '
         'ToolStripSeparator1
         '
-        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
         resources.ApplyResources(Me.ToolStripSeparator1, "ToolStripSeparator1")
+        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripSeparator1, resources.GetString("ToolStripSeparator1.StatusBarText"))
         '
         'ToolStripButton8
         '
+        resources.ApplyResources(Me.ToolStripButton8, "ToolStripButton8")
         Me.ToolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton8.Image = Global.DWSIM.My.Resources.Resources.report
-        resources.ApplyResources(Me.ToolStripButton8, "ToolStripButton8")
         Me.ToolStripButton8.Name = "ToolStripButton8"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripButton8, resources.GetString("ToolStripButton8.StatusBarText"))
         '
         'DataGridView1
         '
+        resources.ApplyResources(Me.DataGridView1, "DataGridView1")
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -443,7 +474,6 @@ Partial Class FormFlowsheet
         DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.DataGridView1.DefaultCellStyle = DataGridViewCellStyle2
-        resources.ApplyResources(Me.DataGridView1, "DataGridView1")
         Me.DataGridView1.Name = "DataGridView1"
         DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
@@ -453,14 +483,16 @@ Partial Class FormFlowsheet
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.DataGridView1.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.DataGridView1, resources.GetString("DataGridView1.StatusBarText"))
         '
         'TSTable
         '
+        resources.ApplyResources(Me.TSTable, "TSTable")
         Me.TSTable.CanClose = False
         Me.TSTable.Controls.Add(Me.DataGridView1)
         Me.TSTable.IsDrawn = True
         Me.TSTable.Name = "TSTable"
-        resources.ApplyResources(Me.TSTable, "TSTable")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSTable, resources.GetString("TSTable.StatusBarText"))
         '
         'ToolStrip2
         '
@@ -473,44 +505,51 @@ Partial Class FormFlowsheet
         '
         resources.ApplyResources(Me.ToolStripLabel8, "ToolStripLabel8")
         Me.ToolStripLabel8.Name = "ToolStripLabel8"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripLabel8, resources.GetString("ToolStripLabel8.StatusBarText"))
         '
         'tsbSaveState
         '
+        resources.ApplyResources(Me.tsbSaveState, "tsbSaveState")
         Me.tsbSaveState.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.tsbSaveState.Image = Global.DWSIM.My.Resources.Resources.bullet_arrow_bottom
-        resources.ApplyResources(Me.tsbSaveState, "tsbSaveState")
         Me.tsbSaveState.Name = "tsbSaveState"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.tsbSaveState, resources.GetString("tsbSaveState.StatusBarText"))
         '
         'tsbRestoreStates
         '
+        resources.ApplyResources(Me.tsbRestoreStates, "tsbRestoreStates")
         Me.tsbRestoreStates.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.tsbRestoreStates.Image = Global.DWSIM.My.Resources.Resources.bullet_arrow_top
-        resources.ApplyResources(Me.tsbRestoreStates, "tsbRestoreStates")
         Me.tsbRestoreStates.Name = "tsbRestoreStates"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.tsbRestoreStates, resources.GetString("tsbRestoreStates.StatusBarText"))
         '
         'tsbClearStates
         '
+        resources.ApplyResources(Me.tsbClearStates, "tsbClearStates")
         Me.tsbClearStates.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.tsbClearStates.Image = Global.DWSIM.My.Resources.Resources.bullet_delete
-        resources.ApplyResources(Me.tsbClearStates, "tsbClearStates")
         Me.tsbClearStates.Name = "tsbClearStates"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.tsbClearStates, resources.GetString("tsbClearStates.StatusBarText"))
         '
         'ToolStripSeparator7
         '
-        Me.ToolStripSeparator7.Name = "ToolStripSeparator7"
         resources.ApplyResources(Me.ToolStripSeparator7, "ToolStripSeparator7")
+        Me.ToolStripSeparator7.Name = "ToolStripSeparator7"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripSeparator7, resources.GetString("ToolStripSeparator7.StatusBarText"))
         '
         'ToolStripLabel5
         '
         resources.ApplyResources(Me.ToolStripLabel5, "ToolStripLabel5")
         Me.ToolStripLabel5.Name = "ToolStripLabel5"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripLabel5, resources.GetString("ToolStripLabel5.StatusBarText"))
         '
         'tsbRestoreSolutions
         '
+        resources.ApplyResources(Me.tsbRestoreSolutions, "tsbRestoreSolutions")
         Me.tsbRestoreSolutions.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.tsbRestoreSolutions.Image = Global.DWSIM.My.Resources.Resources.bullet_arrow_top
-        resources.ApplyResources(Me.tsbRestoreSolutions, "tsbRestoreSolutions")
         Me.tsbRestoreSolutions.Name = "tsbRestoreSolutions"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.tsbRestoreSolutions, resources.GetString("tsbRestoreSolutions.StatusBarText"))
         '
         'ToolStrip1
         '
@@ -523,385 +562,443 @@ Partial Class FormFlowsheet
         '
         resources.ApplyResources(Me.ToolStripLabel3, "ToolStripLabel3")
         Me.ToolStripLabel3.Name = "ToolStripLabel3"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripLabel3, resources.GetString("ToolStripLabel3.StatusBarText"))
         '
         'ToolStripComboBoxUnitSystem
         '
+        resources.ApplyResources(Me.ToolStripComboBoxUnitSystem, "ToolStripComboBoxUnitSystem")
         Me.ToolStripComboBoxUnitSystem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ToolStripComboBoxUnitSystem.Name = "ToolStripComboBoxUnitSystem"
-        resources.ApplyResources(Me.ToolStripComboBoxUnitSystem, "ToolStripComboBoxUnitSystem")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripComboBoxUnitSystem, resources.GetString("ToolStripComboBoxUnitSystem.StatusBarText"))
         '
         'ToolStripButton7
         '
+        resources.ApplyResources(Me.ToolStripButton7, "ToolStripButton7")
         Me.ToolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton7.Image = Global.DWSIM.My.Resources.Resources.add
-        resources.ApplyResources(Me.ToolStripButton7, "ToolStripButton7")
         Me.ToolStripButton7.Name = "ToolStripButton7"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripButton7, resources.GetString("ToolStripButton7.StatusBarText"))
         '
         'ToolStripSeparator2
         '
-        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
         resources.ApplyResources(Me.ToolStripSeparator2, "ToolStripSeparator2")
+        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripSeparator2, resources.GetString("ToolStripSeparator2.StatusBarText"))
         '
         'ToolStripLabel6
         '
         resources.ApplyResources(Me.ToolStripLabel6, "ToolStripLabel6")
         Me.ToolStripLabel6.Name = "ToolStripLabel6"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripLabel6, resources.GetString("ToolStripLabel6.StatusBarText"))
         '
         'ToolStripComboBoxNumberFormatting
         '
+        resources.ApplyResources(Me.ToolStripComboBoxNumberFormatting, "ToolStripComboBoxNumberFormatting")
         Me.ToolStripComboBoxNumberFormatting.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ToolStripComboBoxNumberFormatting.Items.AddRange(New Object() {resources.GetString("ToolStripComboBoxNumberFormatting.Items"), resources.GetString("ToolStripComboBoxNumberFormatting.Items1"), resources.GetString("ToolStripComboBoxNumberFormatting.Items2"), resources.GetString("ToolStripComboBoxNumberFormatting.Items3"), resources.GetString("ToolStripComboBoxNumberFormatting.Items4"), resources.GetString("ToolStripComboBoxNumberFormatting.Items5"), resources.GetString("ToolStripComboBoxNumberFormatting.Items6"), resources.GetString("ToolStripComboBoxNumberFormatting.Items7"), resources.GetString("ToolStripComboBoxNumberFormatting.Items8"), resources.GetString("ToolStripComboBoxNumberFormatting.Items9"), resources.GetString("ToolStripComboBoxNumberFormatting.Items10"), resources.GetString("ToolStripComboBoxNumberFormatting.Items11"), resources.GetString("ToolStripComboBoxNumberFormatting.Items12"), resources.GetString("ToolStripComboBoxNumberFormatting.Items13"), resources.GetString("ToolStripComboBoxNumberFormatting.Items14"), resources.GetString("ToolStripComboBoxNumberFormatting.Items15"), resources.GetString("ToolStripComboBoxNumberFormatting.Items16"), resources.GetString("ToolStripComboBoxNumberFormatting.Items17"), resources.GetString("ToolStripComboBoxNumberFormatting.Items18"), resources.GetString("ToolStripComboBoxNumberFormatting.Items19"), resources.GetString("ToolStripComboBoxNumberFormatting.Items20"), resources.GetString("ToolStripComboBoxNumberFormatting.Items21"), resources.GetString("ToolStripComboBoxNumberFormatting.Items22"), resources.GetString("ToolStripComboBoxNumberFormatting.Items23"), resources.GetString("ToolStripComboBoxNumberFormatting.Items24"), resources.GetString("ToolStripComboBoxNumberFormatting.Items25"), resources.GetString("ToolStripComboBoxNumberFormatting.Items26"), resources.GetString("ToolStripComboBoxNumberFormatting.Items27"), resources.GetString("ToolStripComboBoxNumberFormatting.Items28")})
         Me.ToolStripComboBoxNumberFormatting.Name = "ToolStripComboBoxNumberFormatting"
-        resources.ApplyResources(Me.ToolStripComboBoxNumberFormatting, "ToolStripComboBoxNumberFormatting")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripComboBoxNumberFormatting, resources.GetString("ToolStripComboBoxNumberFormatting.StatusBarText"))
         '
         'ToolStripSeparator3
         '
-        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
         resources.ApplyResources(Me.ToolStripSeparator3, "ToolStripSeparator3")
+        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripSeparator3, resources.GetString("ToolStripSeparator3.StatusBarText"))
         '
         'ToolStripLabel7
         '
         resources.ApplyResources(Me.ToolStripLabel7, "ToolStripLabel7")
         Me.ToolStripLabel7.Name = "ToolStripLabel7"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripLabel7, resources.GetString("ToolStripLabel7.StatusBarText"))
         '
         'ToolStripComboBoxNumberFractionFormatting
         '
+        resources.ApplyResources(Me.ToolStripComboBoxNumberFractionFormatting, "ToolStripComboBoxNumberFractionFormatting")
         Me.ToolStripComboBoxNumberFractionFormatting.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ToolStripComboBoxNumberFractionFormatting.Items.AddRange(New Object() {resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items1"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items2"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items3"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items4"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items5"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items6"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items7"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items8"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items9"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items10"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items11"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items12"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items13"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items14"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items15"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items16"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items17"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items18"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items19"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items20"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items21"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items22"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items23"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items24"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items25"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items26"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items27"), resources.GetString("ToolStripComboBoxNumberFractionFormatting.Items28")})
         Me.ToolStripComboBoxNumberFractionFormatting.Name = "ToolStripComboBoxNumberFractionFormatting"
-        resources.ApplyResources(Me.ToolStripComboBoxNumberFractionFormatting, "ToolStripComboBoxNumberFractionFormatting")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripComboBoxNumberFractionFormatting, resources.GetString("ToolStripComboBoxNumberFractionFormatting.StatusBarText"))
         '
         'MenuStrip1
         '
+        resources.ApplyResources(Me.MenuStrip1, "MenuStrip1")
         Me.MenuStrip1.AllowItemReorder = True
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConfiguraçõesToolStripMenuItem, Me.ExibirToolStripMenuItem, Me.InserirToolStripMenuItem, Me.SuplementosToolStripMenuItem, Me.OtimizaToolStripMenuItem, Me.ResultadosToolStripMenuItem, Me.ArquivoToolStripMenuItem, Me.FerramentasToolStripMenuItem, Me.PluginsToolStripMenuItem, Me.ScriptsToolStripMenuItem})
-        resources.ApplyResources(Me.MenuStrip1, "MenuStrip1")
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.ShowItemToolTips = True
         '
         'ConfiguraçõesToolStripMenuItem
         '
+        resources.ApplyResources(Me.ConfiguraçõesToolStripMenuItem, "ConfiguraçõesToolStripMenuItem")
         Me.ConfiguraçõesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ComponentesToolStripMenuItem})
         Me.ConfiguraçõesToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.MatchOnly
         Me.ConfiguraçõesToolStripMenuItem.MergeIndex = 0
         Me.ConfiguraçõesToolStripMenuItem.Name = "ConfiguraçõesToolStripMenuItem"
-        resources.ApplyResources(Me.ConfiguraçõesToolStripMenuItem, "ConfiguraçõesToolStripMenuItem")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ConfiguraçõesToolStripMenuItem, resources.GetString("ConfiguraçõesToolStripMenuItem.StatusBarText"))
         '
         'ComponentesToolStripMenuItem
         '
+        resources.ApplyResources(Me.ComponentesToolStripMenuItem, "ComponentesToolStripMenuItem")
         Me.ComponentesToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.brick
         Me.ComponentesToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert
         Me.ComponentesToolStripMenuItem.MergeIndex = 0
         Me.ComponentesToolStripMenuItem.Name = "ComponentesToolStripMenuItem"
-        resources.ApplyResources(Me.ComponentesToolStripMenuItem, "ComponentesToolStripMenuItem")
         Me.StatusBarTextProvider1.SetStatusBarText(Me.ComponentesToolStripMenuItem, resources.GetString("ComponentesToolStripMenuItem.StatusBarText"))
         '
         'ExibirToolStripMenuItem
         '
+        resources.ApplyResources(Me.ExibirToolStripMenuItem, "ExibirToolStripMenuItem")
         Me.ExibirToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExibirSaídaDoConsoleToolStripMenuItem, Me.ExibirListaDeItensACalcularToolStripMenuItem, Me.PainelDeVariáveisToolStripMenuItem, Me.ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem})
         Me.ExibirToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert
         Me.ExibirToolStripMenuItem.MergeIndex = 3
         Me.ExibirToolStripMenuItem.Name = "ExibirToolStripMenuItem"
-        resources.ApplyResources(Me.ExibirToolStripMenuItem, "ExibirToolStripMenuItem")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ExibirToolStripMenuItem, resources.GetString("ExibirToolStripMenuItem.StatusBarText"))
         '
         'ExibirSaídaDoConsoleToolStripMenuItem
         '
+        resources.ApplyResources(Me.ExibirSaídaDoConsoleToolStripMenuItem, "ExibirSaídaDoConsoleToolStripMenuItem")
         Me.ExibirSaídaDoConsoleToolStripMenuItem.CheckOnClick = True
         Me.ExibirSaídaDoConsoleToolStripMenuItem.Name = "ExibirSaídaDoConsoleToolStripMenuItem"
-        resources.ApplyResources(Me.ExibirSaídaDoConsoleToolStripMenuItem, "ExibirSaídaDoConsoleToolStripMenuItem")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ExibirSaídaDoConsoleToolStripMenuItem, resources.GetString("ExibirSaídaDoConsoleToolStripMenuItem.StatusBarText"))
         '
         'ExibirListaDeItensACalcularToolStripMenuItem
         '
+        resources.ApplyResources(Me.ExibirListaDeItensACalcularToolStripMenuItem, "ExibirListaDeItensACalcularToolStripMenuItem")
         Me.ExibirListaDeItensACalcularToolStripMenuItem.CheckOnClick = True
         Me.ExibirListaDeItensACalcularToolStripMenuItem.Name = "ExibirListaDeItensACalcularToolStripMenuItem"
-        resources.ApplyResources(Me.ExibirListaDeItensACalcularToolStripMenuItem, "ExibirListaDeItensACalcularToolStripMenuItem")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ExibirListaDeItensACalcularToolStripMenuItem, resources.GetString("ExibirListaDeItensACalcularToolStripMenuItem.StatusBarText"))
         '
         'PainelDeVariáveisToolStripMenuItem
         '
+        resources.ApplyResources(Me.PainelDeVariáveisToolStripMenuItem, "PainelDeVariáveisToolStripMenuItem")
         Me.PainelDeVariáveisToolStripMenuItem.CheckOnClick = True
         Me.PainelDeVariáveisToolStripMenuItem.Name = "PainelDeVariáveisToolStripMenuItem"
-        resources.ApplyResources(Me.PainelDeVariáveisToolStripMenuItem, "PainelDeVariáveisToolStripMenuItem")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.PainelDeVariáveisToolStripMenuItem, resources.GetString("PainelDeVariáveisToolStripMenuItem.StatusBarText"))
         '
         'ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem
         '
+        resources.ApplyResources(Me.ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem, "ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem")
         Me.ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem.CheckOnClick = True
         Me.ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem.Name = "ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem"
-        resources.ApplyResources(Me.ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem, "ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem, resources.GetString("ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem.StatusBarText"))
         '
         'InserirToolStripMenuItem
         '
+        resources.ApplyResources(Me.InserirToolStripMenuItem, "InserirToolStripMenuItem")
         Me.InserirToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CorrentesToolStripMenuItem, Me.OperaçõesUnitáriasToolStripMenuItem, Me.ColunasToolStripMenuItem, Me.ReatoresToolStripMenuItem, Me.OperaçõesLógicasToolStripMenuItem})
         Me.InserirToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert
         Me.InserirToolStripMenuItem.MergeIndex = 2
         Me.InserirToolStripMenuItem.Name = "InserirToolStripMenuItem"
-        resources.ApplyResources(Me.InserirToolStripMenuItem, "InserirToolStripMenuItem")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.InserirToolStripMenuItem, resources.GetString("InserirToolStripMenuItem.StatusBarText"))
         '
         'CorrentesToolStripMenuItem
         '
+        resources.ApplyResources(Me.CorrentesToolStripMenuItem, "CorrentesToolStripMenuItem")
         Me.CorrentesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TSMIMaterialStream, Me.TSMIEnergyStream})
         Me.CorrentesToolStripMenuItem.Name = "CorrentesToolStripMenuItem"
-        resources.ApplyResources(Me.CorrentesToolStripMenuItem, "CorrentesToolStripMenuItem")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.CorrentesToolStripMenuItem, resources.GetString("CorrentesToolStripMenuItem.StatusBarText"))
         '
         'TSMIMaterialStream
         '
-        Me.TSMIMaterialStream.Image = Global.DWSIM.My.Resources.Resources.arrow_right
         resources.ApplyResources(Me.TSMIMaterialStream, "TSMIMaterialStream")
+        Me.TSMIMaterialStream.Image = Global.DWSIM.My.Resources.Resources.arrow_right
         Me.TSMIMaterialStream.Name = "TSMIMaterialStream"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMIMaterialStream, resources.GetString("TSMIMaterialStream.StatusBarText"))
         '
         'TSMIEnergyStream
         '
-        Me.TSMIEnergyStream.Image = Global.DWSIM.My.Resources.Resources.arrow_right2
         resources.ApplyResources(Me.TSMIEnergyStream, "TSMIEnergyStream")
+        Me.TSMIEnergyStream.Image = Global.DWSIM.My.Resources.Resources.arrow_right2
         Me.TSMIEnergyStream.Name = "TSMIEnergyStream"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMIEnergyStream, resources.GetString("TSMIEnergyStream.StatusBarText"))
         '
         'OperaçõesUnitáriasToolStripMenuItem
         '
+        resources.ApplyResources(Me.OperaçõesUnitáriasToolStripMenuItem, "OperaçõesUnitáriasToolStripMenuItem")
         Me.OperaçõesUnitáriasToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TSMIMixer, Me.TSMISplitter, Me.TSMICompressor, Me.TSMIExpander, Me.TSMIPump, Me.TSMIPipe, Me.TSMIValve, Me.TSMISeparator, Me.TSMIHeater, Me.TSMICooler, Me.TSMIOrificePlate, Me.TSMIComponentSeparator, Me.TSMIHeatExchanger, Me.TSMITank, Me.TSMIExcelUO, Me.TSMICUO, Me.TSMICOUO, Me.TSMISolidsSeparator, Me.TSMIFilter, Me.TSMIFlowsheet})
         Me.OperaçõesUnitáriasToolStripMenuItem.Name = "OperaçõesUnitáriasToolStripMenuItem"
-        resources.ApplyResources(Me.OperaçõesUnitáriasToolStripMenuItem, "OperaçõesUnitáriasToolStripMenuItem")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.OperaçõesUnitáriasToolStripMenuItem, resources.GetString("OperaçõesUnitáriasToolStripMenuItem.StatusBarText"))
         '
         'TSMIMixer
         '
-        Me.TSMIMixer.Image = Global.DWSIM.My.Resources.Resources.node_in_copy
         resources.ApplyResources(Me.TSMIMixer, "TSMIMixer")
+        Me.TSMIMixer.Image = Global.DWSIM.My.Resources.Resources.node_in_copy
         Me.TSMIMixer.Name = "TSMIMixer"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMIMixer, resources.GetString("TSMIMixer.StatusBarText"))
         '
         'TSMISplitter
         '
-        Me.TSMISplitter.Image = Global.DWSIM.My.Resources.Resources.node_out_copy
         resources.ApplyResources(Me.TSMISplitter, "TSMISplitter")
+        Me.TSMISplitter.Image = Global.DWSIM.My.Resources.Resources.node_out_copy
         Me.TSMISplitter.Name = "TSMISplitter"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMISplitter, resources.GetString("TSMISplitter.StatusBarText"))
         '
         'TSMICompressor
         '
-        Me.TSMICompressor.Image = Global.DWSIM.My.Resources.Resources.compressor_copy
         resources.ApplyResources(Me.TSMICompressor, "TSMICompressor")
+        Me.TSMICompressor.Image = Global.DWSIM.My.Resources.Resources.compressor_copy
         Me.TSMICompressor.Name = "TSMICompressor"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMICompressor, resources.GetString("TSMICompressor.StatusBarText"))
         '
         'TSMIExpander
         '
-        Me.TSMIExpander.Image = Global.DWSIM.My.Resources.Resources.turbina_copy
         resources.ApplyResources(Me.TSMIExpander, "TSMIExpander")
+        Me.TSMIExpander.Image = Global.DWSIM.My.Resources.Resources.turbina_copy
         Me.TSMIExpander.Name = "TSMIExpander"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMIExpander, resources.GetString("TSMIExpander.StatusBarText"))
         '
         'TSMIPump
         '
-        Me.TSMIPump.Image = Global.DWSIM.My.Resources.Resources.pump_copy
         resources.ApplyResources(Me.TSMIPump, "TSMIPump")
+        Me.TSMIPump.Image = Global.DWSIM.My.Resources.Resources.pump_copy
         Me.TSMIPump.Name = "TSMIPump"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMIPump, resources.GetString("TSMIPump.StatusBarText"))
         '
         'TSMIPipe
         '
-        Me.TSMIPipe.Image = Global.DWSIM.My.Resources.Resources.pipe_copy
         resources.ApplyResources(Me.TSMIPipe, "TSMIPipe")
+        Me.TSMIPipe.Image = Global.DWSIM.My.Resources.Resources.pipe_copy
         Me.TSMIPipe.Name = "TSMIPipe"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMIPipe, resources.GetString("TSMIPipe.StatusBarText"))
         '
         'TSMIValve
         '
-        Me.TSMIValve.Image = Global.DWSIM.My.Resources.Resources.valve_copy
         resources.ApplyResources(Me.TSMIValve, "TSMIValve")
+        Me.TSMIValve.Image = Global.DWSIM.My.Resources.Resources.valve_copy
         Me.TSMIValve.Name = "TSMIValve"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMIValve, resources.GetString("TSMIValve.StatusBarText"))
         '
         'TSMISeparator
         '
-        Me.TSMISeparator.Image = Global.DWSIM.My.Resources.Resources.vessel_copy
         resources.ApplyResources(Me.TSMISeparator, "TSMISeparator")
+        Me.TSMISeparator.Image = Global.DWSIM.My.Resources.Resources.vessel_copy
         Me.TSMISeparator.Name = "TSMISeparator"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMISeparator, resources.GetString("TSMISeparator.StatusBarText"))
         '
         'TSMIHeater
         '
-        Me.TSMIHeater.Image = Global.DWSIM.My.Resources.Resources.heater_copy
         resources.ApplyResources(Me.TSMIHeater, "TSMIHeater")
+        Me.TSMIHeater.Image = Global.DWSIM.My.Resources.Resources.heater_copy
         Me.TSMIHeater.Name = "TSMIHeater"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMIHeater, resources.GetString("TSMIHeater.StatusBarText"))
         '
         'TSMICooler
         '
-        Me.TSMICooler.Image = Global.DWSIM.My.Resources.Resources.cooler_copy
         resources.ApplyResources(Me.TSMICooler, "TSMICooler")
+        Me.TSMICooler.Image = Global.DWSIM.My.Resources.Resources.cooler_copy
         Me.TSMICooler.Name = "TSMICooler"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMICooler, resources.GetString("TSMICooler.StatusBarText"))
         '
         'TSMIOrificePlate
         '
-        Me.TSMIOrificePlate.Image = Global.DWSIM.My.Resources.Resources.orifice2
         resources.ApplyResources(Me.TSMIOrificePlate, "TSMIOrificePlate")
+        Me.TSMIOrificePlate.Image = Global.DWSIM.My.Resources.Resources.orifice2
         Me.TSMIOrificePlate.Name = "TSMIOrificePlate"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMIOrificePlate, resources.GetString("TSMIOrificePlate.StatusBarText"))
         '
         'TSMIComponentSeparator
         '
-        Me.TSMIComponentSeparator.Image = Global.DWSIM.My.Resources.Resources.comp_separator
         resources.ApplyResources(Me.TSMIComponentSeparator, "TSMIComponentSeparator")
+        Me.TSMIComponentSeparator.Image = Global.DWSIM.My.Resources.Resources.comp_separator
         Me.TSMIComponentSeparator.Name = "TSMIComponentSeparator"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMIComponentSeparator, resources.GetString("TSMIComponentSeparator.StatusBarText"))
         '
         'TSMIHeatExchanger
         '
-        Me.TSMIHeatExchanger.Image = Global.DWSIM.My.Resources.Resources.heater_copy
         resources.ApplyResources(Me.TSMIHeatExchanger, "TSMIHeatExchanger")
+        Me.TSMIHeatExchanger.Image = Global.DWSIM.My.Resources.Resources.heater_copy
         Me.TSMIHeatExchanger.Name = "TSMIHeatExchanger"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMIHeatExchanger, resources.GetString("TSMIHeatExchanger.StatusBarText"))
         '
         'TSMITank
         '
-        Me.TSMITank.Image = Global.DWSIM.My.Resources.Resources.tank_copy
         resources.ApplyResources(Me.TSMITank, "TSMITank")
+        Me.TSMITank.Image = Global.DWSIM.My.Resources.Resources.tank_copy
         Me.TSMITank.Name = "TSMITank"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMITank, resources.GetString("TSMITank.StatusBarText"))
         '
         'TSMIExcelUO
         '
+        resources.ApplyResources(Me.TSMIExcelUO, "TSMIExcelUO")
         Me.TSMIExcelUO.Image = Global.DWSIM.My.Resources.Resources.Excel
         Me.TSMIExcelUO.Name = "TSMIExcelUO"
-        resources.ApplyResources(Me.TSMIExcelUO, "TSMIExcelUO")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMIExcelUO, resources.GetString("TSMIExcelUO.StatusBarText"))
         '
         'TSMICUO
         '
+        resources.ApplyResources(Me.TSMICUO, "TSMICUO")
         Me.TSMICUO.Image = Global.DWSIM.My.Resources.Resources.greyscale_20
         Me.TSMICUO.Name = "TSMICUO"
-        resources.ApplyResources(Me.TSMICUO, "TSMICUO")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMICUO, resources.GetString("TSMICUO.StatusBarText"))
         '
         'TSMICOUO
         '
+        resources.ApplyResources(Me.TSMICOUO, "TSMICOUO")
         Me.TSMICOUO.Image = Global.DWSIM.My.Resources.Resources.colan2
         Me.TSMICOUO.Name = "TSMICOUO"
-        resources.ApplyResources(Me.TSMICOUO, "TSMICOUO")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMICOUO, resources.GetString("TSMICOUO.StatusBarText"))
         '
         'TSMISolidsSeparator
         '
+        resources.ApplyResources(Me.TSMISolidsSeparator, "TSMISolidsSeparator")
         Me.TSMISolidsSeparator.Image = Global.DWSIM.My.Resources.Resources.comp_separator
         Me.TSMISolidsSeparator.Name = "TSMISolidsSeparator"
-        resources.ApplyResources(Me.TSMISolidsSeparator, "TSMISolidsSeparator")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMISolidsSeparator, resources.GetString("TSMISolidsSeparator.StatusBarText"))
         '
         'TSMIFilter
         '
+        resources.ApplyResources(Me.TSMIFilter, "TSMIFilter")
         Me.TSMIFilter.Image = Global.DWSIM.My.Resources.Resources.comp_separator
         Me.TSMIFilter.Name = "TSMIFilter"
-        resources.ApplyResources(Me.TSMIFilter, "TSMIFilter")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMIFilter, resources.GetString("TSMIFilter.StatusBarText"))
         '
         'TSMIFlowsheet
         '
+        resources.ApplyResources(Me.TSMIFlowsheet, "TSMIFlowsheet")
         Me.TSMIFlowsheet.Image = Global.DWSIM.My.Resources.Resources.Vector_Badge
         Me.TSMIFlowsheet.Name = "TSMIFlowsheet"
-        resources.ApplyResources(Me.TSMIFlowsheet, "TSMIFlowsheet")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMIFlowsheet, resources.GetString("TSMIFlowsheet.StatusBarText"))
         '
         'ColunasToolStripMenuItem
         '
+        resources.ApplyResources(Me.ColunasToolStripMenuItem, "ColunasToolStripMenuItem")
         Me.ColunasToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TSMIColShortcut, Me.TSMIColDist, Me.TSMIColAbs, Me.TSMIColAbsReb, Me.TSMIColAbsCond})
         Me.ColunasToolStripMenuItem.Name = "ColunasToolStripMenuItem"
-        resources.ApplyResources(Me.ColunasToolStripMenuItem, "ColunasToolStripMenuItem")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ColunasToolStripMenuItem, resources.GetString("ColunasToolStripMenuItem.StatusBarText"))
         '
         'TSMIColShortcut
         '
-        Me.TSMIColShortcut.Image = Global.DWSIM.My.Resources.Resources.vessel_copy
         resources.ApplyResources(Me.TSMIColShortcut, "TSMIColShortcut")
+        Me.TSMIColShortcut.Image = Global.DWSIM.My.Resources.Resources.vessel_copy
         Me.TSMIColShortcut.Name = "TSMIColShortcut"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMIColShortcut, resources.GetString("TSMIColShortcut.StatusBarText"))
         '
         'TSMIColDist
         '
-        Me.TSMIColDist.Image = Global.DWSIM.My.Resources.Resources.vessel_copy
         resources.ApplyResources(Me.TSMIColDist, "TSMIColDist")
+        Me.TSMIColDist.Image = Global.DWSIM.My.Resources.Resources.vessel_copy
         Me.TSMIColDist.Name = "TSMIColDist"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMIColDist, resources.GetString("TSMIColDist.StatusBarText"))
         '
         'TSMIColAbs
         '
-        Me.TSMIColAbs.Image = Global.DWSIM.My.Resources.Resources.vessel_copy
         resources.ApplyResources(Me.TSMIColAbs, "TSMIColAbs")
+        Me.TSMIColAbs.Image = Global.DWSIM.My.Resources.Resources.vessel_copy
         Me.TSMIColAbs.Name = "TSMIColAbs"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMIColAbs, resources.GetString("TSMIColAbs.StatusBarText"))
         '
         'TSMIColAbsReb
         '
-        Me.TSMIColAbsReb.Image = Global.DWSIM.My.Resources.Resources.vessel_copy
         resources.ApplyResources(Me.TSMIColAbsReb, "TSMIColAbsReb")
+        Me.TSMIColAbsReb.Image = Global.DWSIM.My.Resources.Resources.vessel_copy
         Me.TSMIColAbsReb.Name = "TSMIColAbsReb"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMIColAbsReb, resources.GetString("TSMIColAbsReb.StatusBarText"))
         '
         'TSMIColAbsCond
         '
-        Me.TSMIColAbsCond.Image = Global.DWSIM.My.Resources.Resources.vessel_copy
         resources.ApplyResources(Me.TSMIColAbsCond, "TSMIColAbsCond")
+        Me.TSMIColAbsCond.Image = Global.DWSIM.My.Resources.Resources.vessel_copy
         Me.TSMIColAbsCond.Name = "TSMIColAbsCond"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMIColAbsCond, resources.GetString("TSMIColAbsCond.StatusBarText"))
         '
         'ReatoresToolStripMenuItem
         '
+        resources.ApplyResources(Me.ReatoresToolStripMenuItem, "ReatoresToolStripMenuItem")
         Me.ReatoresToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TSMIReactorConv, Me.TSMIReactorEquilibrium, Me.TSMIReactorGibbs, Me.TSMIReactorCSTR, Me.TSMIReactorPFR})
         Me.ReatoresToolStripMenuItem.Name = "ReatoresToolStripMenuItem"
-        resources.ApplyResources(Me.ReatoresToolStripMenuItem, "ReatoresToolStripMenuItem")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ReatoresToolStripMenuItem, resources.GetString("ReatoresToolStripMenuItem.StatusBarText"))
         '
         'TSMIReactorConv
         '
-        Me.TSMIReactorConv.Image = Global.DWSIM.My.Resources.Resources.r_conv2
         resources.ApplyResources(Me.TSMIReactorConv, "TSMIReactorConv")
+        Me.TSMIReactorConv.Image = Global.DWSIM.My.Resources.Resources.r_conv2
         Me.TSMIReactorConv.Name = "TSMIReactorConv"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMIReactorConv, resources.GetString("TSMIReactorConv.StatusBarText"))
         '
         'TSMIReactorEquilibrium
         '
-        Me.TSMIReactorEquilibrium.Image = Global.DWSIM.My.Resources.Resources.r_equil1
         resources.ApplyResources(Me.TSMIReactorEquilibrium, "TSMIReactorEquilibrium")
+        Me.TSMIReactorEquilibrium.Image = Global.DWSIM.My.Resources.Resources.r_equil1
         Me.TSMIReactorEquilibrium.Name = "TSMIReactorEquilibrium"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMIReactorEquilibrium, resources.GetString("TSMIReactorEquilibrium.StatusBarText"))
         '
         'TSMIReactorGibbs
         '
-        Me.TSMIReactorGibbs.Image = Global.DWSIM.My.Resources.Resources.r_gibbs1
         resources.ApplyResources(Me.TSMIReactorGibbs, "TSMIReactorGibbs")
+        Me.TSMIReactorGibbs.Image = Global.DWSIM.My.Resources.Resources.r_gibbs1
         Me.TSMIReactorGibbs.Name = "TSMIReactorGibbs"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMIReactorGibbs, resources.GetString("TSMIReactorGibbs.StatusBarText"))
         '
         'TSMIReactorCSTR
         '
-        Me.TSMIReactorCSTR.Image = Global.DWSIM.My.Resources.Resources.r_cstr
         resources.ApplyResources(Me.TSMIReactorCSTR, "TSMIReactorCSTR")
+        Me.TSMIReactorCSTR.Image = Global.DWSIM.My.Resources.Resources.r_cstr
         Me.TSMIReactorCSTR.Name = "TSMIReactorCSTR"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMIReactorCSTR, resources.GetString("TSMIReactorCSTR.StatusBarText"))
         '
         'TSMIReactorPFR
         '
-        Me.TSMIReactorPFR.Image = Global.DWSIM.My.Resources.Resources.r_pfr
         resources.ApplyResources(Me.TSMIReactorPFR, "TSMIReactorPFR")
+        Me.TSMIReactorPFR.Image = Global.DWSIM.My.Resources.Resources.r_pfr
         Me.TSMIReactorPFR.Name = "TSMIReactorPFR"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMIReactorPFR, resources.GetString("TSMIReactorPFR.StatusBarText"))
         '
         'OperaçõesLógicasToolStripMenuItem
         '
+        resources.ApplyResources(Me.OperaçõesLógicasToolStripMenuItem, "OperaçõesLógicasToolStripMenuItem")
         Me.OperaçõesLógicasToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TSMIRecycle, Me.TSMIEnergyRecycle, Me.TSMIAdjust, Me.TSMISpecification})
         Me.OperaçõesLógicasToolStripMenuItem.Name = "OperaçõesLógicasToolStripMenuItem"
-        resources.ApplyResources(Me.OperaçõesLógicasToolStripMenuItem, "OperaçõesLógicasToolStripMenuItem")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.OperaçõesLógicasToolStripMenuItem, resources.GetString("OperaçõesLógicasToolStripMenuItem.StatusBarText"))
         '
         'TSMIRecycle
         '
-        Me.TSMIRecycle.Image = Global.DWSIM.My.Resources.Resources.reciclo_mini
         resources.ApplyResources(Me.TSMIRecycle, "TSMIRecycle")
+        Me.TSMIRecycle.Image = Global.DWSIM.My.Resources.Resources.reciclo_mini
         Me.TSMIRecycle.Name = "TSMIRecycle"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMIRecycle, resources.GetString("TSMIRecycle.StatusBarText"))
         '
         'TSMIEnergyRecycle
         '
-        Me.TSMIEnergyRecycle.Image = Global.DWSIM.My.Resources.Resources.reciclo_e
         resources.ApplyResources(Me.TSMIEnergyRecycle, "TSMIEnergyRecycle")
+        Me.TSMIEnergyRecycle.Image = Global.DWSIM.My.Resources.Resources.reciclo_e
         Me.TSMIEnergyRecycle.Name = "TSMIEnergyRecycle"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMIEnergyRecycle, resources.GetString("TSMIEnergyRecycle.StatusBarText"))
         '
         'TSMIAdjust
         '
-        Me.TSMIAdjust.Image = Global.DWSIM.My.Resources.Resources.ajuste_mini
         resources.ApplyResources(Me.TSMIAdjust, "TSMIAdjust")
+        Me.TSMIAdjust.Image = Global.DWSIM.My.Resources.Resources.ajuste_mini
         Me.TSMIAdjust.Name = "TSMIAdjust"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMIAdjust, resources.GetString("TSMIAdjust.StatusBarText"))
         '
         'TSMISpecification
         '
-        Me.TSMISpecification.Image = Global.DWSIM.My.Resources.Resources.especificacao_mini
         resources.ApplyResources(Me.TSMISpecification, "TSMISpecification")
+        Me.TSMISpecification.Image = Global.DWSIM.My.Resources.Resources.especificacao_mini
         Me.TSMISpecification.Name = "TSMISpecification"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.TSMISpecification, resources.GetString("TSMISpecification.StatusBarText"))
         '
         'SuplementosToolStripMenuItem
         '
+        resources.ApplyResources(Me.SuplementosToolStripMenuItem, "SuplementosToolStripMenuItem")
         Me.SuplementosToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PontoCríticoRealToolStripMenuItem, Me.HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem, Me.PropriedadesDosComponentesToolStripMenuItem, Me.AnáliseDePetróleosToolStripMenuItem, Me.DiagramaDeFasesToolStripMenuItem, Me.DiagramaDeFasesToolStripMenuItem1, Me.DiagramaBinárioToolStripMenuItem, Me.LLEDiagramToolStripMenuItem, Me.PropriedadesEspeciaisToolStripMenuItem, Me.PSVSizingToolStripMenuItem, Me.FlashVesselSizingToolStripMenuItem, Me.PropriedadesDePetróleosToolStripMenuItem})
         Me.SuplementosToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert
         Me.SuplementosToolStripMenuItem.MergeIndex = 3
         Me.SuplementosToolStripMenuItem.Name = "SuplementosToolStripMenuItem"
-        resources.ApplyResources(Me.SuplementosToolStripMenuItem, "SuplementosToolStripMenuItem")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.SuplementosToolStripMenuItem, resources.GetString("SuplementosToolStripMenuItem.StatusBarText"))
         '
         'PontoCríticoRealToolStripMenuItem
         '
+        resources.ApplyResources(Me.PontoCríticoRealToolStripMenuItem, "PontoCríticoRealToolStripMenuItem")
         Me.PontoCríticoRealToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.cog1
         Me.PontoCríticoRealToolStripMenuItem.Name = "PontoCríticoRealToolStripMenuItem"
-        resources.ApplyResources(Me.PontoCríticoRealToolStripMenuItem, "PontoCríticoRealToolStripMenuItem")
         Me.StatusBarTextProvider1.SetStatusBarText(Me.PontoCríticoRealToolStripMenuItem, resources.GetString("PontoCríticoRealToolStripMenuItem.StatusBarText"))
         '
         'HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem
         '
+        resources.ApplyResources(Me.HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem, "HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem")
         Me.HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.cog
         Me.HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem.Name = "HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem"
-        resources.ApplyResources(Me.HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem, "HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem")
         Me.StatusBarTextProvider1.SetStatusBarText(Me.HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem, resources.GetString("HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem.StatusBarText"))
         '
         'PropriedadesDosComponentesToolStripMenuItem
@@ -924,23 +1021,24 @@ Partial Class FormFlowsheet
         '
         'DiagramaDeFasesToolStripMenuItem1
         '
+        resources.ApplyResources(Me.DiagramaDeFasesToolStripMenuItem1, "DiagramaDeFasesToolStripMenuItem1")
         Me.DiagramaDeFasesToolStripMenuItem1.Image = Global.DWSIM.My.Resources.Resources.cog
         Me.DiagramaDeFasesToolStripMenuItem1.Name = "DiagramaDeFasesToolStripMenuItem1"
-        resources.ApplyResources(Me.DiagramaDeFasesToolStripMenuItem1, "DiagramaDeFasesToolStripMenuItem1")
         Me.StatusBarTextProvider1.SetStatusBarText(Me.DiagramaDeFasesToolStripMenuItem1, resources.GetString("DiagramaDeFasesToolStripMenuItem1.StatusBarText"))
         '
         'DiagramaBinárioToolStripMenuItem
         '
+        resources.ApplyResources(Me.DiagramaBinárioToolStripMenuItem, "DiagramaBinárioToolStripMenuItem")
         Me.DiagramaBinárioToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.cog1
         Me.DiagramaBinárioToolStripMenuItem.Name = "DiagramaBinárioToolStripMenuItem"
-        resources.ApplyResources(Me.DiagramaBinárioToolStripMenuItem, "DiagramaBinárioToolStripMenuItem")
         Me.StatusBarTextProvider1.SetStatusBarText(Me.DiagramaBinárioToolStripMenuItem, resources.GetString("DiagramaBinárioToolStripMenuItem.StatusBarText"))
         '
         'LLEDiagramToolStripMenuItem
         '
+        resources.ApplyResources(Me.LLEDiagramToolStripMenuItem, "LLEDiagramToolStripMenuItem")
         Me.LLEDiagramToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.cog
         Me.LLEDiagramToolStripMenuItem.Name = "LLEDiagramToolStripMenuItem"
-        resources.ApplyResources(Me.LLEDiagramToolStripMenuItem, "LLEDiagramToolStripMenuItem")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.LLEDiagramToolStripMenuItem, resources.GetString("LLEDiagramToolStripMenuItem.StatusBarText"))
         '
         'PropriedadesEspeciaisToolStripMenuItem
         '
@@ -963,137 +1061,155 @@ Partial Class FormFlowsheet
         '
         'PropriedadesDePetróleosToolStripMenuItem
         '
+        resources.ApplyResources(Me.PropriedadesDePetróleosToolStripMenuItem, "PropriedadesDePetróleosToolStripMenuItem")
         Me.PropriedadesDePetróleosToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.cog
         Me.PropriedadesDePetróleosToolStripMenuItem.Name = "PropriedadesDePetróleosToolStripMenuItem"
-        resources.ApplyResources(Me.PropriedadesDePetróleosToolStripMenuItem, "PropriedadesDePetróleosToolStripMenuItem")
         Me.StatusBarTextProvider1.SetStatusBarText(Me.PropriedadesDePetróleosToolStripMenuItem, resources.GetString("PropriedadesDePetróleosToolStripMenuItem.StatusBarText"))
         '
         'OtimizaToolStripMenuItem
         '
+        resources.ApplyResources(Me.OtimizaToolStripMenuItem, "OtimizaToolStripMenuItem")
         Me.OtimizaToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AnáliseDeSensibilidadeToolStripMenuItem, Me.MultivariateOptimizerToolStripMenuItem})
         Me.OtimizaToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert
         Me.OtimizaToolStripMenuItem.MergeIndex = 4
         Me.OtimizaToolStripMenuItem.Name = "OtimizaToolStripMenuItem"
-        resources.ApplyResources(Me.OtimizaToolStripMenuItem, "OtimizaToolStripMenuItem")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.OtimizaToolStripMenuItem, resources.GetString("OtimizaToolStripMenuItem.StatusBarText"))
         '
         'AnáliseDeSensibilidadeToolStripMenuItem
         '
+        resources.ApplyResources(Me.AnáliseDeSensibilidadeToolStripMenuItem, "AnáliseDeSensibilidadeToolStripMenuItem")
         Me.AnáliseDeSensibilidadeToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.chart_curve
         Me.AnáliseDeSensibilidadeToolStripMenuItem.Name = "AnáliseDeSensibilidadeToolStripMenuItem"
-        resources.ApplyResources(Me.AnáliseDeSensibilidadeToolStripMenuItem, "AnáliseDeSensibilidadeToolStripMenuItem")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.AnáliseDeSensibilidadeToolStripMenuItem, resources.GetString("AnáliseDeSensibilidadeToolStripMenuItem.StatusBarText"))
         '
         'MultivariateOptimizerToolStripMenuItem
         '
+        resources.ApplyResources(Me.MultivariateOptimizerToolStripMenuItem, "MultivariateOptimizerToolStripMenuItem")
         Me.MultivariateOptimizerToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.arrow_switch
         Me.MultivariateOptimizerToolStripMenuItem.Name = "MultivariateOptimizerToolStripMenuItem"
-        resources.ApplyResources(Me.MultivariateOptimizerToolStripMenuItem, "MultivariateOptimizerToolStripMenuItem")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.MultivariateOptimizerToolStripMenuItem, resources.GetString("MultivariateOptimizerToolStripMenuItem.StatusBarText"))
         '
         'ResultadosToolStripMenuItem
         '
+        resources.ApplyResources(Me.ResultadosToolStripMenuItem, "ResultadosToolStripMenuItem")
         Me.ResultadosToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.GerarRelatórioToolStripMenuItem})
         Me.ResultadosToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert
         Me.ResultadosToolStripMenuItem.MergeIndex = 5
         Me.ResultadosToolStripMenuItem.Name = "ResultadosToolStripMenuItem"
-        resources.ApplyResources(Me.ResultadosToolStripMenuItem, "ResultadosToolStripMenuItem")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ResultadosToolStripMenuItem, resources.GetString("ResultadosToolStripMenuItem.StatusBarText"))
         '
         'GerarRelatórioToolStripMenuItem
         '
+        resources.ApplyResources(Me.GerarRelatórioToolStripMenuItem, "GerarRelatórioToolStripMenuItem")
         Me.GerarRelatórioToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.report
         Me.GerarRelatórioToolStripMenuItem.Name = "GerarRelatórioToolStripMenuItem"
-        resources.ApplyResources(Me.GerarRelatórioToolStripMenuItem, "GerarRelatórioToolStripMenuItem")
         Me.StatusBarTextProvider1.SetStatusBarText(Me.GerarRelatórioToolStripMenuItem, resources.GetString("GerarRelatórioToolStripMenuItem.StatusBarText"))
         '
         'ArquivoToolStripMenuItem
         '
+        resources.ApplyResources(Me.ArquivoToolStripMenuItem, "ArquivoToolStripMenuItem")
         Me.ArquivoToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CloseToolStripMenuItem})
         Me.ArquivoToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.MatchOnly
         Me.ArquivoToolStripMenuItem.MergeIndex = 0
         Me.ArquivoToolStripMenuItem.Name = "ArquivoToolStripMenuItem"
-        resources.ApplyResources(Me.ArquivoToolStripMenuItem, "ArquivoToolStripMenuItem")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ArquivoToolStripMenuItem, resources.GetString("ArquivoToolStripMenuItem.StatusBarText"))
         '
         'CloseToolStripMenuItem
         '
+        resources.ApplyResources(Me.CloseToolStripMenuItem, "CloseToolStripMenuItem")
         Me.CloseToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.cross
         Me.CloseToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert
         Me.CloseToolStripMenuItem.MergeIndex = 8
         Me.CloseToolStripMenuItem.Name = "CloseToolStripMenuItem"
         Me.CloseToolStripMenuItem.Overflow = System.Windows.Forms.ToolStripItemOverflow.AsNeeded
-        resources.ApplyResources(Me.CloseToolStripMenuItem, "CloseToolStripMenuItem")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.CloseToolStripMenuItem, resources.GetString("CloseToolStripMenuItem.StatusBarText"))
         '
         'FerramentasToolStripMenuItem
         '
+        resources.ApplyResources(Me.FerramentasToolStripMenuItem, "FerramentasToolStripMenuItem")
         Me.FerramentasToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CaracterizaçãoDePetróleosFraçõesC7ToolStripMenuItem, Me.CaracterizaçãoDePetróleosCurvasDeDestilaçãoToolStripMenuItem, Me.GerenciadorDeAmostrasDePetróleoToolStripMenuItem, Me.GerenciadorDeReaçõesToolStripMenuItem})
         Me.FerramentasToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert
         Me.FerramentasToolStripMenuItem.MergeIndex = 3
         Me.FerramentasToolStripMenuItem.Name = "FerramentasToolStripMenuItem"
-        resources.ApplyResources(Me.FerramentasToolStripMenuItem, "FerramentasToolStripMenuItem")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.FerramentasToolStripMenuItem, resources.GetString("FerramentasToolStripMenuItem.StatusBarText"))
         '
         'CaracterizaçãoDePetróleosFraçõesC7ToolStripMenuItem
         '
+        resources.ApplyResources(Me.CaracterizaçãoDePetróleosFraçõesC7ToolStripMenuItem, "CaracterizaçãoDePetróleosFraçõesC7ToolStripMenuItem")
         Me.CaracterizaçãoDePetróleosFraçõesC7ToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.Experiments_Badge
         Me.CaracterizaçãoDePetróleosFraçõesC7ToolStripMenuItem.Name = "CaracterizaçãoDePetróleosFraçõesC7ToolStripMenuItem"
-        resources.ApplyResources(Me.CaracterizaçãoDePetróleosFraçõesC7ToolStripMenuItem, "CaracterizaçãoDePetróleosFraçõesC7ToolStripMenuItem")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.CaracterizaçãoDePetróleosFraçõesC7ToolStripMenuItem, resources.GetString("CaracterizaçãoDePetróleosFraçõesC7ToolStripMenuItem.StatusBarText"))
         '
         'CaracterizaçãoDePetróleosCurvasDeDestilaçãoToolStripMenuItem
         '
+        resources.ApplyResources(Me.CaracterizaçãoDePetróleosCurvasDeDestilaçãoToolStripMenuItem, "CaracterizaçãoDePetróleosCurvasDeDestilaçãoToolStripMenuItem")
         Me.CaracterizaçãoDePetróleosCurvasDeDestilaçãoToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.Experiments_Badge
         Me.CaracterizaçãoDePetróleosCurvasDeDestilaçãoToolStripMenuItem.Name = "CaracterizaçãoDePetróleosCurvasDeDestilaçãoToolStripMenuItem"
-        resources.ApplyResources(Me.CaracterizaçãoDePetróleosCurvasDeDestilaçãoToolStripMenuItem, "CaracterizaçãoDePetróleosCurvasDeDestilaçãoToolStripMenuItem")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.CaracterizaçãoDePetróleosCurvasDeDestilaçãoToolStripMenuItem, resources.GetString("CaracterizaçãoDePetróleosCurvasDeDestilaçãoToolStripMenuItem.StatusBarText"))
         '
         'GerenciadorDeAmostrasDePetróleoToolStripMenuItem
         '
+        resources.ApplyResources(Me.GerenciadorDeAmostrasDePetróleoToolStripMenuItem, "GerenciadorDeAmostrasDePetróleoToolStripMenuItem")
         Me.GerenciadorDeAmostrasDePetróleoToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.Experiments_Badge
         Me.GerenciadorDeAmostrasDePetróleoToolStripMenuItem.Name = "GerenciadorDeAmostrasDePetróleoToolStripMenuItem"
-        resources.ApplyResources(Me.GerenciadorDeAmostrasDePetróleoToolStripMenuItem, "GerenciadorDeAmostrasDePetróleoToolStripMenuItem")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.GerenciadorDeAmostrasDePetróleoToolStripMenuItem, resources.GetString("GerenciadorDeAmostrasDePetróleoToolStripMenuItem.StatusBarText"))
         '
         'GerenciadorDeReaçõesToolStripMenuItem
         '
+        resources.ApplyResources(Me.GerenciadorDeReaçõesToolStripMenuItem, "GerenciadorDeReaçõesToolStripMenuItem")
         Me.GerenciadorDeReaçõesToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.wi0124_16
         Me.GerenciadorDeReaçõesToolStripMenuItem.Name = "GerenciadorDeReaçõesToolStripMenuItem"
-        resources.ApplyResources(Me.GerenciadorDeReaçõesToolStripMenuItem, "GerenciadorDeReaçõesToolStripMenuItem")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.GerenciadorDeReaçõesToolStripMenuItem, resources.GetString("GerenciadorDeReaçõesToolStripMenuItem.StatusBarText"))
         '
         'PluginsToolStripMenuItem
         '
+        resources.ApplyResources(Me.PluginsToolStripMenuItem, "PluginsToolStripMenuItem")
         Me.PluginsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CAPEOPENFlowsheetMonitoringObjectsMOsToolStripMenuItem})
         Me.PluginsToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert
         Me.PluginsToolStripMenuItem.MergeIndex = 7
         Me.PluginsToolStripMenuItem.Name = "PluginsToolStripMenuItem"
-        resources.ApplyResources(Me.PluginsToolStripMenuItem, "PluginsToolStripMenuItem")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.PluginsToolStripMenuItem, resources.GetString("PluginsToolStripMenuItem.StatusBarText"))
         '
         'CAPEOPENFlowsheetMonitoringObjectsMOsToolStripMenuItem
         '
+        resources.ApplyResources(Me.CAPEOPENFlowsheetMonitoringObjectsMOsToolStripMenuItem, "CAPEOPENFlowsheetMonitoringObjectsMOsToolStripMenuItem")
         Me.CAPEOPENFlowsheetMonitoringObjectsMOsToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.colan2
         Me.CAPEOPENFlowsheetMonitoringObjectsMOsToolStripMenuItem.Name = "CAPEOPENFlowsheetMonitoringObjectsMOsToolStripMenuItem"
-        resources.ApplyResources(Me.CAPEOPENFlowsheetMonitoringObjectsMOsToolStripMenuItem, "CAPEOPENFlowsheetMonitoringObjectsMOsToolStripMenuItem")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.CAPEOPENFlowsheetMonitoringObjectsMOsToolStripMenuItem, resources.GetString("CAPEOPENFlowsheetMonitoringObjectsMOsToolStripMenuItem.StatusBarText"))
         '
         'ScriptsToolStripMenuItem
         '
+        resources.ApplyResources(Me.ScriptsToolStripMenuItem, "ScriptsToolStripMenuItem")
         Me.ScriptsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.IronRubyToolStripMenuItem})
         Me.ScriptsToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert
         Me.ScriptsToolStripMenuItem.MergeIndex = 6
         Me.ScriptsToolStripMenuItem.Name = "ScriptsToolStripMenuItem"
-        resources.ApplyResources(Me.ScriptsToolStripMenuItem, "ScriptsToolStripMenuItem")
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ScriptsToolStripMenuItem, resources.GetString("ScriptsToolStripMenuItem.StatusBarText"))
         '
         'IronRubyToolStripMenuItem
         '
-        Me.IronRubyToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources._280px_python_logo_2
         resources.ApplyResources(Me.IronRubyToolStripMenuItem, "IronRubyToolStripMenuItem")
+        Me.IronRubyToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources._280px_python_logo_2
         Me.IronRubyToolStripMenuItem.Name = "IronRubyToolStripMenuItem"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.IronRubyToolStripMenuItem, resources.GetString("IronRubyToolStripMenuItem.StatusBarText"))
         '
         'ToolStripMenuItem1
         '
-        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
         resources.ApplyResources(Me.ToolStripMenuItem1, "ToolStripMenuItem1")
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripMenuItem1, resources.GetString("ToolStripMenuItem1.StatusBarText"))
         '
         'ToolStripMenuItem2
         '
-        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
         resources.ApplyResources(Me.ToolStripMenuItem2, "ToolStripMenuItem2")
+        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripMenuItem2, resources.GetString("ToolStripMenuItem2.StatusBarText"))
         '
         'ToolStripMenuItem3
         '
-        Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
         resources.ApplyResources(Me.ToolStripMenuItem3, "ToolStripMenuItem3")
+        Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripMenuItem3, resources.GetString("ToolStripMenuItem3.StatusBarText"))
         '
         'BGLoadComp
         '
@@ -1106,8 +1222,8 @@ Partial Class FormFlowsheet
         '
         'dckPanel
         '
-        Me.dckPanel.DefaultFloatWindowSize = New System.Drawing.Size(400, 600)
         resources.ApplyResources(Me.dckPanel, "dckPanel")
+        Me.dckPanel.DefaultFloatWindowSize = New System.Drawing.Size(400, 600)
         Me.dckPanel.DockBackColor = System.Drawing.SystemColors.Control
         Me.dckPanel.DocumentStyle = WeifenLuo.WinFormsUI.Docking.DocumentStyle.DockingWindow
         Me.dckPanel.Name = "dckPanel"
@@ -1157,6 +1273,7 @@ Partial Class FormFlowsheet
         DockPaneStripSkin1.ToolWindowGradient = DockPaneStripToolWindowGradient1
         DockPanelSkin1.DockPaneStripSkin = DockPaneStripSkin1
         Me.dckPanel.Skin = DockPanelSkin1
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.dckPanel, resources.GetString("dckPanel.StatusBarText"))
         '
         'FlowLayoutPanel1
         '
@@ -1167,11 +1284,16 @@ Partial Class FormFlowsheet
         Me.FlowLayoutPanel1.Controls.Add(Me.ToolStrip4)
         Me.FlowLayoutPanel1.Controls.Add(Me.ToolStrip1)
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.FlowLayoutPanel1, resources.GetString("FlowLayoutPanel1.StatusBarText"))
         '
         'SaveFileDialog1
         '
         Me.SaveFileDialog1.DefaultExt = "png"
         resources.ApplyResources(Me.SaveFileDialog1, "SaveFileDialog1")
+        '
+        'OpenFileName
+        '
+        resources.ApplyResources(Me.OpenFileName, "OpenFileName")
         '
         'TimerScripts1
         '

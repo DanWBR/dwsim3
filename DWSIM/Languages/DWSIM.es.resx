@@ -4861,7 +4861,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Tem certeza de que deseja remover esse script da lista?</value>
   </data>
   <data name="ExcelUnitOp" xml:space="preserve">
-    <value>Operação Unitária Excel</value>
+    <value>Operação Unitária Hoja de Calculo</value>
   </data>
   <data name="Correntedeentrada10" xml:space="preserve">
     <value>Corriente de entrada (10)</value>
@@ -4933,7 +4933,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Selecione o arquivo de simulação para executar como um sub-fluxograma.</value>
   </data>
   <data name="ExcelFile" xml:space="preserve">
-    <value>Archivo de definición de Excel</value>
+    <value>Archivo de definición de Hoja de Calculo</value>
   </data>
   <data name="LinkedInputParms" xml:space="preserve">
     <value>3. Parâmetros de entrada</value>

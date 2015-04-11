@@ -179,6 +179,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\FileHelpers.dll</HintPath>
     </Reference>
+    <Reference Include="GemBox.Spreadsheet">
+      <HintPath>..\packages\GemBox.Spreadsheet.39.3.30.1037\lib\net30\GemBox.Spreadsheet.dll</HintPath>
+    </Reference>
     <Reference Include="GenericDictionaryEditor">
       <HintPath>..\packages\GenDictEdit.1.1.0\lib\net20\GenericDictionaryEditor.dll</HintPath>
     </Reference>

@@ -27,7 +27,7 @@ Public Class ExcelUOEditorForm
 
     Private Sub BtnSearch_Click(sender As System.Object, e As System.EventArgs) Handles BtnSearch.Click
         OpenFileDialog1.FileName = TbFileName.Text
-        OpenFileDialog1.Filter = "Excel files|*.xls; *xlsx"
+        OpenFileDialog1.Filter = "XLS/X files|*.xlsx; *xls|ODS files|*.ods"
 
         OpenFileDialog1.ValidateNames = True
         OpenFileDialog1.CheckFileExists = True
@@ -38,28 +38,25 @@ Public Class ExcelUOEditorForm
         End If
     End Sub
 
-    Private Function ExctractFilepath(ByVal S As String) As String
-        Dim P1, P2 As Integer
-        P1 = InStr(1, S, "(") + 1
-        P2 = InStrRev(S, "\") + 1
-
-        Return Mid(S, P1, P2 - P1)
-    End Function
     Private Sub BtnEdit_Click(sender As System.Object, e As System.EventArgs) Handles BtnEdit.Click
         If TbFileName.Text <> "" Then
             If My.Computer.FileSystem.FileExists(TbFileName.Text) Then
-                Dim excelType As Type = Type.GetTypeFromProgID("Excel.Application")
-                Dim excelProxy As Object = Activator.CreateInstance(excelType)
-                Using xcl As New Excel.Application(Nothing, excelProxy)
-                    For Each CurrAddin As Excel.AddIn In xcl.AddIns
-                        If CurrAddin.Installed Then
-                            CurrAddin.Installed = False
-                            CurrAddin.Installed = True
-                        End If
-                    Next
-                    xcl.Visible = True
-                    xcl.Workbooks.Open(TbFileName.Text, True, False)
-                End Using
+                If Not DWSIM.App.IsRunningOnMono Then
+                    Dim excelType As Type = Type.GetTypeFromProgID("Excel.Application")
+                    Dim excelProxy As Object = Activator.CreateInstance(excelType)
+                    Using xcl As New Excel.Application(Nothing, excelProxy)
+                        For Each CurrAddin As Excel.AddIn In xcl.AddIns
+                            If CurrAddin.Installed Then
+                                CurrAddin.Installed = False
+                                CurrAddin.Installed = True
+                            End If
+                        Next
+                        xcl.Visible = True
+                        xcl.Workbooks.Open(TbFileName.Text, True, False)
+                    End Using
+                Else
+                    Process.Start(New ProcessStartInfo("xdg-open", TbFileName.Text) With {.UseShellExecute = False})
+                End If
             Else
                 MessageBox.Show(DWSIM.App.GetLocalString("Oarquivonoexisteoufo"), DWSIM.App.GetLocalString("Erroaoabrirarquivo"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
@@ -69,17 +66,24 @@ Public Class ExcelUOEditorForm
     Private Sub BtnNew_Click(sender As System.Object, e As System.EventArgs) Handles BtnNew.Click
         Dim FileName As String = My.Application.ActiveSimulation.Text
         OpenFileDialog1.Title = "New Filename"
-        OpenFileDialog1.Filter = "Excel files|*.xlsx; *xls"
+        OpenFileDialog1.Filter = "XLS/X files|*.xlsx; *xls|ODS files|*.ods"
         OpenFileDialog1.ValidateNames = False
         OpenFileDialog1.CheckFileExists = False
         OpenFileDialog1.CheckPathExists = True
-        OpenFileDialog1.InitialDirectory = ExctractFilepath(FileName)
+        OpenFileDialog1.InitialDirectory = IO.Path.GetDirectoryName(FileName)
 
         If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
             Dim s As String = OpenFileDialog1.FileName
-            FileCopy(My.Application.Info.DirectoryPath & "\TemplateExcelUO.xlsx", s)
+            If IO.Path.GetExtension(s).ToLower = ".ods" Then
+                FileCopy(My.Application.Info.DirectoryPath & IO.Path.DirectorySeparatorChar & "TemplateExcelUO.ods", s)
+            Else
+                FileCopy(My.Application.Info.DirectoryPath & IO.Path.DirectorySeparatorChar & "TemplateExcelUO.xlsx", s)
+            End If
             TbFileName.Text = s
         End If
     End Sub
 
+    Private Sub ExcelUOEditorForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
 End Class

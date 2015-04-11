@@ -4863,7 +4863,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Kein Energiestrom der ExcelUO zugeordnet.</value>
   </data>
   <data name="ExcelUOEditor" xml:space="preserve">
-    <value>Editor</value>
+    <value>Kalkulationstabelle Editor</value>
   </data>
   <data name="NoDatabaseDefined" xml:space="preserve">
     <value>Keine Datenbank definiert!</value>
@@ -4884,7 +4884,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Sind Sie sicher, dass Sie dieses Skript aus der Liste entfernen?</value>
   </data>
   <data name="ExcelUnitOp" xml:space="preserve">
-    <value>Excel UO</value>
+    <value>Kalkulationstabelle UO</value>
   </data>
   <data name="Correntedeentrada10" xml:space="preserve">
     <value>Eintrittsstrom 10</value>
@@ -4956,7 +4956,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Select the simulation file to use as a subflowsheet.</value>
   </data>
   <data name="ExcelFile" xml:space="preserve">
-    <value>Excel Definitionsdatei</value>
+    <value>Kalkulationstabelle Definitionsdatei</value>
   </data>
   <data name="LinkedInputParms" xml:space="preserve">
     <value>3. Verknüpfte eingabeparameter</value>

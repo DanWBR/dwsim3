@@ -4892,7 +4892,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Are you sure that you want to remove this script from the list?</value>
   </data>
   <data name="ExcelUnitOp" xml:space="preserve">
-    <value>Excel Unit Operation</value>
+    <value>Spreadsheet Unit Operation</value>
   </data>
   <data name="Correntedeentrada10" xml:space="preserve">
     <value>Inlet Stream 10</value>
@@ -4964,7 +4964,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Select the simulation file to use as a subflowsheet.</value>
   </data>
   <data name="ExcelFile" xml:space="preserve">
-    <value>Excel definition file</value>
+    <value>Spreadsheet definition file</value>
   </data>
   <data name="LinkedInputParms" xml:space="preserve">
     <value>3. Linked input parameters</value>

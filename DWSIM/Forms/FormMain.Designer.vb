@@ -640,6 +640,7 @@ Partial Class FormMain
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException)
             AddHandler Application.ThreadException, AddressOf MyApplication_UnhandledException
             AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf MyApplication_UnhandledException2
+            My.MyApplication.UtilityPlugins = New Dictionary(Of String, Interfaces.IUtilityPlugin)
         End If
 
         ' This call is required by the Windows Form Designer.

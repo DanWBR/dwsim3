@@ -45,11 +45,12 @@ Namespace DWSIM.Editors.ExcelUO
 
                 Dim selectionControl As New ExcelUOEditorForm
 
-                selectionControl.Text = form.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag & " - " & "ExcelUO Specification"
+                selectionControl.Text = form.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag
                 selectionControl.TbFileName.Text = value
 
                 editorService.ShowDialog(selectionControl)
                 value = selectionControl.TbFileName.Text
+
             End If
 
             Return value
