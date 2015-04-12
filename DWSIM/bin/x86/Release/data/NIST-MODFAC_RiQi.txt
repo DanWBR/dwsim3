@@ -62,9 +62,9 @@ No.	Sub-group Name	Ri	Qi	Example
 306	ACNH	1.1849	0.732	n-Methylaniline	5 ACH, 1 ACNH, 1 CH3	
 307	ACN	1.1849	0.61	Dimethylaniline	5 ACH, 1 ACN, 2 CH3	
 (18) Pyridine							
-37	AC2H2N	1.4578	0.9022	Pyridine_	1 AC2H2N, 3 ACH	
+37	AC2H2N	1.4578	0.9022	Pyridine	1 AC2H2N, 3 ACH	
 38	AC2HN	1.2393	0.633	2 Methylpyridine	1 AC2HN, 3 ACH, 1 CH3	
-39	AC2N	1.0731	0.353	2,6-Dimethylpyridine	1 AC2N, 3ACH, 2 CH3	
+39	AC2N	1.0731	0.353	2-6-Dimethylpyridine	1 AC2N, 3ACH, 2 CH3	
 (94) Pyrrole							
 196	AC2H2NH	1.325	0.752	Pyrrole	1 AC2H2NH, 2 ACH	
 197	AC2HNH	1.0976	0.44	2-Methylpyrrole	1 AC2HNH, 2 ACH, 1 CH3	
@@ -184,7 +184,7 @@ No.	Sub-group Name	Ri	Qi	Example
 (55) Carbonate							
 112	(CH3O)2CO	3.0613	2.816	Dimethylcarbonate	1 (CH3O)2CO	
 113	(CH2O)2CO	2.6078	2.2	Diethylcarbonate	1 (CH2O)2CO, 2 CH3	
-114	(CH3O)COOCH2	2.8214	2.508	Ethylmethylcarbonate	1 (CH3O) COOCH2, 1 CH3	
+114	(CH3O)COOCH2	2.8214	2.508	Ethylmethylcarbonate	1 (CH3O)COOCH2, 1 CH3	
 199	(ACO)COOCH2	2.2854	1.78	Ethylphenylcarbonate	1 (ACO)COOCH2, 5 ACH, 1 CH3	
 200	(ACO)CO(OAC)	1.9895	1.36	Diphenylcarbonate	1 (ACO)COOCH2, 10 ACH	
 (56) Sulfone							

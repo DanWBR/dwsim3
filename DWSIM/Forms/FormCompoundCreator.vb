@@ -122,6 +122,7 @@ Public Class FormCompoundCreator
                     .Item(.Count - 1).Cells(2).Value = 0
                     TT = "Rk / Qk: " & fields(4) & " / " & fields(5) & vbCrLf & _
                                                              "Example Compound: " & fields(6) & vbCrLf & fields(7)
+
                     .Item(.Count - 1).Cells(3).Tag = {S, TT, fields(3)}
 
                     If L Then

@@ -37,7 +37,7 @@
 16,35,C3N,CH3N,1.1865,0.94,trimethylamine: 2*CH3 1*CH3N,Trimethylamine,1:1/1:33//,
 16,36,C3N,CH2N,0.9597,0.632,triethylamine: 3*CH3 2*CH2 1*CH2N,Triethylamine,1:2/1:33//,
 17,37,ACNH2,ACNH2,1.06,0.816,aniline: 5*ACH 1*ACNH2,Aniline,1:15/1:30//,
-18,38,Pyridine,C5H5N,2.9993,2.113,pyridine: 1*C5H5N,Pyridine,5:14/1:35//,
+18,38,Pyridine,C5H5N,2.9993,2.113,pyridine: 1*C5H5N,Pyridine_,5:14/1:35//,
 18,39,Pyridine,C5H4N,2.8332,1.833,2-methylpyridine: 1*CH3 1*C5H4N,2-Methylpyridine,4:14/1:33/1:15/,
 18,40,Pyridine,C5H3N,2.667,1.553,2-3-dimethylpyridine: 2*CH3 1*C5H3N,2-3-Dimethylpyridine,3:14/1:33/2:15/,
 19,41,CCN,CH3CN,1.8701,1.724,Acetonitrile: 1*CH3CN,Acetonitrile,1:1/1:37//,
