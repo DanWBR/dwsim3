@@ -1164,12 +1164,6 @@
     <Compile Include="Utilities\HYD+\Helper Classes\HYDR_KS.vb" />
     <Compile Include="Utilities\HYD+\Helper Classes\HYDR_vdwP_PP.vb" />
     <Compile Include="Objects\PropertyPackages\Base\HYP.vb" />
-    <Compile Include="Utilities\PHASE_ENVEL\FormPEC.Designer.vb">
-      <DependentUpon>FormPEC.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Utilities\PHASE_ENVEL\FormPEC.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Utilities\PHASE_ENVEL\FormPhEnv.Designer.vb">
       <DependentUpon>FormPhEnv.vb</DependentUpon>
     </Compile>
@@ -1812,14 +1806,6 @@
     <EmbeddedResource Include="Utilities\HYD+\FormHYD.resx">
       <SubType>Designer</SubType>
       <DependentUpon>FormHYD.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Utilities\PHASE_ENVEL\FormPEC.en.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>FormPEC.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Utilities\PHASE_ENVEL\FormPEC.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>FormPEC.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Utilities\PHASE_ENVEL\FormPhEnv.en.resx">
       <SubType>Designer</SubType>
@@ -2912,12 +2898,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Utilities\HYD+\FormHYD_DET.es.resx">
       <DependentUpon>FormHYD_DET.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Utilities\PHASE_ENVEL\FormPEC.de.resx">
-      <DependentUpon>FormPEC.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Utilities\PHASE_ENVEL\FormPEC.es.resx">
-      <DependentUpon>FormPEC.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Utilities\PHASE_ENVEL\FormPhEnv.de.resx">
       <DependentUpon>FormPhEnv.vb</DependentUpon>

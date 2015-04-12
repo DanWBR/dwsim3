@@ -44,7 +44,7 @@ Public Class FormPhEnv
     Dim ot, op, ov, oh, os As Double
     Dim strname As String = ""
 
-    Dim fpec As FormPEC
+    Public bw As System.ComponentModel.BackgroundWorker
 
     Private Sub FormPhEnv_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
@@ -77,7 +77,7 @@ Public Class FormPhEnv
             If Me.DockState = WeifenLuo.WinFormsUI.Docking.DockState.Float Then
                 Dim floatWin = Me.DockHandler.FloatPane.FloatWindow
                 If Not floatWin Is Nothing Then
-                    floatWin.SetBounds(floatWin.Location.X, floatWin.Location.Y, 583, 819)
+                    floatWin.SetBounds(floatWin.Location.X, floatWin.Location.Y, 943, 484)
                 End If
             End If
         End If
@@ -135,7 +135,7 @@ exec:       With Me.GraphControl.GraphPane.Legend
             If Me.CheckBox2.Checked Then Me.showoppoint = True Else Me.showoppoint = False
             Me.phaseidentification = chkpip.Checked
             Me.hydratecalc = chkhyd.Checked
-            Me.Enabled = False
+            Me.Button1.Enabled = False
 
             If My.Settings.EnableGPUProcessing Then
                 DWSIM.App.InitComputeDevice()
@@ -144,15 +144,11 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
             Me.BackgroundWorker1.RunWorkerAsync(New Object() {0, Me.TextBox1.Text, Me.CheckBox1.Checked, Me.CheckBox3.Checked, Me.chkpip.Checked, Me.chkhyd.Checked, Me.CheckBoxHYDVAP.Checked})
 
-            fpec = New FormPEC
-            fpec.bw = Me.BackgroundWorker1
-            fpec.Label2.Tag = fpec.Label2.Text
-            Try
-                fpec.Show()
-            Catch ex As Exception
-                fpec.Close()
-                Me.Frm.WriteToLog(ex.ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
-            End Try
+            Me.bw = Me.BackgroundWorker1
+
+            Me.PanelCalc.Visible = True
+            Me.PanelCalc.Enabled = True
+
         End If
 
     End Sub
@@ -982,7 +978,7 @@ exec:       With Me.GraphControl.GraphPane.Legend
     End Sub
 
     Private Sub BackgroundWorker1_ProgressChanged(sender As Object, e As System.ComponentModel.ProgressChangedEventArgs) Handles BackgroundWorker1.ProgressChanged
-        fpec.Label2.Text = fpec.Label2.Tag.ToString + " " + e.UserState.ToString
+        Me.LabelStatus.Text = e.UserState.ToString
     End Sub
 
     Private Sub BackgroundWorker1_RunWorkerCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
@@ -992,9 +988,9 @@ exec:       With Me.GraphControl.GraphPane.Legend
             My.MyApplication.gpu.FreeAll()
         End If
 
-        Me.Enabled = True
+        Me.Button1.Enabled = True
 
-        fpec.Close()
+        Me.PanelCalc.Visible = False
 
         Dim r = e.Result(0)
 
@@ -1208,4 +1204,8 @@ exec:       With Me.GraphControl.GraphPane.Legend
 
     End Sub
 
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        My.MyApplication.CalculatorStopRequested = True
+        If Not bw Is Nothing Then bw.CancelAsync()
+    End Sub
 End Class

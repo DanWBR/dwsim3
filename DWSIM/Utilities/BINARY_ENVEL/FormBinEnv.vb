@@ -34,7 +34,7 @@ Public Class FormBinEnv
 
     Private loaded As Boolean = False
 
-    Dim fpec As FormPEC
+    Public bw As System.ComponentModel.BackgroundWorker
 
     Dim P, T As Double
 
@@ -51,7 +51,7 @@ Public Class FormBinEnv
             If Me.DockState = WeifenLuo.WinFormsUI.Docking.DockState.Float Then
                 Dim floatWin = Me.DockHandler.FloatPane.FloatWindow
                 If Not floatWin Is Nothing Then
-                    floatWin.SetBounds(floatWin.Location.X, floatWin.Location.Y, 714, 752)
+                    floatWin.SetBounds(floatWin.Location.X, floatWin.Location.Y, 804, 464)
                 End If
             End If
         End If
@@ -174,7 +174,7 @@ Public Class FormBinEnv
                 lle = False
             End If
 
-            Me.Enabled = False
+            Me.Button1.Enabled = False
 
             If My.Settings.EnableGPUProcessing Then
                 DWSIM.App.InitComputeDevice()
@@ -183,15 +183,11 @@ Public Class FormBinEnv
 
             Me.BackgroundWorker1.RunWorkerAsync(New Object() {tipocalc, P, T, chkVLE.Checked, lle, chkSLE.Checked, chkCritical.Checked, rbSolidSolution.Checked, chkCompareModels.Checked})
 
-            fpec = New FormPEC
-            fpec.Label2.Tag = fpec.Label2.Text
-            fpec.bw = Me.BackgroundWorker1
-            Try
-                fpec.Show()
-            Catch ex As Exception
-                fpec.Close()
-                Throw ex
-            End Try
+            Me.bw = Me.BackgroundWorker1
+
+            Me.LabelStatus.Text = ""
+            Me.PanelCalc.Visible = True
+            Me.PanelCalc.Enabled = True
 
         Else
 
@@ -239,7 +235,7 @@ Public Class FormBinEnv
     End Sub
 
     Private Sub BackgroundWorker1_ProgressChanged(sender As Object, e As System.ComponentModel.ProgressChangedEventArgs) Handles BackgroundWorker1.ProgressChanged
-        fpec.Label2.Text = fpec.Label2.Tag.ToString + " " + e.UserState.ToString
+        Me.LabelStatus.Text = e.UserState.ToString
     End Sub
 
     Private Sub BackgroundWorker1_RunWorkerCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker1.RunWorkerCompleted
@@ -249,9 +245,8 @@ Public Class FormBinEnv
             My.MyApplication.gpu.FreeAll()
         End If
 
-        Me.Enabled = True
-
-        fpec.Close()
+        Me.Button1.Enabled = True
+        Me.PanelCalc.Visible = False
 
         Me.Grid1.Columns.Clear()
         Me.Grid1.Rows.Clear()
@@ -1154,4 +1149,8 @@ Public Class FormBinEnv
 
     End Sub
 
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        My.MyApplication.CalculatorStopRequested = True
+        If Not bw Is Nothing Then bw.CancelAsync()
+    End Sub
 End Class

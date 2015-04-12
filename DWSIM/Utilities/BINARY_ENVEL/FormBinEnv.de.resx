@@ -117,75 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="chkCompareModels.Location" type="System.Drawing.Point, System.Drawing">
-    <value>366, 213</value>
-  </data>
-  <data name="chkCompareModels.Size" type="System.Drawing.Size, System.Drawing">
-    <value>121, 17</value>
-  </data>
   <data name="chkCompareModels.Text" xml:space="preserve">
     <value>Modelle vergleichen</value>
-  </data>
-  <data name="FlowLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>248, 25</value>
-  </data>
-  <data name="chkCritical.Location" type="System.Drawing.Point, System.Drawing">
-    <value>499, 105</value>
-  </data>
-  <data name="chkCritical.Size" type="System.Drawing.Size, System.Drawing">
-    <value>109, 17</value>
   </data>
   <data name="chkCritical.Text" xml:space="preserve">
     <value>Kritischen Punkte</value>
   </data>
-  <data name="chkLLE.Location" type="System.Drawing.Point, System.Drawing">
-    <value>202, 106</value>
-  </data>
   <data name="chkLLE.Text" xml:space="preserve">
     <value>LLE</value>
-  </data>
-  <data name="chkVLE.Location" type="System.Drawing.Point, System.Drawing">
-    <value>150, 106</value>
   </data>
   <data name="chkVLE.Text" xml:space="preserve">
     <value>VLE</value>
   </data>
-  <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>126, 13</value>
-  </data>
   <data name="Label7.Text" xml:space="preserve">
     <value>Txy Darstellung-Optionen</value>
-  </data>
-  <data name="cbPropPack.Location" type="System.Drawing.Point, System.Drawing">
-    <value>150, 211</value>
-  </data>
-  <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>136, 13</value>
   </data>
   <data name="Label6.Text" xml:space="preserve">
     <value>Thermodynamische Pakete</value>
   </data>
-  <data name="lblT.Location" type="System.Drawing.Point, System.Drawing">
-    <value>260, 188</value>
-  </data>
-  <data name="lblP.Location" type="System.Drawing.Point, System.Drawing">
-    <value>260, 161</value>
-  </data>
-  <data name="tbT.Location" type="System.Drawing.Point, System.Drawing">
-    <value>150, 185</value>
-  </data>
-  <data name="tbP.Location" type="System.Drawing.Point, System.Drawing">
-    <value>150, 158</value>
-  </data>
-  <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>61, 13</value>
-  </data>
   <data name="Label5.Text" xml:space="preserve">
     <value>Temperatur</value>
-  </data>
-  <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>36, 13</value>
   </data>
   <data name="Label4.Text" xml:space="preserve">
     <value>Druck</value>
@@ -202,68 +153,29 @@
   <data name="cbXAxisBasis.Items3" xml:space="preserve">
     <value>Massenprozent</value>
   </data>
-  <data name="cbXAxisBasis.Location" type="System.Drawing.Point, System.Drawing">
-    <value>150, 128</value>
-  </data>
-  <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 13</value>
-  </data>
   <data name="Label3.Text" xml:space="preserve">
     <value>X-Achse Basis</value>
-  </data>
-  <data name="cbComp2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>150, 49</value>
-  </data>
-  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 13</value>
   </data>
   <data name="Label2.Text" xml:space="preserve">
     <value>Komponent 2</value>
   </data>
-  <data name="RadioButton4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>308, 77</value>
-  </data>
   <data name="RadioButton4.Text" xml:space="preserve">
     <value>(P)xy</value>
-  </data>
-  <data name="RadioButton3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>253, 77</value>
   </data>
   <data name="RadioButton3.Text" xml:space="preserve">
     <value>(T)xy</value>
   </data>
-  <data name="RadioButton2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>204, 77</value>
-  </data>
   <data name="RadioButton2.Text" xml:space="preserve">
     <value>Pxy</value>
-  </data>
-  <data name="RadioButton1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>150, 77</value>
   </data>
   <data name="RadioButton1.Text" xml:space="preserve">
     <value>Txy</value>
   </data>
-  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>73, 13</value>
-  </data>
   <data name="Label1.Text" xml:space="preserve">
     <value>Envelope-Typ</value>
   </data>
-  <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>493, 209</value>
-  </data>
-  <data name="Button1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>115, 23</value>
-  </data>
   <data name="Button1.Text" xml:space="preserve">
     <value>Berechnen</value>
-  </data>
-  <data name="cbComp1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>150, 21</value>
-  </data>
-  <data name="Label23.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 13</value>
   </data>
   <data name="Label23.Text" xml:space="preserve">
     <value>Komponent 1</value>
@@ -274,17 +186,8 @@
   <data name="chkSLE.Text" xml:space="preserve">
     <value>SLE</value>
   </data>
-  <data name="rbEutectic.Size" type="System.Drawing.Size, System.Drawing">
-    <value>81, 17</value>
-  </data>
   <data name="rbEutectic.Text" xml:space="preserve">
     <value>Eutektische</value>
-  </data>
-  <data name="rbSolidSolution.Location" type="System.Drawing.Point, System.Drawing">
-    <value>142, 3</value>
-  </data>
-  <data name="rbSolidSolution.Size" type="System.Drawing.Size, System.Drawing">
-    <value>103, 17</value>
   </data>
   <data name="rbSolidSolution.Text" xml:space="preserve">
     <value>Feststoff Lösung</value>

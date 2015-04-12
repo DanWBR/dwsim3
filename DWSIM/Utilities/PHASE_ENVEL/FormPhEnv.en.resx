@@ -118,8 +118,20 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="Button2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>186, 12</value>
+  </data>
+  <data name="Button2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>154, 23</value>
+  </data>
+  <data name="Button2.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="LabelStatus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 13</value>
+  </data>
   <data name="CheckBoxHYDVAP.Location" type="System.Drawing.Point, System.Drawing">
-    <value>474, 93</value>
+    <value>274, 118</value>
   </data>
   <data name="CheckBoxHYDVAP.Size" type="System.Drawing.Size, System.Drawing">
     <value>78, 17</value>
@@ -139,17 +151,11 @@
   <data name="ComboBox2.Items3" xml:space="preserve">
     <value>Klauda &amp; Sandler (with inhibitor support)</value>
   </data>
-  <data name="ComboBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>206, 21</value>
-  </data>
   <data name="chkpip.Size" type="System.Drawing.Size, System.Drawing">
     <value>256, 17</value>
   </data>
   <data name="chkpip.Text" xml:space="preserve">
     <value>Include Phase Identification Parameter Boundary</value>
-  </data>
-  <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>395, 162</value>
   </data>
   <data name="Button1.Text" xml:space="preserve">
     <value>Calculate</value>
@@ -159,9 +165,6 @@
   </data>
   <data name="chkhyd.Text" xml:space="preserve">
     <value>Include Hydrate Equilibrium Curve</value>
-  </data>
-  <data name="TextBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>262, 46</value>
   </data>
   <data name="CheckBox2.Size" type="System.Drawing.Size, System.Drawing">
     <value>137, 17</value>
@@ -181,29 +184,14 @@
   <data name="CheckBox1.Text" xml:space="preserve">
     <value>Include Quality Line</value>
   </data>
-  <data name="ComboBox3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>104, 15</value>
-  </data>
-  <data name="ComboBox3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>448, 21</value>
-  </data>
   <data name="Label23.Size" type="System.Drawing.Size, System.Drawing">
     <value>80, 13</value>
   </data>
   <data name="Label23.Text" xml:space="preserve">
     <value>Material Stream</value>
   </data>
-  <data name="GroupBox6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>559, 191</value>
-  </data>
   <data name="GroupBox6.Text" xml:space="preserve">
     <value>Object Selection</value>
-  </data>
-  <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>559, 46</value>
-  </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Options</value>
   </data>
   <data name="ComboBox1.Items" xml:space="preserve">
     <value>Pressure vs. Temperature</value>
@@ -241,23 +229,14 @@
   <data name="ComboBox1.Items11" xml:space="preserve">
     <value>Molar Volume vs. Entropy</value>
   </data>
-  <data name="ComboBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>448, 21</value>
-  </data>
   <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 13</value>
   </data>
   <data name="Label1.Text" xml:space="preserve">
     <value>Envelope type</value>
   </data>
-  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>559, 465</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Results</value>
-  </data>
-  <data name="FaTabStripItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>551, 425</value>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Options</value>
   </data>
   <data name="FaTabStripItem1.Title" xml:space="preserve">
     <value>Graph</value>
@@ -265,13 +244,7 @@
   <data name="FaTabStripItem2.Title" xml:space="preserve">
     <value>Table</value>
   </data>
-  <data name="FaTabStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>553, 446</value>
-  </data>
-  <data name="GraphControl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>551, 425</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>570, 718</value>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Results</value>
   </data>
 </root>

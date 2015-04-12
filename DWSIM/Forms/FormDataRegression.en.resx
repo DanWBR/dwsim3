@@ -118,12 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="graph.Size" type="System.Drawing.Size, System.Drawing">
-    <value>701, 416</value>
-  </data>
-  <data name="FaTabStripItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>701, 416</value>
-  </data>
   <data name="ToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>221, 22</value>
   </data>
@@ -169,32 +163,11 @@
   <data name="ContextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
     <value>222, 158</value>
   </data>
-  <data name="FaTabStrip1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>329, 91</value>
-  </data>
-  <data name="FaTabStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>703, 437</value>
-  </data>
-  <data name="tbRegResults.Size" type="System.Drawing.Size, System.Drawing">
-    <value>697, 128</value>
-  </data>
-  <data name="GroupBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>326, 532</value>
-  </data>
-  <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>703, 147</value>
-  </data>
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Regression Results</value>
   </data>
-  <data name="btnDoReg.Location" type="System.Drawing.Point, System.Drawing">
-    <value>92, 536</value>
-  </data>
   <data name="btnDoReg.Text" xml:space="preserve">
     <value>Run Regression</value>
-  </data>
-  <data name="chkDoTDepRegression.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 456</value>
   </data>
   <data name="chkDoTDepRegression.Size" type="System.Drawing.Size, System.Drawing">
     <value>248, 17</value>
@@ -202,17 +175,11 @@
   <data name="chkDoTDepRegression.Text" xml:space="preserve">
     <value>Calculate parameter's temperature dependency</value>
   </data>
-  <data name="chkTS.Location" type="System.Drawing.Point, System.Drawing">
-    <value>247, 275</value>
-  </data>
   <data name="chkTS.Size" type="System.Drawing.Size, System.Drawing">
     <value>40, 17</value>
   </data>
   <data name="chkTS.Text" xml:space="preserve">
     <value>TS</value>
-  </data>
-  <data name="chkTL.Location" type="System.Drawing.Point, System.Drawing">
-    <value>199, 275</value>
   </data>
   <data name="chkTL.Size" type="System.Drawing.Size, System.Drawing">
     <value>39, 17</value>
@@ -238,17 +205,6 @@
   <data name="colval.HeaderText" xml:space="preserve">
     <value>Value</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="btnCancel.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="btnCancel.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>217, 536</value>
-  </data>
   <data name="btnCancel.Text" xml:space="preserve">
     <value>Cancel</value>
   </data>
@@ -264,20 +220,14 @@
   <data name="Label1.Text" xml:space="preserve">
     <value>T Unit</value>
   </data>
-  <data name="btnCalcOnce.Location" type="System.Drawing.Point, System.Drawing">
-    <value>11, 536</value>
-  </data>
   <data name="btnCalcOnce.Text" xml:space="preserve">
     <value>Calc Once</value>
   </data>
-  <data name="cbObjFunc.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 506</value>
+  <data name="LabelWithDivider12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>286, 18</value>
   </data>
   <data name="LabelWithDivider12.Text" xml:space="preserve">
     <value>Compounds</value>
-  </data>
-  <data name="Label7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 509</value>
   </data>
   <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
     <value>96, 13</value>
@@ -291,23 +241,14 @@
   <data name="Label2.Text" xml:space="preserve">
     <value>Compound 1</value>
   </data>
-  <data name="cbRegMethod.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 479</value>
-  </data>
   <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>67, 13</value>
   </data>
   <data name="Label3.Text" xml:space="preserve">
     <value>Compound 2</value>
   </data>
-  <data name="Label6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 482</value>
-  </data>
   <data name="Label6.Text" xml:space="preserve">
     <value>Method</value>
-  </data>
-  <data name="LabelWithDivider3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 436</value>
   </data>
   <data name="LabelWithDivider3.Text" xml:space="preserve">
     <value>Regression Parameters</value>
@@ -317,9 +258,6 @@
   </data>
   <data name="Label4.Text" xml:space="preserve">
     <value>Model</value>
-  </data>
-  <data name="GridExpData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>282, 101</value>
   </data>
   <data name="cbDataType.Items" xml:space="preserve">
     <value>Txy (VLE)</value>
@@ -345,14 +283,11 @@
   <data name="cbDataType.Items7" xml:space="preserve">
     <value>TTx (SLE-SS)</value>
   </data>
-  <data name="cbDataType.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 273</value>
-  </data>
   <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 13</value>
+    <value>31, 13</value>
   </data>
   <data name="Label5.Text" xml:space="preserve">
-    <value>Data Type</value>
+    <value>Type</value>
   </data>
   <data name="LabelWithDivider1.Text" xml:space="preserve">
     <value>Thermodynamic Model</value>
@@ -360,41 +295,14 @@
   <data name="LabelWithDivider2.Text" xml:space="preserve">
     <value>Experimental Data</value>
   </data>
-  <data name="Panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>311, 569</value>
-  </data>
-  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>317, 588</value>
-  </data>
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Regression Information</value>
-  </data>
-  <data name="BtnSelectIPDB.Location" type="System.Drawing.Point, System.Drawing">
-    <value>171, 50</value>
-  </data>
-  <data name="BtnSelectIPDB.Size" type="System.Drawing.Size, System.Drawing">
-    <value>78, 26</value>
   </data>
   <data name="BtnSelectIPDB.Text" xml:space="preserve">
     <value>Search</value>
   </data>
-  <data name="BtnSelectIPDB.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="BtnSaveIPDB.Location" type="System.Drawing.Point, System.Drawing">
-    <value>90, 50</value>
-  </data>
-  <data name="BtnSaveIPDB.Size" type="System.Drawing.Size, System.Drawing">
-    <value>78, 26</value>
-  </data>
   <data name="BtnSaveIPDB.Text" xml:space="preserve">
     <value>Save</value>
-  </data>
-  <data name="BtnSaveIPDB.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="Label12.Location" type="System.Drawing.Point, System.Drawing">
-    <value>285, 58</value>
   </data>
   <data name="Label12.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 13</value>
@@ -402,32 +310,8 @@
   <data name="Label12.Text" xml:space="preserve">
     <value>Database</value>
   </data>
-  <data name="tbIPDBName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>344, 55</value>
-  </data>
-  <data name="tbIPDBName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>676, 20</value>
-  </data>
-  <data name="BtnNewIPDB.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 50</value>
-  </data>
-  <data name="BtnNewIPDB.Size" type="System.Drawing.Size, System.Drawing">
-    <value>78, 26</value>
-  </data>
   <data name="BtnNewIPDB.Text" xml:space="preserve">
     <value>New</value>
-  </data>
-  <data name="BtnNewIPDB.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="LabelWithDivider4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1014, 12</value>
-  </data>
-  <data name="tbDescription.Location" type="System.Drawing.Point, System.Drawing">
-    <value>344, 19</value>
-  </data>
-  <data name="tbDescription.Size" type="System.Drawing.Size, System.Drawing">
-    <value>676, 20</value>
   </data>
   <data name="Label11.Size" type="System.Drawing.Size, System.Drawing">
     <value>60, 13</value>
@@ -435,26 +319,14 @@
   <data name="Label11.Text" xml:space="preserve">
     <value>Description</value>
   </data>
-  <data name="tbTitle.Location" type="System.Drawing.Point, System.Drawing">
-    <value>47, 19</value>
-  </data>
-  <data name="tbTitle.Size" type="System.Drawing.Size, System.Drawing">
-    <value>225, 20</value>
-  </data>
   <data name="Label10.Size" type="System.Drawing.Size, System.Drawing">
     <value>27, 13</value>
   </data>
   <data name="Label10.Text" xml:space="preserve">
     <value>Title</value>
   </data>
-  <data name="GroupBox4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1028, 81</value>
-  </data>
   <data name="GroupBox4.Text" xml:space="preserve">
     <value>Information</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1038, 691</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
