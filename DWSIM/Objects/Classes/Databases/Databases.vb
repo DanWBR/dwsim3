@@ -1052,7 +1052,7 @@ Namespace DWSIM.Databases
                             Case "IG_Gibbs_Energy_of_Formation_25C"
                                 .IG_Gibbs_Energy_of_Formation_25C = Double.Parse(node2.InnerText, nf)
                             Case "Vapor_Pressure_Constant_EqNo"
-                                .VaporPressureEquation = Integer.Parse(node2.InnerText, nf)
+                                If node2.InnerText <> "" Then .VaporPressureEquation = Integer.Parse(node2.InnerText, nf)
                             Case "Vapor_Pressure_Constant_A"
                                 .Vapor_Pressure_Constant_A = Double.Parse(node2.InnerText, nf)
                             Case "Vapor_Pressure_Constant_B"
@@ -1064,7 +1064,7 @@ Namespace DWSIM.Databases
                             Case "Vapor_Pressure_Constant_E"
                                 .Vapor_Pressure_Constant_E = Double.Parse(node2.InnerText, nf)
                             Case "Ideal_Gas_Heat_Capacity_EqNo"
-                                .IdealgasCpEquation = Integer.Parse(node2.InnerText, nf)
+                                If node2.InnerText <> "" Then .IdealgasCpEquation = Integer.Parse(node2.InnerText, nf)
                             Case "Ideal_Gas_Heat_Capacity_Const_A"
                                 .Ideal_Gas_Heat_Capacity_Const_A = Double.Parse(node2.InnerText, nf)
                             Case "Ideal_Gas_Heat_Capacity_Const_B"
@@ -1076,7 +1076,7 @@ Namespace DWSIM.Databases
                             Case "Ideal_Gas_Heat_Capacity_Const_E"
                                 .Ideal_Gas_Heat_Capacity_Const_E = Double.Parse(node2.InnerText, nf)
                             Case "Liquid_Viscosity_Const_EqNo"
-                                .LiquidViscosityEquation = Integer.Parse(node2.InnerText, nf)
+                                If node2.InnerText <> "" Then .LiquidViscosityEquation = Integer.Parse(node2.InnerText, nf)
                             Case "Liquid_Viscosity_Const_A"
                                 .Liquid_Viscosity_Const_A = Double.Parse(node2.InnerText, nf)
                             Case "Liquid_Viscosity_Const_B"
@@ -1088,7 +1088,7 @@ Namespace DWSIM.Databases
                             Case "Liquid_Viscosity_Const_E"
                                 .Liquid_Viscosity_Const_E = Double.Parse(node2.InnerText, nf)
                             Case "Liquid_Density_Const_EqNo"
-                                .LiquidDensityEquation = Integer.Parse(node2.InnerText, nf)
+                                If node2.InnerText <> "" Then .LiquidDensityEquation = Integer.Parse(node2.InnerText, nf)
                             Case "Liquid_Density_Const_A"
                                 .Liquid_Density_Const_A = Double.Parse(node2.InnerText, nf)
                             Case "Liquid_Density_Const_B"
@@ -1100,7 +1100,7 @@ Namespace DWSIM.Databases
                             Case "Liquid_Density_Const_E"
                                 .Liquid_Density_Const_E = Double.Parse(node2.InnerText, nf)
                             Case "Liquid_Heat_Capacity_EqNo"
-                                .LiquidHeatCapacityEquation = Integer.Parse(node2.InnerText, nf)
+                                If node2.InnerText <> "" Then .LiquidHeatCapacityEquation = Integer.Parse(node2.InnerText, nf)
                             Case "Liquid_Heat_Capacity_Constant_A"
                                 .Liquid_Heat_Capacity_Const_A = Double.Parse(node2.InnerText, nf)
                             Case "Liquid_Heat_Capacity_Constant_B"
@@ -1116,7 +1116,7 @@ Namespace DWSIM.Databases
                             Case "Liquid_Heat_Capacity_TMax"
                                 .Liquid_Heat_Capacity_Tmax = Double.Parse(node2.InnerText, nf)
                             Case "Solid_Heat_Capacity_EqNo"
-                                .SolidHeatCapacityEquation = Integer.Parse(node2.InnerText, nf)
+                                If node2.InnerText <> "" Then .SolidHeatCapacityEquation = Integer.Parse(node2.InnerText, nf)
                             Case "Solid_Heat_Capacity_Constant_A"
                                 .Solid_Heat_Capacity_Const_A = Double.Parse(node2.InnerText, nf)
                             Case "Solid_Heat_Capacity_Constant_B"
@@ -1132,7 +1132,7 @@ Namespace DWSIM.Databases
                             Case "Solid_Heat_Capacity_TMax"
                                 .Solid_Heat_Capacity_Tmax = Double.Parse(node2.InnerText, nf)
                             Case "Solid_Density_EqNo"
-                                .SolidDensityEquation = Integer.Parse(node2.InnerText, nf)
+                                If node2.InnerText <> "" Then .SolidDensityEquation = Integer.Parse(node2.InnerText, nf)
                             Case "Solid_Density_Constant_A"
                                 .Solid_Density_Const_A = Double.Parse(node2.InnerText, nf)
                             Case "Solid_Density_Constant_B"

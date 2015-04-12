@@ -46,7 +46,7 @@ Imports DWSIM.DWSIM.Outros
     Public Property MasterFlowsheet As FormFlowsheet = Nothing
     Public Property RedirectMessages As Boolean = False
 
-    Public FrmStSim1 As New FormStSim
+    Public FrmStSim1 As New FormSimulSettings
     Public FrmPCBulk As New FormPCBulk
     Public FrmReport As New FormReportConfig
 

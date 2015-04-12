@@ -1,0 +1,876 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Button9.Text" xml:space="preserve">
+    <value>Start Distillation Curves Petroleum Characterization Utility</value>
+  </data>
+  <data name="Button2.Text" xml:space="preserve">
+    <value>Start Bulk C7+ Petroleum Characterization Utility</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>760, 96</value>
+  </data>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Misc</value>
+  </data>
+  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>242, 13</value>
+  </data>
+  <data name="Label1.Text" xml:space="preserve">
+    <value>Format compositions (fractions) using this scheme:</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ComboBox3.ItemHeight" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="ComboBox3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>228, 21</value>
+  </data>
+  <data name="ComboBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>228, 21</value>
+  </data>
+  <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>241, 13</value>
+  </data>
+  <data name="Label5.Text" xml:space="preserve">
+    <value>Apply the following formatting to numerical values:</value>
+  </data>
+  <data name="TBdesc.Text" xml:space="preserve">
+    <value>description</value>
+  </data>
+  <data name="TBaut.Text" xml:space="preserve">
+    <value>author</value>
+  </data>
+  <data name="TBtit.Text" xml:space="preserve">
+    <value>title</value>
+  </data>
+  <data name="Label30.Size" type="System.Drawing.Size, System.Drawing">
+    <value>63, 13</value>
+  </data>
+  <data name="Label30.Text" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="Label28.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 13</value>
+  </data>
+  <data name="Label28.Text" xml:space="preserve">
+    <value>Author:</value>
+  </data>
+  <data name="Label27.Size" type="System.Drawing.Size, System.Drawing">
+    <value>30, 13</value>
+  </data>
+  <data name="Label27.Text" xml:space="preserve">
+    <value>Title:</value>
+  </data>
+  <data name="GroupBox5.Text" xml:space="preserve">
+    <value>Units</value>
+  </data>
+  <data name="GroupBox18.Size" type="System.Drawing.Size, System.Drawing">
+    <value>749, 47</value>
+  </data>
+  <data name="GroupBox18.Text" xml:space="preserve">
+    <value>Tasks</value>
+  </data>
+  <data name="KryptonButton23.Text" xml:space="preserve">
+    <value>Save to File</value>
+  </data>
+  <data name="KryptonButton22.Text" xml:space="preserve">
+    <value>Load from File</value>
+  </data>
+  <data name="KryptonButton18.Text" xml:space="preserve">
+    <value>Remove Selected</value>
+  </data>
+  <data name="KryptonButton15.Text" xml:space="preserve">
+    <value>Create New...</value>
+  </data>
+  <data name="Column1.HeaderText" xml:space="preserve">
+    <value>Property</value>
+  </data>
+  <data name="Column2.HeaderText" xml:space="preserve">
+    <value>Unit</value>
+  </data>
+  <data name="Column3.HeaderText" xml:space="preserve">
+    <value>Property</value>
+  </data>
+  <data name="Column4.HeaderText" xml:space="preserve">
+    <value>Unit</value>
+  </data>
+  <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 13</value>
+  </data>
+  <data name="Label7.Text" xml:space="preserve">
+    <value>System of Units</value>
+  </data>
+  <data name="Button1.Text" xml:space="preserve">
+    <value>Back to simulation</value>
+  </data>
+  <data name="ImageList1.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAACm
+        MQAAAk1TRnQBSQFMAgEBCgEAAfwBAQH8AQEBEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        AwABMAMAAQEBAAEgBgABMDEAAQEDOwFkAWUCTAH0AbICgQH/Aa8CgQH/AWICSAH2AUICQQFzIAADLQFG
+        AVkCVgG+AVsCWQHEATECMAFNAWACWQHrAQABgQEYAf8DAwEEpAADKAE9AWQCXAHnAbICgQH/AcsBqwGJ
+        Af8B0QG0AZUB/wG7AY4BgQH/AbUBhwGBAf8BqwKBAf8BYAJZAesDLQFGEAADHgErAVECTwGlA38B/gGP
+        Ac0B6wH/AYEBtwHiAf8BgQGOAcgB/wFcAlkB+AGBAaEBgQH/AVwCWQHMAwQBBpgAAw8BFAMGAQgCfwFf
+        Af4B1QG7AZ8B/wHWAbsBngH/AdMBuAGcAf8B0QGzAZQB/wG3AYkBgQH/AboBjgGBAf8BuAGNAYEB/wGy
+        AoEB/wF/AX4BVgH+CAADEAEWA0gBhQFYAlIB7wGCAcQB5QH/ARwBmAGBAf8BFgGSAYEB/wEQAZABgQH/
+        AQoBjAGBAf8BgQGfAYEB/wGBAcEBlgH/AYEBowGBAf8BYAJbAdYDBQEHiwABAQM7AWMBZQJMAfQBgQGi
+        AYEB/wGBAaEBgQH/AbECgQH/AeEBzQG4Af8B2AHAAaUB/wHYAcABpwH/AdQBugGdAf8BuAGMAYEB/wG3
+        AYoBgQH/AbgBjQGBAf8BugGOAYEB/wGxAoEB/wMEAQYDOwFlAV8CWgHbAYEBwAHgAf8BxwHuAfwB/wHM
+        AfIC/wEjAZsBgQH/AZABygGpAf8BjQHIAaUB/wGKAcYBoQH/AYgBxQGeAf8BgQG2AYUB/wGCAcIBlwH/
+        AYEBpQGBAf8BXwJXAegDDgETgAADKAE9AWQCXAHnAYEBowGBAf8BkwHAAZkB/wGeAccBpAH/AYEBrAGB
+        Af8BrwKBAf8B4wHQAbwB/wHaAcMBqwH/AdMBuAGeAf8BxwGjAYEB/wHBAZgBgQH/AbYBiQGBAf8BtwGK
+        AYEB/wG6AY4BgQH/AbECgQH/AVgCVgG7AYEBvQHcAf8BvwHlAfYB/wHbAfYC/wHBAe4C/wGlAeUC/wEr
+        AZ8BgQH/AZQBzQGtAf8BgQG6AY4B/wGBAbgBiQH/AYEBtgGFAf8BgQGzAYEB/wGBAbUBggH/AYMBwgGY
+        Af8BgQGgAYEB/wJ/AUoB/oAAAn8BdAH+AakBzQGvAf8BpgHMAawB/wGiAckBqQH/AZkBxQGfAf8BgQGp
+        AYEB/wGuAoEB/wHcAcgBsAH/Ab8BnwGBAf8BuAGNAYEB/wHRAbMBjwH/AdEBswGPAf8BuwGQAYEB/wG8
+        AZEBgQH/AbcBigGBAf8BsQKBAf8BagJBAfkB5wH7Af4B/wHdAfYC/wHBAe8C/wG3AesC/wGrAegC/wGB
+        AaMBgQH/AZYBzgGwAf8BlAHNAa0B/wGRAcsBqgH/AZABywGoAf8BgQG8AZAB/wGKAccBoQH/AYEBpQGB
+        Af8BAwGIAYEB/wFcAlkB+IAAAYEBoQGBAf8BwAHaAcUB/wGtAdABswH/AasBzgGxAf8BngHIAaYB/wGB
+        AaoBgQH/AZUCgQH/AoEByAH/AoEB4wH/AoEB4AH/AoEByAH/AZABgQGEAf8BuwGQAYEB/wHRAbMBjwH/
+        AcYBogGBAf8CfwFYAf4BXQJOAfAB4gH2AfwB/wHUAfMC/wHJAfAC/wG+Ae0C/wGzAeoC/wGBAaUBgQH/
+        AYEBpAGBAf8BLQGiAYEB/wEpAZ4BgQH/AYEBrwGBAf8BkQHLAaoB/wGBAasBgQH/ARIBjwGBAf8BgwHF
+        AesB/wFdAk4B8IAAAYEBoAGBAf8BxQHeAckB/wG0AdQBuQH/AaQByQGqAf8BgQGrAZoB/wKBAcMB/wKB
+        AeAB/wKBAesB/wKTAfQB/wKBAeoB/wKBAeQB/wKBAdwB/wKBAb4B/wGmAYkBgQH/AcEBmgGBAf8DWwHI
+        AV0CTgHwAeIB9gH8Af8B1wH0Av8BzgHyAv8ByAHvAv8BugHrAv8BkgHbAfsB/wGBAcEB8QH/AYEBwgH5
+        Af8BgQG9AfAB/wEtAaIBgQH/AYEBswGBAf8BIgGYAYEB/wGBAbEB5gH/AYgBygHuAf8BXQJOAfCAAAGB
+        AZ8BgQH/AbkB1gG+Af8BhwG6AY8B/wGBAawBgQH/AoEB3AH/AoEB6wH/AZgBlgH0Af8CkQHzAf8BiQGK
+        AfAB/wKBAecB/wKBAekB/wKBAegB/wKBAeQB/wF/AV0BfwH+ASwCKwFDAwcBCgFdAk4B8AHiAfYB/QH/
+        AdoB9AL/AdUB8wL/Ab0B6wL/AYkB1QH3Af8BgQHJAfUB/wGBAbQB6QH/AY0B2gH7Af8BjAHcAv8BgQGm
+        AYEB/wErAZ8BgQH/AYEBvwHoAf8BgQG7AegB/wGMAdAB8AH/AV0CTgHwgAACfwF0Af4BhgG6AY8B/wGZ
+        AcYBogH/AYEBrQGBAf8CgQHiAf8BtAGxAfkB/wGXAZYB9AH/ApMB9AH/AYwBjQHwAf8CgQHoAf8CgQHn
+        Af8CgQHoAf8CgQHpAf8CgQHiAf8DIQEwBAABXQJOAfAB4gH4Af0B/wHUAfMC/wGwAeQB+gH/AYYBzwHx
+        Af8BgQHQAfUB/wGBAdAB9QH/AYEBsQHkAf8BsAHkAfoB/wG2AekC/wGbAeEC/wGBAdYB/gH/AYEBvQH1
+        Af8BgQG1AekB/wGQAdUB8QH/AV0CTgHwgAADWwHIAYEBtAGFAf8BgQGvAYEB/wGBAasBgQH/AoEB4QH/
+        AbQBsQH5Af8BlQGWAfUB/wKBAesB/wKBAewB/wKBAewB/wKBAeUB/wKBAecB/wKBAekB/wKBAeIB/wMh
+        ATAEAAFfAiIB+wHhAfgB/gH/Ac0B6wH5Af8BkgHSAe0B/wGEAcwB6wH/AYEBvwHlAf8BgQGxAdsB/wGB
+        AZQByAH/Ac4B7AH6Af8B2QH1Av8BuQHqAv8BlQHfAf4B/wGBAdUC/wGlAeQC/wGEAdwB+wH/AV8CIgH7
+        gAADBwEKAycBOwM3AVsBgQGoAYEB/wKBAeAB/wKiAfQB/wKBAewB/wKBAeoB/wGXAZMB9wH/AZcBkwH3
+        Af8CgQHpAf8CgQHqAf8CgQHnAf8CgQHiAf8DIQEwBAABUQJQAZ8DfwH+AaUB2QHtAf8B0gHrAfUB/wG+
+        Ad4B7QH/AZUByQHeAf8BiQHDAdsB/wGBAbgB1gH/AYEBuQHdAf8BkAHXAfUB/wGBAc8B9QH/AZ0B2wH4
+        Af8BqgHjAfoB/wGEAcoB7AH/AYEBpgHVAf8DUgGmkAABfwFjAX8B/gKBAfIB/wGXAZMB9wH/AoEB6QH/
+        AoEB4wH/AoEB4wH/AoEB6QH/AZcBkwH3Af8CgQHyAf8BfwFfAX8B/gMbASYIAAMtAUYBWQJXAcIBgQHG
+        AeAB/wHRAe4B9wH/AfYD/wHwAf4C/wHLAe0B+wH/AYEBrQHaAf8BiwHXAfcB/wGqAeEB+QH/AZUB1gHy
+        Af8BgQGyAdsB/wNbAcgBMQIwAU2UAANbAcgCgQHsAf8CgQHrAf8CgQHpAf8CgQHwAf8CgQHwAf8CgQHp
+        Af8CgQHrAf8CgQHsAf8DWwHIEAADBAEFAzsBZQFfAloB2wGSAc8B5QH/AeYB+AH8Af8B4wH2Af4B/wGv
+        Ad0B8gH/AbIB5AH3Af8BgQHAAeEB/wFfAl4B4AE/Aj4BbAMHAQmYAAMHAQoDJwE7AzcBWwKBAeMB/wKB
+        AeIB/wKBAeIB/wKBAeMB/wM4AV4DJwE7AwcBChgAAxABFgNIAYQBWAJSAe8BnAHVAeoB/wGIAcwB5wH/
+        AV8CTAHzA0oBjAMTARroAAMeASsDVAGvAVgCVgG8ASICIQExsAADEwEaAzMBUgM5AV8DJgE5AwEBAiwA
+        Ay0BRgFZAlYBvgFbAlkBxAExAjABTRwAAxUBHQMjATQDJAE2AyQBNgMkATYDJAE2AyQBNgMkATYDJAE2
+        AyQBNgMkATYDJAE2AyMBMwMVAR0QAAMlATdAAAM2AVkBgQEqARYB/wHCAZYBhwH/AeQB0wHNAf8B5wHb
+        AdcB/wHZAb4BtQH/AZoCgQH/A1kBxwMEAQUcAAMeASsBUQJPAaUDfwH+AY8BzQHrAf8BgQG3AeIB/wGB
+        AY4ByAH/AVQCUwGsASICIQExFAADIwE0AVkCQwH1AagCQAH9A/wB/wP8Af8D/AH/A/wB/wP8Af8D/AH/
+        A/wB/wP8Af8BqAJAAf0BXwJMAfMDIwEzEAABXgJaAdUBYgJYAekDCQEMNAADWQHHAdQBsAGjAf8B7AHw
+        AfIB/wPqAf8D6wH/A+oB/wPqAf8B6QLqAf8B7gHxAfIB/wGGAYEBKwH/AxwBKBAAAxABFgNIAYUBWAJS
+        Ae8BggHEAeUB/wHMAfQC/wHEAe8C/wGLAdIB8QH/AYoBzgHwAf8BgQGkAdcB/wFfAkwB8wNKAY0DFAEb
+        CwABAQMkATYDfwH+A/wB/wP8Af8D/AH/A/wB/wP8Af8D/AH/A/wB/wP8Af8D/AH/A/wB/wGoAkAB/QMk
+        ATYQAAMJAQwBgQGuAd8B/wGBAasB3gH/A0oBiiwAA1UBtQHkAdMBzQH/A+kB/wPsAf8D7QH/A+4B/wPu
+        Af8D7gH/A+0B/wPqAf8B7AHyAfQB/wGSAoEB/wMJAQwEAAMEAQYDOwFlAV8CWgHbAYEBwAHgAf8BxwHu
+        AfwB/wHMAfIC/wGoAegC/wGUAeAB/gH/AYEBugHnAf8BgQGxAeQB/wGKAcoB7wH/AYIBwQHrAf8BgQGX
+        AdAB/wFfAl4B4AM/AW0DBwEKAwABAQMkATYD/AH/A/wB/wPdAf8D2wH/A9kB/wPXAf8D1QH/A9QB/wPU
+        Af8D1AH/A/sB/wP8Af8DJAE2AwABARAAAVwCWQHPAYEBvAHnAf8BgQG6AeYB/wFdAlYB7QMRARcgAAMZ
+        ASMBwQGJAYEB/wPpAf8D7AH/A+4B/wPxAf8D8gH/A/IB/wPyAf8D8AH/A+4B/wPrAf8B7gHzAfUB/wFg
+        AlkB6wQAAVgCVgG7AYEBvQHcAf8BvwHlAfYB/wHbAfYC/wHBAe4C/wGlAeUC/wGfAeMC/wGUAeEB/gH/
+        AYEBwQHqAf8BgQG1AeYB/wGBAaoB4gH/AYEBrwHlAf8BhwHGAe0B/wGBAbMB5AH/AYEBkAHKAf8BWAJW
+        AcEDAAEBAyQBNgP8Af8D/AH/A/wB/wP8Af8D+wH/A/sB/wP6Af8D+gH/A/oB/wP6Af8D+gH/A/wB/wMk
+        ATYDAAEBFAABgQGvAd8B/wGEAdMB8gH/AYEBvQHnAf8BgQGqAd4B/wFMAksBkBwAA14B2gHtAfIB9AH/
+        A+sB/wPuAf8D8QH/A/QB/wP2Af8D9gH/A/UB/wPzAf8D8AH/A+0B/wPqAf8BwgGJAYEB/wMNARIBagJB
+        AfkB5wH7Af4B/wHdAfYC/wHBAe8C/wG3AesC/wGrAegC/wGkAeQC/wGWAeEB/gH/AYEBxgHrAf8BgQG9
+        AekB/wGBAbQB5gH/AYEBqQHiAf8BgQGfAd4B/wGBAbYB5gH/AYMBxAHuAf8BXAJZAfgDAAEBAyQBNgP8
+        Af8D/AH/A9YB/wPTAf8DzwH/A80B/wPLAf8DyAH/A8gB/wPGAf8D+AH/A/wB/wMkATYDAAEBFAABWgJY
+        AcABgQHMAe4B/wGDAdIB8gH/AYEBzgHxAf8BgQG2AeQB/wFkAlMB8QMRARcUAAGfAoEB/wHqAewB7QH/
+        A+wB/wPwAf8D9AH/A/cB/wP5Af8D+gH/A/gB/wP1Af8D8gH/A+4B/wPrAf8B5gHeAdoB/wFFAkQBfAFd
+        Ak4B8AHiAfYB/AH/AdQB8wL/AckB8AL/Ab4B7QL/AbMB6gL/Aa0B5wL/AYEB2QH+Af8BgQHHAe8B/wGB
+        AcQB6gH/AYEBvgHoAf8BgQG1AeYB/wGBAasB4wH/AYEBpwHhAf8BgwHFAewB/wFdAk4B8AMAAQEDJAE2
+        A/wB/wP8Af8D/AH/A/wB/wP8Af8D/AH/A/wB/wP7Af8D+QH/A/kB/wP4Af8D/AH/AyQBNgMAAQEBXQJO
+        AfABXAJZAfgBXAJZAfgBXAJZAfgBXAJZAfgBXAJZAfgBhgHXAfMB/wGBAbYB6wH/AYEBvAHsAf8BgQHO
+        AfEB/wGBAbkB5gH/AYEBqAHdAf8DUAGdEAABxQKBAf8D8AH/AfIB9AH3Af8B8wH1AfcB/wP0Af8D+AH/
+        Af0B/gb/A/oB/wP3Af8B8wL0Af8B8QH1AfcB/wPsAf8B6wHuAe8B/wFXAlYBuAFdAk4B8AHiAfYB/AH/
+        AdcB9AL/Ac4B8gL/AcgB7wL/AboB6wL/AZIB2wH7Af8BgQHBAfEB/wGBAcIB+QH/AYEBvQHwAf8BgQHF
+        AewB/wGBAb0B6QH/AYEBtQHmAf8BgQGxAeYB/wGIAcoB7gH/AV0CTgHwAwABAQMkATYD/AH/A/wB/wPO
+        Af8DygH/A8YB/wPDAf8DwAH/A70B/wO8Af8DugH/A/YB/wP8Af8DJAE2AwABAQFiAlgB6QGBAdoB8gH/
+        AZMB5gH4Af8BkQHjAfcB/wGNAeAB9gH/AYoB3AH1Af8BigHbAfUB/wGIAdcB9AH/AYQB0wHyAf8BgQHP
+        AfEB/wGBAcwB8AH/AYEByQHvAf8BgQG0AeMB/wFZAkMB9QMZASMIAAHLAoEB/wHuAeUB3AH/AdYBiAGB
+        Af8B2gGZAYEB/wH4AfkB8wH/AfwB/QH8Af8B5AGtAYEB/wHbAYoBgQH/Ae8B2wHJAf8B+QH8Af4B/wHM
+        AYoBgQH/Ab0CgQH/Ac8BnQGGAf8B6wHvAfEB/wFXAlUBtwFdAk4B8AHiAfYB/QH/AdoB9AL/AdUB8wL/
+        Ab0B6wL/AYkB1QH3Af8BgQHJAfUB/wGBAbQB6QH/AY0B2gH7Af8BjAHcAv8BgQHEAfkB/wGBAbYB7AH/
+        AYEBvwHoAf8BgQG7AegB/wGMAdAB8AH/AV0CTgHwAwABAQMkATYD/AH/A/wB/wP8Af8D/AH/A/wB/wP8
+        Af8D+wH/A/gB/wP2Af8D8wH/A/IB/wP8Af8DJAE2AwABAQMlATcBgQHNAewB/wGYAekB+QH/AYEB1QHz
+        Af8BgQHPAfEB/wGBAcoB8AH/AYEBwgHuAf8BiQHZAfQB/wN/Af4BXAJZAfgBXAJZAfgBXAJZAfgBXAJZ
+        AfgBXAJZAfgBYgJYAekIAAG6AoEB/wHPAoEB/wHVAYgBgQH/AdkBlwGBAf8B2QGZAYEB/wHiAbABgQH/
+        AeMBrgGBAf8B6QHFAYEB/wHgAaoBgQH/AeIBugGRAf8BwQKBAf8BuwKBAf8BtQKBAf8B1QG1AagB/wNC
+        AXYBXQJOAfAB4gH4Af0B/wHUAfMC/wGwAeQB+gH/AYYBzwHxAf8BgQHQAfUB/wGBAdAB9QH/AYEBsQHk
+        Af8BsAHkAfoB/wG2AekC/wGbAeEC/wGBAdYB/gH/AYEBvQH1Af8BgQG1AekB/wGQAdUB8QH/AV0CTgHw
+        AwABAQMkATYD/AH/A/wB/wPHAf8DwgH/A74B/wO4Af8DtAH/A7EB/wOuAf8DrAH/A+0B/wP8Af8DJAE2
+        AwABAQQAAWUCTAH0AYEB4QH1Af8BjgHmAfgB/wGBAdIB8wH/AYEBzQHxAf8BgQHHAe8B/wGMAdwB9QH/
+        AYEBxgHqAf8DQgF0HAABYQJeAdoB0wKBAf8B1AGCAYEB/wHXAY8BgQH/AdsBmwGBAf8B2QGYAYEB/wH9
+        A/8B+QL6Af8B7AHRAasB/wHcAaEBgQH/AdoBmAGBAf8B1QGHAYEB/wG+AoEB/wGyAoEB/wMHAQoBXwIi
+        AfsB4QH4Af4B/wHNAesB+QH/AZIB0gHtAf8BhAHMAesB/wGBAb8B5QH/AYEBsQHbAf8BgQGUAcgB/wHO
+        AewB+gH/AdkB9QL/AbkB6gL/AZUB3wH+Af8BgQHVAv8BpQHkAv8BhAHcAfsB/wFfAiIB+wMAAQEDJAE2
+        A/wB/wP7Af8D/AH/A/wB/wP7Af8D+AH/A/UB/wPxAf8D7AH/A+oB/wPmAf8D/AH/AyQBNgMAAQEEAAM0
+        AVQBgQHUAe8B/wGZAeoB+QH/AYEB1gH0Af8BgQHQAfIB/wGBAcsB8AH/AYEB1QHzAf8BgQHXAfMB/wGB
+        AcAB5wH/Ay8BShgAAw0BEgHaAoEB/wHRAoEB/wHVAYYBgQH/AdgBkAGBAf8B1AGPAYEB/wH7Af0C/wL3
+        AfYB/wHuAd0BxgH/AdoBlQGBAf8B1gGLAYEB/wHTAoEB/wHRAoEB/wFfAlcB6AQAAVECUAGfA38B/gGl
+        AdkB7QH/AdIB6wH1Af8BvgHeAe0B/wGVAckB3gH/AYkBwwHbAf8BgQG4AdYB/wGBAbkB3QH/AZAB1wH1
+        Af8BgQHPAfUB/wGdAdsB+AH/AaoB4wH6Af8BhAHKAewB/wGBAaYB1QH/A1IBpgMAAQEDJAE2A/wB/wP5
+        Af8DwAH/A7oB/wO0Af8DrwH/A6oB/wOlAf8D/AH/A/wB/wP8Af8D/AH/AyQBNgMAAQEIAAFqAkEB+QGT
+        AekB+QH/AYEB4QH3Af8BgQHUAfMB/wGBAc4B8gH/AYEByQHwAf8BigHcAfUB/wGBAdAB7wH/AYEBuwHk
+        Af8DGQEjGAADUwGqAdMCgQH/AdECgQH/AdQBgwGBAf8B1QGGAYEB/wH1AfQB8QH/AfUB9gH3Af8B2QGX
+        AYEB/wHVAYcBgQH/AdMCgQH/AdACgQH/AcsCgQH/AwABAQgAAy0BRgFZAlcBwgGBAcYB4AH/AdEB7gH3
+        Af8B9gP/AfAB/gL/AcsB7QH7Af8BgQGtAdoB/wGLAdcB9wH/AaoB4QH5Af8BlQHWAfIB/wGBAbIB2wH/
+        A1sByAExAjABTQcAAQEDJAE2A/wB/wP3Af8D+QH/A/cB/wP3Af8D8wH/A/AB/wPqAf8D/AH/A/YB/wP0
+        Af8BTQJMAZEDFwEgDAABSAJHAYMBgQHZAfEB/wGaAesB+gH/AYEB2AH0Af8BgQHTAfMB/wGBAc4B8QH/
+        AYEByAHwAf8BjAHcAfUB/wGBAcsB7QH/AysB/BwAAVcCVgG4AdcCgQH/AdACgQH/AdICgQH/AdkBlgGB
+        Af8B8wH2AfcB/wHRAoEB/wHRAoEB/wHPAoEB/wHLAoEB/wMOARMQAAMEAQUDOwFlAV8CWgHbAZIBzwHl
+        Af8B5gH4AfwB/wHjAfYB/gH/Aa8B3QHyAf8BsgHkAfcB/wGBAcAB4QH/AV8CXgHgAT8CPgFsAwcBCQwA
+        AyQBNgGoAkAB/QP0Af8D9QH/A/UB/wP1Af8D8QH/A+8B/wPpAf8D/AH/A+cB/wFNAkwBkQMXASADAQEC
+        EAADQAH9AZoB7QH6Af8BmQHrAfkB/wGXAegB+QH/AZQB5QH4Af8BkQHiAfcB/wGOAd8B9gH/AYsB2wH1
+        Af8BgQHHAesB/wFfAkwB8xwAAygBPAG2AoEB/wHaAoEB/wHUAoEB/wHZAYkBgQH/AdcCgQH/AdQCgQH/
+        AVgCVgG5IAADEAEWA0gBhAFYAlIB7wGcAdUB6gH/AYgBzAHnAf8BXwJMAfMDSgGMAxMBGhQAAyMBMwFd
+        Ak4B8AGoAkAB/QP8Af8D/AH/A/wB/wP8Af8D/AH/A/wB/wP4Af8BTQJMAZEDFwEgAwEBAhQAA1EBogGB
+        AcwB6wH/AYEBywHqAf8BgQHJAekB/wGBAccB6QH/AYEBxAHoAf8BgQHCAecB/wGBAcAB5gH/AYEBvQHl
+        Af8BgQG7AeQB/wFhAlsB4SMAAQEDIwE0ASwCKwFDAxQBHDAAAx4BKwNUAa8BWAJWAbwBIgIhATEcAAMU
+        ARwDIwEzAyQBNgMkATYDJAE2AyQBNgMkATYDJAE2AyQBNgMkATYDFwEgAwEBAlwAAW0CUQH3AV8CIgH7
+        AV8CIgH7AVgCVgHBAxgBIiMAAQEDBQEHAw8BFAMZASMDHwEtAyEBMAMhATADIQEwAyEBMAMfAS0DGQEj
+        Aw8BFAMFAQcDAAEBHAADEAEWAzABTAM3AVsDIwE0AwABAWQAAV8CIgH7AZQBxwH5Af8BkQHJAfkB/wGB
+        AYUByQH/AV8CTAHzAyABLxwAAwkBDAMgAS4DNQFXA0IBdgFKAkkBiQFMAksBjwFMAksBjwFMAksBjwFM
+        AksBjwFKAkkBiQNCAXYDNQFWAx8BLQMIAQsUAAMzAVIBfwFmAUoB/gEmAZ8BgQH/ASkBrwGBAf8BKAGw
+        AYEB/wEnAagBgQH/ASABhQGBAf8BWwJZAcMDAwEEHAADGQEjA0UBfQFfAloB2wFfAkwB8wFfAkwB8wFf
+        AloB2wNFAX0DGQEjIAABgQGJAaoB/wHgAfIC/wGBAZoB2AH/AR4BgQG+Af8BgQGYAcUB/wFlAl0B5QMf
+        ASwYAAMgAS8BVAJTAawBZAJcAecBowGBAScB/wG6AYEBFQH/AcQBgQEQAf8BzgGKAREB/wHTAZQBKAH/
+        AdYBnQGBAf8BYQJUAe4BYAJcAdQBUQJPAaUDPQFpAxcBIBAAAVoCVwHFASgBqQGBAf8BLAGrAYEB/wGB
+        Aa4BgQH/AYEBsAGBAf8BgQGxAYEB/wGBAbABgQH/AS0BrQGBAf8BKgGvAYEB/wEcAoEB/wMaASQUAAMz
+        AVMBYQJYAeYBsgKBAf8B1QG3AZMB/wHbAcMBpgH/AdoBwwGmAf8B0gG0AZAB/wGrAoEB/wFhAlgB5gMz
+        AVMcAAM7AWMBgQG2AdUB/wGQAbcB0QH/AYEByQHkAf8BgQHfAfUB/wGBAdAB7QH/AWICWAHpAxgBIhQA
+        AWUCXQHlAZsCgQH/AasBgQEbAf8BrwGBARcB/wG2AYEBDQH/Ab8BgQEEAf8ByQGFAQUB/wHUAZMBCQH/
+        AeQBsgGBAf8B8wHPAYEB/wH7AesBvwH/AWcCUwHyAUkCSAGIAx8BLAwAA1UBsgEpAbEBgQH/ASgBrAGB
+        Af8BJgGpAYEB/wEmAakBgQH/ASYBqQGBAf8BJgGpAYEB/wEmAakBgQH/ASYBqQGBAf8BIgGsAYEB/wEq
+        AasBgQH/AR8BiAGBAf8DCAELDAADMwFTAWUCTAH0AcsBpwGBAf8B2AG7AZ8B/wHDAZwBgQH/AbYBigGB
+        Af8BtAGGAYEB/wG+AZYBgQH/AdEBswGXAf8BxQGjAYEB/wFlAkwB9AMzAVMcAAMzAVMBagJBAfkBwgH2
+        Af0B/wGBAd8B9wH/AYEB4gH4Af8BgQHTAfAB/wFiAkgB9gMXASAQAAGWAoEB/wHyAuYB/wHCAYgBgQH/
+        AbABgQEWAf8BuAGBAQgB/wHBAYEBBAH/AcwBiAEGAf8B1wGWAQgB/wHrAcUBgQH/AfkB6AGvAf8B/AHv
+        AcQB/wHwAcgBgQH/A0MBdwMaASQIAAMXASABJgGmAYEB/wErAasBgQH/AR4BrAGBAf8B9wHsAfUB/wHm
+        AekB5wH/AecB6wHqAf8B8gHtAe4B/wH4AesB9QH/AfAB6AHrAf8BJgGpAYEB/wGBAbEBgQH/ASoBrAGB
+        Af8BYAJZAesIAAMYASIBZQJdAeUBzwGqAYEB/wHaAbwBogH/Ab4BkQGBAf8BugGMAYEB/wG3AYkBgQH/
+        AbMBhAGBAf8BsQGDAYEB/wGwAYMBgQH/Ac0BqgGNAf8BxgGlAYEB/wFlAl0B5QMYASIMAAMEAQYBUgJR
+        AacBXgJaAdUBYQJeAdoDVAGvAYEBywHnAf8BxwH3Af0B/wGBAdwB9QH/AYEB4QH3Af8BgQHUAfEB/wFZ
+        AlMB8gMjATQMAAFbAlkBwwH6AfUB8AH/AeUBywGuAf8BywGNAYEB/wHXAZwBIgH/AdoBnQEHAf8B2QGa
+        AQYB/wHXAZcBBwH/AegBxQGBAf8B9gHgAZ8B/wH4Ad0BhAH/AWcCUwHyAzEBTgMMARAIAAFeAloB2AEr
+        AawBgQH/AYEBsQGBAf8BIAGzAYEB/wH5AfIB9wH/A+8B/wPxAf8B+QHzAfgB/wHxAfAB9AH/AfYB6gHu
+        Af8BJgGpAYEB/wGBAbYBgQH/AS0BrQGBAf8BJgGnAYEB/wMNAREEAAFGAkUBfgG/AZEBgQH/AeABwgGo
+        Af8BxQGWAYEB/wHCAZEBgQH/AeEBywG4Af8B/gH9AfwD/wH+Af8B6gHcAdAB/wG0AYUBgQH/AbMBhQGB
+        Af8B1AG1AZkB/wGuAoEB/wFGAkUBfgwAAwEBAgMyAVABWQJWAb4B3QGMAYEB/wNBAXIDLwFJAYEB0wHu
+        Af8BxwH3Af0B/wGBAdwB9QH/AYEB4gH3Af8BgQHWAfIB/wFfAlcB6AMhATAIAAMrAUIBzAGeAZkC/wH9
+        AfgB/wH2AdMBgQH/AfMBxQGBAf8B8AG6AQkB/wHjAagBBAH/AdQBkwEIAf8B7QHYAbAB/wHmAcsBoAH/
+        AbYBgQEkAf8DTgGUAxwBJwMCAQMIAAEiAZIBgQH/ASsBqwGBAf8BgQG0AYEB/wEgAbcBgQH/Af4B9AH7
+        Af8D9AH/A/cB/wHqAfQB8AH/AvMB9AH/AfMB8QHzAf8BJgGpAYEB/wGBAbkBgQH/AYEBsQGBAf8BKQGt
+        AYEB/wNEAXkEAAFfAloC2wG8AZwB/wHVAa0BiQH/AccBmAGBAf8BwwGVAYEB/wHBAZMBgQH/Ae0B3wHT
+        Af8B+gH3AfQB/wG7AYsBgQH/AbkBigGBAf8BuAGKAYEB/wHFAZ0BgQH/AdIBuAGTAf8BXwJaAdsUAAMf
+        ASwBYQJcAdwBVAJTAawDHwEsAzcBWgN/Af4BxAH2Af0B/wGBAd0B9gH/AYEBygHtAf8BgQGjAdcB/wFk
+        AlkB7AMbASYIAAFbAlkBwwH4AvMB/wH5AeABngH/AfMBxAGBAf8B7wG5AQcB/wHhAaYBBAH/AdYBmAEW
+        Af8B7QHWAa4B/wHjAccBowH/AVwCVwHfAysBQgMLAQ8MAAEsAbUBgQH/AYEBxwGPAf8BgQHFAYwB/wEl
+        AboBgQH/Af4B9AH7Af8B+wH2AfcC/wH9Af4B/wH+AfgB/QH/AeIB8AHqAf8B/AH0AfsB/wEmAakBgQH/
+        AYEBvAGBAf8BgQGyAYEB/wEqAasBgQH/A1UBtQQAAWICSAH2AeMBxwGvAf8B0AGiAYEB/wHFAZkBgQH/
+        AcQBlwGBAf8BxAGWAYEB/wHuAeAB1AH/AfsB9wH0Af8BvwGQAYEB/wG+AY8BgQH/Ab4BjwGBAf8BvgGS
+        AYEB/wHfAcYBqgH/AWICSAH2BAADAgEDBwABAQQAAwIBAwM7AWMBagJBAfkBYQJeAdoBXQJaAcoBXQJO
+        AfABgQHTAeoB/wGyAeMB+QH/AYsBwAHnAf8BrgHTAfYB/wHEAeAB/AH/AW0CUQH3CAADKwFCAWICUgHv
+        AWUCTAH0AVwCWQHPAV0CWgHTAV4CWwHQAVwCWAHRAWQCWQHsAV8CWgHbA0gBhQMWAR8DAgEDDAABgQG8
+        AYEB/wGBAc4BmAH/AYEB0wGjAf8BgQHUAakB/wH+AfQB+wH/AYEB5QG8Af8BgQHjAbkB/wGHAeUBtAH/
+        AdoB7gHkAf8BgQHSAZsB/wEmAakBgQH/AYEBvAGBAf8BgQGyAYEB/wEqAaoBgQH/A1YBtgQAAWICSAH2
+        AeQByQGwAf8B0AGjAYEB/wHMAZ0BgQH/AccBmgGBAf8BxQGYAYEH/wH+Af8BwwGWAYEB/wHBAZQBgQH/
+        AcIBlAGBAf8BwwGYAYEB/wHfAcUBqwH/AWICSAH2BAABVgJVAbQBXgJaAdgDSgGLAwEBAgMtAUYBWAJW
+        AcECfwF2Af4BXQJOAfADMwFTA0IBdAFcAlkB+AGBAb4B5wH/AbQB0gHwAf8B5QHzAv8BrAHSAe8B/wFf
+        AlcB6AwAAVcCVQG6AVwCWQH4AVkCVwG/AVgCVgG8A1QBrgFcAloBzQFfAloB2wFcAloBzQMnAToDCAEL
+        EAABKgGvAYEB/wGBAc0BlwH/AYEB0gGhAf8BgQHVAaQB/wH+AfQB+wH/AYEB4AG3Af8BgQHjAboB/wGB
+        AeMBuAH/AdEB7wHqAf8BKAHOAY4B/wEmAakBgQH/AYEBuAGBAf8BgQGxAYEB/wEpAakBgQH/AUICQQFz
+        BAABXwJaAdsB4AG8AZ8B/wHbAbMBkwH/Ac8BoAGBAf8BzQGeAYEB/wHLAZwBgQH/Ad0BvwGjAf8B3QG/
+        AaIB/wHFAZkBgQH/AcUBmQGBAf8BxAGYAYEB/wHRAasBhQH/AdgBugGXAf8BXwJaAdsEAAMvAUkBYQJU
+        Ae4BTgJNAZYDDwQUARsBVQJTAbABYQJbAeEBXwJeAeABTQJMAZEDNQFWAWECWAHmAUYCRQF+AYEBpQHY
+        Af8BhQGxAdsB/wGBAZ0B0AH/AzgBXgwAAysBQgFiAlIB7wFfAl4B4AFeAloB2AFeAlwBzgFeAloB1QFi
+        AlgB6QM+AWsDGAEiAwABARAAAV0CWQHSAYEBzQGVAf8BgQHQAZ0B/wGBAdIBoQH/AYEB3gG1Af8BgQHc
+        AbUB/wGBAd4BtwH/AYEB3wG2Af8BgQHfAbYB/wGBAdUBrAH/AYEB2gG4Af8BgQHTAaQB/wGBAbkBgQH/
+        ASgBrAGBAf8DBwEJBAABRgJFAX4BzQGcAYEB/wHnAcsBtAH/AdQBpQGBAf8B0AGgAYEB/wHPAZ4BgQH/
+        AfsB+AH1Af8B+wH4AfUB/wHLAZ4BgQH/AcsBnQGBAf8BzQGhAYEB/wHfAcABpQH/AbkBigGBAf8BRgJF
+        AX4IAAFAAj8BbwFkAlkB7AFYAlYBuQFVAlMBsAFkAlkB7ANWAbMBPwI+AWwBZAJTAfEBWgJXAcUBXwJa
+        AdsBIgIhATEgAAFWAlUBtAj/AWICWAHpAVoCVwG9AVsCWAHGAy0BRgMSARkUAAMOARMBgQHOAY8B/wGB
+        Ac0BlQH/Af4B9AH7Af8B/gH0AfsB/wH+AfQB+wH/Af4B9AH7Af8B/gH0AfsB/wH+AfQB+wH/Af4B9AH7
+        Af8B/gH0AfsB/wGBAdABnAH/AYEBzQGVAf8BZAJcAecIAAMYASIBZQJdAeUB2QGyAYwB/wHmAcoBswH/
+        AdYBqQGBAf8B0QGlAYEB/wHiAcQBqAH/AeEBwwGoAf8B0AGiAYEB/wHRAaQBgQH/Ad0BvQGiAf8B0AGs
+        AYUB/wFlAl0B5QMYASIIAAMIAQsBVwJVAboBYAJZAesDNAFUAVgCVgHBAVYCVQG0ATUCNAFVAWECWwHh
+        AecBrgGBAf8BXQJOAfADSgGLHAADAQECAVgCVgG5CP8BWQJDAfUBWgJXAcUBWAJWAbwDMQFPAxQBGxgA
+        A1EBogGBAc4BlQH/AYEBzgGYAf8BgQHQAZwB/wGBAdMBoAH/AYEB0wGjAf8BgQHUAaUB/wGBAdQBoAH/
+        AYEB0gGfAf8BgQHPAZoB/wGBAcwBlQH/AYEBxgGHAf8QAAMzAVMBZQJMAfQB2QGyAYwB/wHmAc0BuAH/
+        AeABugGdAf8B1wGrAYUB/wHWAakBggH/AdkBswGRAf8B4QHCAasB/wHUAa4BhgH/AWUCTAH0AzMBUxAA
+        AyYBOAFcAlgB0QFCAkEBcwFSAlABowFSAlABowMrAUIDRwGCAUoCSQGJAUoCSQGJA0gBhRwAAwUBBwFc
+        AloBzQj/AWcCUwHyAVsCWAHGAVwCWQHJAz0BaQMYASIcAANWAbMBgQHTAZsB/wGBAcwBlQH/AYEBzwGZ
+        Af8BgQHQAZwB/wGBAdABnAH/AYEBzwGbAf8BgQHNAZgB/wGBAcwBkwH/AYEBxgGJAf8DDQESFAADMwFT
+        AWECWAHmAdABoAGBAf8B4AG/AaAB/wHjAcUBrgH/AeMBxQGuAf8B3wG8AZ8B/wHIAZcBgQH/AWECWAHm
+        AzMBUxgAA0MBeAFkAlMB8QFcAlUB6gNQAZ4DBwEJLAADJQE3AWUCXQHlAcEBhAGBAf8BrgGBARYB/wGu
+        AYEBFgH/AWUCTAH0AWECXAHcAzYBWQMWAR4gAAMmATgDQAH9AYEB1wGgAf8BgQHSAZoB/wGBAdEBmQH/
+        AYEB1QGdAf8BgQHQAZkB/wNVAbUgAAMZASMDRQF9AV8CWgHbAV8CTAHzAV8CTAHzAV8CWgHbA0UBfQMZ
+        ASMYAAMGAQgDSgGNAWACWQHrAWcCUwHyAV0CWgHTAzwBZiwAAysBQgFkAlwB5wFYAlYBvAFRAk8BnANO
+        AZkBXAJZAcwBYQJaAeQDFgEeAwcBCiwAAyEBMAMpAT8DEgEZWAABQgFNAT4HAAE+AwABKAMAAUADAAEw
+        AwABAQEAAQEFAAGAAQEWAAP/AQAB/gEDAfwBBwQAAfwBAAHwAQMEAAHwAQABwAEBBAABgDAAAQEHAAEB
+        BwABAQYAAfABAQGAAQEEAAHwAQMBwAEDBAAB8AEDAfABDwQAAv8B/AE/BAAB/AEfAfwBPwGAAQEB7wH/
+        AfABBwHwAQ8BgAEBAeMB/wHgAQMBwAEDAQABAQHhAf8BwAEBBAAB8AF/AYABAQQAAfgBPwGABQAB+AEP
+        AYAGAAEHAYAGAAEBAYAGAAEBAYAFAAGAAT8BgAUAAYABHwGAAQEEAAHAAQ8BwAEBAYABAQEAAQEBwAEP
+        AeABAwHAAQMBgAEBAeABBwHwAQ8B8AEPAYABAwHgAQMB/AE/AfwBPwGAAQcC/wHwAX8BgAEBAfwBHwL/
+        AfABPwGAAQEB8AEHAfABDwHwAR8BgAEBAeABAwHgAQcB8AEPAYABAQHAAQEBwAEDAfgBBwGAAQEBgAEB
+        AYABAQHAAQMBgAEBAYABAAGAAQEBwAEBAYABAQGAAQABgAEBAfABAAHAAQMBgAEAAYABAQFQAQABwAED
+        AYABAAGAAQECAAHgAQcBgAEAAYABAQIAAeABBwGAAQABgAEBAYABDwHwAQ8BgAEBAYABAQGAAQ8B4AEP
+        AcABAwHAAQMBwAEPAeABDwHgAQMB4AEHAeAB/wHgAQ8B8AEPAfABDwHAAf8B4AEPAf4BPwL/Cw==
+</value>
+  </data>
+  <data name="TreeView2.Nodes" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAAB1TeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQkAAAAEVGV4dAtUb29sVGlwVGV4dAROYW1lCUlzQ2hlY2tl
+        ZApJbWFnZUluZGV4CEltYWdlS2V5ElNlbGVjdGVkSW1hZ2VJbmRleBBTZWxlY3RlZEltYWdlS2V5CkNo
+        aWxkQ291bnQBAQEAAAEAAQABCAgIAgAAAAYDAAAACkNvbXBvbmVudHMGBAAAAAAGBQAAAAVOb2RlMQD/
+        ////BgYAAAANd2kwMTI0LTE2LnBuZ/////8GBwAAAA13aTAxMjQtMTYucG5nAAAAAAs=
+</value>
+  </data>
+  <data name="TreeView2.Nodes1" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAAB1TeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQkAAAAEVGV4dAtUb29sVGlwVGV4dAROYW1lCUlzQ2hlY2tl
+        ZApJbWFnZUluZGV4CEltYWdlS2V5ElNlbGVjdGVkSW1hZ2VJbmRleBBTZWxlY3RlZEltYWdlS2V5CkNo
+        aWxkQ291bnQBAQEAAAEAAQABCAgIAgAAAAYDAAAAGlBldHJvbGV1bSBDaGFyYWN0ZXJpemF0aW9uBgQA
+        AAAABgUAAAAFTm9kZTAA/////wYGAAAADWxpZ2h0bmluZy5wbmf/////CQYAAAAAAAAACw==
+</value>
+  </data>
+  <data name="NavigationPanePage1.Text" xml:space="preserve">
+    <value>Components</value>
+  </data>
+  <data name="TreeView5.Nodes" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAAB1TeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQkAAAAEVGV4dAtUb29sVGlwVGV4dAROYW1lCUlzQ2hlY2tl
+        ZApJbWFnZUluZGV4CEltYWdlS2V5ElNlbGVjdGVkSW1hZ2VJbmRleBBTZWxlY3RlZEltYWdlS2V5CkNo
+        aWxkQ291bnQBAQEAAAEAAQABCAgIAgAAAAYDAAAAEVByb3BlcnR5IFBhY2thZ2VzBgQAAAAABgUAAAAF
+        Tm9kZTIA/////wYGAAAAC3BhY2thZ2UucG5n/////wkGAAAAAAAAAAs=
+</value>
+  </data>
+  <data name="TreeView5.Nodes1" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAAB1TeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQkAAAAEVGV4dAtUb29sVGlwVGV4dAROYW1lCUlzQ2hlY2tl
+        ZApJbWFnZUluZGV4CEltYWdlS2V5ElNlbGVjdGVkSW1hZ2VJbmRleBBTZWxlY3RlZEltYWdlS2V5CkNo
+        aWxkQ291bnQBAQEAAAEAAQABCAgIAgAAAAYDAAAAEUFkdmFuY2VkIFNldHRpbmdzBgQAAAAABgUAAAAF
+        Tm9kZTAA/////wYGAAAACHdhbmQucG5n/////wYHAAAACHdhbmQucG5nAAAAAAs=
+</value>
+  </data>
+  <data name="TreeView5.Nodes2" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAAB1TeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQkAAAAEVGV4dAtUb29sVGlwVGV4dAROYW1lCUlzQ2hlY2tl
+        ZApJbWFnZUluZGV4CEltYWdlS2V5ElNlbGVjdGVkSW1hZ2VJbmRleBBTZWxlY3RlZEltYWdlS2V5CkNo
+        aWxkQ291bnQBAQEAAAEAAQABCAgIAgAAAAYDAAAAEVJlYWN0aW9ucyBNYW5hZ2VyBgQAAAAABgUAAAAF
+        Tm9kZTEA/////wYGAAAADnN0eWxlX2VkaXQucG5n/////wkGAAAAAAAAAAs=
+</value>
+  </data>
+  <data name="NavigationPanePage5.Text" xml:space="preserve">
+    <value>Thermodynamics</value>
+  </data>
+  <data name="TreeView1.Nodes" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAAB1TeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQkAAAAEVGV4dAtUb29sVGlwVGV4dAROYW1lCUlzQ2hlY2tl
+        ZApJbWFnZUluZGV4CEltYWdlS2V5ElNlbGVjdGVkSW1hZ2VJbmRleBBTZWxlY3RlZEltYWdlS2V5CkNo
+        aWxkQ291bnQBAQEAAAEAAQABCAgIAgAAAAYDAAAADFVuaXRzIFN5c3RlbQYEAAAAAAYFAAAABU5vZGUx
+        AP////8GBgAAABNwYWdlX3doaXRlX3RleHQucG5n/////wYHAAAAE3BhZ2Vfd2hpdGVfdGV4dC5wbmcA
+        AAAACw==
+</value>
+  </data>
+  <data name="TreeView1.Nodes1" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAAB1TeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQkAAAAEVGV4dAtUb29sVGlwVGV4dAROYW1lCUlzQ2hlY2tl
+        ZApJbWFnZUluZGV4CEltYWdlS2V5ElNlbGVjdGVkSW1hZ2VJbmRleBBTZWxlY3RlZEltYWdlS2V5CkNo
+        aWxkQ291bnQBAQEAAAEAAQABCAgIAgAAAAYDAAAAD0dlbmVyYWwgT3B0aW9ucwYEAAAAAAYFAAAABU5v
+        ZGUwAP////8GBgAAABBpbmZvcm1hdGlvbjEucG5n/////wYHAAAAEGluZm9ybWF0aW9uMS5wbmcAAAAA
+        Cw==
+</value>
+  </data>
+  <data name="NavigationPanePage3.Text" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="TreeView4.Nodes" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAAB1TeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQkAAAAEVGV4dAtUb29sVGlwVGV4dAROYW1lCUlzQ2hlY2tl
+        ZApJbWFnZUluZGV4CEltYWdlS2V5ElNlbGVjdGVkSW1hZ2VJbmRleBBTZWxlY3RlZEltYWdlS2V5CkNo
+        aWxkQ291bnQBAQEAAAEAAQABCAgIAgAAAAYDAAAAC0Rlc2NyaXB0aW9uBgQAAAAABgUAAAAFTm9kZTAA
+        /////wYGAAAADnN0eWxlX2VkaXQucG5n/////wYHAAAADnN0eWxlX2VkaXQucG5nAAAAAAs=
+</value>
+  </data>
+  <data name="NavigationPanePage4.Text" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Button3.Text" xml:space="preserve">
+    <value>Open Assay Manager</value>
+  </data>
+  <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>768, 309</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Components / Compounds</value>
+  </data>
+  <data name="Button4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>474, 159</value>
+  </data>
+  <data name="Button4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="Button4.Text" xml:space="preserve">
+    <value>Export ^</value>
+  </data>
+  <data name="Button6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>474, 130</value>
+  </data>
+  <data name="Button6.Text" xml:space="preserve">
+    <value>Ungroup</value>
+  </data>
+  <data name="GroupBox4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>557, 10</value>
+  </data>
+  <data name="GroupBox4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>204, 293</value>
+  </data>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Added</value>
+  </data>
+  <data name="ListViewA.Size" type="System.Drawing.Size, System.Drawing">
+    <value>198, 274</value>
+  </data>
+  <data name="Button11.Location" type="System.Drawing.Point, System.Drawing">
+    <value>474, 101</value>
+  </data>
+  <data name="Button11.Text" xml:space="preserve">
+    <value>Clear List</value>
+  </data>
+  <data name="Button10.Location" type="System.Drawing.Point, System.Drawing">
+    <value>474, 72</value>
+  </data>
+  <data name="Button10.Text" xml:space="preserve">
+    <value>&lt; Remove</value>
+  </data>
+  <data name="Button7.Location" type="System.Drawing.Point, System.Drawing">
+    <value>474, 43</value>
+  </data>
+  <data name="Button7.Text" xml:space="preserve">
+    <value>Add &gt;</value>
+  </data>
+  <data name="TextBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>50, 17</value>
+  </data>
+  <data name="TextBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>416, 20</value>
+  </data>
+  <data name="Label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 20</value>
+  </data>
+  <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>41, 13</value>
+  </data>
+  <data name="Label3.Text" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Column6.HeaderText" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="casno.HeaderText" xml:space="preserve">
+    <value>CAS #</value>
+  </data>
+  <data name="Column8.HeaderText" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Column9.HeaderText" xml:space="preserve">
+    <value>Formula</value>
+  </data>
+  <data name="Column7.HeaderText" xml:space="preserve">
+    <value>Database</value>
+  </data>
+  <data name="ogc1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 43</value>
+  </data>
+  <data name="ogc1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>463, 260</value>
+  </data>
+  <data name="Label8.Text" xml:space="preserve">
+    <value>Press ENTER to add.</value>
+  </data>
+  <data name="Label9.Text" xml:space="preserve">
+    <value>Search:</value>
+  </data>
+  <data name="GroupBox7.Text" xml:space="preserve">
+    <value>Components Selected</value>
+  </data>
+  <data name="GroupBox8.Text" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="KryptonButton2.Text" xml:space="preserve">
+    <value>Sort list&gt;</value>
+  </data>
+  <data name="KryptonButton3.Text" xml:space="preserve">
+    <value>Clear List&gt;</value>
+  </data>
+  <data name="KryptonButton4.Text" xml:space="preserve">
+    <value>&lt;Background</value>
+  </data>
+  <data name="KryptonButton5.Text" xml:space="preserve">
+    <value>&lt;Remove</value>
+  </data>
+  <data name="KryptonButton6.Text" xml:space="preserve">
+    <value>Add&gt;</value>
+  </data>
+  <data name="GroupBox9.Text" xml:space="preserve">
+    <value>Components</value>
+  </data>
+  <data name="Label11.Text" xml:space="preserve">
+    <value>Select the components you want to add to the simulation.</value>
+  </data>
+  <data name="Label10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 13</value>
+  </data>
+  <data name="Label10.Text" xml:space="preserve">
+    <value>Password:</value>
+  </data>
+  <data name="chkUsePassword.Size" type="System.Drawing.Size, System.Drawing">
+    <value>131, 17</value>
+  </data>
+  <data name="chkUsePassword.Text" xml:space="preserve">
+    <value>Protect with Password</value>
+  </data>
+  <data name="LinkLabelPropertyMethods.Size" type="System.Drawing.Size, System.Drawing">
+    <value>531, 13</value>
+  </data>
+  <data name="LinkLabelPropertyMethods.Text" xml:space="preserve">
+    <value>Click here to learn which methods and correlations are being used by the packages to calculate fluid properties.</value>
+  </data>
+  <data name="GroupBox12.Text" xml:space="preserve">
+    <value>Selected Property Packages</value>
+  </data>
+  <data name="btnDeletePP.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="btnConfigPP.Text" xml:space="preserve">
+    <value>Configure</value>
+  </data>
+  <data name="btnCopyPP.Text" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="Column16.HeaderText" xml:space="preserve">
+    <value>Name (click to edit)</value>
+  </data>
+  <data name="Column17.HeaderText" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="GroupBox6.Text" xml:space="preserve">
+    <value>Available Property Packages</value>
+  </data>
+  <data name="Button8.Text" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="GroupBox11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>762, 149</value>
+  </data>
+  <data name="GroupBox11.Text" xml:space="preserve">
+    <value>Stability Test (Three-Phase Flash)</value>
+  </data>
+  <data name="RadioButton3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>383, 126</value>
+  </data>
+  <data name="RadioButton3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>47, 17</value>
+  </data>
+  <data name="RadioButton3.Text" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="RadioButton2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>315, 126</value>
+  </data>
+  <data name="RadioButton2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>62, 17</value>
+  </data>
+  <data name="RadioButton2.Text" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="RadioButton1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>264, 126</value>
+  </data>
+  <data name="RadioButton1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>45, 17</value>
+  </data>
+  <data name="RadioButton1.Text" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="Label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 128</value>
+  </data>
+  <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 13</value>
+  </data>
+  <data name="Label4.Text" xml:space="preserve">
+    <value>Search severity:</value>
+  </data>
+  <data name="Label6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 24</value>
+  </data>
+  <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>254, 13</value>
+  </data>
+  <data name="Label6.Text" xml:space="preserve">
+    <value>Key components for the second liquid phase search:</value>
+  </data>
+  <data name="ListView2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>266, 23</value>
+  </data>
+  <data name="ListView2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>489, 94</value>
+  </data>
+  <data name="gb1.Text" xml:space="preserve">
+    <value>Global Settings (except for CAPE-OPEN and Electrolyte Property Packages)</value>
+  </data>
+  <data name="chkDoPhaseId.Size" type="System.Drawing.Size, System.Drawing">
+    <value>338, 17</value>
+  </data>
+  <data name="chkDoPhaseId.Text" xml:space="preserve">
+    <value>Apply a Phase Identification Algorithm after equilibrium calculations</value>
+  </data>
+  <data name="Label13.Location" type="System.Drawing.Point, System.Drawing">
+    <value>510, 95</value>
+  </data>
+  <data name="tbFlashValidationTolerance.Location" type="System.Drawing.Point, System.Drawing">
+    <value>456, 92</value>
+  </data>
+  <data name="Label12.Location" type="System.Drawing.Point, System.Drawing">
+    <value>263, 95</value>
+  </data>
+  <data name="Label12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>187, 13</value>
+  </data>
+  <data name="Label12.Text" xml:space="preserve">
+    <value>Gibbs Free Energy variation tolerance:</value>
+  </data>
+  <data name="chkValidateEqCalc.Size" type="System.Drawing.Size, System.Drawing">
+    <value>228, 17</value>
+  </data>
+  <data name="chkValidateEqCalc.Text" xml:space="preserve">
+    <value>Validate equilibrium flash calculation results</value>
+  </data>
+  <data name="CheckBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>395, 17</value>
+  </data>
+  <data name="CheckBox1.Text" xml:space="preserve">
+    <value>Calculate Bubble and Dew Points for all Material Streams at current conditions </value>
+  </data>
+  <data name="ComboBoxFlashAlg.Items" xml:space="preserve">
+    <value>Nested Loops (VLE)</value>
+  </data>
+  <data name="ComboBoxFlashAlg.Items1" xml:space="preserve">
+    <value>Nested Loops (VLLE)</value>
+  </data>
+  <data name="ComboBoxFlashAlg.Items2" xml:space="preserve">
+    <value>Inside-Out (VLE)</value>
+  </data>
+  <data name="ComboBoxFlashAlg.Items3" xml:space="preserve">
+    <value>Inside-Out (VLLE)</value>
+  </data>
+  <data name="ComboBoxFlashAlg.Items4" xml:space="preserve">
+    <value>Gibbs Minimization (VLE)</value>
+  </data>
+  <data name="ComboBoxFlashAlg.Items5" xml:space="preserve">
+    <value>Gibbs Minimization (VLLE)</value>
+  </data>
+  <data name="ComboBoxFlashAlg.Items6" xml:space="preserve">
+    <value>Nested Loops (SVLE - Eutectic Systems)</value>
+  </data>
+  <data name="ComboBoxFlashAlg.Items7" xml:space="preserve">
+    <value>Nested Loops (SVLE - Solid Solution Systems)</value>
+  </data>
+  <data name="ComboBoxFlashAlg.Items8" xml:space="preserve">
+    <value>Nested Loops (VLLE - Immiscible Liquids)</value>
+  </data>
+  <data name="ComboBoxFlashAlg.Location" type="System.Drawing.Point, System.Drawing">
+    <value>266, 18</value>
+  </data>
+  <data name="ComboBoxFlashAlg.Size" type="System.Drawing.Size, System.Drawing">
+    <value>382, 21</value>
+  </data>
+  <data name="Label2.Text" xml:space="preserve">
+    <value>Flash Algorithm</value>
+  </data>
+  <data name="CheckBox3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>477, 17</value>
+  </data>
+  <data name="CheckBox3.Text" xml:space="preserve">
+    <value>Force Pressure-Enthalpy (PH) flash calculations (recommended for single-compound simulations)</value>
+  </data>
+  <data name="OpenFileDialog1.Filter" xml:space="preserve">
+    <value>XML File|*.xml|All files|*.*</value>
+  </data>
+  <data name="OpenFileDialog1.Title" xml:space="preserve">
+    <value>Import Parts</value>
+  </data>
+  <data name="SaveFileDialog1.Filter" xml:space="preserve">
+    <value>DWSIM Unit System|*.dwund</value>
+  </data>
+  <data name="SaveFileDialog1.Title" xml:space="preserve">
+    <value>Save System of Units to a File</value>
+  </data>
+  <data name="OpenFileDialog2.Filter" xml:space="preserve">
+    <value>DWSIM Unit System|*.dwund|All Files|*.*</value>
+  </data>
+  <data name="OpenFileDialog2.Title" xml:space="preserve">
+    <value>Charging System of Units of a File</value>
+  </data>
+  <data name="KryptonButton7.Text" xml:space="preserve">
+    <value>Open Chemical Reactions Manager</value>
+  </data>
+  <data name="ofdcs.Filter" xml:space="preserve">
+    <value>XML File|*.xml</value>
+  </data>
+  <data name="ofdcs.Title" xml:space="preserve">
+    <value>Load Database ChemSep (XML)</value>
+  </data>
+  <data name="sfdxml1.Filter" xml:space="preserve">
+    <value>XML Files|*.xml</value>
+  </data>
+  <data name="sfdxml1.Title" xml:space="preserve">
+    <value>Save XML File</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>DWSIM - Configure Simulation</value>
+  </data>
+</root>

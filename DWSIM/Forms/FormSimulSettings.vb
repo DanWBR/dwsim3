@@ -25,7 +25,7 @@ Imports DWSIM.DWSIM.Outros
 Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
 Imports System.Linq
 
-Public Class FormStSim
+Public Class FormSimulSettings
 
     Inherits System.Windows.Forms.Form
 
@@ -1099,7 +1099,7 @@ Public Class FormStSim
 
             End If
 
-            
+
         End If
 
     End Sub
@@ -1203,14 +1203,14 @@ Public Class FormStSim
                 Me.GroupBox11.Enabled = False
             Case 5
                 Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.GibbsMin3P
-               Me.GroupBox11.Enabled = True
+                Me.GroupBox11.Enabled = True
             Case 6
                 Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsSLE
                 Me.GroupBox11.Enabled = False
                 Me.chkValidateEqCalc.Enabled = False
             Case 7
                 Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsSLE_SS
-               Me.GroupBox11.Enabled = False
+                Me.GroupBox11.Enabled = False
                 Me.chkValidateEqCalc.Enabled = False
             Case 8
                 Me.FrmChild.Options.PropertyPackageFlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsImmiscible
@@ -1341,5 +1341,16 @@ Public Class FormStSim
 
     Private Sub chkDoPhaseId_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkDoPhaseId.CheckedChanged
         Me.FrmChild.Options.UsePhaseIdentificationAlgorithm = Me.chkDoPhaseId.Checked
+    End Sub
+
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        Dim comps As New List(Of ConstantProperties)
+        If Me.sfdxml1.ShowDialog() = Windows.Forms.DialogResult.OK Then
+            If Not File.Exists(sfdxml1.FileName) Then File.Create(sfdxml1.FileName).Close()
+            For Each lvi As ListViewItem In Me.ListViewA.SelectedItems
+                comps.Add(FrmChild.Options.SelectedComponents(lvi.Tag))
+            Next
+            DWSIM.Databases.UserDB.AddCompounds(comps.ToArray, sfdxml1.FileName, True)
+        End If
     End Sub
 End Class
