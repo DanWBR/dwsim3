@@ -105,6 +105,8 @@ Public Class FormPhEnv
 
         Me.loaded = True
 
+        If DWSIM.App.IsRunningOnMono Then GroupBox2.Width -= 80
+
     End Sub
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click

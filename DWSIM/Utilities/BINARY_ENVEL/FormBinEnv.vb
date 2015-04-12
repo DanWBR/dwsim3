@@ -99,6 +99,8 @@ Public Class FormBinEnv
             Frm.WriteToLog(DWSIM.App.GetLocalTipString("BENV002"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
             Frm.WriteToLog(DWSIM.App.GetLocalTipString("BENV003"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
 
+            If DWSIM.App.IsRunningOnMono Then GroupBox2.Width -= 80
+
         Else
 
             MessageBox.Show(DWSIM.App.GetLocalString("BinEnvError_TwoCompoundsMinimum"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
