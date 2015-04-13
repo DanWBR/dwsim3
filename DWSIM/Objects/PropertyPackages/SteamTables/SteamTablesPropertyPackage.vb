@@ -607,8 +607,8 @@ FINAL:
             Dim state As String = ""
 
             Dim T, P As Double
-            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature
-            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure
+            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
+            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
 
             Select Case phase
                 Case Fase.Vapor
@@ -704,8 +704,8 @@ FINAL:
             Dim overallmolarflow As Double = Nothing
 
             Dim phaseID As Integer
-            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature
-            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure
+            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
+            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
 
             Select Case fase
                 Case PropertyPackages.Fase.Mixture
@@ -861,8 +861,8 @@ FINAL:
             Dim composition1 As Object = Nothing
             Dim composition2 As Object = Nothing
 
-            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature
-            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure
+            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
+            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
 
             result = 1
             Me.CurrentMaterialStream.Fases(0).TPMProperties.kvalue = result

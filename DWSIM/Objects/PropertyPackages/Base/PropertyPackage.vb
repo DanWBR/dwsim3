@@ -608,8 +608,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim result As Double = 0.0#
 
             Dim T, P As Double
-            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature
-            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure
+            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
+            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
 
             Dim phasemolarfrac As Double = Nothing
             Dim overallmolarflow As Double = Nothing
@@ -2201,7 +2201,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     Next
                 End If
             End If
-            
+
             With Me.CurrentMaterialStream
 
                 .Fases(0).SPMProperties.temperature = T
@@ -3343,7 +3343,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                             End Try
                             i = i + 1
                         Loop Until (i - 1) * dx >= 1
-                    
+
                         If unstable Then
                             Dim pi, pf, uim As Double, pit As Integer
                             pi = up(0)
@@ -6074,13 +6074,13 @@ Final3:
                 End If
                 result = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.HVap_A * ((1 - Tr) / (1 - tr1)) ^ 0.375
                 Return result 'kJ/kg
-                ElseIf Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "ChemSep" Then
-                    Dim eqno As String = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.VaporizationEnthalpyEquation
+            ElseIf Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "ChemSep" Then
+                Dim eqno As String = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.VaporizationEnthalpyEquation
                 result = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, T / Tr) / Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Molar_Weight / 1000 'kJ/kg
-                    Return result
-                Else
+                Return result
+            Else
                 Return 0.0#
-                End If
+            End If
 
         End Function
 

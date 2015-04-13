@@ -195,7 +195,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             Dim T As Double
 
-            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature
+            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
             Me.CurrentMaterialStream.Fases(0).TPMProperties.surfaceTension = Me.AUX_SURFTM(T)
 
         End Sub

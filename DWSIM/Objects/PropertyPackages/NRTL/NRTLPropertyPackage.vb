@@ -176,8 +176,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim state As String = ""
 
             Dim T, P As Double
-            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature
-            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure
+            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
+            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
 
             Select Case phase
                 Case Fase.Vapor
@@ -358,8 +358,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim overallmolarflow As Double = Nothing
 
             Dim phaseID As Integer
-            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature
-            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure
+            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
+            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
 
             Select Case fase
                 Case PropertyPackages.Fase.Mixture
@@ -443,7 +443,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = result
                 result = Me.m_lk.S_LK_MIX("V", T, P, RET_VMOL(fase.Vapor), RET_VKij, RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Sid(298.15, T, P, fase.Vapor))
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = result
-               result = Me.m_lk.Z_LK("V", T / Me.AUX_TCM(PropertyPackages.Fase.Vapor), P / Me.AUX_PCM(PropertyPackages.Fase.Vapor), Me.AUX_WM(PropertyPackages.Fase.Vapor))(0)
+                result = Me.m_lk.Z_LK("V", T / Me.AUX_TCM(PropertyPackages.Fase.Vapor), P / Me.AUX_PCM(PropertyPackages.Fase.Vapor), Me.AUX_WM(PropertyPackages.Fase.Vapor))(0)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = result
                 result = Me.AUX_CPm(PropertyPackages.Fase.Vapor, T)
                 resultObj = Me.m_lk.CpCvR_LK("V", T, P, RET_VMOL(PropertyPackages.Fase.Vapor), RET_VKij(), RET_VMAS(PropertyPackages.Fase.Vapor), RET_VTC(), RET_VPC(), RET_VCP(T), RET_VMM(), RET_VW(), RET_VZRa())
@@ -520,7 +520,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             Dim T As Double
 
-            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature
+            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
             Me.CurrentMaterialStream.Fases(0).TPMProperties.surfaceTension = Me.AUX_SURFTM(T)
 
         End Sub

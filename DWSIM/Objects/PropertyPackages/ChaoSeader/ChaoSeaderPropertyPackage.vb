@@ -215,8 +215,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim state As String = ""
 
             Dim T, P As Double
-            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature
-            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure
+            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
+            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
 
             Select Case phase
                 Case Fase.Vapor
@@ -327,8 +327,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim overallmolarflow As Double = Nothing
 
             Dim phaseID As Integer
-            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature
-            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure
+            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
+            P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
 
             Select Case fase
                 Case PropertyPackages.Fase.Mixture
@@ -400,7 +400,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 result = Me.AUX_LIQVISCm(T)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.viscosity = result
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.kinematic_viscosity = result / Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density.Value
-               
+
             ElseIf phaseID = 2 Then
 
                 result = Me.AUX_VAPDENS(T, P)
@@ -458,7 +458,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             Dim T As Double
 
-            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature
+            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
             Me.CurrentMaterialStream.Fases(0).TPMProperties.surfaceTension = Me.AUX_SURFTM(T)
 
         End Sub
