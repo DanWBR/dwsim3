@@ -201,10 +201,10 @@ Namespace DWSIM.SimulationObjects.Reactors
                         With rxn.ExpContext
                             .Imports.AddType(GetType(System.Math))
                         End With
+                        rxn.ExpContext.Variables.Add("T", ims.Fases(0).SPMProperties.temperature.GetValueOrDefault)
 
                     End If
 
-                    rxn.ExpContext.Variables.Add("T", ims.Fases(0).SPMProperties.temperature.GetValueOrDefault)
                     rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.Expression)
                     X = rxn.Expr.Evaluate / 100
 
