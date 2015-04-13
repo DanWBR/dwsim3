@@ -838,6 +838,8 @@ Namespace DWSIM.SimulationObjects.Reactors
             Dim pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage = Me.PropertyPackage
             Dim ppr As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage()
 
+            ims.SetFlowsheet(Me.FlowSheet)
+
             'Reactants Enthalpy (kJ/kg * kg/s = kW) (ISOTHERMIC)
             Dim Hr0 As Double
             Hr0 = ims.Fases(0).SPMProperties.enthalpy.GetValueOrDefault * ims.Fases(0).SPMProperties.massflow.GetValueOrDefault

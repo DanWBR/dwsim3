@@ -209,6 +209,8 @@ Namespace DWSIM.SimulationObjects.Reactors
             pp = Me.PropertyPackage
             ppr = New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage()
 
+            ims.SetFlowsheet(Me.FlowSheet)
+
             Me.Reactions.Clear()
             Me.ReactionsSequence.Clear()
             Me.Conversions.Clear()

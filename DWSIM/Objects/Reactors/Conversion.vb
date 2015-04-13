@@ -125,6 +125,8 @@ Namespace DWSIM.SimulationObjects.Reactors
             Dim pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage = Me.PropertyPackage
             Dim ppr As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage()
 
+            ims.SetFlowsheet(Me.FlowSheet)
+
             pp.CurrentMaterialStream = ims
             ppr.CurrentMaterialStream = ims
 
