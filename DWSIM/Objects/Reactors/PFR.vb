@@ -676,6 +676,66 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                             End With
 
+                        Case OperationMode.OutletTemperature
+
+                            Me.DeltaQ = form.Collections.CLCS_EnergyStreamCollection(Me.GraphicObject.InputConnectors(1).AttachedConnector.AttachedFrom.Name).Energia.GetValueOrDefault
+
+                            'Products Enthalpy (kJ/kg * kg/s = kW)
+                            Hp = Me.dV * Me.DeltaQ.GetValueOrDefault + Hr + Hid_p - Hid_r - DHr
+
+                            Me.DeltaT = Me.DeltaT.GetValueOrDefault + Me.OutletTemperature - T
+                            ims.Fases(0).SPMProperties.temperature = Me.OutletTemperature
+                            T = ims.Fases(0).SPMProperties.temperature.GetValueOrDefault
+
+                            With pp
+
+                                .CurrentMaterialStream = ims
+                                .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
+                                If ims.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                                Else
+                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                                End If
+                                If ims.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                                Else
+                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                                End If
+                                If ims.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
+                                Else
+                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
+                                End If
+                                If ims.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
+                                Else
+                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
+                                End If
+                                If ims.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
+                                Else
+                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
+                                End If
+                                If ims.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                                Else
+                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                                End If
+                                If ims.Fases(2).SPMProperties.molarfraction.GetValueOrDefault >= 0 And ims.Fases(2).SPMProperties.molarfraction.GetValueOrDefault < 1 Then
+                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
+                                Else
+                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
+                                End If
+                                .DW_CalcCompMolarFlow(-1)
+                                .DW_CalcCompMassFlow(-1)
+                                .DW_CalcCompVolFlow(-1)
+                                .DW_CalcOverallProps()
+                                .DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                                .DW_CalcVazaoVolumetrica()
+                                .DW_CalcKvalue()
+
+                            End With
+
                     End Select
 
                 Next
@@ -880,7 +940,18 @@ Namespace DWSIM.SimulationObjects.Reactors
                     .IsBrowsable = False
                 End With
 
-                Dim valor = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault), FlowSheet.Options.NumberFormat)
+                Dim valor As Double
+
+                If Me.ReactorOperationMode = OperationMode.OutletTemperature Then
+                    valor = Format(Conversor.ConverterDoSI(su.spmp_temperature, Me.OutletTemperature), FlowSheet.Options.NumberFormat)
+                    .Item.Add(FT(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature"), su.spmp_temperature), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "", True)
+                    With .Item(.Item.Count - 1)
+                        .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_temperature, "T"}
+                        .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
+                    End With
+                End If
+
+                valor = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                 .Item.Add(FT(DWSIM.App.GetLocalString("Quedadepresso"), su.spmp_deltaP), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Quedadepressoaplicad6"), True)
                 With .Item(.Item.Count - 1)
                     .DefaultValue = Nothing

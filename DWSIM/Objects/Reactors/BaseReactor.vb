@@ -26,6 +26,7 @@ Namespace DWSIM.SimulationObjects.Reactors
     Public Enum OperationMode
         Isothermic = 0
         Adiabatic = 1
+        OutletTemperature = 2
     End Enum
 
     <System.Serializable()> Public MustInherit Class Reactor
@@ -101,6 +102,8 @@ Namespace DWSIM.SimulationObjects.Reactors
             Me.m_conversions = New Dictionary(Of String, Double)
             Me.m_componentconversions = New Dictionary(Of String, Double)
         End Sub
+
+        Public Property OutletTemperature As Double = 298.15#
 
         <Xml.Serialization.XmlIgnore()> Public Property ReactionsSequence() As SortedList(Of Integer, ArrayList)
             Get

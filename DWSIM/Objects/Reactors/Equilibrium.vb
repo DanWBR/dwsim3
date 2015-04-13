@@ -1007,6 +1007,42 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                     Me.DeltaT = 0
 
+                Case OperationMode.OutletTemperature
+
+                    Dim Tout As Double = Me.OutletTemperature
+
+                    Me.DeltaT = Tout - T
+
+                    ims.Fases(0).SPMProperties.temperature = Tout
+
+                    With pp
+
+                        'Calcular corrente de matéria com T e P
+                        .DW_CalcVazaoMolar()
+                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
+                        If ims.Fases(1).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
+                        Else
+                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
+                        End If
+                        If ims.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                        Else
+                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                        End If
+                        .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Mixture)
+                        .DW_CalcOverallProps()
+                        .DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                        .DW_CalcVazaoVolumetrica()
+
+                    End With
+
+                    'Products Enthalpy (kJ/kg * kg/s = kW)
+                    Hp = ims.Fases(0).SPMProperties.enthalpy.GetValueOrDefault * ims.Fases(0).SPMProperties.massflow.GetValueOrDefault
+
+                    'Heat (kW)
+                    Me.DeltaQ = Me.DeltaQ.GetValueOrDefault + DHr + Hid_r + Hp - Hr0 - Hid_p
+
             End Select
 
             Dim W As Double = ims.Fases(0).SPMProperties.massflow.GetValueOrDefault
@@ -1271,7 +1307,18 @@ Namespace DWSIM.SimulationObjects.Reactors
                     .IsBrowsable = False
                 End With
 
-                Dim valor = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault), FlowSheet.Options.NumberFormat)
+                Dim valor As Double
+
+                If Me.ReactorOperationMode = OperationMode.OutletTemperature Then
+                    valor = Format(Conversor.ConverterDoSI(su.spmp_temperature, Me.OutletTemperature), FlowSheet.Options.NumberFormat)
+                    .Item.Add(FT(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature"), su.spmp_temperature), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "", True)
+                    With .Item(.Item.Count - 1)
+                        .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_temperature, "T"}
+                        .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
+                    End With
+                End If
+
+                valor = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                 .Item.Add(FT(DWSIM.App.GetLocalString("Quedadepresso"), su.spmp_deltaP), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Quedadepressoaplicad6"), True)
                 With .Item(.Item.Count - 1)
                     .DefaultValue = Nothing
