@@ -28,7 +28,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Protected m_dp As Nullable(Of Double)
         Protected m_dt As Nullable(Of Double)
         Protected m_DQ As Nullable(Of Double)
-        Protected m_Pout As Nullable(Of Double)
+        Protected m_Pout As Nullable(Of Double) = 101325.0#
         Protected m_cmode As CalculationMode = CalculationMode.DeltaP
 
         Public Enum CalculationMode

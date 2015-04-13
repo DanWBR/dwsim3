@@ -31,8 +31,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Protected m_overrideT As Boolean = False
         Protected m_overrideP As Boolean = False
-        Protected m_T As Double = 0
-        Protected m_P As Double = 0
+        Protected m_T As Double = 298.15#
+        Protected m_P As Double = 101325.0#
 
         Public Enum FlashSpec
             PH

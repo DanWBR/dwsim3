@@ -67,9 +67,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Protected m_Q As Nullable(Of Double) = 0
         Protected m_dp As Nullable(Of Double) = 0
         Protected m_OverallCoefficient As Nullable(Of Double) = 0
-        Protected m_Area As Nullable(Of Double) = 0
-        Protected TempHotOut As Nullable(Of Double) = 0
-        Protected TempColdOut As Nullable(Of Double) = 0
+        Protected m_Area As Nullable(Of Double) = 1.0#
+        Protected TempHotOut As Nullable(Of Double) = 298.15#
+        Protected TempColdOut As Nullable(Of Double) = 298.15#
         Protected m_tempdiff As Double = 0
         Protected FoulingFactor As Nullable(Of Double) = 0
         Protected Type As Integer

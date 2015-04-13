@@ -35,7 +35,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Protected m_dp As Nullable(Of Double)
         Protected m_dt As Nullable(Of Double)
         Protected m_DQ As Nullable(Of Double)
-        Protected m_Tout As Nullable(Of Double)
+        Protected m_Tout As Nullable(Of Double) = 298.15#
         Protected m_VFout As Nullable(Of Double)
         Protected m_cmode As CalculationMode = CalculationMode.HeatAdded
 
