@@ -43,6 +43,7 @@ Partial Class FormFlowsheet
         Me.ToolStripLabel4 = New System.Windows.Forms.ToolStripLabel()
         Me.TSBtabela = New System.Windows.Forms.ToolStripButton()
         Me.TSBTexto = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton19 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton12 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
@@ -200,7 +201,7 @@ Partial Class FormFlowsheet
         'ToolStrip4
         '
         resources.ApplyResources(Me.ToolStrip4, "ToolStrip4")
-        Me.ToolStrip4.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel4, Me.TSBtabela, Me.TSBTexto, Me.ToolStripButton19, Me.ToolStripButton12, Me.ToolStripSeparator5, Me.ToolStripButton1, Me.TSTBZoom, Me.ToolStripButton2, Me.ToolStripButton20, Me.ToolStripButton3, Me.ToolStripSeparator6, Me.ToolStripButton18, Me.ToolStripButton6, Me.ToolStripButton11, Me.ToolStripButton10, Me.ToolStripSeparator4, Me.ToolStripButton16, Me.ToolStripButton17})
+        Me.ToolStrip4.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel4, Me.TSBtabela, Me.TSBTexto, Me.ToolStripButton4, Me.ToolStripButton19, Me.ToolStripButton12, Me.ToolStripSeparator5, Me.ToolStripButton1, Me.TSTBZoom, Me.ToolStripButton2, Me.ToolStripButton20, Me.ToolStripButton3, Me.ToolStripSeparator6, Me.ToolStripButton18, Me.ToolStripButton6, Me.ToolStripButton11, Me.ToolStripButton10, Me.ToolStripSeparator4, Me.ToolStripButton16, Me.ToolStripButton17})
         Me.ToolStrip4.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow
         Me.ToolStrip4.Name = "ToolStrip4"
         '
@@ -226,6 +227,14 @@ Partial Class FormFlowsheet
         Me.TSBTexto.Image = Global.DWSIM.My.Resources.Resources.font
         Me.TSBTexto.Name = "TSBTexto"
         Me.StatusBarTextProvider1.SetStatusBarText(Me.TSBTexto, resources.GetString("TSBTexto.StatusBarText"))
+        '
+        'ToolStripButton4
+        '
+        resources.ApplyResources(Me.ToolStripButton4, "ToolStripButton4")
+        Me.ToolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton4.Image = Global.DWSIM.My.Resources.Resources.table_relationship
+        Me.ToolStripButton4.Name = "ToolStripButton4"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripButton4, resources.GetString("ToolStripButton4.StatusBarText"))
         '
         'ToolStripButton19
         '
@@ -1496,4 +1505,5 @@ Partial Class FormFlowsheet
     Friend WithEvents ToolStripSeparator7 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents ToolStripLabel5 As System.Windows.Forms.ToolStripLabel
     Friend WithEvents tsbRestoreSolutions As System.Windows.Forms.ToolStripDropDownButton
+    Friend WithEvents ToolStripButton4 As System.Windows.Forms.ToolStripButton
 End Class

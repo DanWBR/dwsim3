@@ -115,8 +115,6 @@ Namespace DWSIM.GraphicObjects
 
         End Function
 
-
-
 #Region "Constructors"
 
         Public Sub New()
@@ -1390,5 +1388,305 @@ Namespace DWSIM.GraphicObjects
         End Sub
 
     End Class
+
+    <Serializable()> Public Class SpreadsheetTableGraphic
+
+        Inherits ShapeGraphic
+
+        <System.NonSerialized()> <Xml.Serialization.XmlIgnore> Public Spreadsheet As SpreadsheetForm
+
+        Protected m_Font_Col1 As Font = New Font("Arial", 10, FontStyle.Regular, GraphicsUnit.Pixel, 0, False)
+
+        Protected m_Text As String = ""
+
+        Protected m_Color_Bg As Color = Drawing.Color.White
+        Protected m_Color_Gradient_1 As Color = Drawing.Color.LightGray
+        Protected m_Color_Gradient_2 As Color = Drawing.Color.WhiteSmoke
+
+        Protected m_bgOpacity As Integer = 175
+
+        Protected m_IsGradientBg As Boolean = False
+
+        Protected m_BorderThickness As Integer = 1
+        Protected m_Padding As Integer = 2
+
+        <System.NonSerialized()> Protected m_BorderPen As Drawing.Pen = New Drawing.Pen(Color.Black)
+        Protected m_BorderStyle As Drawing2D.DashStyle = DashStyle.Solid
+        Protected m_BorderColor As Color = Color.Black
+
+        Protected m_TextRenderStyle As Drawing2D.SmoothingMode = Drawing2D.SmoothingMode.Default
+
+        Public Overrides Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement)
+
+            Dim elements As System.Collections.Generic.List(Of System.Xml.Linq.XElement) = MyBase.SaveData()
+
+            Return elements
+
+        End Function
+
+        Public Overrides Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean
+
+            Return MyBase.LoadData(data)
+
+        End Function
+
+        Public Sub SetSpreadsheet(sheet As SpreadsheetForm)
+            Me.Spreadsheet = sheet
+        End Sub
+
+#Region "Constructors"
+
+        Public Sub New(ByVal sheet As SpreadsheetForm)
+            Me.TipoObjeto = TipoObjeto.GO_Tabela
+            Me.Spreadsheet = sheet
+        End Sub
+
+        Public Sub New(ByVal sheet As SpreadsheetForm, ByVal graphicPosition As Point)
+            Me.New(sheet)
+            Me.SetPosition(graphicPosition)
+        End Sub
+
+        Public Sub New(ByVal sheet As SpreadsheetForm, ByVal posX As Integer, ByVal posY As Integer)
+            Me.New(sheet, New Point(posX, posY))
+        End Sub
+
+        Public Sub New()
+            Me.TipoObjeto = TipoObjeto.GO_Tabela
+        End Sub
+
+#End Region
+
+#Region "Properties"
+
+        Public Property SpreadsheetCellRange As String = ""
+
+        Public Property FontCol1() As Font
+            Get
+                Return m_Font_Col1
+            End Get
+            Set(ByVal Value As Font)
+                m_Font_Col1 = Value
+            End Set
+        End Property
+
+        Public Property BorderThickness() As Integer
+            Get
+                Return m_BorderThickness
+            End Get
+            Set(ByVal value As Integer)
+                m_BorderThickness = value
+            End Set
+        End Property
+
+        Public Property Padding() As Integer
+            Get
+                Return m_Padding
+            End Get
+            Set(ByVal value As Integer)
+                m_Padding = value
+            End Set
+        End Property
+
+        Public Property Opacity() As Integer
+            Get
+                Return m_bgOpacity
+            End Get
+            Set(ByVal value As Integer)
+                m_bgOpacity = value
+            End Set
+        End Property
+
+        Public Property BackgroundColor() As System.Drawing.Color
+            Get
+                Return m_Color_Bg
+            End Get
+            Set(ByVal Value As System.Drawing.Color)
+                m_Color_Bg = Value
+            End Set
+        End Property
+
+        Public Property BackgroundGradientColor1() As System.Drawing.Color
+            Get
+                Return m_Color_Gradient_1
+            End Get
+            Set(ByVal Value As System.Drawing.Color)
+                m_Color_Gradient_1 = Value
+            End Set
+        End Property
+
+        Public Property BackgroundGradientColor2() As System.Drawing.Color
+            Get
+                Return m_Color_Gradient_2
+            End Get
+            Set(ByVal Value As System.Drawing.Color)
+                m_Color_Gradient_2 = Value
+            End Set
+        End Property
+
+        Public Property BorderStyle() As Drawing.Drawing2D.DashStyle
+            Get
+                Return m_BorderStyle
+            End Get
+            Set(ByVal value As Drawing.Drawing2D.DashStyle)
+                m_BorderStyle = value
+            End Set
+        End Property
+
+        Public Property BorderColor() As Drawing.Color
+            Get
+                Return m_BorderColor
+            End Get
+            Set(ByVal value As Drawing.Color)
+                m_BorderColor = value
+            End Set
+        End Property
+
+        Public Property TextRenderStyle() As Drawing2D.SmoothingMode
+            Get
+                Return m_TextRenderStyle
+            End Get
+            Set(ByVal value As Drawing2D.SmoothingMode)
+                m_TextRenderStyle = value
+            End Set
+        End Property
+
+        Property IsGradientBackground() As Boolean
+            Get
+                Return m_IsGradientBg
+            End Get
+            Set(ByVal value As Boolean)
+                m_IsGradientBg = value
+            End Set
+        End Property
+#End Region
+
+        Public Sub PopulateGrid(ByRef pgrid As PropertyGridEx.PropertyGridEx)
+
+            With pgrid
+
+                .Item.Clear()
+
+                .Item.Add("Range", Me, "SpreadsheetCellRange", False, "", "", True)
+               
+                .PropertySort = PropertySort.Alphabetical
+                .ShowCustomProperties = True
+
+            End With
+
+        End Sub
+
+        Public Overrides Sub Draw(ByVal g As System.Drawing.Graphics)
+
+            Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
+            Dim myMatrix As Drawing2D.Matrix
+            gContainer = g.BeginContainer()
+            myMatrix = g.Transform()
+            If m_Rotation <> 0 Then
+                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
+                g.Transform = myMatrix
+            End If
+
+            If Not Me.TextRenderStyle = -1 Then g.TextRenderingHint = Me.TextRenderStyle
+
+            Dim firstcolumn, firstrow, lastcolumn, lastrow As Integer
+            Dim maxW As New List(Of Integer)
+
+            'find number of rows and columns by range
+
+            If SpreadsheetCellRange <> "" And Not Spreadsheet Is Nothing Then
+
+                Dim firstcell, lastcell As String
+
+                firstcell = Me.SpreadsheetCellRange.Split(":")(0)
+                lastcell = Me.SpreadsheetCellRange.Split(":")(1)
+
+                firstrow = Spreadsheet.GetCellValue(firstcell).RowIndex
+                firstcolumn = Spreadsheet.GetCellValue(firstcell).ColumnIndex
+
+                lastrow = Spreadsheet.GetCellValue(lastcell).RowIndex
+                lastcolumn = Spreadsheet.GetCellValue(lastcell).ColumnIndex
+
+                'determinar comprimento das colunas e altura das linhas
+
+                Dim i, j, k, itemheight, n, m, leftmargin As Integer
+                Dim size As SizeF
+
+                Dim grid = Spreadsheet.DataGridView1
+
+                k = 0
+                For j = firstcolumn To lastcolumn
+                    maxW.Add(0)
+                    For i = firstrow To lastrow
+                        If Not grid.Rows(i).Cells(j).Value Is Nothing Then
+                            size = g.MeasureString(grid.Rows(i).Cells(j).Value.ToString, Me.FontCol1, New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
+                            If size.Width > maxW(k) Then maxW(k) = size.Width + 2 * Padding
+                        Else
+                            maxW(k) = 10
+                        End If
+                    Next
+                    k += 1
+                Next
+
+                itemheight = g.MeasureString("AAA", Me.FontCol1, New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0)).Height + 2 * Me.Padding
+
+                Me.Height = (lastrow - firstrow + 1) * itemheight
+                Me.Width = maxW.Sum
+
+                If m_BorderPen Is Nothing Then m_BorderPen = New Drawing.Pen(Color.Black)
+
+                With Me.m_BorderPen
+                    .Color = Me.BorderColor
+                    .DashStyle = Me.BorderStyle
+                End With
+
+                Dim rect As New Rectangle(X, Y, Width, Height)
+                If Me.IsGradientBackground = False Then
+                    g.FillRectangle(New SolidBrush(Color.FromArgb(Me.Opacity, Me.BackgroundColor)), rect)
+                Else
+                    g.FillRectangle(New Drawing2D.LinearGradientBrush(rect, Color.FromArgb(Me.Opacity, Me.BackgroundGradientColor2), Color.FromArgb(Me.Opacity, Me.BackgroundGradientColor1), LinearGradientMode.Vertical), rect)
+                End If
+
+                Dim format1 As New StringFormat(StringFormatFlags.NoClip)
+                With format1
+                    .Alignment = StringAlignment.Far
+                    '.LineAlignment = StringAlignment.Far
+                End With
+
+                n = 0
+                leftmargin = 0
+                For j = firstcolumn To lastcolumn
+                    m = 0
+                    For i = firstrow To lastrow
+                        If Not grid.Rows(i).Cells(j).Value Is Nothing Then
+                            g.DrawString(grid.Rows(i).Cells(j).Value.ToString, Me.FontCol1, New SolidBrush(Me.LineColor), X + Padding + leftmargin, Y + Padding + m * itemheight)
+                        Else
+                            g.DrawString("", Me.FontCol1, New SolidBrush(Me.LineColor), X + Padding + leftmargin, Y + Padding + m * itemheight)
+                        End If
+                        g.DrawLine(Me.m_BorderPen, X + leftmargin, Y + (i + 1) * itemheight, X + leftmargin + maxW(n), Y + (i + 1) * itemheight)
+                        m += 1
+                    Next
+                    leftmargin += maxW(n)
+                    g.DrawLine(Me.m_BorderPen, X + leftmargin, Y, X + leftmargin, Y + (lastrow - firstrow + 1) * itemheight)
+                    n += 1
+                Next
+
+                g.DrawRectangle(Me.m_BorderPen, New Rectangle(Me.X, Me.Y, Me.Width, Me.Height))
+
+            Else
+
+                g.DrawString("NO_DATA_TO_SHOW", Me.FontCol1, New SolidBrush(Me.LineColor), X, Y)
+                Dim size = g.MeasureString("NO_DATA_TO_SHOW", Me.FontCol1, New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
+
+                Me.Height = size.Height
+                Me.Width = size.Width
+
+            End If
+
+            g.EndContainer(gContainer)
+
+        End Sub
+
+    End Class
+
 
 End Namespace

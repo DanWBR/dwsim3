@@ -37,6 +37,7 @@ Public Class frmSurface
     End Function
 
     Public Sub SetupGraphicsSurface()
+
         'load up the design surface with the default bounds and margins
         Dim defSettings As Printing.PageSettings = _
             designSurfacePrintDocument.DefaultPageSettings
@@ -100,6 +101,11 @@ Public Class frmSurface
                 Flowsheet.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString("MasterTable")
                 Flowsheet.FormProps.LblStatusObj.Text = "-"
                 Flowsheet.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
+            ElseIf Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_SpreadsheetTable Then
+                Flowsheet.FormProps.LblNomeObj.Text = DWSIM.App.GetLocalString("SpreadsheetTable")
+                Flowsheet.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString("SpreadsheetTable")
+                Flowsheet.FormProps.LblStatusObj.Text = "-"
+                Flowsheet.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
             ElseIf Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_Figura Then
                 Flowsheet.FormProps.LblNomeObj.Text = DWSIM.App.GetLocalString("Figura")
                 Flowsheet.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString("ImagemBitmap")
@@ -138,6 +144,8 @@ Public Class frmSurface
                     CType(Me.FlowsheetDesignSurface.SelectedObject, DWSIM.GraphicObjects.TableGraphic).PopulateGrid(PGEx1)
                 ElseIf Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_MasterTable Then
                     CType(Me.FlowsheetDesignSurface.SelectedObject, DWSIM.GraphicObjects.MasterTableGraphic).PopulateGrid(PGEx1, Flowsheet)
+                ElseIf Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_SpreadsheetTable Then
+                    CType(Me.FlowsheetDesignSurface.SelectedObject, DWSIM.GraphicObjects.SpreadsheetTableGraphic).PopulateGrid(PGEx1)
                 Else
                     Flowsheet.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name).PopulatePropertyGrid(PGEx1, Flowsheet.Options.SelectedUnitSystem)
                 End If
@@ -262,6 +270,11 @@ Public Class frmSurface
                     Flowsheet.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString("MasterTable")
                     Flowsheet.FormProps.LblStatusObj.Text = "-"
                     Flowsheet.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
+                ElseIf Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_SpreadsheetTable Then
+                    Flowsheet.FormProps.LblNomeObj.Text = "SpreadsheetTable"
+                    Flowsheet.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString("SpreadsheetTable")
+                    Flowsheet.FormProps.LblStatusObj.Text = "-"
+                    Flowsheet.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
                 ElseIf Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_Figura Then
                     Flowsheet.FormProps.LblNomeObj.Text = DWSIM.App.GetLocalString("Figura")
                     Flowsheet.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString("ImagemBitmap")
@@ -307,6 +320,8 @@ Public Class frmSurface
                                 CType(Me.FlowsheetDesignSurface.SelectedObject, DWSIM.GraphicObjects.TableGraphic).PopulateGrid(PGEx1)
                             ElseIf Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_MasterTable Then
                                 CType(Me.FlowsheetDesignSurface.SelectedObject, DWSIM.GraphicObjects.MasterTableGraphic).PopulateGrid(PGEx1, Flowsheet)
+                            ElseIf Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_SpreadsheetTable Then
+                                CType(Me.FlowsheetDesignSurface.SelectedObject, DWSIM.GraphicObjects.SpreadsheetTableGraphic).PopulateGrid(PGEx1)
                             Else
                                 Flowsheet.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name).PopulatePropertyGrid(PGEx1, Flowsheet.Options.SelectedUnitSystem)
                             End If
@@ -434,7 +449,13 @@ Public Class frmSurface
             Me.FlowsheetDesignSurface.Invalidate()
 
             If Not m_startobj Is Nothing And Not m_endobj Is Nothing Then
-                If m_startobj.Name <> m_endobj.Name Then Call Flowsheet.ConnectObject(Me.m_startobj, Me.m_endobj)
+                If m_startobj.Name <> m_endobj.Name Then
+                    Try
+                        Flowsheet.ConnectObject(Me.m_startobj, Me.m_endobj)
+                    Catch ex As Exception
+                        Flowsheet.WriteToLog(ex.Message.ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
+                    End Try
+                End If
             End If
         End If
 
@@ -611,6 +632,7 @@ Public Class frmSurface
                 If Me.m_qt Is Nothing And Not _
                     gobj.TipoObjeto = TipoObjeto.GO_TabelaRapida And Not _
                     gobj.TipoObjeto = TipoObjeto.GO_MasterTable And Not _
+                    gobj.TipoObjeto = TipoObjeto.GO_SpreadsheetTable And Not _
                     gobj.TipoObjeto = TipoObjeto.GO_Tabela And Not _
                     gobj.TipoObjeto = TipoObjeto.GO_Figura And Not _
                     gobj.TipoObjeto = TipoObjeto.GO_Texto And Not _
@@ -775,6 +797,7 @@ Public Class frmSurface
         If Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto <> TipoObjeto.GO_Figura And _
             Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto <> TipoObjeto.GO_Tabela And _
             Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto <> TipoObjeto.GO_MasterTable And _
+            Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto <> TipoObjeto.GO_SpreadsheetTable And _
             Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto <> TipoObjeto.GO_TabelaRapida And _
             Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto <> TipoObjeto.DistillationColumn And _
             Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto <> TipoObjeto.AbsorptionColumn And _
@@ -2176,6 +2199,7 @@ Public Class frmSurface
                 If obj.GraphicObject.TipoObjeto <> TipoObjeto.GO_Texto And _
                     obj.GraphicObject.TipoObjeto <> TipoObjeto.GO_TabelaRapida And _
                     obj.GraphicObject.TipoObjeto <> TipoObjeto.GO_MasterTable And _
+                    obj.GraphicObject.TipoObjeto <> TipoObjeto.GO_SpreadsheetTable And _
                     obj.GraphicObject.TipoObjeto <> TipoObjeto.GO_Tabela And _
                     obj.GraphicObject.TipoObjeto <> TipoObjeto.OT_Ajuste And _
                     obj.GraphicObject.TipoObjeto <> TipoObjeto.OT_Especificacao And _

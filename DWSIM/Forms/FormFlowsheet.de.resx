@@ -136,6 +136,9 @@
   <data name="TSBTexto.ToolTipText" xml:space="preserve">
     <value>Text einfügen</value>
   </data>
+  <data name="ToolStripButton4.Text" xml:space="preserve">
+    <value>Verknüpfte Arbeitsblatttabelle</value>
+  </data>
   <data name="ToolStripButton19.Text" xml:space="preserve">
     <value>Master Property Table</value>
   </data>
@@ -179,7 +182,7 @@
     <value>Schnellkupplung</value>
   </data>
   <data name="ToolStrip4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>418, 25</value>
+    <value>495, 25</value>
   </data>
   <data name="ToolStrip4.Text" xml:space="preserve">
     <value>Fließbild</value>
@@ -871,6 +874,10 @@
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="dckPanel.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>Inherit</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Simulation</value>

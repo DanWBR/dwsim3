@@ -43,7 +43,7 @@ Public Class frmProps
         'handle changes internally
         If Not sobj Is Nothing Then
 
-            If sobj.TipoObjeto <> TipoObjeto.GO_Tabela And sobj.TipoObjeto <> TipoObjeto.GO_MasterTable Then
+            If sobj.TipoObjeto <> TipoObjeto.GO_Tabela And sobj.TipoObjeto <> TipoObjeto.GO_MasterTable And sobj.TipoObjeto <> TipoObjeto.GO_SpreadsheetTable Then
 
                 ChildParent.Collections.ObjectCollection(sobj.Name).PropertyValueChanged(s, e)
 

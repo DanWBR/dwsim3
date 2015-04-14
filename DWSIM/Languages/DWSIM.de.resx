@@ -5076,4 +5076,7 @@ Die erhaltenen Daten werden hauptsächlich für die Berechnung von VLE-Daten emp
   <data name="OutputVariables" xml:space="preserve">
     <value>3. Ausgangsvariablen</value>
   </data>
+  <data name="SpreadsheetTable" xml:space="preserve">
+    <value>Verknüpfte Arbeitsblatttabelle</value>
+  </data>
 </root>

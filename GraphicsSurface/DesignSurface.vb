@@ -726,12 +726,13 @@ Imports System.Runtime.Serialization
                 If Not obj Is Nothing Then
                     If obj.TipoObjeto <> TipoObjeto.GO_TabelaRapida And obj.TipoObjeto <> TipoObjeto.GO_Texto _
                     And obj.TipoObjeto <> TipoObjeto.GO_Figura And obj.TipoObjeto <> TipoObjeto.GO_Tabela _
-                    And obj.TipoObjeto <> TipoObjeto.Nenhum Then
+                    And obj.TipoObjeto <> TipoObjeto.Nenhum And obj.TipoObjeto <> TipoObjeto.GO_SpreadsheetTable _
+                    And obj.TipoObjeto <> TipoObjeto.GO_MasterTable Then
                         With Me.hoverRect
                             .X = obj.X - 10
                             .Y = obj.Y - 10
                             Select Case obj.TipoObjeto
-                                Case TipoObjeto.GO_Animation, TipoObjeto.GO_Figura, TipoObjeto.GO_Tabela, TipoObjeto.GO_TabelaRapida, TipoObjeto.GO_Texto, TipoObjeto.GO_MasterTable
+                                Case TipoObjeto.GO_Animation, TipoObjeto.GO_Figura, TipoObjeto.GO_Tabela, TipoObjeto.GO_TabelaRapida, TipoObjeto.GO_Texto, TipoObjeto.GO_MasterTable, TipoObjeto.GO_SpreadsheetTable
                                     .Height = obj.Height + 20
                                     .Width = obj.Width + 20
                                 Case Else

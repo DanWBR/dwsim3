@@ -2584,6 +2584,12 @@ Public Class FormMain
             excs.Add(New Exception("Error Loading Spreadsheet Information", ex))
         End Try
 
+        For Each obj In form.FormSurface.FlowsheetDesignSurface.drawingObjects
+            If obj.TipoObjeto = TipoObjeto.GO_SpreadsheetTable Then
+                DirectCast(obj, DWSIM.GraphicObjects.SpreadsheetTableGraphic).SetSpreadsheet(form.FormSpreadsheet)
+            End If
+        Next
+
         For Each pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage In form.Options.PropertyPackages.Values
             Try
                 If pp.ConfigForm Is Nothing Then pp.ReconfigureConfigForm()

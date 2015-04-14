@@ -63,6 +63,7 @@ Namespace GraphicObjects
         GO_MasterTable
         SolidSeparator
         Filter
+        GO_SpreadsheetTable
 
     End Enum
 

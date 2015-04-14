@@ -2045,6 +2045,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="dwsim_splash.ico" />
+    <None Include="Resources\table_relationship.png" />
     <EmbeddedResource Include="version.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>

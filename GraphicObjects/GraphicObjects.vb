@@ -38,7 +38,7 @@ Namespace GraphicObjects
                 Dim hoverRect As New Rectangle
                 With hoverRect
                     Select Case selectedObject.TipoObjeto
-                        Case TipoObjeto.GO_Animation, TipoObjeto.GO_MasterTable, TipoObjeto.GO_Figura, TipoObjeto.GO_Tabela, TipoObjeto.GO_TabelaRapida, TipoObjeto.GO_Texto
+                        Case TipoObjeto.GO_Animation, TipoObjeto.GO_MasterTable, TipoObjeto.GO_Figura, TipoObjeto.GO_Tabela, TipoObjeto.GO_TabelaRapida, TipoObjeto.GO_Texto, TipoObjeto.GO_SpreadsheetTable
                             .X = selectedObject.X - 10
                             .Y = selectedObject.Y - 10
                             .Height = selectedObject.Height + 20

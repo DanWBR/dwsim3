@@ -137,6 +137,8 @@ Namespace DWSIM.Outros
         Private m_parentnode As String
         Private m_key As Integer
 
+        Public Property CustomText As String = ""
+
         Sub New()
 
         End Sub
