@@ -43,6 +43,12 @@ Public Class UITVSelectorForm
             .Add(DWSIM.App.GetLocalString("Ajuste"), DWSIM.App.GetLocalString("Ajuste"))
             .Add(DWSIM.App.GetLocalString("ComponentSeparator"), DWSIM.App.GetLocalString("ComponentSeparator"))
             .Add(DWSIM.App.GetLocalString("OrificePlate"), DWSIM.App.GetLocalString("OrificePlate"))
+            .Add(DWSIM.App.GetLocalString("CapeOpenUnitOperation1"), DWSIM.App.GetLocalString("CapeOpenUnitOperation1"))
+            .Add(DWSIM.App.GetLocalString("CustomUnitOp"), DWSIM.App.GetLocalString("CustomUnitOp"))
+            .Add(DWSIM.App.GetLocalString("ExcelUnitOp"), DWSIM.App.GetLocalString("ExcelUnitOp"))
+            .Add(DWSIM.App.GetLocalString("FlowsheetUnitOp"), DWSIM.App.GetLocalString("FlowsheetUnitOp"))
+            .Add(DWSIM.App.GetLocalString("SolidsSeparator"), DWSIM.App.GetLocalString("SolidsSeparator"))
+            .Add(DWSIM.App.GetLocalString("Filter"), DWSIM.App.GetLocalString("Filter"))
         End With
 
         If formC.Collections.ObjectCollection.ContainsKey(Me.selectionData.m_ID) Then
@@ -193,6 +199,30 @@ Public Class UITVSelectorForm
                     Next
                 Case 29
                     For Each obj In formC.Collections.OrificePlateCollection.Values
+                        .Add(obj.Name, obj.Tag).Tag = obj.Name
+                    Next
+                Case 30
+                    For Each obj In formC.Collections.CapeOpenUOCollection.Values
+                        .Add(obj.Name, obj.Tag).Tag = obj.Name
+                    Next
+                Case 31
+                    For Each obj In formC.Collections.CustomUOCollection.Values
+                        .Add(obj.Name, obj.Tag).Tag = obj.Name
+                    Next
+                Case 32
+                    For Each obj In formC.Collections.ExcelUOCollection.Values
+                        .Add(obj.Name, obj.Tag).Tag = obj.Name
+                    Next
+                Case 33
+                    For Each obj In formC.Collections.FlowsheetUOCollection.Values
+                        .Add(obj.Name, obj.Tag).Tag = obj.Name
+                    Next
+                Case 34
+                    For Each obj In formC.Collections.SolidsSeparatorCollection.Values
+                        .Add(obj.Name, obj.Tag).Tag = obj.Name
+                    Next
+                Case 35
+                    For Each obj In formC.Collections.FilterCollection.Values
                         .Add(obj.Name, obj.Tag).Tag = obj.Name
                     Next
             End Select

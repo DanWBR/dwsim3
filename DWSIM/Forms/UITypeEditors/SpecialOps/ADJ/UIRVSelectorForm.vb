@@ -139,6 +139,30 @@
                     For Each obj In formC.Collections.OrificePlateCollection.Values
                         If obj.Name <> Me.selectionDataCV.m_ID Then .Add(obj.Name, obj.Tag).Tag = obj.Name
                     Next
+                Case DWSIM.App.GetLocalString("CapeOpenUnitOperation1")
+                    For Each obj In formC.Collections.CapeOpenUOCollection.Values
+                        .Add(obj.Name, obj.Tag).Tag = obj.Name
+                    Next
+                Case DWSIM.App.GetLocalString("CustomUnitOp")
+                    For Each obj In formC.Collections.CustomUOCollection.Values
+                        .Add(obj.Name, obj.Tag).Tag = obj.Name
+                    Next
+                Case DWSIM.App.GetLocalString("ExcelUnitOp")
+                    For Each obj In formC.Collections.ExcelUOCollection.Values
+                        .Add(obj.Name, obj.Tag).Tag = obj.Name
+                    Next
+                Case DWSIM.App.GetLocalString("FlowsheetUnitOp")
+                    For Each obj In formC.Collections.FlowsheetUOCollection.Values
+                        .Add(obj.Name, obj.Tag).Tag = obj.Name
+                    Next
+                Case DWSIM.App.GetLocalString("SolidsSeparator")
+                    For Each obj In formC.Collections.SolidsSeparatorCollection.Values
+                        .Add(obj.Name, obj.Tag).Tag = obj.Name
+                    Next
+                Case DWSIM.App.GetLocalString("Filter")
+                    For Each obj In formC.Collections.FilterCollection.Values
+                        .Add(obj.Name, obj.Tag).Tag = obj.Name
+                    Next
             End Select
         End With
 

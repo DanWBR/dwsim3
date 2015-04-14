@@ -30,7 +30,7 @@ Public Class SpreadsheetForm
     Public formc As FormFlowsheet
     Public loaded As Boolean = False
 
-    Protected m_e As IGenericExpression(Of Double)
+    Protected m_e As IGenericExpression(Of Object)
     Protected m_eopt As ExpressionContext
 
     Protected ccparams As DWSIM.Utilities.Spreadsheet.SpreadsheetCellParameters
@@ -43,11 +43,11 @@ Public Class SpreadsheetForm
 
     Public InternalCounter As Integer = 0
 
-    Public Property Expr() As IGenericExpression(Of Double)
+    Public Property Expr() As IGenericExpression(Of Object)
         Get
             Return m_e
         End Get
-        Set(ByVal value As IGenericExpression(Of Double))
+        Set(ByVal value As IGenericExpression(Of Object))
             m_e = value
         End Set
     End Property
@@ -444,6 +444,9 @@ Public Class SpreadsheetForm
                 Me.ExpContext = New Ciloci.Flee.ExpressionContext
                 With Me.ExpContext
                     .Imports.AddType(GetType(System.Math))
+                    .Imports.AddType(GetType(System.String))
+                    .Imports.AddType(GetType(Microsoft.VisualBasic.Strings))
+                    .Imports.AddType(GetType(DWSIM.MathEx.Common))
                 End With
             End If
 
@@ -464,7 +467,7 @@ Public Class SpreadsheetForm
                 End If
                 If expression <> "" Then
                     If expression.Substring(0, 1) = "=" Then
-                        Me.Expr = Me.ExpContext.CompileGeneric(Of Double)(expression.Substring(1))
+                        Me.Expr = Me.ExpContext.CompileGeneric(Of Object)(expression.Substring(1))
                         cell.Value = Expr.Evaluate
                         If Not ccparams.CellType = VarType.Write Then cell.Style.BackColor = Color.LightYellow
                     ElseIf expression.Substring(0, 1) = ":" Then
