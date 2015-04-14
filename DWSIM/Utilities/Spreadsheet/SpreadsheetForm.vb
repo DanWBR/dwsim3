@@ -485,9 +485,11 @@ Public Class SpreadsheetForm
                         cell.Style.BackColor = Color.LightGreen
                     Else
                         cell.Value = expression
-                        ccparams.ToolTipText = expression
-                        cell.ToolTipText = ccparams.ToolTipText
-                        cell.Style.BackColor = cell.OwningColumn.DefaultCellStyle.BackColor
+                        If ccparams.CellType <> VarType.Write Then
+                            ccparams.ToolTipText = expression
+                            cell.ToolTipText = ccparams.ToolTipText
+                            cell.Style.BackColor = cell.OwningColumn.DefaultCellStyle.BackColor
+                        End If
                     End If
                 Else
                     cell.Value = ""
@@ -508,6 +510,34 @@ Public Class SpreadsheetForm
 
 
     End Sub
+
+    Sub UpdateColors()
+
+        For Each cell In Me.DataGridView1.Rows
+
+            Try
+                ccparams = cell.Tag
+                Dim expression = ccparams.Expression
+                If ccparams.CellType = VarType.Write Then
+                    cell.Style.BackColor = Color.LightBlue
+                End If
+                If expression <> "" Then
+                    If expression.Substring(0, 1) = ":" Then
+                        cell.Style.BackColor = Color.LightGreen
+                    Else
+                        cell.Style.BackColor = cell.OwningColumn.DefaultCellStyle.BackColor
+                    End If
+                Else
+                    cell.Style.BackColor = cell.OwningColumn.DefaultCellStyle.BackColor
+                End If
+            Catch ex As Exception
+                cell.Style.BackColor = cell.OwningColumn.DefaultCellStyle.BackColor
+            End Try
+
+        Next
+
+    End Sub
+
 
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
         If Not Me.DataGridView1.SelectedCells(0) Is Nothing Then
@@ -636,7 +666,7 @@ Public Class SpreadsheetForm
             For Each ce As DataGridViewCell In r.Cells
                 ccparams = ce.Tag
                 If Not ccparams Is Nothing Then
-                    If ccparams.CellType = VarType.Write And Not ce.Value Is Nothing And Not Double.IsNaN(CDbl(ce.Value)) Then
+                    If ccparams.CellType = VarType.Write And Not ce.Value Is Nothing Then
                         obj = formc.Collections.ObjectCollection(ccparams.ObjectID)
                         obj.SetPropertyValue(ccparams.PropID, ce.Value, su)
                         'Call function to calculate flowsheet

@@ -2580,6 +2580,7 @@ Public Class FormMain
             Dim data2 As String = xdoc.Element("DWSIM_Simulation_Data").Element("Spreadsheet").Element("Data2").Value
             If data1 <> "" Then form.FormSpreadsheet.CopyDT1FromString(data1)
             If data2 <> "" Then form.FormSpreadsheet.CopyDT2FromString(data2)
+            form.FormSpreadsheet.UpdateColors()
         Catch ex As Exception
             excs.Add(New Exception("Error Loading Spreadsheet Information", ex))
         End Try
