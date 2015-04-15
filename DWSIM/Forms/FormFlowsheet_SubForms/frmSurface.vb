@@ -257,7 +257,6 @@ Public Class frmSurface
     Private Sub FlowsheetDesignSurface_SelectionChanged(ByVal sender As Object, _
             ByVal e As Microsoft.Msdn.Samples.DesignSurface.SelectionChangedEventArgs) Handles FlowsheetDesignSurface.SelectionChanged
 
-        'Try
         If Not e.SelectedObject Is Nothing Then
             If Not e.SelectedObject.IsConnector Then
                 If Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_Tabela Then
@@ -344,12 +343,6 @@ Public Class frmSurface
             Else
 
                 Me.FlowsheetDesignSurface.SelectedObject = Nothing
-                'Flowsheet.FormProps.LblNomeObj.Text = DWSIM.App.GetLocalString("Nenhumselecionado")
-                'Flowsheet.FormProps.LblTipoObj.Text = "-"
-                'Flowsheet.FormProps.LblStatusObj.Text = "-"
-                'Flowsheet.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
-                'Flowsheet.FormObjList.TreeViewObj.CollapseAll()
-                'Flowsheet.FormObjList.TreeViewObj.SelectedNode = Nothing
 
             End If
 
@@ -360,11 +353,6 @@ Public Class frmSurface
 
         End If
 
-        'Catch
-        '    Flowsheet.FormObjList.TreeViewObj.CollapseAll()
-        '    Flowsheet.FormObjList.TreeViewObj.SelectedNode = Nothing
-        'End Try
-
         If Me.FlowsheetDesignSurface.SelectedObject Is Nothing Then
 
             Flowsheet.FormProps.LblNomeObj.Text = DWSIM.App.GetLocalString("Nenhumselecionado")
@@ -373,8 +361,6 @@ Public Class frmSurface
             Flowsheet.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
 
         End If
-
-        RaiseEvent ObjectSelected(Flowsheet)
 
     End Sub
 
@@ -606,6 +592,8 @@ Public Class frmSurface
             End If
 
         End If
+
+        RaiseEvent ObjectSelected(Flowsheet)
 
     End Sub
 

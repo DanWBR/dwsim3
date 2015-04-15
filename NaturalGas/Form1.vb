@@ -26,14 +26,20 @@ Public Class Form1
     Private Sub Form1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
 
         'remove SelectedObjectChanged event handler
-        RemoveHandler fsheet.FormSurface.FlowsheetDesignSurface.MouseUp, AddressOf SelectedObjectChanged
+
+        Dim eventhandler As DWSIM.frmSurface.ObjectSelectedEventHandler = AddressOf SelectedObjectChanged
+
+        RemoveHandler fsheet.FormSurface.ObjectSelected, eventhandler
+
+        For Each f In fsheet.Collections.CLCS_FlowsheetUOCollection.Values
+            RemoveHandler f.Fsheet.FormSurface.ObjectSelected, eventhandler
+        Next
+
+        My.Settings.Save()
 
     End Sub
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-
-        'add a handler to the SelectedObjectChanged event, triggered when the flowsheet's selected object changes
-        AddHandler fsheet.FormSurface.FlowsheetDesignSurface.MouseUp, AddressOf SelectedObjectChanged
 
         'read data from text files
         Dim engine As New FileHelperEngine(Of datamass)()
@@ -49,9 +55,18 @@ Public Class Form1
             If d.dbname <> "" Then dvc.Add(d.dbname, d)
         Next
 
+
+        'add SelectedObjectChanged event handler
+
+        AddHandler fsheet.FormSurface.ObjectSelected, AddressOf SelectedObjectChanged
+
+        For Each f In fsheet.Collections.CLCS_FlowsheetUOCollection.Values
+            AddHandler f.Fsheet.FormSurface.ObjectSelected, AddressOf SelectedObjectChanged
+        Next
+
     End Sub
 
-    Sub SelectedObjectChanged(ByVal sender As Object, ByVal e As MouseEventArgs)
+    Sub SelectedObjectChanged(ByVal sender As FormFlowsheet)
 
         Me.lblStream.Text = ""
         Me.lblCalcd.Text = ""
