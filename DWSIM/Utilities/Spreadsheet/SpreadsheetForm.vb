@@ -80,6 +80,12 @@ Public Class SpreadsheetForm
         Next
         If Me.ExpContext Is Nothing Then
             Me.ExpContext = New Ciloci.Flee.ExpressionContext
+            With Me.ExpContext
+                .Imports.AddType(GetType(System.Math))
+                .Imports.AddType(GetType(System.String))
+                .Imports.AddType(GetType(Microsoft.VisualBasic.Strings))
+                .Imports.AddType(GetType(DWSIM.MathEx.Common))
+            End With
         End If
         DefineVariables()
         loaded = True

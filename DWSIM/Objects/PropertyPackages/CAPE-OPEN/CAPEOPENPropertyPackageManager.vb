@@ -58,6 +58,9 @@ Public Class CAPEOPENPropertyPackageManager
             Case "Modified UNIFAC (Dortmund)"
                 pp = New MODFACPropertyPackage(True)
                 pp.ComponentDescription = DWSIM.App.GetLocalString("DescMUPP")
+            Case "Modified UNIFAC (NIST)"
+                pp = New NISTMFACPropertyPackage(True)
+                pp.ComponentDescription = DWSIM.App.GetLocalString("DescNUPP")
             Case "Chao-Seader"
                 pp = New ChaoSeaderPropertyPackage(True)
                 pp.ComponentDescription = DWSIM.App.GetLocalString("DescCSLKPP")
@@ -84,9 +87,9 @@ Public Class CAPEOPENPropertyPackageManager
     End Function
 
     Public Function GetPropertyPackageList() As Object Implements ICapeThermoPropertyPackageManager.GetPropertyPackageList
-        Return New String() {"FPROPS", "PC-SAFT", "Peng-Robinson (PR)", "Peng-Robinson-Stryjek-Vera 2 (PRSV2-M)", "Peng-Robinson-Stryjek-Vera 2 (PRSV2-VL)", "Soave-Redlich-Kwong (SRK)", "Peng-Robinson / Lee-Kesler (PR/LK)", _
-                             "UNIFAC", "UNIFAC-LL", "Modified UNIFAC (Dortmund)", "NRTL", "UNIQUAC", _
-                            "Chao-Seader", "Grayson-Streed", "Lee-Kesler-Plöcker", "Raoult's Law", "COSMO-SAC (JCOSMO)", "IAPWS-IF97 Steam Tables", "CoolProp"}
+        Return New String() {"FPROPS", "CoolProp", "PC-SAFT", "Peng-Robinson (PR)", "Peng-Robinson-Stryjek-Vera 2 (PRSV2-M)", "Peng-Robinson-Stryjek-Vera 2 (PRSV2-VL)", "Soave-Redlich-Kwong (SRK)", "Peng-Robinson / Lee-Kesler (PR/LK)", _
+                             "UNIFAC", "UNIFAC-LL", "Modified UNIFAC (Dortmund)", "Modified UNIFAC (NIST)", "NRTL", "UNIQUAC", _
+                            "Chao-Seader", "Grayson-Streed", "Lee-Kesler-Plöcker", "Raoult's Law", "COSMO-SAC (JCOSMO)", "IAPWS-IF97 Steam Tables"}
     End Function
 
     Public Property ComponentDescription() As String Implements ICapeIdentification.ComponentDescription
@@ -174,7 +177,7 @@ Public Class CAPEOPENPropertyPackageManager
         key.SetValue("ComponentVersion", My.Application.Info.Version.ToString)
         key.SetValue("VendorURL", "http://dwsim.inforside.com.br")
         key.SetValue("HelpURL", "http://dwsim.inforside.com.br")
-        key.SetValue("About", "DWSIM is open-source software, released under the GPL v3 license. (c) 2011-2013 Daniel Medeiros.")
+        key.SetValue("About", "DWSIM is open-source software, released under the GPL v3 license. (c) 2011-2015 Daniel Medeiros.")
         key.Close()
 
     End Sub
