@@ -36,12 +36,6 @@ Imports DWSIM.DWSIM.MathEx
 Namespace DWSIM.SimulationObjects.PropertyPackages
 
 #Region "    Global Enumerations"
-    <System.Serializable()> Public Class HenryParam
-        Public Component As String
-        Public CAS As String
-        Public KHcp As Double
-        Public C As Double
-    End Class
 
     Public Enum Fase
 
@@ -104,6 +98,21 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         NestedLoopsSLE_SS = 10
         NestedLoops3PV2 = 11
         NestedLoops3PV3 = 12
+    End Enum
+
+    Public Enum Parameter
+        PHFlash_Internal_Loop_Tolerance = 0
+        PSFlash_Internal_Loop_Tolerance = 1
+        PHFlash_External_Loop_Tolerance = 2
+        PSFlash_External_Loop_Tolerance = 3
+        PHFlash_Maximum_Number_Of_External_Iterations = 4
+        PSFlash_Maximum_Number_Of_External_Iterations = 5
+        PHFlash_Maximum_Number_Of_Internal_Iterations = 6
+        PSFlash_Maximum_Number_Of_Internal_Iterations = 7
+        PTFlash_Maximum_Number_Of_External_Iterations = 8
+        PTFlash_Maximum_Number_Of_Internal_Iterations = 9
+        PTFlash_External_Loop_Tolerance = 10
+        PTFlash_Internal_Loop_Tolerance = 11
     End Enum
 
 #End Region
@@ -6832,7 +6841,6 @@ Final3:
 
         End Function
 
-
         Public Function AUX_INT_CPDT_Ti(ByVal T1 As Double, ByVal T2 As Double, ByVal subst As String) As Double
 
             Dim deltaT As Double = (T2 - T1) / 10
@@ -11343,6 +11351,13 @@ Final3:
             mSource.Write(buffer, count, IntPtr.Zero)
         End Sub
 
+    End Class
+
+    <System.Serializable()> Public Class HenryParam
+        Public Component As String
+        Public CAS As String
+        Public KHcp As Double
+        Public C As Double
     End Class
 
 End Namespace

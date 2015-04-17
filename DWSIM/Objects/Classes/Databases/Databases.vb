@@ -441,7 +441,7 @@ Namespace DWSIM.Databases
                             For Each node3 As XmlNode In node2.ChildNodes
                                 Select Case node3.Name
                                     Case "group"
-                                        If Not cp.UNIFACGroups.Collection.ContainsKey(unif.ID2Group(Integer.Parse(node3.Attributes("id").Value))) Then
+                                        If Not cp.UNIFACGroups.Collection.ContainsKey(node3.Attributes("id").Value) Then
                                             cp.UNIFACGroups.Collection.Add(node3.Attributes("id").Value, Integer.Parse(node3.Attributes("value").Value))
                                         End If
                                 End Select
@@ -451,7 +451,7 @@ Namespace DWSIM.Databases
                             For Each node3 As XmlNode In node2.ChildNodes
                                 Select Case node3.Name
                                     Case "group"
-                                        If Not cp.MODFACGroups.Collection.ContainsKey(modf.ID2Group(Integer.Parse(node3.Attributes("id").Value))) Then
+                                        If Not cp.MODFACGroups.Collection.ContainsKey(node3.Attributes("id").Value) Then
                                             cp.MODFACGroups.Collection.Add(node3.Attributes("id").Value, Integer.Parse(node3.Attributes("value").Value))
                                         End If
                                 End Select
