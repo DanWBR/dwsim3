@@ -1263,7 +1263,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Return CType(_copp, ICapeThermoPropertyPackage).GetComponentConstant(materialObject, props)
         End Function
 
-        Public Overrides Sub GetComponentList(ByRef compIds As Object, ByRef formulae As Object, ByRef names As Object, ByRef boilTemps As Object, ByRef molWt As Object, ByRef casNo As Object)
+        Public Overrides Sub GetComponentList(ByRef compIds As String(), ByRef formulae As String(), ByRef names As String(), ByRef boilTemps As Double(), ByRef molWt As Double(), ByRef casNo As String())
             CType(_copp, ICapeThermoPropertyPackage).GetComponentList(compIds, formulae, names, boilTemps, molWt, casNo)
         End Sub
 
@@ -1295,16 +1295,19 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             If Not _copp Is Nothing Then CType(_copp, ICapeUtilities).Initialize()
         End Sub
 
-        Public Overrides ReadOnly Property parameters1() As Object
+        Public Overrides ReadOnly Property parameters1() As ParameterCollection
             Get
-                Return CType(_copp, ICapeUtilities).parameters()
+                Return CType(_copp, ICapeUtilities).Parameters()
             End Get
         End Property
 
-        Public Overrides WriteOnly Property simulationContext() As Object
-            Set(ByVal value As Object)
-                CType(_copp, ICapeUtilities).simulationContext = value
+        Public Overrides Property simulationContext() As ICapeSimulationContext
+            Set(ByVal value As ICapeSimulationContext)
+                CType(_copp, ICapeUtilities).SimulationContext = value
             End Set
+            Get
+                Return CType(_copp, ICapeUtilities).SimulationContext
+            End Get
         End Property
 
         Public Overrides Sub Terminate()
@@ -1327,19 +1330,19 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             CType(_copp, ICapeThermoEquilibriumServer).ValidityCheck(materialObject, props, relList)
         End Sub
 
-        Public Overrides Sub CalcProp1(ByVal materialObject As Object, ByVal props As Object, ByVal phases As Object, ByVal calcType As String)
+        Public Overrides Sub CalcProp1(ByVal materialObject As ICapeThermoMaterialObject, ByVal props As String(), ByVal phases As String(), ByVal calcType As String)
             CType(_copp, ICapeThermoCalculationRoutine).CalcProp(materialObject, props, phases, calcType)
         End Sub
 
-        Public Overrides Function GetPropList1() As Object
-            Return CType(_copp, ICapeThermoCalculationRoutine).GetPropList()
-        End Function
+        Public Overrides Sub GetPropList1(ByRef props As String(), ByRef phases As String(), ByRef calctype As String())
+            CType(_copp, ICapeThermoCalculationRoutine).GetPropList(props, phases, calctype)
+        End Sub
 
-        Public Overrides Function PropCheck2(ByVal materialObject As Object, ByVal props As Object) As Object
+        Public Overrides Function PropCheck2(ByVal materialObject As ICapeThermoMaterialObject, ByVal props As String()) As Boolean()
             Return CType(_copp, ICapeThermoCalculationRoutine).PropCheck(materialObject, props)
         End Function
 
-        Public Overrides Function ValidityCheck2(ByVal materialObject As Object, ByVal props As Object) As Object
+        Public Overrides Function ValidityCheck2(ByVal materialObject As ICapeThermoMaterialObject, ByVal props As String()) As ICapeThermoReliability()
             Return CType(_copp, ICapeThermoCalculationRoutine).ValidityCheck(materialObject, props)
         End Function
 
@@ -1347,73 +1350,59 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
 #Region "    CAPE-OPEN 1.1 Thermo & Physical Properties"
 
-        Public Overrides Function GetCompoundConstant(ByVal props As Object, ByVal compIds As Object) As Object
-            'Me.SetMaterial(Me.CurrentMaterialStream)
-            Return CType(_copp, ICapeThermoCompounds).GetCompoundConstant(props, compIds)
+        Public Overrides Function GetCompoundConstant(ByVal props As String(), ByVal compIds As String()) As Object()
+           Return CType(_copp, ICapeThermoCompounds).GetCompoundConstant(props, compIds)
         End Function
 
-        Public Overrides Sub GetCompoundList(ByRef compIds As Object, ByRef formulae As Object, ByRef names As Object, ByRef boilTemps As Object, ByRef molwts As Object, ByRef casnos As Object)
-            'Me.SetMaterial(Me.CurrentMaterialStream)
+        Public Overrides Sub GetCompoundList(ByRef compIds As String(), ByRef formulae As String(), ByRef names As String(), ByRef boilTemps As Double(), ByRef molwts As Double(), ByRef casnos As String())
             CType(_copp, ICapeThermoCompounds).GetCompoundList(compIds, formulae, names, boilTemps, molwts, casnos)
         End Sub
 
-        Public Overrides Function GetConstPropList() As Object
-            'Me.SetMaterial(Me.CurrentMaterialStream)
+        Public Overrides Function GetConstPropList() As String()
             Return CType(_copp, ICapeThermoCompounds).GetConstPropList()
         End Function
 
         Public Overrides Function GetNumCompounds() As Integer
-            'Me.SetMaterial(Me.CurrentMaterialStream)
             Return CType(_copp, ICapeThermoCompounds).GetNumCompounds()
         End Function
 
-        Public Overrides Sub GetPDependentProperty(ByVal props As Object, ByVal pressure As Double, ByVal compIds As Object, ByRef propVals As Object)
-            'Me.SetMaterial(Me.CurrentMaterialStream)
+        Public Overrides Sub GetPDependentProperty(ByVal props As String(), ByVal pressure As Double, ByVal compIds As String(), ByRef propVals As Double())
             CType(_copp, ICapeThermoCompounds).GetPDependentProperty(props, pressure, compIds, propVals)
         End Sub
 
-        Public Overrides Function GetPDependentPropList() As Object
-            'Me.SetMaterial(Me.CurrentMaterialStream)
+        Public Overrides Function GetPDependentPropList() As String()
             Return CType(_copp, ICapeThermoCompounds).GetPDependentPropList
         End Function
 
-        Public Overrides Sub GetTDependentProperty(ByVal props As Object, ByVal temperature As Double, ByVal compIds As Object, ByRef propVals As Object)
-            'Me.SetMaterial(Me.CurrentMaterialStream)
+        Public Overrides Sub GetTDependentProperty(ByVal props As String(), ByVal temperature As Double, ByVal compIds As String(), ByRef propVals As Double())
             CType(_copp, ICapeThermoCompounds).GetTDependentProperty(props, temperature, compIds, propVals)
         End Sub
 
-        Public Overrides Function GetTDependentPropList() As Object
-            'Me.SetMaterial(Me.CurrentMaterialStream)
+        Public Overrides Function GetTDependentPropList() As String()
             Return CType(_copp, ICapeThermoCompounds).GetTDependentPropList
         End Function
 
         Public Overrides Function GetNumPhases() As Integer
-            'Me.SetMaterial(Me.CurrentMaterialStream)
             Return CType(_copp, ICapeThermoPhases).GetNumPhases
         End Function
 
-        Public Overrides Function GetPhaseInfo(ByVal phaseLabel As String, ByVal phaseAttribute As String) As Object
-            'Me.SetMaterial(Me.CurrentMaterialStream)
+        Public Overrides Function GetPhaseInfo(ByVal phaseLabel As String, ByVal phaseAttribute As String) As String()
             Return CType(_copp, ICapeThermoPhases).GetPhaseInfo(phaseLabel, phaseAttribute)
         End Function
 
-        Public Overrides Sub GetPhaseList1(ByRef phaseLabels As Object, ByRef stateOfAggregation As Object, ByRef keyCompoundId As Object)
-            'Me.SetMaterial(Me.CurrentMaterialStream)
+        Public Overrides Sub GetPhaseList1(ByRef phaseLabels As String(), ByRef stateOfAggregation As String(), ByRef keyCompoundId As String())
             CType(_copp, ICapeThermoPhases).GetPhaseList(phaseLabels, stateOfAggregation, keyCompoundId)
         End Sub
 
-        Public Overrides Sub CalcAndGetLnPhi(ByVal phaseLabel As String, ByVal temperature As Double, ByVal pressure As Double, ByVal moleNumbers As Object, ByVal fFlags As Integer, ByRef lnPhi As Object, ByRef lnPhiDT As Object, ByRef lnPhiDP As Object, ByRef lnPhiDn As Object)
-            'Me.SetMaterial(Me.CurrentMaterialStream)
+        Public Overrides Sub CalcAndGetLnPhi(ByVal phaseLabel As String, ByVal temperature As Double, ByVal pressure As Double, ByVal moleNumbers As Double(), ByVal fFlags As CapeFugacityFlag, ByRef lnPhi As Double(), ByRef lnPhiDT As Double(), ByRef lnPhiDP As Double(), ByRef lnPhiDn As Double())
             CType(_copp, ICapeThermoPropertyRoutine).CalcAndGetLnPhi(phaseLabel, temperature, pressure, moleNumbers, fFlags, lnPhi, lnPhiDT, lnPhiDP, lnPhiDn)
         End Sub
 
-        Public Overrides Sub CalcSinglePhaseProp(ByVal props As Object, ByVal phaseLabel As String)
-            'Me.SetMaterial(Me.CurrentMaterialStream)
+        Public Overrides Sub CalcSinglePhaseProp(ByVal props As String(), ByVal phaseLabel As String)
             CType(_copp, ICapeThermoPropertyRoutine).CalcSinglePhaseProp(props, phaseLabel)
         End Sub
 
-        Public Overrides Sub CalcTwoPhaseProp(ByVal props As Object, ByVal phaseLabels As Object)
-            'Me.SetMaterial(Me.CurrentMaterialStream)
+        Public Overrides Sub CalcTwoPhaseProp(ByVal props As String(), ByVal phaseLabels As String())
             CType(_copp, ICapeThermoPropertyRoutine).CalcTwoPhaseProp(props, phaseLabels)
         End Sub
 
@@ -1421,15 +1410,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Return CType(_copp, ICapeThermoPropertyRoutine).CheckSinglePhasePropSpec([property], phaseLabel)
         End Function
 
-        Public Overrides Function CheckTwoPhasePropSpec(ByVal [property] As String, ByVal phaseLabels As Object) As Boolean
+        Public Overrides Function CheckTwoPhasePropSpec(ByVal [property] As String, ByVal phaseLabels As String()) As Boolean
             Return CType(_copp, ICapeThermoPropertyRoutine).CheckTwoPhasePropSpec([property], phaseLabels)
         End Function
 
-        Public Overrides Function GetSinglePhasePropList() As Object
+        Public Overrides Function GetSinglePhasePropList() As String()
             Return CType(_copp, ICapeThermoPropertyRoutine).GetSinglePhasePropList()
         End Function
 
-        Public Overrides Function GetTwoPhasePropList() As Object
+        Public Overrides Function GetTwoPhasePropList() As String()
             Return CType(_copp, ICapeThermoPropertyRoutine).GetTwoPhasePropList()
         End Function
 
@@ -1437,11 +1426,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Return CType(_copp, ICapeThermoUniversalConstant).GetUniversalConstant(constantId)
         End Function
 
-        Public Overrides Function GetUniversalConstantList() As Object
+        Public Overrides Function GetUniversalConstantList() As String()
             Return CType(_copp, ICapeThermoUniversalConstant).GetUniversalConstantList()
         End Function
 
-        Public Overrides Sub CalcEquilibrium1(ByVal specification1 As Object, ByVal specification2 As Object, ByVal solutionType As String)
+        Public Overrides Sub CalcEquilibrium1(ByVal specification1 As String(), ByVal specification2 As String(), ByVal solutionType As String)
             'Me.SetMaterial(Me.CurrentMaterialStream)
 
             Me.DW_ZerarPhaseProps(Fase.Vapor)
@@ -1460,11 +1449,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         End Sub
 
-        Public Overrides Function CheckEquilibriumSpec(ByVal specification1 As Object, ByVal specification2 As Object, ByVal solutionType As String) As Boolean
+        Public Overrides Function CheckEquilibriumSpec(ByVal specification1 As String(), ByVal specification2 As String(), ByVal solutionType As String) As Boolean
             CType(_copp, ICapeThermoEquilibriumRoutine).CheckEquilibriumSpec(specification1, specification2, solutionType)
         End Function
 
-        Public Overrides Sub SetMaterial(ByVal material As Object)
+        Public Overrides Sub SetMaterial(material As ICapeThermoMaterial)
             CType(_copp, ICapeThermoMaterialContext).SetMaterial(material)
         End Sub
 

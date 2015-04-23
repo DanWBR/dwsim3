@@ -2525,7 +2525,7 @@ Imports DWSIM.DWSIM.Outros
             If TryCast(o, CapeOpen.ICapeThermoMaterialObject) IsNot Nothing Then
                 'object is a CAPE-OPEN Material Object
                 _col._icol.Add(o)
-            ElseIf TryCast(o, CapeOpen.ICapeCollection) IsNot Nothing Then
+            ElseIf TryCast(o, CAPEOPEN110.ICapeCollection) IsNot Nothing Then
                 'object is a CAPE-OPEN Energy Object
                 _col._icol.Add(o)
             End If

@@ -388,7 +388,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen
                 RaiseEvent OnParameterValueChanged(Me, New System.EventArgs())
             End Set
         End Property
-        Public ReadOnly Property Dimensionality() As Object Implements Global.CapeOpen.ICapeParameterSpec.Dimensionality
+        Public ReadOnly Property Dimensionality() As Double() Implements Global.CapeOpen.ICapeParameterSpec.Dimensionality
             Get
                 Dim myd As ICapeParameterSpec = _par
                 Return New Double() {myd.Dimensionality(0), myd.Dimensionality(1), myd.Dimensionality(2), myd.Dimensionality(3), myd.Dimensionality(4), myd.Dimensionality(5), myd.Dimensionality(6), myd.Dimensionality(7)}
@@ -401,21 +401,21 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen
         End Property
         Public ReadOnly Property DefaultValue() As Double Implements Global.CapeOpen.ICapeRealParameterSpec.DefaultValue
             Get
-                Return _par.DefaultValue
+                Return _par.DimensionedDefaultValue
             End Get
         End Property
         Public ReadOnly Property LowerBound() As Double Implements Global.CapeOpen.ICapeRealParameterSpec.LowerBound
             Get
-                Return _par.LowerBound
+                Return _par.DimensionedLowerBound
             End Get
         End Property
         Public ReadOnly Property UpperBound() As Double Implements Global.CapeOpen.ICapeRealParameterSpec.UpperBound
             Get
-                Return _par.UpperBound
+                Return _par.DimensionedUpperBound
             End Get
         End Property
         Public Function Validate1(ByVal value As Double, ByRef message As String) As Boolean Implements Global.CapeOpen.ICapeRealParameterSpec.Validate
-            Return _par.Validate(value, message)
+            Return _par.Validate(message)
         End Function
     End Class
 
@@ -429,8 +429,8 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen
         <NonSerialized> Private ispecs As Object
         Private numdim As Integer
 
-        Sub New(ByVal name As String, description As String, ByVal value As Object, ispecs As Object, numdim As Integer)
-            MyBase.New(name, description)
+        Sub New(ByVal name As String, description As String, ByVal value As Object, ispecs As Object, numdim As Integer, mode As CapeParamMode)
+            MyBase.New(name, description, mode)
             Me.value = value
             Me.ispecs = ispecs
             Me.numdim = numdim
@@ -470,6 +470,10 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen
 
         Public Overrides Function Validate(ByRef message As String) As Boolean
             Return True
+        End Function
+
+        Public Overrides Function Clone() As Object
+            Throw New NotImplementedException
         End Function
 
     End Class

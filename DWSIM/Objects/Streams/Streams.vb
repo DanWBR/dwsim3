@@ -30,7 +30,7 @@ Namespace DWSIM.SimulationObjects.Streams
         Inherits SimulationObjects_BaseClass
 
         'CAPE-OPEN 1.0
-        Implements ICapeIdentification, ICapeThermoMaterialObject, ICapeThermoCalculationRoutine, ICapeThermoEquilibriumServer, ICapeThermoPropertyPackage, ICapeThermoMaterialTemplate
+        Implements ICapeIdentification, ICapeThermoMaterialObject, ICapeThermoCalculationRoutine, ICapeThermoEquilibriumServer, ICapeThermoPropertyPackage
 
         'CAPE-OPEN 1.1
         Implements ICapeThermoMaterial, ICapeThermoCompounds, ICapeThermoPhases, ICapeThermoUniversalConstant, ICapeThermoPropertyRoutine, ICapeThermoEquilibriumRoutine, ICapeThermoMaterialContext
@@ -159,8 +159,8 @@ Namespace DWSIM.SimulationObjects.Streams
             MyBase.PropertyValueChanged(s, e)
             If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("UOPropertyPackage")) Then
                 If e.ChangedItem.Value <> "" Then
-                    If Flowsheet.Options.PropertyPackages.ContainsKey(e.ChangedItem.Value) Then
-                        Me.PropertyPackage = Flowsheet.Options.PropertyPackages(e.ChangedItem.Value)
+                    If FlowSheet.Options.PropertyPackages.ContainsKey(e.ChangedItem.Value) Then
+                        Me.PropertyPackage = FlowSheet.Options.PropertyPackages(e.ChangedItem.Value)
                     End If
                 End If
             End If
@@ -257,8 +257,8 @@ Namespace DWSIM.SimulationObjects.Streams
             End If
 
             For Each nti As Outros.NodeItem In Me.NodeTableItems.Values
-                nti.Value = GetPropertyValue(nti.Text, Flowsheet.Options.SelectedUnitSystem)
-                nti.Unit = GetPropertyUnit(nti.Text, Flowsheet.Options.SelectedUnitSystem)
+                nti.Value = GetPropertyValue(nti.Text, FlowSheet.Options.SelectedUnitSystem)
+                nti.Unit = GetPropertyUnit(nti.Text, FlowSheet.Options.SelectedUnitSystem)
             Next
 
             Me.QTNodeTableItems = New System.Collections.Generic.Dictionary(Of Integer, DWSIM.Outros.NodeItem)
@@ -592,7 +592,7 @@ Namespace DWSIM.SimulationObjects.Streams
                     .Item.Add("[1] " & DWSIM.App.GetLocalString("Especificao"), Me, "SpecType", False, DWSIM.App.GetLocalString("Condies1"), "")
                 End If
 
-                valor = Format(Conversor.ConverterDoSI(su.spmp_temperature, Me.Fases(0).SPMProperties.temperature.GetValueOrDefault), Flowsheet.Options.NumberFormat)
+                valor = Format(Conversor.ConverterDoSI(su.spmp_temperature, Me.Fases(0).SPMProperties.temperature.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                 .Item.Add("[2] " & FT(DWSIM.App.GetLocalString("Temperatura"), su.spmp_temperature), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Temperaturadacorrent"), True)
                 With .Item(.Item.Count - 1)
                     Select Case Me.SpecType
@@ -601,10 +601,10 @@ Namespace DWSIM.SimulationObjects.Streams
                         Case Else
                             .IsReadOnly = False
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
-                            .Tag = New Object() {Flowsheet.Options.NumberFormat, su.spmp_temperature, "T"}
+                            .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_temperature, "T"}
                     End Select
                 End With
-                valor = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.Fases(0).SPMProperties.pressure.GetValueOrDefault), Flowsheet.Options.NumberFormat)
+                valor = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.Fases(0).SPMProperties.pressure.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                 .Item.Add(FT("[3] " & DWSIM.App.GetLocalString("Presso"), su.spmp_pressure), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Pressodacorrente"), True)
                 With .Item(.Item.Count - 1)
                     Select Case Me.SpecType
@@ -612,29 +612,29 @@ Namespace DWSIM.SimulationObjects.Streams
                             .IsReadOnly = True
                         Case Else
                             .IsReadOnly = False
-                            .Tag = New Object() {Flowsheet.Options.NumberFormat, su.spmp_pressure, "P"}
+                            .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_pressure, "P"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                     End Select
                 End With
-                valor = Format(Conversor.ConverterDoSI(su.spmp_massflow, Me.Fases(0).SPMProperties.massflow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
+                valor = Format(Conversor.ConverterDoSI(su.spmp_massflow, Me.Fases(0).SPMProperties.massflow.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                 .Item.Add("[4] " & FT(DWSIM.App.GetLocalString("Vazomssica"), su.spmp_massflow), valor, False, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Vazomssicadacorrente"), True)
                 With .Item(.Item.Count - 1)
-                    .Tag = New Object() {Flowsheet.Options.NumberFormat, su.spmp_massflow, "W"}
+                    .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_massflow, "W"}
                     .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                 End With
-                valor = Format(Conversor.ConverterDoSI(su.spmp_molarflow, Me.Fases(0).SPMProperties.molarflow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
+                valor = Format(Conversor.ConverterDoSI(su.spmp_molarflow, Me.Fases(0).SPMProperties.molarflow.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                 .Item.Add("[5] " & FT(DWSIM.App.GetLocalString("Vazomolar"), su.spmp_molarflow), valor, False, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Vazomolardacorrente"), True)
                 With .Item(.Item.Count - 1)
-                    .Tag = New Object() {Flowsheet.Options.NumberFormat, su.spmp_molarflow, "M"}
+                    .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_molarflow, "M"}
                     .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                 End With
-                valor = Format(Conversor.ConverterDoSI(su.spmp_volumetricFlow, Me.Fases(0).SPMProperties.volumetric_flow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
+                valor = Format(Conversor.ConverterDoSI(su.spmp_volumetricFlow, Me.Fases(0).SPMProperties.volumetric_flow.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                 .Item.Add("[6] " & FT(DWSIM.App.GetLocalString("Vazovolumtrica"), su.spmp_volumetricFlow), valor, False, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Vazovolumtricadacorr"), True)
                 With .Item(.Item.Count - 1)
-                    .Tag = New Object() {Flowsheet.Options.NumberFormat, su.spmp_volumetricFlow, "Q"}
+                    .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_volumetricFlow, "Q"}
                     .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                 End With
-                valor = Format(Me.Fases(2).SPMProperties.molarfraction.GetValueOrDefault, Flowsheet.Options.NumberFormat)
+                valor = Format(Me.Fases(2).SPMProperties.molarfraction.GetValueOrDefault, FlowSheet.Options.NumberFormat)
                 .Item.Add("[7] " & DWSIM.App.GetPropertyName("PROP_MS_106"), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True)
                 With .Item(.Item.Count - 1)
                     .DefaultType = Type.GetType("System.Nullable(Of Double)")
@@ -646,8 +646,8 @@ Namespace DWSIM.SimulationObjects.Streams
                             .IsReadOnly = False
                     End Select
                 End With
-                valor = Format(Conversor.ConverterDoSI(su.spmp_enthalpy, Me.Fases(0).SPMProperties.enthalpy.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                .Item.Add("[8] " & Flowsheet.FT(DWSIM.App.GetLocalString("EntalpiaEspecfica"), su.spmp_enthalpy), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("EntalpiaEspecficadam"), True)
+                valor = Format(Conversor.ConverterDoSI(su.spmp_enthalpy, Me.Fases(0).SPMProperties.enthalpy.GetValueOrDefault), FlowSheet.Options.NumberFormat)
+                .Item.Add("[8] " & FlowSheet.FT(DWSIM.App.GetLocalString("EntalpiaEspecfica"), su.spmp_enthalpy), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("EntalpiaEspecficadam"), True)
                 With .Item(.Item.Count - 1)
                     Select Case Me.SpecType
                         Case Flashspec.Pressure_and_Enthalpy
@@ -656,8 +656,8 @@ Namespace DWSIM.SimulationObjects.Streams
                             .IsReadOnly = True
                     End Select
                 End With
-                valor = Format(Conversor.ConverterDoSI(su.spmp_entropy, Me.Fases(0).SPMProperties.entropy.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                .Item.Add("[9] " & Flowsheet.FT(DWSIM.App.GetLocalString("EntropiaEspecfica"), su.spmp_entropy), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("EntropiaEspecficadam"), True)
+                valor = Format(Conversor.ConverterDoSI(su.spmp_entropy, Me.Fases(0).SPMProperties.entropy.GetValueOrDefault), FlowSheet.Options.NumberFormat)
+                .Item.Add("[9] " & FlowSheet.FT(DWSIM.App.GetLocalString("EntropiaEspecfica"), su.spmp_entropy), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("EntropiaEspecficadam"), True)
                 With .Item(.Item.Count - 1)
                     Select Case Me.SpecType
                         Case Flashspec.Pressure_and_Entropy
@@ -702,7 +702,7 @@ Namespace DWSIM.SimulationObjects.Streams
                 End If
 
                 If Me.IsSpecAttached = True Then
-                    .Item.Add(DWSIM.App.GetLocalString("ObjetoUtilizadopor"), Flowsheet.Collections.ObjectCollection(Me.AttachedSpecId).GraphicObject.Tag, True, DWSIM.App.GetLocalString("Miscelnea4"), "", True)
+                    .Item.Add(DWSIM.App.GetLocalString("ObjetoUtilizadopor"), FlowSheet.Collections.ObjectCollection(Me.AttachedSpecId).GraphicObject.Tag, True, DWSIM.App.GetLocalString("Miscelnea4"), "", True)
                     Select Case Me.SpecVarType
                         Case SpecialOps.Helpers.Spec.TipoVar.Destino
                             .Item.Add(DWSIM.App.GetLocalString("Utilizadocomo"), DWSIM.App.GetLocalString(Me.SpecVarType.ToString), True, DWSIM.App.GetLocalString("Miscelnea4"), "", True)
@@ -712,7 +712,7 @@ Namespace DWSIM.SimulationObjects.Streams
                 End If
 
                 Me.PropertyPackage.CurrentMaterialStream = Me
-                Me.PropertyPackage.PopulatePropertyGrid(pgrid, Flowsheet, su)
+                Me.PropertyPackage.PopulatePropertyGrid(pgrid, FlowSheet, su)
 
                 If Not Me.Annotation Is Nothing Then
                     .Item.Add(DWSIM.App.GetLocalString("Anotaes"), Me, "Annotation", False, DWSIM.App.GetLocalString("Outros"), DWSIM.App.GetLocalString("Cliquenobotocomretic"), True)
@@ -1367,7 +1367,7 @@ Namespace DWSIM.SimulationObjects.Streams
                         proplist.Add("PROP_MS_" + CStr(i))
                     Next
                     For i = 102 To 105
-                        For Each subst As ConstantProperties In Flowsheet.Options.SelectedComponents.Values
+                        For Each subst As ConstantProperties In FlowSheet.Options.SelectedComponents.Values
                             proplist.Add("PROP_MS_" + CStr(i) + "," + subst.Name)
                         Next
                     Next
@@ -1378,7 +1378,7 @@ Namespace DWSIM.SimulationObjects.Streams
                     For i = 131 To 148
                         proplist.Add("PROP_MS_" + CStr(i))
                     Next
-                    For Each subst As ConstantProperties In Flowsheet.Options.SelectedComponents.Values
+                    For Each subst As ConstantProperties In FlowSheet.Options.SelectedComponents.Values
                         proplist.Add("PROP_MS_102" + "," + subst.Name)
                         proplist.Add("PROP_MS_103" + "," + subst.Name)
                         proplist.Add("PROP_MS_104" + "," + subst.Name)
@@ -1427,7 +1427,7 @@ Namespace DWSIM.SimulationObjects.Streams
                     For i = 131 To 148
                         proplist.Add("PROP_MS_" + CStr(i))
                     Next
-                    For Each subst As ConstantProperties In Me.Flowsheet.Options.SelectedComponents.Values
+                    For Each subst As ConstantProperties In Me.FlowSheet.Options.SelectedComponents.Values
                         proplist.Add("PROP_MS_102" + "," + subst.Name)
                         proplist.Add("PROP_MS_103" + "," + subst.Name)
                         proplist.Add("PROP_MS_104" + "," + subst.Name)
@@ -1952,7 +1952,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' </summary>
         ''' <returns>Properties for which results are available.</returns>
         ''' <remarks>Not implemented in DWSIM.</remarks>
-        Public Function AvailableProps() As Object Implements CapeOpen.ICapeThermoMaterialObject.AvailableProps
+        Public Function AvailableProps() As String() Implements CapeOpen.ICapeThermoMaterialObject.AvailableProps
             Throw New CapeOpen.CapeNoImplException
         End Function
 
@@ -1973,7 +1973,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' be specified. Advice is to perform a CalcEquilibrium, get the phaseIDs and perform a CalcProp on the
         ''' existing phases.
         ''' The Material Object may or may not delegate this call to a Property Package.</remarks>
-        Public Sub CalcEquilibrium(ByVal flashType As String, ByVal props As Object) Implements CapeOpen.ICapeThermoMaterialObject.CalcEquilibrium
+        Public Sub CalcEquilibrium(ByVal flashType As String, ByVal props As String()) Implements CapeOpen.ICapeThermoMaterialObject.CalcEquilibrium
             Me.PropertyPackage.CurrentMaterialStream = Me
             Try
                 Me.PropertyPackage.CalcEquilibrium(Me, flashType, props)
@@ -1983,6 +1983,10 @@ Namespace DWSIM.SimulationObjects.Streams
                 If Not IsNothing(comEx) Then hcode = comEx.ErrorCode
                 ThrowCAPEException(ex, "Error", ex.Message, "ICapeThermoMaterialObject", ex.Source, ex.StackTrace, "CalcEquilibrium", hcode)
             End Try
+        End Sub
+
+        Public Sub GetPropList1(ByRef props() As String, ByRef phases() As String, ByRef calcType() As String) Implements ICapeThermoCalculationRoutine.GetPropList
+            props = GetPropList()
         End Sub
 
         ''' <summary>
@@ -1996,7 +2000,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' mixture, use “Mixture” CalcType. For pure compound fugacity
         ''' coefficients, use “Pure” CalcType.</param>
         ''' <remarks>"Pure" calctype is not implemented in DWSIM.</remarks>
-        Public Sub CalcProp(ByVal props As Object, ByVal phases As Object, ByVal calcType As String) Implements CapeOpen.ICapeThermoMaterialObject.CalcProp
+        Public Sub CalcProp(ByVal props As String(), ByVal phases As String(), ByVal calcType As String) Implements CapeOpen.ICapeThermoMaterialObject.CalcProp
             Me.PropertyPackage.CurrentMaterialStream = Me
             Try
                 Me.PropertyPackage.CalcProp(Me, props, phases, calcType)
@@ -2014,7 +2018,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' <value></value>
         ''' <returns>Compound IDs</returns>
         ''' <remarks></remarks>
-        <Xml.Serialization.XmlIgnore()> Public ReadOnly Property ComponentIds() As Object Implements CapeOpen.ICapeThermoMaterialObject.ComponentIds
+        <Xml.Serialization.XmlIgnore()> Public ReadOnly Property ComponentIds() As String() Implements CapeOpen.ICapeThermoMaterialObject.ComponentIds
             Get
                 Dim compids As Object = Nothing
                 Dim formulas As Object = Nothing
@@ -2040,9 +2044,9 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' </summary>
         ''' <returns>The created and initialized Material Object.</returns>
         ''' <remarks></remarks>
-        Public Function CreateMaterialObject() As Object Implements CapeOpen.ICapeThermoMaterialObject.CreateMaterialObject
-            Dim mat As New Streams.MaterialStream("temporary stream", "temporary stream", Me.Flowsheet, Me.PropertyPackage)
-            Me.Flowsheet.AddComponentsRows(mat)
+        Public Function CreateMaterialObject() As ICapeThermoMaterialObject Implements CapeOpen.ICapeThermoMaterialObject.CreateMaterialObject
+            Dim mat As New Streams.MaterialStream("temporary stream", "temporary stream", Me.FlowSheet, Me.PropertyPackage)
+            Me.FlowSheet.AddComponentsRows(mat)
             Return mat
         End Function
 
@@ -2051,7 +2055,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' </summary>
         ''' <returns>The duplicated Material Object.</returns>
         ''' <remarks></remarks>
-        Public Function Duplicate() As Object Implements CapeOpen.ICapeThermoMaterialObject.Duplicate
+        Public Function Duplicate() As ICapeThermoMaterialObject Implements CapeOpen.ICapeThermoMaterialObject.Duplicate
             Dim newmat As MaterialStream = Me.Clone
             newmat._flowsheet = Me._flowsheet
             Return newmat
@@ -2067,7 +2071,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' <returns>Compound Constant values returned from the Property Package for the
         ''' specified compounds.</returns>
         ''' <remarks></remarks>
-        Public Function GetComponentConstant(ByVal props As Object, ByVal compIds As Object) As Object Implements CapeOpen.ICapeThermoMaterialObject.GetComponentConstant
+        Public Function GetComponentConstant(ByVal props As String(), ByVal compIds As String()) As Object() Implements CapeOpen.ICapeThermoMaterialObject.GetComponentConstant
             Me.PropertyPackage.CurrentMaterialStream = Me
             Dim obj As Object = Nothing
             Try
@@ -2087,7 +2091,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' <param name="indVars">Independent variables to be set</param>
         ''' <returns>Values of independent variables.</returns>
         ''' <remarks>This method should not be used.</remarks>
-        Public Function GetIndependentVar(ByVal indVars As Object) As Object Implements CapeOpen.ICapeThermoMaterialObject.GetIndependentVar
+        Public Function GetIndependentVar(ByVal indVars As String()) As Double() Implements CapeOpen.ICapeThermoMaterialObject.GetIndependentVar
             Throw New CapeOpen.CapeNoImplException
         End Function
 
@@ -2115,7 +2119,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' for default or as place holder for property for which basis does not apply (see also 3.3.1).</param>
         ''' <returns>Results vector containing property values in SI units arranged by the defined qualifiers.</returns>
         ''' <remarks></remarks>
-        Public Function GetProp(ByVal [property] As String, ByVal phase As String, ByVal compIds As Object, ByVal calcType As String, ByVal basis As String) As Object Implements CapeOpen.ICapeThermoMaterialObject.GetProp
+        Public Function GetProp(ByVal [property] As String, ByVal phase As String, ByVal compIds As String(), ByVal calcType As String, ByVal basis As String) As Double() Implements CapeOpen.ICapeThermoMaterialObject.GetProp
 
             Me.PropertyPackage.CurrentMaterialStream = Me
 
@@ -2125,7 +2129,7 @@ Namespace DWSIM.SimulationObjects.Streams
             Dim res As New ArrayList
             Dim length As Integer, i As Integer, comps As New ArrayList
             If Not compIds Is Nothing Then
-                length = compIds.length
+                length = compIds.Length
                 If TryCast(Me.PropertyPackage, PropertyPackages.CAPEOPENPropertyPackage) Is Nothing Then
                     For i = 0 To length - 1
                         comps.Add(compIds(i))
@@ -2381,7 +2385,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' </summary>
         ''' <returns>List of all supported properties of the Material Object.</returns>
         ''' <remarks>DWSIM passes this call to the Property Package currently associated to the stream.</remarks>
-        Public Function GetPropList() As Object Implements CapeOpen.ICapeThermoMaterialObject.GetPropList
+        Public Function GetPropList() As String() Implements CapeOpen.ICapeThermoMaterialObject.GetPropList
             Dim mylist As Object = Me.PropertyPackage.GetPropList
             Return mylist
         End Function
@@ -2392,7 +2396,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' <param name="props">List of universal constants to be retrieved</param>
         ''' <returns>Values of universal constants</returns>
         ''' <remarks>DWSIM passes this call to the Property Package currently associated to the stream.</remarks>
-        Public Function GetUniversalConstant(ByVal props As Object) As Object Implements CapeOpen.ICapeThermoMaterialObject.GetUniversalConstant
+        Public Function GetUniversalConstant(ByVal props As String()) As Double() Implements CapeOpen.ICapeThermoMaterialObject.GetUniversalConstant
             Return Me.PropertyPackage.GetUniversalConstant(Me, props)
         End Function
 
@@ -2402,7 +2406,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' <value></value>
         ''' <returns>List of phases</returns>
         ''' <remarks></remarks>
-        <Xml.Serialization.XmlIgnore()> Public ReadOnly Property PhaseIds() As Object Implements CapeOpen.ICapeThermoMaterialObject.PhaseIds
+        <Xml.Serialization.XmlIgnore()> Public ReadOnly Property PhaseIds() As String() Implements CapeOpen.ICapeThermoMaterialObject.PhaseIds
             Get
                 Dim pl As New ArrayList
                 For Each pi As PhaseInfo In Me.PropertyPackage.PhaseMappings.Values
@@ -2428,7 +2432,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' PropCheck at least verifies that the Property is available for calculation in the Material Object. However, this
         ''' can also be verified with PropList. It is advised not to use PropCheck.
         ''' The Material Object may or may not delegate this call to a Property Package.</remarks>
-        Public Function PropCheck(ByVal props As Object) As Object Implements CapeOpen.ICapeThermoMaterialObject.PropCheck
+        Public Function PropCheck(ByVal props As String()) As Boolean() Implements CapeOpen.ICapeThermoMaterialObject.PropCheck
             Throw New CapeNoImplException
         End Function
 
@@ -2437,7 +2441,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' </summary>
         ''' <param name="props">Properties to be removed. UNDEFINED to remove all properties.</param>
         ''' <remarks>Not implemented.</remarks>
-        Public Sub RemoveResults(ByVal props As Object) Implements CapeOpen.ICapeThermoMaterialObject.RemoveResults
+        Public Sub RemoveResults(ByVal props As String()) Implements CapeOpen.ICapeThermoMaterialObject.RemoveResults
             Throw New CapeOpen.CapeNoImplException
         End Sub
 
@@ -2447,7 +2451,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' <param name="indVars">Sets the independent variable for a given Material Object. This method is deprecated.</param>
         ''' <param name="values">Independent variables to be set</param>
         ''' <remarks>Values of independent variables.</remarks>
-        Public Sub SetIndependentVar(ByVal indVars As Object, ByVal values As Object) Implements CapeOpen.ICapeThermoMaterialObject.SetIndependentVar
+        Public Sub SetIndependentVar(ByVal indVars As String(), ByVal values As Double()) Implements CapeOpen.ICapeThermoMaterialObject.SetIndependentVar
             Throw New CapeNoImplException
         End Sub
 
@@ -2464,7 +2468,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' <param name="basis">Qualifies the basis (mole / mass). See also 3.3.2.</param>
         ''' <param name="values">Values to set for the property.</param>
         ''' <remarks>DWSIM doesn't implement "Pure" calculation type.</remarks>
-        Public Sub SetProp(ByVal [property] As String, ByVal phase As String, ByVal compIds As Object, ByVal calcType As String, ByVal basis As String, ByVal values As Object) Implements CapeOpen.ICapeThermoMaterialObject.SetProp
+        Public Sub SetProp(ByVal [property] As String, ByVal phase As String, ByVal compIds As String(), ByVal calcType As String, ByVal basis As String, ByVal values As Double()) Implements CapeOpen.ICapeThermoMaterialObject.SetProp
             Me.PropertyPackage.CurrentMaterialStream = Me
             If Not calcType Is Nothing Then
                 If calcType = "Pure" Then Throw New CapeLimitedImplException
@@ -2472,7 +2476,7 @@ Namespace DWSIM.SimulationObjects.Streams
             Dim res As New ArrayList
             Dim length As Integer, i As Integer, comps As New ArrayList
             If Not compIds Is Nothing Then
-                length = compIds.length
+                length = compIds.Length
                 If TryCast(Me.PropertyPackage, PropertyPackages.CAPEOPENPropertyPackage) IsNot Nothing Then
                     For Each kvp As KeyValuePair(Of String, String) In CType(Me.PropertyPackage, PropertyPackages.CAPEOPENPropertyPackage)._mappings
                         For i = 0 To length - 1
@@ -2714,23 +2718,19 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' <param name="props">The properties for which reliability is checked.</param>
         ''' <returns>Returns the reliability scale of the calculation.</returns>
         ''' <remarks>The ValidityCheck method must not be used, since the ICapeThermoReliability interface is not yet defined.</remarks>
-        Public Function ValidityCheck(ByVal props As Object) As Object Implements CapeOpen.ICapeThermoMaterialObject.ValidityCheck
+        Public Function ValidityCheck(ByVal props As String()) As ICapeThermoReliability() Implements CapeOpen.ICapeThermoMaterialObject.ValidityCheck
             Return Me.PropertyPackage.ValidityCheck(Me, props)
         End Function
 
-        Public Sub CalcProp1(ByVal materialObject As Object, ByVal props As Object, ByVal phases As Object, ByVal calcType As String) Implements CapeOpen.ICapeThermoCalculationRoutine.CalcProp
+        Public Sub CalcProp1(ByVal materialObject As ICapeThermoMaterialObject, ByVal props As String(), ByVal phases As String(), ByVal calcType As String) Implements CapeOpen.ICapeThermoCalculationRoutine.CalcProp
             CalcProp1(materialObject, props, phases, calcType)
         End Sub
 
-        Public Function GetPropList1() As Object Implements CapeOpen.ICapeThermoCalculationRoutine.GetPropList
-            Return GetPropList()
-        End Function
-
-        Public Function PropCheck1(ByVal materialObject As Object, ByVal props As Object) As Object Implements CapeOpen.ICapeThermoCalculationRoutine.PropCheck
+        Public Function PropCheck1(ByVal materialObject As ICapeThermoMaterialObject, ByVal props As String()) As Boolean() Implements CapeOpen.ICapeThermoCalculationRoutine.PropCheck
             Return PropCheck1(materialObject, props)
         End Function
 
-        Public Function ValidityCheck1(ByVal materialObject As Object, ByVal props As Object) As Object Implements CapeOpen.ICapeThermoCalculationRoutine.ValidityCheck
+        Public Function ValidityCheck1(ByVal materialObject As ICapeThermoMaterialObject, ByVal props As String()) As ICapeThermoReliability() Implements CapeOpen.ICapeThermoCalculationRoutine.ValidityCheck
             Me.PropertyPackage.CurrentMaterialStream = Me
             Return ValidityCheck(props)
         End Function
@@ -2809,7 +2809,7 @@ Namespace DWSIM.SimulationObjects.Streams
             End Try
         End Function
 
-        Public Sub GetComponentList(ByRef compIds As Object, ByRef formulae As Object, ByRef names As Object, ByRef boilTemps As Object, ByRef molWt As Object, ByRef casNo As Object) Implements CapeOpen.ICapeThermoPropertyPackage.GetComponentList
+        Public Sub GetComponentList(ByRef compIds As String(), ByRef formulae As String(), ByRef names As String(), ByRef boilTemps As Double(), ByRef molWt As Double(), ByRef casNo As String()) Implements CapeOpen.ICapeThermoPropertyPackage.GetComponentList
             If Not Me.PropertyPackage Is Nothing Then
                 Me.PropertyPackage.CurrentMaterialStream = Me
                 Try
@@ -2932,15 +2932,6 @@ Namespace DWSIM.SimulationObjects.Streams
             Return Me.PropertyPackage.ValidityCheck(materialObject, props)
         End Function
 
-        Public Function CreateMaterialObject1() As Object Implements CapeOpen.ICapeThermoMaterialTemplate.CreateMaterialObject
-            Dim mstr As MaterialStream = CreateMaterial()
-            Return mstr
-        End Function
-
-        Public Sub SetProp1(ByVal [property] As String, ByVal values As Object) Implements CapeOpen.ICapeThermoMaterialTemplate.SetProp
-            ThrowCAPEException(New NotImplementedException(), "Not implemented.", "Not implemented.", "ICapeThermoMaterialTemplate", "", "", "", 0)
-        End Sub
-
 #End Region
 
 #Region "    CAPE-OPEN 1.1 Thermo & Properties"
@@ -2971,7 +2962,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' must be returned for those combinations and an ECapeThrmPropertyNotAvailable exception
         ''' must be raised. If the exception is raised, the client should check all the values returned to
         ''' determine which is undefined.</remarks>
-        Public Function GetCompoundConstant(ByVal props As Object, ByVal compIds As Object) As Object Implements ICapeThermoCompounds.GetCompoundConstant
+        Public Function GetCompoundConstant(ByVal props As String(), ByVal compIds As String()) As Object() Implements ICapeThermoCompounds.GetCompoundConstant
             Me.PropertyPackage.CurrentMaterialStream = Me
             Try
                 Return Me.PropertyPackage.GetCompoundConstant(props, compIds)
@@ -3019,7 +3010,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' argument. It is the responsibility of the client to maintain appropriate data structures that
         ''' allow it to reconcile the different Compound identifiers used by different Property Packages
         ''' and any native property system.</remarks>
-        Public Sub GetCompoundList(ByRef compIds As Object, ByRef formulae As Object, ByRef names As Object, ByRef boilTemps As Object, ByRef molwts As Object, ByRef casnos As Object) Implements ICapeThermoCompounds.GetCompoundList
+        Public Sub GetCompoundList(ByRef compIds As String(), ByRef formulae As String(), ByRef names As String(), ByRef boilTemps As Double(), ByRef molwts As Double(), ByRef casnos As String()) Implements ICapeThermoCompounds.GetCompoundList
             If Not Me.PropertyPackage Is Nothing Then
                 Me.PropertyPackage.CurrentMaterialStream = Me
                 Try
@@ -3055,7 +3046,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' Physical Property identifiers which do not belong to the list defined in section 7.5.2.
         ''' However, these proprietary identifiers may not be understood by most of the clients of this
         ''' component.</remarks>
-        Public Function GetConstPropList() As Object Implements ICapeThermoCompounds.GetConstPropList
+        Public Function GetConstPropList() As String() Implements ICapeThermoCompounds.GetConstPropList
             Me.PropertyPackage.CurrentMaterialStream = Me
             Try
                 Return Me.PropertyPackage.GetConstPropList()
@@ -3089,7 +3080,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' Set compIds to UNDEFINED to denote all Compounds in the component that implements the ICapeThermoCompounds interface.</param>
         ''' <param name="propVals">Property values for the Compounds specified.</param>
         ''' <remarks></remarks>
-        Public Sub GetPDependentProperty(ByVal props As Object, ByVal pressure As Double, ByVal compIds As Object, ByRef propVals As Object) Implements ICapeThermoCompounds.GetPDependentProperty
+        Public Sub GetPDependentProperty(ByVal props As String(), ByVal pressure As Double, ByVal compIds As String(), ByRef propVals As Double()) Implements ICapeThermoCompounds.GetPDependentProperty
             Me.PropertyPackage.CurrentMaterialStream = Me
             Try
                 Me.PropertyPackage.GetPDependentProperty(props, pressure, compIds, propVals)
@@ -3113,7 +3104,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' A component that implements the ICapeThermoCompounds interface may return identifiers
         ''' which do not belong to the list defined in section 7.5.4. However, these proprietary
         ''' identifiers may not be understood by most of the clients of this component.</remarks>
-        Public Function GetPDependentPropList() As Object Implements ICapeThermoCompounds.GetPDependentPropList
+        Public Function GetPDependentPropList() As String() Implements ICapeThermoCompounds.GetPDependentPropList
             Me.PropertyPackage.CurrentMaterialStream = Me
             Try
                 Return Me.PropertyPackage.GetPDependentPropList()
@@ -3151,7 +3142,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' must be returned for those combinations and an ECapeThrmPropertyNotAvailable exception
         ''' must be raised. If the exception is raised, the client should check all the values returned to
         ''' determine which is undefined.</remarks>
-        Public Sub GetTDependentProperty(ByVal props As Object, ByVal temperature As Double, ByVal compIds As Object, ByRef propVals As Object) Implements ICapeThermoCompounds.GetTDependentProperty
+        Public Sub GetTDependentProperty(ByVal props As String(), ByVal temperature As Double, ByVal compIds As String(), ByRef propVals As Double()) Implements ICapeThermoCompounds.GetTDependentProperty
             Me.PropertyPackage.CurrentMaterialStream = Me
             Try
                 Me.PropertyPackage.GetTDependentProperty(props, temperature, compIds, propVals)
@@ -3176,7 +3167,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' A component that implements the ICapeThermoCompounds interface may return identifiers
         ''' which do not belong to the list defined in section 7.5.3. However, these proprietary identifiers
         ''' may not be understood by most of the clients of this component.</remarks>
-        Public Function GetTDependentPropList() As Object Implements ICapeThermoCompounds.GetTDependentPropList
+        Public Function GetTDependentPropList() As String() Implements ICapeThermoCompounds.GetTDependentPropList
             Me.PropertyPackage.CurrentMaterialStream = Me
             Try
                 Return Me.PropertyPackage.GetTDependentPropList()
@@ -3236,7 +3227,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' If the Material Object supports the Petroleum Fractions Interface [7] the petroleum fraction
         ''' properties are also copied from the source Material Object to the current instance of the
         ''' Material Object.</remarks>
-        Public Sub CopyFromMaterial(ByRef source As Object) Implements ICapeThermoMaterial.CopyFromMaterial
+        Public Sub CopyFromMaterial(source As ICapeThermoMaterial) Implements ICapeThermoMaterial.CopyFromMaterial
 
             If Not Marshal.IsComObject(source) Then
                 Me.Assign(source)
@@ -3244,7 +3235,7 @@ Namespace DWSIM.SimulationObjects.Streams
             Else
                 'get ID
                 Dim id As String = CType(source, ICapeIdentification).ComponentDescription
-                Dim myms As MaterialStream = Me.Flowsheet.Collections.ObjectCollection(id)
+                Dim myms As MaterialStream = Me.FlowSheet.Collections.ObjectCollection(id)
                 'proceed with copy
                 Me.Assign(myms)
                 Me.AssignProps(myms)
@@ -3261,9 +3252,9 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' SetOverallProp. Any attempt to retrieve Physical Property values before they have been set
         ''' will result in an exception.</returns>
         ''' <remarks></remarks>
-        Public Function CreateMaterial() As Object Implements ICapeThermoMaterial.CreateMaterial
+        Public Function CreateMaterial() As ICapeThermoMaterial Implements ICapeThermoMaterial.CreateMaterial
             Dim mat As Streams.MaterialStream = Me.Clone
-            mat.SetFlowsheet(Me.Flowsheet)
+            mat.SetFlowsheet(Me.FlowSheet)
             mat.ClearAllProps()
             Return mat
         End Function
@@ -3291,7 +3282,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' Although the result of some calls to GetOverallProp will be a single value, the return type is
         ''' CapeArrayDouble and the method must always return an array even if it contains only a
         ''' single element.</remarks>
-        Public Sub GetOverallProp(ByVal [property] As String, ByVal basis As String, ByRef results As Object) Implements ICapeThermoMaterial.GetOverallProp
+        Public Sub GetOverallProp(ByVal [property] As String, ByVal basis As String, ByRef results As Double()) Implements ICapeThermoMaterial.GetOverallProp
             Try
                 GetSinglePhaseProp([property], "overall", basis, results)
             Catch ex As Exception
@@ -3311,7 +3302,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' <remarks>This method is provided to make it easier for developers to make efficient use of the CAPEOPEN interfaces. 
         ''' It returns the most frequently requested information from a Material Object in a single call. There is no choice 
         ''' of basis in this method. The composition is always returned as mole fractions.</remarks>
-        Public Sub GetOverallTPFraction(ByRef temperature As Double, ByRef pressure As Double, ByRef composition As Object) Implements ICapeThermoMaterial.GetOverallTPFraction
+        Public Sub GetOverallTPFraction(ByRef temperature As Double, ByRef pressure As Double, ByRef composition As Double()) Implements ICapeThermoMaterial.GetOverallTPFraction
             Try
                 Me.GetTPFraction("overall", temperature, pressure, composition)
             Catch ex As Exception
@@ -3397,7 +3388,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' 5. The PME uses the GetPresentPhases method to find out the Phases present following
         ''' the calculation and it can then use the GetSinglePhaseProp or GetTPFraction
         ''' methods to get the Phase properties.</remarks>
-        Public Sub GetPresentPhases(ByRef phaseLabels As Object, ByRef phaseStatus As Object) Implements ICapeThermoMaterial.GetPresentPhases
+        Public Sub GetPresentPhases(ByRef phaseLabels As String(), ByRef phaseStatus As CapePhaseStatus()) Implements ICapeThermoMaterial.GetPresentPhases
 
             Dim pl As New ArrayList, stat As New ArrayList
 
@@ -3467,7 +3458,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' the basis requested. This operation will not always be possible. For example, if the
         ''' molecular weight is not known for one or more Compounds, it is not possible to convert
         ''' from mass fractions or mass flows to mole fractions or molar flows.</remarks>
-        Public Sub GetSinglePhaseProp(ByVal [property] As String, ByVal phaseLabel As String, ByVal basis As String, ByRef results As Object) Implements ICapeThermoMaterial.GetSinglePhaseProp
+        Public Sub GetSinglePhaseProp(ByVal [property] As String, ByVal phaseLabel As String, ByVal basis As String, ByRef results As Double()) Implements ICapeThermoMaterial.GetSinglePhaseProp
 
             Me.PropertyPackage.CurrentMaterialStream = Me
 
@@ -3720,7 +3711,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' fractions.
         ''' To get the equivalent information for the overall mixture the GetOverallTPFraction method
         ''' of the ICapeThermoMaterial interface should be used.</remarks>
-        Public Sub GetTPFraction(ByVal phaseLabel As String, ByRef temperature As Double, ByRef pressure As Double, ByRef composition As Object) Implements ICapeThermoMaterial.GetTPFraction
+        Public Sub GetTPFraction(ByVal phaseLabel As String, ByRef temperature As Double, ByRef pressure As Double, ByRef composition As Double()) Implements ICapeThermoMaterial.GetTPFraction
 
             If Me.Fases(0).SPMProperties.temperature Is Nothing Or Me.Fases(0).SPMProperties.pressure Is Nothing Then
                 Throw New CapeBadArgumentException("Temperature and/or Pressure not set.", Nothing, 0)
@@ -3811,7 +3802,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' derivative values for the second Phase. For K-value derivative there will be N2 derivative
         ''' values for the first phase followed by N2 values for the second phase in the order defined in
         ''' 7.6.2.</remarks>
-        Public Sub GetTwoPhaseProp(ByVal [property] As String, ByVal phaseLabels As Object, ByVal basis As String, ByRef results As Object) Implements ICapeThermoMaterial.GetTwoPhaseProp
+        Public Sub GetTwoPhaseProp(ByVal [property] As String, ByVal phaseLabels As String(), ByVal basis As String, ByRef results As Double()) Implements ICapeThermoMaterial.GetTwoPhaseProp
             Me.PropertyPackage.CurrentMaterialStream = Me
             Dim res As New ArrayList
             Dim f As Integer = 0
@@ -3867,7 +3858,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' Although some properties set by calls to SetOverallProp will have a single value, the type of
         ''' argument values is CapeArrayDouble and the method must always be called with values as
         ''' an array even if it contains only a single element.</remarks>
-        Public Sub SetOverallProp(ByVal [property] As String, ByVal basis As String, ByVal values As Object) Implements ICapeThermoMaterial.SetOverallProp
+        Public Sub SetOverallProp(ByVal [property] As String, ByVal basis As String, ByVal values As Double()) Implements ICapeThermoMaterial.SetOverallProp
             Me.SetSinglePhaseProp([property], "Overall", basis, values)
         End Sub
 
@@ -3917,7 +3908,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' phase fraction set in the Material Object. These values are available for use by an
         ''' Equilibrium Calculator component to initialise an Equilibrium Calculation. The stored
         ''' values are available but there is no guarantee that they will be used.</remarks>
-        Public Sub SetPresentPhases(ByVal phaseLabels As Object, ByVal phaseStatus As Object) Implements ICapeThermoMaterial.SetPresentPhases
+        Public Sub SetPresentPhases(ByVal phaseLabels As String(), ByVal phaseStatus As CapePhaseStatus()) Implements ICapeThermoMaterial.SetPresentPhases
             'do nothing, done automatically by CalcEquilibrium
         End Sub
 
@@ -3954,7 +3945,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' property should cause the phase to be present on the Material Object, as if it were specified
         ''' in a call to SetPresentPhases with status Cape_UnknownPhaseStatus. The SetPresentPhases
         ''' method of this interface does not need to be called before calling SetSinglePhaseProp.</remarks>
-        Public Sub SetSinglePhaseProp(ByVal [property] As String, ByVal phaseLabel As String, ByVal basis As String, ByVal values As Object) Implements ICapeThermoMaterial.SetSinglePhaseProp
+        Public Sub SetSinglePhaseProp(ByVal [property] As String, ByVal phaseLabel As String, ByVal basis As String, ByVal values As Double()) Implements ICapeThermoMaterial.SetSinglePhaseProp
 
             Dim comps As New ArrayList
             If TryCast(Me.PropertyPackage, PropertyPackages.CAPEOPENPropertyPackage) IsNot Nothing Then
@@ -4208,7 +4199,83 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' phases to be present on the Material Object, as if it were present in a call to SetPresentPhases with
         ''' status Cape_UnknownPhaseStatus. The SetPresentPhases method of this interface does not need to
         ''' be called before calling SetTwoPhaseProp.</remarks>
-        Public Sub SetTwoPhaseProp(ByVal [property] As String, ByVal phaseLabels As Object, ByVal basis As String, ByVal values As Object) Implements ICapeThermoMaterial.SetTwoPhaseProp
+        Public Sub SetTwoPhaseProp(ByVal [property] As String, ByVal phaseLabels As String(), ByVal basis As String, ByVal values As Double()) Implements ICapeThermoMaterial.SetTwoPhaseProp
+            Dim comps As New ArrayList
+            If TryCast(Me.PropertyPackage, PropertyPackages.CAPEOPENPropertyPackage) IsNot Nothing Then
+                Dim complist As Object = Nothing
+                Me.PropertyPackage.GetCompoundList(complist, Nothing, Nothing, Nothing, Nothing, Nothing)
+                For Each s As String In complist
+                    For Each kvp As KeyValuePair(Of String, String) In CType(Me.PropertyPackage, PropertyPackages.CAPEOPENPropertyPackage)._mappings
+                        If kvp.Value = s Then
+                            comps.Add(kvp.Key)
+                            Exit For
+                        End If
+                    Next
+                Next
+            Else
+                For Each c As Substancia In Me.Fases(0).Componentes.Values
+                    comps.Add(c.Nome)
+                Next
+            End If
+            Select Case [property].ToLower
+                Case "kvalue"
+                    Dim i As Integer = 0
+                    For Each c As String In comps
+                        Me.Fases(0).Componentes(c).Kvalue = values(i)
+                        i += 1
+                    Next
+                Case "logkvalue"
+                    Dim i As Integer = 0
+                    For Each c As String In comps
+                        Me.Fases(0).Componentes(c).lnKvalue = values(i)
+                        i += 1
+                    Next
+                Case "surfacetension"
+                    Me.Fases(0).TPMProperties.surfaceTension = values(0)
+                Case Else
+                    Dim ex = New CapeOpen.CapeThrmPropertyNotAvailableException
+                    Dim hcode As Integer = 0
+                    ThrowCAPEException(ex, "Error", ex.Message, "ICapeThermoMaterial", ex.Source, ex.StackTrace, "GetSinglePhaseProp", hcode)
+            End Select
+        End Sub
+
+        ''' <summary>
+        ''' Sets two-phase non-constant property values for a mixture.
+        ''' </summary>
+        ''' <param name="property">The property for which values are set in the Material Object. This 
+        ''' must be one of the two-phase properties or derivatives included in sections 7.5.6 and 7.6.</param>
+        ''' <param name="phaseLabels">Phase labels of the Phases for which the property is set. The Phase
+        ''' labels must be two of the identifiers returned by the GetPhaseList method of the ICapeThermoPhases
+        ''' interface.</param>
+        ''' <param name="basis">Basis of the results. Valid settings are: “Mass” for Physical Properties per unit
+        ''' mass or “Mole” for molar properties. Use UNDEFINED as a place holder for a Physical Property for which 
+        ''' basis does not apply. See section 7.5.5 for details.</param>
+        ''' <param name="values">Value(s) to set for the property (CapeArrayDouble) or CapeInterface (see notes).</param>
+        ''' <remarks>The values argument of SetTwoPhaseProp is either a CapeArrayDouble that contains one or
+        ''' more numerical values to be set for a property, e.g. kvalues, or a CapeInterface that may be
+        ''' used to set two-phase properties described by a more complex data structure, e.g. distributed
+        ''' properties.
+        ''' Although some properties set by calls to SetTwoPhaseProp will have a single numerical
+        ''' value, the type of the values argument for numerical values is CapeArrayDouble and in such
+        ''' a case the method must be called with the values argument containing an array even if it
+        ''' contains only a single element.
+        ''' The Physical Property values set by SetTwoPhaseProp depend on two Phases, for example
+        ''' surface tension or K-values. Properties that depend on a single Phase are set by the
+        ''' SetSinglePhaseProp method.
+        ''' If a Physical Property with composition derivative is specified, the derivative values will be
+        ''' set for both Phases in the order in which the Phase labels are specified. The number of
+        ''' values returned for a composition derivative will depend on the property. For example, if
+        ''' there are N Compounds then the values vector for the surface tension derivative will contain
+        ''' N composition derivative values for the first Phase, followed by N composition derivative
+        ''' values for the second Phase. For K-values there will be N2 derivative values for the first
+        ''' phase followed by N2 values for the second phase in the order defined in 7.6.2.
+        ''' To set a property using SetTwoPhaseProp, phaseLabels identifiers should be passed that are
+        ''' supported by the Property Package or Material Object, i.e. one that appears in the list returned by the
+        ''' GetPhaseList method of the ICapeThermoPhases interface. Setting such a property should cause the
+        ''' phases to be present on the Material Object, as if it were present in a call to SetPresentPhases with
+        ''' status Cape_UnknownPhaseStatus. The SetPresentPhases method of this interface does not need to
+        ''' be called before calling SetTwoPhaseProp.</remarks>
+        Public Sub SetTwoPhaseProp(ByVal [property] As String, ByVal phaseLabels As String(), ByVal basis As String, ByVal values As Object) Implements ICapeThermoMaterial.SetTwoPhaseProp
             Dim comps As New ArrayList
             If TryCast(Me.PropertyPackage, PropertyPackages.CAPEOPENPropertyPackage) IsNot Nothing Then
                 Dim complist As Object = Nothing
@@ -4310,7 +4377,7 @@ Namespace DWSIM.SimulationObjects.Streams
         '''                                       understood by most clients.
         '''                                       For Phases with any other state of aggregation it must be
         '''                                       UNDEFINED.</remarks>
-        Public Function GetPhaseInfo(ByVal phaseLabel As String, ByVal phaseAttribute As String) As Object Implements ICapeThermoPhases.GetPhaseInfo
+        Public Function GetPhaseInfo(ByVal phaseLabel As String, ByVal phaseAttribute As String) As String() Implements ICapeThermoPhases.GetPhaseInfo
             Me.PropertyPackage.CurrentMaterialStream = Me
             Try
                 Return Me.PropertyPackage.GetPhaseInfo(phaseLabel, phaseAttribute)
@@ -4345,7 +4412,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' All arrays returned by this method must be of the same length, i.e. equal to the number of
         ''' Phase labels.
         ''' To get further information about a Phase, use the GetPhaseInfo method.</remarks>
-        Public Sub GetPhaseList(ByRef phaseLabels As Object, ByRef stateOfAggregation As Object, ByRef keyCompoundId As Object) Implements ICapeThermoPhases.GetPhaseList
+        Public Sub GetPhaseList(ByRef phaseLabels As String(), ByRef stateOfAggregation As String(), ByRef keyCompoundId As String()) Implements ICapeThermoPhases.GetPhaseList
             Me.PropertyPackage.CurrentMaterialStream = Me
             Try
                 Me.PropertyPackage.GetPhaseList1(phaseLabels, stateOfAggregation, keyCompoundId)
@@ -4378,7 +4445,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' <remarks>A component may return Universal Constant identifiers that do not belong to the list defined
         ''' in section 7.5.1. However, these proprietary identifiers may not be understood by most of the
         ''' clients of this component.</remarks>
-        Public Function GetUniversalConstantList() As Object Implements ICapeThermoUniversalConstant.GetUniversalConstantList
+        Public Function GetUniversalConstantList() As String() Implements ICapeThermoUniversalConstant.GetUniversalConstantList
             Me.PropertyPackage.CurrentMaterialStream = Me
             Return Me.PropertyPackage.GetUniversalConstantList()
         End Function
@@ -4442,7 +4509,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' - Store values for the properties/derivatives in the corresponding arguments.
         ''' Note that this calculation can be carried out irrespective of whether the Phase actually exists
         ''' in the Material Object.</remarks>
-        Public Sub CalcAndGetLnPhi(ByVal phaseLabel As String, ByVal temperature As Double, ByVal pressure As Double, ByVal moleNumbers As Object, ByVal fFlags As Integer, ByRef lnPhi As Object, ByRef lnPhiDT As Object, ByRef lnPhiDP As Object, ByRef lnPhiDn As Object) Implements ICapeThermoPropertyRoutine.CalcAndGetLnPhi
+        Public Sub CalcAndGetLnPhi(ByVal phaseLabel As String, ByVal temperature As Double, ByVal pressure As Double, ByVal moleNumbers As Double(), ByVal fFlags As CapeFugacityFlag, ByRef lnPhi As Double(), ByRef lnPhiDT As Double(), ByRef lnPhiDP As Double(), ByRef lnPhiDn As Double()) Implements ICapeThermoPropertyRoutine.CalcAndGetLnPhi
             Me.PropertyPackage.CurrentMaterialStream = Me
             Try
                 Me.PropertyPackage.CalcAndGetLnPhi(phaseLabel, temperature, pressure, moleNumbers, fFlags, lnPhi, lnPhiDT, lnPhiDP, lnPhiDn)
@@ -4513,7 +4580,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' mathematical/physical models used to represent properties). The exception
         ''' ECapeThrmPropertyNotAvailable may be raised or an extrapolated value may be returned.
         ''' It is responsibility of the implementer to decide how to handle this circumstance.</remarks>
-        Public Sub CalcSinglePhaseProp(ByVal props As Object, ByVal phaseLabel As String) Implements ICapeThermoPropertyRoutine.CalcSinglePhaseProp
+        Public Sub CalcSinglePhaseProp(ByVal props As String(), ByVal phaseLabel As String) Implements ICapeThermoPropertyRoutine.CalcSinglePhaseProp
             Me.PropertyPackage.CurrentMaterialStream = Me
             Try
                 Me.PropertyPackage.CalcSinglePhaseProp(props, phaseLabel)
@@ -4553,7 +4620,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' interface. This latter condition will be satisfied if the phases are made present explicitly by
         ''' calling the SetPresentPhases method or if any phase properties have been set by calling the
         ''' SetSinglePhaseProp or SetTwoPhaseProp methods.</remarks>
-        Public Sub CalcTwoPhaseProp(ByVal props As Object, ByVal phaseLabels As Object) Implements ICapeThermoPropertyRoutine.CalcTwoPhaseProp
+        Public Sub CalcTwoPhaseProp(ByVal props As String(), ByVal phaseLabels As String()) Implements ICapeThermoPropertyRoutine.CalcTwoPhaseProp
             Me.PropertyPackage.CurrentMaterialStream = Me
             Try
                 Me.PropertyPackage.CalcTwoPhaseProp(props, phaseLabels)
@@ -4608,7 +4675,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' If either the property argument or the values in the phaseLabels arguments are not
         ''' recognised by the component that implements the ICapeThermoPropertyRoutine interface
         ''' this method should return False.</remarks>
-        Public Function CheckTwoPhasePropSpec(ByVal [property] As String, ByVal phaseLabels As Object) As Boolean Implements ICapeThermoPropertyRoutine.CheckTwoPhasePropSpec
+        Public Function CheckTwoPhasePropSpec(ByVal [property] As String, ByVal phaseLabels As String()) As Boolean Implements ICapeThermoPropertyRoutine.CheckTwoPhasePropSpec
             Me.PropertyPackage.CurrentMaterialStream = Me
             Return Me.PropertyPackage.CheckTwoPhasePropSpec([property], phaseLabels)
         End Function
@@ -4632,7 +4699,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' A component that implements this method may return non-constant single-phase property
         ''' identifiers which do not belong to the list defined in section 7.5.5. However, these
         ''' proprietary identifiers may not be understood by most of the clients of this component.</remarks>
-        Public Function GetSinglePhasePropList() As Object Implements ICapeThermoPropertyRoutine.GetSinglePhasePropList
+        Public Function GetSinglePhasePropList() As String() Implements ICapeThermoPropertyRoutine.GetSinglePhasePropList
             Me.PropertyPackage.CurrentMaterialStream = Me
             Return Me.PropertyPackage.GetSinglePhasePropList()
         End Function
@@ -4653,7 +4720,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' identifiers which do not belong to the list defined in section 7.5.6. However, these
         ''' proprietary identifiers may not be understood by most of the clients of this component.
         ''' To get the list of supported single-phase properties, use GetSinglePhasePropList.</remarks>
-        Public Function GetTwoPhasePropList() As Object Implements ICapeThermoPropertyRoutine.GetTwoPhasePropList
+        Public Function GetTwoPhasePropList() As String() Implements ICapeThermoPropertyRoutine.GetTwoPhasePropList
             Me.PropertyPackage.CurrentMaterialStream = Me
             Return Me.PropertyPackage.GetTwoPhasePropList()
         End Function
@@ -4755,7 +4822,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' 
         ''' -- Use SetSinglePhaseProp to set pressure, temperature, Phase amount (or Phase
         ''' fraction) and composition for all Phases present.</remarks>
-        Public Sub CalcEquilibrium1(ByVal specification1 As Object, ByVal specification2 As Object, ByVal solutionType As String) Implements ICapeThermoEquilibriumRoutine.CalcEquilibrium
+        Public Sub CalcEquilibrium1(ByVal specification1 As String(), ByVal specification2 As String(), ByVal solutionType As String) Implements ICapeThermoEquilibriumRoutine.CalcEquilibrium
             Me.PropertyPackage.CurrentMaterialStream = Me
             Try
                 Me.PropertyPackage.CalcEquilibrium1(specification1, specification2, solutionType)
@@ -4792,7 +4859,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' ICapeThermoMaterial interface has been called to specify the combination of phases for the
         ''' equilibrium calculation. The result of the check should not depend on the state (temperature,
         ''' pressure, composition etc.) of the Material Object.</remarks>
-        Public Function CheckEquilibriumSpec(ByVal specification1 As Object, ByVal specification2 As Object, ByVal solutionType As String) As Boolean Implements ICapeThermoEquilibriumRoutine.CheckEquilibriumSpec
+        Public Function CheckEquilibriumSpec(ByVal specification1 As String(), ByVal specification2 As String(), ByVal solutionType As String) As Boolean Implements ICapeThermoEquilibriumRoutine.CheckEquilibriumSpec
             Me.PropertyPackage.CurrentMaterialStream = Me
             Try
                 Return Me.PropertyPackage.CheckEquilibriumSpec(specification1, specification2, solutionType)
@@ -4829,7 +4896,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' After a call to SetMaterial() has been received, the object implementing the ICapeThermo-
         ''' MaterialContext interface can assume that the number, name and order of compounds for
         ''' that Material Object will remain fixed until the next call to SetMaterial() or UnsetMaterial().</remarks>
-        Public Sub SetMaterial(ByVal material As Object) Implements ICapeThermoMaterialContext.SetMaterial
+        Public Sub SetMaterial(ByVal material As ICapeThermoMaterial) Implements ICapeThermoMaterialContext.SetMaterial
             Try
                 Me.PropertyPackage.SetMaterial(material)
             Catch ex As Exception
@@ -4931,7 +4998,7 @@ Namespace DWSIM.SimulationObjects.Streams
 
         Inherits SimulationObjects_BaseClass
 
-        Implements ICapeIdentification, ICapeCollection
+        Implements ICapeIdentification, CAPEOPEN110.ICapeCollection
 
         Protected m_energy As Nullable(Of Double)
         'Protected m_params As List(Of CapeOpen.ICapeParameter)
@@ -5201,12 +5268,12 @@ Namespace DWSIM.SimulationObjects.Streams
             Me.Energia = m_work.SIValue / 1000
         End Sub
 
-        Public Function Count() As Integer Implements CapeOpen.ICapeCollection.Count
+        Public Function Count() As Integer Implements CAPEOPEN110.ICapeCollection.Count
             'If m_params Is Nothing Then CreateParamCol()
             Return 1 'Me.m_params.Count
         End Function
 
-        Public Function Item(ByVal index As Object) As Object Implements CapeOpen.ICapeCollection.Item
+        Public Function Item(ByVal index As Object) As Object Implements CAPEOPEN110.ICapeCollection.Item
             '    If m_params Is Nothing Then CreateParamCol()
             '    Dim mypar As Object = Nothing
             '    If IsNumeric(index) Then
