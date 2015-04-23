@@ -1056,32 +1056,23 @@ Imports DWSIM.DWSIM.Outros
     End Sub
 
     Private Sub ToolStripComboBoxUnitSystem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripComboBoxUnitSystem.SelectedIndexChanged
+
         Try
+
             If FormMain.AvailableUnitSystems.ContainsKey(Me.ToolStripComboBoxUnitSystem.SelectedItem.ToString) Then
                 Me.Options.SelectedUnitSystem = FormMain.AvailableUnitSystems.Item(Me.ToolStripComboBoxUnitSystem.SelectedItem.ToString)
             End If
+
             Me.FormSurface.UpdateSelectedObject()
 
-            Dim ms As DWSIM.SimulationObjects.Streams.MaterialStream
-            Dim proplist As New ArrayList
-            For Each ms In Collections.CLCS_MaterialStreamCollection.Values
-                proplist.Clear()
-                For Each pi As DWSIM.Outros.NodeItem In ms.NodeTableItems.Values
-                    If pi.Checked Then
-                        proplist.Add(pi.Text)
-                    End If
-                Next
-                ms.FillNodeItems()
-                For Each pi As DWSIM.Outros.NodeItem In ms.NodeTableItems.Values
-                    If proplist.Contains(pi.Text) Then
-                        pi.Checked = True
-                    End If
-                Next
+            For Each o In Collections.ObjectCollection.Values
+                o.UpdatePropertyNodes(Me.Options.SelectedUnitSystem, Me.Options.NumberFormat)
             Next
 
         Catch ex As Exception
 
         End Try
+
     End Sub
 
     Private Sub ToolStripButton7_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton7.Click

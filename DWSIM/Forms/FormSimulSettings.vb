@@ -702,6 +702,10 @@ Public Class FormSimulSettings
 
             Me.FrmChild.FormSurface.UpdateSelectedObject()
 
+            For Each o In Me.FrmChild.Collections.ObjectCollection.Values
+                o.UpdatePropertyNodes(Me.FrmChild.Options.SelectedUnitSystem, Me.FrmChild.Options.NumberFormat)
+            Next
+
         End If
 
     End Sub

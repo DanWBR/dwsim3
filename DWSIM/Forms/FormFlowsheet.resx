@@ -133,9 +133,6 @@
   <data name="&gt;&gt;tsbDesat.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="TSMIPipe.Size" type="System.Drawing.Size, System.Drawing">
-    <value>237, 22</value>
-  </data>
   <data name="ToolStripButton8.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 22</value>
   </data>
@@ -187,6 +184,9 @@
   </data>
   <data name="&gt;&gt;TSMIReactorPFR.Name" xml:space="preserve">
     <value>TSMIReactorPFR</value>
+  </data>
+  <data name="TSMIValve.Text" xml:space="preserve">
+    <value>Válvula</value>
   </data>
   <data name="&gt;&gt;ToolStrip7.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -333,8 +333,8 @@
   <data name="TSMIExcelUO.Size" type="System.Drawing.Size, System.Drawing">
     <value>237, 22</value>
   </data>
-  <data name="TSMIReactorEquilibrium.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
+  <data name="&gt;&gt;GerenciadorDeReaçõesToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;ToolStrip1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -371,9 +371,6 @@
   </data>
   <data name="DiagramaDeFasesToolStripMenuItem.Text" xml:space="preserve">
     <value>Limite de Estabilidade</value>
-  </data>
-  <data name="&gt;&gt;ToolStrip6.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="TSMIMixer.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>White</value>
@@ -441,9 +438,6 @@
   <data name="&gt;&gt;MultivariateOptimizerToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;PainelDeVariáveisToolStripMenuItem.Name" xml:space="preserve">
-    <value>PainelDeVariáveisToolStripMenuItem</value>
-  </data>
   <data name="ArquivoToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
@@ -452,6 +446,9 @@
   </data>
   <data name="ResultadosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>76, 20</value>
+  </data>
+  <data name="ToolStripButton6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
   </data>
   <data name="&gt;&gt;ToolStripSeparator2.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -783,9 +780,6 @@
   <data name="&gt;&gt;MenuStrip1.Type" xml:space="preserve">
     <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;TSMITank.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;GerenciadorDeReaçõesToolStripMenuItem.Name" xml:space="preserve">
     <value>GerenciadorDeReaçõesToolStripMenuItem</value>
   </data>
@@ -1002,8 +996,8 @@
   <data name="MenuStrip1.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
-  <data name="&gt;&gt;GerenciadorDeReaçõesToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="TSMIReactorGibbs.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>White</value>
   </data>
   <data name="FlowLayoutPanel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
@@ -1035,17 +1029,14 @@
   <data name="TSBtabela.ToolTipText" xml:space="preserve">
     <value>Inserir Figura</value>
   </data>
-  <data name="ToolStripButton6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
+  <data name="TSTBZoom.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="ToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
     <value>185, 22</value>
   </data>
   <data name="TSMIRecycle.Size" type="System.Drawing.Size, System.Drawing">
     <value>170, 22</value>
-  </data>
-  <data name="&gt;&gt;TSMIPipe.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="AnáliseDePetróleosToolStripMenuItem.StatusBarText" xml:space="preserve">
     <value>Utilitário para Análise de Petróleos (caracterização e determinação de propriedades e composição PNA)</value>
@@ -1059,8 +1050,8 @@
   <data name="&gt;&gt;TSTBZoom.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="TSMIReactorGibbs.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value>White</value>
+  <data name="&gt;&gt;CAPEOPENFlowsheetMonitoringObjectsMOsToolStripMenuItem.Name" xml:space="preserve">
+    <value>CAPEOPENFlowsheetMonitoringObjectsMOsToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;ToolStripLabel2.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -1262,6 +1253,9 @@
   </data>
   <data name="DiagramaDeFasesToolStripMenuItem.StatusBarText" xml:space="preserve">
     <value>Utilitário para cálculo do diagrama PT do limite de estabilidade termodinâmica de uma corrente de matéria</value>
+  </data>
+  <data name="&gt;&gt;FlowLayoutPanel1.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
   <data name="MenuStrip1.Text" xml:space="preserve">
     <value>MenuStrip1</value>
@@ -1539,8 +1533,8 @@
   <data name="ToolStripLabel8.Text" xml:space="preserve">
     <value>Estados</value>
   </data>
-  <data name="&gt;&gt;ToolStripLabel6.Name" xml:space="preserve">
-    <value>ToolStripLabel6</value>
+  <data name="&gt;&gt;TSMIPipe.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;CaracterizaçãoDePetróleosFraçõesC7ToolStripMenuItem.Name" xml:space="preserve">
     <value>CaracterizaçãoDePetróleosFraçõesC7ToolStripMenuItem</value>
@@ -1941,11 +1935,11 @@
   <data name="&gt;&gt;ToolStripComboBoxNumberFractionFormatting.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="TSMIMixer.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
   <data name="&gt;&gt;tsbDesat.Name" xml:space="preserve">
     <value>tsbDesat</value>
-  </data>
-  <data name="ToolStripComboBoxNumberFormatting.Items13" xml:space="preserve">
-    <value>#0.0####</value>
   </data>
   <data name="&gt;&gt;MenuStrip1.Name" xml:space="preserve">
     <value>MenuStrip1</value>
@@ -1962,6 +1956,9 @@
   <data name="SaveFileDialog1.Title" xml:space="preserve">
     <value>Save Flowsheet as Image</value>
   </data>
+  <data name="GerenciadorDeAmostrasDePetróleoToolStripMenuItem.Text" xml:space="preserve">
+    <value>Gerenciador de Amostras de Petróleos</value>
+  </data>
   <data name="&gt;&gt;GerarRelatórioToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -1970,6 +1967,9 @@
   </data>
   <data name="ToolStripLabel5.Text" xml:space="preserve">
     <value>Soluções</value>
+  </data>
+  <data name="TSMIReactorEquilibrium.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
   </data>
   <data name="TSTBZoom.Size" type="System.Drawing.Size, System.Drawing">
     <value>35, 25</value>
@@ -2175,8 +2175,8 @@
   <data name="OtimizaToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />
   </data>
-  <data name="TSMIMixer.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
+  <data name="&gt;&gt;ToolStrip6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;TSMICooler.Name" xml:space="preserve">
     <value>TSMICooler</value>
@@ -2207,9 +2207,6 @@
   </data>
   <data name="TSMISpecification.Size" type="System.Drawing.Size, System.Drawing">
     <value>170, 22</value>
-  </data>
-  <data name="&gt;&gt;CAPEOPENFlowsheetMonitoringObjectsMOsToolStripMenuItem.Name" xml:space="preserve">
-    <value>CAPEOPENFlowsheetMonitoringObjectsMOsToolStripMenuItem</value>
   </data>
   <data name="TSTBZoom.ToolTipText" xml:space="preserve">
     <value>Nível de zoom do fluxograma</value>
@@ -2607,8 +2604,8 @@
   <data name="&gt;&gt;ToolStrip4.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="&gt;&gt;FlowLayoutPanel1.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="&gt;&gt;PainelDeVariáveisToolStripMenuItem.Name" xml:space="preserve">
+    <value>PainelDeVariáveisToolStripMenuItem</value>
   </data>
   <data name="TSMICOUO.Size" type="System.Drawing.Size, System.Drawing">
     <value>237, 22</value>
@@ -2679,8 +2676,8 @@
   <data name="&gt;&gt;ExibirSaídaDoConsoleToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="TSTBZoom.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
+  <data name="&gt;&gt;TSMITank.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;ExibirSaídaDoConsoleToolStripMenuItem.Name" xml:space="preserve">
     <value>ExibirSaídaDoConsoleToolStripMenuItem</value>
@@ -2700,8 +2697,8 @@
   <data name="&gt;&gt;OperaçõesLógicasToolStripMenuItem.Name" xml:space="preserve">
     <value>OperaçõesLógicasToolStripMenuItem</value>
   </data>
-  <data name="TSMIValve.Text" xml:space="preserve">
-    <value>Válvula</value>
+  <data name="ToolStripComboBoxNumberFormatting.Items13" xml:space="preserve">
+    <value>#0.0####</value>
   </data>
   <data name="&gt;&gt;ComponentesToolStripMenuItem.Name" xml:space="preserve">
     <value>ComponentesToolStripMenuItem</value>
@@ -2745,8 +2742,8 @@
   <data name="TSMIFlowsheet.Text" xml:space="preserve">
     <value>Fluxograma (UO)</value>
   </data>
-  <data name="GerenciadorDeAmostrasDePetróleoToolStripMenuItem.Text" xml:space="preserve">
-    <value>Gerenciador de Amostras de Petróleos</value>
+  <data name="TSMIPipe.Size" type="System.Drawing.Size, System.Drawing">
+    <value>237, 22</value>
   </data>
   <data name="&gt;&gt;tsbRestoreStates.Name" xml:space="preserve">
     <value>tsbRestoreStates</value>
@@ -2819,6 +2816,9 @@
   </data>
   <data name="ToolStripButton1.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 22</value>
+  </data>
+  <data name="&gt;&gt;ToolStripLabel6.Name" xml:space="preserve">
+    <value>ToolStripLabel6</value>
   </data>
   <data name="CorrentesToolStripMenuItem.StatusBarText" type="System.Resources.ResXNullRef, System.Windows.Forms">
     <value />

@@ -182,7 +182,7 @@
     <value>Schnellkupplung</value>
   </data>
   <data name="ToolStrip4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>495, 25</value>
+    <value>441, 25</value>
   </data>
   <data name="ToolStrip4.Text" xml:space="preserve">
     <value>Fließbild</value>
@@ -293,7 +293,7 @@
     <value>Anteilformat</value>
   </data>
   <data name="ToolStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>662, 25</value>
+    <value>695, 25</value>
   </data>
   <data name="ComponentesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>207, 22</value>
