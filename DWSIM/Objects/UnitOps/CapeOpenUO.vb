@@ -321,13 +321,15 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 If Not _couo Is Nothing Then
                     Dim myuo As CapeOpen.ICapeUtilities = TryCast(_couo, CapeOpen.ICapeUtilities)
-                    If Not myuo Is Nothing Then myuo.Initialize()
+                    If Not myuo Is Nothing Then
+                        myuo.Initialize()
+                        myuo.simulationContext = Me.FlowSheet
+                    End If
                     Dim myuo2 As CapeOpen.ICapeIdentification = TryCast(_couo, CapeOpen.ICapeIdentification)
                     If Not myuo2 Is Nothing Then
                         If Not Me.GraphicObject Is Nothing Then myuo2.ComponentName = Me.GraphicObject.Tag
                         If Not Me.GraphicObject Is Nothing Then myuo2.ComponentDescription = Me.GraphicObject.Name
                     End If
-                    myuo.simulationContext = Me.FlowSheet
                 End If
 
             End If
