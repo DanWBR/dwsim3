@@ -222,7 +222,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
         <OnSerializing()> Sub PersistSave(ByVal context As System.Runtime.Serialization.StreamingContext)
 
             'If the Unit Operation doesn't implement any of the IPersist interfaces, the _istr variable will be null.
-            'The Object will have to be restored using the parameters and ports stored information only.
+            'The object will have to be restored using the parameters and ports' information only.
+
+            _istr = Nothing
 
             If Not _couo Is Nothing Then
                 Dim myuo As Interfaces.IPersistStreamInit = TryCast(_couo, Interfaces.IPersistStreamInit)
@@ -805,8 +807,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Init()
 
                         Dim pdata As XElement = (From el As XElement In data Select el Where el.Name = "PersistedData").SingleOrDefault
-                        _istr = New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.ComIStreamWrapper(New MemoryStream(Convert.FromBase64String(pdata.Value)))
-                        PersistLoad(Nothing)
+
+                        If Not pdata Is Nothing Then
+                            _istr = New DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.ComIStreamWrapper(New MemoryStream(Convert.FromBase64String(pdata.Value)))
+                            PersistLoad(Nothing)
+                        End If
 
                         Dim paramdata As XElement = (From el As XElement In data Select el Where el.Name = "ParameterData").SingleOrDefault
                         Dim b As New BinaryFormatter, m As New MemoryStream()
@@ -873,7 +878,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             With elements
                 .Add(New XElement("CAPEOPEN_Object_Info", _seluo.SaveData().ToArray))
                 Me.PersistSave(Nothing)
-                .Add(New XElement("PersistedData", Convert.ToBase64String(CType(_istr.baseStream, MemoryStream).ToArray())))
+                If Not _istr Is Nothing Then .Add(New XElement("PersistedData", Convert.ToBase64String(CType(_istr.baseStream, MemoryStream).ToArray())))
                 Dim b As New BinaryFormatter, m As New MemoryStream()
                 b.Serialize(m, _params)
                 .Add(New XElement("ParameterData", Convert.ToBase64String(m.ToArray)))
