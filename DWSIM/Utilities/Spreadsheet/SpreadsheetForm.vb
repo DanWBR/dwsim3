@@ -482,7 +482,11 @@ Public Class SpreadsheetForm
                         str = expression.Split(New Char() {","})
                         obj = str(0).Substring(1)
                         ccparams.ObjectID = obj
-                        prop = str(1)
+                        If str.Length < 3 Then
+                            prop = str(1)
+                        Else
+                            prop = str(1) & "," & str(2)
+                        End If
                         ccparams.PropID = prop
                         cell.Value = formc.Collections.ObjectCollection(obj).GetPropertyValue(prop, formc.Options.SelectedUnitSystem)
                         ccparams.ToolTipText = DWSIM.App.GetLocalString("CellIsReading") & vbCrLf & _
