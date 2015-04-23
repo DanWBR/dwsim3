@@ -16,7 +16,7 @@ Public Class CAPEOPENPropertyPackageManager
         _description = "Exposes DWSIM Property Packages to clients using CAPE-OPEN Thermodynamic Interface Definitions"
     End Sub
 
-    Public Function GetPropertyPackage(ByVal PackageName As String) As ICapeThermoPropertyRoutine Implements ICapeThermoPropertyPackageManager.GetPropertyPackage
+    Public Function GetPropertyPackage(ByVal PackageName As String) As Object Implements ICapeThermoPropertyPackageManager.GetPropertyPackage
         Dim pp As PropertyPackage = Nothing
         Select Case PackageName
             Case "FPROPS"
@@ -86,7 +86,7 @@ Public Class CAPEOPENPropertyPackageManager
         Return pp
     End Function
 
-    Public Function GetPropertyPackageList() As String() Implements ICapeThermoPropertyPackageManager.GetPropertyPackageList
+    Public Function GetPropertyPackageList() As Object Implements ICapeThermoPropertyPackageManager.GetPropertyPackageList
         Return New String() {"FPROPS", "CoolProp", "PC-SAFT", "Peng-Robinson (PR)", "Peng-Robinson-Stryjek-Vera 2 (PRSV2-M)", "Peng-Robinson-Stryjek-Vera 2 (PRSV2-VL)", "Soave-Redlich-Kwong (SRK)", "Peng-Robinson / Lee-Kesler (PR/LK)", _
                              "UNIFAC", "UNIFAC-LL", "Modified UNIFAC (Dortmund)", "Modified UNIFAC (NIST)", "NRTL", "UNIQUAC", _
                             "Chao-Seader", "Grayson-Streed", "Lee-Kesler-Plöcker", "Raoult's Law", "COSMO-SAC (JCOSMO)", "IAPWS-IF97 Steam Tables"}
@@ -118,19 +118,16 @@ Public Class CAPEOPENPropertyPackageManager
         _params = New ParameterCollection()
     End Sub
 
-    Public ReadOnly Property parameters() As ParameterCollection Implements ICapeUtilities.Parameters
+    Public ReadOnly Property parameters() As Object Implements ICapeUtilities.parameters
         Get
             Return _params
         End Get
     End Property
 
-    Public Property simulationContext() As ICapeSimulationContext Implements ICapeUtilities.SimulationContext
-        Set(ByVal value As ICapeSimulationContext)
+    Public WriteOnly Property simulationContext() As Object Implements ICapeUtilities.simulationContext
+        Set(ByVal value As Object)
             'do nothing
         End Set
-        Get
-            Return Nothing
-        End Get
     End Property
 
     Public Sub Terminate() Implements ICapeUtilities.Terminate

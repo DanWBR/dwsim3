@@ -2661,7 +2661,7 @@ End Class
     ''' <returns>A reference to the interface on the collection containing the specified ports</returns>
     ''' <remarks>Return the collection of unit ports (i.e. ICapeUnitCollection). These are delivered as a
     ''' collection of elements exposing the interfaces ICapeUnitPort</remarks>
-    <Xml.Serialization.XmlIgnore()> Public ReadOnly Property ports As PortCollection Implements CapeOpen.ICapeUnit.Ports
+    <Xml.Serialization.XmlIgnore()> Public ReadOnly Property ports() As Object Implements CapeOpen.ICapeUnit.ports
         Get
             If Not Me._capeopenmode Then
                 If Not Me.GraphicObject.TipoObjeto = TipoObjeto.CapeOpenUO Then
@@ -2774,7 +2774,7 @@ End Class
     ''' If the PMC does not support exposing its parameters, it should raise the ECapeNoImpl error, instead of
     ''' returning a NULL reference or an empty Collection. But if the PMC supports parameters but has for this call
     ''' no parameters, it should return a valid ICapeCollection reference exposing zero parameters.</remarks>
-    <Xml.Serialization.XmlIgnore()> Public ReadOnly Property parameters As ParameterCollection Implements CapeOpen.ICapeUtilities.Parameters
+    <Xml.Serialization.XmlIgnore()> Public ReadOnly Property parameters() As Object Implements CapeOpen.ICapeUtilities.parameters
         Get
             Return _parameters
         End Get
@@ -2793,13 +2793,10 @@ End Class
     ''' simulation context, it is recommended to raise the ECapeNoImpl error.
     ''' Initially, this method was only present in the ICapeUnit interface. Since ICapeUtilities.SetSimulationContext
     ''' is now available for any kind of PMC, ICapeUnit. SetSimulationContext is deprecated.</remarks>
-    <Xml.Serialization.XmlIgnore()> Public Property SimulationContext As ICapeSimulationContext Implements CapeOpen.ICapeUtilities.SimulationContext
-        Set(ByVal value As ICapeSimulationContext)
+    <Xml.Serialization.XmlIgnore()> Public WriteOnly Property simulationContext() As Object Implements CapeOpen.ICapeUtilities.simulationContext
+        Set(ByVal value As Object)
             _simcontext = value
         End Set
-        Get
-            Return _simcontext
-        End Get
     End Property
 
     ''' <summary>
@@ -3004,7 +3001,7 @@ End Class
 
 #Region "   CAPE-OPEN Reports"
 
-    Friend _reports As New List(Of String) From {"log", "last run", "validation results"}
+    Friend _reports As String() = New String() {"log", "last run", "validation results"}
     Friend _selreport As String = ""
     Friend _calclog As String = ""
     Friend _lastrun As String = ""
@@ -3021,7 +3018,7 @@ End Class
         End Select
     End Sub
 
-    Public ReadOnly Property reports() As List(Of String) Implements CapeOpen.ICapeUnitReport.Reports
+    Public ReadOnly Property reports() As Object Implements CapeOpen.ICapeUnitReport.reports
         Get
             Return _reports
         End Get

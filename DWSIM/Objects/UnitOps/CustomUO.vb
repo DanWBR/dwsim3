@@ -622,10 +622,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
             oms2 = TryCast(Me._ports(4).connectedObject, ICapeThermoMaterialObject)
             oms3 = TryCast(Me._ports(5).connectedObject, ICapeThermoMaterialObject)
 
-            Dim ies1, oes1 As CAPEOPEN110.ICapeCollection
+            Dim ies1, oes1 As ICapeCollection
 
-            ies1 = TryCast(Me._ports(6).connectedObject, CAPEOPEN110.ICapeCollection)
-            oes1 = TryCast(Me._ports(7).connectedObject, CAPEOPEN110.ICapeCollection)
+            ies1 = TryCast(Me._ports(6).connectedObject, ICapeCollection)
+            oes1 = TryCast(Me._ports(7).connectedObject, ICapeCollection)
 
             Select Case Language
                 Case 4

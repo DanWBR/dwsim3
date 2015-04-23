@@ -346,7 +346,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Sub GetPorts()
             If Not _couo Is Nothing Then
                 Dim myuo As CapeOpen.ICapeUnit = _couo
-                Dim myports As CAPEOPEN110.ICapeCollection = myuo.Ports
+                Dim myports As ICapeCollection = myuo.ports
                 Dim i As Integer = 0
                 Dim numports As Integer = myports.Count
                 If numports > 0 Then
@@ -362,7 +362,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Sub GetParams()
             If Not _couo Is Nothing Then
                 Dim myuo As CapeOpen.ICapeUtilities = _couo
-                Dim myparms As CAPEOPEN110.ICapeCollection = myuo.Parameters
+                Dim myparms As ICapeCollection = myuo.parameters
                 Dim paramcount As Integer = myparms.Count
                 If paramcount > 0 Then
                     Dim i As Integer = 0
@@ -393,7 +393,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             Case CapeParamType.CAPE_ARRAY
                                 Dim ips As ICapeArrayParameterSpec = CType(myparam, ICapeArrayParameterSpec)
                                 Dim ip As ICapeParameter = CType(myparam, ICapeParameter)
-                                Dim p As New CapeArrayParameter(id.ComponentName, id.ComponentDescription, ip.value, ips.ItemsSpecifications, ips.NumDimensions, ip.Mode)
+                                Dim p As New CapeArrayParameter(id.ComponentName, id.ComponentDescription, ip.value, ips.ItemsSpecifications, ips.NumDimensions)
                                 _params.Add(p)
                         End Select
                     Next
@@ -404,7 +404,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Sub RestorePorts()
             If Not _couo Is Nothing Then
                 Dim myuo As ICapeUnit = _couo
-                Dim myports As CAPEOPEN110.ICapeCollection = myuo.Ports
+                Dim myports As ICapeCollection = myuo.ports
                 Dim i As Integer = 0
                 Dim numports As Integer = myports.Count
                 If numports > 0 Then
@@ -430,7 +430,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Sub RestoreParams()
             If Not _couo Is Nothing Then
                 Dim myuo As CapeOpen.ICapeUtilities = _couo
-                Dim myparms As CAPEOPEN110.ICapeCollection = myuo.Parameters
+                Dim myparms As ICapeCollection = myuo.parameters
                 Dim paramcount As Integer = myparms.Count
                 If paramcount > 0 Then
                     Dim i As Integer = 0
@@ -452,7 +452,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Sub UpdateParams()
             If Not _couo Is Nothing Then
                 Dim myuo As CapeOpen.ICapeUtilities = _couo
-                Dim myparms As CAPEOPEN110.ICapeCollection = myuo.Parameters
+                Dim myparms As ICapeCollection = myuo.parameters
                 Dim paramcount As Integer = myparms.Count
                 If paramcount > 0 Then
                     If CInt(paramcount) <> _params.Count Then
@@ -540,7 +540,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             If Not _couo Is Nothing Then
                 Dim myuo As CapeOpen.ICapeUnit = _couo
-                Dim myports As CAPEOPEN110.ICapeCollection = myuo.Ports
+                Dim myports As ICapeCollection = myuo.ports
                 Dim nip As Integer = 1
                 Dim nop As Integer = 1
                 Dim objid As String
@@ -622,7 +622,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             If Not _couo Is Nothing Then
                 Dim myuo As CapeOpen.ICapeUnit = _couo
-                Dim myports As CAPEOPEN110.ICapeCollection = myuo.Ports
+                Dim myports As ICapeCollection = myuo.ports
                 Dim nip As Integer = 0
                 Dim nop As Integer = 0
                 Dim ic, oc As Integer
@@ -701,7 +701,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Sub UpdatePorts()
             If Not _couo Is Nothing Then
                 Dim myuo As CapeOpen.ICapeUnit = _couo
-                Dim myports As CAPEOPEN110.ICapeCollection = myuo.Ports
+                Dim myports As ICapeCollection = myuo.ports
                 Dim i As Integer = 0
                 Dim numports As Integer = myports.Count
                 _ports.Clear()
@@ -1007,7 +1007,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Next
                         Dim ur As CapeOpen.ICapeUnitReport = _couo
                         If Not ur Is Nothing Then
-                            Dim reps = ur.Reports
+                            Dim reps As String() = ur.reports
                             For Each r As String In reps
                                 ur.selectedReport = r
                                 Dim msg2 As String = ""
@@ -1665,7 +1665,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen
 
     <System.Serializable()> Public Class CCapeCollection
 
-        Implements CAPEOPEN110.ICapeCollection
+        Implements ICapeCollection
 
         Public _icol As List(Of ICapeIdentification)
 
@@ -1673,11 +1673,11 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen
             _icol = New List(Of ICapeIdentification)
         End Sub
 
-        Public Function Count() As Integer Implements Global.CAPEOPEN110.ICapeCollection.Count
+        Public Function Count() As Integer Implements Global.CapeOpen.ICapeCollection.Count
             Return _icol.Count
         End Function
 
-        Public Function Item(ByVal index As Object) As Object Implements Global.CAPEOPEN110.ICapeCollection.Item
+        Public Function Item(ByVal index As Object) As Object Implements Global.CapeOpen.ICapeCollection.Item
             If Integer.TryParse(index, New Integer) Then
                 Return _icol(index - 1)
             Else

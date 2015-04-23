@@ -720,7 +720,7 @@ Namespace DWSIM.ClassesBasicasTermodinamica
 
         'CAPE-OPEN Reaction Package Interfaces
         Implements CapeOpen.ICapeIdentification
-        Implements CapeOpen.ICapeUtilities, CAPEOPEN110.ICapeCollection, CapeOpen.ICapeReactionsRoutine, CapeOpen.ICapeReactionChemistry
+        Implements CapeOpen.ICapeUtilities, CapeOpen.ICapeCollection, CapeOpen.ICapeReactionsRoutine, CapeOpen.ICapeReactionChemistry
         Implements CapeOpen.ICapeThermoContext, CapeOpen.ICapeKineticReactionContext, CapeOpen.ICapeReactionProperties
         Implements CAPEOPEN110.ICapeThermoMaterialContext
 
@@ -827,11 +827,11 @@ Namespace DWSIM.ClassesBasicasTermodinamica
         <System.NonSerialized()> Protected m_pme As FormFlowsheet
         Protected m_kre As Reaction
 
-        Public Function Count() As Integer Implements CAPEOPEN110.ICapeCollection.Count
+        Public Function Count() As Integer Implements CapeOpen.ICapeCollection.Count
             Return m_params.Count
         End Function
 
-        Public Function Item(ByVal index As Object) As Object Implements CAPEOPEN110.ICapeCollection.Item
+        Public Function Item(ByVal index As Object) As Object Implements CapeOpen.ICapeCollection.Item
             Dim mypar As Object = Nothing
             If IsNumeric(index) Then
                 mypar = m_params(index - 1)
@@ -1079,19 +1079,16 @@ Namespace DWSIM.ClassesBasicasTermodinamica
             End If
         End Sub
 
-        Public ReadOnly Property parameters() As CapeOpen.ParameterCollection Implements CapeOpen.ICapeUtilities.Parameters
+        Public ReadOnly Property parameters() As Object Implements CapeOpen.ICapeUtilities.parameters
             Get
                 Return m_params
             End Get
         End Property
 
-        Public Property simulationContext() As CapeOpen.ICapeSimulationContext Implements CapeOpen.ICapeUtilities.SimulationContext
-            Set(ByVal value As CapeOpen.ICapeSimulationContext)
+        Public WriteOnly Property simulationContext() As Object Implements CapeOpen.ICapeUtilities.simulationContext
+            Set(ByVal value As Object)
                 m_pme = value
             End Set
-            Get
-                Return m_pme
-            End Get
         End Property
 
         Public Sub Terminate() Implements CapeOpen.ICapeUtilities.Terminate
@@ -1312,7 +1309,7 @@ Namespace DWSIM.ClassesBasicasTermodinamica
 
         End Sub
 
-        Public Sub SetMaterial(ByVal materialObject As CapeOpen.ICapeThermoMaterialObject) Implements CapeOpen.ICapeThermoContext.SetMaterial
+        Public Sub SetMaterial(ByVal materialObject As Object) Implements CapeOpen.ICapeThermoContext.SetMaterial
             If Not System.Runtime.InteropServices.Marshal.IsComObject(materialObject) Then
                 Me.m_str = materialObject
             Else
@@ -1353,10 +1350,6 @@ Namespace DWSIM.ClassesBasicasTermodinamica
                 Me.m_str = myms
             End If
 
-        End Sub
-
-        Public Sub SetMaterial2(materialObject As CapeOpen.ICapeThermoMaterial) Implements CapeOpen.ICapeThermoContext.SetMaterial
-            SetMaterial1(materialObject)
         End Sub
 
         Public Sub UnsetMaterial() Implements CAPEOPEN110.ICapeThermoMaterialContext.UnsetMaterial

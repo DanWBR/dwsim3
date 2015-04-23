@@ -8074,10 +8074,6 @@ Final3:
 
         End Sub
 
-        Public Overridable Sub GetPropList1(ByRef props() As String, ByRef phases() As String, ByRef calcType() As String) Implements ICapeThermoCalculationRoutine.GetPropList
-            props = GetPropList()
-        End Sub
-
         ''' <summary>
         ''' This method is responsible for doing all calculations on behalf of the Calculation Routine component.
         ''' </summary>
@@ -8168,7 +8164,7 @@ Final3:
         ''' 'casno’ argument instead of the compIds. The reason is that different PMEs may give different names to the same
         ''' chemical compounds, whereas CAS Numbers are universal. Therefore, it is recommended to provide a value for the
         ''' casno argument wherever available.</remarks>
-        Public Overridable Sub GetComponentList(ByRef compIds() As String, ByRef formulae() As String, ByRef names() As String, ByRef boilTemps() As Double, ByRef molWt() As Double, ByRef casNo() As String) Implements CapeOpen.ICapeThermoPropertyPackage.GetComponentList
+        Public Overridable Sub GetComponentList(ByRef compIds As Object, ByRef formulae As Object, ByRef names As Object, ByRef boilTemps As Object, ByRef molWt As Object, ByRef casNo As Object) Implements CapeOpen.ICapeThermoPropertyPackage.GetComponentList
 
             Dim ids, formulas, nms, bts, casnos, molws As New ArrayList
 
@@ -8414,16 +8410,20 @@ Final3:
             Throw New CapeOpen.CapeNoImplException
         End Sub
 
-        Public Overridable Sub CalcProp1(ByVal materialObject As CapeOpen.ICapeThermoMaterialObject, ByVal props() As String, ByVal phases() As String, ByVal calcType As String) Implements CapeOpen.ICapeThermoCalculationRoutine.CalcProp
+        Public Overridable Sub CalcProp1(ByVal materialObject As Object, ByVal props As Object, ByVal phases As Object, ByVal calcType As String) Implements CapeOpen.ICapeThermoCalculationRoutine.CalcProp
             CalcProp(materialObject, props, phases, calcType)
         End Sub
 
-        Public Overridable Function PropCheck2(ByVal materialObject As ICapeThermoMaterialObject, ByVal props() As String) As Boolean() Implements CapeOpen.ICapeThermoCalculationRoutine.PropCheck
-            Throw New NotImplementedException()
+        Public Overridable Function GetPropList1() As Object Implements CapeOpen.ICapeThermoCalculationRoutine.GetPropList
+            Return GetPropList()
         End Function
 
-        Public Overridable Function ValidityCheck2(ByVal materialObject As ICapeThermoMaterialObject, ByVal props() As String) As ICapeThermoReliability() Implements CapeOpen.ICapeThermoCalculationRoutine.ValidityCheck
-            Throw New NotImplementedException()
+        Public Overridable Function PropCheck2(ByVal materialObject As Object, ByVal props As Object) As Object Implements CapeOpen.ICapeThermoCalculationRoutine.PropCheck
+            Return True
+        End Function
+
+        Public Overridable Function ValidityCheck2(ByVal materialObject As Object, ByVal props As Object) As Object Implements CapeOpen.ICapeThermoCalculationRoutine.ValidityCheck
+            Return True
         End Function
 
 #End Region
@@ -8456,7 +8456,7 @@ Final3:
         ''' must be returned for those combinations and an ECapeThrmPropertyNotAvailable exception
         ''' must be raised. If the exception is raised, the client should check all the values returned to
         ''' determine which is undefined.</remarks>
-        Public Overridable Function GetCompoundConstant(ByVal props() As String, ByVal compIds() As String) As Object() Implements ICapeThermoCompounds.GetCompoundConstant
+        Public Overridable Function GetCompoundConstant(ByVal props As Object, ByVal compIds As Object) As Object Implements ICapeThermoCompounds.GetCompoundConstant
             Dim vals As New ArrayList
             For Each s As String In compIds
                 Dim c As Substancia = Me.CurrentMaterialStream.Fases(0).Componentes(s)
@@ -8529,7 +8529,7 @@ Final3:
         ''' argument. It is the responsibility of the client to maintain appropriate data structures that
         ''' allow it to reconcile the different Compound identifiers used by different Property Packages
         ''' and any native property system.</remarks>
-        Public Overridable Sub GetCompoundList(ByRef compIds() As String, ByRef formulae() As String, ByRef names() As String, ByRef boilTemps() As Double, ByRef molwts() As Double, ByRef casnos() As String) Implements ICapeThermoCompounds.GetCompoundList
+        Public Overridable Sub GetCompoundList(ByRef compIds As Object, ByRef formulae As Object, ByRef names As Object, ByRef boilTemps As Object, ByRef molwts As Object, ByRef casnos As Object) Implements ICapeThermoCompounds.GetCompoundList
             GetComponentList(compIds, formulae, names, boilTemps, molwts, casnos)
         End Sub
 
@@ -8546,7 +8546,7 @@ Final3:
         ''' Physical Property identifiers which do not belong to the list defined in section 7.5.2.
         ''' However, these proprietary identifiers may not be understood by most of the clients of this
         ''' component.</remarks>
-        Public Overridable Function GetConstPropList() As String() Implements ICapeThermoCompounds.GetConstPropList
+        Public Overridable Function GetConstPropList() As Object Implements ICapeThermoCompounds.GetConstPropList
             Dim vals As New ArrayList
             With vals
                 .Add("molecularweight")
@@ -8591,7 +8591,7 @@ Final3:
         ''' Set compIds to UNDEFINED to denote all Compounds in the component that implements the ICapeThermoCompounds interface.</param>
         ''' <param name="propVals">Property values for the Compounds specified.</param>
         ''' <remarks></remarks>
-        Public Overridable Sub GetPDependentProperty(ByVal props As String(), ByVal pressure As Double, ByVal compIds As String(), ByRef propVals As Double()) Implements ICapeThermoCompounds.GetPDependentProperty
+        Public Overridable Sub GetPDependentProperty(ByVal props As Object, ByVal pressure As Double, ByVal compIds As Object, ByRef propVals As Object) Implements ICapeThermoCompounds.GetPDependentProperty
             Dim vals As New ArrayList
             For Each c As String In compIds
                 For Each p As String In props
@@ -8618,7 +8618,7 @@ Final3:
         ''' A component that implements the ICapeThermoCompounds interface may return identifiers
         ''' which do not belong to the list defined in section 7.5.4. However, these proprietary
         ''' identifiers may not be understood by most of the clients of this component.</remarks>
-        Public Overridable Function GetPDependentPropList() As String() Implements ICapeThermoCompounds.GetPDependentPropList
+        Public Overridable Function GetPDependentPropList() As Object Implements ICapeThermoCompounds.GetPDependentPropList
             Return New String() {"boilingPointTemperature"}
         End Function
 
@@ -8647,7 +8647,7 @@ Final3:
         ''' must be returned for those combinations and an ECapeThrmPropertyNotAvailable exception
         ''' must be raised. If the exception is raised, the client should check all the values returned to
         ''' determine which is undefined.</remarks>
-        Public Overridable Sub GetTDependentProperty(ByVal props As String(), ByVal temperature As Double, ByVal compIds As String(), ByRef propVals As Double()) Implements ICapeThermoCompounds.GetTDependentProperty
+        Public Overridable Sub GetTDependentProperty(ByVal props As Object, ByVal temperature As Double, ByVal compIds As Object, ByRef propVals As Object) Implements ICapeThermoCompounds.GetTDependentProperty
             Dim vals As New ArrayList
             For Each c As String In compIds
                 For Each p As String In props
@@ -8699,7 +8699,7 @@ Final3:
         ''' A component that implements the ICapeThermoCompounds interface may return identifiers
         ''' which do not belong to the list defined in section 7.5.3. However, these proprietary identifiers
         ''' may not be understood by most of the clients of this component.</remarks>
-        Public Overridable Function GetTDependentPropList() As String() Implements ICapeThermoCompounds.GetTDependentPropList
+        Public Overridable Function GetTDependentPropList() As Object Implements ICapeThermoCompounds.GetTDependentPropList
             Dim vals As New ArrayList
             With vals
 
@@ -8785,7 +8785,7 @@ Final3:
         '''                                       understood by most clients.
         '''                                       For Phases with any other state of aggregation it must be
         '''                                       UNDEFINED.</remarks>
-        Public Overridable Function GetPhaseInfo(ByVal phaseLabel As String, ByVal phaseAttribute As String) As String() Implements ICapeThermoPhases.GetPhaseInfo
+        Public Overridable Function GetPhaseInfo(ByVal phaseLabel As String, ByVal phaseAttribute As String) As Object Implements ICapeThermoPhases.GetPhaseInfo
             Dim retval As Object = Nothing
             Select Case phaseLabel
                 Case "Vapor"
@@ -8861,7 +8861,7 @@ Final3:
         ''' All arrays returned by this method must be of the same length, i.e. equal to the number of
         ''' Phase labels.
         ''' To get further information about a Phase, use the GetPhaseInfo method.</remarks>
-        Public Overridable Sub GetPhaseList1(ByRef phaseLabels As String(), ByRef stateOfAggregation As String(), ByRef keyCompoundId As String()) Implements ICapeThermoPhases.GetPhaseList
+        Public Overridable Sub GetPhaseList1(ByRef phaseLabels As Object, ByRef stateOfAggregation As Object, ByRef keyCompoundId As Object) Implements ICapeThermoPhases.GetPhaseList
             Dim pl, sa, kci As New ArrayList, tmpstr As Object
             For Each pin As PhaseInfo In Me.PhaseMappings.Values
                 If pin.PhaseLabel <> "Disabled" Then
@@ -8940,15 +8940,15 @@ Final3:
         ''' - Store values for the properties/derivatives in the corresponding arguments.
         ''' Note that this calculation can be carried out irrespective of whether the Phase actually exists
         ''' in the Material Object.</remarks>
-        Public Overridable Sub CalcAndGetLnPhi(ByVal phaseLabel As String, ByVal temperature As Double, ByVal pressure As Double, ByVal moleNumbers() As Double, ByVal fFlags As CapeOpen.CapeFugacityFlag, ByRef lnPhi() As Double, ByRef lnPhiDT() As Double, ByRef lnPhiDP() As Double, ByRef lnPhiDn() As Double) Implements ICapeThermoPropertyRoutine.CalcAndGetLnPhi
+        Public Overridable Sub CalcAndGetLnPhi(ByVal phaseLabel As String, ByVal temperature As Double, ByVal pressure As Double, ByVal moleNumbers As Object, ByVal fFlags As Integer, ByRef lnPhi As Object, ByRef lnPhiDT As Object, ByRef lnPhiDP As Object, ByRef lnPhiDn As Object) Implements ICapeThermoPropertyRoutine.CalcAndGetLnPhi
             Select Case fFlags
                 Case CapeCalculationCode.CAPE_LOG_FUGACITY_COEFFICIENTS
                     'normalize mole fractions
-                    Dim tmols As Double, Vx(moleNumbers.Length) As Double
-                    For i As Integer = 0 To moleNumbers.Length - 1
+                    Dim tmols As Double, Vx(moleNumbers.length) As Double
+                    For i As Integer = 0 To moleNumbers.length - 1
                         tmols += moleNumbers(i)
                     Next
-                    For i As Integer = 0 To moleNumbers.Length - 1
+                    For i As Integer = 0 To moleNumbers.length - 1
                         moleNumbers(i) /= tmols
                     Next
                     Select Case phaseLabel
@@ -8959,7 +8959,7 @@ Final3:
                         Case "Solid"
                             lnPhi = Me.DW_CalcFugCoeff(Vx, temperature, pressure, State.Solid)
                     End Select
-                    For i As Integer = 0 To moleNumbers.Length - 1
+                    For i As Integer = 0 To moleNumbers.length - 1
                         lnPhi(i) = Log(lnPhi(i))
                     Next
                 Case Else
@@ -9026,7 +9026,7 @@ Final3:
         ''' mathematical/physical models used to represent properties). The exception
         ''' ECapeThrmPropertyNotAvailable may be raised or an extrapolated value may be returned.
         ''' It is responsibility of the implementer to decide how to handle this circumstance.</remarks>
-        Public Overridable Sub CalcSinglePhaseProp(ByVal props As String(), ByVal phaseLabel As String) Implements ICapeThermoPropertyRoutine.CalcSinglePhaseProp
+        Public Overridable Sub CalcSinglePhaseProp(ByVal props As Object, ByVal phaseLabel As String) Implements ICapeThermoPropertyRoutine.CalcSinglePhaseProp
 
             If Not My.Application.CAPEOPENMode Then
 
@@ -9359,7 +9359,7 @@ Final3:
         ''' interface. This latter condition will be satisfied if the phases are made present explicitly by
         ''' calling the SetPresentPhases method or if any phase properties have been set by calling the
         ''' SetSinglePhaseProp or SetTwoPhaseProp methods.</remarks>
-        Public Overridable Sub CalcTwoPhaseProp(ByVal props As String(), ByVal phaseLabels As String()) Implements ICapeThermoPropertyRoutine.CalcTwoPhaseProp
+        Public Overridable Sub CalcTwoPhaseProp(ByVal props As Object, ByVal phaseLabels As Object) Implements ICapeThermoPropertyRoutine.CalcTwoPhaseProp
 
             Me.DW_CalcTwoPhaseProps(Fase.Liquid, Fase.Vapor)
 
@@ -9454,7 +9454,7 @@ Final3:
         ''' If either the property argument or the values in the phaseLabels arguments are not
         ''' recognised by the component that implements the ICapeThermoPropertyRoutine interface
         ''' this method should return False.</remarks>
-        Public Overridable Function CheckTwoPhasePropSpec(ByVal [property] As String, ByVal phaseLabels As String()) As Boolean Implements ICapeThermoPropertyRoutine.CheckTwoPhasePropSpec
+        Public Overridable Function CheckTwoPhasePropSpec(ByVal [property] As String, ByVal phaseLabels As Object) As Boolean Implements ICapeThermoPropertyRoutine.CheckTwoPhasePropSpec
             Return True
         End Function
 
@@ -9477,7 +9477,7 @@ Final3:
         ''' A component that implements this method may return non-constant single-phase property
         ''' identifiers which do not belong to the list defined in section 7.5.5. However, these
         ''' proprietary identifiers may not be understood by most of the clients of this component.</remarks>
-        Public Overridable Function GetSinglePhasePropList() As String() Implements ICapeThermoPropertyRoutine.GetSinglePhasePropList
+        Public Overridable Function GetSinglePhasePropList() As Object Implements ICapeThermoPropertyRoutine.GetSinglePhasePropList
             Dim arr As New ArrayList
             With arr
                 .Add("compressibilityFactor")
@@ -9523,7 +9523,7 @@ Final3:
         ''' identifiers which do not belong to the list defined in section 7.5.6. However, these
         ''' proprietary identifiers may not be understood by most of the clients of this component.
         ''' To get the list of supported single-phase properties, use GetSinglePhasePropList.</remarks>
-        Public Overridable Function GetTwoPhasePropList() As String() Implements ICapeThermoPropertyRoutine.GetTwoPhasePropList
+        Public Overridable Function GetTwoPhasePropList() As Object Implements ICapeThermoPropertyRoutine.GetTwoPhasePropList
             Return New String() {"kvalue", "logKvalue", "surfaceTension"}
         End Function
 
@@ -9560,7 +9560,7 @@ Final3:
         ''' <remarks>A component may return Universal Constant identifiers that do not belong to the list defined
         ''' in section 7.5.1. However, these proprietary identifiers may not be understood by most of the
         ''' clients of this component.</remarks>
-        Public Overridable Function GetUniversalConstantList() As String() Implements ICapeThermoUniversalConstant.GetUniversalConstantList
+        Public Overridable Function GetUniversalConstantList() As Object Implements ICapeThermoUniversalConstant.GetUniversalConstantList
             Return New String() {"standardAccelerationOfGravity", "avogadroConstant", "boltzmannConstant", "molarGasConstant"}
         End Function
 
@@ -9661,7 +9661,7 @@ Final3:
         ''' 
         ''' -- Use SetSinglePhaseProp to set pressure, temperature, Phase amount (or Phase
         ''' fraction) and composition for all Phases present.</remarks>
-        Public Overridable Sub CalcEquilibrium1(ByVal specification1() As String, ByVal specification2() As String, ByVal solutionType As String) Implements ICapeThermoEquilibriumRoutine.CalcEquilibrium
+        Public Overridable Sub CalcEquilibrium1(ByVal specification1 As Object, ByVal specification2 As Object, ByVal solutionType As String) Implements ICapeThermoEquilibriumRoutine.CalcEquilibrium
 
             Dim spec1, spec2 As FlashSpec
             If specification1(0).ToString.ToLower = "temperature" And specification2(0).ToString.ToLower = "pressure" Then
@@ -9906,7 +9906,7 @@ Final3:
         ''' ICapeThermoMaterial interface has been called to specify the combination of phases for the
         ''' equilibrium calculation. The result of the check should not depend on the state (temperature,
         ''' pressure, composition etc.) of the Material Object.</remarks>
-        Public Overridable Function CheckEquilibriumSpec(ByVal specification1 As String(), ByVal specification2 As String(), ByVal solutionType As String) As Boolean Implements ICapeThermoEquilibriumRoutine.CheckEquilibriumSpec
+        Public Overridable Function CheckEquilibriumSpec(ByVal specification1 As Object, ByVal specification2 As Object, ByVal solutionType As String) As Boolean Implements ICapeThermoEquilibriumRoutine.CheckEquilibriumSpec
             If specification1(0).ToString.ToLower = "temperature" And specification2(0).ToString.ToLower = "pressure" Then
                 Return True
             ElseIf specification1(0).ToString.ToLower = "pressure" And specification2(0).ToString.ToLower = "enthalpy" Then
@@ -9956,7 +9956,7 @@ Final3:
         ''' After a call to SetMaterial() has been received, the object implementing the ICapeThermo-
         ''' MaterialContext interface can assume that the number, name and order of compounds for
         ''' that Material Object will remain fixed until the next call to SetMaterial() or UnsetMaterial().</remarks>
-        Public Overridable Sub SetMaterial(ByVal material As CapeOpen.ICapeThermoMaterial) Implements ICapeThermoMaterialContext.SetMaterial
+        Public Overridable Sub SetMaterial(ByVal material As Object) Implements ICapeThermoMaterialContext.SetMaterial
             Me.CurrentMaterialStream = Nothing
             If _como IsNot Nothing Then
                 If System.Runtime.InteropServices.Marshal.IsComObject(_como) Then
@@ -10275,7 +10275,7 @@ Final3:
         ''' If the PMC does not support exposing its parameters, it should raise the ECapeNoImpl error, instead of
         ''' returning a NULL reference or an empty Collection. But if the PMC supports parameters but has for this call
         ''' no parameters, it should return a valid ICapeCollection reference exposing zero parameters.</remarks>
-        Public Overridable ReadOnly Property parameters1() As CapeOpen.ParameterCollection Implements CapeOpen.ICapeUtilities.Parameters
+        Public Overridable ReadOnly Property parameters1() As Object Implements CapeOpen.ICapeUtilities.parameters
             Get
                 Dim parms As New CapeOpen.ParameterCollection
                 For Each kvp As KeyValuePair(Of String, Double) In Me.Parameters
@@ -10298,13 +10298,10 @@ Final3:
         ''' simulation context, it is recommended to raise the ECapeNoImpl error.
         ''' Initially, this method was only present in the ICapeUnit interface. Since ICapeUtilities.SetSimulationContext
         ''' is now available for any kind of PMC, ICapeUnit. SetSimulationContext is deprecated.</remarks>
-        Public Overridable Property SimulationContext() As CapeOpen.ICapeSimulationContext Implements CapeOpen.ICapeUtilities.SimulationContext
-            Set(ByVal value As CapeOpen.ICapeSimulationContext)
+        Public Overridable WriteOnly Property simulationContext() As Object Implements CapeOpen.ICapeUtilities.simulationContext
+            Set(ByVal value As Object)
                 _pme = value
             End Set
-            Get
-                Return _pme
-            End Get
         End Property
 
         ''' <summary>
