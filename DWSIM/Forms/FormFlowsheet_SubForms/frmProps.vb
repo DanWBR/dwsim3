@@ -1041,25 +1041,21 @@ Public Class frmProps
     Private Sub PGEx2_PropertyValueChanged(ByVal s As Object, ByVal e As System.Windows.Forms.PropertyValueChangedEventArgs) Handles PGEx2.PropertyValueChanged
         ChildParent = Me.ParentForm
         If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Nome")) Then
-            If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
-                Try
-                    If Not ChildParent.Collections.ObjectCollection(ChildParent.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).Tabela Is Nothing Then
-                        ChildParent.Collections.ObjectCollection(ChildParent.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).Tabela.HeaderText = ChildParent.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag
+            Try
+                If Not ChildParent.Collections.ObjectCollection(ChildParent.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).Tabela Is Nothing Then
+                    ChildParent.Collections.ObjectCollection(ChildParent.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).Tabela.HeaderText = ChildParent.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag
+                End If
+                ChildParent.FormObjList.TreeViewObj.Nodes.Find(ChildParent.FormSurface.FlowsheetDesignSurface.SelectedObject.Name, True)(0).Text = e.ChangedItem.Value
+            Catch ex As Exception
+                'ChildParent.WriteToLog(ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+            Finally
+                'CType(FormFlowsheet.SearchSurfaceObjectsByTag(e.OldValue, ChildParent.FormSurface.FlowsheetDesignSurface), GraphicObject).Tag = e.ChangedItem.Value
+                For Each g As GraphicObject In ChildParent.FormSurface.FlowsheetDesignSurface.drawingObjects
+                    If g.TipoObjeto = TipoObjeto.GO_MasterTable Then
+                        CType(g, DWSIM.GraphicObjects.MasterTableGraphic).Update(ChildParent)
                     End If
-                    ChildParent.FormObjList.TreeViewObj.Nodes.Find(ChildParent.FormSurface.FlowsheetDesignSurface.SelectedObject.Name, True)(0).Text = e.ChangedItem.Value
-                Catch ex As Exception
-                    'ChildParent.WriteToLog(ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                Finally
-                    CType(FormFlowsheet.SearchSurfaceObjectsByTag(e.OldValue, ChildParent.FormSurface.FlowsheetDesignSurface), GraphicObject).Tag = e.ChangedItem.Value
-                    For Each g As GraphicObject In ChildParent.FormSurface.FlowsheetDesignSurface.drawingObjects
-                        If g.TipoObjeto = TipoObjeto.GO_MasterTable Then
-                            CType(g, DWSIM.GraphicObjects.MasterTableGraphic).Update(ChildParent)
-                        End If
-                    Next
-                End Try
-            Else
-                MessageBox.Show(DWSIM.App.GetLocalString("JaExisteObjetoNome"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-            End If
+                Next
+            End Try
             ChildParent.FormSurface.FlowsheetDesignSurface.Invalidate()
         End If
     End Sub

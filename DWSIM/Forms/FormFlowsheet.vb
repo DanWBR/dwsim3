@@ -2304,7 +2304,7 @@ Imports DWSIM.DWSIM.Outros
                 .ShowCustomProperties = True
                 .Item.Clear()
 
-                .Item.Add(DWSIM.App.GetLocalString("Nome"), gobj.Tag, False, DWSIM.App.GetLocalString("Descrio1"), DWSIM.App.GetLocalString("Nomedoobjeto"), True)
+                .Item.Add(DWSIM.App.GetLocalString("Nome"), gobj, "Tag", False, DWSIM.App.GetLocalString("Descrio1"), DWSIM.App.GetLocalString("Nomedoobjeto"), True)
                 With .Item(.Item.Count - 1)
                     .DefaultType = GetType(System.Boolean)
                 End With
