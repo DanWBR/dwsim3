@@ -192,7 +192,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             'Me.New(False)
 
-            MyBase.New()
+            'MyBase.New()
 
             Initialize()
 
@@ -290,7 +290,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         End Sub
 
-        Sub ConfigParameters()
+        Public Overridable Sub ConfigParameters()
             m_par = New System.Collections.Generic.Dictionary(Of String, Double)
             With Me.Parameters
                 .Clear()
@@ -9189,7 +9189,7 @@ Final3:
                         Case "volume"
                             res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.molecularWeight.GetValueOrDefault / Me.CurrentMaterialStream.Fases(f).SPMProperties.density.GetValueOrDefault / 1000)
                         Case "density"
-                            res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.density.GetValueOrDefault / Me.AUX_MMM(phs) * 1000)
+                            res.Add(Me.CurrentMaterialStream.Fases(f).SPMProperties.density.GetValueOrDefault / Me.CurrentMaterialStream.Fases(f).SPMProperties.molecularWeight.GetValueOrDefault * 1000)
                         Case "enthalpy", "enthalpynf"
                             Select Case basis
                                 Case "Molar", "molar", "mole", "Mole"
@@ -10220,7 +10220,7 @@ Final3:
                 ._pp = Me
                 ._selcomps = _selectedcomps
                 ._availcomps = _availablecomps
-                .ShowDialog()
+                .Show()
                 _selectedcomps = ._selcomps
                 _availablecomps = ._availcomps
             End With

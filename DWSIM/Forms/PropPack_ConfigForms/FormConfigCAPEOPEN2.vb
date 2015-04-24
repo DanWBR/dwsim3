@@ -20,6 +20,11 @@ Public Class FormConfigCAPEOPEN2
 
     Private Sub FormConfigCAPEOPEN2_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
+        'loads the resource manager
+        If My.MyApplication._ResourceManager Is Nothing Then
+            My.MyApplication._ResourceManager = New System.Resources.ResourceManager("DWSIM.DWSIM", System.Reflection.Assembly.GetExecutingAssembly())
+        End If
+
         Application.EnableVisualStyles()
         Application.DoEvents()
 
@@ -91,7 +96,7 @@ Public Class FormConfigCAPEOPEN2
             ACSC1 = New AutoCompleteStringCollection
 
             For Each comp In _selcomps.Values
-                Me.ListViewA.Items.Add(comp.Name, DWSIM.App.GetComponentName(comp.Name), 0).Tag = comp.Name
+                Me.ListViewA.Items.Add(comp.Name, DWSIM.App.GetComponentName(comp.Name, Nothing, True), 0).Tag = comp.Name
             Next
             For Each comp In _availcomps.Values
                 Dim idx As Integer = Me.AddCompToGrid(comp)
@@ -137,20 +142,24 @@ Public Class FormConfigCAPEOPEN2
         Select Case _pp.FlashAlgorithm
             Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
                 ComboBoxFlashAlg.SelectedIndex = 0
-            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.InsideOut
+            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoops3P,
+                    DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoops3PV2,
+                    DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoops3PV3
                 ComboBoxFlashAlg.SelectedIndex = 1
-            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.InsideOut3P
+            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.InsideOut
                 ComboBoxFlashAlg.SelectedIndex = 2
-            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.GibbsMin2P
+            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.InsideOut3P
                 ComboBoxFlashAlg.SelectedIndex = 3
-            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.GibbsMin3P
+            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.GibbsMin2P
                 ComboBoxFlashAlg.SelectedIndex = 4
-            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoops3P
+            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.GibbsMin3P
                 ComboBoxFlashAlg.SelectedIndex = 5
             Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsSLE
                 ComboBoxFlashAlg.SelectedIndex = 6
-            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsImmiscible
+            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsSLE_SS
                 ComboBoxFlashAlg.SelectedIndex = 7
+            Case DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsImmiscible
+                ComboBoxFlashAlg.SelectedIndex = 8
             Case Else
                 ComboBoxFlashAlg.SelectedIndex = 0
         End Select
@@ -172,7 +181,7 @@ Public Class FormConfigCAPEOPEN2
         Dim n As Integer
         n = comps.Count - 1
         For i = 0 To n
-            With Me.ListView2.Items.Add(DWSIM.App.GetComponentName(comps(i)))
+            With Me.ListView2.Items.Add(DWSIM.App.GetComponentName(comps(i), Nothing, True))
                 For Each s As String In selected
                     If s = comps(i) Then
                         .Checked = True
@@ -222,35 +231,30 @@ Public Class FormConfigCAPEOPEN2
         Select Case ComboBoxFlashAlg.SelectedIndex
             Case 0
                 Me._pp.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.DWSIMDefault
-                Me.chkIOmode.Enabled = False
                 Me.GroupBox11.Enabled = False
             Case 1
-                Me._pp.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.InsideOut
-                Me.chkIOmode.Enabled = True
-                Me.GroupBox11.Enabled = False
+                Me._pp.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoops3PV3
+                Me.GroupBox11.Enabled = True
             Case 2
-                Me._pp.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.InsideOut3P
-                Me.chkIOmode.Enabled = True
-                Me.GroupBox11.Enabled = True
-            Case 3
-                Me._pp.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.GibbsMin2P
-                Me.chkIOmode.Enabled = False
+                Me._pp.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.InsideOut
                 Me.GroupBox11.Enabled = False
-            Case 4
-                Me._pp.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.GibbsMin3P
-                Me.chkIOmode.Enabled = False
+            Case 3
+                Me._pp.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.InsideOut3P
                 Me.GroupBox11.Enabled = True
+            Case 4
+                Me._pp.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.GibbsMin2P
+                Me.GroupBox11.Enabled = False
             Case 5
-                Me._pp.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoops3P
-                Me.chkIOmode.Enabled = True
+                Me._pp.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.GibbsMin3P
                 Me.GroupBox11.Enabled = True
             Case 6
                 Me._pp.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsSLE
-                Me.chkIOmode.Enabled = False
                 Me.GroupBox11.Enabled = False
-            Case 7
+             Case 7
+                Me._pp.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsSLE_SS
+                Me.GroupBox11.Enabled = False
+            Case 8
                 Me._pp.FlashAlgorithm = DWSIM.SimulationObjects.PropertyPackages.FlashMethod.NestedLoopsImmiscible
-                Me.chkIOmode.Enabled = False
                 Me.GroupBox11.Enabled = True
         End Select
     End Sub
@@ -272,7 +276,7 @@ Public Class FormConfigCAPEOPEN2
 
         If Not contains Then
             Dim r As New OutlookGridRow
-            r.CreateCells(ogc1, New Object() {comp.Name, DWSIM.App.GetComponentName(comp.Name), comp.OriginalDB, DWSIM.App.GetComponentType(comp), comp.Formula})
+            r.CreateCells(ogc1, New Object() {comp.Name, DWSIM.App.GetComponentName(comp.Name, Nothing, True), comp.OriginalDB, DWSIM.App.GetComponentType(comp), comp.Formula})
             ogc1.Rows.Add(r)
             Return ogc1.Rows.Count - 1
         Else
@@ -326,7 +330,7 @@ Public Class FormConfigCAPEOPEN2
                 tmpcomp = _availcomps(ogc1.Rows(index).Cells(0).Value)
                 _selcomps.Add(tmpcomp.Name, tmpcomp)
                 _availcomps.Remove(tmpcomp.Name)
-                Me.ListViewA.Items.Add(tmpcomp.Name, DWSIM.App.GetComponentName(tmpcomp.Name), 0).Tag = tmpcomp.Name
+                Me.ListViewA.Items.Add(tmpcomp.Name, DWSIM.App.GetComponentName(tmpcomp.Name, Nothing, True), 0).Tag = tmpcomp.Name
                 Me.ogc1.Rows.RemoveAt(index)
             End If
         End If

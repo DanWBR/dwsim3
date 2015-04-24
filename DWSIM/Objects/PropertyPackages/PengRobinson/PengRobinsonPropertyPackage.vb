@@ -39,25 +39,50 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Sub New(ByVal comode As Boolean)
             MyBase.New(comode)
-            With Me.Parameters
-                .Add("PP_USE_EOS_LIQDENS", 0)
-                .Add("PP_USE_EOS_VOLUME_SHIFT", 0)
-            End With
+            'With Me.Parameters
+            '    .Add("PP_USE_EOS_LIQDENS", 0)
+            '    .Add("PP_USE_EOS_VOLUME_SHIFT", 0)
+            'End With
         End Sub
 
         Public Sub New()
 
             MyBase.New()
 
-            With Me.Parameters
-                .Add("PP_USE_EOS_LIQDENS", 0)
-                .Add("PP_USE_EOS_VOLUME_SHIFT", 0)
-            End With
+            'With Me.Parameters
+            '    .Add("PP_USE_EOS_LIQDENS", 0)
+            '    .Add("PP_USE_EOS_VOLUME_SHIFT", 0)
+            'End With
 
             Me.IsConfigurable = True
             Me.ConfigForm = New FormConfigPP
             Me._packagetype = PropertyPackages.PackageType.EOS
 
+        End Sub
+
+        Public Overrides Sub ConfigParameters()
+            m_par = New System.Collections.Generic.Dictionary(Of String, Double)
+            With Me.Parameters
+                .Clear()
+                .Add("PP_PHFILT", 0.001)
+                .Add("PP_PSFILT", 0.001)
+                .Add("PP_PHFELT", 0.001)
+                .Add("PP_PSFELT", 0.001)
+                .Add("PP_PHFMEI", 50)
+                .Add("PP_PSFMEI", 50)
+                .Add("PP_PHFMII", 100)
+                .Add("PP_PSFMII", 100)
+                .Add("PP_PTFMEI", 100)
+                .Add("PP_PTFMII", 100)
+                .Add("PP_PTFILT", 0.001)
+                .Add("PP_PTFELT", 0.001)
+                .Add("PP_FLASHALGORITHM", 2)
+                .Add("PP_FLASHALGORITHMFASTMODE", 1)
+                .Add("PP_IDEAL_MIXRULE_LIQDENS", 0)
+                .Add("PP_USEEXPLIQDENS", 0)
+                .Add("PP_USE_EOS_LIQDENS", 0)
+                .Add("PP_USE_EOS_VOLUME_SHIFT", 0)
+            End With
         End Sub
 
         Public Overrides Sub ReconfigureConfigForm()
@@ -166,9 +191,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Select Case [property].ToLower
                 Case "compressibilityfactor"
                     result = m_pr.Z_PR(T, P, RET_VMOL(phase), RET_VKij(), RET_VTC, RET_VPC, RET_VW, state)
+                    MsgBox(result)
                     If CInt(Me.Parameters("PP_USE_EOS_VOLUME_SHIFT")) = 1 Then
                         result -= Me.AUX_CM(phase) / 8.314 / T * P
                     End If
+                    MsgBox(result)
                     Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = result
                 Case "heatcapacity", "heatcapacitycp"
                     resultObj = Me.m_props.CpCvR(state, T, P, RET_VMOL(phase), RET_VKij(), RET_VMAS(phase), RET_VTC(), RET_VPC(), RET_VCP(T), RET_VMM(), RET_VW(), RET_VZRa())

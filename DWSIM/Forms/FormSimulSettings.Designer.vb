@@ -184,6 +184,7 @@ Partial Class FormSimulSettings
         Me.Button9.Name = "Button9"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Button9, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Button9, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Button9, resources.GetString("Button9.ToolTip"))
         '
         'Button2
         '
@@ -191,18 +192,20 @@ Partial Class FormSimulSettings
         Me.Button2.Name = "Button2"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Button2, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Button2, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Button2, resources.GetString("Button2.ToolTip"))
         '
         'GroupBox1
         '
+        resources.ApplyResources(Me.GroupBox1, "GroupBox1")
         Me.GroupBox1.Controls.Add(Me.Label1)
         Me.GroupBox1.Controls.Add(Me.ComboBox3)
         Me.GroupBox1.Controls.Add(Me.ComboBox1)
         Me.GroupBox1.Controls.Add(Me.Label5)
-        resources.ApplyResources(Me.GroupBox1, "GroupBox1")
         Me.GroupBox1.Name = "GroupBox1"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox1, System.Drawing.Color.Empty)
         Me.GroupBox1.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox1, resources.GetString("GroupBox1.ToolTip"))
         '
         'Label1
         '
@@ -210,26 +213,29 @@ Partial Class FormSimulSettings
         Me.Label1.Name = "Label1"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label1, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label1, resources.GetString("Label1.ToolTip"))
         '
         'ComboBox3
         '
+        resources.ApplyResources(Me.ComboBox3, "ComboBox3")
         Me.ComboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBox3.DropDownWidth = 226
         Me.ComboBox3.Items.AddRange(New Object() {resources.GetString("ComboBox3.Items"), resources.GetString("ComboBox3.Items1"), resources.GetString("ComboBox3.Items2"), resources.GetString("ComboBox3.Items3"), resources.GetString("ComboBox3.Items4"), resources.GetString("ComboBox3.Items5"), resources.GetString("ComboBox3.Items6"), resources.GetString("ComboBox3.Items7"), resources.GetString("ComboBox3.Items8"), resources.GetString("ComboBox3.Items9"), resources.GetString("ComboBox3.Items10"), resources.GetString("ComboBox3.Items11"), resources.GetString("ComboBox3.Items12"), resources.GetString("ComboBox3.Items13"), resources.GetString("ComboBox3.Items14"), resources.GetString("ComboBox3.Items15"), resources.GetString("ComboBox3.Items16"), resources.GetString("ComboBox3.Items17"), resources.GetString("ComboBox3.Items18"), resources.GetString("ComboBox3.Items19"), resources.GetString("ComboBox3.Items20"), resources.GetString("ComboBox3.Items21"), resources.GetString("ComboBox3.Items22"), resources.GetString("ComboBox3.Items23"), resources.GetString("ComboBox3.Items24"), resources.GetString("ComboBox3.Items25"), resources.GetString("ComboBox3.Items26"), resources.GetString("ComboBox3.Items27"), resources.GetString("ComboBox3.Items28")})
-        resources.ApplyResources(Me.ComboBox3, "ComboBox3")
         Me.ComboBox3.Name = "ComboBox3"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.ComboBox3, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.ComboBox3, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.ComboBox3, resources.GetString("ComboBox3.ToolTip"))
         '
         'ComboBox1
         '
+        resources.ApplyResources(Me.ComboBox1, "ComboBox1")
         Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBox1.DropDownWidth = 226
-        resources.ApplyResources(Me.ComboBox1, "ComboBox1")
         Me.ComboBox1.Items.AddRange(New Object() {resources.GetString("ComboBox1.Items"), resources.GetString("ComboBox1.Items1"), resources.GetString("ComboBox1.Items2"), resources.GetString("ComboBox1.Items3"), resources.GetString("ComboBox1.Items4"), resources.GetString("ComboBox1.Items5"), resources.GetString("ComboBox1.Items6"), resources.GetString("ComboBox1.Items7"), resources.GetString("ComboBox1.Items8"), resources.GetString("ComboBox1.Items9"), resources.GetString("ComboBox1.Items10"), resources.GetString("ComboBox1.Items11"), resources.GetString("ComboBox1.Items12"), resources.GetString("ComboBox1.Items13"), resources.GetString("ComboBox1.Items14"), resources.GetString("ComboBox1.Items15"), resources.GetString("ComboBox1.Items16"), resources.GetString("ComboBox1.Items17"), resources.GetString("ComboBox1.Items18"), resources.GetString("ComboBox1.Items19"), resources.GetString("ComboBox1.Items20"), resources.GetString("ComboBox1.Items21"), resources.GetString("ComboBox1.Items22"), resources.GetString("ComboBox1.Items23"), resources.GetString("ComboBox1.Items24"), resources.GetString("ComboBox1.Items25"), resources.GetString("ComboBox1.Items26"), resources.GetString("ComboBox1.Items27"), resources.GetString("ComboBox1.Items28")})
         Me.ComboBox1.Name = "ComboBox1"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.ComboBox1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.ComboBox1, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.ComboBox1, resources.GetString("ComboBox1.ToolTip"))
         '
         'Label5
         '
@@ -237,6 +243,7 @@ Partial Class FormSimulSettings
         Me.Label5.Name = "Label5"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label5, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label5, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label5, resources.GetString("Label5.ToolTip"))
         '
         'TBdesc
         '
@@ -244,6 +251,7 @@ Partial Class FormSimulSettings
         Me.TBdesc.Name = "TBdesc"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.TBdesc, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.TBdesc, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.TBdesc, resources.GetString("TBdesc.ToolTip"))
         '
         'TBaut
         '
@@ -251,6 +259,7 @@ Partial Class FormSimulSettings
         Me.TBaut.Name = "TBaut"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.TBaut, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.TBaut, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.TBaut, resources.GetString("TBaut.ToolTip"))
         '
         'TBtit
         '
@@ -258,6 +267,7 @@ Partial Class FormSimulSettings
         Me.TBtit.Name = "TBtit"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.TBtit, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.TBtit, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.TBtit, resources.GetString("TBtit.ToolTip"))
         '
         'Label30
         '
@@ -265,6 +275,7 @@ Partial Class FormSimulSettings
         Me.Label30.Name = "Label30"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label30, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label30, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label30, resources.GetString("Label30.ToolTip"))
         '
         'Label28
         '
@@ -272,6 +283,7 @@ Partial Class FormSimulSettings
         Me.Label28.Name = "Label28"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label28, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label28, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label28, resources.GetString("Label28.ToolTip"))
         '
         'Label27
         '
@@ -279,30 +291,33 @@ Partial Class FormSimulSettings
         Me.Label27.Name = "Label27"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label27, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label27, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label27, resources.GetString("Label27.ToolTip"))
         '
         'GroupBox5
         '
+        resources.ApplyResources(Me.GroupBox5, "GroupBox5")
         Me.GroupBox5.Controls.Add(Me.GroupBox18)
         Me.GroupBox5.Controls.Add(Me.DataGridView1)
         Me.GroupBox5.Controls.Add(Me.ComboBox2)
         Me.GroupBox5.Controls.Add(Me.Label7)
-        resources.ApplyResources(Me.GroupBox5, "GroupBox5")
         Me.GroupBox5.Name = "GroupBox5"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox5, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox5, System.Drawing.Color.Empty)
         Me.GroupBox5.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox5, resources.GetString("GroupBox5.ToolTip"))
         '
         'GroupBox18
         '
+        resources.ApplyResources(Me.GroupBox18, "GroupBox18")
         Me.GroupBox18.Controls.Add(Me.KryptonButton23)
         Me.GroupBox18.Controls.Add(Me.KryptonButton22)
         Me.GroupBox18.Controls.Add(Me.KryptonButton18)
         Me.GroupBox18.Controls.Add(Me.KryptonButton15)
-        resources.ApplyResources(Me.GroupBox18, "GroupBox18")
         Me.GroupBox18.Name = "GroupBox18"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox18, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox18, System.Drawing.Color.Empty)
         Me.GroupBox18.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox18, resources.GetString("GroupBox18.ToolTip"))
         '
         'KryptonButton23
         '
@@ -310,6 +325,7 @@ Partial Class FormSimulSettings
         Me.KryptonButton23.Name = "KryptonButton23"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.KryptonButton23, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.KryptonButton23, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.KryptonButton23, resources.GetString("KryptonButton23.ToolTip"))
         '
         'KryptonButton22
         '
@@ -317,6 +333,7 @@ Partial Class FormSimulSettings
         Me.KryptonButton22.Name = "KryptonButton22"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.KryptonButton22, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.KryptonButton22, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.KryptonButton22, resources.GetString("KryptonButton22.ToolTip"))
         '
         'KryptonButton18
         '
@@ -324,6 +341,7 @@ Partial Class FormSimulSettings
         Me.KryptonButton18.Name = "KryptonButton18"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.KryptonButton18, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.KryptonButton18, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.KryptonButton18, resources.GetString("KryptonButton18.ToolTip"))
         '
         'KryptonButton15
         '
@@ -331,9 +349,11 @@ Partial Class FormSimulSettings
         Me.KryptonButton15.Name = "KryptonButton15"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.KryptonButton15, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.KryptonButton15, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.KryptonButton15, resources.GetString("KryptonButton15.ToolTip"))
         '
         'DataGridView1
         '
+        resources.ApplyResources(Me.DataGridView1, "DataGridView1")
         Me.DataGridView1.AllowUserToAddRows = False
         Me.DataGridView1.AllowUserToDeleteRows = False
         Me.DataGridView1.AllowUserToResizeColumns = False
@@ -359,12 +379,12 @@ Partial Class FormSimulSettings
         DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.DataGridView1.DefaultCellStyle = DataGridViewCellStyle9
         Me.DataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter
-        resources.ApplyResources(Me.DataGridView1, "DataGridView1")
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.RowHeadersVisible = False
         Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.DataGridView1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.DataGridView1, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.DataGridView1, resources.GetString("DataGridView1.ToolTip"))
         '
         'Column1
         '
@@ -400,12 +420,13 @@ Partial Class FormSimulSettings
         '
         'ComboBox2
         '
+        resources.ApplyResources(Me.ComboBox2, "ComboBox2")
         Me.ComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBox2.DropDownWidth = 205
-        resources.ApplyResources(Me.ComboBox2, "ComboBox2")
         Me.ComboBox2.Name = "ComboBox2"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.ComboBox2, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.ComboBox2, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.ComboBox2, resources.GetString("ComboBox2.ToolTip"))
         '
         'Label7
         '
@@ -413,6 +434,7 @@ Partial Class FormSimulSettings
         Me.Label7.Name = "Label7"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label7, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label7, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label7, resources.GetString("Label7.ToolTip"))
         '
         'Button1
         '
@@ -420,9 +442,11 @@ Partial Class FormSimulSettings
         Me.Button1.Name = "Button1"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Button1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Button1, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Button1, resources.GetString("Button1.ToolTip"))
         '
         'NavigationPane1
         '
+        resources.ApplyResources(Me.NavigationPane1, "NavigationPane1")
         Me.NavigationPane1.AllowAddOrRemove = False
         Me.NavigationPane1.AllowOptions = False
         Me.NavigationPane1.Border = New Ascend.Border(0, 0, 1, 0)
@@ -445,7 +469,6 @@ Partial Class FormSimulSettings
         Me.NavigationPane1.Controls.Add(Me.NavigationPanePage3)
         Me.NavigationPane1.Controls.Add(Me.NavigationPanePage4)
         Me.NavigationPane1.Cursor = System.Windows.Forms.Cursors.Default
-        resources.ApplyResources(Me.NavigationPane1, "NavigationPane1")
         Me.NavigationPane1.FooterGradientHighColor = System.Drawing.SystemColors.ActiveCaption
         Me.NavigationPane1.FooterGradientLowColor = System.Drawing.SystemColors.ActiveCaption
         Me.NavigationPane1.FooterHeight = 0
@@ -460,13 +483,14 @@ Partial Class FormSimulSettings
         Me.NavigationPane1.SplitBarHeight = 6
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.NavigationPane1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.NavigationPane1, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.NavigationPane1, resources.GetString("NavigationPane1.ToolTip"))
         Me.NavigationPane1.VisibleButtonCount = 4
         '
         'NavigationPanePage1
         '
+        resources.ApplyResources(Me.NavigationPanePage1, "NavigationPanePage1")
         Me.NavigationPanePage1.ActiveGradientHighColor = System.Drawing.Color.White
         Me.NavigationPanePage1.ActiveGradientLowColor = System.Drawing.SystemColors.ActiveCaption
-        resources.ApplyResources(Me.NavigationPanePage1, "NavigationPanePage1")
         Me.NavigationPanePage1.BackColor = System.Drawing.Color.WhiteSmoke
         Me.NavigationPanePage1.ButtonFont = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold)
         Me.NavigationPanePage1.ButtonForeColor = System.Drawing.SystemColors.ActiveCaptionText
@@ -489,12 +513,13 @@ Partial Class FormSimulSettings
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.NavigationPanePage1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.NavigationPanePage1, System.Drawing.Color.Empty)
         Me.NavigationPanePage1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.SuperToolTip1.SetToolTip(Me.NavigationPanePage1, resources.GetString("NavigationPanePage1.ToolTip"))
         Me.NavigationPanePage1.ToolTipText = Nothing
         '
         'TreeView2
         '
-        Me.TreeView2.BorderStyle = System.Windows.Forms.BorderStyle.None
         resources.ApplyResources(Me.TreeView2, "TreeView2")
+        Me.TreeView2.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.TreeView2.FullRowSelect = True
         Me.TreeView2.HideSelection = False
         Me.TreeView2.ImageList = Me.ImageList1
@@ -508,6 +533,7 @@ Partial Class FormSimulSettings
         Me.TreeView2.ShowRootLines = False
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.TreeView2, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.TreeView2, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.TreeView2, resources.GetString("TreeView2.ToolTip"))
         '
         'ImageList1
         '
@@ -526,9 +552,9 @@ Partial Class FormSimulSettings
         '
         'NavigationPanePage5
         '
+        resources.ApplyResources(Me.NavigationPanePage5, "NavigationPanePage5")
         Me.NavigationPanePage5.ActiveGradientHighColor = System.Drawing.Color.White
         Me.NavigationPanePage5.ActiveGradientLowColor = System.Drawing.SystemColors.ActiveCaption
-        resources.ApplyResources(Me.NavigationPanePage5, "NavigationPanePage5")
         Me.NavigationPanePage5.BackColor = System.Drawing.Color.WhiteSmoke
         Me.NavigationPanePage5.ButtonFont = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold)
         Me.NavigationPanePage5.ButtonForeColor = System.Drawing.SystemColors.ActiveCaptionText
@@ -551,12 +577,13 @@ Partial Class FormSimulSettings
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.NavigationPanePage5, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.NavigationPanePage5, System.Drawing.Color.Empty)
         Me.NavigationPanePage5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.SuperToolTip1.SetToolTip(Me.NavigationPanePage5, resources.GetString("NavigationPanePage5.ToolTip"))
         Me.NavigationPanePage5.ToolTipText = Nothing
         '
         'TreeView5
         '
-        Me.TreeView5.BorderStyle = System.Windows.Forms.BorderStyle.None
         resources.ApplyResources(Me.TreeView5, "TreeView5")
+        Me.TreeView5.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.TreeView5.FullRowSelect = True
         Me.TreeView5.HideSelection = False
         Me.TreeView5.ImageList = Me.ImageList1
@@ -570,12 +597,13 @@ Partial Class FormSimulSettings
         Me.TreeView5.ShowRootLines = False
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.TreeView5, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.TreeView5, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.TreeView5, resources.GetString("TreeView5.ToolTip"))
         '
         'NavigationPanePage3
         '
+        resources.ApplyResources(Me.NavigationPanePage3, "NavigationPanePage3")
         Me.NavigationPanePage3.ActiveGradientHighColor = System.Drawing.Color.White
         Me.NavigationPanePage3.ActiveGradientLowColor = System.Drawing.SystemColors.ActiveCaption
-        resources.ApplyResources(Me.NavigationPanePage3, "NavigationPanePage3")
         Me.NavigationPanePage3.BackColor = System.Drawing.Color.WhiteSmoke
         Me.NavigationPanePage3.ButtonFont = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold)
         Me.NavigationPanePage3.ButtonForeColor = System.Drawing.SystemColors.ActiveCaptionText
@@ -598,12 +626,13 @@ Partial Class FormSimulSettings
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.NavigationPanePage3, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.NavigationPanePage3, System.Drawing.Color.Empty)
         Me.NavigationPanePage3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.SuperToolTip1.SetToolTip(Me.NavigationPanePage3, resources.GetString("NavigationPanePage3.ToolTip"))
         Me.NavigationPanePage3.ToolTipText = Nothing
         '
         'TreeView1
         '
-        Me.TreeView1.BorderStyle = System.Windows.Forms.BorderStyle.None
         resources.ApplyResources(Me.TreeView1, "TreeView1")
+        Me.TreeView1.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.TreeView1.FullRowSelect = True
         Me.TreeView1.HideSelection = False
         Me.TreeView1.ImageList = Me.ImageList1
@@ -617,12 +646,13 @@ Partial Class FormSimulSettings
         Me.TreeView1.ShowRootLines = False
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.TreeView1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.TreeView1, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.TreeView1, resources.GetString("TreeView1.ToolTip"))
         '
         'NavigationPanePage4
         '
+        resources.ApplyResources(Me.NavigationPanePage4, "NavigationPanePage4")
         Me.NavigationPanePage4.ActiveGradientHighColor = System.Drawing.Color.White
         Me.NavigationPanePage4.ActiveGradientLowColor = System.Drawing.SystemColors.ActiveCaption
-        resources.ApplyResources(Me.NavigationPanePage4, "NavigationPanePage4")
         Me.NavigationPanePage4.BackColor = System.Drawing.Color.WhiteSmoke
         Me.NavigationPanePage4.ButtonFont = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold)
         Me.NavigationPanePage4.ButtonForeColor = System.Drawing.SystemColors.ActiveCaptionText
@@ -645,12 +675,13 @@ Partial Class FormSimulSettings
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.NavigationPanePage4, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.NavigationPanePage4, System.Drawing.Color.Empty)
         Me.NavigationPanePage4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.SuperToolTip1.SetToolTip(Me.NavigationPanePage4, resources.GetString("NavigationPanePage4.ToolTip"))
         Me.NavigationPanePage4.ToolTipText = Nothing
         '
         'TreeView4
         '
-        Me.TreeView4.BorderStyle = System.Windows.Forms.BorderStyle.None
         resources.ApplyResources(Me.TreeView4, "TreeView4")
+        Me.TreeView4.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.TreeView4.FullRowSelect = True
         Me.TreeView4.HideSelection = False
         Me.TreeView4.ImageList = Me.ImageList1
@@ -664,17 +695,19 @@ Partial Class FormSimulSettings
         Me.TreeView4.ShowRootLines = False
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.TreeView4, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.TreeView4, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.TreeView4, resources.GetString("TreeView4.ToolTip"))
         '
         'PanelCarPet
         '
+        resources.ApplyResources(Me.PanelCarPet, "PanelCarPet")
         Me.PanelCarPet.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.PanelCarPet.Controls.Add(Me.Button3)
         Me.PanelCarPet.Controls.Add(Me.Button9)
         Me.PanelCarPet.Controls.Add(Me.Button2)
-        resources.ApplyResources(Me.PanelCarPet, "PanelCarPet")
         Me.PanelCarPet.Name = "PanelCarPet"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.PanelCarPet, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.PanelCarPet, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.PanelCarPet, resources.GetString("PanelCarPet.ToolTip"))
         '
         'Button3
         '
@@ -682,18 +715,21 @@ Partial Class FormSimulSettings
         Me.Button3.Name = "Button3"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Button3, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Button3, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Button3, resources.GetString("Button3.ToolTip"))
         '
         'PanelComps
         '
+        resources.ApplyResources(Me.PanelComps, "PanelComps")
         Me.PanelComps.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.PanelComps.Controls.Add(Me.GroupBox2)
-        resources.ApplyResources(Me.PanelComps, "PanelComps")
         Me.PanelComps.Name = "PanelComps"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.PanelComps, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.PanelComps, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.PanelComps, resources.GetString("PanelComps.ToolTip"))
         '
         'GroupBox2
         '
+        resources.ApplyResources(Me.GroupBox2, "GroupBox2")
         Me.GroupBox2.Controls.Add(Me.Button4)
         Me.GroupBox2.Controls.Add(Me.Button6)
         Me.GroupBox2.Controls.Add(Me.GroupBox4)
@@ -703,11 +739,11 @@ Partial Class FormSimulSettings
         Me.GroupBox2.Controls.Add(Me.TextBox1)
         Me.GroupBox2.Controls.Add(Me.Label3)
         Me.GroupBox2.Controls.Add(Me.ogc1)
-        resources.ApplyResources(Me.GroupBox2, "GroupBox2")
         Me.GroupBox2.Name = "GroupBox2"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox2, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox2, System.Drawing.Color.Empty)
         Me.GroupBox2.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox2, resources.GetString("GroupBox2.ToolTip"))
         '
         'Button4
         '
@@ -715,6 +751,7 @@ Partial Class FormSimulSettings
         Me.Button4.Name = "Button4"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Button4, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Button4, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Button4, resources.GetString("Button4.ToolTip"))
         Me.Button4.UseVisualStyleBackColor = True
         '
         'Button6
@@ -723,21 +760,23 @@ Partial Class FormSimulSettings
         Me.Button6.Name = "Button6"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Button6, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Button6, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Button6, resources.GetString("Button6.ToolTip"))
         Me.Button6.UseVisualStyleBackColor = True
         '
         'GroupBox4
         '
-        Me.GroupBox4.Controls.Add(Me.ListViewA)
         resources.ApplyResources(Me.GroupBox4, "GroupBox4")
+        Me.GroupBox4.Controls.Add(Me.ListViewA)
         Me.GroupBox4.Name = "GroupBox4"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox4, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox4, System.Drawing.Color.Empty)
         Me.GroupBox4.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox4, resources.GetString("GroupBox4.ToolTip"))
         '
         'ListViewA
         '
-        Me.ListViewA.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader3})
         resources.ApplyResources(Me.ListViewA, "ListViewA")
+        Me.ListViewA.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader3})
         Me.ListViewA.FullRowSelect = True
         Me.ListViewA.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None
         Me.ListViewA.HideSelection = False
@@ -746,6 +785,7 @@ Partial Class FormSimulSettings
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.ListViewA, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.ListViewA, System.Drawing.Color.Empty)
         Me.ListViewA.TileSize = New System.Drawing.Size(184, 16)
+        Me.SuperToolTip1.SetToolTip(Me.ListViewA, resources.GetString("ListViewA.ToolTip"))
         Me.ListViewA.UseCompatibleStateImageBehavior = False
         Me.ListViewA.View = System.Windows.Forms.View.List
         '
@@ -759,6 +799,7 @@ Partial Class FormSimulSettings
         Me.Button11.Name = "Button11"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Button11, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Button11, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Button11, resources.GetString("Button11.ToolTip"))
         Me.Button11.UseVisualStyleBackColor = True
         '
         'Button10
@@ -767,6 +808,7 @@ Partial Class FormSimulSettings
         Me.Button10.Name = "Button10"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Button10, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Button10, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Button10, resources.GetString("Button10.ToolTip"))
         Me.Button10.UseVisualStyleBackColor = True
         '
         'Button7
@@ -775,16 +817,18 @@ Partial Class FormSimulSettings
         Me.Button7.Name = "Button7"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Button7, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Button7, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Button7, resources.GetString("Button7.ToolTip"))
         Me.Button7.UseVisualStyleBackColor = True
         '
         'TextBox1
         '
+        resources.ApplyResources(Me.TextBox1, "TextBox1")
         Me.TextBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
         Me.TextBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
-        resources.ApplyResources(Me.TextBox1, "TextBox1")
         Me.TextBox1.Name = "TextBox1"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.TextBox1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.TextBox1, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.TextBox1, resources.GetString("TextBox1.ToolTip"))
         '
         'Label3
         '
@@ -792,9 +836,11 @@ Partial Class FormSimulSettings
         Me.Label3.Name = "Label3"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label3, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label3, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label3, resources.GetString("Label3.ToolTip"))
         '
         'ogc1
         '
+        resources.ApplyResources(Me.ogc1, "ogc1")
         Me.ogc1.AllowUserToAddRows = False
         Me.ogc1.AllowUserToDeleteRows = False
         Me.ogc1.AllowUserToResizeRows = False
@@ -803,7 +849,6 @@ Partial Class FormSimulSettings
         Me.ogc1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.ogc1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.ogc1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column11, Me.Column6, Me.casno, Me.Column8, Me.Column9, Me.Column7, Me.Column5, Me.Column10})
-        resources.ApplyResources(Me.ogc1, "ogc1")
         Me.ogc1.MultiSelect = False
         Me.ogc1.Name = "ogc1"
         Me.ogc1.ReadOnly = True
@@ -814,6 +859,7 @@ Partial Class FormSimulSettings
         Me.ogc1.ShowRowErrors = False
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.ogc1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.ogc1, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.ogc1, resources.GetString("ogc1.ToolTip"))
         '
         'Column11
         '
@@ -885,15 +931,17 @@ Partial Class FormSimulSettings
         Me.Label8.Name = "Label8"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label8, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label8, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label8, resources.GetString("Label8.ToolTip"))
         '
         'TextBox2
         '
+        resources.ApplyResources(Me.TextBox2, "TextBox2")
         Me.TextBox2.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
         Me.TextBox2.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
-        resources.ApplyResources(Me.TextBox2, "TextBox2")
         Me.TextBox2.Name = "TextBox2"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.TextBox2, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.TextBox2, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.TextBox2, resources.GetString("TextBox2.ToolTip"))
         '
         'Label9
         '
@@ -901,37 +949,41 @@ Partial Class FormSimulSettings
         Me.Label9.Name = "Label9"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label9, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label9, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label9, resources.GetString("Label9.ToolTip"))
         '
         'GroupBox7
         '
-        Me.GroupBox7.Controls.Add(Me.ListBox3)
         resources.ApplyResources(Me.GroupBox7, "GroupBox7")
+        Me.GroupBox7.Controls.Add(Me.ListBox3)
         Me.GroupBox7.Name = "GroupBox7"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox7, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox7, System.Drawing.Color.Empty)
         Me.GroupBox7.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox7, resources.GetString("GroupBox7.ToolTip"))
         '
         'ListBox3
         '
-        Me.ListBox3.BackColor = System.Drawing.SystemColors.Control
         resources.ApplyResources(Me.ListBox3, "ListBox3")
+        Me.ListBox3.BackColor = System.Drawing.SystemColors.Control
         Me.ListBox3.FormattingEnabled = True
         Me.ListBox3.Name = "ListBox3"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.ListBox3, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.ListBox3, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.ListBox3, resources.GetString("ListBox3.ToolTip"))
         '
         'GroupBox8
         '
+        resources.ApplyResources(Me.GroupBox8, "GroupBox8")
         Me.GroupBox8.Controls.Add(Me.KryptonButton2)
         Me.GroupBox8.Controls.Add(Me.KryptonButton3)
         Me.GroupBox8.Controls.Add(Me.KryptonButton4)
         Me.GroupBox8.Controls.Add(Me.KryptonButton5)
         Me.GroupBox8.Controls.Add(Me.KryptonButton6)
-        resources.ApplyResources(Me.GroupBox8, "GroupBox8")
         Me.GroupBox8.Name = "GroupBox8"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox8, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox8, System.Drawing.Color.Empty)
         Me.GroupBox8.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox8, resources.GetString("GroupBox8.ToolTip"))
         '
         'KryptonButton2
         '
@@ -939,6 +991,7 @@ Partial Class FormSimulSettings
         Me.KryptonButton2.Name = "KryptonButton2"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.KryptonButton2, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.KryptonButton2, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.KryptonButton2, resources.GetString("KryptonButton2.ToolTip"))
         '
         'KryptonButton3
         '
@@ -946,6 +999,7 @@ Partial Class FormSimulSettings
         Me.KryptonButton3.Name = "KryptonButton3"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.KryptonButton3, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.KryptonButton3, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.KryptonButton3, resources.GetString("KryptonButton3.ToolTip"))
         '
         'KryptonButton4
         '
@@ -953,6 +1007,7 @@ Partial Class FormSimulSettings
         Me.KryptonButton4.Name = "KryptonButton4"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.KryptonButton4, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.KryptonButton4, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.KryptonButton4, resources.GetString("KryptonButton4.ToolTip"))
         '
         'KryptonButton5
         '
@@ -960,6 +1015,7 @@ Partial Class FormSimulSettings
         Me.KryptonButton5.Name = "KryptonButton5"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.KryptonButton5, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.KryptonButton5, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.KryptonButton5, resources.GetString("KryptonButton5.ToolTip"))
         '
         'KryptonButton6
         '
@@ -967,25 +1023,28 @@ Partial Class FormSimulSettings
         Me.KryptonButton6.Name = "KryptonButton6"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.KryptonButton6, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.KryptonButton6, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.KryptonButton6, resources.GetString("KryptonButton6.ToolTip"))
         '
         'GroupBox9
         '
-        Me.GroupBox9.Controls.Add(Me.ListBox4)
         resources.ApplyResources(Me.GroupBox9, "GroupBox9")
+        Me.GroupBox9.Controls.Add(Me.ListBox4)
         Me.GroupBox9.Name = "GroupBox9"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox9, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox9, System.Drawing.Color.Empty)
         Me.GroupBox9.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox9, resources.GetString("GroupBox9.ToolTip"))
         '
         'ListBox4
         '
-        Me.ListBox4.BackColor = System.Drawing.SystemColors.Control
         resources.ApplyResources(Me.ListBox4, "ListBox4")
+        Me.ListBox4.BackColor = System.Drawing.SystemColors.Control
         Me.ListBox4.FormattingEnabled = True
         Me.ListBox4.Name = "ListBox4"
         Me.ListBox4.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.ListBox4, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.ListBox4, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.ListBox4, resources.GetString("ListBox4.ToolTip"))
         '
         'Label11
         '
@@ -993,9 +1052,11 @@ Partial Class FormSimulSettings
         Me.Label11.Name = "Label11"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label11, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label11, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label11, resources.GetString("Label11.ToolTip"))
         '
         'PanelDescricao
         '
+        resources.ApplyResources(Me.PanelDescricao, "PanelDescricao")
         Me.PanelDescricao.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.PanelDescricao.Controls.Add(Me.Label10)
         Me.PanelDescricao.Controls.Add(Me.tbPassword)
@@ -1006,10 +1067,10 @@ Partial Class FormSimulSettings
         Me.PanelDescricao.Controls.Add(Me.Label28)
         Me.PanelDescricao.Controls.Add(Me.TBtit)
         Me.PanelDescricao.Controls.Add(Me.Label30)
-        resources.ApplyResources(Me.PanelDescricao, "PanelDescricao")
         Me.PanelDescricao.Name = "PanelDescricao"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.PanelDescricao, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.PanelDescricao, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.PanelDescricao, resources.GetString("PanelDescricao.ToolTip"))
         '
         'Label10
         '
@@ -1017,6 +1078,7 @@ Partial Class FormSimulSettings
         Me.Label10.Name = "Label10"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label10, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label10, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label10, resources.GetString("Label10.ToolTip"))
         '
         'tbPassword
         '
@@ -1024,6 +1086,7 @@ Partial Class FormSimulSettings
         Me.tbPassword.Name = "tbPassword"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.tbPassword, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.tbPassword, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.tbPassword, resources.GetString("tbPassword.ToolTip"))
         '
         'chkUsePassword
         '
@@ -1031,18 +1094,20 @@ Partial Class FormSimulSettings
         Me.chkUsePassword.Name = "chkUsePassword"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.chkUsePassword, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.chkUsePassword, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.chkUsePassword, resources.GetString("chkUsePassword.ToolTip"))
         Me.chkUsePassword.UseVisualStyleBackColor = True
         '
         'PanelPP
         '
+        resources.ApplyResources(Me.PanelPP, "PanelPP")
         Me.PanelPP.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.PanelPP.Controls.Add(Me.LinkLabelPropertyMethods)
         Me.PanelPP.Controls.Add(Me.GroupBox12)
         Me.PanelPP.Controls.Add(Me.GroupBox6)
-        resources.ApplyResources(Me.PanelPP, "PanelPP")
         Me.PanelPP.Name = "PanelPP"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.PanelPP, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.PanelPP, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.PanelPP, resources.GetString("PanelPP.ToolTip"))
         '
         'LinkLabelPropertyMethods
         '
@@ -1052,18 +1117,20 @@ Partial Class FormSimulSettings
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.LinkLabelPropertyMethods, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.LinkLabelPropertyMethods, System.Drawing.Color.Empty)
         Me.LinkLabelPropertyMethods.TabStop = True
+        Me.SuperToolTip1.SetToolTip(Me.LinkLabelPropertyMethods, resources.GetString("LinkLabelPropertyMethods.ToolTip"))
         '
         'GroupBox12
         '
+        resources.ApplyResources(Me.GroupBox12, "GroupBox12")
         Me.GroupBox12.Controls.Add(Me.btnDeletePP)
         Me.GroupBox12.Controls.Add(Me.btnConfigPP)
         Me.GroupBox12.Controls.Add(Me.btnCopyPP)
         Me.GroupBox12.Controls.Add(Me.dgvpp)
-        resources.ApplyResources(Me.GroupBox12, "GroupBox12")
         Me.GroupBox12.Name = "GroupBox12"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox12, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox12, System.Drawing.Color.Empty)
         Me.GroupBox12.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox12, resources.GetString("GroupBox12.ToolTip"))
         '
         'btnDeletePP
         '
@@ -1071,6 +1138,7 @@ Partial Class FormSimulSettings
         Me.btnDeletePP.Name = "btnDeletePP"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.btnDeletePP, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.btnDeletePP, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.btnDeletePP, resources.GetString("btnDeletePP.ToolTip"))
         '
         'btnConfigPP
         '
@@ -1078,6 +1146,7 @@ Partial Class FormSimulSettings
         Me.btnConfigPP.Name = "btnConfigPP"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.btnConfigPP, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.btnConfigPP, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.btnConfigPP, resources.GetString("btnConfigPP.ToolTip"))
         '
         'btnCopyPP
         '
@@ -1085,9 +1154,11 @@ Partial Class FormSimulSettings
         Me.btnCopyPP.Name = "btnCopyPP"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.btnCopyPP, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.btnCopyPP, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.btnCopyPP, resources.GetString("btnCopyPP.ToolTip"))
         '
         'dgvpp
         '
+        resources.ApplyResources(Me.dgvpp, "dgvpp")
         Me.dgvpp.AllowUserToAddRows = False
         Me.dgvpp.AllowUserToDeleteRows = False
         Me.dgvpp.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
@@ -1095,7 +1166,6 @@ Partial Class FormSimulSettings
         Me.dgvpp.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None
         Me.dgvpp.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvpp.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column18, Me.Column16, Me.Column17})
-        resources.ApplyResources(Me.dgvpp, "dgvpp")
         Me.dgvpp.MultiSelect = False
         Me.dgvpp.Name = "dgvpp"
         Me.dgvpp.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
@@ -1103,6 +1173,7 @@ Partial Class FormSimulSettings
         Me.dgvpp.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.dgvpp, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.dgvpp, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.dgvpp, resources.GetString("dgvpp.ToolTip"))
         '
         'Column18
         '
@@ -1125,13 +1196,14 @@ Partial Class FormSimulSettings
         '
         'GroupBox6
         '
+        resources.ApplyResources(Me.GroupBox6, "GroupBox6")
         Me.GroupBox6.Controls.Add(Me.Button8)
         Me.GroupBox6.Controls.Add(Me.ListViewPP)
-        resources.ApplyResources(Me.GroupBox6, "GroupBox6")
         Me.GroupBox6.Name = "GroupBox6"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox6, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox6, System.Drawing.Color.Empty)
         Me.GroupBox6.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox6, resources.GetString("GroupBox6.ToolTip"))
         '
         'Button8
         '
@@ -1139,6 +1211,7 @@ Partial Class FormSimulSettings
         Me.Button8.Name = "Button8"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Button8, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Button8, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Button8, resources.GetString("Button8.ToolTip"))
         '
         'ListViewPP
         '
@@ -1152,32 +1225,35 @@ Partial Class FormSimulSettings
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.ListViewPP, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.ListViewPP, System.Drawing.Color.Empty)
         Me.ListViewPP.TileSize = New System.Drawing.Size(350, 16)
+        Me.SuperToolTip1.SetToolTip(Me.ListViewPP, resources.GetString("ListViewPP.ToolTip"))
         Me.ListViewPP.UseCompatibleStateImageBehavior = False
         Me.ListViewPP.View = System.Windows.Forms.View.Tile
         '
         'PanelPPAdv
         '
+        resources.ApplyResources(Me.PanelPPAdv, "PanelPPAdv")
         Me.PanelPPAdv.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.PanelPPAdv.Controls.Add(Me.GroupBox11)
         Me.PanelPPAdv.Controls.Add(Me.gb1)
-        resources.ApplyResources(Me.PanelPPAdv, "PanelPPAdv")
         Me.PanelPPAdv.Name = "PanelPPAdv"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.PanelPPAdv, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.PanelPPAdv, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.PanelPPAdv, resources.GetString("PanelPPAdv.ToolTip"))
         '
         'GroupBox11
         '
+        resources.ApplyResources(Me.GroupBox11, "GroupBox11")
         Me.GroupBox11.Controls.Add(Me.RadioButton3)
         Me.GroupBox11.Controls.Add(Me.RadioButton2)
         Me.GroupBox11.Controls.Add(Me.RadioButton1)
         Me.GroupBox11.Controls.Add(Me.Label4)
         Me.GroupBox11.Controls.Add(Me.Label6)
         Me.GroupBox11.Controls.Add(Me.ListView2)
-        resources.ApplyResources(Me.GroupBox11, "GroupBox11")
         Me.GroupBox11.Name = "GroupBox11"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.GroupBox11, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.GroupBox11, System.Drawing.Color.Empty)
         Me.GroupBox11.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.GroupBox11, resources.GetString("GroupBox11.ToolTip"))
         '
         'RadioButton3
         '
@@ -1186,6 +1262,7 @@ Partial Class FormSimulSettings
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.RadioButton3, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.RadioButton3, System.Drawing.Color.Empty)
         Me.RadioButton3.TabStop = True
+        Me.SuperToolTip1.SetToolTip(Me.RadioButton3, resources.GetString("RadioButton3.ToolTip"))
         Me.RadioButton3.UseVisualStyleBackColor = True
         '
         'RadioButton2
@@ -1195,6 +1272,7 @@ Partial Class FormSimulSettings
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.RadioButton2, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.RadioButton2, System.Drawing.Color.Empty)
         Me.RadioButton2.TabStop = True
+        Me.SuperToolTip1.SetToolTip(Me.RadioButton2, resources.GetString("RadioButton2.ToolTip"))
         Me.RadioButton2.UseVisualStyleBackColor = True
         '
         'RadioButton1
@@ -1204,6 +1282,7 @@ Partial Class FormSimulSettings
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.RadioButton1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.RadioButton1, System.Drawing.Color.Empty)
         Me.RadioButton1.TabStop = True
+        Me.SuperToolTip1.SetToolTip(Me.RadioButton1, resources.GetString("RadioButton1.ToolTip"))
         Me.RadioButton1.UseVisualStyleBackColor = True
         '
         'Label4
@@ -1212,6 +1291,7 @@ Partial Class FormSimulSettings
         Me.Label4.Name = "Label4"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label4, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label4, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label4, resources.GetString("Label4.ToolTip"))
         '
         'Label6
         '
@@ -1219,19 +1299,22 @@ Partial Class FormSimulSettings
         Me.Label6.Name = "Label6"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label6, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label6, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label6, resources.GetString("Label6.ToolTip"))
         '
         'ListView2
         '
-        Me.ListView2.CheckBoxes = True
         resources.ApplyResources(Me.ListView2, "ListView2")
+        Me.ListView2.CheckBoxes = True
         Me.ListView2.Name = "ListView2"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.ListView2, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.ListView2, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.ListView2, resources.GetString("ListView2.ToolTip"))
         Me.ListView2.UseCompatibleStateImageBehavior = False
         Me.ListView2.View = System.Windows.Forms.View.List
         '
         'gb1
         '
+        resources.ApplyResources(Me.gb1, "gb1")
         Me.gb1.Controls.Add(Me.chkDoPhaseId)
         Me.gb1.Controls.Add(Me.Label13)
         Me.gb1.Controls.Add(Me.tbFlashValidationTolerance)
@@ -1241,11 +1324,11 @@ Partial Class FormSimulSettings
         Me.gb1.Controls.Add(Me.ComboBoxFlashAlg)
         Me.gb1.Controls.Add(Me.Label2)
         Me.gb1.Controls.Add(Me.CheckBox3)
-        resources.ApplyResources(Me.gb1, "gb1")
         Me.gb1.Name = "gb1"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.gb1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.gb1, System.Drawing.Color.Empty)
         Me.gb1.TabStop = False
+        Me.SuperToolTip1.SetToolTip(Me.gb1, resources.GetString("gb1.ToolTip"))
         '
         'chkDoPhaseId
         '
@@ -1253,6 +1336,7 @@ Partial Class FormSimulSettings
         Me.chkDoPhaseId.Name = "chkDoPhaseId"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.chkDoPhaseId, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.chkDoPhaseId, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.chkDoPhaseId, resources.GetString("chkDoPhaseId.ToolTip"))
         '
         'Label13
         '
@@ -1260,6 +1344,7 @@ Partial Class FormSimulSettings
         Me.Label13.Name = "Label13"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label13, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label13, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label13, resources.GetString("Label13.ToolTip"))
         '
         'tbFlashValidationTolerance
         '
@@ -1267,6 +1352,7 @@ Partial Class FormSimulSettings
         Me.tbFlashValidationTolerance.Name = "tbFlashValidationTolerance"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.tbFlashValidationTolerance, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.tbFlashValidationTolerance, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.tbFlashValidationTolerance, resources.GetString("tbFlashValidationTolerance.ToolTip"))
         '
         'Label12
         '
@@ -1274,6 +1360,7 @@ Partial Class FormSimulSettings
         Me.Label12.Name = "Label12"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label12, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label12, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label12, resources.GetString("Label12.ToolTip"))
         '
         'chkValidateEqCalc
         '
@@ -1281,6 +1368,7 @@ Partial Class FormSimulSettings
         Me.chkValidateEqCalc.Name = "chkValidateEqCalc"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.chkValidateEqCalc, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.chkValidateEqCalc, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.chkValidateEqCalc, resources.GetString("chkValidateEqCalc.ToolTip"))
         '
         'CheckBox1
         '
@@ -1288,16 +1376,18 @@ Partial Class FormSimulSettings
         Me.CheckBox1.Name = "CheckBox1"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.CheckBox1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.CheckBox1, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.CheckBox1, resources.GetString("CheckBox1.ToolTip"))
         '
         'ComboBoxFlashAlg
         '
+        resources.ApplyResources(Me.ComboBoxFlashAlg, "ComboBoxFlashAlg")
         Me.ComboBoxFlashAlg.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.ComboBoxFlashAlg.FormattingEnabled = True
         Me.ComboBoxFlashAlg.Items.AddRange(New Object() {resources.GetString("ComboBoxFlashAlg.Items"), resources.GetString("ComboBoxFlashAlg.Items1"), resources.GetString("ComboBoxFlashAlg.Items2"), resources.GetString("ComboBoxFlashAlg.Items3"), resources.GetString("ComboBoxFlashAlg.Items4"), resources.GetString("ComboBoxFlashAlg.Items5"), resources.GetString("ComboBoxFlashAlg.Items6"), resources.GetString("ComboBoxFlashAlg.Items7"), resources.GetString("ComboBoxFlashAlg.Items8")})
-        resources.ApplyResources(Me.ComboBoxFlashAlg, "ComboBoxFlashAlg")
         Me.ComboBoxFlashAlg.Name = "ComboBoxFlashAlg"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.ComboBoxFlashAlg, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.ComboBoxFlashAlg, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.ComboBoxFlashAlg, resources.GetString("ComboBoxFlashAlg.ToolTip"))
         '
         'Label2
         '
@@ -1305,6 +1395,7 @@ Partial Class FormSimulSettings
         Me.Label2.Name = "Label2"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.Label2, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.Label2, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.Label2, resources.GetString("Label2.ToolTip"))
         '
         'CheckBox3
         '
@@ -1312,24 +1403,27 @@ Partial Class FormSimulSettings
         Me.CheckBox3.Name = "CheckBox3"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.CheckBox3, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.CheckBox3, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.CheckBox3, resources.GetString("CheckBox3.ToolTip"))
         '
         'PanelOptions
         '
+        resources.ApplyResources(Me.PanelOptions, "PanelOptions")
         Me.PanelOptions.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.PanelOptions.Controls.Add(Me.GroupBox1)
-        resources.ApplyResources(Me.PanelOptions, "PanelOptions")
         Me.PanelOptions.Name = "PanelOptions"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.PanelOptions, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.PanelOptions, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.PanelOptions, resources.GetString("PanelOptions.ToolTip"))
         '
         'PanelUnits
         '
+        resources.ApplyResources(Me.PanelUnits, "PanelUnits")
         Me.PanelUnits.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.PanelUnits.Controls.Add(Me.GroupBox5)
-        resources.ApplyResources(Me.PanelUnits, "PanelUnits")
         Me.PanelUnits.Name = "PanelUnits"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.PanelUnits, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.PanelUnits, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.PanelUnits, resources.GetString("PanelUnits.ToolTip"))
         '
         'OpenFileDialog1
         '
@@ -1346,12 +1440,13 @@ Partial Class FormSimulSettings
         '
         'PanelReactions
         '
+        resources.ApplyResources(Me.PanelReactions, "PanelReactions")
         Me.PanelReactions.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.PanelReactions.Controls.Add(Me.KryptonButton7)
-        resources.ApplyResources(Me.PanelReactions, "PanelReactions")
         Me.PanelReactions.Name = "PanelReactions"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.PanelReactions, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.PanelReactions, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.PanelReactions, resources.GetString("PanelReactions.ToolTip"))
         '
         'KryptonButton7
         '
@@ -1359,6 +1454,7 @@ Partial Class FormSimulSettings
         Me.KryptonButton7.Name = "KryptonButton7"
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.KryptonButton7, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.KryptonButton7, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me.KryptonButton7, resources.GetString("KryptonButton7.ToolTip"))
         '
         'ofdcs
         '
@@ -1392,14 +1488,15 @@ Partial Class FormSimulSettings
         Me.Controls.Add(Me.NavigationPane1)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.PanelPP)
-        Me.Controls.Add(Me.PanelPPAdv)
         Me.Controls.Add(Me.PanelUnits)
+        Me.Controls.Add(Me.PanelPPAdv)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "FormSimulSettings"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.SuperToolTip1.SetSuperToolTipColor1(Me, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me, System.Drawing.Color.Empty)
+        Me.SuperToolTip1.SetToolTip(Me, resources.GetString("$this.ToolTip"))
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.GroupBox5.ResumeLayout(False)

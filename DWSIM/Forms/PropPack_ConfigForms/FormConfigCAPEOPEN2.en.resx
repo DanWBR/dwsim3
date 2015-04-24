@@ -117,6 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="FaTabStripItem1.Title" xml:space="preserve">
+    <value>Compounds</value>
+  </data>
+  <data name="FaTabStripItem2.Title" xml:space="preserve">
+    <value>Flash Settings</value>
+  </data>
+  <data name="FaTabStripItem7.Title" xml:space="preserve">
+    <value>Calculation Engine</value>
+  </data>
+  <data name="FaTabStripItem4.Title" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="FaTabStripItem6.Title" xml:space="preserve">
+    <value>Package Information</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Compounds</value>
+  </data>
   <data name="Button6.Text" xml:space="preserve">
     <value>&lt; Ungroup</value>
   </data>
@@ -151,11 +169,11 @@
   <data name="Column9.HeaderText" xml:space="preserve">
     <value>Formula</value>
   </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Compounds</value>
+  <data name="GroupBox5.Text" xml:space="preserve">
+    <value>Settings</value>
   </data>
-  <data name="FaTabStripItem1.Title" xml:space="preserve">
-    <value>Compounds</value>
+  <data name="GroupBox3.Text" xml:space="preserve">
+    <value>Stability Test (VLLE Flash only)</value>
   </data>
   <data name="RadioButton3.Size" type="System.Drawing.Size, System.Drawing">
     <value>46, 17</value>
@@ -187,50 +205,41 @@
   <data name="Label6.Text" xml:space="preserve">
     <value>Key compounds for the second liquid phase:</value>
   </data>
-  <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Stability Test (VLLE Flash only)</value>
-  </data>
-  <data name="chkIOmode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>76, 17</value>
-  </data>
-  <data name="chkIOmode.Text" xml:space="preserve">
-    <value>Fast Mode</value>
-  </data>
   <data name="ComboBoxFlashAlg.Items" xml:space="preserve">
-    <value>Nested Loops</value>
+    <value>Nested Loops (VLE)</value>
   </data>
   <data name="ComboBoxFlashAlg.Items1" xml:space="preserve">
-    <value>Inside-Out (2-phase)</value>
+    <value>Nested Loops (VLLE)</value>
   </data>
   <data name="ComboBoxFlashAlg.Items2" xml:space="preserve">
-    <value>Inside-Out (3-phase)</value>
+    <value>Inside-Out (VLE)</value>
   </data>
   <data name="ComboBoxFlashAlg.Items3" xml:space="preserve">
-    <value>Gibbs Minimization (2-phase)</value>
+    <value>Inside-Out (VLLE)</value>
   </data>
   <data name="ComboBoxFlashAlg.Items4" xml:space="preserve">
-    <value>Gibbs Minimization (3-phase)</value>
+    <value>Gibbs Minimization (VLE)</value>
   </data>
   <data name="ComboBoxFlashAlg.Items5" xml:space="preserve">
-    <value>Hybrid Nested Loops / Inside-Out  (3-phase)</value>
+    <value>Gibbs Minimization (VLLE)</value>
   </data>
   <data name="ComboBoxFlashAlg.Items6" xml:space="preserve">
-    <value>Nested Loops (2-phase SLE)</value>
+    <value>Nested Loops (SVLE - Eutectic Systems)</value>
   </data>
   <data name="ComboBoxFlashAlg.Items7" xml:space="preserve">
-    <value>Nested Loops (3-phase Immsicible VLLE)</value>
+    <value>Nested Loops (SVLE - Solid Solution Systems)</value>
+  </data>
+  <data name="ComboBoxFlashAlg.Items8" xml:space="preserve">
+    <value>Nested Loops (VLLE - Immiscible Liquids)</value>
   </data>
   <data name="Label1.Text" xml:space="preserve">
     <value>Flash Algorithm</value>
   </data>
-  <data name="GroupBox5.Text" xml:space="preserve">
-    <value>Settings</value>
-  </data>
-  <data name="FaTabStripItem2.Title" xml:space="preserve">
-    <value>Flash Settings</value>
-  </data>
   <data name="Button3.Text" xml:space="preserve">
     <value>Open Property Package Configuration Window</value>
+  </data>
+  <data name="GroupBox7.Text" xml:space="preserve">
+    <value>Calculation Engine</value>
   </data>
   <data name="GroupBox8.Text" xml:space="preserve">
     <value>Selected CUDA/OpenCL Device Information</value>
@@ -273,12 +282,6 @@
   </data>
   <data name="chkEnableParallelCalcs.Text" xml:space="preserve">
     <value>Enable Parallel CPU Calculations</value>
-  </data>
-  <data name="GroupBox7.Text" xml:space="preserve">
-    <value>Calculation Engine</value>
-  </data>
-  <data name="FaTabStripItem7.Title" xml:space="preserve">
-    <value>Calculation Engine</value>
   </data>
   <data name="ListView1.Items" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
@@ -350,9 +353,6 @@
         /xtTeXN0ZW0uRHJhd2luZy5HcmFwaGljc1VuaXQBAAAAB3ZhbHVlX18ACAMAAAADAAAACw==
 </value>
   </data>
-  <data name="FaTabStripItem4.Title" xml:space="preserve">
-    <value>Language</value>
-  </data>
   <data name="Label10.Size" type="System.Drawing.Size, System.Drawing">
     <value>64, 13</value>
   </data>
@@ -364,9 +364,6 @@
   </data>
   <data name="Label8.Text" xml:space="preserve">
     <value>Name:</value>
-  </data>
-  <data name="FaTabStripItem6.Title" xml:space="preserve">
-    <value>Package Information</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

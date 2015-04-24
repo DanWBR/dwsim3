@@ -118,28 +118,31 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ComboBoxFlashAlg.Items" xml:space="preserve">
-    <value>Nested Loops</value>
+    <value>Nested Loops (VLE)</value>
   </data>
   <data name="ComboBoxFlashAlg.Items1" xml:space="preserve">
-    <value>Inside-Out (2-Phase)</value>
+    <value>Nested Loops (VLLE)</value>
   </data>
   <data name="ComboBoxFlashAlg.Items2" xml:space="preserve">
-    <value>Inside-Out (3-Phase)</value>
+    <value>Inside-Out (VLE)</value>
   </data>
   <data name="ComboBoxFlashAlg.Items3" xml:space="preserve">
-    <value>Gibbs Minimization (2-Phase)</value>
+    <value>Inside-Out (VLLE)</value>
   </data>
   <data name="ComboBoxFlashAlg.Items4" xml:space="preserve">
-    <value>Gibbs Minimization (3-Phase)</value>
+    <value>Gibbs Minimization (VLE)</value>
   </data>
   <data name="ComboBoxFlashAlg.Items5" xml:space="preserve">
-    <value>Hybrid Nested Loops / Inside-Out  (3-Phase)</value>
+    <value>Gibbs Minimization (VLLE)</value>
   </data>
   <data name="ComboBoxFlashAlg.Items6" xml:space="preserve">
-    <value>Nested Loops (2-phase SLE)</value>
+    <value>Nested Loops (SVLE - Eutectic Systems)</value>
   </data>
   <data name="ComboBoxFlashAlg.Items7" xml:space="preserve">
-    <value>Nested Loops (3-phase Immsicible VLLE)</value>
+    <value>Nested Loops (SVLE - Solid Solution Systems)</value>
+  </data>
+  <data name="ComboBoxFlashAlg.Items8" xml:space="preserve">
+    <value>Nested Loops (VLLE - Immiscible Liquids)</value>
   </data>
   <data name="ListView1.Items" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>

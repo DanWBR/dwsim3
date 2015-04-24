@@ -138,38 +138,47 @@ Namespace DWSIM
 
         End Function
 
-        Public Shared Function GetComponentName(ByVal UniqueName As String, Optional ByRef fp As FormMain = Nothing) As String
-            If Not UniqueName = "" Then
-                If fp Is Nothing Then fp = My.Forms.FormMain
-                If fp.AvailableComponents.ContainsKey(UniqueName) Then
-                    Dim str As String = GetLocalString("_" + UniqueName)
-                    If UniqueName Is Nothing Then
-                        Return fp.AvailableComponents.Item(UniqueName).Name
-                    Else
-                        If str(0) = "_" Then
-                            Return UniqueName
+        Public Shared Function GetComponentName(ByVal UniqueName As String, Optional ByRef fp As FormMain = Nothing, Optional ByVal COmode As Boolean = False) As String
+            If COmode Then
+                Dim str As String = GetLocalString("_" + UniqueName)
+                If str(0) = "_" Then
+                    Return UniqueName
+                Else
+                    Return str
+                End If
+            Else
+                If Not UniqueName = "" Then
+                    If fp Is Nothing Then fp = My.Forms.FormMain
+                    If fp.AvailableComponents.ContainsKey(UniqueName) Then
+                        Dim str As String = GetLocalString("_" + UniqueName)
+                        If UniqueName Is Nothing Then
+                            Return fp.AvailableComponents.Item(UniqueName).Name
                         Else
-                            Return str
+                            If str(0) = "_" Then
+                                Return UniqueName
+                            Else
+                                Return str
+                            End If
+                        End If
+                    Else
+                        Dim frmc As FormFlowsheet = My.Application.ActiveSimulation
+                        If Not frmc Is Nothing Then
+                            If frmc.Options.SelectedComponents.ContainsKey(UniqueName) Then
+                                Return frmc.Options.SelectedComponents(UniqueName).Name
+                            ElseIf frmc.Options.NotSelectedComponents.ContainsKey(UniqueName) Then
+                                Return frmc.Options.NotSelectedComponents(UniqueName).Name
+                            Else
+                                Return UniqueName
+                            End If
+                        Else
+                            Return UniqueName
                         End If
                     End If
                 Else
-                    Dim frmc As FormFlowsheet = My.Application.ActiveSimulation
-                    If Not frmc Is Nothing Then
-                        If frmc.Options.SelectedComponents.ContainsKey(UniqueName) Then
-                            Return frmc.Options.SelectedComponents(UniqueName).Name
-                        ElseIf frmc.Options.NotSelectedComponents.ContainsKey(UniqueName) Then
-                            Return frmc.Options.NotSelectedComponents(UniqueName).Name
-                        Else
-                            Return UniqueName
-                        End If
-                    Else
-                        Return UniqueName
-                    End If
+                    Return UniqueName
                 End If
-            Else
                 Return UniqueName
             End If
-            Return UniqueName
         End Function
 
         Public Shared Function GetComponentType(ByRef comp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties) As String
