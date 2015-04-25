@@ -374,6 +374,8 @@ Namespace DWSIM.SimulationObjects.Streams
                     For Each comp In Fases(i).Componentes.Values
                         comp.FracaoMolar = ASource.Fases(i).Componentes(comp.Nome).FracaoMolar
                         comp.FracaoMassica = ASource.Fases(i).Componentes(comp.Nome).FracaoMassica
+                        comp.MassFlow = ASource.Fases(i).Componentes(comp.Nome).MassFlow
+                        comp.MolarFlow = ASource.Fases(i).Componentes(comp.Nome).MolarFlow
                     Next
 
                     'Should be defined after concentrations?!?! [yes, no, maybe... whatever]
