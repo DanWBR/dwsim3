@@ -1,5 +1,4 @@
 *.suo
-/DWSIM/version.txt
 /DWSIM/obj
 /DWSIM/bin/Debug
 /DWSIM/bin/x86/Debug
@@ -139,6 +138,7 @@ obj
 /DWSIM/bin/x86/Release/Microsoft.ServiceBus.dll
 /DWSIM/bin/x86/Release/TcpComm.*
 /DWSIM/Thumbs.db
+/DWSIM/version.txt
 /DWSIM/bin/Release/DWSIM.exe.config
 /DWSIM/bin/Release/DWSIM.vshost.exe
 /DWSIM/bin/Release/DWSIM.vshost.exe.config
