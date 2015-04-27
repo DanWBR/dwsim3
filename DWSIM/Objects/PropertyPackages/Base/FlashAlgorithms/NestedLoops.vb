@@ -1309,6 +1309,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             Dim soma_x, soma_y As Double
             Dim L, Lf, Vf, T, Tf, deltaT As Double
             Dim e1 As Double
+            Dim AF As Double = 1
 
             d1 = Date.Now
 
@@ -1622,8 +1623,8 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     fval = stmp4 - 1
 
                     Tant = T
-                    deltaT = -fval / dFdT
-
+                    deltaT = -fval / dFdT * AF
+                    AF *= 1.01
                     If Abs(deltaT) > 0.1 * T Then
                         T = T + Sign(deltaT) * 0.1 * T
                     Else

@@ -1464,7 +1464,7 @@ alt:
 
                         'do a simple LLE calculation to get initial estimates.
                         Dim slle As New SimpleLLE() With {.InitialEstimatesForPhase1 = result(2), .InitialEstimatesForPhase2 = vx2est, .UseInitialEstimatesForPhase1 = True, .UseInitialEstimatesForPhase2 = True}
-                        Dim resultL As Object = slle.Flash_PT(Vz, P, T - 10, PP)
+                        Dim resultL As Object = slle.Flash_PT(result(2), P, T, PP)
 
                         L1 = resultL(0)
                         L2 = resultL(5)
@@ -1504,12 +1504,13 @@ alt:
             proppack = PP
 
             ReDim Vx1(n), Vx2(n), Vy(n), Ki1(n)
-            Dim Tant, L1ant, L2ant, gamma1(n), gamma2(n), VL(n) As Double
+            Dim Tant, dTant, dT, DF, L1ant, L2ant, gamma1(n), gamma2(n), VL(n) As Double
             Dim Vx1ant(n), Vx2ant(n), Vyant(n), e1, e2, e3, e4 As Double
 
             Tant = Tref
             T = Tref
             ecount = 0
+            DF = 1 'Damping Factor
 
             If n = 0 Then
                 If Vp(0) <= P Then
@@ -1550,13 +1551,15 @@ alt:
 
             'VL: composition of total liquid -> VX for LLE flash
             For i = 0 To n
-                VL(i) = Vz(i)
+                VL(i) = (L1 * Vx1(i) + L2 * Vx2(i)) / (L1 + L2)
             Next
 
             Do
                 L1ant = L1
                 L2ant = L2
                 Tant = T
+                dTant = dT
+
                 For i = 0 To n
                     Vx1ant(i) = Vx1(i)
                     Vx2ant(i) = Vx2(i)
@@ -1602,6 +1605,14 @@ alt:
                     lnP1 = Log(Pn)
                     F = P - Pn
                 Loop While Abs(P - Pn) > 1
+
+                'Detect symetric oscillations in vicinity to critical point of a component
+                'Do damping for new temperature in this case to avoid problems.
+                dT = T - Tant
+                T = Tant + DF * dT
+                If Abs(dTant + dT) < 0.05 Then
+                    DF *= 0.8
+                End If
 
                 'calculate new Ki's and vapour composition
                 For i = 0 To n
@@ -1673,7 +1684,10 @@ out:        L1 = L1 * (1 - V) 'calculate global phase fractions
             L1 = L1est / (1 - V)
             L2 = L2est / (1 - V)
 
-            VL = Vz.Clone 'VL: composition of total liquid -> VX for LLE flash
+            'VL: composition of total liquid -> VX for LLE flash
+            For i = 0 To n
+                VL(i) = (L1 * Vx1(i) + L2 * Vx2(i)) / (L1 + L2)
+            Next
 
             Do
                 L1ant = L1

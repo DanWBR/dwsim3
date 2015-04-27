@@ -956,14 +956,19 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim i As Integer
 
             Dim Tc As Object = Me.RET_VTC()
-
+            Dim Tr As Double
             If st = State.Liquid Then
                 ativ = Me.m_uni.GAMMA_MR(T, Vx, Me.RET_VNAMES)
                 For i = 0 To n
-                    If T / Tc(i) >= 1 Then
+                    Tr = T / Tc(i)
+                    If Tr >= 1.02 Then
                         lnfug(i) = Math.Log(AUX_KHenry(Me.RET_VNAMES(i), T) / P)
-                    Else
+                    ElseIf Tr < 0.98 Then
                         lnfug(i) = Math.Log(ativ(i) * Me.AUX_PVAPi(i, T) / (P))
+                    Else 'do interpolation at proximity of critical point
+                        Dim a2 As Double = AUX_KHenry(Me.RET_VNAMES(i), 1.02 * Tc(i))
+                        Dim a1 As Double = ativ(i) * Me.AUX_PVAPi(i, 0.98 * Tc(i))
+                        lnfug(i) = Math.Log(((Tr - 0.98) / (1.02 - 0.98) * (a2 - a1) + a1) / P)
                     End If
                 Next
             Else
