@@ -145,6 +145,10 @@
     <value>Calor Eliminado</value>
     <comment>1</comment>
   </data>
+  <data name="PROP_CL_4" xml:space="preserve">
+    <value>Fracción molar de vapor de salida</value>
+    <comment>1</comment>
+  </data>
   <data name="PROP_CO_0" xml:space="preserve">
     <value>Aumento de presión (Head)</value>
     <comment>1</comment>
@@ -267,6 +271,10 @@
   </data>
   <data name="PROP_HT_3" xml:space="preserve">
     <value>Calor suministrado</value>
+    <comment>1</comment>
+  </data>
+  <data name="PROP_HT_4" xml:space="preserve">
+    <value>Fracción molar de vapor de salida</value>
     <comment>1</comment>
   </data>
   <data name="PROP_HX_0" xml:space="preserve">

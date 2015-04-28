@@ -1417,6 +1417,9 @@ Namespace DWSIM.SimulationObjects.Streams
                     For i = 0 To 4
                         proplist.Add("PROP_MS_" + CStr(i))
                     Next
+                    proplist.Add("PROP_MS_7")
+                    proplist.Add("PROP_MS_8")
+                    proplist.Add("PROP_MS_27")
                     For i = 102 To 105
                         For Each subst As Substancia In Me.Fases(0).Componentes.Values
                             proplist.Add("PROP_MS_" + CStr(i) + "," + subst.Nome)
@@ -1501,6 +1504,15 @@ Namespace DWSIM.SimulationObjects.Streams
                     Me.Fases(0).SPMProperties.volumetric_flow = cv.ConverterParaSI(su.spmp_volumetricFlow, propval)
                     Me.Fases(0).SPMProperties.massflow = Me.Fases(0).SPMProperties.volumetric_flow * Me.Fases(0).SPMProperties.density.GetValueOrDefault
                     Me.PropertyPackage.DW_CalcVazaoMolar()
+                Case 7
+                    'PROP_MS_7	Specific Enthalpy
+                    Me.Fases(0).SPMProperties.enthalpy = cv.ConverterParaSI(su.spmp_enthalpy, propval)
+                Case 8
+                    'PROP_MS_8	Specific Entropy
+                    Me.Fases(0).SPMProperties.entropy = cv.ConverterParaSI(su.spmp_entropy, propval)
+                Case 27
+                    'PROP_MS_27	Molar fraction vapour phase
+                    Me.Fases(2).SPMProperties.molarfraction = propval
                 Case 102
                     If Me.Fases(0).Componentes.ContainsKey(sname) Then
                         Me.Fases(0).Componentes(sname).FracaoMolar = propval

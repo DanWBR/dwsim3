@@ -481,7 +481,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     'PROP_CL_3	Heat Removed
                     value = cv.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ.GetValueOrDefault)
                 Case 4
-                    'PROP_HT_4(Delta - T)
+                    'PROP_HT_4 Outlet Vapour fraction
+                    value = Me.OutletVaporFraction.GetValueOrDefault
+                Case 5
+                    'PROP_HT_5 DeltaT
                     value = cv.ConverterDoSI(su.spmp_deltaT, Me.DeltaT.GetValueOrDefault)
 
             End Select
@@ -496,19 +499,19 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Dim proplist As New ArrayList
             Select Case proptype
                 Case PropertyType.RO
-                    For i = 4 To 4
+                    For i = 4 To 5
                         proplist.Add("PROP_CL_" + CStr(i))
                     Next
                 Case PropertyType.RW
-                    For i = 0 To 4
+                    For i = 0 To 5
                         proplist.Add("PROP_CL_" + CStr(i))
                     Next
                 Case PropertyType.WR
-                    For i = 0 To 3
+                    For i = 0 To 4
                         proplist.Add("PROP_CL_" + CStr(i))
                     Next
                 Case PropertyType.ALL
-                    For i = 0 To 4
+                    For i = 0 To 5
                         proplist.Add("PROP_CL_" + CStr(i))
                     Next
             End Select
@@ -535,6 +538,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Case 3
                     'PROP_HT_3	Heat Added
                     Me.DeltaQ = cv.ConverterParaSI(su.spmp_heatflow, propval)
+                Case 4
+                    'PROP_HT_4	Outlet Vapour fraction
+                    Me.OutletVaporFraction = propval
 
             End Select
             Return 1
@@ -549,19 +555,22 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Select Case propidx
 
                 Case 0
-                    'PROP_HT_0	Pressure Drop
+                    'PROP_CL_0	Pressure Drop
                     value = su.spmp_deltaP
                 Case 1
-                    'PROP_HT_1(Efficiency)
+                    'PROP_CL_1  Efficiency
                     value = ""
                 Case 2
-                    'PROP_HT_2	Outlet Temperature
+                    'PROP_CL_2	Outlet Temperature
                     value = su.spmp_temperature
                 Case 3
-                    'PROP_HT_3	Heat Added
+                    'PROP_CL_3	Heat Added
                     value = su.spmp_heatflow
                 Case 4
-                    'PROP_HT_4(Delta - T)
+                    'PROP_CL_4	Outlet Vapour Fraction
+                    value = ""
+                Case 5
+                    'PROP_CL_4  DeltaT
                     value = su.spmp_deltaT
 
             End Select

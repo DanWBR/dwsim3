@@ -146,6 +146,10 @@
     <comment>1</comment>
   </data>
   <data name="PROP_CL_4" xml:space="preserve">
+    <value>Fração Molar da Saída</value>
+    <comment>0</comment>
+  </data>
+  <data name="PROP_CL_5" xml:space="preserve">
     <value>Delta-T</value>
     <comment>0</comment>
   </data>
@@ -278,8 +282,11 @@
     <comment>1</comment>
   </data>
   <data name="PROP_HT_4" xml:space="preserve">
-    <value>Delta-T</value>
+    <value>Fração Molar da Saída</value>
     <comment>0</comment>
+  </data>
+  <data name="PROP_HT_5" xml:space="preserve">
+    <value>Delta-T</value>
   </data>
   <data name="PROP_HX_0" xml:space="preserve">
     <value>Coeficiente Global de Transferência de Calor (U)</value>
