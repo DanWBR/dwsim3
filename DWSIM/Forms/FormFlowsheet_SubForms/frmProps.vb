@@ -36,7 +36,11 @@ Public Class frmProps
 
     Public Sub PGEx1_PropertyValueChanged(ByVal s As Object, ByVal e As System.Windows.Forms.PropertyValueChangedEventArgs) Handles PGEx1.PropertyValueChanged
 
-        ChildParent = Me.ParentForm
+        If TypeOf Me.ParentForm Is FormFlowsheet Then
+            ChildParent = Me.ParentForm
+        Else
+            ChildParent = My.Application.ActiveSimulation
+        End If
 
         Dim sobj As Microsoft.MSDN.Samples.GraphicObjects.GraphicObject = ChildParent.FormSurface.FlowsheetDesignSurface.SelectedObject
 
@@ -1039,7 +1043,11 @@ Public Class frmProps
 
 
     Private Sub PGEx2_PropertyValueChanged(ByVal s As Object, ByVal e As System.Windows.Forms.PropertyValueChangedEventArgs) Handles PGEx2.PropertyValueChanged
-        ChildParent = Me.ParentForm
+        If TypeOf Me.ParentForm Is FormFlowsheet Then
+            ChildParent = Me.ParentForm
+        Else
+            ChildParent = My.Application.ActiveSimulation
+        End If
         If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Nome")) Then
             Try
                 If Not ChildParent.Collections.ObjectCollection(ChildParent.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).Tabela Is Nothing Then

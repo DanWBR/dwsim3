@@ -2637,16 +2637,18 @@ Public Class FormMain
             form.FormWatch.DockPanel = Nothing
             form.FormSurface.DockPanel = Nothing
 
-            Dim myfile As String = My.Computer.FileSystem.GetTempFileName()
-            Try
-                Dim pnl As String = xdoc.Element("DWSIM_Simulation_Data").Element("PanelLayout").Value
-                File.WriteAllText(myfile, pnl)
-                form.dckPanel.LoadFromXml(myfile, New DeserializeDockContent(AddressOf Me.ReturnForm))
-            Catch ex As Exception
-                excs.Add(New Exception("Error Restoring Window Layout", ex))
-            Finally
-                File.Delete(myfile)
-            End Try
+            If Not My.Computer.Keyboard.ShiftKeyDown Then
+                Dim myfile As String = My.Computer.FileSystem.GetTempFileName()
+                Try
+                    Dim pnl As String = xdoc.Element("DWSIM_Simulation_Data").Element("PanelLayout").Value
+                    File.WriteAllText(myfile, pnl)
+                    form.dckPanel.LoadFromXml(myfile, New DeserializeDockContent(AddressOf Me.ReturnForm))
+                Catch ex As Exception
+                    excs.Add(New Exception("Error Restoring Window Layout", ex))
+                Finally
+                    File.Delete(myfile)
+                End Try
+            End If
 
             Try
                 form.FormLog.Show(form.dckPanel)

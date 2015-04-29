@@ -72,17 +72,14 @@ Public Class frmSurface
 
         If TypeOf Me.ParentForm Is FormFlowsheet Then
             Flowsheet = Me.ParentForm
+        Else
+            Flowsheet = My.Application.ActiveSimulation
         End If
+
         PGEx1 = Me.Flowsheet.FormProps.PGEx1
         PGEx2 = Me.Flowsheet.FormProps.PGEx2
 
         AddHandler CopyFromTSMI.DropDownItemClicked, AddressOf MaterialStreamClickHandler
-
-        'If Not Flowsheet.Options.SelectedPropertyPackage Is Nothing Then Me.LabelPP.Text = "PP: " & Flowsheet.Options.SelectedPropertyPackage.ComponentName
-
-        If DWSIM.App.IsRunningOnMono Then
-
-        End If
 
     End Sub
 
