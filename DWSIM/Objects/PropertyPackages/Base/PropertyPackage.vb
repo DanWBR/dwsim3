@@ -411,8 +411,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Return New Auxiliary.FlashAlgorithms.BostonFournierInsideOut3P With
                                                         {.StabSearchCompIDs = _tpcompids, .StabSearchSeverity = _tpseverity}
                         Else
-                            If _brio3 Is Nothing Then _brio3 = New Auxiliary.FlashAlgorithms.BostonFournierInsideOut3P With
-                                {.StabSearchCompIDs = _tpcompids, .StabSearchSeverity = _tpseverity}
+                            If _brio3 Is Nothing Then _brio3 = New Auxiliary.FlashAlgorithms.BostonFournierInsideOut3P
+                            _brio3.StabSearchCompIDs = _tpcompids
+                            _brio3.StabSearchSeverity = _tpseverity
                             Return _brio3
                         End If
                     Case FlashMethod.GibbsMin2P
@@ -428,8 +429,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Return New Auxiliary.FlashAlgorithms.GibbsMinimization3P With
                                                         {.ForceTwoPhaseOnly = False, .StabSearchCompIDs = _tpcompids, .StabSearchSeverity = _tpseverity}
                         Else
-                            If _gm3 Is Nothing Then _gm3 = New Auxiliary.FlashAlgorithms.GibbsMinimization3P With
-                                {.ForceTwoPhaseOnly = False, .StabSearchCompIDs = _tpcompids, .StabSearchSeverity = _tpseverity}
+                            If _gm3 Is Nothing Then _gm3 = New Auxiliary.FlashAlgorithms.GibbsMinimization3P
+                            _gm3.ForceTwoPhaseOnly = False
+                            _gm3.StabSearchCompIDs = _tpcompids
+                            _gm3.StabSearchSeverity = _tpseverity
                             Return _gm3
                         End If
                     Case FlashMethod.NestedLoops3P, FlashMethod.NestedLoops3PV2, FlashMethod.NestedLoops3PV3
@@ -437,8 +440,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Return New Auxiliary.FlashAlgorithms.NestedLoops3P With
                                                         {.StabSearchCompIDs = _tpcompids, .StabSearchSeverity = _tpseverity}
                         Else
-                            If _nl3 Is Nothing Then _nl3 = New Auxiliary.FlashAlgorithms.NestedLoops3PV3 With
-                                {.StabSearchCompIDs = _tpcompids, .StabSearchSeverity = _tpseverity}
+                            If _nl3 Is Nothing Then _nl3 = New Auxiliary.FlashAlgorithms.NestedLoops3PV3
+                            _nl3.StabSearchCompIDs = _tpcompids
+                            _nl3.StabSearchSeverity = _tpseverity
                             Return _nl3
                         End If
                     Case FlashMethod.NestedLoopsSLE
@@ -449,7 +453,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                        If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then
                             Return New Auxiliary.FlashAlgorithms.NestedLoopsSLE With {.CompoundProperties = constprops}
                         Else
-                            If _nlsle Is Nothing Then _nlsle = New Auxiliary.FlashAlgorithms.NestedLoopsSLE With {.CompoundProperties = constprops}
+                            If _nlsle Is Nothing Then _nlsle = New Auxiliary.FlashAlgorithms.NestedLoopsSLE
+                            _nlsle.CompoundProperties = constprops
                             Return _nlsle
                         End If
                     Case FlashMethod.NestedLoopsSLE_SS
@@ -460,7 +465,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then
                             Return New Auxiliary.FlashAlgorithms.NestedLoopsSLE With {.CompoundProperties = constprops, .SolidSolution = True}
                         Else
-                            If _nlsle Is Nothing Then _nlsle = New Auxiliary.FlashAlgorithms.NestedLoopsSLE With {.CompoundProperties = constprops, .SolidSolution = True}
+                            If _nlsle Is Nothing Then _nlsle = New Auxiliary.FlashAlgorithms.NestedLoopsSLE
+                            _nlsle.CompoundProperties = constprops
+                            _nlsle.SolidSolution = True
                             Return _nlsle
                         End If
                     Case FlashMethod.NestedLoopsImmiscible
@@ -472,8 +479,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Return New Auxiliary.FlashAlgorithms.NestedLoopsImmiscible With
                                                         {.CompoundProperties = constprops, .StabSearchCompIDs = _tpcompids, .StabSearchSeverity = _tpseverity}
                         Else
-                            If _nli Is Nothing Then _nli = New Auxiliary.FlashAlgorithms.NestedLoopsImmiscible With
-                            {.CompoundProperties = constprops, .StabSearchCompIDs = _tpcompids, .StabSearchSeverity = _tpseverity}
+                            If _nli Is Nothing Then _nli = New Auxiliary.FlashAlgorithms.NestedLoopsImmiscible
+                            _nli.CompoundProperties = constprops
+                            _nli.StabSearchCompIDs = _tpcompids
+                            _nli.StabSearchSeverity = _tpseverity
                             Return _nli
                         End If
                     Case FlashMethod.SimpleLLE
