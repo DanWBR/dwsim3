@@ -2735,7 +2735,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Phasenwechsel nicht zulässig.</value>
   </data>
   <data name="Plstico" xml:space="preserve">
-    <value>Plaste</value>
+    <value>Plastik</value>
   </data>
   <data name="PontoCrtico" xml:space="preserve">
     <value>Kritischer Punkt</value>
@@ -4430,10 +4430,10 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Skriptsprache</value>
   </data>
   <data name="UO_ScriptText_After" xml:space="preserve">
-    <value>Skript (Hintere)</value>
+    <value>Skript (Nachher)</value>
   </data>
   <data name="UO_ScriptText_Before" xml:space="preserve">
-    <value>Skript (Vordere)</value>
+    <value>Skript (Vorher)</value>
   </data>
   <data name="UO_ScriptExtension" xml:space="preserve">
     <value>Skript</value>
@@ -4596,7 +4596,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Gleichzeitige Adjust Solver: maximale Iterationen erreicht</value>
   </data>
   <data name="IncludeJTEffect" xml:space="preserve">
-    <value>Fügen Sie Joule-Thomson-Kühleffekt</value>
+    <value>Fügen Sie Joule-Thomson-Kühleffekt hinzu</value>
   </data>
   <data name="ReactionExtents" xml:space="preserve">
     <value>Reaktionsumsatz</value>
@@ -4716,7 +4716,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Komponente in Anwenderdatenbank speichern?</value>
   </data>
   <data name="FilterVaporPhaseNotSupported" xml:space="preserve">
-    <value>The Cake Filter model doesn't support a vapor phase in the inlet stream.</value>
+    <value>Das Modell für den Kuchenfilter unterstützt keine Gasphase im Einlaufstrom.</value>
   </data>
   <data name="PP_IDEAL_VAPOR_PHASE_FUG" xml:space="preserve">
     <value>Verwenden ideale Dampfphasen Fugazität Modell (0 = Deaktivieren, 1 = Aktivieren)</value>
@@ -4779,7 +4779,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Gesperrt</value>
   </data>
   <data name="NoRegParmsAvail" xml:space="preserve">
-    <value>No regressed parameters available! No data saved.</value>
+    <value>Keine regressierten Parameter verfügbar! Keine Daten gespeichert.</value>
   </data>
   <data name="ParametrosAdicionadosComSucesso" xml:space="preserve">
     <value>Interaction Parameters successfully added to the database.</value>
@@ -4791,31 +4791,31 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Cancel</value>
   </data>
   <data name="FinishText" xml:space="preserve">
-    <value>Finish</value>
+    <value>Ende</value>
   </data>
   <data name="NextText" xml:space="preserve">
     <value>Next</value>
   </data>
   <data name="DescCPPP" xml:space="preserve">
-    <value>CoolProp is an open-source database of fluid and humid air properties, formulated based on the most accurate formulations in open literature. It has been validated against the most accurate data available from the relevant references.</value>
+    <value>CoolProp ist eine open-source Datenbanik mit Eigenschaften von Fluiden und feuchter Luft. Die Formulierung basiert auf den genauesten Methoden die in der offenen Literatur verfügbar sind. Diese wurde gegenüber der genauesten verfügbaren Daten der relevanten Refferenzen validiert.</value>
   </data>
   <data name="SpecSource" xml:space="preserve">
     <value>Source</value>
   </data>
   <data name="FlashSpecification" xml:space="preserve">
-    <value>Flash calculation specification</value>
+    <value>Spezifikation Flashberechnung</value>
   </data>
   <data name="FlashSpecificationDesc" xml:space="preserve">
-    <value>Select the flash calculation type to be done to solve the energy balance in the vessel.</value>
+    <value>Wählen Sie den Flash-Berechnungsmodus welcher für die Berechnug der Energiebilanz im Kessel durchgeführt werden soll.</value>
   </data>
   <data name="HydrateEquilibriumCurve" xml:space="preserve">
     <value>Hydrate Equilibrium Curve</value>
   </data>
   <data name="PhaseIdentificationParameter" xml:space="preserve">
-    <value>Phase Identification Parameter = 1</value>
+    <value>Phasen Identifikationsparameter = 1</value>
   </data>
   <data name="PontosdeOrvalhoWF" xml:space="preserve">
-    <value>Dew Points (Dry Basis)</value>
+    <value>Taupunkte (Basis trocken)</value>
   </data>
   <data name="BinEnvError_DuplicateCompound" xml:space="preserve">
     <value>Komponenten doppelt vorhanden</value>
@@ -4920,40 +4920,40 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Fließbild (UO)</value>
   </data>
   <data name="FlowsheetInitializationError" xml:space="preserve">
-    <value>An error occurred during flowsheet initialization, please check the error message for details.</value>
+    <value>Während der Initialisierung des Flowsheetts trat ein Fehler auf. Bitte beachten Sie die Fehlermeldung für weitere Details.</value>
   </data>
   <data name="FlowsheetInitializationSuccess" xml:space="preserve">
-    <value>Flowsheet successfully initialized.</value>
+    <value>Flowsheet erfolgreich initialisiert.</value>
   </data>
   <data name="FlowsheetInitialized" xml:space="preserve">
-    <value>Flowsheet already initialized.</value>
+    <value>Flowsheet bereits initialisiert.</value>
   </data>
   <data name="FlowsheetNotInitialized" xml:space="preserve">
-    <value>Flowsheet not initialized, click on the button on the left to initialize it.</value>
+    <value>Flowsheet wurde nicht initialisiert. Clicken Sie auf den linke Knopf, um es zu initialisieren.</value>
   </data>
   <data name="FlowsheetUOEditor" xml:space="preserve">
     <value>Control panel</value>
   </data>
   <data name="FlowsheetUOEditorDesc" xml:space="preserve">
-    <value>Initialize the flowsheet, define material stream links, expose object properties and select the mass transfer mode between streams.</value>
+    <value>Initialisiere das Flowsheet, definieren Sie Verknüpfungen der Materialströme, machen Sie die Objekteigenschaften sichtbar und wählen Sie den Massentransfermodus zwischen Strömen.</value>
   </data>
   <data name="FlowsheetUOViewer" xml:space="preserve">
-    <value>View flowsheet</value>
+    <value>Zeige Flowsheet</value>
   </data>
   <data name="FlowsheetUOViewerDesc" xml:space="preserve">
-    <value>View PFD and object properties.</value>
+    <value>Zeige Flowsheet und Objekteigenschaften.</value>
   </data>
   <data name="InitializeOnLoad" xml:space="preserve">
-    <value>Initialize on load</value>
+    <value>Initialisiere beim Laden</value>
   </data>
   <data name="InitializeOnLoadDesc" xml:space="preserve">
-    <value>Select 'True' to initialize the subflowsheet during loading of the main simulation file.</value>
+    <value>Wählen Sie 'True' um das Unter-Flowsheet während dem Laden der Hauptsimulation zu initialisieren.</value>
   </data>
   <data name="SimulationFile" xml:space="preserve">
     <value>Simulation file</value>
   </data>
   <data name="SimulationFileDesc" xml:space="preserve">
-    <value>Select the simulation file to use as a subflowsheet.</value>
+    <value>Wählen Sie die Simulationsdatei, welche als Subflowsheet genutzt  werden soll.</value>
   </data>
   <data name="ExcelFile" xml:space="preserve">
     <value>Kalkulationstabelle Definitionsdatei</value>
@@ -4980,76 +4980,76 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Fehler beim aktualisieren der subflowsheet prozessdaten:</value>
   </data>
   <data name="SubFSUpdateSuccess" xml:space="preserve">
-    <value>Subflowsheet prozessdaten erfolgreich aktualisiert.</value>
+    <value>Subflowsheet Prozessdaten erfolgreich aktualisiert.</value>
   </data>
   <data name="UpdateOnSave" xml:space="preserve">
-    <value>Update-prozessdaten über das speichern</value>
+    <value>Aktualisiere-Prozessdaten beim Speichern</value>
   </data>
   <data name="UpdateOnSaveDesc" xml:space="preserve">
-    <value>Aktualisiert die unterflowsheet-Datei mit prozessdaten aus der letzten berechnung lauf beim speichern des hauptfließbild-datei (XML-only).</value>
+    <value>Aktualisiert die Subflowsheet-Datei mit Prozessdaten aus dem letzten Berechnungslauf beim Speichern des Hauptfließbilddatei (XML-only).</value>
   </data>
   <data name="DCOperationMode" xml:space="preserve">
-    <value>Column operation mode</value>
+    <value>Berechnungsmodus Kolonne</value>
   </data>
   <data name="FSfinishedsolvingerror" xml:space="preserve">
-    <value>Errors occured during the calculation of the flowsheet, please read the following messages for more details.</value>
+    <value>Während der Berechnung des Flowsheets trat ein Fehler auf. Bitte lesen Sie die folgenden Meldungen für mehr Details.</value>
   </data>
   <data name="FSfinishedsolvingok" xml:space="preserve">
-    <value>The flowsheet was calculated succesfully.</value>
+    <value>Der Flowsheet wurde erfolgreich berechnet.</value>
   </data>
   <data name="FSstartedsolving" xml:space="preserve">
-    <value>The flowsheet is being calculated, please wait...</value>
+    <value>Der Flowsheet wird berechnet, bitte warten...</value>
   </data>
   <data name="SolverTimeout" xml:space="preserve">
-    <value>Der solver konnte die fließbild innerhalb des festgelegten zeitlimits zu berechnen.</value>
+    <value>Der Solver konnte das Fließbild innerhalb des festgelegten Zeitlimits nicht berechnen.</value>
   </data>
   <data name="RecycleMaxItsReached" xml:space="preserve">
     <value>Maximale Anzahl an Iterationen erreicht, ohne zu konvergieren.</value>
   </data>
   <data name="ClientConnected" xml:space="preserve">
-    <value>Connected to the network server.</value>
+    <value>Verbunden zum Netzwerkserver.</value>
   </data>
   <data name="ClientConnectingError" xml:space="preserve">
-    <value>Error connecting to the server</value>
+    <value>Fehler beim Verbinden zum Server</value>
   </data>
   <data name="ClientDataProcessingError" xml:space="preserve">
-    <value>Error processing incoming data from server</value>
+    <value>Fehler beim Verarbeiten der vom Server eintreffenden Daten</value>
   </data>
   <data name="ClientMessageFromServer" xml:space="preserve">
-    <value>Server message</value>
+    <value>Server Nachricht</value>
   </data>
   <data name="ClientSavingTempFile" xml:space="preserve">
-    <value>Saving temporary file to send to server...</value>
+    <value>Speichere temporäre Datei zum senden an Server...</value>
   </data>
   <data name="ClientSendDataError" xml:space="preserve">
-    <value>Error sending data to server</value>
+    <value>Fehler beim senden der Daten zum Server</value>
   </data>
   <data name="ClientSendingData" xml:space="preserve">
-    <value>Sending data to server...</value>
+    <value>Sende Daten zum Server ...</value>
   </data>
   <data name="ClientSentDataOK" xml:space="preserve">
-    <value>Data successfully sent to server.</value>
+    <value>Daten erfolgreich zum Server gesendet.</value>
   </data>
   <data name="ClientUpdatedDataOK" xml:space="preserve">
-    <value>Update finished.</value>
+    <value>Update fertiggestellt.</value>
   </data>
   <data name="ClientUpdatingData" xml:space="preserve">
-    <value>Updating flowsheet data...</value>
+    <value>Updaten der Fließbild Daten ...</value>
   </data>
   <data name="ClientWaitingForResults" xml:space="preserve">
-    <value>Waiting for results from server run....</value>
+    <value>Warte auf Ergebnisse vom Server ....</value>
   </data>
   <data name="AzureClientCheckingForServerOnEndpoint" xml:space="preserve">
-    <value>Checking for an active server on the Service Bus Endpoint...</value>
+    <value>Prüfung ob Server am Service Bus Endpoint aktiv ist ...</value>
   </data>
   <data name="AzureClientConnectingtoSB" xml:space="preserve">
-    <value>Connecting to Azure Service Bus...</value>
+    <value>Verbinden zum Azure Service Bus...</value>
   </data>
   <data name="AzureClientNoServerOnEndpoint" xml:space="preserve">
-    <value>There are no servers connected to the Service Bus at the moment. Try again later or start a server somewhere.</value>
+    <value>Im Moment sind keine Server am Service Bus verbunden. Versuchen Sie es später oder starten Sie einen Server.</value>
   </data>
   <data name="AzureClientServerFoundOnEndpoint" xml:space="preserve">
-    <value>Active server found on Service Bus Endpoint. Preparing data for uploading...</value>
+    <value>Aktiver Server am Service Bus Endpoint gefunden. Bereite Daten für Upload vor ...</value>
   </data>
   <data name="LastUpdatedOn" xml:space="preserve">
     <value>Daten aktualisiert am</value>
