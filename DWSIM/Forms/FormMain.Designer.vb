@@ -1,4 +1,4 @@
-Imports System.IO
+ï»¿Imports System.IO
 Imports System.Runtime.Serialization.Formatters
 Imports Infralution.Localization
 Imports System.Globalization
@@ -31,7 +31,7 @@ Partial Class FormMain
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NovoEstudoDoCriadorDeComponentesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.NovoEstudoDeRegressãoDeDadosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.NovoEstudoDeRegressÃ£oDeDadosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OpenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.toolStripSeparator = New System.Windows.Forms.ToolStripSeparator()
         Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -42,7 +42,7 @@ Partial Class FormMain
         Me.toolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.VerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.PreferênciasDoDWSIMToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PreferÃªnciasDoDWSIMToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DatabaseManagerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MostrarBarraDeFerramentasToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.WindowsMenu = New System.Windows.Forms.ToolStripMenuItem()
@@ -56,7 +56,7 @@ Partial Class FormMain
         Me.BlogDeDesenvolvimentoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DownloadsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.WikiToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.FórumToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.FÃ³rumToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RastreamentoDeBugsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RegistroToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RegistrarTiposCOMToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -112,7 +112,7 @@ Partial Class FormMain
         'FileToolStripMenuItem
         '
         resources.ApplyResources(Me.FileToolStripMenuItem, "FileToolStripMenuItem")
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripMenuItem, Me.NovoEstudoDoCriadorDeComponentesToolStripMenuItem, Me.NovoEstudoDeRegressãoDeDadosToolStripMenuItem, Me.OpenToolStripMenuItem, Me.toolStripSeparator, Me.SaveToolStripMenuItem, Me.SaveAllToolStripMenuItem, Me.SaveAsToolStripMenuItem, Me.ToolStripSeparator2, Me.CloseAllToolstripMenuItem, Me.toolStripSeparator1, Me.ExitToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripMenuItem, Me.NovoEstudoDoCriadorDeComponentesToolStripMenuItem, Me.NovoEstudoDeRegressÃ£oDeDadosToolStripMenuItem, Me.OpenToolStripMenuItem, Me.toolStripSeparator, Me.SaveToolStripMenuItem, Me.SaveAllToolStripMenuItem, Me.SaveAsToolStripMenuItem, Me.ToolStripSeparator2, Me.CloseAllToolstripMenuItem, Me.toolStripSeparator1, Me.ExitToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Overflow = System.Windows.Forms.ToolStripItemOverflow.AsNeeded
         Me.StatusBarTextProvider1.SetStatusBarText(Me.FileToolStripMenuItem, resources.GetString("FileToolStripMenuItem.StatusBarText"))
@@ -131,12 +131,12 @@ Partial Class FormMain
         Me.NovoEstudoDoCriadorDeComponentesToolStripMenuItem.Name = "NovoEstudoDoCriadorDeComponentesToolStripMenuItem"
         Me.StatusBarTextProvider1.SetStatusBarText(Me.NovoEstudoDoCriadorDeComponentesToolStripMenuItem, resources.GetString("NovoEstudoDoCriadorDeComponentesToolStripMenuItem.StatusBarText"))
         '
-        'NovoEstudoDeRegressãoDeDadosToolStripMenuItem
+        'NovoEstudoDeRegressÃ£oDeDadosToolStripMenuItem
         '
-        resources.ApplyResources(Me.NovoEstudoDeRegressãoDeDadosToolStripMenuItem, "NovoEstudoDeRegressãoDeDadosToolStripMenuItem")
-        Me.NovoEstudoDeRegressãoDeDadosToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.page_white
-        Me.NovoEstudoDeRegressãoDeDadosToolStripMenuItem.Name = "NovoEstudoDeRegressãoDeDadosToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.NovoEstudoDeRegressãoDeDadosToolStripMenuItem, resources.GetString("NovoEstudoDeRegressãoDeDadosToolStripMenuItem.StatusBarText"))
+        resources.ApplyResources(Me.NovoEstudoDeRegressÃ£oDeDadosToolStripMenuItem, "NovoEstudoDeRegressÃ£oDeDadosToolStripMenuItem")
+        Me.NovoEstudoDeRegressÃ£oDeDadosToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.page_white
+        Me.NovoEstudoDeRegressÃ£oDeDadosToolStripMenuItem.Name = "NovoEstudoDeRegressÃ£oDeDadosToolStripMenuItem"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.NovoEstudoDeRegressÃ£oDeDadosToolStripMenuItem, resources.GetString("NovoEstudoDeRegressÃ£oDeDadosToolStripMenuItem.StatusBarText"))
         '
         'OpenToolStripMenuItem
         '
@@ -201,17 +201,17 @@ Partial Class FormMain
         'VerToolStripMenuItem
         '
         resources.ApplyResources(Me.VerToolStripMenuItem, "VerToolStripMenuItem")
-        Me.VerToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PreferênciasDoDWSIMToolStripMenuItem, Me.DatabaseManagerToolStripMenuItem, Me.MostrarBarraDeFerramentasToolStripMenuItem})
+        Me.VerToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PreferÃªnciasDoDWSIMToolStripMenuItem, Me.DatabaseManagerToolStripMenuItem, Me.MostrarBarraDeFerramentasToolStripMenuItem})
         Me.VerToolStripMenuItem.Name = "VerToolStripMenuItem"
         Me.VerToolStripMenuItem.Overflow = System.Windows.Forms.ToolStripItemOverflow.AsNeeded
         Me.StatusBarTextProvider1.SetStatusBarText(Me.VerToolStripMenuItem, resources.GetString("VerToolStripMenuItem.StatusBarText"))
         '
-        'PreferênciasDoDWSIMToolStripMenuItem
+        'PreferÃªnciasDoDWSIMToolStripMenuItem
         '
-        resources.ApplyResources(Me.PreferênciasDoDWSIMToolStripMenuItem, "PreferênciasDoDWSIMToolStripMenuItem")
-        Me.PreferênciasDoDWSIMToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.application_edit
-        Me.PreferênciasDoDWSIMToolStripMenuItem.Name = "PreferênciasDoDWSIMToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.PreferênciasDoDWSIMToolStripMenuItem, resources.GetString("PreferênciasDoDWSIMToolStripMenuItem.StatusBarText"))
+        resources.ApplyResources(Me.PreferÃªnciasDoDWSIMToolStripMenuItem, "PreferÃªnciasDoDWSIMToolStripMenuItem")
+        Me.PreferÃªnciasDoDWSIMToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.application_edit
+        Me.PreferÃªnciasDoDWSIMToolStripMenuItem.Name = "PreferÃªnciasDoDWSIMToolStripMenuItem"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.PreferÃªnciasDoDWSIMToolStripMenuItem, resources.GetString("PreferÃªnciasDoDWSIMToolStripMenuItem.StatusBarText"))
         '
         'DatabaseManagerToolStripMenuItem
         '
@@ -289,7 +289,7 @@ Partial Class FormMain
         'DWSIMNaInternetToolStripMenuItem
         '
         resources.ApplyResources(Me.DWSIMNaInternetToolStripMenuItem, "DWSIMNaInternetToolStripMenuItem")
-        Me.DWSIMNaInternetToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BlogDeDesenvolvimentoToolStripMenuItem, Me.DownloadsToolStripMenuItem, Me.WikiToolStripMenuItem, Me.FórumToolStripMenuItem, Me.RastreamentoDeBugsToolStripMenuItem})
+        Me.DWSIMNaInternetToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BlogDeDesenvolvimentoToolStripMenuItem, Me.DownloadsToolStripMenuItem, Me.WikiToolStripMenuItem, Me.FÃ³rumToolStripMenuItem, Me.RastreamentoDeBugsToolStripMenuItem})
         Me.DWSIMNaInternetToolStripMenuItem.Name = "DWSIMNaInternetToolStripMenuItem"
         Me.StatusBarTextProvider1.SetStatusBarText(Me.DWSIMNaInternetToolStripMenuItem, resources.GetString("DWSIMNaInternetToolStripMenuItem.StatusBarText"))
         '
@@ -311,11 +311,11 @@ Partial Class FormMain
         Me.WikiToolStripMenuItem.Name = "WikiToolStripMenuItem"
         Me.StatusBarTextProvider1.SetStatusBarText(Me.WikiToolStripMenuItem, resources.GetString("WikiToolStripMenuItem.StatusBarText"))
         '
-        'FórumToolStripMenuItem
+        'FÃ³rumToolStripMenuItem
         '
-        resources.ApplyResources(Me.FórumToolStripMenuItem, "FórumToolStripMenuItem")
-        Me.FórumToolStripMenuItem.Name = "FórumToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.FórumToolStripMenuItem, resources.GetString("FórumToolStripMenuItem.StatusBarText"))
+        resources.ApplyResources(Me.FÃ³rumToolStripMenuItem, "FÃ³rumToolStripMenuItem")
+        Me.FÃ³rumToolStripMenuItem.Name = "FÃ³rumToolStripMenuItem"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.FÃ³rumToolStripMenuItem, resources.GetString("FÃ³rumToolStripMenuItem.StatusBarText"))
         '
         'RastreamentoDeBugsToolStripMenuItem
         '
@@ -619,7 +619,7 @@ Partial Class FormMain
     Public WithEvents ToolStripStatusLabel1 As System.Windows.Forms.ToolStripStatusLabel
 
 
-    Public WithEvents PreferênciasDoDWSIMToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Public WithEvents PreferÃªnciasDoDWSIMToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents TimerBackup As System.Windows.Forms.Timer
     Public WithEvents bgSaveBackup As System.ComponentModel.BackgroundWorker
 
@@ -712,7 +712,7 @@ Partial Class FormMain
     Public WithEvents BlogDeDesenvolvimentoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents DownloadsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents WikiToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Public WithEvents FórumToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Public WithEvents FÃ³rumToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents RastreamentoDeBugsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents DonateToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents ToolStripSeparator3 As System.Windows.Forms.ToolStripSeparator
@@ -734,7 +734,7 @@ Partial Class FormMain
     Friend WithEvents tslupd As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents NovoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents NewToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents NovoEstudoDeRegressãoDeDadosToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents NovoEstudoDeRegressÃ£oDeDadosToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents NovoEstudoDoCriadorDeComponentesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents SaveStudyDlg As System.Windows.Forms.SaveFileDialog
     Friend WithEvents SaveRegStudyDlg As System.Windows.Forms.SaveFileDialog
