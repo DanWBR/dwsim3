@@ -315,15 +315,14 @@ out:
 
             If L > 0 Then ' we have a liquid phase
 
-                Dim nt As Integer
+                Dim nt As Integer = -1
                 Dim nc As Integer = UBound(Vz)
                 Dim ff As Integer
 
-                nt = -1
                 i = 0
                 For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In PP.CurrentMaterialStream.Fases(0).Componentes.Values
                     ff = Array.IndexOf(StabSearchCompIDs, subst.Nome)
-                    If ff >= 0 And Vz(i) > 0 Then nt += 1
+                    If ff >= 0 And Vz(i) > 0 And T < subst.ConstantProperties.Critical_Temperature Then nt += 1
                     i += 1
                 Next
                 If nt = -1 Then nt = nc
@@ -335,7 +334,7 @@ out:
                 j = 0
                 For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In PP.CurrentMaterialStream.Fases(0).Componentes.Values
                     ff = Array.IndexOf(StabSearchCompIDs, subst.Nome)
-                    If ff >= 0 And Vz(i) > 0 Then
+                    If ff >= 0 And Vz(i) > 0 And T < subst.ConstantProperties.Critical_Temperature Then
                         idx(j) = i
                         j += 1
                     End If
@@ -344,7 +343,7 @@ out:
 
                 For i = 0 To nt
                     For j = 0 To nc
-                        Vtrials(i, j) = 0.00001
+                        If Vz(j) > 0 Then Vtrials(i, j) = 0.00001
                     Next
                 Next
                 For j = 0 To nt
@@ -805,9 +804,9 @@ out:
 
             Dim d1, d2 As Date, dt As TimeSpan
             Dim i, n, ecount As Integer
-            Dim resultFlash As Object
-            Dim Tb, Td, Hb, Hd As Double
-            'Dim q, r, dV, fx As Double
+            Dim Tb, Td As Double
+            Dim Span(1) As PointF
+
             Dim ErrRes As Object
 
             d1 = Date.Now
@@ -835,28 +834,23 @@ out:
 
             If Tref = 0.0# Then Tref = 298.15
 
-            ' ============= Calculate Dew point and boiling point
+            ' ============= Calculate Dew point and boiling point as span endpoints =================
 
             Dim alreadymt As Boolean = False
 
             If My.Settings.EnableParallelProcessing Then
                 My.MyApplication.IsRunningParallelTasks = True
-                If My.Settings.EnableGPUProcessing Then
-                    'If Not My.MyApplication.gpu.IsMultithreadingEnabled Then
-                    '    My.MyApplication.gpu.EnableMultithreading()
-                    'Else
-                    '    alreadymt = True
-                    'End If
-                End If
                 Try
                     Dim task1 As Task = New Task(Sub()
                                                      Dim ErrRes1 = Herror("PV", 0, P, Vz, PP)
-                                                     Hb = ErrRes1(0)
+                                                     Span(0).X = 0
+                                                     Span(0).Y = ErrRes1(0)
                                                      Tb = ErrRes1(1)
                                                  End Sub)
                     Dim task2 As Task = New Task(Sub()
                                                      Dim ErrRes2 = Herror("PV", 1, P, Vz, PP)
-                                                     Hd = ErrRes2(0)
+                                                     Span(1).X = 1
+                                                     Span(1).Y = ErrRes2(0)
                                                      Td = ErrRes2(1)
                                                  End Sub)
                     task1.Start()
@@ -865,65 +859,78 @@ out:
                 Catch ae As AggregateException
                     Throw ae.Flatten().InnerException
                 Finally
-                    'If My.Settings.EnableGPUProcessing Then
-                    '    If Not alreadymt Then
-                    '        My.MyApplication.gpu.DisableMultithreading()
-                    '        My.MyApplication.gpu.FreeAll()
-                    '    End If
-                    'End If
                 End Try
                 My.MyApplication.IsRunningParallelTasks = False
             Else
                 ErrRes = Herror("PV", 0, P, Vz, PP)
-                Hb = ErrRes(0)
                 Tb = ErrRes(1)
+                Span(0).X = 0
+                Span(0).Y = ErrRes(0) 'Enthalpy at boiling point
+
                 ErrRes = Herror("PV", 1, P, Vz, PP)
-                Hd = ErrRes(0)
                 Td = ErrRes(1)
+                Span(1).X = 0
+                Span(1).Y = ErrRes(0) 'Enthalpy at dew point
             End If
 
-            If Hb > 0 And Hd < 0 Then
+            If Span(0).Y > 0 And Span(1).Y < 0 Then
                 'specified enthalpy requires partial evaporation 
                 'calculate vapour fraction
+                Dim Vn, Hn As Double
 
-                Dim H1, H2, V1, V2 As Double
                 ecount = 0
-                V = 0
-                H1 = Hb
                 Do
+                    'First step: Interpolation of solutions
                     ecount += 1
-                    V1 = V
-                    If V1 < 1 Then
-                        V2 = V1 + 0.01
+                    Vn = Span(0).X + (Span(1).X - Span(0).X) * (0 - Span(0).Y) / (Span(1).Y - Span(0).Y) 'new vapour fraction by interpolation
+                    ErrRes = Herror("PV", Vn, P, Vz, PP)
+                    Hn = ErrRes(0)
+                    If Abs(Hn) < itol Then Exit Do 'Solution within tolerance, exit search
+
+                    'Adjust search span
+                    If Hn < 0 Then
+                        Span(1).X = Vn
+                        Span(1).Y = Hn
                     Else
-                        V2 = V1 - 0.01
+                        Span(0).X = Vn
+                        Span(0).Y = Hn
                     End If
 
-                    H2 = Herror("PV", V2, P, Vz, PP)(0)
-                    V = V1 + (V2 - V1) * (0 - H1) / (H2 - H1)
-                    If V < 0 Then V = 0
-                    If V > 1 Then V = 1
-                    resultFlash = Herror("PV", V, P, Vz, PP)
-                    H1 = resultFlash(0)
-                Loop Until Abs(H1) < itol Or ecount > maxitEXT
+                    'Second step: Span dividing
+                    ecount += 1
+                    Vn = (Span(0).X + Span(1).X) / 2 'new vapour fraction by span division
+                    ErrRes = Herror("PV", Vn, P, Vz, PP)
+                    Hn = ErrRes(0)
+                    If Abs(Hn) < itol Then Exit Do 'Solution within tolerance, exit search
 
-                T = resultFlash(1)
-                L1 = resultFlash(3)
-                L2 = resultFlash(4)
-                Vy = resultFlash(5)
-                Vx1 = resultFlash(6)
-                Vx2 = resultFlash(7)
+                    'Adjust search span
+                    If Hn < 0 Then
+                        Span(1).X = Vn
+                        Span(1).Y = Hn
+                    Else
+                        Span(0).X = Vn
+                        Span(0).Y = Hn
+                    End If
+                Loop Until ecount > maxitEXT
+
+                T = ErrRes(1)
+                V = Vn
+                L1 = ErrRes(3)
+                L2 = ErrRes(4)
+                Vy = ErrRes(5)
+                Vx1 = ErrRes(6)
+                Vx2 = ErrRes(7)
                 For i = 0 To n
                     Ki(i) = Vy(i) / Vx1(i)
                 Next
 
-            ElseIf Hd > 0 Then 'only gas phase
+            ElseIf Span(1).Y > 0 Then 'only gas phase
                 'calculate temperature
 
                 Dim H1, H2, T1, T2 As Double
                 ecount = 0
                 T = Td
-                H1 = Hd
+                H1 = Span(1).Y
                 Do
                     ecount += 1
                     T1 = T
@@ -951,33 +958,34 @@ out:
                 Dim H1, H2, T1, T2 As Double
                 ecount = 0
                 T = Tb
-                H1 = Hb
+                H1 = Span(0).Y
                 Do
                     ecount += 1
                     T1 = T
                     T2 = T1 - 1
                     H2 = Herror("PT", T2, P, Vz, PP)(0)
                     T = T1 + (T2 - T1) * (0 - H1) / (H2 - H1)
-                    resultFlash = Herror("PT", T, P, Vz, PP)
-                    H1 = resultFlash(0)
+                    ErrRes = Herror("PT", T, P, Vz, PP)
+                    H1 = ErrRes(0)
                 Loop Until Abs(H1) < itol Or ecount > maxitEXT
 
                 V = 0
-                L1 = resultFlash(3)
-                L2 = resultFlash(4)
-                Vy = resultFlash(5)
-                Vx1 = resultFlash(6)
-                Vx2 = resultFlash(7)
+                L1 = ErrRes(3)
+                L2 = ErrRes(4)
+                Vy = ErrRes(5)
+                Vx1 = ErrRes(6)
+                Vx2 = ErrRes(7)
 
                 For i = 0 To n
                     Ki(i) = Vy(i) / Vx1(i)
                 Next
 
-                If T <= Tmin Or T >= Tmax Then Throw New Exception("PH Flash [NL3PV2]: Invalid result: Temperature did not converge.")
+                If T <= Tmin Or T >= Tmax Then Throw New Exception("PH Flash [NL3PV3]: Invalid result: Temperature did not converge.")
             End If
 
-            d2 = Date.Now
+            If ecount > maxitEXT Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt"))
 
+            d2 = Date.Now
             dt = d2 - d1
 
             WriteDebugInfo("PH Flash [NL-3PV3]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms")
@@ -1253,7 +1261,7 @@ alt:
         Public Overrides Function Flash_TV(ByVal Vz As Double(), ByVal T As Double, ByVal V As Double, ByVal Pref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
             Dim d1, d2 As Date, dt As TimeSpan
-            Dim i, j As Integer
+            Dim i, j, ff As Integer
 
             d1 = Date.Now
 
@@ -1265,33 +1273,34 @@ alt:
 
             If result(0) > 0 Then
 
-                Dim nt As Integer = Me.StabSearchCompIDs.Length - 1
+                Dim nt As Integer = -1
                 Dim nc As Integer = UBound(Vz)
 
+                i = 0
+                For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In PP.CurrentMaterialStream.Fases(0).Componentes.Values
+                    ff = Array.IndexOf(StabSearchCompIDs, subst.Nome)
+                    If ff >= 0 And Vz(i) > 0 And T < subst.ConstantProperties.Critical_Temperature Then nt += 1
+                    i += 1
+                Next
                 If nt = -1 Then nt = nc
-                n = nc
 
                 Dim Vtrials(nt, nc) As Double
                 Dim idx(nt) As Integer
 
-                For i = 0 To nt
-                    If Me.StabSearchCompIDs.Length = 0 Then
-                        idx(i) = i
-                    Else
-                        j = 0
-                        For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In PP.CurrentMaterialStream.Fases(0).Componentes.Values
-                            If subst.Nome = Me.StabSearchCompIDs(i) Then
-                                idx(i) = j
-                                Exit For
-                            End If
-                            j += 1
-                        Next
+                i = 0
+                j = 0
+                For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In PP.CurrentMaterialStream.Fases(0).Componentes.Values
+                    ff = Array.IndexOf(StabSearchCompIDs, subst.Nome)
+                    If ff >= 0 And Vz(i) > 0 And T < subst.ConstantProperties.Critical_Temperature Then
+                        idx(j) = i
+                        j += 1
                     End If
+                    i += 1
                 Next
 
                 For i = 0 To nt
                     For j = 0 To nc
-                        Vtrials(i, j) = 0.00001
+                        If Vz(j) > 0 Then Vtrials(i, j) = 0.00001
                     Next
                 Next
                 For j = 0 To nt
@@ -1345,7 +1354,7 @@ alt:
 
                         'do a simple LLE calculation to get initial estimates.
                         Dim slle As New SimpleLLE() With {.InitialEstimatesForPhase1 = result(2), .InitialEstimatesForPhase2 = vx2est, .UseInitialEstimatesForPhase1 = True, .UseInitialEstimatesForPhase2 = True}
-                        Dim resultL As Object = slle.Flash_PT(Vz, P, T * 0.9, PP)
+                        Dim resultL As Object = slle.Flash_PT(result(2), P, T, PP)
 
                         L1 = resultL(0)
                         L2 = resultL(5)
@@ -1373,6 +1382,7 @@ alt:
 
             Dim d1, d2 As Date, dt As TimeSpan
             Dim i, j As Integer
+            Dim ff As Integer
 
             d1 = Date.Now
 
@@ -1384,33 +1394,34 @@ alt:
 
             If result(0) > 0 Then
 
-                Dim nt As Integer = Me.StabSearchCompIDs.Length - 1
+                Dim nt As Integer = -1
                 Dim nc As Integer = UBound(Vz)
 
+                i = 0
+                For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In PP.CurrentMaterialStream.Fases(0).Componentes.Values
+                    ff = Array.IndexOf(StabSearchCompIDs, subst.Nome)
+                    If ff >= 0 And Vz(i) > 0 And T < subst.ConstantProperties.Critical_Temperature Then nt += 1
+                    i += 1
+                Next
                 If nt = -1 Then nt = nc
-                n = nc
 
                 Dim Vtrials(nt, nc) As Double
                 Dim idx(nt) As Integer
 
-                For i = 0 To nt
-                    If Me.StabSearchCompIDs.Length = 0 Then
-                        idx(i) = i
-                    Else
-                        j = 0
-                        For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In PP.CurrentMaterialStream.Fases(0).Componentes.Values
-                            If subst.Nome = Me.StabSearchCompIDs(i) Then
-                                idx(i) = j
-                                Exit For
-                            End If
-                            j += 1
-                        Next
+                i = 0
+                j = 0
+                For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In PP.CurrentMaterialStream.Fases(0).Componentes.Values
+                    ff = Array.IndexOf(StabSearchCompIDs, subst.Nome)
+                    If ff >= 0 And Vz(i) > 0 And T < subst.ConstantProperties.Critical_Temperature Then
+                        idx(j) = i
+                        j += 1
                     End If
+                    i += 1
                 Next
 
                 For i = 0 To nt
                     For j = 0 To nc
-                        Vtrials(i, j) = 0.00001
+                        If Vz(j) > 0 Then Vtrials(i, j) = 0.00001
                     Next
                 Next
                 For j = 0 To nt
@@ -1421,8 +1432,8 @@ alt:
 
                 If stresult(0) = False Then
 
-                    Dim vx2est(n), fcl(nc), fcv(n) As Double
-                    Dim m As Double = UBound(stresult(1), 1)
+                    Dim vx2est(nc), fcl(nc), fcv(nc) As Double
+                    Dim m As Integer = UBound(stresult(1), 1)
                     Dim gl, gv, gli As Double
 
                     If StabSearchSeverity = 2 Then
@@ -1485,11 +1496,6 @@ alt:
 
             Return result
 
-        End Function
-        Function ASinH(ByVal x As Double) As Double
-            Dim F As Double
-            F = Log(x + Sqrt(x * x + 1))
-            Return F
         End Function
         Public Function Flash_PV_3P(ByVal Vz() As Double, ByVal Vest As Double, ByVal L1est As Double, ByVal L2est As Double, ByVal VyEST As Double(), ByVal Vx1EST As Double(), ByVal Vx2EST As Double(), ByVal P As Double, ByVal V As Double, ByVal Tref As Double, ByVal PP As PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi() As Double = Nothing) As Object
             Dim i As Integer

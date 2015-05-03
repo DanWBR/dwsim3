@@ -178,7 +178,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Loop
 
 out:        d2 = Date.Now
-
             dt = d2 - d1
 
             WriteDebugInfo("PT Flash [SimpleLLE]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Error function value: " & err)
@@ -203,10 +202,6 @@ out:        d2 = Date.Now
                     Return New Object() {L2, V, Vx2, PP.RET_NullVector, ecount, L1, Vx1, 0.0#, PP.RET_NullVector, gamma1, gamma2}
                 End If
             End If
-
-
-
-
 
         End Function
 
