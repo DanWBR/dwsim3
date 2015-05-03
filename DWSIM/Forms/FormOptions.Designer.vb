@@ -134,7 +134,7 @@ Partial Class FormOptions
         Me.FaTabStrip1.AlwaysShowMenuGlyph = False
         Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem3, Me.FaTabStripItem6, Me.FaTabStripItem4, Me.FaTabStripItem2, Me.FaTabStripItem5, Me.FaTabStripItem7})
         Me.FaTabStrip1.Name = "FaTabStrip1"
-        Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem4
+        Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem1
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.FaTabStrip1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.FaTabStrip1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetToolTip(Me.FaTabStrip1, resources.GetString("FaTabStrip1.ToolTip"))
@@ -147,6 +147,7 @@ Partial Class FormOptions
         Me.FaTabStripItem1.Controls.Add(Me.GroupBox7)
         Me.FaTabStripItem1.IsDrawn = True
         Me.FaTabStripItem1.Name = "FaTabStripItem1"
+        Me.FaTabStripItem1.Selected = True
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.FaTabStripItem1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.FaTabStripItem1, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetToolTip(Me.FaTabStripItem1, resources.GetString("FaTabStripItem1.ToolTip"))
@@ -587,7 +588,6 @@ Partial Class FormOptions
         Me.FaTabStripItem4.Controls.Add(Me.GroupBox1)
         Me.FaTabStripItem4.IsDrawn = True
         Me.FaTabStripItem4.Name = "FaTabStripItem4"
-        Me.FaTabStripItem4.Selected = True
         Me.SuperToolTip1.SetSuperToolTipColor1(Me.FaTabStripItem4, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetSuperToolTipColor2(Me.FaTabStripItem4, System.Drawing.Color.Empty)
         Me.SuperToolTip1.SetToolTip(Me.FaTabStripItem4, resources.GetString("FaTabStripItem4.ToolTip"))
@@ -618,7 +618,7 @@ Partial Class FormOptions
         '
         resources.ApplyResources(Me.ListView1, "ListView1")
         Me.ListView1.FullRowSelect = True
-        Me.ListView1.Items.AddRange(New System.Windows.Forms.ListViewItem() {CType(resources.GetObject("ListView1.Items"), System.Windows.Forms.ListViewItem), CType(resources.GetObject("ListView1.Items1"), System.Windows.Forms.ListViewItem), CType(resources.GetObject("ListView1.Items2"), System.Windows.Forms.ListViewItem), CType(resources.GetObject("ListView1.Items3"), System.Windows.Forms.ListViewItem), CType(resources.GetObject("ListView1.Items4"), System.Windows.Forms.ListViewItem)})
+        Me.ListView1.Items.AddRange(New System.Windows.Forms.ListViewItem() {CType(resources.GetObject("ListView1.Items"), System.Windows.Forms.ListViewItem), CType(resources.GetObject("ListView1.Items1"), System.Windows.Forms.ListViewItem), CType(resources.GetObject("ListView1.Items2"), System.Windows.Forms.ListViewItem), CType(resources.GetObject("ListView1.Items3"), System.Windows.Forms.ListViewItem)})
         Me.ListView1.LargeImageList = Me.ImageList1
         Me.ListView1.MultiSelect = False
         Me.ListView1.Name = "ListView1"

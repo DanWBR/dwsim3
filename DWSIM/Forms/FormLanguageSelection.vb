@@ -57,11 +57,4 @@ Public Class FormLanguageSelection
         UpdateLanguage()
         Me.Close()
     End Sub
-
-    Private Sub Button5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button5.Click
-        My.Settings.CultureInfo = "ru"
-        My.Settings.ShowLangForm = False
-        UpdateLanguage()
-        Me.Close()
-    End Sub
 End Class

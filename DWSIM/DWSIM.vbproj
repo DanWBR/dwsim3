@@ -1332,8 +1332,6 @@
     <EmbeddedResource Include="Forms\UITypeEditors\UIScriptEditor\ScriptEditorFormMono.resx">
       <DependentUpon>ScriptEditorFormMono.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Languages\DWSIM.ru.resx" />
-    <EmbeddedResource Include="Languages\Properties.ru.resx" />
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
