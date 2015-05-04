@@ -869,7 +869,7 @@ out:
 
                 ErrRes = Herror("PV", 1, P, Vz, PP)
                 Td = ErrRes(1)
-                Span(1).X = 0
+                Span(1).X = 1
                 Span(1).Y = ErrRes(0) 'Enthalpy at dew point
             End If
 
