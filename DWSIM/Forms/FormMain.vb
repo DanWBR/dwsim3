@@ -1577,6 +1577,8 @@ Public Class FormMain
             form.Invalidate()
             Application.DoEvents()
 
+            form.FrmStSim1.Init(True)
+
             'form = Nothing
             Me.ToolStripStatusLabel1.Text = ""
 
@@ -2710,6 +2712,8 @@ Public Class FormMain
             Application.DoEvents()
 
         End If
+
+        form.FrmStSim1.Init(True)
 
         'fls.Close()
         'fls = Nothing

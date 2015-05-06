@@ -59,17 +59,17 @@ Public Class FormPCBulk
 
         Dim i As Integer
 
-        If tb_mw.Text <> "" Then MW = tb_mw.Text
-        If tb_sg.Text <> "" Then SG = tb_sg.Text
-        If tb_wk.Text <> "" Then TB = tb_wk.Text
-        If tb_v1.Text <> "" Then V1 = CDbl(tb_v1.Text) * 0.000001 Else V1 = 0
-        If tb_v2.Text <> "" Then V2 = CDbl(tb_v2.Text) * 0.000001 Else V2 = 0
-        If tb_t1.Text <> "" Then T1 = CDbl(tb_t1.Text) + 273.15
-        If tb_t2.Text <> "" Then T2 = CDbl(tb_t2.Text) + 273.15
+        If tb_mw.Text <> "" Then MW = Double.Parse(tb_mw.Text, Globalization.NumberStyles.AllowDecimalPoint)
+        If tb_sg.Text <> "" Then SG = Double.Parse(tb_sg.Text, Globalization.NumberStyles.AllowDecimalPoint)
+        If tb_wk.Text <> "" Then TB = Double.Parse(tb_wk.Text, Globalization.NumberStyles.AllowDecimalPoint)
+        If tb_v1.Text <> "" Then V1 = Double.Parse(tb_v1.Text, Globalization.NumberStyles.AllowDecimalPoint) * 0.000001 Else V1 = 0
+        If tb_v2.Text <> "" Then V2 = Double.Parse(tb_v2.Text, Globalization.NumberStyles.AllowDecimalPoint) * 0.000001 Else V2 = 0
+        If tb_t1.Text <> "" Then T1 = Double.Parse(tb_t1.Text, Globalization.NumberStyles.AllowDecimalPoint) + 273.15
+        If tb_t2.Text <> "" Then T2 = Double.Parse(tb_t2.Text, Globalization.NumberStyles.AllowDecimalPoint) + 273.15
 
-        MW0 = Me.TextBoxMW0.Text
-        SG0 = CDbl(Me.TextBoxSG0.Text)
-        TB0 = CDbl(Me.TextBoxTB0.Text)
+        MW0 = Double.Parse(Me.TextBoxMW0.Text, Globalization.NumberStyles.AllowDecimalPoint)
+        SG0 = Double.Parse(Me.TextBoxSG0.Text, Globalization.NumberStyles.AllowDecimalPoint)
+        TB0 = Double.Parse(Me.TextBoxTB0.Text, Globalization.NumberStyles.AllowDecimalPoint)
 
         'Dim dMF(n), dMW(n), dSG(n), dTB(n), dMW_(n), dSG_(n), dTB_(n), dVA(n), dVB(n), dV1(n), dV2(n), dV1_(n), dV2_(n), q(n) As Double()
         Array.Resize(dMF, n + 1)

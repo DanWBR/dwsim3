@@ -19,82 +19,82 @@ Partial Class FormPCBulk
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormPCBulk))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox
-        Me.Label6 = New System.Windows.Forms.Label
-        Me.GroupBox5 = New System.Windows.Forms.GroupBox
-        Me.Label15 = New System.Windows.Forms.Label
-        Me.Label14 = New System.Windows.Forms.Label
-        Me.Label13 = New System.Windows.Forms.Label
-        Me.Label12 = New System.Windows.Forms.Label
-        Me.tb_v2 = New System.Windows.Forms.TextBox
-        Me.tb_v1 = New System.Windows.Forms.TextBox
-        Me.tb_t2 = New System.Windows.Forms.TextBox
-        Me.tb_t1 = New System.Windows.Forms.TextBox
-        Me.Label11 = New System.Windows.Forms.Label
-        Me.Label8 = New System.Windows.Forms.Label
-        Me.Label9 = New System.Windows.Forms.Label
-        Me.Label10 = New System.Windows.Forms.Label
-        Me.tb_wk = New System.Windows.Forms.TextBox
-        Me.Label16 = New System.Windows.Forms.Label
-        Me.Label17 = New System.Windows.Forms.Label
-        Me.Label18 = New System.Windows.Forms.Label
-        Me.tb_sg = New System.Windows.Forms.TextBox
-        Me.tb_mw = New System.Windows.Forms.TextBox
-        Me.Label19 = New System.Windows.Forms.Label
-        Me.Label20 = New System.Windows.Forms.Label
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.tb_v2 = New System.Windows.Forms.TextBox()
+        Me.tb_v1 = New System.Windows.Forms.TextBox()
+        Me.tb_t2 = New System.Windows.Forms.TextBox()
+        Me.tb_t1 = New System.Windows.Forms.TextBox()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.tb_wk = New System.Windows.Forms.TextBox()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.tb_sg = New System.Windows.Forms.TextBox()
+        Me.tb_mw = New System.Windows.Forms.TextBox()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.Label20 = New System.Windows.Forms.Label()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.DataGridView2 = New System.Windows.Forms.DataGridView
-        Me.KButton1 = New System.Windows.Forms.Button
-        Me.KButton3 = New System.Windows.Forms.Button
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.TextBox1 = New System.Windows.Forms.TextBox
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.ComboBox1 = New System.Windows.Forms.ComboBox
-        Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip
-        Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem
-        Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem
-        Me.GroupBox4 = New System.Windows.Forms.GroupBox
-        Me.CheckBoxADJZRA = New System.Windows.Forms.CheckBox
-        Me.CheckBoxADJAF = New System.Windows.Forms.CheckBox
-        Me.ComboBoxMW = New System.Windows.Forms.ComboBox
-        Me.ComboBoxSG = New System.Windows.Forms.ComboBox
-        Me.ComboBoxAF = New System.Windows.Forms.ComboBox
-        Me.ComboBoxPC = New System.Windows.Forms.ComboBox
-        Me.Label33 = New System.Windows.Forms.Label
-        Me.Label31 = New System.Windows.Forms.Label
-        Me.Label30 = New System.Windows.Forms.Label
-        Me.Label29 = New System.Windows.Forms.Label
-        Me.ComboBoxTC = New System.Windows.Forms.ComboBox
-        Me.Label28 = New System.Windows.Forms.Label
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox
-        Me.Label21 = New System.Windows.Forms.Label
-        Me.TextBoxTB0 = New System.Windows.Forms.TextBox
-        Me.Label7 = New System.Windows.Forms.Label
-        Me.Label5 = New System.Windows.Forms.Label
-        Me.TextBoxSG0 = New System.Windows.Forms.TextBox
-        Me.TextBoxMW0 = New System.Windows.Forms.TextBox
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.Button1 = New System.Windows.Forms.Button
-        Me.Button2 = New System.Windows.Forms.Button
-        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.prvs = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.srkvs = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.DataGridView2 = New System.Windows.Forms.DataGridView()
+        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.prvs = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.srkvs = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.KButton1 = New System.Windows.Forms.Button()
+        Me.KButton3 = New System.Windows.Forms.Button()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
+        Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip()
+        Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem()
+        Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem()
+        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.CheckBoxADJZRA = New System.Windows.Forms.CheckBox()
+        Me.CheckBoxADJAF = New System.Windows.Forms.CheckBox()
+        Me.ComboBoxMW = New System.Windows.Forms.ComboBox()
+        Me.ComboBoxSG = New System.Windows.Forms.ComboBox()
+        Me.ComboBoxAF = New System.Windows.Forms.ComboBox()
+        Me.ComboBoxPC = New System.Windows.Forms.ComboBox()
+        Me.Label33 = New System.Windows.Forms.Label()
+        Me.Label31 = New System.Windows.Forms.Label()
+        Me.Label30 = New System.Windows.Forms.Label()
+        Me.Label29 = New System.Windows.Forms.Label()
+        Me.ComboBoxTC = New System.Windows.Forms.ComboBox()
+        Me.Label28 = New System.Windows.Forms.Label()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Label21 = New System.Windows.Forms.Label()
+        Me.TextBoxTB0 = New System.Windows.Forms.TextBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.TextBoxSG0 = New System.Windows.Forms.TextBox()
+        Me.TextBoxMW0 = New System.Windows.Forms.TextBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Button2 = New System.Windows.Forms.Button()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -124,11 +124,13 @@ Partial Class FormPCBulk
         Me.GroupBox3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.GroupBox3.Name = "GroupBox3"
         Me.GroupBox3.TabStop = False
+        Me.ToolTip1.SetToolTip(Me.GroupBox3, resources.GetString("GroupBox3.ToolTip"))
         '
         'Label6
         '
         resources.ApplyResources(Me.Label6, "Label6")
         Me.Label6.Name = "Label6"
+        Me.ToolTip1.SetToolTip(Me.Label6, resources.GetString("Label6.ToolTip"))
         '
         'GroupBox5
         '
@@ -148,106 +150,127 @@ Partial Class FormPCBulk
         Me.GroupBox5.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.GroupBox5.Name = "GroupBox5"
         Me.GroupBox5.TabStop = False
+        Me.ToolTip1.SetToolTip(Me.GroupBox5, resources.GetString("GroupBox5.ToolTip"))
         '
         'Label15
         '
         resources.ApplyResources(Me.Label15, "Label15")
         Me.Label15.Name = "Label15"
+        Me.ToolTip1.SetToolTip(Me.Label15, resources.GetString("Label15.ToolTip"))
         '
         'Label14
         '
         resources.ApplyResources(Me.Label14, "Label14")
         Me.Label14.Name = "Label14"
+        Me.ToolTip1.SetToolTip(Me.Label14, resources.GetString("Label14.ToolTip"))
         '
         'Label13
         '
         resources.ApplyResources(Me.Label13, "Label13")
         Me.Label13.Name = "Label13"
+        Me.ToolTip1.SetToolTip(Me.Label13, resources.GetString("Label13.ToolTip"))
         '
         'Label12
         '
         resources.ApplyResources(Me.Label12, "Label12")
         Me.Label12.Name = "Label12"
+        Me.ToolTip1.SetToolTip(Me.Label12, resources.GetString("Label12.ToolTip"))
         '
         'tb_v2
         '
         resources.ApplyResources(Me.tb_v2, "tb_v2")
         Me.tb_v2.Name = "tb_v2"
+        Me.ToolTip1.SetToolTip(Me.tb_v2, resources.GetString("tb_v2.ToolTip"))
         '
         'tb_v1
         '
         resources.ApplyResources(Me.tb_v1, "tb_v1")
         Me.tb_v1.Name = "tb_v1"
+        Me.ToolTip1.SetToolTip(Me.tb_v1, resources.GetString("tb_v1.ToolTip"))
         '
         'tb_t2
         '
         resources.ApplyResources(Me.tb_t2, "tb_t2")
         Me.tb_t2.Name = "tb_t2"
+        Me.ToolTip1.SetToolTip(Me.tb_t2, resources.GetString("tb_t2.ToolTip"))
         '
         'tb_t1
         '
         resources.ApplyResources(Me.tb_t1, "tb_t1")
         Me.tb_t1.Name = "tb_t1"
+        Me.ToolTip1.SetToolTip(Me.tb_t1, resources.GetString("tb_t1.ToolTip"))
         '
         'Label11
         '
         resources.ApplyResources(Me.Label11, "Label11")
         Me.Label11.Name = "Label11"
+        Me.ToolTip1.SetToolTip(Me.Label11, resources.GetString("Label11.ToolTip"))
         '
         'Label8
         '
         resources.ApplyResources(Me.Label8, "Label8")
         Me.Label8.Name = "Label8"
+        Me.ToolTip1.SetToolTip(Me.Label8, resources.GetString("Label8.ToolTip"))
         '
         'Label9
         '
         resources.ApplyResources(Me.Label9, "Label9")
         Me.Label9.Name = "Label9"
+        Me.ToolTip1.SetToolTip(Me.Label9, resources.GetString("Label9.ToolTip"))
         '
         'Label10
         '
         resources.ApplyResources(Me.Label10, "Label10")
         Me.Label10.Name = "Label10"
+        Me.ToolTip1.SetToolTip(Me.Label10, resources.GetString("Label10.ToolTip"))
         '
         'tb_wk
         '
         resources.ApplyResources(Me.tb_wk, "tb_wk")
         Me.tb_wk.Name = "tb_wk"
+        Me.ToolTip1.SetToolTip(Me.tb_wk, resources.GetString("tb_wk.ToolTip"))
         '
         'Label16
         '
         resources.ApplyResources(Me.Label16, "Label16")
         Me.Label16.Name = "Label16"
+        Me.ToolTip1.SetToolTip(Me.Label16, resources.GetString("Label16.ToolTip"))
         '
         'Label17
         '
         resources.ApplyResources(Me.Label17, "Label17")
         Me.Label17.Name = "Label17"
+        Me.ToolTip1.SetToolTip(Me.Label17, resources.GetString("Label17.ToolTip"))
         '
         'Label18
         '
         resources.ApplyResources(Me.Label18, "Label18")
         Me.Label18.Name = "Label18"
+        Me.ToolTip1.SetToolTip(Me.Label18, resources.GetString("Label18.ToolTip"))
         '
         'tb_sg
         '
         resources.ApplyResources(Me.tb_sg, "tb_sg")
         Me.tb_sg.Name = "tb_sg"
+        Me.ToolTip1.SetToolTip(Me.tb_sg, resources.GetString("tb_sg.ToolTip"))
         '
         'tb_mw
         '
         resources.ApplyResources(Me.tb_mw, "tb_mw")
         Me.tb_mw.Name = "tb_mw"
+        Me.ToolTip1.SetToolTip(Me.tb_mw, resources.GetString("tb_mw.ToolTip"))
         '
         'Label19
         '
         resources.ApplyResources(Me.Label19, "Label19")
         Me.Label19.Name = "Label19"
+        Me.ToolTip1.SetToolTip(Me.Label19, resources.GetString("Label19.ToolTip"))
         '
         'Label20
         '
         resources.ApplyResources(Me.Label20, "Label20")
         Me.Label20.Name = "Label20"
+        Me.ToolTip1.SetToolTip(Me.Label20, resources.GetString("Label20.ToolTip"))
         '
         'ToolTip1
         '
@@ -267,9 +290,11 @@ Partial Class FormPCBulk
         Me.GroupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.TabStop = False
+        Me.ToolTip1.SetToolTip(Me.GroupBox1, resources.GetString("GroupBox1.ToolTip"))
         '
         'DataGridView2
         '
+        resources.ApplyResources(Me.DataGridView2, "DataGridView2")
         Me.DataGridView2.AllowUserToAddRows = False
         Me.DataGridView2.AllowUserToDeleteRows = False
         Me.DataGridView2.AllowUserToResizeRows = False
@@ -295,236 +320,11 @@ Partial Class FormPCBulk
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.DataGridView2.DefaultCellStyle = DataGridViewCellStyle3
-        resources.ApplyResources(Me.DataGridView2, "DataGridView2")
         Me.DataGridView2.Name = "DataGridView2"
         Me.DataGridView2.ReadOnly = True
         Me.DataGridView2.RowHeadersVisible = False
         Me.DataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        '
-        'KButton1
-        '
-        resources.ApplyResources(Me.KButton1, "KButton1")
-        Me.KButton1.Name = "KButton1"
-        '
-        'KButton3
-        '
-        resources.ApplyResources(Me.KButton3, "KButton3")
-        Me.KButton3.Name = "KButton3"
-        '
-        'Label2
-        '
-        resources.ApplyResources(Me.Label2, "Label2")
-        Me.Label2.Name = "Label2"
-        '
-        'TextBox1
-        '
-        resources.ApplyResources(Me.TextBox1, "TextBox1")
-        Me.TextBox1.Name = "TextBox1"
-        '
-        'Label3
-        '
-        resources.ApplyResources(Me.Label3, "Label3")
-        Me.Label3.Name = "Label3"
-        '
-        'ComboBox1
-        '
-        Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ComboBox1.DropDownWidth = 54
-        Me.ComboBox1.Items.AddRange(New Object() {resources.GetString("ComboBox1.Items"), resources.GetString("ComboBox1.Items1"), resources.GetString("ComboBox1.Items2"), resources.GetString("ComboBox1.Items3"), resources.GetString("ComboBox1.Items4"), resources.GetString("ComboBox1.Items5"), resources.GetString("ComboBox1.Items6"), resources.GetString("ComboBox1.Items7"), resources.GetString("ComboBox1.Items8"), resources.GetString("ComboBox1.Items9"), resources.GetString("ComboBox1.Items10"), resources.GetString("ComboBox1.Items11"), resources.GetString("ComboBox1.Items12"), resources.GetString("ComboBox1.Items13"), resources.GetString("ComboBox1.Items14"), resources.GetString("ComboBox1.Items15")})
-        resources.ApplyResources(Me.ComboBox1, "ComboBox1")
-        Me.ComboBox1.Name = "ComboBox1"
-        '
-        'FaTabStrip1
-        '
-        Me.FaTabStrip1.AlwaysShowClose = False
-        Me.FaTabStrip1.AlwaysShowMenuGlyph = False
-        resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
-        Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem2})
-        Me.FaTabStrip1.Name = "FaTabStrip1"
-        Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem1
-        '
-        'FaTabStripItem1
-        '
-        Me.FaTabStripItem1.CanClose = False
-        Me.FaTabStripItem1.Controls.Add(Me.GroupBox3)
-        Me.FaTabStripItem1.Controls.Add(Me.KButton1)
-        Me.FaTabStripItem1.Controls.Add(Me.GroupBox1)
-        Me.FaTabStripItem1.Controls.Add(Me.Label3)
-        Me.FaTabStripItem1.Controls.Add(Me.ComboBox1)
-        Me.FaTabStripItem1.IsDrawn = True
-        Me.FaTabStripItem1.Name = "FaTabStripItem1"
-        Me.FaTabStripItem1.Selected = True
-        resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
-        '
-        'FaTabStripItem2
-        '
-        Me.FaTabStripItem2.CanClose = False
-        Me.FaTabStripItem2.Controls.Add(Me.GroupBox4)
-        Me.FaTabStripItem2.Controls.Add(Me.GroupBox2)
-        Me.FaTabStripItem2.IsDrawn = True
-        Me.FaTabStripItem2.Name = "FaTabStripItem2"
-        resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
-        '
-        'GroupBox4
-        '
-        resources.ApplyResources(Me.GroupBox4, "GroupBox4")
-        Me.GroupBox4.Controls.Add(Me.CheckBoxADJZRA)
-        Me.GroupBox4.Controls.Add(Me.CheckBoxADJAF)
-        Me.GroupBox4.Controls.Add(Me.ComboBoxMW)
-        Me.GroupBox4.Controls.Add(Me.ComboBoxSG)
-        Me.GroupBox4.Controls.Add(Me.ComboBoxAF)
-        Me.GroupBox4.Controls.Add(Me.ComboBoxPC)
-        Me.GroupBox4.Controls.Add(Me.Label33)
-        Me.GroupBox4.Controls.Add(Me.Label31)
-        Me.GroupBox4.Controls.Add(Me.Label30)
-        Me.GroupBox4.Controls.Add(Me.Label29)
-        Me.GroupBox4.Controls.Add(Me.ComboBoxTC)
-        Me.GroupBox4.Controls.Add(Me.Label28)
-        Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.TabStop = False
-        '
-        'CheckBoxADJZRA
-        '
-        resources.ApplyResources(Me.CheckBoxADJZRA, "CheckBoxADJZRA")
-        Me.CheckBoxADJZRA.Checked = True
-        Me.CheckBoxADJZRA.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckBoxADJZRA.Name = "CheckBoxADJZRA"
-        Me.CheckBoxADJZRA.UseVisualStyleBackColor = True
-        '
-        'CheckBoxADJAF
-        '
-        resources.ApplyResources(Me.CheckBoxADJAF, "CheckBoxADJAF")
-        Me.CheckBoxADJAF.Name = "CheckBoxADJAF"
-        Me.CheckBoxADJAF.UseVisualStyleBackColor = True
-        '
-        'ComboBoxMW
-        '
-        Me.ComboBoxMW.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ComboBoxMW.FormattingEnabled = True
-        Me.ComboBoxMW.Items.AddRange(New Object() {resources.GetString("ComboBoxMW.Items"), resources.GetString("ComboBoxMW.Items1"), resources.GetString("ComboBoxMW.Items2")})
-        resources.ApplyResources(Me.ComboBoxMW, "ComboBoxMW")
-        Me.ComboBoxMW.Name = "ComboBoxMW"
-        '
-        'ComboBoxSG
-        '
-        Me.ComboBoxSG.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ComboBoxSG.FormattingEnabled = True
-        Me.ComboBoxSG.Items.AddRange(New Object() {resources.GetString("ComboBoxSG.Items")})
-        resources.ApplyResources(Me.ComboBoxSG, "ComboBoxSG")
-        Me.ComboBoxSG.Name = "ComboBoxSG"
-        '
-        'ComboBoxAF
-        '
-        Me.ComboBoxAF.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ComboBoxAF.FormattingEnabled = True
-        Me.ComboBoxAF.Items.AddRange(New Object() {resources.GetString("ComboBoxAF.Items"), resources.GetString("ComboBoxAF.Items1")})
-        resources.ApplyResources(Me.ComboBoxAF, "ComboBoxAF")
-        Me.ComboBoxAF.Name = "ComboBoxAF"
-        '
-        'ComboBoxPC
-        '
-        Me.ComboBoxPC.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ComboBoxPC.FormattingEnabled = True
-        Me.ComboBoxPC.Items.AddRange(New Object() {resources.GetString("ComboBoxPC.Items"), resources.GetString("ComboBoxPC.Items1"), resources.GetString("ComboBoxPC.Items2")})
-        resources.ApplyResources(Me.ComboBoxPC, "ComboBoxPC")
-        Me.ComboBoxPC.Name = "ComboBoxPC"
-        '
-        'Label33
-        '
-        resources.ApplyResources(Me.Label33, "Label33")
-        Me.Label33.Name = "Label33"
-        '
-        'Label31
-        '
-        resources.ApplyResources(Me.Label31, "Label31")
-        Me.Label31.Name = "Label31"
-        '
-        'Label30
-        '
-        resources.ApplyResources(Me.Label30, "Label30")
-        Me.Label30.Name = "Label30"
-        '
-        'Label29
-        '
-        resources.ApplyResources(Me.Label29, "Label29")
-        Me.Label29.Name = "Label29"
-        '
-        'ComboBoxTC
-        '
-        Me.ComboBoxTC.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ComboBoxTC.FormattingEnabled = True
-        Me.ComboBoxTC.Items.AddRange(New Object() {resources.GetString("ComboBoxTC.Items"), resources.GetString("ComboBoxTC.Items1"), resources.GetString("ComboBoxTC.Items2"), resources.GetString("ComboBoxTC.Items3")})
-        resources.ApplyResources(Me.ComboBoxTC, "ComboBoxTC")
-        Me.ComboBoxTC.Name = "ComboBoxTC"
-        '
-        'Label28
-        '
-        resources.ApplyResources(Me.Label28, "Label28")
-        Me.Label28.Name = "Label28"
-        '
-        'GroupBox2
-        '
-        resources.ApplyResources(Me.GroupBox2, "GroupBox2")
-        Me.GroupBox2.Controls.Add(Me.Label21)
-        Me.GroupBox2.Controls.Add(Me.TextBoxTB0)
-        Me.GroupBox2.Controls.Add(Me.Label7)
-        Me.GroupBox2.Controls.Add(Me.Label5)
-        Me.GroupBox2.Controls.Add(Me.TextBoxSG0)
-        Me.GroupBox2.Controls.Add(Me.TextBoxMW0)
-        Me.GroupBox2.Controls.Add(Me.Label4)
-        Me.GroupBox2.Controls.Add(Me.Label1)
-        Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.TabStop = False
-        '
-        'Label21
-        '
-        resources.ApplyResources(Me.Label21, "Label21")
-        Me.Label21.Name = "Label21"
-        '
-        'TextBoxTB0
-        '
-        resources.ApplyResources(Me.TextBoxTB0, "TextBoxTB0")
-        Me.TextBoxTB0.Name = "TextBoxTB0"
-        '
-        'Label7
-        '
-        resources.ApplyResources(Me.Label7, "Label7")
-        Me.Label7.Name = "Label7"
-        '
-        'Label5
-        '
-        resources.ApplyResources(Me.Label5, "Label5")
-        Me.Label5.Name = "Label5"
-        '
-        'TextBoxSG0
-        '
-        resources.ApplyResources(Me.TextBoxSG0, "TextBoxSG0")
-        Me.TextBoxSG0.Name = "TextBoxSG0"
-        '
-        'TextBoxMW0
-        '
-        resources.ApplyResources(Me.TextBoxMW0, "TextBoxMW0")
-        Me.TextBoxMW0.Name = "TextBoxMW0"
-        '
-        'Label4
-        '
-        resources.ApplyResources(Me.Label4, "Label4")
-        Me.Label4.Name = "Label4"
-        '
-        'Label1
-        '
-        resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.Name = "Label1"
-        '
-        'Button1
-        '
-        resources.ApplyResources(Me.Button1, "Button1")
-        Me.Button1.Name = "Button1"
-        '
-        'Button2
-        '
-        resources.ApplyResources(Me.Button2, "Button2")
-        Me.Button2.Name = "Button2"
+        Me.ToolTip1.SetToolTip(Me.DataGridView2, resources.GetString("DataGridView2.ToolTip"))
         '
         'DataGridViewTextBoxColumn1
         '
@@ -598,6 +398,264 @@ Partial Class FormPCBulk
         Me.srkvs.Name = "srkvs"
         Me.srkvs.ReadOnly = True
         '
+        'KButton1
+        '
+        resources.ApplyResources(Me.KButton1, "KButton1")
+        Me.KButton1.Name = "KButton1"
+        Me.ToolTip1.SetToolTip(Me.KButton1, resources.GetString("KButton1.ToolTip"))
+        '
+        'KButton3
+        '
+        resources.ApplyResources(Me.KButton3, "KButton3")
+        Me.KButton3.Name = "KButton3"
+        Me.ToolTip1.SetToolTip(Me.KButton3, resources.GetString("KButton3.ToolTip"))
+        '
+        'Label2
+        '
+        resources.ApplyResources(Me.Label2, "Label2")
+        Me.Label2.Name = "Label2"
+        Me.ToolTip1.SetToolTip(Me.Label2, resources.GetString("Label2.ToolTip"))
+        '
+        'TextBox1
+        '
+        resources.ApplyResources(Me.TextBox1, "TextBox1")
+        Me.TextBox1.Name = "TextBox1"
+        Me.ToolTip1.SetToolTip(Me.TextBox1, resources.GetString("TextBox1.ToolTip"))
+        '
+        'Label3
+        '
+        resources.ApplyResources(Me.Label3, "Label3")
+        Me.Label3.Name = "Label3"
+        Me.ToolTip1.SetToolTip(Me.Label3, resources.GetString("Label3.ToolTip"))
+        '
+        'ComboBox1
+        '
+        resources.ApplyResources(Me.ComboBox1, "ComboBox1")
+        Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBox1.DropDownWidth = 54
+        Me.ComboBox1.Items.AddRange(New Object() {resources.GetString("ComboBox1.Items"), resources.GetString("ComboBox1.Items1"), resources.GetString("ComboBox1.Items2"), resources.GetString("ComboBox1.Items3"), resources.GetString("ComboBox1.Items4"), resources.GetString("ComboBox1.Items5"), resources.GetString("ComboBox1.Items6"), resources.GetString("ComboBox1.Items7"), resources.GetString("ComboBox1.Items8"), resources.GetString("ComboBox1.Items9"), resources.GetString("ComboBox1.Items10"), resources.GetString("ComboBox1.Items11"), resources.GetString("ComboBox1.Items12"), resources.GetString("ComboBox1.Items13"), resources.GetString("ComboBox1.Items14"), resources.GetString("ComboBox1.Items15")})
+        Me.ComboBox1.Name = "ComboBox1"
+        Me.ToolTip1.SetToolTip(Me.ComboBox1, resources.GetString("ComboBox1.ToolTip"))
+        '
+        'FaTabStrip1
+        '
+        resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
+        Me.FaTabStrip1.AlwaysShowClose = False
+        Me.FaTabStrip1.AlwaysShowMenuGlyph = False
+        Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem2})
+        Me.FaTabStrip1.Name = "FaTabStrip1"
+        Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem1
+        Me.ToolTip1.SetToolTip(Me.FaTabStrip1, resources.GetString("FaTabStrip1.ToolTip"))
+        '
+        'FaTabStripItem1
+        '
+        resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
+        Me.FaTabStripItem1.CanClose = False
+        Me.FaTabStripItem1.Controls.Add(Me.GroupBox3)
+        Me.FaTabStripItem1.Controls.Add(Me.KButton1)
+        Me.FaTabStripItem1.Controls.Add(Me.GroupBox1)
+        Me.FaTabStripItem1.Controls.Add(Me.Label3)
+        Me.FaTabStripItem1.Controls.Add(Me.ComboBox1)
+        Me.FaTabStripItem1.IsDrawn = True
+        Me.FaTabStripItem1.Name = "FaTabStripItem1"
+        Me.FaTabStripItem1.Selected = True
+        Me.ToolTip1.SetToolTip(Me.FaTabStripItem1, resources.GetString("FaTabStripItem1.ToolTip"))
+        '
+        'FaTabStripItem2
+        '
+        resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
+        Me.FaTabStripItem2.CanClose = False
+        Me.FaTabStripItem2.Controls.Add(Me.GroupBox4)
+        Me.FaTabStripItem2.Controls.Add(Me.GroupBox2)
+        Me.FaTabStripItem2.IsDrawn = True
+        Me.FaTabStripItem2.Name = "FaTabStripItem2"
+        Me.ToolTip1.SetToolTip(Me.FaTabStripItem2, resources.GetString("FaTabStripItem2.ToolTip"))
+        '
+        'GroupBox4
+        '
+        resources.ApplyResources(Me.GroupBox4, "GroupBox4")
+        Me.GroupBox4.Controls.Add(Me.CheckBoxADJZRA)
+        Me.GroupBox4.Controls.Add(Me.CheckBoxADJAF)
+        Me.GroupBox4.Controls.Add(Me.ComboBoxMW)
+        Me.GroupBox4.Controls.Add(Me.ComboBoxSG)
+        Me.GroupBox4.Controls.Add(Me.ComboBoxAF)
+        Me.GroupBox4.Controls.Add(Me.ComboBoxPC)
+        Me.GroupBox4.Controls.Add(Me.Label33)
+        Me.GroupBox4.Controls.Add(Me.Label31)
+        Me.GroupBox4.Controls.Add(Me.Label30)
+        Me.GroupBox4.Controls.Add(Me.Label29)
+        Me.GroupBox4.Controls.Add(Me.ComboBoxTC)
+        Me.GroupBox4.Controls.Add(Me.Label28)
+        Me.GroupBox4.Name = "GroupBox4"
+        Me.GroupBox4.TabStop = False
+        Me.ToolTip1.SetToolTip(Me.GroupBox4, resources.GetString("GroupBox4.ToolTip"))
+        '
+        'CheckBoxADJZRA
+        '
+        resources.ApplyResources(Me.CheckBoxADJZRA, "CheckBoxADJZRA")
+        Me.CheckBoxADJZRA.Checked = True
+        Me.CheckBoxADJZRA.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CheckBoxADJZRA.Name = "CheckBoxADJZRA"
+        Me.ToolTip1.SetToolTip(Me.CheckBoxADJZRA, resources.GetString("CheckBoxADJZRA.ToolTip"))
+        Me.CheckBoxADJZRA.UseVisualStyleBackColor = True
+        '
+        'CheckBoxADJAF
+        '
+        resources.ApplyResources(Me.CheckBoxADJAF, "CheckBoxADJAF")
+        Me.CheckBoxADJAF.Name = "CheckBoxADJAF"
+        Me.ToolTip1.SetToolTip(Me.CheckBoxADJAF, resources.GetString("CheckBoxADJAF.ToolTip"))
+        Me.CheckBoxADJAF.UseVisualStyleBackColor = True
+        '
+        'ComboBoxMW
+        '
+        resources.ApplyResources(Me.ComboBoxMW, "ComboBoxMW")
+        Me.ComboBoxMW.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBoxMW.FormattingEnabled = True
+        Me.ComboBoxMW.Items.AddRange(New Object() {resources.GetString("ComboBoxMW.Items"), resources.GetString("ComboBoxMW.Items1"), resources.GetString("ComboBoxMW.Items2")})
+        Me.ComboBoxMW.Name = "ComboBoxMW"
+        Me.ToolTip1.SetToolTip(Me.ComboBoxMW, resources.GetString("ComboBoxMW.ToolTip"))
+        '
+        'ComboBoxSG
+        '
+        resources.ApplyResources(Me.ComboBoxSG, "ComboBoxSG")
+        Me.ComboBoxSG.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBoxSG.FormattingEnabled = True
+        Me.ComboBoxSG.Items.AddRange(New Object() {resources.GetString("ComboBoxSG.Items")})
+        Me.ComboBoxSG.Name = "ComboBoxSG"
+        Me.ToolTip1.SetToolTip(Me.ComboBoxSG, resources.GetString("ComboBoxSG.ToolTip"))
+        '
+        'ComboBoxAF
+        '
+        resources.ApplyResources(Me.ComboBoxAF, "ComboBoxAF")
+        Me.ComboBoxAF.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBoxAF.FormattingEnabled = True
+        Me.ComboBoxAF.Items.AddRange(New Object() {resources.GetString("ComboBoxAF.Items"), resources.GetString("ComboBoxAF.Items1")})
+        Me.ComboBoxAF.Name = "ComboBoxAF"
+        Me.ToolTip1.SetToolTip(Me.ComboBoxAF, resources.GetString("ComboBoxAF.ToolTip"))
+        '
+        'ComboBoxPC
+        '
+        resources.ApplyResources(Me.ComboBoxPC, "ComboBoxPC")
+        Me.ComboBoxPC.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBoxPC.FormattingEnabled = True
+        Me.ComboBoxPC.Items.AddRange(New Object() {resources.GetString("ComboBoxPC.Items"), resources.GetString("ComboBoxPC.Items1"), resources.GetString("ComboBoxPC.Items2")})
+        Me.ComboBoxPC.Name = "ComboBoxPC"
+        Me.ToolTip1.SetToolTip(Me.ComboBoxPC, resources.GetString("ComboBoxPC.ToolTip"))
+        '
+        'Label33
+        '
+        resources.ApplyResources(Me.Label33, "Label33")
+        Me.Label33.Name = "Label33"
+        Me.ToolTip1.SetToolTip(Me.Label33, resources.GetString("Label33.ToolTip"))
+        '
+        'Label31
+        '
+        resources.ApplyResources(Me.Label31, "Label31")
+        Me.Label31.Name = "Label31"
+        Me.ToolTip1.SetToolTip(Me.Label31, resources.GetString("Label31.ToolTip"))
+        '
+        'Label30
+        '
+        resources.ApplyResources(Me.Label30, "Label30")
+        Me.Label30.Name = "Label30"
+        Me.ToolTip1.SetToolTip(Me.Label30, resources.GetString("Label30.ToolTip"))
+        '
+        'Label29
+        '
+        resources.ApplyResources(Me.Label29, "Label29")
+        Me.Label29.Name = "Label29"
+        Me.ToolTip1.SetToolTip(Me.Label29, resources.GetString("Label29.ToolTip"))
+        '
+        'ComboBoxTC
+        '
+        resources.ApplyResources(Me.ComboBoxTC, "ComboBoxTC")
+        Me.ComboBoxTC.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBoxTC.FormattingEnabled = True
+        Me.ComboBoxTC.Items.AddRange(New Object() {resources.GetString("ComboBoxTC.Items"), resources.GetString("ComboBoxTC.Items1"), resources.GetString("ComboBoxTC.Items2"), resources.GetString("ComboBoxTC.Items3")})
+        Me.ComboBoxTC.Name = "ComboBoxTC"
+        Me.ToolTip1.SetToolTip(Me.ComboBoxTC, resources.GetString("ComboBoxTC.ToolTip"))
+        '
+        'Label28
+        '
+        resources.ApplyResources(Me.Label28, "Label28")
+        Me.Label28.Name = "Label28"
+        Me.ToolTip1.SetToolTip(Me.Label28, resources.GetString("Label28.ToolTip"))
+        '
+        'GroupBox2
+        '
+        resources.ApplyResources(Me.GroupBox2, "GroupBox2")
+        Me.GroupBox2.Controls.Add(Me.Label21)
+        Me.GroupBox2.Controls.Add(Me.TextBoxTB0)
+        Me.GroupBox2.Controls.Add(Me.Label7)
+        Me.GroupBox2.Controls.Add(Me.Label5)
+        Me.GroupBox2.Controls.Add(Me.TextBoxSG0)
+        Me.GroupBox2.Controls.Add(Me.TextBoxMW0)
+        Me.GroupBox2.Controls.Add(Me.Label4)
+        Me.GroupBox2.Controls.Add(Me.Label1)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.TabStop = False
+        Me.ToolTip1.SetToolTip(Me.GroupBox2, resources.GetString("GroupBox2.ToolTip"))
+        '
+        'Label21
+        '
+        resources.ApplyResources(Me.Label21, "Label21")
+        Me.Label21.Name = "Label21"
+        Me.ToolTip1.SetToolTip(Me.Label21, resources.GetString("Label21.ToolTip"))
+        '
+        'TextBoxTB0
+        '
+        resources.ApplyResources(Me.TextBoxTB0, "TextBoxTB0")
+        Me.TextBoxTB0.Name = "TextBoxTB0"
+        Me.ToolTip1.SetToolTip(Me.TextBoxTB0, resources.GetString("TextBoxTB0.ToolTip"))
+        '
+        'Label7
+        '
+        resources.ApplyResources(Me.Label7, "Label7")
+        Me.Label7.Name = "Label7"
+        Me.ToolTip1.SetToolTip(Me.Label7, resources.GetString("Label7.ToolTip"))
+        '
+        'Label5
+        '
+        resources.ApplyResources(Me.Label5, "Label5")
+        Me.Label5.Name = "Label5"
+        Me.ToolTip1.SetToolTip(Me.Label5, resources.GetString("Label5.ToolTip"))
+        '
+        'TextBoxSG0
+        '
+        resources.ApplyResources(Me.TextBoxSG0, "TextBoxSG0")
+        Me.TextBoxSG0.Name = "TextBoxSG0"
+        Me.ToolTip1.SetToolTip(Me.TextBoxSG0, resources.GetString("TextBoxSG0.ToolTip"))
+        '
+        'TextBoxMW0
+        '
+        resources.ApplyResources(Me.TextBoxMW0, "TextBoxMW0")
+        Me.TextBoxMW0.Name = "TextBoxMW0"
+        Me.ToolTip1.SetToolTip(Me.TextBoxMW0, resources.GetString("TextBoxMW0.ToolTip"))
+        '
+        'Label4
+        '
+        resources.ApplyResources(Me.Label4, "Label4")
+        Me.Label4.Name = "Label4"
+        Me.ToolTip1.SetToolTip(Me.Label4, resources.GetString("Label4.ToolTip"))
+        '
+        'Label1
+        '
+        resources.ApplyResources(Me.Label1, "Label1")
+        Me.Label1.Name = "Label1"
+        Me.ToolTip1.SetToolTip(Me.Label1, resources.GetString("Label1.ToolTip"))
+        '
+        'Button1
+        '
+        resources.ApplyResources(Me.Button1, "Button1")
+        Me.Button1.Name = "Button1"
+        Me.ToolTip1.SetToolTip(Me.Button1, resources.GetString("Button1.ToolTip"))
+        '
+        'Button2
+        '
+        resources.ApplyResources(Me.Button2, "Button2")
+        Me.Button2.Name = "Button2"
+        Me.ToolTip1.SetToolTip(Me.Button2, resources.GetString("Button2.ToolTip"))
+        '
         'FormPCBulk
         '
         resources.ApplyResources(Me, "$this")
@@ -613,6 +671,7 @@ Partial Class FormPCBulk
         Me.Name = "FormPCBulk"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
+        Me.ToolTip1.SetToolTip(Me, resources.GetString("$this.ToolTip"))
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()
         Me.GroupBox5.ResumeLayout(False)
