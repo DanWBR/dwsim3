@@ -138,7 +138,6 @@ obj
 /DWSIM/bin/x86/Release/Microsoft.ServiceBus.dll
 /DWSIM/bin/x86/Release/TcpComm.*
 /DWSIM/Thumbs.db
-/DWSIM/version.txt
 /DWSIM/bin/Release/DWSIM.exe.config
 /DWSIM/bin/Release/DWSIM.vshost.exe
 /DWSIM/bin/Release/DWSIM.vshost.exe.config
@@ -160,3 +159,4 @@ obj
 /PropertyGridEx
 /NaturalGas/NaturalGas.sln.cache
 /DWSIM/bin/x86/Release/GemBox.Spreadsheet.xml
+/DWSIM/version.txt
