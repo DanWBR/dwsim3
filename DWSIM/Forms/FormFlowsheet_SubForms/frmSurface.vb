@@ -72,7 +72,7 @@ Public Class frmSurface
 
         If TypeOf Me.ParentForm Is FormFlowsheet Then
             Flowsheet = Me.ParentForm
-        Else
+        ElseIf Flowsheet Is Nothing Then
             Flowsheet = My.Application.ActiveSimulation
         End If
 
