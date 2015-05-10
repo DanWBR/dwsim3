@@ -1,6 +1,6 @@
 ==================================================
 DWSIM - Open Source Process Simulator
-Version 3.3, Build 5517 - February 2015
+Version 3.4, Build 5608 - May 2015
 Copyright (c) Daniel Medeiros, Gregor Reichert, Gustavo León
 ==================================================
 
@@ -100,6 +100,33 @@ VERSION HISTORY / CHANGELOG
 ==================================================
 
 The full changelog, including code changes and their authors can be viewed at https://github.com/DanWBR/dwsim3/commits/master
+
+Version 3.4 Build 5608
+
+- [NEW] NIST-MODFAC Property Package (http://trc.nist.gov/TDE/Help/TDE103b/NIST-Modified-UNIFAC-AC-Model.htm)
+- [NEW] Model Comparison in Binary Enevelope Utility
+- [NEW] New Flowsheet Solver modes
+- [NEW] Linked Spreadsheet Table
+- [NEW] Activate/Deactivate Flowsheet Objects
+- [NEW] Added Input and Output Variables to Custom (Script) Unit Operation
+- [NEW] Restore previous successful flowsheet solutions
+- [NEW] Equilibrium calculations now use Henry coefficients for non-condensables 
+- [NEW] Added support for CAPE-OPEN Array Parameter type
+- [NEW] Mouse double-click now opens specific windows for some unit operations
+- [NEW] Added window docking menu for Mono compatibility
+- [NEW] Export simulation compounds to XML user database
+- [CHG] Excel UO is now Spreadsheet UO, supports ODS files and runs on Linux
+- [CHG] Speed enhancements for calculations with UNIFAC-type Property Packages
+- [CHG] Flash Algorithm "Fast" option is now a Property Package parameter
+- [CHG] Changed Flowsheet UO subflowsheet display mode to dockable
+- [CHG] Parallelized phase identification routine loop
+- [CHG] Optimized Recycle code
+- [CHG] Improved Lee-Kesler root finding
+- [CHG] New object palette icons
+- [FIX] Corrected some Hydrate calculation models
+- [FIX] Fixed GPU multithreading lockups
+- [FIX] Fixed Sum Rates Absorption Column solver
+- [FIX] Minor bug fixes and enhancements
 
 Version 3.3 Build 5517
 

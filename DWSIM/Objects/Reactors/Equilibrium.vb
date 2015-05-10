@@ -173,8 +173,8 @@ Namespace DWSIM.SimulationObjects.Reactors
 
             sumfm = Sum(fm) + Ninerts
 
-            sum1 = 0
-            sumn = 0
+            sum1 = 0.0#
+            sumn = 0.0#
             For Each s As Substancia In tms.Fases(0).Componentes.Values
                 If Me.ComponentIDs.Contains(s.Nome) Then
                     s.MolarFlow = N(s.Nome)
@@ -188,7 +188,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
             tms.Fases(0).SPMProperties.molarflow = sumn
 
-            sumw = 0
+            sumw = 0.0#
             For Each s As Substancia In tms.Fases(0).Componentes.Values
                 If Me.ComponentIDs.Contains(s.Nome) Then
                     s.MassFlow = N(s.Nome) * s.ConstantProperties.Molar_Weight / 1000
@@ -202,16 +202,16 @@ Namespace DWSIM.SimulationObjects.Reactors
             With pp
                 .CurrentMaterialStream = tms
                 .DW_CalcEquilibrium(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P)
-                .DW_CalcPhaseProps(PropertyPackages.Fase.Mixture)
-                .DW_CalcPhaseProps(PropertyPackages.Fase.Vapor)
-                .DW_CalcPhaseProps(PropertyPackages.Fase.Liquid)
-                .DW_CalcCompMolarFlow(-1)
-                .DW_CalcCompMassFlow(-1)
-                .DW_CalcCompVolFlow(-1)
-                .DW_CalcOverallProps()
-                .DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                .DW_CalcVazaoVolumetrica()
-                .DW_CalcKvalue()
+                '.DW_CalcPhaseProps(PropertyPackages.Fase.Mixture)
+                '.DW_CalcPhaseProps(PropertyPackages.Fase.Vapor)
+                '.DW_CalcPhaseProps(PropertyPackages.Fase.Liquid)
+                '.DW_CalcCompMolarFlow(-1)
+                '.DW_CalcCompMassFlow(-1)
+                '.DW_CalcCompVolFlow(-1)
+                '.DW_CalcOverallProps()
+                '.DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                '.DW_CalcVazaoVolumetrica()
+                '.DW_CalcKvalue()
             End With
 
             Dim fugs(tms.Fases(0).Componentes.Count - 1) As Double
@@ -222,7 +222,6 @@ Namespace DWSIM.SimulationObjects.Reactors
             i = 0
             For Each s As Substancia In tms.Fases(2).Componentes.Values
                 If s.FracaoMolar > 0.0# Then
-                    'DGf = pp.AUX_DELGF_T(298.15, T, s.Nome) * s.ConstantProperties.Molar_Weight
                     fugs(i) = s.FugacityCoeff.GetValueOrDefault
                     CP(i) = (fugs(i) * s.FracaoMolar.GetValueOrDefault * P / P0)
                 Else
@@ -233,7 +232,7 @@ Namespace DWSIM.SimulationObjects.Reactors
             Next
 
             For i = 0 To Me.Reactions.Count - 1
-                prod(i) = 1
+                prod(i) = 1.0#
                 j = 0
                 For Each s As Substancia In tms.Fases(2).Componentes.Values
                     With FlowSheet.Options.Reactions(Me.Reactions(i))
@@ -292,8 +291,8 @@ Namespace DWSIM.SimulationObjects.Reactors
 
             sumfm = Sum(fm) + Ninerts
 
-            sum1 = 0
-            sumn = 0
+            sum1 = 0.0#
+            sumn = 0.0#
             For Each s As Substancia In tms.Fases(0).Componentes.Values
                 If Me.ComponentIDs.Contains(s.Nome) Then
                     s.MolarFlow = N(s.Nome)
@@ -307,7 +306,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
             tms.Fases(0).SPMProperties.molarflow = sumn
 
-            sumw = 0
+            sumw = 0.0#
             For Each s As Substancia In tms.Fases(0).Componentes.Values
                 If Me.ComponentIDs.Contains(s.Nome) Then
                     s.MassFlow = N(s.Nome) * s.ConstantProperties.Molar_Weight / 1000
@@ -321,16 +320,16 @@ Namespace DWSIM.SimulationObjects.Reactors
             With pp
                 .CurrentMaterialStream = tms
                 .DW_CalcEquilibrium(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P)
-                .DW_CalcPhaseProps(PropertyPackages.Fase.Mixture)
-                .DW_CalcPhaseProps(PropertyPackages.Fase.Vapor)
-                .DW_CalcPhaseProps(PropertyPackages.Fase.Liquid)
-                .DW_CalcCompMolarFlow(-1)
-                .DW_CalcCompMassFlow(-1)
-                .DW_CalcCompVolFlow(-1)
-                .DW_CalcOverallProps()
-                .DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                .DW_CalcVazaoVolumetrica()
-                .DW_CalcKvalue()
+                '.DW_CalcPhaseProps(PropertyPackages.Fase.Mixture)
+                '.DW_CalcPhaseProps(PropertyPackages.Fase.Vapor)
+                '.DW_CalcPhaseProps(PropertyPackages.Fase.Liquid)
+                '.DW_CalcCompMolarFlow(-1)
+                '.DW_CalcCompMassFlow(-1)
+                '.DW_CalcCompVolFlow(-1)
+                '.DW_CalcOverallProps()
+                '.DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                '.DW_CalcVazaoVolumetrica()
+                '.DW_CalcKvalue()
             End With
 
             Dim CP(tms.Fases(0).Componentes.Count - 1) As Double
@@ -352,7 +351,7 @@ Namespace DWSIM.SimulationObjects.Reactors
             Next
 
             For i = 0 To Me.Reactions.Count - 1
-                prod(i) = 1
+                prod(i) = 1.0#
                 j = 0
                 For Each s As Substancia In tms.Fases(2).Componentes.Values
                     With FlowSheet.Options.Reactions(Me.Reactions(i))
@@ -370,7 +369,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
             For i = 0 To Me.Reactions.Count - 1
                 With FlowSheet.Options.Reactions(Me.Reactions(i))
-                    f(i) = prod(i) - .ConstantKeqValue
+                    f(i) = prod(i) - .ConstantKeqValue + pen_val
                     If Double.IsNaN(f(i)) Or Double.IsInfinity(f(i)) Then
                         f(i) = pen_val
                     End If
@@ -458,7 +457,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                     fugs(i) = s.FugacityCoeff.GetValueOrDefault
                     CP(i) = s.FracaoMolar * (DGf + Log(fugs(i) * s.FracaoMolar.GetValueOrDefault * P / P0))
                 Else
-                    CP(i) = 0
+                    CP(i) = 0.0#
                 End If
                 i += 1
             Next
@@ -527,8 +526,8 @@ Namespace DWSIM.SimulationObjects.Reactors
 
             i = 0
             For Each comp As Substancia In tms.Fases(0).Componentes.Values
-                con_lc(i) = 0
-                con_uc(i) = 1
+                con_lc(i) = 0.0#
+                con_uc(i) = 1.0#
                 con_val(i) = comp.FracaoMolar.GetValueOrDefault
                 i += 1
             Next
@@ -538,15 +537,15 @@ Namespace DWSIM.SimulationObjects.Reactors
                 delta1 = con_val(i) - con_lc(i)
                 delta2 = con_val(i) - con_uc(i)
                 If delta1 < 0 Then
-                    pen_val += -delta1 * 100000000000
+                    pen_val += -delta1 * 100000000000.0#
                 ElseIf delta2 > 1 Then
-                    pen_val += -delta2 * 100000000000
+                    pen_val += -delta2 * 100000000000.0#
                 Else
-                    pen_val += 0
+                    pen_val += 0.0#
                 End If
             Next
 
-            If Double.IsNaN(pen_val) Then pen_val = 0
+            If Double.IsNaN(pen_val) Then pen_val = 0.0#
 
             Return pen_val
 
@@ -653,8 +652,8 @@ Namespace DWSIM.SimulationObjects.Reactors
             Me.ReactionExtents.Clear()
             Me.Conversions.Clear()
             Me.ComponentConversions.Clear()
-            Me.DeltaQ = 0
-            Me.DeltaT = 0
+            Me.DeltaQ = 0.0#
+            Me.DeltaT = 0.0#
 
             Dim rx As Reaction
             Dim ims As DWSIM.SimulationObjects.Streams.MaterialStream = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Clone
@@ -721,7 +720,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
             T = ims.Fases(0).SPMProperties.temperature.GetValueOrDefault
             P = ims.Fases(0).SPMProperties.pressure.GetValueOrDefault
-            P0 = 101325
+            P0 = 101325.0#
 
             pp.CurrentMaterialStream = ims
             ppr.CurrentMaterialStream = ims
