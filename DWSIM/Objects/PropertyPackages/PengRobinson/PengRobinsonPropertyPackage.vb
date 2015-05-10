@@ -191,11 +191,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Select Case [property].ToLower
                 Case "compressibilityfactor"
                     result = m_pr.Z_PR(T, P, RET_VMOL(phase), RET_VKij(), RET_VTC, RET_VPC, RET_VW, state)
-                    MsgBox(result)
                     If CInt(Me.Parameters("PP_USE_EOS_VOLUME_SHIFT")) = 1 Then
                         result -= Me.AUX_CM(phase) / 8.314 / T * P
                     End If
-                    MsgBox(result)
                     Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = result
                 Case "heatcapacity", "heatcapacitycp"
                     resultObj = Me.m_props.CpCvR(state, T, P, RET_VMOL(phase), RET_VKij(), RET_VMAS(phase), RET_VTC(), RET_VPC(), RET_VCP(T), RET_VMM(), RET_VW(), RET_VZRa())
