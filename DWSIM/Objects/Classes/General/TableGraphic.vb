@@ -1615,13 +1615,13 @@ Namespace DWSIM.GraphicObjects
 
                 k = 0
                 For j = firstcolumn To lastcolumn
-                    maxW.Add(0)
+                    maxW.Add(10)
                     For i = firstrow To lastrow
                         If Not grid.Rows(i).Cells(j).Value Is Nothing Then
                             size = g.MeasureString(grid.Rows(i).Cells(j).Value.ToString, Me.FontCol1, New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                             If size.Width > maxW(k) Then maxW(k) = size.Width + 2 * Padding
                         Else
-                            maxW(k) = 10
+                            'maxW(k) = 10
                         End If
                     Next
                     k += 1
