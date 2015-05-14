@@ -46,7 +46,7 @@ Namespace DWSIM.GraphicObjects
 
         Protected m_BorderThickness As Integer = 1
         Protected m_Padding As Integer = 2
-        
+
         <System.NonSerialized()> Protected m_BorderPen As Drawing.Pen = New Drawing.Pen(Color.Black)
         Protected m_BorderStyle As Drawing2D.DashStyle = DashStyle.Solid
         Protected m_BorderColor As Color = Color.Black
@@ -90,7 +90,7 @@ Namespace DWSIM.GraphicObjects
                 For Each kvp As KeyValuePair(Of String, Boolean) In m_objectlist
                     elements(elements.Count - 1).Add(New XElement(XmlConvert.EncodeName(kvp.Key), kvp.Value))
                 Next
-                
+
                 .Add(New XElement("Properties"))
 
                 For Each kvp As KeyValuePair(Of String, Boolean) In m_propertylist
@@ -1270,7 +1270,7 @@ Namespace DWSIM.GraphicObjects
                         If size.Height > maxH Then maxH = size.Height
                         count += 1
                     Next
-                    
+
                     Me.Padding = 3 / Me.AdditionalInfo
 
                     If maxH = 0 Then maxH = 20
@@ -1567,7 +1567,7 @@ Namespace DWSIM.GraphicObjects
                 .Item.Clear()
 
                 .Item.Add("Range", Me, "SpreadsheetCellRange", False, "", "", True)
-               
+
                 .PropertySort = PropertySort.Alphabetical
                 .ShowCustomProperties = True
 
@@ -1618,7 +1618,7 @@ Namespace DWSIM.GraphicObjects
 
                 k = 0
                 For j = firstcolumn To lastcolumn
-                    maxW.Add(0)
+                    maxW.Add(10)
                     For i = firstrow To lastrow
                         If Not grid.Rows(i).Cells(j).Value Is Nothing Then
                             If Double.TryParse(grid.Rows(i).Cells(j).Value, New Double()) Then
@@ -1628,7 +1628,7 @@ Namespace DWSIM.GraphicObjects
                             End If
                             If size.Width > maxW(k) Then maxW(k) = size.Width + 2 * Padding
                         Else
-                            maxW(k) = 10
+                            'maxW(k) = 10
                         End If
                     Next
                     k += 1
