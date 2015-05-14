@@ -1595,6 +1595,9 @@ Namespace DWSIM.GraphicObjects
 
             If SpreadsheetCellRange <> "" And Not Spreadsheet Is Nothing Then
 
+                Dim nf As String = Spreadsheet.formc.Options.NumberFormat
+                Dim value As Object = Nothing
+
                 Dim firstcell, lastcell As String
 
                 firstcell = Me.SpreadsheetCellRange.Split(":")(0)
@@ -1618,7 +1621,11 @@ Namespace DWSIM.GraphicObjects
                     maxW.Add(0)
                     For i = firstrow To lastrow
                         If Not grid.Rows(i).Cells(j).Value Is Nothing Then
-                            size = g.MeasureString(grid.Rows(i).Cells(j).Value.ToString, Me.FontCol1, New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
+                            If Double.TryParse(grid.Rows(i).Cells(j).Value, New Double()) Then
+                                size = g.MeasureString(Format(Double.Parse(grid.Rows(i).Cells(j).Value), nf), Me.FontCol1, New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
+                            Else
+                                size = g.MeasureString(grid.Rows(i).Cells(j).Value.ToString, Me.FontCol1, New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
+                            End If
                             If size.Width > maxW(k) Then maxW(k) = size.Width + 2 * Padding
                         Else
                             maxW(k) = 10
@@ -1658,7 +1665,11 @@ Namespace DWSIM.GraphicObjects
                     m = 0
                     For i = firstrow To lastrow
                         If Not grid.Rows(i).Cells(j).Value Is Nothing Then
-                            g.DrawString(grid.Rows(i).Cells(j).Value.ToString, Me.FontCol1, New SolidBrush(Me.LineColor), X + Padding + leftmargin, Y + Padding + m * itemheight)
+                            If Double.TryParse(grid.Rows(i).Cells(j).Value, New Double()) Then
+                                g.DrawString(Format(Double.Parse(grid.Rows(i).Cells(j).Value), nf), Me.FontCol1, New SolidBrush(Me.LineColor), X + Padding + leftmargin, Y + Padding + m * itemheight)
+                            Else
+                                g.DrawString(grid.Rows(i).Cells(j).Value.ToString, Me.FontCol1, New SolidBrush(Me.LineColor), X + Padding + leftmargin, Y + Padding + m * itemheight)
+                            End If
                         Else
                             g.DrawString("", Me.FontCol1, New SolidBrush(Me.LineColor), X + Padding + leftmargin, Y + Padding + m * itemheight)
                         End If
