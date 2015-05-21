@@ -299,7 +299,7 @@ Public Class SpreadsheetForm
         Dim text As String = ""
         For i As Integer = 0 To dt1.GetUpperBound(0)
             For j As Integer = 0 To dt1.GetUpperBound(1)
-                If Double.TryParse(dt1(i, j), New Double) Then
+                If Double.TryParse(dt1(i, j), Globalization.NumberStyles.Any, ci, New Double) Then
                     text += Double.Parse(dt1(i, j), ci).ToString + ";"
                 Else
                     text += dt1(i, j) + ";"
