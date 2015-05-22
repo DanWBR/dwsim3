@@ -2229,13 +2229,17 @@ Namespace DWSIM.Flowsheet
 
                     form.WriteToLog(DWSIM.App.GetLocalString("FSfinishedsolvingerror"), Color.Red, FormClasses.TipoAviso.Erro)
                     For Each ex In age.Flatten().InnerExceptions
-                        Dim st As New StackTrace(ex, True)
-                        If Not ex.InnerException Is Nothing Then st = New StackTrace(ex.InnerException, True)
-                        If st.FrameCount > 0 Then
-                            form.WriteToLog(ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
-                        Else
-                            form.WriteToLog(ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                        End If
+                        Try
+                            Dim st As New StackTrace(ex, True)
+                            If Not ex.InnerException Is Nothing Then st = New StackTrace(ex.InnerException, True)
+                            If st.FrameCount > 0 Then
+                                form.WriteToLog(ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                            Else
+                                form.WriteToLog(ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                            End If
+                        Catch iex As Exception
+
+                        End Try
                     Next
                     If Not form.Visible Then Throw age Else age = Nothing
 

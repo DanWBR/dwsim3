@@ -191,7 +191,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             Select Case Me.CalcMode
                 Case CalculationMode.Delta_P
-                    P2 = Pi + Me.DeltaP.GetValueOrDefault
+                    P2 = Pi - Me.DeltaP.GetValueOrDefault
                     POut = P2
                 Case CalculationMode.OutletPressure
                     P2 = Me.POut.GetValueOrDefault
