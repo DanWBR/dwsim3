@@ -207,6 +207,13 @@ Namespace DWSIM.SimulationObjects.SpecialOps
 
             End If
 
+            Try
+                Me.SourceObject = Me.FlowSheet.Collections.ObjectCollection(Me.SourceObjectData.m_ID)
+                Me.TargetObject = Me.FlowSheet.Collections.ObjectCollection(Me.TargetObjectData.m_ID)
+            Catch ex As Exception
+
+            End Try
+
         End Function
 
         Public Overrides Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement)
