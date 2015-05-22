@@ -34,10 +34,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Protected m_dp As Nullable(Of Double)
         Protected m_dt As Nullable(Of Double)
         Protected m_DQ As Nullable(Of Double)
-        Protected m_POut As Nullable(Of Double) = 101325
+        Protected m_POut As Nullable(Of Double) = 101325.0#
         Protected m_cmode As CalculationMode = CalculationMode.Delta_P
 
-        Protected m_eta_a As Nullable(Of Double) = 75
+        Protected m_eta_a As Nullable(Of Double) = 75.0#
         Protected m_eta_p As Nullable(Of Double) = Nothing
 
         Protected m_ignorephase As Boolean = True
@@ -50,6 +50,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 m_cmode = value
             End Set
         End Property
+
         Public Property IgnorePhase() As Boolean
             Get
                 Return m_ignorephase
@@ -111,6 +112,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 m_DQ = value
             End Set
         End Property
+
         Public Property POut() As Nullable(Of Double)
             Get
                 Return m_POut
@@ -230,17 +232,15 @@ fix:            Me.PropertyPackage.CurrentMaterialStream = form.Collections.CLCS
                 ein = ei
 
                 Me.PropertyPackage.CurrentMaterialStream = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name)
-                Select Case Me.CalcMode
 
+                Select Case Me.CalcMode
                     Case CalculationMode.Delta_P
                         P2 = Pi + Me.DeltaP.GetValueOrDefault
-
+                        POut = P2
                     Case CalculationMode.OutletPressure
                         P2 = Me.POut.GetValueOrDefault
                         DeltaP = P2 - Pi
                 End Select
-                POut = P2
-
 
                 Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.S, P2, Si, 0)
                 T2 = tmp(2)
@@ -457,17 +457,14 @@ fix:            Me.PropertyPackage.CurrentMaterialStream = form.Collections.CLCS
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_deltaP, "DP"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With
-
                     Case CalculationMode.OutletPressure
                         Dim valor = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.POut.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("Presso"), su.spmp_pressure), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Pressoajusante"), True)
                         With .Item(.Item.Count - 1)
-                            .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_pressure, "DP"}
+                            .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_pressure, "P"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With
                 End Select
-
-
 
                 .Item.Add(DWSIM.App.GetLocalString("EficinciaAdiabtica01"), Me, "EficienciaAdiabatica", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Eficinciadocompresso"), True)
                 With .Item(.Item.Count - 1)

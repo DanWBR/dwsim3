@@ -1178,6 +1178,10 @@
     <value>Erzeugte Leistung</value>
     <comment>0</comment>
   </data>
+  <data name="PROP_TU_4" xml:space="preserve">
+    <value>Druck</value>
+    <comment>1</comment>
+  </data>
   <data name="PROP_VA_0" xml:space="preserve">
     <value>Berechnungsmodus</value>
     <comment>1</comment>

@@ -387,16 +387,16 @@ Namespace DWSIM.SimulationObjects.SpecialOps
 
             If Me.GraphicObject.Active Then
 
-                If Me.ExpContext Is Nothing Then
-                    '// Define the context of our expression
-                    'ExpressionContext context = new ExpressionContext();
-                    '// Import all members of the Math type into the default namespace
-                    'context.Imports.ImportStaticMembers(typeof(Math));
-                    Me.ExpContext = New Ciloci.Flee.ExpressionContext
-                    With Me.ExpContext
-                        .Imports.AddType(GetType(System.Math))
-                    End With
-                End If
+                'If Me.ExpContext Is Nothing Then
+                '// Define the context of our expression
+                'ExpressionContext context = new ExpressionContext();
+                '// Import all members of the Math type into the default namespace
+                'context.Imports.ImportStaticMembers(typeof(Math));
+                Me.ExpContext = New Ciloci.Flee.ExpressionContext
+                With Me.ExpContext
+                    .Imports.AddType(GetType(System.Math))
+                End With
+                'End If
 
                 If Not Me.GetSourceVarValue Is Nothing And Not Me.GetTargetVarValue Is Nothing Then
 
@@ -432,11 +432,14 @@ Namespace DWSIM.SimulationObjects.SpecialOps
 
                     Me.GraphicObject.Calculated = True
 
-                    Dim form As Global.DWSIM.FormFlowsheet = Me.Flowsheet
+                    Dim form As Global.DWSIM.FormFlowsheet = Me.FlowSheet
+
+                    Me.TargetObject = form.Collections.ObjectCollection(Me.TargetObjectData.m_ID)
                     Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
                     'Call function to calculate flowsheet
                     With objargs
                         .Calculado = False
+
                         .Nome = Me.TargetObject.Nome
                         .Tag = Me.TargetObject.GraphicObject.Tag
                         .Tipo = Me.TargetObject.GraphicObject.TipoObjeto

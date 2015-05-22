@@ -41,7 +41,7 @@ Public Class UI_SpecControlPanelForm
 
     Private Sub KryptonButton1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KryptonButton1.Click
 
-        If mySPEC.ExpContext Is Nothing Then
+        If Not mySPEC.ExpContext Is Nothing Then
             '// Define the context of our expression
             'ExpressionContext context = new ExpressionContext();
             '// Import all members of the Math type into the default namespace

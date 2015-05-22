@@ -1177,6 +1177,10 @@
     <value>Power Generated</value>
     <comment>0</comment>
   </data>
+  <data name="PROP_TU_4" xml:space="preserve">
+    <value>Pressure</value>
+    <comment>1</comment>
+  </data>
   <data name="PROP_VA_0" xml:space="preserve">
     <value>Calculation Mode</value>
     <comment>1</comment>

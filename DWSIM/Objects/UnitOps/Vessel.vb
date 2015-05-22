@@ -617,6 +617,55 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     ms = form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name)
                     With ms
                         .ClearAllProps()
+                        If ems.Fases(6).SPMProperties.molarflow.GetValueOrDefault > 0 Then
+                            .Fases(0).SPMProperties.temperature = ems.Fases(0).SPMProperties.temperature
+                            .Fases(0).SPMProperties.pressure = ems.Fases(0).SPMProperties.pressure
+                            .Fases(0).SPMProperties.enthalpy = ems.Fases(6).SPMProperties.enthalpy
+                            Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
+                            j = 0
+                            For Each comp In .Fases(0).Componentes.Values
+                                comp.FracaoMolar = ems.Fases(6).Componentes(comp.Nome).FracaoMolar
+                                comp.FracaoMassica = ems.Fases(6).Componentes(comp.Nome).FracaoMassica
+                                j += 1
+                            Next
+                            For Each comp In .Fases(6).Componentes.Values
+                                comp.FracaoMolar = ems.Fases(6).Componentes(comp.Nome).FracaoMolar
+                                comp.FracaoMassica = ems.Fases(6).Componentes(comp.Nome).FracaoMassica
+                                j += 1
+                            Next
+                            .Fases(0).SPMProperties.massflow = ems.Fases(6).SPMProperties.massflow
+                            .Fases(0).SPMProperties.massfraction = 1
+                            .Fases(0).SPMProperties.molarfraction = 1
+                            .Fases(6).SPMProperties.massflow = ems.Fases(6).SPMProperties.massflow
+                            .Fases(6).SPMProperties.massfraction = 1
+                            .Fases(6).SPMProperties.molarfraction = 1
+                            .Fases(2).SPMProperties.massfraction = 0
+                            .Fases(2).SPMProperties.molarfraction = 0
+                        Else
+                            .Fases(0).SPMProperties.temperature = ems.Fases(0).SPMProperties.temperature
+                            .Fases(0).SPMProperties.pressure = ems.Fases(0).SPMProperties.pressure
+                            .Fases(0).SPMProperties.enthalpy = ems.Fases(4).SPMProperties.enthalpy
+                            Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
+                            j = 0
+                            For Each comp In .Fases(0).Componentes.Values
+                                comp.FracaoMolar = ems.Fases(4).Componentes(comp.Nome).FracaoMolar
+                                comp.FracaoMassica = ems.Fases(4).Componentes(comp.Nome).FracaoMassica
+                                j += 1
+                            Next
+                            For Each comp In .Fases(4).Componentes.Values
+                                comp.FracaoMolar = ems.Fases(4).Componentes(comp.Nome).FracaoMolar
+                                comp.FracaoMassica = ems.Fases(4).Componentes(comp.Nome).FracaoMassica
+                                j += 1
+                            Next
+                            .Fases(0).SPMProperties.massflow = ems.Fases(4).SPMProperties.massflow
+                            .Fases(0).SPMProperties.massfraction = 1
+                            .Fases(0).SPMProperties.molarfraction = 1
+                            .Fases(4).SPMProperties.massflow = ems.Fases(4).SPMProperties.massflow
+                            .Fases(4).SPMProperties.massfraction = 1
+                            .Fases(4).SPMProperties.molarfraction = 1
+                            .Fases(2).SPMProperties.massfraction = 0
+                            .Fases(2).SPMProperties.molarfraction = 0
+                        End If
                     End With
                 End If
 
