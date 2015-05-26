@@ -22,44 +22,44 @@ Partial Class FormConfigPRSV2
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormConfigPRSV2))
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip
-        Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.dgvu1 = New System.Windows.Forms.DataGridView
-        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.LabelWithDivider3 = New System.Windows.Forms.LabelWithDivider
-        Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.KryptonDataGridView2 = New System.Windows.Forms.DataGridView
-        Me.LabelWithDivider2 = New System.Windows.Forms.LabelWithDivider
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.KryptonDataGridView1 = New System.Windows.Forms.DataGridView
-        Me.ID = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip()
+        Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem()
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.dgvu1 = New System.Windows.Forms.DataGridView()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LabelWithDivider3 = New System.Windows.Forms.LabelWithDivider()
+        Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.KryptonDataGridView2 = New System.Windows.Forms.DataGridView()
+        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LabelWithDivider2 = New System.Windows.Forms.LabelWithDivider()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.KryptonDataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.ID = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStrip1.SuspendLayout()
         Me.FaTabStripItem3.SuspendLayout()
@@ -75,62 +75,45 @@ Partial Class FormConfigPRSV2
         '
         'FaTabStrip1
         '
-        Me.FaTabStrip1.AccessibleDescription = Nothing
-        Me.FaTabStrip1.AccessibleName = Nothing
         Me.FaTabStrip1.AlwaysShowClose = False
         Me.FaTabStrip1.AlwaysShowMenuGlyph = False
         resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
         Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem3, Me.FaTabStripItem2, Me.FaTabStripItem1})
         Me.FaTabStrip1.Name = "FaTabStrip1"
-        Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem3
+        Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem2
         '
         'FaTabStripItem3
         '
-        Me.FaTabStripItem3.AccessibleDescription = Nothing
-        Me.FaTabStripItem3.AccessibleName = Nothing
-        resources.ApplyResources(Me.FaTabStripItem3, "FaTabStripItem3")
         Me.FaTabStripItem3.CanClose = False
         Me.FaTabStripItem3.Controls.Add(Me.GroupBox3)
         Me.FaTabStripItem3.IsDrawn = True
         Me.FaTabStripItem3.Name = "FaTabStripItem3"
-        Me.FaTabStripItem3.Selected = True
+        resources.ApplyResources(Me.FaTabStripItem3, "FaTabStripItem3")
         '
         'GroupBox3
         '
-        Me.GroupBox3.AccessibleDescription = Nothing
-        Me.GroupBox3.AccessibleName = Nothing
         resources.ApplyResources(Me.GroupBox3, "GroupBox3")
-        Me.GroupBox3.BackgroundImage = Nothing
         Me.GroupBox3.Controls.Add(Me.Label1)
         Me.GroupBox3.Controls.Add(Me.dgvu1)
         Me.GroupBox3.Controls.Add(Me.LabelWithDivider3)
-        Me.GroupBox3.Font = Nothing
         Me.GroupBox3.Name = "GroupBox3"
         Me.GroupBox3.TabStop = False
         '
         'Label1
         '
-        Me.Label1.AccessibleDescription = Nothing
-        Me.Label1.AccessibleName = Nothing
         resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.Font = Nothing
         Me.Label1.Name = "Label1"
         '
         'dgvu1
         '
-        Me.dgvu1.AccessibleDescription = Nothing
-        Me.dgvu1.AccessibleName = Nothing
         Me.dgvu1.AllowUserToAddRows = False
         Me.dgvu1.AllowUserToDeleteRows = False
         Me.dgvu1.AllowUserToResizeColumns = False
         Me.dgvu1.AllowUserToResizeRows = False
         resources.ApplyResources(Me.dgvu1, "dgvu1")
         Me.dgvu1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.dgvu1.BackgroundImage = Nothing
         Me.dgvu1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         Me.dgvu1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column3, Me.Column5, Me.Column6, Me.Column7})
-        Me.dgvu1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter
-        Me.dgvu1.Font = Nothing
         Me.dgvu1.MultiSelect = False
         Me.dgvu1.Name = "dgvu1"
         Me.dgvu1.RowHeadersVisible = False
@@ -174,59 +157,43 @@ Partial Class FormConfigPRSV2
         '
         'LabelWithDivider3
         '
-        Me.LabelWithDivider3.AccessibleDescription = Nothing
-        Me.LabelWithDivider3.AccessibleName = Nothing
         resources.ApplyResources(Me.LabelWithDivider3, "LabelWithDivider3")
-        Me.LabelWithDivider3.Font = Nothing
         Me.LabelWithDivider3.Name = "LabelWithDivider3"
         '
         'FaTabStripItem2
         '
-        Me.FaTabStripItem2.AccessibleDescription = Nothing
-        Me.FaTabStripItem2.AccessibleName = Nothing
-        resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
         Me.FaTabStripItem2.CanClose = False
         Me.FaTabStripItem2.Controls.Add(Me.GroupBox2)
         Me.FaTabStripItem2.Controls.Add(Me.Label2)
         Me.FaTabStripItem2.IsDrawn = True
         Me.FaTabStripItem2.Name = "FaTabStripItem2"
+        Me.FaTabStripItem2.Selected = True
+        resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
         '
         'GroupBox2
         '
-        Me.GroupBox2.AccessibleDescription = Nothing
-        Me.GroupBox2.AccessibleName = Nothing
         resources.ApplyResources(Me.GroupBox2, "GroupBox2")
-        Me.GroupBox2.BackgroundImage = Nothing
         Me.GroupBox2.Controls.Add(Me.Label3)
         Me.GroupBox2.Controls.Add(Me.KryptonDataGridView2)
         Me.GroupBox2.Controls.Add(Me.LabelWithDivider2)
-        Me.GroupBox2.Font = Nothing
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.TabStop = False
         '
         'Label3
         '
-        Me.Label3.AccessibleDescription = Nothing
-        Me.Label3.AccessibleName = Nothing
         resources.ApplyResources(Me.Label3, "Label3")
-        Me.Label3.Font = Nothing
         Me.Label3.Name = "Label3"
         '
         'KryptonDataGridView2
         '
-        Me.KryptonDataGridView2.AccessibleDescription = Nothing
-        Me.KryptonDataGridView2.AccessibleName = Nothing
         Me.KryptonDataGridView2.AllowUserToAddRows = False
         Me.KryptonDataGridView2.AllowUserToDeleteRows = False
         Me.KryptonDataGridView2.AllowUserToResizeColumns = False
         Me.KryptonDataGridView2.AllowUserToResizeRows = False
         resources.ApplyResources(Me.KryptonDataGridView2, "KryptonDataGridView2")
         Me.KryptonDataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.KryptonDataGridView2.BackgroundImage = Nothing
         Me.KryptonDataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         Me.KryptonDataGridView2.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.Column4})
-        Me.KryptonDataGridView2.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter
-        Me.KryptonDataGridView2.Font = Nothing
         Me.KryptonDataGridView2.MultiSelect = False
         Me.KryptonDataGridView2.Name = "KryptonDataGridView2"
         Me.KryptonDataGridView2.RowHeadersVisible = False
@@ -235,83 +202,6 @@ Partial Class FormConfigPRSV2
         DataGridViewCellStyle8.Format = "N5"
         Me.KryptonDataGridView2.RowsDefaultCellStyle = DataGridViewCellStyle8
         Me.KryptonDataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        '
-        'LabelWithDivider2
-        '
-        Me.LabelWithDivider2.AccessibleDescription = Nothing
-        Me.LabelWithDivider2.AccessibleName = Nothing
-        resources.ApplyResources(Me.LabelWithDivider2, "LabelWithDivider2")
-        Me.LabelWithDivider2.Font = Nothing
-        Me.LabelWithDivider2.Name = "LabelWithDivider2"
-        '
-        'Label2
-        '
-        Me.Label2.AccessibleDescription = Nothing
-        Me.Label2.AccessibleName = Nothing
-        resources.ApplyResources(Me.Label2, "Label2")
-        Me.Label2.Font = Nothing
-        Me.Label2.Name = "Label2"
-        '
-        'FaTabStripItem1
-        '
-        Me.FaTabStripItem1.AccessibleDescription = Nothing
-        Me.FaTabStripItem1.AccessibleName = Nothing
-        resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
-        Me.FaTabStripItem1.CanClose = False
-        Me.FaTabStripItem1.Controls.Add(Me.GroupBox1)
-        Me.FaTabStripItem1.IsDrawn = True
-        Me.FaTabStripItem1.Name = "FaTabStripItem1"
-        '
-        'GroupBox1
-        '
-        Me.GroupBox1.AccessibleDescription = Nothing
-        Me.GroupBox1.AccessibleName = Nothing
-        resources.ApplyResources(Me.GroupBox1, "GroupBox1")
-        Me.GroupBox1.BackgroundImage = Nothing
-        Me.GroupBox1.Controls.Add(Me.KryptonDataGridView1)
-        Me.GroupBox1.Font = Nothing
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.TabStop = False
-        '
-        'KryptonDataGridView1
-        '
-        Me.KryptonDataGridView1.AccessibleDescription = Nothing
-        Me.KryptonDataGridView1.AccessibleName = Nothing
-        Me.KryptonDataGridView1.AllowUserToAddRows = False
-        Me.KryptonDataGridView1.AllowUserToDeleteRows = False
-        Me.KryptonDataGridView1.AllowUserToResizeRows = False
-        resources.ApplyResources(Me.KryptonDataGridView1, "KryptonDataGridView1")
-        Me.KryptonDataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.KryptonDataGridView1.BackgroundImage = Nothing
-        Me.KryptonDataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.KryptonDataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ID, Me.Column2, Me.Column1})
-        Me.KryptonDataGridView1.Font = Nothing
-        Me.KryptonDataGridView1.MultiSelect = False
-        Me.KryptonDataGridView1.Name = "KryptonDataGridView1"
-        Me.KryptonDataGridView1.RowHeadersVisible = False
-        Me.KryptonDataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        '
-        'ID
-        '
-        resources.ApplyResources(Me.ID, "ID")
-        Me.ID.Name = "ID"
-        '
-        'Column2
-        '
-        DataGridViewCellStyle9.BackColor = System.Drawing.Color.LightGray
-        Me.Column2.DefaultCellStyle = DataGridViewCellStyle9
-        Me.Column2.FillWeight = 149.2386!
-        resources.ApplyResources(Me.Column2, "Column2")
-        Me.Column2.Name = "Column2"
-        Me.Column2.ReadOnly = True
-        '
-        'Column1
-        '
-        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        Me.Column1.DefaultCellStyle = DataGridViewCellStyle10
-        Me.Column1.FillWeight = 50.76142!
-        resources.ApplyResources(Me.Column1, "Column1")
-        Me.Column1.Name = "Column1"
         '
         'DataGridViewTextBoxColumn1
         '
@@ -339,17 +229,73 @@ Partial Class FormConfigPRSV2
         resources.ApplyResources(Me.Column4, "Column4")
         Me.Column4.Name = "Column4"
         '
+        'LabelWithDivider2
+        '
+        resources.ApplyResources(Me.LabelWithDivider2, "LabelWithDivider2")
+        Me.LabelWithDivider2.Name = "LabelWithDivider2"
+        '
+        'Label2
+        '
+        resources.ApplyResources(Me.Label2, "Label2")
+        Me.Label2.Name = "Label2"
+        '
+        'FaTabStripItem1
+        '
+        Me.FaTabStripItem1.CanClose = False
+        Me.FaTabStripItem1.Controls.Add(Me.GroupBox1)
+        Me.FaTabStripItem1.IsDrawn = True
+        Me.FaTabStripItem1.Name = "FaTabStripItem1"
+        resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
+        '
+        'GroupBox1
+        '
+        resources.ApplyResources(Me.GroupBox1, "GroupBox1")
+        Me.GroupBox1.Controls.Add(Me.KryptonDataGridView1)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.TabStop = False
+        '
+        'KryptonDataGridView1
+        '
+        Me.KryptonDataGridView1.AllowUserToAddRows = False
+        Me.KryptonDataGridView1.AllowUserToDeleteRows = False
+        Me.KryptonDataGridView1.AllowUserToResizeRows = False
+        resources.ApplyResources(Me.KryptonDataGridView1, "KryptonDataGridView1")
+        Me.KryptonDataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.KryptonDataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.KryptonDataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ID, Me.Column2, Me.Column1})
+        Me.KryptonDataGridView1.MultiSelect = False
+        Me.KryptonDataGridView1.Name = "KryptonDataGridView1"
+        Me.KryptonDataGridView1.RowHeadersVisible = False
+        Me.KryptonDataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
+        '
+        'ID
+        '
+        resources.ApplyResources(Me.ID, "ID")
+        Me.ID.Name = "ID"
+        '
+        'Column2
+        '
+        DataGridViewCellStyle9.BackColor = System.Drawing.Color.LightGray
+        Me.Column2.DefaultCellStyle = DataGridViewCellStyle9
+        Me.Column2.FillWeight = 149.2386!
+        resources.ApplyResources(Me.Column2, "Column2")
+        Me.Column2.Name = "Column2"
+        Me.Column2.ReadOnly = True
+        '
+        'Column1
+        '
+        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        Me.Column1.DefaultCellStyle = DataGridViewCellStyle10
+        Me.Column1.FillWeight = 50.76142!
+        resources.ApplyResources(Me.Column1, "Column1")
+        Me.Column1.Name = "Column1"
+        '
         'FormConfigPRSV2
         '
-        Me.AccessibleDescription = Nothing
-        Me.AccessibleName = Nothing
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackgroundImage = Nothing
         Me.Controls.Add(Me.FaTabStrip1)
-        Me.Font = Nothing
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
-        Me.Icon = Nothing
         Me.Name = "FormConfigPRSV2"
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FaTabStrip1.ResumeLayout(False)

@@ -231,4 +231,9 @@ gt2:            If ppu.m_pr._data.ContainsKey(cp.Name.ToLower) Then
         End If
     End Sub
 
+    Private Sub dgvu1_KeyDown(sender As Object, e As KeyEventArgs) Handles dgvu1.KeyDown, KryptonDataGridView2.KeyDown
+        If e.KeyCode = Keys.V And e.Modifiers = Keys.Control Then
+            PasteData(sender)
+        End If
+    End Sub
 End Class

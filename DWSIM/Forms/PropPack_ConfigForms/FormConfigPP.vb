@@ -629,5 +629,10 @@ gt2:            If ppu.m_pr.InteractionParameters.ContainsKey(cp.Name) Then
 
     End Sub
 
-   
+    Private Sub KryptonDataGridView2_KeyDown(sender As Object, e As KeyEventArgs) Handles KryptonDataGridView2.KeyDown
+        If e.KeyCode = Keys.V And e.Modifiers = Keys.Control Then
+            PasteData(KryptonDataGridView2)
+        End If
+    End Sub
+
 End Class

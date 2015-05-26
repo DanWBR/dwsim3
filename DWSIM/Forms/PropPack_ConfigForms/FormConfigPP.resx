@@ -423,6 +423,9 @@
   <metadata name="Column6.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="Column6.HeaderText" xml:space="preserve">
+    <value />
+  </data>
   <data name="IPGrid.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -556,6 +559,6 @@
     <value>FormConfigPP</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>DWSIM.FormConfigBase, DWSIM, Version=3.1.5281.34112, Culture=neutral, PublicKeyToken=null</value>
+    <value>DWSIM.FormConfigBase, DWSIM, Version=3.4.5624.26013, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>

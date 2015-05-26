@@ -95,4 +95,71 @@ Module ControlExtensions
 
     End Function
 
+    <System.Runtime.CompilerServices.Extension()> _
+    Public Sub PasteData(dgv As DataGridView)
+
+        Dim tArr() As String
+        Dim arT() As String
+        Dim i, ii As Integer
+        Dim c, cc, r As Integer
+
+        tArr = Clipboard.GetText().Split(Environment.NewLine)
+
+        If dgv.SelectedCells.Count > 0 Then
+            r = dgv.SelectedCells(0).RowIndex
+            c = dgv.SelectedCells(0).ColumnIndex
+        Else
+            r = 0
+            c = 0
+        End If
+        For i = 0 To tArr.Length - 1
+            If tArr(i) <> "" Then
+                arT = tArr(i).Split(vbTab)
+                For ii = 0 To arT.Length - 1
+                    If r > dgv.Rows.Count - 1 Then
+                        'dgv.Rows.Add()
+                        'dgv.Rows(0).Cells(0).Value = True
+                        'dgv.Rows(0).Cells(1).Selected = True
+                    End If
+                Next
+                r = r + 1
+            End If
+        Next
+        If dgv.SelectedCells.Count > 0 Then
+            r = dgv.SelectedCells(0).RowIndex
+            c = dgv.SelectedCells(0).ColumnIndex
+        Else
+            r = 0
+            c = 0
+        End If
+        For i = 0 To tArr.Length - 1
+            If tArr(i) <> "" Then
+                arT = tArr(i).Split(vbTab)
+                cc = c
+                If r <= dgv.Rows.Count - 1 Then
+                    For ii = 0 To arT.Length - 1
+                        cc = GetNextVisibleCol(dgv, cc)
+                        If cc > dgv.ColumnCount - 1 Then Exit For
+                        dgv.Item(cc, r).Value = arT(ii).TrimStart
+                        cc = cc + 1
+                    Next
+                End If
+                r = r + 1
+            End If
+        Next
+
+    End Sub
+
+    Function GetNextVisibleCol(dgv As DataGridView, stidx As Integer) As Integer
+
+        Dim i As Integer
+
+        For i = stidx To dgv.ColumnCount - 1
+            If dgv.Columns(i).Visible Then Return i
+        Next
+
+        Return Nothing
+
+    End Function
+
 End Module
