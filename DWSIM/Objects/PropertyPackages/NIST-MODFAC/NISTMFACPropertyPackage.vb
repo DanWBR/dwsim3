@@ -37,7 +37,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Private m_props As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
         Public m_pr As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PengRobinson
-        Private m_uni As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NISTMFAC
+        Public m_uni As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NISTMFAC
         Private m_lk As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.LeeKesler
     
         Public Sub New(ByVal comode As Boolean)

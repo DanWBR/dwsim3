@@ -118,6 +118,16 @@ Public Class FormWelcome
                     NewMDIChild.currcase.filename = Me.lvlatest.SelectedItems(0).Tag
                     objStreamReader.Close()
                     NewMDIChild.LoadCase(NewMDIChild.currcase, False)
+                Case ".dwruf"
+                    Dim NewMDIChild As New FormUNIFACRegression()
+                    NewMDIChild.MdiParent = FormMain
+                    NewMDIChild.Show()
+                    Dim objStreamReader As New FileStream(Me.lvlatest.SelectedItems(0).Tag, FileMode.Open)
+                    Dim x As New BinaryFormatter()
+                    NewMDIChild.mycase = x.Deserialize(objStreamReader)
+                    NewMDIChild.mycase.Filename = Me.lvlatest.SelectedItems(0).Tag
+                    objStreamReader.Close()
+                    NewMDIChild.LoadCase(NewMDIChild.mycase, False)
             End Select
 
             Me.Close()

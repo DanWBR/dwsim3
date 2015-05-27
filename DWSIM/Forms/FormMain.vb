@@ -3394,6 +3394,20 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
                         Me.UpdateMRUList()
                     End If
                 Case 6
+ruf:                Dim NewMDIChild As New FormUNIFACRegression()
+                    NewMDIChild.MdiParent = Me
+                    NewMDIChild.Show()
+                    Dim objStreamReader As New FileStream(Me.OpenFileDialog1.FileName, FileMode.Open)
+                    Dim x As New BinaryFormatter()
+                    NewMDIChild.mycase = x.Deserialize(objStreamReader)
+                    NewMDIChild.mycase.Filename = Me.OpenFileDialog1.FileName
+                    objStreamReader.Close()
+                    NewMDIChild.LoadCase(NewMDIChild.mycase, False)
+                    If Not My.Settings.MostRecentFiles.Contains(Me.OpenFileDialog1.FileName) Then
+                        My.Settings.MostRecentFiles.Add(Me.OpenFileDialog1.FileName)
+                        Me.UpdateMRUList()
+                    End If
+                Case 7
                     Select Case Path.GetExtension(Me.OpenFileDialog1.FileName).ToLower()
                         Case ".dwxml"
                             GoTo simx
@@ -3405,6 +3419,8 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
                             GoTo csd
                         Case ".dwrsd"
                             GoTo rsd
+                        Case ".dwruf"
+                            GoTo ruf
                     End Select
             End Select
         End If
@@ -3692,6 +3708,16 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
                             NewMDIChild.currcase = x.Deserialize(objStreamReader)
                             objStreamReader.Close()
                             NewMDIChild.LoadCase(NewMDIChild.currcase, False)
+                        Case ".dwruf"
+                            Dim NewMDIChild As New FormUNIFACRegression()
+                            NewMDIChild.MdiParent = Me
+                            NewMDIChild.Show()
+                            objStreamReader = New FileStream(nome, FileMode.Open)
+                            Dim x As New BinaryFormatter()
+                            NewMDIChild.mycase = x.Deserialize(objStreamReader)
+                            NewMDIChild.mycase.Filename = nome
+                            objStreamReader.Close()
+                            NewMDIChild.LoadCase(NewMDIChild.mycase, False)
                     End Select
                 Catch ex As Exception
                     MessageBox.Show("Erro ao carregar arquivo: " & ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -3905,6 +3931,16 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
                     Me.filename = Me.SaveRegStudyDlg.FileName
                     Me.ActiveMdiChild.Text = Me.filename
                 End If
+            ElseIf TypeOf Me.ActiveMdiChild Is FormUNIFACRegression Then
+                If Me.SaveUnifacIPRegrDlg.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
+                    CType(Me.ActiveMdiChild, FormUNIFACRegression).StoreData()
+                    Dim objStreamWriter As New FileStream(Me.SaveUnifacIPRegrDlg.FileName, FileMode.OpenOrCreate)
+                    Dim x As New BinaryFormatter
+                    x.Serialize(objStreamWriter, CType(Me.ActiveMdiChild, FormUNIFACRegression).mycase)
+                    objStreamWriter.Close()
+                    Me.filename = Me.SaveUnifacIPRegrDlg.FileName
+                    Me.ActiveMdiChild.Text = Me.filename
+                End If
             End If
         Else
             MessageBox.Show(DWSIM.App.GetLocalString("Noexistemsimulaesati"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -4063,6 +4099,17 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
         NewMDIChild.Show()
         m_childcount += 1
     End Sub
+
+    Private Sub NovoRegressaoUNIFACIPs_Click(sender As Object, e As EventArgs) Handles NovoRegressaoUNIFACIPs.Click
+        Dim NewMDIChild As New FormUNIFACRegression()
+        'Set the Parent Form of the Child window.
+        NewMDIChild.MdiParent = Me
+        'Display the new form.
+        NewMDIChild.Text = "UNIFAC IP Regression" & m_childcount
+        Me.ActivateMdiChild(NewMDIChild)
+        NewMDIChild.Show()
+        m_childcount += 1
+    End Sub
     Private Sub DatabaseManagerToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles DatabaseManagerToolStripMenuItem.Click
         If My.Settings.UserDatabases.Count > 0 Then
             FormDBManager.DBPath = My.Settings.UserDatabases.Item(0)
@@ -4156,4 +4203,5 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
 
 #End Region
 
+    
 End Class

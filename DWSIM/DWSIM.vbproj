@@ -1208,6 +1208,12 @@
     <Compile Include="Utilities\Spreadsheet\FormPropSelection.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Utilities\UNIFAC_Regression\FormUNIFACRegression.designer.vb">
+      <DependentUpon>FormUNIFACRegression.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\UNIFAC_Regression\FormUNIFACRegression.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\AboutBoxMono.de.resx">
@@ -2046,6 +2052,15 @@
   <ItemGroup>
     <Content Include="dwsim_splash.ico" />
     <None Include="Resources\table_relationship.png" />
+    <EmbeddedResource Include="Utilities\UNIFAC_Regression\FormUNIFACRegression.de.resx">
+      <DependentUpon>FormUNIFACRegression.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Utilities\UNIFAC_Regression\FormUNIFACRegression.en.resx">
+      <DependentUpon>FormUNIFACRegression.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Utilities\UNIFAC_Regression\FormUNIFACRegression.resx">
+      <DependentUpon>FormUNIFACRegression.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="version.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>

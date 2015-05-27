@@ -32,6 +32,7 @@ Partial Class FormMain
         Me.NewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NovoEstudoDoCriadorDeComponentesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NovoEstudoDeRegressãoDeDadosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.NovoRegressaoUNIFACIPs = New System.Windows.Forms.ToolStripMenuItem()
         Me.OpenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.toolStripSeparator = New System.Windows.Forms.ToolStripSeparator()
@@ -97,6 +98,7 @@ Partial Class FormMain
         Me.sfdUpdater = New System.Windows.Forms.SaveFileDialog()
         Me.SaveStudyDlg = New System.Windows.Forms.SaveFileDialog()
         Me.SaveRegStudyDlg = New System.Windows.Forms.SaveFileDialog()
+        Me.SaveUnifacIPRegrDlg = New System.Windows.Forms.SaveFileDialog()
         Me.MenuStrip1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
@@ -113,7 +115,7 @@ Partial Class FormMain
         'FileToolStripMenuItem
         '
         resources.ApplyResources(Me.FileToolStripMenuItem, "FileToolStripMenuItem")
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripMenuItem, Me.NovoEstudoDoCriadorDeComponentesToolStripMenuItem, Me.NovoEstudoDeRegressãoDeDadosToolStripMenuItem, Me.OpenToolStripMenuItem, Me.ToolStripMenuItem1, Me.toolStripSeparator, Me.SaveToolStripMenuItem, Me.SaveAllToolStripMenuItem, Me.SaveAsToolStripMenuItem, Me.ToolStripSeparator2, Me.CloseAllToolstripMenuItem, Me.toolStripSeparator1, Me.ExitToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripMenuItem, Me.NovoEstudoDoCriadorDeComponentesToolStripMenuItem, Me.NovoEstudoDeRegressãoDeDadosToolStripMenuItem, Me.NovoRegressaoUNIFACIPs, Me.OpenToolStripMenuItem, Me.ToolStripMenuItem1, Me.toolStripSeparator, Me.SaveToolStripMenuItem, Me.SaveAllToolStripMenuItem, Me.SaveAsToolStripMenuItem, Me.ToolStripSeparator2, Me.CloseAllToolstripMenuItem, Me.toolStripSeparator1, Me.ExitToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Overflow = System.Windows.Forms.ToolStripItemOverflow.AsNeeded
         Me.StatusBarTextProvider1.SetStatusBarText(Me.FileToolStripMenuItem, resources.GetString("FileToolStripMenuItem.StatusBarText"))
@@ -128,16 +130,23 @@ Partial Class FormMain
         'NovoEstudoDoCriadorDeComponentesToolStripMenuItem
         '
         resources.ApplyResources(Me.NovoEstudoDoCriadorDeComponentesToolStripMenuItem, "NovoEstudoDoCriadorDeComponentesToolStripMenuItem")
-        Me.NovoEstudoDoCriadorDeComponentesToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.page_white
+        Me.NovoEstudoDoCriadorDeComponentesToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.wi0124_16
         Me.NovoEstudoDoCriadorDeComponentesToolStripMenuItem.Name = "NovoEstudoDoCriadorDeComponentesToolStripMenuItem"
         Me.StatusBarTextProvider1.SetStatusBarText(Me.NovoEstudoDoCriadorDeComponentesToolStripMenuItem, resources.GetString("NovoEstudoDoCriadorDeComponentesToolStripMenuItem.StatusBarText"))
         '
         'NovoEstudoDeRegressãoDeDadosToolStripMenuItem
         '
         resources.ApplyResources(Me.NovoEstudoDeRegressãoDeDadosToolStripMenuItem, "NovoEstudoDeRegressãoDeDadosToolStripMenuItem")
-        Me.NovoEstudoDeRegressãoDeDadosToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.page_white
+        Me.NovoEstudoDeRegressãoDeDadosToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.chart_line
         Me.NovoEstudoDeRegressãoDeDadosToolStripMenuItem.Name = "NovoEstudoDeRegressãoDeDadosToolStripMenuItem"
         Me.StatusBarTextProvider1.SetStatusBarText(Me.NovoEstudoDeRegressãoDeDadosToolStripMenuItem, resources.GetString("NovoEstudoDeRegressãoDeDadosToolStripMenuItem.StatusBarText"))
+        '
+        'NovoRegressaoUNIFACIPs
+        '
+        resources.ApplyResources(Me.NovoRegressaoUNIFACIPs, "NovoRegressaoUNIFACIPs")
+        Me.NovoRegressaoUNIFACIPs.Image = Global.DWSIM.My.Resources.Resources.chart_line1
+        Me.NovoRegressaoUNIFACIPs.Name = "NovoRegressaoUNIFACIPs"
+        Me.StatusBarTextProvider1.SetStatusBarText(Me.NovoRegressaoUNIFACIPs, resources.GetString("NovoRegressaoUNIFACIPs.StatusBarText"))
         '
         'OpenToolStripMenuItem
         '
@@ -492,7 +501,7 @@ Partial Class FormMain
         '
         Me.OpenFileDialog1.DefaultExt = "dwsim"
         resources.ApplyResources(Me.OpenFileDialog1, "OpenFileDialog1")
-        Me.OpenFileDialog1.FilterIndex = 6
+        Me.OpenFileDialog1.FilterIndex = 7
         Me.OpenFileDialog1.RestoreDirectory = True
         '
         'SaveFileDialog1
@@ -564,6 +573,10 @@ Partial Class FormMain
         'SaveRegStudyDlg
         '
         resources.ApplyResources(Me.SaveRegStudyDlg, "SaveRegStudyDlg")
+        '
+        'SaveUnifacIPRegrDlg
+        '
+        resources.ApplyResources(Me.SaveUnifacIPRegrDlg, "SaveUnifacIPRegrDlg")
         '
         'FormMain
         '
@@ -737,5 +750,7 @@ Partial Class FormMain
     Friend WithEvents SaveRegStudyDlg As System.Windows.Forms.SaveFileDialog
     Friend WithEvents DatabaseManagerToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents ToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents NovoRegressaoUNIFACIPs As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents SaveUnifacIPRegrDlg As System.Windows.Forms.SaveFileDialog
 
 End Class
