@@ -426,10 +426,14 @@ Namespace DWSIM.SimulationObjects.SpecialOps
                         'IGenericExpression<double> eGeneric = ExpressionFactory.CreateGeneric<double>("sqrt(a) + 1", context);
                         .Expr = .ExpContext.CompileGeneric(Of Double)(.Expression)
                         Dim val = .Expr.Evaluate
-                        If Me.MaxVal.GetValueOrDefault = 0 And Me.MinVal.GetValueOrDefault = 0 Then
+                        If Not Me.MaxVal.HasValue And Not Me.MinVal.HasValue Then
                             Me.SetTargetVarValue(val)
                         Else
-                            If val < Me.MaxVal.Value And val > Me.MinVal.Value Then
+                            If val < Me.MinVal.Value Then
+                                Me.SetTargetVarValue(Me.MinVal.Value)
+                            ElseIf val > Me.MaxVal.Value Then
+                                Me.SetTargetVarValue(Me.MaxVal.Value)
+                            Else
                                 Me.SetTargetVarValue(val)
                             End If
                             Exit Function
