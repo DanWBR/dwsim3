@@ -209,7 +209,13 @@ Namespace DWSIM.SimulationObjects.SpecialOps
 
             Try
                 Me.SourceObject = Me.FlowSheet.Collections.ObjectCollection(Me.SourceObjectData.m_ID)
+                If Not Me.SourceObject Is Nothing Then Me.SourceObject.IsSpecAttached = True
+            Catch ex As Exception
+
+            End Try
+            Try
                 Me.TargetObject = Me.FlowSheet.Collections.ObjectCollection(Me.TargetObjectData.m_ID)
+                If Not Me.TargetObject Is Nothing Then Me.TargetObject.IsSpecAttached = True
             Catch ex As Exception
 
             End Try
