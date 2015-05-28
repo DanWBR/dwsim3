@@ -103,7 +103,7 @@ Module ControlExtensions
         Dim i, ii As Integer
         Dim c, cc, r As Integer
 
-        tArr = Clipboard.GetText().Split(Environment.NewLine)
+        tArr = Clipboard.GetText().Split(New Char() {vbLf, vbCr, vbCrLf})
 
         If dgv.SelectedCells.Count > 0 Then
             r = dgv.SelectedCells(0).RowIndex

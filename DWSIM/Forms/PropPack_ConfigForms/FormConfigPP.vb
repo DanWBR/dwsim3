@@ -575,7 +575,9 @@ gt2:            If ppu.m_pr.InteractionParameters.ContainsKey(cp.Name) Then
 
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
 
-        For Each r As DataGridViewRow In Me.KryptonDataGridView2.SelectedRows
+        For Each r2 As DataGridViewCell In Me.KryptonDataGridView2.SelectedCells
+
+            Dim r = Me.KryptonDataGridView2.Rows(r2.RowIndex)
 
             Dim id1 As String = r.Cells(0).Tag.ToString
             Dim id2 As String = r.Cells(1).Tag.ToString
