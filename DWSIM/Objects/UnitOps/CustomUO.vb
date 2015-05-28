@@ -194,20 +194,20 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     For Each variable In InputVariables
                         lscript(variable.Key) = variable.Value
                     Next
-                    If Me.GraphicObject.InputConnectors(0).IsAttached Then lscript("ims1") = ims1
-                    If Me.GraphicObject.InputConnectors(1).IsAttached Then lscript("ims2") = ims2
-                    If Me.GraphicObject.InputConnectors(2).IsAttached Then lscript("ims3") = ims3
-                    If Me.GraphicObject.InputConnectors(2).IsAttached Then lscript("ims4") = ims4
-                    If Me.GraphicObject.InputConnectors(2).IsAttached Then lscript("ims5") = ims5
-                    If Me.GraphicObject.InputConnectors(2).IsAttached Then lscript("ims6") = ims6
-                    If Me.GraphicObject.OutputConnectors(0).IsAttached Then lscript("oms1") = oms1
-                    If Me.GraphicObject.OutputConnectors(1).IsAttached Then lscript("oms2") = oms2
-                    If Me.GraphicObject.OutputConnectors(2).IsAttached Then lscript("oms3") = oms3
-                    If Me.GraphicObject.OutputConnectors(2).IsAttached Then lscript("oms4") = oms4
-                    If Me.GraphicObject.OutputConnectors(2).IsAttached Then lscript("oms5") = oms5
-                    If Me.GraphicObject.OutputConnectors(2).IsAttached Then lscript("oms6") = oms6
-                    If Me.GraphicObject.InputConnectors(3).IsAttached Then lscript("ies1") = ies1
-                    If Me.GraphicObject.OutputConnectors(3).IsAttached Then lscript("oes1") = oes1
+                    lscript("ims1") = ims1
+                    lscript("ims2") = ims2
+                    lscript("ims3") = ims3
+                    lscript("ims4") = ims4
+                    lscript("ims5") = ims5
+                    lscript("ims6") = ims6
+                    lscript("oms1") = oms1
+                    lscript("oms2") = oms2
+                    lscript("oms3") = oms3
+                    lscript("oms4") = oms4
+                    lscript("oms5") = oms5
+                    lscript("oms6") = oms6
+                    lscript("ies1") = ies1
+                    lscript("oes1") = oes1
                     lscript("DWSIM") = GetType(DWSIM.ClassesBasicasTermodinamica.Fase).Assembly
                     Try
                         Dim txtcode As String = ""
@@ -245,20 +245,20 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     For Each variable In InputVariables
                         scope.SetVariable(variable.Key, variable.Value)
                     Next
-                    If Me.GraphicObject.InputConnectors(0).IsAttached Then scope.SetVariable("ims1", ims1)
-                    If Me.GraphicObject.InputConnectors(1).IsAttached Then scope.SetVariable("ims2", ims2)
-                    If Me.GraphicObject.InputConnectors(2).IsAttached Then scope.SetVariable("ims3", ims3)
-                    If Me.GraphicObject.InputConnectors(4).IsAttached Then scope.SetVariable("ims4", ims4)
-                    If Me.GraphicObject.InputConnectors(5).IsAttached Then scope.SetVariable("ims5", ims5)
-                    If Me.GraphicObject.InputConnectors(6).IsAttached Then scope.SetVariable("ims6", ims6)
-                    If Me.GraphicObject.OutputConnectors(0).IsAttached Then scope.SetVariable("oms1", oms1)
-                    If Me.GraphicObject.OutputConnectors(1).IsAttached Then scope.SetVariable("oms2", oms2)
-                    If Me.GraphicObject.OutputConnectors(2).IsAttached Then scope.SetVariable("oms3", oms3)
-                    If Me.GraphicObject.OutputConnectors(4).IsAttached Then scope.SetVariable("oms4", oms4)
-                    If Me.GraphicObject.OutputConnectors(5).IsAttached Then scope.SetVariable("oms5", oms5)
-                    If Me.GraphicObject.OutputConnectors(6).IsAttached Then scope.SetVariable("oms6", oms6)
-                    If Me.GraphicObject.InputConnectors(3).IsAttached Then scope.SetVariable("ies1", ies1)
-                    If Me.GraphicObject.OutputConnectors(3).IsAttached Then scope.SetVariable("oes1", oes1)
+                    scope.SetVariable("ims1", ims1)
+                    scope.SetVariable("ims2", ims2)
+                    scope.SetVariable("ims3", ims3)
+                    scope.SetVariable("ims4", ims4)
+                    scope.SetVariable("ims5", ims5)
+                    scope.SetVariable("ims6", ims6)
+                    scope.SetVariable("oms1", oms1)
+                    scope.SetVariable("oms2", oms2)
+                    scope.SetVariable("oms3", oms3)
+                    scope.SetVariable("oms4", oms4)
+                    scope.SetVariable("oms5", oms5)
+                    scope.SetVariable("oms6", oms6)
+                    scope.SetVariable("ies1", ies1)
+                    scope.SetVariable("oes1", oes1)
                     Dim Solver As New DWSIM.Flowsheet.FlowsheetSolver
                     scope.SetVariable("Solver", Solver)
                     Dim txtcode As String = ""
