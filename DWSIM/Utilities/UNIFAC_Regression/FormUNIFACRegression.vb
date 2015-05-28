@@ -36,20 +36,17 @@ Public Class FormUNIFACRegression
 
     Public cv As DWSIM.SistemasDeUnidades.Conversor
     Public ci As Globalization.CultureInfo = Globalization.CultureInfo.CurrentUICulture
-    Public _pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage
+    Public _pp As Object
     Public _comps As New Dictionary(Of String, DWSIM.ClassesBasicasTermodinamica.ConstantProperties)
     Public uni As Object = Nothing
 
     Dim mat As DWSIM.SimulationObjects.Streams.MaterialStream
-    Dim Frm As FormFlowsheet
     Dim GI1, GI2 As Integer
     Dim GN1, GN2, Comp1, Comp2 As String
 
     Private Sub FormUNIFACRegression_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         cv = New DWSIM.SistemasDeUnidades.Conversor
-        Frm = My.Application.ActiveSimulation
         mat = New MaterialStream("", "")
-        mat.SetFlowsheet(Frm)
         Comp1 = ""
         Comp2 = ""
     End Sub
@@ -64,13 +61,15 @@ Public Class FormUNIFACRegression
         Dim PrimaryGroups As New SortedList()
 
         Dim g1, g2 As Integer
-        Dim ip, pg, Type As String
+        Dim ip, pg, myType As String
+
+        myType = ""
 
         'create list of all subgroups and primary groups
         PrimaryGroups.Clear()
         Select Case cbModel.SelectedItem
             Case "UNIFAC"
-                Type = "UNIFAC"
+                myType = "UNIFAC"
                 For Each cp As ConstantProperties In _comps.Values
                     For Each ufg In cp.UNIFACGroups.Collection.Keys
                         pg = uni.UnifGroups.Groups(Integer.Parse(ufg)).PrimGroupName
@@ -78,7 +77,7 @@ Public Class FormUNIFACRegression
                     Next
                 Next
             Case "MODFAC (Dortmund)"
-                Type = "MODFAC"
+                myType = "MODFAC"
                 For Each cp As ConstantProperties In _comps.Values
                     For Each ufg In cp.MODFACGroups.Collection.Keys
                         pg = uni.ModfGroups.Groups(Integer.Parse(ufg)).MainGroupName
@@ -86,7 +85,7 @@ Public Class FormUNIFACRegression
                     Next
                 Next
             Case "MODFAC (NIST)"
-                Type = "MODFAC-NIST"
+                myType = "MODFAC-NIST"
                 For Each cp As ConstantProperties In _comps.Values
                     For Each ufg In cp.NISTMODFACGroups.Collection.Keys
                         pg = uni.ModfGroups.Groups(Integer.Parse(ufg)).MainGroupName
@@ -133,7 +132,7 @@ Public Class FormUNIFACRegression
                 If g1 = g2 Then
                     IPGrid.Item(PrimaryGroups.IndexOfKey(s1) + 1, PrimaryGroups.IndexOfKey(s2) + 1 + _comps.Count).Style.BackColor = Color.Black
                 Else
-                    If Type = "UNIFAC" Then
+                    If myType = "UNIFAC" Then
                         If uni.UnifGroups.InteracParam.ContainsKey(g1) Then
                             If uni.UnifGroups.InteracParam(g1).ContainsKey(g2) Then
                                 ip = uni.UnifGroups.InteracParam(g1).Item(g2)
@@ -176,7 +175,7 @@ Public Class FormUNIFACRegression
             IPGrid.Item(0, k).Style.BackColor = Color.CadetBlue
             IPGrid.Item(0, k).Style.ForeColor = Color.White
             IPGrid.Item(0, k).Style.Alignment = DataGridViewContentAlignment.MiddleRight
-            If Type = "UNIFAC" Then
+            If myType = "UNIFAC" Then
                 If cp.UNIFACGroups.Collection.Count > 0 Then
                     For Each ufg As String In cp.UNIFACGroups.Collection.Keys
                         l = Integer.Parse(ufg)
@@ -188,7 +187,7 @@ Public Class FormUNIFACRegression
                     IPGrid.Item(0, k).Style.BackColor = Color.Yellow
                     IPGrid.Item(0, k).Style.ForeColor = Color.Black
                 End If
-            ElseIf Type = "MODFAC" Then
+            ElseIf myType = "MODFAC" Then
                 If cp.MODFACGroups.Collection.Count > 0 Then
                     For Each ufg As String In cp.MODFACGroups.Collection.Keys
                         l = Integer.Parse(ufg)
@@ -421,7 +420,22 @@ Public Class FormUNIFACRegression
         End If
     End Sub
     Private Function CalcError(ByVal IP(,) As Double, ByVal T As Double, ByVal x1 As Double, ByRef x2 As Double) As Object
-        Dim PP As New DWSIM.SimulationObjects.PropertyPackages.NISTMFACPropertyPackage
+
+        If mat Is Nothing Then mat = New MaterialStream("", "")
+
+        If _pp Is Nothing Then
+
+            'Initialize Property Package (needs to change how to do this when it start working with other PPs than NIST)
+
+            Dim ppm As New CAPEOPENPropertyPackageManager()
+
+            _pp = ppm.GetPropertyPackage("Modified UNIFAC (NIST)")
+
+            ppm.Dispose()
+            ppm = Nothing
+
+        End If
+
         Dim P, L1, L2, V, Err As Double
 
         P = 101314
@@ -429,12 +443,12 @@ Public Class FormUNIFACRegression
         VZ(0) = 0.48
         VZ(1) = 0.52
 
-        PP.m_uni.ModfGroups.InteracParam_aij(GI1)(GI2) = IP(0, 0)
-        PP.m_uni.ModfGroups.InteracParam_aij(GI2)(GI1) = IP(1, 0)
-        PP.m_uni.ModfGroups.InteracParam_bij(GI1)(GI2) = IP(0, 1)
-        PP.m_uni.ModfGroups.InteracParam_bij(GI2)(GI1) = IP(1, 1)
-        PP.m_uni.ModfGroups.InteracParam_cij(GI1)(GI2) = IP(0, 2)
-        PP.m_uni.ModfGroups.InteracParam_cij(GI2)(GI1) = IP(1, 2)
+        _pp.m_uni.ModfGroups.InteracParam_aij(GI1)(GI2) = IP(0, 0)
+        _pp.m_uni.ModfGroups.InteracParam_aij(GI2)(GI1) = IP(1, 0)
+        _pp.m_uni.ModfGroups.InteracParam_bij(GI1)(GI2) = IP(0, 1)
+        _pp.m_uni.ModfGroups.InteracParam_bij(GI2)(GI1) = IP(1, 1)
+        _pp.m_uni.ModfGroups.InteracParam_cij(GI1)(GI2) = IP(0, 2)
+        _pp.m_uni.ModfGroups.InteracParam_cij(GI2)(GI1) = IP(1, 2)
 
         mat.Fases(0).SPMProperties.pressure = P
         mat.Fases(0).SPMProperties.temperature = T
@@ -448,12 +462,12 @@ Public Class FormUNIFACRegression
             phase.Componentes.Add(Comp2, New DWSIM.ClassesBasicasTermodinamica.Substancia(Comp2, ""))
             phase.Componentes(Comp2).ConstantProperties = _comps.Values(1)
         Next
-        PP.CurrentMaterialStream = mat
+        _pp.CurrentMaterialStream = mat
 
 
         mat.Fases(0).SPMProperties.temperature = T
         Dim slle As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms.SimpleLLE()
-        Dim resultL As Object = slle.Flash_PT(VZ, P, T, PP)
+        Dim resultL As Object = slle.Flash_PT(VZ, P, T, _pp)
         L1 = resultL(0)
         L2 = resultL(5)
         V = resultL(1)

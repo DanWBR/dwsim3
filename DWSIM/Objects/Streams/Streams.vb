@@ -235,7 +235,7 @@ Namespace DWSIM.SimulationObjects.Streams
             Me.Fases.Add("6", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Aqueous"), ""))
             Me.Fases.Add("7", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Solid"), ""))
 
-            If Not My.Application.CAPEOPENMode Then
+            If Not My.Application.CAPEOPENMode And Not Me.FlowSheet Is Nothing Then
                 'Me.PropertyPackage = FlowSheet.Options.PropertyPackages(0)
                 Me.FillNodeItems()
                 Me.QTFillNodeItems()
