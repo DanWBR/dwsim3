@@ -4207,8 +4207,9 @@ Namespace GraphicObjects
                     .EndCap = Drawing2D.LineCap.ArrowAnchor
                     .StartCap = Drawing2D.LineCap.Flat
                 End With
-                g.DrawLines(cpen, New Point() {New Point(Me.X + Me.Width / 2, Me.Y), New Point(Me.X + Me.Width / 2, Me.m_svPT.Y), Me.m_svPT.GetPosition})
+                g.DrawLines(cpen, New Point() {New Point(Me.X + Me.Width, Me.Y + Me.Height / 2), New Point(Me.m_svPT.X + Me.m_svPT.Width / 2, Me.Y + Me.Height / 2), New Point(Me.m_svPT.X + Me.m_svPT.Width / 2, Me.m_svPT.Y + Me.m_svPT.Height / 2)})
             End If
+
             If Not Me.ConnectedToTv Is Nothing Then
                 Dim cpen As New Pen(Color.Red, 2)
                 With cpen
@@ -4217,7 +4218,7 @@ Namespace GraphicObjects
                     .EndCap = Drawing2D.LineCap.ArrowAnchor
                     .StartCap = Drawing2D.LineCap.DiamondAnchor
                 End With
-                g.DrawLines(cpen, New Point() {New Point(Me.X + Me.Width / 2, Me.Y + Me.Height), New Point(Me.X + Me.Width / 2, Me.m_tvPT.Y), Me.m_tvPT.GetPosition})
+                g.DrawLines(cpen, New Point() {New Point(Me.X + Me.Width, Me.Y + Me.Height / 2), New Point(Me.m_tvPT.X + Me.m_tvPT.Width / 2, Me.Y + Me.Height / 2), New Point(Me.m_tvPT.X + Me.m_tvPT.Width / 2, Me.m_tvPT.Y + Me.m_tvPT.Height / 2)})
             End If
 
             Dim rect2 As New Rectangle(X - Width * 1 / 2, Y - Height * 1 / 2, Width * 2, Height * 2)
