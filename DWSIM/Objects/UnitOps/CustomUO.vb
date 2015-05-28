@@ -108,7 +108,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Public Overrides Function Calculate(Optional ByVal args As Object = Nothing) As Integer
 
-            Dim ims1, ims2, ims3, oms1, oms2, oms3 As SimulationObjects.Streams.MaterialStream
+            Dim ims1, ims2, ims3, ims4, ims5, ims6, oms1, oms2, oms3, oms4, oms5, oms6 As SimulationObjects.Streams.MaterialStream
             If Me.GraphicObject.InputConnectors(0).IsAttached Then
                 ims1 = FlowSheet.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name)
             Else
@@ -124,6 +124,21 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Else
                 ims3 = Nothing
             End If
+            If Me.GraphicObject.InputConnectors(4).IsAttached Then
+                ims4 = FlowSheet.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(4).AttachedConnector.AttachedFrom.Name)
+            Else
+                ims4 = Nothing
+            End If
+            If Me.GraphicObject.InputConnectors(5).IsAttached Then
+                ims5 = FlowSheet.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(5).AttachedConnector.AttachedFrom.Name)
+            Else
+                ims5 = Nothing
+            End If
+            If Me.GraphicObject.InputConnectors(6).IsAttached Then
+                ims6 = FlowSheet.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(6).AttachedConnector.AttachedFrom.Name)
+            Else
+                ims6 = Nothing
+            End If
             If Me.GraphicObject.OutputConnectors(0).IsAttached Then
                 oms1 = FlowSheet.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name)
             Else
@@ -138,6 +153,21 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 oms3 = FlowSheet.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.OutputConnectors(2).AttachedConnector.AttachedTo.Name)
             Else
                 oms3 = Nothing
+            End If
+            If Me.GraphicObject.OutputConnectors(4).IsAttached Then
+                oms4 = FlowSheet.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.OutputConnectors(4).AttachedConnector.AttachedTo.Name)
+            Else
+                oms4 = Nothing
+            End If
+            If Me.GraphicObject.OutputConnectors(5).IsAttached Then
+                oms5 = FlowSheet.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.OutputConnectors(5).AttachedConnector.AttachedTo.Name)
+            Else
+                oms5 = Nothing
+            End If
+            If Me.GraphicObject.OutputConnectors(6).IsAttached Then
+                oms6 = FlowSheet.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.OutputConnectors(6).AttachedConnector.AttachedTo.Name)
+            Else
+                oms6 = Nothing
             End If
 
             Dim ies1, oes1 As SimulationObjects.Streams.EnergyStream
@@ -167,9 +197,15 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     If Me.GraphicObject.InputConnectors(0).IsAttached Then lscript("ims1") = ims1
                     If Me.GraphicObject.InputConnectors(1).IsAttached Then lscript("ims2") = ims2
                     If Me.GraphicObject.InputConnectors(2).IsAttached Then lscript("ims3") = ims3
+                    If Me.GraphicObject.InputConnectors(2).IsAttached Then lscript("ims4") = ims4
+                    If Me.GraphicObject.InputConnectors(2).IsAttached Then lscript("ims5") = ims5
+                    If Me.GraphicObject.InputConnectors(2).IsAttached Then lscript("ims6") = ims6
                     If Me.GraphicObject.OutputConnectors(0).IsAttached Then lscript("oms1") = oms1
                     If Me.GraphicObject.OutputConnectors(1).IsAttached Then lscript("oms2") = oms2
                     If Me.GraphicObject.OutputConnectors(2).IsAttached Then lscript("oms3") = oms3
+                    If Me.GraphicObject.OutputConnectors(2).IsAttached Then lscript("oms4") = oms4
+                    If Me.GraphicObject.OutputConnectors(2).IsAttached Then lscript("oms5") = oms5
+                    If Me.GraphicObject.OutputConnectors(2).IsAttached Then lscript("oms6") = oms6
                     If Me.GraphicObject.InputConnectors(3).IsAttached Then lscript("ies1") = ies1
                     If Me.GraphicObject.OutputConnectors(3).IsAttached Then lscript("oes1") = oes1
                     lscript("DWSIM") = GetType(DWSIM.ClassesBasicasTermodinamica.Fase).Assembly
@@ -212,9 +248,15 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     If Me.GraphicObject.InputConnectors(0).IsAttached Then scope.SetVariable("ims1", ims1)
                     If Me.GraphicObject.InputConnectors(1).IsAttached Then scope.SetVariable("ims2", ims2)
                     If Me.GraphicObject.InputConnectors(2).IsAttached Then scope.SetVariable("ims3", ims3)
+                    If Me.GraphicObject.InputConnectors(2).IsAttached Then scope.SetVariable("ims4", ims4)
+                    If Me.GraphicObject.InputConnectors(2).IsAttached Then scope.SetVariable("ims5", ims5)
+                    If Me.GraphicObject.InputConnectors(2).IsAttached Then scope.SetVariable("ims6", ims6)
                     If Me.GraphicObject.OutputConnectors(0).IsAttached Then scope.SetVariable("oms1", oms1)
                     If Me.GraphicObject.OutputConnectors(1).IsAttached Then scope.SetVariable("oms2", oms2)
                     If Me.GraphicObject.OutputConnectors(2).IsAttached Then scope.SetVariable("oms3", oms3)
+                    If Me.GraphicObject.OutputConnectors(2).IsAttached Then scope.SetVariable("oms4", oms4)
+                    If Me.GraphicObject.OutputConnectors(2).IsAttached Then scope.SetVariable("oms5", oms5)
+                    If Me.GraphicObject.OutputConnectors(2).IsAttached Then scope.SetVariable("oms6", oms6)
                     If Me.GraphicObject.InputConnectors(3).IsAttached Then scope.SetVariable("ies1", ies1)
                     If Me.GraphicObject.OutputConnectors(3).IsAttached Then scope.SetVariable("oes1", oes1)
                     Dim Solver As New DWSIM.Flowsheet.FlowsheetSolver
@@ -299,7 +341,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 MyBase.PopulatePropertyGrid(pgrid, su)
 
-                Dim ent1, ent2, ent3, ent4 As String
+                Dim ent1, ent2, ent3, ent4, ent5, ent6, ent7 As String
 
                 If Me.GraphicObject.InputConnectors(0).IsAttached = True Then
                     ent1 = Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Tag
@@ -321,8 +363,23 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Else
                     ent4 = ""
                 End If
+                If Me.GraphicObject.InputConnectors(4).IsAttached = True Then
+                    ent5 = Me.GraphicObject.InputConnectors(4).AttachedConnector.AttachedFrom.Tag
+                Else
+                    ent5 = ""
+                End If
+                If Me.GraphicObject.InputConnectors(5).IsAttached = True Then
+                    ent6 = Me.GraphicObject.InputConnectors(5).AttachedConnector.AttachedFrom.Tag
+                Else
+                    ent6 = ""
+                End If
+                If Me.GraphicObject.InputConnectors(6).IsAttached = True Then
+                    ent7 = Me.GraphicObject.InputConnectors(6).AttachedConnector.AttachedFrom.Tag
+                Else
+                    ent7 = ""
+                End If
 
-                Dim saida1, saida2, saida3, saida4 As String
+                Dim saida1, saida2, saida3, saida4, saida5, saida6, saida7 As String
 
                 If Me.GraphicObject.OutputConnectors(0).IsAttached = True Then
                     saida1 = Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Tag
@@ -344,6 +401,21 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Else
                     saida4 = ""
                 End If
+                If Me.GraphicObject.OutputConnectors(4).IsAttached = True Then
+                    saida5 = Me.GraphicObject.OutputConnectors(4).AttachedConnector.AttachedTo.Tag
+                Else
+                    saida5 = ""
+                End If
+                If Me.GraphicObject.OutputConnectors(5).IsAttached = True Then
+                    saida6 = Me.GraphicObject.OutputConnectors(5).AttachedConnector.AttachedTo.Tag
+                Else
+                    saida6 = ""
+                End If
+                If Me.GraphicObject.OutputConnectors(6).IsAttached = True Then
+                    saida7 = Me.GraphicObject.OutputConnectors(6).AttachedConnector.AttachedTo.Tag
+                Else
+                    saida7 = ""
+                End If
 
                 .Item.Add(DWSIM.App.GetLocalString("Correntedeentrada1"), ent1, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
                 With .Item(.Item.Count - 1)
@@ -356,6 +428,21 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     .CustomEditor = New DWSIM.Editors.Streams.UIInputMSSelector
                 End With
                 .Item.Add(DWSIM.App.GetLocalString("Correntedeentrada3"), ent3, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
+                With .Item(.Item.Count - 1)
+                    .DefaultValue = Nothing
+                    .CustomEditor = New DWSIM.Editors.Streams.UIInputMSSelector
+                End With
+                .Item.Add(DWSIM.App.GetLocalString("Correntedeentrada4"), ent5, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
+                With .Item(.Item.Count - 1)
+                    .DefaultValue = Nothing
+                    .CustomEditor = New DWSIM.Editors.Streams.UIInputMSSelector
+                End With
+                .Item.Add(DWSIM.App.GetLocalString("Correntedeentrada5"), ent6, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
+                With .Item(.Item.Count - 1)
+                    .DefaultValue = Nothing
+                    .CustomEditor = New DWSIM.Editors.Streams.UIInputMSSelector
+                End With
+                .Item.Add(DWSIM.App.GetLocalString("Correntedeentrada6"), ent7, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
                 With .Item(.Item.Count - 1)
                     .DefaultValue = Nothing
                     .CustomEditor = New DWSIM.Editors.Streams.UIInputMSSelector
@@ -377,6 +464,21 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     .CustomEditor = New DWSIM.Editors.Streams.UIOutputMSSelector
                 End With
                 .Item.Add(DWSIM.App.GetLocalString("Correntedesaida3"), saida3, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
+                With .Item(.Item.Count - 1)
+                    .DefaultValue = Nothing
+                    .CustomEditor = New DWSIM.Editors.Streams.UIOutputMSSelector
+                End With
+                .Item.Add(DWSIM.App.GetLocalString("Correntedesaida4"), saida5, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
+                With .Item(.Item.Count - 1)
+                    .DefaultValue = Nothing
+                    .CustomEditor = New DWSIM.Editors.Streams.UIOutputMSSelector
+                End With
+                .Item.Add(DWSIM.App.GetLocalString("Correntedesaida5"), saida6, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
+                With .Item(.Item.Count - 1)
+                    .DefaultValue = Nothing
+                    .CustomEditor = New DWSIM.Editors.Streams.UIOutputMSSelector
+                End With
+                .Item.Add(DWSIM.App.GetLocalString("Correntedesaida6"), saida7, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
                 With .Item(.Item.Count - 1)
                     .DefaultValue = Nothing
                     .CustomEditor = New DWSIM.Editors.Streams.UIOutputMSSelector
@@ -568,9 +670,23 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 .Add(New UnitPort("Inlet_Port_1", "Material Object Inlet Port 1", CapePortDirection.CAPE_INLET, CapePortType.CAPE_MATERIAL))
                 .Add(New UnitPort("Inlet_Port_2", "Material Object Inlet Port 2", CapePortDirection.CAPE_INLET, CapePortType.CAPE_MATERIAL))
                 .Add(New UnitPort("Inlet_Port_3", "Material Object Inlet Port 3", CapePortDirection.CAPE_INLET, CapePortType.CAPE_MATERIAL))
+                .Add(New UnitPort("Inlet_Port_4", "Material Object Inlet Port 4", CapePortDirection.CAPE_INLET, CapePortType.CAPE_MATERIAL))
+                .Add(New UnitPort("Inlet_Port_5", "Material Object Inlet Port 5", CapePortDirection.CAPE_INLET, CapePortType.CAPE_MATERIAL))
+                .Add(New UnitPort("Inlet_Port_6", "Material Object Inlet Port 6", CapePortDirection.CAPE_INLET, CapePortType.CAPE_MATERIAL))
+                .Add(New UnitPort("Inlet_Port_7", "Material Object Inlet Port 7", CapePortDirection.CAPE_INLET, CapePortType.CAPE_MATERIAL))
+                .Add(New UnitPort("Inlet_Port_8", "Material Object Inlet Port 8", CapePortDirection.CAPE_INLET, CapePortType.CAPE_MATERIAL))
+                .Add(New UnitPort("Inlet_Port_9", "Material Object Inlet Port 9", CapePortDirection.CAPE_INLET, CapePortType.CAPE_MATERIAL))
+                .Add(New UnitPort("Inlet_Port_10", "Material Object Inlet Port 10", CapePortDirection.CAPE_INLET, CapePortType.CAPE_MATERIAL))
                 .Add(New UnitPort("Outlet_Port_1", "Material Object Outlet Port 1", CapePortDirection.CAPE_OUTLET, CapePortType.CAPE_MATERIAL))
                 .Add(New UnitPort("Outlet_Port_2", "Material Object Outlet Port 2", CapePortDirection.CAPE_OUTLET, CapePortType.CAPE_MATERIAL))
                 .Add(New UnitPort("Outlet_Port_3", "Material Object Outlet Port 3", CapePortDirection.CAPE_OUTLET, CapePortType.CAPE_MATERIAL))
+                .Add(New UnitPort("Outlet_Port_4", "Material Object Outlet Port 4", CapePortDirection.CAPE_OUTLET, CapePortType.CAPE_MATERIAL))
+                .Add(New UnitPort("Outlet_Port_5", "Material Object Outlet Port 5", CapePortDirection.CAPE_OUTLET, CapePortType.CAPE_MATERIAL))
+                .Add(New UnitPort("Outlet_Port_6", "Material Object Outlet Port 6", CapePortDirection.CAPE_OUTLET, CapePortType.CAPE_MATERIAL))
+                .Add(New UnitPort("Outlet_Port_7", "Material Object Outlet Port 7", CapePortDirection.CAPE_OUTLET, CapePortType.CAPE_MATERIAL))
+                .Add(New UnitPort("Outlet_Port_8", "Material Object Outlet Port 8", CapePortDirection.CAPE_OUTLET, CapePortType.CAPE_MATERIAL))
+                .Add(New UnitPort("Outlet_Port_9", "Material Object Outlet Port 9", CapePortDirection.CAPE_OUTLET, CapePortType.CAPE_MATERIAL))
+                .Add(New UnitPort("Outlet_Port_10", "Material Object Outlet Port 10", CapePortDirection.CAPE_OUTLET, CapePortType.CAPE_MATERIAL))
                 .Add(New UnitPort("Energy_Inlet_Port_1", "Energy Stream Inlet Port", CapePortDirection.CAPE_INLET, CapePortType.CAPE_ENERGY))
                 .Add(New UnitPort("Energy_Outlet_Port_1", "Energy Stream Outlet Port", CapePortDirection.CAPE_OUTLET, CapePortType.CAPE_ENERGY))
             End With
@@ -613,19 +729,34 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Public Overrides Sub Calculate1()
 
-            Dim ims1, ims2, ims3, oms1, oms2, oms3 As ICapeThermoMaterialObject
+            Dim ims1, ims2, ims3, ims4, ims5, ims6, ims7, ims8, ims9, ims10,
+                oms1, oms2, oms3, oms4, oms5, oms6, oms7, oms8, oms9, oms10 As ICapeThermoMaterialObject
 
             ims1 = TryCast(Me._ports(0).connectedObject, ICapeThermoMaterialObject)
             ims2 = TryCast(Me._ports(1).connectedObject, ICapeThermoMaterialObject)
             ims3 = TryCast(Me._ports(2).connectedObject, ICapeThermoMaterialObject)
-            oms1 = TryCast(Me._ports(3).connectedObject, ICapeThermoMaterialObject)
-            oms2 = TryCast(Me._ports(4).connectedObject, ICapeThermoMaterialObject)
-            oms3 = TryCast(Me._ports(5).connectedObject, ICapeThermoMaterialObject)
+            ims4 = TryCast(Me._ports(3).connectedObject, ICapeThermoMaterialObject)
+            ims5 = TryCast(Me._ports(4).connectedObject, ICapeThermoMaterialObject)
+            ims6 = TryCast(Me._ports(5).connectedObject, ICapeThermoMaterialObject)
+            ims7 = TryCast(Me._ports(6).connectedObject, ICapeThermoMaterialObject)
+            ims8 = TryCast(Me._ports(7).connectedObject, ICapeThermoMaterialObject)
+            ims9 = TryCast(Me._ports(8).connectedObject, ICapeThermoMaterialObject)
+            ims10 = TryCast(Me._ports(9).connectedObject, ICapeThermoMaterialObject)
+            oms1 = TryCast(Me._ports(10).connectedObject, ICapeThermoMaterialObject)
+            oms2 = TryCast(Me._ports(11).connectedObject, ICapeThermoMaterialObject)
+            oms3 = TryCast(Me._ports(12).connectedObject, ICapeThermoMaterialObject)
+            oms4 = TryCast(Me._ports(13).connectedObject, ICapeThermoMaterialObject)
+            oms5 = TryCast(Me._ports(14).connectedObject, ICapeThermoMaterialObject)
+            oms6 = TryCast(Me._ports(15).connectedObject, ICapeThermoMaterialObject)
+            oms7 = TryCast(Me._ports(16).connectedObject, ICapeThermoMaterialObject)
+            oms8 = TryCast(Me._ports(17).connectedObject, ICapeThermoMaterialObject)
+            oms9 = TryCast(Me._ports(18).connectedObject, ICapeThermoMaterialObject)
+            oms10 = TryCast(Me._ports(19).connectedObject, ICapeThermoMaterialObject)
 
             Dim ies1, oes1 As ICapeCollection
 
-            ies1 = TryCast(Me._ports(6).connectedObject, ICapeCollection)
-            oes1 = TryCast(Me._ports(7).connectedObject, ICapeCollection)
+            ies1 = TryCast(Me._ports(20).connectedObject, ICapeCollection)
+            oes1 = TryCast(Me._ports(21).connectedObject, ICapeCollection)
 
             Select Case Language
                 Case 4
@@ -637,9 +768,23 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         lscript("ims1") = ims1
                         lscript("ims2") = ims2
                         lscript("ims3") = ims3
+                        lscript("ims4") = ims4
+                        lscript("ims5") = ims5
+                        lscript("ims6") = ims6
+                        lscript("ims7") = ims7
+                        lscript("ims8") = ims8
+                        lscript("ims9") = ims9
+                        lscript("ims10") = ims10
                         lscript("oms1") = oms1
                         lscript("oms2") = oms2
                         lscript("oms3") = oms3
+                        lscript("oms4") = oms4
+                        lscript("oms5") = oms5
+                        lscript("oms6") = oms6
+                        lscript("oms7") = oms7
+                        lscript("oms8") = oms8
+                        lscript("oms9") = oms9
+                        lscript("oms10") = oms10
                         lscript("ies1") = ies1
                         lscript("oes1") = oes1
                         Dim txtcode As String = ""
@@ -674,9 +819,23 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         scope.SetVariable("ims1", ims1)
                         scope.SetVariable("ims2", ims2)
                         scope.SetVariable("ims3", ims3)
+                        scope.SetVariable("ims4", ims4)
+                        scope.SetVariable("ims5", ims5)
+                        scope.SetVariable("ims6", ims6)
+                        scope.SetVariable("ims7", ims7)
+                        scope.SetVariable("ims8", ims8)
+                        scope.SetVariable("ims9", ims9)
+                        scope.SetVariable("ims10", ims10)
                         scope.SetVariable("oms1", oms1)
                         scope.SetVariable("oms2", oms2)
                         scope.SetVariable("oms3", oms3)
+                        scope.SetVariable("oms4", oms4)
+                        scope.SetVariable("oms5", oms5)
+                        scope.SetVariable("oms6", oms6)
+                        scope.SetVariable("oms7", oms7)
+                        scope.SetVariable("oms8", oms8)
+                        scope.SetVariable("oms9", oms9)
+                        scope.SetVariable("oms10", oms10)
                         scope.SetVariable("ies1", ies1)
                         scope.SetVariable("oes1", oes1)
                         Dim txtcode As String = ""
@@ -828,7 +987,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             key.SetValue("ComponentVersion", My.Application.Info.Version.ToString)
             key.SetValue("VendorURL", "http://dwsim.inforside.com.br")
             key.SetValue("HelpURL", "http://dwsim.inforside.com.br")
-            key.SetValue("About", "DWSIM is open-source software, released under the GPL v3 license. (c) 2011-2014 Daniel Medeiros.")
+            key.SetValue("About", "DWSIM is open-source software, released under the GPL v3 license. (c) 2011-2015 Daniel Medeiros.")
             key.Close()
 
         End Sub

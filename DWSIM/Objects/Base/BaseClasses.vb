@@ -180,8 +180,7 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
                         End If
                     End If
                 End If
-                '========================
-            ElseIf sobj.TipoObjeto = TipoObjeto.ExcelUO Then
+           ElseIf sobj.TipoObjeto = TipoObjeto.ExcelUO Then
                 If e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedeentrada1")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
@@ -1672,6 +1671,63 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
                             ChildParent.DisconnectObject(sobj.InputConnectors(2).AttachedConnector.AttachedFrom, sobj)
                         End If
                     End If
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedeentrada4")) Then
+                    If e.ChangedItem.Value <> "" Then
+                        If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
+                            Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X - 40, sobj.Y + 30, e.ChangedItem.Value)
+                        ElseIf CType(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), GraphicObject).OutputConnectors(0).IsAttached Then
+                            MessageBox.Show(DWSIM.App.GetLocalString("Todasasconexespossve"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            Exit Sub
+                        End If
+                        If Not sobj.InputConnectors(4).IsAttached Then
+                            ChildParent.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), sobj, 0, 3)
+                        Else
+                            ChildParent.DisconnectObject(sobj.InputConnectors(4).AttachedConnector.AttachedFrom, sobj)
+                            ChildParent.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), sobj, 0, 3)
+                        End If
+                    Else
+                        If e.OldValue.ToString <> "" Then
+                            ChildParent.DisconnectObject(sobj.InputConnectors(4).AttachedConnector.AttachedFrom, sobj)
+                        End If
+                    End If
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedeentrada5")) Then
+                    If e.ChangedItem.Value <> "" Then
+                        If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
+                            Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X - 40, sobj.Y + 40, e.ChangedItem.Value)
+                        ElseIf CType(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), GraphicObject).OutputConnectors(0).IsAttached Then
+                            MessageBox.Show(DWSIM.App.GetLocalString("Todasasconexespossve"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            Exit Sub
+                        End If
+                        If Not sobj.InputConnectors(5).IsAttached Then
+                            ChildParent.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), sobj, 0, 4)
+                        Else
+                            ChildParent.DisconnectObject(sobj.InputConnectors(5).AttachedConnector.AttachedFrom, sobj)
+                            ChildParent.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), sobj, 0, 4)
+                        End If
+                    Else
+                        If e.OldValue.ToString <> "" Then
+                            ChildParent.DisconnectObject(sobj.InputConnectors(5).AttachedConnector.AttachedFrom, sobj)
+                        End If
+                    End If
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedeentrada6")) Then
+                    If e.ChangedItem.Value <> "" Then
+                        If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
+                            Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X - 40, sobj.Y + 50, e.ChangedItem.Value)
+                        ElseIf CType(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), GraphicObject).OutputConnectors(0).IsAttached Then
+                            MessageBox.Show(DWSIM.App.GetLocalString("Todasasconexespossve"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            Exit Sub
+                        End If
+                        If Not sobj.InputConnectors(6).IsAttached Then
+                            ChildParent.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), sobj, 0, 5)
+                        Else
+                            ChildParent.DisconnectObject(sobj.InputConnectors(6).AttachedConnector.AttachedFrom, sobj)
+                            ChildParent.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), sobj, 0, 5)
+                        End If
+                    Else
+                        If e.OldValue.ToString <> "" Then
+                            ChildParent.DisconnectObject(sobj.InputConnectors(6).AttachedConnector.AttachedFrom, sobj)
+                        End If
+                    End If
                 ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("CorrentedeenergiaE")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
@@ -1692,60 +1748,117 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
                         End If
                     End If
                 ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedesaida1")) Then
-                    If e.ChangedItem.Value <> "" Then
-                        If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
-                            Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X + sobj.Width + 40, sobj.Y + 20, e.ChangedItem.Value)
-                        ElseIf CType(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), GraphicObject).InputConnectors(0).IsAttached Then
-                            MessageBox.Show(DWSIM.App.GetLocalString("Todasasconexespossve"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-                            Exit Sub
-                        End If
-                        If Not sobj.OutputConnectors(0).IsAttached Then
-                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 0, 0)
+                        If e.ChangedItem.Value <> "" Then
+                            If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
+                                Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X + sobj.Width + 40, sobj.Y + 20, e.ChangedItem.Value)
+                            ElseIf CType(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), GraphicObject).InputConnectors(0).IsAttached Then
+                                MessageBox.Show(DWSIM.App.GetLocalString("Todasasconexespossve"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                Exit Sub
+                            End If
+                            If Not sobj.OutputConnectors(0).IsAttached Then
+                                ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 0, 0)
+                            Else
+                                ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(0).AttachedConnector.AttachedTo)
+                                ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 0, 0)
+                            End If
                         Else
-                            ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(0).AttachedConnector.AttachedTo)
-                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 0, 0)
+                            If e.OldValue.ToString <> "" Then
+                                ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(0).AttachedConnector.AttachedTo)
+                            End If
                         End If
-                    Else
-                        If e.OldValue.ToString <> "" Then
-                            ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(0).AttachedConnector.AttachedTo)
-                        End If
-                    End If
                 ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedesaida2")) Then
+                        If e.ChangedItem.Value <> "" Then
+                            If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
+                                Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X + sobj.Width + 40, sobj.Y, e.ChangedItem.Value)
+                            ElseIf CType(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), GraphicObject).InputConnectors(0).IsAttached Then
+                                MessageBox.Show(DWSIM.App.GetLocalString("Todasasconexespossve"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                Exit Sub
+                            End If
+                            If Not sobj.OutputConnectors(1).IsAttached Then
+                                ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 1, 0)
+                            Else
+                                ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(1).AttachedConnector.AttachedTo)
+                                ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 1, 0)
+                            End If
+                        Else
+                            If e.OldValue.ToString <> "" Then
+                                ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(1).AttachedConnector.AttachedTo)
+                            End If
+                        End If
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedesaida3")) Then
+                        If e.ChangedItem.Value <> "" Then
+                            If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
+                                Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X + sobj.Width + 40, sobj.Y - 20, e.ChangedItem.Value)
+                            ElseIf CType(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), GraphicObject).InputConnectors(0).IsAttached Then
+                                MessageBox.Show(DWSIM.App.GetLocalString("Todasasconexespossve"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                                Exit Sub
+                            End If
+                            If Not sobj.OutputConnectors(2).IsAttached Then
+                                ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 2, 0)
+                            Else
+                                ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(2).AttachedConnector.AttachedTo)
+                                ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 2, 0)
+                            End If
+                        Else
+                            If e.OldValue.ToString <> "" Then
+                                ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(2).AttachedConnector.AttachedTo)
+                            End If
+                        End If
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedesaida4")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
-                            Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X + sobj.Width + 40, sobj.Y, e.ChangedItem.Value)
+                            Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X + sobj.Width + 40, sobj.Y + 60, e.ChangedItem.Value)
                         ElseIf CType(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), GraphicObject).InputConnectors(0).IsAttached Then
                             MessageBox.Show(DWSIM.App.GetLocalString("Todasasconexespossve"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                             Exit Sub
                         End If
-                        If Not sobj.OutputConnectors(1).IsAttached Then
-                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 1, 0)
+                        If Not sobj.OutputConnectors(4).IsAttached Then
+                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface))
                         Else
-                            ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(1).AttachedConnector.AttachedTo)
-                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 1, 0)
+                            ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(4).AttachedConnector.AttachedTo)
+                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface))
                         End If
                     Else
                         If e.OldValue.ToString <> "" Then
-                            ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(1).AttachedConnector.AttachedTo)
+                            ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(4).AttachedConnector.AttachedTo)
                         End If
                     End If
-                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedesaida3")) Then
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedesaida5")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
-                            Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X + sobj.Width + 40, sobj.Y - 20, e.ChangedItem.Value)
+                            Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X + sobj.Width + 40, sobj.Y + 60, e.ChangedItem.Value)
                         ElseIf CType(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), GraphicObject).InputConnectors(0).IsAttached Then
                             MessageBox.Show(DWSIM.App.GetLocalString("Todasasconexespossve"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
                             Exit Sub
                         End If
-                        If Not sobj.OutputConnectors(2).IsAttached Then
-                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 2, 0)
+                        If Not sobj.OutputConnectors(5).IsAttached Then
+                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface))
                         Else
-                            ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(2).AttachedConnector.AttachedTo)
-                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 2, 0)
+                            ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(5).AttachedConnector.AttachedTo)
+                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface))
                         End If
                     Else
                         If e.OldValue.ToString <> "" Then
-                            ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(2).AttachedConnector.AttachedTo)
+                            ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(5).AttachedConnector.AttachedTo)
+                        End If
+                    End If
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedesaida6")) Then
+                    If e.ChangedItem.Value <> "" Then
+                        If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
+                            Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X + sobj.Width + 40, sobj.Y + 60, e.ChangedItem.Value)
+                        ElseIf CType(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), GraphicObject).InputConnectors(0).IsAttached Then
+                            MessageBox.Show(DWSIM.App.GetLocalString("Todasasconexespossve"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            Exit Sub
+                        End If
+                        If Not sobj.OutputConnectors(6).IsAttached Then
+                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface))
+                        Else
+                            ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(6).AttachedConnector.AttachedTo)
+                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface))
+                        End If
+                    Else
+                        If e.OldValue.ToString <> "" Then
+                            ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(6).AttachedConnector.AttachedTo)
                         End If
                     End If
                 ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("CorrentedeenergiaS")) Then
@@ -1767,7 +1880,7 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
                             ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(3).AttachedConnector.AttachedTo)
                         End If
                     End If
-                End If
+                    End If
             End If
         End If
 
