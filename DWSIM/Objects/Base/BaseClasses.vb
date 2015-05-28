@@ -1680,10 +1680,10 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
                             Exit Sub
                         End If
                         If Not sobj.InputConnectors(4).IsAttached Then
-                            ChildParent.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), sobj, 0, 3)
+                            ChildParent.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), sobj, 0, 4)
                         Else
                             ChildParent.DisconnectObject(sobj.InputConnectors(4).AttachedConnector.AttachedFrom, sobj)
-                            ChildParent.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), sobj, 0, 3)
+                            ChildParent.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), sobj, 0, 4)
                         End If
                     Else
                         If e.OldValue.ToString <> "" Then
@@ -1699,10 +1699,10 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
                             Exit Sub
                         End If
                         If Not sobj.InputConnectors(5).IsAttached Then
-                            ChildParent.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), sobj, 0, 4)
+                            ChildParent.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), sobj, 0, 5)
                         Else
                             ChildParent.DisconnectObject(sobj.InputConnectors(5).AttachedConnector.AttachedFrom, sobj)
-                            ChildParent.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), sobj, 0, 4)
+                            ChildParent.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), sobj, 0, 5)
                         End If
                     Else
                         If e.OldValue.ToString <> "" Then
@@ -1718,10 +1718,10 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
                             Exit Sub
                         End If
                         If Not sobj.InputConnectors(6).IsAttached Then
-                            ChildParent.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), sobj, 0, 5)
+                            ChildParent.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), sobj, 0, 6)
                         Else
                             ChildParent.DisconnectObject(sobj.InputConnectors(6).AttachedConnector.AttachedFrom, sobj)
-                            ChildParent.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), sobj, 0, 5)
+                            ChildParent.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), sobj, 0, 6)
                         End If
                     Else
                         If e.OldValue.ToString <> "" Then
@@ -1786,24 +1786,24 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
                             End If
                         End If
                 ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedesaida3")) Then
-                        If e.ChangedItem.Value <> "" Then
-                            If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
-                                Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X + sobj.Width + 40, sobj.Y - 20, e.ChangedItem.Value)
-                            ElseIf CType(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), GraphicObject).InputConnectors(0).IsAttached Then
-                                MessageBox.Show(DWSIM.App.GetLocalString("Todasasconexespossve"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-                                Exit Sub
-                            End If
-                            If Not sobj.OutputConnectors(2).IsAttached Then
-                                ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 2, 0)
-                            Else
-                                ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(2).AttachedConnector.AttachedTo)
-                                ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 2, 0)
-                            End If
-                        Else
-                            If e.OldValue.ToString <> "" Then
-                                ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(2).AttachedConnector.AttachedTo)
-                            End If
+                    If e.ChangedItem.Value <> "" Then
+                        If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
+                            Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X + sobj.Width + 40, sobj.Y - 20, e.ChangedItem.Value)
+                        ElseIf CType(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), GraphicObject).InputConnectors(0).IsAttached Then
+                            MessageBox.Show(DWSIM.App.GetLocalString("Todasasconexespossve"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            Exit Sub
                         End If
+                        If Not sobj.OutputConnectors(2).IsAttached Then
+                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 2, 0)
+                        Else
+                            ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(2).AttachedConnector.AttachedTo)
+                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 2, 0)
+                        End If
+                    Else
+                        If e.OldValue.ToString <> "" Then
+                            ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(2).AttachedConnector.AttachedTo)
+                        End If
+                    End If
                 ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedesaida4")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
@@ -1813,10 +1813,10 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
                             Exit Sub
                         End If
                         If Not sobj.OutputConnectors(4).IsAttached Then
-                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface))
+                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 4, 0)
                         Else
                             ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(4).AttachedConnector.AttachedTo)
-                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface))
+                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 4, 0)
                         End If
                     Else
                         If e.OldValue.ToString <> "" Then
@@ -1832,10 +1832,10 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
                             Exit Sub
                         End If
                         If Not sobj.OutputConnectors(5).IsAttached Then
-                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface))
+                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 5, 0)
                         Else
                             ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(5).AttachedConnector.AttachedTo)
-                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface))
+                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 5, 0)
                         End If
                     Else
                         If e.OldValue.ToString <> "" Then
@@ -1851,10 +1851,10 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
                             Exit Sub
                         End If
                         If Not sobj.OutputConnectors(6).IsAttached Then
-                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface))
+                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 6, 0)
                         Else
                             ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(6).AttachedConnector.AttachedTo)
-                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface))
+                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 6, 0)
                         End If
                     Else
                         If e.OldValue.ToString <> "" Then
