@@ -998,10 +998,11 @@ Namespace GraphicObjects
 
             UpdateStatusC(myPen, Me, StartPos, EndPos)
 
-            Dim delta As Integer = 0
-            Dim delta2 As Integer = 0
-            delta = 15
-            delta2 = 30
+            Dim delta, delta2, delta3, delta4 As Integer
+            delta = Math.Abs(StartPos.X - EndPos.X) / 2
+            delta2 = Math.Abs(StartPos.Y - EndPos.Y) / 2
+            delta3 = 20
+            delta4 = 40
 
             Dim p1, p2, p3, p4, p5, p6 As Point
 
@@ -1015,10 +1016,10 @@ Namespace GraphicObjects
                     g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4}, 4))
                 ElseIf StartPos.Y < EndPos.Y And StartPos.X >= EndPos.X Then
                     p1 = New Point(StartPos.X, StartPos.Y)
-                    p2 = New Point(StartPos.X + delta, StartPos.Y)
-                    p3 = New Point(StartPos.X + delta, StartPos.Y + delta2)
-                    p4 = New Point(EndPos.X - delta, StartPos.Y + delta2)
-                    p5 = New Point(EndPos.X - delta, EndPos.Y)
+                    p2 = New Point(StartPos.X + delta3, StartPos.Y)
+                    p3 = New Point(StartPos.X + delta3, StartPos.Y + delta2)
+                    p4 = New Point(EndPos.X - delta3, StartPos.Y + delta2)
+                    p5 = New Point(EndPos.X - delta3, EndPos.Y)
                     p6 = New Point(EndPos.X, EndPos.Y)
                     g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4, p5, p6}, 4))
                 ElseIf StartPos.Y >= EndPos.Y And StartPos.X < EndPos.X Then
@@ -1029,10 +1030,10 @@ Namespace GraphicObjects
                     g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4}, 4))
                 ElseIf StartPos.Y >= EndPos.Y And StartPos.X >= EndPos.X Then
                     p1 = New Point(StartPos.X, StartPos.Y)
-                    p2 = New Point(StartPos.X + delta, StartPos.Y)
-                    p3 = New Point(StartPos.X + delta, StartPos.Y - delta2)
-                    p4 = New Point(EndPos.X - delta, StartPos.Y - delta2)
-                    p5 = New Point(EndPos.X - delta, EndPos.Y)
+                    p2 = New Point(StartPos.X + delta3, StartPos.Y)
+                    p3 = New Point(StartPos.X + delta3, StartPos.Y - delta2)
+                    p4 = New Point(EndPos.X - delta3, StartPos.Y - delta2)
+                    p5 = New Point(EndPos.X - delta3, EndPos.Y)
                     p6 = New Point(EndPos.X, EndPos.Y)
                     g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4, p5, p6}, 4))
                 End If
@@ -1041,26 +1042,26 @@ Namespace GraphicObjects
 
                 If StartPos.Y < EndPos.Y And StartPos.X < EndPos.X Then
                     p1 = New Point(StartPos.X, StartPos.Y)
-                    p2 = New Point(EndPos.X + delta, StartPos.Y)
-                    p3 = New Point(EndPos.X + delta, EndPos.Y)
+                    p2 = New Point(EndPos.X + delta3, StartPos.Y)
+                    p3 = New Point(EndPos.X + delta3, EndPos.Y)
                     p4 = New Point(EndPos.X, EndPos.Y)
                     g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4}, 4))
                 ElseIf StartPos.Y < EndPos.Y And StartPos.X >= EndPos.X Then
                     p1 = New Point(StartPos.X, StartPos.Y)
-                    p2 = New Point(StartPos.X + delta, StartPos.Y)
-                    p3 = New Point(StartPos.X + delta, EndPos.Y)
+                    p2 = New Point(StartPos.X + delta3, StartPos.Y)
+                    p3 = New Point(StartPos.X + delta3, EndPos.Y)
                     p4 = New Point(EndPos.X, EndPos.Y)
                     g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4}, 4))
                 ElseIf StartPos.Y >= EndPos.Y And StartPos.X < EndPos.X Then
                     p1 = New Point(StartPos.X, StartPos.Y)
-                    p2 = New Point(EndPos.X + delta, StartPos.Y)
-                    p3 = New Point(EndPos.X + delta, EndPos.Y)
+                    p2 = New Point(EndPos.X + delta3, StartPos.Y)
+                    p3 = New Point(EndPos.X + delta3, EndPos.Y)
                     p4 = New Point(EndPos.X, EndPos.Y)
                     g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4}, 4))
                 ElseIf StartPos.Y >= EndPos.Y And StartPos.X >= EndPos.X Then
                     p1 = New Point(StartPos.X, StartPos.Y)
-                    p2 = New Point(StartPos.X + delta, StartPos.Y)
-                    p3 = New Point(StartPos.X + delta, EndPos.Y)
+                    p2 = New Point(StartPos.X + delta3, StartPos.Y)
+                    p3 = New Point(StartPos.X + delta3, EndPos.Y)
                     p4 = New Point(EndPos.X, EndPos.Y)
                     g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4}, 4))
                 End If
@@ -1069,26 +1070,26 @@ Namespace GraphicObjects
 
                 If StartPos.Y < EndPos.Y And StartPos.X < EndPos.X Then
                     p1 = New Point(StartPos.X, StartPos.Y)
-                    p2 = New Point(StartPos.X - delta, StartPos.Y)
-                    p3 = New Point(StartPos.X - delta, EndPos.Y)
+                    p2 = New Point(StartPos.X - delta3, StartPos.Y)
+                    p3 = New Point(StartPos.X - delta3, EndPos.Y)
                     p4 = New Point(EndPos.X, EndPos.Y)
                     g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4}, 4))
                 ElseIf StartPos.Y < EndPos.Y And StartPos.X >= EndPos.X Then
                     p1 = New Point(StartPos.X, StartPos.Y)
-                    p2 = New Point(EndPos.X - delta, StartPos.Y)
-                    p3 = New Point(EndPos.X - delta, EndPos.Y)
+                    p2 = New Point(EndPos.X - delta3, StartPos.Y)
+                    p3 = New Point(EndPos.X - delta3, EndPos.Y)
                     p4 = New Point(EndPos.X, EndPos.Y)
                     g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4}, 4))
                 ElseIf StartPos.Y >= EndPos.Y And StartPos.X < EndPos.X Then
                     p1 = New Point(StartPos.X, StartPos.Y)
-                    p2 = New Point(StartPos.X - delta, StartPos.Y)
-                    p3 = New Point(StartPos.X - delta, EndPos.Y)
+                    p2 = New Point(StartPos.X - delta3, StartPos.Y)
+                    p3 = New Point(StartPos.X - delta3, EndPos.Y)
                     p4 = New Point(EndPos.X, EndPos.Y)
                     g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4}, 4))
                 ElseIf StartPos.Y >= EndPos.Y And StartPos.X >= EndPos.X Then
                     p1 = New Point(StartPos.X, StartPos.Y)
-                    p2 = New Point(EndPos.X - delta, StartPos.Y)
-                    p3 = New Point(EndPos.X - delta, EndPos.Y)
+                    p2 = New Point(EndPos.X - delta3, StartPos.Y)
+                    p3 = New Point(EndPos.X - delta3, EndPos.Y)
                     p4 = New Point(EndPos.X, EndPos.Y)
                     g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4}, 4))
                 End If
@@ -1097,10 +1098,10 @@ Namespace GraphicObjects
 
                 If StartPos.Y < EndPos.Y And StartPos.X < EndPos.X Then
                     p1 = New Point(StartPos.X, StartPos.Y)
-                    p2 = New Point(StartPos.X - delta, StartPos.Y)
-                    p3 = New Point(StartPos.X - delta, StartPos.Y - delta2)
-                    p4 = New Point(EndPos.X + delta, StartPos.Y - delta2)
-                    p5 = New Point(EndPos.X + delta, EndPos.Y)
+                    p2 = New Point(StartPos.X - delta3, StartPos.Y)
+                    p3 = New Point(StartPos.X - delta3, StartPos.Y - delta2)
+                    p4 = New Point(EndPos.X + delta3, StartPos.Y - delta2)
+                    p5 = New Point(EndPos.X + delta3, EndPos.Y)
                     p6 = New Point(EndPos.X, EndPos.Y)
                     g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4, p5, p6}, 4))
                 ElseIf StartPos.Y < EndPos.Y And StartPos.X >= EndPos.X Then
@@ -1111,10 +1112,10 @@ Namespace GraphicObjects
                     g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4}, 4))
                 ElseIf StartPos.Y >= EndPos.Y And StartPos.X < EndPos.X Then
                     p1 = New Point(StartPos.X, StartPos.Y)
-                    p2 = New Point(StartPos.X - delta, StartPos.Y)
-                    p3 = New Point(StartPos.X - delta, StartPos.Y + delta2)
-                    p4 = New Point(EndPos.X + delta, StartPos.Y + delta2)
-                    p5 = New Point(EndPos.X + delta, EndPos.Y)
+                    p2 = New Point(StartPos.X - delta3, StartPos.Y)
+                    p3 = New Point(StartPos.X - delta3, StartPos.Y + delta2)
+                    p4 = New Point(EndPos.X + delta3, StartPos.Y + delta2)
+                    p5 = New Point(EndPos.X + delta3, EndPos.Y)
                     p6 = New Point(EndPos.X, EndPos.Y)
                     g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4, p5, p6}, 4))
                 ElseIf StartPos.Y >= EndPos.Y And StartPos.X >= EndPos.X Then
