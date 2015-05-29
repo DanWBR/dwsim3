@@ -3001,6 +3001,7 @@
     <None Include="Resources\help-browser1.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="bin\x86\Release\samples\" />
     <Folder Include="Forms\UITypeEditors\DistillationColumn\UISpecificationsEditor\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />

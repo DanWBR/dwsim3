@@ -1760,6 +1760,10 @@ Namespace DWSIM.Flowsheet
                         Else
                             Exit Do
                         End If
+                        If lists.Count > 10000 Then
+                            lists.Clear()
+                            Throw New Exception("Infinite loop detected while obtaining flowsheet object calculation order. Please insert recycle blocks where needed.")
+                        End If
                     Loop
 
                     'process the lists , adding objects to the stack, discarding duplicate entries.
@@ -1825,6 +1829,10 @@ Namespace DWSIM.Flowsheet
                         Next
                     Else
                         Exit Do
+                    End If
+                    If lists.Count > 10000 Then
+                        lists.Clear()
+                        Throw New Exception("Infinite loop detected while obtaining flowsheet object calculation order. Please insert recycle blocks where needed.")
                     End If
                 Loop
 
@@ -2201,29 +2209,33 @@ Namespace DWSIM.Flowsheet
                     form.WriteToLog(DWSIM.App.GetLocalString("FSfinishedsolvingok"), Color.Blue, FormClasses.TipoAviso.Informacao)
                     form.WriteToLog(DWSIM.App.GetLocalString("Runtime") & ": " & (Date.Now - d1).ToString("g"), Color.MediumBlue, DWSIM.FormClasses.TipoAviso.Informacao)
 
-                    'adds the current solution to the valid solution list.
-                    'the XML data is converted to a compressed byte array before being added to the collection.
+                    If My.Settings.StorePreviousSolutions Then
 
-                    Dim stask As Task = Task.Factory.StartNew(Sub()
-                                                                  Try
-                                                                      Dim retbytes As MemoryStream = DWSIM.SimulationObjects.UnitOps.Flowsheet.ReturnProcessData(form)
-                                                                      Using retbytes
-                                                                          Dim uncompressedbytes As Byte() = retbytes.ToArray
-                                                                          Using compressedstream As New MemoryStream()
-                                                                              Using gzs As New BufferedStream(New Compression.GZipStream(compressedstream, Compression.CompressionMode.Compress, True), 64 * 1024)
-                                                                                  gzs.Write(uncompressedbytes, 0, uncompressedbytes.Length)
-                                                                                  gzs.Close()
-                                                                                  Dim id As String = Date.Now.ToBinary.ToString
-                                                                                  If form.PreviousSolutions Is Nothing Then form.PreviousSolutions = New Dictionary(Of String, FormClasses.FlowsheetSolution)
-                                                                                  form.PreviousSolutions.Add(id, New DWSIM.FormClasses.FlowsheetSolution() With {.ID = id, .SaveDate = Date.Now, .Solution = compressedstream.ToArray})
+                        'adds the current solution to the valid solution list.
+                        'the XML data is converted to a compressed byte array before being added to the collection.
+
+                        Dim stask As Task = Task.Factory.StartNew(Sub()
+                                                                      Try
+                                                                          Dim retbytes As MemoryStream = DWSIM.SimulationObjects.UnitOps.Flowsheet.ReturnProcessData(form)
+                                                                          Using retbytes
+                                                                              Dim uncompressedbytes As Byte() = retbytes.ToArray
+                                                                              Using compressedstream As New MemoryStream()
+                                                                                  Using gzs As New BufferedStream(New Compression.GZipStream(compressedstream, Compression.CompressionMode.Compress, True), 64 * 1024)
+                                                                                      gzs.Write(uncompressedbytes, 0, uncompressedbytes.Length)
+                                                                                      gzs.Close()
+                                                                                      Dim id As String = Date.Now.ToBinary.ToString
+                                                                                      If form.PreviousSolutions Is Nothing Then form.PreviousSolutions = New Dictionary(Of String, FormClasses.FlowsheetSolution)
+                                                                                      form.PreviousSolutions.Add(id, New DWSIM.FormClasses.FlowsheetSolution() With {.ID = id, .SaveDate = Date.Now, .Solution = compressedstream.ToArray})
+                                                                                  End Using
                                                                               End Using
                                                                           End Using
-                                                                      End Using
-                                                                  Catch ex As Exception
-                                                                  End Try
-                                                              End Sub).ContinueWith(Sub(t)
-                                                                                        form.UpdateSolutionsList()
-                                                                                    End Sub, TaskContinuationOptions.ExecuteSynchronously)
+                                                                      Catch ex As Exception
+                                                                      End Try
+                                                                  End Sub).ContinueWith(Sub(t)
+                                                                                            form.UpdateSolutionsList()
+                                                                                        End Sub, TaskContinuationOptions.ExecuteSynchronously)
+
+                    End If
 
                 Else
 

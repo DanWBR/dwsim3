@@ -81,6 +81,7 @@ Public Class FormOptions
         tbServerIP.Text = My.Settings.ServerIPAddress
         tbServerPort.Text = My.Settings.ServerPort
         chkSolverBreak.Checked = My.Settings.SolverBreakOnException
+        chkStorePreviousSolutions.Checked = My.Settings.StorePreviousSolutions
 
         'databases
         Me.PopulateDBGrid()
@@ -659,5 +660,9 @@ Public Class FormOptions
 
     Private Sub chkSolverBreak_CheckedChanged(sender As Object, e As EventArgs) Handles chkSolverBreak.CheckedChanged
         My.Settings.SolverBreakOnException = chkSolverBreak.Checked
+    End Sub
+
+    Private Sub chkStorePreviousSolutions_CheckedChanged(sender As Object, e As EventArgs) Handles chkStorePreviousSolutions.CheckedChanged
+        My.Settings.StorePreviousSolutions = chkStorePreviousSolutions.Checked
     End Sub
 End Class
