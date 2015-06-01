@@ -57,6 +57,7 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
     <System.NonSerialized()> Protected Friend m_flowsheet As FormFlowsheet
 
     Protected m_showqtable As Boolean = True
+    Protected m_errormessage As String = ""
 
     Public Property Calculated As Boolean = False
     <Xml.Serialization.XmlIgnore> Public Property LastUpdated As New Date
@@ -69,13 +70,22 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
 
     End Sub
 
-    Public Sub CheckSpec(val As Double, onlypositive As Boolean)
+    Public Property ErrorMessage() As String
+        Get
+            Return m_errormessage
+        End Get
+        Set(ByVal value As String)
+            m_errormessage = value
+        End Set
+    End Property
+
+    Public Sub CheckSpec(val As Double, onlypositive As Boolean, paramname As String)
 
         Dim mytag As String = ""
-        If Me.GraphicObject IsNot Nothing Then mytag = "[" & Me.GraphicObject.Tag & "] "
+        If Me.GraphicObject IsNot Nothing Then mytag = Me.GraphicObject.Tag & ": "
 
-        If Not val.IsValid Then Throw New ArgumentException(mytag & DWSIM.App.GetLocalString("ErrorInvalidUOSpecValue"))
-        If onlypositive Then If Not val.IsPositive Then Throw New ArgumentOutOfRangeException(mytag & DWSIM.App.GetLocalString("ErrorInvalidUOSpecValue"))
+        If Not val.IsValid Then Throw New ArgumentException(mytag & DWSIM.App.GetLocalString("ErrorInvalidUOSpecValue") & " (" & paramname & ")")
+        If onlypositive Then If Not val.IsPositive Then Throw New ArgumentOutOfRangeException(mytag & DWSIM.App.GetLocalString("ErrorInvalidUOSpecValue") & " (" & paramname & ")")
 
     End Sub
 
@@ -2323,8 +2333,7 @@ End Class
     Private _includesE() As String
     Private _fontnameE As String = "Courier New"
     Private _fontsizeE As Integer = 10
-    Protected m_errormessage As String = ""
-
+  
     <System.NonSerialized()> Public scope As Microsoft.Scripting.Hosting.ScriptScope
     <System.NonSerialized()> Public engine As Microsoft.Scripting.Hosting.ScriptEngine
 
@@ -2604,15 +2613,6 @@ End Class
         End Select
 
     End Sub
-
-    Public Property ErrorMessage() As String
-        Get
-            Return m_errormessage
-        End Get
-        Set(ByVal value As String)
-            m_errormessage = value
-        End Set
-    End Property
 
     Public Overrides Sub PopulatePropertyGrid(ByRef pgrid As PropertyGridEx.PropertyGridEx, ByVal su As DWSIM.SistemasDeUnidades.Unidades)
         With pgrid
@@ -3172,19 +3172,8 @@ End Class
         Return Nothing
     End Function
 
-    Protected m_errormessage As String = ""
-
     Public Sub New()
         MyBase.CreateNew()
     End Sub
-
-    Public Property ErrorMessage() As String
-        Get
-            Return m_errormessage
-        End Get
-        Set(ByVal value As String)
-            m_errormessage = value
-        End Set
-    End Property
 
 End Class

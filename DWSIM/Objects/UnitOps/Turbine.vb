@@ -199,19 +199,19 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     P2 = Me.POut.GetValueOrDefault
                     DeltaP = Pi - P2
             End Select
-            CheckSpec(P2, True)
+            CheckSpec(P2, True, "outlet pressure")
 
             Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.S, P2, Si, Ti)
             T2 = tmp(2)
-            CheckSpec(T2, True)
+            CheckSpec(T2, True, "outlet temperature")
             H2 = tmp(4)
-            CheckSpec(H2, False)
+            CheckSpec(H2, False, "outlet enthalpy")
 
             Me.DeltaQ = -Wi * (H2 - Hi) * (Me.EficienciaAdiabatica.GetValueOrDefault / 100)
 
             tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, Hi - Me.DeltaQ.GetValueOrDefault / Wi, T2)
             T2 = tmp(2)
-            CheckSpec(T2, True)
+            CheckSpec(T2, True, "outlet temperature")
             Me.DeltaT = T2 - Ti
 
             H2 = Hi - Me.DeltaQ.GetValueOrDefault / Wi

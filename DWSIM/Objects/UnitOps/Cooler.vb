@@ -172,10 +172,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     FlashSpec = Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
 
                     H2 = -Me.DeltaQ.GetValueOrDefault * (Me.Eficiencia.GetValueOrDefault / 100) / Wi + Hi
-                    CheckSpec(H2, False)
+                    CheckSpec(H2, False, "outlet enthalpy")
                     Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, H2, 0)
                     T2 = tmp(2)
-                    CheckSpec(T2, True)
+                    CheckSpec(T2, True, "outlet temperature")
                     Me.DeltaT = T2 - Ti
 
                     'Corrente de energia - atualizar valor da potência (kJ/s)
@@ -190,7 +190,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     T2 = Me.OutletTemperature.GetValueOrDefault
                     Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, T2, P2, 0)
                     H2 = tmp(4)
-                    CheckSpec(H2, False)
+                    CheckSpec(H2, False, "outlet enthalpy")
                     Me.DeltaT = T2 - Ti
                     Me.DeltaQ = -(H2 - Hi) / (Me.Eficiencia.GetValueOrDefault / 100) * Wi
 
@@ -205,9 +205,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     V2 = m_VFout.GetValueOrDefault
                     Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.VAP, P2, m_VFout.GetValueOrDefault, Ti)
                     H2 = tmp(4)
-                    CheckSpec(H2, False)
+                    CheckSpec(H2, False, "outlet enthalpy")
                     T2 = tmp(2)
-                    CheckSpec(T2, True)
+                    CheckSpec(T2, True, "outlet temperature")
                     Me.DeltaT = T2 - Ti
                     Me.DeltaQ = -(H2 - Hi) / (Me.Eficiencia.GetValueOrDefault / 100) * Wi
 

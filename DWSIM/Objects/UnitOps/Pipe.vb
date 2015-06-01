@@ -723,9 +723,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             Next
 
-            CheckSpec(Tout, True)
-            CheckSpec(Pout, True)
-            CheckSpec(Hout, False)
+            CheckSpec(Tout, True, "outlet temperature")
+            CheckSpec(Pout, True, "outlet pressure")
+            CheckSpec(Hout, False, "outlet enthalpy")
 
             With results
                 .TemperaturaInicial = Tout

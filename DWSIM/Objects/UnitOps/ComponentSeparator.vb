@@ -242,14 +242,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 End If
                                 .MassFlow = .MolarFlow * .ConstantProperties.Molar_Weight / 1000
                         End Select
-                        CheckSpec(.MolarFlow, True)
-                        CheckSpec(.MassFlow, True)
+                        CheckSpec(.MolarFlow, True, "component molar flow")
+                        CheckSpec(.MassFlow, True, "component mass flow")
                     End With
                     With otherstr.Fases(0).Componentes(cs.ComponentID)
                         .MassFlow = instr.Fases(0).Componentes(cs.ComponentID).MassFlow.GetValueOrDefault - specstr.Fases(0).Componentes(cs.ComponentID).MassFlow.GetValueOrDefault
                         .MolarFlow = instr.Fases(0).Componentes(cs.ComponentID).MolarFlow.GetValueOrDefault - specstr.Fases(0).Componentes(cs.ComponentID).MolarFlow.GetValueOrDefault
-                        CheckSpec(.MolarFlow, True)
-                        CheckSpec(.MassFlow, True)
+                        CheckSpec(.MolarFlow, True, "component molar flow")
+                        CheckSpec(.MassFlow, True, "component mass flow")
                     End With
                 Else
                     toremove.Add(cs.ComponentID)
@@ -302,10 +302,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Wo1 = outstr1.Fases(0).SPMProperties.massflow.GetValueOrDefault
             Wo2 = outstr2.Fases(0).SPMProperties.massflow.GetValueOrDefault
 
-            CheckSpec(Hi, False)
-            CheckSpec(Wi, True)
-            CheckSpec(Wo1, True)
-            CheckSpec(Wo1, True)
+            CheckSpec(Hi, False, "inlet enthalpy")
+            CheckSpec(Wi, True, "inlet mass flow")
+            CheckSpec(Wo1, True, "outlet mass flow")
+            CheckSpec(Wo1, True, "outlet mass flow")
 
             'do a flash calculation on streams to calculate energy imbalance
 
@@ -325,7 +325,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             EnergyImb = Hi * Wi - Ho1 * Wo1 - Ho2 * Wo2
 
-            CheckSpec(EnergyImb, False)
+            CheckSpec(EnergyImb, False, "energy balance")
 
             'update energy stream power value
 

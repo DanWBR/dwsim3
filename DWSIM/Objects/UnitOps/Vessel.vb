@@ -260,9 +260,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             If W = 0.0# Then T = 273.15
 
-            CheckSpec(Hs, False)
-            CheckSpec(W, True)
-            CheckSpec(P, True)
+            CheckSpec(Hs, False, "enthalpy")
+            CheckSpec(W, True, "mass flow")
+            CheckSpec(P, True, "pressure")
 
             With mix
 
@@ -557,9 +557,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Next
                 End If
 
-                CheckSpec(Hv, False)
-                CheckSpec(P, True)
-                CheckSpec(Tv, True)
+                CheckSpec(Hv, False, "vapor enthalpy")
+                CheckSpec(P, True, "vapor pressure")
+                CheckSpec(Tv, True, "vapor temperature")
 
                 cp = Me.GraphicObject.OutputConnectors(0)
                 If cp.IsAttached Then
@@ -591,9 +591,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     End With
                 End If
 
-                CheckSpec(Hl, False)
-                CheckSpec(P, True)
-                CheckSpec(Tl, True)
+                CheckSpec(Hl, False, "liquid enthalpy")
+                CheckSpec(P, True, "liquid pressure")
+                CheckSpec(Tl, True, "liquid temperature")
 
                 cp = Me.GraphicObject.OutputConnectors(1)
                 If cp.IsAttached Then

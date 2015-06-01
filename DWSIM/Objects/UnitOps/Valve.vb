@@ -140,13 +140,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 P2 = Me.OutletPressure.GetValueOrDefault
                 Me.DeltaP = P2 - Pi
             End If
-            CheckSpec(P2, True)
+            CheckSpec(P2, True, "outlet pressure")
 
             Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, H2, Ti)
             T2 = tmp(2)
-            CheckSpec(T2, True)
+            CheckSpec(T2, True, "outlet temperature")
             H2c = tmp(4)
-            CheckSpec(H2c, True)
+            CheckSpec(H2c, True, "outlet enthalpy")
 
             'Dim htol As Double = Me.PropertyPackage.Parameters("PP_PHFELT")
             'Dim herr As Double = Math.Abs((H2c - H2) / H2)

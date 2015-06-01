@@ -1443,8 +1443,9 @@ Namespace DWSIM.Flowsheet
                     'form.WriteToLog(ex.Message, Color.Black, DWSIM.FormClasses.TipoAviso.Erro)
                 End Try
 
+                Dim myobj = form.Collections.ObjectCollection(myinfo.Nome)
                 Try
-                    Dim myobj = form.Collections.ObjectCollection(myinfo.Nome)
+                    myobj.ErrorMessage = ""
                     If myobj.GraphicObject.Active Then
                         If FlowsheetSolverMode Then
                             If myinfo.Emissor = "FlowsheetSolver" Then
@@ -1471,6 +1472,7 @@ Namespace DWSIM.Flowsheet
                     'Else
                     '    form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
                     'End If
+                    myobj.ErrorMessage = ex.Message.ToString
                     loopex = ex
                     If My.Settings.SolverBreakOnException Then Exit While
                 End Try
@@ -1536,8 +1538,9 @@ Namespace DWSIM.Flowsheet
                 Dim myinfo As DWSIM.Outros.StatusChangeEventArgs = form.CalculationQueue.Peek()
 
                 'form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}, True))
+                Dim myobj = form.Collections.ObjectCollection(myinfo.Nome)
                 Try
-                    Dim myobj = form.Collections.ObjectCollection(myinfo.Nome)
+                    myobj.ErrorMessage = ""
                     If myobj.GraphicObject.Active Then
                         If myinfo.Tipo = TipoObjeto.MaterialStream Then
                             CalculateMaterialStreamAsync(form, myobj, ct)
@@ -1547,12 +1550,13 @@ Namespace DWSIM.Flowsheet
                         myobj.GraphicObject.Calculated = True
                     End If
                 Catch ex As Exception
-                    Dim st As New StackTrace(ex, True)
-                    If st.FrameCount > 0 Then
-                        form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
-                    Else
-                        form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                    End If
+                    'Dim st As New StackTrace(ex, True)
+                    'If st.FrameCount > 0 Then
+                    '    form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                    'Else
+                    '    form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                    'End If
+                    myobj.ErrorMessage = ex.Message.ToString
                     loopex = ex
                     If My.Settings.SolverBreakOnException Then Exit While
                 Finally
@@ -1603,8 +1607,9 @@ Namespace DWSIM.Flowsheet
                 Parallel.ForEach(li.Value, poptions, Sub(myinfo, state)
                                                          If ct.IsCancellationRequested = True Then ct.ThrowIfCancellationRequested()
                                                          'form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}, True))
+                                                         Dim myobj = form.Collections.ObjectCollection(myinfo.Nome)
+                                                         myobj.ErrorMessage = ""
                                                          Try
-                                                             Dim myobj = form.Collections.ObjectCollection(myinfo.Nome)
                                                              If myobj.GraphicObject.Active Then
                                                                  If myinfo.Tipo = TipoObjeto.MaterialStream Then
                                                                      CalculateMaterialStreamAsync(form, myobj, ct)
@@ -1614,12 +1619,13 @@ Namespace DWSIM.Flowsheet
                                                                  myobj.GraphicObject.Calculated = True
                                                              End If
                                                          Catch ex As Exception
-                                                             Dim st As New StackTrace(ex, True)
-                                                             If st.FrameCount > 0 Then
-                                                                 form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
-                                                             Else
-                                                                 form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                                                             End If
+                                                             'Dim st As New StackTrace(ex, True)
+                                                             'If st.FrameCount > 0 Then
+                                                             '    form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                                                             'Else
+                                                             '    form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                                                             'End If
+                                                             myobj.ErrorMessage = ex.Message.ToString
                                                              loopex = ex
                                                              If My.Settings.SolverBreakOnException Then state.Break()
                                                          Finally

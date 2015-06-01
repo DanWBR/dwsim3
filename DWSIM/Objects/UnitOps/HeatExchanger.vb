@@ -851,10 +851,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Loop Until fx < 0.01 Or icnt > 100
             End Select
 
-            CheckSpec(Tc2, True)
-            CheckSpec(Th2, True)
-            CheckSpec(Ph2, True)
-            CheckSpec(Pc2, True)
+            CheckSpec(Tc2, True, "cold stream outlet temperature")
+            CheckSpec(Th2, True, "hot stream outlet temperature")
+            CheckSpec(Ph2, True, "hot stream outlet pressure")
+            CheckSpec(Pc2, True, "cold stream outlet pressure")
 
             Me.ColdSideOutletTemperature = Tc2
             Me.HotSideOutletTemperature = Th2

@@ -562,7 +562,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     'we need -> head, power, eff, to calculate P2, H2, T2
 
                     P2 = Pi + syshead * 9.81 * rho_li
-                    CheckSpec(P2, True)
+                    CheckSpec(P2, True, "outlet pressure")
 
                     Me.DeltaP = P2 - Pi
 
@@ -579,7 +579,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         H2 = Hi + power * eff / Wi
                     End If
 
-                    CheckSpec(power, True)
+                    CheckSpec(power, True, "power")
 
                     Me.CurvePower = power
 
@@ -588,7 +588,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, H2, Ti)
                     T2 = tmp(2)
 
-                    CheckSpec(T2, True)
+                    CheckSpec(T2, True, "outlet temperature")
 
                     Me.DeltaT = T2 - Ti
 
@@ -614,16 +614,16 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     End With
 
                     H2 = Hi + Me.DeltaQ.GetValueOrDefault * (Me.Eficiencia.GetValueOrDefault / 100) / Wi
-                    CheckSpec(H2, False)
+                    CheckSpec(H2, False, "outlet enthalpy")
 
                     P2 = Pi + (H2 - Hi) * rho_li * 1000
-                    CheckSpec(P2, True)
+                    CheckSpec(P2, True, "outlet pressure")
 
                     DeltaP = P2 - Pi
 
                     tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, H2, Ti)
                     T2 = tmp(2)
-                    CheckSpec(T2, True)
+                    CheckSpec(T2, True, "outlet temperature")
 
                     Me.DeltaT = T2 - Ti
 
@@ -637,16 +637,16 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                     Me.PropertyPackage.CurrentMaterialStream = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name)
                     P2 = Pi + Me.DeltaP.GetValueOrDefault
-                    CheckSpec(P2, True)
+                    CheckSpec(P2, True, "outlet pressure")
 
                     Me.DeltaQ = (P2 - Pi) / rho_li / 1000 / (Me.Eficiencia.GetValueOrDefault / 100) * Wi
 
                     H2 = Hi + Me.DeltaQ / Wi
-                    CheckSpec(H2, False)
+                    CheckSpec(H2, False, "outlet enthalpy")
 
                     Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, H2, 0.0#)
                     T2 = tmp(2)
-                    CheckSpec(T2, True)
+                    CheckSpec(T2, True, "outlet temperature")
 
                     Me.DeltaT = T2 - Ti
 
@@ -670,18 +670,18 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Me.PropertyPackage.CurrentMaterialStream = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name)
 
                     P2 = Me.Pout
-                    CheckSpec(P2, True)
+                    CheckSpec(P2, True, "outlet pressure")
 
                     Me.DeltaP = P2 - Pi
 
                     Me.DeltaQ = (P2 - Pi) / rho_li / 1000 / (Me.Eficiencia.GetValueOrDefault / 100) * Wi
 
                     H2 = Hi + Me.DeltaQ / Wi
-                    CheckSpec(H2, False)
+                    CheckSpec(H2, False, "outlet enthalpy")
 
                     Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, H2, Ti)
                     T2 = tmp(2)
-                    CheckSpec(T2, True)
+                    CheckSpec(T2, True, "outlet temperature")
 
                     Me.DeltaT = T2 - Ti
 
