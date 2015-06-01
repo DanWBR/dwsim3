@@ -117,17 +117,14 @@ Namespace DWSIM.SimulationObjects.Streams
 
         Public Sub Validate()
 
-            Dim mytag As String = ""
-            If Me.GraphicObject IsNot Nothing Then mytag = "[" & Me.GraphicObject.Tag & "] "
-
             'temperature
-            If Not Me.Fases(0).SPMProperties.temperature.IsValid Then Throw New ArgumentException(mytag & DWSIM.App.GetLocalString("ErrorInvalidMSSpecValue"))
+            If Not Me.Fases(0).SPMProperties.temperature.IsValid Then Throw New ArgumentException(DWSIM.App.GetLocalString("ErrorInvalidMSSpecValue"))
             'pressure
-            If Not Me.Fases(0).SPMProperties.pressure.IsValid Then Throw New ArgumentException(mytag & DWSIM.App.GetLocalString("ErrorInvalidMSSpecValue"))
+            If Not Me.Fases(0).SPMProperties.pressure.IsValid Then Throw New ArgumentException(DWSIM.App.GetLocalString("ErrorInvalidMSSpecValue"))
             'enthalpy
-            If Not Me.Fases(0).SPMProperties.enthalpy.IsValid Then Throw New ArgumentException(mytag & DWSIM.App.GetLocalString("ErrorInvalidMSSpecValue"))
+            If Not Me.Fases(0).SPMProperties.enthalpy.IsValid Then Throw New ArgumentException(DWSIM.App.GetLocalString("ErrorInvalidMSSpecValue"))
             'entropy
-            If Not Me.Fases(0).SPMProperties.entropy.IsValid Then Throw New ArgumentException(mytag & DWSIM.App.GetLocalString("ErrorInvalidMSSpecValue"))
+            If Not Me.Fases(0).SPMProperties.entropy.IsValid Then Throw New ArgumentException(DWSIM.App.GetLocalString("ErrorInvalidMSSpecValue"))
 
         End Sub
 

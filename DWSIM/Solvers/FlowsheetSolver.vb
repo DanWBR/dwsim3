@@ -1472,8 +1472,8 @@ Namespace DWSIM.Flowsheet
                     'Else
                     '    form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
                     'End If
-                    myobj.ErrorMessage = ex.Message.ToString
-                    loopex = ex
+                    myobj.ErrorMessage = ex.Message
+                    loopex = New Exception(myinfo.Tag & ": " & ex.Message, ex)
                     If My.Settings.SolverBreakOnException Then Exit While
                 End Try
 
@@ -1557,7 +1557,7 @@ Namespace DWSIM.Flowsheet
                     '    form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
                     'End If
                     myobj.ErrorMessage = ex.Message.ToString
-                    loopex = ex
+                    loopex = New Exception(myinfo.Tag & ": " & ex.Message, ex)
                     If My.Settings.SolverBreakOnException Then Exit While
                 Finally
                     form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}))
@@ -1626,7 +1626,7 @@ Namespace DWSIM.Flowsheet
                                                              '    form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
                                                              'End If
                                                              myobj.ErrorMessage = ex.Message.ToString
-                                                             loopex = ex
+                                                             loopex = New Exception(myinfo.Tag & ": " & ex.Message, ex)
                                                              If My.Settings.SolverBreakOnException Then state.Break()
                                                          Finally
                                                              form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}))

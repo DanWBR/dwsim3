@@ -81,11 +81,8 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
 
     Public Sub CheckSpec(val As Double, onlypositive As Boolean, paramname As String)
 
-        Dim mytag As String = ""
-        If Me.GraphicObject IsNot Nothing Then mytag = Me.GraphicObject.Tag & ": "
-
-        If Not val.IsValid Then Throw New ArgumentException(mytag & DWSIM.App.GetLocalString("ErrorInvalidUOSpecValue") & " (" & paramname & ")")
-        If onlypositive Then If Not val.IsPositive Then Throw New ArgumentException(mytag & DWSIM.App.GetLocalString("ErrorInvalidUOSpecValue") & " (" & paramname & ")")
+        If Not val.IsValid Then Throw New ArgumentException(DWSIM.App.GetLocalString("ErrorInvalidUOSpecValue") & " (" & paramname & ")")
+        If onlypositive Then If Not val.IsPositive Then Throw New ArgumentException(DWSIM.App.GetLocalString("ErrorInvalidUOSpecValue") & " (" & paramname & ")")
 
     End Sub
 
