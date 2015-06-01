@@ -242,14 +242,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 End If
                                 .MassFlow = .MolarFlow * .ConstantProperties.Molar_Weight / 1000
                         End Select
-                        CheckSpec(.MolarFlow, True, "component molar flow")
-                        CheckSpec(.MassFlow, True, "component mass flow")
+                        CheckSpec(.MolarFlow, False, "component molar flow: " & .ConstantProperties.Name.ToString.ToLower)
+                        CheckSpec(.MassFlow, False, "component mass flow: " & .ConstantProperties.Name.ToString.ToLower)
                     End With
                     With otherstr.Fases(0).Componentes(cs.ComponentID)
                         .MassFlow = instr.Fases(0).Componentes(cs.ComponentID).MassFlow.GetValueOrDefault - specstr.Fases(0).Componentes(cs.ComponentID).MassFlow.GetValueOrDefault
                         .MolarFlow = instr.Fases(0).Componentes(cs.ComponentID).MolarFlow.GetValueOrDefault - specstr.Fases(0).Componentes(cs.ComponentID).MolarFlow.GetValueOrDefault
-                        CheckSpec(.MolarFlow, True, "component molar flow")
-                        CheckSpec(.MassFlow, True, "component mass flow")
+                        CheckSpec(.MolarFlow, True, "component molar flow: " & .ConstantProperties.Name.ToString.ToLower)
+                        CheckSpec(.MassFlow, True, "component mass flow: " & .ConstantProperties.Name.ToString.ToLower)
                     End With
                 Else
                     toremove.Add(cs.ComponentID)

@@ -81,8 +81,8 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
 
     Public Sub CheckSpec(val As Double, onlypositive As Boolean, paramname As String)
 
-        If Not val.IsValid Then Throw New ArgumentException(DWSIM.App.GetLocalString("ErrorInvalidUOSpecValue") & " (" & paramname & ")")
-        If onlypositive Then If Not val.IsPositive Then Throw New ArgumentException(DWSIM.App.GetLocalString("ErrorInvalidUOSpecValue") & " (" & paramname & ")")
+        If Not val.IsValid Then Throw New ArgumentException(DWSIM.App.GetLocalString("ErrorInvalidUOSpecValue") & " (name: " & paramname & ", value: " & val & ")")
+        If onlypositive Then If val.IsNegative Then Throw New ArgumentException(DWSIM.App.GetLocalString("ErrorInvalidUOSpecValue") & " (name: " & paramname & ", value: " & val & ")")
 
     End Sub
 

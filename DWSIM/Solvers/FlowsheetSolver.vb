@@ -1473,7 +1473,7 @@ Namespace DWSIM.Flowsheet
                     '    form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
                     'End If
                     myobj.ErrorMessage = ex.Message
-                    loopex = New Exception(myinfo.Tag & ": " & ex.Message, ex)
+                    loopex = New Exception(myinfo.Tag & ": " & ex.Message)
                     If My.Settings.SolverBreakOnException Then Exit While
                 End Try
 
@@ -1557,7 +1557,7 @@ Namespace DWSIM.Flowsheet
                     '    form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
                     'End If
                     myobj.ErrorMessage = ex.Message.ToString
-                    loopex = New Exception(myinfo.Tag & ": " & ex.Message, ex)
+                    loopex = New Exception(myinfo.Tag & ": " & ex.Message)
                     If My.Settings.SolverBreakOnException Then Exit While
                 Finally
                     form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}))
@@ -1626,7 +1626,7 @@ Namespace DWSIM.Flowsheet
                                                              '    form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
                                                              'End If
                                                              myobj.ErrorMessage = ex.Message.ToString
-                                                             loopex = New Exception(myinfo.Tag & ": " & ex.Message, ex)
+                                                             loopex = New Exception(myinfo.Tag & ": " & ex.Message)
                                                              If My.Settings.SolverBreakOnException Then state.Break()
                                                          Finally
                                                              form.UIThread(Sub() UpdateDisplayStatus(form, New String() {myinfo.Nome}))
@@ -2253,8 +2253,9 @@ Namespace DWSIM.Flowsheet
                     For Each ex In age.InnerExceptions
                         baseexception = ex
                         While ex.InnerException IsNot Nothing
-                            baseexception = ex.InnerException
+                            ex = ex.InnerException
                         End While
+                        baseexception = ex
                         form.WriteToLog(baseexception.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
                         'Try
                         '    Dim st As New StackTrace(ex, True)
