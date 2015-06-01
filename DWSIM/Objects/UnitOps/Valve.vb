@@ -146,7 +146,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             T2 = tmp(2)
             CheckSpec(T2, True, "outlet temperature")
             H2c = tmp(4)
-            CheckSpec(H2c, True, "outlet enthalpy")
+            CheckSpec(H2c, False, "outlet enthalpy")
 
             'Dim htol As Double = Me.PropertyPackage.Parameters("PP_PHFELT")
             'Dim herr As Double = Math.Abs((H2c - H2) / H2)

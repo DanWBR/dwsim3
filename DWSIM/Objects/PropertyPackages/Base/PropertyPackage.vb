@@ -1378,7 +1378,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
 
                             If Not T.IsValid Or Not P.IsValid Then Throw New ArgumentException("TP Flash: " & DWSIM.App.GetLocalString("ErrorInvalidFlashSpecValue"))
-                            If Not T.IsPositive Or Not P.IsPositive Then Throw New ArgumentOutOfRangeException("TP Flash: " & DWSIM.App.GetLocalString("ErrorInvalidFlashSpecValue"))
+                            If Not T.IsPositive Or Not P.IsPositive Then Throw New ArgumentException("TP Flash: " & DWSIM.App.GetLocalString("ErrorInvalidFlashSpecValue"))
 
                             Dim ige As Double = 0
                             Dim fge As Double = 0
@@ -1614,7 +1614,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
 
                             If Not T.IsValid Or Not xv.IsValid Then Throw New ArgumentException("TVF Flash: " & DWSIM.App.GetLocalString("ErrorInvalidFlashSpecValue"))
-                            If Not T.IsPositive Or xv.IsNegative Then Throw New ArgumentOutOfRangeException("TVF Flash: " & DWSIM.App.GetLocalString("ErrorInvalidFlashSpecValue"))
+                            If Not T.IsPositive Or xv.IsNegative Then Throw New ArgumentException("TVF Flash: " & DWSIM.App.GetLocalString("ErrorInvalidFlashSpecValue"))
 
                             If Double.IsNaN(P) Or Double.IsInfinity(P) Then P = 0.0#
 
@@ -1735,7 +1735,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             If Double.IsNaN(H) Or Double.IsInfinity(H) Then H = Me.CurrentMaterialStream.Fases(0).SPMProperties.molar_enthalpy.GetValueOrDefault / Me.CurrentMaterialStream.Fases(0).SPMProperties.molecularWeight.GetValueOrDefault
 
                             If Not T.IsValid Or Not H.IsValid Then Throw New ArgumentException("PH Flash: " & DWSIM.App.GetLocalString("ErrorInvalidFlashSpecValue"))
-                            If Not T.IsPositive Then Throw New ArgumentOutOfRangeException("PH Flash: " & DWSIM.App.GetLocalString("ErrorInvalidFlashSpecValue"))
+                            If Not T.IsPositive Then Throw New ArgumentException("PH Flash: " & DWSIM.App.GetLocalString("ErrorInvalidFlashSpecValue"))
 
                             If Me.AUX_IS_SINGLECOMP(Fase.Mixture) And Me.ComponentName <> "FPROPS" Then
 
@@ -1961,7 +1961,7 @@ redirect:                       result = Me.FlashBase.Flash_PH(RET_VMOL(Fase.Mix
                             If Double.IsNaN(S) Or Double.IsInfinity(S) Then S = Me.CurrentMaterialStream.Fases(0).SPMProperties.molar_entropy.GetValueOrDefault / Me.CurrentMaterialStream.Fases(0).SPMProperties.molecularWeight.GetValueOrDefault
 
                             If Not T.IsValid Or Not S.IsValid Then Throw New ArgumentException("PS Flash: " & DWSIM.App.GetLocalString("ErrorInvalidFlashSpecValue"))
-                            If Not T.IsPositive Then Throw New ArgumentOutOfRangeException("PS Flash: " & DWSIM.App.GetLocalString("ErrorInvalidFlashSpecValue"))
+                            If Not T.IsPositive Then Throw New ArgumentException("PS Flash: " & DWSIM.App.GetLocalString("ErrorInvalidFlashSpecValue"))
 
                             If Me.AUX_IS_SINGLECOMP(Fase.Mixture) And Me.ComponentName <> "FPROPS" And Me.ComponentName <> "CoolProp" Then
 
@@ -2134,7 +2134,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                             P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
 
                             If Not P.IsValid Or Not xv.IsValid Then Throw New ArgumentException("PVF Flash: " & DWSIM.App.GetLocalString("ErrorInvalidFlashSpecValue"))
-                            If Not P.IsPositive Or xv.IsNegative Then Throw New ArgumentOutOfRangeException("PVF Flash: " & DWSIM.App.GetLocalString("ErrorInvalidFlashSpecValue"))
+                            If Not P.IsPositive Or xv.IsNegative Then Throw New ArgumentException("PVF Flash: " & DWSIM.App.GetLocalString("ErrorInvalidFlashSpecValue"))
 
                             Dim Vx, Vx2, Vy As Double()
 
