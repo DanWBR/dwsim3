@@ -1465,12 +1465,12 @@ Namespace DWSIM.Flowsheet
                         End If
                     End If
                 Catch ex As Exception
-                    Dim st As New StackTrace(ex, True)
-                    If st.FrameCount > 0 Then
-                        form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
-                    Else
-                        form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                    End If
+                    'Dim st As New StackTrace(ex, True)
+                    'If st.FrameCount > 0 Then
+                    '    form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                    'Else
+                    '    form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                    'End If
                     loopex = ex
                     If My.Settings.SolverBreakOnException Then Exit While
                 End Try
