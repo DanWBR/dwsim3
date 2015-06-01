@@ -242,10 +242,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 End If
                                 .MassFlow = .MolarFlow * .ConstantProperties.Molar_Weight / 1000
                         End Select
+                        CheckSpec(.MolarFlow, True)
+                        CheckSpec(.MassFlow, True)
                     End With
                     With otherstr.Fases(0).Componentes(cs.ComponentID)
                         .MassFlow = instr.Fases(0).Componentes(cs.ComponentID).MassFlow.GetValueOrDefault - specstr.Fases(0).Componentes(cs.ComponentID).MassFlow.GetValueOrDefault
                         .MolarFlow = instr.Fases(0).Componentes(cs.ComponentID).MolarFlow.GetValueOrDefault - specstr.Fases(0).Componentes(cs.ComponentID).MolarFlow.GetValueOrDefault
+                        CheckSpec(.MolarFlow, True)
+                        CheckSpec(.MassFlow, True)
                     End With
                 Else
                     toremove.Add(cs.ComponentID)
@@ -298,6 +302,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Wo1 = outstr1.Fases(0).SPMProperties.massflow.GetValueOrDefault
             Wo2 = outstr2.Fases(0).SPMProperties.massflow.GetValueOrDefault
 
+            CheckSpec(Hi, False)
+            CheckSpec(Wi, True)
+            CheckSpec(Wo1, True)
+            CheckSpec(Wo1, True)
+
             'do a flash calculation on streams to calculate energy imbalance
 
             If Wo1 <> 0.0# Then
@@ -314,12 +323,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             'calculate imbalance
 
-            m_ei = Hi * Wi - Ho1 * Wo1 - Ho2 * Wo2
+            EnergyImb = Hi * Wi - Ho1 * Wo1 - Ho2 * Wo2
+
+            CheckSpec(EnergyImb, False)
 
             'update energy stream power value
 
             With form.Collections.CLCS_EnergyStreamCollection(Me.GraphicObject.EnergyConnector.AttachedConnector.AttachedTo.Name)
-                .Energia = Me.EnergyImb
+                .Energia = EnergyImb
                 .GraphicObject.Calculated = True
             End With
 

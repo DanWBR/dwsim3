@@ -89,6 +89,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 If cp.IsAttached Then
                     If cp.AttachedConnector.AttachedFrom.Calculated = False Then Throw New Exception(DWSIM.App.GetLocalString("Umaoumaiscorrentesna"))
                     ms = form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedFrom.Name)
+                    ms.Validate()
                     If Me.PressureCalculation = PressureBehavior.Minimum Then
                         If ms.Fases(0).SPMProperties.pressure.GetValueOrDefault < P Then
                             P = ms.Fases(0).SPMProperties.pressure

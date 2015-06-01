@@ -190,19 +190,31 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Me.DeltaQ = .Energia.GetValueOrDefault 'Wi * (H2 - Hi) / (Me.Eficiencia.GetValueOrDefault / 100)
                 End With
 
+                CheckSpec(Me.DeltaQ, True)
+
                 Dim k As Double = cp / cv
 
                 P2 = Pi * ((1 + DeltaQ.GetValueOrDefault * (Me.EficienciaAdiabatica.GetValueOrDefault / 100) / Wi * (k - 1) / k * mw / 8.314 / Ti)) ^ (k / (k - 1))
 
+                CheckSpec(P2, True)
+
                 DeltaP = P2 - Pi
                 POut = P2
+
+                CheckSpec(Si, False)
 
                 Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.S, P2, Si, 0)
 
                 H2 = Hi + (tmp(4) - Hi) / (Me.EficienciaAdiabatica.GetValueOrDefault / 100)
 
+                CheckSpec(H2, False)
+
                 tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, H2, Ti)
+
                 T2 = tmp(2)
+
+                CheckSpec(T2, True)
+
                 Me.DeltaT = T2 - Ti
 
                 'Atribuir valores à corrente de matéria conectada à jusante
@@ -242,15 +254,24 @@ fix:            Me.PropertyPackage.CurrentMaterialStream = form.Collections.CLCS
                         DeltaP = P2 - Pi
                 End Select
 
+                CheckSpec(Si, False)
+
                 Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.S, P2, Si, 0)
                 T2 = tmp(2)
                 H2 = tmp(4)
 
+                CheckSpec(T2, True)
+                CheckSpec(H2, False)
+
                 Me.DeltaQ = Wi * (H2 - Hi) / (Me.EficienciaAdiabatica.GetValueOrDefault / 100)
+
+                CheckSpec(DeltaQ, True)
 
                 tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, Hi + Me.DeltaQ.GetValueOrDefault / Wi, T2)
                 T2 = tmp(2)
                 Me.DeltaT = T2 - Ti
+
+                CheckSpec(T2, True)
 
                 H2 = Hi + Me.DeltaQ.GetValueOrDefault / Wi
 

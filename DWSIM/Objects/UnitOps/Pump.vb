@@ -441,12 +441,15 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Throw New Exception(DWSIM.App.GetLocalString("Verifiqueasconexesdo"))
             End If
 
+            Me.PropertyPackage.CurrentMaterialStream = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name)
+
+            Me.PropertyPackage.CurrentMaterialStream.Validate()
+
             Dim Ti, Pi, Hi, Wi, rho_li, qli, qvi, ei, ein, T2, P2, H2 As Double
 
             qvi = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(2).SPMProperties.volumetric_flow.GetValueOrDefault.ToString
             If qvi > 0 And Not Me.IgnorePhase Then Throw New Exception(DWSIM.App.GetLocalString("Existeumafasevaporna"))
 
-            Me.PropertyPackage.CurrentMaterialStream = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name)
             Ti = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.temperature.GetValueOrDefault.ToString
             Pi = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.pressure.GetValueOrDefault.ToString
             rho_li = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.density.GetValueOrDefault.ToString
@@ -559,6 +562,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     'we need -> head, power, eff, to calculate P2, H2, T2
 
                     P2 = Pi + syshead * 9.81 * rho_li
+                    CheckSpec(P2, True)
 
                     Me.DeltaP = P2 - Pi
 
@@ -575,12 +579,16 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         H2 = Hi + power * eff / Wi
                     End If
 
+                    CheckSpec(power, True)
+
                     Me.CurvePower = power
 
                     Me.DeltaQ = power
 
                     tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, H2, Ti)
                     T2 = tmp(2)
+
+                    CheckSpec(T2, True)
 
                     Me.DeltaT = T2 - Ti
 
@@ -606,13 +614,16 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     End With
 
                     H2 = Hi + Me.DeltaQ.GetValueOrDefault * (Me.Eficiencia.GetValueOrDefault / 100) / Wi
+                    CheckSpec(H2, False)
 
                     P2 = Pi + (H2 - Hi) * rho_li * 1000
+                    CheckSpec(P2, True)
 
                     DeltaP = P2 - Pi
 
                     tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, H2, Ti)
                     T2 = tmp(2)
+                    CheckSpec(T2, True)
 
                     Me.DeltaT = T2 - Ti
 
@@ -626,13 +637,16 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                     Me.PropertyPackage.CurrentMaterialStream = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name)
                     P2 = Pi + Me.DeltaP.GetValueOrDefault
+                    CheckSpec(P2, True)
 
                     Me.DeltaQ = (P2 - Pi) / rho_li / 1000 / (Me.Eficiencia.GetValueOrDefault / 100) * Wi
 
                     H2 = Hi + Me.DeltaQ / Wi
+                    CheckSpec(H2, False)
 
                     Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, H2, 0.0#)
                     T2 = tmp(2)
+                    CheckSpec(T2, True)
 
                     Me.DeltaT = T2 - Ti
 
@@ -656,15 +670,18 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Me.PropertyPackage.CurrentMaterialStream = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name)
 
                     P2 = Me.Pout
+                    CheckSpec(P2, True)
 
                     Me.DeltaP = P2 - Pi
 
                     Me.DeltaQ = (P2 - Pi) / rho_li / 1000 / (Me.Eficiencia.GetValueOrDefault / 100) * Wi
 
                     H2 = Hi + Me.DeltaQ / Wi
+                    CheckSpec(H2, False)
 
                     Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, H2, Ti)
                     T2 = tmp(2)
+                    CheckSpec(T2, True)
 
                     Me.DeltaT = T2 - Ti
 

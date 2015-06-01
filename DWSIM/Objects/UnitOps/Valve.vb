@@ -123,6 +123,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Dim Ti, Pi, Hi, Wi, ei, ein, T2, P2, H2, H2c As Double
 
             Me.PropertyPackage.CurrentMaterialStream = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name)
+            Me.PropertyPackage.CurrentMaterialStream.Validate()
             Ti = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.temperature.GetValueOrDefault.ToString
             Pi = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.pressure.GetValueOrDefault.ToString
             Hi = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.enthalpy.GetValueOrDefault.ToString
@@ -139,10 +140,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 P2 = Me.OutletPressure.GetValueOrDefault
                 Me.DeltaP = P2 - Pi
             End If
+            CheckSpec(P2, True)
 
             Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, H2, Ti)
             T2 = tmp(2)
+            CheckSpec(T2, True)
             H2c = tmp(4)
+            CheckSpec(H2c, True)
 
             'Dim htol As Double = Me.PropertyPackage.Parameters("PP_PHFELT")
             'Dim herr As Double = Math.Abs((H2c - H2) / H2)

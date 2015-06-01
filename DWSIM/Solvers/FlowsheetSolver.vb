@@ -2239,19 +2239,28 @@ Namespace DWSIM.Flowsheet
 
                 Else
 
-                    form.WriteToLog(DWSIM.App.GetLocalString("FSfinishedsolvingerror"), Color.Red, FormClasses.TipoAviso.Erro)
-                    For Each ex In age.Flatten().InnerExceptions
-                        Try
-                            Dim st As New StackTrace(ex, True)
-                            If Not ex.InnerException Is Nothing Then st = New StackTrace(ex.InnerException, True)
-                            If st.FrameCount > 0 Then
-                                form.WriteToLog(ex.Message & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
-                            Else
-                                form.WriteToLog(ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                            End If
-                        Catch iex As Exception
+                    Dim baseexception As Exception = Nothing
 
-                        End Try
+                    age = age.Flatten
+
+                    form.WriteToLog(DWSIM.App.GetLocalString("FSfinishedsolvingerror"), Color.Red, FormClasses.TipoAviso.Erro)
+                    For Each ex In age.InnerExceptions
+                        baseexception = ex
+                        While ex.InnerException IsNot Nothing
+                            baseexception = ex.InnerException
+                        End While
+                        form.WriteToLog(baseexception.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                        'Try
+                        '    Dim st As New StackTrace(ex, True)
+                        '    If Not baseexception Is Nothing Then st = New StackTrace(baseexception, True)
+                        '    If st.FrameCount > 0 Then
+                        '        form.WriteToLog(ex.Message.ToString & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                        '    Else
+                        '        form.WriteToLog(ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                        '    End If
+                        'Catch iex As Exception
+
+                        'End Try
                     Next
                     If Not form.Visible Then Throw age Else age = Nothing
 

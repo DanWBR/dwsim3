@@ -162,4 +162,50 @@ Module ControlExtensions
 
     End Function
 
+    <System.Runtime.CompilerServices.Extension()> _
+    Public Function IsValid(d As Double) As Boolean
+        If Double.IsNaN(d) Or Double.IsInfinity(d) Then Return False Else Return True
+    End Function
+
+    <System.Runtime.CompilerServices.Extension()> _
+    Public Function IsValid(d As Nullable(Of Double)) As Boolean
+        If Double.IsNaN(d.GetValueOrDefault) Or Double.IsInfinity(d.GetValueOrDefault) Then Return False Else Return True
+    End Function
+
+    <System.Runtime.CompilerServices.Extension()> _
+    Public Function IsPositive(d As Double) As Boolean
+        If d.IsValid() Then
+            If d > 0.0# Then Return True Else Return False
+        Else
+            Throw New ArgumentException("invalid double")
+        End If
+    End Function
+
+    <System.Runtime.CompilerServices.Extension()> _
+    Public Function IsPositive(d As Nullable(Of Double)) As Boolean
+        If d.GetValueOrDefault.IsValid() Then
+            If d.GetValueOrDefault > 0.0# Then Return True Else Return False
+        Else
+            Throw New ArgumentException("invalid double")
+        End If
+    End Function
+
+    <System.Runtime.CompilerServices.Extension()> _
+    Public Function IsNegative(d As Double) As Boolean
+        If d.IsValid() Then
+            If d < 0.0# Then Return True Else Return False
+        Else
+            Throw New ArgumentException("invalid double")
+        End If
+    End Function
+
+    <System.Runtime.CompilerServices.Extension()> _
+    Public Function IsNegative(d As Nullable(Of Double)) As Boolean
+        If d.GetValueOrDefault.IsValid() Then
+            If d.GetValueOrDefault < 0.0# Then Return True Else Return False
+        Else
+            Throw New ArgumentException("invalid double")
+        End If
+    End Function
+
 End Module

@@ -5086,4 +5086,13 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="SpreadsheetTable" xml:space="preserve">
     <value>Linked Spreadsheet Table</value>
   </data>
+  <data name="ErrorInvalidFlashSpecValue" xml:space="preserve">
+    <value>One or more flash specification values are invalid. Please check the associated Unit Operation or Material Stream for incorrect specifications or miscalculated values.</value>
+  </data>
+  <data name="ErrorInvalidMSSpecValue" xml:space="preserve">
+    <value>A specified or calculated property for this Material Stream is invalid. Please check it for incorrect specifications or miscalculated values.</value>
+  </data>
+  <data name="ErrorInvalidUOSpecValue" xml:space="preserve">
+    <value>A specified or calculated property for this Unit Operation is invalid. Please check it for incorrect specifications or miscalculated values.</value>
+  </data>
 </root>

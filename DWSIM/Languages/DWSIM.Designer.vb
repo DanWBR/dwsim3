@@ -5342,6 +5342,33 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Um ou ambos os valores das variáveis especificadas para o cálculo flash está (estão) inválido(s). Por favor verifique a Operação Unitária associada ou suas correntes de entrada para encontrar possíveis erros nas suas propriedades especificadas ou calculadas..
+        '''</summary>
+        Friend Shared ReadOnly Property ErrorInvalidFlashSpecValue() As String
+            Get
+                Return ResourceManager.GetString("ErrorInvalidFlashSpecValue", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Uma ou mais variáveis de estado da corrente de matéria está (estão) com o(s) valor(es) inválido(s). Por favor, verifique os parâmetros informados ou calculados para esta corrente..
+        '''</summary>
+        Friend Shared ReadOnly Property ErrorInvalidMSSpecValue() As String
+            Get
+                Return ResourceManager.GetString("ErrorInvalidMSSpecValue", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Uma ou mais variáveis de estado calculadas pela operação unitária está (estão) com o(s) valor(es) inválido(s). Por favor, verifique os parâmetros informados para a Operação Unitária ou suas correntes de entrada..
+        '''</summary>
+        Friend Shared ReadOnly Property ErrorInvalidUOSpecValue() As String
+            Get
+                Return ResourceManager.GetString("ErrorInvalidUOSpecValue", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Erro ao carregar banco de dados do ChemSep em XML..
         '''</summary>
         Friend Shared ReadOnly Property ErrorloadingChemSepXMLdatabase() As String

@@ -250,6 +250,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
             StOut0 = FlowSheet.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name)
             StOut1 = FlowSheet.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.OutputConnectors(1).AttachedConnector.AttachedTo.Name)
 
+            StIn0.Validate()
+            StIn1.Validate()
+
             Me.PropertyPackage.CurrentMaterialStream = StIn0
 
             'First input stream.
@@ -847,6 +850,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         icnt += 1
                     Loop Until fx < 0.01 Or icnt > 100
             End Select
+
+            CheckSpec(Tc2, True)
+            CheckSpec(Th2, True)
+            CheckSpec(Ph2, True)
+            CheckSpec(Pc2, True)
 
             Me.ColdSideOutletTemperature = Tc2
             Me.HotSideOutletTemperature = Th2

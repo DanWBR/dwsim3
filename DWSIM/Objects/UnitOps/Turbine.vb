@@ -131,6 +131,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             Dim form As Global.DWSIM.FormFlowsheet = Me.Flowsheet
 
+            form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Validate()
+
             Dim Ti, Pi, Hi, Si, Wi, rho_vi, qvi, qli, ei, ein, T2, P2, H2 As Double
 
             qli = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(1).SPMProperties.volumetric_flow.GetValueOrDefault.ToString
@@ -197,15 +199,19 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     P2 = Me.POut.GetValueOrDefault
                     DeltaP = Pi - P2
             End Select
+            CheckSpec(P2, True)
 
             Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.S, P2, Si, Ti)
             T2 = tmp(2)
+            CheckSpec(T2, True)
             H2 = tmp(4)
+            CheckSpec(H2, False)
 
             Me.DeltaQ = -Wi * (H2 - Hi) * (Me.EficienciaAdiabatica.GetValueOrDefault / 100)
 
             tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, Hi - Me.DeltaQ.GetValueOrDefault / Wi, T2)
             T2 = tmp(2)
+            CheckSpec(T2, True)
             Me.DeltaT = T2 - Ti
 
             H2 = Hi - Me.DeltaQ.GetValueOrDefault / Wi

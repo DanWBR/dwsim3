@@ -36,16 +36,16 @@ Namespace DWSIM.ClassesBasicasTermodinamica
 
         Protected m_ComponentDescription As String = ""
         Protected m_ComponentName As String = ""
-        Protected m_molarfraction As Nullable(Of Double) = 0
-        Protected m_massfraction As Nullable(Of Double) = 0
-        Protected m_molarflow As Nullable(Of Double) = 0
-        Protected m_massflow As Nullable(Of Double) = 0
-        Protected m_fugacitycoeff As Nullable(Of Double) = 0
-        Protected m_activitycoeff As Nullable(Of Double) = 0
-        Protected m_partialvolume As Nullable(Of Double) = 0
-        Protected m_partialpressure As Nullable(Of Double) = 0
-        Protected m_volumetricflow As Nullable(Of Double) = 0
-        Protected m_volumetricfraction As Nullable(Of Double) = 0
+        Protected m_molarfraction As Nullable(Of Double) = 0.0#
+        Protected m_massfraction As Nullable(Of Double) = 0.0#
+        Protected m_molarflow As Nullable(Of Double) = 0.0#
+        Protected m_massflow As Nullable(Of Double) = 0.0#
+        Protected m_fugacitycoeff As Nullable(Of Double) = 0.0#
+        Protected m_activitycoeff As Nullable(Of Double) = 0.0#
+        Protected m_partialvolume As Nullable(Of Double) = 0.0#
+        Protected m_partialpressure As Nullable(Of Double) = 0.0#
+        Protected m_volumetricflow As Nullable(Of Double) = 0.0#
+        Protected m_volumetricfraction As Nullable(Of Double) = 0.0#
         Protected m_isPF As Boolean = False
         Protected m_lnKval As Double = 0
         Protected m_Kval As Double = 0

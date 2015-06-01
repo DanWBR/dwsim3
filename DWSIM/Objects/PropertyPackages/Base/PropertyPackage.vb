@@ -1161,6 +1161,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             xl3 = Me.CurrentMaterialStream.Fases(5).SPMProperties.molarfraction.GetValueOrDefault
             xw = Me.CurrentMaterialStream.Fases(6).SPMProperties.molarfraction.GetValueOrDefault
 
+            If Not xl1.IsValid Then xl1 = 0.0#
+            If Not xl2.IsValid Then xl2 = 0.0#
+            If Not xl3.IsValid Then xl3 = 0.0#
+            If Not xw.IsValid Then xw = 0.0#
+
             xl = xl1 + xl2 + xl3 + xw
             Me.CurrentMaterialStream.Fases(1).SPMProperties.molarfraction = xl
 
@@ -1168,6 +1173,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             wl2 = Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction.GetValueOrDefault
             wl3 = Me.CurrentMaterialStream.Fases(5).SPMProperties.massfraction.GetValueOrDefault
             ww = Me.CurrentMaterialStream.Fases(6).SPMProperties.massfraction.GetValueOrDefault
+
+            If Not wl1.IsValid Then wl1 = 0.0#
+            If Not wl2.IsValid Then wl2 = 0.0#
+            If Not wl3.IsValid Then wl3 = 0.0#
+            If Not ww.IsValid Then ww = 0.0#
 
             wl = wl1 + wl2 + wl3 + ww
             Me.CurrentMaterialStream.Fases(1).SPMProperties.massfraction = wl
@@ -1177,6 +1187,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             xlf3 = Me.CurrentMaterialStream.Fases(5).SPMProperties.molarflow.GetValueOrDefault
             xwf = Me.CurrentMaterialStream.Fases(6).SPMProperties.molarflow.GetValueOrDefault
 
+            If Not xlf1.IsValid Then xlf1 = 0.0#
+            If Not xlf2.IsValid Then xlf2 = 0.0#
+            If Not xlf3.IsValid Then xlf3 = 0.0#
+            If Not xwf.IsValid Then xwf = 0.0#
+
             xlf = xlf1 + xlf2 + xlf3 + xwf
             Me.CurrentMaterialStream.Fases(1).SPMProperties.molarflow = xlf
 
@@ -1185,22 +1200,41 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             wlf3 = Me.CurrentMaterialStream.Fases(5).SPMProperties.massflow.GetValueOrDefault
             wwf = Me.CurrentMaterialStream.Fases(6).SPMProperties.massflow.GetValueOrDefault
 
+            If Not wlf1.IsValid Then wlf1 = 0.0#
+            If Not wlf2.IsValid Then wlf2 = 0.0#
+            If Not wlf3.IsValid Then wlf3 = 0.0#
+            If Not wwf.IsValid Then wwf = 0.0#
+
             wlf = wlf1 + wlf2 + wlf3 + wwf
             Me.CurrentMaterialStream.Fases(1).SPMProperties.massflow = wlf
 
             For Each c As Substancia In Me.CurrentMaterialStream.Fases(1).Componentes.Values
+
                 cml1 = Me.CurrentMaterialStream.Fases(3).Componentes(c.Nome).FracaoMolar.GetValueOrDefault
                 cml2 = Me.CurrentMaterialStream.Fases(4).Componentes(c.Nome).FracaoMolar.GetValueOrDefault
                 cml3 = Me.CurrentMaterialStream.Fases(5).Componentes(c.Nome).FracaoMolar.GetValueOrDefault
                 cmw = Me.CurrentMaterialStream.Fases(6).Componentes(c.Nome).FracaoMolar.GetValueOrDefault
+
+                If Not cml1.IsValid Then cml1 = 0.0#
+                If Not cml2.IsValid Then cml2 = 0.0#
+                If Not cml3.IsValid Then cml3 = 0.0#
+                If Not cmw.IsValid Then cmw = 0.0#
+
                 cwl1 = Me.CurrentMaterialStream.Fases(3).Componentes(c.Nome).FracaoMassica.GetValueOrDefault
                 cwl2 = Me.CurrentMaterialStream.Fases(4).Componentes(c.Nome).FracaoMassica.GetValueOrDefault
                 cwl3 = Me.CurrentMaterialStream.Fases(5).Componentes(c.Nome).FracaoMassica.GetValueOrDefault
                 cww = Me.CurrentMaterialStream.Fases(6).Componentes(c.Nome).FracaoMassica.GetValueOrDefault
+
+                If Not cwl1.IsValid Then cwl1 = 0.0#
+                If Not cwl2.IsValid Then cwl2 = 0.0#
+                If Not cwl3.IsValid Then cwl3 = 0.0#
+                If Not cww.IsValid Then cww = 0.0#
+
                 cml = (xl1 * cml1 + xl2 * cml2 + xl3 * cml3 + xw * cmw) / xl
                 cwl = (wl1 * cwl1 + wl2 * cwl2 + wl3 * cwl3 + ww * cww) / wl
                 c.FracaoMolar = cml
                 c.FracaoMassica = cwl
+
             Next
 
             If wl1 > 0 Then dl1 = Me.CurrentMaterialStream.Fases(3).SPMProperties.density.GetValueOrDefault Else dl1 = 1
@@ -1211,7 +1245,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             dl = wl1 / dl1 + wl2 / dl2 + wl3 / dl3 + ww / dw
             dl = wl / dl
             Me.CurrentMaterialStream.Fases(1).SPMProperties.density = dl
-
 
             If Double.IsNaN(wlf / dl) Then
                 Me.CurrentMaterialStream.Fases(1).SPMProperties.volumetric_flow = 0.0#
@@ -1343,6 +1376,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                             T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
                             P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
+
+                            If Not T.IsValid Or Not P.IsValid Then Throw New ArgumentException(DWSIM.App.GetLocalString("ErrorInvalidFlashSpecValue"))
+                            If Not T.IsPositive Or Not P.IsPositive Then Throw New ArgumentOutOfRangeException(DWSIM.App.GetLocalString("ErrorInvalidFlashSpecValue"))
 
                             Dim ige As Double = 0
                             Dim fge As Double = 0
@@ -1577,6 +1613,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
                             P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
 
+                            If Not T.IsValid Or Not xv.IsValid Then Throw New ArgumentException(DWSIM.App.GetLocalString("ErrorInvalidFlashSpecValue"))
+                            If Not T.IsPositive Or xv.IsNegative Then Throw New ArgumentOutOfRangeException(DWSIM.App.GetLocalString("ErrorInvalidFlashSpecValue"))
+
                             If Double.IsNaN(P) Or Double.IsInfinity(P) Then P = 0.0#
 
                             Dim Vx, Vx2, Vy As Double()
@@ -1694,7 +1733,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
 
                             If Double.IsNaN(H) Or Double.IsInfinity(H) Then H = Me.CurrentMaterialStream.Fases(0).SPMProperties.molar_enthalpy.GetValueOrDefault / Me.CurrentMaterialStream.Fases(0).SPMProperties.molecularWeight.GetValueOrDefault
-                            If Double.IsNaN(T) Or Double.IsInfinity(T) Then T = 0.0#
+
+                            If Not T.IsValid Or Not H.IsValid Then Throw New ArgumentException(DWSIM.App.GetLocalString("ErrorInvalidFlashSpecValue"))
+                            If Not T.IsPositive Then Throw New ArgumentOutOfRangeException(DWSIM.App.GetLocalString("ErrorInvalidFlashSpecValue"))
 
                             If Me.AUX_IS_SINGLECOMP(Fase.Mixture) And Me.ComponentName <> "FPROPS" Then
 
@@ -1919,6 +1960,9 @@ redirect:                       result = Me.FlashBase.Flash_PH(RET_VMOL(Fase.Mix
 
                             If Double.IsNaN(S) Or Double.IsInfinity(S) Then S = Me.CurrentMaterialStream.Fases(0).SPMProperties.molar_entropy.GetValueOrDefault / Me.CurrentMaterialStream.Fases(0).SPMProperties.molecularWeight.GetValueOrDefault
 
+                            If Not T.IsValid Or Not S.IsValid Then Throw New ArgumentException(DWSIM.App.GetLocalString("ErrorInvalidFlashSpecValue"))
+                            If Not T.IsPositive Then Throw New ArgumentOutOfRangeException(DWSIM.App.GetLocalString("ErrorInvalidFlashSpecValue"))
+
                             If Me.AUX_IS_SINGLECOMP(Fase.Mixture) And Me.ComponentName <> "FPROPS" And Me.ComponentName <> "CoolProp" Then
 
                                 Dim brentsolverT As New BrentOpt.Brent
@@ -2089,7 +2133,8 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                             T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
                             P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
 
-                            If Double.IsNaN(T) Or Double.IsInfinity(T) Then T = 0.0#
+                            If Not P.IsValid Or Not xv.IsValid Then Throw New ArgumentException(DWSIM.App.GetLocalString("ErrorInvalidFlashSpecValue"))
+                            If Not P.IsPositive Or xv.IsNegative Then Throw New ArgumentOutOfRangeException(DWSIM.App.GetLocalString("ErrorInvalidFlashSpecValue"))
 
                             Dim Vx, Vx2, Vy As Double()
 

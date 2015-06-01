@@ -207,6 +207,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     nc += 1
                     If cp.AttachedConnector.AttachedFrom.Calculated = False Then Throw New Exception(DWSIM.App.GetLocalString("Umaoumaiscorrentesna"))
                     ms = form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedFrom.Name)
+                    ms.Validate()
                     If Me.PressureCalculation = PressureBehavior.Minimum Then
                         If ms.Fases(0).SPMProperties.pressure.GetValueOrDefault < P Then
                             P = ms.Fases(0).SPMProperties.pressure
@@ -258,6 +259,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Next
 
             If W = 0.0# Then T = 273.15
+
+            CheckSpec(Hs, False)
+            CheckSpec(W, True)
+            CheckSpec(P, True)
 
             With mix
 
@@ -552,6 +557,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Next
                 End If
 
+                CheckSpec(Hv, False)
+                CheckSpec(P, True)
+                CheckSpec(Tv, True)
+
                 cp = Me.GraphicObject.OutputConnectors(0)
                 If cp.IsAttached Then
                     ms = form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name)
@@ -581,6 +590,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         .Fases(2).SPMProperties.molarfraction = 1
                     End With
                 End If
+
+                CheckSpec(Hl, False)
+                CheckSpec(P, True)
+                CheckSpec(Tl, True)
 
                 cp = Me.GraphicObject.OutputConnectors(1)
                 If cp.IsAttached Then

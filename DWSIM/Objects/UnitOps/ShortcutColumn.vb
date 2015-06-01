@@ -146,6 +146,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
             cduty = FlowSheet.Collections.CLCS_EnergyStreamCollection(Me.GraphicObject.EnergyConnector.AttachedConnector.AttachedTo.Name)
             rduty = FlowSheet.Collections.CLCS_EnergyStreamCollection(Me.GraphicObject.InputConnectors(1).AttachedConnector.AttachedFrom.Name)
 
+            feed.Validate()
+
             'classify components by relative volatility
 
             Dim n As Integer = feed.Fases(0).Componentes.Count - 1

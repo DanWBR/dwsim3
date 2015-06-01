@@ -5052,4 +5052,13 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="SpreadsheetTable" xml:space="preserve">
     <value>Tabela da Planilha de Dados</value>
   </data>
+  <data name="ErrorInvalidFlashSpecValue" xml:space="preserve">
+    <value>Um ou ambos os valores das variáveis especificadas para o cálculo flash está (estão) inválido(s). Por favor verifique a Operação Unitária associada ou suas correntes de entrada para encontrar possíveis erros nas suas propriedades especificadas ou calculadas.</value>
+  </data>
+  <data name="ErrorInvalidMSSpecValue" xml:space="preserve">
+    <value>Uma ou mais variáveis de estado da corrente de matéria está (estão) com o(s) valor(es) inválido(s). Por favor, verifique os parâmetros informados ou calculados para esta corrente.</value>
+  </data>
+  <data name="ErrorInvalidUOSpecValue" xml:space="preserve">
+    <value>Uma ou mais variáveis de estado calculadas pela operação unitária está (estão) com o(s) valor(es) inválido(s). Por favor, verifique os parâmetros informados para a Operação Unitária ou suas correntes de entrada.</value>
+  </data>
 </root>

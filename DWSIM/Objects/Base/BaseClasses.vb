@@ -69,6 +69,16 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
 
     End Sub
 
+    Public Sub CheckSpec(val As Double, onlypositive As Boolean)
+
+        Dim mytag As String = ""
+        If Me.GraphicObject IsNot Nothing Then mytag = "[" & Me.GraphicObject.Tag & "] "
+
+        If Not val.IsValid Then Throw New ArgumentException(mytag & DWSIM.App.GetLocalString("ErrorInvalidUOSpecValue"))
+        If onlypositive Then If Not val.IsPositive Then Throw New ArgumentOutOfRangeException(mytag & DWSIM.App.GetLocalString("ErrorInvalidUOSpecValue"))
+
+    End Sub
+
     Public Overridable Sub FillNodeItems(Optional ByVal NoPropVals As Boolean = False)
 
         If Me.NodeTableItems Is Nothing Then Me.NodeTableItems = New Dictionary(Of Integer, DWSIM.Outros.NodeItem)

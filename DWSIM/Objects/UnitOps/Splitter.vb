@@ -116,6 +116,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             End If
 
             Dim ems As DWSIM.SimulationObjects.Streams.MaterialStream = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name)
+            ems.Validate()
             Dim W As Double = ems.Fases(0).SPMProperties.massflow.GetValueOrDefault
             Dim M As Double = ems.Fases(0).SPMProperties.molarflow.GetValueOrDefault
 
