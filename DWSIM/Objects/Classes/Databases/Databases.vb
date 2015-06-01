@@ -1291,9 +1291,9 @@ Namespace DWSIM.Databases
                         i += 1
                     Next
                 End If
-                'If replace Then
-                '    If index <> -1 Then xmldoc.ChildNodes(1).RemoveChild(xmldoc.ChildNodes(1).ChildNodes(index))
-                'End If
+                If replace Then
+                    If index <> -1 Then xmldoc.ChildNodes(1).RemoveChild(xmldoc.ChildNodes(1).ChildNodes(index))
+                End If
 
                 Dim newnode As XmlNode = xmldoc.CreateNode("element", "Interaction", "")
                 With newnode
@@ -1335,7 +1335,6 @@ Namespace DWSIM.Databases
             Dim IP As ClassesBasicasTermodinamica.InteractionParameter
             Dim IPA As New ArrayList()
             Dim cult As Globalization.CultureInfo = New Globalization.CultureInfo("en-US")
-            'Dim nf As Globalization.NumberFormatInfo = cult.NumberFormat
 
             For Each node As XmlNode In xmldoc.ChildNodes(1)
                 IP = New ClassesBasicasTermodinamica.InteractionParameter

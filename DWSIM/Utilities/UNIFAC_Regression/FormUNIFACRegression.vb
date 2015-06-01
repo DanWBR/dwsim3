@@ -39,6 +39,7 @@ Public Class FormUNIFACRegression
     Public _pp As Object
     Public _comps As New Dictionary(Of String, DWSIM.ClassesBasicasTermodinamica.ConstantProperties)
     Public uni As Object = Nothing
+    Public IP As New DWSIM.ClassesBasicasTermodinamica.InteractionParameter
 
     Dim mat As DWSIM.SimulationObjects.Streams.MaterialStream
     Dim GI1, GI2 As Integer
@@ -299,8 +300,8 @@ Public Class FormUNIFACRegression
         If col > 0 And row > 2 And uni IsNot Nothing Then
             Dim T As Type = uni.GetType
 
-            GN1 = IPGrid.Item(0, row).Value
-            GN2 = IPGrid.Item(col, 2).Value
+            GN1 = IPGrid.Item(col, 2).Value
+            GN2 = IPGrid.Item(0, row).Value
 
             Select Case T.Name
                 Case "Unifac"
@@ -309,24 +310,36 @@ Public Class FormUNIFACRegression
                         If group.Value.PrimGroupName = GN1 Then GI1 = group.Value.PrimaryGroup
                         If group.Value.PrimGroupName = GN2 Then GI2 = group.Value.PrimaryGroup
                     Next
+                    TBaij.Text = EvalIPNF("a", GI1, GI2)
+                    TBaji.Text = EvalIPNF("a", GI2, GI1)
+                    TBbij.Text = ""
+                    TBbji.Text = ""
+                    TBcij.Text = ""
+                    TBcji.Text = ""
                 Case "Modfac"
                     Dim gr As DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Modfac = uni
                     For Each group In gr.ModfGroups.Groups
                         If group.Value.MainGroupName = GN1 Then GI1 = group.Value.PrimaryGroup
                         If group.Value.MainGroupName = GN2 Then GI2 = group.Value.PrimaryGroup
                     Next
+                    TBaij.Text = EvalIPNF("a", GI1, GI2)
+                    TBaji.Text = EvalIPNF("a", GI2, GI1)
+                    TBbij.Text = EvalIPNF("b", GI1, GI2)
+                    TBbji.Text = EvalIPNF("b", GI2, GI1)
+                    TBcij.Text = EvalIPNF("c", GI1, GI2)
+                    TBcji.Text = EvalIPNF("c", GI2, GI1)
                 Case "NISTMFAC"
                     Dim gr As DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NISTMFAC = uni
                     For Each group In gr.ModfGroups.Groups
                         If group.Value.MainGroupName = GN1 Then GI1 = group.Value.PrimaryGroup
                         If group.Value.MainGroupName = GN2 Then GI2 = group.Value.PrimaryGroup
                     Next
-                    TBaij.Text = EvalIPNF(gr, "a", GI1, GI2)
-                    TBaji.Text = EvalIPNF(gr, "a", GI2, GI1)
-                    TBbij.Text = EvalIPNF(gr, "b", GI1, GI2)
-                    TBbji.Text = EvalIPNF(gr, "b", GI2, GI1)
-                    TBcij.Text = EvalIPNF(gr, "c", GI1, GI2)
-                    TBcji.Text = EvalIPNF(gr, "c", GI2, GI1)
+                    TBaij.Text = EvalIPNF("a", GI1, GI2)
+                    TBaji.Text = EvalIPNF("a", GI2, GI1)
+                    TBbij.Text = EvalIPNF("b", GI1, GI2)
+                    TBbji.Text = EvalIPNF("b", GI2, GI1)
+                    TBcij.Text = EvalIPNF("c", GI1, GI2)
+                    TBcji.Text = EvalIPNF("c", GI2, GI1)
             End Select
 
             LblMGi.Text = GI1 & " - " & GN1
@@ -340,25 +353,59 @@ Public Class FormUNIFACRegression
         End If
 
     End Sub
-    Function EvalIPNF(ByVal gr As DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NISTMFAC, ByVal F As Char, ByVal g1 As Integer, ByVal g2 As Integer) As Double
+    Function EvalIPNF(ByVal F As Char, ByVal g1 As Integer, ByVal g2 As Integer) As Double
         EvalIPNF = 0
-        Select Case F
-            Case "a"
-                If gr.ModfGroups.InteracParam_aij.ContainsKey(g1) Then
-                    If gr.ModfGroups.InteracParam_aij(g1).ContainsKey(g2) Then
-                        EvalIPNF = gr.ModfGroups.InteracParam_aij(g2)(g1)
-                    End If
-                End If
-            Case "b"
-                If gr.ModfGroups.InteracParam_bij.ContainsKey(g1) Then
-                    If gr.ModfGroups.InteracParam_bij(g1).ContainsKey(g2) Then
-                        EvalIPNF = gr.ModfGroups.InteracParam_bij(g2)(g1)
-                    End If
-                End If
-            Case "c"
-                If gr.ModfGroups.InteracParam_cij.ContainsKey(g1) Then
-                    If gr.ModfGroups.InteracParam_cij(g1).ContainsKey(g2) Then
-                        EvalIPNF = gr.ModfGroups.InteracParam_cij(g2)(g1)
+        Dim T As Type = uni.GetType
+        Select Case T.Name
+            Case "NISTMFAC"
+                Dim gr As DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NISTMFAC = uni
+                Select Case F
+                    Case "a"
+                        If gr.ModfGroups.InteracParam_aij.ContainsKey(g1) Then
+                            If gr.ModfGroups.InteracParam_aij(g1).ContainsKey(g2) Then
+                                EvalIPNF = gr.ModfGroups.InteracParam_aij(g2)(g1)
+                            End If
+                        End If
+                    Case "b"
+                        If gr.ModfGroups.InteracParam_bij.ContainsKey(g1) Then
+                            If gr.ModfGroups.InteracParam_bij(g1).ContainsKey(g2) Then
+                                EvalIPNF = gr.ModfGroups.InteracParam_bij(g2)(g1)
+                            End If
+                        End If
+                    Case "c"
+                        If gr.ModfGroups.InteracParam_cij.ContainsKey(g1) Then
+                            If gr.ModfGroups.InteracParam_cij(g1).ContainsKey(g2) Then
+                                EvalIPNF = gr.ModfGroups.InteracParam_cij(g2)(g1)
+                            End If
+                        End If
+                End Select
+            Case "MODFAC"
+                Dim gr As DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Modfac = uni
+                Select Case F
+                    Case "a"
+                        If gr.ModfGroups.InteracParam_aij.ContainsKey(g1) Then
+                            If gr.ModfGroups.InteracParam_aij(g1).ContainsKey(g2) Then
+                                EvalIPNF = gr.ModfGroups.InteracParam_aij(g2)(g1)
+                            End If
+                        End If
+                    Case "b"
+                        If gr.ModfGroups.InteracParam_bij.ContainsKey(g1) Then
+                            If gr.ModfGroups.InteracParam_bij(g1).ContainsKey(g2) Then
+                                EvalIPNF = gr.ModfGroups.InteracParam_bij(g2)(g1)
+                            End If
+                        End If
+                    Case "c"
+                        If gr.ModfGroups.InteracParam_cij.ContainsKey(g1) Then
+                            If gr.ModfGroups.InteracParam_cij(g1).ContainsKey(g2) Then
+                                EvalIPNF = gr.ModfGroups.InteracParam_cij(g2)(g1)
+                            End If
+                        End If
+                End Select
+            Case "Unifac"
+                Dim gr As DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac = uni
+                If gr.UnifGroups.InteracParam.ContainsKey(g1) Then
+                    If gr.UnifGroups.InteracParam(g1).ContainsKey(g2) Then
+                        EvalIPNF = gr.UnifGroups.InteracParam(g2)(g1)
                     End If
                 End If
         End Select
@@ -440,8 +487,8 @@ Public Class FormUNIFACRegression
 
         P = 101314
         Dim VZ(1), VX1(1), VX2(1) As Double
-        VZ(0) = 0.48
-        VZ(1) = 0.52
+        VZ(0) = (x1 + x2) / 2
+        VZ(1) = 1 - VZ(0)
 
         _pp.m_uni.ModfGroups.InteracParam_aij(GI1)(GI2) = IP(0, 0)
         _pp.m_uni.ModfGroups.InteracParam_aij(GI2)(GI1) = IP(1, 0)
@@ -754,6 +801,7 @@ Public Class FormUNIFACRegression
         With mycase
             tbTitle.Text = .Title
             tbDescription.Text = .Description
+            tbIPDBName.Text = .Databasepath
 
             cbModel.SelectedItem = .ModelType
             cbCompound1.SelectedItem = .Component1
@@ -793,6 +841,7 @@ Public Class FormUNIFACRegression
         With mycase
             .Title = tbTitle.Text
             .Description = tbDescription.Text
+            .Databasepath = tbIPDBName.Text
 
             .Component1 = cbCompound1.SelectedItem
             .Component2 = cbCompound2.SelectedItem
@@ -817,12 +866,56 @@ Public Class FormUNIFACRegression
         End With
     End Sub
 
-    Private Sub Button2_Click(sender As Object, e As EventArgs)
+    Private Sub BtnSelectIPDB_Click(sender As Object, e As EventArgs) Handles BtnSelectIPDB.Click
+        'Select Interaction user database
+        If Me.DBOpenDlg.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
+            Me.tbIPDBName.Text = Me.DBOpenDlg.FileName
+        End If
+    End Sub
+
+    Private Sub BtnNewIPDB_Click(sender As Object, e As EventArgs) Handles BtnNewIPDB.Click
+        'Create new Interaction Parameter User Database
+        If Me.DBOpenDlg.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
+            If Not File.Exists(Me.DBOpenDlg.FileName) Then File.Create(Me.DBOpenDlg.FileName)
+            Me.tbIPDBName.Text = Me.DBOpenDlg.FileName
+        End If
+    End Sub
+
+    Private Sub BtnSaveIPDB_Click(sender As Object, e As EventArgs) Handles BtnSaveIPDB.Click
+        StoreData()
+
+        IP.Comp1 = mycase.MainGr_i
+        IP.Comp2 = mycase.MainGr_j
+        IP.Model = mycase.ModelType
+        IP.Description = mycase.Description
+        IP.RegressionFile = mycase.Filename
+
+        IP.Parameters.Clear()
+
+        IP.Parameters("aij") = mycase.aij
+        IP.Parameters("aji") = mycase.aji
+
+        If IP.Model <> "UNIFAC" Then
+            IP.Parameters("bij") = mycase.bij
+            IP.Parameters("bji") = mycase.bji
+            IP.Parameters("cij") = mycase.cij
+            IP.Parameters("cji") = mycase.cji
+        End If
+
+        If Me.tbIPDBName.Text <> "" Then
+            Try
+                DWSIM.Databases.UserIPDB.AddInteractionParameters(New DWSIM.ClassesBasicasTermodinamica.InteractionParameter() {IP}, tbIPDBName.Text, True)
+                MessageBox.Show(DWSIM.App.GetLocalString("ParametrosAdicionadosComSucesso"))
+            Catch ex As Exception
+                MessageBox.Show(DWSIM.App.GetLocalString("Erroaosalvararquivo") & ex.Message.ToString, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End If
 
     End Sub
 End Class
 <System.Serializable()> Public Class UNIFACIPRegressionCase
     Public Filename As String = ""
+    Public Databasepath As String = ""
     Public su As DWSIM.SistemasDeUnidades.Unidades
     Public Title, Description As String
     Public Component1, Component2 As String

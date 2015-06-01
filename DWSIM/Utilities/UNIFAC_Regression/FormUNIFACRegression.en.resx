@@ -117,7 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BtnSelectIPDB.Text" xml:space="preserve">
+    <value>Search</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 13</value>
+  </data>
+  <data name="Label5.Text" xml:space="preserve">
+    <value>Database</value>
+  </data>
+  <data name="BtnSaveIPDB.Text" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="BtnNewIPDB.Text" xml:space="preserve">
+    <value>New</value>
+  </data>
   <data name="Label11.Size" type="System.Drawing.Size, System.Drawing">
     <value>60, 13</value>
   </data>
@@ -132,12 +147,6 @@
   </data>
   <data name="TSInformation.Title" xml:space="preserve">
     <value>Information</value>
-  </data>
-  <data name="IPGrid.Size" type="System.Drawing.Size, System.Drawing">
-    <value>617, 389</value>
-  </data>
-  <data name="Panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>617, 389</value>
   </data>
   <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
     <value>35, 13</value>
@@ -157,16 +166,10 @@
   <data name="LblC2.Text" xml:space="preserve">
     <value>Component 2</value>
   </data>
-  <data name="TSModel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>932, 395</value>
-  </data>
   <data name="TSModel.Title" xml:space="preserve">
     <value>Model</value>
   </data>
-  <data name="graph.Size" type="System.Drawing.Size, System.Drawing">
-    <value>932, 395</value>
-  </data>
-  <data name="TSChart.Size" type="System.Drawing.Size, System.Drawing">
-    <value>932, 395</value>
+  <data name="DBOpenDlg.Filter" xml:space="preserve">
+    <value>Database XML|*.xml</value>
   </data>
 </root>

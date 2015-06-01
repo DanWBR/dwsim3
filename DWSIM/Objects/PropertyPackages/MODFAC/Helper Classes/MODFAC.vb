@@ -442,7 +442,48 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 End While
             End Using
 
+            'load user database interactions
+            If Not My.Settings.UserInteractionsDatabases Is Nothing Then
+                For Each IPDBPath As String In My.Settings.UserInteractionsDatabases
+                    Dim Interactions As DWSIM.ClassesBasicasTermodinamica.InteractionParameter()
+                    Dim IP As DWSIM.ClassesBasicasTermodinamica.InteractionParameter
+                    Try
+                        Interactions = DWSIM.Databases.UserIPDB.ReadInteractions(IPDBPath, "MODFAC (Dortmund)")
+                        For Each IP In Interactions
+                            If Not Me.InteracParam_aij.ContainsKey(IP.Comp1) Then
+                                Me.InteracParam_aij.Add(IP.Comp1, New System.Collections.Generic.Dictionary(Of Integer, Double))
+                                Me.InteracParam_bij.Add(IP.Comp1, New System.Collections.Generic.Dictionary(Of Integer, Double))
+                                Me.InteracParam_cij.Add(IP.Comp1, New System.Collections.Generic.Dictionary(Of Integer, Double))
+                            End If
+                            If Not Me.InteracParam_aij.ContainsKey(IP.Comp2) Then
+                                Me.InteracParam_aij.Add(IP.Comp2, New System.Collections.Generic.Dictionary(Of Integer, Double))
+                                Me.InteracParam_bij.Add(IP.Comp2, New System.Collections.Generic.Dictionary(Of Integer, Double))
+                                Me.InteracParam_cij.Add(IP.Comp2, New System.Collections.Generic.Dictionary(Of Integer, Double))
+                            End If
+                            If Not Me.InteracParam_aij(IP.Comp1).ContainsKey(IP.Comp2) Then
+                                Me.InteracParam_aij(IP.Comp1).Add(IP.Comp2, 0)
+                                Me.InteracParam_bij(IP.Comp1).Add(IP.Comp2, 0)
+                                Me.InteracParam_cij(IP.Comp1).Add(IP.Comp2, 0)
+                            End If
+                            If Not Me.InteracParam_aij(IP.Comp2).ContainsKey(IP.Comp1) Then
+                                Me.InteracParam_aij(IP.Comp2).Add(IP.Comp1, 0)
+                                Me.InteracParam_bij(IP.Comp2).Add(IP.Comp1, 0)
+                                Me.InteracParam_cij(IP.Comp2).Add(IP.Comp1, 0)
+                            End If
+                            Me.InteracParam_aij(IP.Comp1)(IP.Comp2) = IP.Parameters("aij")
+                            Me.InteracParam_bij(IP.Comp1)(IP.Comp2) = IP.Parameters("bij")
+                            Me.InteracParam_cij(IP.Comp1)(IP.Comp2) = IP.Parameters("cij")
+                            Me.InteracParam_aij(IP.Comp2)(IP.Comp1) = IP.Parameters("aji")
+                            Me.InteracParam_bij(IP.Comp2)(IP.Comp1) = IP.Parameters("bji")
+                            Me.InteracParam_cij(IP.Comp2)(IP.Comp1) = IP.Parameters("cji")
+                        Next
+                    Catch ex As Exception
+                        Console.WriteLine(ex.ToString)
+                    End Try
+                Next
+            End If
         End Sub
+
 
         Public ReadOnly Property Groups() As System.Collections.Generic.SortedDictionary(Of Integer, ModfacGroup)
             Get

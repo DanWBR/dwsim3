@@ -2058,6 +2058,9 @@
     <EmbeddedResource Include="Utilities\UNIFAC_Regression\FormUNIFACRegression.en.resx">
       <DependentUpon>FormUNIFACRegression.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Utilities\UNIFAC_Regression\FormUNIFACRegression.es.resx">
+      <DependentUpon>FormUNIFACRegression.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Utilities\UNIFAC_Regression\FormUNIFACRegression.resx">
       <DependentUpon>FormUNIFACRegression.vb</DependentUpon>
     </EmbeddedResource>

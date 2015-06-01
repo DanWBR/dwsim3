@@ -118,94 +118,49 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="BtnSelectIPDB.Text" xml:space="preserve">
-    <value>Suchen</value>
+    <value>Búsqueda</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>59, 13</value>
+    <value>76, 13</value>
   </data>
   <data name="Label5.Text" xml:space="preserve">
-    <value>Datenbank</value>
-  </data>
-  <data name="BtnSaveIPDB.Text" xml:space="preserve">
-    <value>Speichern</value>
+    <value>Base de Datos</value>
   </data>
   <data name="BtnNewIPDB.Text" xml:space="preserve">
-    <value>Neu</value>
-  </data>
-  <data name="tbDescription.Location" type="System.Drawing.Point, System.Drawing">
-    <value>93, 48</value>
-  </data>
-  <data name="tbDescription.Size" type="System.Drawing.Size, System.Drawing">
-    <value>851, 21</value>
+    <value>Nuevo</value>
   </data>
   <data name="Label11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>71, 13</value>
+    <value>61, 13</value>
   </data>
   <data name="Label11.Text" xml:space="preserve">
-    <value>Beschreibung</value>
-  </data>
-  <data name="tbTitle.Location" type="System.Drawing.Point, System.Drawing">
-    <value>93, 17</value>
-  </data>
-  <data name="Label10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>27, 13</value>
-  </data>
-  <data name="Label10.Text" xml:space="preserve">
-    <value>Titel</value>
+    <value>Descripción</value>
   </data>
   <data name="TSInformation.Title" xml:space="preserve">
-    <value>Information</value>
-  </data>
-  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>94, 13</value>
-  </data>
-  <data name="Label2.Text" xml:space="preserve">
-    <value>Hauptgruppe j :</value>
-  </data>
-  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>93, 13</value>
-  </data>
-  <data name="Label1.Text" xml:space="preserve">
-    <value>Hauptgruppe i :</value>
+    <value>Información</value>
   </data>
   <data name="BtnShowIPGrid.Text" xml:space="preserve">
-    <value>Zeige Parameters</value>
+    <value>Mostrar los Parámetros</value>
   </data>
-  <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>37, 13</value>
-  </data>
-  <data name="Label4.Text" xml:space="preserve">
-    <value>Modell</value>
-  </data>
-  <data name="LblC1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>76, 13</value>
-  </data>
-  <data name="LblC1.Text" xml:space="preserve">
-    <value>Komponente 1</value>
-  </data>
-  <data name="LblC2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>76, 13</value>
-  </data>
-  <data name="LblC2.Text" xml:space="preserve">
-    <value>Komponente 2</value>
-  </data>
-  <data name="TSModel.Title" xml:space="preserve">
-    <value>Modell</value>
+  <data name="BtnDrawIPs.Size" type="System.Drawing.Size, System.Drawing">
+    <value>110, 23</value>
   </data>
   <data name="BtnDrawIPs.Text" xml:space="preserve">
-    <value>Zeichne IPs</value>
+    <value>Llamar la IPs</value>
+  </data>
+  <data name="BtnDrawChart.Size" type="System.Drawing.Size, System.Drawing">
+    <value>110, 23</value>
   </data>
   <data name="BtnDrawChart.Text" xml:space="preserve">
-    <value>Zeichne Chart</value>
+    <value>Llamar la carta</value>
+  </data>
+  <data name="BtnRegressIP.Size" type="System.Drawing.Size, System.Drawing">
+    <value>110, 23</value>
   </data>
   <data name="BtnRegressIP.Text" xml:space="preserve">
-    <value>Regression IPs</value>
-  </data>
-  <data name="TSData.Title" xml:space="preserve">
-    <value>Daten</value>
+    <value>Regresión IP</value>
   </data>
   <data name="DBOpenDlg.Filter" xml:space="preserve">
-    <value>Datenbank XML|*.xml</value>
+    <value>Base de datos XML|*.xml</value>
   </data>
 </root>
