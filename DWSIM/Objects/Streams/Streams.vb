@@ -117,14 +117,17 @@ Namespace DWSIM.SimulationObjects.Streams
 
         Public Sub Validate()
 
+            Dim mytag As String = ""
+            If Not Me.GraphicObject Is Nothing Then mytag = Me.GraphicObject.Tag
+
             'temperature
-            If Not Me.Fases(0).SPMProperties.temperature.IsValid Then Throw New ArgumentException(DWSIM.App.GetLocalString("ErrorInvalidMSSpecValue") & " (name: temperature, value: " & Me.Fases(0).SPMProperties.temperature.GetValueOrDefault & ")")
+            If Not Me.Fases(0).SPMProperties.temperature.IsValid Then Throw New ArgumentException(DWSIM.App.GetLocalString("ErrorInvalidMSSpecValue") & " (stream: " & mytag & ", name: temperature, value: " & Me.Fases(0).SPMProperties.temperature.GetValueOrDefault & ")")
             'pressure
-            If Not Me.Fases(0).SPMProperties.pressure.IsValid Then Throw New ArgumentException(DWSIM.App.GetLocalString("ErrorInvalidMSSpecValue") & " (name: pressure, value: " & Me.Fases(0).SPMProperties.pressure.GetValueOrDefault & ")")
+            If Not Me.Fases(0).SPMProperties.pressure.IsValid Then Throw New ArgumentException(DWSIM.App.GetLocalString("ErrorInvalidMSSpecValue") & " (stream: " & mytag & ", name: pressure, value: " & Me.Fases(0).SPMProperties.pressure.GetValueOrDefault & ")")
             'enthalpy
-            If Not Me.Fases(0).SPMProperties.enthalpy.IsValid Then Throw New ArgumentException(DWSIM.App.GetLocalString("ErrorInvalidMSSpecValue") & " (name: enthalpy, value: " & Me.Fases(0).SPMProperties.enthalpy.GetValueOrDefault & ")")
+            If Not Me.Fases(0).SPMProperties.enthalpy.IsValid Then Throw New ArgumentException(DWSIM.App.GetLocalString("ErrorInvalidMSSpecValue") & " (stream: " & mytag & ", name: enthalpy, value: " & Me.Fases(0).SPMProperties.enthalpy.GetValueOrDefault & ")")
             'entropy
-            If Not Me.Fases(0).SPMProperties.entropy.IsValid Then Throw New ArgumentException(DWSIM.App.GetLocalString("ErrorInvalidMSSpecValue") & " (name: entropy, value: " & Me.Fases(0).SPMProperties.entropy.GetValueOrDefault & ")")
+            If Not Me.Fases(0).SPMProperties.entropy.IsValid Then Throw New ArgumentException(DWSIM.App.GetLocalString("ErrorInvalidMSSpecValue") & " (stream: " & mytag & ", name: entropy, value: " & Me.Fases(0).SPMProperties.entropy.GetValueOrDefault & ")")
 
         End Sub
 
