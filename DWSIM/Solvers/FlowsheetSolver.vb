@@ -1307,7 +1307,7 @@ Namespace DWSIM.Flowsheet
                         If con.IsAttached Then
                             Try
                                 Dim UnitOp = form.Collections.ObjectCollection(con.AttachedConnector.AttachedFrom.Name)
-                                form.CalculationQueue.Enqueue(New StatusChangeEventArgs() With {.Calculado = False, .Emissor = "Flowsheet", .Nome = UnitOp.Nome, .Tag = UnitOp.GraphicObject.Tag, .Tipo = UnitOp.GraphicObject.TipoObjeto})
+                                form.CalculationQueue.Enqueue(New StatusChangeEventArgs() With {.Calculado = False, .Emissor = "FlowsheetSolver", .Nome = UnitOp.Nome, .Tag = UnitOp.GraphicObject.Tag, .Tipo = UnitOp.GraphicObject.TipoObjeto})
                             Catch ex As Exception
 
                             End Try
@@ -1320,7 +1320,7 @@ Namespace DWSIM.Flowsheet
                         If con.IsAttached Then
                             Try
                                 Dim UnitOp = form.Collections.ObjectCollection(con.AttachedConnector.AttachedTo.Name)
-                                form.CalculationQueue.Enqueue(New StatusChangeEventArgs() With {.Calculado = False, .Emissor = "Flowsheet", .Nome = UnitOp.Nome, .Tag = UnitOp.GraphicObject.Tag, .Tipo = UnitOp.GraphicObject.TipoObjeto})
+                                form.CalculationQueue.Enqueue(New StatusChangeEventArgs() With {.Calculado = False, .Emissor = "FlowsheetSolver", .Nome = UnitOp.Nome, .Tag = UnitOp.GraphicObject.Tag, .Tipo = UnitOp.GraphicObject.TipoObjeto})
                             Catch ex As Exception
 
                             End Try
@@ -1337,7 +1337,7 @@ Namespace DWSIM.Flowsheet
                     For Each con In obj.InputConnectors
                         If con.IsAttached Then
                             Dim UnitOp = form.Collections.ObjectCollection(con.AttachedConnector.AttachedFrom.Name)
-                            form.CalculationQueue.Enqueue(New StatusChangeEventArgs() With {.Calculado = False, .Emissor = "Flowsheet", .Nome = UnitOp.Nome, .Tag = UnitOp.GraphicObject.Tag, .Tipo = UnitOp.GraphicObject.TipoObjeto})
+                            form.CalculationQueue.Enqueue(New StatusChangeEventArgs() With {.Calculado = False, .Emissor = "FlowsheetSolver", .Nome = UnitOp.Nome, .Tag = UnitOp.GraphicObject.Tag, .Tipo = UnitOp.GraphicObject.TipoObjeto})
                         End If
                     Next
 
@@ -1346,7 +1346,7 @@ Namespace DWSIM.Flowsheet
                     For Each con In obj.OutputConnectors
                         If con.IsAttached Then
                             Dim UnitOp = form.Collections.ObjectCollection(con.AttachedConnector.AttachedTo.Name)
-                            form.CalculationQueue.Enqueue(New StatusChangeEventArgs() With {.Calculado = False, .Emissor = "Flowsheet", .Nome = UnitOp.Nome, .Tag = UnitOp.GraphicObject.Tag, .Tipo = UnitOp.GraphicObject.TipoObjeto})
+                            form.CalculationQueue.Enqueue(New StatusChangeEventArgs() With {.Calculado = False, .Emissor = "FlowsheetSolver", .Nome = UnitOp.Nome, .Tag = UnitOp.GraphicObject.Tag, .Tipo = UnitOp.GraphicObject.TipoObjeto})
                         End If
                     Next
 
@@ -1358,7 +1358,7 @@ Namespace DWSIM.Flowsheet
 
                     Try
                         Dim UnitOp = form.Collections.ObjectCollection(obj.Name)
-                        form.CalculationQueue.Enqueue(New StatusChangeEventArgs() With {.Calculado = False, .Emissor = "Flowsheet", .Nome = UnitOp.Nome, .Tag = UnitOp.GraphicObject.Tag, .Tipo = UnitOp.GraphicObject.TipoObjeto})
+                        form.CalculationQueue.Enqueue(New StatusChangeEventArgs() With {.Calculado = False, .Emissor = "FlowsheetSolver", .Nome = UnitOp.Nome, .Tag = UnitOp.GraphicObject.Tag, .Tipo = UnitOp.GraphicObject.TipoObjeto})
                     Catch ex As Exception
 
                     End Try
@@ -1367,7 +1367,7 @@ Namespace DWSIM.Flowsheet
 
                     Try
                         Dim UnitOp = form.Collections.ObjectCollection(obj.Name)
-                        form.CalculationQueue.Enqueue(New StatusChangeEventArgs() With {.Calculado = False, .Emissor = "Flowsheet", .Nome = UnitOp.Nome, .Tag = UnitOp.GraphicObject.Tag, .Tipo = UnitOp.GraphicObject.TipoObjeto})
+                        form.CalculationQueue.Enqueue(New StatusChangeEventArgs() With {.Calculado = False, .Emissor = "FlowsheetSolver", .Nome = UnitOp.Nome, .Tag = UnitOp.GraphicObject.Tag, .Tipo = UnitOp.GraphicObject.TipoObjeto})
                     Catch ex As Exception
 
                     End Try
@@ -1437,12 +1437,22 @@ Namespace DWSIM.Flowsheet
                     'form.WriteToLog(ex.Message, Color.Black, DWSIM.FormClasses.TipoAviso.Erro)
                 End Try
 
-                Dim myobj = form.Collections.ObjectCollection(myinfo.Nome)
-                Try
-                    myobj.ErrorMessage = ""
-                    If myobj.GraphicObject.Active Then
-                        If FlowsheetSolverMode Then
-                            If myinfo.Emissor = "FlowsheetSolver" Then
+                If form.Collections.ObjectCollection.ContainsKey(myinfo.Nome) Then
+
+                    Dim myobj = form.Collections.ObjectCollection(myinfo.Nome)
+                    Try
+                        myobj.ErrorMessage = ""
+                        If myobj.GraphicObject.Active Then
+                            If FlowsheetSolverMode Then
+                                If myinfo.Emissor = "FlowsheetSolver" Then
+                                    If myinfo.Tipo = TipoObjeto.MaterialStream Then
+                                        CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(myinfo.Nome), , Isolated)
+                                    Else
+                                        If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
+                                        CalculateFlowsheet(form, myinfo, Nothing, Isolated)
+                                    End If
+                                End If
+                            Else
                                 If myinfo.Tipo = TipoObjeto.MaterialStream Then
                                     CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(myinfo.Nome), , Isolated)
                                 Else
@@ -1450,34 +1460,28 @@ Namespace DWSIM.Flowsheet
                                     CalculateFlowsheet(form, myinfo, Nothing, Isolated)
                                 End If
                             End If
-                        Else
-                            If myinfo.Tipo = TipoObjeto.MaterialStream Then
-                                CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(myinfo.Nome), , Isolated)
-                            Else
-                                If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
-                                CalculateFlowsheet(form, myinfo, Nothing, Isolated)
-                            End If
                         End If
-                    End If
-                Catch ex As Exception
-                    'Dim st As New StackTrace(ex, True)
-                    'If st.FrameCount > 0 Then
-                    '    form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
-                    'Else
-                    '    form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                    'End If
-                    myobj.ErrorMessage = ex.Message
-                    loopex = New Exception(myinfo.Tag & ": " & ex.Message)
-                    If My.Settings.SolverBreakOnException Then Exit While
-                End Try
+                    Catch ex As Exception
+                        'Dim st As New StackTrace(ex, True)
+                        'If st.FrameCount > 0 Then
+                        '    form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
+                        'Else
+                        '    form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                        'End If
+                        myobj.ErrorMessage = ex.Message
+                        loopex = New Exception(myinfo.Tag & ": " & ex.Message)
+                        If My.Settings.SolverBreakOnException Then Exit While
+                    End Try
 
-                form.FormWatch.UpdateList()
+                    form.FormWatch.UpdateList()
 
-                For Each g As GraphicObject In form.FormSurface.FlowsheetDesignSurface.drawingObjects
-                    If g.TipoObjeto = TipoObjeto.GO_MasterTable Then
-                        CType(g, DWSIM.GraphicObjects.MasterTableGraphic).Update(form)
-                    End If
-                Next
+                    For Each g As GraphicObject In form.FormSurface.FlowsheetDesignSurface.drawingObjects
+                        If g.TipoObjeto = TipoObjeto.GO_MasterTable Then
+                            CType(g, DWSIM.GraphicObjects.MasterTableGraphic).Update(form)
+                        End If
+                    Next
+
+                End If
 
                 If form.CalculationQueue.Count = 1 Then form.FormSpreadsheet.InternalCounter = 0
                 If form.CalculationQueue.Count > 0 Then form.CalculationQueue.Dequeue()
