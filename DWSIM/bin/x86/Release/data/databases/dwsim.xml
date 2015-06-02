@@ -1063,11 +1063,11 @@
     <IG_Enthalpy_of_Formation_25C>1.06E+03</IG_Enthalpy_of_Formation_25C>
     <IG_Gibbs_Energy_of_Formation_25C>1659.12</IG_Gibbs_Energy_of_Formation_25C>
     <Dipole_Moment>0</Dipole_Moment>
-    <DIPPR_Vapor_Pressure_Constant_A>83.10597439</DIPPR_Vapor_Pressure_Constant_A>
-    <DIPPR_Vapor_Pressure_Constant_B>-6486.200002</DIPPR_Vapor_Pressure_Constant_B>
-    <DIPPR_Vapor_Pressure_Constant_C>-9.225897362</DIPPR_Vapor_Pressure_Constant_C>
-    <DIPPR_Vapor_Pressure_Constant_D>6.89E-06</DIPPR_Vapor_Pressure_Constant_D>
-    <DIPPR_Vapor_Pressure_Constant_E>2</DIPPR_Vapor_Pressure_Constant_E>
+    <DIPPR_Vapor_Pressure_Constant_A>67.78881008</DIPPR_Vapor_Pressure_Constant_A>
+    <DIPPR_Vapor_Pressure_Constant_B>-3283.54136643597</DIPPR_Vapor_Pressure_Constant_B>
+    <DIPPR_Vapor_Pressure_Constant_C>0.753585988</DIPPR_Vapor_Pressure_Constant_C>
+    <DIPPR_Vapor_Pressure_Constant_D>-51.32140332</DIPPR_Vapor_Pressure_Constant_D>
+    <DIPPR_Vapor_Pressure_Constant_E>0</DIPPR_Vapor_Pressure_Constant_E>
     <DIPPR_Vapor_Pressure_TMIN>280</DIPPR_Vapor_Pressure_TMIN>
     <DIPPR_Vapor_Pressure_TMAX>377</DIPPR_Vapor_Pressure_TMAX>
     <Ideal_Gas_Heat_Capacity_Const_A>33.9172668</Ideal_Gas_Heat_Capacity_Const_A>
@@ -1119,11 +1119,11 @@
     <IG_Enthalpy_of_Formation_25C>5.44E+02</IG_Enthalpy_of_Formation_25C>
     <IG_Gibbs_Energy_of_Formation_25C>544.5</IG_Gibbs_Energy_of_Formation_25C>
     <Dipole_Moment>0</Dipole_Moment>
-    <DIPPR_Vapor_Pressure_Constant_A>82.40906573</DIPPR_Vapor_Pressure_Constant_A>
-    <DIPPR_Vapor_Pressure_Constant_B>-6589.532181</DIPPR_Vapor_Pressure_Constant_B>
-    <DIPPR_Vapor_Pressure_Constant_C>-9.169627</DIPPR_Vapor_Pressure_Constant_C>
-    <DIPPR_Vapor_Pressure_Constant_D>6.89E-06</DIPPR_Vapor_Pressure_Constant_D>
-    <DIPPR_Vapor_Pressure_Constant_E>2</DIPPR_Vapor_Pressure_Constant_E>
+    <DIPPR_Vapor_Pressure_Constant_A>-88.09860827</DIPPR_Vapor_Pressure_Constant_A>
+    <DIPPR_Vapor_Pressure_Constant_B>-6012.226713</DIPPR_Vapor_Pressure_Constant_B>
+    <DIPPR_Vapor_Pressure_Constant_C>-4.300117147</DIPPR_Vapor_Pressure_Constant_C>
+    <DIPPR_Vapor_Pressure_Constant_D>140.8683749</DIPPR_Vapor_Pressure_Constant_D>
+    <DIPPR_Vapor_Pressure_Constant_E>0</DIPPR_Vapor_Pressure_Constant_E>
     <DIPPR_Vapor_Pressure_TMIN>280</DIPPR_Vapor_Pressure_TMIN>
     <DIPPR_Vapor_Pressure_TMAX>410</DIPPR_Vapor_Pressure_TMAX>
     <Ideal_Gas_Heat_Capacity_Const_A>-24.3546156</Ideal_Gas_Heat_Capacity_Const_A>
