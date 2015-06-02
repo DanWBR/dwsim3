@@ -1402,10 +1402,10 @@ Imports DWSIM.DWSIM.Outros
 
                     If SelectedObj.IsEnergyStream Then
 
-                        DeCalculateObject(Me, SelectedObj)
                         Dim InCon, OutCon As ConnectionPoint
                         For Each InCon In gobj.InputConnectors
                             If InCon.IsAttached = True Then
+                                DeCalculateDisconnectedObject(Me, SelectedObj, "In")
                                 If InCon.AttachedConnector.AttachedFrom.EnergyConnector.IsAttached Then
                                     With InCon.AttachedConnector.AttachedFrom.EnergyConnector
                                         .IsAttached = False
@@ -1426,6 +1426,7 @@ Imports DWSIM.DWSIM.Outros
                         gobj = SelectedObj
                         For Each OutCon In gobj.OutputConnectors
                             If OutCon.IsAttached = True Then
+                                DeCalculateDisconnectedObject(Me, SelectedObj, "Out")
                                 With OutCon.AttachedConnector.AttachedTo.InputConnectors(OutCon.AttachedConnector.AttachedToConnectorIndex)
                                     .IsAttached = False
                                     gobj = .AttachedConnector
@@ -1458,7 +1459,7 @@ Imports DWSIM.DWSIM.Outros
                             Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(gobj)
                         Else
                             Dim obj As SimulationObjects_BaseClass = Me.Collections.ObjectCollection(SelectedObj.Name)
-                            DeCalculateObject(Me, SelectedObj)
+                            DeCalculateDisconnectedObject(Me, SelectedObj, "Out")
                             If gobj.EnergyConnector.IsAttached = True Then
                                 With gobj.EnergyConnector.AttachedConnector.AttachedTo.InputConnectors(0)
                                     .IsAttached = False
@@ -1749,6 +1750,9 @@ Imports DWSIM.DWSIM.Outros
                     End If
                 End If
             End If
+
+            ProcessCalculationQueue(Me, False, False)
+
         End If
     End Sub
 
@@ -1781,7 +1785,6 @@ Imports DWSIM.DWSIM.Outros
                             Me.FormSurface.FlowsheetDesignSurface.SelectedObjects.Clear()
                             conptObj.IsAttached = False
                             Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(conptObj.AttachedConnector)
-                            Exit Sub
                         End If
                     End If
                 End If
@@ -1795,7 +1798,6 @@ Imports DWSIM.DWSIM.Outros
                             conptObj.AttachedConnector.AttachedTo.InputConnectors(conptObj.AttachedConnector.AttachedToConnectorIndex).AttachedConnector = Nothing
                             conptObj.IsAttached = False
                             Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(conptObj.AttachedConnector)
-                            Exit Sub
                         End If
                     End If
                 End If
@@ -1807,10 +1809,11 @@ Imports DWSIM.DWSIM.Outros
                     SelObj.EnergyConnector.AttachedConnector.AttachedFrom.OutputConnectors(SelObj.EnergyConnector.AttachedConnector.AttachedFromConnectorIndex).AttachedConnector = Nothing
                     SelObj.EnergyConnector.IsAttached = False
                     Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(SelObj.EnergyConnector.AttachedConnector)
-                    Exit Sub
                 End If
             End If
         End If
+
+        ProcessCalculationQueue(Me, False, False)
 
     End Sub
 
@@ -1840,7 +1843,7 @@ Imports DWSIM.DWSIM.Outros
                 If Not gObjTo Is Nothing Then
                     If gObjFrom.TipoObjeto = TipoObjeto.MaterialStream And gObjTo.TipoObjeto = TipoObjeto.MaterialStream Then
                         Throw New Exception(DWSIM.App.GetLocalString("Nopossvelrealizaress"))
-                     ElseIf gObjFrom.TipoObjeto = TipoObjeto.EnergyStream And gObjTo.TipoObjeto = TipoObjeto.EnergyStream Then
+                    ElseIf gObjFrom.TipoObjeto = TipoObjeto.EnergyStream And gObjTo.TipoObjeto = TipoObjeto.EnergyStream Then
                         Throw New Exception(DWSIM.App.GetLocalString("Nopossvelrealizaress"))
                     ElseIf Not gObjFrom.TipoObjeto = TipoObjeto.MaterialStream And Not gObjFrom.TipoObjeto = TipoObjeto.EnergyStream Then
                         If Not gObjTo.TipoObjeto = TipoObjeto.EnergyStream And Not gObjTo.TipoObjeto = TipoObjeto.MaterialStream Then

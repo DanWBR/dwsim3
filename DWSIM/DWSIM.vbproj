@@ -2064,9 +2064,7 @@
     <EmbeddedResource Include="Utilities\UNIFAC_Regression\FormUNIFACRegression.resx">
       <DependentUpon>FormUNIFACRegression.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="version.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="version.txt" />
     <None Include="Resources\table_row_insert1.png" />
     <None Include="Resources\zoom_extend.png" />
     <None Include="Resources\zoom_refresh.png" />

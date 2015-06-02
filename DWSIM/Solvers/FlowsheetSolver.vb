@@ -1306,9 +1306,8 @@ Namespace DWSIM.Flowsheet
                     For Each con In obj.InputConnectors
                         If con.IsAttached Then
                             Try
-                                Dim UnitOp As Object = form.Collections.ObjectCollection(con.AttachedConnector.AttachedFrom.Name)
-                                UnitOp.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                                UnitOp.DeCalculate()
+                                Dim UnitOp = form.Collections.ObjectCollection(con.AttachedConnector.AttachedFrom.Name)
+                                form.CalculationQueue.Enqueue(New StatusChangeEventArgs() With {.Calculado = False, .Emissor = "Flowsheet", .Nome = UnitOp.Nome, .Tag = UnitOp.GraphicObject.Tag, .Tipo = UnitOp.GraphicObject.TipoObjeto})
                             Catch ex As Exception
 
                             End Try
@@ -1320,9 +1319,8 @@ Namespace DWSIM.Flowsheet
                     For Each con In obj.OutputConnectors
                         If con.IsAttached Then
                             Try
-                                Dim UnitOp As Object = form.Collections.ObjectCollection(con.AttachedConnector.AttachedTo.Name)
-                                UnitOp.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                                UnitOp.DeCalculate()
+                                Dim UnitOp = form.Collections.ObjectCollection(con.AttachedConnector.AttachedTo.Name)
+                                form.CalculationQueue.Enqueue(New StatusChangeEventArgs() With {.Calculado = False, .Emissor = "Flowsheet", .Nome = UnitOp.Nome, .Tag = UnitOp.GraphicObject.Tag, .Tipo = UnitOp.GraphicObject.TipoObjeto})
                             Catch ex As Exception
 
                             End Try
@@ -1338,9 +1336,8 @@ Namespace DWSIM.Flowsheet
 
                     For Each con In obj.InputConnectors
                         If con.IsAttached Then
-                            Dim UnitOp As Object = form.Collections.ObjectCollection(con.AttachedConnector.AttachedFrom.Name)
-                            UnitOp.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                            UnitOp.DeCalculate()
+                            Dim UnitOp = form.Collections.ObjectCollection(con.AttachedConnector.AttachedFrom.Name)
+                            form.CalculationQueue.Enqueue(New StatusChangeEventArgs() With {.Calculado = False, .Emissor = "Flowsheet", .Nome = UnitOp.Nome, .Tag = UnitOp.GraphicObject.Tag, .Tipo = UnitOp.GraphicObject.TipoObjeto})
                         End If
                     Next
 
@@ -1348,9 +1345,8 @@ Namespace DWSIM.Flowsheet
 
                     For Each con In obj.OutputConnectors
                         If con.IsAttached Then
-                            Dim UnitOp As Object = form.Collections.ObjectCollection(con.AttachedConnector.AttachedTo.Name)
-                            UnitOp.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                            UnitOp.DeCalculate()
+                            Dim UnitOp = form.Collections.ObjectCollection(con.AttachedConnector.AttachedTo.Name)
+                            form.CalculationQueue.Enqueue(New StatusChangeEventArgs() With {.Calculado = False, .Emissor = "Flowsheet", .Nome = UnitOp.Nome, .Tag = UnitOp.GraphicObject.Tag, .Tipo = UnitOp.GraphicObject.TipoObjeto})
                         End If
                     Next
 
@@ -1361,9 +1357,8 @@ Namespace DWSIM.Flowsheet
                 If side = "In" Then
 
                     Try
-                        Dim UnitOp As Object = form.Collections.ObjectCollection(obj.Name)
-                        UnitOp.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                        UnitOp.DeCalculate()
+                        Dim UnitOp = form.Collections.ObjectCollection(obj.Name)
+                        form.CalculationQueue.Enqueue(New StatusChangeEventArgs() With {.Calculado = False, .Emissor = "Flowsheet", .Nome = UnitOp.Nome, .Tag = UnitOp.GraphicObject.Tag, .Tipo = UnitOp.GraphicObject.TipoObjeto})
                     Catch ex As Exception
 
                     End Try
@@ -1371,9 +1366,8 @@ Namespace DWSIM.Flowsheet
                 Else
 
                     Try
-                        Dim UnitOp As Object = form.Collections.ObjectCollection(obj.Name)
-                        UnitOp.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                        UnitOp.DeCalculate()
+                        Dim UnitOp = form.Collections.ObjectCollection(obj.Name)
+                        form.CalculationQueue.Enqueue(New StatusChangeEventArgs() With {.Calculado = False, .Emissor = "Flowsheet", .Nome = UnitOp.Nome, .Tag = UnitOp.GraphicObject.Tag, .Tipo = UnitOp.GraphicObject.TipoObjeto})
                     Catch ex As Exception
 
                     End Try
