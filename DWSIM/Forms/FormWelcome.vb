@@ -20,8 +20,6 @@ Imports System.Runtime.Serialization.Formatters.Binary
 
 Public Class FormWelcome
 
-    Dim tips As System.Collections.Specialized.StringCollection
-
     Dim index As Integer = 0
 
     Private Sub FormTips_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -30,7 +28,8 @@ Public Class FormWelcome
 
         For Each f As String In My.Settings.MostRecentFiles
             If File.Exists(f) And Path.GetExtension(f).ToLower <> ".dwbcs" Then
-                Me.lvlatest.Items.Add(f, 0).Tag = f
+                Me.lvlatest.Items.Add(Path.GetFileName(f), 0).Tag = f
+                Me.lvlatest.Items(Me.lvlatest.Items.Count - 1).ToolTipText = f
                 Select Case Path.GetExtension(f).ToLower
                     Case ".dwsim"
                         Me.lvlatest.Items(Me.lvlatest.Items.Count - 1).ImageIndex = 0
@@ -41,11 +40,16 @@ Public Class FormWelcome
                     Case ".dwrsd"
                         Me.lvlatest.Items(Me.lvlatest.Items.Count - 1).ImageIndex = 3
                 End Select
+                If Not Me.lvlatestfolders.Items.ContainsKey(Path.GetDirectoryName(f)) Then
+                    Me.lvlatestfolders.Items.Add(Path.GetDirectoryName(f), Path.GetDirectoryName(f), 4).Tag = Path.GetDirectoryName(f)
+                    Me.lvlatestfolders.Items(Me.lvlatestfolders.Items.Count - 1).ToolTipText = Path.GetDirectoryName(f)
+                End If
             End If
         Next
 
         If DWSIM.App.IsRunningOnMono Then
             Me.lvlatest.View = View.List
+            Me.lvlatestfolders.View = View.List
         End If
 
     End Sub
@@ -140,6 +144,16 @@ Public Class FormWelcome
 
     End Sub
 
+    Private Sub lvlatestfolders_ItemActivate(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lvlatestfolders.ItemActivate
+
+        Me.Close()
+        Application.DoEvents()
+        Application.DoEvents()
+        FormMain.OpenFileDialog1.InitialDirectory = Me.lvlatestfolders.SelectedItems(0).Tag
+        Call FormMain.LoadFileDialog()
+
+    End Sub
+
     Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button4.Click
         Me.Close()
         Application.DoEvents()
@@ -183,4 +197,5 @@ Public Class FormWelcome
     Private Sub Button8_Click(sender As System.Object, e As System.EventArgs) Handles Button8.Click
         Process.Start("https://sourceforge.net/p/dwsim/donate/?source=navbar")
     End Sub
+
 End Class
