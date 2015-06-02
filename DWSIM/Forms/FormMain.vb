@@ -2684,13 +2684,6 @@ Public Class FormMain
             form.Show()
             form.MdiParent = Me
 
-
-            Try
-                form.FormSpreadsheet.EvaluateAll()
-            Catch ex As Exception
-                excs.Add(New Exception("Error Updating Spreadsheet Variables", ex))
-            End Try
-
             'form.FormChild_Shown(Me, New EventArgs)
 
             form.Invalidate()
@@ -2715,8 +2708,12 @@ Public Class FormMain
 
         form.FrmStSim1.Init(True)
 
-        'fls.Close()
-        'fls = Nothing
+        Try
+            form.FormSpreadsheet.EvaluateAll()
+            form.FormSpreadsheet.EvaluateAll()
+        Catch ex As Exception
+            excs.Add(New Exception("Error Updating Spreadsheet Variables", ex))
+        End Try
 
         If excs.Count > 0 Then
             form.WriteToLog("Some errors where found while parsing the XML file. The simulation might not work as expected. Please read the subsequent messages for more details.", Color.DarkRed, TipoAviso.Erro)
@@ -3341,6 +3338,7 @@ simx:               Dim myStream As System.IO.FileStream
                         Me.filename = nome
                         Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Abrindosimulao") + " " + nome + "..."
                         Application.DoEvents()
+                        Application.DoEvents()
                         Me.LoadXML(Me.filename)
                     End If
                 Case 2
@@ -3351,6 +3349,7 @@ simx2:              Dim myStream As System.IO.FileStream
                         myStream.Close()
                         Me.filename = nome
                         Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Abrindosimulao") + " " + nome + "..."
+                        Application.DoEvents()
                         Application.DoEvents()
                         Me.LoadAndExtractXMLZIP(Me.filename)
                     End If
@@ -3363,10 +3362,12 @@ sim:                Dim myStream As System.IO.FileStream
                         Me.filename = nome
                         Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Abrindosimulao") + " " + nome + "..."
                         Application.DoEvents()
+                        Application.DoEvents()
                         Me.LoadF(Me.filename)
                     End If
                 Case 4
-csd:                Dim NewMDIChild As New FormCompoundCreator()
+csd:                Application.DoEvents()
+                    Dim NewMDIChild As New FormCompoundCreator()
                     NewMDIChild.MdiParent = Me
                     NewMDIChild.Show()
                     Dim objStreamReader As New FileStream(Me.OpenFileDialog1.FileName, FileMode.Open)
@@ -3380,7 +3381,8 @@ csd:                Dim NewMDIChild As New FormCompoundCreator()
                         Me.UpdateMRUList()
                     End If
                 Case 5
-rsd:                Dim NewMDIChild As New FormDataRegression()
+rsd:                Application.DoEvents()
+                    Dim NewMDIChild As New FormDataRegression()
                     NewMDIChild.MdiParent = Me
                     NewMDIChild.Show()
                     Dim objStreamReader As New FileStream(Me.OpenFileDialog1.FileName, FileMode.Open)
@@ -3394,7 +3396,8 @@ rsd:                Dim NewMDIChild As New FormDataRegression()
                         Me.UpdateMRUList()
                     End If
                 Case 6
-ruf:                Dim NewMDIChild As New FormUNIFACRegression()
+ruf:                Application.DoEvents()
+                    Dim NewMDIChild As New FormUNIFACRegression()
                     NewMDIChild.MdiParent = Me
                     NewMDIChild.Show()
                     Dim objStreamReader As New FileStream(Me.OpenFileDialog1.FileName, FileMode.Open)
