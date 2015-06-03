@@ -1767,7 +1767,7 @@ Imports DWSIM.DWSIM.Outros
 
     End Sub
 
-    Public Sub DisconnectObject(ByRef gObjFrom As GraphicObject, ByRef gObjTo As GraphicObject)
+    Public Sub DisconnectObject(ByRef gObjFrom As GraphicObject, ByRef gObjTo As GraphicObject, Optional ByVal triggercalc As Boolean = True)
 
         Dim conObj As ConnectorGraphic = Nothing
         Dim SelObj As GraphicObject = gObjFrom
@@ -1813,7 +1813,7 @@ Imports DWSIM.DWSIM.Outros
             End If
         End If
 
-        ProcessCalculationQueue(Me, False, False)
+        If triggercalc Then ProcessCalculationQueue(Me, False, False) Else Me.CalculationQueue.Clear()
 
     End Sub
 

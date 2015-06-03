@@ -530,12 +530,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
             ' disconnect existing connections
             For Each c As ConnectionPoint In Me.GraphicObject.InputConnectors
                 If c.IsAttached Then
-                    Me.FlowSheet.DisconnectObject(Me.FlowSheet.GetFlowsheetGraphicObject(c.AttachedConnector.AttachedFrom.Tag), Me.GraphicObject)
+                    Me.FlowSheet.DisconnectObject(Me.FlowSheet.GetFlowsheetGraphicObject(c.AttachedConnector.AttachedFrom.Tag), Me.GraphicObject, False)
                 End If
             Next
             For Each c As ConnectionPoint In Me.GraphicObject.OutputConnectors
                 If c.IsAttached Then
-                    Me.FlowSheet.DisconnectObject(Me.GraphicObject, Me.FlowSheet.GetFlowsheetGraphicObject(c.AttachedConnector.AttachedTo.Tag))
+                    Me.FlowSheet.DisconnectObject(Me.GraphicObject, Me.FlowSheet.GetFlowsheetGraphicObject(c.AttachedConnector.AttachedTo.Tag), False)
                 End If
             Next
 
