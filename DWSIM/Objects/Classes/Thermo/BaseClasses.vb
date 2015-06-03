@@ -22,6 +22,7 @@ Imports System.Runtime.Serialization
 Imports System.IO
 Imports System.Linq
 Imports DWSIM.Interfaces2
+Imports DWSIM.DWSIM
 Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
 Imports Microsoft.Scripting.Hosting
 Imports CapeOpen
@@ -31,6 +32,7 @@ Imports System.Runtime.InteropServices
 Imports DWSIM.DWSIM.SimulationObjects
 Imports System.Text
 Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
+Imports PropertyGridEx
 
 <System.Serializable()> <ComVisible(True)> Public MustInherit Class SimulationObjects_BaseClass
 
@@ -130,6 +132,987 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
     Public MustOverride Function GetPropertyUnit(ByVal prop As String, Optional ByVal su As DWSIM.SistemasDeUnidades.Unidades = Nothing)
     Public MustOverride Function SetPropertyValue(ByVal prop As String, ByVal propval As Object, Optional ByVal su As DWSIM.SistemasDeUnidades.Unidades = Nothing)
 
+    Public Sub HandlePropertyChange(ByVal s As Object, ByVal e As System.Windows.Forms.PropertyValueChangedEventArgs)
+
+        'handle connection updates
+
+        PropertyValueChanged(s, e)
+
+        'handle other property changes
+
+        Dim Conversor = New DWSIM.SistemasDeUnidades.Conversor
+
+        Dim sobj As Microsoft.Msdn.Samples.GraphicObjects.GraphicObject = Me.GraphicObject
+
+        FlowSheet.FormSurface.FlowsheetDesignSurface.SelectedObject = sobj
+
+        If Not sobj Is Nothing Then
+
+            If sobj.TipoObjeto = TipoObjeto.FlowsheetUO Then
+
+                Dim fs As DWSIM.SimulationObjects.UnitOps.Flowsheet = FlowSheet.Collections.CLCS_FlowsheetUOCollection.Item(sobj.Name)
+
+                If e.ChangedItem.PropertyDescriptor.Category.Equals(DWSIM.App.GetLocalString("LinkedInputParms")) Then
+
+                    Dim pkey As String = CType(e.ChangedItem.PropertyDescriptor, CustomProperty.CustomPropertyDescriptor).CustomProperty.Tag
+
+                    fs.Fsheet.Collections.ObjectCollection(fs.InputParams(pkey).ObjectID).SetPropertyValue(fs.InputParams(pkey).ObjectProperty, e.ChangedItem.Value, FlowSheet.Options.SelectedUnitSystem)
+
+                    If FlowSheet.Options.CalculatorActivated Then
+
+                        sobj.Calculated = True
+                        FlowSheet.FormProps.HandleObjectStatusChanged(sobj)
+
+                        'Call function to calculate flowsheet
+                        Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                        With objargs
+                            .Calculado = True
+                            .Nome = sobj.Name
+                            .Tag = sobj.Tag
+                            .Tipo = TipoObjeto.FlowsheetUO
+                            .Emissor = "PropertyGrid"
+                        End With
+
+                        If fs.IsSpecAttached = True And fs.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then FlowSheet.Collections.CLCS_SpecCollection(fs.AttachedSpecId).Calculate()
+                        FlowSheet.CalculationQueue.Enqueue(objargs)
+
+                    End If
+
+                End If
+
+            ElseIf sobj.TipoObjeto = TipoObjeto.GO_MasterTable Then
+
+                Dim mt As DWSIM.GraphicObjects.MasterTableGraphic = sobj
+
+                If e.ChangedItem.PropertyDescriptor.Category.Contains(DWSIM.App.GetLocalString("MT_PropertiesToShow")) Then
+                    Dim pkey As String = CType(e.ChangedItem.PropertyDescriptor, CustomProperty.CustomPropertyDescriptor).CustomProperty.Tag
+                    If Not mt.PropertyList.ContainsKey(pkey) Then
+                        mt.PropertyList.Add(pkey, e.ChangedItem.Value)
+                    Else
+                        mt.PropertyList(pkey) = e.ChangedItem.Value
+                    End If
+                ElseIf e.ChangedItem.PropertyDescriptor.Category.Contains(DWSIM.App.GetLocalString("MT_ObjectsToShow")) Then
+                    If Not mt.ObjectList.ContainsKey(e.ChangedItem.Label) Then
+                        mt.ObjectList.Add(e.ChangedItem.Label, e.ChangedItem.Value)
+                    Else
+                        mt.ObjectList(e.ChangedItem.Label) = e.ChangedItem.Value
+                    End If
+                End If
+
+                mt.Update(FlowSheet)
+
+            ElseIf sobj.TipoObjeto = TipoObjeto.MaterialStream Then
+
+                Dim ms As DWSIM.SimulationObjects.Streams.MaterialStream = FlowSheet.Collections.CLCS_MaterialStreamCollection.Item(sobj.Name)
+
+                If Not e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Base")) Then
+
+                    Dim T, P, W, Q, QV, HM, SM, VF As Double
+
+                    If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Temperatura")) Then
+                        T = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+                        ms.Fases(0).SPMProperties.temperature = T
+                    ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Presso")) Then
+                        P = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
+                        ms.Fases(0).SPMProperties.pressure = P
+                    ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Vazomssica")) Then
+                        W = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_massflow, e.ChangedItem.Value)
+                        ms.Fases(0).SPMProperties.massflow = W
+                        ms.Fases(0).SPMProperties.molarflow = Nothing
+                        ms.Fases(0).SPMProperties.volumetric_flow = Nothing
+                    ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Vazomolar")) Then
+                        Q = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_molarflow, e.ChangedItem.Value)
+                        ms.Fases(0).SPMProperties.molarflow = Q
+                        ms.Fases(0).SPMProperties.massflow = Nothing
+                        ms.Fases(0).SPMProperties.volumetric_flow = Nothing
+                    ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Vazovolumtrica")) Then
+                        QV = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_volumetricFlow, e.ChangedItem.Value)
+                        ms.Fases(0).SPMProperties.volumetric_flow = QV
+                        ms.Fases(0).SPMProperties.massflow = Nothing
+                        ms.Fases(0).SPMProperties.molarflow = Nothing
+                    ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("EntalpiaEspecfica")) Then
+                        HM = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_enthalpy, e.ChangedItem.Value)
+                        ms.Fases(0).SPMProperties.enthalpy = HM
+                    ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("EntropiaEspecfica")) Then
+                        SM = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_entropy, e.ChangedItem.Value)
+                        ms.Fases(0).SPMProperties.entropy = SM
+                    ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetPropertyName("PROP_MS_106")) Then
+                        VF = e.ChangedItem.Value
+                        ms.Fases(2).SPMProperties.molarfraction = VF
+                    End If
+
+                    'Call function to calculate flowsheet
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Calculado = False
+                        .Nome = sobj.Name
+                        .Tag = sobj.Tag
+                        .Tipo = TipoObjeto.MaterialStream
+                        .Emissor = "PropertyGrid"
+                    End With
+
+                    FlowSheet.CalculationQueue.Enqueue(objargs)
+
+                End If
+
+            ElseIf sobj.TipoObjeto = TipoObjeto.EnergyStream Then
+
+                Dim es As DWSIM.SimulationObjects.Streams.EnergyStream = FlowSheet.Collections.CLCS_EnergyStreamCollection.Item(sobj.Name)
+
+                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Energia")) Then
+
+                    es.Energia = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_heatflow, e.ChangedItem.Value)
+
+                End If
+
+                If FlowSheet.Options.CalculatorActivated Then
+
+                    sobj.Calculated = True
+                    FlowSheet.FormProps.HandleObjectStatusChanged(sobj)
+
+                    'Call function to calculate flowsheet
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Calculado = True
+                        .Nome = sobj.Name
+                        .Tag = sobj.Tag
+                        .Tipo = TipoObjeto.EnergyStream
+                        .Emissor = "PropertyGrid"
+                    End With
+
+                    If es.IsSpecAttached = True And es.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then FlowSheet.Collections.CLCS_SpecCollection(es.AttachedSpecId).Calculate()
+                    FlowSheet.CalculationQueue.Enqueue(objargs)
+
+                End If
+
+
+            ElseIf sobj.TipoObjeto = TipoObjeto.NodeOut Then
+
+                Dim sp As DWSIM.SimulationObjects.UnitOps.Splitter = FlowSheet.Collections.CLCS_SplitterCollection.Item(sobj.Name)
+
+                If e.ChangedItem.Label.Contains("[Split Ratio] ") Then
+
+                    If e.ChangedItem.Value < 0.0# Or e.ChangedItem.Value > 1.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+
+                    Dim i As Integer = 0
+                    Dim j As Integer = 0
+
+                    Dim cp As ConnectionPoint
+                    For Each cp In sp.GraphicObject.OutputConnectors
+                        If cp.IsAttached Then
+                            If e.ChangedItem.Label.Contains(cp.AttachedConnector.AttachedTo.Tag) Then
+                                sp.Ratios(i) = e.ChangedItem.Value
+                            End If
+                        End If
+                        i += 1
+                    Next
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetPropertyName("PROP_SP_1")) Then
+
+                    Select Case sp.OperationMode
+                        Case SimulationObjects.UnitOps.Splitter.OpMode.StreamMassFlowSpec
+                            sp.StreamFlowSpec = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_massflow, e.ChangedItem.Value)
+                        Case SimulationObjects.UnitOps.Splitter.OpMode.StreamMoleFlowSpec
+                            sp.StreamFlowSpec = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_molarflow, e.ChangedItem.Value)
+                    End Select
+
+                End If
+
+                If FlowSheet.Options.CalculatorActivated Then
+
+                    sobj.Calculated = True
+
+                    FlowSheet.FormProps.HandleObjectStatusChanged(sobj)
+
+                    'Call function to calculate flowsheet
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Calculado = False
+                        .Nome = sobj.Name
+                        .Tag = sobj.Tag
+                        .Tipo = TipoObjeto.NodeOut
+                        .Emissor = "PropertyGrid"
+                    End With
+
+                    If sp.IsSpecAttached = True And sp.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then FlowSheet.Collections.CLCS_SpecCollection(sp.AttachedSpecId).Calculate()
+                    FlowSheet.CalculationQueue.Enqueue(objargs)
+
+                End If
+
+            ElseIf sobj.TipoObjeto = TipoObjeto.Pump Then
+
+                Dim bb As DWSIM.SimulationObjects.UnitOps.Pump = FlowSheet.Collections.CLCS_PumpCollection.Item(sobj.Name)
+
+                If e.ChangedItem.Label.Contains("Delta P") Then
+
+                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Pressoajusante")) Then
+
+                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    bb.Pout = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Eficincia")) Then
+
+                    If e.ChangedItem.Value <= 20 Or e.ChangedItem.Value > 100 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+
+                End If
+
+                If FlowSheet.Options.CalculatorActivated Then
+
+                    'Call function to calculate flowsheet
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Calculado = False
+                        .Tag = sobj.Tag
+                        .Nome = sobj.Name
+                        .Tipo = TipoObjeto.Pump
+                        .Emissor = "PropertyGrid"
+                    End With
+
+                    If bb.IsSpecAttached = True And bb.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then FlowSheet.Collections.CLCS_SpecCollection(bb.AttachedSpecId).Calculate()
+                    FlowSheet.CalculationQueue.Enqueue(objargs)
+
+                End If
+
+            ElseIf sobj.TipoObjeto = TipoObjeto.Valve Then
+
+                Dim bb As DWSIM.SimulationObjects.UnitOps.Valve = FlowSheet.Collections.CLCS_ValveCollection.Item(sobj.Name)
+
+                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
+
+                    bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+
+                    'If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("ValveOutletPressure")) Then
+
+                    bb.OutletPressure = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
+
+                End If
+
+                If FlowSheet.Options.CalculatorActivated Then
+
+                    'Call function to calculate flowsheet
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Calculado = False
+                        .Tag = sobj.Tag
+                        .Nome = sobj.Name
+                        .Tipo = TipoObjeto.Valve
+                        .Emissor = "PropertyGrid"
+                    End With
+
+                    If bb.IsSpecAttached = True And bb.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then FlowSheet.Collections.CLCS_SpecCollection(bb.AttachedSpecId).Calculate()
+                    FlowSheet.CalculationQueue.Enqueue(objargs)
+
+                End If
+
+            ElseIf sobj.TipoObjeto = TipoObjeto.Filter Then
+
+                Dim ft As DWSIM.SimulationObjects.UnitOps.Filter = FlowSheet.Collections.CLCS_FilterCollection.Item(sobj.Name)
+
+                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("FilterMediumResistance")) Then
+                    ft.FilterMediumResistance = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.mediumresistance, e.ChangedItem.Value)
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("FilterSpecificCakeResistance")) Then
+                    ft.SpecificCakeResistance = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.cakeresistance, e.ChangedItem.Value)
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("FilterCycleTime")) Then
+                    ft.FilterCycleTime = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.time, e.ChangedItem.Value)
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("FilterPressureDrop")) Then
+                    ft.PressureDrop = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("FilterArea")) Then
+                    ft.TotalFilterArea = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.area, e.ChangedItem.Value)
+                End If
+
+                If FlowSheet.Options.CalculatorActivated Then
+
+                    'Call function to calculate flowsheet
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Calculado = False
+                        .Tag = sobj.Tag
+                        .Nome = sobj.Name
+                        .Tipo = sobj.TipoObjeto
+                        .Emissor = "PropertyGrid"
+                    End With
+
+                    If ft.IsSpecAttached = True And ft.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then FlowSheet.Collections.CLCS_SpecCollection(ft.AttachedSpecId).Calculate()
+                    FlowSheet.CalculationQueue.Enqueue(objargs)
+
+                End If
+
+            ElseIf sobj.TipoObjeto = TipoObjeto.Compressor Then
+
+                Dim bb As DWSIM.SimulationObjects.UnitOps.Compressor = FlowSheet.Collections.CLCS_CompressorCollection.Item(sobj.Name)
+
+                If e.ChangedItem.Label.Contains("Delta P") Then
+
+                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Presso")) Then
+                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    bb.POut = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Eficincia")) Then
+                    If e.ChangedItem.Value <= 20 Or e.ChangedItem.Value > 100 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+
+                End If
+
+                If FlowSheet.Options.CalculatorActivated Then
+
+                    'Call function to calculate flowsheet
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Calculado = False
+                        .Tag = sobj.Tag
+                        .Nome = sobj.Name
+                        .Tipo = TipoObjeto.Compressor
+                        .Emissor = "PropertyGrid"
+                    End With
+
+                    If bb.IsSpecAttached = True And bb.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then FlowSheet.Collections.CLCS_SpecCollection(bb.AttachedSpecId).Calculate()
+                    FlowSheet.CalculationQueue.Enqueue(objargs)
+
+                End If
+
+            ElseIf sobj.TipoObjeto = TipoObjeto.Expander Then
+
+                Dim bb As DWSIM.SimulationObjects.UnitOps.Expander = FlowSheet.Collections.CLCS_TurbineCollection.Item(sobj.Name)
+
+                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
+
+                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Eficincia")) Then
+
+                    If e.ChangedItem.Value <= 20 Or e.ChangedItem.Value > 100 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+
+                End If
+
+                If FlowSheet.Options.CalculatorActivated Then
+
+                    'Call function to calculate flowsheet
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Calculado = False
+                        .Tag = sobj.Tag
+                        .Nome = sobj.Name
+                        .Tipo = TipoObjeto.Expander
+                        .Emissor = "PropertyGrid"
+                    End With
+
+                    If bb.IsSpecAttached = True And bb.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then FlowSheet.Collections.CLCS_SpecCollection(bb.AttachedSpecId).Calculate()
+                    FlowSheet.CalculationQueue.Enqueue(objargs)
+
+                End If
+
+            ElseIf sobj.TipoObjeto = TipoObjeto.Pipe Then
+
+                Dim bb As DWSIM.SimulationObjects.UnitOps.Pipe = FlowSheet.Collections.CLCS_PipeCollection.Item(sobj.Name)
+
+                If FlowSheet.Options.CalculatorActivated Then
+
+                    'Call function to calculate flowsheet
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Calculado = False
+                        .Tag = sobj.Tag
+                        .Nome = sobj.Name
+                        .Tipo = TipoObjeto.Pipe
+                        .Emissor = "PropertyGrid"
+                    End With
+
+                    If bb.IsSpecAttached = True And bb.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then FlowSheet.Collections.CLCS_SpecCollection(bb.AttachedSpecId).Calculate()
+                    FlowSheet.CalculationQueue.Enqueue(objargs)
+
+                End If
+
+            ElseIf sobj.TipoObjeto = TipoObjeto.Heater Then
+
+                Dim bb As DWSIM.SimulationObjects.UnitOps.Heater = FlowSheet.Collections.CLCS_HeaterCollection.Item(sobj.Name)
+
+                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Eficincia")) Then
+
+                    If e.ChangedItem.Value <= 20 Or e.ChangedItem.Value > 100 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Calor")) Then
+
+                    bb.DeltaQ = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_heatflow, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
+
+                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature")) Then
+
+                    bb.OutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("FraomolardafaseFaseV")) Then
+
+                    bb.OutletVaporFraction = Double.Parse(e.ChangedItem.Value)
+
+                End If
+
+                If FlowSheet.Options.CalculatorActivated Then
+
+                    'Call function to calculate flowsheet
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Calculado = False
+                        .Tag = sobj.Tag
+                        .Nome = sobj.Name
+                        .Tipo = TipoObjeto.Heater
+                        .Emissor = "PropertyGrid"
+                    End With
+
+                    If bb.IsSpecAttached = True And bb.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then FlowSheet.Collections.CLCS_SpecCollection(bb.AttachedSpecId).Calculate()
+                    FlowSheet.CalculationQueue.Enqueue(objargs)
+
+                End If
+
+            ElseIf sobj.TipoObjeto = TipoObjeto.Cooler Then
+
+                Dim bb As DWSIM.SimulationObjects.UnitOps.Cooler = FlowSheet.Collections.CLCS_CoolerCollection.Item(sobj.Name)
+
+                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Eficincia")) Then
+
+                    If e.ChangedItem.Value <= 20 Or e.ChangedItem.Value > 100 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Calor")) Then
+
+                    bb.DeltaQ = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_heatflow, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
+
+                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature")) Then
+
+                    bb.OutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("FraomolardafaseFaseV")) Then
+
+                    bb.OutletVaporFraction = Double.Parse(e.ChangedItem.Value)
+
+                End If
+
+                If FlowSheet.Options.CalculatorActivated Then
+
+                    'Call function to calculate flowsheet
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Calculado = False
+                        .Tag = sobj.Tag
+                        .Nome = sobj.Name
+                        .Tipo = TipoObjeto.Cooler
+                        .Emissor = "PropertyGrid"
+                    End With
+
+                    If bb.IsSpecAttached = True And bb.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then FlowSheet.Collections.CLCS_SpecCollection(bb.AttachedSpecId).Calculate()
+                    FlowSheet.CalculationQueue.Enqueue(objargs)
+
+                End If
+
+            ElseIf sobj.TipoObjeto = TipoObjeto.Tank Then
+
+                Dim bb As DWSIM.SimulationObjects.UnitOps.Tank = FlowSheet.Collections.CLCS_TankCollection.Item(sobj.Name)
+
+                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
+
+                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("AquecimentoResfriame")) Then
+
+                    bb.DeltaQ = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_heatflow, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("TKVol")) Then
+
+                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    bb.Volume = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.volume, e.ChangedItem.Value)
+
+                End If
+
+                If FlowSheet.Options.CalculatorActivated Then
+
+                    'Call function to calculate flowsheet
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Tag = sobj.Tag
+                        .Calculado = False
+                        .Nome = sobj.Name
+                        .Tipo = TipoObjeto.Tank
+                        .Emissor = "PropertyGrid"
+                    End With
+
+                    If bb.IsSpecAttached = True And bb.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then FlowSheet.Collections.CLCS_SpecCollection(bb.AttachedSpecId).Calculate()
+                    FlowSheet.CalculationQueue.Enqueue(objargs)
+
+                End If
+
+            ElseIf sobj.TipoObjeto = TipoObjeto.OT_Ajuste Then
+
+                Dim adj As DWSIM.SimulationObjects.SpecialOps.Adjust = FlowSheet.Collections.CLCS_AdjustCollection.Item(sobj.Name)
+
+                With adj
+                    If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Controlada")) Then
+                        .ControlledObject = FlowSheet.Collections.ObjectCollection(.ControlledObjectData.m_ID)
+                        .ControlledVariable = .ControlledObjectData.m_Property
+                        CType(FlowSheet.Collections.AdjustCollection(adj.Nome), AdjustGraphic).ConnectedToCv = .ControlledObject.GraphicObject
+                        .ReferenceObject = Nothing
+                        .ReferenceVariable = Nothing
+                        With .ReferencedObjectData
+                            .m_ID = ""
+                            .m_Name = ""
+                            .m_Property = ""
+                            .m_Type = ""
+                        End With
+                    ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Manipulada")) Then
+                        .ManipulatedObject = FlowSheet.Collections.ObjectCollection(.ManipulatedObjectData.m_ID)
+                        Dim gr As AdjustGraphic = FlowSheet.Collections.AdjustCollection(adj.Nome)
+                        gr.ConnectedToMv = .ManipulatedObject.GraphicObject
+                        .ManipulatedVariable = .ManipulatedObjectData.m_Property
+                    ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("ObjetoVariveldeRefer")) Then
+                        .ReferenceObject = FlowSheet.Collections.ObjectCollection(.ReferencedObjectData.m_ID)
+                        .ReferenceVariable = .ReferencedObjectData.m_Property
+                        Dim gr As AdjustGraphic = FlowSheet.Collections.AdjustCollection(adj.Nome)
+                        gr.ConnectedToRv = .ReferenceObject.GraphicObject
+                    ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Valormnimoopcional")) Then
+                        adj.MinVal = Conversor.ConverterParaSI(adj.ManipulatedObject.GetPropertyUnit(adj.ManipulatedObjectData.m_Property, FlowSheet.Options.SelectedUnitSystem), e.ChangedItem.Value)
+                    ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Valormximoopcional")) Then
+                        adj.MaxVal = Conversor.ConverterParaSI(adj.ManipulatedObject.GetPropertyUnit(adj.ManipulatedObjectData.m_Property, FlowSheet.Options.SelectedUnitSystem), e.ChangedItem.Value)
+                    ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("ValordeAjusteouOffse")) Then
+                        adj.AdjustValue = Conversor.ConverterParaSI(adj.ControlledObject.GetPropertyUnit(adj.ControlledObjectData.m_Property, FlowSheet.Options.SelectedUnitSystem), e.ChangedItem.Value)
+                    End If
+                End With
+
+            ElseIf sobj.TipoObjeto = TipoObjeto.OT_Especificacao Then
+
+                Dim spec As DWSIM.SimulationObjects.SpecialOps.Spec = FlowSheet.Collections.CLCS_SpecCollection.Item(sobj.Name)
+
+                With spec
+                    If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Destino")) Then
+                        .TargetObject = FlowSheet.Collections.ObjectCollection(.TargetObjectData.m_ID)
+                        .TargetVariable = .TargetObjectData.m_Property
+                        CType(FlowSheet.Collections.SpecCollection(spec.Nome), SpecGraphic).ConnectedToTv = .TargetObject.GraphicObject
+                    ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Fonte")) Then
+                        .SourceObject = FlowSheet.Collections.ObjectCollection(.SourceObjectData.m_ID)
+                        Dim gr As SpecGraphic = FlowSheet.Collections.SpecCollection(spec.Nome)
+                        gr.ConnectedToSv = .SourceObject.GraphicObject
+                        .SourceVariable = .SourceObjectData.m_Property
+                    End If
+                End With
+
+            ElseIf sobj.TipoObjeto = TipoObjeto.Vessel Then
+
+                Dim vessel As DWSIM.SimulationObjects.UnitOps.Vessel = FlowSheet.Collections.CLCS_VesselCollection.Item(sobj.Name)
+
+                Dim T, P As Double
+                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Temperatura")) Then
+                    T = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+                    vessel.FlashTemperature = T
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Presso")) Then
+                    P = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
+                    vessel.FlashPressure = P
+                End If
+
+                If FlowSheet.Options.CalculatorActivated Then
+
+                    'Call function to calculate flowsheet
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Tag = sobj.Tag
+                        .Calculado = False
+                        .Nome = sobj.Name
+                        .Tipo = TipoObjeto.Vessel
+                        .Emissor = "PropertyGrid"
+                    End With
+
+                    If vessel.IsSpecAttached = True And vessel.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then FlowSheet.Collections.CLCS_SpecCollection(vessel.AttachedSpecId).Calculate()
+                    FlowSheet.CalculationQueue.Enqueue(objargs)
+
+                End If
+
+            ElseIf sobj.TipoObjeto = TipoObjeto.OT_Reciclo Then
+
+                Dim rec As DWSIM.SimulationObjects.SpecialOps.Recycle = FlowSheet.Collections.CLCS_RecycleCollection.Item(sobj.Name)
+
+                Dim T, P, W As Double
+                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Temperatura")) Then
+                    T = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaT, e.ChangedItem.Value)
+                    rec.ConvergenceParameters.Temperatura = T
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Presso")) Then
+                    P = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    rec.ConvergenceParameters.Pressao = P
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("mssica")) Then
+                    W = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_massflow, e.ChangedItem.Value)
+                    rec.ConvergenceParameters.VazaoMassica = W
+                End If
+
+            ElseIf sobj.TipoObjeto = TipoObjeto.RCT_Conversion Then
+
+                Dim bb As DWSIM.SimulationObjects.Reactors.Reactor_Conversion = FlowSheet.Collections.CLCS_ReactorConversionCollection.Item(sobj.Name)
+
+                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
+
+                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature")) Then
+
+                    bb.OutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+
+                End If
+
+                If FlowSheet.Options.CalculatorActivated Then
+
+                    'Call function to calculate flowsheet
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Calculado = False
+                        .Tag = sobj.Tag
+                        .Nome = sobj.Name
+                        .Tipo = TipoObjeto.RCT_Conversion
+                        .Emissor = "PropertyGrid"
+                    End With
+
+                    If bb.IsSpecAttached = True And bb.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then FlowSheet.Collections.CLCS_SpecCollection(bb.AttachedSpecId).Calculate()
+                    FlowSheet.CalculationQueue.Enqueue(objargs)
+
+                End If
+
+            ElseIf sobj.TipoObjeto = TipoObjeto.RCT_Equilibrium Then
+
+                Dim bb As DWSIM.SimulationObjects.Reactors.Reactor_Equilibrium = FlowSheet.Collections.CLCS_ReactorEquilibriumCollection.Item(sobj.Name)
+
+                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
+
+                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature")) Then
+
+                    bb.OutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+
+                End If
+
+                If FlowSheet.Options.CalculatorActivated Then
+
+                    'Call function to calculate flowsheet
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Calculado = False
+                        .Tag = sobj.Tag
+                        .Nome = sobj.Name
+                        .Tipo = TipoObjeto.RCT_Equilibrium
+                        .Emissor = "PropertyGrid"
+                    End With
+
+                    If bb.IsSpecAttached = True And bb.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then FlowSheet.Collections.CLCS_SpecCollection(bb.AttachedSpecId).Calculate()
+                    FlowSheet.CalculationQueue.Enqueue(objargs)
+
+                End If
+
+            ElseIf sobj.TipoObjeto = TipoObjeto.RCT_Gibbs Then
+
+                Dim bb As DWSIM.SimulationObjects.Reactors.Reactor_Gibbs = FlowSheet.Collections.CLCS_ReactorGibbsCollection.Item(sobj.Name)
+
+                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
+
+                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature")) Then
+
+                    bb.OutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+
+                End If
+
+                If FlowSheet.Options.CalculatorActivated Then
+
+                    'Call function to calculate flowsheet
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Calculado = False
+                        .Tag = sobj.Tag
+                        .Nome = sobj.Name
+                        .Tipo = TipoObjeto.RCT_Gibbs
+                        .Emissor = "PropertyGrid"
+                    End With
+
+                    If bb.IsSpecAttached = True And bb.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then FlowSheet.Collections.CLCS_SpecCollection(bb.AttachedSpecId).Calculate()
+                    FlowSheet.CalculationQueue.Enqueue(objargs)
+
+                End If
+
+            ElseIf sobj.TipoObjeto = TipoObjeto.RCT_CSTR Then
+
+                Dim bb As DWSIM.SimulationObjects.Reactors.Reactor_CSTR = FlowSheet.Collections.CLCS_ReactorCSTRCollection.Item(sobj.Name)
+
+                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("RSCTRIsothermalTemperature")) Then
+
+                    bb.IsothermalTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature")) Then
+
+                    bb.OutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
+
+                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("RCSTRPGridItem1")) Then
+
+                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    bb.Volume = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.volume, e.ChangedItem.Value)
+
+                End If
+
+                If FlowSheet.Options.CalculatorActivated Then
+
+                    'Call function to calculate flowsheet
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Calculado = False
+                        .Tag = sobj.Tag
+                        .Nome = sobj.Name
+                        .Tipo = TipoObjeto.RCT_CSTR
+                        .Emissor = "PropertyGrid"
+                    End With
+
+                    If bb.IsSpecAttached = True And bb.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then FlowSheet.Collections.CLCS_SpecCollection(bb.AttachedSpecId).Calculate()
+                    FlowSheet.CalculationQueue.Enqueue(objargs)
+
+                End If
+
+            ElseIf sobj.TipoObjeto = TipoObjeto.RCT_PFR Then
+
+                Dim bb As DWSIM.SimulationObjects.Reactors.Reactor_PFR = FlowSheet.Collections.CLCS_ReactorPFRCollection.Item(sobj.Name)
+
+                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
+
+                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature")) Then
+
+                    bb.OutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("RCSTRPGridItem1")) Then
+
+                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    bb.Volume = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.volume, e.ChangedItem.Value)
+
+                End If
+
+                If FlowSheet.Options.CalculatorActivated Then
+
+                    'Call function to calculate flowsheet
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Calculado = False
+                        .Tag = sobj.Tag
+                        .Nome = sobj.Name
+                        .Tipo = TipoObjeto.RCT_PFR
+                        .Emissor = "PropertyGrid"
+                    End With
+
+                    If bb.IsSpecAttached = True And bb.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then FlowSheet.Collections.CLCS_SpecCollection(bb.AttachedSpecId).Calculate()
+                    FlowSheet.CalculationQueue.Enqueue(objargs)
+
+                End If
+
+            ElseIf sobj.TipoObjeto = TipoObjeto.HeatExchanger Then
+
+                Dim bb As DWSIM.SimulationObjects.UnitOps.HeatExchanger = FlowSheet.Collections.CLCS_HeatExchangerCollection.Item(sobj.Name)
+
+                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("OverallHeatTranferCoefficient")) Then
+
+                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    bb.OverallCoefficient = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.heat_transf_coeff, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Area")) Then
+
+                    bb.Area = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.area, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HeatLoad")) Then
+
+                    bb.Q = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_heatflow, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HXHotSidePressureDrop")) Then
+
+                    bb.HotSidePressureDrop = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HXColdSidePressureDrop")) Then
+
+                    bb.ColdSidePressureDrop = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HXTempHotOut")) Then
+
+                    bb.HotSideOutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HXTempColdOut")) Then
+
+                    bb.ColdSideOutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+
+                End If
+
+                If FlowSheet.Options.CalculatorActivated Then
+
+                    'Call function to calculate flowsheet
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Tag = sobj.Tag
+                        .Calculado = False
+                        .Nome = sobj.Name
+                        .Tipo = TipoObjeto.HeatExchanger
+                        .Emissor = "PropertyGrid"
+                    End With
+
+                    If bb.IsSpecAttached = True And bb.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then FlowSheet.Collections.CLCS_SpecCollection(bb.AttachedSpecId).Calculate()
+                    FlowSheet.CalculationQueue.Enqueue(objargs)
+
+                End If
+
+            ElseIf sobj.TipoObjeto = TipoObjeto.ShortcutColumn Then
+
+                Dim sc As DWSIM.SimulationObjects.UnitOps.ShortcutColumn = FlowSheet.Collections.CLCS_ShortcutColumnCollection.Item(sobj.Name)
+                Dim Pr, Pc As Double
+
+                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("SCCondenserType")) Then
+                    sc.GraphicObject.Shape = sc.condtype
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("SCCondenserPressure")) Then
+                    Pc = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
+                    sc.m_condenserpressure = Pc
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("SCReboilerPressure")) Then
+                    Pr = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
+                    sc.m_boilerpressure = Pr
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("SCLightKey")) Then
+                    sc.m_lightkey = e.ChangedItem.Value
+                ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("SCHeavyKey")) Then
+                    sc.m_heavykey = e.ChangedItem.Value
+                End If
+
+                If FlowSheet.Options.CalculatorActivated Then
+
+                    'Call function to calculate flowsheet
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Tag = sobj.Tag
+                        .Calculado = False
+                        .Nome = sobj.Name
+                        .Tipo = TipoObjeto.ShortcutColumn
+                        .Emissor = "PropertyGrid"
+                    End With
+
+                    If sc.IsSpecAttached = True And sc.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then FlowSheet.Collections.CLCS_SpecCollection(sc.AttachedSpecId).Calculate()
+                    FlowSheet.CalculationQueue.Enqueue(objargs)
+
+                End If
+
+            ElseIf sobj.TipoObjeto = TipoObjeto.OrificePlate Then
+
+                Dim op As DWSIM.SimulationObjects.UnitOps.OrificePlate = FlowSheet.Collections.CLCS_OrificePlateCollection.Item(sobj.Name)
+
+                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("OPOrificeDiameter")) Then
+                    op.OrificeDiameter = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.diameter, e.ChangedItem.Value)
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("OPBeta")) Then
+                    op.Beta = e.ChangedItem.Value
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("OPCorrectionFactor")) Then
+                    op.CorrectionFactor = e.ChangedItem.Value
+                End If
+
+                If FlowSheet.Options.CalculatorActivated Then
+
+                    'Call function to calculate flowsheet
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Calculado = False
+                        .Tag = sobj.Tag
+                        .Nome = sobj.Name
+                        .Tipo = TipoObjeto.OrificePlate
+                        .Emissor = "PropertyGrid"
+                    End With
+
+                    If op.IsSpecAttached = True And op.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then FlowSheet.Collections.CLCS_SpecCollection(op.AttachedSpecId).Calculate()
+                    FlowSheet.CalculationQueue.Enqueue(objargs)
+
+                End If
+
+
+            ElseIf sobj.TipoObjeto = TipoObjeto.ExcelUO Then
+
+                Dim eo As DWSIM.SimulationObjects.UnitOps.ExcelUO = FlowSheet.Collections.CLCS_ExcelUOCollection.Item(sobj.Name)
+                Dim P1 As Integer
+                Dim L As String
+                P1 = InStr(1, e.ChangedItem.Label, "(") - 2
+                If P1 > 0 Then
+                    L = Strings.Left(e.ChangedItem.Label, P1)
+                    If eo.InputParams.ContainsKey(L) Then
+                        eo.InputParams(L).Value = e.ChangedItem.Value
+                    End If
+                End If
+
+                If FlowSheet.Options.CalculatorActivated Then
+
+                    'Call function to calculate flowsheet
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Calculado = False
+                        .Tag = sobj.Tag
+                        .Nome = sobj.Name
+                        .Tipo = TipoObjeto.ExcelUO
+                        .Emissor = "PropertyGrid"
+                    End With
+
+                    If eo.IsSpecAttached = True And eo.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then FlowSheet.Collections.CLCS_SpecCollection(eo.AttachedSpecId).Calculate()
+                    FlowSheet.CalculationQueue.Enqueue(objargs)
+
+                End If
+
+            ElseIf sobj.TipoObjeto = TipoObjeto.DistillationColumn Or sobj.TipoObjeto = TipoObjeto.AbsorptionColumn Or sobj.TipoObjeto = TipoObjeto.ReboiledAbsorber Or
+                sobj.TipoObjeto = TipoObjeto.RefluxedAbsorber Or sobj.TipoObjeto = TipoObjeto.CapeOpenUO Then
+
+
+                If FlowSheet.Options.CalculatorActivated Then
+
+                    sobj.Calculated = True
+                    FlowSheet.FormProps.HandleObjectStatusChanged(sobj)
+
+                    'Call function to calculate flowsheet
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Calculado = True
+                        .Nome = sobj.Name
+                        .Tag = sobj.Tag
+                        .Tipo = sobj.TipoObjeto
+                        .Emissor = "PropertyGrid"
+                    End With
+
+                    Dim obj = FlowSheet.Collections.ObjectCollection.Item(sobj.Name)
+
+                    If obj.IsSpecAttached = True And obj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then FlowSheet.Collections.CLCS_SpecCollection(obj.AttachedSpecId).Calculate()
+                    FlowSheet.CalculationQueue.Enqueue(objargs)
+
+                End If
+
+            End If
+
+        End If
+
+        Call FlowSheet.FormSurface.UpdateSelectedObject()
+        Call FlowSheet.FormSurface.FlowsheetDesignSurface.Invalidate()
+
+        CalculateAll2(FlowSheet, My.Settings.SolverMode, , True)
+
+    End Sub
+
     Public Overridable Sub PropertyValueChanged(ByVal s As Object, ByVal e As System.Windows.Forms.PropertyValueChangedEventArgs)
 
         Dim ChildParent As FormFlowsheet = FlowSheet
@@ -197,7 +1180,7 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
                         End If
                     End If
                 End If
-           ElseIf sobj.TipoObjeto = TipoObjeto.ExcelUO Then
+            ElseIf sobj.TipoObjeto = TipoObjeto.ExcelUO Then
                 If e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedeentrada1")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
@@ -1765,43 +2748,43 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
                         End If
                     End If
                 ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedesaida1")) Then
-                        If e.ChangedItem.Value <> "" Then
-                            If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
-                                Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X + sobj.Width + 40, sobj.Y + 20, e.ChangedItem.Value)
-                            ElseIf CType(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), GraphicObject).InputConnectors(0).IsAttached Then
-                                MessageBox.Show(DWSIM.App.GetLocalString("Todasasconexespossve"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-                                Exit Sub
-                            End If
-                            If Not sobj.OutputConnectors(0).IsAttached Then
-                                ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 0, 0)
-                            Else
-                                ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(0).AttachedConnector.AttachedTo)
-                                ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 0, 0)
-                            End If
-                        Else
-                            If e.OldValue.ToString <> "" Then
-                                ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(0).AttachedConnector.AttachedTo)
-                            End If
+                    If e.ChangedItem.Value <> "" Then
+                        If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
+                            Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X + sobj.Width + 40, sobj.Y + 20, e.ChangedItem.Value)
+                        ElseIf CType(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), GraphicObject).InputConnectors(0).IsAttached Then
+                            MessageBox.Show(DWSIM.App.GetLocalString("Todasasconexespossve"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            Exit Sub
                         End If
+                        If Not sobj.OutputConnectors(0).IsAttached Then
+                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 0, 0)
+                        Else
+                            ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(0).AttachedConnector.AttachedTo)
+                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 0, 0)
+                        End If
+                    Else
+                        If e.OldValue.ToString <> "" Then
+                            ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(0).AttachedConnector.AttachedTo)
+                        End If
+                    End If
                 ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedesaida2")) Then
-                        If e.ChangedItem.Value <> "" Then
-                            If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
-                                Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X + sobj.Width + 40, sobj.Y, e.ChangedItem.Value)
-                            ElseIf CType(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), GraphicObject).InputConnectors(0).IsAttached Then
-                                MessageBox.Show(DWSIM.App.GetLocalString("Todasasconexespossve"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-                                Exit Sub
-                            End If
-                            If Not sobj.OutputConnectors(1).IsAttached Then
-                                ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 1, 0)
-                            Else
-                                ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(1).AttachedConnector.AttachedTo)
-                                ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 1, 0)
-                            End If
-                        Else
-                            If e.OldValue.ToString <> "" Then
-                                ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(1).AttachedConnector.AttachedTo)
-                            End If
+                    If e.ChangedItem.Value <> "" Then
+                        If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
+                            Dim oguid As String = ChildParent.FormSurface.AddObjectToSurface(TipoObjeto.MaterialStream, sobj.X + sobj.Width + 40, sobj.Y, e.ChangedItem.Value)
+                        ElseIf CType(FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), GraphicObject).InputConnectors(0).IsAttached Then
+                            MessageBox.Show(DWSIM.App.GetLocalString("Todasasconexespossve"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            Exit Sub
                         End If
+                        If Not sobj.OutputConnectors(1).IsAttached Then
+                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 1, 0)
+                        Else
+                            ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(1).AttachedConnector.AttachedTo)
+                            ChildParent.ConnectObject(sobj, FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface), 1, 0)
+                        End If
+                    Else
+                        If e.OldValue.ToString <> "" Then
+                            ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(1).AttachedConnector.AttachedTo)
+                        End If
+                    End If
                 ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedesaida3")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then
@@ -1897,7 +2880,7 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
                             ChildParent.DisconnectObject(sobj, sobj.OutputConnectors(3).AttachedConnector.AttachedTo)
                         End If
                     End If
-                    End If
+                End If
             End If
         End If
 
