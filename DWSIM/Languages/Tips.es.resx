@@ -165,6 +165,9 @@
   <data name="FLSH006" xml:space="preserve">
     <value>Alguns tipos de objetos exibem sua janela principal de edição de propriedades em resposta a um duplo clique no seu ícone no fluxograma.</value>
   </data>
+  <data name="FLSH007" xml:space="preserve">
+    <value>Após finalizar as modificações nas conexões, recalcule o fluxograma por completo (F5).</value>
+  </data>
   <data name="FOPT001" xml:space="preserve">
     <value>A janela do otimizador também pode ser reposicionada livremente como as principais janelas da simulação.</value>
   </data>

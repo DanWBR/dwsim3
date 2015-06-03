@@ -165,6 +165,9 @@
   <data name="FLSH006" xml:space="preserve">
     <value>Some object types display their main editing window when you do a double-click on them in the flowsheet.</value>
   </data>
+  <data name="FLSH007" xml:space="preserve">
+    <value>After finishing updating the object connections, call the flowsheet solver by pressing the F5 key.</value>
+  </data>
   <data name="FOPT001" xml:space="preserve">
     <value>The optimizer window can also be freely repositioned just like the flowsheet sub-windows.</value>
   </data>

@@ -1769,6 +1769,8 @@ Imports DWSIM.DWSIM.Outros
 
     Public Sub DisconnectObject(ByRef gObjFrom As GraphicObject, ByRef gObjTo As GraphicObject, Optional ByVal triggercalc As Boolean = False)
 
+        Me.WriteToLog(DWSIM.App.GetLocalTipString("FLSH007"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+
         Dim conObj As ConnectorGraphic = Nothing
         Dim SelObj As GraphicObject = gObjFrom
         Dim ObjToDisconnect As GraphicObject = Nothing
@@ -1818,6 +1820,8 @@ Imports DWSIM.DWSIM.Outros
     End Sub
 
     Public Sub ConnectObject(ByRef gObjFrom As GraphicObject, ByRef gObjTo As GraphicObject, Optional ByVal fidx As Integer = -1, Optional ByVal tidx As Integer = -1)
+
+        Me.WriteToLog(DWSIM.App.GetLocalTipString("FLSH007"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
 
         If gObjFrom.TipoObjeto <> TipoObjeto.GO_Figura And gObjFrom.TipoObjeto <> TipoObjeto.GO_Tabela And _
         gObjFrom.TipoObjeto <> TipoObjeto.GO_Tabela And gObjFrom.TipoObjeto <> TipoObjeto.GO_TabelaRapida And _
