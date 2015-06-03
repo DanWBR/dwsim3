@@ -142,7 +142,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             If g > 0 Then Vmin = V Else Vmax = V
 
-            V = Vmin + (Vmax - Vmin) / 4
+            V = Vmin + (Vmax - Vmin) / 2
+            'V = (P - Pd) / (Pb - Pd)
 
             L = 1 - V
 
@@ -239,11 +240,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
 
-                ElseIf Math.Abs(e3) < itol And ecount > 0 Then
+                    'ElseIf Math.Abs(e3) < itol And ecount > 0 Then
 
-                    convergiu = 1
+                    'convergiu = 1
 
-                    Exit Do
+                    'Exit Do
 
                 Else
 
