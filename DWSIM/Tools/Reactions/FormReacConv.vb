@@ -193,7 +193,7 @@ Public Class FormReacConv
                 '// Define an int variable
                 'context.Variables.DefineVariable(DWSIM.App.GetLocalString("a"), typeof(int));
                 'context.Variables.SetVariableValue(DWSIM.App.GetLocalString("a"), 100);
-                '.ExpContext.Variables.Add("T", CDbl(300))
+                .ExpContext.Variables.Add("T", CDbl(300))
                 '// Create a dynamic expression that evaluates to an Object
                 'IDynamicExpression eDynamic = ExpressionFactory.CreateDynamic("sqrt(a) + 1", context);
                 '// Create a generic expression that evaluates to a double

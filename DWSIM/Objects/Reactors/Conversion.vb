@@ -197,18 +197,13 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                     nBC = N0(rxn.BaseReactant)
 
-                    If rxn.ExpContext Is Nothing Then
-
-                        rxn.ExpContext = New Ciloci.Flee.ExpressionContext
-                        With rxn.ExpContext
-                            .Imports.AddType(GetType(System.Math))
-                        End With
-                        rxn.ExpContext.Variables.Add("T", ims.Fases(0).SPMProperties.temperature.GetValueOrDefault)
-
-                    End If
+                    rxn.ExpContext = New Ciloci.Flee.ExpressionContext
+                    rxn.ExpContext.Imports.AddType(GetType(System.Math))
+                    rxn.ExpContext.Variables.Clear()
+                    rxn.ExpContext.Variables.Add("T", ims.Fases(0).SPMProperties.temperature.GetValueOrDefault)
 
                     rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.Expression)
-                    X = rxn.Expr.Evaluate / 100
+                    X = rxn.Expr.Evaluate / 100.0#
 
                     If X < 0 Or X > 1 Then
 
