@@ -645,6 +645,9 @@ Namespace DWSIM.GraphicObjects
                 .DashStyle = Me.BorderStyle
             End With
 
+            If Width = 0 Then Width = 100
+            If Height = 0 Then Height = 100
+
             Dim rect As New Rectangle(X, Y, Width, Height)
             If Me.IsGradientBackground = False Then
                 g.FillRectangle(New SolidBrush(Color.FromArgb(Me.Opacity, Me.BackgroundColor)), rect)
