@@ -23,48 +23,48 @@ Partial Class FormReacEq
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormReacEq))
-        Me.KryptonButton4 = New System.Windows.Forms.Button
-        Me.KryptonButton3 = New System.Windows.Forms.Button
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox
-        Me.tbDelG = New System.Windows.Forms.TextBox
-        Me.KryptonLabel12 = New System.Windows.Forms.Label
-        Me.KryptonLabel5 = New System.Windows.Forms.Label
-        Me.tbExp = New System.Windows.Forms.TextBox
-        Me.tbKeqConstant = New System.Windows.Forms.TextBox
-        Me.rbKeqConstant = New System.Windows.Forms.RadioButton
-        Me.rbKeqGibbs = New System.Windows.Forms.RadioButton
-        Me.rbKeqfT = New System.Windows.Forms.RadioButton
-        Me.tbApproach = New System.Windows.Forms.TextBox
-        Me.KryptonLabel9 = New System.Windows.Forms.Label
-        Me.tbTmax = New System.Windows.Forms.TextBox
-        Me.tbTmin = New System.Windows.Forms.TextBox
-        Me.KryptonLabel8 = New System.Windows.Forms.Label
-        Me.KryptonLabel7 = New System.Windows.Forms.Label
-        Me.KryptonLabel4 = New System.Windows.Forms.Label
-        Me.cbBase = New System.Windows.Forms.ComboBox
-        Me.KryptonLabel6 = New System.Windows.Forms.Label
-        Me.tbPhase = New System.Windows.Forms.ComboBox
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.tbEquation = New System.Windows.Forms.TextBox
-        Me.KryptonLabel3 = New System.Windows.Forms.Label
-        Me.KryptonButton2 = New System.Windows.Forms.Button
-        Me.tbReacHeat = New System.Windows.Forms.TextBox
-        Me.KryptonLabel2 = New System.Windows.Forms.Label
-        Me.tbStoich = New System.Windows.Forms.TextBox
-        Me.KryptonDataGridView1 = New System.Windows.Forms.DataGridView
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column4 = New System.Windows.Forms.DataGridViewCheckBoxColumn
-        Me.Column5 = New System.Windows.Forms.DataGridViewCheckBoxColumn
-        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.KryptonLabel1 = New System.Windows.Forms.Label
-        Me.GroupBox4 = New System.Windows.Forms.GroupBox
-        Me.KryptonLabel10 = New System.Windows.Forms.Label
-        Me.KryptonLabel11 = New System.Windows.Forms.Label
-        Me.tbName = New System.Windows.Forms.TextBox
-        Me.tbDesc = New System.Windows.Forms.TextBox
+        Me.KryptonButton4 = New System.Windows.Forms.Button()
+        Me.KryptonButton3 = New System.Windows.Forms.Button()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.tbDelG = New System.Windows.Forms.TextBox()
+        Me.KryptonLabel12 = New System.Windows.Forms.Label()
+        Me.KryptonLabel5 = New System.Windows.Forms.Label()
+        Me.tbExp = New System.Windows.Forms.TextBox()
+        Me.tbKeqConstant = New System.Windows.Forms.TextBox()
+        Me.rbKeqConstant = New System.Windows.Forms.RadioButton()
+        Me.rbKeqGibbs = New System.Windows.Forms.RadioButton()
+        Me.rbKeqfT = New System.Windows.Forms.RadioButton()
+        Me.tbApproach = New System.Windows.Forms.TextBox()
+        Me.KryptonLabel9 = New System.Windows.Forms.Label()
+        Me.tbTmax = New System.Windows.Forms.TextBox()
+        Me.tbTmin = New System.Windows.Forms.TextBox()
+        Me.KryptonLabel8 = New System.Windows.Forms.Label()
+        Me.KryptonLabel7 = New System.Windows.Forms.Label()
+        Me.KryptonLabel4 = New System.Windows.Forms.Label()
+        Me.cbBase = New System.Windows.Forms.ComboBox()
+        Me.KryptonLabel6 = New System.Windows.Forms.Label()
+        Me.tbPhase = New System.Windows.Forms.ComboBox()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.tbEquation = New System.Windows.Forms.TextBox()
+        Me.KryptonLabel3 = New System.Windows.Forms.Label()
+        Me.KryptonButton2 = New System.Windows.Forms.Button()
+        Me.tbReacHeat = New System.Windows.Forms.TextBox()
+        Me.KryptonLabel2 = New System.Windows.Forms.Label()
+        Me.tbStoich = New System.Windows.Forms.TextBox()
+        Me.KryptonDataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.KryptonLabel1 = New System.Windows.Forms.Label()
+        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.KryptonLabel10 = New System.Windows.Forms.Label()
+        Me.KryptonLabel11 = New System.Windows.Forms.Label()
+        Me.tbName = New System.Windows.Forms.TextBox()
+        Me.tbDesc = New System.Windows.Forms.TextBox()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -74,28 +74,17 @@ Partial Class FormReacEq
         '
         'KryptonButton4
         '
-        Me.KryptonButton4.AccessibleDescription = Nothing
-        Me.KryptonButton4.AccessibleName = Nothing
         resources.ApplyResources(Me.KryptonButton4, "KryptonButton4")
-        Me.KryptonButton4.BackgroundImage = Nothing
-        Me.KryptonButton4.Font = Nothing
         Me.KryptonButton4.Name = "KryptonButton4"
         '
         'KryptonButton3
         '
-        Me.KryptonButton3.AccessibleDescription = Nothing
-        Me.KryptonButton3.AccessibleName = Nothing
         resources.ApplyResources(Me.KryptonButton3, "KryptonButton3")
-        Me.KryptonButton3.BackgroundImage = Nothing
-        Me.KryptonButton3.Font = Nothing
         Me.KryptonButton3.Name = "KryptonButton3"
         '
         'GroupBox2
         '
-        Me.GroupBox2.AccessibleDescription = Nothing
-        Me.GroupBox2.AccessibleName = Nothing
         resources.ApplyResources(Me.GroupBox2, "GroupBox2")
-        Me.GroupBox2.BackgroundImage = Nothing
         Me.GroupBox2.Controls.Add(Me.GroupBox3)
         Me.GroupBox2.Controls.Add(Me.tbApproach)
         Me.GroupBox2.Controls.Add(Me.KryptonLabel9)
@@ -107,16 +96,12 @@ Partial Class FormReacEq
         Me.GroupBox2.Controls.Add(Me.cbBase)
         Me.GroupBox2.Controls.Add(Me.KryptonLabel6)
         Me.GroupBox2.Controls.Add(Me.tbPhase)
-        Me.GroupBox2.Font = Nothing
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.TabStop = False
         '
         'GroupBox3
         '
-        Me.GroupBox3.AccessibleDescription = Nothing
-        Me.GroupBox3.AccessibleName = Nothing
         resources.ApplyResources(Me.GroupBox3, "GroupBox3")
-        Me.GroupBox3.BackgroundImage = Nothing
         Me.GroupBox3.Controls.Add(Me.tbDelG)
         Me.GroupBox3.Controls.Add(Me.KryptonLabel12)
         Me.GroupBox3.Controls.Add(Me.KryptonLabel5)
@@ -125,180 +110,111 @@ Partial Class FormReacEq
         Me.GroupBox3.Controls.Add(Me.rbKeqConstant)
         Me.GroupBox3.Controls.Add(Me.rbKeqGibbs)
         Me.GroupBox3.Controls.Add(Me.rbKeqfT)
-        Me.GroupBox3.Font = Nothing
         Me.GroupBox3.Name = "GroupBox3"
         Me.GroupBox3.TabStop = False
         '
         'tbDelG
         '
-        Me.tbDelG.AccessibleDescription = Nothing
-        Me.tbDelG.AccessibleName = Nothing
         resources.ApplyResources(Me.tbDelG, "tbDelG")
-        Me.tbDelG.BackgroundImage = Nothing
-        Me.tbDelG.Font = Nothing
         Me.tbDelG.Name = "tbDelG"
         Me.tbDelG.ReadOnly = True
         '
         'KryptonLabel12
         '
-        Me.KryptonLabel12.AccessibleDescription = Nothing
-        Me.KryptonLabel12.AccessibleName = Nothing
         resources.ApplyResources(Me.KryptonLabel12, "KryptonLabel12")
-        Me.KryptonLabel12.Font = Nothing
         Me.KryptonLabel12.Name = "KryptonLabel12"
         '
         'KryptonLabel5
         '
-        Me.KryptonLabel5.AccessibleDescription = Nothing
-        Me.KryptonLabel5.AccessibleName = Nothing
         resources.ApplyResources(Me.KryptonLabel5, "KryptonLabel5")
-        Me.KryptonLabel5.Font = Nothing
         Me.KryptonLabel5.Name = "KryptonLabel5"
         '
         'tbExp
         '
-        Me.tbExp.AccessibleDescription = Nothing
-        Me.tbExp.AccessibleName = Nothing
         resources.ApplyResources(Me.tbExp, "tbExp")
-        Me.tbExp.BackgroundImage = Nothing
-        Me.tbExp.Font = Nothing
         Me.tbExp.Name = "tbExp"
         '
         'tbKeqConstant
         '
-        Me.tbKeqConstant.AccessibleDescription = Nothing
-        Me.tbKeqConstant.AccessibleName = Nothing
         resources.ApplyResources(Me.tbKeqConstant, "tbKeqConstant")
-        Me.tbKeqConstant.BackgroundImage = Nothing
-        Me.tbKeqConstant.Font = Nothing
         Me.tbKeqConstant.Name = "tbKeqConstant"
         '
         'rbKeqConstant
         '
-        Me.rbKeqConstant.AccessibleDescription = Nothing
-        Me.rbKeqConstant.AccessibleName = Nothing
         resources.ApplyResources(Me.rbKeqConstant, "rbKeqConstant")
-        Me.rbKeqConstant.BackgroundImage = Nothing
-        Me.rbKeqConstant.Font = Nothing
         Me.rbKeqConstant.Name = "rbKeqConstant"
         '
         'rbKeqGibbs
         '
-        Me.rbKeqGibbs.AccessibleDescription = Nothing
-        Me.rbKeqGibbs.AccessibleName = Nothing
         resources.ApplyResources(Me.rbKeqGibbs, "rbKeqGibbs")
-        Me.rbKeqGibbs.BackgroundImage = Nothing
         Me.rbKeqGibbs.Checked = True
-        Me.rbKeqGibbs.Font = Nothing
         Me.rbKeqGibbs.Name = "rbKeqGibbs"
         Me.rbKeqGibbs.TabStop = True
         '
         'rbKeqfT
         '
-        Me.rbKeqfT.AccessibleDescription = Nothing
-        Me.rbKeqfT.AccessibleName = Nothing
         resources.ApplyResources(Me.rbKeqfT, "rbKeqfT")
-        Me.rbKeqfT.BackgroundImage = Nothing
-        Me.rbKeqfT.Font = Nothing
         Me.rbKeqfT.Name = "rbKeqfT"
         '
         'tbApproach
         '
-        Me.tbApproach.AccessibleDescription = Nothing
-        Me.tbApproach.AccessibleName = Nothing
         resources.ApplyResources(Me.tbApproach, "tbApproach")
-        Me.tbApproach.BackgroundImage = Nothing
-        Me.tbApproach.Font = Nothing
         Me.tbApproach.Name = "tbApproach"
         '
         'KryptonLabel9
         '
-        Me.KryptonLabel9.AccessibleDescription = Nothing
-        Me.KryptonLabel9.AccessibleName = Nothing
         resources.ApplyResources(Me.KryptonLabel9, "KryptonLabel9")
-        Me.KryptonLabel9.Font = Nothing
         Me.KryptonLabel9.Name = "KryptonLabel9"
         '
         'tbTmax
         '
-        Me.tbTmax.AccessibleDescription = Nothing
-        Me.tbTmax.AccessibleName = Nothing
         resources.ApplyResources(Me.tbTmax, "tbTmax")
-        Me.tbTmax.BackgroundImage = Nothing
-        Me.tbTmax.Font = Nothing
         Me.tbTmax.Name = "tbTmax"
         '
         'tbTmin
         '
-        Me.tbTmin.AccessibleDescription = Nothing
-        Me.tbTmin.AccessibleName = Nothing
         resources.ApplyResources(Me.tbTmin, "tbTmin")
-        Me.tbTmin.BackgroundImage = Nothing
-        Me.tbTmin.Font = Nothing
         Me.tbTmin.Name = "tbTmin"
         '
         'KryptonLabel8
         '
-        Me.KryptonLabel8.AccessibleDescription = Nothing
-        Me.KryptonLabel8.AccessibleName = Nothing
         resources.ApplyResources(Me.KryptonLabel8, "KryptonLabel8")
-        Me.KryptonLabel8.Font = Nothing
         Me.KryptonLabel8.Name = "KryptonLabel8"
         '
         'KryptonLabel7
         '
-        Me.KryptonLabel7.AccessibleDescription = Nothing
-        Me.KryptonLabel7.AccessibleName = Nothing
         resources.ApplyResources(Me.KryptonLabel7, "KryptonLabel7")
-        Me.KryptonLabel7.Font = Nothing
         Me.KryptonLabel7.Name = "KryptonLabel7"
         '
         'KryptonLabel4
         '
-        Me.KryptonLabel4.AccessibleDescription = Nothing
-        Me.KryptonLabel4.AccessibleName = Nothing
         resources.ApplyResources(Me.KryptonLabel4, "KryptonLabel4")
-        Me.KryptonLabel4.Font = Nothing
         Me.KryptonLabel4.Name = "KryptonLabel4"
         '
         'cbBase
         '
-        Me.cbBase.AccessibleDescription = Nothing
-        Me.cbBase.AccessibleName = Nothing
         resources.ApplyResources(Me.cbBase, "cbBase")
-        Me.cbBase.BackgroundImage = Nothing
         Me.cbBase.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbBase.DropDownWidth = 121
-        Me.cbBase.Font = Nothing
         Me.cbBase.Items.AddRange(New Object() {resources.GetString("cbBase.Items"), resources.GetString("cbBase.Items1"), resources.GetString("cbBase.Items2"), resources.GetString("cbBase.Items3"), resources.GetString("cbBase.Items4"), resources.GetString("cbBase.Items5"), resources.GetString("cbBase.Items6")})
         Me.cbBase.Name = "cbBase"
         '
         'KryptonLabel6
         '
-        Me.KryptonLabel6.AccessibleDescription = Nothing
-        Me.KryptonLabel6.AccessibleName = Nothing
         resources.ApplyResources(Me.KryptonLabel6, "KryptonLabel6")
-        Me.KryptonLabel6.Font = Nothing
         Me.KryptonLabel6.Name = "KryptonLabel6"
         '
         'tbPhase
         '
-        Me.tbPhase.AccessibleDescription = Nothing
-        Me.tbPhase.AccessibleName = Nothing
         resources.ApplyResources(Me.tbPhase, "tbPhase")
-        Me.tbPhase.BackgroundImage = Nothing
         Me.tbPhase.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.tbPhase.DropDownWidth = 121
-        Me.tbPhase.Font = Nothing
         Me.tbPhase.Items.AddRange(New Object() {resources.GetString("tbPhase.Items"), resources.GetString("tbPhase.Items1")})
         Me.tbPhase.Name = "tbPhase"
         '
         'GroupBox1
         '
-        Me.GroupBox1.AccessibleDescription = Nothing
-        Me.GroupBox1.AccessibleName = Nothing
         resources.ApplyResources(Me.GroupBox1, "GroupBox1")
-        Me.GroupBox1.BackgroundImage = Nothing
         Me.GroupBox1.Controls.Add(Me.tbEquation)
         Me.GroupBox1.Controls.Add(Me.KryptonLabel3)
         Me.GroupBox1.Controls.Add(Me.KryptonButton2)
@@ -307,78 +223,51 @@ Partial Class FormReacEq
         Me.GroupBox1.Controls.Add(Me.tbStoich)
         Me.GroupBox1.Controls.Add(Me.KryptonDataGridView1)
         Me.GroupBox1.Controls.Add(Me.KryptonLabel1)
-        Me.GroupBox1.Font = Nothing
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.TabStop = False
         '
         'tbEquation
         '
-        Me.tbEquation.AccessibleDescription = Nothing
-        Me.tbEquation.AccessibleName = Nothing
         resources.ApplyResources(Me.tbEquation, "tbEquation")
-        Me.tbEquation.BackgroundImage = Nothing
-        Me.tbEquation.Font = Nothing
         Me.tbEquation.Name = "tbEquation"
         Me.tbEquation.ReadOnly = True
         '
         'KryptonLabel3
         '
-        Me.KryptonLabel3.AccessibleDescription = Nothing
-        Me.KryptonLabel3.AccessibleName = Nothing
         resources.ApplyResources(Me.KryptonLabel3, "KryptonLabel3")
-        Me.KryptonLabel3.Font = Nothing
         Me.KryptonLabel3.Name = "KryptonLabel3"
         '
         'KryptonButton2
         '
-        Me.KryptonButton2.AccessibleDescription = Nothing
-        Me.KryptonButton2.AccessibleName = Nothing
         resources.ApplyResources(Me.KryptonButton2, "KryptonButton2")
-        Me.KryptonButton2.BackgroundImage = Nothing
-        Me.KryptonButton2.Font = Nothing
         Me.KryptonButton2.Name = "KryptonButton2"
         '
         'tbReacHeat
         '
-        Me.tbReacHeat.AccessibleDescription = Nothing
-        Me.tbReacHeat.AccessibleName = Nothing
         resources.ApplyResources(Me.tbReacHeat, "tbReacHeat")
-        Me.tbReacHeat.BackgroundImage = Nothing
-        Me.tbReacHeat.Font = Nothing
         Me.tbReacHeat.Name = "tbReacHeat"
         Me.tbReacHeat.ReadOnly = True
         '
         'KryptonLabel2
         '
-        Me.KryptonLabel2.AccessibleDescription = Nothing
-        Me.KryptonLabel2.AccessibleName = Nothing
         resources.ApplyResources(Me.KryptonLabel2, "KryptonLabel2")
-        Me.KryptonLabel2.Font = Nothing
         Me.KryptonLabel2.Name = "KryptonLabel2"
         '
         'tbStoich
         '
-        Me.tbStoich.AccessibleDescription = Nothing
-        Me.tbStoich.AccessibleName = Nothing
         resources.ApplyResources(Me.tbStoich, "tbStoich")
-        Me.tbStoich.BackgroundImage = Nothing
-        Me.tbStoich.Font = Nothing
         Me.tbStoich.Name = "tbStoich"
         Me.tbStoich.ReadOnly = True
         '
         'KryptonDataGridView1
         '
-        Me.KryptonDataGridView1.AccessibleDescription = Nothing
-        Me.KryptonDataGridView1.AccessibleName = Nothing
+        resources.ApplyResources(Me.KryptonDataGridView1, "KryptonDataGridView1")
         Me.KryptonDataGridView1.AllowUserToAddRows = False
         Me.KryptonDataGridView1.AllowUserToDeleteRows = False
         Me.KryptonDataGridView1.AllowUserToResizeRows = False
-        resources.ApplyResources(Me.KryptonDataGridView1, "KryptonDataGridView1")
         Me.KryptonDataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.KryptonDataGridView1.BackgroundImage = Nothing
         Me.KryptonDataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.KryptonDataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column2, Me.Column3, Me.Column4, Me.Column5, Me.Column6, Me.Column1})
-        Me.KryptonDataGridView1.Font = Nothing
         Me.KryptonDataGridView1.MultiSelect = False
         Me.KryptonDataGridView1.Name = "KryptonDataGridView1"
         Me.KryptonDataGridView1.RowHeadersVisible = False
@@ -424,76 +313,50 @@ Partial Class FormReacEq
         '
         'KryptonLabel1
         '
-        Me.KryptonLabel1.AccessibleDescription = Nothing
-        Me.KryptonLabel1.AccessibleName = Nothing
         resources.ApplyResources(Me.KryptonLabel1, "KryptonLabel1")
-        Me.KryptonLabel1.Font = Nothing
         Me.KryptonLabel1.Name = "KryptonLabel1"
         '
         'GroupBox4
         '
-        Me.GroupBox4.AccessibleDescription = Nothing
-        Me.GroupBox4.AccessibleName = Nothing
         resources.ApplyResources(Me.GroupBox4, "GroupBox4")
-        Me.GroupBox4.BackgroundImage = Nothing
         Me.GroupBox4.Controls.Add(Me.KryptonLabel10)
         Me.GroupBox4.Controls.Add(Me.KryptonLabel11)
         Me.GroupBox4.Controls.Add(Me.tbName)
         Me.GroupBox4.Controls.Add(Me.tbDesc)
-        Me.GroupBox4.Font = Nothing
         Me.GroupBox4.Name = "GroupBox4"
         Me.GroupBox4.TabStop = False
         '
         'KryptonLabel10
         '
-        Me.KryptonLabel10.AccessibleDescription = Nothing
-        Me.KryptonLabel10.AccessibleName = Nothing
         resources.ApplyResources(Me.KryptonLabel10, "KryptonLabel10")
-        Me.KryptonLabel10.Font = Nothing
         Me.KryptonLabel10.Name = "KryptonLabel10"
         '
         'KryptonLabel11
         '
-        Me.KryptonLabel11.AccessibleDescription = Nothing
-        Me.KryptonLabel11.AccessibleName = Nothing
         resources.ApplyResources(Me.KryptonLabel11, "KryptonLabel11")
-        Me.KryptonLabel11.Font = Nothing
         Me.KryptonLabel11.Name = "KryptonLabel11"
         '
         'tbName
         '
-        Me.tbName.AccessibleDescription = Nothing
-        Me.tbName.AccessibleName = Nothing
         resources.ApplyResources(Me.tbName, "tbName")
-        Me.tbName.BackgroundImage = Nothing
-        Me.tbName.Font = Nothing
         Me.tbName.Name = "tbName"
         '
         'tbDesc
         '
-        Me.tbDesc.AccessibleDescription = Nothing
-        Me.tbDesc.AccessibleName = Nothing
         resources.ApplyResources(Me.tbDesc, "tbDesc")
-        Me.tbDesc.BackgroundImage = Nothing
-        Me.tbDesc.Font = Nothing
         Me.tbDesc.Name = "tbDesc"
         '
         'FormReacEq
         '
-        Me.AccessibleDescription = Nothing
-        Me.AccessibleName = Nothing
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackgroundImage = Nothing
         Me.Controls.Add(Me.GroupBox4)
         Me.Controls.Add(Me.KryptonButton4)
         Me.Controls.Add(Me.KryptonButton3)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
         Me.DoubleBuffered = True
-        Me.Font = Nothing
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
-        Me.Icon = Nothing
         Me.Name = "FormReacEq"
         Me.ShowInTaskbar = False
         Me.GroupBox2.ResumeLayout(False)

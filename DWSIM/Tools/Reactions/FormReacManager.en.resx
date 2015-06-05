@@ -117,18 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="KryptonButton8.Text" xml:space="preserve">
-    <value>New</value>
-  </data>
-  <data name="KryptonButton6.Text" xml:space="preserve">
-    <value>View/Edit</value>
-  </data>
-  <data name="KryptonButton3.Text" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="KryptonButton2.Text" xml:space="preserve">
-    <value>Copy</value>
-  </data>
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Reaction Sets</value>
   </data>
@@ -138,39 +126,33 @@
   <data name="Column3.HeaderText" xml:space="preserve">
     <value>Description</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="ToolStripButton1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>21, 20</value>
+  </data>
+  <data name="ToolStripButton1.Text" xml:space="preserve">
+    <value>Add New Reaction Set</value>
+  </data>
+  <data name="ToolStripButton3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>21, 20</value>
+  </data>
+  <data name="ToolStripButton3.Text" xml:space="preserve">
+    <value>Edit Selected Set</value>
+  </data>
+  <data name="ToolStripButton5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>21, 20</value>
+  </data>
+  <data name="ToolStripButton5.Text" xml:space="preserve">
+    <value>Copy Selected Set</value>
+  </data>
+  <data name="ToolStripButton2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>21, 20</value>
+  </data>
+  <data name="ToolStripButton2.Text" xml:space="preserve">
+    <value>Remove Selected Set</value>
+  </data>
   <data name="GroupBox4.Text" xml:space="preserve">
     <value>Chemical Reactions</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 13</value>
-  </data>
-  <data name="Label1.Text" xml:space="preserve">
-    <value>Add Reaction:</value>
-  </data>
-  <data name="Button3.Text" xml:space="preserve">
-    <value>Kinetic</value>
-  </data>
-  <data name="Button2.Text" xml:space="preserve">
-    <value>Equilibrium</value>
-  </data>
-  <data name="Button1.Text" xml:space="preserve">
-    <value>Conversion</value>
-  </data>
-  <data name="KryptonButton5.Text" xml:space="preserve">
-    <value>Import</value>
-  </data>
-  <data name="KryptonButton4.Text" xml:space="preserve">
-    <value>Export</value>
-  </data>
-  <data name="KryptonButton1.Text" xml:space="preserve">
-    <value>View/Edit</value>
-  </data>
-  <data name="KryptonButton9.Text" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="KryptonButton10.Text" xml:space="preserve">
-    <value>Copy</value>
   </data>
   <data name="DataGridViewTextBoxColumn1.HeaderText" xml:space="preserve">
     <value>Name</value>
@@ -180,6 +162,48 @@
   </data>
   <data name="DataGridViewTextBoxColumn3.HeaderText" xml:space="preserve">
     <value>Equation</value>
+  </data>
+  <data name="ToolStripDropDownButton1.Text" xml:space="preserve">
+    <value>Add Reaction</value>
+  </data>
+  <data name="ConversãoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>204, 22</value>
+  </data>
+  <data name="ConversãoToolStripMenuItem.Text" xml:space="preserve">
+    <value>Conversion</value>
+  </data>
+  <data name="EquilíbrioToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>204, 22</value>
+  </data>
+  <data name="EquilíbrioToolStripMenuItem.Text" xml:space="preserve">
+    <value>Equilibrium</value>
+  </data>
+  <data name="CinéticaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>204, 22</value>
+  </data>
+  <data name="CinéticaToolStripMenuItem.Text" xml:space="preserve">
+    <value>Kinetic</value>
+  </data>
+  <data name="HeterogêneaCatalíticaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>204, 22</value>
+  </data>
+  <data name="HeterogêneaCatalíticaToolStripMenuItem.Text" xml:space="preserve">
+    <value>Heterogeneous Catalytic</value>
+  </data>
+  <data name="ToolStripButton6.Text" xml:space="preserve">
+    <value>Edit Selected Reaction</value>
+  </data>
+  <data name="ToolStripButton7.Text" xml:space="preserve">
+    <value>Copy Selected Reaction</value>
+  </data>
+  <data name="ToolStripButton8.Text" xml:space="preserve">
+    <value>Remove Selected Reaction</value>
+  </data>
+  <data name="ToolStripButton4.Text" xml:space="preserve">
+    <value>Export Selected Reactions</value>
+  </data>
+  <data name="ToolStripButton9.Text" xml:space="preserve">
+    <value>Import Reactions</value>
   </data>
   <data name="OpenFileDialog1.Filter" xml:space="preserve">
     <value>DWSIM Chemical Reactions File|*.dwrxs;*.dwrxm</value>

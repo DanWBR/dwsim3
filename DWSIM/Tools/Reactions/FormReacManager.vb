@@ -46,7 +46,7 @@ Public Class FormReacManager
 
     End Sub
 
-    Private Sub KryptonButton8_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KryptonButton8.Click
+    Private Sub KryptonButton8_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton1.Click
         Dim rse As New FormReacSetEditor
         rse.ShowDialog()
         rse.Dispose()
@@ -58,7 +58,7 @@ Public Class FormReacManager
         End With
     End Sub
 
-    Private Sub KryptonContextMenuItem1_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles Button1.Click
+    Private Sub KryptonContextMenuItem1_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles ConversãoToolStripMenuItem.Click
         Dim frc As New FormReacConv
         Dim result As MsgBoxResult = frc.ShowDialog()
         With Me.GridRxns.Rows
@@ -70,7 +70,7 @@ Public Class FormReacManager
         frc.Dispose()
     End Sub
 
-    Private Sub KryptonContextMenuItem2_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles Button2.Click
+    Private Sub KryptonContextMenuItem2_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles EquilíbrioToolStripMenuItem.Click
         Dim fre As New FormReacEq
         fre.ShowDialog()
         fre.Dispose()
@@ -82,7 +82,7 @@ Public Class FormReacManager
         End With
     End Sub
 
-    Private Sub KryptonContextMenuItem3_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles Button3.Click
+    Private Sub KryptonContextMenuItem3_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles CinéticaToolStripMenuItem.Click
         Dim frk As New FormReacKinetic
         frk.ShowDialog()
         frk.Dispose()
@@ -94,7 +94,7 @@ Public Class FormReacManager
         End With
     End Sub
 
-    Private Sub KryptonButton4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KryptonButton4.Click
+    Private Sub KryptonButton4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton4.Click
 
         Dim myStream As System.IO.FileStream
         col = New ReactionsCollection
@@ -135,7 +135,7 @@ Public Class FormReacManager
         End If
     End Sub
 
-    Private Sub KryptonButton5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KryptonButton5.Click
+    Private Sub KryptonButton5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton9.Click
 
         Dim myStream As System.IO.FileStream
 
@@ -231,7 +231,7 @@ Public Class FormReacManager
 
     End Sub
 
-    Private Sub KryptonButton10_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KryptonButton10.Click
+    Private Sub KryptonButton10_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton7.Click
         If Not Me.GridRxns.SelectedRows.Count = 0 Then
             Dim rxn As Reaction = frmchild.Options.Reactions(Me.GridRxns.SelectedRows(0).Cells(3).Value)
             Dim rxn2 As Reaction = rxn.Clone()
@@ -242,7 +242,7 @@ Public Class FormReacManager
 
     End Sub
 
-    Private Sub KryptonButton9_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KryptonButton9.Click
+    Private Sub KryptonButton9_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton8.Click
         If Not Me.GridRxns.SelectedRows.Count = 0 Then
             frmchild.Options.Reactions.Remove(Me.GridRxns.SelectedRows(0).Cells(3).Value)
             Me.GridRxns.Rows.Remove(Me.GridRxns.SelectedRows(0))
@@ -250,7 +250,7 @@ Public Class FormReacManager
         End If
     End Sub
 
-    Private Sub KryptonButton1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KryptonButton1.Click
+    Private Sub KryptonButton1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton6.Click
         If Not Me.GridRxns.SelectedRows.Count = 0 Then
             Dim rxn As Reaction = frmchild.Options.Reactions(Me.GridRxns.SelectedRows(0).Cells(3).Value)
             Select Case rxn.ReactionType
@@ -290,7 +290,7 @@ Public Class FormReacManager
         End If
     End Sub
 
-    Private Sub KryptonButton3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KryptonButton3.Click
+    Private Sub KryptonButton3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton2.Click
         If Not Me.GridRSets.SelectedRows.Count = 0 Then
             Dim rxs As ReactionSet = frmchild.Options.ReactionSets(Me.GridRSets.SelectedRows(0).Cells(2).Value)
             If rxs.ID = "DefaultSet" Then
@@ -302,7 +302,7 @@ Public Class FormReacManager
         End If
     End Sub
 
-    Private Sub KryptonButton2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KryptonButton2.Click
+    Private Sub KryptonButton2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton5.Click
         If Not Me.GridRSets.SelectedRows.Count = 0 Then
             Dim rxs As ReactionSet = frmchild.Options.ReactionSets(Me.GridRSets.SelectedRows(0).Cells(2).Value)
             If rxs.ID = "DefaultSet" Then
@@ -316,7 +316,7 @@ Public Class FormReacManager
         End If
     End Sub
 
-    Private Sub KryptonButton6_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KryptonButton6.Click
+    Private Sub KryptonButton6_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton3.Click
         If Not Me.GridRSets.SelectedRows.Count = 0 Then
             Dim rset As ReactionSet = frmchild.Options.ReactionSets(Me.GridRSets.SelectedRows(0).Cells(2).Value)
             Dim rse As New FormReacSetEditor
@@ -362,7 +362,4 @@ Public Class FormReacManager
 
     End Sub
 
-    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
-
-    End Sub
 End Class

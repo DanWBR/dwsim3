@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="KryptonButton3.Text" xml:space="preserve">
     <value>Abbrechen</value>
@@ -126,88 +126,23 @@
   <data name="GroupBox3.Text" xml:space="preserve">
     <value>Gleichgewichtskonstante (K)</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="tbDelG.Size" type="System.Drawing.Size, System.Drawing">
-    <value>108, 20</value>
-  </data>
   <data name="KryptonLabel12.Text" xml:space="preserve">
     <value>DelG_R (kJ/kmol_BC) (25°C)</value>
-  </data>
-  <data name="KryptonLabel5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>38, 19</value>
   </data>
   <data name="KryptonLabel5.Text" xml:space="preserve">
     <value>T in K</value>
   </data>
-  <data name="tbExp.Location" type="System.Drawing.Point, System.Drawing">
-    <value>160, 40</value>
-  </data>
-  <data name="tbExp.Size" type="System.Drawing.Size, System.Drawing">
-    <value>362, 20</value>
-  </data>
-  <data name="tbKeqConstant.Location" type="System.Drawing.Point, System.Drawing">
-    <value>85, 63</value>
-  </data>
-  <data name="tbKeqConstant.Size" type="System.Drawing.Size, System.Drawing">
-    <value>136, 20</value>
-  </data>
-  <data name="rbKeqConstant.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 64</value>
-  </data>
   <data name="rbKeqConstant.Text" xml:space="preserve">
     <value>Konstante</value>
-  </data>
-  <data name="rbKeqGibbs.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 15</value>
-  </data>
-  <data name="rbKeqGibbs.Size" type="System.Drawing.Size, System.Drawing">
-    <value>249, 19</value>
   </data>
   <data name="rbKeqGibbs.Text" xml:space="preserve">
     <value>Berechnung aus der Gibbs'schen Reaktionsen.</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="rbKeqfT.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="rbKeqfT.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 41</value>
-  </data>
-  <data name="rbKeqfT.Size" type="System.Drawing.Size, System.Drawing">
-    <value>137, 17</value>
-  </data>
   <data name="rbKeqfT.Text" xml:space="preserve">
     <value>T-Funktion.: ln K [f(T)] =</value>
   </data>
-  <data name="tbApproach.Size" type="System.Drawing.Size, System.Drawing">
-    <value>81, 20</value>
-  </data>
-  <data name="KryptonLabel9.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 45</value>
-  </data>
-  <data name="KryptonLabel9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>78, 19</value>
-  </data>
   <data name="KryptonLabel9.Text" xml:space="preserve">
     <value>Näherung (%)</value>
-  </data>
-  <data name="tbTmax.Size" type="System.Drawing.Size, System.Drawing">
-    <value>42, 20</value>
-  </data>
-  <data name="tbTmin.Size" type="System.Drawing.Size, System.Drawing">
-    <value>45, 20</value>
-  </data>
-  <data name="KryptonLabel8.Location" type="System.Drawing.Point, System.Drawing">
-    <value>484, 20</value>
-  </data>
-  <data name="KryptonLabel7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>378, 20</value>
-  </data>
-  <data name="KryptonLabel4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 20</value>
-  </data>
-  <data name="KryptonLabel4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>35, 19</value>
   </data>
   <data name="KryptonLabel4.Text" xml:space="preserve">
     <value>Basis</value>
@@ -233,35 +168,11 @@
   <data name="cbBase.Items6" xml:space="preserve">
     <value>Dampfdruck</value>
   </data>
-  <data name="cbBase.Size" type="System.Drawing.Size, System.Drawing">
-    <value>143, 21</value>
-  </data>
-  <data name="KryptonLabel6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>191, 20</value>
-  </data>
-  <data name="KryptonLabel6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>39, 19</value>
-  </data>
   <data name="KryptonLabel6.Text" xml:space="preserve">
     <value>Phase</value>
   </data>
   <data name="tbPhase.Items1" xml:space="preserve">
     <value>Flüssigkeit</value>
-  </data>
-  <data name="tbPhase.Location" type="System.Drawing.Point, System.Drawing">
-    <value>236, 17</value>
-  </data>
-  <data name="tbPhase.Size" type="System.Drawing.Size, System.Drawing">
-    <value>136, 21</value>
-  </data>
-  <data name="tbEquation.Location" type="System.Drawing.Point, System.Drawing">
-    <value>70, 186</value>
-  </data>
-  <data name="tbEquation.Size" type="System.Drawing.Size, System.Drawing">
-    <value>515, 20</value>
-  </data>
-  <data name="KryptonLabel3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>64, 19</value>
   </data>
   <data name="KryptonLabel3.Text" xml:space="preserve">
     <value>Gleichung</value>
@@ -269,20 +180,8 @@
   <data name="KryptonButton2.Text" xml:space="preserve">
     <value>Balance</value>
   </data>
-  <data name="tbReacHeat.Size" type="System.Drawing.Size, System.Drawing">
-    <value>125, 20</value>
-  </data>
-  <data name="KryptonLabel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>194, 19</value>
-  </data>
   <data name="KryptonLabel2.Text" xml:space="preserve">
     <value>Reaktionswärme (kJ/kmol_BK) (25°C)</value>
-  </data>
-  <data name="tbStoich.Size" type="System.Drawing.Size, System.Drawing">
-    <value>69, 20</value>
-  </data>
-  <data name="KryptonLabel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>79, 19</value>
   </data>
   <data name="KryptonLabel1.Text" xml:space="preserve">
     <value>Stöchiometrie</value>
@@ -311,28 +210,10 @@
   <data name="GroupBox4.Text" xml:space="preserve">
     <value>Identifikation</value>
   </data>
-  <data name="KryptonLabel10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 19</value>
-  </data>
   <data name="KryptonLabel10.Text" xml:space="preserve">
     <value>Beschreibung</value>
   </data>
-  <data name="KryptonLabel11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 19</value>
-  </data>
   <data name="KryptonLabel11.Text" xml:space="preserve">
     <value>Name</value>
-  </data>
-  <data name="tbName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>91, 17</value>
-  </data>
-  <data name="tbName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>494, 20</value>
-  </data>
-  <data name="tbDesc.Location" type="System.Drawing.Point, System.Drawing">
-    <value>91, 44</value>
-  </data>
-  <data name="tbDesc.Size" type="System.Drawing.Size, System.Drawing">
-    <value>494, 50</value>
   </data>
 </root>
