@@ -219,9 +219,11 @@ Namespace DWSIM.SimulationObjects.Reactors
             Me.DeltaT = 0
             Me.DN.Clear()
 
-            'check active reactions (kinetic only) in the reaction set
+            'check active reactions (kinetic and heterogeneous only) in the reaction set
             For Each rxnsb As ReactionSetBase In form.Options.ReactionSets(Me.ReactionSetID).Reactions.Values
                 If form.Options.Reactions(rxnsb.ReactionID).ReactionType = ReactionType.Kinetic And rxnsb.IsActive Then
+                    Me.Reactions.Add(rxnsb.ReactionID)
+                ElseIf form.Options.Reactions(rxnsb.ReactionID).ReactionType = ReactionType.Heterogeneous_Catalytic And rxnsb.IsActive Then
                     Me.Reactions.Add(rxnsb.ReactionID)
                 End If
             Next

@@ -106,7 +106,7 @@ Public Class FormReacKinetic
                 Me.cbBase.SelectedIndex = 6
         End Select
 
-        Me.cbConcUnit.Items.AddRange(New String() {"kmol/m3", "mol/m3", "mol/L", "mol/cm3", "mol/mL", "lbmol/ft3", "kg/m3", "g/L", "g/cm3", "g/mL", "lbm/ft3"})
+        'Me.cbConcUnit.Items.AddRange(New String() {"kmol/m3", "mol/m3", "mol/L", "mol/cm3", "mol/mL", "lbmol/ft3", "kg/m3", "g/L", "g/cm3", "g/mL", "lbm/ft3"})
         If rc.ConcUnit = "" Then
             Me.cbConcUnit.SelectedIndex = 0
         Else
@@ -282,6 +282,30 @@ Public Class FormReacKinetic
 
     Private Sub KryptonButton3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KryptonButton3.Click
         Me.Close()
+    End Sub
+
+    Private Sub cbBase_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbBase.SelectedIndexChanged
+
+        Me.cbConcUnit.Items.Clear()
+
+        Select Case cbBase.SelectedIndex
+            Case 0, 4, 5
+                'atividade, frac molar, frac massica
+                Me.cbConcUnit.Items.AddRange(New String() {""})
+            Case 1, 6
+                'fugacidade, press parcial
+                Me.cbConcUnit.Items.AddRange(New Object() {"Pa", "atm", "kgf/cm2", "kgf/cm2g", "lbf/ft2", "kPa", "kPag", "bar", "barg", "ftH2O", "inH2O", "inHg", "mbar", "mH2O", "mmH2O", "mmHg", "MPa", "psi", "psig"})
+            Case 2
+                'conc molar
+                Me.cbConcUnit.Items.AddRange(New String() {"kmol/m3", "mol/m3", "mol/L", "mol/cm3", "mol/mL", "lbmol/ft3"})
+            Case 3
+                'conc massica
+                Me.cbConcUnit.Items.AddRange(New String() {"kg/m3", "g/L", "g/cm3", "g/mL", "lbm/ft3"})
+            Case 4
+        End Select
+
+        Me.cbConcUnit.SelectedIndex = 0
+
     End Sub
 
 End Class

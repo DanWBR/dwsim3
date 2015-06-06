@@ -380,4 +380,12 @@ Public Class FormReacManager
             Next
         End With
     End Sub
+
+    Private Sub GridRxns_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles GridRxns.CellDoubleClick
+        KryptonButton1_Click(sender, e)
+    End Sub
+
+    Private Sub GridRSets_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles GridRSets.CellDoubleClick
+        KryptonButton6_Click(sender, e)
+    End Sub
 End Class
