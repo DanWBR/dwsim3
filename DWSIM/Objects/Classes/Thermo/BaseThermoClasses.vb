@@ -471,8 +471,8 @@ Namespace DWSIM.ClassesBasicasTermodinamica
         Protected m_Expression As String = ""
         Protected m_OptionForK As KOpt = KOpt.Gibbs
         Protected m_approach As Double
-        Protected m_tmin As Double
-        Protected m_tmax As Double
+        Protected m_tmin As Double = 0
+        Protected m_tmax As Double = 2000
         Protected m_constantkeq As Double
         Protected m_reactiongibbs As Double
         Protected m_kval As Double
@@ -671,7 +671,7 @@ Namespace DWSIM.ClassesBasicasTermodinamica
 
         Function ObjectCopy(ByVal obj As Reaction) As Reaction
 
-            Dim objMemStream As New IO.MemoryStream(50000)
+            Dim objMemStream As New IO.MemoryStream(100000)
             Dim objBinaryFormatter As New BinaryFormatter(Nothing, New StreamingContext(StreamingContextStates.Clone))
 
             objBinaryFormatter.Serialize(objMemStream, obj)

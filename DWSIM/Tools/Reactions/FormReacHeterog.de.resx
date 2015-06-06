@@ -215,6 +215,9 @@
     <value>Liquid</value>
   </data>
   <data name="tbPhase.Items2" xml:space="preserve">
+    <value>Solid</value>
+  </data>
+  <data name="tbPhase.Items3" xml:space="preserve">
     <value>Mixture</value>
   </data>
   <data name="tbPhase.Location" type="System.Drawing.Point, System.Drawing">

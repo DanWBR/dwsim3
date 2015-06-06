@@ -206,6 +206,9 @@
     <value>Liquid</value>
   </data>
   <data name="tbPhase.Items2" xml:space="preserve">
+    <value>Solid</value>
+  </data>
+  <data name="tbPhase.Items3" xml:space="preserve">
     <value>Mixture</value>
   </data>
   <data name="tbPhase.Location" type="System.Drawing.Point, System.Drawing">
@@ -238,6 +241,27 @@
   <data name="KryptonLabel2.Text" xml:space="preserve">
     <value>Heat of Reaction (kJ/kmol_BC)</value>
   </data>
+  <data name="Column2.HeaderText" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Column3.HeaderText" xml:space="preserve">
+    <value>Molar Weight</value>
+  </data>
+  <data name="Column4.HeaderText" xml:space="preserve">
+    <value>Include</value>
+  </data>
+  <data name="Column5.HeaderText" xml:space="preserve">
+    <value>BC</value>
+  </data>
+  <data name="Column5.ToolTipText" xml:space="preserve">
+    <value>Base Component</value>
+  </data>
+  <data name="Column6.HeaderText" xml:space="preserve">
+    <value>SC</value>
+  </data>
+  <data name="Column6.ToolTipText" xml:space="preserve">
+    <value>Stoichiometric Coefficient</value>
+  </data>
   <data name="KryptonLabel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>70, 13</value>
   </data>
@@ -259,27 +283,6 @@
   </data>
   <data name="KryptonLabel20.Text" xml:space="preserve">
     <value>Name</value>
-  </data>
-  <data name="Column2.HeaderText" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="Column3.HeaderText" xml:space="preserve">
-    <value>Molar Weight</value>
-  </data>
-  <data name="Column4.HeaderText" xml:space="preserve">
-    <value>Include</value>
-  </data>
-  <data name="Column5.HeaderText" xml:space="preserve">
-    <value>BC</value>
-  </data>
-  <data name="Column5.ToolTipText" xml:space="preserve">
-    <value>Base Component</value>
-  </data>
-  <data name="Column6.HeaderText" xml:space="preserve">
-    <value>SC</value>
-  </data>
-  <data name="Column6.ToolTipText" xml:space="preserve">
-    <value>Stoichiometric Coefficient</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Heterogeneous Catalytic Reaction</value>
