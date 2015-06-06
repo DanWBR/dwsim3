@@ -77,7 +77,7 @@ Public Class FormUNIFACRegression
                         If Not PrimaryGroups.ContainsKey(pg) Then PrimaryGroups.Add(pg, uni.UnifGroups.Groups(ufg).PrimaryGroup)
                     Next
                 Next
-            Case "MODFAC (Dortmund)"
+            Case "Modified UNIFAC (Dortmund)"
                 myType = "MODFAC"
                 For Each cp As ConstantProperties In _comps.Values
                     For Each ufg In cp.MODFACGroups.Collection.Keys
@@ -85,7 +85,7 @@ Public Class FormUNIFACRegression
                         If Not PrimaryGroups.ContainsKey(pg) Then PrimaryGroups.Add(pg, uni.ModfGroups.Groups(ufg).PrimaryGroup)
                     Next
                 Next
-            Case "MODFAC (NIST)"
+            Case "Modified UNIFAC (NIST)"
                 myType = "MODFAC-NIST"
                 For Each cp As ConstantProperties In _comps.Values
                     For Each ufg In cp.NISTMODFACGroups.Collection.Keys
@@ -230,6 +230,18 @@ Public Class FormUNIFACRegression
             LblC2.Visible = True
             IPGrid.ColumnCount = 1
             IPGrid.RowCount = 0
+            TBaij.Text = ""
+            TBaji.Text = ""
+            TBbij.Text = ""
+            TBbji.Text = ""
+            TBcij.Text = ""
+            TBcji.Text = ""
+            GN1 = ""
+            GN2 = ""
+            LblMGi.Text = ""
+            LblMGj.Text = ""
+
+            _pp = Nothing
 
             'get list of compounds
             Dim compounds As New ArrayList
@@ -241,20 +253,53 @@ Public Class FormUNIFACRegression
                         End If
                     Next
                     uni = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac
-                Case "MODFAC (Dortmund)"
+                    TBbij.Visible = False
+                    Lblbij.Visible = False
+                    TBbji.Visible = False
+                    Lblbji.Visible = False
+                    TBcij.Visible = False
+                    Lblcij.Visible = False
+                    TBcji.Visible = False
+                    Lblcji.Visible = False
+                    BtnNewTemp.Visible = True
+                    TbUnifacTemp.Visible = True
+                    LblTUnit.Visible = True
+                Case "Modified UNIFAC (Dortmund)"
                     For Each c As ConstantProperties In FormMain.AvailableComponents.Values
                         If c.MODFACGroups.Collection.Count > 0 Then
                             compounds.Add(c.Name & " (" & c.CurrentDB & ")")
                         End If
                     Next
                     uni = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Modfac
-                Case "MODFAC (NIST)"
+                    TBbij.Visible = True
+                    Lblbij.Visible = True
+                    TBbji.Visible = True
+                    Lblbji.Visible = True
+                    TBcij.Visible = True
+                    Lblcij.Visible = True
+                    TBcji.Visible = True
+                    Lblcji.Visible = True
+                    BtnNewTemp.Visible = False
+                    TbUnifacTemp.Visible = False
+                    LblTUnit.Visible = False
+                Case "Modified UNIFAC (NIST)"
                     For Each c As ConstantProperties In FormMain.AvailableComponents.Values
                         If c.NISTMODFACGroups.Collection.Count > 0 Then
                             compounds.Add(c.Name & " (" & c.CurrentDB & ")")
                         End If
                     Next
                     uni = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NISTMFAC
+                    TBbij.Visible = True
+                    Lblbij.Visible = True
+                    TBbji.Visible = True
+                    Lblbji.Visible = True
+                    TBcij.Visible = True
+                    Lblcij.Visible = True
+                    TBcji.Visible = True
+                    Lblcji.Visible = True
+                    BtnNewTemp.Visible = False
+                    TbUnifacTemp.Visible = False
+                    LblTUnit.Visible = False
             End Select
 
             compounds.Sort()
@@ -471,12 +516,16 @@ Public Class FormUNIFACRegression
         If mat Is Nothing Then mat = New MaterialStream("", "")
 
         If _pp Is Nothing Then
-
-            'Initialize Property Package (needs to change how to do this when it start working with other PPs than NIST)
-
             Dim ppm As New CAPEOPENPropertyPackageManager()
 
-            _pp = ppm.GetPropertyPackage("Modified UNIFAC (NIST)")
+            Select Case cbModel.SelectedItem
+                Case "Modified UNIFAC (NIST)"
+                    _pp = ppm.GetPropertyPackage("Modified UNIFAC (NIST)")
+                Case "Modified UNIFAC (Dortmund)"
+                    _pp = ppm.GetPropertyPackage("Modified UNIFAC (Dortmund)")
+                Case "UNIFAC"
+                    _pp = ppm.GetPropertyPackage("UNIFAC")
+            End Select
 
             ppm.Dispose()
             ppm = Nothing
@@ -490,12 +539,17 @@ Public Class FormUNIFACRegression
         VZ(0) = (x1 + x2) / 2
         VZ(1) = 1 - VZ(0)
 
-        _pp.m_uni.ModfGroups.InteracParam_aij(GI1)(GI2) = IP(0, 0)
-        _pp.m_uni.ModfGroups.InteracParam_aij(GI2)(GI1) = IP(1, 0)
-        _pp.m_uni.ModfGroups.InteracParam_bij(GI1)(GI2) = IP(0, 1)
-        _pp.m_uni.ModfGroups.InteracParam_bij(GI2)(GI1) = IP(1, 1)
-        _pp.m_uni.ModfGroups.InteracParam_cij(GI1)(GI2) = IP(0, 2)
-        _pp.m_uni.ModfGroups.InteracParam_cij(GI2)(GI1) = IP(1, 2)
+        If cbModel.SelectedItem = "UNIFAC" Then
+            _pp.m_uni.UnifGroups.InteracParam(GI1)(GI2) = IP(0, 0)
+            _pp.m_uni.UnifGroups.InteracParam(GI2)(GI1) = IP(1, 0)
+        Else
+            _pp.m_uni.ModfGroups.InteracParam_aij(GI1)(GI2) = IP(0, 0)
+            _pp.m_uni.ModfGroups.InteracParam_aij(GI2)(GI1) = IP(1, 0)
+            _pp.m_uni.ModfGroups.InteracParam_bij(GI1)(GI2) = IP(0, 1)
+            _pp.m_uni.ModfGroups.InteracParam_bij(GI2)(GI1) = IP(1, 1)
+            _pp.m_uni.ModfGroups.InteracParam_cij(GI1)(GI2) = IP(0, 2)
+            _pp.m_uni.ModfGroups.InteracParam_cij(GI2)(GI1) = IP(1, 2)
+        End If
 
         mat.Fases(0).SPMProperties.pressure = P
         mat.Fases(0).SPMProperties.temperature = T
@@ -528,7 +582,7 @@ Public Class FormUNIFACRegression
     Private Sub BtnRegressIP_Click(sender As Object, e As EventArgs) Handles BtnRegressIP.Click
 
         Dim T, Dist As Double
-        Dim aij, aji, mij, mji, MinError As Double
+        Dim aij, aji, mij, mji, MinError, MaxT, MinT As Double
         Dim Simplex(2) As Object
         Dim MinS, MidS, MaxS As Integer
         Dim CalcRes As Object
@@ -545,11 +599,15 @@ Public Class FormUNIFACRegression
         Next
         aij = 0
         aji = 0
+        MinT = GridExpData.Item(2, 0).Value + 273.15
+        MaxT = MinT
 
         For i = 0 To GridExpData.Rows.Count - 1
             Cnt = 3
 
             T = GridExpData.Item(2, i).Value + 273.15
+            If T < MinT Then MinT = T
+            If T > MaxT Then MaxT = T
 
             'initialize search
 
@@ -628,10 +686,21 @@ Public Class FormUNIFACRegression
             GridExpData.Item(7, i).Value = aji
         Next
 
+
+        TbUnifacTemp.Text = (MaxT + MinT) / 2 - 273.15
+        BtnNewTemp_Click(sender, e)
+
+        Cursor = Cursors.Default
+        TBStatus.Text = "Status: Idle"
+
+    End Sub
+    Private Sub BtnNewTemp_Click(sender As Object, e As EventArgs) Handles BtnNewTemp.Click
         'do linear regression for aij, aji, bij, bji from results
         Dim mwT, mwaij, mwaji, naij, naji, d As Double
 
         For i = 0 To GridExpData.Rows.Count - 1
+            If GridExpData.Item(6, i).Value = Nothing Or GridExpData.Item(7, i).Value = Nothing Then Exit Sub
+
             mwT += (GridExpData.Item(2, i).Value + 273.15) / GridExpData.Rows.Count
             mwaij += GridExpData.Item(6, i).Value / GridExpData.Rows.Count
             mwaji += GridExpData.Item(7, i).Value / GridExpData.Rows.Count
@@ -641,17 +710,28 @@ Public Class FormUNIFACRegression
             naji += (GridExpData.Item(2, i).Value + 273.15 - mwT) * (GridExpData.Item(7, i).Value - mwaji)
             d += (GridExpData.Item(2, i).Value + 273.15 - mwT) ^ 2
         Next
+
+
         TBbij.Text = naij / d
         TBbji.Text = naji / d
         TBaij.Text = mwaij - naij / d * mwT
         TBaji.Text = mwaji - naji / d * mwT
 
+        If cbModel.SelectedItem = "UNIFAC" Then
+            If TbUnifacTemp.Text = "" Then
+                TBaij.Text = "0"
+                TBaji.Text = "0"
+                TBbij.Text = "0"
+                TBbji.Text = "0"
+                Exit Sub
+            End If
 
-        Cursor = Cursors.Default
-        TBStatus.Text = "Status: Idle"
-
+            TBaij.Text = TBaij.Text + TBbij.Text * (TbUnifacTemp.Text + 273.15)
+            TBaji.Text = TBaji.Text + TBbji.Text * (TbUnifacTemp.Text + 273.15)
+            TBbij.Text = "0"
+            TBbji.Text = "0"
+        End If
     End Sub
-
     Private Sub BtnDrawChart_Click(sender As Object, e As EventArgs) Handles BtnDrawChart.Click
 
         'Exit if no experimental data are available
@@ -665,10 +745,12 @@ Public Class FormUNIFACRegression
 
         IP(0, 0) = TBaij.Text
         IP(1, 0) = TBaji.Text
-        IP(0, 1) = TBbij.Text
-        IP(1, 1) = TBbji.Text
-        IP(0, 2) = TBcij.Text
-        IP(1, 2) = TBcji.Text
+        If cbModel.SelectedItem <> "UNIFAC" Then
+            IP(0, 1) = TBbij.Text
+            IP(1, 1) = TBbji.Text
+            IP(0, 2) = TBcij.Text
+            IP(1, 2) = TBcji.Text
+        End If
 
         For i = 0 To GridExpData.Rows.Count - 1
             If GridExpData.Item(0, i).Value <> Nothing Then vx1exp(i) = Double.Parse(GridExpData.Item(0, i).Value, ci)
@@ -910,6 +992,21 @@ Public Class FormUNIFACRegression
                 MessageBox.Show(DWSIM.App.GetLocalString("Erroaosalvararquivo") & ex.Message.ToString, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
         End If
+
+    End Sub
+
+    
+    Private Sub FormUNIFACRegression_HelpRequested(sender As Object, hlpevent As HelpEventArgs) Handles MyBase.HelpRequested
+        Select Case FaTabStrip1.SelectedItem.Name
+            Case "TSInformation"
+                DWSIM.App.HelpRequested("UR_Case_Definition_1.htm")
+            Case "TSModel"
+                DWSIM.App.HelpRequested("UR_Model_Definition_2.htm")
+            Case "TSData"
+                DWSIM.App.HelpRequested("UR_Data_Regression_3.htm")
+            Case "TSChart"
+                DWSIM.App.HelpRequested("UR_Diagrams_4.htm")
+        End Select
 
     End Sub
 End Class

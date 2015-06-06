@@ -448,7 +448,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                     Dim Interactions As DWSIM.ClassesBasicasTermodinamica.InteractionParameter()
                     Dim IP As DWSIM.ClassesBasicasTermodinamica.InteractionParameter
                     Try
-                        Interactions = DWSIM.Databases.UserIPDB.ReadInteractions(IPDBPath, "MODFAC (Dortmund)")
+                        Interactions = DWSIM.Databases.UserIPDB.ReadInteractions(IPDBPath, "Modified UNIFAC (Dortmund)")
                         For Each IP In Interactions
                             If Not Me.InteracParam_aij.ContainsKey(IP.Comp1) Then
                                 Me.InteracParam_aij.Add(IP.Comp1, New System.Collections.Generic.Dictionary(Of Integer, Double))

@@ -46,15 +46,15 @@ Partial Class FormUNIFACRegression
         Me.TBcji = New System.Windows.Forms.TextBox()
         Me.TBbji = New System.Windows.Forms.TextBox()
         Me.TBaji = New System.Windows.Forms.TextBox()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.Label12 = New System.Windows.Forms.Label()
-        Me.Label13 = New System.Windows.Forms.Label()
+        Me.Lblcji = New System.Windows.Forms.Label()
+        Me.Lblbji = New System.Windows.Forms.Label()
+        Me.Lblaji = New System.Windows.Forms.Label()
         Me.TBcij = New System.Windows.Forms.TextBox()
         Me.TBbij = New System.Windows.Forms.TextBox()
         Me.TBaij = New System.Windows.Forms.TextBox()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.Label6 = New System.Windows.Forms.Label()
+        Me.Lblcij = New System.Windows.Forms.Label()
+        Me.Lblbij = New System.Windows.Forms.Label()
+        Me.Lblaij = New System.Windows.Forms.Label()
         Me.LblMGj = New System.Windows.Forms.Label()
         Me.LblMGi = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -70,6 +70,9 @@ Partial Class FormUNIFACRegression
         Me.cbCompound1 = New System.Windows.Forms.ComboBox()
         Me.cbCompound2 = New System.Windows.Forms.ComboBox()
         Me.TSData = New FarsiLibrary.Win.FATabStripItem()
+        Me.LblTUnit = New System.Windows.Forms.Label()
+        Me.TbUnifacTemp = New System.Windows.Forms.TextBox()
+        Me.BtnNewTemp = New System.Windows.Forms.Button()
         Me.TBStatus = New System.Windows.Forms.TextBox()
         Me.BtnDrawIPs = New System.Windows.Forms.Button()
         Me.BtnDrawChart = New System.Windows.Forms.Button()
@@ -206,15 +209,15 @@ Partial Class FormUNIFACRegression
         Me.Panel2.Controls.Add(Me.TBcji)
         Me.Panel2.Controls.Add(Me.TBbji)
         Me.Panel2.Controls.Add(Me.TBaji)
-        Me.Panel2.Controls.Add(Me.Label9)
-        Me.Panel2.Controls.Add(Me.Label12)
-        Me.Panel2.Controls.Add(Me.Label13)
+        Me.Panel2.Controls.Add(Me.Lblcji)
+        Me.Panel2.Controls.Add(Me.Lblbji)
+        Me.Panel2.Controls.Add(Me.Lblaji)
         Me.Panel2.Controls.Add(Me.TBcij)
         Me.Panel2.Controls.Add(Me.TBbij)
         Me.Panel2.Controls.Add(Me.TBaij)
-        Me.Panel2.Controls.Add(Me.Label8)
-        Me.Panel2.Controls.Add(Me.Label7)
-        Me.Panel2.Controls.Add(Me.Label6)
+        Me.Panel2.Controls.Add(Me.Lblcij)
+        Me.Panel2.Controls.Add(Me.Lblbij)
+        Me.Panel2.Controls.Add(Me.Lblaij)
         Me.Panel2.Controls.Add(Me.LblMGj)
         Me.Panel2.Controls.Add(Me.LblMGi)
         Me.Panel2.Controls.Add(Me.Label2)
@@ -236,20 +239,20 @@ Partial Class FormUNIFACRegression
         resources.ApplyResources(Me.TBaji, "TBaji")
         Me.TBaji.Name = "TBaji"
         '
-        'Label9
+        'Lblcji
         '
-        resources.ApplyResources(Me.Label9, "Label9")
-        Me.Label9.Name = "Label9"
+        resources.ApplyResources(Me.Lblcji, "Lblcji")
+        Me.Lblcji.Name = "Lblcji"
         '
-        'Label12
+        'Lblbji
         '
-        resources.ApplyResources(Me.Label12, "Label12")
-        Me.Label12.Name = "Label12"
+        resources.ApplyResources(Me.Lblbji, "Lblbji")
+        Me.Lblbji.Name = "Lblbji"
         '
-        'Label13
+        'Lblaji
         '
-        resources.ApplyResources(Me.Label13, "Label13")
-        Me.Label13.Name = "Label13"
+        resources.ApplyResources(Me.Lblaji, "Lblaji")
+        Me.Lblaji.Name = "Lblaji"
         '
         'TBcij
         '
@@ -266,20 +269,20 @@ Partial Class FormUNIFACRegression
         resources.ApplyResources(Me.TBaij, "TBaij")
         Me.TBaij.Name = "TBaij"
         '
-        'Label8
+        'Lblcij
         '
-        resources.ApplyResources(Me.Label8, "Label8")
-        Me.Label8.Name = "Label8"
+        resources.ApplyResources(Me.Lblcij, "Lblcij")
+        Me.Lblcij.Name = "Lblcij"
         '
-        'Label7
+        'Lblbij
         '
-        resources.ApplyResources(Me.Label7, "Label7")
-        Me.Label7.Name = "Label7"
+        resources.ApplyResources(Me.Lblbij, "Lblbij")
+        Me.Lblbij.Name = "Lblbij"
         '
-        'Label6
+        'Lblaij
         '
-        resources.ApplyResources(Me.Label6, "Label6")
-        Me.Label6.Name = "Label6"
+        resources.ApplyResources(Me.Lblaij, "Lblaij")
+        Me.Lblaij.Name = "Lblaij"
         '
         'LblMGj
         '
@@ -375,6 +378,9 @@ Partial Class FormUNIFACRegression
         '
         resources.ApplyResources(Me.TSData, "TSData")
         Me.TSData.CanClose = False
+        Me.TSData.Controls.Add(Me.LblTUnit)
+        Me.TSData.Controls.Add(Me.TbUnifacTemp)
+        Me.TSData.Controls.Add(Me.BtnNewTemp)
         Me.TSData.Controls.Add(Me.TBStatus)
         Me.TSData.Controls.Add(Me.BtnDrawIPs)
         Me.TSData.Controls.Add(Me.BtnDrawChart)
@@ -382,6 +388,22 @@ Partial Class FormUNIFACRegression
         Me.TSData.Controls.Add(Me.GridExpData)
         Me.TSData.IsDrawn = True
         Me.TSData.Name = "TSData"
+        '
+        'LblTUnit
+        '
+        resources.ApplyResources(Me.LblTUnit, "LblTUnit")
+        Me.LblTUnit.Name = "LblTUnit"
+        '
+        'TbUnifacTemp
+        '
+        resources.ApplyResources(Me.TbUnifacTemp, "TbUnifacTemp")
+        Me.TbUnifacTemp.Name = "TbUnifacTemp"
+        '
+        'BtnNewTemp
+        '
+        resources.ApplyResources(Me.BtnNewTemp, "BtnNewTemp")
+        Me.BtnNewTemp.Name = "BtnNewTemp"
+        Me.BtnNewTemp.UseVisualStyleBackColor = True
         '
         'TBStatus
         '
@@ -543,15 +565,15 @@ Partial Class FormUNIFACRegression
     Friend WithEvents TBcji As System.Windows.Forms.TextBox
     Friend WithEvents TBbji As System.Windows.Forms.TextBox
     Friend WithEvents TBaji As System.Windows.Forms.TextBox
-    Friend WithEvents Label9 As System.Windows.Forms.Label
-    Friend WithEvents Label12 As System.Windows.Forms.Label
-    Friend WithEvents Label13 As System.Windows.Forms.Label
+    Friend WithEvents Lblcji As System.Windows.Forms.Label
+    Friend WithEvents Lblbji As System.Windows.Forms.Label
+    Friend WithEvents Lblaji As System.Windows.Forms.Label
     Friend WithEvents TBcij As System.Windows.Forms.TextBox
     Friend WithEvents TBbij As System.Windows.Forms.TextBox
     Friend WithEvents TBaij As System.Windows.Forms.TextBox
-    Friend WithEvents Label8 As System.Windows.Forms.Label
-    Friend WithEvents Label7 As System.Windows.Forms.Label
-    Friend WithEvents Label6 As System.Windows.Forms.Label
+    Friend WithEvents Lblcij As System.Windows.Forms.Label
+    Friend WithEvents Lblbij As System.Windows.Forms.Label
+    Friend WithEvents Lblaij As System.Windows.Forms.Label
     Friend WithEvents LblMGj As System.Windows.Forms.Label
     Friend WithEvents LblMGi As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
@@ -576,4 +598,7 @@ Partial Class FormUNIFACRegression
     Friend WithEvents BtnSaveIPDB As System.Windows.Forms.Button
     Friend WithEvents BtnNewIPDB As System.Windows.Forms.Button
     Friend WithEvents DBOpenDlg As System.Windows.Forms.OpenFileDialog
+    Friend WithEvents LblTUnit As System.Windows.Forms.Label
+    Friend WithEvents TbUnifacTemp As System.Windows.Forms.TextBox
+    Friend WithEvents BtnNewTemp As System.Windows.Forms.Button
 End Class
