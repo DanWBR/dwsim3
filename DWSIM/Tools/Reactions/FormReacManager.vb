@@ -1,4 +1,4 @@
-﻿'    Copyright 2008 Daniel Wagner O. de Medeiros
+﻿'    Copyright 2008-2015 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -279,6 +279,13 @@ Public Class FormReacManager
                     frk.ShowDialog()
                     frk.Dispose()
                 Case ReactionType.Heterogeneous_Catalytic
+                    Dim frk As New FormReacHeterog
+                    With frk
+                        .mode = "Edit"
+                        .rc = rxn
+                    End With
+                    frk.ShowDialog()
+                    frk.Dispose()
             End Select
             With Me.GridRxns.Rows
                 .Clear()
@@ -362,4 +369,15 @@ Public Class FormReacManager
 
     End Sub
 
+    Private Sub HeterogêneaCatalíticaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles HeterogêneaCatalíticaToolStripMenuItem.Click
+        Dim frk As New FormReacHeterog
+        frk.ShowDialog()
+        frk.Dispose()
+        With Me.GridRxns.Rows
+            .Clear()
+            For Each rxn As Reaction In frmchild.Options.Reactions.Values
+                .Add(New Object() {rxn.Name, rxn.ReactionType, rxn.Equation, rxn.ID})
+            Next
+        End With
+    End Sub
 End Class

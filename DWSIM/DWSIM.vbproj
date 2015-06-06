@@ -970,6 +970,12 @@
     <Compile Include="Tools\Reactions\FormReacEq.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Tools\Reactions\FormReacHeterog.Designer.vb">
+      <DependentUpon>FormReacHeterog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Reactions\FormReacHeterog.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Tools\Reactions\FormReacKinetic.Designer.vb">
       <DependentUpon>FormReacKinetic.vb</DependentUpon>
     </Compile>
@@ -1637,6 +1643,20 @@
     <EmbeddedResource Include="Tools\Reactions\FormReacEq.resx">
       <SubType>Designer</SubType>
       <DependentUpon>FormReacEq.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\Reactions\FormReacHeterog.de.resx">
+      <DependentUpon>FormReacHeterog.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\Reactions\FormReacHeterog.en.resx">
+      <DependentUpon>FormReacHeterog.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\Reactions\FormReacHeterog.es.resx">
+      <DependentUpon>FormReacHeterog.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\Reactions\FormReacHeterog.resx">
+      <DependentUpon>FormReacHeterog.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Tools\Reactions\FormReacKinetic.en.resx">
       <SubType>Designer</SubType>

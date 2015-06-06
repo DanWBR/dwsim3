@@ -311,6 +311,7 @@ Namespace DWSIM.ClassesBasicasTermodinamica
         Liquid
         Vapor
         Mixture
+        Solid
     End Enum
 
     Public Enum ReactionType
@@ -637,6 +638,10 @@ Namespace DWSIM.ClassesBasicasTermodinamica
         End Property
 
         'Heterogeneous
+
+        Public Property RateEquationNumerator As String = ""
+
+        Public Property RateEquationDenominator As String = ""
 
         'Initializers
 
