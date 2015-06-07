@@ -1821,35 +1821,35 @@ Namespace GraphicObjects
         Public Overrides Sub CreateConnectors(InCount As Integer, OutCount As Integer)
 
             Dim myIC1 As New ConnectionPoint
-            myIC1.Position = New Point(X + 0.25 * Width, Y + 0.2 * Height)
+            myIC1.Position = New Point(X + 0.25 * Width, Y + 1 / 7 * Height)
             myIC1.Type = ConType.ConIn
 
             Dim myIC2 As New ConnectionPoint
-            myIC2.Position = New Point(X + 0.25 * Width, Y + 0.3 * Height)
+            myIC2.Position = New Point(X + 0.25 * Width, Y + 2 / 7 * Height)
             myIC2.Type = ConType.ConIn
 
             Dim myIC3 As New ConnectionPoint
-            myIC3.Position = New Point(X + 0.25 * Width, Y + 0.4 * Height)
+            myIC3.Position = New Point(X + 0.25 * Width, Y + 3 / 7 * Height)
             myIC3.Type = ConType.ConIn
 
             Dim myIC4 As New ConnectionPoint
-            myIC4.Position = New Point(X + 0.25 * Width, Y + 0.5 * Height)
+            myIC4.Position = New Point(X + 0.25 * Width, Y + 4 / 7 * Height)
             myIC4.Type = ConType.ConIn
 
             Dim myIC5 As New ConnectionPoint
-            myIC5.Position = New Point(X + 0.25 * Width, Y + 0.6 * Height)
+            myIC5.Position = New Point(X + 0.25 * Width, Y + 5 / 7 * Height)
             myIC5.Type = ConType.ConIn
 
             Dim myIC6 As New ConnectionPoint
-            myIC6.Position = New Point(X + 0.25 * Width, Y + 0.7 * Height)
+            myIC6.Position = New Point(X + 0.25 * Width, Y + 6 / 7 * Height)
             myIC6.Type = ConType.ConIn
 
             Dim myOC1 As New ConnectionPoint
-            myOC1.Position = New Point(X + 0.827 * Width, Y + (0.1 + 0.127 / 2) * Height)
+            myOC1.Position = New Point(X + 0.827 * Width, Y + (1 / 7) * Height)
             myOC1.Type = ConType.ConOut
 
             Dim myOC2 As New ConnectionPoint
-            myOC2.Position = New Point(X + 0.827 * Width, Y + (0.773 + 0.127 / 2) * Height)
+            myOC2.Position = New Point(X + 0.827 * Width, Y + (6 / 7) * Height)
             myOC2.Type = ConType.ConOut
 
             Dim myOC3 As New ConnectionPoint
@@ -1857,7 +1857,7 @@ Namespace GraphicObjects
             myOC3.Type = ConType.ConOut
 
             Dim myIC7 As New ConnectionPoint
-            myIC7.Position = New Point(X + 0.25 * Width, Y + 0.8 * Height)
+            myIC7.Position = New Point(X + 0.25 * Width, Y + 1 * Height)
             myIC7.Type = ConType.ConEn
 
             With InputConnectors
@@ -1875,21 +1875,21 @@ Namespace GraphicObjects
                         .Add(myIC7)
                     End If
                     If Not Me.FlippedH Then
-                        .Item(0).Position = New Point(X + 0.25 * Width, Y + 0.2 * Height)
-                        .Item(1).Position = New Point(X + 0.25 * Width, Y + 0.3 * Height)
-                        .Item(2).Position = New Point(X + 0.25 * Width, Y + 0.4 * Height)
-                        .Item(3).Position = New Point(X + 0.25 * Width, Y + 0.5 * Height)
-                        .Item(4).Position = New Point(X + 0.25 * Width, Y + 0.6 * Height)
-                        .Item(5).Position = New Point(X + 0.25 * Width, Y + 0.7 * Height)
-                        .Item(6).Position = New Point(X + 0.25 * Width, Y + 0.8 * Height)
+                        .Item(0).Position = New Point(X + 0.25 * Width, Y + 1 / 7 * Height)
+                        .Item(1).Position = New Point(X + 0.25 * Width, Y + 2 / 7 * Height)
+                        .Item(2).Position = New Point(X + 0.25 * Width, Y + 3 / 7 * Height)
+                        .Item(3).Position = New Point(X + 0.25 * Width, Y + 4 / 7 * Height)
+                        .Item(4).Position = New Point(X + 0.25 * Width, Y + 5 / 7 * Height)
+                        .Item(5).Position = New Point(X + 0.25 * Width, Y + 6 / 7 * Height)
+                        .Item(6).Position = New Point(X + 0.25 * Width, Y + 1 * Height)
                     Else
-                        .Item(0).Position = New Point(X + (1 - 0.25) * Width, Y + 0.2 * Height)
-                        .Item(1).Position = New Point(X + (1 - 0.25) * Width, Y + 0.3 * Height)
-                        .Item(2).Position = New Point(X + (1 - 0.25) * Width, Y + 0.4 * Height)
-                        .Item(3).Position = New Point(X + (1 - 0.25) * Width, Y + 0.5 * Height)
-                        .Item(4).Position = New Point(X + (1 - 0.25) * Width, Y + 0.6 * Height)
-                        .Item(5).Position = New Point(X + (1 - 0.25) * Width, Y + 0.7 * Height)
-                        .Item(6).Position = New Point(X + (1 - 0.25) * Width, Y + 0.8 * Height)
+                        .Item(0).Position = New Point(X + (1 - 0.25) * Width, Y + 1 / 7 * Height)
+                        .Item(1).Position = New Point(X + (1 - 0.25) * Width, Y + 2 / 7 * Height)
+                        .Item(2).Position = New Point(X + (1 - 0.25) * Width, Y + 3 / 7 * Height)
+                        .Item(3).Position = New Point(X + (1 - 0.25) * Width, Y + 4 / 7 * Height)
+                        .Item(4).Position = New Point(X + (1 - 0.25) * Width, Y + 5 / 7 * Height)
+                        .Item(5).Position = New Point(X + (1 - 0.25) * Width, Y + 6 / 7 * Height)
+                        .Item(6).Position = New Point(X + (1 - 0.25) * Width, Y + 1 * Height)
                     End If
                 Else
                     .Add(myIC1)
@@ -1909,12 +1909,12 @@ Namespace GraphicObjects
 
                 If .Count <> 0 Then
                     If Me.FlippedH Then
-                        .Item(0).Position = New Point(X + 0.3 * Width, Y + (0.1 + 0.127 / 2) * Height)
-                        .Item(1).Position = New Point(X + 0.3 * Width, Y + (0.773 + 0.127 / 2) * Height)
+                        .Item(0).Position = New Point(X + 0.3 * Width, Y + 1 / 7 * Height)
+                        .Item(1).Position = New Point(X + 0.3 * Width, Y + 6 / 7 * Height)
                         .Item(2).Position = New Point(X + 0.5 * Width, Y + Height)
                     Else
-                        .Item(0).Position = New Point(X + 0.827 * Width, Y + (0.1 + 0.127 / 2) * Height)
-                        .Item(1).Position = New Point(X + 0.827 * Width, Y + (0.773 + 0.127 / 2) * Height)
+                        .Item(0).Position = New Point(X + 0.827 * Width, Y + 1 / 7 * Height)
+                        .Item(1).Position = New Point(X + 0.827 * Width, Y + 6 / 7 * Height)
                         .Item(2).Position = New Point(X + 0.5 * Width, Y + Height)
                     End If
                 Else
