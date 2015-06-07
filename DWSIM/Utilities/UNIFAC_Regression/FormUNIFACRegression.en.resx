@@ -148,6 +148,9 @@
   <data name="TSInformation.Title" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="BtnShowIPGrid.Text" xml:space="preserve">
+    <value>Show Parameters</value>
+  </data>
   <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
     <value>35, 13</value>
   </data>
@@ -168,6 +171,18 @@
   </data>
   <data name="TSModel.Title" xml:space="preserve">
     <value>Model</value>
+  </data>
+  <data name="BtnNewTemp.Text" xml:space="preserve">
+    <value>New temperature</value>
+  </data>
+  <data name="BtnDrawIPs.Text" xml:space="preserve">
+    <value>Draw IPs</value>
+  </data>
+  <data name="BtnDrawChart.Text" xml:space="preserve">
+    <value>Draw diagram</value>
+  </data>
+  <data name="BtnRegressIP.Text" xml:space="preserve">
+    <value>Regress IPs</value>
   </data>
   <data name="DBOpenDlg.Filter" xml:space="preserve">
     <value>Database XML|*.xml</value>

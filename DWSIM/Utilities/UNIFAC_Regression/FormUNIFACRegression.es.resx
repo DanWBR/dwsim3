@@ -142,6 +142,12 @@
   <data name="BtnShowIPGrid.Text" xml:space="preserve">
     <value>Mostrar los Parámetros</value>
   </data>
+  <data name="BtnNewTemp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>110, 23</value>
+  </data>
+  <data name="BtnNewTemp.Text" xml:space="preserve">
+    <value>Nueva temperatura</value>
+  </data>
   <data name="BtnDrawIPs.Size" type="System.Drawing.Size, System.Drawing">
     <value>110, 23</value>
   </data>
