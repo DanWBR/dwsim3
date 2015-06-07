@@ -21,7 +21,8 @@ Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports Ciloci.Flee
 Imports System.Math
 Imports DWSIM.DWSIM.MathEx
-Imports DWSIM.DWSIM.Flowsheet.FlowSheetSolver
+Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
+Imports System.Linq
 
 Namespace DWSIM.SimulationObjects.Reactors
 
@@ -129,27 +130,54 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                 Dim T As Double = ims.Fases(0).SPMProperties.temperature.GetValueOrDefault
 
-                Dim kxf As Double = rxn.A_Forward * Exp(-rxn.E_Forward / (8.314 * T))
-                Dim kxr As Double = rxn.A_Reverse * Exp(-rxn.E_Reverse / (8.314 * T))
-                If T < rxn.Tmin Or T > rxn.Tmax Then
-                    kxf = 0
-                    kxr = 0
+                Dim rx As Double = 0.0#
+
+                If rxn.ReactionType = ReactionType.Kinetic Then
+
+                    Dim kxf As Double = rxn.A_Forward * Exp(-rxn.E_Forward / (8.314 * T))
+                    Dim kxr As Double = rxn.A_Reverse * Exp(-rxn.E_Reverse / (8.314 * T))
+                    If T < rxn.Tmin Or T > rxn.Tmax Then
+                        kxf = 0.0#
+                        kxr = 0.0#
+                    End If
+
+                    Dim rxf As Double = 1.0#
+                    Dim rxr As Double = 1.0#
+
+                    'kinetic expression
+
+                    For Each sb As ReactionStoichBase In rxn.Components.Values
+                        rxf *= C(sb.CompName) ^ sb.DirectOrder
+                        rxr *= C(sb.CompName) ^ sb.ReverseOrder
+                    Next
+
+                    rx = kxf * rxf - kxr * rxr
+                    Rxi(rxn.ID) = rx
+
+                    Kf(i) = kxf
+                    Kr(i) = kxr
+
+                ElseIf rxn.ReactionType = ReactionType.Heterogeneous_Catalytic Then
+
+                    Dim numval, denmval As Double
+
+                    rxn.ExpContext = New Ciloci.Flee.ExpressionContext
+                    rxn.ExpContext.Imports.AddType(GetType(System.Math))
+
+                    rxn.ExpContext.Variables.Clear()
+                    rxn.ExpContext.Variables.Add("T", ims.Fases(0).SPMProperties.temperature.GetValueOrDefault)
+
+                    rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.RateEquationNumerator)
+
+                    numval = rxn.Expr.Evaluate
+
+                    rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.RateEquationDenominator)
+
+                    denmval = rxn.Expr.Evaluate
+
+                    rx = numval / denmval
+
                 End If
-
-                Dim rx As Double = 0
-                Dim rxf As Double = 1
-                Dim rxr As Double = 1
-
-                'kinetic expression
-                For Each sb As ReactionStoichBase In rxn.Components.Values
-                    rxf *= C(sb.CompName) ^ sb.DirectOrder
-                    rxr *= C(sb.CompName) ^ sb.ReverseOrder
-                Next
-                rx = kxf * rxf - kxr * rxr
-                Rxi(rxn.ID) = rx
-
-                Kf(i) = kxf
-                Kr(i) = kxr
 
                 For Each sb As ReactionStoichBase In rxn.Components.Values
 
@@ -219,12 +247,18 @@ Namespace DWSIM.SimulationObjects.Reactors
             Me.DeltaT = 0
             Me.DN.Clear()
 
+            Dim kcount, hcount As Integer
+
             'check active reactions (kinetic and heterogeneous only) in the reaction set
+            kcount = 0
+            hcount = 0
             For Each rxnsb As ReactionSetBase In form.Options.ReactionSets(Me.ReactionSetID).Reactions.Values
                 If form.Options.Reactions(rxnsb.ReactionID).ReactionType = ReactionType.Kinetic And rxnsb.IsActive Then
                     Me.Reactions.Add(rxnsb.ReactionID)
+                    kcount += 1
                 ElseIf form.Options.Reactions(rxnsb.ReactionID).ReactionType = ReactionType.Heterogeneous_Catalytic And rxnsb.IsActive Then
                     Me.Reactions.Add(rxnsb.ReactionID)
+                    hcount += 1
                 End If
             Next
 
@@ -258,8 +292,8 @@ Namespace DWSIM.SimulationObjects.Reactors
             C = New Dictionary(Of String, Double)
             C0 = New Dictionary(Of String, Double)
 
-            Kf = New ArrayList(Me.Reactions.Count)
-            Kr = New ArrayList(Me.Reactions.Count)
+            Kf = New ArrayList(kcount)
+            Kr = New ArrayList(kcount)
 
             Dim scBC, DHr, Hid_r, Hid_p, Hr, Hr0, Hp, Tin, Tin0, Pin, Pout, T As Double
             Dim BC As String = ""
@@ -404,7 +438,10 @@ Namespace DWSIM.SimulationObjects.Reactors
                 i = 0
                 Do
 
+                    Dim rx As Double = 0.0#
+
                     'process reaction i
+
                     rxn = form.Options.Reactions(ar(i))
                     BC = rxn.BaseReactant
                     scBC = rxn.Components(BC).StoichCoeff
@@ -417,31 +454,54 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                     T = ims.Fases(0).SPMProperties.temperature.GetValueOrDefault
 
-                    Dim kxf As Double = rxn.A_Forward * Exp(-rxn.E_Forward / (8.314 * T))
-                    Dim kxr As Double = rxn.A_Reverse * Exp(-rxn.E_Reverse / (8.314 * T))
+                    If rxn.ReactionType = ReactionType.Kinetic Then
 
-                    Dim rx As Double = 0
-                    Dim rxf As Double = 1
-                    Dim rxr As Double = 1
+                        Dim kxf As Double = rxn.A_Forward * Exp(-rxn.E_Forward / (8.314 * T))
+                        Dim kxr As Double = rxn.A_Reverse * Exp(-rxn.E_Reverse / (8.314 * T))
 
-                    'kinetic expression
-                    For Each sb As ReactionStoichBase In rxn.Components.Values
-                        rxf *= C(sb.CompName) ^ sb.DirectOrder
-                        rxr *= C(sb.CompName) ^ sb.ReverseOrder
-                    Next
-                    rx = kxf * rxf - kxr * rxr
-                    If Not Rxi.ContainsKey(rxn.ID) Then
-                        Rxi.Add(rxn.ID, rx)
-                    Else
-                        Rxi(rxn.ID) = rx
-                    End If
+                        Dim rxf As Double = 1.0#
+                        Dim rxr As Double = 1.0#
 
-                    If Kf.Count - 1 <= i Then
-                        Kf.Add(kxf)
-                        Kr.Add(kxf)
-                    Else
-                        Kf(i) = kxf
-                        Kr(i) = kxr
+                        'kinetic expression
+                        For Each sb As ReactionStoichBase In rxn.Components.Values
+                            rxf *= C(sb.CompName) ^ sb.DirectOrder
+                            rxr *= C(sb.CompName) ^ sb.ReverseOrder
+                        Next
+                        rx = kxf * rxf - kxr * rxr
+                        If Not Rxi.ContainsKey(rxn.ID) Then
+                            Rxi.Add(rxn.ID, rx)
+                        Else
+                            Rxi(rxn.ID) = rx
+                        End If
+
+                        If Kf.Count - 1 <= i Then
+                            Kf.Add(kxf)
+                            Kr.Add(kxf)
+                        Else
+                            Kf(i) = kxf
+                            Kr(i) = kxr
+                        End If
+
+                    ElseIf rxn.ReactionType = ReactionType.Heterogeneous_Catalytic Then
+
+                        Dim numval, denmval As Double
+
+                        rxn.ExpContext = New Ciloci.Flee.ExpressionContext
+                        rxn.ExpContext.Imports.AddType(GetType(System.Math))
+
+                        rxn.ExpContext.Variables.Clear()
+                        rxn.ExpContext.Variables.Add("T", ims.Fases(0).SPMProperties.temperature.GetValueOrDefault)
+
+                        rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.RateEquationNumerator)
+
+                        numval = rxn.Expr.Evaluate
+
+                        rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.RateEquationDenominator)
+
+                        denmval = rxn.Expr.Evaluate
+
+                        rx = numval / denmval
+
                     End If
 
                     For Each sb As ReactionStoichBase In rxn.Components.Values
@@ -462,10 +522,8 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                 Loop Until i = ar.Count
 
-                '
-                '   SOLVE ODEs
-                '
-
+                'SOLVE ODEs
+          
                 Me.activeAL = Me.ReactionsSequence.IndexOfValue(ar)
 
                 Dim vc(C.Count) As Double

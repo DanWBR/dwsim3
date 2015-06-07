@@ -2708,12 +2708,22 @@ Public Class FormMain
 
         form.FrmStSim1.Init(True)
 
+        'Master Property Tables
+
+        For Each g As GraphicObject In form.FormSurface.FlowsheetDesignSurface.drawingObjects
+            If g.TipoObjeto = TipoObjeto.GO_MasterTable Then
+                CType(g, DWSIM.GraphicObjects.MasterTableGraphic).Update(form)
+            End If
+        Next
+
         Try
             form.FormSpreadsheet.EvaluateAll()
             form.FormSpreadsheet.EvaluateAll()
         Catch ex As Exception
             excs.Add(New Exception("Error Updating Spreadsheet Variables", ex))
         End Try
+
+        form.FormSurface.FlowsheetDesignSurface.Invalidate()
 
         If excs.Count > 0 Then
             form.WriteToLog("Some errors where found while parsing the XML file. The simulation might not work as expected. Please read the subsequent messages for more details.", Color.DarkRed, TipoAviso.Erro)
