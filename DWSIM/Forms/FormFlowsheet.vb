@@ -1363,7 +1363,7 @@ Imports DWSIM.DWSIM.Outros
 
 #Region "    Connect/Disconnect Objects "
 
-    Public Sub DeleteSelectedObject(ByVal sender As System.Object, ByVal e As System.EventArgs, gobj As GraphicObject, Optional ByVal confirmation As Boolean = True)
+    Public Sub DeleteSelectedObject(ByVal sender As System.Object, ByVal e As System.EventArgs, gobj As GraphicObject, Optional ByVal confirmation As Boolean = True, Optional ByVal triggercalc As Boolean = False)
 
         If Not gobj Is Nothing Then
             Dim SelectedObj As GraphicObject = gobj
@@ -1751,7 +1751,7 @@ Imports DWSIM.DWSIM.Outros
                 End If
             End If
 
-            ProcessCalculationQueue(Me, False, False)
+            If triggercalc Then ProcessCalculationQueue(Me, False, False) Else Me.CalculationQueue.Clear()
 
         End If
     End Sub

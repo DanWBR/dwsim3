@@ -134,7 +134,7 @@ Public Class FrmColdProperties
 
             Dim t, t_ant, t_ant2, ft, ft_ant, ft_ant2, v As Double, j As Integer
 
-            t = bt + 2
+            t = bt + 15
             i = 0
             Do
                 ft_ant2 = ft_ant
@@ -153,32 +153,6 @@ Public Class FrmColdProperties
 
                 mwv = pp.AUX_MMM(vv)
                 mwl = pp.AUX_MMM(vl)
-
-                'j = 0
-                'sum1 = 0
-                'sum2 = 0
-                'For Each subst As Substancia In mat.Fases(0).Componentes.Values
-                '    sum1 += vl(j) * subst.ConstantProperties.Molar_Weight / subst.ConstantProperties.PF_SG.GetValueOrDefault
-                '    sum2 += vv(j) * subst.ConstantProperties.Molar_Weight / subst.ConstantProperties.PF_SG.GetValueOrDefault
-                '    j = j + 1
-                'Next
-                'j = 0
-                'For Each subst As Substancia In mat.Fases(0).Componentes.Values
-                '    vwl(j) = vl(j) * subst.ConstantProperties.Molar_Weight / subst.ConstantProperties.PF_SG.GetValueOrDefault / sum1
-                '    vwv(j) = vv(j) * subst.ConstantProperties.Molar_Weight / subst.ConstantProperties.PF_SG.GetValueOrDefault / sum1
-                '    j = j + 1
-                'Next
-                'j = 0
-                'dl = 0
-                'dv = 0
-                'For Each subst As Substancia In mat.Fases(0).Componentes.Values
-                '    dl += vwl(j) / subst.ConstantProperties.PF_SG.GetValueOrDefault
-                '    dv += vwv(j) / subst.ConstantProperties.PF_SG.GetValueOrDefault
-                '    j = j + 1
-                'Next
-
-                'dl = 1 / dl
-                'dv = 1 / dv
 
                 mat.Fases(0).SPMProperties.temperature = t
                 mat.Fases(0).SPMProperties.pressure = 101325
@@ -205,7 +179,7 @@ Public Class FrmColdProperties
                 t_ant = t
                 If i > 2 Then
                     If ft <> ft_ant2 Then
-                        t = t - ft * (t - t_ant2) / (ft - ft_ant2)
+                        t = t - 0.3 * ft * (t - t_ant2) / (ft - ft_ant2)
                     Else
                         t = t
                     End If
@@ -213,7 +187,7 @@ Public Class FrmColdProperties
                     t = t - 1
                 End If
                 i = i + 1
-            Loop Until Abs(ft) < 0.001 Or t < 0 Or Double.IsNaN(t) Or Double.IsInfinity(t) Or i > 100
+            Loop Until Abs(ft) < 0.001 Or t < 0 Or Double.IsNaN(t) Or Double.IsInfinity(t) Or i > 200
             t10TBP = t
 
             t10ASTM = (t10TBP / 0.5564) ^ (1 / 1.09)
@@ -241,90 +215,11 @@ Public Class FrmColdProperties
             'API Procedure 2B13.1
             CetaneIndex = 415.26 - 7.673 * API + 0.186 * (MeABP * 1.8 - 458.67) + 3.503 * API * Log10(1.8 * MeABP - 458.67) - 193.816 * Log10(MeABP * 1.8 - 458.67)
 
-            Dim p, p_ant, p_ant2, fp, fp_ant, fp_ant2 As Double
+            'Reid Vapor Pressure
+            'reference: http://www.epa.gov/ttn/chief/ap42/ch07/final/c07s01.pdf, page 7.1-56
+            'TVP = Exp((2799 / (310.95 * 1.8) - 2.227) * Log10(RVP/ 6894.76) - 7261 / (310.95 * 1.8) + 12.82)*6894.76
 
-            p = dp * 1.1
-            i = 0
-            Do
-                fp_ant2 = fp_ant
-                fp_ant = fp
-                Try
-                    tmp = pp.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, 310.95, p, 0)
-                    v = tmp(1)
-                    vv = tmp(9)
-                    vl = tmp(8)
-                Catch ex As Exception
-                    tmp = ppi.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, 310.95, p, 0)
-                    v = tmp(1)
-                    vv = tmp(9)
-                    vl = tmp(8)
-                End Try
-
-                mwv = pp.AUX_MMM(vv)
-                mwl = pp.AUX_MMM(vl)
-
-                'j = 0
-                'sum1 = 0
-                'sum2 = 0
-                'For Each subst As Substancia In mat.Fases(0).Componentes.Values
-                '    sum1 += vl(j) * subst.ConstantProperties.Molar_Weight / subst.ConstantProperties.PF_SG.GetValueOrDefault
-                '    sum2 += vv(j) * subst.ConstantProperties.Molar_Weight / subst.ConstantProperties.PF_SG.GetValueOrDefault
-                '    j = j + 1
-                'Next
-                'j = 0
-                'For Each subst As Substancia In mat.Fases(0).Componentes.Values
-                '    vwl(j) = vl(j) * subst.ConstantProperties.Molar_Weight / subst.ConstantProperties.PF_SG.GetValueOrDefault / sum1
-                '    vwv(j) = vv(j) * subst.ConstantProperties.Molar_Weight / subst.ConstantProperties.PF_SG.GetValueOrDefault / sum1
-                '    j = j + 1
-                'Next
-                'j = 0
-                'dl = 0
-                'dv = 0
-                'For Each subst As Substancia In mat.Fases(0).Componentes.Values
-                '    dl += vwl(j) / subst.ConstantProperties.PF_SG.GetValueOrDefault
-                '    dv += vwv(j) / subst.ConstantProperties.PF_SG.GetValueOrDefault
-                '    j = j + 1
-                'Next
-
-                'dl = 1 / dl
-                'dv = 1 / dv
-
-                mat.Fases(0).SPMProperties.temperature = t
-                mat.Fases(0).SPMProperties.pressure = 101325
-                j = 0
-                For Each subst As Substancia In mat.Fases(1).Componentes.Values
-                    subst.FracaoMolar = vl(j)
-                    j += 1
-                Next
-                pp.DW_CalcProp("density", PropertyPackages.Fase.Liquid)
-                dl = mat.Fases(1).SPMProperties.density.GetValueOrDefault
-                j = 0
-                For Each subst As Substancia In mat.Fases(1).Componentes.Values
-                    subst.FracaoMolar = vv(j)
-                    j += 1
-                Next
-                pp.DW_CalcProp("density", PropertyPackages.Fase.Liquid)
-                dv = mat.Fases(1).SPMProperties.density.GetValueOrDefault
-
-                If v = 1 Then v = 1 - i * 0.0001
-
-                fp = v - (0.8 / dv) / ((0.8 / dv) + (0.2 / dl))
-
-                p_ant2 = p_ant
-                p_ant = p
-                If i > 2 Then
-                    If ft <> ft_ant2 Then
-                        p = p - fp * (p - p_ant2) / (fp - fp_ant2)
-                    Else
-                        p = p
-                    End If
-                Else
-                    p = p * 0.9999
-                End If
-                i = i + 1
-            Loop Until Abs(fp) < 0.001 Or p <= 0 Or Double.IsNaN(p) Or Double.IsInfinity(p) Or i > 100
-
-            RVP = p
+            RVP = (10 ^ ((Log(TVP / 6894.76) + 7261 / (310.95 * 1.8) - 12.82) / (2799 / (310.95 * 1.8) - 2.227)) + 14.6959) * 6894.76
 
             Me.TextBox1.Text = Format(cv.ConverterDoSI(su.spmp_pressure, TVP), nf)
             Me.TextBox2.Text = Format(cv.ConverterDoSI(su.spmp_pressure, RVP), nf)
