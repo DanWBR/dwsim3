@@ -52,12 +52,18 @@ Partial Class FlowsheetUOEditorForm
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton5 = New System.Windows.Forms.ToolStripButton()
+        Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.dgmap = New System.Windows.Forms.DataGridView()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.cbMassTransferMode = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.btnInitialize = New System.Windows.Forms.Button()
         Me.lblInit = New System.Windows.Forms.Label()
+        Me.id1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.col1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.id2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.col2 = New System.Windows.Forms.DataGridViewComboBoxColumn()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -71,6 +77,8 @@ Partial Class FlowsheetUOEditorForm
         Me.GroupBox4.SuspendLayout()
         CType(Me.dgvInputPars, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ToolStrip2.SuspendLayout()
+        Me.TabPage4.SuspendLayout()
+        CType(Me.dgmap, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage3.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -79,6 +87,7 @@ Partial Class FlowsheetUOEditorForm
         resources.ApplyResources(Me.TabControl1, "TabControl1")
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
+        Me.TabControl1.Controls.Add(Me.TabPage4)
         Me.TabControl1.Controls.Add(Me.TabPage3)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
@@ -289,6 +298,28 @@ Partial Class FlowsheetUOEditorForm
         Me.ToolStripButton5.Image = Global.DWSIM.My.Resources.Resources.tag_blue
         Me.ToolStripButton5.Name = "ToolStripButton5"
         '
+        'TabPage4
+        '
+        resources.ApplyResources(Me.TabPage4, "TabPage4")
+        Me.TabPage4.Controls.Add(Me.dgmap)
+        Me.TabPage4.Name = "TabPage4"
+        Me.TabPage4.UseVisualStyleBackColor = True
+        '
+        'dgmap
+        '
+        resources.ApplyResources(Me.dgmap, "dgmap")
+        Me.dgmap.AllowUserToAddRows = False
+        Me.dgmap.AllowUserToDeleteRows = False
+        Me.dgmap.AllowUserToOrderColumns = True
+        Me.dgmap.AllowUserToResizeColumns = False
+        Me.dgmap.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.dgmap.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgmap.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id1, Me.col1, Me.id2, Me.col2})
+        Me.dgmap.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter
+        Me.dgmap.MultiSelect = False
+        Me.dgmap.Name = "dgmap"
+        Me.dgmap.RowHeadersVisible = False
+        '
         'TabPage3
         '
         resources.ApplyResources(Me.TabPage3, "TabPage3")
@@ -327,6 +358,28 @@ Partial Class FlowsheetUOEditorForm
         resources.ApplyResources(Me.lblInit, "lblInit")
         Me.lblInit.Name = "lblInit"
         '
+        'id1
+        '
+        resources.ApplyResources(Me.id1, "id1")
+        Me.id1.Name = "id1"
+        Me.id1.ReadOnly = True
+        '
+        'col1
+        '
+        resources.ApplyResources(Me.col1, "col1")
+        Me.col1.Name = "col1"
+        Me.col1.ReadOnly = True
+        '
+        'id2
+        '
+        resources.ApplyResources(Me.id2, "id2")
+        Me.id2.Name = "id2"
+        '
+        'col2
+        '
+        resources.ApplyResources(Me.col2, "col2")
+        Me.col2.Name = "col2"
+        '
         'FlowsheetUOEditorForm
         '
         resources.ApplyResources(Me, "$this")
@@ -353,6 +406,8 @@ Partial Class FlowsheetUOEditorForm
         CType(Me.dgvInputPars, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ToolStrip2.ResumeLayout(False)
         Me.ToolStrip2.PerformLayout()
+        Me.TabPage4.ResumeLayout(False)
+        CType(Me.dgmap, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage3.ResumeLayout(False)
         Me.TabPage3.PerformLayout()
         Me.ResumeLayout(False)
@@ -394,4 +449,10 @@ Partial Class FlowsheetUOEditorForm
     Friend WithEvents DataGridViewComboBoxColumn3 As System.Windows.Forms.DataGridViewComboBoxColumn
     Friend WithEvents ToolStripButton6 As System.Windows.Forms.ToolStripButton
     Friend WithEvents ToolStripButton5 As System.Windows.Forms.ToolStripButton
+    Friend WithEvents TabPage4 As System.Windows.Forms.TabPage
+    Friend WithEvents dgmap As System.Windows.Forms.DataGridView
+    Friend WithEvents id1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents col1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents id2 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents col2 As System.Windows.Forms.DataGridViewComboBoxColumn
 End Class

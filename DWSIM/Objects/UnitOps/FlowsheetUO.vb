@@ -71,12 +71,15 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Public Property OutputConnections As List(Of String)
         Public Property MassBalanceError As Double = 0.0#
         Public Property RedirectOutput As Boolean = False
+        Public Property CompoundMappings As Dictionary(Of String, String)
 
         Public Sub New(ByVal nome As String, ByVal descricao As String)
 
             MyBase.CreateNew()
             Me.m_ComponentName = nome
             Me.m_ComponentDescription = descricao
+
+            CompoundMappings = New Dictionary(Of String, String)
 
             InputParams = New Dictionary(Of String, FlowsheetUOParameter)
             OutputParams = New Dictionary(Of String, FlowsheetUOParameter)
@@ -93,11 +96,35 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             MyBase.New()
 
+            CompoundMappings = New Dictionary(Of String, String)
+
             InputParams = New Dictionary(Of String, FlowsheetUOParameter)
             OutputParams = New Dictionary(Of String, FlowsheetUOParameter)
 
             InputConnections = New List(Of String) From {"", "", "", "", "", "", "", "", "", ""}
             OutputConnections = New List(Of String) From {"", "", "", "", "", "", "", "", "", ""}
+
+        End Sub
+
+        Public Sub InitializeMappings()
+
+            If CompoundMappings Is Nothing Then CompoundMappings = New Dictionary(Of String, String)
+
+            'create mappings
+            If CompoundMappings.Count = 0 Then
+                For Each c In Me.FlowSheet.Options.SelectedComponents.Values
+                    If Me.Fsheet.Options.SelectedComponents.ContainsKey(c.Name) Then CompoundMappings.Add(c.Name, c.Name) Else CompoundMappings.Add(c.Name, "")
+                Next
+            End If
+
+            If CompoundMappings.Count <> Me.FlowSheet.Options.SelectedComponents.Count Then
+                'update mappings
+                For Each c In Me.FlowSheet.Options.SelectedComponents.Values
+                    If Not CompoundMappings.ContainsKey(c.Name) Then
+                        If Me.Fsheet.Options.SelectedComponents.ContainsKey(c.Name) Then CompoundMappings.Add(c.Name, c.Name) Else CompoundMappings.Add(c.Name, "")
+                    End If
+                Next
+            End If
 
         End Sub
 
@@ -856,17 +883,17 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Case FlowsheetUOMassTransferMode.CompoundMassFlows
 
                             wt = 0.0#
-                            For Each s In msfrom.Fases(0).Componentes.Values
-                                If msfrom.Fases(0).Componentes.ContainsKey(s.Nome) And msto.Fases(0).Componentes.ContainsKey(s.Nome) Then
-                                    wt += s.MassFlow.GetValueOrDefault
+                            For Each s In CompoundMappings
+                                If msfrom.Fases(0).Componentes.ContainsKey(s.Key) And msto.Fases(0).Componentes.ContainsKey(s.Value) Then
+                                    wt += msfrom.Fases(0).Componentes(s.Key).MassFlow.GetValueOrDefault
                                 End If
                             Next
 
                             msto.Fases(0).SPMProperties.massflow = wt
 
-                            For Each s In msfrom.Fases(0).Componentes.Values
-                                If msfrom.Fases(0).Componentes.ContainsKey(s.Nome) And msto.Fases(0).Componentes.ContainsKey(s.Nome) Then
-                                    msto.Fases(0).Componentes(s.Nome).FracaoMassica = s.MassFlow.GetValueOrDefault / wt
+                            For Each s In CompoundMappings
+                                If msfrom.Fases(0).Componentes.ContainsKey(s.Key) And msto.Fases(0).Componentes.ContainsKey(s.Value) Then
+                                    msto.Fases(0).Componentes(s.Value).FracaoMassica += msfrom.Fases(0).Componentes(s.Key).MassFlow.GetValueOrDefault / wt
                                 End If
                             Next
 
@@ -876,9 +903,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                             msto.Fases(0).SPMProperties.massflow = msfrom.Fases(0).SPMProperties.massflow.GetValueOrDefault
 
-                            For Each s In msfrom.Fases(0).Componentes.Values
-                                If msfrom.Fases(0).Componentes.ContainsKey(s.Nome) And msto.Fases(0).Componentes.ContainsKey(s.Nome) Then
-                                    msto.Fases(0).Componentes(s.Nome).FracaoMassica = s.FracaoMassica.GetValueOrDefault
+                            For Each s In CompoundMappings
+                                If msfrom.Fases(0).Componentes.ContainsKey(s.Key) And msto.Fases(0).Componentes.ContainsKey(s.Value) Then
+                                    msto.Fases(0).Componentes(s.Value).FracaoMassica += msfrom.Fases(0).Componentes(s.Key).FracaoMassica.GetValueOrDefault
                                 End If
                             Next
 
@@ -889,17 +916,17 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Case FlowsheetUOMassTransferMode.CompoundMoleFlows
 
                             mt = 0.0#
-                            For Each s In msfrom.Fases(0).Componentes.Values
-                                If msfrom.Fases(0).Componentes.ContainsKey(s.Nome) And msto.Fases(0).Componentes.ContainsKey(s.Nome) Then
-                                    mt += s.MolarFlow.GetValueOrDefault
+                            For Each s In CompoundMappings
+                                If msfrom.Fases(0).Componentes.ContainsKey(s.Key) And msto.Fases(0).Componentes.ContainsKey(s.Value) Then
+                                    mt += msfrom.Fases(0).Componentes(s.Key).MolarFlow.GetValueOrDefault
                                 End If
                             Next
 
                             msto.Fases(0).SPMProperties.molarflow = mt
 
-                            For Each s In msfrom.Fases(0).Componentes.Values
-                                If msfrom.Fases(0).Componentes.ContainsKey(s.Nome) And msto.Fases(0).Componentes.ContainsKey(s.Nome) Then
-                                    msto.Fases(0).Componentes(s.Nome).FracaoMolar = s.MolarFlow.GetValueOrDefault / mt
+                            For Each s In CompoundMappings
+                                If msfrom.Fases(0).Componentes.ContainsKey(s.Key) And msto.Fases(0).Componentes.ContainsKey(s.Value) Then
+                                    msto.Fases(0).Componentes(s.Value).FracaoMolar += msfrom.Fases(0).Componentes(s.Key).MolarFlow.GetValueOrDefault / mt
                                 End If
                             Next
 
@@ -909,9 +936,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                             msto.Fases(0).SPMProperties.molarflow = msfrom.Fases(0).SPMProperties.molarflow.GetValueOrDefault
 
-                            For Each s In msfrom.Fases(0).Componentes.Values
-                                If msfrom.Fases(0).Componentes.ContainsKey(s.Nome) And msto.Fases(0).Componentes.ContainsKey(s.Nome) Then
-                                    msto.Fases(0).Componentes(s.Nome).FracaoMolar = s.FracaoMolar.GetValueOrDefault
+                            For Each s In CompoundMappings
+                                If msfrom.Fases(0).Componentes.ContainsKey(s.Key) And msto.Fases(0).Componentes.ContainsKey(s.Value) Then
+                                    msto.Fases(0).Componentes(s.Value).FracaoMolar += msfrom.Fases(0).Componentes(s.Key).FracaoMolar.GetValueOrDefault
                                 End If
                             Next
 
@@ -1405,6 +1432,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 If Fsheet.Collections.ObjectCollection.ContainsKey(fp.ObjectID) Then Me.OutputParams.Add(fp.ID, fp)
             Next
 
+            For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "CompoundMappings").Elements.ToList
+                Me.CompoundMappings.Add(xel.Attribute("From").Value, xel.Attribute("To").Value)
+            Next
+
             m_nodeitems = Nothing
             FillNodeItems(True)
             QTFillNodeItems()
@@ -1440,6 +1471,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 .Add(New XElement("OutputParameters"))
                 For Each p In OutputParams.Values
                     .Item(.Count - 1).Add(New XElement("FlowsheetUOParameter", p.SaveData.ToArray))
+                Next
+                .Add(New XElement("CompoundMappings"))
+                For Each p In CompoundMappings
+                    Dim xel As New XElement("CompoundMapping")
+                    xel.SetAttributeValue("From", p.Key)
+                    xel.SetAttributeValue("To", p.Value)
+                    .Item(.Count - 1).Add(xel)
                 Next
             End With
 

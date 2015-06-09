@@ -7,6 +7,16 @@ Public Class FlowsheetUOEditorForm
 
     Private loaded As Boolean = True
 
+    Private Sub FlowsheetUOEditorForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+
+        For Each r As DataGridViewRow In dgmap.Rows
+            Dim comp As String = r.Cells(0).Value
+            Dim map As String = r.Cells(3).Value
+            fsuo.CompoundMappings(comp) = map
+        Next
+
+    End Sub
+
     Private Sub FlowsheetUOEditorForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         If fsuo.Initialized Then
@@ -14,6 +24,7 @@ Public Class FlowsheetUOEditorForm
             lblInit.Text = DWSIM.App.GetLocalString("FlowsheetInitialized")
             UpdateLinks()
             UpdateProps()
+            UpdateMappings()
             loaded = True
         Else
             btnInitialize.Enabled = True
@@ -47,6 +58,7 @@ Public Class FlowsheetUOEditorForm
 
         UpdateLinks()
         UpdateProps()
+        UpdateMappings()
 
         loaded = True
 
@@ -117,6 +129,26 @@ Public Class FlowsheetUOEditorForm
             Dim obj As GraphicObject = fsuo.Fsheet.GetFlowsheetGraphicObject(dgvOutputLinks.Rows(e.RowIndex).Cells(1).Value)
             If Not obj Is Nothing Then fsuo.OutputConnections(e.RowIndex) = obj.Name Else fsuo.OutputConnections(e.RowIndex) = ""
         End If
+    End Sub
+
+    Sub UpdateMappings()
+
+        Me.fsuo.InitializeMappings()
+
+        Dim complist = Me.fsuo.Fsheet.Options.SelectedComponents.Values.ToArray
+        Dim cb As New DataGridViewComboBoxCell
+
+        For Each c In complist
+            cb.Items.Add(c.Name)
+        Next
+
+        dgmap.Columns(3).CellTemplate = cb
+
+        Me.dgmap.Rows.Clear()
+        For Each kvp As KeyValuePair(Of String, String) In fsuo.CompoundMappings
+            Me.dgmap.Rows.Add(New Object() {kvp.Key, DWSIM.App.GetComponentName(kvp.Key), kvp.Value, DWSIM.App.GetComponentName(kvp.Value)})
+        Next
+
     End Sub
 
     Sub UpdateProps()
@@ -350,4 +382,10 @@ Public Class FlowsheetUOEditorForm
     Private Sub dgvOutputPars_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles dgvOutputPars.DataError
 
     End Sub
+
+    Private Sub dgmap_DataError(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewDataErrorEventArgs) Handles dgmap.DataError
+
+    End Sub
+
+
 End Class
