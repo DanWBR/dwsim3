@@ -24,8 +24,8 @@ Public Class UI_SpecControlPanelForm
         mySPEC = formC.Collections.CLCS_SpecCollection(formC.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
 
         With mySPEC
-            Me.tbSVID.Text = .SourceObjectData.m_Name & " (" & .SourceObjectData.m_Type & ") / " & .SourceObjectData.m_Property
-            Me.tbTVID.Text = .TargetObjectData.m_Name & " (" & .TargetObjectData.m_Type & ") / " & .TargetObjectData.m_Property
+            Me.tbSVID.Text = .SourceObjectData.m_Name & " (" & .SourceObjectData.m_Type & ") / " & DWSIM.App.GetPropertyName(.SourceObjectData.m_Property)
+            Me.tbTVID.Text = .TargetObjectData.m_Name & " (" & .TargetObjectData.m_Type & ") / " & DWSIM.App.GetPropertyName(.TargetObjectData.m_Property)
             Me.tbSVVal.Text = Format(Double.Parse(.GetSourceVarValue), nf) & " " & .GetSourceVarUnit
             Me.tbTVVal.Text = Format(Double.Parse(.GetTargetVarValue), nf) & " " & .GetTargetVarUnit
             Me.tbExp.Text = .Expression
