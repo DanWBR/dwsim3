@@ -68,6 +68,12 @@ Namespace DWSIM.SimulationObjects.Reactors
             End Set
         End Property
 
+        Public Property CatalystLoading As Double = 0.0#
+
+        Public Property CatalystVoidFraction As Double = 0.0#
+
+        Public Property CatalystParticleDiameter As Double = 0.0#
+
         Public Sub New()
             MyBase.New()
         End Sub

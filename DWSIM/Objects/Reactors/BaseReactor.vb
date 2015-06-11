@@ -95,6 +95,77 @@ Namespace DWSIM.SimulationObjects.Reactors
 
         End Function
 
+        Function GetAmounts(rxn As Reaction, ims As SimulationObjects.Streams.MaterialStream) As Dictionary(Of String, Double)
+
+            Dim conv As New SistemasDeUnidades.Conversor
+
+            Dim Pin As Double = ims.Fases(0).SPMProperties.pressure.GetValueOrDefault
+            Dim amounts As New Dictionary(Of String, Double)
+
+            For Each sb As ReactionStoichBase In rxn.Components.Values
+
+                If Not amounts.ContainsKey(sb.CompName) Then amounts.Add(sb.CompName, 0.0#)
+
+                Select Case rxn.ReactionBasis
+                    Case ReactionBasis.Activity
+                        amounts(sb.CompName) = ims.Fases(3).Componentes(sb.CompName).FracaoMolar.GetValueOrDefault * ims.Fases(3).Componentes(sb.CompName).ActivityCoeff.GetValueOrDefault
+                    Case ReactionBasis.Fugacity
+                        Select Case rxn.ReactionPhase
+                            Case PhaseName.Vapor
+                                amounts(sb.CompName) = ims.Fases(2).Componentes(sb.CompName).FracaoMolar.GetValueOrDefault * ims.Fases(2).Componentes(sb.CompName).FugacityCoeff.GetValueOrDefault * Pin
+                            Case PhaseName.Liquid
+                                amounts(sb.CompName) = ims.Fases(3).Componentes(sb.CompName).FracaoMolar.GetValueOrDefault * ims.Fases(3).Componentes(sb.CompName).FugacityCoeff.GetValueOrDefault * Pin
+                            Case PhaseName.Mixture
+                                amounts(sb.CompName) = ims.Fases(0).Componentes(sb.CompName).FracaoMolar.GetValueOrDefault * ims.Fases(0).Componentes(sb.CompName).FugacityCoeff.GetValueOrDefault * Pin
+                        End Select
+                    Case ReactionBasis.MassConc
+                        Select Case rxn.ReactionPhase
+                            Case PhaseName.Vapor
+                                amounts(sb.CompName) = ims.Fases(2).Componentes(sb.CompName).MassFlow.GetValueOrDefault / ims.Fases(2).SPMProperties.volumetric_flow.GetValueOrDefault
+                            Case PhaseName.Liquid
+                                amounts(sb.CompName) = ims.Fases(3).Componentes(sb.CompName).MassFlow.GetValueOrDefault / ims.Fases(3).SPMProperties.volumetric_flow.GetValueOrDefault
+                            Case PhaseName.Mixture
+                                amounts(sb.CompName) = ims.Fases(0).Componentes(sb.CompName).MassFlow.GetValueOrDefault / ims.Fases(0).SPMProperties.volumetric_flow.GetValueOrDefault
+                        End Select
+                    Case ReactionBasis.MassFrac
+                        Select Case rxn.ReactionPhase
+                            Case PhaseName.Vapor
+                                amounts(sb.CompName) = ims.Fases(2).Componentes(sb.CompName).FracaoMassica.GetValueOrDefault
+                            Case PhaseName.Liquid
+                                amounts(sb.CompName) = ims.Fases(3).Componentes(sb.CompName).FracaoMassica.GetValueOrDefault
+                            Case PhaseName.Mixture
+                                amounts(sb.CompName) = ims.Fases(0).Componentes(sb.CompName).FracaoMassica.GetValueOrDefault
+                        End Select
+                    Case ReactionBasis.MolarConc
+                        Select Case rxn.ReactionPhase
+                            Case PhaseName.Vapor
+                                amounts(sb.CompName) = ims.Fases(2).Componentes(sb.CompName).MolarFlow.GetValueOrDefault / ims.Fases(2).SPMProperties.volumetric_flow.GetValueOrDefault
+                            Case PhaseName.Liquid
+                                amounts(sb.CompName) = ims.Fases(3).Componentes(sb.CompName).MolarFlow.GetValueOrDefault / ims.Fases(3).SPMProperties.volumetric_flow.GetValueOrDefault
+                            Case PhaseName.Mixture
+                                amounts(sb.CompName) = ims.Fases(0).Componentes(sb.CompName).MolarFlow.GetValueOrDefault / ims.Fases(0).SPMProperties.volumetric_flow.GetValueOrDefault
+                        End Select
+                    Case ReactionBasis.MolarFrac
+                        Select Case rxn.ReactionPhase
+                            Case PhaseName.Vapor
+                                amounts(sb.CompName) = ims.Fases(2).Componentes(sb.CompName).FracaoMolar.GetValueOrDefault
+                            Case PhaseName.Liquid
+                                amounts(sb.CompName) = ims.Fases(3).Componentes(sb.CompName).FracaoMolar.GetValueOrDefault
+                            Case PhaseName.Mixture
+                                amounts(sb.CompName) = ims.Fases(0).Componentes(sb.CompName).FracaoMolar.GetValueOrDefault
+                        End Select
+                    Case ReactionBasis.PartialPress
+                        amounts(sb.CompName) = ims.Fases(2).Componentes(sb.CompName).FracaoMolar.GetValueOrDefault * Pin
+                End Select
+
+                amounts(sb.CompName) = conv.ConverterParaSI(rxn.ConcUnit, amounts(sb.CompName))
+
+            Next
+
+            Return amounts
+
+        End Function
+
         Sub New()
             MyBase.CreateNew()
             Me.m_reactionSequence = New SortedList(Of Integer, ArrayList)
