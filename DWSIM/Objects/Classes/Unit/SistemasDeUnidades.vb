@@ -24,7 +24,7 @@ Namespace DWSIM.SistemasDeUnidades
 
         Public nome As String
 
-        Public mass, area, distance, time, volume, molar_volume, diameter, thickness, molar_conc, mass_conc, _
+        Public mass As String = "kg", area, distance, time, volume, molar_volume, diameter, thickness, molar_conc, mass_conc, _
                 heat_transf_coeff, force, accel, spec_vol, reac_rate, velocity, foulingfactor, cakeresistance, mediumresistance As String
 
         Public molar_enthalpy, molar_entropy As String
