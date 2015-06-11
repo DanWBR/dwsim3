@@ -5095,4 +5095,34 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="ErrorInvalidUOSpecValue" xml:space="preserve">
     <value>Uma ou mais variáveis de estado calculadas pela operação unitária está (estão) com o(s) valor(es) inválido(s). Por favor, verifique os parâmetros informados para a Operação Unitária ou suas correntes de entrada.</value>
   </data>
+  <data name="CSTRCatalystAmount" xml:space="preserve">
+    <value>Carga de catalisador</value>
+  </data>
+  <data name="CSTRCatalystAmountDesc" xml:space="preserve">
+    <value>Quantidade de catalisador presente no reator</value>
+  </data>
+  <data name="PFRCatalystLoading" xml:space="preserve">
+    <value>Carga de catalisador</value>
+  </data>
+  <data name="PFRCatalystLoadingDesc" xml:space="preserve">
+    <value>Quantidade de catalisador presente no reator</value>
+  </data>
+  <data name="PFRCatalystParticleDiameter" xml:space="preserve">
+    <value>Diâmetro das partículas de catalisador</value>
+  </data>
+  <data name="PFRCatalystParticleDiameterDesc" xml:space="preserve">
+    <value>Diâmetro das partículas de catalisador</value>
+  </data>
+  <data name="PFRCatalystVoidFraction" xml:space="preserve">
+    <value>Fração de vazios do catalisador</value>
+  </data>
+  <data name="PFRCatalystVoidFractionDesc" xml:space="preserve">
+    <value>Fração de vazios do catalisador</value>
+  </data>
+  <data name="PFRLength" xml:space="preserve">
+    <value>Comprimento útil do reator</value>
+  </data>
+  <data name="PFRLengthDesc" xml:space="preserve">
+    <value>Comprimento útil do reator, para cálculo do diâmetro e da perda de carga</value>
+  </data>
 </root>

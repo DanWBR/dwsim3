@@ -5079,4 +5079,34 @@ Die erhaltenen Daten werden hauptsächlich für die Berechnung von VLE-Daten emp
   <data name="SpreadsheetTable" xml:space="preserve">
     <value>Verknüpfte Arbeitsblatttabelle</value>
   </data>
+  <data name="CSTRCatalystAmount" xml:space="preserve">
+    <value>Katalysatorbeladung</value>
+  </data>
+  <data name="CSTRCatalystAmountDesc" xml:space="preserve">
+    <value>Menge Katalysator den Reaktor gegeben</value>
+  </data>
+  <data name="PFRCatalystLoading" xml:space="preserve">
+    <value>Katalysatorbeladung</value>
+  </data>
+  <data name="PFRCatalystLoadingDesc" xml:space="preserve">
+    <value>Menge Katalysator den Reaktor gegeben</value>
+  </data>
+  <data name="PFRCatalystParticleDiameter" xml:space="preserve">
+    <value>Katalysatorpartikeldurchmesser</value>
+  </data>
+  <data name="PFRCatalystParticleDiameterDesc" xml:space="preserve">
+    <value>Katalysatorpartikeldurchmesser</value>
+  </data>
+  <data name="PFRCatalystVoidFraction" xml:space="preserve">
+    <value>Katalysator Hohlraumanteil</value>
+  </data>
+  <data name="PFRCatalystVoidFractionDesc" xml:space="preserve">
+    <value>Katalysator Hohlraumanteil</value>
+  </data>
+  <data name="PFRLength" xml:space="preserve">
+    <value>Länge</value>
+  </data>
+  <data name="PFRLengthDesc" xml:space="preserve">
+    <value>Nutzlänge</value>
+  </data>
 </root>

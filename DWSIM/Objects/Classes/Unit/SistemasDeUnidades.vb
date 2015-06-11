@@ -24,7 +24,7 @@ Namespace DWSIM.SistemasDeUnidades
 
         Public nome As String
 
-        Public area, distance, time, volume, molar_volume, diameter, thickness, molar_conc, mass_conc, _
+        Public mass, area, distance, time, volume, molar_volume, diameter, thickness, molar_conc, mass_conc, _
                 heat_transf_coeff, force, accel, spec_vol, reac_rate, velocity, foulingfactor, cakeresistance, mediumresistance As String
 
         Public molar_enthalpy, molar_entropy As String
@@ -113,6 +113,7 @@ Namespace DWSIM.SistemasDeUnidades
                 .spec_vol = "m3/kg"
                 .time = "s"
                 .volume = "m3"
+                .mass = "kg"
                 .thickness = "mm"
                 .molar_enthalpy = "kJ/kmol"
                 .molar_entropy = "kJ/[kmol.K]"
@@ -195,6 +196,7 @@ Namespace DWSIM.SistemasDeUnidades
                 .spec_vol = "m3/kg"
                 .time = "s"
                 .volume = "m3"
+                .mass = "kg"
                 .thickness = "mm"
                 .molar_enthalpy = "kJ/kmol"
                 .molar_entropy = "kJ/[kmol.K]"
@@ -277,6 +279,7 @@ Namespace DWSIM.SistemasDeUnidades
                 .spec_vol = "m3/kg"
                 .time = "s"
                 .volume = "m3"
+                .mass = "kg"
                 .thickness = "mm"
                 .molar_enthalpy = "kJ/kmol"
                 .molar_entropy = "kJ/[kmol.K]"
@@ -359,6 +362,7 @@ Namespace DWSIM.SistemasDeUnidades
                 .spec_vol = "m3/kg"
                 .time = "s"
                 .volume = "m3"
+                .mass = "kg"
                 .thickness = "mm"
                 .molar_enthalpy = "kJ/kmol"
                 .molar_entropy = "kJ/[kmol.K]"
@@ -441,6 +445,7 @@ Namespace DWSIM.SistemasDeUnidades
                 .spec_vol = "m3/kg"
                 .time = "s"
                 .volume = "m3"
+                .mass = "kg"
                 .thickness = "mm"
                 .molar_enthalpy = "kJ/kmol"
                 .molar_entropy = "kJ/[kmol.K]"
@@ -522,6 +527,7 @@ Namespace DWSIM.SistemasDeUnidades
                 .spec_vol = "m3/kg"
                 .time = "h"
                 .volume = "m3"
+                .mass = "kg"
                 .thickness = "mm"
                 .molar_enthalpy = "kJ/kmol"
                 .molar_entropy = "kJ/[kmol.K]"
@@ -604,6 +610,7 @@ Namespace DWSIM.SistemasDeUnidades
                 .spec_vol = "ft3/lbm"
                 .time = "h"
                 .volume = "ft3"
+                .mass = "lb"
                 .thickness = "in"
                 .molar_enthalpy = "BTU/lbmol"
                 .molar_entropy = "BTU/[lbmol.R]"
@@ -686,6 +693,7 @@ Namespace DWSIM.SistemasDeUnidades
                 .spec_vol = "cm3/g"
                 .time = "s"
                 .volume = "cm3"
+                .mass = "g"
                 .thickness = "cm"
                 .molar_enthalpy = "cal/mol"
                 .molar_entropy = "cal/[mol.C]"
@@ -751,6 +759,10 @@ Namespace DWSIM.SistemasDeUnidades
 
             Select Case unidade
 
+                Case "g"
+                    Return valor / 1000
+                Case "lb"
+                    Return valor / 2.20462
                 Case "m/s"
                     Return valor
                 Case "cm/s"
@@ -810,7 +822,7 @@ Namespace DWSIM.SistemasDeUnidades
                 Case "lb/min"
                     Return valor / 132.277
                 Case "lb/s"
-                    Return 2.20462
+                    Return valor / 2.20462
 
                 Case "mol/h"
                     Return valor / 3600
@@ -1136,6 +1148,10 @@ Namespace DWSIM.SistemasDeUnidades
 
             Select Case unidade
 
+                Case "g"
+                    Return valor * 1000
+                Case "lb"
+                    Return valor * 2.20462
                 Case "m/s"
                     Return valor
                 Case "cm/s"

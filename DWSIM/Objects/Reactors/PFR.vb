@@ -50,6 +50,8 @@ Namespace DWSIM.SimulationObjects.Reactors
         <System.NonSerialized()> Dim pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage
         <System.NonSerialized()> Dim ppr As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage()
 
+        Public Length As Double = 1.0#
+
         Public Property Volume() As Double
             Get
                 Return m_vol
@@ -981,6 +983,16 @@ Namespace DWSIM.SimulationObjects.Reactors
                     .DefaultType = GetType(Nullable(Of Double))
                 End With
 
+                valor = Format(Conversor.ConverterDoSI(su.distance, Me.Length), FlowSheet.Options.NumberFormat)
+                .Item.Add(FT(DWSIM.App.GetLocalString("PFRLength"), su.distance), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("PFRLengthDesc"), True)
+
+                valor = Format(Conversor.ConverterDoSI(su.spmp_density, Me.CatalystLoading), FlowSheet.Options.NumberFormat)
+                .Item.Add(FT(DWSIM.App.GetLocalString("PFRCatalystLoading"), su.spmp_density), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("PFRCatalystLoadingDesc"), True)
+
+                valor = Format(Conversor.ConverterDoSI(su.diameter, Me.CatalystParticleDiameter), FlowSheet.Options.NumberFormat)
+                .Item.Add(FT(DWSIM.App.GetLocalString("PFRCatalystParticleDiameter"), su.diameter), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("PFRCatalystParticleDiameterDesc"), True)
+
+                .Item.Add(FT(DWSIM.App.GetLocalString("PFRCatalystVoidFraction"), su.diameter), Me, "CatalystVoidFraction", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("PFRCatalystVoidFractionDesc"), True)
 
                 If Me.GraphicObject.Calculated Then
 
