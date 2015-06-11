@@ -24,8 +24,10 @@ Namespace DWSIM.SistemasDeUnidades
 
         Public nome As String
 
-        Public mass As String = "kg", area, distance, time, volume, molar_volume, diameter, thickness, molar_conc, mass_conc, _
-                heat_transf_coeff, force, accel, spec_vol, reac_rate, velocity, foulingfactor, cakeresistance, mediumresistance As String
+        Public mass As String = "kg", reac_rate_heterog As String = "mol/[kg.s]", area, distance,
+            time, volume, molar_volume, diameter, thickness, molar_conc, mass_conc,
+            heat_transf_coeff, force, accel, spec_vol, reac_rate, velocity, foulingfactor,
+            cakeresistance, mediumresistance As String
 
         Public molar_enthalpy, molar_entropy As String
 
@@ -110,6 +112,7 @@ Namespace DWSIM.SistemasDeUnidades
                 .molar_conc = "mol/m3"
                 .molar_volume = "m3/kmol"
                 .reac_rate = "mol/[m3.s]"
+                .reac_rate_heterog = "mol/[kg.s]"
                 .spec_vol = "m3/kg"
                 .time = "s"
                 .volume = "m3"
@@ -193,6 +196,7 @@ Namespace DWSIM.SistemasDeUnidades
                 .molar_conc = "kmol/m3"
                 .molar_volume = "m3/kmol"
                 .reac_rate = "kmol.[m3.s]"
+                .reac_rate_heterog = "kmol/[kg.s]"
                 .spec_vol = "m3/kg"
                 .time = "s"
                 .volume = "m3"
@@ -276,6 +280,7 @@ Namespace DWSIM.SistemasDeUnidades
                 .molar_conc = "kmol/m3"
                 .molar_volume = "m3/kmol"
                 .reac_rate = "kmol.[m3.s]"
+                .reac_rate_heterog = "kmol/[kg.s]"
                 .spec_vol = "m3/kg"
                 .time = "s"
                 .volume = "m3"
@@ -359,6 +364,7 @@ Namespace DWSIM.SistemasDeUnidades
                 .molar_conc = "kmol/m3"
                 .molar_volume = "m3/kmol"
                 .reac_rate = "kmol.[m3.s]"
+                .reac_rate_heterog = "kmol/[kg.s]"
                 .spec_vol = "m3/kg"
                 .time = "s"
                 .volume = "m3"
@@ -442,6 +448,7 @@ Namespace DWSIM.SistemasDeUnidades
                 .molar_conc = "kmol/m3"
                 .molar_volume = "m3/kmol"
                 .reac_rate = "kmol.[m3.s]"
+                .reac_rate_heterog = "kmol/[kg.s]"
                 .spec_vol = "m3/kg"
                 .time = "s"
                 .volume = "m3"
@@ -524,6 +531,7 @@ Namespace DWSIM.SistemasDeUnidades
                 .molar_conc = "kmol/m3"
                 .molar_volume = "m3/kmol"
                 .reac_rate = "kmol.[m3.s]"
+                .reac_rate_heterog = "kmol/[kg.s]"
                 .spec_vol = "m3/kg"
                 .time = "h"
                 .volume = "m3"
@@ -607,6 +615,7 @@ Namespace DWSIM.SistemasDeUnidades
                 .molar_conc = "lbmol/ft3"
                 .molar_volume = "ft3/lbmol"
                 .reac_rate = "lbmol.[ft3.h]"
+                .reac_rate_heterog = "lbmol.[lbm.h]"
                 .spec_vol = "ft3/lbm"
                 .time = "h"
                 .volume = "ft3"
@@ -690,6 +699,7 @@ Namespace DWSIM.SistemasDeUnidades
                 .molar_conc = "mol/cm3"
                 .molar_volume = "cm3/mol"
                 .reac_rate = "mol.[cm3.s]"
+                .reac_rate_heterog = "mol/[g.s]"
                 .spec_vol = "cm3/g"
                 .time = "s"
                 .volume = "cm3"
@@ -834,6 +844,21 @@ Namespace DWSIM.SistemasDeUnidades
                     Return valor * 1000 / 3600
                 Case "kmol/d"
                     Return valor * 1000 / 3600 / 24
+
+                Case "kmol/[kg.s]"
+                    Return valor
+                Case "kmol/[kg.min.]"
+                    Return valor / 60
+                Case "kmol/[kg.h]"
+                    Return valor / 60 / 60
+                Case "mol/[kg.s]"
+                    Return valor / 1000
+                Case "mol/[kg.min.]"
+                    Return valor / 1000 / 60
+                Case "mol/[kg.h]"
+                    Return valor / 1000 / 60 / 60
+                Case "lbmol/[lbm.h]"
+                    Return valor * 453.59237 * 2.20462 / 60 / 60
 
                 Case "bbl/h"
                     Return valor / 22643.3
@@ -1248,6 +1273,21 @@ Namespace DWSIM.SistemasDeUnidades
                     Return valor / 1000 * 3600
                 Case "kmol/d"
                     Return valor / 1000 * 3600 * 24
+
+                Case "kmol/[kg.s]"
+                    Return valor
+                Case "kmol/[kg.min.]"
+                    Return valor * 60
+                Case "kmol/[kg.h]"
+                    Return valor * 60 * 60
+                Case "mol/[kg.s]"
+                    Return valor * 1000
+                Case "mol/[kg.min.]"
+                    Return valor * 1000 * 60
+                Case "mol/[kg.h]"
+                    Return valor * 1000 * 60 * 60
+                Case "lbmol/[lbm.h]"
+                    Return valor * 453.59237 * 2.20462 * 60 * 60
 
                 Case "BTU/h"
                     Return valor * 3412.14

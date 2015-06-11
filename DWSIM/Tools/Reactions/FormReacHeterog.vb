@@ -108,7 +108,7 @@ Public Class FormReacHeterog
         Else
             Me.cbConcUnit.SelectedItem = rc.ConcUnit
         End If
-        Me.cbVelUnit.Items.AddRange(New String() {"kmol/[kg.s]", "kmol/[kg.min.]", "kmol/[kg.h]", "mol/[kg.s]", "mol/[kg.min.]", "mol/[kg.h]", "mol/[kg.s]", "lbmol/[lb.h]"})
+        Me.cbVelUnit.Items.AddRange(New String() {"kmol/[kg.s]", "kmol/[kg.min.]", "kmol/[kg.h]", "mol/[kg.s]", "mol/[kg.min.]", "mol/[kg.h]", "lbmol/[lbm.h]"})
         If rc.VelUnit = "" Then
             Me.cbConcUnit.SelectedIndex = 0
         Else
