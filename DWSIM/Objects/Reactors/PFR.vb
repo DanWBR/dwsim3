@@ -103,10 +103,15 @@ Namespace DWSIM.SimulationObjects.Reactors
 
         Public Sub ODEFunc(ByVal y As Double(), ByRef dy As Double())
 
+            Dim conv As New SistemasDeUnidades.Conversor
+
             Dim i As Integer = 0
             Dim j As Integer = 0
             Dim scBC As Double = 0
             Dim BC As String = ""
+
+            'conversion factors for different basis other than molar concentrations
+            Dim convfactors As New Dictionary(Of String, Double)
 
             'loop through reactions
             Dim rxn As Reaction
@@ -139,31 +144,78 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                 Dim T As Double = ims.Fases(0).SPMProperties.temperature.GetValueOrDefault
 
-                Dim kxf As Double = rxn.A_Forward * Exp(-rxn.E_Forward / (8.314 * T))
-                Dim kxr As Double = rxn.A_Reverse * Exp(-rxn.E_Reverse / (8.314 * T))
-                If T < rxn.Tmin Or T > rxn.Tmax Then
-                    kxf = 0
-                    kxr = 0
+                Dim rx As Double = 0.0#
+
+                convfactors = Me.GetConvFactors(rxn, ims)
+
+                If rxn.ReactionType = ReactionType.Kinetic Then
+
+                    Dim kxf As Double = rxn.A_Forward * Exp(-rxn.E_Forward / (8.314 * T))
+                    Dim kxr As Double = rxn.A_Reverse * Exp(-rxn.E_Reverse / (8.314 * T))
+
+                    If T < rxn.Tmin Or T > rxn.Tmax Then
+                        kxf = 0.0#
+                        kxr = 0.0#
+                    End If
+
+                    Dim rxf As Double = 1.0#
+                    Dim rxr As Double = 1.0#
+
+                    'kinetic expression
+
+                    For Each sb As ReactionStoichBase In rxn.Components.Values
+                        rxf *= (C(sb.CompName) * convfactors(sb.CompName)) ^ sb.DirectOrder
+                        rxr *= (C(sb.CompName) * convfactors(sb.CompName)) ^ sb.ReverseOrder
+                    Next
+
+                    rx = kxf * rxf - kxr * rxr
+                    Rxi(rxn.ID) = conv.ConverterParaSI(rxn.VelUnit, rx)
+
+                    Kf(i) = kxf
+                    Kr(i) = kxr
+
+                ElseIf rxn.ReactionType = ReactionType.Heterogeneous_Catalytic Then
+
+                    Dim numval, denmval As Double
+
+                    rxn.ExpContext = New Ciloci.Flee.ExpressionContext
+                    rxn.ExpContext.Imports.AddType(GetType(System.Math))
+
+                    rxn.ExpContext.Variables.Clear()
+                    rxn.ExpContext.Variables.Add("T", ims.Fases(0).SPMProperties.temperature.GetValueOrDefault)
+
+                    Dim ir As Integer = 0
+                    Dim ip As Integer = 0
+
+                    For Each sb As ReactionStoichBase In rxn.Components.Values
+                        If sb.StoichCoeff < 1 Then
+                            rxn.ExpContext.Variables.Add("R" & ir.ToString, C(sb.CompName) * convfactors(sb.CompName))
+                            ir += 1
+                        ElseIf sb.StoichCoeff > 1 Then
+                            rxn.ExpContext.Variables.Add("P" & ip.ToString, C(sb.CompName) * convfactors(sb.CompName))
+                            ip += 1
+                        End If
+                    Next
+
+                    rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.RateEquationNumerator)
+
+                    numval = rxn.Expr.Evaluate
+
+                    rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.RateEquationDenominator)
+
+                    denmval = rxn.Expr.Evaluate
+
+                    rx = conv.ConverterParaSI(rxn.VelUnit, numval / denmval)
+
                 End If
 
-                Dim rx As Double = 0
-                Dim rxf As Double = 1
-                Dim rxr As Double = 1
-
-                'kinetic expression
-                For Each sb As ReactionStoichBase In rxn.Components.Values
-                    rxf *= C(sb.CompName) ^ sb.DirectOrder
-                    rxr *= C(sb.CompName) ^ sb.ReverseOrder
-                Next
-                rx = kxf * rxf - kxr * rxr
-                Rxi(rxn.ID) = rx
-
-                Kf(i) = kxf
-                Kr(i) = kxr
-
                 For Each sb As ReactionStoichBase In rxn.Components.Values
 
-                    Ri(sb.CompName) += rx * sb.StoichCoeff / rxn.Components(BC).StoichCoeff
+                    If rxn.ReactionType = ReactionType.Kinetic Then
+                        Ri(sb.CompName) += rx * sb.StoichCoeff / rxn.Components(BC).StoichCoeff
+                    ElseIf rxn.ReactionType = ReactionType.Heterogeneous_Catalytic Then
+                        Ri(sb.CompName) += rx * sb.StoichCoeff / rxn.Components(BC).StoichCoeff * Me.CatalystLoading
+                    End If
 
                 Next
 
@@ -182,6 +234,8 @@ Namespace DWSIM.SimulationObjects.Reactors
         End Sub
 
         Public Overrides Function Calculate(Optional ByVal args As Object = Nothing) As Integer
+
+            Dim conv As New SistemasDeUnidades.Conversor
 
             If Rxi Is Nothing Then Rxi = New Dictionary(Of String, Double)
             If DHRi Is Nothing Then DHRi = New Dictionary(Of String, Double)
@@ -286,6 +340,9 @@ Namespace DWSIM.SimulationObjects.Reactors
             T0 = ims.Fases(0).SPMProperties.temperature.GetValueOrDefault
             P0 = ims.Fases(0).SPMProperties.pressure.GetValueOrDefault
 
+            'conversion factors for different basis other than molar concentrations
+            Dim convfactors As New Dictionary(Of String, Double)
+
             'do the calculations on each dV
             Dim currvol As Double = 0
             Do
@@ -367,7 +424,10 @@ Namespace DWSIM.SimulationObjects.Reactors
                     i = 0
                     Do
 
+                        Dim rx As Double = 0.0#
+
                         'process reaction i
+
                         rxn = form.Options.Reactions(ar(i))
                         BC = rxn.BaseReactant
                         scBC = rxn.Components(BC).StoichCoeff
@@ -380,31 +440,72 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                         T = ims.Fases(0).SPMProperties.temperature.GetValueOrDefault
 
-                        Dim kxf As Double = rxn.A_Forward * Exp(-rxn.E_Forward / (8.314 * T))
-                        Dim kxr As Double = rxn.A_Reverse * Exp(-rxn.E_Reverse / (8.314 * T))
+                        convfactors = Me.GetConvFactors(rxn, ims)
 
-                        Dim rx As Double = 0
-                        Dim rxf As Double = 1
-                        Dim rxr As Double = 1
+                        If rxn.ReactionType = ReactionType.Kinetic Then
 
-                        'kinetic expression
-                        For Each sb As ReactionStoichBase In rxn.Components.Values
-                            rxf *= C(sb.CompName) ^ sb.DirectOrder
-                            rxr *= C(sb.CompName) ^ sb.ReverseOrder
-                        Next
-                        rx = kxf * rxf - kxr * rxr
-                        If Not Rxi.ContainsKey(rxn.ID) Then
-                            Rxi.Add(rxn.ID, rx)
-                        Else
-                            Rxi(rxn.ID) = rx
-                        End If
+                            Dim kxf As Double = rxn.A_Forward * Exp(-rxn.E_Forward / (8.314 * T))
+                            Dim kxr As Double = rxn.A_Reverse * Exp(-rxn.E_Reverse / (8.314 * T))
 
-                        If Kf.Count - 1 <= i Then
-                            Kf.Add(kxf)
-                            Kr.Add(kxf)
-                        Else
-                            Kf(i) = kxf
-                            Kr(i) = kxr
+                            Dim rxf As Double = 1.0#
+                            Dim rxr As Double = 1.0#
+
+                            'kinetic expression
+
+                            For Each sb As ReactionStoichBase In rxn.Components.Values
+                                rxf *= (C(sb.CompName) * convfactors(sb.CompName)) ^ sb.DirectOrder
+                                rxr *= (C(sb.CompName) * convfactors(sb.CompName)) ^ sb.ReverseOrder
+                            Next
+
+                            rx = conv.ConverterParaSI(rxn.VelUnit, kxf * rxf - kxr * rxr)
+
+                            If Not Rxi.ContainsKey(rxn.ID) Then
+                                Rxi.Add(rxn.ID, rx)
+                            Else
+                                Rxi(rxn.ID) = rx
+                            End If
+
+                            If Kf.Count - 1 <= i Then
+                                Kf.Add(kxf)
+                                Kr.Add(kxf)
+                            Else
+                                Kf(i) = kxf
+                                Kr(i) = kxr
+                            End If
+
+                        ElseIf rxn.ReactionType = ReactionType.Heterogeneous_Catalytic Then
+
+                            Dim numval, denmval As Double
+
+                            rxn.ExpContext = New Ciloci.Flee.ExpressionContext
+                            rxn.ExpContext.Imports.AddType(GetType(System.Math))
+
+                            rxn.ExpContext.Variables.Clear()
+                            rxn.ExpContext.Variables.Add("T", ims.Fases(0).SPMProperties.temperature.GetValueOrDefault)
+
+                            Dim ir As Integer = 0
+                            Dim ip As Integer = 0
+
+                            For Each sb As ReactionStoichBase In rxn.Components.Values
+                                If sb.StoichCoeff < 1 Then
+                                    rxn.ExpContext.Variables.Add("R" & ir.ToString, C(sb.CompName) * convfactors(sb.CompName))
+                                    ir += 1
+                                ElseIf sb.StoichCoeff > 1 Then
+                                    rxn.ExpContext.Variables.Add("P" & ip.ToString, C(sb.CompName) * convfactors(sb.CompName))
+                                    ip += 1
+                                End If
+                            Next
+
+                            rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.RateEquationNumerator)
+
+                            numval = rxn.Expr.Evaluate
+
+                            rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.RateEquationDenominator)
+
+                            denmval = rxn.Expr.Evaluate
+
+                            rx = conv.ConverterParaSI(rxn.VelUnit, numval / denmval)
+
                         End If
 
                         For Each sb As ReactionStoichBase In rxn.Components.Values
@@ -590,103 +691,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                             ims.Fases(0).SPMProperties.temperature = Tout
                             T = ims.Fases(0).SPMProperties.temperature.GetValueOrDefault
 
-                            With pp
-
-                                .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
-                                If ims.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
-                                Else
-                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
-                                End If
-                                If ims.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
-                                Else
-                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
-                                End If
-                                If ims.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
-                                Else
-                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
-                                End If
-                                If ims.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
-                                Else
-                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
-                                End If
-                                If ims.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
-                                Else
-                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
-                                End If
-                                If ims.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                                Else
-                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                                End If
-                                If ims.Fases(2).SPMProperties.molarfraction.GetValueOrDefault >= 0 And ims.Fases(2).SPMProperties.molarfraction.GetValueOrDefault < 1 Then
-                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
-                                Else
-                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
-                                End If
-                                .DW_CalcCompMolarFlow(-1)
-                                .DW_CalcCompMassFlow(-1)
-                                .DW_CalcCompVolFlow(-1)
-                                .DW_CalcOverallProps()
-                                .DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                                .DW_CalcVazaoVolumetrica()
-                                .DW_CalcKvalue()
-
-                            End With
-
                         Case OperationMode.Isothermic
-
-                            With pp
-
-                                .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
-                                If ims.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
-                                Else
-                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
-                                End If
-                                If ims.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
-                                Else
-                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
-                                End If
-                                If ims.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
-                                Else
-                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
-                                End If
-                                If ims.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
-                                Else
-                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
-                                End If
-                                If ims.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
-                                Else
-                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
-                                End If
-                                If ims.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                                Else
-                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                                End If
-                                If ims.Fases(2).SPMProperties.molarfraction.GetValueOrDefault >= 0 And ims.Fases(2).SPMProperties.molarfraction.GetValueOrDefault < 1 Then
-                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
-                                Else
-                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
-                                End If
-                                .DW_CalcCompMolarFlow(-1)
-                                .DW_CalcCompMassFlow(-1)
-                                .DW_CalcCompVolFlow(-1)
-                                .DW_CalcOverallProps()
-                                .DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                                .DW_CalcVazaoVolumetrica()
-                                .DW_CalcKvalue()
-
-                            End With
 
                         Case OperationMode.OutletTemperature
 
@@ -699,56 +704,9 @@ Namespace DWSIM.SimulationObjects.Reactors
                             ims.Fases(0).SPMProperties.temperature = Me.OutletTemperature
                             T = ims.Fases(0).SPMProperties.temperature.GetValueOrDefault
 
-                            With pp
-
-                                .CurrentMaterialStream = ims
-                                .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
-                                If ims.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
-                                Else
-                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
-                                End If
-                                If ims.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
-                                Else
-                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
-                                End If
-                                If ims.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
-                                Else
-                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
-                                End If
-                                If ims.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
-                                Else
-                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
-                                End If
-                                If ims.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
-                                Else
-                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
-                                End If
-                                If ims.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                                Else
-                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                                End If
-                                If ims.Fases(2).SPMProperties.molarfraction.GetValueOrDefault >= 0 And ims.Fases(2).SPMProperties.molarfraction.GetValueOrDefault < 1 Then
-                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
-                                Else
-                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
-                                End If
-                                .DW_CalcCompMolarFlow(-1)
-                                .DW_CalcCompMassFlow(-1)
-                                .DW_CalcCompVolFlow(-1)
-                                .DW_CalcOverallProps()
-                                .DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                                .DW_CalcVazaoVolumetrica()
-                                .DW_CalcKvalue()
-
-                            End With
-
                     End Select
+
+                    ims.Calculate(True, True)
 
                 Next
 
