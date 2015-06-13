@@ -730,7 +730,54 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                 Me.points.Add(tmparr)
 
-                P -= Me.DeltaP.GetValueOrDefault * Me.dV
+                Dim Qvin, Qlin, eta_v, eta_l, rho_v, rho_l, tens, q, rho, eta As Double
+
+                With ims
+                    q = .Fases(0).SPMProperties.volumetric_flow.GetValueOrDefault
+                    rho = .Fases(0).SPMProperties.density.GetValueOrDefault
+                    eta = .Fases(0).SPMProperties.viscosity.GetValueOrDefault
+                    Qlin = .Fases(1).SPMProperties.volumetric_flow.GetValueOrDefault
+                    rho_l = .Fases(1).SPMProperties.density.GetValueOrDefault
+                    eta_l = .Fases(1).SPMProperties.viscosity.GetValueOrDefault
+                    tens = .Fases(0).TPMProperties.surfaceTension.GetValueOrDefault
+                    Qvin = .Fases(2).SPMProperties.volumetric_flow.GetValueOrDefault
+                    rho_v = .Fases(2).SPMProperties.density.GetValueOrDefault
+                    eta_v = .Fases(2).SPMProperties.viscosity.GetValueOrDefault
+                End With
+
+                Dim diameter As Double = (4 * Me.Volume / PI / Me.Length) ^ 0.5
+
+                If Me.CatalystLoading = 0.0# Then
+
+                    Dim resv As Object
+                    Dim fpp As New DWSIM.FlowPackages.BeggsBrill
+                    Dim tipofluxo As String, holdup, dpf, dph, dpt As Double
+
+                    resv = fpp.CalculateDeltaP(diameter * 0.0254, Me.dV * Me.Length, 0.0#, 0.000045, Qvin * 24 * 3600, Qlin * 24 * 3600, eta_v * 1000, eta_l * 1000, rho_v, rho_l, tens)
+
+                    tipofluxo = resv(0)
+                    holdup = resv(1)
+                    dpf = resv(2)
+                    dph = resv(3)
+                    dpt = resv(4)
+
+                    P -= dpf
+
+                Else
+
+                    'has catalyst, use Ergun equation for pressure drop in reactor beds
+
+                    Dim vel As Double = q / (PI * diameter ^ 2 / 4)
+                    Dim L As Double = Me.dV * Me.Length
+                    Dim dp As Double = Me.CatalystParticleDiameter
+                    Dim ev As Double = Me.CatalystVoidFraction
+
+                    Dim pdrop As Double = 150 * eta * L / dp ^ 2 * (1 - ev) ^ 2 / ev ^ 3 * vel + 1.75 * L * rho / dp * (1 - ev) / ev ^ 3 * vel ^ 2
+
+                    P -= pdrop
+
+                End If
+
                 ims.Fases(0).SPMProperties.pressure = P
 
                 currvol += Me.dV * Me.Volume
@@ -738,6 +785,8 @@ Namespace DWSIM.SimulationObjects.Reactors
                 CheckCalculatorStatus()
 
             Loop Until currvol - Me.Volume > dV * Me.Volume * 0.98
+
+            Me.DeltaP = P0 - P
 
             If Me.ReactorOperationMode = OperationMode.Isothermic Then
 
@@ -921,13 +970,6 @@ Namespace DWSIM.SimulationObjects.Reactors
                     End With
                 End If
 
-                valor = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault), FlowSheet.Options.NumberFormat)
-                .Item.Add(FT(DWSIM.App.GetLocalString("Quedadepresso"), su.spmp_deltaP), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Quedadepressoaplicad6"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultValue = Nothing
-                    .DefaultType = GetType(Nullable(Of Double))
-                End With
-
                 valor = Format(Conversor.ConverterDoSI(su.volume, Me.Volume), FlowSheet.Options.NumberFormat)
                 .Item.Add(FT(DWSIM.App.GetLocalString("RCSTRPGridItem1"), su.volume), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("RCSTRPGridItem1Help"), True)
                 With .Item(.Item.Count - 1)
@@ -953,6 +995,13 @@ Namespace DWSIM.SimulationObjects.Reactors
                 .Item.Add(FT(DWSIM.App.GetLocalString("PFRCatalystVoidFraction"), su.diameter), Me, "CatalystVoidFraction", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("PFRCatalystVoidFractionDesc"), True)
 
                 If Me.GraphicObject.Calculated Then
+
+                    valor = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault), FlowSheet.Options.NumberFormat)
+                    .Item.Add(FT(DWSIM.App.GetLocalString("Quedadepresso"), su.spmp_deltaP), valor, False, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("Quedadepressoaplicad6"), True)
+                    With .Item(.Item.Count - 1)
+                        .DefaultValue = Nothing
+                        .DefaultType = GetType(Nullable(Of Double))
+                    End With
 
                     .Item.Add(FT(DWSIM.App.GetLocalString("DeltaT2"), su.spmp_deltaT), Format(Conversor.ConverterDoSI(su.spmp_deltaT, Me.DeltaT.GetValueOrDefault), FlowSheet.Options.NumberFormat), True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("Diferenadetemperatur"), True)
                     With .Item(.Item.Count - 1)
