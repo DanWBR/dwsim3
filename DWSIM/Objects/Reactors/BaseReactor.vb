@@ -100,7 +100,7 @@ Namespace DWSIM.SimulationObjects.Reactors
             Dim conv As New SistemasDeUnidades.Conversor
 
             Dim P As Double = ims.Fases(0).SPMProperties.pressure.GetValueOrDefault
-            Dim T As Double = ims.Fases(0).SPMProperties.pressure.GetValueOrDefault
+            Dim T As Double = ims.Fases(0).SPMProperties.temperature.GetValueOrDefault
             Dim amounts As New Dictionary(Of String, Double)
             Dim val1, val2, val3 As Double
 
@@ -175,7 +175,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                         amounts(sb.CompName) = 8.314 * T
                 End Select
 
-                amounts(sb.CompName) = conv.ConverterParaSI(rxn.ConcUnit, amounts(sb.CompName))
+                amounts(sb.CompName) = conv.ConverterDoSI(rxn.ConcUnit, amounts(sb.CompName))
 
             Next
 

@@ -846,17 +846,17 @@ Namespace DWSIM.SistemasDeUnidades
                     Return valor * 1000 / 3600 / 24
 
                 Case "kmol/[kg.s]"
-                    Return valor
+                    Return valor * 1000
                 Case "kmol/[kg.min.]"
-                    Return valor / 60
+                    Return valor / 60 * 1000
                 Case "kmol/[kg.h]"
-                    Return valor / 60 / 60
+                    Return valor / 60 / 60 * 1000
                 Case "mol/[kg.s]"
-                    Return valor / 1000
+                    Return valor
                 Case "mol/[kg.min.]"
-                    Return valor / 1000 / 60
+                    Return valor / 60
                 Case "mol/[kg.h]"
-                    Return valor / 1000 / 60 / 60
+                    Return valor / 60 / 60
                 Case "lbmol/[lbm.h]"
                     Return valor * 453.59237 * 2.20462 / 60 / 60
 
@@ -1275,17 +1275,17 @@ Namespace DWSIM.SistemasDeUnidades
                     Return valor / 1000 * 3600 * 24
 
                 Case "kmol/[kg.s]"
-                    Return valor
+                    Return valor / 1000
                 Case "kmol/[kg.min.]"
-                    Return valor * 60
+                    Return valor * 60 / 1000
                 Case "kmol/[kg.h]"
-                    Return valor * 60 * 60
+                    Return valor * 60 * 60 / 1000
                 Case "mol/[kg.s]"
-                    Return valor * 1000
+                    Return valor
                 Case "mol/[kg.min.]"
-                    Return valor * 1000 * 60
+                    Return valor * 60
                 Case "mol/[kg.h]"
-                    Return valor * 1000 * 60 * 60
+                    Return valor * 60 * 60
                 Case "lbmol/[lbm.h]"
                     Return valor * 453.59237 * 2.20462 * 60 * 60
 

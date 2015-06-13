@@ -205,7 +205,7 @@ Public Class FormReacHeterog
             rc.Components.Clear()
             For Each row As DataGridViewRow In Me.KryptonDataGridView1.Rows
                 If row.Cells(2).Value = True Then
-                    rc.Components.Add(row.Cells(5).Value, New ReactionStoichBase(row.Cells(5).Value, row.Cells(4).Value, row.Cells(3).Value, row.Cells(5).Value, row.Cells(6).Value))
+                    rc.Components.Add(row.Cells(5).Value, New ReactionStoichBase(row.Cells(5).Value, row.Cells(4).Value, row.Cells(3).Value, 0, 0))
                 End If
             Next
 
@@ -247,9 +247,6 @@ Public Class FormReacHeterog
             rc.Tmax = Me.tbTmax.Text
             rc.RateEquationNumerator = Me.tbNumerator.Text
             rc.RateEquationDenominator = Me.tbDenominator.Text
-
-            rc.A_Forward = Me.tbNumerator.Text
-            rc.A_Reverse = Me.tbDenominator.Text
 
             rc.ConcUnit = Me.cbConcUnit.SelectedItem.ToString
             rc.VelUnit = Me.cbVelUnit.SelectedItem

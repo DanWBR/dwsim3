@@ -867,6 +867,11 @@ Imports PropertyGridEx
                     If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
 
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("CSTRCatalystAmount")) Then
+
+                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    bb.CatalystAmount = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.mass, e.ChangedItem.Value)
+
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("RCSTRPGridItem1")) Then
 
                     If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
@@ -909,7 +914,22 @@ Imports PropertyGridEx
                     If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     bb.Volume = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.volume, e.ChangedItem.Value)
 
-                End If
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("PFRLength")) Then
+
+                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    bb.Length = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.distance, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("PFRCatalystLoading")) Then
+
+                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    bb.CatalystLoading = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_density, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("PFRCatalystParticleDiameter")) Then
+
+                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    bb.CatalystParticleDiameter = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.diameter, e.ChangedItem.Value)
+
+               End If
 
                 If FlowSheet.Options.CalculatorActivated Then
 
@@ -1353,10 +1373,8 @@ Imports PropertyGridEx
                         End If
                     End If
                 End If
-
-                '=================
             ElseIf sobj.TipoObjeto = TipoObjeto.Compressor Or sobj.TipoObjeto = TipoObjeto.Heater Or sobj.TipoObjeto = TipoObjeto.Pump Or
-                sobj.TipoObjeto = TipoObjeto.RCT_PFR Or sobj.TipoObjeto = TipoObjeto.RCT_CSTR Then
+                         sobj.TipoObjeto = TipoObjeto.RCT_PFR Or sobj.TipoObjeto = TipoObjeto.RCT_CSTR Then
                 If e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("Correntedeentrada")) Then
                     If e.ChangedItem.Value <> "" Then
                         If FormFlowsheet.SearchSurfaceObjectsByTag(e.ChangedItem.Value, ChildParent.FormSurface.FlowsheetDesignSurface) Is Nothing Then

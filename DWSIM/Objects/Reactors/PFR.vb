@@ -38,8 +38,8 @@ Namespace DWSIM.SimulationObjects.Reactors
         Dim Kf, Kr As ArrayList
         Dim DN As Dictionary(Of String, Double)
         Dim N00 As Dictionary(Of String, Double)
-        Dim Rxi As Dictionary(Of String, Double)
-        Dim DHRi As Dictionary(Of String, Double)
+        Dim Rxi As New Dictionary(Of String, Double)
+        Dim DHRi As New Dictionary(Of String, Double)
 
         Public points As ArrayList
 
@@ -77,7 +77,25 @@ Namespace DWSIM.SimulationObjects.Reactors
         Public Property CatalystParticleDiameter As Double = 0.0#
 
         Public Sub New()
+
             MyBase.New()
+
+            Me.m_ComponentName = Nome
+            Me.m_ComponentDescription = Descricao
+            Me.FillNodeItems()
+            Me.QTFillNodeItems()
+            Me.ShowQuickTable = False
+
+            N00 = New Dictionary(Of String, Double)
+            DN = New Dictionary(Of String, Double)
+            C0 = New Dictionary(Of String, Double)
+            C = New Dictionary(Of String, Double)
+            Ri = New Dictionary(Of String, Double)
+            DHRi = New Dictionary(Of String, Double)
+            Kf = New ArrayList
+            Kr = New ArrayList
+            Rxi = New Dictionary(Of String, Double)
+
         End Sub
 
         Public Sub New(ByVal nome As String, ByVal descricao As String)
@@ -182,16 +200,16 @@ Namespace DWSIM.SimulationObjects.Reactors
                     rxn.ExpContext.Imports.AddType(GetType(System.Math))
 
                     rxn.ExpContext.Variables.Clear()
-                    rxn.ExpContext.Variables.Add("T", ims.Fases(0).SPMProperties.temperature.GetValueOrDefault)
+                    rxn.ExpContext.Variables.Add("T", T)
 
-                    Dim ir As Integer = 0
-                    Dim ip As Integer = 0
+                    Dim ir As Integer = 1
+                    Dim ip As Integer = 1
 
                     For Each sb As ReactionStoichBase In rxn.Components.Values
-                        If sb.StoichCoeff < 1 Then
+                        If sb.StoichCoeff < 0 Then
                             rxn.ExpContext.Variables.Add("R" & ir.ToString, C(sb.CompName) * convfactors(sb.CompName))
                             ir += 1
-                        ElseIf sb.StoichCoeff > 1 Then
+                        ElseIf sb.StoichCoeff > 0 Then
                             rxn.ExpContext.Variables.Add("P" & ip.ToString, C(sb.CompName) * convfactors(sb.CompName))
                             ip += 1
                         End If
@@ -237,6 +255,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
             Dim conv As New SistemasDeUnidades.Conversor
 
+            If Ri Is Nothing Then Ri = New Dictionary(Of String, Double)
             If Rxi Is Nothing Then Rxi = New Dictionary(Of String, Double)
             If DHRi Is Nothing Then DHRi = New Dictionary(Of String, Double)
             If DN Is Nothing Then DN = New Dictionary(Of String, Double)
@@ -434,6 +453,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                         For Each sb As ReactionStoichBase In rxn.Components.Values
 
+                            If C0(sb.CompName) = 0.0# Then C0(sb.CompName) = 0.0000000001
                             C(sb.CompName) = C0(sb.CompName)
 
                         Next
@@ -459,12 +479,6 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                             rx = conv.ConverterParaSI(rxn.VelUnit, kxf * rxf - kxr * rxr)
 
-                            If Not Rxi.ContainsKey(rxn.ID) Then
-                                Rxi.Add(rxn.ID, rx)
-                            Else
-                                Rxi(rxn.ID) = rx
-                            End If
-
                             If Kf.Count - 1 <= i Then
                                 Kf.Add(kxf)
                                 Kr.Add(kxf)
@@ -481,16 +495,16 @@ Namespace DWSIM.SimulationObjects.Reactors
                             rxn.ExpContext.Imports.AddType(GetType(System.Math))
 
                             rxn.ExpContext.Variables.Clear()
-                            rxn.ExpContext.Variables.Add("T", ims.Fases(0).SPMProperties.temperature.GetValueOrDefault)
+                            rxn.ExpContext.Variables.Add("T", T)
 
-                            Dim ir As Integer = 0
-                            Dim ip As Integer = 0
+                            Dim ir As Integer = 1
+                            Dim ip As Integer = 1
 
                             For Each sb As ReactionStoichBase In rxn.Components.Values
-                                If sb.StoichCoeff < 1 Then
+                                If sb.StoichCoeff < 0 Then
                                     rxn.ExpContext.Variables.Add("R" & ir.ToString, C(sb.CompName) * convfactors(sb.CompName))
                                     ir += 1
-                                ElseIf sb.StoichCoeff > 1 Then
+                                ElseIf sb.StoichCoeff > 0 Then
                                     rxn.ExpContext.Variables.Add("P" & ip.ToString, C(sb.CompName) * convfactors(sb.CompName))
                                     ip += 1
                                 End If
@@ -506,6 +520,12 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                             rx = conv.ConverterParaSI(rxn.VelUnit, numval / denmval)
 
+                        End If
+
+                        If Not Rxi.ContainsKey(rxn.ID) Then
+                            Rxi.Add(rxn.ID, rx)
+                        Else
+                            Rxi(rxn.ID) = rx
                         End If
 
                         For Each sb As ReactionStoichBase In rxn.Components.Values
@@ -542,7 +562,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                     Dim bs As New MathEx.ODESolver.bulirschstoer
                     bs.DefineFuncDelegate(AddressOf ODEFunc)
-                    bs.solvesystembulirschstoer(0, currvol, vc, Ri.Count, 0.01 * currvol, 0.000001, True)
+                    bs.solvesystembulirschstoer(0, currvol, vc, Ri.Count, 0.001 * currvol, 0.00001, True)
 
                     C.Clear()
                     i = 1
@@ -674,6 +694,8 @@ Namespace DWSIM.SimulationObjects.Reactors
                     Hid_p += 0 'ppr.RET_Hid(298.15, ims.Fases(0).SPMProperties.temperature.GetValueOrDefault, PropertyPackages.Fase.Mixture) * ims.Fases(0).SPMProperties.massflow.GetValueOrDefault
 
                     'do a flash calc (calculate final temperature/enthalpy)
+
+                    Me.PropertyPackage.CurrentMaterialStream = ims
 
                     Select Case Me.ReactorOperationMode
 
@@ -997,7 +1019,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                 If Me.GraphicObject.Calculated Then
 
                     valor = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault), FlowSheet.Options.NumberFormat)
-                    .Item.Add(FT(DWSIM.App.GetLocalString("Quedadepresso"), su.spmp_deltaP), valor, False, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("Quedadepressoaplicad6"), True)
+                    .Item.Add(FT(DWSIM.App.GetLocalString("Quedadepresso"), su.spmp_deltaP), valor, True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("Quedadepressoaplicad6"), True)
                     With .Item(.Item.Count - 1)
                         .DefaultValue = Nothing
                         .DefaultType = GetType(Nullable(Of Double))

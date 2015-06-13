@@ -178,14 +178,14 @@ Namespace DWSIM.SimulationObjects.Reactors
                     rxn.ExpContext.Variables.Clear()
                     rxn.ExpContext.Variables.Add("T", ims.Fases(0).SPMProperties.temperature.GetValueOrDefault)
 
-                    Dim ir As Integer = 0
-                    Dim ip As Integer = 0
+                    Dim ir As Integer = 1
+                    Dim ip As Integer = 1
 
                     For Each sb As ReactionStoichBase In rxn.Components.Values
-                        If sb.StoichCoeff < 1 Then
+                        If sb.StoichCoeff < 0 Then
                             rxn.ExpContext.Variables.Add("R" & ir.ToString, C(sb.CompName) * convfactors(sb.CompName))
                             ir += 1
-                        ElseIf sb.StoichCoeff > 1 Then
+                        ElseIf sb.StoichCoeff > 0 Then
                             rxn.ExpContext.Variables.Add("P" & ip.ToString, C(sb.CompName) * convfactors(sb.CompName))
                             ip += 1
                         End If
@@ -481,14 +481,14 @@ Namespace DWSIM.SimulationObjects.Reactors
                         rxn.ExpContext.Variables.Clear()
                         rxn.ExpContext.Variables.Add("T", ims.Fases(0).SPMProperties.temperature.GetValueOrDefault)
 
-                        Dim ir As Integer = 0
-                        Dim ip As Integer = 0
+                        Dim ir As Integer = 1
+                        Dim ip As Integer = 1
 
                         For Each sb As ReactionStoichBase In rxn.Components.Values
-                            If sb.StoichCoeff < 1 Then
+                            If sb.StoichCoeff < 0 Then
                                 rxn.ExpContext.Variables.Add("R" & ir.ToString, C(sb.CompName) * convfactors(sb.CompName))
                                 ir += 1
-                            ElseIf sb.StoichCoeff > 1 Then
+                            ElseIf sb.StoichCoeff > 0 Then
                                 rxn.ExpContext.Variables.Add("P" & ip.ToString, C(sb.CompName) * convfactors(sb.CompName))
                                 ip += 1
                             End If
