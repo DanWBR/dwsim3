@@ -21,7 +21,8 @@ Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports Ciloci.Flee
 Imports System.Math
 Imports DWSIM.DWSIM.MathEx
-Imports DWSIM.DWSIM.Flowsheet.FlowSheetSolver
+Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
+Imports System.Linq
 
 Namespace DWSIM.SimulationObjects.Reactors
 
@@ -80,8 +81,6 @@ Namespace DWSIM.SimulationObjects.Reactors
 
             MyBase.New()
 
-            Me.m_ComponentName = Nome
-            Me.m_ComponentDescription = Descricao
             Me.FillNodeItems()
             Me.QTFillNodeItems()
             Me.ShowQuickTable = False
@@ -346,9 +345,10 @@ Namespace DWSIM.SimulationObjects.Reactors
             Dim N0 As New Dictionary(Of String, Double)
             Dim N As New Dictionary(Of String, Double)
             Dim DNT As New Dictionary(Of String, Double)
+            Dim DNj As New Dictionary(Of String, Double)
             N00.Clear()
 
-            Dim scBC, DHr, Hid_r, Hid_p, Hr, Hr0, Hp, T, T0, P, P0 As Double
+            Dim scBC, DHr, Hid_r, Hid_p, Hr, Hr0, Hp, T, T0, P, P0, vol As Double
             Dim BC As String = ""
             Dim tmp As Object
             Dim maxXarr As New ArrayList
@@ -407,6 +407,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                                         N(sb.CompName) = N0(sb.CompName)
                                         C0(sb.CompName) = N0(sb.CompName) / ims.Fases(3).SPMProperties.volumetric_flow.GetValueOrDefault
                                     End If
+                                    vol = ims.Fases(3).SPMProperties.volumetric_flow.GetValueOrDefault
                                 Case PhaseName.Vapor
                                     If Not N0.ContainsKey(sb.CompName) Then
                                         N0.Add(sb.CompName, ims.Fases(2).Componentes(sb.CompName).MolarFlow.GetValueOrDefault)
@@ -418,6 +419,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                                         N(sb.CompName) = N0(sb.CompName)
                                         C0(sb.CompName) = N0(sb.CompName) / ims.Fases(2).SPMProperties.volumetric_flow.GetValueOrDefault
                                     End If
+                                    vol = ims.Fases(2).SPMProperties.volumetric_flow.GetValueOrDefault
                                 Case PhaseName.Mixture
                                     If Not N0.ContainsKey(sb.CompName) Then
                                         N0.Add(sb.CompName, ims.Fases(0).Componentes(sb.CompName).MolarFlow.GetValueOrDefault)
@@ -429,6 +431,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                                         N(sb.CompName) = N0(sb.CompName)
                                         C0(sb.CompName) = N0(sb.CompName) / ims.Fases(0).SPMProperties.volumetric_flow.GetValueOrDefault
                                     End If
+                                    vol = ims.Fases(0).SPMProperties.volumetric_flow.GetValueOrDefault
                             End Select
 
                         Next
@@ -510,13 +513,19 @@ Namespace DWSIM.SimulationObjects.Reactors
                                 End If
                             Next
 
-                            rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.RateEquationNumerator)
+                            Try
+                                rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.RateEquationNumerator)
+                                numval = rxn.Expr.Evaluate
+                            Catch ex As Exception
+                                Throw New Exception(DWSIM.App.GetLocalString("PFRNumeratorEvaluationError") & " " & rxn.Name)
+                            End Try
 
-                            numval = rxn.Expr.Evaluate
-
-                            rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.RateEquationDenominator)
-
-                            denmval = rxn.Expr.Evaluate
+                            Try
+                                rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.RateEquationDenominator)
+                                denmval = rxn.Expr.Evaluate
+                            Catch ex As Exception
+                                Throw New Exception(DWSIM.App.GetLocalString("PFRDenominatorEvaluationError") & " " & rxn.Name)
+                            End Try
 
                             rx = conv.ConverterParaSI(rxn.VelUnit, numval / denmval)
 
@@ -562,7 +571,19 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                     Dim bs As New MathEx.ODESolver.bulirschstoer
                     bs.DefineFuncDelegate(AddressOf ODEFunc)
-                    bs.solvesystembulirschstoer(0, currvol, vc, Ri.Count, 0.001 * currvol, 0.00001, True)
+                    bs.solvesystembulirschstoer(0, currvol, vc, Ri.Count, 0.05 * currvol, 0.001, True)
+
+                    If Double.IsNaN(vc.Sum) Then Throw New Exception(DWSIM.App.GetLocalString("PFRMassBalanceError"))
+
+                    i = 1
+                    For Each sb As KeyValuePair(Of String, Double) In C0
+                        If Not DN.ContainsKey(sb.Key) Then
+                            DNj.Add(sb.Key, vol * (vc(i) - C(sb.Key)))
+                        Else
+                            DNj(sb.Key) = vol * (vc(i) - C(sb.Key))
+                        End If
+                        i = i + 1
+                    Next
 
                     C.Clear()
                     i = 1
@@ -728,7 +749,11 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                     End Select
 
+                    CheckCalculatorStatus()
+
                     ims.Calculate(True, True)
+
+                    CheckCalculatorStatus()
 
                 Next
 
@@ -799,6 +824,8 @@ Namespace DWSIM.SimulationObjects.Reactors
                     P -= pdrop
 
                 End If
+
+                If P < 0 Then Throw New Exception(DWSIM.App.GetLocalString("PFRNegativePressureError"))
 
                 ims.Fases(0).SPMProperties.pressure = P
 

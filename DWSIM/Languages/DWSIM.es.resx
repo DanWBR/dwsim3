@@ -5091,4 +5091,16 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="PFRLengthDesc" xml:space="preserve">
     <value>Comprimento útil do reator, para cálculo do diâmetro e da perda de carga</value>
   </data>
+  <data name="PFRMassBalanceError" xml:space="preserve">
+    <value>Ocorreu um erro no balanço de massa do reator. Verifique as equações das reações informadas e ativas no reator, bem como as dimensões informadas para o equipamento.</value>
+  </data>
+  <data name="PFRNegativePressureError" xml:space="preserve">
+    <value>A perda de carga no PFR está muito alta. Verifique o comprimento e volume informados, bem como os dados de carregamento de catalisador, se for o caso.</value>
+  </data>
+  <data name="PFRDenominatorEvaluationError" xml:space="preserve">
+    <value>Erro ao avaliar expressão para o denominador da equação de taxa da reação</value>
+  </data>
+  <data name="PFRNumeratorEvaluationError" xml:space="preserve">
+    <value>Erro ao avaliar expressão para o numerador da equação de taxa da reação</value>
+  </data>
 </root>

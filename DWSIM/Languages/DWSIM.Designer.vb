@@ -10202,6 +10202,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Erro ao avaliar expressão para o denominador da equação de taxa da reação.
+        '''</summary>
+        Friend Shared ReadOnly Property PFRDenominatorEvaluationError() As String
+            Get
+                Return ResourceManager.GetString("PFRDenominatorEvaluationError", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Comprimento útil do reator.
         '''</summary>
         Friend Shared ReadOnly Property PFRLength() As String
@@ -10216,6 +10225,33 @@ Namespace My.Resources
         Friend Shared ReadOnly Property PFRLengthDesc() As String
             Get
                 Return ResourceManager.GetString("PFRLengthDesc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Ocorreu um erro no balanço de massa do reator. Verifique as equações das reações informadas e ativas no reator, bem como as dimensões informadas para o equipamento..
+        '''</summary>
+        Friend Shared ReadOnly Property PFRMassBalanceError() As String
+            Get
+                Return ResourceManager.GetString("PFRMassBalanceError", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to A perda de carga no PFR está muito alta. Verifique o comprimento e volume informados, bem como os dados de carregamento de catalisador, se for o caso..
+        '''</summary>
+        Friend Shared ReadOnly Property PFRNegativePressureError() As String
+            Get
+                Return ResourceManager.GetString("PFRNegativePressureError", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Erro ao avaliar expressão para o numerador da equação de taxa da reação.
+        '''</summary>
+        Friend Shared ReadOnly Property PFRNumeratorEvaluationError() As String
+            Get
+                Return ResourceManager.GetString("PFRNumeratorEvaluationError", resourceCulture)
             End Get
         End Property
         

@@ -70,7 +70,23 @@ Namespace DWSIM.SimulationObjects.Reactors
         Public Property CatalystAmount As Double = 0.0#
 
         Public Sub New()
+
             MyBase.New()
+
+            Me.FillNodeItems()
+            Me.QTFillNodeItems()
+            Me.ShowQuickTable = False
+
+            N00 = New Dictionary(Of String, Double)
+            DN = New Dictionary(Of String, Double)
+            C0 = New Dictionary(Of String, Double)
+            C = New Dictionary(Of String, Double)
+            Ri = New Dictionary(Of String, Double)
+            Rxi = New Dictionary(Of String, Double)
+            DHRi = New Dictionary(Of String, Double)
+            Kf = New ArrayList
+            Kr = New ArrayList
+
         End Sub
 
         Public Sub New(ByVal nome As String, ByVal descricao As String)
@@ -457,12 +473,6 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                         rx = conv.ConverterParaSI(rxn.VelUnit, kxf * rxf - kxr * rxr)
 
-                        If Not Rxi.ContainsKey(rxn.ID) Then
-                            Rxi.Add(rxn.ID, rx)
-                        Else
-                            Rxi(rxn.ID) = rx
-                        End If
-
                         If Kf.Count - 1 <= i Then
                             Kf.Add(kxf)
                             Kr.Add(kxf)
@@ -506,6 +516,12 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                     End If
 
+                    If Not Rxi.ContainsKey(rxn.ID) Then
+                        Rxi.Add(rxn.ID, rx)
+                    Else
+                        Rxi(rxn.ID) = rx
+                    End If
+
                     For Each sb As ReactionStoichBase In rxn.Components.Values
 
                         If Not Ri.ContainsKey(sb.CompName) Then
@@ -541,6 +557,8 @@ Namespace DWSIM.SimulationObjects.Reactors
                 Dim bs As New MathEx.ODESolver.bulirschstoer
                 bs.DefineFuncDelegate(AddressOf ODEFunc)
                 bs.solvesystembulirschstoer(0.0#, 1.0#, vc, Ri.Count, 0.05, 0.000001, True)
+
+                If Double.IsNaN(vc.Sum) Then Throw New Exception(DWSIM.App.GetLocalString("PFRMassBalanceError"))
 
                 C.Clear()
                 i = 1

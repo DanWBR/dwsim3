@@ -1620,8 +1620,8 @@
     <EmbeddedResource Include="Languages\DWSIM.resx">
       <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>DWSIM.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <LastGenOutput>DWSIM1.Designer.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="Forms\PropPack_ConfigForms\FormConfigPP.en.resx">

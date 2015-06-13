@@ -5125,4 +5125,16 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="PFRLengthDesc" xml:space="preserve">
     <value>Reactor active/usable length</value>
   </data>
+  <data name="PFRMassBalanceError" xml:space="preserve">
+    <value>An error ocurred during the mass balance calculation. Check reaction kinetics data and reactor sizing information as well.</value>
+  </data>
+  <data name="PFRNegativePressureError" xml:space="preserve">
+    <value>The pressure drop inside the PFR is too high. Check input data like volume, diameter and catalyst loading information, if applicable.</value>
+  </data>
+  <data name="PFRDenominatorEvaluationError" xml:space="preserve">
+    <value>Error evaluating denominator expression for reaction</value>
+  </data>
+  <data name="PFRNumeratorEvaluationError" xml:space="preserve">
+    <value>Error evaluating numerator expression for reaction</value>
+  </data>
 </root>
