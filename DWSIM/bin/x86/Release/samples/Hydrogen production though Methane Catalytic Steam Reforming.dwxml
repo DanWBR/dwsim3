@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <DWSIM_Simulation_Data>
   <GeneralInfo>
-    <BuildVersion>3.4.5642.32136</BuildVersion>
-    <BuildDate>2015-06-13T17:51:12</BuildDate>
+    <BuildVersion>3.4.5643.18871</BuildVersion>
+    <BuildDate>2015-06-14T10:29:02</BuildDate>
     <OSInfo>Microsoft Windows 7 Home Premium , Version 6.1.7601.65536, Win32NT Platform</OSInfo>
-    <SavedOn>2015-06-13T18:34:48.3283042-04:00</SavedOn>
+    <SavedOn>2015-06-14T11:50:22.1766973-04:00</SavedOn>
   </GeneralInfo>
   <SimulationObjects>
     <SimulationObject>
@@ -605,8 +605,6 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0</FracaoMolar>
-              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
@@ -623,8 +621,6 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0</FracaoMolar>
-              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
@@ -641,8 +637,6 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0</FracaoMolar>
-              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
@@ -659,8 +653,6 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0</FracaoMolar>
-              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
@@ -677,8 +669,6 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0</FracaoMolar>
-              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
@@ -708,8 +698,6 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0</FracaoMolar>
-              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
@@ -726,8 +714,6 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0</FracaoMolar>
-              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
@@ -744,8 +730,6 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0</FracaoMolar>
-              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
@@ -762,8 +746,6 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0</FracaoMolar>
-              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
@@ -780,8 +762,6 @@
               <lnKvalue>0</lnKvalue>
               <Kvalue>0</Kvalue>
               <FracaoDePetroleo>false</FracaoDePetroleo>
-              <FracaoMolar>0</FracaoMolar>
-              <FracaoMassica>0</FracaoMassica>
               <MolarFlow>0</MolarFlow>
               <MassFlow>0</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
@@ -910,18 +890,18 @@
     </SimulationObject>
     <SimulationObject>
       <Type>DWSIM.DWSIM.SimulationObjects.Reactors.Reactor_PFR</Type>
-      <Volume>6</Volume>
+      <ReactorOperationMode>Isothermic</ReactorOperationMode>
       <dV>0.05</dV>
-      <CatalystLoading>0.1</CatalystLoading>
       <CatalystVoidFraction>0.4</CatalystVoidFraction>
+      <Volume>6</Volume>
+      <CatalystLoading>0.1</CatalystLoading>
       <CatalystParticleDiameter>0.002</CatalystParticleDiameter>
       <OutletTemperature>298.15</OutletTemperature>
-      <ReactorOperationMode>Isothermic</ReactorOperationMode>
       <ReactionSetID>DefaultSet</ReactionSetID>
       <ReactionSetName></ReactionSetName>
-      <DeltaP>1043.283952</DeltaP>
+      <DeltaP>1043.283971</DeltaP>
       <DeltaT>0</DeltaT>
-      <DeltaQ>-23367.934551</DeltaQ>
+      <DeltaQ>151482.307329</DeltaQ>
       <ScriptExt_FontName>Courier New</ScriptExt_FontName>
       <ScriptExt_FontSize>10</ScriptExt_FontSize>
       <ScriptExt_ScriptTextB></ScriptExt_ScriptTextB>
@@ -943,7 +923,7 @@
       <SpecVarType>Nenhum</SpecVarType>
       <Descricao>ReatorPFR</Descricao>
       <Nome>PFR-5f3ea195-7284-4d1d-b2be-f1a347522946</Nome>
-      <ShowQuickTable>false</ShowQuickTable>
+      <ShowQuickTable>true</ShowQuickTable>
       <Annotation></Annotation>
       <NodeItems />
       <PropertyPackage>PP-938ce079-8219-43f7-b4c5-37020707b002</PropertyPackage>
@@ -957,11 +937,11 @@
       </Reactions>
       <ReactionConversions />
       <CompoundConversions>
-        <Compound ID="Methane">0.932231626115982</Compound>
-        <Compound ID="Hydrogen">-5.56531442940881</Compound>
-        <Compound ID="Water">0.918186781406212</Compound>
-        <Compound ID="Carbon dioxide">0.561789273355695</Compound>
-        <Compound ID="Carbon monoxide">-37.8507546309235</Compound>
+        <Compound ID="Methane">0.932231663312669</Compound>
+        <Compound ID="Hydrogen">-5.56531448983829</Compound>
+        <Compound ID="Water">0.91818682252034</Compound>
+        <Compound ID="Carbon dioxide">0.561789334005947</Compound>
+        <Compound ID="Carbon monoxide">-37.8507706059063</Compound>
       </CompoundConversions>
     </SimulationObject>
     <SimulationObject>
@@ -1018,7 +998,7 @@
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.743611</FracaoMolar>
               <FracaoMassica>0.179498</FracaoMassica>
-              <MolarFlow>89.042166</MolarFlow>
+              <MolarFlow>89.042169</MolarFlow>
               <MassFlow>0.179498</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
@@ -1036,7 +1016,7 @@
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.018534</FracaoMolar>
               <FracaoMassica>0.039981</FracaoMassica>
-              <MolarFlow>2.219302</MolarFlow>
+              <MolarFlow>2.219301</MolarFlow>
               <MassFlow>0.039981</MassFlow>
               <FugacityCoeff>0</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
@@ -1089,20 +1069,20 @@
           <SPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
             <density>0.202431</density>
-            <enthalpy>2555.212801</enthalpy>
+            <enthalpy>2555.212847</enthalpy>
             <entropy>5.450006</entropy>
-            <molarflow>119.74293</molarflow>
+            <molarflow>119.742932</molarflow>
             <massflow>1</massflow>
             <massfraction>1</massfraction>
-            <heatCapacityCp>3.795459</heatCapacityCp>
+            <heatCapacityCp>3.79546</heatCapacityCp>
             <heatCapacityCv>2.799691</heatCapacityCv>
             <molecularWeight>8.351224</molecularWeight>
-            <pressure>201606.716048</pressure>
+            <pressure>201606.716029</pressure>
             <temperature>1000</temperature>
             <thermalConductivity>0.354228</thermalConductivity>
             <volumetric_flow>4.939966</volumetric_flow>
-            <molar_enthalpy>21339.153859</molar_enthalpy>
-            <molar_entropy>45.514216</molar_entropy>
+            <molar_enthalpy>21339.153786</molar_enthalpy>
+            <molar_entropy>45.514215</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
@@ -1257,7 +1237,7 @@
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.743611</FracaoMolar>
               <FracaoMassica>0.179498</FracaoMassica>
-              <MolarFlow>89.042166</MolarFlow>
+              <MolarFlow>89.042169</MolarFlow>
               <MassFlow>0.179498</MassFlow>
               <FugacityCoeff>1.000338</FugacityCoeff>
               <ActivityCoeff>0</ActivityCoeff>
@@ -1275,7 +1255,7 @@
               <FracaoDePetroleo>false</FracaoDePetroleo>
               <FracaoMolar>0.018534</FracaoMolar>
               <FracaoMassica>0.039981</FracaoMassica>
-              <MolarFlow>2.219302</MolarFlow>
+              <MolarFlow>2.219301</MolarFlow>
               <MassFlow>0.039981</MassFlow>
               <FugacityCoeff>1.000015</FugacityCoeff>
               <ActivityCoeff>0.000362</ActivityCoeff>
@@ -1329,21 +1309,21 @@
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.SinglePhaseMixtureProperties</Type>
             <compressibilityFactor>1.000389</compressibilityFactor>
             <density>0.202431</density>
-            <enthalpy>2555.212801</enthalpy>
+            <enthalpy>2555.212847</enthalpy>
             <entropy>5.450006</entropy>
-            <molarflow>119.74293</molarflow>
+            <molarflow>119.742932</molarflow>
             <massflow>1</massflow>
             <molarfraction>1</molarfraction>
             <massfraction>1</massfraction>
-            <heatCapacityCp>3.795459</heatCapacityCp>
+            <heatCapacityCp>3.79546</heatCapacityCp>
             <heatCapacityCv>2.799691</heatCapacityCv>
             <molecularWeight>8.351224</molecularWeight>
             <thermalConductivity>0.354228</thermalConductivity>
             <viscosity>2.5E-05</viscosity>
             <kinematic_viscosity>0.000125</kinematic_viscosity>
             <volumetric_flow>4.939966</volumetric_flow>
-            <molar_enthalpy>21339.153859</molar_enthalpy>
-            <molar_entropy>45.514216</molar_entropy>
+            <molar_enthalpy>21339.153786</molar_enthalpy>
+            <molar_entropy>45.514215</molar_entropy>
           </SPMProperties>
           <TPMProperties>
             <Type>DWSIM.DWSIM.ClassesBasicasTermodinamica.TwoPhaseMixtureProperties</Type>
@@ -1848,10 +1828,10 @@
     </SimulationObject>
     <SimulationObject>
       <Type>DWSIM.DWSIM.SimulationObjects.Streams.EnergyStream</Type>
-      <Energia>-23367.934551</Energia>
+      <Energia>151482.307329</Energia>
       <ComponentDescription>EN-bfaa2be1-1e89-4683-b51b-ef145653d863</ComponentDescription>
       <ComponentName>ESTR-000</ComponentName>
-      <Calculated>false</Calculated>
+      <Calculated>true</Calculated>
       <ErrorMessage></ErrorMessage>
       <IsAdjustAttached>false</IsAdjustAttached>
       <AttachedAdjustId></AttachedAdjustId>
@@ -1948,13 +1928,13 @@
     <SimAutor>Daniel-PC\Daniel</SimAutor>
     <SimComentario>simulation_details</SimComentario>
     <FilePath>C:\Users\Daniel\Documents\Visual Studio 2013\Projects\DWSIM3\DWSIM\bin\x86\Release\samples\Hydrogen production though Methane Catalytic Steam Reforming.dwxml</FilePath>
-    <BackupFileName>49948785.dwbcs</BackupFileName>
+    <BackupFileName>62142339.dwbcs</BackupFileName>
     <CalculatorActivated>true</CalculatorActivated>
     <PropertyPackageFlashAlgorithm>DWSIMDefault</PropertyPackageFlashAlgorithm>
     <PropertyPackageIOFlashQuickMode>true</PropertyPackageIOFlashQuickMode>
     <ThreePhaseFlashStabTestSeverity>0</ThreePhaseFlashStabTestSeverity>
     <FlashValidationDGETolerancePct>0.01</FlashValidationDGETolerancePct>
-    <Key>743994A1F2D8664A1E0CCB284A4598FD</Key>
+    <Key>7467FBADAFCAC10D0404F0AB040F1EE0</Key>
     <ThreePhaseFlashStabTestCompIds>Methane,Hydrogen,Water</ThreePhaseFlashStabTestCompIds>
   </Settings>
   <GraphicObjects>
@@ -2001,13 +1981,20 @@
     </GraphicObject>
     <GraphicObject>
       <Type>Microsoft.MSDN.Samples.GraphicObjects.ReactorPFRGraphic</Type>
-      <LineWidth>2</LineWidth>
+      <Tag>PFR-000</Tag>
       <GradientMode>true</GradientMode>
-      <LineColor>SteelBlue</LineColor>
-      <Fill>true</Fill>
-      <FillColor>WhiteSmoke</FillColor>
       <GradientColor1>LightGrey</GradientColor1>
       <GradientColor2>White</GradientColor2>
+      <FillColor>WhiteSmoke</FillColor>
+      <LineWidth>2</LineWidth>
+      <Width>70</Width>
+      <Height>20</Height>
+      <Rotation>0</Rotation>
+      <X>5221</X>
+      <Y>3741</Y>
+      <Active>true</Active>
+      <LineColor>SteelBlue</LineColor>
+      <Fill>true</Fill>
       <MixPoint>false</MixPoint>
       <SplitPoint>false</SplitPoint>
       <ShapeOverride>DefaultShape</ShapeOverride>
@@ -2018,17 +2005,10 @@
       <FlippedV>false</FlippedV>
       <TipoObjeto>RCT_PFR</TipoObjeto>
       <IsEnergyStream>false</IsEnergyStream>
-      <Active>true</Active>
       <Calculated>true</Calculated>
-      <Tag>PFR-000</Tag>
       <AutoSize>false</AutoSize>
       <IsConnector>false</IsConnector>
-      <X>5221</X>
-      <Y>3741</Y>
       <Name>PFR-5f3ea195-7284-4d1d-b2be-f1a347522946</Name>
-      <Height>20</Height>
-      <Width>70</Width>
-      <Rotation>0</Rotation>
       <InputConnectors>
         <Connector IsAttached="True" ConnType="ConIn" AttachedFromObjID="MAT-407b6ae5-849b-4b85-aaa5-ce2ec4806f98" AttachedFromConnIndex="0" AttachedFromEnergyConn="False" />
         <Connector IsAttached="True" ConnType="ConEn" AttachedFromObjID="EN-bfaa2be1-1e89-4683-b51b-ef145653d863" AttachedFromConnIndex="0" AttachedFromEnergyConn="True" />
@@ -3170,7 +3150,7 @@ Liquid Surface Tension: Brock-Bird Method</ComponentDescription>
   <PanelLayout>&lt;?xml version="1.0" encoding="utf-8"?&gt;
 &lt;!--DockPanel configuration file. Author: Weifen Luo, all rights reserved.--&gt;
 &lt;!--!!! AUTOMATICALLY GENERATED FILE. DO NOT MODIFY !!!--&gt;
-&lt;DockPanel FormatVersion="1.0" DockLeftPortion="0.220250521920668" DockRightPortion="0.25" DockTopPortion="0.25" DockBottomPortion="0.25" ActiveDocumentPane="3" ActivePane="2"&gt;
+&lt;DockPanel FormatVersion="1.0" DockLeftPortion="0.220250521920668" DockRightPortion="0.25" DockTopPortion="0.25" DockBottomPortion="0.25" ActiveDocumentPane="3" ActivePane="3"&gt;
   &lt;Contents Count="7"&gt;
     &lt;Content ID="0" PersistString="DWSIM.frmLog" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" /&gt;
     &lt;Content ID="1" PersistString="DWSIM.frmObjListView" AutoHidePortion="0.25" IsHidden="False" IsFloat="False" /&gt;

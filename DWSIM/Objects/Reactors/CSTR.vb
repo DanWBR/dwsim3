@@ -75,8 +75,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
             Me.FillNodeItems()
             Me.QTFillNodeItems()
-            Me.ShowQuickTable = False
-
+  
             N00 = New Dictionary(Of String, Double)
             DN = New Dictionary(Of String, Double)
             C0 = New Dictionary(Of String, Double)
@@ -96,8 +95,7 @@ Namespace DWSIM.SimulationObjects.Reactors
             Me.m_ComponentDescription = descricao
             Me.FillNodeItems()
             Me.QTFillNodeItems()
-            Me.ShowQuickTable = False
-
+   
             N00 = New Dictionary(Of String, Double)
             DN = New Dictionary(Of String, Double)
             C0 = New Dictionary(Of String, Double)
@@ -829,9 +827,58 @@ Namespace DWSIM.SimulationObjects.Reactors
 
         Public Overrides Sub QTFillNodeItems()
 
+            With Me.QTNodeTableItems
+
+                .Clear()
+
+                .Add(0, New DWSIM.Outros.NodeItem("Delta-P", "", "", 0, 0, ""))
+                .Add(1, New DWSIM.Outros.NodeItem("Delta-T", "", "", 1, 0, ""))
+                .Add(2, New DWSIM.Outros.NodeItem("Delta-Q", "", "", 2, 0, ""))
+
+            End With
+
         End Sub
 
         Public Overrides Sub UpdatePropertyNodes(ByVal su As SistemasDeUnidades.Unidades, ByVal nf As String)
+
+            Me.ShowQuickTable = True
+
+            Dim Conversor As New DWSIM.SistemasDeUnidades.Conversor
+
+            If Me.QTNodeTableItems Is Nothing Then
+                Me.QTNodeTableItems = New System.Collections.Generic.Dictionary(Of Integer, DWSIM.Outros.NodeItem)
+                Me.QTFillNodeItems()
+            End If
+
+            With Me.QTNodeTableItems
+
+                Dim valor As String
+
+                If Me.DeltaP.HasValue Then
+                    valor = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP), nf)
+                Else
+                    valor = DWSIM.App.GetLocalString("NC")
+                End If
+                .Item(0).Value = valor
+                .Item(0).Unit = su.spmp_deltaP
+
+                If Me.DeltaT.HasValue Then
+                    valor = Format(Conversor.ConverterDoSI(su.spmp_deltaT, Me.DeltaT), nf)
+                Else
+                    valor = DWSIM.App.GetLocalString("NC")
+                End If
+                .Item(1).Value = valor
+                .Item(1).Unit = su.spmp_deltaT
+
+                If Me.DeltaQ.HasValue Then
+                    valor = Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ), nf)
+                Else
+                    valor = DWSIM.App.GetLocalString("NC")
+                End If
+                .Item(2).Value = valor
+                .Item(2).Unit = su.spmp_heatflow
+
+            End With
 
         End Sub
 

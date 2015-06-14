@@ -196,6 +196,8 @@ Public Class frmSurface
             Else
                 CalculateAll2(Me.Flowsheet, My.Settings.SolverMode)
             End If
+        ElseIf e.KeyCode = Keys.F6 Then
+            If Not Me.FlowsheetDesignSurface.SelectedObject Is Nothing Then RecalcularToolStripMenuItem_Click(sender, e)
         End If
 
         If Not Me.FlowsheetDesignSurface.SelectedObject Is Nothing Then
@@ -623,9 +625,7 @@ Public Class frmSurface
                     gobj.TipoObjeto = TipoObjeto.GO_Texto And Not _
                     gobj.TipoObjeto = TipoObjeto.Nenhum Then
 
-
                     If gobj.Calculated Then
-
 
                         If Flowsheet.Collections.ObjectCollection.ContainsKey(gobj.Name) Then
 
@@ -3515,31 +3515,61 @@ Public Class frmSurface
                     EditCompTSMI_Click(sender, e)
                 Case TipoObjeto.FlowsheetUO
                     Dim myobj As DWSIM.SimulationObjects.UnitOps.Flowsheet = Flowsheet.Collections.CLCS_FlowsheetUOCollection(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
-                    If myobj.Initialized Then
-                        Dim viewform As New FlowsheetUOViewerForm
-                        With viewform
-                            .Text = Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag
-                            .fsuo = myobj
-                            .Show(Flowsheet.dckPanel)
-                        End With
-                    Else
+                    If My.Computer.Keyboard.ShiftKeyDown Then
                         Dim viewform As New FlowsheetUOEditorForm
                         With viewform
                             .Text = Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag
                             .fsuo = myobj
                             .ShowDialog()
                         End With
+                    Else
+                        If myobj.Initialized Then
+                            Dim viewform As New FlowsheetUOViewerForm
+                            With viewform
+                                .Text = Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag
+                                .fsuo = myobj
+                                .Show(Flowsheet.dckPanel)
+                            End With
+                        Else
+                            Dim viewform As New FlowsheetUOEditorForm
+                            With viewform
+                                .Text = Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag
+                                .fsuo = myobj
+                                .ShowDialog()
+                            End With
+                        End If
                     End If
                 Case TipoObjeto.CapeOpenUO
                     Dim myobj As DWSIM.SimulationObjects.UnitOps.CapeOpenUO = Flowsheet.Collections.CLCS_CapeOpenUOCollection(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
                     myobj.Edit(Me, New EventArgs)
                 Case TipoObjeto.ExcelUO
                     Dim myobj As DWSIM.SimulationObjects.UnitOps.ExcelUO = Flowsheet.Collections.CLCS_ExcelUOCollection(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
-                    Dim selectionControl As New ExcelUOEditorForm
-                    selectionControl.Text = Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag & " - " & "Excel UO Specification"
-                    selectionControl.TbFileName.Text = myobj.Filename
-                    selectionControl.ShowDialog()
-                    myobj.Filename = selectionControl.TbFileName.Text
+                    If My.Computer.Keyboard.ShiftKeyDown Then
+                        Dim selectionControl As New ExcelUOEditorForm
+                        selectionControl.Text = Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag & " - " & "Excel UO Specification"
+                        selectionControl.TbFileName.Text = myobj.Filename
+                        selectionControl.ShowDialog()
+                        myobj.Filename = selectionControl.TbFileName.Text
+                    Else
+                        If myobj.Filename <> "" Then
+                            If My.Computer.FileSystem.FileExists(myobj.Filename) Then
+                                If Not DWSIM.App.IsRunningOnMono Then
+                                    Try
+                                        Process.Start(myobj.Filename)
+                                    Catch ex As Exception
+                                    End Try
+                                Else
+                                    Try
+                                        Process.Start(New ProcessStartInfo("xdg-open", myobj.Filename) With {.UseShellExecute = False})
+                                    Catch ex As Exception
+
+                                    End Try
+                                End If
+                            Else
+                                MessageBox.Show(DWSIM.App.GetLocalString("Oarquivonoexisteoufo"), DWSIM.App.GetLocalString("Erroaoabrirarquivo"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            End If
+                        End If
+                    End If
                 Case TipoObjeto.CustomUO
                     Dim myobj As DWSIM.SimulationObjects.UnitOps.CustomUO = Flowsheet.Collections.CLCS_CustomUOCollection(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
                     If Not DWSIM.App.IsRunningOnMono Then
@@ -3572,6 +3602,82 @@ Public Class frmSurface
                 Case TipoObjeto.OT_Ajuste
                     Dim selectionControl As New UI_AdjControlPanelForm
                     selectionControl.ShowDialog()
+                Case TipoObjeto.OT_Especificacao
+                    Dim selectionControl As New UI_SpecControlPanelForm
+                    selectionControl.ShowDialog()
+                Case TipoObjeto.AbsorptionColumn, TipoObjeto.DistillationColumn, TipoObjeto.ReboiledAbsorber, TipoObjeto.RefluxedAbsorber
+                    Dim myobj As DWSIM.SimulationObjects.UnitOps.Column = Flowsheet.Collections.ObjectCollection(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
+                    If My.Computer.Keyboard.ShiftKeyDown Then
+                        Dim selectionControl As New UIConnectionsEditorForm
+                        selectionControl.ShowDialog()
+                    ElseIf My.Computer.Keyboard.CtrlKeyDown Then
+                        Dim selectionControl As New UIInitialEstimatesEditorForm
+                        selectionControl.ShowDialog()
+                    ElseIf My.Computer.Keyboard.AltKeyDown Then
+                        Dim selectionControl As New UIStagesEditorForm
+                        selectionControl.ShowDialog()
+                    Else
+                        If myobj.Calculated Then
+                            Dim selectionControl As New UIResultsForm
+                            selectionControl.form = myobj.FlowSheet
+                            selectionControl.ShowDialog()
+                        End If
+                    End If
+                Case TipoObjeto.Pipe
+                        Dim myobj As DWSIM.SimulationObjects.UnitOps.Pipe = Flowsheet.Collections.ObjectCollection(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
+                        If My.Computer.Keyboard.ShiftKeyDown Then
+                            Dim selectionControl As New ThermalProfileEditorForm
+                            selectionControl.ThermalProfile = myobj.ThermalProfile
+                            selectionControl.ShowDialog()
+                            myobj.ThermalProfile = selectionControl.ThermalProfile
+                        ElseIf My.Computer.Keyboard.CtrlKeyDown Then
+                            If myobj.Calculated Then
+                                Dim selectionControl As New FormGraph
+                                selectionControl.Profile = myobj.Profile
+                                selectionControl.ShowDialog()
+                            End If
+                        ElseIf My.Computer.Keyboard.AltKeyDown Then
+                            If myobj.Calculated Then
+                                Dim selectionControl As New FormTable
+                                selectionControl.Profile = myobj.Profile
+                                selectionControl.ShowDialog()
+                            End If
+                        Else
+                            Dim selectionControl As New PipeEditorForm
+                            selectionControl.PipeEditor1.SystemOfUnits = My.Application.ActiveSimulation.Options.SelectedUnitSystem
+                            selectionControl.PipeEditor1.NumberFormat = My.Application.ActiveSimulation.Options.NumberFormat
+                            selectionControl.PipeEditor1.Profile = myobj.Profile
+                            selectionControl.ShowDialog()
+                            myobj.Profile = selectionControl.PipeEditor1.Profile
+                        End If
+                Case TipoObjeto.RCT_PFR
+                        Dim myobj As DWSIM.SimulationObjects.Reactors.Reactor_PFR = Flowsheet.Collections.ObjectCollection(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
+                        If myobj.Calculated Then
+                            Dim selectionControl As New FormGraphPFR
+                            selectionControl.form = myobj.FlowSheet
+                            selectionControl.Points = myobj.points
+                            selectionControl.ShowDialog()
+                        End If
+                Case TipoObjeto.RCT_Gibbs
+                    Dim myobj As DWSIM.SimulationObjects.Reactors.Reactor_Gibbs = Flowsheet.Collections.ObjectCollection(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
+                    If My.Computer.Keyboard.ShiftKeyDown Then
+                        Dim selectionControl As New ElementMatrixEditorForm
+                        selectionControl.elmat = myobj.ElementMatrix
+                        selectionControl.Text = myobj.GraphicObject.Tag & " - " & DWSIM.App.GetLocalString("RGEditElementMatrix")
+                        selectionControl.ShowDialog()
+                        myobj.ElementMatrix = selectionControl.elmat
+                    Else
+                        Dim selectionControl As New GibbsInitialEstimatesEditorForm
+                        selectionControl.ie = myobj.InitialEstimates
+                        selectionControl.gr = myobj
+                        selectionControl.Text = myobj.GraphicObject.Tag & " - " & selectionControl.Text
+                        selectionControl.form = myobj.FlowSheet
+                        If selectionControl.gr.GraphicObject.InputConnectors(0).IsAttached Then
+                            selectionControl.inlet = myobj.FlowSheet.Collections.CLCS_MaterialStreamCollection(selectionControl.gr.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name)
+                        End If
+                        selectionControl.ShowDialog()
+                        myobj.InitialEstimates = selectionControl.ie
+                    End If
             End Select
         End If
 

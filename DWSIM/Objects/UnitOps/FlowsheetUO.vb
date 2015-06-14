@@ -893,6 +893,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                             For Each s In CompoundMappings
                                 If msfrom.Fases(0).Componentes.ContainsKey(s.Key) And msto.Fases(0).Componentes.ContainsKey(s.Value) Then
+                                    If Not msto.Fases(0).Componentes(s.Value).FracaoMassica.HasValue Then msto.Fases(0).Componentes(s.Value).FracaoMassica = 0.0#
                                     msto.Fases(0).Componentes(s.Value).FracaoMassica += msfrom.Fases(0).Componentes(s.Key).MassFlow.GetValueOrDefault / wt
                                 End If
                             Next
@@ -927,6 +928,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                             For Each s In CompoundMappings
                                 If msfrom.Fases(0).Componentes.ContainsKey(s.Key) And msto.Fases(0).Componentes.ContainsKey(s.Value) Then
+                                    If Not msto.Fases(0).Componentes(s.Value).FracaoMolar.HasValue Then msto.Fases(0).Componentes(s.Value).FracaoMolar = 0.0#
                                     msto.Fases(0).Componentes(s.Value).FracaoMolar += msfrom.Fases(0).Componentes(s.Key).MolarFlow.GetValueOrDefault / mt
                                 End If
                             Next
