@@ -62,21 +62,21 @@ Partial Class FormReacManager
         '
         'GroupBox2
         '
+        resources.ApplyResources(Me.GroupBox2, "GroupBox2")
         Me.GroupBox2.Controls.Add(Me.GridRSets)
         Me.GroupBox2.Controls.Add(Me.ToolStrip2)
-        resources.ApplyResources(Me.GroupBox2, "GroupBox2")
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.TabStop = False
         '
         'GridRSets
         '
+        resources.ApplyResources(Me.GridRSets, "GridRSets")
         Me.GridRSets.AllowUserToAddRows = False
         Me.GridRSets.AllowUserToDeleteRows = False
         Me.GridRSets.AllowUserToResizeRows = False
         Me.GridRSets.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.GridRSets.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.GridRSets.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column3, Me.Column2})
-        resources.ApplyResources(Me.GridRSets, "GridRSets")
         Me.GridRSets.MultiSelect = False
         Me.GridRSets.Name = "GridRSets"
         Me.GridRSets.ReadOnly = True
@@ -112,49 +112,49 @@ Partial Class FormReacManager
         '
         'ToolStripButton1
         '
+        resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
         Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton1.Image = Global.DWSIM.My.Resources.Resources.add
-        resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
         Me.ToolStripButton1.Name = "ToolStripButton1"
         '
         'ToolStripButton3
         '
+        resources.ApplyResources(Me.ToolStripButton3, "ToolStripButton3")
         Me.ToolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton3.Image = Global.DWSIM.My.Resources.Resources.page_white_gear
-        resources.ApplyResources(Me.ToolStripButton3, "ToolStripButton3")
         Me.ToolStripButton3.Name = "ToolStripButton3"
         '
         'ToolStripButton5
         '
+        resources.ApplyResources(Me.ToolStripButton5, "ToolStripButton5")
         Me.ToolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton5.Image = Global.DWSIM.My.Resources.Resources.copy
-        resources.ApplyResources(Me.ToolStripButton5, "ToolStripButton5")
         Me.ToolStripButton5.Name = "ToolStripButton5"
         '
         'ToolStripButton2
         '
+        resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
         Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton2.Image = Global.DWSIM.My.Resources.Resources.delete1
-        resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
         Me.ToolStripButton2.Name = "ToolStripButton2"
         '
         'GroupBox4
         '
+        resources.ApplyResources(Me.GroupBox4, "GroupBox4")
         Me.GroupBox4.Controls.Add(Me.GridRxns)
         Me.GroupBox4.Controls.Add(Me.ToolStrip1)
-        resources.ApplyResources(Me.GroupBox4, "GroupBox4")
         Me.GroupBox4.Name = "GroupBox4"
         Me.GroupBox4.TabStop = False
         '
         'GridRxns
         '
+        resources.ApplyResources(Me.GridRxns, "GridRxns")
         Me.GridRxns.AllowUserToAddRows = False
         Me.GridRxns.AllowUserToDeleteRows = False
         Me.GridRxns.AllowUserToResizeRows = False
         Me.GridRxns.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.GridRxns.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.GridRxns.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.ColumnID})
-        resources.ApplyResources(Me.GridRxns, "GridRxns")
         Me.GridRxns.MultiSelect = False
         Me.GridRxns.Name = "GridRxns"
         Me.GridRxns.ReadOnly = True
@@ -196,70 +196,70 @@ Partial Class FormReacManager
         '
         'ToolStripDropDownButton1
         '
+        resources.ApplyResources(Me.ToolStripDropDownButton1, "ToolStripDropDownButton1")
         Me.ToolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripDropDownButton1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConversãoToolStripMenuItem, Me.EquilíbrioToolStripMenuItem, Me.CinéticaToolStripMenuItem, Me.HeterogêneaCatalíticaToolStripMenuItem})
         Me.ToolStripDropDownButton1.Image = Global.DWSIM.My.Resources.Resources.add
-        resources.ApplyResources(Me.ToolStripDropDownButton1, "ToolStripDropDownButton1")
         Me.ToolStripDropDownButton1.Name = "ToolStripDropDownButton1"
         Me.ToolStripDropDownButton1.ShowDropDownArrow = False
         '
         'ConversãoToolStripMenuItem
         '
+        resources.ApplyResources(Me.ConversãoToolStripMenuItem, "ConversãoToolStripMenuItem")
         Me.ConversãoToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.Experiments_Badge
         Me.ConversãoToolStripMenuItem.Name = "ConversãoToolStripMenuItem"
-        resources.ApplyResources(Me.ConversãoToolStripMenuItem, "ConversãoToolStripMenuItem")
         '
         'EquilíbrioToolStripMenuItem
         '
+        resources.ApplyResources(Me.EquilíbrioToolStripMenuItem, "EquilíbrioToolStripMenuItem")
         Me.EquilíbrioToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.Experiments_Badge
         Me.EquilíbrioToolStripMenuItem.Name = "EquilíbrioToolStripMenuItem"
-        resources.ApplyResources(Me.EquilíbrioToolStripMenuItem, "EquilíbrioToolStripMenuItem")
         '
         'CinéticaToolStripMenuItem
         '
+        resources.ApplyResources(Me.CinéticaToolStripMenuItem, "CinéticaToolStripMenuItem")
         Me.CinéticaToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.Experiments_Badge
         Me.CinéticaToolStripMenuItem.Name = "CinéticaToolStripMenuItem"
-        resources.ApplyResources(Me.CinéticaToolStripMenuItem, "CinéticaToolStripMenuItem")
         '
         'HeterogêneaCatalíticaToolStripMenuItem
         '
+        resources.ApplyResources(Me.HeterogêneaCatalíticaToolStripMenuItem, "HeterogêneaCatalíticaToolStripMenuItem")
         Me.HeterogêneaCatalíticaToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.Experiments_Badge
         Me.HeterogêneaCatalíticaToolStripMenuItem.Name = "HeterogêneaCatalíticaToolStripMenuItem"
-        resources.ApplyResources(Me.HeterogêneaCatalíticaToolStripMenuItem, "HeterogêneaCatalíticaToolStripMenuItem")
         '
         'ToolStripButton6
         '
+        resources.ApplyResources(Me.ToolStripButton6, "ToolStripButton6")
         Me.ToolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton6.Image = Global.DWSIM.My.Resources.Resources.page_white_gear
-        resources.ApplyResources(Me.ToolStripButton6, "ToolStripButton6")
         Me.ToolStripButton6.Name = "ToolStripButton6"
         '
         'ToolStripButton7
         '
+        resources.ApplyResources(Me.ToolStripButton7, "ToolStripButton7")
         Me.ToolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton7.Image = Global.DWSIM.My.Resources.Resources.copy
-        resources.ApplyResources(Me.ToolStripButton7, "ToolStripButton7")
         Me.ToolStripButton7.Name = "ToolStripButton7"
         '
         'ToolStripButton8
         '
+        resources.ApplyResources(Me.ToolStripButton8, "ToolStripButton8")
         Me.ToolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton8.Image = Global.DWSIM.My.Resources.Resources.delete1
-        resources.ApplyResources(Me.ToolStripButton8, "ToolStripButton8")
         Me.ToolStripButton8.Name = "ToolStripButton8"
         '
         'ToolStripButton4
         '
+        resources.ApplyResources(Me.ToolStripButton4, "ToolStripButton4")
         Me.ToolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton4.Image = Global.DWSIM.My.Resources.Resources.arrow_left
-        resources.ApplyResources(Me.ToolStripButton4, "ToolStripButton4")
         Me.ToolStripButton4.Name = "ToolStripButton4"
         '
         'ToolStripButton9
         '
+        resources.ApplyResources(Me.ToolStripButton9, "ToolStripButton9")
         Me.ToolStripButton9.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton9.Image = Global.DWSIM.My.Resources.Resources.arrow_right3
-        resources.ApplyResources(Me.ToolStripButton9, "ToolStripButton9")
         Me.ToolStripButton9.Name = "ToolStripButton9"
         '
         'OpenFileDialog1

@@ -470,6 +470,11 @@
     </Compile>
     <Compile Include="Interfaces\Excel.vb" />
     <Compile Include="Interfaces\IPersistStream.vb" />
+    <Compile Include="Languages\DWSIM1.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DWSIM.resx</DependentUpon>
+    </Compile>
     <Compile Include="Languages\Tips.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -923,11 +928,6 @@
     </Compile>
     <Compile Include="Forms\FormUnhandledException.vb">
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Languages\DWSIM.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DWSIM.resx</DependentUpon>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

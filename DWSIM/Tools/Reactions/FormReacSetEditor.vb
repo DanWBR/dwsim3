@@ -32,7 +32,6 @@ Public Class FormReacSetEditor
         tbName.Focus()
         tbName.ScrollToCaret()
 
-
         fc = My.Application.ActiveSimulation
 
         Select Case mode
@@ -52,27 +51,40 @@ Public Class FormReacSetEditor
 
         Dim add As Boolean = True
 
+        tsddAdd.DropDownItems.Clear()
+
         For Each rxn As Reaction In fc.Options.Reactions.Values
+            add = True
             For Each row As DataGridViewRow In Me.KryptonDataGridView1.Rows
                 If row.Cells(5).Value = rxn.ID Then add = False
                 Exit For
             Next
             If add = True Then
-                Me.ComboBox1.Items.Add(rxn.Name & " (" & rxn.ReactionType & ")" & "[" & rxn.ID & "]")
+                Dim tsmi As New ToolStripMenuItem(rxn.Name & " (" & rxn.ReactionType.ToString() & ")") With {.Tag = rxn.ID}
+                AddHandler tsmi.Click, AddressOf ReactionItem_click
+                tsddAdd.DropDownItems.Add(tsmi)
             End If
         Next
 
     End Sub
 
+    Private Sub ReactionItem_click(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
-    Private Sub KryptonButton1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KryptonButton1.Click
+        Dim myLink As ToolStripMenuItem = CType(sender, ToolStripMenuItem)
 
-        If Not Me.KryptonDataGridView1.SelectedRows(0) Is Nothing Then
-            Dim res As MsgBoxResult = MessageBox.Show(DWSIM.App.GetLocalString("RemoverReacaodoConjuntoPergunta"), DWSIM.App.GetLocalString("Pergunta"), MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-            If res = MsgBoxResult.Yes Then Me.KryptonDataGridView1.Rows.Remove(Me.KryptonDataGridView1.SelectedRows(0))
-        End If
+        Dim rxn As Reaction = fc.Options.Reactions(myLink.Tag)
+        For Each row1 As DataGridViewRow In Me.KryptonDataGridView1.Rows
+            If row1.Cells(5).Value = rxn.ID Then
+                MessageBox.Show(DWSIM.App.GetLocalString("ReacaoJaAdicionada"), DWSIM.App.GetLocalString("Erro"))
+                Exit Sub
+            End If
+        Next
+        With Me.KryptonDataGridView1.Rows
+            .Add(New Object() {rxn.Name, rxn.ReactionType, rxn.Equation, True, 0, rxn.ID})
+        End With
 
     End Sub
+
 
     Private Sub KryptonButton3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KryptonButton3.Click
 
@@ -102,16 +114,14 @@ Public Class FormReacSetEditor
         Me.Close()
     End Sub
 
-    Private Sub ComboBox1_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles ComboBox1.SelectedIndexChanged
-        Dim rxn As Reaction = fc.Options.Reactions(ComboBox1.SelectedItem.ToString.Substring(ComboBox1.SelectedItem.ToString.IndexOf("[") + 1, ComboBox1.SelectedItem.ToString.Length - ComboBox1.SelectedItem.ToString.IndexOf("[") - 2))
-        For Each row1 As DataGridViewRow In Me.KryptonDataGridView1.Rows
-            If row1.Cells(5).Value = rxn.ID Then
-                MessageBox.Show(DWSIM.App.GetLocalString("ReacaoJaAdicionada"), DWSIM.App.GetLocalString("Erro"))
-                Exit Sub
-            End If
-        Next
-        With Me.KryptonDataGridView1.Rows
-            .Add(New Object() {rxn.Name, rxn.ReactionType, rxn.Equation, True, 0, rxn.ID})
-        End With
+    Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles tsbRemove.Click
+        If Not Me.KryptonDataGridView1.SelectedRows(0) Is Nothing Then
+            Dim res As MsgBoxResult = MessageBox.Show(DWSIM.App.GetLocalString("RemoverReacaodoConjuntoPergunta"), DWSIM.App.GetLocalString("Pergunta"), MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+            If res = MsgBoxResult.Yes Then Me.KryptonDataGridView1.Rows.Remove(Me.KryptonDataGridView1.SelectedRows(0))
+        End If
+    End Sub
+
+    Private Sub KryptonLabel2_Click(sender As Object, e As EventArgs) Handles KryptonLabel2.Click
+
     End Sub
 End Class

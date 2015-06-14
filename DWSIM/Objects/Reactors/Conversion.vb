@@ -20,6 +20,7 @@ Imports Microsoft.MSDN.Samples.GraphicObjects
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports Ciloci.Flee
 Imports System.Math
+Imports System.Linq
 Imports DWSIM.DWSIM.Flowsheet.FlowSheetSolver
 
 Namespace DWSIM.SimulationObjects.Reactors
@@ -88,6 +89,8 @@ Namespace DWSIM.SimulationObjects.Reactors
 
             If Me.Conversions Is Nothing Then Me.m_conversions = New Dictionary(Of String, Double)
 
+            Dim ConversionLimiter As New Dictionary(Of String, Double)
+         
             Me.Reactions.Clear()
             Me.ReactionsSequence.Clear()
             Me.Conversions.Clear()
@@ -110,6 +113,7 @@ Namespace DWSIM.SimulationObjects.Reactors
             Next
 
             'ordering of parallel reactions
+
             i = 0
             Dim arr As New ArrayList
             Do
@@ -134,11 +138,10 @@ Namespace DWSIM.SimulationObjects.Reactors
             Dim N0 As New Dictionary(Of String, Double)
             Dim N As New Dictionary(Of String, Double)
 
-            Dim X, scBC, nBC, maxX, DHr, Hid_r, Hid_p, Hr, Hp, Tin, Pin, Pout, W As Double
+            Dim X, scBC, nBC, DHr, Hid_r, Hid_p, Hr, Hp, Tin, Pin, Pout, W As Double
             Dim BC As String = ""
             Dim tmp As Object
-            Dim maxXarr As New ArrayList
-
+         
             Tin = ims.Fases(0).SPMProperties.temperature.GetValueOrDefault
             Pin = ims.Fases(0).SPMProperties.pressure.GetValueOrDefault
             W = ims.Fases(0).SPMProperties.massflow.GetValueOrDefault
@@ -146,19 +149,24 @@ Namespace DWSIM.SimulationObjects.Reactors
             ims.Fases(0).SPMProperties.pressure = Pout
 
             'Reactants Enthalpy (kJ/kg * kg/s = kW)
+
             Hr = ims.Fases(0).SPMProperties.enthalpy.GetValueOrDefault * ims.Fases(0).SPMProperties.massflow.GetValueOrDefault
 
-            'loop through reactions
             Dim rxn As Reaction
+
+            'loop through reactions
+
             For Each ar As ArrayList In Me.ReactionsSequence.Values
 
+                ConversionLimiter.Clear()
+
+                'calculate conversion limiters
+
                 i = 0
-                DHr = 0
-                Hid_r = 0
-                Hid_p = 0
                 Do
 
                     'process reaction i
+
                     rxn = form.Options.Reactions(ar(i))
                     BC = rxn.BaseReactant
                     scBC = rxn.Components(BC).StoichCoeff
@@ -203,6 +211,44 @@ Namespace DWSIM.SimulationObjects.Reactors
                     rxn.ExpContext.Variables.Add("T", ims.Fases(0).SPMProperties.temperature.GetValueOrDefault)
 
                     rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.Expression)
+                    X = rxn.Expr.Evaluate / 100
+
+                    If X < 0 Or X > 1 Then Throw New ArgumentOutOfRangeException("Conversion Expression", "The conversion expression for reaction " & rxn.Name & " results in a value that is out of the valid range (0 to 100%).")
+
+                    'verify if the calculated conversion is reachable
+
+                
+                    For Each sb As ReactionStoichBase In rxn.Components.Values
+                        If sb.StoichCoeff < 1 Then
+                            If Not ConversionLimiter.ContainsKey(sb.CompName) Then ConversionLimiter.Add(sb.CompName, 0.0#)
+                            Dim amount As Double = Abs(X * rxn.Components(sb.CompName).StoichCoeff / scBC * nBC)
+                            ConversionLimiter(sb.CompName) += amount / N0(sb.CompName)
+                       End If
+                    Next
+
+                    i += 1
+
+                Loop Until i = ar.Count
+
+                i = 0
+                DHr = 0
+                Hid_r = 0
+                Hid_p = 0
+                Do
+
+                    'process reaction i
+                    rxn = form.Options.Reactions(ar(i))
+                    BC = rxn.BaseReactant
+                    scBC = rxn.Components(BC).StoichCoeff
+
+                    nBC = N0(rxn.BaseReactant)
+
+                    rxn.ExpContext = New Ciloci.Flee.ExpressionContext
+                    rxn.ExpContext.Imports.AddType(GetType(System.Math))
+                    rxn.ExpContext.Variables.Clear()
+                    rxn.ExpContext.Variables.Add("T", ims.Fases(0).SPMProperties.temperature.GetValueOrDefault)
+
+                    rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.Expression)
                     X = rxn.Expr.Evaluate / 100.0#
 
                     If X < 0 Or X > 1 Then
@@ -211,44 +257,27 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                     Else
 
-                        maxXarr.Clear()
-
-                        'verify if the calculated conversion is reachable
-                        For Each sb As ReactionStoichBase In rxn.Components.Values
-                            If sb.StoichCoeff < 1 Then
-                                If Abs(X * rxn.Components(sb.CompName).StoichCoeff / scBC * nBC) > N0(sb.CompName) Then
-                                    'exception: conversion unreachable (insufficient reactant)
-                                    maxXarr.Add(N0(sb.CompName) * scBC / (rxn.Components(sb.CompName).StoichCoeff * nBC))
-                                ElseIf N0(rxn.BaseReactant) = 0 Then
-                                    maxXarr.Add(0)
-                                End If
-                            End If
-                        Next
-
-                        If maxXarr.Count > 0 Then
-                            maxXarr.Sort()
-                            maxX = maxXarr(0)
-                        Else
-                            maxX = X
-                        End If
+                        X /= ConversionLimiter.Values.Max
 
                         ''
                         If Not Me.Conversions.ContainsKey(rxn.ID) Then
-                            Me.Conversions.Add(rxn.ID, maxX)
+                            Me.Conversions.Add(rxn.ID, X)
                         Else
-                            Me.Conversions(rxn.ID) = maxX
+                            Me.Conversions(rxn.ID) = X
                         End If
 
                         'delta mole flows
+
                         For Each sb As ReactionStoichBase In rxn.Components.Values
                             If Not DN.ContainsKey(sb.CompName) Then
-                                DN.Add(sb.CompName, -maxX * rxn.Components(sb.CompName).StoichCoeff / scBC * nBC)
+                                DN.Add(sb.CompName, -X * rxn.Components(sb.CompName).StoichCoeff / scBC * nBC)
                             Else
-                                DN(sb.CompName) = -maxX * rxn.Components(sb.CompName).StoichCoeff / scBC * nBC
+                                DN(sb.CompName) = -X * rxn.Components(sb.CompName).StoichCoeff / scBC * nBC
                             End If
                         Next
 
                         'final mole flows
+
                         For Each sb As ReactionStoichBase In rxn.Components.Values
                             N(sb.CompName) += DN(sb.CompName)
                         Next
@@ -366,7 +395,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                             .DW_CalcVazaoVolumetrica()
 
                         End With
-                        
+
                         'Products Enthalpy (kJ/kg * kg/s = kW)
                         Hp = ims.Fases(0).SPMProperties.enthalpy.GetValueOrDefault * ims.Fases(0).SPMProperties.massflow.GetValueOrDefault
 

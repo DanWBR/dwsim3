@@ -112,59 +112,48 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="KryptonLabel2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="KryptonLabel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 16</value>
+    <value>72, 13</value>
   </data>
   <data name="KryptonLabel2.Text" xml:space="preserve">
     <value>Beschreibung</value>
   </data>
+  <data name="KryptonLabel1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="KryptonLabel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>40, 19</value>
+    <value>35, 13</value>
   </data>
   <data name="KryptonLabel1.Text" xml:space="preserve">
     <value>Name</value>
   </data>
   <data name="tbName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>92, 16</value>
+    <value>84, 16</value>
   </data>
   <data name="tbName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>449, 20</value>
+    <value>457, 20</value>
   </data>
   <data name="KryptonTextBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>92, 44</value>
+    <value>84, 44</value>
   </data>
   <data name="KryptonTextBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>449, 50</value>
+    <value>457, 50</value>
   </data>
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Identifikation</value>
   </data>
-  <data name="ComboBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>120, 172</value>
-  </data>
-  <data name="ComboBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 21</value>
-  </data>
-  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>108, 13</value>
-  </data>
-  <data name="Label1.Text" xml:space="preserve">
-    <value>Reaktion hinzufügen:</value>
-  </data>
-  <data name="KryptonButton1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>312, 169</value>
-  </data>
-  <data name="KryptonButton1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>229, 25</value>
-  </data>
-  <data name="KryptonButton1.Text" xml:space="preserve">
-    <value>Ausgewählte Reaktion aus dem Set löschen</value>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Reaktionen</value>
   </data>
   <data name="Column1.HeaderText" xml:space="preserve">
     <value>Reaktion</value>
@@ -178,8 +167,11 @@
   <data name="Column2.HeaderText" xml:space="preserve">
     <value>Aktive</value>
   </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Reaktionen</value>
+  <data name="tsddAdd.Text" xml:space="preserve">
+    <value>Add Reaktion</value>
+  </data>
+  <data name="tsbRemove.Text" xml:space="preserve">
+    <value>Remove Reaktion</value>
   </data>
   <data name="KryptonButton2.Text" xml:space="preserve">
     <value>Abbrechen</value>
