@@ -10,11 +10,17 @@ Namespace GraphicObjects
         ConSp = 2
 
     End Enum
-
+    Public Enum ConDir
+        Up
+        Down
+        Right
+        Left
+    End Enum
     <Serializable()> Public Class ConnectionPoint
 
         Protected mPosition As Point
         Protected mType As ConType
+        Protected mDir As ConDir = ConDir.Right
         Protected mIsAttached As Boolean = False
         Protected mAttachedConnector As ConnectorGraphic = Nothing
         Protected mConnectorName As String = ""
@@ -40,7 +46,16 @@ Namespace GraphicObjects
             End Set
 
         End Property
+        Public Overridable Property Direction() As ConDir
 
+            Get
+                Return mDir
+            End Get
+            Set(ByVal ConnectionDirection As ConDir)
+                mDir = ConnectionDirection
+            End Set
+
+        End Property
         Public Overridable Property AttachedConnector() As ConnectorGraphic
 
             Get

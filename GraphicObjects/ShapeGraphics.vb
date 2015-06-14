@@ -331,6 +331,7 @@ Namespace GraphicObjects
 
             Me.EnergyConnector.Position = New Point(X + 0.5 * Width, Y + Height)
             Me.EnergyConnector.Type = ConType.ConEn
+            Me.EnergyConnector.Direction = ConDir.Up
 
         End Sub
 
@@ -519,6 +520,7 @@ Namespace GraphicObjects
 
             Me.EnergyConnector.Position = New Point(X + 0.5 * Width, Y + Height)
             Me.EnergyConnector.Type = ConType.ConEn
+            Me.EnergyConnector.Direction = ConDir.Down
 
             With InputConnectors
 
@@ -966,6 +968,7 @@ Namespace GraphicObjects
 
             'posicionar pontos nos primeiros slots livres
             Dim StartPos, EndPos As New Point
+            Dim StartDir, EndDir As ConDir
             If Me.AttachedFrom.TipoObjeto = GraphicObjects.TipoObjeto.EnergyStream Then
                 If Me.AttachedTo.TipoObjeto = GraphicObjects.TipoObjeto.CustomUO Or _
                 Me.AttachedTo.TipoObjeto = GraphicObjects.TipoObjeto.ShortcutColumn Or _
@@ -974,16 +977,24 @@ Namespace GraphicObjects
                 Me.AttachedTo.TipoObjeto = GraphicObjects.TipoObjeto.Vessel Then
                     StartPos = Me.AttachedFrom.OutputConnectors(0).Position
                     EndPos = Me.AttachedTo.InputConnectors(Me.AttachedToConnectorIndex).Position
+                    StartDir = Me.AttachedFrom.OutputConnectors(0).Direction
+                    EndDir = Me.AttachedTo.InputConnectors(Me.AttachedToConnectorIndex).Direction
                 Else
                     StartPos = Me.AttachedFrom.OutputConnectors(0).Position
                     EndPos = Me.AttachedTo.EnergyConnector.Position
+                    StartDir = Me.AttachedFrom.OutputConnectors(0).Direction
+                    EndDir = Me.AttachedTo.EnergyConnector.Direction
                 End If
             ElseIf Me.AttachedFromConnectorIndex = -1 Then
                 StartPos = Me.AttachedFrom.EnergyConnector.Position
                 EndPos = Me.AttachedTo.InputConnectors(Me.AttachedToConnectorIndex).Position
+                StartDir = Me.AttachedFrom.EnergyConnector.Direction
+                EndDir = Me.AttachedTo.InputConnectors(Me.AttachedToConnectorIndex).Direction
             Else
                 StartPos = Me.AttachedFrom.OutputConnectors(Me.AttachedFromConnectorIndex).Position
                 EndPos = Me.AttachedTo.InputConnectors(Me.AttachedToConnectorIndex).Position
+                StartDir = Me.AttachedFrom.OutputConnectors(Me.AttachedFromConnectorIndex).Direction
+                EndDir = Me.AttachedTo.InputConnectors(Me.AttachedToConnectorIndex).Direction
             End If
 
             'StartPos = New Point(Me.X, Me.Y)
@@ -998,135 +1009,309 @@ Namespace GraphicObjects
 
             UpdateStatusC(myPen, Me, StartPos, EndPos)
 
-            Dim delta, delta2, delta3, delta4 As Integer
+            Dim delta, delta2, delta3, delta4, DeltaX, DeltaY As Integer
             delta = Math.Abs(StartPos.X - EndPos.X) / 2
             delta2 = Math.Abs(StartPos.Y - EndPos.Y) / 2
             delta3 = 20
             delta4 = 40
+            DeltaX = 20
+            DeltaY = 20
 
-            Dim p1, p2, p3, p4, p5, p6 As Point
+            'Dim p1, p2, p3, p4, p5, p6 As Point
+            Dim XM, YM As Double
+            Dim PointList As New ArrayList
+            Dim PL() As PointF
+            Dim LeftTop1, RightBottom1, LeftTop2, RightBottom2 As PointF
+            LeftTop1.X = Me.AttachedFrom.X
+            LeftTop1.Y = Me.AttachedFrom.Y
+            RightBottom1.X = Me.AttachedFrom.X + Me.AttachedFrom.Width
+            RightBottom1.Y = Me.AttachedFrom.Y + Me.AttachedFrom.Height
+            LeftTop2.X = Me.AttachedTo.X
+            LeftTop2.Y = Me.AttachedTo.Y
+            RightBottom2.X = Me.AttachedTo.X + Me.AttachedTo.Width
+            RightBottom2.Y = Me.AttachedTo.Y + Me.AttachedTo.Height
 
-            If Not Me.AttachedFrom.FlippedH And Not Me.AttachedTo.FlippedH Then
-
-                If StartPos.Y < EndPos.Y And StartPos.X < EndPos.X Then
-                    p1 = New Point(StartPos.X, StartPos.Y)
-                    p2 = New Point(StartPos.X + delta, StartPos.Y)
-                    p3 = New Point(StartPos.X + delta, EndPos.Y)
-                    p4 = New Point(EndPos.X, EndPos.Y)
-                    g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4}, 4))
-                ElseIf StartPos.Y < EndPos.Y And StartPos.X >= EndPos.X Then
-                    p1 = New Point(StartPos.X, StartPos.Y)
-                    p2 = New Point(StartPos.X + delta3, StartPos.Y)
-                    p3 = New Point(StartPos.X + delta3, StartPos.Y + delta2)
-                    p4 = New Point(EndPos.X - delta3, StartPos.Y + delta2)
-                    p5 = New Point(EndPos.X - delta3, EndPos.Y)
-                    p6 = New Point(EndPos.X, EndPos.Y)
-                    g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4, p5, p6}, 4))
-                ElseIf StartPos.Y >= EndPos.Y And StartPos.X < EndPos.X Then
-                    p1 = New Point(StartPos.X, StartPos.Y)
-                    p2 = New Point(StartPos.X + delta, StartPos.Y)
-                    p3 = New Point(StartPos.X + delta, EndPos.Y)
-                    p4 = New Point(EndPos.X, EndPos.Y)
-                    g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4}, 4))
-                ElseIf StartPos.Y >= EndPos.Y And StartPos.X >= EndPos.X Then
-                    p1 = New Point(StartPos.X, StartPos.Y)
-                    p2 = New Point(StartPos.X + delta3, StartPos.Y)
-                    p3 = New Point(StartPos.X + delta3, StartPos.Y - delta2)
-                    p4 = New Point(EndPos.X - delta3, StartPos.Y - delta2)
-                    p5 = New Point(EndPos.X - delta3, EndPos.Y)
-                    p6 = New Point(EndPos.X, EndPos.Y)
-                    g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4, p5, p6}, 4))
+            If Me.AttachedFrom.FlippedH Then
+                If StartDir = ConDir.Right Then
+                    StartDir = ConDir.Left
+                ElseIf StartDir = ConDir.Left Then
+                    StartDir = ConDir.Right
                 End If
-
-            ElseIf Not Me.AttachedFrom.FlippedH And Me.AttachedTo.FlippedH Then
-
-                If StartPos.Y < EndPos.Y And StartPos.X < EndPos.X Then
-                    p1 = New Point(StartPos.X, StartPos.Y)
-                    p2 = New Point(EndPos.X + delta3, StartPos.Y)
-                    p3 = New Point(EndPos.X + delta3, EndPos.Y)
-                    p4 = New Point(EndPos.X, EndPos.Y)
-                    g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4}, 4))
-                ElseIf StartPos.Y < EndPos.Y And StartPos.X >= EndPos.X Then
-                    p1 = New Point(StartPos.X, StartPos.Y)
-                    p2 = New Point(StartPos.X + delta3, StartPos.Y)
-                    p3 = New Point(StartPos.X + delta3, EndPos.Y)
-                    p4 = New Point(EndPos.X, EndPos.Y)
-                    g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4}, 4))
-                ElseIf StartPos.Y >= EndPos.Y And StartPos.X < EndPos.X Then
-                    p1 = New Point(StartPos.X, StartPos.Y)
-                    p2 = New Point(EndPos.X + delta3, StartPos.Y)
-                    p3 = New Point(EndPos.X + delta3, EndPos.Y)
-                    p4 = New Point(EndPos.X, EndPos.Y)
-                    g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4}, 4))
-                ElseIf StartPos.Y >= EndPos.Y And StartPos.X >= EndPos.X Then
-                    p1 = New Point(StartPos.X, StartPos.Y)
-                    p2 = New Point(StartPos.X + delta3, StartPos.Y)
-                    p3 = New Point(StartPos.X + delta3, EndPos.Y)
-                    p4 = New Point(EndPos.X, EndPos.Y)
-                    g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4}, 4))
+            End If
+            If Me.AttachedTo.FlippedH Then
+                If EndDir = ConDir.Right Then
+                    EndDir = ConDir.Left
+                ElseIf EndDir = ConDir.Left Then
+                    EndDir = ConDir.Right
                 End If
+            End If
 
-            ElseIf Me.AttachedFrom.FlippedH And Not Me.AttachedTo.FlippedH Then
+            'Construct path of stream
+            PointList.Add(New PointF(StartPos.X, StartPos.Y))
 
-                If StartPos.Y < EndPos.Y And StartPos.X < EndPos.X Then
-                    p1 = New Point(StartPos.X, StartPos.Y)
-                    p2 = New Point(StartPos.X - delta3, StartPos.Y)
-                    p3 = New Point(StartPos.X - delta3, EndPos.Y)
-                    p4 = New Point(EndPos.X, EndPos.Y)
-                    g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4}, 4))
-                ElseIf StartPos.Y < EndPos.Y And StartPos.X >= EndPos.X Then
-                    p1 = New Point(StartPos.X, StartPos.Y)
-                    p2 = New Point(EndPos.X - delta3, StartPos.Y)
-                    p3 = New Point(EndPos.X - delta3, EndPos.Y)
-                    p4 = New Point(EndPos.X, EndPos.Y)
-                    g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4}, 4))
-                ElseIf StartPos.Y >= EndPos.Y And StartPos.X < EndPos.X Then
-                    p1 = New Point(StartPos.X, StartPos.Y)
-                    p2 = New Point(StartPos.X - delta3, StartPos.Y)
-                    p3 = New Point(StartPos.X - delta3, EndPos.Y)
-                    p4 = New Point(EndPos.X, EndPos.Y)
-                    g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4}, 4))
-                ElseIf StartPos.Y >= EndPos.Y And StartPos.X >= EndPos.X Then
-                    p1 = New Point(StartPos.X, StartPos.Y)
-                    p2 = New Point(EndPos.X - delta3, StartPos.Y)
-                    p3 = New Point(EndPos.X - delta3, EndPos.Y)
-                    p4 = New Point(EndPos.X, EndPos.Y)
-                    g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4}, 4))
+            '================== EndDir Right =======================
+            If StartDir = ConDir.Down And EndDir = ConDir.Right Then
+                If (EndPos.X - DeltaX) > StartPos.X Then
+                    If EndPos.Y >= StartPos.Y + DeltaY Then
+                        PointList.Add(New PointF(StartPos.X, EndPos.Y))
+                    Else
+                        PointList.Add(New PointF(StartPos.X, StartPos.Y + DeltaY))
+
+                        XM = (RightBottom1.X + LeftTop2.X) / 2
+                        If XM < RightBottom1.X + DeltaX Then XM = LeftTop1.X - DeltaX
+                        PointList.Add(New PointF(XM, StartPos.Y + DeltaY))
+                        PointList.Add(New PointF(XM, EndPos.Y))
+                    End If
+                Else
+                    XM = EndPos.X - DeltaX
+                    If XM > LeftTop1.X - DeltaX And EndPos.Y < StartPos.Y + DeltaY Then XM = LeftTop1.X - DeltaX
+                    YM = (StartPos.Y + EndPos.Y) / 2
+                    If YM > LeftTop2.Y - DeltaY And YM < RightBottom2.Y + DeltaY Then YM = RightBottom2.Y + DeltaY
+                    If YM < StartPos.Y + DeltaY Then YM = StartPos.Y + DeltaY
+
+                    PointList.Add(New PointF(StartPos.X, YM))
+                    PointList.Add(New PointF(XM, YM))
+                    PointList.Add(New PointF(XM, EndPos.Y))
                 End If
+                PointList.Add(New PointF(EndPos.X, EndPos.Y))
+            End If
 
-            ElseIf Me.AttachedFrom.FlippedH And Me.AttachedTo.FlippedH Then
+            If StartDir = ConDir.Right And EndDir = ConDir.Right Then
+                If (EndPos.X - DeltaX) >= (StartPos.X + DeltaX) Then
+                    PointList.Add(New PointF((StartPos.X + EndPos.X) / 2, StartPos.Y))
+                    PointList.Add(New PointF((StartPos.X + EndPos.X) / 2, EndPos.Y))
+                Else
+                    PointList.Add(New PointF((StartPos.X + DeltaX), StartPos.Y))
 
-                If StartPos.Y < EndPos.Y And StartPos.X < EndPos.X Then
-                    p1 = New Point(StartPos.X, StartPos.Y)
-                    p2 = New Point(StartPos.X - delta3, StartPos.Y)
-                    p3 = New Point(StartPos.X - delta3, StartPos.Y - delta2)
-                    p4 = New Point(EndPos.X + delta3, StartPos.Y - delta2)
-                    p5 = New Point(EndPos.X + delta3, EndPos.Y)
-                    p6 = New Point(EndPos.X, EndPos.Y)
-                    g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4, p5, p6}, 4))
-                ElseIf StartPos.Y < EndPos.Y And StartPos.X >= EndPos.X Then
-                    p1 = New Point(StartPos.X, StartPos.Y)
-                    p2 = New Point(StartPos.X - delta, StartPos.Y)
-                    p3 = New Point(StartPos.X - delta, EndPos.Y)
-                    p4 = New Point(EndPos.X, EndPos.Y)
-                    g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4}, 4))
-                ElseIf StartPos.Y >= EndPos.Y And StartPos.X < EndPos.X Then
-                    p1 = New Point(StartPos.X, StartPos.Y)
-                    p2 = New Point(StartPos.X - delta3, StartPos.Y)
-                    p3 = New Point(StartPos.X - delta3, StartPos.Y + delta2)
-                    p4 = New Point(EndPos.X + delta3, StartPos.Y + delta2)
-                    p5 = New Point(EndPos.X + delta3, EndPos.Y)
-                    p6 = New Point(EndPos.X, EndPos.Y)
-                    g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4, p5, p6}, 4))
-                ElseIf StartPos.Y >= EndPos.Y And StartPos.X >= EndPos.X Then
-                    p1 = New Point(StartPos.X, StartPos.Y)
-                    p2 = New Point(StartPos.X - delta, StartPos.Y)
-                    p3 = New Point(StartPos.X - delta, EndPos.Y)
-                    p4 = New Point(EndPos.X, EndPos.Y)
-                    g.DrawPath(myPen, Me.GetRoundedLine(New PointF() {p1, p2, p3, p4}, 4))
+                    XM = EndPos.X - DeltaX
+
+                    YM = (LeftTop2.Y + RightBottom1.Y) / 2
+                    If RightBottom2.Y + DeltaY > LeftTop1.Y - DeltaY Then YM = RightBottom1.Y + DeltaY
+                    If YM < RightBottom2.Y + DeltaY And YM > LeftTop2.Y - DeltaY Then YM = RightBottom2.Y + DeltaY
+                    If YM < (RightBottom1.Y + LeftTop2.Y) / 2 Then YM = (RightBottom1.Y + LeftTop2.Y) / 2
+
+                    PointList.Add(New PointF((StartPos.X + DeltaX), YM))
+                    PointList.Add(New PointF(XM, YM))
+                    PointList.Add(New PointF(XM, EndPos.Y))
+
+                End If
+            End If
+
+            If StartDir = ConDir.Left And EndDir = ConDir.Right Then
+                If (EndPos.X - DeltaX) > StartPos.X Then
+                    PointList.Add(New PointF(StartPos.X - DeltaX, StartPos.Y))
+                    If EndPos.Y > LeftTop1.Y - DeltaY And EndPos.Y < RightBottom1.Y + DeltaY Then
+                        If StartPos.Y < EndPos.Y Then
+                            YM = LeftTop1.Y - DeltaY
+                        Else
+                            YM = RightBottom1.Y + DeltaY
+                        End If
+
+                        PointList.Add(New PointF(StartPos.X - DeltaX, YM))
+                        PointList.Add(New PointF((RightBottom1.X + LeftTop2.X) / 2, YM))
+                        PointList.Add(New PointF((RightBottom1.X + LeftTop2.X) / 2, EndPos.Y))
+                    Else
+                        PointList.Add(New PointF(StartPos.X - DeltaX, EndPos.Y))
+                    End If
+                Else
+                    XM = StartPos.X - DeltaX
+                    If XM > EndPos.X - DeltaX Then XM = EndPos.X - DeltaX
+
+                    If StartPos.Y > LeftTop2.Y - DeltaY And StartPos.Y < RightBottom2.Y + DeltaY Then
+                        PointList.Add(New PointF((StartPos.X + RightBottom2.X) / 2, StartPos.Y))
+                        If StartPos.Y < EndPos.Y Then
+                            YM = LeftTop2.Y - DeltaY
+                        Else
+                            YM = RightBottom2.Y + DeltaY
+                        End If
+                        PointList.Add(New PointF((StartPos.X + RightBottom2.X) / 2, YM))
+                        PointList.Add(New PointF(XM, YM))
+                        PointList.Add(New PointF(XM, EndPos.Y))
+                    Else
+                        PointList.Add(New PointF(XM, StartPos.Y))
+                        PointList.Add(New PointF(XM, EndPos.Y))
+                    End If
+                End If
+            End If
+
+            '================== EndDir Down  =======================
+            If StartDir = ConDir.Right And EndDir = ConDir.Down Then
+                If (EndPos.Y - DeltaY) > StartPos.Y Then
+                    If EndPos.X >= StartPos.X + DeltaX Then
+                        PointList.Add(New PointF(EndPos.X, StartPos.Y))
+                    Else
+                        YM = (StartPos.Y + EndPos.Y) / 2
+                        If YM > LeftTop2.Y - DeltaY And YM < RightBottom2.Y + DeltaY Then YM = LeftTop2.Y - DeltaY
+                        If YM > LeftTop1.Y - DeltaY And YM < RightBottom1.Y + DeltaY Then YM = LeftTop1.Y - DeltaY
+                        PointList.Add(New PointF(StartPos.X + DeltaX, StartPos.Y))
+                        PointList.Add(New PointF(StartPos.X + DeltaX, YM))
+                        PointList.Add(New PointF(EndPos.X, YM))
+                    End If
+                Else
+                    XM = StartPos.X + DeltaX
+                    If XM > LeftTop2.X - DeltaX And XM < RightBottom2.X + DeltaX Then XM = RightBottom2.X + DeltaX
+                    YM = EndPos.Y - DeltaY
+                    If YM > LeftTop1.Y - DeltaY And YM < RightBottom1.Y + DeltaY Then YM = LeftTop1.Y - DeltaY
+                    PointList.Add(New PointF(XM, StartPos.Y))
+                    PointList.Add(New PointF(XM, YM))
+                    PointList.Add(New PointF(EndPos.X, YM))
+                End If
+            End If
+
+            If StartDir = ConDir.Left And EndDir = ConDir.Down Then
+                If (EndPos.Y - DeltaY) > StartPos.Y Then
+                    If EndPos.X <= StartPos.X - DeltaX Then
+                        PointList.Add(New PointF(EndPos.X, StartPos.Y))
+                    Else
+                        YM = (StartPos.Y + EndPos.Y) / 2
+                        If YM > LeftTop2.Y - DeltaY And YM < RightBottom2.Y + DeltaY Then YM = LeftTop2.Y - DeltaY
+                        If YM > LeftTop1.Y - DeltaY And YM < RightBottom1.Y + DeltaY Then YM = LeftTop1.Y - DeltaY
+                        PointList.Add(New PointF(StartPos.X - DeltaX, StartPos.Y))
+                        PointList.Add(New PointF(StartPos.X - DeltaX, YM))
+                        PointList.Add(New PointF(EndPos.X, YM))
+                    End If
+                Else
+                    XM = StartPos.X - DeltaX
+                    If XM > LeftTop2.X - DeltaX And XM < RightBottom2.X + DeltaX Then XM = LeftTop2.X - DeltaX
+                    YM = EndPos.Y - DeltaY
+                    If YM > LeftTop1.Y - DeltaY And YM < RightBottom1.Y + DeltaY Then YM = LeftTop1.Y - DeltaY
+                    PointList.Add(New PointF(XM, StartPos.Y))
+                    PointList.Add(New PointF(XM, YM))
+                    PointList.Add(New PointF(EndPos.X, YM))
+                End If
+            End If
+
+            '================== EndDir Left =======================
+            If StartDir = ConDir.Right And EndDir = ConDir.Left Then
+                If (EndPos.X + DeltaX) > (StartPos.X + DeltaX) Then
+                    If EndPos.Y < RightBottom1.Y + DeltaY And EndPos.Y > LeftTop1.Y - DeltaY Then
+                        If EndPos.Y < (LeftTop1.Y + RightBottom1.Y) / 2 Then
+                            YM = RightBottom2.Y + DeltaY
+                        Else
+                            YM = LeftTop2.Y - DeltaY
+                        End If
+                        PointList.Add(New PointF((StartPos.X + LeftTop2.X) / 2, StartPos.Y))
+                        PointList.Add(New PointF((StartPos.X + LeftTop2.X) / 2, YM))
+                        PointList.Add(New PointF(EndPos.X + DeltaX, YM))
+                        PointList.Add(New PointF(EndPos.X + DeltaX, EndPos.Y))
+                    Else
+                        PointList.Add(New PointF(EndPos.X + DeltaX, StartPos.Y))
+                        PointList.Add(New PointF(EndPos.X + DeltaX, EndPos.Y))
+                    End If
+                Else
+                    PointList.Add(New PointF(StartPos.X + DeltaX, StartPos.Y))
+                    If EndPos.Y < RightBottom1.Y + DeltaY And EndPos.Y > LeftTop1.Y - DeltaY Then
+                        If EndPos.Y < (LeftTop1.Y + RightBottom1.Y) / 2 Then
+                            YM = LeftTop1.Y - DeltaY
+                        Else
+                            YM = RightBottom1.Y + DeltaY
+                        End If
+                        PointList.Add(New PointF(StartPos.X + DeltaX, YM))
+                        PointList.Add(New PointF((RightBottom2.X + LeftTop1.X) / 2, YM))
+                        PointList.Add(New PointF((RightBottom2.X + LeftTop1.X) / 2, EndPos.Y))
+                    Else
+                        PointList.Add(New PointF(StartPos.X + DeltaX, EndPos.Y))
+                    End If
+
+                End If
+            End If
+
+            If StartDir = ConDir.Down And EndDir = ConDir.Left Then
+                If (EndPos.X + DeltaX) < StartPos.X Then
+                    If EndPos.Y >= StartPos.Y + DeltaY Then
+                        PointList.Add(New PointF(StartPos.X, EndPos.Y))
+                    Else
+                        PointList.Add(New PointF(StartPos.X, StartPos.Y + DeltaY))
+
+                        XM = (LeftTop1.X + RightBottom2.X) / 2
+                        If XM > LeftTop1.X - DeltaX Then XM = RightBottom1.X + DeltaX
+                        PointList.Add(New PointF(XM, StartPos.Y + DeltaY))
+                        PointList.Add(New PointF(XM, EndPos.Y))
+                    End If
+                Else
+                    XM = EndPos.X + DeltaX
+                    If XM < RightBottom1.X + DeltaX And EndPos.Y < StartPos.Y + DeltaY Then XM = RightBottom1.X + DeltaX
+                    YM = (StartPos.Y + LeftTop2.Y) / 2
+                    If YM > LeftTop2.Y - DeltaY And YM < RightBottom2.Y + DeltaY Then YM = RightBottom2.Y + DeltaY
+                    If YM < StartPos.Y + DeltaY Then YM = StartPos.Y + DeltaY
+                    PointList.Add(New PointF(StartPos.X, YM))
+                    PointList.Add(New PointF(XM, YM))
+                    PointList.Add(New PointF(XM, EndPos.Y))
+                End If
+                PointList.Add(New PointF(EndPos.X, EndPos.Y))
+            End If
+
+            If StartDir = ConDir.Left And EndDir = ConDir.Left Then
+                If (EndPos.X + DeltaX) > (StartPos.X - DeltaX) Then
+                    YM = (StartPos.Y + EndPos.Y) / 2
+                    If YM < RightBottom1.Y + DeltaY And YM > LeftTop1.Y - DeltaY Then YM = LeftTop1.Y - DeltaY
+                    If YM < RightBottom2.Y + DeltaY And YM > LeftTop2.Y - DeltaY Then YM = LeftTop2.Y - DeltaY
+                    PointList.Add(New PointF(StartPos.X - DeltaX, StartPos.Y))
+                    PointList.Add(New PointF(StartPos.X - DeltaX, YM))
+                    PointList.Add(New PointF(EndPos.X + DeltaX, YM))
+                    PointList.Add(New PointF(EndPos.X + DeltaX, EndPos.Y))
+                Else
+                    PointList.Add(New PointF((StartPos.X + EndPos.X) / 2, StartPos.Y))
+                    PointList.Add(New PointF((StartPos.X + EndPos.X) / 2, EndPos.Y))
+                End If
+            End If
+
+            '================== EndDir Up =======================
+            If StartDir = ConDir.Left And EndDir = ConDir.Up Then
+                If EndPos.X < StartPos.X - DeltaX Then
+                    If StartPos.Y > EndPos.Y + DeltaY Then
+                        PointList.Add(New PointF(EndPos.X, StartPos.Y))
+                    Else
+                        XM = (StartPos.X + EndPos.X) / 2
+                        If XM < RightBottom2.X + DeltaX Then XM = LeftTop2.X - DeltaX
+                        PointList.Add(New PointF(XM, StartPos.Y))
+                        PointList.Add(New PointF(XM, EndPos.Y + DeltaY))
+                        PointList.Add(New PointF(EndPos.X, EndPos.Y + DeltaY))
+                    End If
+
+                Else
+                    XM = StartPos.X - DeltaX
+                    If XM > LeftTop2.X - DeltaX Then XM = LeftTop2.X - DeltaX
+                    YM = (StartPos.Y + EndPos.Y) / 2
+                    If YM < RightBottom2.Y + DeltaY Then YM = EndPos.Y + DeltaY
+                    If YM > LeftTop1.Y - DeltaY And YM < RightBottom1.Y + DeltaY Then YM = RightBottom1.Y + DeltaY
+                    PointList.Add(New PointF(XM, StartPos.Y))
+                    PointList.Add(New PointF(XM, YM))
+                    PointList.Add(New PointF(EndPos.X, YM))
                 End If
 
             End If
+
+            If StartDir = ConDir.Right And EndDir = ConDir.Up Then
+                If EndPos.X > StartPos.X + DeltaX Then
+                    If StartPos.Y > EndPos.Y + DeltaY Then
+                        PointList.Add(New PointF(EndPos.X, StartPos.Y))
+                    Else
+                        XM = (StartPos.X + EndPos.X) / 2
+                        If XM > LeftTop2.X - DeltaX Then XM = RightBottom2.X + DeltaX
+                        PointList.Add(New PointF(XM, StartPos.Y))
+                        PointList.Add(New PointF(XM, EndPos.Y + DeltaY))
+                        PointList.Add(New PointF(EndPos.X, EndPos.Y + DeltaY))
+                    End If
+
+                Else
+                    XM = StartPos.X + DeltaX
+                    If XM < RightBottom2.X + DeltaX Then XM = RightBottom2.X + DeltaX
+                    YM = (StartPos.Y + EndPos.Y) / 2
+                    If YM < EndPos.Y + DeltaY Then YM = EndPos.Y + DeltaY
+                    If YM > LeftTop1.Y - DeltaY And YM < RightBottom1.Y + DeltaY Then YM = RightBottom1.Y + DeltaY
+                    PointList.Add(New PointF(XM, StartPos.Y))
+                    PointList.Add(New PointF(XM, YM))
+                    PointList.Add(New PointF(EndPos.X, YM))
+                End If
+            End If
+
+            'finish path
+            PointList.Add(New PointF(EndPos.X, EndPos.Y))
+
+            'and now, after constructing the path, draw it
+            PL = PointList.ToArray(GetType(PointF))
+            g.DrawPath(myPen, Me.GetRoundedLine(PL, 4))
 
             g.EndContainer(gContainer)
 
@@ -1855,10 +2040,12 @@ Namespace GraphicObjects
             Dim myOC3 As New ConnectionPoint
             myOC3.Position = New Point(X + 0.5 * Width, Y + Height)
             myOC3.Type = ConType.ConOut
+            myOC3.Direction = ConDir.Down
 
             Dim myIC7 As New ConnectionPoint
             myIC7.Position = New Point(X + 0.25 * Width, Y + 1 * Height)
             myIC7.Type = ConType.ConEn
+            myIC7.Direction = ConDir.Up
 
             With InputConnectors
 
@@ -2137,6 +2324,7 @@ Namespace GraphicObjects
 
             Me.EnergyConnector.Position = New Point(X + 0.5 * Width, Y + Height)
             Me.EnergyConnector.Type = ConType.ConEn
+            Me.EnergyConnector.Direction = ConDir.Up
 
             With InputConnectors
 
@@ -2338,6 +2526,7 @@ Namespace GraphicObjects
 
             Me.EnergyConnector.Position = New Point(X + 0.5 * Width, Y + Height)
             Me.EnergyConnector.Type = ConType.ConEn
+            Me.EnergyConnector.Direction = ConDir.Up
 
             With InputConnectors
 
@@ -2542,6 +2731,7 @@ Namespace GraphicObjects
 
             Me.EnergyConnector.Position = New Point(X + 0.5 * Width, Y + Height)
             Me.EnergyConnector.Type = ConType.ConEn
+            Me.EnergyConnector.Direction = ConDir.Down
 
             With InputConnectors
 
@@ -3304,6 +3494,7 @@ Namespace GraphicObjects
 
             Me.EnergyConnector.Position = New Point(X + 0.5 * Width, Y + Height)
             Me.EnergyConnector.Type = ConType.ConEn
+            Me.EnergyConnector.Direction = ConDir.Down
 
             With InputConnectors
 
@@ -4848,11 +5039,8 @@ Namespace GraphicObjects
             End With
 
             With Me.EnergyConnector
-                If Me.FlippedH Then
-                    .Position = New Point(X + 0.875 * Width, Y + 0.7 * Height)
-                Else
-                    .Position = New Point(X + 0.125 * Width, Y + 0.7 * Height)
-                End If
+                .Position = New Point(X + 0.5 * Width, Y + Height)
+                .Direction = ConDir.Up
             End With
 
         End Sub
@@ -5144,11 +5332,8 @@ Namespace GraphicObjects
             End With
 
             With Me.EnergyConnector
-                If Me.FlippedH Then
-                    .Position = New Point(X + 0.875 * Width, Y + 0.7 * Height)
-                Else
-                    .Position = New Point(X + 0.125 * Width, Y + 0.7 * Height)
-                End If
+                .Position = New Point(X + 0.5 * Width, Y + Height)
+                .Direction = ConDir.Up
             End With
 
         End Sub
@@ -5439,11 +5624,8 @@ Namespace GraphicObjects
             End With
 
             With Me.EnergyConnector
-                If Me.FlippedH Then
-                    .Position = New Point(X + 0.875 * Width, Y + 0.7 * Height)
-                Else
-                    .Position = New Point(X + 0.125 * Width, Y + 0.7 * Height)
-                End If
+                .Position = New Point(X + 0.5 * Width, Y + Height)
+                .Direction = ConDir.Up
             End With
 
 
@@ -5696,6 +5878,7 @@ Namespace GraphicObjects
 
             Me.EnergyConnector.Position = New Point(X + 0.5 * Width, Y + Height)
             Me.EnergyConnector.Type = ConType.ConEn
+            Me.EnergyConnector.Direction = ConDir.Up
 
             With InputConnectors
 
@@ -5908,6 +6091,7 @@ Namespace GraphicObjects
 
             Me.EnergyConnector.Position = New Point(X + 0.5 * Width, Y + Height)
             Me.EnergyConnector.Type = ConType.ConEn
+            Me.EnergyConnector.Direction = ConDir.Up
 
             With InputConnectors
 
@@ -6088,6 +6272,7 @@ Namespace GraphicObjects
                     .Item(0).Position = New Point(X, Y + 0.5 * Height)
                     .Item(1).Position = New Point(X + 0.5 * Width, Y)
                 End If
+                .Item(1).Direction = ConDir.Down
             End With
 
             With OutputConnectors
@@ -6098,6 +6283,7 @@ Namespace GraphicObjects
                     .Item(0).Position = New Point(X + Width, Y + 0.5 * Height)
                     .Item(1).Position = New Point(X + 0.5 * Width, Y + Height)
                 End If
+                .Item(1).Direction = ConDir.Down
             End With
 
         End Sub
@@ -6261,6 +6447,7 @@ Namespace GraphicObjects
                     .Item(0).Position = New Point(X, Y + 0.5 * Height)
                     .Item(1).Position = New Point(X + Width, Y + 0.825 * Height)
                 End If
+                .Item(1).Direction = ConDir.Left
             End With
 
             With OutputConnectors
@@ -6739,7 +6926,7 @@ Namespace GraphicObjects
 
             End If
 
-            Me.DrawRoundRect(g, myPen, Me.X, Me.Y, Me.Width, Me.Height, 5, New SolidBrush(Color.Transparent))
+            'Me.DrawRoundRect(g, myPen, Me.X, Me.Y, Me.Width, Me.Height, 5, New SolidBrush(Color.Transparent))
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
@@ -7014,7 +7201,7 @@ Namespace GraphicObjects
 
             End If
 
-            Me.DrawRoundRect(g, myPen, Me.X, Me.Y, Me.Width, Me.Height, 5, New SolidBrush(Color.Transparent))
+            'Me.DrawRoundRect(g, myPen, Me.X, Me.Y, Me.Width, Me.Height, 5, New SolidBrush(Color.Transparent))
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
@@ -7286,7 +7473,7 @@ Namespace GraphicObjects
 
             End If
 
-            Me.DrawRoundRect(g, myPen, Me.X, Me.Y, Me.Width, Me.Height, 5, New SolidBrush(Color.Transparent))
+            ' Me.DrawRoundRect(g, myPen, Me.X, Me.Y, Me.Width, Me.Height, 5, New SolidBrush(Color.Transparent))
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
@@ -7588,7 +7775,7 @@ Namespace GraphicObjects
 
             End If
 
-            Me.DrawRoundRect(g, myPen, Me.X, Me.Y, Me.Width, Me.Height, 5, New SolidBrush(Color.Transparent))
+            'Me.DrawRoundRect(g, myPen, Me.X, Me.Y, Me.Width, Me.Height, 5, New SolidBrush(Color.Transparent))
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
@@ -7721,8 +7908,8 @@ Namespace GraphicObjects
                         .Item(0).Position = New Point(X + 0.3 * Width, Y + (0.1 + 0.127 / 2) * Height)
                         .Item(1).Position = New Point(X + 0.3 * Width, Y + (0.773 + 0.127 / 2) * Height)
                     Else
-                        .Item(0).Position = New Point(X + 0.7 * Width, Y + (0.1 + 0.127 / 2) * Height)
-                        .Item(1).Position = New Point(X + 0.7 * Width, Y + (0.773 + 0.127 / 2) * Height)
+                        .Item(0).Position = New Point(X + 0.827 * Width, Y + (0.1 + 0.127 / 2) * Height)
+                        .Item(1).Position = New Point(X + 0.827 * Width, Y + (0.773 + 0.127 / 2) * Height)
                     End If
                 Else
                     .Add(myOC1)
@@ -7732,11 +7919,8 @@ Namespace GraphicObjects
             End With
 
             With Me.EnergyConnector
-                If Me.FlippedH Then
-                    .Position = New Point(X + 0.125 * Width, Y + 0.5 * Height)
-                Else
-                    .Position = New Point(X + 0.875 * Width, Y + 0.5 * Height)
-                End If
+                .Position = New Point(X + 0.5 * Width, Y + Height)
+                .Direction = ConDir.Down
             End With
 
         End Sub
@@ -8021,11 +8205,8 @@ Namespace GraphicObjects
             End With
 
             With Me.EnergyConnector
-                If Me.FlippedH Then
-                    .Position = New Point(X + 0.125 * Width, Y + 0.5 * Height)
-                Else
-                    .Position = New Point(X + 0.875 * Width, Y + 0.5 * Height)
-                End If
+                .Position = New Point(X + 0.5 * Width, Y + Height)
+                .Direction = ConDir.Down
             End With
 
         End Sub
@@ -8310,11 +8491,8 @@ Namespace GraphicObjects
             End With
 
             With Me.EnergyConnector
-                If Me.FlippedH Then
-                    .Position = New Point(X + 0.125 * Width, Y + 0.5 * Height)
-                Else
-                    .Position = New Point(X + 0.875 * Width, Y + 0.5 * Height)
-                End If
+                .Position = New Point(X + 0.5 * Width, Y + Height)
+                .Direction = ConDir.Down
             End With
 
         End Sub
@@ -8756,8 +8934,9 @@ Namespace GraphicObjects
             myIC3.Type = ConType.ConIn
 
             Dim myIC4 As New ConnectionPoint
-            myIC4.Position = New Point(X + 0.5 * Width, Y)
+            myIC4.Position = New Point(X, Y)
             myIC4.Type = ConType.ConEn
+            myIC4.Direction = ConDir.Up
 
             Dim myIC5 As New ConnectionPoint
             myIC5.Position = New Point(X, Y + 3 * 0.13 * Height)
@@ -8784,8 +8963,9 @@ Namespace GraphicObjects
             myOC3.Type = ConType.ConOut
 
             Dim myOC4 As New ConnectionPoint
-            myOC4.Position = New Point(X + 0.5 * Width, Y + Height)
+            myOC4.Position = New Point(X + Width, Y + Height)
             myOC4.Type = ConType.ConEn
+            myOC4.Direction = ConDir.Down
 
             Dim myOC5 As New ConnectionPoint
             myOC5.Position = New Point(X + Width, Y + 3 * 0.13 * Height)
@@ -8813,7 +8993,7 @@ Namespace GraphicObjects
                             .Item(0).Position = New Point(X + Width, Y)
                             .Item(1).Position = New Point(X + Width, Y + 1 * 0.13 * Height)
                             .Item(2).Position = New Point(X + Width, Y + 2 * 0.13 * Height)
-                            .Item(3).Position = New Point(X + 0.5 * Width, Y)
+                            .Item(3).Position = New Point(X + Width, Y + Height)
                             .Item(4).Position = New Point(X + Width, Y + 3 * 0.13 * Height)
                             .Item(5).Position = New Point(X + Width, Y + 4 * 0.13 * Height)
                             .Item(6).Position = New Point(X + Width, Y + 5 * 0.13 * Height)
@@ -8821,7 +9001,7 @@ Namespace GraphicObjects
                             .Item(0).Position = New Point(X, Y)
                             .Item(1).Position = New Point(X, Y + 1 * 0.13 * Height)
                             .Item(2).Position = New Point(X, Y + 2 * 0.13 * Height)
-                            .Item(3).Position = New Point(X + 0.5 * Width, Y)
+                            .Item(3).Position = New Point(X, Y + Height)
                             .Item(4).Position = New Point(X, Y + 3 * 0.13 * Height)
                             .Item(5).Position = New Point(X, Y + 4 * 0.13 * Height)
                             .Item(6).Position = New Point(X, Y + 5 * 0.13 * Height)
@@ -8853,7 +9033,7 @@ Namespace GraphicObjects
                             .Item(0).Position = New Point(X, Y)
                             .Item(1).Position = New Point(X, Y + 1 * 0.13 * Height)
                             .Item(2).Position = New Point(X, Y + 2 * 0.13 * Height)
-                            .Item(3).Position = New Point(X + 0.5 * Width, Y)
+                            .Item(3).Position = New Point(X, Y + Height)
                             .Item(4).Position = New Point(X, Y + 3 * 0.13 * Height)
                             .Item(5).Position = New Point(X, Y + 4 * 0.13 * Height)
                             .Item(6).Position = New Point(X, Y + 5 * 0.13 * Height)
@@ -8861,7 +9041,7 @@ Namespace GraphicObjects
                             .Item(0).Position = New Point(X + Width, Y)
                             .Item(1).Position = New Point(X + Width, Y + 1 * 0.13 * Height)
                             .Item(2).Position = New Point(X + Width, Y + 2 * 0.13 * Height)
-                            .Item(3).Position = New Point(X + 0.5 * Width, Y)
+                            .Item(3).Position = New Point(X + Width, Y + Height)
                             .Item(4).Position = New Point(X + Width, Y + 3 * 0.13 * Height)
                             .Item(5).Position = New Point(X + Width, Y + 4 * 0.13 * Height)
                             .Item(6).Position = New Point(X + Width, Y + 5 * 0.13 * Height)
@@ -9073,6 +9253,7 @@ Namespace GraphicObjects
 
             Me.EnergyConnector.Position = New Point(X + 0.5 * Width, Y + Height)
             Me.EnergyConnector.Type = ConType.ConEn
+            Me.EnergyConnector.Direction = ConDir.Up
 
             With InputConnectors
 
