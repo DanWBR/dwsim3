@@ -997,9 +997,6 @@ Namespace GraphicObjects
                 EndDir = Me.AttachedTo.InputConnectors(Me.AttachedToConnectorIndex).Direction
             End If
 
-            'StartPos = New Point(Me.X, Me.Y)
-            'EndPos = New Point(Me.X + Me.Width, Me.Y + Me.Height)
-
             Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
             With myPen
                 .EndCap = Drawing2D.LineCap.ArrowAnchor
@@ -1009,15 +1006,10 @@ Namespace GraphicObjects
 
             UpdateStatusC(myPen, Me, StartPos, EndPos)
 
-            Dim delta, delta2, delta3, delta4, DeltaX, DeltaY As Integer
-            delta = Math.Abs(StartPos.X - EndPos.X) / 2
-            delta2 = Math.Abs(StartPos.Y - EndPos.Y) / 2
-            delta3 = 20
-            delta4 = 40
-            DeltaX = 20
-            DeltaY = 20
+            Dim DeltaX, DeltaY As Integer
+            DeltaX = 10
+            DeltaY = 10
 
-            'Dim p1, p2, p3, p4, p5, p6 As Point
             Dim XM, YM As Double
             Dim PointList As New ArrayList
             Dim PL() As PointF
