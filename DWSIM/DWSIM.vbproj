@@ -409,6 +409,12 @@
     <Compile Include="Forms\FormState.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\FormWhatsNew.Designer.vb">
+      <DependentUpon>FormWhatsNew.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormWhatsNew.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\PropPack_ConfigForms\FormConfigExUNIQUAC.Designer.vb">
       <DependentUpon>FormConfigExUNIQUAC.vb</DependentUpon>
     </Compile>
@@ -1288,6 +1294,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormState.de.resx">
       <DependentUpon>FormState.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormWhatsNew.de.resx">
+      <DependentUpon>FormWhatsNew.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormWhatsNew.en.resx">
+      <DependentUpon>FormWhatsNew.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormWhatsNew.resx">
+      <DependentUpon>FormWhatsNew.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PropPack_ConfigForms\FormConfigCAPEOPEN2.de.resx">
       <DependentUpon>FormConfigCAPEOPEN2.vb</DependentUpon>

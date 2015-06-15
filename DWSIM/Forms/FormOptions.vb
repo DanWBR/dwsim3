@@ -65,6 +65,8 @@ Public Class FormOptions
 
         Me.chkUpdates.Checked = My.Settings.CheckForUpdates
 
+        Me.chkShowWhatsNew.Checked = My.Settings.ShowWhatsNew
+
         Me.cbudb.Checked = My.Settings.ReplaceComps
 
         If TrackBar1.Value = 1 Then
@@ -664,5 +666,9 @@ Public Class FormOptions
 
     Private Sub chkStorePreviousSolutions_CheckedChanged(sender As Object, e As EventArgs) Handles chkStorePreviousSolutions.CheckedChanged
         My.Settings.StorePreviousSolutions = chkStorePreviousSolutions.Checked
+    End Sub
+
+    Private Sub chkShowWhatsNew_CheckedChanged(sender As Object, e As EventArgs) Handles chkShowWhatsNew.CheckedChanged
+        My.Settings.ShowWhatsNew = chkShowWhatsNew.Checked
     End Sub
 End Class

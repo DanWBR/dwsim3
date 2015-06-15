@@ -334,6 +334,11 @@ Imports DWSIM.DWSIM.Outros
         WriteToLog(DWSIM.App.GetLocalTipString("FLSH002"), Color.Black, TipoAviso.Dica)
         WriteToLog(DWSIM.App.GetLocalTipString("FLSH005"), Color.Black, TipoAviso.Dica)
 
+        If My.Settings.ShowWhatsNew Then
+            Dim fwn As New FormWhatsNew
+            fwn.ShowDialog(Me)
+        End If
+
     End Sub
 
     Private Sub FormChild2_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
