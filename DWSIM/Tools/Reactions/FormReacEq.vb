@@ -213,25 +213,12 @@ Public Class FormReacEq
         Else
             If Me.rbKeqfT.Checked Then
                 'proceed with expression evaluation
-
-                '// Define the context of our expression
-                'ExpressionContext context = new ExpressionContext();
-                '// Import all members of the Math type into the default namespace
-                'context.Imports.ImportStaticMembers(typeof(Math));
                 rc.ExpContext = New Ciloci.Flee.ExpressionContext
                 With rc.ExpContext
                     .Imports.AddType(GetType(System.Math))
                 End With
                 With rc
-
-                    '// Define an int variable
-                    'context.Variables.DefineVariable(DWSIM.App.GetLocalString("a"), typeof(int));
-                    'context.Variables.SetVariableValue(DWSIM.App.GetLocalString("a"), 100);
-                    '.ExpContext.Variables.SetVariableValue("T", CDbl(300))
-                    '// Create a dynamic expression that evaluates to an Object
-                    'IDynamicExpression eDynamic = ExpressionFactory.CreateDynamic("sqrt(a) + 1", context);
-                    '// Create a generic expression that evaluates to a double
-                    'IGenericExpression<double> eGeneric = ExpressionFactory.CreateGeneric<double>("sqrt(a) + 1", context);
+                    .ExpContext.Variables.Add("T", CDbl(300))
                     Try
                         .Expr = .ExpContext.CompileGeneric(Of Double)(Me.tbExp.Text)
                         .Expression = Me.tbExp.Text
@@ -246,14 +233,7 @@ Public Class FormReacEq
                         End Select
                         Exit Sub
                     End Try
-                    '// Evaluate the expressions
-                    'double result = (double)eDynamic.Evaluate();
-                    'result = eGeneric.Evaluate();
-                    '// Update the value of our variable
-                    'context.Variables.SetVariableValue(DWSIM.App.GetLocalString("a"), 144);
-                    '// Evaluate again to get the updated result
-                    'result = eGeneric.Evaluate();
-                End With
+                  End With
             End If
 
             'Components and stoichiometry

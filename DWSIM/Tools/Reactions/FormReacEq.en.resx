@@ -120,23 +120,41 @@
   <data name="KryptonButton3.Text" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Equilibrium Reaction Parameters</value>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="KryptonLabel12.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Equilibrium Constant (Keq)</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="KryptonLabel12.Location" type="System.Drawing.Point, System.Drawing">
+    <value>261, 20</value>
+  </data>
+  <data name="KryptonLabel12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>144, 13</value>
   </data>
   <data name="KryptonLabel12.Text" xml:space="preserve">
     <value>DelG_R (kJ/kmol_BC) (25°C)</value>
   </data>
+  <data name="KryptonLabel5.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="KryptonLabel5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>528, 46</value>
+  </data>
+  <data name="KryptonLabel5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 13</value>
+  </data>
   <data name="KryptonLabel5.Text" xml:space="preserve">
     <value>T in K</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="tbExp.Location" type="System.Drawing.Point, System.Drawing">
+    <value>160, 42</value>
+  </data>
+  <data name="tbExp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>362, 20</value>
+  </data>
   <data name="tbKeqConstant.Location" type="System.Drawing.Point, System.Drawing">
     <value>109, 67</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="rbKeqConstant.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -146,11 +164,26 @@
   <data name="rbKeqConstant.Text" xml:space="preserve">
     <value>Constant Value</value>
   </data>
+  <data name="rbKeqGibbs.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="rbKeqGibbs.Size" type="System.Drawing.Size, System.Drawing">
+    <value>216, 17</value>
+  </data>
   <data name="rbKeqGibbs.Text" xml:space="preserve">
     <value>Calculate from Gibbs Energy of Reaction</value>
   </data>
+  <data name="rbKeqfT.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="rbKeqfT.Size" type="System.Drawing.Size, System.Drawing">
+    <value>149, 17</value>
+  </data>
   <data name="rbKeqfT.Text" xml:space="preserve">
     <value>T-Function.: ln Keq [f(T)] =</value>
+  </data>
+  <data name="GroupBox3.Text" xml:space="preserve">
+    <value>Equilibrium Constant (Keq)</value>
   </data>
   <data name="KryptonLabel9.Text" xml:space="preserve">
     <value>Approach (%)</value>
@@ -224,8 +257,8 @@
   <data name="tbPhase.Location" type="System.Drawing.Point, System.Drawing">
     <value>233, 17</value>
   </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Components/Stoichiometry</value>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Equilibrium Reaction Parameters</value>
   </data>
   <data name="KryptonLabel3.Text" xml:space="preserve">
     <value>Equation</value>
@@ -256,6 +289,9 @@
   </data>
   <data name="KryptonLabel1.Text" xml:space="preserve">
     <value>Stoichiometry</value>
+  </data>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Components/Stoichiometry</value>
   </data>
   <data name="KryptonLabel10.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
