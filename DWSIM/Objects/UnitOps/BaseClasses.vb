@@ -481,10 +481,14 @@ Imports PropertyGridEx
 
                 Dim bb As DWSIM.SimulationObjects.UnitOps.Expander = FlowSheet.Collections.CLCS_TurbineCollection.Item(sobj.Name)
 
-                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
+                If e.ChangedItem.Label.Contains("Delta P") Then
 
                     If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Presso")) Then
+                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    bb.POut = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Eficincia")) Then
 

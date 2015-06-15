@@ -841,7 +841,7 @@
     <Compile Include="Forms\FormSimulSettings.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Objects\Classes\Thermo\BaseClasses.vb" />
+    <Compile Include="Objects\UnitOps\BaseClasses.vb" />
     <Compile Include="Objects\UnitOps\CapeOpenUO.vb" />
     <Compile Include="Objects\UnitOps\ComponentSeparator.vb" />
     <Compile Include="Objects\UnitOps\Compressor.vb" />
@@ -864,7 +864,7 @@
     <Compile Include="Objects\UnitOps\Splitter.vb" />
     <Compile Include="Objects\Streams\Streams.vb" />
     <Compile Include="Objects\Classes\Thermo\BaseThermoClasses.vb" />
-    <Compile Include="Objects\Classes\Unit\SistemasDeUnidades.vb" />
+    <Compile Include="Objects\Classes\Units\SistemasDeUnidades.vb" />
     <Compile Include="Forms\FormReadingComp1.Designer.vb">
       <DependentUpon>FormReadingComp1.vb</DependentUpon>
     </Compile>
