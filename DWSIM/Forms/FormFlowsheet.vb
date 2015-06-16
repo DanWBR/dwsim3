@@ -335,8 +335,10 @@ Imports DWSIM.DWSIM.Outros
         WriteToLog(DWSIM.App.GetLocalTipString("FLSH005"), Color.Black, TipoAviso.Dica)
 
         If My.Settings.ShowWhatsNew Then
-            Dim fwn As New FormWhatsNew
-            fwn.ShowDialog(Me)
+            If Not DWSIM.App.IsRunningOnMono Then
+                Dim fwn As New FormWhatsNew
+                fwn.ShowDialog(Me)
+            End If
         End If
 
     End Sub
