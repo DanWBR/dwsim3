@@ -341,45 +341,22 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             Dim tolINT As Double = CDbl(PP.Parameters("PP_PHFILT"))
             Dim tolEXT As Double = CDbl(PP.Parameters("PP_PHFELT"))
 
-            Dim Tmin, Tmax, epsilon(4), Tb, Td, Vt(n), Vtf(n), Hb, Hd, T0 As Double
-
-            For i = 0 To n
-                Vt(i) = PP.AUX_TSATi(P, i)
-            Next
-
-            Vtf = PP.RET_VTF
-
-            Tb = Vt.Min
-            Td = Vt.Max
-
-            If Tb < Vtf.Max Then Tb = Vtf.Max
-
-            Hb = PP.DW_CalcEnthalpy(Vz, Tb, P, State.Liquid)
-            Hd = PP.DW_CalcEnthalpy(Vz, Td, P, State.Vapor)
+            Dim Tmin, Tmax, epsilon(4) As Double
 
             Tmax = 2000.0#
             Tmin = 50.0#
 
-            epsilon(0) = 1
-            epsilon(1) = 0.1
-            epsilon(2) = 0.01
-            epsilon(3) = 0.001
-            epsilon(4) = 0.0001
+            epsilon(0) = 0.1
+            epsilon(1) = 0.01
+            epsilon(2) = 0.001
+            epsilon(3) = 0.0001
+            epsilon(4) = 0.00001
 
             Dim fx, fx2, dfdx, x1, dx As Double
 
             Dim cnt As Integer
 
-            If Tref = 0 Then Tref = 298.15
-
-            If H < Hb Then
-                Tref = Tb - 5
-            ElseIf H > Hd Then
-                Tref = Td + 5
-            Else
-                Tref = Tb + (H - Hb) / (Hd - Hb) * (Td - Tb)
-            End If
-            T0 = Tref
+            If Tref = 0.0# Then Tref = 298.15
 
             For j = 0 To 4
 
@@ -432,8 +409,6 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
 
                 If Not Double.IsNaN(T) And Not Double.IsInfinity(T) And Not cnt > maxitEXT Then
                     If T > Tmin And T < Tmax Then Exit For
-                Else
-                    Tref = T0
                 End If
 
             Next
@@ -564,14 +539,12 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     Else
                         V2 = V1 - 0.01
                     End If
-
                     H2 = Herror("PV", V2, P, Vz, PP)(0)
                     V = V1 + (V2 - V1) * (0 - H1) / (H2 - H1)
                     If V < 0 Then V = 0.0#
                     If V > 1 Then V = 1.0#
                     resultFlash = Herror("PV", V, P, Vz, PP)
                     H1 = resultFlash(0)
-
                 Loop Until Abs(H1) < itol Or ecount > maxitEXT
 
                 T = resultFlash(1)
