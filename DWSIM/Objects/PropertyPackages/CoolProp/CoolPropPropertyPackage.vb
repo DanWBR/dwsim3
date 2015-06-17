@@ -68,7 +68,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     'do nothing
                 Case 1
                     Console.WriteLine(message)
-                Case 2
+                Case 2, 3
                     If Not Me.CurrentMaterialStream Is Nothing Then
                         If Not Me.CurrentMaterialStream.FlowSheet Is Nothing Then
                             If Not Me.CurrentMaterialStream.GraphicObject Is Nothing Then
@@ -1013,9 +1013,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Tmax = CoolProp.Props1SI(vn(i), "TMAX")
                             Pmin = CoolProp.Props1SI(vn(i), "PMIN")
                             Pmax = CoolProp.Props1SI(vn(i), "PMAX")
-                            If T > Tmin And T < Tmax And P > Pmin And P < Pmax Then
+                            If P > Pmin And P < Pmax Then
                                 Tb = Me.AUX_TSATi(P, i)
-                                If T < Tb Then
+                                If T < Tb And T > Tmin Then
                                     vk(i) = CoolProp.PropsSI("H", "T", T, "P", P, vn(i)) / 1000
                                 Else
                                     WriteWarningMessage("CoolProp Warning: T and/or P is/are outside the valid range for calculation of Liquid Enthalpy, compound " &
@@ -1051,7 +1051,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Tmax = CoolProp.Props1SI(vn(i), "TMAX")
                             Pmin = CoolProp.Props1SI(vn(i), "PMIN")
                             Pmax = CoolProp.Props1SI(vn(i), "PMAX")
-                            If T > Tmin And T < Tmax And P > Pmin And P < Pmax Then
+                            If P > Pmin And P < Pmax Then
                                 Tb = Me.AUX_TSATi(P, i)
                                 If T > Tb Then
                                     vk(i) = CoolProp.PropsSI("H", "T", T, "P", P, vn(i)) / 1000
@@ -1114,9 +1114,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Tmax = CoolProp.Props1SI(vn(i), "TMAX")
                             Pmin = CoolProp.Props1SI(vn(i), "PMIN")
                             Pmax = CoolProp.Props1SI(vn(i), "PMAX")
-                            If T > Tmin And T < Tmax And P > Pmin And P < Pmax Then
+                            If P > Pmin And P < Pmax Then
                                 Tb = Me.AUX_TSATi(P, i)
-                                If T < Tb Then
+                                If T < Tb And T > Tmin Then
                                     vk(i) = CoolProp.PropsSI("S", "T", T, "P", P, vn(i)) / 1000
                                 Else
                                     WriteWarningMessage("CoolProp Warning: T and/or P is/are outside the valid range for calculation of Liquid Entropy, compound " &
@@ -1152,7 +1152,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Tmax = CoolProp.Props1SI(vn(i), "TMAX")
                             Pmin = CoolProp.Props1SI(vn(i), "PMIN")
                             Pmax = CoolProp.Props1SI(vn(i), "PMAX")
-                            If T > Tmin And T < Tmax And P > Pmin And P < Pmax Then
+                            If P > Pmin And P < Pmax Then
                                 Tb = Me.AUX_TSATi(P, i)
                                 If T > Tb Then
                                     vk(i) = CoolProp.PropsSI("S", "T", T, "P", P, vn(i)) / 1000

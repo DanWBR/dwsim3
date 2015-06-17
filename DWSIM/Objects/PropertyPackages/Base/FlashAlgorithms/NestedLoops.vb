@@ -433,7 +433,6 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                 If Not Double.IsNaN(T) And Not Double.IsInfinity(T) And Not cnt > maxitEXT Then
                     If T > Tmin And T < Tmax Then Exit For
                 Else
-                    j += 1
                     Tref = T0
                 End If
 

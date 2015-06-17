@@ -1575,7 +1575,7 @@ Namespace DWSIM.Databases
                 cp = New ClassesBasicasTermodinamica.ConstantProperties
                 With cp
                     .OriginalDB = "CoolProp"
-                    .Name = s
+                    .Name = s & " [CoolProp]"
                     .Formula = ""
                     .CAS_Number = CProp.get_fluid_param_string(s, "CAS")
                     .Molar_Weight = CProp.Props1SI(s, "molemass") * 1000
