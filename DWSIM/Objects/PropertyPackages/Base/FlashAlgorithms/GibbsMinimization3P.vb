@@ -682,7 +682,7 @@ out:        Return result
                     Ki(i) = 1
                 Next
 
-                If T <= Tmin Or T >= Tmax Then Throw New Exception("PH Flash [NL3PV3]: Invalid result: Temperature did not converge.")
+                If T <= Tmin Or T >= Tmax Or ecount > maxitEXT Then Throw New Exception("PH Flash [NL3PV3]: Invalid result: Temperature did not converge.")
             Else
 
                 'specified enthalpy requires pure liquid 
@@ -711,7 +711,7 @@ out:        Return result
                     Ki(i) = Vy(i) / Vx(i)
                 Next
 
-                If T <= Tmin Or T >= Tmax Then Throw New Exception("PH Flash [GM]: Invalid result: Temperature did not converge.")
+                If T <= Tmin Or T >= Tmax Or ecount > maxitEXT Then Throw New Exception("PH Flash [GM]: Invalid result: Temperature did not converge.")
             End If
 
             d2 = Date.Now
@@ -855,7 +855,7 @@ out:        Return result
                     Ki(i) = 1
                 Next
 
-                If T <= Tmin Or T >= Tmax Then Throw New Exception("PS Flash [GM]: Invalid result: Temperature did not converge.")
+                If T <= Tmin Or T >= Tmax Or ecount > maxitEXT Then Throw New Exception("PS Flash [GM]: Invalid result: Temperature did not converge.")
 
             Else
 
@@ -884,7 +884,7 @@ out:        Return result
                     Ki(i) = Vy(i) / Vx(i)
                 Next
 
-                If T <= Tmin Or T >= Tmax Then Throw New Exception("PS Flash [GM]: Invalid result: Temperature did not converge.")
+                If T <= Tmin Or T >= Tmax Or ecount > maxitEXT Then Throw New Exception("PS Flash [GM]: Invalid result: Temperature did not converge.")
             End If
 
             d2 = Date.Now

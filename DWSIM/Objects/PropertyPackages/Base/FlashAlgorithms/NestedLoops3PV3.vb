@@ -980,7 +980,7 @@ out:
                     Ki(i) = Vy(i) / Vx1(i)
                 Next
 
-                If T <= Tmin Or T >= Tmax Then Throw New Exception("PH Flash [NL3PV3]: Invalid result: Temperature did not converge.")
+                If T <= Tmin Or T >= Tmax Or ecount > maxitEXT Then Throw New Exception("PH Flash [NL3PV3]: Invalid result: Temperature did not converge.")
             End If
 
             If ecount > maxitEXT Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt"))
