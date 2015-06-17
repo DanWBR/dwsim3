@@ -45,6 +45,27 @@ Public Class frmProps
 
                 ChildParent.Collections.ObjectCollection(sobj.Name).HandlePropertyChange(s, e)
 
+            ElseIf sobj.TipoObjeto = TipoObjeto.GO_MasterTable Then
+
+                Dim mt As DWSIM.GraphicObjects.MasterTableGraphic = sobj
+
+                If e.ChangedItem.PropertyDescriptor.Category.Contains(DWSIM.App.GetLocalString("MT_PropertiesToShow")) Then
+                    Dim pkey As String = CType(e.ChangedItem.PropertyDescriptor, CustomProperty.CustomPropertyDescriptor).CustomProperty.Tag
+                    If Not mt.PropertyList.ContainsKey(pkey) Then
+                        mt.PropertyList.Add(pkey, e.ChangedItem.Value)
+                    Else
+                        mt.PropertyList(pkey) = e.ChangedItem.Value
+                    End If
+                ElseIf e.ChangedItem.PropertyDescriptor.Category.Contains(DWSIM.App.GetLocalString("MT_ObjectsToShow")) Then
+                    If Not mt.ObjectList.ContainsKey(e.ChangedItem.Label) Then
+                        mt.ObjectList.Add(e.ChangedItem.Label, e.ChangedItem.Value)
+                    Else
+                        mt.ObjectList(e.ChangedItem.Label) = e.ChangedItem.Value
+                    End If
+                End If
+
+                mt.Update(ChildParent)
+
             End If
 
         End If

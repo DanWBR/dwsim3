@@ -180,27 +180,6 @@ Imports PropertyGridEx
 
                 End If
 
-            ElseIf sobj.TipoObjeto = TipoObjeto.GO_MasterTable Then
-
-                Dim mt As DWSIM.GraphicObjects.MasterTableGraphic = sobj
-
-                If e.ChangedItem.PropertyDescriptor.Category.Contains(DWSIM.App.GetLocalString("MT_PropertiesToShow")) Then
-                    Dim pkey As String = CType(e.ChangedItem.PropertyDescriptor, CustomProperty.CustomPropertyDescriptor).CustomProperty.Tag
-                    If Not mt.PropertyList.ContainsKey(pkey) Then
-                        mt.PropertyList.Add(pkey, e.ChangedItem.Value)
-                    Else
-                        mt.PropertyList(pkey) = e.ChangedItem.Value
-                    End If
-                ElseIf e.ChangedItem.PropertyDescriptor.Category.Contains(DWSIM.App.GetLocalString("MT_ObjectsToShow")) Then
-                    If Not mt.ObjectList.ContainsKey(e.ChangedItem.Label) Then
-                        mt.ObjectList.Add(e.ChangedItem.Label, e.ChangedItem.Value)
-                    Else
-                        mt.ObjectList(e.ChangedItem.Label) = e.ChangedItem.Value
-                    End If
-                End If
-
-                mt.Update(FlowSheet)
-
             ElseIf sobj.TipoObjeto = TipoObjeto.MaterialStream Then
 
                 Dim ms As DWSIM.SimulationObjects.Streams.MaterialStream = FlowSheet.Collections.CLCS_MaterialStreamCollection.Item(sobj.Name)
@@ -933,7 +912,7 @@ Imports PropertyGridEx
                     If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     bb.CatalystParticleDiameter = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.diameter, e.ChangedItem.Value)
 
-               End If
+                End If
 
                 If FlowSheet.Options.CalculatorActivated Then
 

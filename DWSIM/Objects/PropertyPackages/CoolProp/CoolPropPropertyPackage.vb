@@ -1199,26 +1199,30 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Overrides Function DW_CalcFugCoeff(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double()
 
-            Dim n As Integer = UBound(Vx)
-            Dim lnfug(n) As Double
-            Dim fugcoeff(n) As Double
-            Dim i As Integer
+            DWSIM.App.WriteToConsole(Me.ComponentName & " fugacity coefficient calculation for phase '" & st.ToString & "' requested at T = " & T & " K and P = " & P & " Pa.", 2)
+            DWSIM.App.WriteToConsole("Compounds: " & Me.RET_VNAMES.ToArrayString, 2)
+            DWSIM.App.WriteToConsole("Mole fractions: " & Vx.ToArrayString(), 2)
 
-            Dim Tc As Object = Me.RET_VTC()
+            Dim n As Integer = UBound(Vx)
+            Dim i As Integer
+            Dim fugcoeff(n) As Double
 
             If st = State.Liquid Then
+                Dim Tc As Object = Me.RET_VTC()
                 For i = 0 To n
-                    If Vx(i) > 0.0# Then lnfug(i) = Math.Log(Me.AUX_PVAPi(i, T) / P)
+                    If T / Tc(i) >= 1 Then
+                        fugcoeff(i) = AUX_KHenry(Me.RET_VNAMES(i), T) / P
+                    Else
+                        fugcoeff(i) = Me.AUX_PVAPi(i, T) / P
+                    End If
                 Next
             Else
                 For i = 0 To n
-                    lnfug(i) = 0.0#
+                    fugcoeff(i) = 1
                 Next
             End If
 
-            For i = 0 To n
-                fugcoeff(i) = Exp(lnfug(i))
-            Next
+            DWSIM.App.WriteToConsole("Result: " & fugcoeff.ToArrayString(), 2)
 
             Return fugcoeff
 

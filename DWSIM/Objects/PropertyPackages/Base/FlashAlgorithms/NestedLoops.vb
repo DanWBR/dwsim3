@@ -22,6 +22,7 @@ Imports DWSIM.DWSIM.MathEx
 Imports DWSIM.DWSIM.MathEx.Common
 Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
 Imports System.Threading.Tasks
+Imports System.Linq
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
@@ -340,22 +341,45 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             Dim tolINT As Double = CDbl(PP.Parameters("PP_PHFILT"))
             Dim tolEXT As Double = CDbl(PP.Parameters("PP_PHFELT"))
 
-            Dim Tmin, Tmax, epsilon(4) As Double
+            Dim Tmin, Tmax, epsilon(4), Tb, Td, Vt(n), Vtf(n), Hb, Hd, T0 As Double
+
+            For i = 0 To n
+                Vt(i) = PP.AUX_TSATi(P, i)
+            Next
+
+            Vtf = PP.RET_VTF
+
+            Tb = Vt.Min
+            Td = Vt.Max
+
+            If Tb < Vtf.Max Then Tb = Vtf.Max
+
+            Hb = PP.DW_CalcEnthalpy(Vz, Tb, P, State.Liquid)
+            Hd = PP.DW_CalcEnthalpy(Vz, Td, P, State.Vapor)
 
             Tmax = 2000.0#
             Tmin = 50.0#
 
-            epsilon(0) = 0.001
-            epsilon(1) = 0.01
-            epsilon(2) = 0.1
-            epsilon(3) = 1
-            epsilon(4) = 10
+            epsilon(0) = 1
+            epsilon(1) = 0.1
+            epsilon(2) = 0.01
+            epsilon(3) = 0.001
+            epsilon(4) = 0.0001
 
             Dim fx, fx2, dfdx, x1, dx As Double
 
             Dim cnt As Integer
 
             If Tref = 0 Then Tref = 298.15
+
+            If H < Hb Then
+                Tref = Tb - 5
+            ElseIf H > Hd Then
+                Tref = Td + 5
+            Else
+                Tref = Tb + (H - Hb) / (Hd - Hb) * (Td - Tb)
+            End If
+            T0 = Tref
 
             For j = 0 To 4
 
@@ -402,12 +426,15 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
 
                     cnt += 1
 
-                Loop Until cnt > maxitEXT Or Double.IsNaN(x1)
+                Loop Until cnt > maxitEXT Or Double.IsNaN(x1) Or x1 < 0.0#
 
                 T = x1
 
                 If Not Double.IsNaN(T) And Not Double.IsInfinity(T) And Not cnt > maxitEXT Then
                     If T > Tmin And T < Tmax Then Exit For
+                Else
+                    j += 1
+                    Tref = T0
                 End If
 
             Next
