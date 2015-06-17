@@ -34,7 +34,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Protected m_ratios As New System.Collections.ArrayList(3)
 
-        Public Property StreamFlowSpec As Double
+        Public Property StreamFlowSpec As Double = 0.0#
+        Public Property Stream2FlowSpec As Double = 0.0#
 
         Public Property OperationMode As OpMode = OpMode.SplitRatios
 
@@ -156,10 +157,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Case OpMode.StreamMassFlowSpec
 
                     Dim cp As ConnectionPoint
-                    Dim w1, wn As Double, n As Integer
-
-                    w1 = Me.StreamFlowSpec
-                    wn = W - w1
+                    Dim w1, w2 As Double, n As Integer
 
                     n = 0
                     For Each cp In Me.GraphicObject.OutputConnectors
@@ -167,6 +165,24 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             n += 1
                         End If
                     Next
+
+                    Dim wn(n) As Double
+
+                    Select Case n
+                        Case 1
+                            w1 = Me.StreamFlowSpec
+                            wn(0) = w1
+                        Case 2
+                            w1 = Me.StreamFlowSpec
+                            wn(0) = w1
+                            wn(1) = W - w1
+                        Case 3
+                            w1 = Me.StreamFlowSpec
+                            w2 = Me.Stream2FlowSpec
+                            wn(0) = w1
+                            wn(1) = w2
+                            wn(2) = W - w1 - w2
+                    End Select
 
                     i = 0
                     For Each cp In Me.GraphicObject.OutputConnectors
@@ -183,11 +199,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                     comp.FracaoMassica = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).Componentes(comp.Nome).FracaoMassica
                                     j += 1
                                 Next
-                                If i = 0 Then
-                                    .Fases(0).SPMProperties.massflow = w1
-                                Else
-                                    .Fases(0).SPMProperties.massflow = wn / (n - 1)
-                                End If
+                                .Fases(0).SPMProperties.massflow = wn(i)
                                 .Fases(0).SPMProperties.massfraction = 1
                                 .Fases(0).SPMProperties.molarfraction = 1
                                 .SpecType = Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
@@ -199,10 +211,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Case OpMode.StreamMoleFlowSpec
 
                     Dim cp As ConnectionPoint
-                    Dim m1, mn As Double, n As Integer
-
-                    m1 = Me.StreamFlowSpec
-                    mn = M - m1
+                    Dim m1, m2 As Double, n As Integer
 
                     n = 0
                     For Each cp In Me.GraphicObject.OutputConnectors
@@ -210,6 +219,24 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             n += 1
                         End If
                     Next
+
+                    Dim mn(n) As Double
+
+                    Select Case n
+                        Case 1
+                            m1 = m1
+                            mn(0) = m1
+                        Case 2
+                            m1 = Me.StreamFlowSpec
+                            mn(0) = m1
+                            mn(1) = M - m1
+                        Case 3
+                            m1 = Me.StreamFlowSpec
+                            m2 = Me.Stream2FlowSpec
+                            mn(0) = m1
+                            mn(1) = m2
+                            mn(2) = M - m1 - m2
+                    End Select
 
                     i = 0
                     For Each cp In Me.GraphicObject.OutputConnectors
@@ -227,11 +254,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                     j += 1
                                 Next
                                 .Fases(0).SPMProperties.massflow = Nothing
-                                If i = 0 Then
-                                    .Fases(0).SPMProperties.molarflow = m1
-                                Else
-                                    .Fases(0).SPMProperties.molarflow = mn / (n - 1)
-                                End If
+                                .Fases(0).SPMProperties.molarflow = mn(i)
                                 .Fases(0).SPMProperties.massfraction = 1
                                 .Fases(0).SPMProperties.molarfraction = 1
                                 .SpecType = Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
@@ -403,6 +426,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 .Item.Add(DWSIM.App.GetLocalString("SplitterOperationMode"), Me, "OperationMode", False, DWSIM.App.GetLocalString("Parmetros2"), "", True)
 
+                Dim n As Integer = 0
+                For Each cp In Me.GraphicObject.OutputConnectors
+                    If cp.IsAttached Then
+                        n += 1
+                    End If
+                Next
+
                 Select Case Me.OperationMode
                     Case OpMode.SplitRatios
                         Dim i As Integer = 0
@@ -423,6 +453,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_massflow, "W"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With
+                        If n = 3 Then
+                            valor = Format(Conversor.ConverterDoSI(su.spmp_massflow, Me.Stream2FlowSpec), FlowSheet.Options.NumberFormat)
+                            .Item.Add(FT(DWSIM.App.GetPropertyName("PROP_SP_2"), su.spmp_massflow), valor, False, DWSIM.App.GetLocalString("Parmetros2"), "", True)
+                            With .Item(.Item.Count - 1)
+                                .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_massflow, "W"}
+                                .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
+                            End With
+                        End If
                     Case OpMode.StreamMoleFlowSpec
                         Dim valor = Format(Conversor.ConverterDoSI(su.spmp_molarflow, Me.StreamFlowSpec), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetPropertyName("PROP_SP_1"), su.spmp_molarflow), valor, False, DWSIM.App.GetLocalString("Parmetros2"), "", True)
@@ -430,6 +468,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_molarflow, "M"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With
+                        If n = 3 Then
+                            valor = Format(Conversor.ConverterDoSI(su.spmp_molarflow, Me.Stream2FlowSpec), FlowSheet.Options.NumberFormat)
+                            .Item.Add(FT(DWSIM.App.GetPropertyName("PROP_SP_2"), su.spmp_molarflow), valor, False, DWSIM.App.GetLocalString("Parmetros2"), "", True)
+                            With .Item(.Item.Count - 1)
+                                .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_molarflow, "M"}
+                                .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
+                            End With
+                        End If
                 End Select
 
             End With
@@ -440,12 +486,25 @@ Namespace DWSIM.SimulationObjects.UnitOps
             If su Is Nothing Then su = New DWSIM.SistemasDeUnidades.UnidadesSI
             Dim cv As New DWSIM.SistemasDeUnidades.Conversor
             Dim value As Double = 0
-            Select Case Me.OperationMode
-                Case OpMode.SplitRatios
-                Case OpMode.StreamMassFlowSpec
-                    value = cv.ConverterDoSI(su.spmp_massflow, Me.StreamFlowSpec)
-                Case OpMode.StreamMoleFlowSpec
-                    value = cv.ConverterDoSI(su.spmp_molarflow, Me.StreamFlowSpec)
+            Select Case prop
+                Case "PROP_SP_1"
+                    If Me.OperationMode = OpMode.StreamMassFlowSpec Then
+                        value = cv.ConverterDoSI(su.spmp_massflow, Me.StreamFlowSpec)
+                    Else
+                        value = cv.ConverterDoSI(su.spmp_molarflow, Me.StreamFlowSpec)
+                    End If
+                Case "PROP_SP_2"
+                    If Me.OperationMode = OpMode.StreamMassFlowSpec Then
+                        value = cv.ConverterDoSI(su.spmp_massflow, Me.Stream2FlowSpec)
+                    Else
+                        value = cv.ConverterDoSI(su.spmp_molarflow, Me.Stream2FlowSpec)
+                    End If
+                Case "SR1"
+                    If Me.Ratios.Count > 0 Then value = Me.Ratios(0)
+                Case "SR2"
+                    If Me.Ratios.Count > 1 Then value = Me.Ratios(1)
+                Case "SR3"
+                    If Me.Ratios.Count > 2 Then value = Me.Ratios(2)
             End Select
             Return value
         End Function
@@ -453,19 +512,35 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Public Overloads Overrides Function GetProperties(ByVal proptype As SimulationObjects_BaseClass.PropertyType) As String()
             Dim proplist As New ArrayList
             proplist.Add("PROP_SP_1")
-            'proplist.Add("PROP_SP_2")
+            proplist.Add("PROP_SP_2")
+            proplist.Add("SR1")
+            proplist.Add("SR2")
+            proplist.Add("SR3")
             Return proplist.ToArray(GetType(System.String))
         End Function
 
         Public Overrides Function SetPropertyValue(ByVal prop As String, ByVal propval As Object, Optional ByVal su As DWSIM.SistemasDeUnidades.Unidades = Nothing) As Object
             If su Is Nothing Then su = New DWSIM.SistemasDeUnidades.UnidadesSI
             Dim cv As New DWSIM.SistemasDeUnidades.Conversor
-            Select Case Me.OperationMode
-                Case OpMode.SplitRatios
-                Case OpMode.StreamMassFlowSpec
-                    Me.StreamFlowSpec = cv.ConverterParaSI(su.spmp_massflow, propval)
-                Case OpMode.StreamMoleFlowSpec
-                    Me.StreamFlowSpec = cv.ConverterParaSI(su.spmp_molarflow, propval)
+            Select Case prop
+                Case "PROP_SP_1"
+                    If Me.OperationMode = OpMode.StreamMassFlowSpec Then
+                        Me.StreamFlowSpec = cv.ConverterParaSI(su.spmp_massflow, propval)
+                    Else
+                        Me.StreamFlowSpec = cv.ConverterParaSI(su.spmp_molarflow, propval)
+                    End If
+                Case "PROP_SP_2"
+                    If Me.OperationMode = OpMode.StreamMassFlowSpec Then
+                        Me.Stream2FlowSpec = cv.ConverterParaSI(su.spmp_massflow, propval)
+                    Else
+                        Me.Stream2FlowSpec = cv.ConverterParaSI(su.spmp_molarflow, propval)
+                    End If
+                Case "SR1"
+                    If Me.Ratios.Count > 0 Then Me.Ratios(0) = propval
+                Case "SR2"
+                    If Me.Ratios.Count > 1 Then Me.Ratios(1) = propval
+                Case "SR3"
+                    If Me.Ratios.Count > 2 Then Me.Ratios(2) = propval
             End Select
             Return 1
         End Function
@@ -473,14 +548,16 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Public Overrides Function GetPropertyUnit(ByVal prop As String, Optional ByVal su As SistemasDeUnidades.Unidades = Nothing) As Object
             If su Is Nothing Then su = New DWSIM.SistemasDeUnidades.UnidadesSI
             Dim value As String = ""
-            Select Case Me.OperationMode
-                Case OpMode.SplitRatios
-                    value = ""
-                Case OpMode.StreamMassFlowSpec
-                    value = su.spmp_massflow
-                Case OpMode.StreamMoleFlowSpec
-                    value = su.spmp_molarflow
-            End Select
+            If prop.StartsWith("P") Then
+                Select Case Me.OperationMode
+                    Case OpMode.StreamMassFlowSpec
+                        value = su.spmp_massflow
+                    Case OpMode.StreamMoleFlowSpec
+                        value = su.spmp_molarflow
+                End Select
+            Else
+                value = ""
+            End If
             Return value
         End Function
     End Class

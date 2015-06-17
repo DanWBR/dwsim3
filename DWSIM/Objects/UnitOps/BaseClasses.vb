@@ -295,6 +295,15 @@ Imports PropertyGridEx
                             sp.StreamFlowSpec = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_molarflow, e.ChangedItem.Value)
                     End Select
 
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetPropertyName("PROP_SP_2")) Then
+
+                    Select Case sp.OperationMode
+                        Case SimulationObjects.UnitOps.Splitter.OpMode.StreamMassFlowSpec
+                            sp.Stream2FlowSpec = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_massflow, e.ChangedItem.Value)
+                        Case SimulationObjects.UnitOps.Splitter.OpMode.StreamMoleFlowSpec
+                            sp.Stream2FlowSpec = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_molarflow, e.ChangedItem.Value)
+                    End Select
+
                 End If
 
                 If FlowSheet.Options.CalculatorActivated Then

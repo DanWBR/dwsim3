@@ -1133,6 +1133,9 @@
   <data name="PROP_SP_1" xml:space="preserve">
     <value>Stream 1 Flow Spec</value>
   </data>
+  <data name="PROP_SP_2" xml:space="preserve">
+    <value>Stream 2 Flow Spec</value>
+  </data>
   <data name="PROP_SS_0" xml:space="preserve">
     <value>Energy Balance</value>
     <comment>0</comment>
