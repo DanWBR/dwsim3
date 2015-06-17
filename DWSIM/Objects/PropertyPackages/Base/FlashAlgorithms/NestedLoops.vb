@@ -341,10 +341,11 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             Dim tolINT As Double = CDbl(PP.Parameters("PP_PHFILT"))
             Dim tolEXT As Double = CDbl(PP.Parameters("PP_PHFELT"))
 
-            Dim Tmin, Tmax, epsilon(4) As Double
+            Dim Tmin, Tmax, epsilon(4), maxDT As Double
 
             Tmax = 2000.0#
             Tmin = 50.0#
+            maxDT = 30.0#
 
             epsilon(0) = 0.1
             epsilon(1) = 0.01
@@ -394,10 +395,12 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                         fx2 = Herror("PT", x1 + epsilon(j), P, Vz, PP)(0)
                     End If
 
-                    If Abs(fx) < tolEXT Then Exit Do
+                    If Abs(fx) <= tolEXT Then Exit Do
 
                     dfdx = (fx2 - fx) / epsilon(j)
                     dx = fx / dfdx
+
+                    If Abs(dx) > maxDT Then dx = maxDT * Sign(dx)
 
                     x1 = x1 - dx
 
@@ -413,7 +416,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
 
             Next
 
-            If Double.IsNaN(T) Or T <= Tmin Or T >= Tmax Then Throw New Exception("PH Flash [NL]: Invalid result: Temperature did not converge.")
+            If Double.IsNaN(T) Or T <= Tmin Or T >= Tmax Or cnt > maxitEXT Or Abs(fx) > tolEXT Then Throw New Exception("PH Flash [NL]: Invalid result: Temperature did not converge.")
 
             Dim tmp As Object = Flash_PT(Vz, P, T, PP)
 
@@ -583,7 +586,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     Ki(i) = 1
                 Next
 
-                If T <= Tmin Or T >= Tmax Then Throw New Exception("PH Flash [NL3PV3]: Invalid result: Temperature did not converge.")
+                If T <= Tmin Or T >= Tmax Or ecount > maxitEXT Then Throw New Exception("PH Flash [NL3PV3]: Invalid result: Temperature did not converge.")
             Else
 
                 'specified enthalpy requires pure liquid 
@@ -612,7 +615,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     Ki(i) = Vy(i) / Vx(i)
                 Next
 
-                If T <= Tmin Or T >= Tmax Then Throw New Exception("PH Flash [NL]: Invalid result: Temperature did not converge.")
+                If T <= Tmin Or T >= Tmax Or ecount > maxitEXT Then Throw New Exception("PH Flash [NL]: Invalid result: Temperature did not converge.")
             End If
 
             d2 = Date.Now
