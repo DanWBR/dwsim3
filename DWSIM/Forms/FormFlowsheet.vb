@@ -1617,6 +1617,11 @@ Imports DWSIM.DWSIM.Outros
                                     'DWSIM
                                     Me.Collections.CLCS_RecycleCollection.Remove(namesel)
                                     Me.Collections.ObjectCollection.Remove(namesel)
+                                Case TipoObjeto.OT_EnergyRecycle
+                                    Me.Collections.EnergyRecycleCollection.Remove(namesel)
+                                    'DWSIM
+                                    Me.Collections.CLCS_EnergyStreamCollection.Remove(namesel)
+                                    Me.Collections.ObjectCollection.Remove(namesel)
                                 Case TipoObjeto.HeatExchanger
                                     Me.Collections.HeatExchangerCollection.Remove(namesel)
                                     If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeHE").Nodes.RemoveByKey(namesel)
