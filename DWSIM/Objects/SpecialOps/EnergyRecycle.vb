@@ -46,12 +46,6 @@ Namespace DWSIM.SimulationObjects.SpecialOps
             MyBase.LoadData(data)
             Dim xel As XElement
 
-            xel = (From xel2 As XElement In data Select xel2 Where xel2.Name = "ConvPar").SingleOrDefault
-
-            If Not xel Is Nothing Then
-                m_ConvPar.Energy = Double.Parse(xel.Value, ci)
-            End If
-
             xel = (From xel2 As XElement In data Select xel2 Where xel2.Name = "ConvHist").SingleOrDefault
 
             If Not xel Is Nothing Then
@@ -78,7 +72,6 @@ Namespace DWSIM.SimulationObjects.SpecialOps
             Dim ci As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
 
             With elements
-                .Add(New XElement("ConvPar", New XAttribute("Energy", m_ConvPar.Energy)))
                 .Add(New XElement("ConvHist", New XAttribute("Energy", m_ConvHist.Energy),
                                   New XAttribute("EnergyE", m_ConvHist.EnergyE),
                                   New XAttribute("Energy0", m_ConvHist.Energy0),
@@ -221,9 +214,9 @@ Namespace DWSIM.SimulationObjects.SpecialOps
                     .Item(0).Value = Me.IterationsTaken
                     .Item(0).Unit = ""
 
-                    valor = Format(Conversor.ConverterDoSI(su.spmp_deltaT, Me.ConvergenceHistory.EnergyE), nf)
+                    valor = Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.ConvergenceHistory.EnergyE), nf)
                     .Item(1).Value = valor
-                    .Item(1).Unit = su.spmp_deltaT
+                    .Item(1).Unit = su.spmp_heatflow
 
                 End With
 

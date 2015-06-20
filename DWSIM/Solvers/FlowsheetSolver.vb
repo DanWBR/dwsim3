@@ -1527,7 +1527,7 @@ Namespace DWSIM.Flowsheet
                                 If obj.GraphicObject.Active Then
                                     For Each c As ConnectionPoint In obj.GraphicObject.OutputConnectors
                                         If c.IsAttached Then
-                                            If obj.GraphicObject.TipoObjeto = TipoObjeto.OT_Reciclo Then Exit For
+                                            If obj.GraphicObject.TipoObjeto = TipoObjeto.OT_Reciclo Or obj.GraphicObject.TipoObjeto = TipoObjeto.OT_EnergyRecycle Then Exit For
                                             lists(listidx).Add(c.AttachedConnector.AttachedTo.Name)
                                         End If
                                     Next
@@ -1580,6 +1580,8 @@ Namespace DWSIM.Flowsheet
                         lists(0).Add(baseobj.Nome)
                     ElseIf baseobj.GraphicObject.TipoObjeto = TipoObjeto.OT_Reciclo Then
                         lists(0).Add(baseobj.Nome)
+                    ElseIf baseobj.GraphicObject.TipoObjeto = TipoObjeto.OT_EnergyRecycle Then
+                        lists(0).Add(baseobj.Nome)
                     End If
                 Next
 
@@ -1597,7 +1599,8 @@ Namespace DWSIM.Flowsheet
                             End If
                             For Each c As ConnectionPoint In obj.GraphicObject.InputConnectors
                                 If c.IsAttached Then
-                                    If c.AttachedConnector.AttachedFrom.TipoObjeto <> TipoObjeto.OT_Reciclo Then
+                                    If c.AttachedConnector.AttachedFrom.TipoObjeto <> TipoObjeto.OT_Reciclo And
+                                        c.AttachedConnector.AttachedFrom.TipoObjeto <> TipoObjeto.OT_EnergyRecycle Then
                                         lists(listidx).Add(c.AttachedConnector.AttachedFrom.Name)
                                     End If
                                 End If

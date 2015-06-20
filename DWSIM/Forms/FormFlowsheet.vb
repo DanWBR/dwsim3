@@ -299,7 +299,7 @@ Imports DWSIM.DWSIM.Outros
                 Me.ToolStripComboBoxUnitSystem.SelectedItem = Me.Options.SelectedUnitSystem.nome
             Else
                 If Me.Options.SelectedUnitSystem.nome <> "" Then
-                    If MessageBox.Show(DWSIM.App.GetLocalString("ConfirmAddUnitSystemFromSimulation"), DWSIM.App.GetLocalString("AddUnitSystemFromSimulation"), MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
+                    If MessageBox.Show(Me.ParentForm, DWSIM.App.GetLocalString("ConfirmAddUnitSystemFromSimulation"), DWSIM.App.GetLocalString("AddUnitSystemFromSimulation"), MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
                         AddUnitSystem(Me.Options.SelectedUnitSystem)
                     End If
                 Else

@@ -2744,6 +2744,8 @@ Public Class FormMain
 
     Sub SaveXML(ByVal path As String, ByVal form As FormFlowsheet, Optional ByVal simulationfilename As String = "")
 
+        If simulationfilename = "" Then simulationfilename = path
+
         If (From f As DockContent In form.dckPanel.Documents Select f Where f.Name = "FormScript").Count > 0 Then
             Dim f As FormScript = (From fs As DockContent In form.dckPanel.Documents Select fs Where fs.Name = "FormScript").First
             f.UpdateScripts()
@@ -2906,7 +2908,7 @@ Public Class FormMain
 
         xdoc.Save(path)
 
-        If IO.Path.GetExtension(path).ToLower.Contains("dwxml") Or IO.Path.GetExtension(path).ToLower.Contains("dwxmz") Then
+        If IO.Path.GetExtension(simulationfilename).ToLower.Contains("dwxml") Or IO.Path.GetExtension(simulationfilename).ToLower.Contains("dwxmz") Then
             Me.UIThread(New Action(Sub()
                                        Dim mypath As String = simulationfilename
                                        If mypath = "" Then mypath = [path]
@@ -3117,6 +3119,7 @@ Public Class FormMain
         End If
 
     End Sub
+
     Private Function IsZipFilePasswordProtected(ByVal ZipFile As String) As Boolean
         Using fsIn As New FileStream(ZipFile, FileMode.Open, FileAccess.Read)
             Using zipInStream As New ZipInputStream(fsIn)
@@ -3700,6 +3703,8 @@ ruf:                Application.DoEvents()
                     Select Case Path.GetExtension(nome).ToLower()
                         Case ".dwxml"
                             Me.LoadXML(nome)
+                        Case ".dwxmz"
+                            Me.LoadAndExtractXMLZIP(nome)
                         Case ".dwsim"
                             Me.LoadF(nome)
                         Case ".dwcsd"
