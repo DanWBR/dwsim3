@@ -210,9 +210,6 @@
   <data name="KryptonLabel7.Size" type="System.Drawing.Size, System.Drawing">
     <value>46, 13</value>
   </data>
-  <data name="cbBase.Items2" xml:space="preserve">
-    <value>Concentração Molar</value>
-  </data>
   <data name="&gt;&gt;KryptonButton3.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
@@ -324,8 +321,8 @@
   <data name="Column3.HeaderText" xml:space="preserve">
     <value>Massa Molar</value>
   </data>
-  <data name="&gt;&gt;tbReacHeat.Parent" xml:space="preserve">
-    <value>GroupBox1</value>
+  <data name="cbBase.Items2" xml:space="preserve">
+    <value>Concentração Molar</value>
   </data>
   <data name="&gt;&gt;KryptonLabel1.Parent" xml:space="preserve">
     <value>GroupBox1</value>
@@ -789,6 +786,9 @@
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FormReacHeterog</value>
   </data>
+  <data name="&gt;&gt;tbReacHeat.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
   <data name="&gt;&gt;tbTmax.Name" xml:space="preserve">
     <value>tbTmax</value>
   </data>
@@ -1134,9 +1134,6 @@
   <data name="KryptonButton4.Text" xml:space="preserve">
     <value>OK</value>
   </data>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>en</value>
-  </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>

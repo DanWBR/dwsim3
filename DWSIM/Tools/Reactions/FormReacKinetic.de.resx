@@ -132,11 +132,15 @@
   <data name="KryptonLabel16.Text" xml:space="preserve">
     <value>A '</value>
   </data>
-  <data name="KryptonLabel14.Text" xml:space="preserve">
-    <value>UND</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="KryptonLabel11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>108, 13</value>
   </data>
   <data name="KryptonLabel11.Text" xml:space="preserve">
     <value>Konzentrationseinheit</value>
+  </data>
+  <data name="KryptonLabel12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 13</value>
   </data>
   <data name="KryptonLabel12.Text" xml:space="preserve">
     <value>Geschwindigkeitseinheit</value>
@@ -148,10 +152,13 @@
     <value>Hinreaktion [k = A exp(-E/RT)]</value>
   </data>
   <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Hin- und Rückreaktionsgeschwindigkeitskonstanten (k and k')</value>
+    <value>Geschwindigkeitskonstanten der Hin- und Rückreaktion (k and k')</value>
   </data>
   <data name="KryptonLabel9.Text" xml:space="preserve">
     <value>Basiskomponente</value>
+  </data>
+  <data name="KryptonLabel4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>32, 13</value>
   </data>
   <data name="KryptonLabel4.Text" xml:space="preserve">
     <value>Basis</value>
@@ -177,8 +184,14 @@
   <data name="cbBase.Items6" xml:space="preserve">
     <value>Partialdruck</value>
   </data>
+  <data name="KryptonLabel6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>37, 13</value>
+  </data>
   <data name="KryptonLabel6.Text" xml:space="preserve">
     <value>Phase</value>
+  </data>
+  <data name="tbPhase.Items" xml:space="preserve">
+    <value>Gas</value>
   </data>
   <data name="tbPhase.Items1" xml:space="preserve">
     <value>Flüssigkeit</value>
@@ -189,11 +202,20 @@
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Kinetische Reaktionsparameter</value>
   </data>
+  <data name="tbEquation.Location" type="System.Drawing.Point, System.Drawing">
+    <value>91, 186</value>
+  </data>
+  <data name="tbEquation.Size" type="System.Drawing.Size, System.Drawing">
+    <value>494, 20</value>
+  </data>
+  <data name="KryptonLabel3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>85, 19</value>
+  </data>
   <data name="KryptonLabel3.Text" xml:space="preserve">
     <value>Gleichung</value>
   </data>
   <data name="KryptonButton2.Text" xml:space="preserve">
-    <value>Balance</value>
+    <value>Bilanz</value>
   </data>
   <data name="KryptonLabel2.Text" xml:space="preserve">
     <value>Reaktionswärme (kJ/kmol_BK)</value>
@@ -234,13 +256,31 @@
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Komponenten, Stöchiometrie und Reaktionordnung</value>
   </data>
+  <data name="KryptonLabel19.Size" type="System.Drawing.Size, System.Drawing">
+    <value>79, 19</value>
+  </data>
   <data name="KryptonLabel19.Text" xml:space="preserve">
     <value>Beschreibung</value>
   </data>
   <data name="KryptonLabel20.Text" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="tbName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>91, 17</value>
+  </data>
+  <data name="tbName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>494, 20</value>
+  </data>
+  <data name="tbDesc.Location" type="System.Drawing.Point, System.Drawing">
+    <value>91, 44</value>
+  </data>
+  <data name="tbDesc.Size" type="System.Drawing.Size, System.Drawing">
+    <value>494, 50</value>
+  </data>
   <data name="GroupBox4.Text" xml:space="preserve">
     <value>Identifikation</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Kinetische Reaktion</value>
   </data>
 </root>

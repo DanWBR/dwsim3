@@ -123,42 +123,20 @@
   <data name="Column3.HeaderText" xml:space="preserve">
     <value>Description</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="GridRSets.Location" type="System.Drawing.Point, System.Drawing">
-    <value>35, 16</value>
-  </data>
-  <data name="GridRSets.Size" type="System.Drawing.Size, System.Drawing">
-    <value>618, 161</value>
-  </data>
-  <data name="ToolStripButton1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>29, 20</value>
-  </data>
   <data name="ToolStripButton1.Text" xml:space="preserve">
     <value>Add New Reaction Set</value>
   </data>
   <data name="ToolStripButton1.ToolTipText" xml:space="preserve">
     <value>Add New Reaction Set</value>
   </data>
-  <data name="ToolStripButton3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>29, 20</value>
-  </data>
   <data name="ToolStripButton3.Text" xml:space="preserve">
     <value>Edit Selected Set</value>
-  </data>
-  <data name="ToolStripButton5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>29, 20</value>
   </data>
   <data name="ToolStripButton5.Text" xml:space="preserve">
     <value>Copy Selected Set</value>
   </data>
-  <data name="ToolStripButton2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>29, 20</value>
-  </data>
   <data name="ToolStripButton2.Text" xml:space="preserve">
     <value>Remove Selected Set</value>
-  </data>
-  <data name="ToolStrip2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>32, 161</value>
   </data>
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Reaction Sets</value>
@@ -172,6 +150,7 @@
   <data name="DataGridViewTextBoxColumn3.HeaderText" xml:space="preserve">
     <value>Equation</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="ConversãoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>204, 22</value>
   </data>

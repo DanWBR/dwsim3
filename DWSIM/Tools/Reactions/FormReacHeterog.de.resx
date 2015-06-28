@@ -118,53 +118,50 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="KryptonButton3.Text" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Heterogeneous Kinetic Reaction Parameters</value>
-  </data>
-  <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Reaction Rate (Base Component) = Numerator / Denominator</value>
+    <value>Abbrechen</value>
   </data>
   <data name="Label1.Text" xml:space="preserve">
-    <value>Expression Variables: Temperature (T) in K, reactant amounts (R1, R2, ..., Rn) and product amounts (P1, P2, ..., Pn) in the selected concentration unit, reaction rate (r) in the selected velocity unit.</value>
+    <value>Ausdruck Variablen: Temperatur (T) in K, Eduktmengen (R1, R2, ..., Rn) und Produktmengen (P1, P2, ..., Pn) in der gewählten Konzentrationseinheit, Reaktionsrate (r) in der gewählten Geschwindigkeitseinheit.</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="KryptonLabel11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>95, 13</value>
+    <value>108, 13</value>
   </data>
   <data name="KryptonLabel11.Text" xml:space="preserve">
-    <value>Concentration Unit</value>
+    <value>Konzentrationseinheit</value>
   </data>
   <data name="cbConcUnit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>107, 118</value>
+    <value>120, 118</value>
   </data>
   <data name="cbConcUnit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>185, 21</value>
+    <value>172, 21</value>
   </data>
   <data name="KryptonLabel12.Size" type="System.Drawing.Size, System.Drawing">
-    <value>66, 13</value>
+    <value>121, 13</value>
   </data>
   <data name="KryptonLabel12.Text" xml:space="preserve">
-    <value>Velocity Unit</value>
+    <value>Geschwindigkeitseinheit</value>
   </data>
   <data name="cbVelUnit.Location" type="System.Drawing.Point, System.Drawing">
-    <value>373, 118</value>
+    <value>427, 118</value>
   </data>
   <data name="cbVelUnit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>196, 21</value>
+    <value>142, 21</value>
   </data>
   <data name="KryptonLabel10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>67, 13</value>
+    <value>42, 13</value>
   </data>
   <data name="KryptonLabel10.Text" xml:space="preserve">
-    <value>Denominator</value>
+    <value>Nenner</value>
   </data>
   <data name="KryptonLabel5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>56, 13</value>
+    <value>37, 13</value>
   </data>
   <data name="KryptonLabel5.Text" xml:space="preserve">
-    <value>Numerator</value>
+    <value>Zähler</value>
+  </data>
+  <data name="GroupBox3.Text" xml:space="preserve">
+    <value>Reaktionsgeschwindigkeit (Basiskomponente) = Zähler / Nenner</value>
   </data>
   <data name="tbTmax.Location" type="System.Drawing.Point, System.Drawing">
     <value>499, 20</value>
@@ -185,25 +182,25 @@
     <value>Basis</value>
   </data>
   <data name="cbBase.Items" xml:space="preserve">
-    <value>Activity</value>
+    <value>Aktivität</value>
   </data>
   <data name="cbBase.Items1" xml:space="preserve">
-    <value>Fugacity</value>
+    <value>Fugazität</value>
   </data>
   <data name="cbBase.Items2" xml:space="preserve">
-    <value>Molar Concentration</value>
+    <value>Molare Konzentration</value>
   </data>
   <data name="cbBase.Items3" xml:space="preserve">
-    <value>Mass concentration</value>
+    <value>Massenkonzentration</value>
   </data>
   <data name="cbBase.Items4" xml:space="preserve">
-    <value>Molar fraction</value>
+    <value>Molare Fraktion</value>
   </data>
   <data name="cbBase.Items5" xml:space="preserve">
-    <value>Mass fraction</value>
+    <value>Massenfraktion</value>
   </data>
   <data name="cbBase.Items6" xml:space="preserve">
-    <value>Arterial</value>
+    <value>Partialdruck</value>
   </data>
   <data name="KryptonLabel6.Size" type="System.Drawing.Size, System.Drawing">
     <value>37, 13</value>
@@ -211,86 +208,107 @@
   <data name="KryptonLabel6.Text" xml:space="preserve">
     <value>Phase</value>
   </data>
+  <data name="tbPhase.Items" xml:space="preserve">
+    <value>Gas</value>
+  </data>
   <data name="tbPhase.Items1" xml:space="preserve">
-    <value>Liquid</value>
+    <value>Flüssigkeit</value>
   </data>
   <data name="tbPhase.Items2" xml:space="preserve">
-    <value>Solid</value>
+    <value>Feststoff</value>
   </data>
   <data name="tbPhase.Items3" xml:space="preserve">
-    <value>Mixture</value>
+    <value>Mischung</value>
   </data>
   <data name="tbPhase.Location" type="System.Drawing.Point, System.Drawing">
     <value>240, 20</value>
   </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Components and Stoichiometry</value>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Reaktionsparameter Heterogene Kinetik</value>
   </data>
   <data name="KryptonLabel3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>49, 13</value>
+    <value>55, 13</value>
   </data>
   <data name="KryptonLabel3.Text" xml:space="preserve">
-    <value>Equation</value>
+    <value>Gleichung</value>
   </data>
   <data name="KryptonLabel9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>88, 13</value>
+    <value>91, 13</value>
   </data>
   <data name="KryptonLabel9.Text" xml:space="preserve">
-    <value>Base Component</value>
+    <value>Basiskomponente</value>
   </data>
   <data name="KryptonButton2.Text" xml:space="preserve">
-    <value>Balance</value>
+    <value>Bilanz</value>
   </data>
   <data name="KryptonLabel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 13</value>
+    <value>153, 13</value>
   </data>
   <data name="KryptonLabel2.Text" xml:space="preserve">
-    <value>Heat of Reaction (kJ/kmol_BC)</value>
+    <value>Reaktionswärme (kJ/kmol_BK)</value>
   </data>
   <data name="Column2.HeaderText" xml:space="preserve">
     <value>Name</value>
   </data>
   <data name="Column3.HeaderText" xml:space="preserve">
-    <value>Molar Weight</value>
+    <value>Molgewicht</value>
   </data>
   <data name="Column4.HeaderText" xml:space="preserve">
-    <value>Include</value>
+    <value>Benutzen</value>
+  </data>
+  <data name="Column4.ToolTipText" xml:space="preserve">
+    <value>Komponente in Reaktion benutzen</value>
   </data>
   <data name="Column5.HeaderText" xml:space="preserve">
-    <value>BC</value>
+    <value>BK</value>
   </data>
   <data name="Column5.ToolTipText" xml:space="preserve">
-    <value>Base Component</value>
+    <value>Basis Komponente</value>
   </data>
   <data name="Column6.HeaderText" xml:space="preserve">
-    <value>SC</value>
+    <value>SK</value>
   </data>
   <data name="Column6.ToolTipText" xml:space="preserve">
-    <value>Stoichiometric Coefficient</value>
+    <value>Stöchiometrischer Koeffizient</value>
   </data>
   <data name="KryptonLabel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 13</value>
+    <value>71, 13</value>
   </data>
   <data name="KryptonLabel1.Text" xml:space="preserve">
-    <value>Stoichiometry</value>
+    <value>Stöchiometrie</value>
   </data>
-  <data name="GroupBox4.Text" xml:space="preserve">
-    <value>Identification</value>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Komponenten und Stöchiometrie</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="KryptonLabel19.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="KryptonLabel19.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 13</value>
+    <value>72, 13</value>
   </data>
   <data name="KryptonLabel19.Text" xml:space="preserve">
-    <value>Description</value>
+    <value>Beschreibung</value>
   </data>
   <data name="KryptonLabel20.Text" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="tbName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>84, 17</value>
+  </data>
+  <data name="tbName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>501, 20</value>
+  </data>
+  <data name="tbDesc.Location" type="System.Drawing.Point, System.Drawing">
+    <value>84, 44</value>
+  </data>
+  <data name="tbDesc.Size" type="System.Drawing.Size, System.Drawing">
+    <value>501, 50</value>
+  </data>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Identifikation</value>
+  </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Heterogeneous Catalytic Reaction</value>
+    <value>Heterogene katalytische Reaktion</value>
   </data>
 </root>

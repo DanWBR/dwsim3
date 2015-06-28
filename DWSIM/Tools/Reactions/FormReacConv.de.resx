@@ -135,6 +135,9 @@
   <data name="Column6.HeaderText" xml:space="preserve">
     <value>Stöch. Koeff.</value>
   </data>
+  <data name="tbPhase.Items" xml:space="preserve">
+    <value>Gas</value>
+  </data>
   <data name="tbPhase.Items1" xml:space="preserve">
     <value>Flüssigkeit</value>
   </data>
@@ -144,23 +147,54 @@
   <data name="KryptonLabel1.Text" xml:space="preserve">
     <value>Stöchiometrie</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="tbEquation.Location" type="System.Drawing.Point, System.Drawing">
+    <value>78, 186</value>
+  </data>
+  <data name="tbEquation.Size" type="System.Drawing.Size, System.Drawing">
+    <value>507, 20</value>
+  </data>
+  <data name="KryptonLabel3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 19</value>
+  </data>
   <data name="KryptonLabel3.Text" xml:space="preserve">
     <value>Gleichung</value>
   </data>
   <data name="KryptonButton2.Text" xml:space="preserve">
-    <value>Balance</value>
+    <value>Bilanz</value>
   </data>
   <data name="KryptonLabel2.Text" xml:space="preserve">
-    <value>Reaktionswärme (kJ/kmol_BC) (25 °C)</value>
+    <value>Reaktionswärme (kJ/kmol_BK) (25 °C)</value>
+  </data>
+  <data name="tbStoich.Location" type="System.Drawing.Point, System.Drawing">
+    <value>78, 161</value>
+  </data>
+  <data name="tbStoich.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 20</value>
   </data>
   <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Komponenten/Stöchiometrie</value>
+    <value>Komponenten / Stöchiometrie</value>
+  </data>
+  <data name="tbCompBase.Location" type="System.Drawing.Point, System.Drawing">
+    <value>103, 17</value>
+  </data>
+  <data name="tbCompBase.Size" type="System.Drawing.Size, System.Drawing">
+    <value>287, 20</value>
+  </data>
+  <data name="KryptonLabel4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>91, 13</value>
   </data>
   <data name="KryptonLabel4.Text" xml:space="preserve">
-    <value>Basiskomp.</value>
+    <value>Basiskomponente</value>
   </data>
   <data name="KryptonLabel7.Text" xml:space="preserve">
     <value>T in K</value>
+  </data>
+  <data name="KryptonLabel6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>396, 20</value>
+  </data>
+  <data name="KryptonLabel6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 19</value>
   </data>
   <data name="KryptonLabel6.Text" xml:space="preserve">
     <value>Phase</value>
@@ -174,13 +208,31 @@
   <data name="KryptonButton3.Text" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
+  <data name="KryptonLabel8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>79, 19</value>
+  </data>
   <data name="KryptonLabel8.Text" xml:space="preserve">
     <value>Beschreibung</value>
   </data>
   <data name="KryptonLabel9.Text" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="tbName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>91, 17</value>
+  </data>
+  <data name="tbName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>494, 20</value>
+  </data>
+  <data name="tbDesc.Location" type="System.Drawing.Point, System.Drawing">
+    <value>91, 44</value>
+  </data>
+  <data name="tbDesc.Size" type="System.Drawing.Size, System.Drawing">
+    <value>494, 50</value>
+  </data>
   <data name="GroupBox3.Text" xml:space="preserve">
     <value>Identifikation</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Konversionsreaktion</value>
   </data>
 </root>
