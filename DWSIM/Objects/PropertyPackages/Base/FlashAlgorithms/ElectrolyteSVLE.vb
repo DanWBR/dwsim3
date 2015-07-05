@@ -439,7 +439,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                             rxn = form.Options.Reactions(rxnsb.ReactionID)
                             If rxn.ConstantKeqValue < 1 Then
                                 REx(i) = 0.0#
-                            ElseIf rxn.ConstantKeqValue > 10 Then
+                            ElseIf rxn.ConstantKeqValue > 70 Then
                                 REx(i) = ubound(i)
                             Else
                                 REx(i) = ubound(i) * 0.5
