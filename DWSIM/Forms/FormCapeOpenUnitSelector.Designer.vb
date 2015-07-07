@@ -8,31 +8,31 @@ Partial Class FormCapeOpenUnitSelector
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormCapeOpenUnitSelector))
-        Me.ListBox1 = New System.Windows.Forms.ListBox
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.Label5 = New System.Windows.Forms.Label
-        Me.Label6 = New System.Windows.Forms.Label
-        Me.lblName = New System.Windows.Forms.Label
-        Me.lblVersion = New System.Windows.Forms.Label
-        Me.lblAuthorURL = New System.Windows.Forms.LinkLabel
-        Me.lblHelpURL = New System.Windows.Forms.LinkLabel
-        Me.btnOK = New System.Windows.Forms.Button
-        Me.btnCancel = New System.Windows.Forms.Button
-        Me.Label7 = New System.Windows.Forms.Label
-        Me.lblCOversion = New System.Windows.Forms.Label
-        Me.txtDesc = New System.Windows.Forms.TextBox
-        Me.txtAbout = New System.Windows.Forms.TextBox
-        Me.Label8 = New System.Windows.Forms.Label
-        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker
+        Me.ListBox1 = New System.Windows.Forms.ListBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.lblName = New System.Windows.Forms.Label()
+        Me.lblVersion = New System.Windows.Forms.Label()
+        Me.lblAuthorURL = New System.Windows.Forms.LinkLabel()
+        Me.lblHelpURL = New System.Windows.Forms.LinkLabel()
+        Me.btnOK = New System.Windows.Forms.Button()
+        Me.btnCancel = New System.Windows.Forms.Button()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.lblCOversion = New System.Windows.Forms.Label()
+        Me.txtDesc = New System.Windows.Forms.TextBox()
+        Me.txtAbout = New System.Windows.Forms.TextBox()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.SuspendLayout()
         '
         'ListBox1
         '
-        Me.ListBox1.FormattingEnabled = True
         resources.ApplyResources(Me.ListBox1, "ListBox1")
+        Me.ListBox1.FormattingEnabled = True
         Me.ListBox1.Name = "ListBox1"
         '
         'Label1
@@ -123,6 +123,9 @@ Partial Class FormCapeOpenUnitSelector
         '
         resources.ApplyResources(Me.Label8, "Label8")
         Me.Label8.Name = "Label8"
+        '
+        'BackgroundWorker1
+        '
         '
         'FormCapeOpenUnitSelector
         '

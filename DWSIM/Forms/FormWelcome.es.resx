@@ -128,92 +128,17 @@
     <value>Abre una nueva ventana del creador de los componentes.</value>
   </data>
   <data name="Label12.Size" type="System.Drawing.Size, System.Drawing">
-    <value>190, 17</value>
+    <value>194, 17</value>
   </data>
   <data name="Label12.Text" xml:space="preserve">
-    <value>Crear nuevo componente</value>
-  </data>
-  <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>49, 13</value>
-  </data>
-  <data name="Label5.Text" xml:space="preserve">
-    <value>Ejemplos</value>
-  </data>
-  <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>257, 13</value>
-  </data>
-  <data name="Label6.Text" xml:space="preserve">
-    <value>Abre la utilidad de regresión de datos experimentales.</value>
-  </data>
-  <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>246, 17</value>
-  </data>
-  <data name="Label7.Text" xml:space="preserve">
-    <value>Crear nuevo Regresión de Datos</value>
-  </data>
-  <data name="Label10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>227, 13</value>
-  </data>
-  <data name="Label10.Text" xml:space="preserve">
-    <value>Crea nueva simulación en estado estacionario.</value>
-  </data>
-  <data name="Label9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>83, 13</value>
-  </data>
-  <data name="Label9.Text" xml:space="preserve">
-    <value>Abrir simulación.</value>
-  </data>
-  <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 17</value>
-  </data>
-  <data name="Label4.Text" xml:space="preserve">
-    <value>Crear nueva simulación</value>
-  </data>
-  <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 17</value>
-  </data>
-  <data name="Label3.Text" xml:space="preserve">
-    <value>Abrir simulación</value>
-  </data>
-  <data name="Label13.Size" type="System.Drawing.Size, System.Drawing">
-    <value>212, 13</value>
-  </data>
-  <data name="Label13.Text" xml:space="preserve">
-    <value>Muestra la documentación en formato PDF.</value>
-  </data>
-  <data name="Label14.Size" type="System.Drawing.Size, System.Drawing">
-    <value>216, 17</value>
-  </data>
-  <data name="Label14.Text" xml:space="preserve">
-    <value>Consultar La Documentación</value>
-  </data>
-  <data name="LabelWithDivider12.Text" xml:space="preserve">
-    <value>Apoyar el Proyecto</value>
-  </data>
-  <data name="Label15.Text" xml:space="preserve">
-    <value>DWSIM es un software de código abierto y siempre lo será. Sin embargo, hay costos de desarrollo (adquisición de libros y artículos técnicos) y de mantenimiento (servidor web, hardware) que se necesitan para mantener viva y en crecimiento del proyecto. Si DWSIM ha gustado a usted de algún modo, por favor considere hacer una donación usando tu cuenta de PayPal. Cualquier cantidad será muy bienvenido y, si lo desea, su nombre aparecerá en la lista de donantes a la página Wiki.</value>
-  </data>
-  <data name="Button8.Text" xml:space="preserve">
-    <value>Donar Ahora</value>
-  </data>
-  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>65, 19</value>
-  </data>
-  <data name="Label1.Text" xml:space="preserve">
-    <value>Tareas</value>
-  </data>
-  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>163, 19</value>
-  </data>
-  <data name="Label2.Text" xml:space="preserve">
-    <value>Archivos Recientes</value>
+    <value>Crear Nuevo Componente</value>
   </data>
   <data name="ImageList1.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAD0
-        DwAAAk1TRnQBSQFMAgEBBQEAATQBAAE0AQABEAEAARABAAT/AREBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        DwAAAk1TRnQBSQFMAgEBBQEAAUQBAAFEAQABEAEAARABAAT/AREBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABIAMAAQEBAAEQBgABEP8AFQABeQF3ARMBcwFJAW4BJwFuAScBbgEnAW4BJwFuAScBbgEnAW4BJwFu
         AScBbgEnAW4BSAFuATUBc2QAAWoBbgG7AXsBdQF7AXMBewFyAXsBcQF7AVABewFPAXsBTwF7AU4BewFN
         AXsBLQF7AbgBfwFoAW5kAAFoAW4B/QF/AbQBfwGSAX8BkAF7AW4BewFsAXsBSgF7AUgBewFHAXsBJQF7
@@ -283,6 +208,93 @@
         AQMBwAEDAcABAwHAAQMBwAEDAcABAwHAAQMBwAEDAcABAwHAAQMBwAEDAcABAwHAAQMBwAEDAcABAwHA
         AQMBwAEDCP8L
 </value>
+  </data>
+  <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 13</value>
+  </data>
+  <data name="Label5.Text" xml:space="preserve">
+    <value>Ejemplos</value>
+  </data>
+  <data name="Label8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>73, 17</value>
+  </data>
+  <data name="Label8.Text" xml:space="preserve">
+    <value>Ejemplos</value>
+  </data>
+  <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>257, 13</value>
+  </data>
+  <data name="Label6.Text" xml:space="preserve">
+    <value>Abre la utilidad de regresión de datos experimentales.</value>
+  </data>
+  <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>246, 17</value>
+  </data>
+  <data name="Label7.Text" xml:space="preserve">
+    <value>Crear nueva Regresión de Datos</value>
+  </data>
+  <data name="Label10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>227, 13</value>
+  </data>
+  <data name="Label10.Text" xml:space="preserve">
+    <value>Crea nueva simulación en estado estacionario.</value>
+  </data>
+  <data name="Label9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 13</value>
+  </data>
+  <data name="Label9.Text" xml:space="preserve">
+    <value>Abrir simulación.</value>
+  </data>
+  <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>182, 17</value>
+  </data>
+  <data name="Label4.Text" xml:space="preserve">
+    <value>Crear Nueva Simulación</value>
+  </data>
+  <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>126, 17</value>
+  </data>
+  <data name="Label3.Text" xml:space="preserve">
+    <value>Abrir Simulación</value>
+  </data>
+  <data name="Label13.Size" type="System.Drawing.Size, System.Drawing">
+    <value>212, 13</value>
+  </data>
+  <data name="Label13.Text" xml:space="preserve">
+    <value>Muestra la documentación en formato PDF.</value>
+  </data>
+  <data name="Label14.Size" type="System.Drawing.Size, System.Drawing">
+    <value>216, 17</value>
+  </data>
+  <data name="Label14.Text" xml:space="preserve">
+    <value>Consultar La Documentación</value>
+  </data>
+  <data name="LabelWithDivider12.Text" xml:space="preserve">
+    <value>Apoyar el Proyecto</value>
+  </data>
+  <data name="Label15.Text" xml:space="preserve">
+    <value>DWSIM es un software de código abierto y siempre lo será. Sin embargo, hay costos de desarrollo (adquisición de libros y artículos técnicos) y de mantenimiento (servidor web, hardware) que se necesitan para mantener viva y en crecimiento del proyecto. Si DWSIM ha gustado a usted de algún modo, por favor considere hacer una donación usando tu cuenta de PayPal. Cualquier cantidad será muy bienvenido y, si lo desea, su nombre aparecerá en la lista de donantes a la página Wiki.</value>
+  </data>
+  <data name="Button8.Text" xml:space="preserve">
+    <value>Donar Ahora</value>
+  </data>
+  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 19</value>
+  </data>
+  <data name="Label1.Text" xml:space="preserve">
+    <value>Tareas</value>
+  </data>
+  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>163, 19</value>
+  </data>
+  <data name="Label2.Text" xml:space="preserve">
+    <value>Archivos Recientes</value>
+  </data>
+  <data name="Label16.Size" type="System.Drawing.Size, System.Drawing">
+    <value>158, 19</value>
+  </data>
+  <data name="Label16.Text" xml:space="preserve">
+    <value>Archivos Recentes</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Bienvenido a DWSIM</value>

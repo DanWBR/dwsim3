@@ -117,8 +117,72 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="FaTabStripItem1.Title" xml:space="preserve">
+    <value>Gráfica T/P-x</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="FaTabStripItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>832, 452</value>
+  </data>
+  <data name="FaTabStripItem2.Title" xml:space="preserve">
+    <value>Gráfica y-x </value>
+  </data>
+  <data name="FaTabStripItem3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>832, 452</value>
+  </data>
+  <data name="graph2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>832, 452</value>
+  </data>
+  <data name="gridstats.Size" type="System.Drawing.Size, System.Drawing">
+    <value>832, 452</value>
+  </data>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Resultados de la Regresión</value>
+  </data>
+  <data name="btnDoReg.Text" xml:space="preserve">
+    <value>Efectuar Regresión</value>
+  </data>
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Configuración</value>
+  </data>
+  <data name="chkDoTDepRegression.Size" type="System.Drawing.Size, System.Drawing">
+    <value>306, 17</value>
+  </data>
+  <data name="chkDoTDepRegression.Text" xml:space="preserve">
+    <value>Obtener dependencia de los parámetros con la temperatura</value>
+  </data>
+  <data name="Label9.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 161</value>
+  </data>
+  <data name="Label9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>99, 13</value>
+  </data>
+  <data name="Label9.Text" xml:space="preserve">
+    <value>Estimados Iniciales:</value>
+  </data>
+  <data name="colpar.HeaderText" xml:space="preserve">
+    <value>Parámetro</value>
+  </data>
+  <data name="btnCalcOnce.Text" xml:space="preserve">
+    <value>Actualizar</value>
+  </data>
+  <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>87, 13</value>
+  </data>
+  <data name="Label7.Text" xml:space="preserve">
+    <value>Función Objetivo</value>
+  </data>
+  <data name="LabelWithDivider3.Text" xml:space="preserve">
+    <value>Parámetros de Regresión</value>
+  </data>
+  <data name="LabelWithDivider1.Text" xml:space="preserve">
+    <value>Modelo Termodinámico</value>
+  </data>
+  <data name="LabelWithDivider2.Text" xml:space="preserve">
+    <value>Datos Experimentales</value>
+  </data>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Información</value>
   </data>
   <data name="BtnSelectIPDB.Text" xml:space="preserve">
     <value>Buscar</value>
@@ -126,7 +190,6 @@
   <data name="BtnSaveIPDB.Text" xml:space="preserve">
     <value>Guardar</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Label12.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 13</value>
   </data>
@@ -141,9 +204,6 @@
   </data>
   <data name="Label11.Text" xml:space="preserve">
     <value>Descripción</value>
-  </data>
-  <data name="GroupBox4.Text" xml:space="preserve">
-    <value>Información</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1590,6 +1650,6 @@
 </value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Regresión de los datos</value>
+    <value>Regresión de Datos</value>
   </data>
 </root>

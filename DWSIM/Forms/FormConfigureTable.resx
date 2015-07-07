@@ -112,42 +112,127 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, ComponentFactory.Krypton.Toolkit, Version=2.7.1.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
   </data>
-  <data name="&gt;&gt;TreeView1.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="KryptonButton1.Values.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value />
   </data>
-  <data name="&gt;&gt;KryptonButton1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, ComponentFactory.Krypton.Toolkit, Version=2.7.1.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="TreeView1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 25</value>
-  </data>
-  <data name="&gt;&gt;TreeView1.Name" xml:space="preserve">
-    <value>TreeView1</value>
+  <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>1, 6</value>
   </data>
   <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>263, 13</value>
   </data>
-  <data name="&gt;&gt;Label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="TreeView1.TabIndex" type="System.Int32, mscorlib">
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FormConfigureTable</value>
+  </data>
+  <data name="&gt;&gt;TreeView1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;KryptonButton1.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="&gt;&gt;TreeView1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>269, 354</value>
+  </data>
+  <data name="KryptonButton1.Text" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterParent</value>
+  </data>
+  <data name="&gt;&gt;KryptonButton1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;KryptonButton1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;TreeView1.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;Label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;TreeView1.Name" xml:space="preserve">
+    <value>TreeView1</value>
+  </data>
+  <data name="Label1.Text" xml:space="preserve">
+    <value>Selecione as propriedades a serem exibidas na tabela.</value>
+  </data>
+  <data name="&gt;&gt;KryptonButton1.Name" xml:space="preserve">
+    <value>KryptonButton1</value>
+  </data>
+  <data name="&gt;&gt;Label1.Name" xml:space="preserve">
+    <value>Label1</value>
   </data>
   <data name="KryptonButton1.Values.Text" xml:space="preserve">
     <value>OK</value>
   </data>
-  <data name="&gt;&gt;KryptonButton1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;Label1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="KryptonButton1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>79, 25</value>
+  </data>
+  <data name="KryptonButton1.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;Label1.Parent" xml:space="preserve">
     <value>$this</value>
+  </data>
+  <data name="TreeView1.Nodes" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAAB1TeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQ0AAAAEVGV4dAtUb29sVGlwVGV4dAROYW1lCUlzQ2hlY2tl
+        ZApJbWFnZUluZGV4CEltYWdlS2V5ElNlbGVjdGVkSW1hZ2VJbmRleBBTZWxlY3RlZEltYWdlS2V5CkNo
+        aWxkQ291bnQJY2hpbGRyZW4wCWNoaWxkcmVuMQljaGlsZHJlbjIJY2hpbGRyZW4zAQEBAAABAAEABAQE
+        BAEICAgdU3lzdGVtLldpbmRvd3MuRm9ybXMuVHJlZU5vZGUCAAAAHVN5c3RlbS5XaW5kb3dzLkZvcm1z
+        LlRyZWVOb2RlAgAAAB1TeXN0ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQIAAAAdU3lzdGVtLldpbmRv
+        d3MuRm9ybXMuVHJlZU5vZGUCAAAAAgAAAAYDAAAABU5vZGUwBgQAAAAABgUAAAAFTm9kZTAA/////wkE
+        AAAA/////wkEAAAABAAAAAkHAAAACQgAAAAJCQAAAAkKAAAABQcAAAAdU3lzdGVtLldpbmRvd3MuRm9y
+        bXMuVHJlZU5vZGUJAAAABFRleHQLVG9vbFRpcFRleHQETmFtZQlJc0NoZWNrZWQKSW1hZ2VJbmRleAhJ
+        bWFnZUtleRJTZWxlY3RlZEltYWdlSW5kZXgQU2VsZWN0ZWRJbWFnZUtleQpDaGlsZENvdW50AQEBAAAB
+        AAEAAQgICAIAAAAGCwAAAAVOb2RlMAkEAAAABg0AAAAFTm9kZTAA/////wkEAAAA/////wkEAAAAAAAA
+        AAUIAAAAHVN5c3RlbS5XaW5kb3dzLkZvcm1zLlRyZWVOb2RlCQAAAARUZXh0C1Rvb2xUaXBUZXh0BE5h
+        bWUJSXNDaGVja2VkCkltYWdlSW5kZXgISW1hZ2VLZXkSU2VsZWN0ZWRJbWFnZUluZGV4EFNlbGVjdGVk
+        SW1hZ2VLZXkKQ2hpbGRDb3VudAEBAQAAAQABAAEICAgCAAAABg8AAAAFTm9kZTEJBAAAAAYRAAAABU5v
+        ZGUxAP////8JBAAAAP////8JBAAAAAAAAAAFCQAAAB1TeXN0ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9k
+        ZQkAAAAEVGV4dAtUb29sVGlwVGV4dAROYW1lCUlzQ2hlY2tlZApJbWFnZUluZGV4CEltYWdlS2V5ElNl
+        bGVjdGVkSW1hZ2VJbmRleBBTZWxlY3RlZEltYWdlS2V5CkNoaWxkQ291bnQBAQEAAAEAAQABCAgIAgAA
+        AAYTAAAABU5vZGUyCQQAAAAGFQAAAAVOb2RlMgD/////CQQAAAD/////CQQAAAAAAAAABQoAAAAdU3lz
+        dGVtLldpbmRvd3MuRm9ybXMuVHJlZU5vZGUJAAAABFRleHQLVG9vbFRpcFRleHQETmFtZQlJc0NoZWNr
+        ZWQKSW1hZ2VJbmRleAhJbWFnZUtleRJTZWxlY3RlZEltYWdlSW5kZXgQU2VsZWN0ZWRJbWFnZUtleQpD
+        aGlsZENvdW50AQEBAAABAAEAAQgICAIAAAAGFwAAAAVOb2RlMwkEAAAABhkAAAAFTm9kZTMA/////wkE
+        AAAA/////wkEAAAAAAAAAAs=
+</value>
+  </data>
+  <data name="KryptonButton1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>185, 323</value>
+  </data>
+  <data name="TreeView1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 25</value>
+  </data>
+  <data name="Label1.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
   <data name="TreeView1.Size" type="System.Drawing.Size, System.Drawing">
     <value>260, 292</value>
@@ -155,96 +240,10 @@
   <data name="$this.Text" xml:space="preserve">
     <value>Configurar Tabela</value>
   </data>
-  <data name="KryptonButton1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>79, 25</value>
-  </data>
-  <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>1, 6</value>
-  </data>
-  <data name="TreeView1.Nodes" mimetype="application/x-microsoft.net.object.binary.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj0yLjAuMC4w
-        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAAB1TeXN0
-        ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQwAAAAEVGV4dAROYW1lCUlzQ2hlY2tlZApJbWFnZUluZGV4
-        CEltYWdlS2V5ElNlbGVjdGVkSW1hZ2VJbmRleBBTZWxlY3RlZEltYWdlS2V5CkNoaWxkQ291bnQJY2hp
-        bGRyZW4wCWNoaWxkcmVuMQljaGlsZHJlbjIJY2hpbGRyZW4zAQEAAAEAAQAEBAQEAQgICB1TeXN0ZW0u
-        V2luZG93cy5Gb3Jtcy5UcmVlTm9kZQIAAAAdU3lzdGVtLldpbmRvd3MuRm9ybXMuVHJlZU5vZGUCAAAA
-        HVN5c3RlbS5XaW5kb3dzLkZvcm1zLlRyZWVOb2RlAgAAAB1TeXN0ZW0uV2luZG93cy5Gb3Jtcy5UcmVl
-        Tm9kZQIAAAACAAAABgMAAAAFTm9kZTAGBAAAAAVOb2RlMAD/////BgUAAAAA/////wkFAAAABAAAAAkG
-        AAAACQcAAAAJCAAAAAkJAAAABQYAAAAdU3lzdGVtLldpbmRvd3MuRm9ybXMuVHJlZU5vZGUIAAAABFRl
-        eHQETmFtZQlJc0NoZWNrZWQKSW1hZ2VJbmRleAhJbWFnZUtleRJTZWxlY3RlZEltYWdlSW5kZXgQU2Vs
-        ZWN0ZWRJbWFnZUtleQpDaGlsZENvdW50AQEAAAEAAQABCAgIAgAAAAYKAAAABU5vZGUwBgsAAAAFTm9k
-        ZTAA/////wkFAAAA/////wkFAAAAAAAAAAUHAAAAHVN5c3RlbS5XaW5kb3dzLkZvcm1zLlRyZWVOb2Rl
-        CAAAAARUZXh0BE5hbWUJSXNDaGVja2VkCkltYWdlSW5kZXgISW1hZ2VLZXkSU2VsZWN0ZWRJbWFnZUlu
-        ZGV4EFNlbGVjdGVkSW1hZ2VLZXkKQ2hpbGRDb3VudAEBAAABAAEAAQgICAIAAAAGDQAAAAVOb2RlMQYO
-        AAAABU5vZGUxAP////8JBQAAAP////8JBQAAAAAAAAAFCAAAAB1TeXN0ZW0uV2luZG93cy5Gb3Jtcy5U
-        cmVlTm9kZQgAAAAEVGV4dAROYW1lCUlzQ2hlY2tlZApJbWFnZUluZGV4CEltYWdlS2V5ElNlbGVjdGVk
-        SW1hZ2VJbmRleBBTZWxlY3RlZEltYWdlS2V5CkNoaWxkQ291bnQBAQAAAQABAAEICAgCAAAABhAAAAAF
-        Tm9kZTIGEQAAAAVOb2RlMgD/////CQUAAAD/////CQUAAAAAAAAABQkAAAAdU3lzdGVtLldpbmRvd3Mu
-        Rm9ybXMuVHJlZU5vZGUIAAAABFRleHQETmFtZQlJc0NoZWNrZWQKSW1hZ2VJbmRleAhJbWFnZUtleRJT
-        ZWxlY3RlZEltYWdlSW5kZXgQU2VsZWN0ZWRJbWFnZUtleQpDaGlsZENvdW50AQEAAAEAAQABCAgIAgAA
-        AAYTAAAABU5vZGUzBhQAAAAFTm9kZTMA/////wkFAAAA/////wkFAAAAAAAAAAs=
-</value>
-  </data>
-  <data name="KryptonButton1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>185, 323</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
-  </data>
-  <data name="Label1.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;KryptonButton1.Name" xml:space="preserve">
-    <value>KryptonButton1</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>269, 354</value>
-  </data>
-  <data name="&gt;&gt;Label1.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;Label1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;TreeView1.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="Label1.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="Label1.Text" xml:space="preserve">
-    <value>Selecione as propriedades a serem exibidas na tabela.</value>
-  </data>
-  <data name="&gt;&gt;Label1.Name" xml:space="preserve">
-    <value>Label1</value>
-  </data>
-  <data name="KryptonButton1.Values.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value />
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterParent</value>
-  </data>
-  <data name="&gt;&gt;TreeView1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="KryptonButton1.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="KryptonButton1.Text" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>FormConfigureTable</value>
-  </data>
-  <data name="&gt;&gt;KryptonButton1.ZOrder" xml:space="preserve">
+  <data name="TreeView1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </metadata>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>English (United States)</value>
   </metadata>
 </root>

@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Column1.HeaderText" xml:space="preserve">
     <value>Longitud (m)</value>
@@ -123,25 +123,22 @@
   <data name="Column2.HeaderText" xml:space="preserve">
     <value>Presión (kPa)</value>
   </data>
-  <data name="Column3.HeaderText" xml:space="preserve">
-    <value>Temperatura (C)</value>
-  </data>
   <data name="Column4.HeaderText" xml:space="preserve">
-    <value>Velocidad de Líquido (m/s)</value>
+    <value>Velocidad del Líquido (m/s)</value>
   </data>
   <data name="Column5.HeaderText" xml:space="preserve">
-    <value>Velocidad de Vapor (m/s)</value>
+    <value>Velocidad del Vapor (m/s)</value>
   </data>
   <data name="Column6.HeaderText" xml:space="preserve">
-    <value>Flujo de energía (kW)</value>
+    <value>Flujo de Energía (kW)</value>
   </data>
   <data name="Column7.HeaderText" xml:space="preserve">
-    <value>Fracción de líquido</value>
+    <value>Fracción de Líquido</value>
   </data>
   <data name="Column8.HeaderText" xml:space="preserve">
-    <value>Tipo de flujo</value>
+    <value>Tipo de Flujo</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Perfil de Propiedades-Resultados</value>
+    <value>Resultados-Perfil de Propiedades</value>
   </data>
 </root>

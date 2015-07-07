@@ -682,7 +682,7 @@
     <value>4</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>DWSIM.FormConfigBase, DWSIM, Version=3.4.5591.37865, Culture=neutral, PublicKeyToken=null</value>
+    <value>DWSIM.FormConfigBase, DWSIM, Version=3.4.5665.19929, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="RadioButton2.Text" xml:space="preserve">
     <value>Média</value>
@@ -1879,6 +1879,9 @@
   </metadata>
   <metadata name="Column15.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
+  </metadata>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>82</value>
   </metadata>
   <metadata name="Column7.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

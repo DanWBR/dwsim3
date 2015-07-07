@@ -112,21 +112,21 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="FaTabStripItem2.Title" xml:space="preserve">
-    <value>Parámetros de interacción</value>
+    <value>Parámetros de Interacción</value>
   </data>
   <data name="FaTabStripItem1.Title" xml:space="preserve">
-    <value>Opciones generales</value>
+    <value>Opciones Generales</value>
   </data>
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Parámetros de interacción</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>99, 13</value>
   </data>
@@ -134,10 +134,10 @@
     <value>Estimar parámetro:</value>
   </data>
   <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>470, 13</value>
+    <value>290, 13</value>
   </data>
   <data name="Label3.Text" xml:space="preserve">
-    <value>Editar los valores que desee haciendo clic con el botón izquierdo del ratón en la celda que desea.</value>
+    <value>Para editar valores haga clic izquierdo en la celda deseada.</value>
   </data>
   <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>168, 13</value>
@@ -152,6 +152,6 @@
     <value>Parámetro</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Configurar las propiedades del paquete</value>
+    <value>Configurar Paquete de Propiedades</value>
   </data>
 </root>

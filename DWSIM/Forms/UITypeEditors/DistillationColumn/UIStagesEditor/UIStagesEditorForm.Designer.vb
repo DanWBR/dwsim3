@@ -23,20 +23,20 @@ Partial Class UIStagesEditorForm
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(UIStagesEditorForm))
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip
-        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton5 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton
-        Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton
-        Me.dgv1 = New System.Windows.Forms.DataGridView
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
+        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton5 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton()
+        Me.dgv1 = New System.Windows.Forms.DataGridView()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ToolStrip1.SuspendLayout()
         CType(Me.dgv1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -49,41 +49,42 @@ Partial Class UIStagesEditorForm
         '
         'ToolStripButton1
         '
+        resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
         Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton1.Image = Global.DWSIM.My.Resources.Resources.copy
-        resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
         Me.ToolStripButton1.Name = "ToolStripButton1"
         '
         'ToolStripButton2
         '
+        resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
         Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton2.Image = Global.DWSIM.My.Resources.Resources.paste_plain
-        resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
         Me.ToolStripButton2.Name = "ToolStripButton2"
         '
         'ToolStripButton5
         '
+        resources.ApplyResources(Me.ToolStripButton5, "ToolStripButton5")
         Me.ToolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton5.Image = Global.DWSIM.My.Resources.Resources.cross
-        resources.ApplyResources(Me.ToolStripButton5, "ToolStripButton5")
         Me.ToolStripButton5.Name = "ToolStripButton5"
         '
         'ToolStripButton3
         '
+        resources.ApplyResources(Me.ToolStripButton3, "ToolStripButton3")
         Me.ToolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton3.Image = Global.DWSIM.My.Resources.Resources.arrow_in1
-        resources.ApplyResources(Me.ToolStripButton3, "ToolStripButton3")
         Me.ToolStripButton3.Name = "ToolStripButton3"
         '
         'ToolStripButton4
         '
+        resources.ApplyResources(Me.ToolStripButton4, "ToolStripButton4")
         Me.ToolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton4.Image = Global.DWSIM.My.Resources.Resources.chart_line1
         Me.ToolStripButton4.Name = "ToolStripButton4"
-        resources.ApplyResources(Me.ToolStripButton4, "ToolStripButton4")
         '
         'dgv1
         '
+        resources.ApplyResources(Me.dgv1, "dgv1")
         Me.dgv1.AllowUserToAddRows = False
         Me.dgv1.AllowUserToDeleteRows = False
         Me.dgv1.AllowUserToOrderColumns = True
@@ -100,7 +101,6 @@ Partial Class UIStagesEditorForm
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.dgv1.DefaultCellStyle = DataGridViewCellStyle3
-        resources.ApplyResources(Me.dgv1, "dgv1")
         Me.dgv1.MultiSelect = False
         Me.dgv1.Name = "dgv1"
         Me.dgv1.RowHeadersVisible = False
@@ -157,8 +157,8 @@ Partial Class UIStagesEditorForm
     Public WithEvents dgv1 As System.Windows.Forms.DataGridView
     Public WithEvents ToolStripButton3 As System.Windows.Forms.ToolStripButton
     Public WithEvents ToolStripButton4 As System.Windows.Forms.ToolStripButton
-    Public WithEvents Column1 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Public WithEvents Column3 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Public WithEvents Column2 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Public WithEvents Column4 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column3 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column2 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column4 As System.Windows.Forms.DataGridViewTextBoxColumn
 End Class

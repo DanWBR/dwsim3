@@ -1249,7 +1249,13 @@
     <EmbeddedResource Include="Forms\Controls\ScriptEditorControl.resx">
       <DependentUpon>ScriptEditorControl.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormCapeOpenUnitSelector.es.resx">
+      <DependentUpon>FormCapeOpenUnitSelector.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormChart.de.resx">
+      <DependentUpon>FormChart.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormChart.es.resx">
       <DependentUpon>FormChart.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCompoundCreator.de.resx">
@@ -1257,6 +1263,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCompoundCreator.es.resx">
       <DependentUpon>FormCompoundCreator.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormConfigureTable.en-US.resx">
+      <DependentUpon>FormConfigureTable.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormConfigWizard.de.resx">
       <DependentUpon>FormConfigWizard.vb</DependentUpon>
@@ -1276,6 +1285,9 @@
     <EmbeddedResource Include="Forms\FormCoolPropWarning.en.resx">
       <DependentUpon>FormCoolPropWarning.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormCoolPropWarning.es.resx">
+      <DependentUpon>FormCoolPropWarning.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCoolPropWarning.resx">
       <DependentUpon>FormCoolPropWarning.vb</DependentUpon>
     </EmbeddedResource>
@@ -1285,20 +1297,41 @@
     <EmbeddedResource Include="Forms\FormDataRegression.es.resx">
       <DependentUpon>FormDataRegression.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormDBManager.es.resx">
+      <DependentUpon>FormDBManager.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormDBManager.resx">
       <DependentUpon>FormDBManager.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormFlowsheet_SubForms\frmQueue.es.resx">
+      <DependentUpon>frmQueue.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormMain.resx">
       <SubType>Designer</SubType>
       <DependentUpon>FormMain.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormPassword.es.resx">
+      <DependentUpon>FormPassword.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormReadingComp1.en-US.resx">
+      <DependentUpon>FormReadingComp1.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormState.de.resx">
       <DependentUpon>FormState.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormState.es.resx">
+      <DependentUpon>FormState.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormTemplateSelect.es.resx">
+      <DependentUpon>FormTemplateSelect.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormWhatsNew.de.resx">
       <DependentUpon>FormWhatsNew.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormWhatsNew.en.resx">
+      <DependentUpon>FormWhatsNew.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormWhatsNew.es.resx">
       <DependentUpon>FormWhatsNew.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormWhatsNew.resx">
@@ -1331,6 +1364,30 @@
     <EmbeddedResource Include="Forms\PropPack_ConfigForms\FormConfigLIQUAC.resx">
       <DependentUpon>FormConfigLIQUAC.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PropPack_ConfigForms\FormConfigPCSAFT.es.resx">
+      <DependentUpon>FormConfigPCSAFT.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PropPack_ConfigForms\FormConfigPRSV2.es.resx">
+      <DependentUpon>FormConfigPRSV2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UITypeEditors\Results\Pipe\FormGraph.en-US.resx">
+      <DependentUpon>FormGraph.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UITypeEditors\SpecialOps\ADJ\UIMVSelectorForm.en-US.resx">
+      <DependentUpon>UIMVSelectorForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UITypeEditors\SpecialOps\ADJ\UIRVSelectorForm.en-US.resx">
+      <DependentUpon>UIRVSelectorForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UITypeEditors\SpecialOps\SPEC\UISVSelectorForm.en-US.resx">
+      <DependentUpon>UISVSelectorForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UITypeEditors\UICSepSpecEditor\CSepSpecEditorForm.es.resx">
+      <DependentUpon>CSepSpecEditorForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UITypeEditors\UIElementMatrixEditor\ElementMatrixEditorForm.es.resx">
+      <DependentUpon>ElementMatrixEditorForm.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\UITypeEditors\UIExcelUOEditor\ExcelUOEditorForm.de.resx">
       <DependentUpon>ExcelUOEditorForm.vb</DependentUpon>
     </EmbeddedResource>
@@ -1349,6 +1406,9 @@
     <EmbeddedResource Include="Forms\UITypeEditors\UIFlowsheetUOEditor\FlowsheetUOEditorForm.en.resx">
       <DependentUpon>FlowsheetUOEditorForm.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UITypeEditors\UIFlowsheetUOEditor\FlowsheetUOEditorForm.es.resx">
+      <DependentUpon>FlowsheetUOEditorForm.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\UITypeEditors\UIFlowsheetUOEditor\FlowsheetUOEditorForm.resx">
       <DependentUpon>FlowsheetUOEditorForm.vb</DependentUpon>
     </EmbeddedResource>
@@ -1356,6 +1416,9 @@
       <DependentUpon>FlowsheetUOViewerForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\UITypeEditors\UIGibbsInitialEstimates\GibbsInitialEstimatesEditorForm.en.resx">
+      <DependentUpon>GibbsInitialEstimatesEditorForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UITypeEditors\UIGibbsInitialEstimates\GibbsInitialEstimatesEditorForm.es.resx">
       <DependentUpon>GibbsInitialEstimatesEditorForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\UITypeEditors\UIGibbsInitialEstimates\GibbsInitialEstimatesEditorForm.resx">

@@ -22,16 +22,17 @@ Partial Class FormConfigLIQUAC
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormConfigLIQUAC))
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip()
         Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
@@ -81,7 +82,7 @@ Partial Class FormConfigLIQUAC
         Me.FaTabStrip1.AlwaysShowMenuGlyph = False
         Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem3, Me.FaTabStripItem1, Me.FaTabStripItem2})
         Me.FaTabStrip1.Name = "FaTabStrip1"
-        Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem3
+        Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem2
         '
         'FaTabStripItem3
         '
@@ -90,7 +91,6 @@ Partial Class FormConfigLIQUAC
         Me.FaTabStripItem3.Controls.Add(Me.GroupBox3)
         Me.FaTabStripItem3.IsDrawn = True
         Me.FaTabStripItem3.Name = "FaTabStripItem3"
-        Me.FaTabStripItem3.Selected = True
         '
         'GroupBox3
         '
@@ -107,28 +107,24 @@ Partial Class FormConfigLIQUAC
         'Button5
         '
         resources.ApplyResources(Me.Button5, "Button5")
-        Me.Button5.ImageKey = ""
         Me.Button5.Name = "Button5"
         Me.Button5.UseVisualStyleBackColor = True
         '
         'Button4
         '
         resources.ApplyResources(Me.Button4, "Button4")
-        Me.Button4.ImageKey = ""
         Me.Button4.Name = "Button4"
         Me.Button4.UseVisualStyleBackColor = True
         '
         'Button2
         '
         resources.ApplyResources(Me.Button2, "Button2")
-        Me.Button2.ImageKey = ""
         Me.Button2.Name = "Button2"
         Me.Button2.UseVisualStyleBackColor = True
         '
         'Button1
         '
         resources.ApplyResources(Me.Button1, "Button1")
-        Me.Button1.ImageKey = ""
         Me.Button1.Name = "Button1"
         Me.Button1.UseVisualStyleBackColor = True
         '
@@ -147,66 +143,59 @@ Partial Class FormConfigLIQUAC
         Me.dgvu1.Name = "dgvu1"
         Me.dgvu1.RowHeadersVisible = False
         Me.dgvu1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        DataGridViewCellStyle7.Format = "N5"
-        Me.dgvu1.RowsDefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle16.Format = "N5"
+        Me.dgvu1.RowsDefaultCellStyle = DataGridViewCellStyle16
         Me.dgvu1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         '
         'Column3
         '
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-        Me.Column3.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        Me.Column3.DefaultCellStyle = DataGridViewCellStyle10
         resources.ApplyResources(Me.Column3, "Column3")
         Me.Column3.Name = "Column3"
         Me.Column3.ReadOnly = True
-        Me.Column3.ToolTipText = ""
         '
         'Column4
         '
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-        Me.Column4.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        Me.Column4.DefaultCellStyle = DataGridViewCellStyle11
         resources.ApplyResources(Me.Column4, "Column4")
         Me.Column4.Name = "Column4"
         Me.Column4.ReadOnly = True
-        Me.Column4.ToolTipText = ""
         '
         'Column5
         '
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.Column5.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.Column5.DefaultCellStyle = DataGridViewCellStyle12
         resources.ApplyResources(Me.Column5, "Column5")
         Me.Column5.Name = "Column5"
-        Me.Column5.ToolTipText = ""
         '
         'Column6
         '
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.Column6.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.Column6.DefaultCellStyle = DataGridViewCellStyle13
         resources.ApplyResources(Me.Column6, "Column6")
         Me.Column6.Name = "Column6"
-        Me.Column6.ToolTipText = ""
         '
         'Column7
         '
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.Column7.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.Column7.DefaultCellStyle = DataGridViewCellStyle14
         resources.ApplyResources(Me.Column7, "Column7")
         Me.Column7.Name = "Column7"
-        Me.Column7.ToolTipText = ""
         '
         'Column8
         '
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.Column8.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.Column8.DefaultCellStyle = DataGridViewCellStyle15
         resources.ApplyResources(Me.Column8, "Column8")
         Me.Column8.Name = "Column8"
-        Me.Column8.ToolTipText = ""
         '
         'LabelWithDivider3
         '
         resources.ApplyResources(Me.LabelWithDivider3, "LabelWithDivider3")
-        Me.LabelWithDivider3.ImageKey = ""
         Me.LabelWithDivider3.Name = "LabelWithDivider3"
         '
         'FaTabStripItem1
@@ -242,26 +231,23 @@ Partial Class FormConfigLIQUAC
         '
         resources.ApplyResources(Me.ID, "ID")
         Me.ID.Name = "ID"
-        Me.ID.ToolTipText = ""
         '
         'Column2
         '
-        DataGridViewCellStyle8.BackColor = System.Drawing.Color.LightGray
-        Me.Column2.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle17.BackColor = System.Drawing.Color.LightGray
+        Me.Column2.DefaultCellStyle = DataGridViewCellStyle17
         Me.Column2.FillWeight = 149.2386!
         resources.ApplyResources(Me.Column2, "Column2")
         Me.Column2.Name = "Column2"
         Me.Column2.ReadOnly = True
-        Me.Column2.ToolTipText = ""
         '
         'Column1
         '
-        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        Me.Column1.DefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        Me.Column1.DefaultCellStyle = DataGridViewCellStyle18
         Me.Column1.FillWeight = 50.76142!
         resources.ApplyResources(Me.Column1, "Column1")
         Me.Column1.Name = "Column1"
-        Me.Column1.ToolTipText = ""
         '
         'FaTabStripItem2
         '
@@ -270,6 +256,7 @@ Partial Class FormConfigLIQUAC
         Me.FaTabStripItem2.Controls.Add(Me.GroupBox2)
         Me.FaTabStripItem2.IsDrawn = True
         Me.FaTabStripItem2.Name = "FaTabStripItem2"
+        Me.FaTabStripItem2.Selected = True
         '
         'GroupBox2
         '
@@ -287,7 +274,6 @@ Partial Class FormConfigLIQUAC
         'Label3
         '
         resources.ApplyResources(Me.Label3, "Label3")
-        Me.Label3.ImageKey = ""
         Me.Label3.Name = "Label3"
         '
         'tbTol
@@ -298,7 +284,6 @@ Partial Class FormConfigLIQUAC
         'Label2
         '
         resources.ApplyResources(Me.Label2, "Label2")
-        Me.Label2.ImageKey = ""
         Me.Label2.Name = "Label2"
         '
         'tbMaxIts
@@ -316,14 +301,12 @@ Partial Class FormConfigLIQUAC
         'chkCalcChemEq
         '
         resources.ApplyResources(Me.chkCalcChemEq, "chkCalcChemEq")
-        Me.chkCalcChemEq.ImageKey = ""
         Me.chkCalcChemEq.Name = "chkCalcChemEq"
         Me.chkCalcChemEq.UseVisualStyleBackColor = True
         '
         'Label1
         '
         resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.ImageKey = ""
         Me.Label1.Name = "Label1"
         '
         'FormConfigLIQUAC

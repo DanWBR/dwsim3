@@ -24,11 +24,11 @@ Partial Class FormDataRegression
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormDataRegression))
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip()
         Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem()
         Me.graph = New ZedGraph.ZedGraphControl()
@@ -85,9 +85,6 @@ Partial Class FormDataRegression
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.gridInEst = New System.Windows.Forms.DataGridView()
-        Me.colpar = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colval = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.cf = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.btnCancel = New System.Windows.Forms.Button()
         Me.cbPunit = New System.Windows.Forms.ComboBox()
         Me.Label8 = New System.Windows.Forms.Label()
@@ -131,6 +128,9 @@ Partial Class FormDataRegression
         Me.tbTitle = New System.Windows.Forms.TextBox()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.DBOpenDlg = New System.Windows.Forms.OpenFileDialog()
+        Me.colpar = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colval = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.cf = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStrip1.SuspendLayout()
         Me.FaTabStripItem1.SuspendLayout()
@@ -207,8 +207,8 @@ Partial Class FormDataRegression
         'gridstats
         '
         resources.ApplyResources(Me.gridstats, "gridstats")
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.gridstats.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle6.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.gridstats.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle6
         Me.gridstats.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.gridstats.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
         Me.gridstats.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -547,37 +547,13 @@ Partial Class FormDataRegression
         Me.gridInEst.AllowUserToAddRows = False
         Me.gridInEst.AllowUserToDeleteRows = False
         Me.gridInEst.AllowUserToResizeRows = False
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.gridInEst.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.gridInEst.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.gridInEst.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.gridInEst.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.gridInEst.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colpar, Me.colval, Me.cf})
         Me.gridInEst.Name = "gridInEst"
         Me.gridInEst.RowHeadersVisible = False
-        '
-        'colpar
-        '
-        Me.colpar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        resources.ApplyResources(Me.colpar, "colpar")
-        Me.colpar.Name = "colpar"
-        Me.colpar.ReadOnly = True
-        Me.colpar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'colval
-        '
-        Me.colval.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        DataGridViewCellStyle3.Format = "N4"
-        Me.colval.DefaultCellStyle = DataGridViewCellStyle3
-        resources.ApplyResources(Me.colval, "colval")
-        Me.colval.Name = "colval"
-        Me.colval.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'cf
-        '
-        Me.cf.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.cf.FillWeight = 20.0!
-        resources.ApplyResources(Me.cf, "cf")
-        Me.cf.Name = "cf"
         '
         'btnCancel
         '
@@ -680,8 +656,8 @@ Partial Class FormDataRegression
         'GridExpData
         '
         resources.ApplyResources(Me.GridExpData, "GridExpData")
-        DataGridViewCellStyle4.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.GridExpData.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle8.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.GridExpData.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle8
         Me.GridExpData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.GridExpData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.GridExpData.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.check, Me.colx1, Me.colx2, Me.coly1, Me.colT, Me.coltl, Me.colts, Me.colP})
@@ -691,7 +667,7 @@ Partial Class FormDataRegression
         '
         'check
         '
-        Me.check.DefaultCellStyle = DataGridViewCellStyle5
+        Me.check.DefaultCellStyle = DataGridViewCellStyle9
         Me.check.FillWeight = 60.9137!
         resources.ApplyResources(Me.check, "check")
         Me.check.Name = "check"
@@ -856,6 +832,30 @@ Partial Class FormDataRegression
         Me.DBOpenDlg.CheckFileExists = False
         resources.ApplyResources(Me.DBOpenDlg, "DBOpenDlg")
         '
+        'colpar
+        '
+        Me.colpar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        resources.ApplyResources(Me.colpar, "colpar")
+        Me.colpar.Name = "colpar"
+        Me.colpar.ReadOnly = True
+        Me.colpar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'colval
+        '
+        Me.colval.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        DataGridViewCellStyle7.Format = "N4"
+        Me.colval.DefaultCellStyle = DataGridViewCellStyle7
+        resources.ApplyResources(Me.colval, "colval")
+        Me.colval.Name = "colval"
+        Me.colval.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'cf
+        '
+        Me.cf.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.cf.FillWeight = 20.0!
+        resources.ApplyResources(Me.cf, "cf")
+        Me.cf.Name = "cf"
+        '
         'FormDataRegression
         '
         resources.ApplyResources(Me, "$this")
@@ -936,9 +936,6 @@ Partial Class FormDataRegression
     Friend WithEvents FaTabStripItem3 As FarsiLibrary.Win.FATabStripItem
     Public WithEvents gridstats As System.Windows.Forms.DataGridView
     Friend WithEvents chkIdealVaporPhase As System.Windows.Forms.CheckBox
-    Friend WithEvents colpar As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents colval As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents cf As System.Windows.Forms.DataGridViewCheckBoxColumn
     Friend WithEvents x1l1 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents x1l1calc As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents x1l2 As System.Windows.Forms.DataGridViewTextBoxColumn
@@ -986,4 +983,7 @@ Partial Class FormDataRegression
     Friend WithEvents DBOpenDlg As System.Windows.Forms.OpenFileDialog
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
     Friend WithEvents Button3 As System.Windows.Forms.Button
+    Friend WithEvents colpar As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents colval As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents cf As System.Windows.Forms.DataGridViewCheckBoxColumn
 End Class

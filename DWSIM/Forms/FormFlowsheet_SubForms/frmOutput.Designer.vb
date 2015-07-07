@@ -44,82 +44,82 @@ Partial Class frmOutput
         '
         'TextBox1
         '
-        Me.TextBox1.BackColor = System.Drawing.Color.Black
         resources.ApplyResources(Me.TextBox1, "TextBox1")
+        Me.TextBox1.BackColor = System.Drawing.Color.Black
         Me.TextBox1.ForeColor = System.Drawing.Color.Lime
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.ReadOnly = True
         '
         'ToolStrip1
         '
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton2})
         resources.ApplyResources(Me.ToolStrip1, "ToolStrip1")
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton2})
         Me.ToolStrip1.Name = "ToolStrip1"
         Me.ToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
         Me.ToolStrip1.Stretch = True
         '
         'ToolStripButton2
         '
+        resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
         Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton2.Image = Global.DWSIM.My.Resources.Resources.cross
-        resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
         Me.ToolStripButton2.Name = "ToolStripButton2"
         '
         'dckMenu
         '
+        resources.ApplyResources(Me.dckMenu, "dckMenu")
         Me.dckMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FloatToolStripMenuItem, Me.DockLeftToolStripMenuItem, Me.DockRightToolStripMenuItem, Me.DockTopToolStripMenuItem, Me.DockBottomToolStripMenuItem, Me.DockLeftAutoHideToolStripMenuItem, Me.DockRightAutoHideToolStripMenuItem, Me.DockTopAutoHideToolStripMenuItem, Me.DockBottomAutoHideToolStripMenuItem, Me.DocumentToolStripMenuItem})
         Me.dckMenu.Name = "dckMenu"
-        resources.ApplyResources(Me.dckMenu, "dckMenu")
         '
         'FloatToolStripMenuItem
         '
-        Me.FloatToolStripMenuItem.Name = "FloatToolStripMenuItem"
         resources.ApplyResources(Me.FloatToolStripMenuItem, "FloatToolStripMenuItem")
+        Me.FloatToolStripMenuItem.Name = "FloatToolStripMenuItem"
         '
         'DockLeftToolStripMenuItem
         '
-        Me.DockLeftToolStripMenuItem.Name = "DockLeftToolStripMenuItem"
         resources.ApplyResources(Me.DockLeftToolStripMenuItem, "DockLeftToolStripMenuItem")
+        Me.DockLeftToolStripMenuItem.Name = "DockLeftToolStripMenuItem"
         '
         'DockRightToolStripMenuItem
         '
-        Me.DockRightToolStripMenuItem.Name = "DockRightToolStripMenuItem"
         resources.ApplyResources(Me.DockRightToolStripMenuItem, "DockRightToolStripMenuItem")
+        Me.DockRightToolStripMenuItem.Name = "DockRightToolStripMenuItem"
         '
         'DockTopToolStripMenuItem
         '
-        Me.DockTopToolStripMenuItem.Name = "DockTopToolStripMenuItem"
         resources.ApplyResources(Me.DockTopToolStripMenuItem, "DockTopToolStripMenuItem")
+        Me.DockTopToolStripMenuItem.Name = "DockTopToolStripMenuItem"
         '
         'DockBottomToolStripMenuItem
         '
-        Me.DockBottomToolStripMenuItem.Name = "DockBottomToolStripMenuItem"
         resources.ApplyResources(Me.DockBottomToolStripMenuItem, "DockBottomToolStripMenuItem")
+        Me.DockBottomToolStripMenuItem.Name = "DockBottomToolStripMenuItem"
         '
         'DockLeftAutoHideToolStripMenuItem
         '
-        Me.DockLeftAutoHideToolStripMenuItem.Name = "DockLeftAutoHideToolStripMenuItem"
         resources.ApplyResources(Me.DockLeftAutoHideToolStripMenuItem, "DockLeftAutoHideToolStripMenuItem")
+        Me.DockLeftAutoHideToolStripMenuItem.Name = "DockLeftAutoHideToolStripMenuItem"
         '
         'DockRightAutoHideToolStripMenuItem
         '
-        Me.DockRightAutoHideToolStripMenuItem.Name = "DockRightAutoHideToolStripMenuItem"
         resources.ApplyResources(Me.DockRightAutoHideToolStripMenuItem, "DockRightAutoHideToolStripMenuItem")
+        Me.DockRightAutoHideToolStripMenuItem.Name = "DockRightAutoHideToolStripMenuItem"
         '
         'DockTopAutoHideToolStripMenuItem
         '
-        Me.DockTopAutoHideToolStripMenuItem.Name = "DockTopAutoHideToolStripMenuItem"
         resources.ApplyResources(Me.DockTopAutoHideToolStripMenuItem, "DockTopAutoHideToolStripMenuItem")
+        Me.DockTopAutoHideToolStripMenuItem.Name = "DockTopAutoHideToolStripMenuItem"
         '
         'DockBottomAutoHideToolStripMenuItem
         '
-        Me.DockBottomAutoHideToolStripMenuItem.Name = "DockBottomAutoHideToolStripMenuItem"
         resources.ApplyResources(Me.DockBottomAutoHideToolStripMenuItem, "DockBottomAutoHideToolStripMenuItem")
+        Me.DockBottomAutoHideToolStripMenuItem.Name = "DockBottomAutoHideToolStripMenuItem"
         '
         'DocumentToolStripMenuItem
         '
-        Me.DocumentToolStripMenuItem.Name = "DocumentToolStripMenuItem"
         resources.ApplyResources(Me.DocumentToolStripMenuItem, "DocumentToolStripMenuItem")
+        Me.DocumentToolStripMenuItem.Name = "DocumentToolStripMenuItem"
         '
         'frmOutput
         '

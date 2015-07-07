@@ -112,69 +112,58 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ComboBox2.Items6" xml:space="preserve">
-    <value>Fracción de líquido</value>
-  </data>
-  <data name="ComboBox1.Items5" xml:space="preserve">
-    <value>Flujo de calor</value>
+  <data name="ComboBox2.Items" xml:space="preserve">
+    <value>Longitud</value>
   </data>
   <data name="ComboBox2.Items1" xml:space="preserve">
     <value>Presión</value>
   </data>
-  <data name="ComboBox1.Items" xml:space="preserve">
-    <value>Longitud</value>
-  </data>
-  <data name="ComboBox1.Items2" xml:space="preserve">
-    <value>Temperatura</value>
-  </data>
-  <data name="Label1.Size" xml:space="preserve">
-    <value>{Width=37, Height=13}</value>
-  </data>
-  <data name="Label2.Text" xml:space="preserve">
-    <value>Eje Y</value>
-  </data>
-  <data name="Label2.Size" xml:space="preserve">
-    <value>{Width=37, Height=13}</value>
+  <data name="ComboBox2.Items3" xml:space="preserve">
+    <value>Velocidad de Liquido</value>
   </data>
   <data name="ComboBox2.Items4" xml:space="preserve">
     <value>Velocidad de vapor</value>
   </data>
-  <data name="ComboBox1.Items3" xml:space="preserve">
-    <value>Velocidad de Liquido</value>
-  </data>
   <data name="ComboBox2.Items5" xml:space="preserve">
     <value>Flujo de calor</value>
   </data>
-  <data name="ComboBox2.Items" xml:space="preserve">
+  <data name="ComboBox2.Items6" xml:space="preserve">
+    <value>Fracción de líquido</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>32, 13</value>
+  </data>
+  <data name="Label2.Text" xml:space="preserve">
+    <value>Eje Y</value>
+  </data>
+  <data name="ComboBox1.Items" xml:space="preserve">
     <value>Longitud</value>
-  </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Ejes</value>
-  </data>
-  <data name="ComboBox2.Items2" xml:space="preserve">
-    <value>Temperatura</value>
   </data>
   <data name="ComboBox1.Items1" xml:space="preserve">
     <value>Presión</value>
   </data>
-  <data name="Label1.Text" xml:space="preserve">
-    <value>El eje x</value>
-  </data>
-  <data name="ComboBox2.Items3" xml:space="preserve">
+  <data name="ComboBox1.Items3" xml:space="preserve">
     <value>Velocidad de Liquido</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Gráfico</value>
   </data>
   <data name="ComboBox1.Items4" xml:space="preserve">
     <value>Velocidad de vapor</value>
   </data>
-  <data name="ComboBox1.Items6" xml:space="preserve">
-    <value>Atraco líquido</value>
+  <data name="ComboBox1.Items5" xml:space="preserve">
+    <value>Flujo de calor</value>
+  </data>
+  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>32, 13</value>
+  </data>
+  <data name="Label1.Text" xml:space="preserve">
+    <value>Eje X</value>
+  </data>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Ejes</value>
   </data>
 </root>

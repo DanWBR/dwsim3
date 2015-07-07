@@ -54,16 +54,16 @@ Partial Class FlowsheetUOEditorForm
         Me.ToolStripButton5 = New System.Windows.Forms.ToolStripButton()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.dgmap = New System.Windows.Forms.DataGridView()
+        Me.id1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.col1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.id2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.col2 = New System.Windows.Forms.DataGridViewComboBoxColumn()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.cbMassTransferMode = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.btnInitialize = New System.Windows.Forms.Button()
         Me.lblInit = New System.Windows.Forms.Label()
-        Me.id1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.col1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.id2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.col2 = New System.Windows.Forms.DataGridViewComboBoxColumn()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -320,6 +320,28 @@ Partial Class FlowsheetUOEditorForm
         Me.dgmap.Name = "dgmap"
         Me.dgmap.RowHeadersVisible = False
         '
+        'id1
+        '
+        resources.ApplyResources(Me.id1, "id1")
+        Me.id1.Name = "id1"
+        Me.id1.ReadOnly = True
+        '
+        'col1
+        '
+        resources.ApplyResources(Me.col1, "col1")
+        Me.col1.Name = "col1"
+        Me.col1.ReadOnly = True
+        '
+        'id2
+        '
+        resources.ApplyResources(Me.id2, "id2")
+        Me.id2.Name = "id2"
+        '
+        'col2
+        '
+        resources.ApplyResources(Me.col2, "col2")
+        Me.col2.Name = "col2"
+        '
         'TabPage3
         '
         resources.ApplyResources(Me.TabPage3, "TabPage3")
@@ -357,28 +379,6 @@ Partial Class FlowsheetUOEditorForm
         '
         resources.ApplyResources(Me.lblInit, "lblInit")
         Me.lblInit.Name = "lblInit"
-        '
-        'id1
-        '
-        resources.ApplyResources(Me.id1, "id1")
-        Me.id1.Name = "id1"
-        Me.id1.ReadOnly = True
-        '
-        'col1
-        '
-        resources.ApplyResources(Me.col1, "col1")
-        Me.col1.Name = "col1"
-        Me.col1.ReadOnly = True
-        '
-        'id2
-        '
-        resources.ApplyResources(Me.id2, "id2")
-        Me.id2.Name = "id2"
-        '
-        'col2
-        '
-        resources.ApplyResources(Me.col2, "col2")
-        Me.col2.Name = "col2"
         '
         'FlowsheetUOEditorForm
         '
@@ -437,20 +437,20 @@ Partial Class FlowsheetUOEditorForm
     Friend WithEvents cbMassTransferMode As System.Windows.Forms.ComboBox
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents DataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewComboBoxColumn1 As System.Windows.Forms.DataGridViewComboBoxColumn
     Friend WithEvents Column1 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column2 As System.Windows.Forms.DataGridViewComboBoxColumn
+    Friend WithEvents ToolStripButton6 As System.Windows.Forms.ToolStripButton
+    Friend WithEvents ToolStripButton5 As System.Windows.Forms.ToolStripButton
+    Friend WithEvents TabPage4 As System.Windows.Forms.TabPage
+    Friend WithEvents dgmap As System.Windows.Forms.DataGridView
+    Friend WithEvents DataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewComboBoxColumn1 As System.Windows.Forms.DataGridViewComboBoxColumn
     Friend WithEvents Column4 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewComboBoxColumn2 As System.Windows.Forms.DataGridViewComboBoxColumn
     Friend WithEvents DataGridViewComboBoxColumn4 As System.Windows.Forms.DataGridViewComboBoxColumn
     Friend WithEvents Column3 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn3 As System.Windows.Forms.DataGridViewComboBoxColumn
     Friend WithEvents DataGridViewComboBoxColumn3 As System.Windows.Forms.DataGridViewComboBoxColumn
-    Friend WithEvents ToolStripButton6 As System.Windows.Forms.ToolStripButton
-    Friend WithEvents ToolStripButton5 As System.Windows.Forms.ToolStripButton
-    Friend WithEvents TabPage4 As System.Windows.Forms.TabPage
-    Friend WithEvents dgmap As System.Windows.Forms.DataGridView
     Friend WithEvents id1 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents col1 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents id2 As System.Windows.Forms.DataGridViewTextBoxColumn

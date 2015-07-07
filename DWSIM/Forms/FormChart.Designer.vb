@@ -22,6 +22,7 @@ Partial Class FormChart
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormChart))
         Me.graph = New ZedGraph.ZedGraphControl()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()

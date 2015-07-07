@@ -122,7 +122,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABW
-        OgAAAk1TRnQBSQFMAgEBEAEAAXQBAAF0AQABEAEAARABAAT/AREBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        OgAAAk1TRnQBSQFMAgEBEAEAAYQBAAGEAQABEAEAARABAAT/AREBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABUAMAAQEBAAEQBgABKP8A/wD/AP8A/wD/AP8A/wAaAAH/AX8B/wF/Af8BfwH/AX8B/wF/Af8BfwH/
         AX8B/wF/Af8BfwH/AX8B/wF/Af8BfwH/AX8B/wF/Af8BfwH/AX8B/wF/Af8BfwH/AX8B/wF/Af8BfwH/
         AX8B/wF/Af8BfwH/AX8B/wF/Af8BfwH/AX8B/wF/Af8BfwH/AX8B/wF/MAABmQEQAVkBCAwAAf8BfwH/
@@ -697,17 +697,20 @@
   <data name="TreeViewObj.Size" type="System.Drawing.Size, System.Drawing">
     <value>254, 349</value>
   </data>
+  <data name="TableLayoutPanel4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>260, 380</value>
+  </data>
+  <data name="TableLayoutPanel3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>260, 25</value>
+  </data>
   <data name="Label2.Text" xml:space="preserve">
     <value>Search</value>
   </data>
   <data name="TBSearch.Size" type="System.Drawing.Size, System.Drawing">
     <value>199, 20</value>
   </data>
-  <data name="TableLayoutPanel3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>260, 25</value>
-  </data>
-  <data name="TableLayoutPanel4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>260, 380</value>
+  <data name="ContextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>167, 48</value>
   </data>
   <data name="ToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>166, 22</value>
@@ -720,9 +723,6 @@
   </data>
   <data name="ToolStripMenuItem2.Text" xml:space="preserve">
     <value>Select and Center</value>
-  </data>
-  <data name="ContextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>167, 48</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>260, 380</value>

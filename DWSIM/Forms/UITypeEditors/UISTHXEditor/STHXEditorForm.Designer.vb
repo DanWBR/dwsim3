@@ -23,60 +23,60 @@ Partial Class STHXEditorForm
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(STHXEditorForm))
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.Label15 = New System.Windows.Forms.Label
-        Me.cbBaffleOrientation = New System.Windows.Forms.ComboBox
-        Me.Label14 = New System.Windows.Forms.Label
-        Me.lbuBaffleCut = New System.Windows.Forms.Label
-        Me.tbBaffleCut = New System.Windows.Forms.TextBox
-        Me.Label12 = New System.Windows.Forms.Label
-        Me.lbuBaffleSpacing = New System.Windows.Forms.Label
-        Me.tbBaffleSpacing = New System.Windows.Forms.TextBox
-        Me.Label10 = New System.Windows.Forms.Label
-        Me.lbuShellFoulingFactor = New System.Windows.Forms.Label
-        Me.tbShellFoulingFactor = New System.Windows.Forms.TextBox
-        Me.Label8 = New System.Windows.Forms.Label
-        Me.lbuShellDi = New System.Windows.Forms.Label
-        Me.tbShellDi = New System.Windows.Forms.TextBox
-        Me.Label6 = New System.Windows.Forms.Label
-        Me.tbNumberOfShellPasses = New System.Windows.Forms.TextBox
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.cbBaffleType = New System.Windows.Forms.ComboBox
-        Me.tbShellsInSeries = New System.Windows.Forms.TextBox
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox
-        Me.lbuTubeThermalCond = New System.Windows.Forms.Label
-        Me.tbTubeThermalCond = New System.Windows.Forms.TextBox
-        Me.Label5 = New System.Windows.Forms.Label
-        Me.rbCold = New System.Windows.Forms.RadioButton
-        Me.rbHot = New System.Windows.Forms.RadioButton
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.lbTubeRoughness = New System.Windows.Forms.Label
-        Me.tbTubeRoughness = New System.Windows.Forms.TextBox
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.lbuTubePitch = New System.Windows.Forms.Label
-        Me.tbTubePitch = New System.Windows.Forms.TextBox
-        Me.Label20 = New System.Windows.Forms.Label
-        Me.Label17 = New System.Windows.Forms.Label
-        Me.cbTubeLayout = New System.Windows.Forms.ComboBox
-        Me.tbNumberOfTubesPerShell = New System.Windows.Forms.TextBox
-        Me.Label22 = New System.Windows.Forms.Label
-        Me.tbTubePassesPerShell = New System.Windows.Forms.TextBox
-        Me.Label24 = New System.Windows.Forms.Label
-        Me.lbuTubeFoulingFactor = New System.Windows.Forms.Label
-        Me.tbTubeFoulingFactor = New System.Windows.Forms.TextBox
-        Me.Label26 = New System.Windows.Forms.Label
-        Me.lbuTubeLength = New System.Windows.Forms.Label
-        Me.tbTubeLength = New System.Windows.Forms.TextBox
-        Me.Label28 = New System.Windows.Forms.Label
-        Me.lbTubeDe = New System.Windows.Forms.Label
-        Me.tbTubeDe = New System.Windows.Forms.TextBox
-        Me.Label30 = New System.Windows.Forms.Label
-        Me.lbuTubeDi = New System.Windows.Forms.Label
-        Me.tbTubeDi = New System.Windows.Forms.TextBox
-        Me.Label32 = New System.Windows.Forms.Label
-        Me.PictureBox2 = New System.Windows.Forms.PictureBox
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.cbBaffleOrientation = New System.Windows.Forms.ComboBox()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.lbuBaffleCut = New System.Windows.Forms.Label()
+        Me.tbBaffleCut = New System.Windows.Forms.TextBox()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.lbuBaffleSpacing = New System.Windows.Forms.Label()
+        Me.tbBaffleSpacing = New System.Windows.Forms.TextBox()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.lbuShellFoulingFactor = New System.Windows.Forms.Label()
+        Me.tbShellFoulingFactor = New System.Windows.Forms.TextBox()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.lbuShellDi = New System.Windows.Forms.Label()
+        Me.tbShellDi = New System.Windows.Forms.TextBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.tbNumberOfShellPasses = New System.Windows.Forms.TextBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.cbBaffleType = New System.Windows.Forms.ComboBox()
+        Me.tbShellsInSeries = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.lbuTubeThermalCond = New System.Windows.Forms.Label()
+        Me.tbTubeThermalCond = New System.Windows.Forms.TextBox()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.rbCold = New System.Windows.Forms.RadioButton()
+        Me.rbHot = New System.Windows.Forms.RadioButton()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.lbTubeRoughness = New System.Windows.Forms.Label()
+        Me.tbTubeRoughness = New System.Windows.Forms.TextBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.lbuTubePitch = New System.Windows.Forms.Label()
+        Me.tbTubePitch = New System.Windows.Forms.TextBox()
+        Me.Label20 = New System.Windows.Forms.Label()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.cbTubeLayout = New System.Windows.Forms.ComboBox()
+        Me.tbNumberOfTubesPerShell = New System.Windows.Forms.TextBox()
+        Me.Label22 = New System.Windows.Forms.Label()
+        Me.tbTubePassesPerShell = New System.Windows.Forms.TextBox()
+        Me.Label24 = New System.Windows.Forms.Label()
+        Me.lbuTubeFoulingFactor = New System.Windows.Forms.Label()
+        Me.tbTubeFoulingFactor = New System.Windows.Forms.TextBox()
+        Me.Label26 = New System.Windows.Forms.Label()
+        Me.lbuTubeLength = New System.Windows.Forms.Label()
+        Me.tbTubeLength = New System.Windows.Forms.TextBox()
+        Me.Label28 = New System.Windows.Forms.Label()
+        Me.lbTubeDe = New System.Windows.Forms.Label()
+        Me.tbTubeDe = New System.Windows.Forms.TextBox()
+        Me.Label30 = New System.Windows.Forms.Label()
+        Me.lbuTubeDi = New System.Windows.Forms.Label()
+        Me.tbTubeDi = New System.Windows.Forms.TextBox()
+        Me.Label32 = New System.Windows.Forms.Label()
+        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -85,6 +85,7 @@ Partial Class STHXEditorForm
         '
         'GroupBox1
         '
+        resources.ApplyResources(Me.GroupBox1, "GroupBox1")
         Me.GroupBox1.Controls.Add(Me.Label15)
         Me.GroupBox1.Controls.Add(Me.cbBaffleOrientation)
         Me.GroupBox1.Controls.Add(Me.Label14)
@@ -105,7 +106,6 @@ Partial Class STHXEditorForm
         Me.GroupBox1.Controls.Add(Me.cbBaffleType)
         Me.GroupBox1.Controls.Add(Me.tbShellsInSeries)
         Me.GroupBox1.Controls.Add(Me.Label1)
-        resources.ApplyResources(Me.GroupBox1, "GroupBox1")
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.TabStop = False
         '
@@ -116,10 +116,10 @@ Partial Class STHXEditorForm
         '
         'cbBaffleOrientation
         '
+        resources.ApplyResources(Me.cbBaffleOrientation, "cbBaffleOrientation")
         Me.cbBaffleOrientation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbBaffleOrientation.FormattingEnabled = True
         Me.cbBaffleOrientation.Items.AddRange(New Object() {resources.GetString("cbBaffleOrientation.Items"), resources.GetString("cbBaffleOrientation.Items1")})
-        resources.ApplyResources(Me.cbBaffleOrientation, "cbBaffleOrientation")
         Me.cbBaffleOrientation.Name = "cbBaffleOrientation"
         '
         'Label14
@@ -199,10 +199,10 @@ Partial Class STHXEditorForm
         '
         'cbBaffleType
         '
+        resources.ApplyResources(Me.cbBaffleType, "cbBaffleType")
         Me.cbBaffleType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbBaffleType.FormattingEnabled = True
         Me.cbBaffleType.Items.AddRange(New Object() {resources.GetString("cbBaffleType.Items"), resources.GetString("cbBaffleType.Items1"), resources.GetString("cbBaffleType.Items2"), resources.GetString("cbBaffleType.Items3")})
-        resources.ApplyResources(Me.cbBaffleType, "cbBaffleType")
         Me.cbBaffleType.Name = "cbBaffleType"
         '
         'tbShellsInSeries
@@ -217,6 +217,7 @@ Partial Class STHXEditorForm
         '
         'GroupBox2
         '
+        resources.ApplyResources(Me.GroupBox2, "GroupBox2")
         Me.GroupBox2.Controls.Add(Me.lbuTubeThermalCond)
         Me.GroupBox2.Controls.Add(Me.tbTubeThermalCond)
         Me.GroupBox2.Controls.Add(Me.Label5)
@@ -247,7 +248,6 @@ Partial Class STHXEditorForm
         Me.GroupBox2.Controls.Add(Me.lbuTubeDi)
         Me.GroupBox2.Controls.Add(Me.tbTubeDi)
         Me.GroupBox2.Controls.Add(Me.Label32)
-        resources.ApplyResources(Me.GroupBox2, "GroupBox2")
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.TabStop = False
         '
@@ -322,10 +322,10 @@ Partial Class STHXEditorForm
         '
         'cbTubeLayout
         '
+        resources.ApplyResources(Me.cbTubeLayout, "cbTubeLayout")
         Me.cbTubeLayout.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbTubeLayout.FormattingEnabled = True
         Me.cbTubeLayout.Items.AddRange(New Object() {resources.GetString("cbTubeLayout.Items"), resources.GetString("cbTubeLayout.Items1"), resources.GetString("cbTubeLayout.Items2"), resources.GetString("cbTubeLayout.Items3")})
-        resources.ApplyResources(Me.cbTubeLayout, "cbTubeLayout")
         Me.cbTubeLayout.Name = "cbTubeLayout"
         '
         'tbNumberOfTubesPerShell
@@ -410,19 +410,19 @@ Partial Class STHXEditorForm
         '
         'PictureBox2
         '
+        resources.ApplyResources(Me.PictureBox2, "PictureBox2")
         Me.PictureBox2.BackColor = System.Drawing.Color.White
         Me.PictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.PictureBox2.Image = Global.DWSIM.My.Resources.Resources.Straight_tube_heat_exchanger_1_pass
-        resources.ApplyResources(Me.PictureBox2, "PictureBox2")
         Me.PictureBox2.Name = "PictureBox2"
         Me.PictureBox2.TabStop = False
         '
         'PictureBox1
         '
+        resources.ApplyResources(Me.PictureBox1, "PictureBox1")
         Me.PictureBox1.BackColor = System.Drawing.Color.White
         Me.PictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.PictureBox1.Image = Global.DWSIM.My.Resources.Resources.Straight_tube_heat_exchanger_2_pass
-        resources.ApplyResources(Me.PictureBox1, "PictureBox1")
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.TabStop = False
         '

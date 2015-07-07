@@ -42,22 +42,22 @@ Partial Class FormDBManager
         '
         'GroupBox1
         '
+        resources.ApplyResources(Me.GroupBox1, "GroupBox1")
         Me.GroupBox1.Controls.Add(Me.CBDBName)
         Me.GroupBox1.Controls.Add(Me.LblDBPath)
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Controls.Add(Me.Label1)
-        resources.ApplyResources(Me.GroupBox1, "GroupBox1")
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.TabStop = False
         '
         'CBDBName
         '
+        resources.ApplyResources(Me.CBDBName, "CBDBName")
         Me.CBDBName.BackColor = System.Drawing.Color.White
         Me.CBDBName.DropDownHeight = 200
         Me.CBDBName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.CBDBName.DropDownWidth = 130
         Me.CBDBName.FormattingEnabled = True
-        resources.ApplyResources(Me.CBDBName, "CBDBName")
         Me.CBDBName.Name = "CBDBName"
         '
         'LblDBPath
@@ -85,23 +85,23 @@ Partial Class FormDBManager
         '
         'BtnEditComponent
         '
-        Me.BtnEditComponent.Image = Global.DWSIM.My.Resources.Resources.wand
         resources.ApplyResources(Me.BtnEditComponent, "BtnEditComponent")
+        Me.BtnEditComponent.Image = Global.DWSIM.My.Resources.Resources.wand
         Me.BtnEditComponent.Name = "BtnEditComponent"
         Me.BtnEditComponent.UseVisualStyleBackColor = True
         '
         'BtnDelComponent
         '
-        Me.BtnDelComponent.Image = Global.DWSIM.My.Resources.Resources.delete1
         resources.ApplyResources(Me.BtnDelComponent, "BtnDelComponent")
+        Me.BtnDelComponent.Image = Global.DWSIM.My.Resources.Resources.delete1
         Me.BtnDelComponent.Name = "BtnDelComponent"
         Me.BtnDelComponent.UseVisualStyleBackColor = True
         '
         'DGrComps
         '
+        resources.ApplyResources(Me.DGrComps, "DGrComps")
         Me.DGrComps.AllowUserToAddRows = False
         Me.DGrComps.AllowUserToDeleteRows = False
-        resources.ApplyResources(Me.DGrComps, "DGrComps")
         Me.DGrComps.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DGrComps.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ID, Me.CompName, Me.StudyFile})
         Me.DGrComps.Name = "DGrComps"
@@ -150,9 +150,9 @@ Partial Class FormDBManager
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
     Friend WithEvents DGrComps As System.Windows.Forms.DataGridView
     Friend WithEvents BtnDelComponent As System.Windows.Forms.Button
+    Friend WithEvents BtnEditComponent As System.Windows.Forms.Button
+    Public WithEvents CBDBName As System.Windows.Forms.ComboBox
     Friend WithEvents ID As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents CompName As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents StudyFile As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents BtnEditComponent As System.Windows.Forms.Button
-    Public WithEvents CBDBName As System.Windows.Forms.ComboBox
 End Class

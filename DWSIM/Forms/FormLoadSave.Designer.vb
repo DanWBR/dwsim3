@@ -40,12 +40,13 @@ Partial Class FormLS
         '
         'SpinningProgress1
         '
+        resources.ApplyResources(Me.SpinningProgress1, "SpinningProgress1")
         Me.SpinningProgress1.ActiveSegmentColour = System.Drawing.Color.RoyalBlue
         Me.SpinningProgress1.AutoIncrementFrequency = 75.0R
+        Me.SpinningProgress1.BehindTransistionSegmentIsActive = False
         Me.SpinningProgress1.InactiveSegmentColour = System.Drawing.Color.LightSteelBlue
-        resources.ApplyResources(Me.SpinningProgress1, "SpinningProgress1")
         Me.SpinningProgress1.Name = "SpinningProgress1"
-        Me.SpinningProgress1.TransistionSegment = 2
+        Me.SpinningProgress1.TransistionSegment = 5
         Me.SpinningProgress1.TransistionSegmentColour = System.Drawing.Color.LightSteelBlue
         '
         'FormLS

@@ -139,15 +139,9 @@
   <data name="btnInitialize.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;ToolStripButton2.Name" xml:space="preserve">
-    <value>ToolStripButton2</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="TabPage2.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
-  </data>
-  <data name="&gt;&gt;DataGridViewTextBoxColumn3.Name" xml:space="preserve">
-    <value>DataGridViewTextBoxColumn3</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="TabPage4.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
@@ -162,9 +156,6 @@
   <data name="&gt;&gt;TabPage4.Name" xml:space="preserve">
     <value>TabPage4</value>
   </data>
-  <data name="&gt;&gt;TabControl1.Name" xml:space="preserve">
-    <value>TabControl1</value>
-  </data>
   <data name="&gt;&gt;ToolStrip1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -177,8 +168,8 @@
   <data name="&gt;&gt;GroupBox3.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;ToolStrip2.Parent" xml:space="preserve">
-    <value>GroupBox4</value>
+  <data name="&gt;&gt;Column4.Name" xml:space="preserve">
+    <value>Column4</value>
   </data>
   <data name="GroupBox4.Location" type="System.Drawing.Point, System.Drawing">
     <value>9, 7</value>
@@ -189,14 +180,14 @@
   <data name="&gt;&gt;dgmap.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="Label1.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="&gt;&gt;ToolStripButton2.Name" xml:space="preserve">
+    <value>ToolStripButton2</value>
   </data>
-  <data name="&gt;&gt;DataGridViewComboBoxColumn2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewComboBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Conexões de Entrada</value>
   </data>
-  <data name="dgmap.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+  <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 18</value>
   </data>
   <data name="Label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -209,9 +200,6 @@
   </data>
   <data name="&gt;&gt;DataGridViewComboBoxColumn4.Name" xml:space="preserve">
     <value>DataGridViewComboBoxColumn4</value>
-  </data>
-  <data name="lblInit.Text" xml:space="preserve">
-    <value>[lblInit]</value>
   </data>
   <data name="TabPage4.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -234,17 +222,17 @@
   <data name="&gt;&gt;DataGridViewComboBoxColumn4.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewComboBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="dgvInputLinks.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="&gt;&gt;DataGridViewTextBoxColumn3.Name" xml:space="preserve">
+    <value>DataGridViewTextBoxColumn3</value>
+  </data>
+  <data name="&gt;&gt;TabPage4.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="TabPage1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
   </data>
-  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 13</value>
-  </data>
-  <data name="TabPage1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 22</value>
+  <data name="&gt;&gt;ToolStripButton6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="TabControl1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Bottom</value>
@@ -273,23 +261,23 @@
   <data name="&gt;&gt;Label1.Name" xml:space="preserve">
     <value>Label1</value>
   </data>
+  <data name="&gt;&gt;TabPage1.Name" xml:space="preserve">
+    <value>TabPage1</value>
+  </data>
   <data name="GroupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="&gt;&gt;GroupBox3.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="GroupBox4.Text" xml:space="preserve">
-    <value>Parâmetros de Entrada</value>
+  <data name="dgvInputLinks.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
   </data>
   <data name="&gt;&gt;col2.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewComboBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;dgvInputPars.ZOrder" xml:space="preserve">
     <value>0</value>
-  </data>
-  <data name="&gt;&gt;DataGridViewComboBoxColumn2.Name" xml:space="preserve">
-    <value>DataGridViewComboBoxColumn2</value>
   </data>
   <data name="cbMassTransferMode.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -312,16 +300,13 @@
   <data name="ToolStripButton6.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>Magenta</value>
   </data>
-  <data name="dgmap.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
-    <value>Vertical</value>
+  <data name="&gt;&gt;DataGridViewComboBoxColumn2.Name" xml:space="preserve">
+    <value>DataGridViewComboBoxColumn2</value>
   </data>
   <data name="&gt;&gt;TabPage1.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Column4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;id1.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lblInit.Parent" xml:space="preserve">
@@ -342,17 +327,11 @@
   <data name="id1.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="cbMassTransferMode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>180, 15</value>
+  <data name="&gt;&gt;dgvOutputLinks.Parent" xml:space="preserve">
+    <value>GroupBox2</value>
   </data>
   <data name="&gt;&gt;dgvInputLinks.Parent" xml:space="preserve">
     <value>GroupBox1</value>
-  </data>
-  <data name="&gt;&gt;Column3.Name" xml:space="preserve">
-    <value>Column3</value>
-  </data>
-  <data name="&gt;&gt;Column4.Name" xml:space="preserve">
-    <value>Column4</value>
   </data>
   <data name="&gt;&gt;dgvOutputLinks.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -360,11 +339,14 @@
   <data name="dgmap.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="&gt;&gt;GroupBox2.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Parâmetros de Entrada</value>
   </data>
-  <data name="&gt;&gt;TabPage1.Name" xml:space="preserve">
-    <value>TabPage1</value>
+  <data name="&gt;&gt;TabPage3.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;DataGridViewComboBoxColumn2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewComboBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;dgvInputPars.Name" xml:space="preserve">
     <value>dgvInputPars</value>
@@ -393,8 +375,8 @@
   <data name="&gt;&gt;ToolStripButton3.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="dgvInputPars.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="dgmap.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
   <data name="&gt;&gt;TabPage2.Name" xml:space="preserve">
     <value>TabPage2</value>
@@ -404,9 +386,6 @@
   </data>
   <data name="&gt;&gt;GroupBox2.Parent" xml:space="preserve">
     <value>TabPage1</value>
-  </data>
-  <data name="ToolStrip1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 16</value>
   </data>
   <data name="cbMassTransferMode.Items" xml:space="preserve">
     <value>Vazões Mássicas por Componente</value>
@@ -423,6 +402,9 @@
   <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>755, 52</value>
   </data>
+  <data name="&gt;&gt;Label1.Parent" xml:space="preserve">
+    <value>TabPage3</value>
+  </data>
   <data name="&gt;&gt;Label1.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
@@ -435,8 +417,8 @@
   <data name="dgvOutputPars.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="cbMassTransferMode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>271, 21</value>
+  <data name="&gt;&gt;TabControl1.Name" xml:space="preserve">
+    <value>TabControl1</value>
   </data>
   <data name="lblInit.Size" type="System.Drawing.Size, System.Drawing">
     <value>37, 13</value>
@@ -444,20 +426,14 @@
   <data name="&gt;&gt;DataGridViewTextBoxColumn3.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewComboBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;TabPage3.ZOrder" xml:space="preserve">
-    <value>3</value>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FlowsheetUOEditorForm</value>
   </data>
   <data name="Label1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;Column2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewComboBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;Label2.Parent" xml:space="preserve">
     <value>TabPage3</value>
-  </data>
-  <data name="&gt;&gt;ToolStripButton6.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Label2.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -465,11 +441,11 @@
   <data name="ToolStripButton1.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 22</value>
   </data>
-  <data name="&gt;&gt;TabControl1.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
   <data name="&gt;&gt;ToolStripButton5.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ToolStrip2.Parent" xml:space="preserve">
+    <value>GroupBox4</value>
   </data>
   <data name="&gt;&gt;TabPage3.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -477,8 +453,8 @@
   <data name="Column3.HeaderText" xml:space="preserve">
     <value>ID</value>
   </data>
-  <data name="&gt;&gt;Label1.Parent" xml:space="preserve">
-    <value>TabPage3</value>
+  <data name="&gt;&gt;Column1.Name" xml:space="preserve">
+    <value>Column1</value>
   </data>
   <data name="&gt;&gt;ToolStripButton4.Name" xml:space="preserve">
     <value>ToolStripButton4</value>
@@ -495,9 +471,6 @@
   <data name="GroupBox3.Size" type="System.Drawing.Size, System.Drawing">
     <value>373, 314</value>
   </data>
-  <data name="&gt;&gt;Column2.Name" xml:space="preserve">
-    <value>Column2</value>
-  </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>
   </data>
@@ -509,9 +482,6 @@
   </data>
   <data name="&gt;&gt;col1.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;ToolStripButton1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Column1.HeaderText" xml:space="preserve">
     <value>Entrada</value>
@@ -537,8 +507,8 @@
   <data name="&gt;&gt;Label2.Name" xml:space="preserve">
     <value>Label2</value>
   </data>
-  <data name="&gt;&gt;dgvOutputLinks.Parent" xml:space="preserve">
-    <value>GroupBox2</value>
+  <data name="&gt;&gt;Column2.Name" xml:space="preserve">
+    <value>Column2</value>
   </data>
   <data name="ToolStripButton4.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 22</value>
@@ -546,14 +516,14 @@
   <data name="DataGridViewTextBoxColumn3.HeaderText" xml:space="preserve">
     <value>Objeto</value>
   </data>
-  <data name="&gt;&gt;btnInitialize.Name" xml:space="preserve">
-    <value>btnInitialize</value>
+  <data name="&gt;&gt;ToolStripButton1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="dgvOutputPars.Size" type="System.Drawing.Size, System.Drawing">
     <value>367, 270</value>
   </data>
-  <data name="&gt;&gt;dgvInputLinks.Name" xml:space="preserve">
-    <value>dgvInputLinks</value>
+  <data name="ToolStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 16</value>
   </data>
   <data name="DataGridViewComboBoxColumn1.HeaderText" xml:space="preserve">
     <value>Conectada a</value>
@@ -573,6 +543,9 @@
   <data name="Column4.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
+  <data name="&gt;&gt;GroupBox2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="ToolStripButton5.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>Magenta</value>
   </data>
@@ -588,8 +561,11 @@
   <data name="$this.Text" xml:space="preserve">
     <value>FlowsheetUOEditorForm</value>
   </data>
-  <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 18</value>
+  <data name="dgvInputPars.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="&gt;&gt;Column3.Name" xml:space="preserve">
+    <value>Column3</value>
   </data>
   <data name="&gt;&gt;GroupBox4.Parent" xml:space="preserve">
     <value>TabPage2</value>
@@ -639,8 +615,8 @@
   <data name="ToolStripButton2.Text" xml:space="preserve">
     <value>ToolStripButton2</value>
   </data>
-  <data name="GroupBox4.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+  <data name="lblInit.Text" xml:space="preserve">
+    <value>[lblInit]</value>
   </data>
   <data name="col1.HeaderText" xml:space="preserve">
     <value>Componente no Fluxograma Principal</value>
@@ -648,11 +624,8 @@
   <data name="DataGridViewComboBoxColumn2.HeaderText" xml:space="preserve">
     <value>Objeto</value>
   </data>
-  <data name="&gt;&gt;ToolStripButton2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ToolStrip2.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
+  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>166, 13</value>
   </data>
   <data name="ToolStripButton2.ToolTipText" xml:space="preserve">
     <value>Remover</value>
@@ -678,8 +651,8 @@
   <data name="&gt;&gt;id1.Name" xml:space="preserve">
     <value>id1</value>
   </data>
-  <data name="&gt;&gt;dgmap.Name" xml:space="preserve">
-    <value>dgmap</value>
+  <data name="&gt;&gt;Column2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewComboBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Label1.Text" xml:space="preserve">
     <value>Modo de Transferência de Massa</value>
@@ -708,17 +681,23 @@
   <data name="TabPage3.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
   </data>
+  <data name="GroupBox4.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
   <data name="TabPage2.Text" xml:space="preserve">
     <value>Parâmetros</value>
   </data>
   <data name="GroupBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 6</value>
   </data>
-  <data name="TabPage1.Text" xml:space="preserve">
-    <value>Conexões</value>
+  <data name="&gt;&gt;id1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="dgvInputPars.RowHeadersWidth" type="System.Int32, mscorlib">
     <value>30</value>
+  </data>
+  <data name="&gt;&gt;dgmap.Name" xml:space="preserve">
+    <value>dgmap</value>
   </data>
   <data name="&gt;&gt;ToolStrip1.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -753,6 +732,9 @@
   <data name="&gt;&gt;cbMassTransferMode.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="TabPage1.Text" xml:space="preserve">
+    <value>Conexões</value>
+  </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>
   </data>
@@ -771,14 +753,20 @@
   <data name="Column3.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="&gt;&gt;GroupBox2.Name" xml:space="preserve">
-    <value>GroupBox2</value>
+  <data name="&gt;&gt;ToolStripButton2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;TabPage4.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="&gt;&gt;dgvInputLinks.Name" xml:space="preserve">
+    <value>dgvInputLinks</value>
   </data>
   <data name="&gt;&gt;dgmap.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="ToolStrip2.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
   </data>
   <data name="&gt;&gt;ToolStrip2.Name" xml:space="preserve">
     <value>ToolStrip2</value>
@@ -789,8 +777,8 @@
   <data name="&gt;&gt;DataGridViewComboBoxColumn3.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewComboBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="dgvOutputLinks.Size" type="System.Drawing.Size, System.Drawing">
-    <value>367, 295</value>
+  <data name="cbMassTransferMode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>180, 15</value>
   </data>
   <data name="&gt;&gt;ToolStripButton6.Name" xml:space="preserve">
     <value>ToolStripButton6</value>
@@ -809,6 +797,9 @@
   </data>
   <data name="id2.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
+  </data>
+  <data name="dgvOutputLinks.Size" type="System.Drawing.Size, System.Drawing">
+    <value>367, 295</value>
   </data>
   <data name="dgvOutputPars.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 41</value>
@@ -849,9 +840,6 @@
   <data name="&gt;&gt;id2.Name" xml:space="preserve">
     <value>id2</value>
   </data>
-  <data name="&gt;&gt;Column1.Name" xml:space="preserve">
-    <value>Column1</value>
-  </data>
   <data name="ToolStripButton2.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 22</value>
   </data>
@@ -873,6 +861,9 @@
   <data name="&gt;&gt;cbMassTransferMode.Type" xml:space="preserve">
     <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="ToolStrip2.Text" xml:space="preserve">
+    <value>ToolStrip2</value>
+  </data>
   <data name="dgmap.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 3</value>
   </data>
@@ -885,26 +876,32 @@
   <data name="id1.HeaderText" xml:space="preserve">
     <value>id</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>FlowsheetUOEditorForm</value>
-  </data>
   <data name="&gt;&gt;Label2.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TabPage1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
   </data>
   <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
     <value>373, 314</value>
   </data>
+  <data name="&gt;&gt;GroupBox2.Name" xml:space="preserve">
+    <value>GroupBox2</value>
+  </data>
   <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
     <value>387, 6</value>
   </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Conexões de Entrada</value>
+  <data name="&gt;&gt;btnInitialize.Name" xml:space="preserve">
+    <value>btnInitialize</value>
+  </data>
+  <data name="cbMassTransferMode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>271, 21</value>
   </data>
   <data name="ToolStripButton3.ToolTipText" xml:space="preserve">
     <value>Adicionar</value>
   </data>
-  <data name="ToolStrip2.Text" xml:space="preserve">
-    <value>ToolStrip2</value>
+  <data name="&gt;&gt;TabControl1.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="&gt;&gt;dgvOutputPars.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -915,22 +912,22 @@
   <data name="dgvOutputLinks.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 16</value>
   </data>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>en</value>
-  </metadata>
+  <data name="dgmap.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
+    <value>Vertical</value>
+  </data>
   <metadata name="Column1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <metadata name="DataGridViewComboBoxColumn1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="DataGridViewComboBoxColumn3.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <metadata name="DataGridViewTextBoxColumn3.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="DataGridViewComboBoxColumn3.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="id2.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <metadata name="Column4.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -948,7 +945,7 @@
   <metadata name="col2.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="id2.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <metadata name="Column2.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

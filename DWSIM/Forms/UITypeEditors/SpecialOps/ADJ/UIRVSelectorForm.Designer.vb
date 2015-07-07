@@ -23,44 +23,32 @@ Partial Class UIRVSelectorForm
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(UIRVSelectorForm))
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.TreeView1 = New System.Windows.Forms.TreeView
-        Me.KryptonButton1 = New System.Windows.Forms.Button
-        Me.KryptonButton2 = New System.Windows.Forms.Button
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.TreeView1 = New System.Windows.Forms.TreeView()
+        Me.KryptonButton1 = New System.Windows.Forms.Button()
+        Me.KryptonButton2 = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'Label1
         '
-        Me.Label1.AccessibleDescription = Nothing
-        Me.Label1.AccessibleName = Nothing
         resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.Font = Nothing
         Me.Label1.Name = "Label1"
         '
         'Label2
         '
-        Me.Label2.AccessibleDescription = Nothing
-        Me.Label2.AccessibleName = Nothing
         resources.ApplyResources(Me.Label2, "Label2")
-        Me.Label2.Font = Nothing
         Me.Label2.Name = "Label2"
         '
         'Label3
         '
-        Me.Label3.AccessibleDescription = Nothing
-        Me.Label3.AccessibleName = Nothing
         resources.ApplyResources(Me.Label3, "Label3")
         Me.Label3.Name = "Label3"
         '
         'TreeView1
         '
-        Me.TreeView1.AccessibleDescription = Nothing
-        Me.TreeView1.AccessibleName = Nothing
         resources.ApplyResources(Me.TreeView1, "TreeView1")
-        Me.TreeView1.BackgroundImage = Nothing
-        Me.TreeView1.Font = Nothing
         Me.TreeView1.FullRowSelect = True
         Me.TreeView1.HideSelection = False
         Me.TreeView1.Name = "TreeView1"
@@ -70,61 +58,25 @@ Partial Class UIRVSelectorForm
         '
         'KryptonButton1
         '
-        Me.KryptonButton1.AccessibleDescription = Nothing
-        Me.KryptonButton1.AccessibleName = Nothing
         resources.ApplyResources(Me.KryptonButton1, "KryptonButton1")
-        Me.KryptonButton1.BackgroundImage = Nothing
-        Me.KryptonButton1.Font = Nothing
         Me.KryptonButton1.Name = "KryptonButton1"
-
-
-
-
-
-
-
-
-
-
-
         '
         'KryptonButton2
         '
-        Me.KryptonButton2.AccessibleDescription = Nothing
-        Me.KryptonButton2.AccessibleName = Nothing
         resources.ApplyResources(Me.KryptonButton2, "KryptonButton2")
-        Me.KryptonButton2.BackgroundImage = Nothing
-        Me.KryptonButton2.Font = Nothing
         Me.KryptonButton2.Name = "KryptonButton2"
-
-
-
-
-
-
-
-
-
-
-
         '
         'UIRVSelectorForm
         '
-        Me.AccessibleDescription = Nothing
-        Me.AccessibleName = Nothing
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-
-        Me.BackgroundImage = Nothing
         Me.Controls.Add(Me.KryptonButton2)
         Me.Controls.Add(Me.KryptonButton1)
         Me.Controls.Add(Me.TreeView1)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
-        Me.Font = Nothing
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
-        Me.Icon = Nothing
         Me.Name = "UIRVSelectorForm"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False

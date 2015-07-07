@@ -22,19 +22,20 @@ Partial Class CSepSpecEditorForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(CSepSpecEditorForm))
-        Me.DataGridView1 = New System.Windows.Forms.DataGridView
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column3 = New System.Windows.Forms.DataGridViewComboBoxColumn
-        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.Column5 = New System.Windows.Forms.DataGridViewComboBoxColumn
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column3 = New System.Windows.Forms.DataGridViewComboBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewComboBoxColumn()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'DataGridView1
         '
+        resources.ApplyResources(Me.DataGridView1, "DataGridView1")
         Me.DataGridView1.AllowUserToAddRows = False
         Me.DataGridView1.AllowUserToDeleteRows = False
         Me.DataGridView1.AllowUserToResizeColumns = False
@@ -45,7 +46,6 @@ Partial Class CSepSpecEditorForm
         Me.DataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2, Me.Column3, Me.Column4, Me.Column5})
-        resources.ApplyResources(Me.DataGridView1, "DataGridView1")
         Me.DataGridView1.MultiSelect = False
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.RowHeadersVisible = False
@@ -90,9 +90,9 @@ Partial Class CSepSpecEditorForm
 
     End Sub
     Public WithEvents DataGridView1 As System.Windows.Forms.DataGridView
-    Public WithEvents Column1 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Public WithEvents Column2 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Public WithEvents Column3 As System.Windows.Forms.DataGridViewComboBoxColumn
-    Public WithEvents Column4 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Public WithEvents Column5 As System.Windows.Forms.DataGridViewComboBoxColumn
+    Friend WithEvents Column1 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column2 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column3 As System.Windows.Forms.DataGridViewComboBoxColumn
+    Friend WithEvents Column4 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column5 As System.Windows.Forms.DataGridViewComboBoxColumn
 End Class

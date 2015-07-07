@@ -23,53 +23,37 @@ Partial Class FormConfigureTable
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormConfigureTable))
-        Me.TreeView1 = New System.Windows.Forms.TreeView
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.KryptonButton1 = New System.Windows.Forms.Button
+        Me.TreeView1 = New System.Windows.Forms.TreeView()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.KryptonButton1 = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'TreeView1
         '
-        Me.TreeView1.AccessibleDescription = Nothing
-        Me.TreeView1.AccessibleName = Nothing
         resources.ApplyResources(Me.TreeView1, "TreeView1")
-        Me.TreeView1.BackgroundImage = Nothing
         Me.TreeView1.CheckBoxes = True
-        Me.TreeView1.Font = Nothing
         Me.TreeView1.Name = "TreeView1"
         Me.TreeView1.Nodes.AddRange(New System.Windows.Forms.TreeNode() {CType(resources.GetObject("TreeView1.Nodes"), System.Windows.Forms.TreeNode)})
         '
         'Label1
         '
-        Me.Label1.AccessibleDescription = Nothing
-        Me.Label1.AccessibleName = Nothing
         resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.Font = Nothing
         Me.Label1.Name = "Label1"
         '
         'KryptonButton1
         '
-        Me.KryptonButton1.AccessibleDescription = Nothing
-        Me.KryptonButton1.AccessibleName = Nothing
         resources.ApplyResources(Me.KryptonButton1, "KryptonButton1")
-        Me.KryptonButton1.BackgroundImage = Nothing
-        Me.KryptonButton1.Font = Nothing
         Me.KryptonButton1.Name = "KryptonButton1"
         '
         'FormConfigureTable
         '
-        Me.AccessibleDescription = Nothing
-        Me.AccessibleName = Nothing
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackgroundImage = Nothing
         Me.ControlBox = False
         Me.Controls.Add(Me.KryptonButton1)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.TreeView1)
-        Me.Font = Nothing
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
-        Me.Icon = Nothing
         Me.Name = "FormConfigureTable"
         Me.ShowIcon = False
         Me.ResumeLayout(False)

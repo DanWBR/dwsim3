@@ -112,12 +112,12 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Label15.Size" type="System.Drawing.Size, System.Drawing">
     <value>59, 13</value>
   </data>
@@ -178,6 +178,9 @@
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Selección de proveedor</value>
   </data>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Versión CAPE-OPEN</value>
+  </data>
   <data name="rb11.Location" type="System.Drawing.Point, System.Drawing">
     <value>335, 17</value>
   </data>
@@ -190,29 +193,20 @@
   <data name="Label1.Text" xml:space="preserve">
     <value>Versión de interfaz Termodinámica CAPE-OPEN</value>
   </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Versión CAPE-OPEN</value>
-  </data>
   <data name="FaTabStripItem1.Title" xml:space="preserve">
-    <value>Termo y Propiedades</value>
-  </data>
-  <data name="id.HeaderText" xml:space="preserve">
-    <value>ID</value>
-  </data>
-  <data name="col1.HeaderText" xml:space="preserve">
-    <value>Componente/compuesto (DWSIM)</value>
-  </data>
-  <data name="col2.HeaderText" xml:space="preserve">
-    <value>Equivalente PP CAPE-OPEN</value>
-  </data>
-  <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>517, 13</value>
-  </data>
-  <data name="Label4.Text" xml:space="preserve">
-    <value>Configurar la asignación de componente/compuesto de DWSIM para el paquete de propiedad CAPE-OPEN.</value>
+    <value>Termodinámica y Propiedades</value>
   </data>
   <data name="FaTabStripItem2.Title" xml:space="preserve">
-    <value>Asignación de compuestos</value>
+    <value>Asignación de Componentes</value>
+  </data>
+  <data name="FaTabStripItem3.Title" xml:space="preserve">
+    <value>Asignación de Fases</value>
+  </data>
+  <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>528, 13</value>
+  </data>
+  <data name="Label4.Text" xml:space="preserve">
+    <value>Configurar la asignación de componente/compuesto de DWSIM para el Paquete de Propiedades CAPE-OPEN.</value>
   </data>
   <data name="DataGridViewTextBoxColumn2.HeaderText" xml:space="preserve">
     <value>Fase en el DWSIM</value>
@@ -221,15 +215,21 @@
     <value>Equivalente en el PP CAPE-OPEN</value>
   </data>
   <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>428, 13</value>
+    <value>439, 13</value>
   </data>
   <data name="Label5.Text" xml:space="preserve">
-    <value>Configurar la asignación de fases de DWSIM para el paquete de propiedad CAPE-OPEN.</value>
+    <value>Configurar la asignación de fases de DWSIM para el Paquete de Propiedades CAPE-OPEN.</value>
   </data>
-  <data name="FaTabStripItem3.Title" xml:space="preserve">
-    <value>Asignación de Fases</value>
+  <data name="id.HeaderText" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="col1.HeaderText" xml:space="preserve">
+    <value>Componente/compuesto (DWSIM)</value>
+  </data>
+  <data name="col2.HeaderText" xml:space="preserve">
+    <value>Equivalente en el PP CAPE-OPEN</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Configuración del paquete de propiedad CAPE-OPEN</value>
+    <value>Configuración del Paquete de Propiedades CAPE-OPEN</value>
   </data>
 </root>

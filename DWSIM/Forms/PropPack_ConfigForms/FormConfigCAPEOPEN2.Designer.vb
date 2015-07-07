@@ -37,11 +37,6 @@ Partial Class FormConfigCAPEOPEN2
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.ogc1 = New OutlookStyleControls.OutlookGrid()
-        Me.Column11 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
@@ -90,6 +85,11 @@ Partial Class FormConfigCAPEOPEN2
         Me.Column15 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column1 = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.ofdcs = New System.Windows.Forms.OpenFileDialog()
+        Me.Column11 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStrip1.SuspendLayout()
         Me.FaTabStripItem1.SuspendLayout()
@@ -219,40 +219,6 @@ Partial Class FormConfigCAPEOPEN2
         Me.ogc1.ShowEditingIcon = False
         Me.ogc1.ShowRowErrors = False
         '
-        'Column11
-        '
-        Me.Column11.FillWeight = 5.0!
-        resources.ApplyResources(Me.Column11, "Column11")
-        Me.Column11.Name = "Column11"
-        '
-        'Column6
-        '
-        Me.Column6.FillWeight = 40.0!
-        resources.ApplyResources(Me.Column6, "Column6")
-        Me.Column6.Name = "Column6"
-        Me.Column6.ReadOnly = True
-        '
-        'Column7
-        '
-        Me.Column7.FillWeight = 30.0!
-        resources.ApplyResources(Me.Column7, "Column7")
-        Me.Column7.Name = "Column7"
-        Me.Column7.ReadOnly = True
-        '
-        'Column8
-        '
-        Me.Column8.FillWeight = 15.0!
-        resources.ApplyResources(Me.Column8, "Column8")
-        Me.Column8.Name = "Column8"
-        Me.Column8.ReadOnly = True
-        '
-        'Column9
-        '
-        Me.Column9.FillWeight = 20.0!
-        resources.ApplyResources(Me.Column9, "Column9")
-        Me.Column9.Name = "Column9"
-        Me.Column9.ReadOnly = True
-        '
         'FaTabStripItem2
         '
         resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
@@ -260,7 +226,6 @@ Partial Class FormConfigCAPEOPEN2
         Me.FaTabStripItem2.Controls.Add(Me.GroupBox5)
         Me.FaTabStripItem2.IsDrawn = True
         Me.FaTabStripItem2.Name = "FaTabStripItem2"
-        Me.FaTabStripItem2.Selected = True
         '
         'GroupBox5
         '
@@ -471,6 +436,7 @@ Partial Class FormConfigCAPEOPEN2
         Me.FaTabStripItem6.Controls.Add(Me.Label8)
         Me.FaTabStripItem6.IsDrawn = True
         Me.FaTabStripItem6.Name = "FaTabStripItem6"
+        Me.FaTabStripItem6.Selected = True
         '
         'lblDescription
         '
@@ -612,6 +578,40 @@ Partial Class FormConfigCAPEOPEN2
         Me.ofdcs.RestoreDirectory = True
         Me.ofdcs.SupportMultiDottedExtensions = True
         '
+        'Column11
+        '
+        Me.Column11.FillWeight = 5.0!
+        resources.ApplyResources(Me.Column11, "Column11")
+        Me.Column11.Name = "Column11"
+        '
+        'Column6
+        '
+        Me.Column6.FillWeight = 40.0!
+        resources.ApplyResources(Me.Column6, "Column6")
+        Me.Column6.Name = "Column6"
+        Me.Column6.ReadOnly = True
+        '
+        'Column7
+        '
+        Me.Column7.FillWeight = 30.0!
+        resources.ApplyResources(Me.Column7, "Column7")
+        Me.Column7.Name = "Column7"
+        Me.Column7.ReadOnly = True
+        '
+        'Column8
+        '
+        Me.Column8.FillWeight = 15.0!
+        resources.ApplyResources(Me.Column8, "Column8")
+        Me.Column8.Name = "Column8"
+        Me.Column8.ReadOnly = True
+        '
+        'Column9
+        '
+        Me.Column9.FillWeight = 20.0!
+        resources.ApplyResources(Me.Column9, "Column9")
+        Me.Column9.Name = "Column9"
+        Me.Column9.ReadOnly = True
+        '
         'FormConfigCAPEOPEN2
         '
         resources.ApplyResources(Me, "$this")
@@ -702,11 +702,6 @@ Partial Class FormConfigCAPEOPEN2
     Friend WithEvents Label10 As System.Windows.Forms.Label
     Friend WithEvents lblName As System.Windows.Forms.Label
     Friend WithEvents Label8 As System.Windows.Forms.Label
-    Friend WithEvents Column11 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column6 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column7 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column8 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Column9 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents FaTabStripItem7 As FarsiLibrary.Win.FATabStripItem
     Public WithEvents GroupBox7 As System.Windows.Forms.GroupBox
     Friend WithEvents GroupBox8 As System.Windows.Forms.GroupBox
@@ -717,4 +712,9 @@ Partial Class FormConfigCAPEOPEN2
     Friend WithEvents cbParallelism As System.Windows.Forms.ComboBox
     Friend WithEvents Label11 As System.Windows.Forms.Label
     Public WithEvents chkEnableParallelCalcs As System.Windows.Forms.CheckBox
+    Friend WithEvents Column11 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column6 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column7 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column8 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Column9 As System.Windows.Forms.DataGridViewTextBoxColumn
 End Class

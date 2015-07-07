@@ -134,7 +134,7 @@
     <value>Tareas</value>
   </data>
   <data name="ButtonEqualize.Text" xml:space="preserve">
-    <value>Ecualizar</value>
+    <value>Igualar</value>
   </data>
   <data name="KButton1.Text" xml:space="preserve">
     <value>Cero</value>
@@ -145,6 +145,9 @@
   </data>
   <data name="RadioButton7.Text" xml:space="preserve">
     <value>Fracción volumétrica en estado líquido</value>
+  </data>
+  <data name="Label4.Text" xml:space="preserve">
+    <value>Unidad: moles soluto / kg solvente</value>
   </data>
   <data name="RadioButton6.Size" type="System.Drawing.Size, System.Drawing">
     <value>124, 17</value>

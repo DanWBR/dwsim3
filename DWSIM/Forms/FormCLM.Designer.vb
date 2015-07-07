@@ -23,24 +23,25 @@ Partial Class FormCLM
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormCLM))
-        Me.Panel1 = New System.Windows.Forms.Panel
-        Me.SpinningProgress1 = New CircularProgress.SpinningProgress.SpinningProgress
-        Me.LblRunNumber = New System.Windows.Forms.Label
-        Me.LblSimulationName = New System.Windows.Forms.Label
-        Me.LblSimulationFile = New System.Windows.Forms.Label
-        Me.BtnAbort = New System.Windows.Forms.Button
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.LBLogMsg = New System.Windows.Forms.ListBox
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.SpinningProgress1 = New CircularProgress.SpinningProgress.SpinningProgress()
+        Me.LblRunNumber = New System.Windows.Forms.Label()
+        Me.LblSimulationName = New System.Windows.Forms.Label()
+        Me.LblSimulationFile = New System.Windows.Forms.Label()
+        Me.BtnAbort = New System.Windows.Forms.Button()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.LBLogMsg = New System.Windows.Forms.ListBox()
         Me.Panel1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
         'Panel1
         '
+        resources.ApplyResources(Me.Panel1, "Panel1")
         Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Panel1.Controls.Add(Me.SpinningProgress1)
         Me.Panel1.Controls.Add(Me.LblRunNumber)
@@ -52,17 +53,16 @@ Partial Class FormCLM
         Me.Panel1.Controls.Add(Me.Label2)
         Me.Panel1.Controls.Add(Me.Label1)
         Me.Panel1.Controls.Add(Me.GroupBox1)
-        resources.ApplyResources(Me.Panel1, "Panel1")
         Me.Panel1.Name = "Panel1"
         '
         'SpinningProgress1
         '
-        Me.SpinningProgress1.ActiveSegmentColour = System.Drawing.Color.RoyalBlue
-        Me.SpinningProgress1.AutoIncrementFrequency = 75
-        Me.SpinningProgress1.InactiveSegmentColour = System.Drawing.SystemColors.Control
         resources.ApplyResources(Me.SpinningProgress1, "SpinningProgress1")
+        Me.SpinningProgress1.ActiveSegmentColour = System.Drawing.Color.RoyalBlue
+        Me.SpinningProgress1.AutoIncrementFrequency = 75.0R
+        Me.SpinningProgress1.InactiveSegmentColour = System.Drawing.SystemColors.Control
         Me.SpinningProgress1.Name = "SpinningProgress1"
-        Me.SpinningProgress1.TransistionSegment = 0
+        Me.SpinningProgress1.TransistionSegment = 11
         Me.SpinningProgress1.TransistionSegmentColour = System.Drawing.Color.LightSteelBlue
         '
         'LblRunNumber
@@ -119,7 +119,7 @@ Partial Class FormCLM
         Me.LBLogMsg.FormattingEnabled = True
         Me.LBLogMsg.Name = "LBLogMsg"
         '
-        'CLMForm
+        'FormCLM
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -127,7 +127,7 @@ Partial Class FormCLM
         Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
-        Me.Name = "CLMForm"
+        Me.Name = "FormCLM"
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)

@@ -112,12 +112,12 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>470, 13</value>
   </data>
@@ -125,7 +125,7 @@
     <value>Editar los valores que desee haciendo clic con el botón izquierdo del ratón en la celda que desea.</value>
   </data>
   <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Parámetros de interacción</value>
+    <value>Parámetros de Interacción</value>
   </data>
   <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>168, 13</value>
@@ -133,14 +133,20 @@
   <data name="Label2.Text" xml:space="preserve">
     <value>Característica de implementación.</value>
   </data>
+  <data name="chkTdep.Location" type="System.Drawing.Point, System.Drawing">
+    <value>379, 20</value>
+  </data>
   <data name="Button5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>186, 17</value>
+    <value>439, 17</value>
   </data>
   <data name="Button5.Text" xml:space="preserve">
     <value>Estimación (UNIFAC-LL)</value>
   </data>
+  <data name="Button4.Text" xml:space="preserve">
+    <value>Abrir Archivo IPD</value>
+  </data>
   <data name="Button2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>454, 17</value>
+    <value>707, 17</value>
   </data>
   <data name="Button2.Size" type="System.Drawing.Size, System.Drawing">
     <value>170, 23</value>
@@ -149,21 +155,30 @@
     <value>Estimación (UNIFAC modificado)</value>
   </data>
   <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>320, 17</value>
+    <value>573, 17</value>
   </data>
   <data name="Button1.Text" xml:space="preserve">
     <value>Estimación (UNIFAC)</value>
   </data>
   <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Parámetros de interacción</value>
+    <value>Parámetros de Interacción</value>
   </data>
   <data name="Column2.HeaderText" xml:space="preserve">
     <value>Parámetro</value>
   </data>
+  <data name="KryptonDataGridView1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1012, 396</value>
+  </data>
+  <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1027, 420</value>
+  </data>
   <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Opciones generales</value>
+    <value>Opciones Generales</value>
+  </data>
+  <data name="FaTabStripItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1038, 430</value>
   </data>
   <data name="FaTabStripItem1.Title" xml:space="preserve">
-    <value>Opciones generales</value>
+    <value>Opciones Generales</value>
   </data>
 </root>

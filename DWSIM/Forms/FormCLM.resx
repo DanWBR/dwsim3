@@ -112,199 +112,69 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="SpinningProgress1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 7</value>
-  </data>
-  <data name="SpinningProgress1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>35, 36</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="SpinningProgress1.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;SpinningProgress1.Name" xml:space="preserve">
-    <value>SpinningProgress1</value>
-  </data>
-  <data name="&gt;&gt;SpinningProgress1.Type" xml:space="preserve">
-    <value>CircularProgress.SpinningProgress.SpinningProgress, SpinningProgress, Version=1.0.2444.27714, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;SpinningProgress1.Parent" xml:space="preserve">
-    <value>Panel1</value>
-  </data>
-  <data name="&gt;&gt;SpinningProgress1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="LblRunNumber.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="LblRunNumber.Location" type="System.Drawing.Point, System.Drawing">
-    <value>122, 148</value>
-  </data>
-  <data name="LblRunNumber.Size" type="System.Drawing.Size, System.Drawing">
-    <value>26, 13</value>
-  </data>
-  <data name="LblRunNumber.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="LblRunNumber.Text" xml:space="preserve">
-    <value>X/Y</value>
-  </data>
-  <data name="&gt;&gt;LblRunNumber.Name" xml:space="preserve">
-    <value>LblRunNumber</value>
-  </data>
-  <data name="&gt;&gt;LblRunNumber.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;LblRunNumber.Parent" xml:space="preserve">
-    <value>Panel1</value>
-  </data>
-  <data name="&gt;&gt;LblRunNumber.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="LblSimulationName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>122, 122</value>
-  </data>
-  <data name="LblSimulationName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>325, 13</value>
-  </data>
-  <data name="LblSimulationName.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="LblSimulationName.Text" xml:space="preserve">
-    <value>Label6</value>
-  </data>
-  <data name="&gt;&gt;LblSimulationName.Name" xml:space="preserve">
-    <value>LblSimulationName</value>
-  </data>
-  <data name="&gt;&gt;LblSimulationName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;LblSimulationName.Parent" xml:space="preserve">
-    <value>Panel1</value>
-  </data>
-  <data name="&gt;&gt;LblSimulationName.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="LblSimulationFile.Location" type="System.Drawing.Point, System.Drawing">
-    <value>122, 60</value>
-  </data>
-  <data name="LblSimulationFile.Size" type="System.Drawing.Size, System.Drawing">
-    <value>325, 49</value>
-  </data>
-  <data name="LblSimulationFile.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="LblSimulationFile.Text" xml:space="preserve">
-    <value>Label5</value>
-  </data>
-  <data name="&gt;&gt;LblSimulationFile.Name" xml:space="preserve">
-    <value>LblSimulationFile</value>
-  </data>
-  <data name="&gt;&gt;LblSimulationFile.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;LblSimulationFile.Parent" xml:space="preserve">
-    <value>Panel1</value>
-  </data>
-  <data name="&gt;&gt;LblSimulationFile.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="BtnAbort.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Right</value>
-  </data>
-  <data name="BtnAbort.Location" type="System.Drawing.Point, System.Drawing">
-    <value>373, 143</value>
-  </data>
-  <data name="BtnAbort.Size" type="System.Drawing.Size, System.Drawing">
-    <value>77, 23</value>
-  </data>
-  <data name="BtnAbort.TabIndex" type="System.Int32, mscorlib">
+  <data name="&gt;&gt;Label3.ZOrder" xml:space="preserve">
     <value>6</value>
-  </data>
-  <data name="BtnAbort.Text" xml:space="preserve">
-    <value>Abortar</value>
-  </data>
-  <data name="&gt;&gt;BtnAbort.Name" xml:space="preserve">
-    <value>BtnAbort</value>
-  </data>
-  <data name="&gt;&gt;BtnAbort.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;BtnAbort.Parent" xml:space="preserve">
-    <value>Panel1</value>
-  </data>
-  <data name="&gt;&gt;BtnAbort.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="Label4.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="Label4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 148</value>
-  </data>
-  <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>110, 13</value>
-  </data>
-  <data name="Label4.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
   </data>
   <data name="Label4.Text" xml:space="preserve">
     <value>Executando cálculo...</value>
   </data>
-  <data name="&gt;&gt;Label4.Name" xml:space="preserve">
-    <value>Label4</value>
-  </data>
-  <data name="&gt;&gt;Label4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Label4.Parent" xml:space="preserve">
-    <value>Panel1</value>
-  </data>
-  <data name="&gt;&gt;Label4.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="Label3.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="Label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 122</value>
-  </data>
-  <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>38, 13</value>
-  </data>
-  <data name="Label3.TabIndex" type="System.Int32, mscorlib">
+  <data name="&gt;&gt;BtnAbort.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
   <data name="Label3.Text" xml:space="preserve">
     <value>Nome:</value>
   </data>
-  <data name="&gt;&gt;Label3.Name" xml:space="preserve">
-    <value>Label3</value>
+  <data name="&gt;&gt;Panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;Label3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Label4.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
   </data>
-  <data name="&gt;&gt;Label3.Parent" xml:space="preserve">
+  <data name="LblRunNumber.Text" xml:space="preserve">
+    <value>X/Y</value>
+  </data>
+  <data name="BtnAbort.Text" xml:space="preserve">
+    <value>Abortar</value>
+  </data>
+  <data name="&gt;&gt;SpinningProgress1.Name" xml:space="preserve">
+    <value>SpinningProgress1</value>
+  </data>
+  <data name="&gt;&gt;LblRunNumber.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LblSimulationName.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="LBLogMsg.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 16</value>
+  </data>
+  <data name="LblSimulationName.Text" xml:space="preserve">
+    <value>Label6</value>
+  </data>
+  <data name="&gt;&gt;LblSimulationFile.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label2.Name" xml:space="preserve">
+    <value>Label2</value>
+  </data>
+  <data name="&gt;&gt;Panel1.Name" xml:space="preserve">
     <value>Panel1</value>
   </data>
-  <data name="&gt;&gt;Label3.ZOrder" xml:space="preserve">
-    <value>6</value>
+  <data name="Label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 122</value>
   </data>
-  <data name="Label2.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
   </data>
-  <data name="Label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 60</value>
-  </data>
-  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>111, 13</value>
+  <data name="Label1.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
   <data name="Label2.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -312,131 +182,168 @@
   <data name="Label2.Text" xml:space="preserve">
     <value>Arquivo da simulação:</value>
   </data>
-  <data name="&gt;&gt;Label2.Name" xml:space="preserve">
-    <value>Label2</value>
-  </data>
-  <data name="&gt;&gt;Label2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Label2.Parent" xml:space="preserve">
-    <value>Panel1</value>
-  </data>
-  <data name="&gt;&gt;Label2.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="Label1.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="Label1.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
-  </data>
-  <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>47, 18</value>
-  </data>
-  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>358, 13</value>
-  </data>
-  <data name="Label1.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="Label1.Text" xml:space="preserve">
-    <value>O DWSIM está sendo executado no modo 'linha de comando'.</value>
-  </data>
-  <data name="&gt;&gt;Label1.Name" xml:space="preserve">
-    <value>Label1</value>
-  </data>
-  <data name="&gt;&gt;Label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Label1.Parent" xml:space="preserve">
-    <value>Panel1</value>
-  </data>
-  <data name="&gt;&gt;Label1.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="GroupBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Bottom, Left, Right</value>
-  </data>
-  <data name="LBLogMsg.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="LBLogMsg.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 16</value>
-  </data>
-  <data name="LBLogMsg.Size" type="System.Drawing.Size, System.Drawing">
-    <value>441, 108</value>
-  </data>
-  <data name="LBLogMsg.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;LBLogMsg.Name" xml:space="preserve">
-    <value>LBLogMsg</value>
-  </data>
-  <data name="&gt;&gt;LBLogMsg.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;LBLogMsg.Parent" xml:space="preserve">
-    <value>GroupBox1</value>
-  </data>
-  <data name="&gt;&gt;LBLogMsg.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="GroupBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 172</value>
-  </data>
-  <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>447, 130</value>
-  </data>
-  <data name="GroupBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Log de Mensagens</value>
+  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>111, 13</value>
   </data>
   <data name="&gt;&gt;GroupBox1.Name" xml:space="preserve">
     <value>GroupBox1</value>
   </data>
-  <data name="&gt;&gt;GroupBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterScreen</value>
   </data>
-  <data name="&gt;&gt;GroupBox1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;Label3.Name" xml:space="preserve">
+    <value>Label3</value>
+  </data>
+  <data name="&gt;&gt;Label4.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;Label1.Name" xml:space="preserve">
+    <value>Label1</value>
+  </data>
+  <data name="&gt;&gt;LBLogMsg.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="Label3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;LblSimulationName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;GroupBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="LBLogMsg.Size" type="System.Drawing.Size, System.Drawing">
+    <value>441, 111</value>
+  </data>
+  <data name="&gt;&gt;Panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;SpinningProgress1.Type" xml:space="preserve">
+    <value>CircularProgress.SpinningProgress.SpinningProgress, SpinningProgress, Version=1.0.2444.27714, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>110, 13</value>
+  </data>
+  <data name="&gt;&gt;Label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblRunNumber.Name" xml:space="preserve">
+    <value>LblRunNumber</value>
+  </data>
+  <data name="&gt;&gt;Label2.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;SpinningProgress1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;Label3.Parent" xml:space="preserve">
+    <value>Panel1</value>
+  </data>
+  <data name="GroupBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;LblSimulationName.Parent" xml:space="preserve">
+    <value>Panel1</value>
+  </data>
+  <data name="Panel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="&gt;&gt;Label3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SpinningProgress1.Parent" xml:space="preserve">
     <value>Panel1</value>
   </data>
   <data name="&gt;&gt;GroupBox1.ZOrder" xml:space="preserve">
     <value>9</value>
   </data>
-  <data name="Panel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="Label1.Text" xml:space="preserve">
+    <value>O DWSIM está sendo executado no modo 'linha de comando'.</value>
   </data>
   <data name="Panel1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <data name="Panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>457, 309</value>
+  <data name="&gt;&gt;LBLogMsg.Parent" xml:space="preserve">
+    <value>GroupBox1</value>
+  </data>
+  <data name="Label3.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;Label1.Parent" xml:space="preserve">
+    <value>Panel1</value>
+  </data>
+  <data name="LBLogMsg.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="LblRunNumber.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;LblSimulationFile.Name" xml:space="preserve">
+    <value>LblSimulationFile</value>
+  </data>
+  <data name="LblSimulationName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>325, 13</value>
+  </data>
+  <data name="SpinningProgress1.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
   <data name="Panel1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;Panel1.Name" xml:space="preserve">
+  <data name="&gt;&gt;GroupBox1.Parent" xml:space="preserve">
     <value>Panel1</value>
   </data>
-  <data name="&gt;&gt;Panel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="LblRunNumber.Location" type="System.Drawing.Point, System.Drawing">
+    <value>122, 148</value>
   </data>
-  <data name="&gt;&gt;Panel1.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Log de Mensagens</value>
   </data>
-  <data name="&gt;&gt;Panel1.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;BtnAbort.Parent" xml:space="preserve">
+    <value>Panel1</value>
+  </data>
+  <data name="BtnAbort.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="LblRunNumber.Size" type="System.Drawing.Size, System.Drawing">
+    <value>26, 13</value>
+  </data>
+  <data name="SpinningProgress1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 36</value>
+  </data>
+  <data name="Label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 148</value>
+  </data>
+  <data name="LblSimulationFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>325, 49</value>
+  </data>
+  <data name="&gt;&gt;LblSimulationName.Name" xml:space="preserve">
+    <value>LblSimulationName</value>
+  </data>
+  <data name="LblSimulationName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>122, 122</value>
+  </data>
+  <data name="SpinningProgress1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 7</value>
+  </data>
+  <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>447, 130</value>
+  </data>
+  <data name="GroupBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left, Right</value>
+  </data>
+  <data name="BtnAbort.Location" type="System.Drawing.Point, System.Drawing">
+    <value>373, 143</value>
+  </data>
+  <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>47, 18</value>
+  </data>
+  <data name="LBLogMsg.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>457, 309</value>
+  <data name="&gt;&gt;Label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -565,16 +472,109 @@
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
 </value>
   </data>
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterScreen</value>
+  <data name="Label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 60</value>
+  </data>
+  <data name="Label1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt, style=Bold</value>
+  </data>
+  <data name="&gt;&gt;BtnAbort.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblSimulationFile.Parent" xml:space="preserve">
+    <value>Panel1</value>
+  </data>
+  <data name="Label2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FormCLM</value>
+  </data>
+  <data name="&gt;&gt;LblRunNumber.Parent" xml:space="preserve">
+    <value>Panel1</value>
+  </data>
+  <data name="&gt;&gt;Label1.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;Label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label4.Parent" xml:space="preserve">
+    <value>Panel1</value>
+  </data>
+  <data name="LblSimulationFile.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>38, 13</value>
+  </data>
+  <data name="GroupBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 172</value>
+  </data>
+  <data name="&gt;&gt;BtnAbort.Name" xml:space="preserve">
+    <value>BtnAbort</value>
+  </data>
+  <data name="&gt;&gt;LBLogMsg.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;LblRunNumber.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;LblSimulationName.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>358, 13</value>
+  </data>
+  <data name="&gt;&gt;Label2.Parent" xml:space="preserve">
+    <value>Panel1</value>
+  </data>
+  <data name="Label4.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="&gt;&gt;Label4.Name" xml:space="preserve">
+    <value>Label4</value>
+  </data>
+  <data name="LblSimulationFile.Text" xml:space="preserve">
+    <value>Label5</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>DWSIM</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>CLMForm</value>
+  <data name="LblSimulationFile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>122, 60</value>
+  </data>
+  <data name="LblRunNumber.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;LBLogMsg.Name" xml:space="preserve">
+    <value>LBLogMsg</value>
+  </data>
+  <data name="&gt;&gt;LblSimulationFile.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>457, 309</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="BtnAbort.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;Panel1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="BtnAbort.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 23</value>
+  </data>
+  <data name="Panel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>457, 309</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>

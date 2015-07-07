@@ -23,26 +23,26 @@ Partial Class FormReportConfig
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormReportConfig))
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox
-        Me.KButton4 = New System.Windows.Forms.Button
-        Me.KButton5 = New System.Windows.Forms.Button
-        Me.KButton7 = New System.Windows.Forms.Button
-        Me.GroupBox4 = New System.Windows.Forms.GroupBox
-        Me.CheckBox8 = New System.Windows.Forms.CheckBox
-        Me.CheckBox7 = New System.Windows.Forms.CheckBox
-        Me.CheckBox6 = New System.Windows.Forms.CheckBox
-        Me.CheckBox5 = New System.Windows.Forms.CheckBox
-        Me.CheckBox4 = New System.Windows.Forms.CheckBox
-        Me.CheckBox3 = New System.Windows.Forms.CheckBox
-        Me.CheckBox2 = New System.Windows.Forms.CheckBox
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox
-        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog
-        Me.TreeViewObj = New System.Windows.Forms.TreeView
-        Me.Button1 = New System.Windows.Forms.Button
-        Me.Button2 = New System.Windows.Forms.Button
-        Me.ListView1 = New System.Windows.Forms.ListView
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox
-        Me.GroupBox5 = New System.Windows.Forms.GroupBox
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.KButton4 = New System.Windows.Forms.Button()
+        Me.KButton5 = New System.Windows.Forms.Button()
+        Me.KButton7 = New System.Windows.Forms.Button()
+        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.CheckBox8 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox7 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox6 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox5 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox4 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox3 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox2 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
+        Me.TreeViewObj = New System.Windows.Forms.TreeView()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.ListView1 = New System.Windows.Forms.ListView()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -51,50 +51,31 @@ Partial Class FormReportConfig
         '
         'GroupBox3
         '
-        Me.GroupBox3.AccessibleDescription = Nothing
-        Me.GroupBox3.AccessibleName = Nothing
         resources.ApplyResources(Me.GroupBox3, "GroupBox3")
-        Me.GroupBox3.BackgroundImage = Nothing
         Me.GroupBox3.Controls.Add(Me.KButton4)
         Me.GroupBox3.Controls.Add(Me.KButton5)
         Me.GroupBox3.Controls.Add(Me.KButton7)
-        Me.GroupBox3.Font = Nothing
         Me.GroupBox3.Name = "GroupBox3"
         Me.GroupBox3.TabStop = False
         '
         'KButton4
         '
-        Me.KButton4.AccessibleDescription = Nothing
-        Me.KButton4.AccessibleName = Nothing
         resources.ApplyResources(Me.KButton4, "KButton4")
-        Me.KButton4.BackgroundImage = Nothing
-        Me.KButton4.Font = Nothing
         Me.KButton4.Name = "KButton4"
         '
         'KButton5
         '
-        Me.KButton5.AccessibleDescription = Nothing
-        Me.KButton5.AccessibleName = Nothing
         resources.ApplyResources(Me.KButton5, "KButton5")
-        Me.KButton5.BackgroundImage = Nothing
-        Me.KButton5.Font = Nothing
         Me.KButton5.Name = "KButton5"
         '
         'KButton7
         '
-        Me.KButton7.AccessibleDescription = Nothing
-        Me.KButton7.AccessibleName = Nothing
         resources.ApplyResources(Me.KButton7, "KButton7")
-        Me.KButton7.BackgroundImage = Nothing
-        Me.KButton7.Font = Nothing
         Me.KButton7.Name = "KButton7"
         '
         'GroupBox4
         '
-        Me.GroupBox4.AccessibleDescription = Nothing
-        Me.GroupBox4.AccessibleName = Nothing
         resources.ApplyResources(Me.GroupBox4, "GroupBox4")
-        Me.GroupBox4.BackgroundImage = Nothing
         Me.GroupBox4.Controls.Add(Me.CheckBox8)
         Me.GroupBox4.Controls.Add(Me.CheckBox7)
         Me.GroupBox4.Controls.Add(Me.CheckBox6)
@@ -103,96 +84,63 @@ Partial Class FormReportConfig
         Me.GroupBox4.Controls.Add(Me.CheckBox3)
         Me.GroupBox4.Controls.Add(Me.CheckBox2)
         Me.GroupBox4.Controls.Add(Me.CheckBox1)
-        Me.GroupBox4.Font = Nothing
         Me.GroupBox4.Name = "GroupBox4"
         Me.GroupBox4.TabStop = False
         '
         'CheckBox8
         '
-        Me.CheckBox8.AccessibleDescription = Nothing
-        Me.CheckBox8.AccessibleName = Nothing
         resources.ApplyResources(Me.CheckBox8, "CheckBox8")
-        Me.CheckBox8.BackgroundImage = Nothing
         Me.CheckBox8.Checked = True
         Me.CheckBox8.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckBox8.Font = Nothing
         Me.CheckBox8.Name = "CheckBox8"
         '
         'CheckBox7
         '
-        Me.CheckBox7.AccessibleDescription = Nothing
-        Me.CheckBox7.AccessibleName = Nothing
         resources.ApplyResources(Me.CheckBox7, "CheckBox7")
-        Me.CheckBox7.BackgroundImage = Nothing
         Me.CheckBox7.Checked = True
         Me.CheckBox7.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckBox7.Font = Nothing
         Me.CheckBox7.Name = "CheckBox7"
         '
         'CheckBox6
         '
-        Me.CheckBox6.AccessibleDescription = Nothing
-        Me.CheckBox6.AccessibleName = Nothing
         resources.ApplyResources(Me.CheckBox6, "CheckBox6")
-        Me.CheckBox6.BackgroundImage = Nothing
         Me.CheckBox6.Checked = True
         Me.CheckBox6.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckBox6.Font = Nothing
         Me.CheckBox6.Name = "CheckBox6"
         '
         'CheckBox5
         '
-        Me.CheckBox5.AccessibleDescription = Nothing
-        Me.CheckBox5.AccessibleName = Nothing
         resources.ApplyResources(Me.CheckBox5, "CheckBox5")
-        Me.CheckBox5.BackgroundImage = Nothing
         Me.CheckBox5.Checked = True
         Me.CheckBox5.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckBox5.Font = Nothing
         Me.CheckBox5.Name = "CheckBox5"
         '
         'CheckBox4
         '
-        Me.CheckBox4.AccessibleDescription = Nothing
-        Me.CheckBox4.AccessibleName = Nothing
         resources.ApplyResources(Me.CheckBox4, "CheckBox4")
-        Me.CheckBox4.BackgroundImage = Nothing
         Me.CheckBox4.Checked = True
         Me.CheckBox4.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckBox4.Font = Nothing
         Me.CheckBox4.Name = "CheckBox4"
         '
         'CheckBox3
         '
-        Me.CheckBox3.AccessibleDescription = Nothing
-        Me.CheckBox3.AccessibleName = Nothing
         resources.ApplyResources(Me.CheckBox3, "CheckBox3")
-        Me.CheckBox3.BackgroundImage = Nothing
         Me.CheckBox3.Checked = True
         Me.CheckBox3.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckBox3.Font = Nothing
         Me.CheckBox3.Name = "CheckBox3"
         '
         'CheckBox2
         '
-        Me.CheckBox2.AccessibleDescription = Nothing
-        Me.CheckBox2.AccessibleName = Nothing
         resources.ApplyResources(Me.CheckBox2, "CheckBox2")
-        Me.CheckBox2.BackgroundImage = Nothing
         Me.CheckBox2.Checked = True
         Me.CheckBox2.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckBox2.Font = Nothing
         Me.CheckBox2.Name = "CheckBox2"
         '
         'CheckBox1
         '
-        Me.CheckBox1.AccessibleDescription = Nothing
-        Me.CheckBox1.AccessibleName = Nothing
         resources.ApplyResources(Me.CheckBox1, "CheckBox1")
-        Me.CheckBox1.BackgroundImage = Nothing
         Me.CheckBox1.Checked = True
         Me.CheckBox1.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckBox1.Font = Nothing
         Me.CheckBox1.Name = "CheckBox1"
         '
         'SaveFileDialog1
@@ -203,12 +151,8 @@ Partial Class FormReportConfig
         '
         'TreeViewObj
         '
-        Me.TreeViewObj.AccessibleDescription = Nothing
-        Me.TreeViewObj.AccessibleName = Nothing
         resources.ApplyResources(Me.TreeViewObj, "TreeViewObj")
-        Me.TreeViewObj.BackgroundImage = Nothing
         Me.TreeViewObj.CheckBoxes = True
-        Me.TreeViewObj.Font = Nothing
         Me.TreeViewObj.FullRowSelect = True
         Me.TreeViewObj.HideSelection = False
         Me.TreeViewObj.Name = "TreeViewObj"
@@ -217,31 +161,19 @@ Partial Class FormReportConfig
         '
         'Button1
         '
-        Me.Button1.AccessibleDescription = Nothing
-        Me.Button1.AccessibleName = Nothing
         resources.ApplyResources(Me.Button1, "Button1")
-        Me.Button1.BackgroundImage = Nothing
-        Me.Button1.Font = Nothing
         Me.Button1.Name = "Button1"
         Me.Button1.UseVisualStyleBackColor = True
         '
         'Button2
         '
-        Me.Button2.AccessibleDescription = Nothing
-        Me.Button2.AccessibleName = Nothing
         resources.ApplyResources(Me.Button2, "Button2")
-        Me.Button2.BackgroundImage = Nothing
-        Me.Button2.Font = Nothing
         Me.Button2.Name = "Button2"
         Me.Button2.UseVisualStyleBackColor = True
         '
         'ListView1
         '
-        Me.ListView1.AccessibleDescription = Nothing
-        Me.ListView1.AccessibleName = Nothing
         resources.ApplyResources(Me.ListView1, "ListView1")
-        Me.ListView1.BackgroundImage = Nothing
-        Me.ListView1.Font = Nothing
         Me.ListView1.HideSelection = False
         Me.ListView1.Name = "ListView1"
         Me.ListView1.UseCompatibleStateImageBehavior = False
@@ -249,42 +181,29 @@ Partial Class FormReportConfig
         '
         'GroupBox2
         '
-        Me.GroupBox2.AccessibleDescription = Nothing
-        Me.GroupBox2.AccessibleName = Nothing
         resources.ApplyResources(Me.GroupBox2, "GroupBox2")
-        Me.GroupBox2.BackgroundImage = Nothing
         Me.GroupBox2.Controls.Add(Me.TreeViewObj)
-        Me.GroupBox2.Font = Nothing
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.TabStop = False
         '
         'GroupBox5
         '
-        Me.GroupBox5.AccessibleDescription = Nothing
-        Me.GroupBox5.AccessibleName = Nothing
         resources.ApplyResources(Me.GroupBox5, "GroupBox5")
-        Me.GroupBox5.BackgroundImage = Nothing
         Me.GroupBox5.Controls.Add(Me.ListView1)
         Me.GroupBox5.Controls.Add(Me.Button2)
         Me.GroupBox5.Controls.Add(Me.Button1)
-        Me.GroupBox5.Font = Nothing
         Me.GroupBox5.Name = "GroupBox5"
         Me.GroupBox5.TabStop = False
         '
         'FormReportConfig
         '
-        Me.AccessibleDescription = Nothing
-        Me.AccessibleName = Nothing
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackgroundImage = Nothing
         Me.Controls.Add(Me.GroupBox5)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox4)
         Me.Controls.Add(Me.GroupBox3)
-        Me.Font = Nothing
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
-        Me.Icon = Nothing
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "FormReportConfig"

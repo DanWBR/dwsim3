@@ -117,6 +117,58 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="FaTabStripItem2.Title" xml:space="preserve">
+    <value>Configuración del Flash</value>
+  </data>
+  <data name="FaTabStripItem6.Title" xml:space="preserve">
+    <value>Información</value>
+  </data>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Agregados</value>
+  </data>
+  <data name="Button11.Text" xml:space="preserve">
+    <value>Limpiar Lista</value>
+  </data>
+  <data name="Button7.Text" xml:space="preserve">
+    <value>Agregar &gt;</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 13</value>
+  </data>
+  <data name="Label3.Text" xml:space="preserve">
+    <value>Buscar</value>
+  </data>
+  <data name="Column6.HeaderText" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="GroupBox5.Text" xml:space="preserve">
+    <value>Configuraciones</value>
+  </data>
+  <data name="GroupBox3.Text" xml:space="preserve">
+    <value>Prueba de Estabilidad (Flash ELLV)</value>
+  </data>
+  <data name="RadioButton2.Text" xml:space="preserve">
+    <value>Media</value>
+  </data>
+  <data name="RadioButton1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 17</value>
+  </data>
+  <data name="RadioButton1.Text" xml:space="preserve">
+    <value>Baja</value>
+  </data>
+  <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 13</value>
+  </data>
+  <data name="Label4.Text" xml:space="preserve">
+    <value>Severidad de busqueda:</value>
+  </data>
+  <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>231, 13</value>
+  </data>
+  <data name="Label6.Text" xml:space="preserve">
+    <value>Componentes clave para segunda fase líquida:</value>
+  </data>
   <data name="ComboBoxFlashAlg.Items" xml:space="preserve">
     <value>Nested Loops (VLE)</value>
   </data>
@@ -144,6 +196,27 @@
   <data name="ComboBoxFlashAlg.Items8" xml:space="preserve">
     <value>Nested Loops (VLLE - Immiscible Liquids)</value>
   </data>
+  <data name="Button3.Text" xml:space="preserve">
+    <value>Ventana de Configuración del Paquete de Propiedades</value>
+  </data>
+  <data name="GroupBox8.Text" xml:space="preserve">
+    <value>Información del dispositivo CUDA/OpenCL seleccionado</value>
+  </data>
+  <data name="chkEnableGPUProcessing.Size" type="System.Drawing.Size, System.Drawing">
+    <value>239, 17</value>
+  </data>
+  <data name="chkEnableGPUProcessing.Text" xml:space="preserve">
+    <value>Activar Cálculos en Paralelo (CUDA/OpenCL)</value>
+  </data>
+  <data name="chkEnableParallelCalcs.Size" type="System.Drawing.Size, System.Drawing">
+    <value>189, 17</value>
+  </data>
+  <data name="chkEnableParallelCalcs.Text" xml:space="preserve">
+    <value>Activar Cálculos en Paralelo (CPU)</value>
+  </data>
+  <data name="GroupBox6.Text" xml:space="preserve">
+    <value>Idioma de Interfaz de Usuario</value>
+  </data>
   <data name="ListView1.Items" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
@@ -152,14 +225,14 @@
         PWIwM2Y1ZjdmMTFkNTBhM2EFAQAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0HAAAA
         BFRleHQKSW1hZ2VJbmRleAlCYWNrQ29sb3IHQ2hlY2tlZARGb250CUZvcmVDb2xvchdVc2VJdGVtU3R5
         bGVGb3JTdWJJdGVtcwEABAAEBAAIFFN5c3RlbS5EcmF3aW5nLkNvbG9yAwAAAAETU3lzdGVtLkRyYXdp
-        bmcuRm9udAMAAAAUU3lzdGVtLkRyYXdpbmcuQ29sb3IDAAAAAQIAAAAGBAAAABZQb3J0dWd1ZXNlIChC
-        cmF6aWxpYW4pAAAAAAX7////FFN5c3RlbS5EcmF3aW5nLkNvbG9yBAAAAARuYW1lBXZhbHVlCmtub3du
-        Q29sb3IFc3RhdGUBAAAACQcHAwAAAAoAAAAAAAAAABgAAQAACQYAAAAB+f////v///8KAAAAAAAAAAAa
-        AAEAAQUGAAAAE1N5c3RlbS5EcmF3aW5nLkZvbnQEAAAABE5hbWUEU2l6ZQVTdHlsZQRVbml0AQAEBAsY
-        U3lzdGVtLkRyYXdpbmcuRm9udFN0eWxlAwAAABtTeXN0ZW0uRHJhd2luZy5HcmFwaGljc1VuaXQDAAAA
-        AwAAAAYIAAAABlRhaG9tYQAABEEF9////xhTeXN0ZW0uRHJhd2luZy5Gb250U3R5bGUBAAAAB3ZhbHVl
-        X18ACAMAAAAAAAAABfb///8bU3lzdGVtLkRyYXdpbmcuR3JhcGhpY3NVbml0AQAAAAd2YWx1ZV9fAAgD
-        AAAAAwAAAAs=
+        bmcuRm9udAMAAAAUU3lzdGVtLkRyYXdpbmcuQ29sb3IDAAAAAQIAAAAGBAAAABJQb3J0dWfDqXMgKEJy
+        YXNpbCkAAAAABfv///8UU3lzdGVtLkRyYXdpbmcuQ29sb3IEAAAABG5hbWUFdmFsdWUKa25vd25Db2xv
+        cgVzdGF0ZQEAAAAJBwcDAAAACgAAAAAAAAAAGAABAAAJBgAAAAH5////+////woAAAAAAAAAABoAAQAB
+        BQYAAAATU3lzdGVtLkRyYXdpbmcuRm9udAQAAAAETmFtZQRTaXplBVN0eWxlBFVuaXQBAAQECxhTeXN0
+        ZW0uRHJhd2luZy5Gb250U3R5bGUDAAAAG1N5c3RlbS5EcmF3aW5nLkdyYXBoaWNzVW5pdAMAAAADAAAA
+        BggAAAAGVGFob21hAAAEQQX3////GFN5c3RlbS5EcmF3aW5nLkZvbnRTdHlsZQEAAAAHdmFsdWVfXwAI
+        AwAAAAAAAAAF9v///xtTeXN0ZW0uRHJhd2luZy5HcmFwaGljc1VuaXQBAAAAB3ZhbHVlX18ACAMAAAAD
+        AAAACw==
 </value>
   </data>
   <data name="ListView1.Items1" mimetype="application/x-microsoft.net.object.binary.base64">
@@ -170,8 +243,8 @@
         PWIwM2Y1ZjdmMTFkNTBhM2EFAQAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0HAAAA
         BFRleHQKSW1hZ2VJbmRleAlCYWNrQ29sb3IHQ2hlY2tlZARGb250CUZvcmVDb2xvchdVc2VJdGVtU3R5
         bGVGb3JTdWJJdGVtcwEABAAEBAAIFFN5c3RlbS5EcmF3aW5nLkNvbG9yAwAAAAETU3lzdGVtLkRyYXdp
-        bmcuRm9udAMAAAAUU3lzdGVtLkRyYXdpbmcuQ29sb3IDAAAAAQIAAAAGBAAAABdFbmdsaXNoIChVbml0
-        ZWQgU3RhdGVzKQIAAAAF+////xRTeXN0ZW0uRHJhd2luZy5Db2xvcgQAAAAEbmFtZQV2YWx1ZQprbm93
+        bmcuRm9udAMAAAAUU3lzdGVtLkRyYXdpbmcuQ29sb3IDAAAAAQIAAAAGBAAAABdJbmfDqXMgKEVzdGFk
+        b3MgVW5pZG9zKQIAAAAF+////xRTeXN0ZW0uRHJhd2luZy5Db2xvcgQAAAAEbmFtZQV2YWx1ZQprbm93
         bkNvbG9yBXN0YXRlAQAAAAkHBwMAAAAKAAAAAAAAAAAYAAEAAAkGAAAAAfn////7////CgAAAAAAAAAA
         GgABAAEFBgAAABNTeXN0ZW0uRHJhd2luZy5Gb250BAAAAAROYW1lBFNpemUFU3R5bGUEVW5pdAEABAQL
         GFN5c3RlbS5EcmF3aW5nLkZvbnRTdHlsZQMAAAAbU3lzdGVtLkRyYXdpbmcuR3JhcGhpY3NVbml0AwAA
@@ -188,13 +261,13 @@
         PWIwM2Y1ZjdmMTFkNTBhM2EFAQAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0HAAAA
         BFRleHQKSW1hZ2VJbmRleAlCYWNrQ29sb3IHQ2hlY2tlZARGb250CUZvcmVDb2xvchdVc2VJdGVtU3R5
         bGVGb3JTdWJJdGVtcwEABAAEBAAIFFN5c3RlbS5EcmF3aW5nLkNvbG9yAwAAAAETU3lzdGVtLkRyYXdp
-        bmcuRm9udAMAAAAUU3lzdGVtLkRyYXdpbmcuQ29sb3IDAAAAAQIAAAAGBAAAAAdTcGFuaXNoBAAAAAX7
-        ////FFN5c3RlbS5EcmF3aW5nLkNvbG9yBAAAAARuYW1lBXZhbHVlCmtub3duQ29sb3IFc3RhdGUBAAAA
-        CQcHAwAAAAoAAAAAAAAAABgAAQAACQYAAAAB+f////v///8KAAAAAAAAAAAaAAEAAQUGAAAAE1N5c3Rl
-        bS5EcmF3aW5nLkZvbnQEAAAABE5hbWUEU2l6ZQVTdHlsZQRVbml0AQAEBAsYU3lzdGVtLkRyYXdpbmcu
-        Rm9udFN0eWxlAwAAABtTeXN0ZW0uRHJhd2luZy5HcmFwaGljc1VuaXQDAAAAAwAAAAYIAAAABlRhaG9t
-        YQAABEEF9////xhTeXN0ZW0uRHJhd2luZy5Gb250U3R5bGUBAAAAB3ZhbHVlX18ACAMAAAAAAAAABfb/
-        //8bU3lzdGVtLkRyYXdpbmcuR3JhcGhpY3NVbml0AQAAAAd2YWx1ZV9fAAgDAAAAAwAAAAs=
+        bmcuRm9udAMAAAAUU3lzdGVtLkRyYXdpbmcuQ29sb3IDAAAAAQIAAAAGBAAAAAhFc3Bhw7FvbAQAAAAF
+        +////xRTeXN0ZW0uRHJhd2luZy5Db2xvcgQAAAAEbmFtZQV2YWx1ZQprbm93bkNvbG9yBXN0YXRlAQAA
+        AAkHBwMAAAAKAAAAAAAAAAAYAAEAAAkGAAAAAfn////7////CgAAAAAAAAAAGgABAAEFBgAAABNTeXN0
+        ZW0uRHJhd2luZy5Gb250BAAAAAROYW1lBFNpemUFU3R5bGUEVW5pdAEABAQLGFN5c3RlbS5EcmF3aW5n
+        LkZvbnRTdHlsZQMAAAAbU3lzdGVtLkRyYXdpbmcuR3JhcGhpY3NVbml0AwAAAAMAAAAGCAAAAAZUYWhv
+        bWEAAARBBff///8YU3lzdGVtLkRyYXdpbmcuRm9udFN0eWxlAQAAAAd2YWx1ZV9fAAgDAAAAAAAAAAX2
+        ////G1N5c3RlbS5EcmF3aW5nLkdyYXBoaWNzVW5pdAEAAAAHdmFsdWVfXwAIAwAAAAMAAAAL
 </value>
   </data>
   <data name="ListView1.Items3" mimetype="application/x-microsoft.net.object.binary.base64">
@@ -205,7 +278,7 @@
         PWIwM2Y1ZjdmMTFkNTBhM2EFAQAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0HAAAA
         BFRleHQKSW1hZ2VJbmRleAlCYWNrQ29sb3IHQ2hlY2tlZARGb250CUZvcmVDb2xvchdVc2VJdGVtU3R5
         bGVGb3JTdWJJdGVtcwEABAAEBAAIFFN5c3RlbS5EcmF3aW5nLkNvbG9yAwAAAAETU3lzdGVtLkRyYXdp
-        bmcuRm9udAMAAAAUU3lzdGVtLkRyYXdpbmcuQ29sb3IDAAAAAQIAAAAGBAAAAAZHZXJtYW4HAAAABfv/
+        bmcuRm9udAMAAAAUU3lzdGVtLkRyYXdpbmcuQ29sb3IDAAAAAQIAAAAGBAAAAAZBbGVtYW4HAAAABfv/
         //8UU3lzdGVtLkRyYXdpbmcuQ29sb3IEAAAABG5hbWUFdmFsdWUKa25vd25Db2xvcgVzdGF0ZQEAAAAJ
         BwcDAAAACgAAAAAAAAAAGAABAAAJBgAAAAH5////+////woAAAAAAAAAABoAAQABBQYAAAATU3lzdGVt
         LkRyYXdpbmcuRm9udAQAAAAETmFtZQRTaXplBVN0eWxlBFVuaXQBAAQECxhTeXN0ZW0uRHJhd2luZy5G
@@ -214,7 +287,30 @@
         /xtTeXN0ZW0uRHJhd2luZy5HcmFwaGljc1VuaXQBAAAAB3ZhbHVlX18ACAMAAAADAAAACw==
 </value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 13</value>
+  </data>
+  <data name="Label5.Text" xml:space="preserve">
+    <value>Idioma</value>
+  </data>
+  <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>321, 13</value>
+  </data>
+  <data name="Label7.Text" xml:space="preserve">
+    <value>Seleccione un Idioma de la lista y haga clic en 'OK' para confirmar:</value>
+  </data>
+  <data name="Label10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 13</value>
+  </data>
+  <data name="Label10.Text" xml:space="preserve">
+    <value>Descripción:</value>
+  </data>
+  <data name="Label8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>108, 13</value>
+  </data>
+  <data name="Label8.Text" xml:space="preserve">
+    <value>Nombre del Paquete:</value>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAEAMDAAAAEAGACoHAAAFgAAACgAAAAwAAAAYAAAAAEAGAAAAAAAAAAAAEgAAABIAAAAAAAAAAAA
@@ -341,5 +437,8 @@
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
 </value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>DWSIM - Configuración del Paquete de Propriedades (Interfaz CAPE-OPEN)</value>
   </data>
 </root>

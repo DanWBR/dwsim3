@@ -38,7 +38,6 @@ Partial Class FormState
         'LabelWithDivider1
         '
         resources.ApplyResources(Me.LabelWithDivider1, "LabelWithDivider1")
-        Me.LabelWithDivider1.ImageKey = ""
         Me.LabelWithDivider1.Name = "LabelWithDivider1"
         '
         'TextBox1
@@ -49,21 +48,18 @@ Partial Class FormState
         'Label1
         '
         resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.ImageKey = ""
         Me.Label1.Name = "Label1"
         '
         'btnCancel
         '
         resources.ApplyResources(Me.btnCancel, "btnCancel")
         Me.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.btnCancel.ImageKey = ""
         Me.btnCancel.Name = "btnCancel"
         Me.btnCancel.UseVisualStyleBackColor = True
         '
         'Label2
         '
         resources.ApplyResources(Me.Label2, "Label2")
-        Me.Label2.ImageKey = ""
         Me.Label2.Name = "Label2"
         '
         'TextBox2
@@ -76,14 +72,12 @@ Partial Class FormState
         '
         resources.ApplyResources(Me.btnOK, "btnOK")
         Me.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK
-        Me.btnOK.ImageKey = ""
         Me.btnOK.Name = "btnOK"
         Me.btnOK.UseVisualStyleBackColor = True
         '
         'Label3
         '
         resources.ApplyResources(Me.Label3, "Label3")
-        Me.Label3.ImageKey = ""
         Me.Label3.Name = "Label3"
         '
         'PictureBox1

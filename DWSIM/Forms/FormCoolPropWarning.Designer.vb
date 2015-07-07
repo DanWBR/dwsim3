@@ -32,8 +32,8 @@ Partial Class FormCoolPropWarning
         '
         'PictureBox1
         '
-        Me.PictureBox1.Image = Global.DWSIM.My.Resources.Resources.dialog_warning
         resources.ApplyResources(Me.PictureBox1, "PictureBox1")
+        Me.PictureBox1.Image = Global.DWSIM.My.Resources.Resources.dialog_warning
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.TabStop = False
         '

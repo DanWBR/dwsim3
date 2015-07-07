@@ -121,7 +121,7 @@
     <value>El cambio de fase no está permitido. </value>
   </data>
   <data name="TemperaturaCrtica" xml:space="preserve">
-    <value>Temperatura crítica </value>
+    <value>Temperatura Crítica </value>
   </data>
   <data name="LIQMassamolar" xml:space="preserve">
     <value>LIQ masa molar </value>
@@ -145,7 +145,7 @@
     <value>Δ (Step Size) </value>
   </data>
   <data name="Conectadoaentrada" xml:space="preserve">
-    <value>Conectado a (entrada) </value>
+    <value>Conectado a (Entrada) </value>
   </data>
   <data name="Elevaom" xml:space="preserve">
     <value>Elevación (m) </value>
@@ -214,13 +214,13 @@
     <value>Masa molar de la Fase Líquida </value>
   </data>
   <data name="Configuroolayoutdasj" xml:space="preserve">
-    <value>Configurar diseño de las ventanas</value>
+    <value>Configurar Diseño de las Ventanas</value>
   </data>
   <data name="PontosdeBolha" xml:space="preserve">
-    <value>Puntos de burbuja </value>
+    <value>Puntos de Burbuja </value>
   </data>
   <data name="EficinciaAdiabtica01" xml:space="preserve">
-    <value>Eficiencia adiabática (0-100) </value>
+    <value>Eficiencia Adiabática (0-100) </value>
   </data>
   <data name="ErroE" xml:space="preserve">
     <value>Error E</value>
@@ -244,7 +244,7 @@
     <value>Problemas en la convergencia...</value>
   </data>
   <data name="DCSideRectifiers" xml:space="preserve">
-    <value>Rectificadores laterales </value>
+    <value>Rectificadores Laterales </value>
   </data>
   <data name="Informao" xml:space="preserve">
     <value>Información </value>
@@ -277,7 +277,7 @@
     <value>Usar Peng-Robinson (EOS) con la regla de mezclado de Wong y Sandler. El  exceso de energía de Gibbs (GE/RT) es calculado por el modelo UNIFAC.</value>
   </data>
   <data name="DCNumbStages" xml:space="preserve">
-    <value>Número de etapas </value>
+    <value>Número de Etapas </value>
   </data>
   <data name="m3kmol" xml:space="preserve">
     <value>m3/kmol </value>
@@ -286,13 +286,13 @@
     <value>Compresor </value>
   </data>
   <data name="EStreams" xml:space="preserve">
-    <value>Corrintes de Energía </value>
+    <value>Corrientes de Energía </value>
   </data>
   <data name="AbsorptionColumn" xml:space="preserve">
     <value>Columna de Absorción</value>
   </data>
   <data name="Todasasconexespossve" xml:space="preserve">
-    <value>Todas las conexiones posibles para el objeto seleccionado ya están ocupadas. </value>
+    <value>Todas las conexiones posibles para el objeto seleccionado ya están satisfechas. </value>
   </data>
   <data name="VAPEntropiaEspecfica" xml:space="preserve">
     <value>VAP Entropía Específica</value>
@@ -337,7 +337,7 @@
     <value>Suelo (mojado) </value>
   </data>
   <data name="DCCondenserDuty" xml:space="preserve">
-    <value>Calor eliminado en el condensador.</value>
+    <value>Calor Eliminado en el Condensador.</value>
   </data>
   <data name="Vapor" xml:space="preserve">
     <value>Vapor </value>
@@ -361,7 +361,7 @@
     <value>Z (Fase Líquida) </value>
   </data>
   <data name="DCCondenserDeltaP" xml:space="preserve">
-    <value>Caída de la presión del condensador. </value>
+    <value>Caída de la presión del Condensador. </value>
   </data>
   <data name="Ar" xml:space="preserve">
     <value>Aire</value>
@@ -388,7 +388,7 @@
     <value>Flujo entre las etapas </value>
   </data>
   <data name="SCOptimalFeedStage" xml:space="preserve">
-    <value>Etapa óptima de alimentación</value>
+    <value>Etapa Optima de Alimentación</value>
   </data>
   <data name="DCReboilerTempEstimate" xml:space="preserve">
     <value>Temperatura de Rehervidor (est) </value>
@@ -397,7 +397,7 @@
     <value>Paso relativo que debe aplicarse a los reactores de volumen en cada paso iterativo. </value>
   </data>
   <data name="DCInitialEstimates" xml:space="preserve">
-    <value>5. Estimaciones iníciales </value>
+    <value>5. Estimaciones Iníciales </value>
   </data>
   <data name="MassamolarMistura" xml:space="preserve">
     <value>Masa molar (mezcla) </value>
@@ -478,7 +478,7 @@
     <value>Iter. </value>
   </data>
   <data name="PF_MW" xml:space="preserve">
-    <value>Masa molar </value>
+    <value>Masa Molar </value>
   </data>
   <data name="_nHeptano" xml:space="preserve">
     <value>n-heptano (nC7)</value>
@@ -496,7 +496,7 @@
     <value>n-Octano (nC8) </value>
   </data>
   <data name="Adicionoobjetosaoflu" xml:space="preserve">
-    <value>Añadir Objetos al Diagrama de Flujo</value>
+    <value>Añadir Objetos al Flujograma</value>
   </data>
   <data name="PacotedePropriedades5" xml:space="preserve">
     <value>Paquete de Propiedades de referencia, donde el equilibrio termodinámico se calcula por la Ley de Raoult.Las Entalpias, Entropías y capacidades Caloríficas Residuales se consideran igual a cero. La expresión de la Fase Líquida utiliza los valores de Delta-H de Vaporización experimental o calculados en el caso de Pseudo-componentes/Hipotéticos. </value>
@@ -529,7 +529,7 @@
     <value>Informe enviado con éxito.</value>
   </data>
   <data name="TemperaturaCrtica1" xml:space="preserve">
-    <value>Temperatura crítica ( </value>
+    <value>Temperatura Crítica ( </value>
   </data>
   <data name="Tratamentodotexto" xml:space="preserve">
     <value>Tratamiento de texto </value>
@@ -556,7 +556,7 @@
     <value>Tipo de Flash </value>
   </data>
   <data name="MaxTemperatureIterat" xml:space="preserve">
-    <value>Iteraciones Maximas de Temperatura</value>
+    <value>Iteraciones Máximas de Temperatura</value>
   </data>
   <data name="HXTempHotOutDesc" xml:space="preserve">
     <value>Temperatura de Salida de fluido caliente</value>
@@ -580,7 +580,7 @@
     <value>Sí</value>
   </data>
   <data name="CondutividadetrmicaF4" xml:space="preserve">
-    <value>Conductividad Térmica (Fase líquida) </value>
+    <value>Conductividad Térmica (Fase Líquida) </value>
   </data>
   <data name="LIQEntropiaEspecfica" xml:space="preserve">
     <value>LIQ específicas Entropía </value>
@@ -592,7 +592,7 @@
     <value>Límites de la variable manipulada </value>
   </data>
   <data name="SCReboilerDuty" xml:space="preserve">
-    <value>Duty del  Reboiler</value>
+    <value>Duty del Reboiler</value>
   </data>
   <data name="Gerencioobjetos" xml:space="preserve">
     <value>Gestión de objetos</value>
@@ -628,7 +628,7 @@
     <value>Proporción (salida 3) </value>
   </data>
   <data name="DescMUPP" xml:space="preserve">
-    <value>Propiedades que utiliza la contribución del Grupo de método (Dortmund) del paquete UNIFAC modificado para el modelado de la Fase Líquida. La capacidad residual Entalpias, Entropias y Caloríficas se calculan a partir del modelo de Lee-Kesler. El vapor se modela por EDE Peng-Robinson.</value>
+    <value>Paquete de Propiedades que utiliza la contribución del Grupo de método (Dortmund) del paquete UNIFAC modificado para el modelado de la Fase Líquida. La capacidad residual Entalpias, Entropias y Caloríficas se calculan a partir del modelo de Lee-Kesler. El vapor se modela por EDE Peng-Robinson.</value>
   </data>
   <data name="Nmeromximodeiteraesa3" xml:space="preserve">
     <value>Número máximo de iteraciones alcanzado </value>
@@ -640,7 +640,7 @@
     <value>Caída de presión aplicada en el enfriador. </value>
   </data>
   <data name="DCCondenserPressure" xml:space="preserve">
-    <value>Presión del condensador</value>
+    <value>Presión del Condensador</value>
   </data>
   <data name="Selecioneavarivelase" xml:space="preserve">
     <value>Seleccione una variable a ser controlada por el ajuste.</value>
@@ -655,10 +655,10 @@
     <value>Soave-Redlich-Kwong (Flash Multifásico)</value>
   </data>
   <data name="Calortrocado" xml:space="preserve">
-    <value>Intercambio de calor </value>
+    <value>Intercambio de Calor </value>
   </data>
   <data name="DCRefluxRatio" xml:space="preserve">
-    <value>Relación de reflujo</value>
+    <value>Relación de Reflujo</value>
   </data>
   <data name="Editoacomposiodeumac" xml:space="preserve">
     <value>Modificar la composición de una corriente </value>
@@ -682,7 +682,7 @@
     <value>Volumen crítico (m3/kmol) </value>
   </data>
   <data name="Ocalculadorexcedeuon" xml:space="preserve">
-    <value>Se superó el número de iteraciones de  Presión. </value>
+    <value>Se superó el número de iteraciones de Presión. </value>
   </data>
   <data name="Expansor" xml:space="preserve">
     <value>Expansor </value>
@@ -718,7 +718,7 @@
     <value>T (salida bilateral) </value>
   </data>
   <data name="CellWillWrite" xml:space="preserve">
-    <value>El valor de esta celda es un objeto en el diagrama de flujo.</value>
+    <value>El valor de esta celda es un objeto en el Flujograma.</value>
   </data>
   <data name="Cascalho" xml:space="preserve">
     <value>Grava </value>
@@ -730,7 +730,7 @@
     <value>Reactor CSTR</value>
   </data>
   <data name="PontoNormaldeEbulio" xml:space="preserve">
-    <value>Punto de ebullición normal, </value>
+    <value>Punto de Ebullición Normal, </value>
   </data>
   <data name="Paranovermaisesseavi" xml:space="preserve">
     <value>Para no ver este aviso, apague la copia de seguridad o seleccionar un directorio válido para el rescate de los archivos. </value>
@@ -757,10 +757,10 @@
     <value>Has eliminado una base de datos de usuario. Los cambios serán efectivos sólo en el próximo inicio del programa. </value>
   </data>
   <data name="OPacotedePropriedade" xml:space="preserve">
-    <value>El Paquete de propiedades se ha modificado. </value>
+    <value>El Paquete de Propiedades se ha modificado. </value>
   </data>
   <data name="DCUseIE2" xml:space="preserve">
-    <value>Usar estimaciones de composición </value>
+    <value>Usar Estimaciones de Composición </value>
   </data>
   <data name="Imagem" xml:space="preserve">
     <value>Imagen</value>
@@ -772,7 +772,7 @@
     <value>Caída de presión aplicada en la válvula. </value>
   </data>
   <data name="PF_TBP" xml:space="preserve">
-    <value>True Boiling Points </value>
+    <value>True Boiling Point</value>
   </data>
   <data name="DCReboiler" xml:space="preserve">
     <value>Rehervidor</value>
@@ -781,7 +781,7 @@
     <value>Error en el cálculo de la temperatura. </value>
   </data>
   <data name="ComposiodaFaseVapor" xml:space="preserve">
-    <value>Composición de la fase de vapor </value>
+    <value>Composición de la Fase Vapor</value>
   </data>
   <data name="Nohcorrentedematriac16" xml:space="preserve">
     <value>Ninguna corriente de materia está conectada a la entrada del reactor.</value>
@@ -814,16 +814,16 @@
     <value>Haga clic en Aceptar para borrar </value>
   </data>
   <data name="UOPropertyPackage0" xml:space="preserve">
-    <value>Paquete de propiedades </value>
+    <value>Paquete de Propiedades </value>
   </data>
   <data name="SelecioLiquidrueparaati" xml:space="preserve">
     <value>Seleccione 'True' para activar las Especificaciones o 'False' para desactivarlas.</value>
   </data>
   <data name="MaximumIterations" xml:space="preserve">
-    <value>Iteraciones Maximas</value>
+    <value>Iteraciones Máximas</value>
   </data>
   <data name="Separadores" xml:space="preserve">
-    <value>Fichas</value>
+    <value>Tanques Separadores</value>
   </data>
   <data name="HXTempHotOut" xml:space="preserve">
     <value>Temperatura de Salida de fluido caliente</value>
@@ -850,7 +850,7 @@
     <value>Anular la presión de separación </value>
   </data>
   <data name="CellIsWriting" xml:space="preserve">
-    <value>El valor de celda se va a enviar al diagrama de flujo.</value>
+    <value>El valor de celda se va a enviar al Flujograma.</value>
   </data>
   <data name="Nohobjetosaseremdesc" xml:space="preserve">
     <value>No hay objetos para ser desconectados.</value>
@@ -874,13 +874,13 @@
     <value>ΔP </value>
   </data>
   <data name="EntalpiaEspecfica" xml:space="preserve">
-    <value>Entalpía específica</value>
+    <value>Entalpía Específica</value>
   </data>
   <data name="Fluxograma" xml:space="preserve">
-    <value>Diagrama de flujo</value>
+    <value>Flujograma</value>
   </data>
   <data name="DCILIts" xml:space="preserve">
-    <value>Iteraciones en el bucle interno </value>
+    <value>Iteraciones en el Bucle Interno </value>
   </data>
   <data name="FormTips_KryptonLabel1Text" xml:space="preserve">
     <value>Seleccione una opción de las disponibles a continuación ...</value>
@@ -916,7 +916,7 @@
     <value>Objeto / Variable de referencia </value>
   </data>
   <data name="DCUseIE" xml:space="preserve">
-    <value>Usar estimaciones de temperatura </value>
+    <value>Usar Estimaciones de Temperatura </value>
   </data>
   <data name="Horizontal" xml:space="preserve">
     <value>Horizontal </value>
@@ -934,7 +934,7 @@
     <value>Temperatura de salida</value>
   </data>
   <data name="HeatExchangers" xml:space="preserve">
-    <value>Intercambiadores de calor </value>
+    <value>Intercambiadores de Calor </value>
   </data>
   <data name="Valormnimoparaavariv" xml:space="preserve">
     <value>Valor mínimo para la variable de destino. Opcional, pero recomendada, ya que puede ser utilizada como un factor de seguridad en el cálculo de la corriente. </value>
@@ -1021,7 +1021,7 @@
     <value>(Termodinámica y Cálculo de Propiedades).</value>
   </data>
   <data name="SCNstages" xml:space="preserve">
-    <value>Número real de etapas</value>
+    <value>Número Real de Etapas</value>
   </data>
   <data name="Parmetroinvlido" xml:space="preserve">
     <value>Parámetro no válido </value>
@@ -1039,7 +1039,7 @@
     <value>Reactor de Gibbs</value>
   </data>
   <data name="Correntedematriacone1" xml:space="preserve">
-    <value>Corriente de materia conectada a la salida de reciclo.</value>
+    <value>Corriente de Materia Conectada a la Salida de Reciclo.</value>
   </data>
   <data name="DWSIMUtilitriosDiagr1" xml:space="preserve">
     <value>DWSIM - Utilidades: Diagrama de Fases </value>
@@ -1075,7 +1075,7 @@
     <value>«Ocultar Perfil </value>
   </data>
   <data name="DCInitialEstimates2" xml:space="preserve">
-    <value>Estimaciones iníciales </value>
+    <value>Estimaciones Iníciales </value>
   </data>
   <data name="Espaamentoentreotext" xml:space="preserve">
     <value>Espacio entre el texto y los bordes de las celdas </value>
@@ -1132,7 +1132,7 @@
     <value>Error en el separador decimal! </value>
   </data>
   <data name="FraomolarnaMistura" xml:space="preserve">
-    <value>Fracción molar en la mezcla</value>
+    <value>Fracción molar en la Mezcla</value>
   </data>
   <data name="RPFRPGridItem2Help" xml:space="preserve">
     <value>Haga clic en el botón para ver el perfil de Propiedades de PFR.</value>
@@ -1144,7 +1144,7 @@
     <value>Eficiencia (0-100) </value>
   </data>
   <data name="DescSRKMP" xml:space="preserve">
-    <value>Paquete de propiedades Soave-Redlich-Kwong con soporte para más de una Fase Líquida.</value>
+    <value>Paquete de Propiedades Soave-Redlich-Kwong con soporte para más de una Fase Líquida.</value>
   </data>
   <data name="Mensagem" xml:space="preserve">
     <value>Mensaje </value>
@@ -1162,7 +1162,7 @@
     <value>Reducción normal 2:1 </value>
   </data>
   <data name="TensosuperficialMist" xml:space="preserve">
-    <value>Tensión superficial (mezcla) </value>
+    <value>Tensión Superficial (mezcla) </value>
   </data>
   <data name="VolumeCrtico" xml:space="preserve">
     <value>Volumen crítico </value>
@@ -1183,7 +1183,7 @@
     <value>Agua (H2O) </value>
   </data>
   <data name="Correntedeentrada3" xml:space="preserve">
-    <value>Corriente de entrada (3) </value>
+    <value>Corriente de Entrada (3) </value>
   </data>
   <data name="Unload" xml:space="preserve">
     <value>Descargar </value>
@@ -1276,13 +1276,13 @@
     <value>Sistema de unidades modificado</value>
   </data>
   <data name="EspumadePoliuretano" xml:space="preserve">
-    <value>Espuma de poliuretano </value>
+    <value>Espuma de Poliuretano</value>
   </data>
   <data name="Proporosada1" xml:space="preserve">
     <value>Proporción (salida 1) </value>
   </data>
   <data name="Conectadoasada" xml:space="preserve">
-    <value>Conectado a (salida)</value>
+    <value>Conectado a (Salida)</value>
   </data>
   <data name="Comprimentom" xml:space="preserve">
     <value>Longitud (m) </value>
@@ -1294,7 +1294,7 @@
     <value>Fase acuosa</value>
   </data>
   <data name="FormTips_KryptonLabel17Text" xml:space="preserve">
-    <value>* Se necesita Adobe Reader para ver la documentación de DWSIM en formato PDF.</value>
+    <value>* Se necesita un lector PDF para ver la documentación de DWSIM.</value>
   </data>
   <data name="FormTips_KryptonLabel6Text" xml:space="preserve">
     <value>Crear una nueva simulación</value>
@@ -1309,7 +1309,7 @@
     <value>Viscosidad dinámica </value>
   </data>
   <data name="PP_PTFMEI" xml:space="preserve">
-    <value>Flash PT/PV – Numero Máximo de Iteraciones del Blucle Externo</value>
+    <value>Flash PT/PV – Numero Máximo de Iteraciones del Bucle Externo</value>
   </data>
   <data name="Tanques" xml:space="preserve">
     <value>Tanques </value>
@@ -1336,13 +1336,13 @@
     <value>Detalles: </value>
   </data>
   <data name="EntropiaEspecfica" xml:space="preserve">
-    <value>Entropía específica </value>
+    <value>Entropía Específica </value>
   </data>
   <data name="Mensagemdeerro" xml:space="preserve">
     <value>Mensaje de error </value>
   </data>
   <data name="HXHotSidePressureDrop" xml:space="preserve">
-    <value>Pérdida de carga líquido caliente</value>
+    <value>Caida de Presión Lado Caliente</value>
   </data>
   <data name="Composiesmssicas2" xml:space="preserve">
     <value>2. Composición masa </value>
@@ -1363,7 +1363,7 @@
     <value>Fracción molar</value>
   </data>
   <data name="ComposiodaMistura" xml:space="preserve">
-    <value>Composición de la mezcla </value>
+    <value>Composición de la Mezcla </value>
   </data>
   <data name="ValveOutletPressure" xml:space="preserve">
     <value>Presión de la corriente de salida</value>
@@ -1378,10 +1378,10 @@
     <value>Diferencia de presión entre las corrientes de salida y entrada </value>
   </data>
   <data name="Oajustenoencontrouum" xml:space="preserve">
-    <value>El ajuste no ha encontrado una solución dentro de los límites informados para la variable manipulada. </value>
+    <value>El ajuste no ha encontrado una solución dentro de los límites establecidos para la variable manipulada. </value>
   </data>
   <data name="EntropiaEspecficaMis" xml:space="preserve">
-    <value>Entropía Específica(Mezcla)</value>
+    <value>Entropía Específica (Mezcla)</value>
   </data>
   <data name="MolarEntropy" xml:space="preserve">
     <value>Entropía molar</value>
@@ -1390,7 +1390,7 @@
     <value>BorderColor</value>
   </data>
   <data name="Controlada" xml:space="preserve">
-    <value>Controlados </value>
+    <value>Controlada</value>
   </data>
   <data name="Erronocalculodasconc" xml:space="preserve">
     <value>Error de cálculo de la composición de equilibrio. </value>
@@ -1402,13 +1402,13 @@
     <value>Error máximo de Presión </value>
   </data>
   <data name="RelatoriodaSimulacao" xml:space="preserve">
-    <value>Informe de simulación </value>
+    <value>Informe de Simulación </value>
   </data>
   <data name="Altura" xml:space="preserve">
     <value>Altura </value>
   </data>
   <data name="DCFirstStgPressure" xml:space="preserve">
-    <value>Presión en la etapa superior </value>
+    <value>Presión en la Etapa Superior </value>
   </data>
   <data name="LIQFraomssicadafase" xml:space="preserve">
     <value>LIQ fracción de masa de la fase </value>
@@ -1420,7 +1420,7 @@
     <value>Ajustando ...</value>
   </data>
   <data name="Correntedesada" xml:space="preserve">
-    <value>Salida de corriente </value>
+    <value>Corriente de Salida</value>
   </data>
   <data name="CpCvFaseLquida" xml:space="preserve">
     <value>Cp / CV (Fase Líquida) </value>
@@ -1447,7 +1447,7 @@
     <value>4. Coordenadas </value>
   </data>
   <data name="Erronapresso" xml:space="preserve">
-    <value>Error  en la Presión </value>
+    <value>Error en la Presión </value>
   </data>
   <data name="VazoTPFaseLquida" xml:space="preserve">
     <value>Flujo @ T, P (Fase Líquida) </value>
@@ -1459,7 +1459,7 @@
     <value>3. Conexiones </value>
   </data>
   <data name="Mtododeaceleraodacon" xml:space="preserve">
-    <value>Método de la aceleración de la convergencia de los reciclos. </value>
+    <value>Método de la Aceleración de la convergencia de los reciclos. </value>
   </data>
   <data name="HXColdSidePressureDropDesc" xml:space="preserve">
     <value>Caida de Presión (caída de presión fluido frío)</value>
@@ -1468,7 +1468,7 @@
     <value>Tipografía del texto de la columna de nombres de propiedades </value>
   </data>
   <data name="CondutividadeTrmicad3" xml:space="preserve">
-    <value>Conductividad Térmica de la fase de vapor: Método de Ely et Hanley </value>
+    <value>Conductividad Térmica de la Fase Vapor: Método de Ely et Hanley </value>
   </data>
   <data name="_Etano" xml:space="preserve">
     <value>Etano (C2)</value>
@@ -1531,7 +1531,7 @@
     <value>Modo de cálculo</value>
   </data>
   <data name="Correntedeentrada2" xml:space="preserve">
-    <value>Corriente de entrada (2) </value>
+    <value>Corriente de Entrada (2) </value>
   </data>
   <data name="titulo" xml:space="preserve">
     <value>&lt;titulo&gt; </value>
@@ -1570,7 +1570,7 @@
     <value>Error P</value>
   </data>
   <data name="Correntedesaida1" xml:space="preserve">
-    <value>Corriente de salida (1)</value>
+    <value>Corriente de Salida (1)</value>
   </data>
   <data name="Objetosnafiladeclcul" xml:space="preserve">
     <value>Objetos en la cola para el cálculo de</value>
@@ -1630,13 +1630,13 @@
     <value>Paquete de propiedad que utiliza el Método de Contribución de Grupos UNIFAC para el cálculo del equilibrio de la Fase Líquida. La entalpía, entropía y la capacidad calor residual se calcula a partir  del modelo de Lee-Kesler. El vapor es modelado por Peng-Robinson(EOS). Recomendado para compuestos hipotéticos.</value>
   </data>
   <data name="DescRPP" xml:space="preserve">
-    <value>Paquete de propiedades de referencia (Gas ideal / Solución). </value>
+    <value>Paquete de Propiedades de referencia (Gas ideal / Solución). </value>
   </data>
   <data name="CaixadeTexto" xml:space="preserve">
     <value>Cuadro de Texto</value>
   </data>
   <data name="HeatExchanger" xml:space="preserve">
-    <value>Intercambiador de calor </value>
+    <value>Intercambiador de Calor </value>
   </data>
   <data name="Potnciageradapelatur" xml:space="preserve">
     <value>La energía generada por la turbina</value>
@@ -1648,7 +1648,7 @@
     <value>Indefinido </value>
   </data>
   <data name="EntalpiaEspecficaMis" xml:space="preserve">
-    <value>Entalpía específica (Fase Líquida) </value>
+    <value>Entalpía Específica (Fase Líquida) </value>
   </data>
   <data name="RefluxedAbsorber" xml:space="preserve">
     <value>Absorsbedora con Reflujo</value>
@@ -1684,7 +1684,7 @@
     <value>Volumen vs Entropía </value>
   </data>
   <data name="PressoCrtica2" xml:space="preserve">
-    <value>Presión crítica (</value>
+    <value>Presión Crítica (</value>
   </data>
   <data name="SelecioLiquidrueparaapl" xml:space="preserve">
     <value>Seleccione 'True' para aplicar un degradado de color del objeto</value>
@@ -1711,7 +1711,7 @@
     <value>Segmento</value>
   </data>
   <data name="SplashScreenBuildText" xml:space="preserve">
-    <value>Compilación</value>
+    <value>Revisión</value>
   </data>
   <data name="FraoMolary" xml:space="preserve">
     <value>Fracción molar (y) --</value>
@@ -1738,7 +1738,7 @@
     <value>Valores K (valores)</value>
   </data>
   <data name="Condutividadetrmicad" xml:space="preserve">
-    <value>Conductividad Térmica de la mezcla</value>
+    <value>Conductividad Térmica de la Mezcla</value>
   </data>
   <data name="VelocidadedoVaporms" xml:space="preserve">
     <value>Velocidad de Vapor (m/s) </value>
@@ -1810,7 +1810,7 @@
     <value>Caída de presión aplicada en la turbina. </value>
   </data>
   <data name="VoltaraoGeradordeHip" xml:space="preserve">
-    <value>Volver al generador de hipotéticos</value>
+    <value>Volver al administrador de hipotéticos</value>
   </data>
   <data name="Diferenaentreosvalor3" xml:space="preserve">
     <value>Diferencia entre los valores de flujo másico de las corrientes de salida y entrada.</value>
@@ -1831,7 +1831,7 @@
     <value>Calculado</value>
   </data>
   <data name="TensoSuperficialdaFa" xml:space="preserve">
-    <value>Tensión superficial de la Fase Líquida: Método Brock-Aves </value>
+    <value>Tensión Superficial de la Fase Líquida: Método Brock-Aves </value>
   </data>
   <data name="Onmeromximodeiteraes" xml:space="preserve">
     <value>El número máximo de iteraciones se ha alcanzado. ¿Continuar el proceso de convergencia de reciclo? </value>
@@ -1867,7 +1867,7 @@
     <value>Longitud </value>
   </data>
   <data name="PontosdeOrvalho" xml:space="preserve">
-    <value>Puntos de rocío </value>
+    <value>Puntos de Rocío </value>
   </data>
   <data name="ControlledObjectData" xml:space="preserve">
     <value>ControlledObjectData </value>
@@ -1915,13 +1915,13 @@
     <value>Introduzca un valor entre 0 y 1. </value>
   </data>
   <data name="Correntedeentrada1" xml:space="preserve">
-    <value>Corriente de entrada (1) </value>
+    <value>Corriente de Entrada (1) </value>
   </data>
   <data name="DimetroEspessura" xml:space="preserve">
     <value>Diámetro / Espesor </value>
   </data>
   <data name="EditordeComposies" xml:space="preserve">
-    <value>Editar de composiciones </value>
+    <value>Editor de composiciones </value>
   </data>
   <data name="ComponentDistribution" xml:space="preserve">
     <value>Distribución de componentes</value>
@@ -1933,7 +1933,7 @@
     <value>Conjunto por defecto </value>
   </data>
   <data name="EntalpiaEspecficadam" xml:space="preserve">
-    <value>Entalpía específica de la Fase Líquida </value>
+    <value>Entalpía Específica de la Fase Líquida </value>
   </data>
   <data name="Fontedotexto" xml:space="preserve">
     <value>Tipografía del texto </value>
@@ -1969,7 +1969,7 @@
     <value>El perfil hidráulico de la tubería no está establecido. </value>
   </data>
   <data name="HXgers" xml:space="preserve">
-    <value>Intercambiadores de calor </value>
+    <value>Intercambiadores de Calor </value>
   </data>
   <data name="CondutividadetrmicFa" xml:space="preserve">
     <value>Conductividad Térmica (Fase Vapor)  </value>
@@ -1981,7 +1981,7 @@
     <value>Consejos para el uso</value>
   </data>
   <data name="PP_PTFELT" xml:space="preserve">
-    <value>Flash PT/PV - Tolerancia del Bucle externo</value>
+    <value>Flash PT/PV - Tolerancia del Bucle Externo</value>
   </data>
   <data name="PropriedadesdaFaseLq" xml:space="preserve">
     <value>Propiedades de la Fase Líquida </value>
@@ -1990,10 +1990,10 @@
     <value>3. Varios </value>
   </data>
   <data name="MaxPressureIteration" xml:space="preserve">
-    <value>Iteraciones Maximas de Presión</value>
+    <value>Iteraciones Máximas de Presión</value>
   </data>
   <data name="CellIsReading" xml:space="preserve">
-    <value>La celda lee desde valor del diagrama de flujo.</value>
+    <value>La celda lee desde valor del Flujograma.</value>
   </data>
   <data name="HidratosI" xml:space="preserve">
     <value>Hidrato sI</value>
@@ -2008,7 +2008,7 @@
     <value>MIST Entropía específica</value>
   </data>
   <data name="REqPGridItem1Help" xml:space="preserve">
-    <value>Grado de reacción seleccionada</value>
+    <value>Grado de Reacción seleccionada</value>
   </data>
   <data name="VolumevsEntalpia" xml:space="preserve">
     <value>Volumen vs Entalpía </value>
@@ -2029,10 +2029,10 @@
     <value>Borrar lista </value>
   </data>
   <data name="RelatriodaSimulao" xml:space="preserve">
-    <value>   - Informe de simulación</value>
+    <value>   - Informe de Simulación</value>
   </data>
   <data name="EntalpiaEspecficaFas2" xml:space="preserve">
-    <value>Entalpía específica (Fase Vapor) </value>
+    <value>Entalpía Específica (Fase Vapor) </value>
   </data>
   <data name="Bottomo3" xml:space="preserve">
     <value>3. Fondo</value>
@@ -2056,10 +2056,10 @@
     <value>VAP Masa molar </value>
   </data>
   <data name="DescGSLKPP" xml:space="preserve">
-    <value>Propiedades que utiliza la plantilla Grayson y Streed empírica para calcular el coeficiente K NET-vapor en el equilibrio del paquete. Todas las demás propiedades termodinámicas (entalpía, entropía, CP/CV, etc.) se calculan por modelo lee y Kesler.</value>
+    <value>Paquete de Propiedades que utiliza la plantilla Grayson y Streed empírica para calcular el coeficiente K NET-vapor en el equilibrio. Todas las demás propiedades termodinámicas (entalpía, entropía, CP/CV, etc.) se calculan por modelo lee y Kesler.</value>
   </data>
   <data name="DescPRWSPP" xml:space="preserve">
-    <value>Utiliza  Peng-Robinson (EOS) con la regla de mezclado Wong-Sandler. El exceso de energía de Gibbs (GE / RT) se calcula a partir del modelo UNIFAC. Recomendado para uso con mezclas binarias o ternarias de componentes polares en altas presiones y temperaturas.</value>
+    <value>Utiliza Peng-Robinson (EOS) con la regla de mezclado Wong-Sandler. El exceso de energía de Gibbs (GE / RT) se calcula a partir del modelo UNIFAC. Recomendado para uso con mezclas binarias o ternarias de componentes polares en altas presiones y temperaturas.</value>
   </data>
   <data name="Cordotexto" xml:space="preserve">
     <value>Color del texto </value>
@@ -2113,7 +2113,7 @@
     <value>Líquido </value>
   </data>
   <data name="EntradaBorda" xml:space="preserve">
-    <value>Entalpía específica (Mezcla) </value>
+    <value>Entalpía Específica (Mezcla) </value>
   </data>
   <data name="Comprimentodoobjetoe" xml:space="preserve">
     <value>Longitud del objeto, en píxeles </value>
@@ -2125,7 +2125,7 @@
     <value>Error al crear el directorio para rescatar a las copias de seguridad. </value>
   </data>
   <data name="DCSteamedSideStrippers" xml:space="preserve">
-    <value>Despojador lateral a vapor </value>
+    <value>Despojador lateral a Vapor </value>
   </data>
   <data name="BancodeDados" xml:space="preserve">
     <value>Base de Datos</value>
@@ -2152,7 +2152,7 @@
     <value>Incrementos </value>
   </data>
   <data name="PP_PSFMII" xml:space="preserve">
-    <value>Flash PS – Numero Máximo de Iteraciones del Blucle Interno</value>
+    <value>Flash PS – Numero Máximo de Iteraciones del Bucle Interno</value>
   </data>
   <data name="Descrio1" xml:space="preserve">
     <value>1. Descripción </value>
@@ -2167,7 +2167,7 @@
     <value>El cálculo Flash TS no está soportado. </value>
   </data>
   <data name="PF_FVAP" xml:space="preserve">
-    <value>Fracción vaporizada </value>
+    <value>Fracción Vaporizada </value>
   </data>
   <data name="HXTempColdOutDesc" xml:space="preserve">
     <value>Temperatura de Salida de fluido frío</value>
@@ -2182,7 +2182,7 @@
     <value>Flash PS: Se alcanzo el máximo de iteraciones del bucle interior. </value>
   </data>
   <data name="Correntedesaida2" xml:space="preserve">
-    <value>Corriente de salida (2)</value>
+    <value>Corriente de Salida (2)</value>
   </data>
   <data name="Excluiracaixadetexto" xml:space="preserve">
     <value>¿Eliminar el cuadro de texto seleccionado? </value>
@@ -2197,7 +2197,7 @@
     <value>Fracción molar -</value>
   </data>
   <data name="Pressodacorrente" xml:space="preserve">
-    <value>Presión de corriente</value>
+    <value>Presión de Corriente</value>
   </data>
   <data name="ViscosidadeLquido" xml:space="preserve">
     <value>Viscosidad (Liquido) </value>
@@ -2218,7 +2218,7 @@
     <value>Hidrato sII</value>
   </data>
   <data name="REqPGridItem2Help" xml:space="preserve">
-    <value>Mostrar el grado de reacción en el Reactor de Equilibrio seleccionado. </value>
+    <value>Mostrar el Grado de reacción en el Reactor de Equilibrio seleccionado. </value>
   </data>
   <data name="DWSIMUtilitriosLimit" xml:space="preserve">
     <value>DWSIM - Utilidades: Límite de Estabilidad </value>
@@ -2227,7 +2227,7 @@
     <value>Bombas</value>
   </data>
   <data name="PP_PHFMEI" xml:space="preserve">
-    <value>Flash PH – Numero Máximo de Iteraciones del Blucle Externo</value>
+    <value>Flash PH – Numero Máximo de Iteraciones del Bucle Externo</value>
   </data>
   <data name="Existeumerronaconfig2" xml:space="preserve">
     <value>Hay un error en la configuración del ajuste. Comprobar el origen y el destino de los objetos. </value>
@@ -2263,7 +2263,7 @@
     <value>Personalizado 3 (CNTP) </value>
   </data>
   <data name="UOPropertyPackage" xml:space="preserve">
-    <value>Paquete de propiedades </value>
+    <value>Paquete de Propiedades </value>
   </data>
   <data name="Valormnimoopcional" xml:space="preserve">
     <value>Valor mínimo (opcional) </value>
@@ -2350,7 +2350,7 @@
     <value>Hay una Fase Líquida en la toma del Compresor. </value>
   </data>
   <data name="CorrentedeMatria2" xml:space="preserve">
-    <value>Corriente de materia</value>
+    <value>Corriente de Materia</value>
   </data>
   <data name="Noexistesoluonointer" xml:space="preserve">
     <value>No hay ninguna solución en el intervalo. </value>
@@ -2392,13 +2392,13 @@
     <value>Contracción Rápida d / D = 1 / 2 </value>
   </data>
   <data name="PP_PTFMII" xml:space="preserve">
-    <value>Flash PT/PV – Numero Máximo de Iteraciones del Blucle Interno</value>
+    <value>Flash PT/PV – Numero Máximo de Iteraciones del Bucle Interno</value>
   </data>
   <data name="_Oxigenio" xml:space="preserve">
     <value>Oxígeno (O2) </value>
   </data>
   <data name="EntalpiadeFormaodoGs" xml:space="preserve">
-    <value>Entalpía de formación del gas ideal a 25 ° C </value>
+    <value>Entalpía de Formación del gas ideal a 25 ° C </value>
   </data>
   <data name="VlvulaRetenodePortin" xml:space="preserve">
     <value>Válvula de retención de Portinhola</value>
@@ -2413,16 +2413,16 @@
     <value>  (FM Mezcla) </value>
   </data>
   <data name="SCStrippingVapor" xml:space="preserve">
-    <value>Vapor de agotamiento</value>
+    <value>Vapor de Agotamiento</value>
   </data>
   <data name="_Metanol" xml:space="preserve">
     <value>Metanol (CH3OH) </value>
   </data>
   <data name="PressodeVapor" xml:space="preserve">
-    <value>Presión de vapor</value>
+    <value>Presión de Vapor</value>
   </data>
   <data name="Correntedesaida3" xml:space="preserve">
-    <value>Corriente de salida (3)</value>
+    <value>Corriente de Salida (3)</value>
   </data>
   <data name="Noexistemsimulaesati" xml:space="preserve">
     <value>No hay Simulaciones activas. </value>
@@ -2437,7 +2437,7 @@
     <value>Flash convergente algoritmo solución trivial. Intenta realizar el cálculo en una temperatura de condición perturbadas y/o presión o utilizar otro paquete de actuales propiedades similares a las.</value>
   </data>
   <data name="CompHypo" xml:space="preserve">
-    <value>Hipotético </value>
+    <value>Componente Hipotético </value>
   </data>
   <data name="col" xml:space="preserve">
     <value>COL </value>
@@ -2503,7 +2503,7 @@
     <value>Suelo (seco) </value>
   </data>
   <data name="PP_USE_EOS_LIQDENS" xml:space="preserve">
-    <value>Utilizar EOS para calcular el peso específico de la Fase Líquida (0 = Desactivar, 1 = Activar)</value>
+    <value>Utilizar Ecuación de Estado para calcular el peso específico de la Fase Líquida (0 = Desactivar, 1 = Activar)</value>
   </data>
   <data name="RConvPGridItem1Help" xml:space="preserve">
     <value>Conjunto de reacciones utilizado por los reactores. </value>
@@ -2548,19 +2548,19 @@
     <value>Error al abrir el archivo </value>
   </data>
   <data name="EntalpiadeVaporizaoa" xml:space="preserve">
-    <value>Entalpía de vaporización </value>
+    <value>Entalpía de Vaporización </value>
   </data>
   <data name="FraomolarnaFaseLquid" xml:space="preserve">
     <value>Fracción molar en la Fase Líquida</value>
   </data>
   <data name="DCConnectionMissingException" xml:space="preserve">
-    <value>Una o más de las conexiones necesarias para la columna de destilación no se hicieron. Por favor, compruebe los datos de entrada y vuelva a intentarlo.</value>
+    <value>No se realizaron las conexiones necesarias para la columna de destilación . Por favor, compruebe los datos de entrada y vuelva a intentarlo.</value>
   </data>
   <data name="Computador" xml:space="preserve">
     <value>Computadora: </value>
   </data>
   <data name="Calorremovidodacorre" xml:space="preserve">
-    <value>Calor Eliminado de la refrigeración por flujo de entrada </value>
+    <value>Calor Eliminado de la Refrigeración por Flujo de Entrada </value>
   </data>
   <data name="DCSolvingMethod1" xml:space="preserve">
     <value>7. Método de Cálculo </value>
@@ -2641,7 +2641,7 @@
     <value>Ln Valores-K (ln [valores k])</value>
   </data>
   <data name="Existemobjetosespera" xml:space="preserve">
-    <value>Hay objetos esperando a ser calculados. ¿Desea procesarlos ahora?</value>
+    <value>Hay Objetos esperando a ser calculados. ¿Desea procesarlos ahora?</value>
   </data>
   <data name="Tubulaes" xml:space="preserve">
     <value>Tuberías </value>
@@ -2701,13 +2701,13 @@
     <value>   - Ver Resultados (gráfico) </value>
   </data>
   <data name="CorrentedeMatria" xml:space="preserve">
-    <value>Corriente de materia</value>
+    <value>Corriente de Materia</value>
   </data>
   <data name="DCELTol" xml:space="preserve">
-    <value>Bucle externo </value>
+    <value>Tolerancia Bucle Externo </value>
   </data>
   <data name="PF_SG" xml:space="preserve">
-    <value>Gravedad específica </value>
+    <value>Gravedad Específica </value>
   </data>
   <data name="TurbinaAdiabtica" xml:space="preserve">
     <value>Expansor Adiabático </value>
@@ -2737,7 +2737,7 @@
     <value>2. Configuración </value>
   </data>
   <data name="NotequesemprequeoPac" xml:space="preserve">
-    <value>Tenga en cuenta que, cuando el Paquete de propiedades se modifica, todos los objetos pierden sus propiedades calculadas.</value>
+    <value>Tenga en cuenta que, cuando el Paquete de Propiedades se modifica, todos los objetos pierden sus propiedades calculadas.</value>
   </data>
   <data name="Viscosidadecinemtica2" xml:space="preserve">
     <value>La viscosidad cinemática de la fase </value>
@@ -2752,7 +2752,7 @@
     <value>Visc 2 </value>
   </data>
   <data name="de" xml:space="preserve">
-    <value>  de </value>
+    <value>de</value>
   </data>
   <data name="EntropiaEspecficadam" xml:space="preserve">
     <value>Entropía Específica de la mezcla </value>
@@ -2821,7 +2821,7 @@
     <value>3. Propiedades </value>
   </data>
   <data name="DescSoaveRedlichKwongSRK" xml:space="preserve">
-    <value>Propiedades del paquete que utiliza la EE Redlich-Kwong modificado por Soave. Adecuado para su uso con aceite y no-condensáveis.
+    <value>Paquete de Propiedades que utiliza la EE Redlich-Kwong modificado por Soave. Adecuado para su uso con aceite y no-condensables. 
 Las propiedades se calculan directamente desde el Estado o datos experimentales excepto: densidad de la Fase Líquida: conductividad térmica Rackett método de Fase Líquida: método de conductividad térmica de más tarde recibido et al vapor fase: método de viscosidad Ely y Hanley de Fase Vapor: Jossi método-Stiel-Thodos tensión de la Fase Líquida: método Brock-aves</value>
   </data>
   <data name="Joelhoem90" xml:space="preserve">
@@ -2852,7 +2852,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Válvula ascensor-comprobar</value>
   </data>
   <data name="DescUNIQUACPP" xml:space="preserve">
-    <value>En este paquete de Propiedades, el modelo UNIQUAC se utiliza para calcular los coeficientes de actividad de la Fase Líquida. Las entalpías son calculadas por el modelo de Lee-Kesler, mientras que la fugacidad de la Fase Vapor  y otras propiedades termodinámicas (ambas fases) son calculadas por  Peng-Robinson (EOS). </value>
+    <value>En este Paquete de Propiedades, el modelo UNIQUAC se utiliza para calcular los coeficientes de actividad de la Fase Líquida. Las entalpías son calculadas por el modelo de Lee-Kesler, mientras que la fugacidad de la Fase Vapor  y otras propiedades termodinámicas (ambas fases) son calculadas por  Peng-Robinson (EOS). </value>
   </data>
   <data name="DefinaumnomeparaoSis" xml:space="preserve">
     <value>Establecer un nombre para el Sistema de Unidades. </value>
@@ -2861,7 +2861,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Fenol (C6H6O)</value>
   </data>
   <data name="EsteSistemadeUnidade" xml:space="preserve">
-    <value>El Sistema de Unidades no se puede quitar. </value>
+    <value>El Sistema de Unidades no se puede remover. </value>
   </data>
   <data name="PC" xml:space="preserve">
     <value>Pc </value>
@@ -2873,7 +2873,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>ReferencedObjectData </value>
   </data>
   <data name="HeatTransferArea" xml:space="preserve">
-    <value>Espacio de intercambio de calor </value>
+    <value>Area de Intercambio de calor </value>
   </data>
   <data name="Ocalorretiradomaiorq" xml:space="preserve">
     <value>El calor removido es mayor que la entalpía específica de la corriente de entrada actual.</value>
@@ -2885,10 +2885,10 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Compuesto Clave Ligero</value>
   </data>
   <data name="CalorFornecido" xml:space="preserve">
-    <value>Calor añadido </value>
+    <value>Calor Añadido </value>
   </data>
   <data name="DCUseIE3" xml:space="preserve">
-    <value>Usar estimaciones de los flujos netos de liquido</value>
+    <value>Usar Estimaciones de Flujos de Líquido</value>
   </data>
   <data name="Tempo" xml:space="preserve">
     <value>Tiempo </value>
@@ -2945,7 +2945,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Tipo de condensador </value>
   </data>
   <data name="PP_PHFELT" xml:space="preserve">
-    <value>Flash PH - Tolerancia del Bucle externo</value>
+    <value>Flash PH - Tolerancia del Bucle Externo</value>
   </data>
   <data name="Resultados4" xml:space="preserve">
     <value>4. Resultados </value>
@@ -2987,7 +2987,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Caída de presión aplicada en la cisterna. </value>
   </data>
   <data name="DescSteamTablesPP" xml:space="preserve">
-    <value>Paquete de propiedades exclusivo para el uso con agua(H2O). </value>
+    <value>Paquete de Propiedades exclusivo para el uso con agua(H2O). </value>
   </data>
   <data name="Quedadepressoaplicad6" xml:space="preserve">
     <value>Caída de presión en el reactor. </value>
@@ -2999,7 +2999,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Rotación de la Tabla</value>
   </data>
   <data name="Correntedeentrada" xml:space="preserve">
-    <value>Corriente de entrada </value>
+    <value>Corriente de Entrada </value>
   </data>
   <data name="Nome" xml:space="preserve">
     <value>Nombre</value>
@@ -3017,7 +3017,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Salida normal </value>
   </data>
   <data name="DCUseIE1" xml:space="preserve">
-    <value>Usar estimaciones de flujos de vapor </value>
+    <value>Usar Estimaciones de Flujos de Vapor </value>
   </data>
   <data name="CompMissingData" xml:space="preserve">
     <value>Faltan Algunos parámetros para este componente. </value>
@@ -3026,7 +3026,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Temperatura (K) </value>
   </data>
   <data name="EspessuradaBorda" xml:space="preserve">
-    <value>Espesor de borde </value>
+    <value>Espesor de Borde </value>
   </data>
   <data name="VisualizarResultados2" xml:space="preserve">
     <value>   - Ver resultados en la tabla </value>
@@ -3038,10 +3038,10 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Seleccione 'True' para ignorar la presencia de líquido en la entrada</value>
   </data>
   <data name="NestePacotedeProprie" xml:space="preserve">
-    <value>En este paquete de Propiedades, las Entalpias, Entropías y Capacidades Caloríficas se calcula a partir del modelo de Lee-Kesler. </value>
+    <value>En este Paquete de Propiedades, las Entalpias, Entropías y Capacidades Caloríficas se calcula a partir del modelo de Lee-Kesler. </value>
   </data>
   <data name="FormTips_KryptonLabel8Text" xml:space="preserve">
-    <value>Guía del usuario *</value>
+    <value>Guía del Usuario *</value>
   </data>
   <data name="Concreto" xml:space="preserve">
     <value>Concreto </value>
@@ -3050,8 +3050,8 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Mostrar propiedades hipotéticas </value>
   </data>
   <data name="DescPengRobinsonPP" xml:space="preserve">
-    <value>Propiedades del paquete que utiliza a la EE Peng-Robinson. Adecuado para su uso con aceite y no-condensáveis.
-Las propiedades se calculan directamente desde el Estado o datos experimentales excepto: densidad de la Fase Líquida: conductividad térmica Rackett método de Fase Líquida: método de conductividad térmica de más tarde recibido et al vapor fase: método de viscosidad Ely y Hanley de Fase Vapor: Jossi método-Stiel-Thodos tensión de la Fase Líquida: método Brock-aves</value>
+    <value>Paquete de Propiedades que utiliza a la EE Peng-Robinson. Adecuado para su uso con aceite y no-condensables. 
+Las propiedades se calculan directamente desde la Ecuación de Estado o datos experimentales excepto: densidad de la Fase Líquida: conductividad térmica Rackett método de Fase Líquida: método de conductividad térmica de más tarde recibido et al vapor fase: método de viscosidad Ely y Hanley de Fase Vapor: Jossi método-Stiel-Thodos tensión de la Fase Líquida: método Brock-aves</value>
   </data>
   <data name="AdicionarNovaReacaodeConversao" xml:space="preserve">
     <value>Añadir nueva Reacción de Conversión</value>
@@ -3075,7 +3075,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Flujo volumétrico de la corriente de </value>
   </data>
   <data name="Existeumafasevaporna21" xml:space="preserve">
-    <value>Hay una entrada de vapor en el intercambiador de calor </value>
+    <value>Hay una entrada de vapor en el Intercambiador de Calor </value>
   </data>
   <data name="FormTips_CheckBox1Text" xml:space="preserve">
     <value>Siempre mostrar esta pantalla al inicio </value>
@@ -3138,7 +3138,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Etanol (C2H5OH)</value>
   </data>
   <data name="DCUseIMJac" xml:space="preserve">
-    <value>Usar matriz  identidad como inversa de Jacobina inicial.</value>
+    <value>Usar Matriz Identidad como inversa de Jacobina inicial.</value>
   </data>
   <data name="Erronasintaxedaexpre" xml:space="preserve">
     <value>Error en la Expresión. Compruebe la sintaxis. </value>
@@ -3201,7 +3201,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Presión vs Temperatura</value>
   </data>
   <data name="Resfriador" xml:space="preserve">
-    <value>Resfriador</value>
+    <value>Enfriador</value>
   </data>
   <data name="Queda" xml:space="preserve">
     <value>Caída </value>
@@ -3243,7 +3243,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Energía libre  de Formación de Gibbs de un Gas ideal  a 25 ° C </value>
   </data>
   <data name="DCResults1" xml:space="preserve">
-    <value>Perfiles columna </value>
+    <value>Perfiles de la Columna </value>
   </data>
   <data name="Massaespecficadafase" xml:space="preserve">
     <value>Densidad de vapor </value>
@@ -3255,7 +3255,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>N/D</value>
   </data>
   <data name="DCELIts" xml:space="preserve">
-    <value>Iteraciones en el bucle exterior </value>
+    <value>Iteraciones en el Bucle Externo </value>
   </data>
   <data name="Coluna1Fonte" xml:space="preserve">
     <value>Columna 1 (Fuente) </value>
@@ -3267,13 +3267,13 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Agua </value>
   </data>
   <data name="PF_PVAP" xml:space="preserve">
-    <value>Porcentaje vaporizado</value>
+    <value>Porcentaje Vaporizado</value>
   </data>
   <data name="ExpansoRpidadD34" xml:space="preserve">
     <value>Expansión rápida d / D = 3 / 4 </value>
   </data>
   <data name="PP_RIG_BUB_DEW_FLASH_INIT" xml:space="preserve">
-    <value>Utilice cálculo riguroso de presiones de burbuja  y Rocío para arrancar Flash TP (0 = Desactivar, 1 = Activar)</value>
+    <value>Utilice cálculo riguroso de presiones de burbuja  y Rocío para iniciar Flash TP (0 = Desactivar, 1 = Activar)</value>
   </data>
   <data name="LIQVazomssica" xml:space="preserve">
     <value>LIQ Flujo másico</value>
@@ -3297,13 +3297,13 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>No hay corriente de energía asociada a la turbina.</value>
   </data>
   <data name="ConfigurarPacotedePropriedades" xml:space="preserve">
-    <value>Configurar las propiedades del paquete ( </value>
+    <value>Configurar Paquete de Propiedades </value>
   </data>
   <data name="IgnorarLquidonaEntra" xml:space="preserve">
     <value>Ignorar Líquido en la entrada </value>
   </data>
   <data name="PP_PHFMII" xml:space="preserve">
-    <value>Flash PH – Numero Máximo de Iteraciones del Blucle Interno</value>
+    <value>Flash PH – Numero Máximo de Iteraciones del Bucle Interno</value>
   </data>
   <data name="Wegstein" xml:space="preserve">
     <value>Wegstein ... </value>
@@ -3333,7 +3333,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Corriente de Energia </value>
   </data>
   <data name="DCEnthBalTol" xml:space="preserve">
-    <value>Balance de Entalpía</value>
+    <value>Tolerancia de Balance Entálpico</value>
   </data>
   <data name="_Mxileno" xml:space="preserve">
     <value>M-xileno (C8H10) </value>
@@ -3342,7 +3342,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Compresibilidad de Rackett</value>
   </data>
   <data name="ComposioemFraesMolar" xml:space="preserve">
-    <value>Composición en fracciones molares </value>
+    <value>Composición en Fracciones Molares </value>
   </data>
   <data name="N" xml:space="preserve">
     <value>N</value>
@@ -3390,7 +3390,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>TocItems </value>
   </data>
   <data name="SCNminstages" xml:space="preserve">
-    <value>Número mínimo de etapas</value>
+    <value>Número Mínimo de Etapas</value>
   </data>
   <data name="Avarivelmanipuladaat" xml:space="preserve">
     <value>La variable manipulada ha alcanzado uno de sus límites. </value>
@@ -3450,7 +3450,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Cancelado. </value>
   </data>
   <data name="DescNRTLPP" xml:space="preserve">
-    <value>En este paquete de la Propiedad, el modelo NRTL (Non-Random Two-Liquid) se utiliza para calcular los coeficientes de actividad de la Fase Líquida. Las  entalpías son calculadas por el modelo de Lee-Kesler, mientras que la fugacidad de la Fase Vapor  y otras propiedades termodinámicas (ambas fases) son calculadas por  Peng-Robinson (EOS). </value>
+    <value>En este Paquete de Propiedades, el modelo NRTL (Non-Random Two-Liquid) se utiliza para calcular los coeficientes de actividad de la Fase Líquida. Las  entalpías son calculadas por el modelo de Lee-Kesler, mientras que la fugacidad de la Fase Vapor  y otras propiedades termodinámicas (ambas fases) son calculadas por  Peng-Robinson (EOS). </value>
   </data>
   <data name="_Nitrogenio" xml:space="preserve">
     <value>Nitrógeno (N2) </value>
@@ -3462,7 +3462,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Reacciones y Conversiones </value>
   </data>
   <data name="DCILTol" xml:space="preserve">
-    <value>Bucle interior (sólo método E/S) </value>
+    <value>Bucle Interior (sólo método Inside-Out) </value>
   </data>
   <data name="PropPack_FlashMaxIt2" xml:space="preserve">
     <value>Flash PT: Se alcanzo el máximo de repeticiones. </value>
@@ -3498,7 +3498,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Volumen vs Presión </value>
   </data>
   <data name="Mtododeacelerao" xml:space="preserve">
-    <value>Método de aceleración </value>
+    <value>Método de Aceleración </value>
   </data>
   <data name="HeatLoadOfEquipment" xml:space="preserve">
     <value>Carga térmica de los equipos </value>
@@ -3525,7 +3525,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>PP modificado</value>
   </data>
   <data name="HXHotSidePressureDropDesc" xml:space="preserve">
-    <value>Pérdida de carga (caída de presión del líquido caliente)</value>
+    <value>Caida de Presión (caída de presión del líquido caliente)</value>
   </data>
   <data name="Atabelapodeseroculta" xml:space="preserve">
     <value>El cuadro se puede ocultar desmarcando el tema "Mostrar" en el menú contextual </value>
@@ -3546,7 +3546,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Sulfuro de Hidrógeno (H2S) </value>
   </data>
   <data name="DCMaxIterationsReached" xml:space="preserve">
-    <value>La calculadora tiene el número máximo de iteraciones sin convergencia. </value>
+    <value>La calculadora llegó al número máximo de iteraciones sin converger. </value>
   </data>
   <data name="SadaBorda" xml:space="preserve">
     <value>Salida Borde</value>
@@ -3561,13 +3561,13 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Tipo de condensador </value>
   </data>
   <data name="EntalpiaEspecficaFas" xml:space="preserve">
-    <value>Entalpía específica de la mezcla </value>
+    <value>Entalpía Específica de la Mezcla </value>
   </data>
   <data name="Lquido" xml:space="preserve">
     <value>Líquido</value>
   </data>
   <data name="EntalpiaEspecficadaf2" xml:space="preserve">
-    <value>Entalpía específica de la Fase Vapor </value>
+    <value>Entalpía Específica de la Fase Vapor </value>
   </data>
   <data name="Valormximoopcional" xml:space="preserve">
     <value>Valor máximo (opcional) </value>
@@ -3618,7 +3618,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Flujo volumétrico en la fase de vapor </value>
   </data>
   <data name="DCReboilerDuty" xml:space="preserve">
-    <value>El calor añadido en Rehervidor</value>
+    <value>El Calor Añadido en Rehervidor</value>
   </data>
   <data name="Osvaloressoapagadosd" xml:space="preserve">
     <value>Los valores se borran de la memoria y no se pueden recuperar. </value>
@@ -3687,7 +3687,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Número de iteraciones usadas en el cálculo. </value>
   </data>
   <data name="DCSideOps" xml:space="preserve">
-    <value>4. Operaciones laterales </value>
+    <value>4. Operaciones Laterales </value>
   </data>
   <data name="AquecimentoResfriame" xml:space="preserve">
     <value>Calentadores / Enfriadores</value>
@@ -3696,7 +3696,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Máximo valor para la variable de destino. Opcional, pero recomendada, ya que puede ser utilizado como un factor de seguridad en el cálculo de la corriente. </value>
   </data>
   <data name="DCLastStgPressure" xml:space="preserve">
-    <value>Presión en la etapa inferior </value>
+    <value>Presión en la Etapa Inferior </value>
   </data>
   <data name="Espessuradabordadoob" xml:space="preserve">
     <value>Espesor de borde de un objeto, en pixeles. </value>
@@ -3732,10 +3732,10 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Compuesto Clave Pesado</value>
   </data>
   <data name="PressoCrtica" xml:space="preserve">
-    <value>Presión crítica</value>
+    <value>Presión Crítica</value>
   </data>
   <data name="SCStrippingLiquid" xml:space="preserve">
-    <value>Líquido de agotamiento</value>
+    <value>Líquido de Agotamiento</value>
   </data>
   <data name="PF_Visc1" xml:space="preserve">
     <value>Viscosidad cinemática @ T1 </value>
@@ -3747,7 +3747,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Producto de Fondo</value>
   </data>
   <data name="HXCalcError" xml:space="preserve">
-    <value>Error de cálculo cambiador: el manejó incoherente parámetros suministrados una solución.</value>
+    <value>Error de cálculo en el Intercamdiador: el manejó deparámetros suministrados resulta una solución incoherente.</value>
   </data>
   <data name="Motivo" xml:space="preserve">
     <value>Razón: </value>
@@ -3789,7 +3789,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Anular la temperatura de separación </value>
   </data>
   <data name="CompViewerError1" xml:space="preserve">
-    <value>Por favor, añadir al menos una corriente de Materia al PFD para usar esta función. </value>
+    <value>Por favor, añadir al menos una corriente de Materia al Flujograma para usar esta función. </value>
   </data>
   <data name="SistemaIngls" xml:space="preserve">
     <value>Sistema Inglés </value>
@@ -3852,7 +3852,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Haga clic en el botón para ver/editar las anotaciones sobre el objeto seleccionado. </value>
   </data>
   <data name="Tensosuperficial" xml:space="preserve">
-    <value>Tensión superficial </value>
+    <value>Tensión Superficial </value>
   </data>
   <data name="ReatorPFR" xml:space="preserve">
     <value>Reactor PFR</value>
@@ -3879,7 +3879,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Volumen molar </value>
   </data>
   <data name="SCMinimumRefluxRatio" xml:space="preserve">
-    <value>Relación de reflujo mínimo</value>
+    <value>Relación de Reflujo Mínimo</value>
   </data>
   <data name="_3Metil1Butanol" xml:space="preserve">
     <value>3-metil-1-butanol (C5H11OH) </value>
@@ -3903,7 +3903,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Calcular Objeto Destino </value>
   </data>
   <data name="EntropiaEspecficadaf" xml:space="preserve">
-    <value>Entropía Específica  de la Fase Vapor </value>
+    <value>Entropía Específica de la Fase Vapor </value>
   </data>
   <data name="VazomssicaMistura" xml:space="preserve">
     <value>Flujo de másico (mezcla) </value>
@@ -3921,7 +3921,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Informe de Excepción de DWSIM </value>
   </data>
   <data name="EntalpiadeVaporizao" xml:space="preserve">
-    <value>Entalpía de vaporización</value>
+    <value>Entalpía de Vaporización</value>
   </data>
   <data name="PP_PTFILT" xml:space="preserve">
     <value>Flash PT/PV - Tolerancia del Bucle Interno</value>
@@ -3933,7 +3933,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Se ha producido un error durante la convergencia de los cálculos iterativos para resolver la columna. Por favor, compruebe los datos de entrada y vuelva a intentarlo. </value>
   </data>
   <data name="DescPRLK" xml:space="preserve">
-    <value>Este paquete de propiedades, Entalpias, Entropias y Capacidades Caloríficas  se calculan a partir de modelo Lee-Kesler.</value>
+    <value>Este Paquete de Propiedades, Entalpias, Entropias y Capacidades Caloríficas  se calculan a partir de modelo Lee-Kesler.</value>
   </data>
   <data name="VolEspecfico" xml:space="preserve">
     <value>Volumen específico </value>
@@ -3948,7 +3948,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Objeto Utilizado por </value>
   </data>
   <data name="PP_PSFMEI" xml:space="preserve">
-    <value>Flash PS – Numero Máximo de Iteraciones del Blucle Externo</value>
+    <value>Flash PS – Numero Máximo de Iteraciones del Bucle Externo</value>
   </data>
   <data name="ChaoSeaderLiquidMolarVolume" xml:space="preserve">
     <value>Volumen molar neto Chao-Seader</value>
@@ -4041,7 +4041,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Seleccione una variable para ser usada como la especificación de destino.</value>
   </data>
   <data name="EntalpiaEspecficadaf" xml:space="preserve">
-    <value>Entalpía específica </value>
+    <value>Entalpía Específica</value>
   </data>
   <data name="FormFitErrorTitle" xml:space="preserve">
     <value>Error en la regresión de los datos </value>
@@ -4053,7 +4053,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Fracción molar (x) --</value>
   </data>
   <data name="Correntedematriacone" xml:space="preserve">
-    <value>Corriente de materia conectada a la entrada de reciclo.</value>
+    <value>Corriente de Materia Conectada a la Entrada de Reciclo.</value>
   </data>
   <data name="CliqueemRecalcularpa" xml:space="preserve">
     <value>Haga clic en "Recalcular" para volver a calcular todos los objetos, o en "Continuar" para mantenerlas en el estado actual. </value>
@@ -4098,13 +4098,13 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>a 14</value>
   </data>
   <data name="DCUseDampingFactor" xml:space="preserve">
-    <value>Usar factor de amortiguamiento</value>
+    <value>Usar Factor de Amortiguamiento</value>
   </data>
   <data name="DCUseNewtonUpdate" xml:space="preserve">
-    <value>Actualizar las variables por el método de Newton</value>
+    <value>Actualizar las Variables por el Método de Newton</value>
   </data>
   <data name="DCSbError" xml:space="preserve">
-    <value>Hubo un error de convergencia en el cálculo del factor de ajuste Sb. Pruebe a ejecutar la columna con la opción de ajustar el factor de Sb o verifique las estimaciones originales</value>
+    <value>Hubo un error de convergencia en el cálculo del factor de ajuste Sb. Pruebe a ejecutar la columna con la opción de ajustar el factor de Sb o verifique las estimaciones iniciales</value>
   </data>
   <data name="DCCondenserSpecComp" xml:space="preserve">
     <value>Componente</value>
@@ -4140,7 +4140,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Tabla</value>
   </data>
   <data name="DCUnsupportedError1" xml:space="preserve">
-    <value>El método Punto de Burbuja de Wang y Henke no es compatible con las especificaciones. Use el método de Russell o de Naphtali y Sandholm que soporta especificaciones completas.</value>
+    <value>El método Punto de Burbuja de Wang y Henke no es compatible con las especificaciones. Use el método de Russell Inside-Out o de Naphtali y Sandholm que soporta especificaciones completas.</value>
   </data>
   <data name="DCUnsupportedError2" xml:space="preserve">
     <value>Las especificaciones establecidas violan el balance de masa de la columna.</value>
@@ -4149,7 +4149,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Actualización de las estimaciones iniciales de forma automática</value>
   </data>
   <data name="DCStoreAndReuseJacobian" xml:space="preserve">
-    <value>Almacenar y reutilizar la matriz jacobiana</value>
+    <value>Almacenar y reutilizar la Matriz Jacobiana</value>
   </data>
   <data name="DC_SC_DampingFactor" xml:space="preserve">
     <value>Factor de Amortiguamiento</value>
@@ -4161,7 +4161,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Paso para el cálculo de derivadas numéricas</value>
   </data>
   <data name="DC_IO_MaxVarChgFac" xml:space="preserve">
-    <value>Factor máximo para Actualización de Variables</value>
+    <value>Factor Máximo para Actualización de Variables</value>
   </data>
   <data name="PumpCalcMode" xml:space="preserve">
     <value>Modo de Cálculo</value>
@@ -4182,7 +4182,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>NPSH disponible</value>
   </data>
   <data name="PumpSetupCurves" xml:space="preserve">
-    <value>Configurar curvas</value>
+    <value>Configurar Curvas</value>
   </data>
   <data name="PumpViewCurves" xml:space="preserve">
     <value>Ver curvas (gráfico)</value>
@@ -4218,19 +4218,19 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Corriente especificada (0 - Superior o 1 - Inferior)</value>
   </data>
   <data name="OutletStream1" xml:space="preserve">
-    <value>Corrente de saída 1</value>
+    <value>Corriente de Salida 1</value>
   </data>
   <data name="OutletStream2" xml:space="preserve">
-    <value>Corrente de saída 2</value>
+    <value>Corriente de Salida 2</value>
   </data>
   <data name="OPBeta" xml:space="preserve">
     <value>Beta (d/D)</value>
   </data>
   <data name="OPCalculationMethod" xml:space="preserve">
-    <value>Modelo de cálculo</value>
+    <value>Método de Cálculo</value>
   </data>
   <data name="OPCorrectionFactor" xml:space="preserve">
-    <value>Fator de corrección</value>
+    <value>Fator de Corrección</value>
   </data>
   <data name="OPDeltaT" xml:space="preserve">
     <value>ΔT</value>
@@ -4245,7 +4245,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Conectores de presión</value>
   </data>
   <data name="OPOverallPressureDrop" xml:space="preserve">
-    <value>Perda de carga total</value>
+    <value>Caida de Presión Total</value>
   </data>
   <data name="OrificePlate" xml:space="preserve">
     <value>Placa de Orificio</value>
@@ -4314,19 +4314,19 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Modelo para representar un proceso de calentamiento de una corriente de materia.</value>
   </data>
   <data name="Bomba_Desc" xml:space="preserve">
-    <value>Modelo de una Bomba Centrífuga Industrial.</value>
+    <value>Modelo de Bomba Centrífuga.</value>
   </data>
   <data name="ComponentSeparator_Desc" xml:space="preserve">
-    <value>Modelo para un processo de separación de componentes.</value>
+    <value>Modelo para un proceso de separación de componentes.</value>
   </data>
   <data name="CompressorAdiabtico_Desc" xml:space="preserve">
     <value>Modelo de un compresor adiabático industrial.</value>
   </data>
   <data name="Correntedeenergia_Desc" xml:space="preserve">
-    <value>Representa los flujos de energía de entrada y salida de Las Operaciónes Unitarias.</value>
+    <value>Representa los Flujos de Energía de Entrada y Salida de Las Operaciónes Unitarias.</value>
   </data>
   <data name="CorrentedeMatria_Desc" xml:space="preserve">
-    <value>Representa los flujos de materia de entrada y salida de operaciones unitarias.</value>
+    <value>Representa los Flujos de Materia de Entrada y Salida de operaciones unitarias.</value>
   </data>
   <data name="DistillationColumn_Desc" xml:space="preserve">
     <value>Modelo Riguroso para Columna de Destilación.</value>
@@ -4341,7 +4341,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Especifica una propiedad de un objeto en función de una propiedad de otro objeto.</value>
   </data>
   <data name="HeatExchanger_Desc" xml:space="preserve">
-    <value>Modelo simplificado de trocador de calor.</value>
+    <value>Modelo simplificado de Intercambiador de Calor.</value>
   </data>
   <data name="Misturador_Desc" xml:space="preserve">
     <value>Mezcla hasta 3 corrientes de matéria en una.</value>
@@ -4353,7 +4353,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Modelo para o reactor de conversión. Especifique las conversiondes de los reactivos.</value>
   </data>
   <data name="ReatorCSTR_Desc" xml:space="preserve">
-    <value>Modelo de reactor agitado.</value>
+    <value>Modelo de Reactor Agitado Completamente.</value>
   </data>
   <data name="ReatorEquilibrio_Desc" xml:space="preserve">
     <value>Modelo de reactor para reacciones de equilíbrio.</value>
@@ -4371,19 +4371,19 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Utilizado para realizar retorno de corrientes de materia en corrientes aguas arriba.</value>
   </data>
   <data name="RefluxedAbsorber_Desc" xml:space="preserve">
-    <value>Modelo rigoroso para absorbedora con condensador.</value>
+    <value>Modelo Rigoroso para Absorbedora con Condensador.</value>
   </data>
   <data name="Resfriador_Desc" xml:space="preserve">
-    <value>Modelo para representar um processo de resfriamento de uma corrente de matéria.</value>
+    <value>Modelo para representar um proceso de enfriamento de una corriente de materia.</value>
   </data>
   <data name="ShortcutColumn_Desc" xml:space="preserve">
     <value>Modelo simplificado de columna de destilación (Método Corto).</value>
   </data>
   <data name="Tanque_Desc" xml:space="preserve">
-    <value>Modelo de um tanque industrial</value>
+    <value>Modelo de un tanque industrial</value>
   </data>
   <data name="Tubulao_Desc" xml:space="preserve">
-    <value>Modelo para calcular perda de carga e transferência de calor em tubulações.</value>
+    <value>Modelo para calcular caida de presión en Transferência de Calor en tuberias.</value>
   </data>
   <data name="TurbinaAdiabtica_Desc" xml:space="preserve">
     <value>Modelo de una turbina (expansor) adiabática industrial.</value>
@@ -4428,7 +4428,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Script</value>
   </data>
   <data name="DescCSPP" xml:space="preserve">
-    <value>Propiedades del paquete utilizando el método COSMO-SAC implementado en el JCOSMO la colección de Rafael Renan Soares y Gerber para la predicción de los coeficientes de actividad de los componentes en la Fase Líquida. La entalpía, entropía y el calor residual de la capacidad se calcula a partir del modelo de Lee-Kesler. La fase de vapor es modelada por la EDE Peng-Robinson.</value>
+    <value>Paquete de Propiedades utilizando el método COSMO-SAC implementado en el JCOSMO la colección de Rafael Renan Soares y Gerber para la predicción de los coeficientes de actividad de los componentes en la Fase Líquida. La entalpía, entropía y el calor residual de la capacidad se calcula a partir del modelo de Lee-Kesler. La fase de vapor es modelada por la EDE Peng-Robinson.</value>
   </data>
   <data name="CorrentedeenergiaE" xml:space="preserve">
     <value>Corriente de Energia (Entrada)</value>
@@ -4449,7 +4449,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Scripts</value>
   </data>
   <data name="STHXProperties" xml:space="preserve">
-    <value>Propiedades de coraza y de tubos</value>
+    <value>Propiedades de Coraza y Tubos</value>
   </data>
   <data name="HXFoulingFactor" xml:space="preserve">
     <value>Factor de Ensuciamiento</value>
@@ -4470,19 +4470,19 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Fije los objetos a la cuadrícula</value>
   </data>
   <data name="STHXPropertiesDesc" xml:space="preserve">
-    <value>Haga clic para editar las propiedades, Casco y Tubo</value>
+    <value>Haga clic para editar las propiedades, Coraza y Tubo</value>
   </data>
   <data name="CapeOpenUnitOperation" xml:space="preserve">
     <value>Operación Unitaria CAPE-OPEN</value>
   </data>
   <data name="DescCOPP" xml:space="preserve">
-    <value>Un Paquete de Propiedades CAPE-OPEN es una colección métodos de compuestos y Parámetros completa, consistente, reutilizable, listo para usar para el para el cálculo de de cualquier conjunto de propiedades físicas conocidas para las Fases de un material. Incluye todos los métodos y los datos de compuestos puros, junto con las reglas pertinentes de mezcla y los parámetros de interacción. Un paquete de Propiedad normalmente cubre sólo una pequeña parte de los compuestos y métodos accesibles a través de un sistema de propiedades físicas.</value>
+    <value>Un Paquete de Propiedades CAPE-OPEN es una colección completa de métodos de compuestos y Parámetros , consistente, reutilizable, listo para usar en el cálculo de de cualquier conjunto de propiedades físicas conocidas para las Fases de un material. Incluye todos los métodos y los datos de compuestos puros, junto con las reglas pertinentes de mezcla y los parámetros de interacción. Un Paquete de Propiedades normalmente cubre sólo una pequeña parte de los compuestos y métodos accesibles a través de un sistema de propiedades físicas.</value>
   </data>
   <data name="BuildDate" xml:space="preserve">
-    <value>Fecha</value>
+    <value>Fecha de Revisión</value>
   </data>
   <data name="BuildNumber" xml:space="preserve">
-    <value>Compilación</value>
+    <value>Número de Revisión</value>
   </data>
   <data name="Changes" xml:space="preserve">
     <value>Historial de cambios</value>
@@ -4515,7 +4515,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Esto eliminará el paquete de propriedad actual. ¿Desea continuar?</value>
   </data>
   <data name="DescPCSAFTPP" xml:space="preserve">
-    <value>El modelo de cadena perturbada SAFT es una ecuacion de estado de ingenieria en estado del arte. Está diseñado para el modelado de las mezclas de todos los tipos de sustancias: gases, disolventes y polímeros.
+    <value>El modelo de cadena perturbada SAFT es una ecuacion de estado de ingenieria en estado del arte. Está diseñada para el modelado de las mezclas de todos los tipos de sustancias: gases, disolventes y polímeros.
 
 SAFT es adecuado para el cálculo de equilibrio de fases y las propiedades termofísicas de los componentes puros y mezclas. Se ha probado con los datos experimentales para numerosos sistemas y se encontró que dan excelentes resultados. En comparación con otras ecuaciones de estado, se encuentra SAFT ser más precisos y más predictivos para la correlación de datos experimentales cuando se aplica a las mezclas. Es muy confiable para las extrapolaciones sobre las regiones donde los parámetros se ajustaron.</value>
   </data>
@@ -4525,11 +4525,7 @@ SAFT es adecuado para el cálculo de equilibrio de fases y las propiedades termo
 Una modificiación al termino de atracción en la EE de Peng-Robinson publicado por Stryjek y Vera en 1986 (PRSV) mejorando significativamente sla precisión del modelo introduciendo un parametro de componente puro  ajustable y una modificación de ajuste polinomial del factor acentrico. Una modificación posterior publicado en 1986 (PRSV2) mejora la exactitud del modelo mediante la introducción de dos parámetros adicionales de componentes puros a la modificación del termino de atracción anterior.</value>
   </data>
   <data name="DescPRSV2VLPP" xml:space="preserve">
-    <value>PRSV2 EOS with three pure compound parameters (k1, k2 and k3) and two Van Laar-type binary interaction parameters (kij and kji).
-
-A modification to the attraction term in the Peng-Robinson equation of state published by Stryjek and Vera in 1986 (PRSV) significantly improved the model's accuracy by introducing an adjustable pure component parameter and by modifying the polynomial fit of the acentric factor. A subsequent modification published in 1986 (PRSV2) further improved the model's accuracy by introducing two additional pure component parameters to the previous attraction term modification.
-
-PRSV2 is particularly advantageous for VLE calculations. While PRSV1 does offer an advantage over the Peng-Robinson model for describing thermodynamic behavior, it is still not accurate enough, in general, for phase equilibrium calculations.</value>
+    <value>La Ecuación de Estado PRSV2 con tres parámetros puros compuestos (K1, K2 y K3) y dos parámetros de interacción binaria Van Laar de tipo (kij y kji). La modificación termino atracción en la ecuación de Peng-Robinson de Estado publicado por Stryjek y Vera en 1986 (PRSV) mejoró significativamente la exactitud del modelo mediante la introducción de un parámetro de componente puro ajustable y modificando el ajuste polinómico del factor acéntrico. La modificación posterior publicada en 1986 (PRSV2) mejora aún más la exactitud del modelo mediante la introducción de dos parámetros adicionales de componentes puros a la modificación anterior atracción plazo. PRSV2 es particularmente ventajoso para los cálculos VLE. Mientras PRSV1 sí ofrece una ventaja sobre el modelo de Peng-Robinson para describir el comportamiento termodinámico, todavía no es lo suficientemente precisa, en general, para los cálculos de equilibrio de fases.</value>
   </data>
   <data name="MasterTable" xml:space="preserve">
     <value>Master Property Table</value>
@@ -4544,7 +4540,7 @@ PRSV2 is particularly advantageous for VLE calculations. While PRSV1 does offer 
     <value>Object Type</value>
   </data>
   <data name="Fundo" xml:space="preserve">
-    <value>3. Background</value>
+    <value>3. Fondo</value>
   </data>
   <data name="HeaderText" xml:space="preserve">
     <value>Texto de Encabezado</value>
@@ -4559,21 +4555,19 @@ PRSV2 is particularly advantageous for VLE calculations. While PRSV1 does offer 
     <value>Lista Customizada</value>
   </data>
   <data name="DescFPP" xml:space="preserve">
-    <value>FPROPS is a free open-source C-based library for high-accuracy evaluation of thermodynamic properties for a number of pure substances. It makes use of published data for the Helmholtz fundamental equation for those substances.
-
-FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
+    <value>FPROPS es una biblioteca de código abierto basado en una biblioteca C para la evaluación de alta precisión de las propiedades termodinámicas de una serie de sustancias puras. Se hace uso de los datos publicados por la ecuación de Helmholtz es Esas sustancias fundamental.</value>
   </data>
   <data name="FPP" xml:space="preserve">
     <value>FPROPS</value>
   </data>
   <data name="RestoreState" xml:space="preserve">
-    <value>Restaurar Estado</value>
+    <value>Restaurar Captura</value>
   </data>
   <data name="RestoreStateError" xml:space="preserve">
-    <value>Erro ao restaurar estado da simulação:</value>
+    <value>Error al Restaurar Captura de Simulación:</value>
   </data>
   <data name="RestoreStateOK" xml:space="preserve">
-    <value>Estado da simulação restaurado com sucesso.</value>
+    <value>Captura de Simulación Restaurada con Exito.</value>
   </data>
   <data name="SaveState" xml:space="preserve">
     <value>Guardar Estado</value>
@@ -4582,7 +4576,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Error al guardar Estado de Simulación.</value>
   </data>
   <data name="SaveStateOK" xml:space="preserve">
-    <value>Estado de Simulación guardado con éxito</value>
+    <value>Captura de Simulación guardada con éxito</value>
   </data>
   <data name="PP_USE_EOS_VOLUME_SHIFT" xml:space="preserve">
     <value>Usar correción de volumen (Peneloux) (0 = Desactivar, 1 = Activar)</value>
@@ -4597,7 +4591,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Ajuste simultáneo: número máximo de iteraciones alcanzado</value>
   </data>
   <data name="IncludeJTEffect" xml:space="preserve">
-    <value>Considerar refrigeración por Joule-Thomson</value>
+    <value>Considerar Refrigeración por Joule-Thomson</value>
   </data>
   <data name="ReactionExtents" xml:space="preserve">
     <value>Coordenadas de Reacciones</value>
@@ -4657,7 +4651,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Área Total de Filtro</value>
   </data>
   <data name="FilterAreaDesc" xml:space="preserve">
-    <value>Área total de Filtro</value>
+    <value>Área Total de Filtro</value>
   </data>
   <data name="FilterCakeRelativeHumidity" xml:space="preserve">
     <value>Humedad Relativa de Torta (%)</value>
@@ -4666,10 +4660,10 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Cantidad Relativa de Líquido en Torta (% en Base Húmeda)</value>
   </data>
   <data name="FilterCycleTime" xml:space="preserve">
-    <value>Tempo de Ciclagem</value>
+    <value>Tiempo de Ciclo</value>
   </data>
   <data name="FilterCycleTimeDesc" xml:space="preserve">
-    <value>Tempo de Ciclagem, inverso da velocidade do tambor</value>
+    <value>Tiempo de Ciclo, inverso de velocidad del tambor</value>
   </data>
   <data name="FilterMediumResistance" xml:space="preserve">
     <value>Resistencia del Medio Filtrante</value>
@@ -4714,28 +4708,28 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Usar Modelo Ideal para Fugacidade da Fase Vapor (0 = Desactivar, 1 = Activar)</value>
   </data>
   <data name="LiquidDensity" xml:space="preserve">
-    <value>Massa Específica do Líquido</value>
+    <value>Masa Específica de Líquido</value>
   </data>
   <data name="SolidDensity" xml:space="preserve">
     <value>Massa Específica do Sólido</value>
   </data>
   <data name="Correntedeentrada4" xml:space="preserve">
-    <value>Corriente de entrada (4) </value>
+    <value>Corriente de Entrada (4) </value>
   </data>
   <data name="Correntedeentrada5" xml:space="preserve">
-    <value>Corriente de entrada (5) </value>
+    <value>Corriente de Entrada (5) </value>
   </data>
   <data name="Correntedeentrada6" xml:space="preserve">
-    <value>Corriente de entrada (6) </value>
+    <value>Corriente de Entrada (6) </value>
   </data>
   <data name="ActivityCoefficients" xml:space="preserve">
     <value>Coeficientes de Actividad</value>
   </data>
   <data name="FreezingPoint" xml:space="preserve">
-    <value>Ponto de Fusão</value>
+    <value>Punto de Fusión</value>
   </data>
   <data name="FreezingPointDepression" xml:space="preserve">
-    <value>Delta do Ponto de Fusão</value>
+    <value>Delta de Punto de Fusión</value>
   </data>
   <data name="OsmoticCoefficient" xml:space="preserve">
     <value>Coeficiente Osmótico</value>
@@ -4744,10 +4738,10 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>El resultado del cálculo flash en las condiciones establecidas no es válida. Por favor, vuelve a intentarlo con con otro algoritmo flash, y si el error persiste, verifique  si el modelo termodinámico seleccionado es apropiado para el proceso simulado.</value>
   </data>
   <data name="UnsuitableFlashAlgorithmSelected" xml:space="preserve">
-    <value>O Algoritmo Flash selecionado não é capaz de calcular o equilíbrio entre duas fases líquidas. Por favor, selecione um algortimo adequado para esta finalidade.</value>
+    <value>El algoritmo Flash seleccionado no es capaz de calcular un equilibrio entre dos fases líquidas. Por favor, seleccione un algortimo apropiado para este propósito.</value>
   </data>
   <data name="XLFileSaved" xml:space="preserve">
-    <value>Hoja de Cálculo de Excel Guardada con Éxito.</value>
+    <value>Hoja de Cálculo Guardada con Éxito.</value>
   </data>
   <data name="Electrolyte_Cp0" xml:space="preserve">
     <value>[Electrolito] Capacidad Calorífica en Condiciones Estándar a 298 K</value>
@@ -4762,16 +4756,16 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>[Electrolito] Volume Molar en Condiciones Estándar a 298 K</value>
   </data>
   <data name="Selado" xml:space="preserve">
-    <value>Selado</value>
+    <value>Sellado</value>
   </data>
   <data name="NoRegParmsAvail" xml:space="preserve">
     <value>Não foram obtidos parâmetros por regressão. Os dados não foram salvos.</value>
   </data>
   <data name="ParametrosAdicionadosComSucesso" xml:space="preserve">
-    <value>Parâmetros de Interação adicionados ao banco de dados com sucesso.</value>
+    <value>Parámetros de Interacción agregados con exito a la base de datos</value>
   </data>
   <data name="SplitterOperationMode" xml:space="preserve">
-    <value>Modo de Operação (Fatores de Divisão / Especificação da Corrente 1)</value>
+    <value>Modo de Operación (Factores de División / Especificación de Corrente 1)</value>
   </data>
   <data name="CancelText" xml:space="preserve">
     <value>Cancelar</value>
@@ -4783,40 +4777,40 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Próximo</value>
   </data>
   <data name="DescCPPP" xml:space="preserve">
-    <value>CoolProp is an open-source database of fluid and humid air properties, formulated based on the most accurate formulations in open literature. It has been validated against the most accurate data available from the relevant references.</value>
+    <value>CoolProp es una base de datos de código abierto de las propiedades del fluido y de aire húmedo, realizado a base de las formulaciones más precisas en la literatura abierta. Se ha validado con los datos más precisos disponibles de las referencias pertinentes.</value>
   </data>
   <data name="Personalizado5" xml:space="preserve">
     <value>Personalizado5</value>
   </data>
   <data name="SpecSource" xml:space="preserve">
-    <value>Fonte</value>
+    <value>Fuente</value>
   </data>
   <data name="FlashSpecification" xml:space="preserve">
-    <value>Especificação do cálculo Flash</value>
+    <value>Especificación del Cálculo Flash</value>
   </data>
   <data name="FlashSpecificationDesc" xml:space="preserve">
-    <value>Selecione o tipo de cálculo Flash a ser realizado para resolver o balanço de energia no vaso.</value>
+    <value>Selecione o tipo de cálculo Flash a ser realizado para resolver o balance de Energia.</value>
   </data>
   <data name="HydrateEquilibriumCurve" xml:space="preserve">
     <value>Curva de Equilíbrio de Hidratos</value>
   </data>
   <data name="PhaseIdentificationParameter" xml:space="preserve">
-    <value>Parâmetro de Identificação da Fase = 1</value>
+    <value>Parámetro de Identificación da Fase = 1</value>
   </data>
   <data name="PontosdeOrvalhoWF" xml:space="preserve">
-    <value>Pontos de Orvalho (Base Seca)</value>
+    <value>Puntos de Rocío  (Base Seca)</value>
   </data>
   <data name="BinEnvError_DuplicateCompound" xml:space="preserve">
     <value>Componente duplicado</value>
   </data>
   <data name="BinEnvError_TwoCompoundsMinimum" xml:space="preserve">
-    <value>Mínimo de dois componentes necessários</value>
+    <value>Se requiere mínimo dos componentes</value>
   </data>
   <data name="LLEEnvError_DuplicateCompound" xml:space="preserve">
     <value>Componente duplicado</value>
   </data>
   <data name="LLEEnvError_ThreeCompoundsMinimum" xml:space="preserve">
-    <value>Mínimo de tres componentes requiere</value>
+    <value>Se Requiere mínimo tres (3) compuestos</value>
   </data>
   <data name="LLEDiagrama" xml:space="preserve">
     <value>LLE Diagrama</value>
@@ -4834,7 +4828,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Método de Cálculo Entalpia/Entropia/Cp/Cv (0 = Lee-Kesler, 1 = Ideal, 2 = Excesso)</value>
   </data>
   <data name="Correntedesaida4" xml:space="preserve">
-    <value>Corriente de salida (4)</value>
+    <value>Corriente de Salida (4)</value>
   </data>
   <data name="Nohcorrentedeenergia1" xml:space="preserve">
     <value>No hay corriente de energía asociada a la ExcelUO.</value>
@@ -4849,258 +4843,258 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Componente de base de datos de ahorro de Error.</value>
   </data>
   <data name="AddUnitSystemFromSimulation" xml:space="preserve">
-    <value>Adicionar Sistema de Unidades da Simulação</value>
+    <value>Añadir sistema de simulación de Unidades</value>
   </data>
   <data name="ConfirmAddUnitSystemFromSimulation" xml:space="preserve">
-    <value>A simulação carregada contém um sistema de unidades definido pelo usuário que não está presente na sua lista de sistemas. Deseja adicionar esse sistema à sua lista?</value>
+    <value>La simulación cargada contiene un sistema de unidades definidas por el usuario que no está presente en la lista de sistema. ¿Quieres añadir este sistema a su lista?</value>
   </data>
   <data name="EnergyStreamRequired" xml:space="preserve">
     <value>O modo de cálculo selecionado exige que uma Corrente de Energia esteja conectada à Operação Unitária.</value>
   </data>
   <data name="RemoveScriptQuestion" xml:space="preserve">
-    <value>Tem certeza de que deseja remover esse script da lista?</value>
+    <value>¿Seguro que quieres eliminar este Script de la lista?</value>
   </data>
   <data name="ExcelUnitOp" xml:space="preserve">
-    <value>Operação Unitária Hoja de Calculo</value>
+    <value>Operación Unitária de Hoja de Cálculo</value>
   </data>
   <data name="Correntedeentrada10" xml:space="preserve">
-    <value>Corriente de entrada (10)</value>
+    <value>Corriente de Entrada (10)</value>
   </data>
   <data name="Correntedeentrada7" xml:space="preserve">
-    <value>Corriente de entrada (7)</value>
+    <value>Corriente de Entrada (7)</value>
   </data>
   <data name="Correntedeentrada8" xml:space="preserve">
-    <value>Corriente de entrada (8)</value>
+    <value>Corriente de Entrada (8)</value>
   </data>
   <data name="Correntedeentrada9" xml:space="preserve">
-    <value>Corriente de entrada (9)</value>
+    <value>Corriente de Entrada (9)</value>
   </data>
   <data name="Correntedesaida10" xml:space="preserve">
-    <value>Corriente de salida (10)</value>
+    <value>Corriente de Salida (10)</value>
   </data>
   <data name="Correntedesaida5" xml:space="preserve">
-    <value>Corriente de salida (5)</value>
+    <value>Corriente de Salida (5)</value>
   </data>
   <data name="Correntedesaida6" xml:space="preserve">
-    <value>Corriente de salida (6)</value>
+    <value>Corriente de Salida (6)</value>
   </data>
   <data name="Correntedesaida7" xml:space="preserve">
-    <value>Corriente de salida (7)</value>
+    <value>Corriente de Salida (7)</value>
   </data>
   <data name="Correntedesaida8" xml:space="preserve">
-    <value>Corriente de salida (8)</value>
+    <value>Corriente de Salida (8)</value>
   </data>
   <data name="Correntedesaida9" xml:space="preserve">
-    <value>Corriente de salida (9)</value>
+    <value>Corriente de Salida (9)</value>
   </data>
   <data name="FlowsheetUnitOp" xml:space="preserve">
-    <value>Fluxograma (UO)</value>
+    <value>Operación Unitaria de Flujograma</value>
   </data>
   <data name="FlowsheetInitializationError" xml:space="preserve">
-    <value>Houve um erro ao inicializar o fluxograma. Verifique a mensagem de erro para detalhes.</value>
+    <value>Hubo un error al inicializar el flujograma. Compruebe el mensaje de error para obtener más información.</value>
   </data>
   <data name="FlowsheetInitializationSuccess" xml:space="preserve">
-    <value>O fluxograma foi inicializado com sucesso.</value>
+    <value>El Flujograma se ha iniciado correctamente.</value>
   </data>
   <data name="FlowsheetInitialized" xml:space="preserve">
-    <value>Fluxograma já inicializado.</value>
+    <value>Flujograma ha inicializado.</value>
   </data>
   <data name="FlowsheetNotInitialized" xml:space="preserve">
-    <value>Fluxograma não inicializado, clique no botão à esquerda para fazê-lo.</value>
+    <value>Fluxograma não inicializado, haga clic izquierdo para hacerlo.</value>
   </data>
   <data name="FlowsheetUOEditor" xml:space="preserve">
-    <value>Painel de controle</value>
+    <value>Panel de Control</value>
   </data>
   <data name="FlowsheetUOEditorDesc" xml:space="preserve">
-    <value>Inicialize o fluxograma, defina as conexões entre correntes, parâmetros a expor e modo de transferência de massa.</value>
+    <value>Iniciar el Flujograma, establezca las conexiones entre las actuales, parámetros para exponer y el modo de transferencia de masa.</value>
   </data>
   <data name="FlowsheetUOViewer" xml:space="preserve">
-    <value>Visualizar fluxograma</value>
+    <value>Visualizar flujograma</value>
   </data>
   <data name="FlowsheetUOViewerDesc" xml:space="preserve">
-    <value>Visualize as propriedades dos objetos no fluxograma.</value>
+    <value>Ver las propiedades de los objetos en el flujograma.</value>
   </data>
   <data name="InitializeOnLoad" xml:space="preserve">
-    <value>Inicializar no carregamento</value>
+    <value>Inicializar cuando carge</value>
   </data>
   <data name="InitializeOnLoadDesc" xml:space="preserve">
-    <value>Selecione 'True' para inicializar o sub-fluxograma logo durante a abertura da simulação principal.</value>
+    <value>Selecione 'True' para inicializar o sub-flujograma durante la apertura de la simulación principal.</value>
   </data>
   <data name="SimulationFile" xml:space="preserve">
-    <value>Arquivo de simulação</value>
+    <value>Archivo de Simulación</value>
   </data>
   <data name="SimulationFileDesc" xml:space="preserve">
-    <value>Selecione o arquivo de simulação para executar como um sub-fluxograma.</value>
+    <value>Selecione o archivo de simulación para ejecutar como un sub-flujograma.</value>
   </data>
   <data name="ExcelFile" xml:space="preserve">
-    <value>Archivo de definición de Hoja de Calculo</value>
+    <value>Archivo de Hoja de Calculo</value>
   </data>
   <data name="LinkedInputParms" xml:space="preserve">
-    <value>3. Parâmetros de entrada</value>
+    <value>3. Parámetros de Entrada</value>
   </data>
   <data name="LinkedOutputParms" xml:space="preserve">
-    <value>4. Parâmetros de saída</value>
+    <value>4. Parámetros de Salida</value>
   </data>
   <data name="MassBalanceError" xml:space="preserve">
     <value>Erro no balanço de massa (%)</value>
   </data>
   <data name="FlowsheetUO" xml:space="preserve">
-    <value>Fluxograma (UO)</value>
+    <value>Operación Unitaria de Flujograma</value>
   </data>
   <data name="RedirectOutput" xml:space="preserve">
-    <value>Redirecionar mensagens</value>
+    <value>Redirecionar mensages</value>
   </data>
   <data name="RedirectOutputDesc" xml:space="preserve">
-    <value>Redireciona as mensagens do sub-fluxograma para a janela de avisos do fluxograma principal.</value>
+    <value>Redireciona los mensages del sub-flujograma para a Ventana de avisos del flujograma principal.</value>
   </data>
   <data name="SubFSUpdateFailed" xml:space="preserve">
-    <value>Erro ao atualizar as informações de processo do sub-fluxograma:</value>
+    <value>Error al actualizar la información de proceso de sub-Flujograma:</value>
   </data>
   <data name="SubFSUpdateSuccess" xml:space="preserve">
-    <value>Informações de processo do sub-fluxograma atualizadas com sucesso.</value>
+    <value>Información de proceso de sub-flujograma actualizadas con exito.</value>
   </data>
   <data name="UpdateOnSave" xml:space="preserve">
-    <value>Atualizar ao salvar</value>
+    <value>Actualizar al guardar</value>
   </data>
   <data name="UpdateOnSaveDesc" xml:space="preserve">
-    <value>Atualiza as informações de processo do sub-fluxograma no arquivo ao salvar o fluxograma principal.</value>
+    <value>Actualiza la información del proceso de la sub-Flujograma en el archivo al guardar el Flujograma principal.</value>
   </data>
   <data name="DCOperationMode" xml:space="preserve">
-    <value>Modo de operação da coluna</value>
+    <value>Modo de Operación de la Columna</value>
   </data>
   <data name="FSfinishedsolvingerror" xml:space="preserve">
-    <value>Erros ocorreram durante o cálculo do fluxograma. Verifique as mensagens subsequentes para mais informações.</value>
+    <value>Se han producido errores durante el cálculo del flujograma. Comprobar los mensajes posteriores para obtener más información.</value>
   </data>
   <data name="FSfinishedsolvingok" xml:space="preserve">
-    <value>O fluxograma foi calculado com sucesso.</value>
+    <value>El Flujograma se ha calculado correctamente.</value>
   </data>
   <data name="FSstartedsolving" xml:space="preserve">
-    <value>O fluxograma está sendo calculado, por favor aguarde...</value>
+    <value>El Flujograma esta siendo calculado, por favor espere...</value>
   </data>
   <data name="SolverTimeout" xml:space="preserve">
-    <value>O calculador não conseguiu resolver o fluxograma dentro do tempo de espera máximo definido.</value>
+    <value>La calculadora no pudo resolver el flujograma en el tiempo de espera máximo definido.</value>
   </data>
   <data name="RecycleMaxItsReached" xml:space="preserve">
     <value>Se alcanzó el número máximo de iteraciones, sin converger.</value>
   </data>
   <data name="ClientConnected" xml:space="preserve">
-    <value>Conectado ao servidor na rede.</value>
+    <value>Conectado con el servidor en la red.</value>
   </data>
   <data name="ClientConnectingError" xml:space="preserve">
-    <value>Erro na conexão com o servidor</value>
+    <value>Error al conectar con el servidor</value>
   </data>
   <data name="ClientDataProcessingError" xml:space="preserve">
-    <value>Erro processando dados enviados pelo servidor</value>
+    <value>Error procesando datos enviados por el servidor</value>
   </data>
   <data name="ClientMessageFromServer" xml:space="preserve">
-    <value>Mensagem do servidor</value>
+    <value>Mensaje de servidor</value>
   </data>
   <data name="ClientSavingTempFile" xml:space="preserve">
-    <value>Salvando arquivo temporário para envio ao servidor...</value>
+    <value>Guardando archivos temporales para enviar al servidor ...</value>
   </data>
   <data name="ClientSendDataError" xml:space="preserve">
-    <value>Erro ao enviar dados para o servidor</value>
+    <value>Error al enviar datos al servidor</value>
   </data>
   <data name="ClientSendingData" xml:space="preserve">
-    <value>Enviando dados para o servidor...</value>
+    <value>Enviando datos al servidor ...</value>
   </data>
   <data name="ClientSentDataOK" xml:space="preserve">
-    <value>Dados enviados com sucesso ao servidor.</value>
+    <value>Datos enviados correctamente al servidor.</value>
   </data>
   <data name="ClientUpdatedDataOK" xml:space="preserve">
-    <value>Atualização concluída.</value>
+    <value>Actualización completa.</value>
   </data>
   <data name="ClientUpdatingData" xml:space="preserve">
-    <value>Atualizando dados do fluxograma...</value>
+    <value>Actualizando datos de Flujograma...</value>
   </data>
   <data name="ClientWaitingForResults" xml:space="preserve">
-    <value>Aguardando resultados do servidor...</value>
+    <value>A la espera de resultados del servidor ...</value>
   </data>
   <data name="AzureClientCheckingForServerOnEndpoint" xml:space="preserve">
-    <value>Verificando a existência de um servidor conectado ao Service Bus...</value>
+    <value>Verificando la existencia de un servidor conectado al Service Bus...</value>
   </data>
   <data name="AzureClientConnectingtoSB" xml:space="preserve">
-    <value>Conectando-se ao Service Bus do Azure...</value>
+    <value>Conectandose al Service Bus de Azure...</value>
   </data>
   <data name="AzureClientNoServerOnEndpoint" xml:space="preserve">
-    <value>Não existe um servidor ativo e conectado ao Service Bus no momento.</value>
+    <value>No existe un servidor activo y conectado al Service Bus.</value>
   </data>
   <data name="AzureClientServerFoundOnEndpoint" xml:space="preserve">
-    <value>Encontrado um servidor ativo conectado ao Service Bus. Continuando...</value>
+    <value>Encontrado un servidor activo conectado al Service Bus. Continuando...</value>
   </data>
   <data name="LastUpdatedOn" xml:space="preserve">
     <value>Informações atualizadas em</value>
   </data>
   <data name="PP_FLASHALGORITHMFASTMODE" xml:space="preserve">
-    <value>Algoritmo Flash no Modo Rápido</value>
+    <value>Algoritmo Flash en Modo Rápido</value>
   </data>
   <data name="RecycleStreamNotCalculated" xml:space="preserve">
     <value>A corrente de entrada do Reciclo não está calculada ou não está em equilíbrio.</value>
   </data>
   <data name="DescNUPP" xml:space="preserve">
-    <value>New modified UNIFAC property prediction model parameters are reported for 89 main groups and 984 group–group interactions by using critically evaluated phase equilibrium data including vapor–liquid equilibrium (VLE), liquid–liquid equilibrium (LLE), solid–liquid equilibrium (SLE), excess enthalpy (HE), infinite dilution activity coefficient (AINF) and excess heat capacity (CPE) data. Obtained parameters are recommended primarily for correlations of the VLE data.</value>
+    <value>Los Nuevos parámetros del modelo de predicción de la propiedad UNIFAC modificado son reportados para 89 grupos principales y 984 interacciones de grupo en grupo mediante el uso de una evaluación crítica de los datos de equilibrio de fases que incluye datos equilibrio líquido-vapor (VLE), equilibrio líquido-líquido (LLE), el equilibrio sólido-líquido (LES) ,Entalpia en exceso (H), coeficiente de actividad a dilución infinita (AINF) y Capacidad Calorífica en exceso (CPE). Parámetros obtenidos se recomienda principalmente para las correlaciones de datos VLE.</value>
   </data>
   <data name="ExpData" xml:space="preserve">
-    <value>Dados experimentais</value>
+    <value>Datos Experimentales</value>
   </data>
   <data name="InputVariables" xml:space="preserve">
-    <value>Variáveis de Entrada</value>
+    <value>Variables de Entrada</value>
   </data>
   <data name="OutputVariables" xml:space="preserve">
-    <value>3. Variáveis de Saída</value>
+    <value>3. Variables de Salida</value>
   </data>
   <data name="SpreadsheetTable" xml:space="preserve">
-    <value>Tabela da Planilha de Dados</value>
+    <value>Tabla de Hoja de Cálculo</value>
   </data>
   <data name="ErrorInvalidFlashSpecValue" xml:space="preserve">
-    <value>Um ou ambos os valores das variáveis especificadas para o cálculo flash está (estão) inválido(s). Por favor verifique a Operação Unitária associada ou suas correntes de entrada para encontrar possíveis erros nas suas propriedades especificadas ou calculadas.</value>
+    <value>Uno o ambos valores de las variables especificadas para el cálculo de flash no son válidos. Por favor verifique la operación unitaria o sus corrientes de entrada asociados para encontrar posibles errores en sus propiedades especificadas o calculadas...</value>
   </data>
   <data name="ErrorInvalidMSSpecValue" xml:space="preserve">
-    <value>Uma ou mais variáveis de estado da corrente de matéria está (estão) com o(s) valor(es) inválido(s). Por favor, verifique os parâmetros informados ou calculados para esta corrente.</value>
+    <value>Una o más variables de estado de la corriente de materia no son válidas. Por favor, verifique los parámetros introducidos o calculados para esta corriente.</value>
   </data>
   <data name="ErrorInvalidUOSpecValue" xml:space="preserve">
-    <value>Uma ou mais variáveis de estado calculadas pela operação unitária está (estão) com o(s) valor(es) inválido(s). Por favor, verifique os parâmetros informados para a Operação Unitária ou suas correntes de entrada.</value>
+    <value>Uno o más variables de estado calculadas por la operación unitaria no son validas. Por favor, compruebe los parámetros introducidos para la operación unitaria o sus corrientes de entrada.</value>
   </data>
   <data name="CSTRCatalystAmount" xml:space="preserve">
-    <value>Carga de catalisador</value>
+    <value>Carga de Catalizador</value>
   </data>
   <data name="CSTRCatalystAmountDesc" xml:space="preserve">
-    <value>Quantidade de catalisador presente no reator</value>
+    <value>Cantidad de Catalizador presente en el Reactor</value>
   </data>
   <data name="PFRCatalystLoading" xml:space="preserve">
-    <value>Carga de catalisador</value>
+    <value>Carga de Catalizador</value>
   </data>
   <data name="PFRCatalystLoadingDesc" xml:space="preserve">
-    <value>Quantidade de catalisador presente no reator</value>
+    <value>Cantidad de Catalizador presente en el Reactor</value>
   </data>
   <data name="PFRCatalystParticleDiameter" xml:space="preserve">
-    <value>Diâmetro das partículas de catalisador</value>
+    <value>Diámetro de partículas de catalizador</value>
   </data>
   <data name="PFRCatalystParticleDiameterDesc" xml:space="preserve">
-    <value>Diâmetro das partículas de catalisador</value>
+    <value>Diámetro de partículas de catalizador</value>
   </data>
   <data name="PFRCatalystVoidFraction" xml:space="preserve">
-    <value>Fração de vazios do catalisador</value>
+    <value>Fracción de vacios de catalizador</value>
   </data>
   <data name="PFRCatalystVoidFractionDesc" xml:space="preserve">
-    <value>Fração de vazios do catalisador</value>
+    <value>Fracción de vacios de catalizador</value>
   </data>
   <data name="PFRLength" xml:space="preserve">
-    <value>Comprimento útil do reator</value>
+    <value>Longitud útil del reactor</value>
   </data>
   <data name="PFRLengthDesc" xml:space="preserve">
-    <value>Comprimento útil do reator, para cálculo do diâmetro e da perda de carga</value>
+    <value>Longitud útil del reactor, para cálculo del diámetro y de caida de presión</value>
   </data>
   <data name="PFRMassBalanceError" xml:space="preserve">
-    <value>Ocorreu um erro no balanço de massa do reator. Verifique as equações das reações informadas e ativas no reator, bem como as dimensões informadas para o equipamento.</value>
+    <value>Se produjo un error en el balance de masa del reactor. Compruebe las ecuaciones de reacciones introducidas y activas en el reactor, así como las dimensiones reportadas para el equipo.</value>
   </data>
   <data name="PFRNegativePressureError" xml:space="preserve">
-    <value>A perda de carga no PFR está muito alta. Verifique o comprimento e volume informados, bem como os dados de carregamento de catalisador, se for o caso.</value>
+    <value>La caída de presión en el PFR es demasiado alta. Compruebe la longitud y el volumen introducidos asi como también los datos carga de catalizador, si procede.</value>
   </data>
   <data name="PFRDenominatorEvaluationError" xml:space="preserve">
-    <value>Erro ao avaliar expressão para o denominador da equação de taxa da reação</value>
+    <value>Error al evaluar para el denominador de la ecuación de velocidad de reacción</value>
   </data>
   <data name="PFRNumeratorEvaluationError" xml:space="preserve">
-    <value>Erro ao avaliar expressão para o numerador da equação de taxa da reação</value>
+    <value>Error al evaluar para el numerador de la ecuación de velocidad de reacción</value>
   </data>
 </root>

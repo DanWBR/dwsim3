@@ -22,53 +22,40 @@ Partial Class FormGraphPFR
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormGraphPFR))
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox
-        Me.ZedGraphControl1 = New ZedGraph.ZedGraphControl
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.ZedGraphControl1 = New ZedGraph.ZedGraphControl()
         Me.GroupBox2.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupBox2
         '
-        Me.GroupBox2.AccessibleDescription = Nothing
-        Me.GroupBox2.AccessibleName = Nothing
-        resources.ApplyResources(Me.GroupBox2, "GroupBox2")
-        Me.GroupBox2.BackgroundImage = Nothing
         Me.GroupBox2.Controls.Add(Me.ZedGraphControl1)
-        Me.GroupBox2.Font = Nothing
+        resources.ApplyResources(Me.GroupBox2, "GroupBox2")
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.TabStop = False
         '
         'ZedGraphControl1
         '
-        Me.ZedGraphControl1.AccessibleDescription = Nothing
-        Me.ZedGraphControl1.AccessibleName = Nothing
         resources.ApplyResources(Me.ZedGraphControl1, "ZedGraphControl1")
-        Me.ZedGraphControl1.BackgroundImage = Nothing
-        Me.ZedGraphControl1.Font = Nothing
         Me.ZedGraphControl1.IsAntiAlias = True
         Me.ZedGraphControl1.IsAutoScrollRange = True
         Me.ZedGraphControl1.IsShowPointValues = True
         Me.ZedGraphControl1.Name = "ZedGraphControl1"
-        Me.ZedGraphControl1.ScrollGrace = 0
-        Me.ZedGraphControl1.ScrollMaxX = 0
-        Me.ZedGraphControl1.ScrollMaxY = 0
-        Me.ZedGraphControl1.ScrollMaxY2 = 0
-        Me.ZedGraphControl1.ScrollMinX = 0
-        Me.ZedGraphControl1.ScrollMinY = 0
-        Me.ZedGraphControl1.ScrollMinY2 = 0
+        Me.ZedGraphControl1.ScrollGrace = 0.0R
+        Me.ZedGraphControl1.ScrollMaxX = 0.0R
+        Me.ZedGraphControl1.ScrollMaxY = 0.0R
+        Me.ZedGraphControl1.ScrollMaxY2 = 0.0R
+        Me.ZedGraphControl1.ScrollMinX = 0.0R
+        Me.ZedGraphControl1.ScrollMinY = 0.0R
+        Me.ZedGraphControl1.ScrollMinY2 = 0.0R
         '
         'FormGraphPFR
         '
-        Me.AccessibleDescription = Nothing
-        Me.AccessibleName = Nothing
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackgroundImage = Nothing
         Me.Controls.Add(Me.GroupBox2)
-        Me.Font = Nothing
-        Me.Icon = Nothing
         Me.MinimizeBox = False
         Me.Name = "FormGraphPFR"
         Me.ShowIcon = False

@@ -118,11 +118,17 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>82, 13</value>
+  </data>
+  <data name="Label1.Text" xml:space="preserve">
+    <value>Hoja de Cálculo</value>
+  </data>
   <data name="TbFileName.Location" type="System.Drawing.Point, System.Drawing">
-    <value>59, 9</value>
+    <value>91, 9</value>
   </data>
   <data name="TbFileName.Size" type="System.Drawing.Size, System.Drawing">
-    <value>395, 20</value>
+    <value>363, 20</value>
   </data>
   <data name="BtnNew.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -136,6 +142,12 @@
         Fi/5zxqcO8P+wAn2zqTFlg94Uc6JFHb697DDtyvG3hGdVRQ5BFWAli/MDi2DvwfhE+YtQI0EZzQYAAAA
         AElFTkSuQmCC
 </value>
+  </data>
+  <data name="BtnNew.Size" type="System.Drawing.Size, System.Drawing">
+    <value>93, 23</value>
+  </data>
+  <data name="BtnNew.Text" xml:space="preserve">
+    <value>Crear Nueva</value>
   </data>
   <data name="BtnSearch.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -153,6 +165,12 @@
         wSb6u8Dt3ZIzkMtDF20TGgog0m3EK9BfMLyNrOcc3kigcd9Wf91ut8Dt2fR3DQx/AFxruSM0P5p9AAAA
         AElFTkSuQmCC
 </value>
+  </data>
+  <data name="BtnSearch.Size" type="System.Drawing.Size, System.Drawing">
+    <value>66, 23</value>
+  </data>
+  <data name="BtnSearch.Text" xml:space="preserve">
+    <value>Buscar</value>
   </data>
   <data name="BtnEdit.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -173,5 +191,8 @@
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Editor de Operación Unitaria de Hoja de Cálculo</value>
   </data>
 </root>
