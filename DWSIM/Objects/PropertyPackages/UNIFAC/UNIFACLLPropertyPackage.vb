@@ -41,24 +41,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Sub New(ByVal comode As Boolean)
             MyBase.New(comode)
-            'With Me.Parameters
-            '    .Add("PP_IDEAL_VAPOR_PHASE_FUG", 1)
-            '    .Add("PP_ENTH_CP_CALC_METHOD", 1)
-            '    .Item("PP_IDEAL_MIXRULE_LIQDENS") = 1
-            '    .Item("PP_USEEXPLIQDENS") = 1
-            'End With
+        
         End Sub
 
         Public Sub New()
 
             MyBase.New()
-
-            'With Me.Parameters
-            '    .Add("PP_IDEAL_VAPOR_PHASE_FUG", 1)
-            '    .Add("PP_ENTH_CP_CALC_METHOD", 1)
-            '    .Item("PP_IDEAL_MIXRULE_LIQDENS") = 1
-            '    .Item("PP_USEEXPLIQDENS") = 1
-            'End With
 
             Me.IsConfigurable = True
             Me.ConfigForm = New FormConfigPP
