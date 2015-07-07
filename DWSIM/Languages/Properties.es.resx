@@ -1172,4 +1172,25 @@
     <value>Caida de Temperatura</value>
     <comment>0</comment>
   </data>
+  <data name="PROP_CL_5" xml:space="preserve">
+    <value>Delta-T</value>
+  </data>
+  <data name="PROP_CO_2" xml:space="preserve">
+    <value>Delta-T</value>
+  </data>
+  <data name="PROP_CS_01" xml:space="preserve">
+    <value>Caida de Presión</value>
+  </data>
+  <data name="PROP_HT_5" xml:space="preserve">
+    <value>Delta-T</value>
+  </data>
+  <data name="PROP_MS_0" xml:space="preserve">
+    <value>Temperatura</value>
+  </data>
+  <data name="PROP_PU_2" xml:space="preserve">
+    <value>Delta-T</value>
+  </data>
+  <data name="PROP_TU_2" xml:space="preserve">
+    <value>Delta-T</value>
+  </data>
 </root>

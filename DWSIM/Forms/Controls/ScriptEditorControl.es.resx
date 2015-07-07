@@ -117,17 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>218, 13</value>
+  <data name="chkLink.Text" xml:space="preserve">
+    <value>Asociar</value>
   </data>
   <data name="Label2.Text" xml:space="preserve">
-    <value>DWSIM está ocupado en este momento...</value>
-  </data>
-  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>101, 13</value>
+    <value>Evento</value>
   </data>
   <data name="Label1.Text" xml:space="preserve">
-    <value>Por favor espere</value>
+    <value>Objeto</value>
   </data>
 </root>

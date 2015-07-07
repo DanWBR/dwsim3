@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -224,10 +224,10 @@
     <value>Girado Triángulo</value>
   </data>
   <data name="cbTubeLayout.Items2" xml:space="preserve">
-    <value>Plaza</value>
+    <value>Cuadrado</value>
   </data>
   <data name="cbTubeLayout.Items3" xml:space="preserve">
-    <value>Rotado Plaza</value>
+    <value>Cuadrado Rotato</value>
   </data>
   <data name="Label22.Size" type="System.Drawing.Size, System.Drawing">
     <value>91, 13</value>

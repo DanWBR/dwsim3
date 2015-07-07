@@ -164,9 +164,33 @@
     <value>Propriedad</value>
   </data>
   <data name="col1.HeaderText" xml:space="preserve">
-    <value>Componente en Flujograma Principal</value>
+    <value>Componente en Diagrama de Flujo Principal</value>
   </data>
   <data name="col2.HeaderText" xml:space="preserve">
-    <value>Componente en Sub-Flujograma</value>
+    <value>Componente en Sub-Diagrama de flujo</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>FlowsheetUOEditorForm</value>
+  </data>
+  <data name="ToolStripButton3.ToolTipText" xml:space="preserve">
+    <value>Agregar</value>
+  </data>
+  <data name="ToolStripButton2.ToolTipText" xml:space="preserve">
+    <value>Quitar</value>
+  </data>
+  <data name="ToolStripButton4.ToolTipText" xml:space="preserve">
+    <value>Quitar</value>
+  </data>
+  <data name="cbMassTransferMode.Items" xml:space="preserve">
+    <value>Flujos Másicos por Componente</value>
+  </data>
+  <data name="cbMassTransferMode.Items1" xml:space="preserve">
+    <value>Flujos Molares por Componente</value>
+  </data>
+  <data name="cbMassTransferMode.Items2" xml:space="preserve">
+    <value>Flujo Másico Total y Fracciones Másicas por Componente</value>
+  </data>
+  <data name="cbMassTransferMode.Items3" xml:space="preserve">
+    <value>Flujo Molar Total y Fracciones Molares por Componente</value>
   </data>
 </root>

@@ -1231,13 +1231,22 @@
     <EmbeddedResource Include="Forms\AboutBoxMono.de.resx">
       <DependentUpon>AboutBoxMono.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AboutBoxMono.es.resx">
+      <DependentUpon>AboutBoxMono.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\AboutBoxMono.resx">
       <DependentUpon>AboutBoxMono.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Controls\GListBox.resx">
       <DependentUpon>GListBox.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Controls\ScriptEditorControl.es.resx">
+      <DependentUpon>ScriptEditorControl.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Controls\ScriptEditorControlMono.en.resx">
+      <DependentUpon>ScriptEditorControlMono.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Controls\ScriptEditorControlMono.es.resx">
       <DependentUpon>ScriptEditorControlMono.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Controls\ScriptEditorControlMono.resx">
@@ -1251,6 +1260,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCapeOpenUnitSelector.es.resx">
       <DependentUpon>FormCapeOpenUnitSelector.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormChart.de.resx">
       <DependentUpon>FormChart.vb</DependentUpon>
@@ -1275,9 +1285,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormConfigWizard.es.resx">
       <DependentUpon>FormConfigWizard.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormConfigWizard.resx">
       <DependentUpon>FormConfigWizard.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCoolPropWarning.de.resx">
       <DependentUpon>FormCoolPropWarning.vb</DependentUpon>
@@ -1321,6 +1333,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormState.es.resx">
       <DependentUpon>FormState.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormTemplateSelect.es.resx">
       <DependentUpon>FormTemplateSelect.vb</DependentUpon>
@@ -1408,6 +1421,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\UITypeEditors\UIFlowsheetUOEditor\FlowsheetUOEditorForm.es.resx">
       <DependentUpon>FlowsheetUOEditorForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\UITypeEditors\UIFlowsheetUOEditor\FlowsheetUOEditorForm.resx">
       <DependentUpon>FlowsheetUOEditorForm.vb</DependentUpon>
@@ -1438,7 +1452,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Languages\Tips.de.resx" />
     <EmbeddedResource Include="Languages\Tips.en.resx" />
-    <EmbeddedResource Include="Languages\Tips.es.resx" />
+    <EmbeddedResource Include="Languages\Tips.es.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Languages\Tips.resx">
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
@@ -1705,6 +1721,9 @@
     <EmbeddedResource Include="Forms\PropPack_ConfigForms\FormConfigPP.en.resx">
       <SubType>Designer</SubType>
       <DependentUpon>FormConfigPP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\AssayManager\FormAssayManager.es.resx">
+      <DependentUpon>FormAssayManager.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tools\Reactions\FormReacConv.en.resx">
       <SubType>Designer</SubType>
@@ -2274,6 +2293,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormFlowsheet.es.resx">
       <DependentUpon>FormFlowsheet.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormFlowsheet_SubForms\frmCOReports.de.resx">
       <DependentUpon>frmCOReports.vb</DependentUpon>
@@ -2383,7 +2403,9 @@
     <EmbeddedResource Include="Forms\FormFlowsheet_SubForms\frmSurface.de.resx">
       <DependentUpon>frmSurface.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormFlowsheet_SubForms\frmSurface.es.resx" />
+    <EmbeddedResource Include="Forms\FormFlowsheet_SubForms\frmSurface.es.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormConfigureTable.de.resx">
       <DependentUpon>FormConfigureTable.vb</DependentUpon>
     </EmbeddedResource>
@@ -2416,6 +2438,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormOptions.es.resx">
       <DependentUpon>FormOptions.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormPassword.en.resx">
       <DependentUpon>FormPassword.vb</DependentUpon>

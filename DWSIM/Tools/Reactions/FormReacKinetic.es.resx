@@ -118,82 +118,55 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Parametros cinéticos de Reacción</value>
+    <value>Parámetros Cinéticos de Reacción</value>
   </data>
   <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Constantes de velocidad de reacción directa e inversa (k y k')</value>
+    <value>Constantes de Velocidad de Reacción Directa e Inversa (k y k')</value>
   </data>
   <data name="KryptonLabel18.Text" xml:space="preserve">
-    <value>T en K</value>
-  </data>
-  <data name="KryptonLabel18.Values.Text" xml:space="preserve">
     <value>T en K</value>
   </data>
   <data name="KryptonLabel17.Text" xml:space="preserve">
     <value>T en K</value>
   </data>
-  <data name="KryptonLabel17.Values.Text" xml:space="preserve">
-    <value>T en K</value>
-  </data>
   <data name="KryptonLabel11.Text" xml:space="preserve">
-    <value>Unidad de concentración</value>
-  </data>
-  <data name="KryptonLabel11.Values.Text" xml:space="preserve">
-    <value>Unidad de concentración</value>
+    <value>Unidad de Cantidad (Base)</value>
   </data>
   <data name="KryptonLabel12.Text" xml:space="preserve">
-    <value>Unidad de velocidad</value>
-  </data>
-  <data name="KryptonLabel12.Values.Text" xml:space="preserve">
-    <value>Unidad de velocidad</value>
+    <value>Unidad de Velocidad</value>
   </data>
   <data name="KryptonLabel10.Text" xml:space="preserve">
-    <value>Reacción Inversa [k' = A' exp(-E'/RT)]</value>
-  </data>
-  <data name="KryptonLabel10.Values.Text" xml:space="preserve">
     <value>Reacción Inversa [k' = A' exp(-E'/RT)]</value>
   </data>
   <data name="KryptonLabel5.Text" xml:space="preserve">
     <value>Reacción Directa [k = A exp(-E/RT)]</value>
   </data>
-  <data name="KryptonLabel5.Values.Text" xml:space="preserve">
-    <value>Reacción Directa [k = A exp(-E/RT)]</value>
-  </data>
   <data name="KryptonLabel9.Text" xml:space="preserve">
-    <value>Componente Base</value>
-  </data>
-  <data name="KryptonLabel9.Values.Text" xml:space="preserve">
     <value>Componente Base</value>
   </data>
   <data name="KryptonLabel8.Text" xml:space="preserve">
     <value>Tmáx (k)</value>
   </data>
-  <data name="KryptonLabel8.Values.Text" xml:space="preserve">
-    <value>Tmáx (k)</value>
-  </data>
   <data name="KryptonLabel7.Text" xml:space="preserve">
-    <value>Tmín (k)</value>
-  </data>
-  <data name="KryptonLabel7.Values.Text" xml:space="preserve">
     <value>Tmín (k)</value>
   </data>
   <data name="cbBase.Items" xml:space="preserve">
     <value>Actividad</value>
   </data>
   <data name="cbBase.Items2" xml:space="preserve">
-    <value>Concentración molar</value>
+    <value>Concentración Molar</value>
   </data>
   <data name="cbBase.Items3" xml:space="preserve">
-    <value>Concentración másica</value>
+    <value>Concentración Másica</value>
   </data>
   <data name="cbBase.Items4" xml:space="preserve">
-    <value>Fracción molar</value>
+    <value>Fracción Molar</value>
   </data>
   <data name="cbBase.Items5" xml:space="preserve">
-    <value>Fracción másica</value>
+    <value>Fracción Másica</value>
   </data>
   <data name="cbBase.Items6" xml:space="preserve">
-    <value>Presión parcial</value>
+    <value>Presión Parcial</value>
   </data>
   <data name="tbPhase.Items1" xml:space="preserve">
     <value>Líquido</value>
@@ -202,31 +175,22 @@
     <value>Mezcla</value>
   </data>
   <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Componentes, Estequiometria y ordenes de reacción</value>
+    <value>Componentes, Estequiometría y Ordenes de Reacción</value>
   </data>
   <data name="KryptonLabel3.Text" xml:space="preserve">
     <value>Ecuación</value>
   </data>
-  <data name="KryptonLabel3.Values.Text" xml:space="preserve">
-    <value>Ecuación</value>
-  </data>
   <data name="KryptonButton2.Text" xml:space="preserve">
-    <value>Balance</value>
-  </data>
-  <data name="KryptonButton2.Values.Text" xml:space="preserve">
-    <value>Balance</value>
+    <value>Balancear</value>
   </data>
   <data name="KryptonLabel2.Text" xml:space="preserve">
-    <value>Calor de reacción (kJ/kmol_CB)</value>
-  </data>
-  <data name="KryptonLabel2.Values.Text" xml:space="preserve">
     <value>Calor de reacción (kJ/kmol_CB)</value>
   </data>
   <data name="Column2.HeaderText" xml:space="preserve">
     <value>Nombre</value>
   </data>
   <data name="Column3.HeaderText" xml:space="preserve">
-    <value>Masa molar</value>
+    <value>Masa Molar</value>
   </data>
   <data name="Column5.ToolTipText" xml:space="preserve">
     <value>Componente-Base</value>
@@ -235,13 +199,13 @@
     <value>Coef. Esteq.</value>
   </data>
   <data name="Column7.ToolTipText" xml:space="preserve">
-    <value>Orden directo</value>
+    <value>Orden Directo</value>
   </data>
   <data name="Column8.HeaderText" xml:space="preserve">
     <value>O</value>
   </data>
   <data name="Column8.ToolTipText" xml:space="preserve">
-    <value>Orden inverso</value>
+    <value>Orden Inverso</value>
   </data>
   <data name="GroupBox4.Text" xml:space="preserve">
     <value>Identificación</value>
@@ -249,16 +213,13 @@
   <data name="KryptonLabel19.Text" xml:space="preserve">
     <value>Descripción</value>
   </data>
-  <data name="KryptonLabel19.Values.Text" xml:space="preserve">
-    <value>Descripción</value>
-  </data>
   <data name="KryptonLabel20.Text" xml:space="preserve">
-    <value>Nombre</value>
-  </data>
-  <data name="KryptonLabel20.Values.Text" xml:space="preserve">
     <value>Nombre</value>
   </data>
   <data name="cbBase.Items1" xml:space="preserve">
     <value>Fugacidad</value>
+  </data>
+  <data name="KryptonLabel1.Text" xml:space="preserve">
+    <value>Estequiometría</value>
   </data>
 </root>

@@ -176,4 +176,13 @@
   <data name="$this.Text" xml:space="preserve">
     <value>Objeto seleccionado</value>
   </data>
+  <data name="sfdxml1.Filter" xml:space="preserve">
+    <value>Archivos de texto|*.txt</value>
+  </data>
+  <data name="sfdxml1.Title" xml:space="preserve">
+    <value>Guardar archivo de texto</value>
+  </data>
+  <data name="ToolStripButton1.Text" xml:space="preserve">
+    <value>Guardar nombres y valores de las propiedades en un archivo de texto</value>
+  </data>
 </root>

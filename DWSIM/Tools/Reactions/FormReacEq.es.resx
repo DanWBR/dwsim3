@@ -120,29 +120,14 @@
   <data name="tbPhase.Items1" xml:space="preserve">
     <value>Líquida</value>
   </data>
-  <data name="KryptonLabel10.Values.Text" xml:space="preserve">
-    <value>Descripción</value>
-  </data>
   <data name="KryptonLabel8.Text" xml:space="preserve">
     <value>Tmáx (k)</value>
-  </data>
-  <data name="rbKeqGibbs.Values.Text" xml:space="preserve">
-    <value>Calcular de Energía libre de Gibbs</value>
-  </data>
-  <data name="KryptonContextMenuItem6.Text" xml:space="preserve">
-    <value>Tangente (tan)</value>
   </data>
   <data name="rbKeqfT.Text" xml:space="preserve">
     <value>Función de la temperatura: ln Keq [f (t)] =</value>
   </data>
-  <data name="KryptonLabel5.Values.Text" xml:space="preserve">
-    <value>T en K</value>
-  </data>
   <data name="KryptonLabel5.Text" xml:space="preserve">
     <value>T en K</value>
-  </data>
-  <data name="KryptonContextMenuItem1.Text" xml:space="preserve">
-    <value>Seno (SIN)</value>
   </data>
   <data name="KryptonLabel2.Text" xml:space="preserve">
     <value>Calor de reacción (kJ/kmol_CB) (25 ° c)</value>
@@ -152,12 +137,6 @@
   </data>
   <data name="cbBase.Items5" xml:space="preserve">
     <value>Fracción masica</value>
-  </data>
-  <data name="KryptonContextMenuItem10.Text" xml:space="preserve">
-    <value>Raíz Cuadrada (sqrt)</value>
-  </data>
-  <data name="KryptonLabel7.Values.Text" xml:space="preserve">
-    <value>Tmín (k)</value>
   </data>
   <data name="cbBase.Items6" xml:space="preserve">
     <value>Presión parcial</value>
@@ -171,26 +150,11 @@
   <data name="cbBase.Items2" xml:space="preserve">
     <value>Concentración molar</value>
   </data>
-  <data name="KryptonContextMenuItem9.Text" xml:space="preserve">
-    <value>Arco-tangente (atan)</value>
-  </data>
   <data name="KryptonLabel7.Text" xml:space="preserve">
     <value>Tmín (k)</value>
   </data>
-  <data name="KryptonLabel12.Values.Text" xml:space="preserve">
-    <value>DelG_R (kJ/kmol_CB) (25 ° c)</value>
-  </data>
-  <data name="KryptonLabel11.Values.Text" xml:space="preserve">
-    <value>Nombre</value>
-  </data>
   <data name="Column3.HeaderText" xml:space="preserve">
     <value>Masa molar</value>
-  </data>
-  <data name="KryptonButton2.Values.Text" xml:space="preserve">
-    <value>Balance</value>
-  </data>
-  <data name="KryptonLabel9.Values.Text" xml:space="preserve">
-    <value>Aproximación (%)</value>
   </data>
   <data name="Column6.HeaderText" xml:space="preserve">
     <value>Coef. Esteq.</value>
@@ -201,38 +165,20 @@
   <data name="Column2.HeaderText" xml:space="preserve">
     <value>Nombre</value>
   </data>
-  <data name="KryptonContextMenuItem8.Text" xml:space="preserve">
-    <value>Arco-coseno (acos)</value>
-  </data>
-  <data name="KryptonLabel3.Values.Text" xml:space="preserve">
-    <value>Ecuación</value>
-  </data>
   <data name="cbBase.Items" xml:space="preserve">
     <value>Actividad</value>
   </data>
   <data name="KryptonButton2.Text" xml:space="preserve">
-    <value>Balance</value>
-  </data>
-  <data name="KryptonContextMenuItem13.Text" xml:space="preserve">
-    <value>Potencia (^)</value>
-  </data>
-  <data name="KryptonLabel8.Values.Text" xml:space="preserve">
-    <value>Tmáx (k)</value>
+    <value>Balancear</value>
   </data>
   <data name="KryptonLabel10.Text" xml:space="preserve">
     <value>Descripción</value>
   </data>
-  <data name="KryptonContextMenuItem2.Text" xml:space="preserve">
-    <value>Coseno (COS)</value>
-  </data>
   <data name="KryptonLabel11.Text" xml:space="preserve">
     <value>Nombre</value>
   </data>
-  <data name="KryptonContextMenuItem12.Text" xml:space="preserve">
-    <value>Valor Absoluto (ABS)</value>
-  </data>
   <data name="rbKeqGibbs.Text" xml:space="preserve">
-    <value>Calcular de Energía libre de Gibbs</value>
+    <value>Calcular a partir de la Energía libre de Gibbs</value>
   </data>
   <data name="KryptonLabel9.Text" xml:space="preserve">
     <value>Aproximación (%)</value>
@@ -240,31 +186,22 @@
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Parámetros de Reacción de Equilibrio</value>
   </data>
-  <data name="KryptonContextMenuItem11.Text" xml:space="preserve">
-    <value>Log Base 10 (log10)</value>
-  </data>
-  <data name="KryptonContextMenuItem3.Text" xml:space="preserve">
-    <value>Log Natural (log)</value>
-  </data>
-  <data name="KryptonContextMenuItem7.Text" xml:space="preserve">
-    <value>Arco-seno (asin)</value>
-  </data>
   <data name="KryptonLabel12.Text" xml:space="preserve">
     <value>DelG_R (kJ/kmol_CB) (25 ° c)</value>
   </data>
   <data name="GroupBox4.Text" xml:space="preserve">
     <value>Identificación</value>
   </data>
-  <data name="rbKeqfT.Values.Text" xml:space="preserve">
-    <value>Función de la temperatura: ln Keq [f (t)] =</value>
-  </data>
-  <data name="KryptonLabel2.Values.Text" xml:space="preserve">
-    <value>Calor de reacción (kJ/kmol_CB) (25 ° c)</value>
-  </data>
   <data name="GroupBox3.Text" xml:space="preserve">
     <value>Constante de Equilibrio (Keq)</value>
   </data>
   <data name="cbBase.Items1" xml:space="preserve">
     <value>Fugacidad</value>
+  </data>
+  <data name="KryptonLabel1.Text" xml:space="preserve">
+    <value>Estequiometría</value>
+  </data>
+  <data name="KryptonLabel4.Text" xml:space="preserve">
+    <value>Base</value>
   </data>
 </root>

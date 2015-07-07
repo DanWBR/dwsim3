@@ -183,4 +183,7 @@
   <data name="Label7.Text" xml:space="preserve">
     <value>Temperatura:</value>
   </data>
+  <data name="CheckBox1.Text" xml:space="preserve">
+    <value>Solo Vapor</value>
+  </data>
 </root>

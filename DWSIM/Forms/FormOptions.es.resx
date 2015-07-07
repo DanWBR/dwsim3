@@ -152,7 +152,7 @@
     <value>265, 17</value>
   </data>
   <data name="chkSolverBreak.Text" xml:space="preserve">
-    <value>Interrumpier cálculo cuando ocurra una excepción</value>
+    <value>Interrumpir cálculo cuando ocurra una excepción</value>
   </data>
   <data name="GroupBoxAzureConfig.Text" xml:space="preserve">
     <value>Ajustes para Azure Service Bus</value>
@@ -270,7 +270,7 @@
     <value>Tareas</value>
   </data>
   <data name="Button4.Text" xml:space="preserve">
-    <value>Agregar la base de datos de usuario</value>
+    <value>Agregar base de datos de usuario</value>
   </data>
   <data name="GroupBox10.Size" type="System.Drawing.Size, System.Drawing">
     <value>842, 376</value>
@@ -302,10 +302,10 @@
     <value>Copia de seguridad</value>
   </data>
   <data name="Button2.Text" xml:space="preserve">
-    <value>Directorio limpio</value>
+    <value>Limpiar Directorio</value>
   </data>
   <data name="KryptonLabel2.Text" xml:space="preserve">
-    <value>Intervalo entre guardado:</value>
+    <value>Intervalo entre guardados:</value>
   </data>
   <data name="KryptonButton1.Text" xml:space="preserve">
     <value>Seleccionar...</value>
@@ -326,7 +326,7 @@
     <value>57, 13</value>
   </data>
   <data name="Label5.Text" xml:space="preserve">
-    <value>Directorio:</value>
+    <value>Ruta:</value>
   </data>
   <data name="btnrmpath.Text" xml:space="preserve">
     <value>Eliminar la selección</value>
@@ -338,7 +338,7 @@
     <value>390, 13</value>
   </data>
   <data name="Label4.Text" xml:space="preserve">
-    <value>Administrar rutas donde el compilador deberá buscar los archivos para importar:</value>
+    <value>Gestionar rutas donde el compilador deberá buscar los archivos para importar:</value>
   </data>
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Idioma de Interfaz</value>
@@ -362,7 +362,7 @@
     <value>174, 17</value>
   </data>
   <data name="chkUpdates.Text" xml:space="preserve">
-    <value>Buscar actualizaciones al iniciar</value>
+    <value>Buscar Actualizaciones al iniciar</value>
   </data>
   <data name="GroupBox6.Text" xml:space="preserve">
     <value>Modo de depuración</value>
@@ -597,5 +597,23 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>DWSIM - Configuración General</value>
+  </data>
+  <data name="BtnEdit.HeaderText" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="cbSolverMode.Items1" xml:space="preserve">
+    <value>Thread en Segundo Plano</value>
+  </data>
+  <data name="cbSolverMode.Items2" xml:space="preserve">
+    <value>Threads Paralelas en Segundo Plano</value>
+  </data>
+  <data name="cbSolverMode.Items4" xml:space="preserve">
+    <value>Servidor en la Rede</value>
+  </data>
+  <data name="Label15.Text" xml:space="preserve">
+    <value>Puerto TCP</value>
+  </data>
+  <data name="Label16.Text" xml:space="preserve">
+    <value>Dirección IP</value>
   </data>
 </root>

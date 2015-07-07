@@ -147,4 +147,13 @@
   <data name="Label3.Text" xml:space="preserve">
     <value>Delta inicial (tamaño de paso)</value>
   </data>
+  <data name="lblItXdeY.Text" xml:space="preserve">
+    <value>&lt;Iteración x de y...&gt;</value>
+  </data>
+  <data name="lblStatus.Text" xml:space="preserve">
+    <value>&lt;ajuste trabajando o detenido?&gt;</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>UI_AdjControlPanelForm</value>
+  </data>
 </root>

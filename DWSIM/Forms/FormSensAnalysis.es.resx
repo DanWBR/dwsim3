@@ -278,7 +278,7 @@
     <value>Enviar Datos para Regresión</value>
   </data>
   <data name="btnAbort.Text" xml:space="preserve">
-    <value>Abortar Cálculo</value>
+    <value>Abortar Análisis</value>
   </data>
   <data name="TabPage1.Text" xml:space="preserve">
     <value>Estudios de sensibilidad</value>
@@ -287,7 +287,7 @@
     <value>Variables independientes</value>
   </data>
   <data name="TabPage3.Text" xml:space="preserve">
-    <value>Variables dependientes</value>
+    <value>Función Dependiente</value>
   </data>
   <data name="BtnDrawChart.Text" xml:space="preserve">
     <value>Dibujar</value>
@@ -296,15 +296,18 @@
     <value>32, 13</value>
   </data>
   <data name="Label18.Text" xml:space="preserve">
-    <value>Y-Eje</value>
+    <value>Eje-Y</value>
   </data>
   <data name="Label16.Size" type="System.Drawing.Size, System.Drawing">
     <value>32, 13</value>
   </data>
   <data name="Label16.Text" xml:space="preserve">
-    <value>X-Eje</value>
+    <value>Eje-X</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Análisis de Sensibilidad</value>
+  </data>
+  <data name="TabPage5.Text" xml:space="preserve">
+    <value>Gráfica</value>
   </data>
 </root>

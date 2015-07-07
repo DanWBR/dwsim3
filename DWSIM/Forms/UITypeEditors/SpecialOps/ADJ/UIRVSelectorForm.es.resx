@@ -133,4 +133,7 @@
   <data name="Label3.Text" xml:space="preserve">
     <value>[Etiqueta]</value>
   </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>UIRVSelectorForm</value>
+  </data>
 </root>

@@ -1652,4 +1652,31 @@
   <data name="$this.Text" xml:space="preserve">
     <value>Regresión de Datos</value>
   </data>
+  <data name="DBOpenDlg.Filter" xml:space="preserve">
+    <value>Archivos XML|*.xml</value>
+  </data>
+  <data name="DBOpenDlg.Title" xml:space="preserve">
+    <value>Abrir/Crear Banco de Parámetros</value>
+  </data>
+  <data name="ToolStripMenuItem1.Text" xml:space="preserve">
+    <value>Generar Puntos (UNIFAC)</value>
+  </data>
+  <data name="ToolStripMenuItem2.Text" xml:space="preserve">
+    <value>Generar Puntos (NRTL)</value>
+  </data>
+  <data name="ToolStripMenuItem3.Text" xml:space="preserve">
+    <value>Generar Puntos (UNIQUAC)</value>
+  </data>
+  <data name="ToolStripMenuItem4.Text" xml:space="preserve">
+    <value>Generar Puntos (PR)</value>
+  </data>
+  <data name="ToolStripMenuItem5.Text" xml:space="preserve">
+    <value>Generar Puntos (SRK)</value>
+  </data>
+  <data name="ToolStripMenuItem6.Text" xml:space="preserve">
+    <value>Generar Puntos (PRSV2-M)</value>
+  </data>
+  <data name="ToolStripMenuItem7.Text" xml:space="preserve">
+    <value>Generar Puntos (PRSV2-VL)</value>
+  </data>
 </root>

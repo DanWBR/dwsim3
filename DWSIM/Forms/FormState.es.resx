@@ -125,12 +125,12 @@
     <value>Descripción:</value>
   </data>
   <data name="Label2.Text" xml:space="preserve">
-    <value>Dato:</value>
+    <value>Fecha:</value>
   </data>
   <data name="Label3.Text" xml:space="preserve">
-    <value>Crear un punto de restauración de simulación permite volver a un estado anterior, deshacer todos los cambios en los objetos del flujograma, incluyendo sus propiedades, sustancias y paquete de propiedades añadidas o removidas y otras opciones.</value>
+    <value>Crear un punto de restauración de simulación permite volver a un estado anterior, deshacer todos los cambios en los objetos del diagrama de flujo, incluyendo sus propiedades, sustancias y paquete de propiedades añadidas o removidas y otras opciones.</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Guardar/Restaurar Captura de Simulación</value>
+    <value>Guardar/Restaurar Estado de Simulación</value>
   </data>
 </root>

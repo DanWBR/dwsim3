@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -275,7 +275,7 @@
 </value>
   </data>
   <data name="PasteToolStripButton.Text" xml:space="preserve">
-    <value>Colar</value>
+    <value>Pegar</value>
   </data>
   <data name="ToolStripButton2.Text" xml:space="preserve">
     <value>Seleccione los archivos que incluyen</value>
@@ -291,5 +291,23 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Editor de Script</value>
+  </data>
+  <data name="ofd1.Filter" xml:space="preserve">
+    <value>Todos los archivos|*.*</value>
+  </data>
+  <data name="ofd1.Title" xml:space="preserve">
+    <value>Incluir Archivos de Script</value>
+  </data>
+  <data name="ofd2.Filter" xml:space="preserve">
+    <value>Todos los archivos|*.*</value>
+  </data>
+  <data name="ofd2.Title" xml:space="preserve">
+    <value>Abrir archivo script</value>
+  </data>
+  <data name="sfd1.Filter" xml:space="preserve">
+    <value>Todos los archivos|*.*</value>
+  </data>
+  <data name="sfd1.Title" xml:space="preserve">
+    <value>Guardar Scripts</value>
   </data>
 </root>

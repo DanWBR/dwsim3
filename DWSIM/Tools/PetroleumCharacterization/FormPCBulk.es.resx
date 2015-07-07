@@ -218,7 +218,7 @@
     <value>88, 13</value>
   </data>
   <data name="Label20.Text" xml:space="preserve">
-    <value>Masa molar (mm)</value>
+    <value>Masa Molar (MM)</value>
   </data>
   <data name="Label20.ToolTip" xml:space="preserve">
     <value />
@@ -285,7 +285,7 @@
     <value>76, 13</value>
   </data>
   <data name="Label2.Text" xml:space="preserve">
-    <value>Nombre actual</value>
+    <value>Nombre de la corriente</value>
   </data>
   <data name="Label2.ToolTip" xml:space="preserve">
     <value />
@@ -297,7 +297,7 @@
     <value>161, 13</value>
   </data>
   <data name="Label3.Text" xml:space="preserve">
-    <value>Número de pseudocomponentes</value>
+    <value>Número de Pseudocomponentes</value>
   </data>
   <data name="Label3.ToolTip" xml:space="preserve">
     <value />
@@ -357,7 +357,7 @@
     <value>61, 13</value>
   </data>
   <data name="Label31.Text" xml:space="preserve">
-    <value>Masa molar</value>
+    <value>Masa Molar</value>
   </data>
   <data name="Label31.ToolTip" xml:space="preserve">
     <value />
@@ -375,7 +375,7 @@
     <value>99, 13</value>
   </data>
   <data name="Label29.Text" xml:space="preserve">
-    <value>Presión de la crítica</value>
+    <value>Presión Crítica</value>
   </data>
   <data name="Label29.ToolTip" xml:space="preserve">
     <value />
@@ -387,7 +387,7 @@
     <value>100, 13</value>
   </data>
   <data name="Label28.Text" xml:space="preserve">
-    <value>Temperatura crítica</value>
+    <value>Temperatura Crítica</value>
   </data>
   <data name="Label28.ToolTip" xml:space="preserve">
     <value />
@@ -429,7 +429,7 @@
     <value>95, 13</value>
   </data>
   <data name="Label4.Text" xml:space="preserve">
-    <value>Densidad absoluta</value>
+    <value>Densidad Absoluta</value>
   </data>
   <data name="Label4.ToolTip" xml:space="preserve">
     <value />
@@ -438,7 +438,7 @@
     <value>61, 13</value>
   </data>
   <data name="Label1.Text" xml:space="preserve">
-    <value>Masa molar</value>
+    <value>Masa Molar</value>
   </data>
   <data name="Label1.ToolTip" xml:space="preserve">
     <value />
@@ -459,9 +459,15 @@
     <value />
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>DWSIM-caracterización de petróleo crudo (Propiedades)</value>
+    <value>DWSIM - Caracterización de Petróleo crudo (Propiedades)</value>
   </data>
   <data name="$this.ToolTip" xml:space="preserve">
     <value />
+  </data>
+  <data name="Button1.Text" xml:space="preserve">
+    <value>Cargar Assay</value>
+  </data>
+  <data name="Button2.Text" xml:space="preserve">
+    <value>Guardar Assay</value>
   </data>
 </root>

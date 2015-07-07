@@ -121,7 +121,7 @@
     <value>Nombre</value>
   </data>
   <data name="Column3.HeaderText" xml:space="preserve">
-    <value>Masa molar</value>
+    <value>Masa Molar</value>
   </data>
   <data name="Column5.ToolTipText" xml:space="preserve">
     <value>Componente Base</value>
@@ -130,7 +130,7 @@
     <value>Coef. Esteq.</value>
   </data>
   <data name="tbPhase.Items1" xml:space="preserve">
-    <value>Liquido</value>
+    <value>Líquido</value>
   </data>
   <data name="tbPhase.Items2" xml:space="preserve">
     <value>Mezcla</value>
@@ -139,7 +139,7 @@
     <value>Ecuación</value>
   </data>
   <data name="KryptonButton2.Text" xml:space="preserve">
-    <value>Balance</value>
+    <value>Balancear</value>
   </data>
   <data name="KryptonLabel2.Text" xml:space="preserve">
     <value>Calor de reacción (kJ/kmol_CB) (25 ° c)</value>
@@ -154,7 +154,7 @@
     <value>Conversión [%, f(T)] =</value>
   </data>
   <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Parámetros de la reacción de conversión</value>
+    <value>Parámetros de la Reacción de Conversión</value>
   </data>
   <data name="KryptonLabel8.Text" xml:space="preserve">
     <value>Descripción</value>
@@ -164,5 +164,14 @@
   </data>
   <data name="GroupBox3.Text" xml:space="preserve">
     <value>Identificación</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value> FormReacConv</value>
+  </data>
+  <data name="KryptonLabel1.Text" xml:space="preserve">
+    <value>Estequiometría</value>
+  </data>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Componentes/Estequiometría</value>
   </data>
 </root>

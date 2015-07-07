@@ -122,19 +122,19 @@
     <value>67, 22</value>
   </data>
   <data name="ToolStripLabel4.Text" xml:space="preserve">
-    <value>Flujograma</value>
+    <value>Diagrama de Flujo</value>
   </data>
   <data name="TSBtabela.Text" xml:space="preserve">
-    <value>Inserte la figura</value>
+    <value>Insertar Figura</value>
   </data>
   <data name="TSBtabela.ToolTipText" xml:space="preserve">
-    <value>Inserte la figura</value>
+    <value>Insertar Figura</value>
   </data>
   <data name="TSBTexto.Text" xml:space="preserve">
-    <value>Insertar texto</value>
+    <value>Insertar Texto</value>
   </data>
   <data name="TSBTexto.ToolTipText" xml:space="preserve">
-    <value>Insertar cuadro de texto</value>
+    <value>Insertar Cuadro de Texto</value>
   </data>
   <data name="ToolStripButton19.Text" xml:space="preserve">
     <value>Tabla Maestra de Propiedades</value>
@@ -151,9 +151,6 @@
   <data name="TSTBZoom.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 25</value>
   </data>
-  <data name="TSTBZoom.Text" xml:space="preserve">
-    <value>100 %</value>
-  </data>
   <data name="TSTBZoom.ToolTipText" xml:space="preserve">
     <value>Nivel de zoom del diagrama de flujo</value>
   </data>
@@ -164,19 +161,19 @@
     <value>Guardar como imagen</value>
   </data>
   <data name="ToolStripButton6.Text" xml:space="preserve">
-    <value>Configurar página</value>
+    <value>Configurar Página</value>
   </data>
   <data name="ToolStripButton11.Text" xml:space="preserve">
     <value>Configurar la impresora</value>
   </data>
   <data name="ToolStripButton10.Text" xml:space="preserve">
-    <value>Vista previa e Imprimir diagrama de flujo</value>
+    <value>Vista previa e Imprimir Diagrama de flujo</value>
   </data>
   <data name="ToolStrip4.Size" type="System.Drawing.Size, System.Drawing">
     <value>521, 25</value>
   </data>
   <data name="ToolStrip4.Text" xml:space="preserve">
-    <value>Flujograma</value>
+    <value>Diagrama de Flujo</value>
   </data>
   <data name="ToolStrip7.Location" type="System.Drawing.Point, System.Drawing">
     <value>130, 0</value>
@@ -203,10 +200,10 @@
     <value>Abortar cálculo</value>
   </data>
   <data name="ToolStripButton15.Text" xml:space="preserve">
-    <value>Lipiar la cola de cálculo</value>
+    <value>Limpiar Cola de Cálculo</value>
   </data>
   <data name="tsbSimultAdjustSolver.Text" xml:space="preserve">
-    <value>Habilitar solver para los ajustes simultáneos</value>
+    <value>Habilitar Solver para Ajustes Simultáneos</value>
   </data>
   <data name="ToolStrip6.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 25</value>
@@ -221,10 +218,10 @@
     <value>Simulación</value>
   </data>
   <data name="ToolStripButton5.Text" xml:space="preserve">
-    <value>Configurar la simulación</value>
+    <value>Configurar la Simulación</value>
   </data>
   <data name="ToolStripButton8.Text" xml:space="preserve">
-    <value>-Informe de resultados</value>
+    <value>-Informe de Resultados</value>
   </data>
   <data name="ToolStrip2.Location" type="System.Drawing.Point, System.Drawing">
     <value>350, 0</value>
@@ -236,7 +233,7 @@
     <value>54, 22</value>
   </data>
   <data name="ToolStripLabel8.Text" xml:space="preserve">
-    <value>Capturas</value>
+    <value>Estados</value>
   </data>
   <data name="ToolStripLabel5.Size" type="System.Drawing.Size, System.Drawing">
     <value>64, 22</value>
@@ -272,7 +269,7 @@
     <value>Abrir la  ventana de configuración de la simulación activa</value>
   </data>
   <data name="ComponentesToolStripMenuItem.Text" xml:space="preserve">
-    <value>Ajustes de simulación</value>
+    <value>Ajustes de Simulación</value>
   </data>
   <data name="ExibirToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>36, 20</value>
@@ -302,7 +299,7 @@
     <value>227, 22</value>
   </data>
   <data name="ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem.Text" xml:space="preserve">
-    <value>Reporte Objetos CAPE-OPEN</value>
+    <value>Reporte de los Objetos CAPE-OPEN</value>
   </data>
   <data name="InserirToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>58, 20</value>
@@ -380,7 +377,7 @@
     <value>276, 22</value>
   </data>
   <data name="TSMICooler.Text" xml:space="preserve">
-    <value>Refrigerador</value>
+    <value>Enfriador</value>
   </data>
   <data name="TSMIOrificePlate.Size" type="System.Drawing.Size, System.Drawing">
     <value>276, 22</value>
@@ -425,7 +422,7 @@
     <value>276, 22</value>
   </data>
   <data name="TSMIFlowsheet.Text" xml:space="preserve">
-    <value>Operación Unitaria de Flujograma</value>
+    <value>Operación Unitaria de Diagrama de Flujo</value>
   </data>
   <data name="ColunasToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>189, 22</value>
@@ -550,7 +547,7 @@
     <value>Utilidad para visualizar las propiedades de un componente puro presente en la simulación actual</value>
   </data>
   <data name="PropriedadesDosComponentesToolStripMenuItem.Text" xml:space="preserve">
-    <value>Propiedades de componentes puros</value>
+    <value>Propiedades de Componentes Puros</value>
   </data>
   <data name="AnáliseDePetróleosToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -632,7 +629,7 @@
     <value>Utilidad para visualizar las propiedades especiales de una corriente de materia (coeficiente J-T, velocidad del sonido, coeficiente de compresibilidad isotérmica, etc..)</value>
   </data>
   <data name="PropriedadesEspeciaisToolStripMenuItem.Text" xml:space="preserve">
-    <value>Propiedades especiales</value>
+    <value>Propiedades Especiales</value>
   </data>
   <data name="PSVSizingToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -729,7 +726,7 @@
     <value>214, 22</value>
   </data>
   <data name="CloseToolStripMenuItem.Text" xml:space="preserve">
-    <value>Cerrar la simulación actual</value>
+    <value>Cerrar la Simulación Actual</value>
   </data>
   <data name="FerramentasToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>90, 20</value>
@@ -771,9 +768,42 @@
     <value>204, 22</value>
   </data>
   <data name="IronRubyToolStripMenuItem.Text" xml:space="preserve">
-    <value>Administrador de Scripts</value>
+    <value>Gestor de Scripts</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Simulación</value>
+  </data>
+  <data name="ToolStripComboBoxNumberFormatting.Items" xml:space="preserve">
+    <value>Fijo</value>
+  </data>
+  <data name="ToolStripComboBoxNumberFormatting.Items1" xml:space="preserve">
+    <value>Estandar</value>
+  </data>
+  <data name="ToolStripComboBoxNumberFormatting.Items2" xml:space="preserve">
+    <value>Científico</value>
+  </data>
+  <data name="ToolStripComboBoxNumberFormatting.Items3" xml:space="preserve">
+    <value>Número General</value>
+  </data>
+  <data name="ToolStripComboBoxNumberFractionFormatting.Items" xml:space="preserve">
+    <value>Fijo</value>
+  </data>
+  <data name="ToolStripComboBoxNumberFractionFormatting.Items1" xml:space="preserve">
+    <value>Estandar</value>
+  </data>
+  <data name="ToolStripComboBoxNumberFractionFormatting.Items2" xml:space="preserve">
+    <value>Científico</value>
+  </data>
+  <data name="ToolStripComboBoxNumberFractionFormatting.Items3" xml:space="preserve">
+    <value>Número General</value>
+  </data>
+  <data name="tsbSaveState.Text" xml:space="preserve">
+    <value>Guardar Estado</value>
+  </data>
+  <data name="tsbSaveState.ToolTipText" xml:space="preserve">
+    <value>Guardar Estado Actual</value>
+  </data>
+  <data name="TSMIOrificePlate.Text" xml:space="preserve">
+    <value>Placa de Orificio</value>
   </data>
 </root>

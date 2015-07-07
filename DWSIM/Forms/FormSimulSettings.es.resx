@@ -146,7 +146,7 @@
     <value>225, 13</value>
   </data>
   <data name="Label5.Text" xml:space="preserve">
-    <value>Aplicar siguiente formato a valores numéricos :</value>
+    <value>Aplicar siguiente formato a valores numéricos:</value>
   </data>
   <data name="TBdesc.Text" xml:space="preserve">
     <value>Descripción</value>
@@ -167,13 +167,13 @@
     <value>Guardar en un archivo</value>
   </data>
   <data name="KryptonButton22.Text" xml:space="preserve">
-    <value>Abrir de un archivo</value>
+    <value>Abrir desde un archivo</value>
   </data>
   <data name="KryptonButton18.Text" xml:space="preserve">
-    <value>Eliminar seleccionado</value>
+    <value>Eliminar Seleccionado</value>
   </data>
   <data name="KryptonButton15.Text" xml:space="preserve">
-    <value>Crear nuevos...</value>
+    <value>Crear Nuevo...</value>
   </data>
   <data name="Column1.HeaderText" xml:space="preserve">
     <value>Propiedad</value>
@@ -553,7 +553,7 @@
     <value>448, 259</value>
   </data>
   <data name="Label8.Text" xml:space="preserve">
-    <value>Pulse Intro para añadirr.</value>
+    <value>Pulse Intro para añadir.</value>
   </data>
   <data name="Label9.Text" xml:space="preserve">
     <value>Buscar:</value>
@@ -565,19 +565,19 @@
     <value>Opciones</value>
   </data>
   <data name="KryptonButton2.Text" xml:space="preserve">
-    <value>Organizar Listar&gt;</value>
+    <value>Organizar Lista &gt;</value>
   </data>
   <data name="KryptonButton3.Text" xml:space="preserve">
-    <value>Limpiar Lista&gt;</value>
+    <value>Limpiar Lista &gt;</value>
   </data>
   <data name="KryptonButton4.Text" xml:space="preserve">
-    <value>&lt;Información</value>
+    <value>&lt; Información</value>
   </data>
   <data name="KryptonButton5.Text" xml:space="preserve">
-    <value>&lt;Remover</value>
+    <value>&lt; Remover</value>
   </data>
   <data name="KryptonButton6.Text" xml:space="preserve">
-    <value>Añadir&gt;</value>
+    <value>Añadir &gt;</value>
   </data>
   <data name="Label11.Text" xml:space="preserve">
     <value>Seleccione los componentes que desea añadir a la simulación.</value>
@@ -604,7 +604,7 @@
     <value>381, 283</value>
   </data>
   <data name="GroupBox12.Text" xml:space="preserve">
-    <value>Paquetes Seleccionados</value>
+    <value>Paquetes Agreados</value>
   </data>
   <data name="btnDeletePP.Location" type="System.Drawing.Point, System.Drawing">
     <value>168, 254</value>
@@ -658,13 +658,13 @@
     <value>100, 13</value>
   </data>
   <data name="Label4.Text" xml:space="preserve">
-    <value>Nível de severidad:</value>
+    <value>Nível de severidadde busqueda:</value>
   </data>
   <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>241, 13</value>
   </data>
   <data name="Label6.Text" xml:space="preserve">
-    <value>Componentes-clave para la segunda fase líquida:</value>
+    <value>Componentes clave para la segunda fase líquida:</value>
   </data>
   <data name="ListView2.Size" type="System.Drawing.Size, System.Drawing">
     <value>503, 96</value>
@@ -679,10 +679,10 @@
     <value>Calcular Puntos de Burbuja y Rocio</value>
   </data>
   <data name="ComboBoxFlashAlg.Items" xml:space="preserve">
-    <value>Nested Loops (VLE)</value>
+    <value>Bucles Anidados (VLE)</value>
   </data>
   <data name="ComboBoxFlashAlg.Items1" xml:space="preserve">
-    <value>Nested Loops (VLLE)</value>
+    <value>Bucles Anidados (VLLE)</value>
   </data>
   <data name="ComboBoxFlashAlg.Items2" xml:space="preserve">
     <value>Inside-Out (VLE)</value>
@@ -691,19 +691,19 @@
     <value>Inside-Out (VLLE)</value>
   </data>
   <data name="ComboBoxFlashAlg.Items4" xml:space="preserve">
-    <value>Gibbs Minimization (VLE)</value>
+    <value>Minimización de la Energía Libre de Gibbs (VLE)</value>
   </data>
   <data name="ComboBoxFlashAlg.Items5" xml:space="preserve">
-    <value>Gibbs Minimization (VLLE)</value>
+    <value>Minimización de la Energía Libre de Gibbs  (VLLE)</value>
   </data>
   <data name="ComboBoxFlashAlg.Items6" xml:space="preserve">
-    <value>Nested Loops (SVLE - Eutectic Systems)</value>
+    <value>Bucles Anidados (SVLE - Eutectic Systems)</value>
   </data>
   <data name="ComboBoxFlashAlg.Items7" xml:space="preserve">
-    <value>Nested Loops (SVLE - Solid Solution Systems)</value>
+    <value>Bucles Anidados (SVLE - Solid Solution Systems)</value>
   </data>
   <data name="ComboBoxFlashAlg.Items8" xml:space="preserve">
-    <value>Nested Loops (VLLE - Immiscible Liquids)</value>
+    <value>Bucles Anidados (VLLE - Immiscible Liquids)</value>
   </data>
   <data name="CheckBox3.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 49</value>
@@ -750,5 +750,29 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>DWSIM - Configurar Simulación</value>
+  </data>
+  <data name="chkValidateEqCalc.Text" xml:space="preserve">
+    <value>Validar resultado de los cálculos de equilibrio</value>
+  </data>
+  <data name="Column10.ToolTipText" xml:space="preserve">
+    <value>Soportado por el Paquete de Propiedades FPROPS</value>
+  </data>
+  <data name="Column5.ToolTipText" xml:space="preserve">
+    <value>Soportado por el Paquete de Propiedades CoolProp</value>
+  </data>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Miscelánea</value>
+  </data>
+  <data name="Label1.Text" xml:space="preserve">
+    <value>Dar Formato a Composiciones (fracciones)</value>
+  </data>
+  <data name="Label12.Text" xml:space="preserve">
+    <value>Tolerancia para variación de la Energia Libre de Gibbs:</value>
+  </data>
+  <data name="RadioButton2.Text" xml:space="preserve">
+    <value>Medio</value>
+  </data>
+  <data name="chkDoPhaseId.Text" xml:space="preserve">
+    <value>Aplicar algoritmo de identificación de fase luego del cálculo de equilibrio</value>
   </data>
 </root>

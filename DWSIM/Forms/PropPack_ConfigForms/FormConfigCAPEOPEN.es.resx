@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -206,7 +206,7 @@
     <value>528, 13</value>
   </data>
   <data name="Label4.Text" xml:space="preserve">
-    <value>Configurar la asignación de componente/compuesto de DWSIM para el Paquete de Propiedades CAPE-OPEN.</value>
+    <value>Configurar el mapeo de componente/compuesto de DWSIM para el Paquete de Propiedades CAPE-OPEN.</value>
   </data>
   <data name="DataGridViewTextBoxColumn2.HeaderText" xml:space="preserve">
     <value>Fase en el DWSIM</value>
@@ -218,7 +218,7 @@
     <value>439, 13</value>
   </data>
   <data name="Label5.Text" xml:space="preserve">
-    <value>Configurar la asignación de fases de DWSIM para el Paquete de Propiedades CAPE-OPEN.</value>
+    <value>Configurar el mapeo de fases de DWSIM para el Paquete de Propiedades CAPE-OPEN.</value>
   </data>
   <data name="id.HeaderText" xml:space="preserve">
     <value>ID</value>
