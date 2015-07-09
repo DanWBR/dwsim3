@@ -247,9 +247,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     End With
                     With otherstr.Fases(0).Componentes(cs.ComponentID)
                         .MassFlow = instr.Fases(0).Componentes(cs.ComponentID).MassFlow.GetValueOrDefault - specstr.Fases(0).Componentes(cs.ComponentID).MassFlow.GetValueOrDefault
+                        If .MassFlow < 0.0# Then .MassFlow = 0.0#
                         .MolarFlow = instr.Fases(0).Componentes(cs.ComponentID).MolarFlow.GetValueOrDefault - specstr.Fases(0).Componentes(cs.ComponentID).MolarFlow.GetValueOrDefault
-                        CheckSpec(.MolarFlow, False, "component molar flow: " & .ConstantProperties.Name.ToString.ToLower)
-                        CheckSpec(.MassFlow, False, "component mass flow: " & .ConstantProperties.Name.ToString.ToLower)
+                        If .MolarFlow < 0.0# Then .MolarFlow = 0.0#
                     End With
                 Else
                     toremove.Add(cs.ComponentID)
