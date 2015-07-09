@@ -137,7 +137,7 @@
     <value>112, 13</value>
   </data>
   <data name="Label4.Text" xml:space="preserve">
-    <value>Ejecutando calculos...</value>
+    <value>Ejecutando cálculos...</value>
   </data>
   <data name="Label3.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 111</value>
@@ -304,5 +304,11 @@
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
 </value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>DWSIM</value>
+  </data>
+  <data name="BtnAbort.Text" xml:space="preserve">
+    <value>Abortar</value>
   </data>
 </root>

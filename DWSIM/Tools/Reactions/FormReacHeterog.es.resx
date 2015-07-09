@@ -118,25 +118,25 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="cbBase.Items" xml:space="preserve">
-    <value>Atividade</value>
+    <value>Actividad</value>
   </data>
   <data name="cbBase.Items1" xml:space="preserve">
-    <value>Fugacidade</value>
+    <value>Fugacidad</value>
   </data>
   <data name="cbBase.Items2" xml:space="preserve">
-    <value>Concentração Molar</value>
+    <value>Concentración Molar</value>
   </data>
   <data name="cbBase.Items3" xml:space="preserve">
-    <value>Concentração Mássica</value>
+    <value>Concentración Másica</value>
   </data>
   <data name="cbBase.Items4" xml:space="preserve">
-    <value>Fração Molar</value>
+    <value>Fracción Molar</value>
   </data>
   <data name="cbBase.Items5" xml:space="preserve">
-    <value>Fração Mássica</value>
+    <value>Fracción Másica</value>
   </data>
   <data name="cbBase.Items6" xml:space="preserve">
-    <value>Pressão Parcial</value>
+    <value>Presión Parcial</value>
   </data>
   <data name="Column1.HeaderText" xml:space="preserve">
     <value>CompID</value>
@@ -145,7 +145,7 @@
     <value>Nome</value>
   </data>
   <data name="Column3.HeaderText" xml:space="preserve">
-    <value>Massa Molar</value>
+    <value>Masa Molar</value>
   </data>
   <data name="Column4.HeaderText" xml:space="preserve">
     <value>Incluir</value>
@@ -160,19 +160,19 @@
     <value>CE</value>
   </data>
   <data name="Column6.ToolTipText" xml:space="preserve">
-    <value>Coeficiente estequiométrico</value>
+    <value>Coeficiente Estequiométrico</value>
   </data>
   <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Componentes e Estequiometria</value>
+    <value>Componentes y Estequiometría</value>
   </data>
   <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Parâmetros da Reação Cinética</value>
+    <value>Parámetros Cinéticos de Reacción</value>
   </data>
   <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Taxa de Reação (Componente-Base) = Numerador / Denominador</value>
+    <value>Velocidad de Reacción (Componente-Base) = Numerador / Denominador</value>
   </data>
   <data name="GroupBox4.Text" xml:space="preserve">
-    <value>Identificação</value>
+    <value>Identificación</value>
   </data>
   <data name="KryptonButton2.Text" xml:space="preserve">
     <value>Balancear</value>
@@ -184,28 +184,28 @@
     <value>OK</value>
   </data>
   <data name="KryptonLabel1.Text" xml:space="preserve">
-    <value>Estequiometria</value>
+    <value>Estequiometría</value>
   </data>
   <data name="KryptonLabel10.Text" xml:space="preserve">
     <value>Denominador</value>
   </data>
   <data name="KryptonLabel11.Text" xml:space="preserve">
-    <value>Unidade de Concentração</value>
+    <value>Unidad de Concentración</value>
   </data>
   <data name="KryptonLabel12.Text" xml:space="preserve">
-    <value>Unidade de Velocidade</value>
+    <value>Unidad de Velocidad</value>
   </data>
   <data name="KryptonLabel19.Text" xml:space="preserve">
-    <value>Descrição</value>
+    <value>Descripción</value>
   </data>
   <data name="KryptonLabel2.Text" xml:space="preserve">
-    <value>Calor de Reação (kJ/kmol_CB)</value>
+    <value>Calor de Reacción (kJ/kmol_CB)</value>
   </data>
   <data name="KryptonLabel20.Text" xml:space="preserve">
-    <value>Nome</value>
+    <value>Nombre</value>
   </data>
   <data name="KryptonLabel3.Text" xml:space="preserve">
-    <value>Equação</value>
+    <value>Ecuación</value>
   </data>
   <data name="KryptonLabel4.Text" xml:space="preserve">
     <value>Base</value>
@@ -229,7 +229,7 @@
     <value>(none)</value>
   </data>
   <data name="Label1.Text" xml:space="preserve">
-    <value>Variáveis das equações: Temperatura (T) em K, quantidades dos reagentes e produtos (R1, R2, ..., Rn; P1, P2, ... PN), na unidade de concentração selecionada e taxa de reação (r) na unidade de velocidade selecionada.</value>
+    <value>Variables de las Ecuaciones: Temperatura (T) em K, quantidades dos reagentes e produtos (R1, R2, ..., Rn; P1, P2, ... PN), na unidade de concentração selecionada e taxa de reação (r) na unidade de velocidade selecionada.</value>
   </data>
   <data name="tbPhase.Items" xml:space="preserve">
     <value>Vapor</value>
@@ -241,6 +241,9 @@
     <value>Sólida</value>
   </data>
   <data name="tbPhase.Items3" xml:space="preserve">
-    <value>Mistura</value>
+    <value>Mezcla</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Reacción Catalítica Heterogénea</value>
   </data>
 </root>

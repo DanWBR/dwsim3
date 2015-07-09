@@ -177,7 +177,7 @@ Haga clic en "Siguiente" para continuar.</value>
     <value>18, 4</value>
   </data>
   <data name="Label4.Text" xml:space="preserve">
-    <value>Seleccionar y añada los paquetes de propiedades que desea utilizar en la simulación. El primero en la lista está seleccionado de forma predeterminada para todos los objetos del Flujograma.
+    <value>Seleccionar y añada los paquetes de propiedades que desea utilizar en la simulación. El primero en la lista está seleccionado de forma predeterminada para todos los objetos del diagrama de flujo.
 
 Haga clic en"Siguiente" para continuar.</value>
   </data>
@@ -377,5 +377,11 @@ Haha clic en"Siguiente" para continuar.</value>
   </data>
   <data name="Column16.HeaderText" xml:space="preserve">
     <value>Nombre</value>
+  </data>
+  <data name="Column10.ToolTipText" xml:space="preserve">
+    <value>Soportado por el Paquete de Propiedades FPROPS</value>
+  </data>
+  <data name="Column5.ToolTipText" xml:space="preserve">
+    <value>Soportado por el Paquete de Propiedades CoolProp</value>
   </data>
 </root>

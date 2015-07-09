@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -143,7 +143,7 @@
     <value>Nombre</value>
   </data>
   <data name="GroupBox5.Text" xml:space="preserve">
-    <value>Configuraciones</value>
+    <value>Ajustes</value>
   </data>
   <data name="GroupBox3.Text" xml:space="preserve">
     <value>Prueba de Estabilidad (Flash ELLV)</value>
@@ -170,10 +170,10 @@
     <value>Componentes clave para segunda fase líquida:</value>
   </data>
   <data name="ComboBoxFlashAlg.Items" xml:space="preserve">
-    <value>Nested Loops (VLE)</value>
+    <value>Bucles Anidados (VLE)</value>
   </data>
   <data name="ComboBoxFlashAlg.Items1" xml:space="preserve">
-    <value>Nested Loops (VLLE)</value>
+    <value>Bucles Anidados (VLLE)</value>
   </data>
   <data name="ComboBoxFlashAlg.Items2" xml:space="preserve">
     <value>Inside-Out (VLE)</value>
@@ -182,19 +182,19 @@
     <value>Inside-Out (VLLE)</value>
   </data>
   <data name="ComboBoxFlashAlg.Items4" xml:space="preserve">
-    <value>Gibbs Minimization (VLE)</value>
+    <value>Minimización de la Energía Libre de Gibbs (VLE)</value>
   </data>
   <data name="ComboBoxFlashAlg.Items5" xml:space="preserve">
-    <value>Gibbs Minimization (VLLE)</value>
+    <value>Minimización de la Energía Libre de Gibbs (VLLE)</value>
   </data>
   <data name="ComboBoxFlashAlg.Items6" xml:space="preserve">
-    <value>Nested Loops (SVLE - Eutectic Systems)</value>
+    <value>Bucles Anidados (SVLE - Eutectic Systems)</value>
   </data>
   <data name="ComboBoxFlashAlg.Items7" xml:space="preserve">
-    <value>Nested Loops (SVLE - Solid Solution Systems)</value>
+    <value>Bucles Anidados (SVLE - Solid Solution Systems)</value>
   </data>
   <data name="ComboBoxFlashAlg.Items8" xml:space="preserve">
-    <value>Nested Loops (VLLE - Immiscible Liquids)</value>
+    <value>Bucles Anidados (VLLE - Immiscible Liquids)</value>
   </data>
   <data name="Button3.Text" xml:space="preserve">
     <value>Ventana de Configuración del Paquete de Propiedades</value>
@@ -440,5 +440,17 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>DWSIM - Configuración del Paquete de Propriedades (Interfaz CAPE-OPEN)</value>
+  </data>
+  <data name="Button2.Text" xml:space="preserve">
+    <value>Añadir Base de Datos de Usuario</value>
+  </data>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Bases de Datos</value>
+  </data>
+  <data name="GroupBox11.Text" xml:space="preserve">
+    <value>Tareas</value>
+  </data>
+  <data name="ofdcs.Title" xml:space="preserve">
+    <value>Agregar BD ChemSep (XML)</value>
   </data>
 </root>

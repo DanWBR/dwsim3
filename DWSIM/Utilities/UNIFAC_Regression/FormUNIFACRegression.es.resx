@@ -152,21 +152,27 @@
     <value>110, 23</value>
   </data>
   <data name="BtnDrawIPs.Text" xml:space="preserve">
-    <value>Llamar la IPs</value>
+    <value>Dibujar IPs</value>
   </data>
   <data name="BtnDrawChart.Size" type="System.Drawing.Size, System.Drawing">
     <value>110, 23</value>
   </data>
   <data name="BtnDrawChart.Text" xml:space="preserve">
-    <value>Llamar la carta</value>
+    <value>Dibujar Gráfico</value>
   </data>
   <data name="BtnRegressIP.Size" type="System.Drawing.Size, System.Drawing">
     <value>110, 23</value>
   </data>
   <data name="BtnRegressIP.Text" xml:space="preserve">
-    <value>Regresión IP</value>
+    <value>Regresión de IP</value>
   </data>
   <data name="DBOpenDlg.Filter" xml:space="preserve">
     <value>Base de datos XML|*.xml</value>
+  </data>
+  <data name="TSChart.Title" xml:space="preserve">
+    <value>Gráfica</value>
+  </data>
+  <data name="BtnSaveIPDB.Text" xml:space="preserve">
+    <value>Guardar</value>
   </data>
 </root>

@@ -131,7 +131,7 @@
     <value>564, 16</value>
   </data>
   <data name="Label1.Text" xml:space="preserve">
-    <value>Asistente  de caracterización de Petróleos a través de las curvas de destilación </value>
+    <value>Asistente de Caracterización de Petróleos a través de Curvas de Destilación </value>
   </data>
   <data name="Button2.Text" xml:space="preserve">
     <value>&lt;Anterior</value>
@@ -143,7 +143,7 @@
     <value>190, 13</value>
   </data>
   <data name="Label4.Text" xml:space="preserve">
-    <value>Haga clic en 'siguiente' para continuar.</value>
+    <value>Haga clic en 'Siguiente' para continuar.</value>
   </data>
   <data name="Label5.Text" xml:space="preserve">
     <value>Seleccione los elementos para que los datos experimentales están disponibles. Y debe proporcionar al menos la curva de destilación en una de las formas enumeradas en el cuadro de texto correspondiente.</value>
@@ -164,7 +164,7 @@
     <value>24, 13</value>
   </data>
   <data name="Label43.Text" xml:space="preserve">
-    <value>API</value>
+    <value>Grado API</value>
   </data>
   <data name="ComboBoxBasis.Items" xml:space="preserve">
     <value>Volumen de líquidos</value>
@@ -299,7 +299,7 @@
     <value>128, 13</value>
   </data>
   <data name="Label11.Text" xml:space="preserve">
-    <value>Datos experimentales</value>
+    <value>Datos Experimentales</value>
   </data>
   <data name="Label12.Size" type="System.Drawing.Size, System.Drawing">
     <value>190, 13</value>
@@ -326,7 +326,7 @@
     <value>128, 13</value>
   </data>
   <data name="Label15.Text" xml:space="preserve">
-    <value>Datos experimentales</value>
+    <value>Datos Experimentales</value>
   </data>
   <data name="Label16.Size" type="System.Drawing.Size, System.Drawing">
     <value>190, 13</value>
@@ -353,7 +353,7 @@
     <value>179, 17</value>
   </data>
   <data name="RadioButtonGenOpt1.Text" xml:space="preserve">
-    <value>Numero de pseudocomponentes</value>
+    <value>Número de Pseudocomponentes</value>
   </data>
   <data name="Label19.Size" type="System.Drawing.Size, System.Drawing">
     <value>134, 13</value>
@@ -365,7 +365,7 @@
     <value>190, 13</value>
   </data>
   <data name="Label20.Text" xml:space="preserve">
-    <value>Haga clic en 'siguiente' para continuar.</value>
+    <value>Haga clic en 'Siguiente' para continuar.</value>
   </data>
   <data name="Label21.Text" xml:space="preserve">
     <value>Estos son los cortes (pseudocomponentes) generados en función de la información recopilada. Si todo es como se esperaba, haga clic en 'siguiente' para seleccionar los métodos de cálculo de propiedades de los cortes.</value>
@@ -386,7 +386,7 @@
     <value>190, 13</value>
   </data>
   <data name="Label24.Text" xml:space="preserve">
-    <value>Haga clic en 'siguiente' para continuar.</value>
+    <value>Haga clic en 'Siguiente' para continuar.</value>
   </data>
   <data name="Label25.Text" xml:space="preserve">
     <value>Seleccione los métodos y correlaciones de cálculo de propiedades de los pseudocomponentes.</value>
@@ -419,7 +419,7 @@
     <value>Riazi-al-Sahhaf (1996)</value>
   </data>
   <data name="ComboBoxSG.Items1" xml:space="preserve">
-    <value>Datos de la viscosidad</value>
+    <value>Datos de Viscosidad</value>
   </data>
   <data name="Label33.Size" type="System.Drawing.Size, System.Drawing">
     <value>52, 13</value>
@@ -443,19 +443,19 @@
     <value>85, 13</value>
   </data>
   <data name="Label30.Text" xml:space="preserve">
-    <value>Factor Acentrico</value>
+    <value>Factor Acéntrico</value>
   </data>
   <data name="Label29.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 13</value>
   </data>
   <data name="Label29.Text" xml:space="preserve">
-    <value>Presión crítica</value>
+    <value>Presión Crítica</value>
   </data>
   <data name="Label28.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 13</value>
   </data>
   <data name="Label28.Text" xml:space="preserve">
-    <value>Temperatura crítica</value>
+    <value>Temperatura Crítica</value>
   </data>
   <data name="Label27.Size" type="System.Drawing.Size, System.Drawing">
     <value>145, 13</value>
@@ -467,7 +467,7 @@
     <value>76, 13</value>
   </data>
   <data name="Label34.Text" xml:space="preserve">
-    <value>Nombre actual</value>
+    <value>Nombre de la Corriente</value>
   </data>
   <data name="Label35.Text" xml:space="preserve">
     <value>La tabla anterior muestra los resultados de caracterización. Haga clic en Finalizar para salir y crear una historia con los componentes generados actualmente.</value>
@@ -499,5 +499,11 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>DWSIM-caracterización de Petroleos</value>
+  </data>
+  <data name="Label38.Text" xml:space="preserve">
+    <value>Propriedades de la Muestra</value>
+  </data>
+  <data name="Label44.Text" xml:space="preserve">
+    <value>Masa Molar</value>
   </data>
 </root>

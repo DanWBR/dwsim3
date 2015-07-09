@@ -125,13 +125,13 @@
     <value>282, 13</value>
   </data>
   <data name="Label11.Text" xml:space="preserve">
-    <value>Abre una nueva ventana del creador de los componentes.</value>
+    <value>Abrir una nueva Ventana del Creador de Componentes.</value>
   </data>
   <data name="Label12.Size" type="System.Drawing.Size, System.Drawing">
     <value>194, 17</value>
   </data>
   <data name="Label12.Text" xml:space="preserve">
-    <value>Crear Nuevo Componente</value>
+    <value>Nuevo Estudio de Regresión de Datos</value>
   </data>
   <data name="ImageList1.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
@@ -225,25 +225,25 @@
     <value>257, 13</value>
   </data>
   <data name="Label6.Text" xml:space="preserve">
-    <value>Abre la utilidad de regresión de datos experimentales.</value>
+    <value>Abrir la utilidad de regresión de datos experimentales.</value>
   </data>
   <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
     <value>246, 17</value>
   </data>
   <data name="Label7.Text" xml:space="preserve">
-    <value>Crear nueva Regresión de Datos</value>
+    <value>Crear Creador de Componentes</value>
   </data>
   <data name="Label10.Size" type="System.Drawing.Size, System.Drawing">
     <value>227, 13</value>
   </data>
   <data name="Label10.Text" xml:space="preserve">
-    <value>Crea nueva simulación en estado estacionario.</value>
+    <value>Crear nueva simulación en estado estacionario.</value>
   </data>
   <data name="Label9.Size" type="System.Drawing.Size, System.Drawing">
     <value>83, 13</value>
   </data>
   <data name="Label9.Text" xml:space="preserve">
-    <value>Abrir simulación.</value>
+    <value>Abre una simulación o estudio ya guardado.</value>
   </data>
   <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
     <value>182, 17</value>

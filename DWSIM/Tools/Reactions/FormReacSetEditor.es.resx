@@ -132,9 +132,6 @@
   <data name="$this.Text" xml:space="preserve">
     <value>DWSIM-Editor de Set de Reacciones</value>
   </data>
-  <data name="Label1.Text" xml:space="preserve">
-    <value>Añadir reacción:</value>
-  </data>
   <data name="KryptonButton1.Text" xml:space="preserve">
     <value>Quitar reacción seleccionada</value>
   </data>
@@ -149,5 +146,11 @@
   </data>
   <data name="Column1.HeaderText" xml:space="preserve">
     <value>Reacción</value>
+  </data>
+  <data name="tsbRemove.Text" xml:space="preserve">
+    <value>Remover Reacción Seleccionada</value>
+  </data>
+  <data name="tsddAdd.Text" xml:space="preserve">
+    <value>Agregar Reacción</value>
   </data>
 </root>

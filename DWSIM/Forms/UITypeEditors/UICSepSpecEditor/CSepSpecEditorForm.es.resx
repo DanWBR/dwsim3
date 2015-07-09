@@ -123,4 +123,7 @@
   <data name="Column5.HeaderText" xml:space="preserve">
     <value>Unidad</value>
   </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>UICSepSpecEditorForm</value>
+  </data>
 </root>

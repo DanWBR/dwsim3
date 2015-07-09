@@ -117,17 +117,91 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>218, 13</value>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Gestor de Assays de Petróleo</value>
   </data>
-  <data name="Label2.Text" xml:space="preserve">
-    <value>DWSIM está ocupado en este momento...</value>
+  <data name="CheckBox1.Text" xml:space="preserve">
+    <value>Temperatura de Ebullición</value>
   </data>
-  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>101, 13</value>
+  <data name="CheckBoxMW.Text" xml:space="preserve">
+    <value>Masa Molar</value>
   </data>
-  <data name="Label1.Text" xml:space="preserve">
-    <value>Por favor espere</value>
+  <data name="CheckBoxSG.Text" xml:space="preserve">
+    <value>Densidad</value>
+  </data>
+  <data name="CheckBoxVISC.Text" xml:space="preserve">
+    <value>Viscosidad en dos Temperaturas</value>
+  </data>
+  <data name="colname.HeaderText" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="ComboBoxBasis.Items" xml:space="preserve">
+    <value>Volumen de Líquido</value>
+  </data>
+  <data name="ComboBoxBasis.Items1" xml:space="preserve">
+    <value>Molar</value>
+  </data>
+  <data name="ComboBoxBasis.Items2" xml:space="preserve">
+    <value>Másico</value>
+  </data>
+  <data name="dens.HeaderText" xml:space="preserve">
+    <value>Densidad</value>
+  </data>
+  <data name="FaTabStripItem1.Title" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Ensayos</value>
+  </data>
+  <data name="GroupBox5.Text" xml:space="preserve">
+    <value>Datos de Viscosidad</value>
+  </data>
+  <data name="GroupBoxBulk.Text" xml:space="preserve">
+    <value>Datos en Bruto</value>
+  </data>
+  <data name="GroupBoxCurves.Text" xml:space="preserve">
+    <value>Datos de las Curvas</value>
+  </data>
+  <data name="Label16.Text" xml:space="preserve">
+    <value>Temp. de Ebullición Media</value>
+  </data>
+  <data name="Label19.Text" xml:space="preserve">
+    <value>Densidad Absoluta (d60/60)</value>
+  </data>
+  <data name="Label20.Text" xml:space="preserve">
+    <value>Masa Molar</value>
+  </data>
+  <data name="Label38.Text" xml:space="preserve">
+    <value>Propiedades de la Muestra</value>
+  </data>
+  <data name="Label42.Text" xml:space="preserve">
+    <value>Base de las Curvas</value>
+  </data>
+  <data name="Label43.Text" xml:space="preserve">
+    <value>Grado API</value>
+  </data>
+  <data name="Label44.Text" xml:space="preserve">
+    <value>Masa Molar</value>
+  </data>
+  <data name="mm.HeaderText" xml:space="preserve">
+    <value>Masa Molar</value>
+  </data>
+  <data name="OpenFileDialog1.Filter" xml:space="preserve">
+    <value>Archivo Assay DWSIM(*.dwasf)|*.dwasf</value>
+  </data>
+  <data name="OpenFileDialog1.Title" xml:space="preserve">
+    <value>Cargar datos Assay desde Archivo</value>
+  </data>
+  <data name="SaveFileDialog1.Filter" xml:space="preserve">
+    <value>Archivo Assay DWSIM(*.dwasf)|*.dwasf</value>
+  </data>
+  <data name="SaveFileDialog1.Title" xml:space="preserve">
+    <value>Guardar datos Assay en Archivo</value>
+  </data>
+  <data name="ToolStripButton1.Text" xml:space="preserve">
+    <value>Importar Archivo</value>
+  </data>
+  <data name="ToolStripButton2.Text" xml:space="preserve">
+    <value>Exportar Archivo</value>
   </data>
 </root>

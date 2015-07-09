@@ -123,4 +123,7 @@
   <data name="$this.Text" xml:space="preserve">
     <value>Corrientes de Materia</value>
   </data>
+  <data name="DocumentToolStripMenuItem.Text" xml:space="preserve">
+    <value>Documento</value>
+  </data>
 </root>

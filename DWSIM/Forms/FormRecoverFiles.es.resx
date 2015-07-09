@@ -141,7 +141,7 @@
     <value>201, 25</value>
   </data>
   <data name="KryptonButton2.Text" xml:space="preserve">
-    <value>Iniciar Sin Abrir Archivos Recuperados</value>
+    <value>Iniciar Sin Abrir</value>
   </data>
   <data name="KryptonButton1.Location" type="System.Drawing.Point, System.Drawing">
     <value>247, 267</value>
@@ -151,5 +151,11 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Simulaciones Recuperadas</value>
+  </data>
+  <data name="KryptonButton1.Values.Text" xml:space="preserve">
+    <value>Abrir Archivos Seleccionados</value>
+  </data>
+  <data name="KryptonButton2.Values.Text" xml:space="preserve">
+    <value>Iniciar Sin Abrir</value>
   </data>
 </root>

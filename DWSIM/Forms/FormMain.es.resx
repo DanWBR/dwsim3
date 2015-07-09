@@ -134,7 +134,7 @@
     <value>62, 20</value>
   </data>
   <data name="WindowsMenu.Text" xml:space="preserve">
-    <value>&amp;Ventana</value>
+    <value>&amp;Ventanas</value>
   </data>
   <data name="HelpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 20</value>
@@ -152,7 +152,7 @@
     <value>291, 22</value>
   </data>
   <data name="NovoEstudoDoCriadorDeComponentesToolStripMenuItem.Text" xml:space="preserve">
-    <value>Nuevo Estudio Creador de Componentes</value>
+    <value>Nuevo Estudio de Creador de Componente</value>
   </data>
   <data name="NovoEstudoDeRegressãoDeDadosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>291, 22</value>
@@ -206,7 +206,7 @@
     <value>291, 22</value>
   </data>
   <data name="CloseAllToolstripMenuItem.Text" xml:space="preserve">
-    <value>Cerrar todo</value>
+    <value>Cerrar Todas las Ventanas</value>
   </data>
   <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
     <value>288, 6</value>
@@ -227,7 +227,7 @@
     <value>242, 22</value>
   </data>
   <data name="DatabaseManagerToolStripMenuItem.Text" xml:space="preserve">
-    <value>Administrador de Base de Datos</value>
+    <value>Gestor de Base de Datos</value>
   </data>
   <data name="MostrarBarraDeFerramentasToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>242, 22</value>
@@ -278,7 +278,7 @@
     <value>349, 22</value>
   </data>
   <data name="BlogDeDesenvolvimentoToolStripMenuItem.Text" xml:space="preserve">
-    <value>Blog de desarrollo</value>
+    <value>Blog de Desarrollo</value>
   </data>
   <data name="DownloadsToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -383,7 +383,7 @@
     <value>349, 22</value>
   </data>
   <data name="RastreamentoDeBugsToolStripMenuItem.Text" xml:space="preserve">
-    <value>Seguimiento de errores/peticiones y soporte técnico</value>
+    <value>Seguimiento de errores/Peticiones y Soporte Técnico</value>
   </data>
   <data name="RegistroToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>196, 22</value>
@@ -413,7 +413,7 @@
     <value>Guardar Como...</value>
   </data>
   <data name="SaveAllToolStripButton.Text" xml:space="preserve">
-    <value>Guardar Todo</value>
+    <value>Guardar Todas Las Simulaciones Abiertas</value>
   </data>
   <data name="ToolStripButton2.Text" xml:space="preserve">
     <value>Configuración General</value>
@@ -437,7 +437,7 @@
     <value>Acerca de DWSIM</value>
   </data>
   <data name="OpenFileDialog1.Title" xml:space="preserve">
-    <value>Abrir simulación existente</value>
+    <value>Abrir una simulación existente</value>
   </data>
   <data name="SaveFileDialog1.Title" xml:space="preserve">
     <value>Guardar simulación Actual</value>
@@ -568,5 +568,38 @@
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
 </value>
+  </data>
+  <data name="DeToolStripMenuItem.Text" xml:space="preserve">
+    <value>Desregistrar Objetos COM</value>
+  </data>
+  <data name="OpenFileDialog1.Filter" xml:space="preserve">
+    <value>Simulaciones DWSIM (XML) (*.dwxml)|*.dwxml|Simulaciones DWSIM (XML Comprimido) (*.dwxmz)|*.dwxmz|Simulaciones DWSIM (*.dwsim)|*.dwsim|Estudio de Creador de Componentes|*.dwcsd|Estudio de Regresión de Datos |*.dwrsd|Estudio de Regresión de UNIFAC IPs|*.dwruf|Todos los Archivos DWSIM|*.dwxml;*.dwxmz;*.dwsim;*.dwcsd;*.dwrsd;*.dwruf </value>
+  </data>
+  <data name="RegistrarTiposCOMToolStripMenuItem.Text" xml:space="preserve">
+    <value>Registrat Objetos COM</value>
+  </data>
+  <data name="SaveFileDialog1.Filter" xml:space="preserve">
+    <value>Simulaciones DWSIM (XML) (*.dwxml)|*.dwxml|Simulaciones DWSIM (XML Comprimido) (*.dwxmz)|*.dwxmz|Simulaciones DWSIM (*.dwsim)|*.dwsim</value>
+  </data>
+  <data name="SaveRegStudyDlg.Filter" xml:space="preserve">
+    <value>Estudio de Regresión de Datos |*.dwrsd</value>
+  </data>
+  <data name="SaveRegStudyDlg.Title" xml:space="preserve">
+    <value>Guardar Estudio</value>
+  </data>
+  <data name="SaveStudyDlg.Title" xml:space="preserve">
+    <value>Guardar Estudio</value>
+  </data>
+  <data name="SaveUnifacIPRegrDlg.Title" xml:space="preserve">
+    <value>Guardar Estudio</value>
+  </data>
+  <data name="SaveStudyDlg.Filter" xml:space="preserve">
+    <value>Estudio de Creador de Componentes|*.dwcsd</value>
+  </data>
+  <data name="sfdUpdater.Filter" xml:space="preserve">
+    <value>Todos los archivos|*.*</value>
+  </data>
+  <data name="sfdUpdater.Title" xml:space="preserve">
+    <value>Guardarr Archivo de Instalación</value>
   </data>
 </root>

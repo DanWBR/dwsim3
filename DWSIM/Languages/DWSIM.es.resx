@@ -496,7 +496,7 @@
     <value>n-Octano (nC8) </value>
   </data>
   <data name="Adicionoobjetosaoflu" xml:space="preserve">
-    <value>Añadir Objetos al Flujograma</value>
+    <value>Añadir Objetos al Diagrama de Flujo</value>
   </data>
   <data name="PacotedePropriedades5" xml:space="preserve">
     <value>Paquete de Propiedades de referencia, donde el equilibrio termodinámico se calcula por la Ley de Raoult.Las Entalpias, Entropías y capacidades Caloríficas Residuales se consideran igual a cero. La expresión de la Fase Líquida utiliza los valores de Delta-H de Vaporización experimental o calculados en el caso de Pseudo-componentes/Hipotéticos. </value>
@@ -718,7 +718,7 @@
     <value>T (salida bilateral) </value>
   </data>
   <data name="CellWillWrite" xml:space="preserve">
-    <value>El valor de esta celda es un objeto en el Flujograma.</value>
+    <value>El valor de esta celda es un objeto en el diagrama de flujo.</value>
   </data>
   <data name="Cascalho" xml:space="preserve">
     <value>Grava </value>
@@ -850,7 +850,7 @@
     <value>Anular la presión de separación </value>
   </data>
   <data name="CellIsWriting" xml:space="preserve">
-    <value>El valor de celda se va a enviar al Flujograma.</value>
+    <value>El valor de celda se va a enviar al diagrama de flujo.</value>
   </data>
   <data name="Nohobjetosaseremdesc" xml:space="preserve">
     <value>No hay objetos para ser desconectados.</value>
@@ -877,7 +877,7 @@
     <value>Entalpía Específica</value>
   </data>
   <data name="Fluxograma" xml:space="preserve">
-    <value>Flujograma</value>
+    <value>Diagrama de Flujo</value>
   </data>
   <data name="DCILIts" xml:space="preserve">
     <value>Iteraciones en el Bucle Interno </value>
@@ -1993,7 +1993,7 @@
     <value>Iteraciones Máximas de Presión</value>
   </data>
   <data name="CellIsReading" xml:space="preserve">
-    <value>La celda lee desde valor del Flujograma.</value>
+    <value>La celda lee desde valor del diagrama de flujo.</value>
   </data>
   <data name="HidratosI" xml:space="preserve">
     <value>Hidrato sI</value>
@@ -3222,7 +3222,7 @@ Las propiedades se calculan directamente desde la Ecuación de Estado o datos ex
     <value>Velocidad de Flujo de destilado </value>
   </data>
   <data name="DCBoilUpRatio" xml:space="preserve">
-    <value>Relación de ebullición </value>
+    <value>Relación de Ebullición </value>
   </data>
   <data name="VolFractionVaporPhase" xml:space="preserve">
     <value>Fracción volumétrica de la fase de vapor </value>
@@ -3789,7 +3789,7 @@ Las propiedades se calculan directamente desde la Ecuación de Estado o datos ex
     <value>Anular la temperatura de separación </value>
   </data>
   <data name="CompViewerError1" xml:space="preserve">
-    <value>Por favor, añadir al menos una corriente de Materia al Flujograma para usar esta función. </value>
+    <value>Por favor, añadir al menos una corriente de Materia al diagrama de flujo para usar esta función. </value>
   </data>
   <data name="SistemaIngls" xml:space="preserve">
     <value>Sistema Inglés </value>
@@ -4146,7 +4146,7 @@ Las propiedades se calculan directamente desde la Ecuación de Estado o datos ex
     <value>Las especificaciones establecidas violan el balance de masa de la columna.</value>
   </data>
   <data name="DCAutoUpdInitEst" xml:space="preserve">
-    <value>Actualización de las estimaciones iniciales de forma automática</value>
+    <value>Actualizar las estimaciones iniciales de forma automática</value>
   </data>
   <data name="DCStoreAndReuseJacobian" xml:space="preserve">
     <value>Almacenar y reutilizar la Matriz Jacobiana</value>
@@ -4774,7 +4774,7 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
     <value>Finalizar</value>
   </data>
   <data name="NextText" xml:space="preserve">
-    <value>Próximo</value>
+    <value>Siguiente</value>
   </data>
   <data name="DescCPPP" xml:space="preserve">
     <value>CoolProp es una base de datos de código abierto de las propiedades del fluido y de aire húmedo, realizado a base de las formulaciones más precisas en la literatura abierta. Se ha validado con los datos más precisos disponibles de las referencias pertinentes.</value>
@@ -4888,16 +4888,16 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
     <value>Corriente de Salida (9)</value>
   </data>
   <data name="FlowsheetUnitOp" xml:space="preserve">
-    <value>Operación Unitaria de Flujograma</value>
+    <value>Operación Unitaria de Diagrama de Flujo</value>
   </data>
   <data name="FlowsheetInitializationError" xml:space="preserve">
-    <value>Hubo un error al inicializar el flujograma. Compruebe el mensaje de error para obtener más información.</value>
+    <value>Hubo un error al inicializar el Diagrama de flujo. Compruebe el mensaje de error para obtener más información.</value>
   </data>
   <data name="FlowsheetInitializationSuccess" xml:space="preserve">
-    <value>El Flujograma se ha iniciado correctamente.</value>
+    <value>El Diagrama de Flujo se ha iniciado correctamente.</value>
   </data>
   <data name="FlowsheetInitialized" xml:space="preserve">
-    <value>Flujograma ha inicializado.</value>
+    <value>Diagrama de Flujo ha inicializado.</value>
   </data>
   <data name="FlowsheetNotInitialized" xml:space="preserve">
     <value>Fluxograma não inicializado, haga clic izquierdo para hacerlo.</value>
@@ -4906,25 +4906,25 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
     <value>Panel de Control</value>
   </data>
   <data name="FlowsheetUOEditorDesc" xml:space="preserve">
-    <value>Iniciar el Flujograma, establezca las conexiones entre las actuales, parámetros para exponer y el modo de transferencia de masa.</value>
+    <value>Iniciar el Diagrama de flujo, establezca las conexiones entre las actuales, parámetros para exponer y el modo de transferencia de masa.</value>
   </data>
   <data name="FlowsheetUOViewer" xml:space="preserve">
-    <value>Visualizar flujograma</value>
+    <value>Visualizar Diagrama de Flujo</value>
   </data>
   <data name="FlowsheetUOViewerDesc" xml:space="preserve">
-    <value>Ver las propiedades de los objetos en el flujograma.</value>
+    <value>Ver las propiedades de los objetos en el diagrama de flujo.</value>
   </data>
   <data name="InitializeOnLoad" xml:space="preserve">
     <value>Inicializar cuando carge</value>
   </data>
   <data name="InitializeOnLoadDesc" xml:space="preserve">
-    <value>Selecione 'True' para inicializar o sub-flujograma durante la apertura de la simulación principal.</value>
+    <value>Selecione 'True' para inicializar el Sub-Diagrama de flujo durante la apertura de la simulación principal.</value>
   </data>
   <data name="SimulationFile" xml:space="preserve">
     <value>Archivo de Simulación</value>
   </data>
   <data name="SimulationFileDesc" xml:space="preserve">
-    <value>Selecione o archivo de simulación para ejecutar como un sub-flujograma.</value>
+    <value>Selecione o archivo de simulación para ejecutar como un sub-diagrama de flujo.</value>
   </data>
   <data name="ExcelFile" xml:space="preserve">
     <value>Archivo de Hoja de Calculo</value>
@@ -4939,40 +4939,40 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
     <value>Erro no balanço de massa (%)</value>
   </data>
   <data name="FlowsheetUO" xml:space="preserve">
-    <value>Operación Unitaria de Flujograma</value>
+    <value>Operación Unitaria de Diagrama de Flujo</value>
   </data>
   <data name="RedirectOutput" xml:space="preserve">
     <value>Redirecionar mensages</value>
   </data>
   <data name="RedirectOutputDesc" xml:space="preserve">
-    <value>Redireciona los mensages del sub-flujograma para a Ventana de avisos del flujograma principal.</value>
+    <value>Redireciona los mensages del sub-diagrama de flujo para a Ventana de avisos del diagrama de flujo principal.</value>
   </data>
   <data name="SubFSUpdateFailed" xml:space="preserve">
-    <value>Error al actualizar la información de proceso de sub-Flujograma:</value>
+    <value>Error al actualizar la información de proceso de sub-diagrama de flujo:</value>
   </data>
   <data name="SubFSUpdateSuccess" xml:space="preserve">
-    <value>Información de proceso de sub-flujograma actualizadas con exito.</value>
+    <value>Información de proceso de sub-diagrama de flujo actualizadas con exito.</value>
   </data>
   <data name="UpdateOnSave" xml:space="preserve">
     <value>Actualizar al guardar</value>
   </data>
   <data name="UpdateOnSaveDesc" xml:space="preserve">
-    <value>Actualiza la información del proceso de la sub-Flujograma en el archivo al guardar el Flujograma principal.</value>
+    <value>Actualiza la información del proceso de la sub-diagrama de flujo en el archivo al guardar el diagrama de flujo principal.</value>
   </data>
   <data name="DCOperationMode" xml:space="preserve">
     <value>Modo de Operación de la Columna</value>
   </data>
   <data name="FSfinishedsolvingerror" xml:space="preserve">
-    <value>Se han producido errores durante el cálculo del flujograma. Comprobar los mensajes posteriores para obtener más información.</value>
+    <value>Se han producido errores durante el cálculo del Diagrama de Flujo. Comprobar los mensajes posteriores para obtener más información.</value>
   </data>
   <data name="FSfinishedsolvingok" xml:space="preserve">
-    <value>El Flujograma se ha calculado correctamente.</value>
+    <value>El Diagrama de Flujo se ha calculado correctamente.</value>
   </data>
   <data name="FSstartedsolving" xml:space="preserve">
-    <value>El Flujograma esta siendo calculado, por favor espere...</value>
+    <value>El Diagrama de Flujo esta siendo calculado, por favor espere...</value>
   </data>
   <data name="SolverTimeout" xml:space="preserve">
-    <value>La calculadora no pudo resolver el flujograma en el tiempo de espera máximo definido.</value>
+    <value>La calculadora no pudo resolver el diagrama de flujo en el tiempo de espera máximo definido.</value>
   </data>
   <data name="RecycleMaxItsReached" xml:space="preserve">
     <value>Se alcanzó el número máximo de iteraciones, sin converger.</value>
@@ -5005,7 +5005,7 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
     <value>Actualización completa.</value>
   </data>
   <data name="ClientUpdatingData" xml:space="preserve">
-    <value>Actualizando datos de Flujograma...</value>
+    <value>Actualizando datos de Diagrama de Flujo...</value>
   </data>
   <data name="ClientWaitingForResults" xml:space="preserve">
     <value>A la espera de resultados del servidor ...</value>
@@ -5096,5 +5096,26 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
   </data>
   <data name="PFRNumeratorEvaluationError" xml:space="preserve">
     <value>Error al evaluar para el numerador de la ecuación de velocidad de reacción</value>
+  </data>
+  <data name="Charge" xml:space="preserve">
+    <value>[Electrolito] Carga</value>
+  </data>
+  <data name="HydrationNumber" xml:space="preserve">
+    <value>[Electrilito] Número de Hidratación</value>
+  </data>
+  <data name="NegativeIon" xml:space="preserve">
+    <value>[Electrolito] Ión Negativo</value>
+  </data>
+  <data name="PositiveIon" xml:space="preserve">
+    <value>[Electrolito] Ión Positivo</value>
+  </data>
+  <data name="SolidDensityAtTs" xml:space="preserve">
+    <value>Densidad como Sólido @ Ts</value>
+  </data>
+  <data name="TemperatureOfFusion" xml:space="preserve">
+    <value>Temperatura de Fusión</value>
+  </data>
+  <data name="TemperatureOfSolidDensity_Ts" xml:space="preserve">
+    <value>Temperatura de Densidad como Sólido</value>
   </data>
 </root>

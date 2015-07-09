@@ -1195,4 +1195,7 @@
     <value>Queda de Temperatura</value>
     <comment>0</comment>
   </data>
+  <data name="PROP_CS_01" xml:space="preserve">
+    <value>Perda de Carga</value>
+  </data>
 </root>

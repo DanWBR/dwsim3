@@ -164,9 +164,15 @@
     <value>398, 13</value>
   </data>
   <data name="Label8.Text" xml:space="preserve">
-    <value>Selecione una Operación Unitaria de la siguiente lista para Agregarla al Flujograma.</value>
+    <value>Selecione una Operación Unitaria de la siguiente lista para Agregarla al diagrama de flujo.</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Agregar una Operación Unitaria CAPE-OPEN</value>
+  </data>
+  <data name="btnCancel.Text" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="btnOK.Text" xml:space="preserve">
+    <value>OK</value>
   </data>
 </root>

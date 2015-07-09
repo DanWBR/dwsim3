@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -294,7 +294,7 @@
 </value>
   </data>
   <data name="FaTabStripItem4.Title" xml:space="preserve">
-    <value>Incluye</value>
+    <value>Inclusiones</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1741,6 +1741,27 @@
 </value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Administrador de Scripts</value>
+    <value>Gestor de Scripts</value>
+  </data>
+  <data name="HelpToolStripButton.Text" xml:space="preserve">
+    <value>Ayuda</value>
+  </data>
+  <data name="ofd1.Filter" xml:space="preserve">
+    <value>Todos los archivos|*.*</value>
+  </data>
+  <data name="ofd1.Title" xml:space="preserve">
+    <value>Incluir Archivos Script</value>
+  </data>
+  <data name="ofd2.Filter" xml:space="preserve">
+    <value>Todos los archivos|*.*</value>
+  </data>
+  <data name="ofd2.Title" xml:space="preserve">
+    <value>Abrir archivo de script</value>
+  </data>
+  <data name="sfd1.Filter" xml:space="preserve">
+    <value>Todos los archivos|*.*</value>
+  </data>
+  <data name="sfd1.Title" xml:space="preserve">
+    <value>Guardar Script</value>
   </data>
 </root>

@@ -133,4 +133,7 @@
   <data name="Button1.Text" xml:space="preserve">
     <value>Cargar</value>
   </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>FormTemplateSelect</value>
+  </data>
 </root>
