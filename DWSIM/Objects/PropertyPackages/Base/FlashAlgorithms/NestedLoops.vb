@@ -266,7 +266,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     V = -F / dF + Vant
 
-                    If V >= 1.01 Or V <= -0.01 Then V = -0.1 * F / dF + Vant
+                    'If V >= 1.01 Or V <= -0.01 Then V = -0.1 * F / dF + Vant
 
                 End If
 
