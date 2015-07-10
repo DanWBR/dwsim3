@@ -87,15 +87,15 @@ Imports System.Drawing.Text
         tscb2.SelectedItem = fontsize
         tscb1.SelectedItem = fontname
 
-        readAssembly(GetType(DWSIM.ClassesBasicasTermodinamica.Fase).Assembly)
-        readAssembly(GetType(System.String).Assembly)
-        readAssembly(GetType(CapeOpen.BaseUnitEditor).Assembly)
-        readAssembly(GetType(CAPEOPEN110.ICapeThermoPhases).Assembly)
+        'readAssembly(GetType(DWSIM.ClassesBasicasTermodinamica.Fase).Assembly)
+        'readAssembly(GetType(System.String).Assembly)
+        'readAssembly(GetType(CapeOpen.BaseUnitEditor).Assembly)
+        'readAssembly(GetType(CAPEOPEN110.ICapeThermoPhases).Assembly)
 
-        With Me.listBoxAutoComplete
-            .Font = New Font("Arial", 8, FontStyle.Regular, GraphicsUnit.Point)
-            .Height = 250
-        End With
+        'With Me.listBoxAutoComplete
+        '    .Font = New Font("Arial", 8, FontStyle.Regular, GraphicsUnit.Point)
+        '    .Height = 250
+        'End With
 
     End Sub
 
@@ -195,7 +195,6 @@ Imports System.Drawing.Text
     Private Sub ToolStripButton5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton5.Click
         If Me.Opacity > 0.1# Then Me.Opacity -= 0.05
     End Sub
-
 
     Private Sub txtScript__KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles txtScript.KeyDown
         ' Keep track of the current character, used

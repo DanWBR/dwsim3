@@ -3521,7 +3521,9 @@ Public Class frmSurface
                             .Text = Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag
                             .fsuo = myobj
                             .ShowDialog()
+                            .Dispose()
                         End With
+                        viewform = Nothing
                     Else
                         If myobj.Initialized Then
                             Dim viewform As New FlowsheetUOViewerForm
@@ -3536,7 +3538,9 @@ Public Class frmSurface
                                 .Text = Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag
                                 .fsuo = myobj
                                 .ShowDialog()
+                                .Dispose()
                             End With
+                            viewform = Nothing
                         End If
                     End If
                 Case TipoObjeto.CapeOpenUO
@@ -3585,6 +3589,8 @@ Public Class frmSurface
                         myobj.FontSize = selectionControl.tscb2.SelectedItem
                         myobj.Includes = selectionControl.includes
                         myobj.ScriptText = selectionControl.txtScript.Document.Text
+                        selectionControl.Dispose()
+                        selectionControl = Nothing
                     Else
                         Dim selectionControl As New ScriptEditorFormMono
                         selectionControl.scripttext = myobj.ScriptText
@@ -3598,58 +3604,80 @@ Public Class frmSurface
                         myobj.FontSize = selectionControl.tscb2.SelectedItem
                         myobj.Includes = selectionControl.includes
                         myobj.ScriptText = selectionControl.txtScript.Text
+                        selectionControl.Dispose()
+                        selectionControl = Nothing
                     End If
                 Case TipoObjeto.OT_Ajuste
                     Dim selectionControl As New UI_AdjControlPanelForm
                     selectionControl.ShowDialog()
+                    selectionControl.Dispose()
+                    selectionControl = Nothing
                 Case TipoObjeto.OT_Especificacao
                     Dim selectionControl As New UI_SpecControlPanelForm
                     selectionControl.ShowDialog()
+                    selectionControl.Dispose()
+                    selectionControl = Nothing
                 Case TipoObjeto.AbsorptionColumn, TipoObjeto.DistillationColumn, TipoObjeto.ReboiledAbsorber, TipoObjeto.RefluxedAbsorber
                     Dim myobj As DWSIM.SimulationObjects.UnitOps.Column = Flowsheet.Collections.ObjectCollection(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
                     If My.Computer.Keyboard.ShiftKeyDown Then
                         Dim selectionControl As New UIConnectionsEditorForm
                         selectionControl.ShowDialog()
+                        selectionControl.Dispose()
+                        selectionControl = Nothing
                     ElseIf My.Computer.Keyboard.CtrlKeyDown Then
                         Dim selectionControl As New UIInitialEstimatesEditorForm
                         selectionControl.ShowDialog()
+                        selectionControl.Dispose()
+                        selectionControl = Nothing
                     ElseIf My.Computer.Keyboard.AltKeyDown Then
                         Dim selectionControl As New UIStagesEditorForm
                         selectionControl.ShowDialog()
+                        selectionControl.Dispose()
+                        selectionControl = Nothing
                     Else
                         If myobj.Calculated Then
                             Dim selectionControl As New UIResultsForm
                             selectionControl.form = myobj.FlowSheet
                             selectionControl.ShowDialog()
+                            selectionControl.Dispose()
+                            selectionControl = Nothing
                         End If
                     End If
                 Case TipoObjeto.Pipe
-                        Dim myobj As DWSIM.SimulationObjects.UnitOps.Pipe = Flowsheet.Collections.ObjectCollection(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
-                        If My.Computer.Keyboard.ShiftKeyDown Then
-                            Dim selectionControl As New ThermalProfileEditorForm
-                            selectionControl.ThermalProfile = myobj.ThermalProfile
+                    Dim myobj As DWSIM.SimulationObjects.UnitOps.Pipe = Flowsheet.Collections.ObjectCollection(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
+                    If My.Computer.Keyboard.ShiftKeyDown Then
+                        Dim selectionControl As New ThermalProfileEditorForm
+                        selectionControl.ThermalProfile = myobj.ThermalProfile
+                        selectionControl.ShowDialog()
+                        myobj.ThermalProfile = selectionControl.ThermalProfile
+                        selectionControl.Dispose()
+                        selectionControl = Nothing
+                    ElseIf My.Computer.Keyboard.CtrlKeyDown Then
+                        If myobj.Calculated Then
+                            Dim selectionControl As New FormGraph
+                            selectionControl.Profile = myobj.Profile
                             selectionControl.ShowDialog()
-                            myobj.ThermalProfile = selectionControl.ThermalProfile
-                        ElseIf My.Computer.Keyboard.CtrlKeyDown Then
-                            If myobj.Calculated Then
-                                Dim selectionControl As New FormGraph
-                                selectionControl.Profile = myobj.Profile
-                                selectionControl.ShowDialog()
-                            End If
-                        ElseIf My.Computer.Keyboard.AltKeyDown Then
-                            If myobj.Calculated Then
-                                Dim selectionControl As New FormTable
-                                selectionControl.Profile = myobj.Profile
-                                selectionControl.ShowDialog()
-                            End If
-                        Else
-                            Dim selectionControl As New PipeEditorForm
-                            selectionControl.PipeEditor1.SystemOfUnits = My.Application.ActiveSimulation.Options.SelectedUnitSystem
-                            selectionControl.PipeEditor1.NumberFormat = My.Application.ActiveSimulation.Options.NumberFormat
-                            selectionControl.PipeEditor1.Profile = myobj.Profile
-                            selectionControl.ShowDialog()
-                            myobj.Profile = selectionControl.PipeEditor1.Profile
+                            selectionControl.Dispose()
+                            selectionControl = Nothing
                         End If
+                    ElseIf My.Computer.Keyboard.AltKeyDown Then
+                        If myobj.Calculated Then
+                            Dim selectionControl As New FormTable
+                            selectionControl.Profile = myobj.Profile
+                            selectionControl.ShowDialog()
+                            selectionControl.Dispose()
+                            selectionControl = Nothing
+                        End If
+                    Else
+                        Dim selectionControl As New PipeEditorForm
+                        selectionControl.PipeEditor1.SystemOfUnits = My.Application.ActiveSimulation.Options.SelectedUnitSystem
+                        selectionControl.PipeEditor1.NumberFormat = My.Application.ActiveSimulation.Options.NumberFormat
+                        selectionControl.PipeEditor1.Profile = myobj.Profile
+                        selectionControl.ShowDialog()
+                        myobj.Profile = selectionControl.PipeEditor1.Profile
+                        selectionControl.Dispose()
+                        selectionControl = Nothing
+                    End If
                 Case TipoObjeto.RCT_PFR
                         Dim myobj As DWSIM.SimulationObjects.Reactors.Reactor_PFR = Flowsheet.Collections.ObjectCollection(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
                         If myobj.Calculated Then
@@ -3657,7 +3685,9 @@ Public Class frmSurface
                             selectionControl.form = myobj.FlowSheet
                             selectionControl.Points = myobj.points
                             selectionControl.ShowDialog()
-                        End If
+                        selectionControl.Dispose()
+                        selectionControl = Nothing
+                    End If
                 Case TipoObjeto.RCT_Gibbs
                     Dim myobj As DWSIM.SimulationObjects.Reactors.Reactor_Gibbs = Flowsheet.Collections.ObjectCollection(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
                     If My.Computer.Keyboard.ShiftKeyDown Then
@@ -3666,6 +3696,8 @@ Public Class frmSurface
                         selectionControl.Text = myobj.GraphicObject.Tag & " - " & DWSIM.App.GetLocalString("RGEditElementMatrix")
                         selectionControl.ShowDialog()
                         myobj.ElementMatrix = selectionControl.elmat
+                        selectionControl.Dispose()
+                        selectionControl = Nothing
                     Else
                         Dim selectionControl As New GibbsInitialEstimatesEditorForm
                         selectionControl.ie = myobj.InitialEstimates
@@ -3677,6 +3709,8 @@ Public Class frmSurface
                         End If
                         selectionControl.ShowDialog()
                         myobj.InitialEstimates = selectionControl.ie
+                        selectionControl.Dispose()
+                        selectionControl = Nothing
                     End If
             End Select
         End If

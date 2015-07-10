@@ -392,6 +392,9 @@ Imports DWSIM.DWSIM.Outros
 
         End If
 
+        System.GC.Collect()
+        System.GC.WaitForPendingFinalizers()
+
     End Sub
 
     Private Sub FormChild2_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing

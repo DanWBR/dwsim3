@@ -1890,6 +1890,7 @@ Namespace DWSIM.Flowsheet
                                         converged = DirectCast(obj, SpecialOps.Recycle).Converged
                                         If Not converged Then Exit For
                                     Next
+                                    t0.Dispose()
                                     t0 = Nothing
 
                                     'process the scripts associated with the recycle loop event.
@@ -1950,6 +1951,8 @@ Namespace DWSIM.Flowsheet
                             If Not azureclient.qcs.IsClosed Then azureclient.qcs.Close()
                         End Try
 
+                        azureclient = Nothing
+
                     Case 4
 
                         'TCP/IP Solver
@@ -1967,6 +1970,8 @@ Namespace DWSIM.Flowsheet
                         Finally
                             tcpclient.client.Close()
                         End Try
+
+                        tcpclient = Nothing
 
                 End Select
 

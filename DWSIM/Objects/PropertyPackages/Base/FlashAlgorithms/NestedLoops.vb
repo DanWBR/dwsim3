@@ -264,7 +264,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     If Abs(F) < etol / 100 Then Exit Do
 
-                    V = -F / dF + V
+                    V = -F / dF + Vant
+
+                    If V >= 1.01 Or V <= -0.01 Then V = -0.1 * F / dF + Vant
 
                 End If
 
