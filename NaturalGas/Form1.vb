@@ -55,13 +55,14 @@ Public Class Form1
             If d.dbname <> "" Then dvc.Add(d.dbname, d)
         Next
 
-
         'add SelectedObjectChanged event handler
 
-        AddHandler fsheet.FormSurface.ObjectSelected, AddressOf SelectedObjectChanged
+        Dim eventhandler As DWSIM.frmSurface.ObjectSelectedEventHandler = AddressOf SelectedObjectChanged
+
+        AddHandler fsheet.FormSurface.ObjectSelected, eventhandler
 
         For Each f In fsheet.Collections.CLCS_FlowsheetUOCollection.Values
-            AddHandler f.Fsheet.FormSurface.ObjectSelected, AddressOf SelectedObjectChanged
+            AddHandler f.Fsheet.FormSurface.ObjectSelected, eventhandler
         Next
 
     End Sub
