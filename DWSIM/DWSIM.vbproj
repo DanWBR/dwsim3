@@ -730,6 +730,7 @@
     <Compile Include="Forms\UITypeEditors\UIUnitConverter\UIUnitConverter.vb" />
     <Compile Include="Interfaces\IUtilityPlugin.vb" />
     <Compile Include="Objects\Classes\Shared\ExtensionMethods.vb" />
+    <Compile Include="Objects\Classes\Shared\STATaskScheduler.vb" />
     <Compile Include="Objects\PropertyPackages\Base\Electrolyte.vb" />
     <Compile Include="Objects\PropertyPackages\Base\ElectrolyteBase.vb" />
     <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\Base.vb" />

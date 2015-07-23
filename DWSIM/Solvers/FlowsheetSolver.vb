@@ -28,6 +28,7 @@ Imports System.Threading
 Imports System.Threading.Tasks
 Imports DWSIM.DWSIM.Outros
 Imports Microsoft.Scripting.Hosting
+Imports System.Linq
 
 Namespace DWSIM.Flowsheet
 
@@ -1823,6 +1824,22 @@ Namespace DWSIM.Flowsheet
 
                                     'starts the calculation task asynchronously.
 
+                                    Dim tsch As TaskScheduler, HasCOMobj As Boolean = False
+
+                                    'if the flowsheet contains COM objects, use a STA task scheduler
+                                    For Each s In objstack
+                                        If TypeOf form.Collections.ObjectCollection(s) Is SimulationObjects.UnitOps.CapeOpenUO Or
+                                            TypeOf form.Collections.ObjectCollection(s) Is SimulationObjects.UnitOps.ExcelUO Then
+                                            HasCOMobj = True
+                                        End If
+                                    Next
+
+                                    If HasCOMobj Then
+                                        tsch = New DWSIM.Auxiliary.TaskSchedulers.StaTaskScheduler(System.Environment.ProcessorCount)
+                                    Else
+                                        tsch = Tasks.TaskScheduler.Default
+                                    End If
+
                                     Try
                                         If form.Visible Then form.FormSurface.Enabled = False
                                         form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & DWSIM.App.GetLocalString("Fluxograma") & "...")
@@ -1840,7 +1857,7 @@ Namespace DWSIM.Flowsheet
                                                                        If Not t.Wait(My.Settings.SolverTimeoutSeconds * 1000, ct) Then
                                                                            Throw New TimeoutException(DWSIM.App.GetLocalString("SolverTimeout"))
                                                                        End If
-                                                                   End Sub)
+                                                                   End Sub, ct, TaskCreationOptions.PreferFairness, tsch)
                                     Catch agex As AggregateException
                                         age = agex
                                         Exit While
