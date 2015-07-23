@@ -65,6 +65,18 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Me.New(name, desc, Nothing)
         End Sub
 
+        Public Function Clone2() As CapeOpenUO
+
+            Dim persisteddata = Me.SaveData()
+
+            Dim couo As New CapeOpenUO()
+
+            couo.LoadData(persisteddata)
+
+            Return couo
+
+        End Function
+
         Public Sub New(ByVal nome As String, ByVal descricao As String, ByVal gobj As GraphicObject)
 
             Me.New()

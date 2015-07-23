@@ -3089,7 +3089,7 @@ Imports PropertyGridEx
 
     Function ObjectCopy(ByVal obj As SimulationObjects_BaseClass) As SimulationObjects_BaseClass
 
-        Dim objMemStream As New MemoryStream(50000)
+        Dim objMemStream As New MemoryStream(250000)
         Dim objBinaryFormatter As New BinaryFormatter(Nothing, New StreamingContext(StreamingContextStates.Clone))
 
         objBinaryFormatter.Serialize(objMemStream, obj)
