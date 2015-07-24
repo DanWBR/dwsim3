@@ -1168,8 +1168,11 @@ Namespace DWSIM.Flowsheet
                 SolveSimultaneousAdjustsAsync(form, ct)
             ElseIf mode = 2 Then
                 'bg parallel thread
+                Dim prevset As Boolean = My.Settings.EnableParallelProcessing
+                My.Settings.EnableParallelProcessing = False
                 ProcessQueueInternalAsyncParallel(form, orderedlist, ct)
                 SolveSimultaneousAdjustsAsync(form, ct)
+                My.Settings.EnableParallelProcessing = prevset
             End If
 
         End Sub
@@ -1871,6 +1874,8 @@ Namespace DWSIM.Flowsheet
                                 End If
 
                             Else
+
+                                Thread.Sleep(100)
 
                                 'checks for the status of the task.
 
