@@ -1467,6 +1467,8 @@ Imports DWSIM.DWSIM.Outros
                             Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(gobj)
                         ElseIf SelectedObj.TipoObjeto = TipoObjeto.GO_TabelaRapida Then
                             Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(gobj)
+                        ElseIf SelectedObj.TipoObjeto = TipoObjeto.GO_SpreadsheetTable Then
+                            Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(gobj)
                         Else
                             Dim obj As SimulationObjects_BaseClass = Me.Collections.ObjectCollection(SelectedObj.Name)
                             DeCalculateDisconnectedObject(Me, SelectedObj, "Out")
