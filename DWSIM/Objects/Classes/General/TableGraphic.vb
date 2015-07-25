@@ -1676,7 +1676,7 @@ Namespace DWSIM.GraphicObjects
                         Else
                             g.DrawString("", Me.FontCol1, New SolidBrush(Me.LineColor), X + Padding + leftmargin, Y + Padding + m * itemheight)
                         End If
-                        g.DrawLine(Me.m_BorderPen, X + leftmargin, Y + (i + 1) * itemheight, X + leftmargin + maxW(n), Y + (i + 1) * itemheight)
+                        g.DrawLine(Me.m_BorderPen, X + leftmargin, Y + (m + 1) * itemheight, X + leftmargin + maxW(n), Y + (m + 1) * itemheight)
                         m += 1
                     Next
                     leftmargin += maxW(n)
