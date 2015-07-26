@@ -795,6 +795,14 @@ Imports DWSIM.DWSIM.Outros
                     DWSIM.App.HelpRequested("SO_Adjust.htm")
                 Case TipoObjeto.OT_Especificacao
                     DWSIM.App.HelpRequested("SO_Specification.htm")
+                Case TipoObjeto.GO_Texto
+                    DWSIM.App.HelpRequested("GO_Textbox.htm")
+                Case TipoObjeto.GO_Figura
+                    DWSIM.App.HelpRequested("GO_Picture.htm")
+                Case TipoObjeto.GO_MasterTable
+                    DWSIM.App.HelpRequested("GO_MasterPropertyTable.htm")
+                Case TipoObjeto.GO_SpreadsheetTable
+                    DWSIM.App.HelpRequested("GO_SpreadsheetTable.htm")
                 Case Else
                     DWSIM.App.HelpRequested("frame.htm")
             End Select
