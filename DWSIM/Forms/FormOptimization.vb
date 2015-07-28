@@ -1346,7 +1346,11 @@ Public Class FormOptimization
                     Dim dgrow As DataGridViewRow = Me.dgVariables.Rows(Me.dgVariables.Rows.Count - 1)
                     dgrow.Cells(0).Value = .id
                     dgrow.Cells(1).Value = .name
-                    dgrow.Cells(3).Value = .objectTAG
+                    If .objectID = "SpreadsheetCell" Then
+                        dgrow.Cells(3).Value = DWSIM.App.GetLocalString(.objectID)
+                    Else
+                        dgrow.Cells(3).Value = .objectTAG
+                    End If
                     dgrow.Cells(4).Value = DWSIM.App.GetPropertyName(.propID)
                     dgrow.Cells(9).Value = .unit
                     dgrow.Cells(5).Value = cv.ConverterDoSI(.unit, .lowerlimit)
