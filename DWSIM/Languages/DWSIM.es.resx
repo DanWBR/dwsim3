@@ -5118,4 +5118,7 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
   <data name="TemperatureOfSolidDensity_Ts" xml:space="preserve">
     <value>Temperatura de Densidad como Sólido</value>
   </data>
+  <data name="SpreadsheetCell" xml:space="preserve">
+    <value>Celda de la Planilla</value>
+  </data>
 </root>

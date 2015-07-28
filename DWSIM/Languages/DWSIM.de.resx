@@ -5121,4 +5121,7 @@ Die erhaltenen Daten werden hauptsächlich für die Berechnung von VLE-Daten emp
   <data name="PFRNumeratorEvaluationError" xml:space="preserve">
     <value>Error evaluating numerator expression for reaction</value>
   </data>
+  <data name="SpreadsheetCell" xml:space="preserve">
+    <value>Kalkulationstabellenzelle</value>
+  </data>
 </root>

@@ -13028,6 +13028,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Célula da Planilha.
+        '''</summary>
+        Friend Shared ReadOnly Property SpreadsheetCell() As String
+            Get
+                Return ResourceManager.GetString("SpreadsheetCell", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Tabela da Planilha de Dados.
         '''</summary>
         Friend Shared ReadOnly Property SpreadsheetTable() As String

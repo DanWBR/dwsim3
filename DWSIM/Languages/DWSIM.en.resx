@@ -5137,4 +5137,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="PFRNumeratorEvaluationError" xml:space="preserve">
     <value>Error evaluating numerator expression for reaction</value>
   </data>
+  <data name="SpreadsheetCell" xml:space="preserve">
+    <value>Spreadsheet Cell</value>
+  </data>
 </root>

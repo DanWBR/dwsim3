@@ -119,8 +119,6 @@ Public Class SpreadsheetForm
             .Item(25).HeaderText = "Z"
         End With
 
-
-
     End Sub
 
     Public Function GetCellValue(ByVal cell As String) As DataGridViewCell
@@ -192,6 +190,15 @@ Public Class SpreadsheetForm
 
     End Function
 
+    Public Sub SetCellValue(ByVal cell As String, value As Object)
+
+        UpdateValue(GetCellValue(cell), value)
+
+        'EvaluateAll()
+
+    End Sub
+
+
     Private Sub DataGridView1_CellBeginEdit(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellCancelEventArgs) Handles DataGridView1.CellBeginEdit
 
         Dim c, r As Integer
@@ -223,6 +230,8 @@ Public Class SpreadsheetForm
 
         UpdateValue(Cell, expression)
 
+        If chkUpdate.Checked Then EvaluateAll()
+
     End Sub
 
     Private Sub DataGridView1_SelectionChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles DataGridView1.SelectionChanged
@@ -238,6 +247,20 @@ Public Class SpreadsheetForm
         Dim str As String = Me.DataGridView1.Columns(cell.ColumnIndex).Name & CStr(cell.RowIndex + 1)
 
         Return str
+
+    End Function
+
+    Public Function GetCellString() As String()
+
+        Dim names As New ArrayList
+
+        For Each col As DataGridViewColumn In Me.DataGridView1.Columns
+            For Each r As DataGridViewRow In Me.DataGridView1.Rows
+                names.Add(col.Name & r.HeaderCell.Value.ToString)
+            Next
+        Next
+
+        Return names.ToArray(Type.GetType("System.String"))
 
     End Function
 
@@ -442,7 +465,7 @@ Public Class SpreadsheetForm
     Sub UpdateValue(ByRef cell As DataGridViewCell, ByVal expression As String)
 
 
-        If TypeOf FormMain.ActiveMdiChild Is FormFlowsheet Then
+        If TypeOf My.Application.OpenForms(0).ActiveMdiChild Is FormFlowsheet Then
 
             If formc Is Nothing Then formc = My.Application.ActiveSimulation
 

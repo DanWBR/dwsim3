@@ -5137,4 +5137,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="PFRNumeratorEvaluationError" xml:space="preserve">
     <value>Erro ao avaliar expressão para o numerador da equação de taxa da reação</value>
   </data>
+  <data name="SpreadsheetCell" xml:space="preserve">
+    <value>Célula da Planilha</value>
+  </data>
 </root>
