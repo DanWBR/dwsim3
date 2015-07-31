@@ -406,16 +406,15 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Dim Tc2_ant, Th2_ant As Double
                     Dim Ud, Ur, U_ant, Rf, fx, Fant, F As Double
                     Dim DTm, Tcm, Thm, R, Sf, P As Double
+                    Dim cph0, cpc0, x0, q0 As Double
+                    cph0 = StInHot.Fases(0).SPMProperties.heatCapacityCp.GetValueOrDefault
+                    cpc0 = StInCold.Fases(0).SPMProperties.heatCapacityCp.GetValueOrDefault
+                    x0 = Wh * cph0 / (Wc * cpc0)
                     If CalculationMode = HeatExchangerCalcMode.ShellandTube_Rating Then
-                        If STProperties.Tube_Fluid = 0 Then
-                            'cold
-                            Tc2 = (Th1 - Tc1) * 0.3 + Tc1
-                            Th2 = (Tc1 + Th1) / 2
-                        Else
-                            'hot
-                            Th2 = (Tc1 - Th1) * 0.3 + Th1
-                            Tc2 = (Tc1 + Th1) / 2
-                        End If
+                        Tc2 = (Tc1 + x0 * Th1) / (1 + x0)
+                        q0 = Wc * cpc0 * (Tc2 - Tc1)
+                        Tc2 = 0.3 * q0 / Wc / cpc0 + Tc1
+                        Th2 = -0.3 * q0 / Wh / cph0 + Th1
                     Else
                         Tc2 = TempColdOut
                         Th2 = TempHotOut
@@ -453,12 +452,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             F = Sf * 2 ^ 0.5 / ((1 - Sf) * Math.Log((2 * (1 - Sf) + Sf * 2 ^ 0.5) / (2 * (1 - Sf) - Sf * 2 ^ 0.5)))
                         End If
                         If Double.IsNaN(F) Then
-                            Throw New Exception("LMTD correction factor 'F'  could not be calculated. R = " & R & ", S = " & Sf)
+                            F = Fant
+                            'Throw New Exception("LMTD correction factor 'F'  could not be calculated. R = " & R & ", S = " & Sf)
                         End If
                         DTm = F * LMTD
                         '3
                         Tcm = (Tc2 - Tc1) / 2 + Tc1
-                        Thm = (Th1 - Th2) / 2 + Th1
+                        Thm = (Th1 - Th2) / 2 + Th2
                         '4, 5
                         StInCold.PropertyPackage.CurrentMaterialStream = StInCold
                         Dim tmp = StInCold.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Tc2, Pc2, 0)
@@ -826,12 +826,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             tmp = StInCold.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pc2, Hc2, Tc2)
                             Tc2_ant = Tc2
                             Tc2 = tmp(2)
-                            Tc2 = 0.6 * Tc2 + 0.4 * Tc2_ant
+                            Tc2 = 0.1 * Tc2 + 0.9 * Tc2_ant
                             StInHot.PropertyPackage.CurrentMaterialStream = StInHot
                             tmp = StInHot.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Ph2, Hh2, Th2)
                             Th2_ant = Th2
                             Th2 = tmp(2)
-                            Th2 = 0.6 * Th2 + 0.4 * Th2_ant
+                            Th2 = 0.1 * Th2 + 0.9 * Th2_ant
                         End If
                         If STProperties.Shell_Fluid = 0 Then
                             Pc2 = Pc1 - dps
