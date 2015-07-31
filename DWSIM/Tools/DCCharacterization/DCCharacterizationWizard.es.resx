@@ -167,7 +167,7 @@
     <value>Grado API</value>
   </data>
   <data name="ComboBoxBasis.Items" xml:space="preserve">
-    <value>Volumen de líquidos</value>
+    <value>Volumen de Líquido</value>
   </data>
   <data name="ComboBoxBasis.Items2" xml:space="preserve">
     <value>Masa</value>
@@ -233,7 +233,7 @@
     <value>147, 17</value>
   </data>
   <data name="CheckBoxVISC.Text" xml:space="preserve">
-    <value>Viscosidades cinematicas</value>
+    <value>Viscosidades cinemáticas</value>
   </data>
   <data name="CheckBoxSG.Size" type="System.Drawing.Size, System.Drawing">
     <value>71, 17</value>
@@ -245,7 +245,7 @@
     <value>80, 17</value>
   </data>
   <data name="CheckBoxMW.Text" xml:space="preserve">
-    <value>Masa molar</value>
+    <value>Masa Molar</value>
   </data>
   <data name="CheckBox1.Size" type="System.Drawing.Size, System.Drawing">
     <value>148, 17</value>
@@ -284,7 +284,7 @@
     <value>Pegar desde Microsoft Excel</value>
   </data>
   <data name="mm.HeaderText" xml:space="preserve">
-    <value>Masa molar</value>
+    <value>Masa Molar</value>
   </data>
   <data name="dens.HeaderText" xml:space="preserve">
     <value>Densidad</value>
@@ -437,7 +437,7 @@
     <value>61, 13</value>
   </data>
   <data name="Label31.Text" xml:space="preserve">
-    <value>Masa molar</value>
+    <value>Masa Molar</value>
   </data>
   <data name="Label30.Size" type="System.Drawing.Size, System.Drawing">
     <value>85, 13</value>
@@ -489,7 +489,7 @@
     <value>69</value>
   </data>
   <data name="Column4.HeaderText" xml:space="preserve">
-    <value>Fracción molar</value>
+    <value>Fracción Molar</value>
   </data>
   <data name="Column4.Width" type="System.Int32, mscorlib">
     <value>101</value>
@@ -505,5 +505,8 @@
   </data>
   <data name="Label44.Text" xml:space="preserve">
     <value>Masa Molar</value>
+  </data>
+  <data name="Button27.Text" xml:space="preserve">
+    <value>Cargar Ensayo</value>
   </data>
 </root>

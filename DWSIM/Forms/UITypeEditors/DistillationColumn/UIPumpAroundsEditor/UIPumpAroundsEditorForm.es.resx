@@ -147,4 +147,7 @@
   <data name="$this.Text" xml:space="preserve">
     <value>Editor de Pump-Arounds</value>
   </data>
+  <data name="Column5.HeaderText" xml:space="preserve">
+    <value>ΔP</value>
+  </data>
 </root>

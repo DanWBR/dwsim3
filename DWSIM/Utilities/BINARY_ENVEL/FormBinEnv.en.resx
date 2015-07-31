@@ -256,4 +256,7 @@
   <data name="TSB_Copy.Text" xml:space="preserve">
     <value>Copy Chart to Clipboard </value>
   </data>
+  <data name="cbPropPack.Items1" xml:space="preserve">
+    <value>Mass Fraction</value>
+  </data>
 </root>

@@ -155,7 +155,7 @@
     <value>Nivel de zoom del diagrama de flujo</value>
   </data>
   <data name="ToolStripButton3.Text" xml:space="preserve">
-    <value>Especificaciónes</value>
+    <value>Zoom Estándar (100%)</value>
   </data>
   <data name="ToolStripButton18.Text" xml:space="preserve">
     <value>Guardar como imagen</value>
@@ -266,7 +266,7 @@
     <value>189, 22</value>
   </data>
   <data name="ComponentesToolStripMenuItem.StatusBarText" xml:space="preserve">
-    <value>Abrir la  ventana de configuración de la simulación activa</value>
+    <value>Abrir Ventana de Configuración de la Simulación.</value>
   </data>
   <data name="ComponentesToolStripMenuItem.Text" xml:space="preserve">
     <value>Ajustes de Simulación</value>
@@ -518,10 +518,10 @@
     <value>289, 22</value>
   </data>
   <data name="HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem.StatusBarText" xml:space="preserve">
-    <value>Utilidad para el cálculo de las condiciones termodinámicas para la formación/disociación hidratos de carbono en una corriente</value>
+    <value>Utilidad para el cálculo de las condiciones termodinámicas para la formación/disociación hidratos en una corriente</value>
   </data>
   <data name="HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem.Text" xml:space="preserve">
-    <value>Formación/Disociación carbohidratos</value>
+    <value>Formación/Disociación Hidratos</value>
   </data>
   <data name="PropriedadesDosComponentesToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -805,5 +805,14 @@
   </data>
   <data name="TSMIOrificePlate.Text" xml:space="preserve">
     <value>Placa de Orificio</value>
+  </data>
+  <data name="ToolStripButton16.Text" xml:space="preserve">
+    <value>Fijar Objetos en Cuadrícula</value>
+  </data>
+  <data name="ToolStripButton17.Text" xml:space="preserve">
+    <value>Conexión Rapida</value>
+  </data>
+  <data name="ToolStripButton20.Text" xml:space="preserve">
+    <value>Mostrar Todo</value>
   </data>
 </root>

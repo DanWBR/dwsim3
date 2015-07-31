@@ -428,7 +428,7 @@
     <value>Agrupar horizontalmente</value>
   </data>
   <data name="ToolStripButton6.Text" xml:space="preserve">
-    <value>Mostrar ayuda contextual</value>
+    <value>Mostrar Ayuda Contextual</value>
   </data>
   <data name="ToolStripButton7.Text" xml:space="preserve">
     <value>Hacer una donación</value>
@@ -437,7 +437,7 @@
     <value>Acerca de DWSIM</value>
   </data>
   <data name="OpenFileDialog1.Title" xml:space="preserve">
-    <value>Abrir una simulación existente</value>
+    <value>Abrir Simulación existente</value>
   </data>
   <data name="SaveFileDialog1.Title" xml:space="preserve">
     <value>Guardar simulación Actual</value>
@@ -576,7 +576,7 @@
     <value>Simulaciones DWSIM (XML) (*.dwxml)|*.dwxml|Simulaciones DWSIM (XML Comprimido) (*.dwxmz)|*.dwxmz|Simulaciones DWSIM (*.dwsim)|*.dwsim|Estudio de Creador de Componentes|*.dwcsd|Estudio de Regresión de Datos |*.dwrsd|Estudio de Regresión de UNIFAC IPs|*.dwruf|Todos los Archivos DWSIM|*.dwxml;*.dwxmz;*.dwsim;*.dwcsd;*.dwrsd;*.dwruf </value>
   </data>
   <data name="RegistrarTiposCOMToolStripMenuItem.Text" xml:space="preserve">
-    <value>Registrat Objetos COM</value>
+    <value>Registrar Objetos COM</value>
   </data>
   <data name="SaveFileDialog1.Filter" xml:space="preserve">
     <value>Simulaciones DWSIM (XML) (*.dwxml)|*.dwxml|Simulaciones DWSIM (XML Comprimido) (*.dwxmz)|*.dwxmz|Simulaciones DWSIM (*.dwsim)|*.dwsim</value>

@@ -229,7 +229,7 @@
     <value>(none)</value>
   </data>
   <data name="Label1.Text" xml:space="preserve">
-    <value>Variables de las Ecuaciones: Temperatura (T) em K, quantidades dos reagentes e produtos (R1, R2, ..., Rn; P1, P2, ... PN), na unidade de concentração selecionada e taxa de reação (r) na unidade de velocidade selecionada.</value>
+    <value>Variables de las Ecuaciones: Temperatura (T) en K, las cantidades de reactivos y productos (R1, R2, ..., Rn, P1, P2, ... PN) en la unidad seleccionada concentración y la velocidad de reacción (r) en la unidad de velocidad seleccionada.</value>
   </data>
   <data name="tbPhase.Items" xml:space="preserve">
     <value>Vapor</value>

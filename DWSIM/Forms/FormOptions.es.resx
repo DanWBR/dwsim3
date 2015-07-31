@@ -608,12 +608,15 @@
     <value>Threads Paralelas en Segundo Plano</value>
   </data>
   <data name="cbSolverMode.Items4" xml:space="preserve">
-    <value>Servidor en la Rede</value>
+    <value>Servidor en la Red</value>
   </data>
   <data name="Label15.Text" xml:space="preserve">
     <value>Puerto TCP</value>
   </data>
   <data name="Label16.Text" xml:space="preserve">
     <value>Dirección IP</value>
+  </data>
+  <data name="GroupBoxNetworkComputerConfig.Text" xml:space="preserve">
+    <value>Configuración para conexión al computador en la red</value>
   </data>
 </root>

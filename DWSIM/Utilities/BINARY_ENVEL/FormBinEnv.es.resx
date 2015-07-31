@@ -117,4 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="check.ToolTipText" xml:space="preserve">
+    <value>Incluir</value>
+  </data>
+  <data name="TSB_PageSetup.Text" xml:space="preserve">
+    <value>Configuración de Página</value>
+  </data>
+  <data name="Label3.Text" xml:space="preserve">
+    <value>Base de Eje X</value>
+  </data>
+  <data name="cbXAxisBasis.Items1" xml:space="preserve">
+    <value>Fracción Másica</value>
+  </data>
+  <data name="cbPropPack.Items1" xml:space="preserve">
+    <value>Fracción Másica</value>
+  </data>
+  <data name="cbPropPack.Items" xml:space="preserve">
+    <value>Fracción Molar</value>
+  </data>
+  <data name="cbXAxisBasis.Items" xml:space="preserve">
+    <value>Fracción Molar</value>
+  </data>
 </root>

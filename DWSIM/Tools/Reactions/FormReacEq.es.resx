@@ -136,25 +136,25 @@
     <value>Ecuación</value>
   </data>
   <data name="cbBase.Items5" xml:space="preserve">
-    <value>Fracción masica</value>
+    <value>Fracción Másica</value>
   </data>
   <data name="cbBase.Items6" xml:space="preserve">
     <value>Presión parcial</value>
   </data>
   <data name="cbBase.Items4" xml:space="preserve">
-    <value>Fracción molar</value>
+    <value>Fracción Molar</value>
   </data>
   <data name="cbBase.Items3" xml:space="preserve">
     <value>Concentración masica</value>
   </data>
   <data name="cbBase.Items2" xml:space="preserve">
-    <value>Concentración molar</value>
+    <value>Concentración Molar</value>
   </data>
   <data name="KryptonLabel7.Text" xml:space="preserve">
     <value>Tmín (k)</value>
   </data>
   <data name="Column3.HeaderText" xml:space="preserve">
-    <value>Masa molar</value>
+    <value>Masa Molar</value>
   </data>
   <data name="Column6.HeaderText" xml:space="preserve">
     <value>Coef. Esteq.</value>

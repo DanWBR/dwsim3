@@ -176,7 +176,7 @@
     <value>147, 13</value>
   </data>
   <data name="Label2.Text" xml:space="preserve">
-    <value>Tolerancia a escribir variables</value>
+    <value>Tolerancia relativa para variables de escritura</value>
   </data>
   <data name="chkWriteMode.Location" type="System.Drawing.Point, System.Drawing">
     <value>165, 6</value>
@@ -1642,5 +1642,8 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Hoja de cálculo</value>
+  </data>
+  <data name="chkWriteMode.Text" xml:space="preserve">
+    <value>Activar Modo de Escritura</value>
   </data>
 </root>

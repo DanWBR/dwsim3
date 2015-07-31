@@ -123,9 +123,6 @@
   <data name="Label41.Text" xml:space="preserve">
     <value>Altura/Long. del Separador:</value>
   </data>
-  <data name="Label45.Text" xml:space="preserve">
-    <value>en.</value>
-  </data>
   <data name="Label19.Text" xml:space="preserve">
     <value>Gas:</value>
   </data>
@@ -156,9 +153,6 @@
   <data name="Label80.Text" xml:space="preserve">
     <value>Alturas relativas Líq/Vap:</value>
   </data>
-  <data name="Label43.Text" xml:space="preserve">
-    <value>en.</value>
-  </data>
   <data name="GroupBox8.Text" xml:space="preserve">
     <value>Datos de entrada</value>
   </data>
@@ -173,9 +167,6 @@
   </data>
   <data name="GroupBox7.Text" xml:space="preserve">
     <value>Detalles</value>
-  </data>
-  <data name="Label44.Text" xml:space="preserve">
-    <value>en.</value>
   </data>
   <data name="Label3.Text" xml:space="preserve">
     <value>Tipo de Separador:</value>

@@ -245,6 +245,9 @@
     <value>566, 466</value>
   </data>
   <data name="FaTabStripItem20.Title" xml:space="preserve">
-    <value>Fracciones de las componentes</value>
+    <value>Fracciones de los componentes</value>
+  </data>
+  <data name="TSB_PageSetup.Text" xml:space="preserve">
+    <value>Configuración de Página</value>
   </data>
 </root>

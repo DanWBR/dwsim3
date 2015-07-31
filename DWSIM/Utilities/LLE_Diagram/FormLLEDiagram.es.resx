@@ -130,4 +130,7 @@
   <data name="Label5.Text" xml:space="preserve">
     <value>Condiciones</value>
   </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>DWSIM - Utilidades: Diagrama de Fases Triangular (ELL)</value>
+  </data>
 </root>

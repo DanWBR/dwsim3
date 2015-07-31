@@ -162,4 +162,7 @@
   <data name="Label23.Text" xml:space="preserve">
     <value>Edición actual</value>
   </data>
+  <data name="HiddenToolStripMenuItem.Text" xml:space="preserve">
+    <value>Oculto</value>
+  </data>
 </root>

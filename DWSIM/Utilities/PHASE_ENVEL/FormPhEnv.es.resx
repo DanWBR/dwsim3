@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CheckBox2.Text" xml:space="preserve">
-    <value>Incluir el punto de operación</value>
+    <value>Incluir Punto de Operación</value>
   </data>
   <data name="CheckBox3.Text" xml:space="preserve">
     <value>Incluir curva de estabilidad de fase (sólo PT/TP)</value>
@@ -173,5 +173,8 @@
   </data>
   <data name="FaTabStripItem2.Title" xml:space="preserve">
     <value>Tabla</value>
+  </data>
+  <data name="chkpip.Text" xml:space="preserve">
+    <value>Incluir curva de Identificación de Fases</value>
   </data>
 </root>

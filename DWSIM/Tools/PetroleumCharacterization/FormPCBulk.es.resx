@@ -237,7 +237,7 @@
     <value>69</value>
   </data>
   <data name="Column4.HeaderText" xml:space="preserve">
-    <value>Fracción molar</value>
+    <value>Fracción Molar</value>
   </data>
   <data name="Column4.Width" type="System.Int32, mscorlib">
     <value>101</value>
