@@ -775,4 +775,7 @@
   <data name="chkDoPhaseId.Text" xml:space="preserve">
     <value>Aplicar algoritmo de identificación de fase luego del cálculo de equilibrio</value>
   </data>
+  <data name="ComboBox3.Items" xml:space="preserve">
+    <value>Fijo</value>
+  </data>
 </root>

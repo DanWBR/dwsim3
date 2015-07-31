@@ -127,7 +127,7 @@
     <value>Copia</value>
   </data>
   <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Set de Reacciones</value>
+    <value>Paquetes de Reacciones</value>
   </data>
   <data name="Column1.HeaderText" xml:space="preserve">
     <value>Nombre</value>
@@ -207,5 +207,8 @@
   </data>
   <data name="EquilíbrioToolStripMenuItem.Text" xml:space="preserve">
     <value>Equilibrio</value>
+  </data>
+  <data name="HeterogêneaCatalíticaToolStripMenuItem.Text" xml:space="preserve">
+    <value>Heterogénea (Catalítica)</value>
   </data>
 </root>

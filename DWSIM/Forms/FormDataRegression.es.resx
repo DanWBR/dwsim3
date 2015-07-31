@@ -1679,4 +1679,7 @@
   <data name="ToolStripMenuItem7.Text" xml:space="preserve">
     <value>Generar Puntos (PRSV2-VL)</value>
   </data>
+  <data name="check.ToolTipText" xml:space="preserve">
+    <value>Incluir en Regresión</value>
+  </data>
 </root>

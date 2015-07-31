@@ -273,7 +273,7 @@
     <value>Apoyar el Proyecto</value>
   </data>
   <data name="Label15.Text" xml:space="preserve">
-    <value>DWSIM es un software de código abierto y siempre lo será. Sin embargo, hay costos de desarrollo (adquisición de libros y artículos técnicos) y de mantenimiento (servidor web, hardware) que se necesitan para mantener viva y en crecimiento del proyecto. Si DWSIM ha gustado a usted de algún modo, por favor considere hacer una donación usando tu cuenta de PayPal. Cualquier cantidad será muy bienvenido y, si lo desea, su nombre aparecerá en la lista de donantes a la página Wiki.</value>
+    <value>DWSIM es un software de código abierto y siempre lo será. Sin embargo, hay costos de desarrollo (adquisición de libros y artículos técnicos) y de mantenimiento (servidor web, hardware) que se necesitan para mantener el proyecto vivo y en crecimiento. Si DWSIM le ha gustado de algún modo, por favor considere hacer una donación usando tu cuenta de PayPal. Cualquier cantidad será muy bienvenida y, si lo desea, su nombre aparecerá en la lista de donantes a la página Wiki.</value>
   </data>
   <data name="Button8.Text" xml:space="preserve">
     <value>Donar Ahora</value>

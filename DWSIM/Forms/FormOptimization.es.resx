@@ -127,7 +127,7 @@
     <value>Nuevo</value>
   </data>
   <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Administrador de casos</value>
+    <value>Administrador de Casos</value>
   </data>
   <data name="GroupBox3.Text" xml:space="preserve">
     <value>Nombre y Descripción</value>
@@ -191,7 +191,7 @@
     <value>68, 17</value>
   </data>
   <data name="rbMinimize.Text" xml:space="preserve">
-    <value>Minimizar</value>
+    <value>Minimización</value>
   </data>
   <data name="rbMaximize.Location" type="System.Drawing.Point, System.Drawing">
     <value>77, 3</value>
@@ -290,7 +290,7 @@
     <value>Metodo de Resolución</value>
   </data>
   <data name="btnRun.Text" xml:space="preserve">
-    <value>Iniciar optimización</value>
+    <value>Iniciar Optimización</value>
   </data>
   <data name="btnAbort.Text" xml:space="preserve">
     <value>Abortar Optimización</value>

@@ -140,7 +140,7 @@
     <value>Información</value>
   </data>
   <data name="BtnShowIPGrid.Text" xml:space="preserve">
-    <value>Mostrar los Parámetros</value>
+    <value>Mostrar Parámetros</value>
   </data>
   <data name="BtnNewTemp.Size" type="System.Drawing.Size, System.Drawing">
     <value>110, 23</value>

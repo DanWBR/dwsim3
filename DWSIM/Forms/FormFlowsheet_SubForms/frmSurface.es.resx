@@ -311,6 +311,6 @@
     <value>Solver para Ajustes Simultáneos trabajando, por favor espere...</value>
   </data>
   <data name="ZoomPadrão100ToolStripMenuItem.Text" xml:space="preserve">
-    <value>Zoom por defecto (100%)</value>
+    <value>Zoom estándar (100%)</value>
   </data>
 </root>

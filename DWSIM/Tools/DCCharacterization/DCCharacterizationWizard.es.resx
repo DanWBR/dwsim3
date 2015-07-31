@@ -489,7 +489,7 @@
     <value>69</value>
   </data>
   <data name="Column4.HeaderText" xml:space="preserve">
-    <value>Fracción molar</value>
+    <value>Fracción Molar</value>
   </data>
   <data name="Column4.Width" type="System.Int32, mscorlib">
     <value>101</value>
@@ -505,5 +505,8 @@
   </data>
   <data name="Label44.Text" xml:space="preserve">
     <value>Masa Molar</value>
+  </data>
+  <data name="Button27.Text" xml:space="preserve">
+    <value>Cargar Ensayo</value>
   </data>
 </root>

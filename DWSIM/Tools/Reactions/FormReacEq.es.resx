@@ -136,13 +136,13 @@
     <value>Ecuación</value>
   </data>
   <data name="cbBase.Items5" xml:space="preserve">
-    <value>Fracción masica</value>
+    <value>Fracción Másica</value>
   </data>
   <data name="cbBase.Items6" xml:space="preserve">
     <value>Presión parcial</value>
   </data>
   <data name="cbBase.Items4" xml:space="preserve">
-    <value>Fracción molar</value>
+    <value>Fracción Molar</value>
   </data>
   <data name="cbBase.Items3" xml:space="preserve">
     <value>Concentración masica</value>
