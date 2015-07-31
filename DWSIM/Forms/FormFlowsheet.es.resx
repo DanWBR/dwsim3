@@ -266,7 +266,7 @@
     <value>189, 22</value>
   </data>
   <data name="ComponentesToolStripMenuItem.StatusBarText" xml:space="preserve">
-    <value>Abrir la  ventana de configuración de la simulación activa</value>
+    <value>Abrir Ventana de Configuración de la Simulación.</value>
   </data>
   <data name="ComponentesToolStripMenuItem.Text" xml:space="preserve">
     <value>Ajustes de Simulación</value>

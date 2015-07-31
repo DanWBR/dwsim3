@@ -133,7 +133,7 @@
     <value>Flujo de calor</value>
   </data>
   <data name="ComboBox2.Items6" xml:space="preserve">
-    <value>Fracción de líquido</value>
+    <value>Fracción de Líquido</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">

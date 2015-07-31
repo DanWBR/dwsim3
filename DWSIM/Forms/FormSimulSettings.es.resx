@@ -167,7 +167,7 @@
     <value>Guardar en un archivo</value>
   </data>
   <data name="KryptonButton22.Text" xml:space="preserve">
-    <value>Abrir desde un archivo</value>
+    <value>Abrir desde Archivo</value>
   </data>
   <data name="KryptonButton18.Text" xml:space="preserve">
     <value>Eliminar Seleccionado</value>
@@ -777,5 +777,8 @@
   </data>
   <data name="ComboBox3.Items" xml:space="preserve">
     <value>Fijo</value>
+  </data>
+  <data name="Button3.Text" xml:space="preserve">
+    <value>Abrir Administrador de Assay</value>
   </data>
 </root>

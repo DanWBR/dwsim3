@@ -194,7 +194,7 @@
     <comment>1</comment>
   </data>
   <data name="PROP_DC_4" xml:space="preserve">
-    <value>Flujo molar de Destilado</value>
+    <value>Flujo Molar de Destilado</value>
     <comment>1</comment>
   </data>
   <data name="PROP_DC_5" xml:space="preserve">
@@ -551,11 +551,11 @@
     <value>Flujo Másico (Fase Sólida)</value>
   </data>
   <data name="PROP_MS_16" xml:space="preserve">
-    <value>Entalpía molar de la Fase Vapor</value>
+    <value>Entalpía Molar de la Fase Vapor</value>
     <comment>0</comment>
   </data>
   <data name="PROP_MS_17" xml:space="preserve">
-    <value>Entropía molar la Fase Vapor</value>
+    <value>Entropía Molar la Fase Vapor</value>
     <comment>0</comment>
   </data>
   <data name="PROP_MS_18" xml:space="preserve">
@@ -631,7 +631,7 @@
     <comment>0</comment>
   </data>
   <data name="PROP_MS_34" xml:space="preserve">
-    <value>Entalpía molar de la fase Líquida (Mezcla)</value>
+    <value>Entalpía Molar de la fase Líquida (Mezcla)</value>
     <comment>0</comment>
   </data>
   <data name="PROP_MS_35" xml:space="preserve">
@@ -667,7 +667,7 @@
     <comment>0</comment>
   </data>
   <data name="PROP_MS_42" xml:space="preserve">
-    <value>Flujo molar de la fase líquida (Mezcla)</value>
+    <value>Flujo Molar de la Fase Líquida (Mezcla)</value>
     <comment>0</comment>
   </data>
   <data name="PROP_MS_43" xml:space="preserve">
@@ -695,7 +695,7 @@
     <comment>0</comment>
   </data>
   <data name="PROP_MS_49" xml:space="preserve">
-    <value>Masa molar de la Fase Líquida (1)</value>
+    <value>Masa Molar de la Fase Líquida (1)</value>
     <comment>0</comment>
   </data>
   <data name="PROP_MS_5" xml:space="preserve">
@@ -751,7 +751,7 @@
     <comment>0</comment>
   </data>
   <data name="PROP_MS_61" xml:space="preserve">
-    <value>Flujo volumétrico de la Fase Líquida (1)</value>
+    <value>Flujo Volumétrico de la Fase Líquida (1)</value>
     <comment>0</comment>
   </data>
   <data name="PROP_MS_62" xml:space="preserve">
@@ -907,7 +907,7 @@
     <comment>0</comment>
   </data>
   <data name="PROP_MS_97" xml:space="preserve">
-    <value>Flujo volumétrico de la fase acuosa</value>
+    <value>Flujo Volumétrico de la fase acuosa</value>
     <comment>0</comment>
   </data>
   <data name="PROP_MS_98" xml:space="preserve">
@@ -1059,11 +1059,11 @@
     <comment>1</comment>
   </data>
   <data name="PROP_SC_10" xml:space="preserve">
-    <value>Flujo Molar de vapor en la zona de Agotamiento</value>
+    <value>Flujo Molar de Vapor en la zona de Agotamiento</value>
     <comment>0</comment>
   </data>
   <data name="PROP_SC_11" xml:space="preserve">
-    <value>Flujo Molar de vapor en la zona de Rectificación</value>
+    <value>Flujo Molar de Vapor en la zona de Rectificación</value>
     <comment>0</comment>
   </data>
   <data name="PROP_SC_12" xml:space="preserve">
@@ -1099,11 +1099,11 @@
     <comment>0</comment>
   </data>
   <data name="PROP_SC_8" xml:space="preserve">
-    <value>Flujo Molar de Líquido en la zona de Agotamiento</value>
+    <value>Flujo Molar del Líquido en la zona de Agotamiento</value>
     <comment>0</comment>
   </data>
   <data name="PROP_SC_9" xml:space="preserve">
-    <value>Flujo Molar de Líquido en la zona de Rectificación</value>
+    <value>Flujo Molar del Líquido en la zona de Rectificación</value>
     <comment>0</comment>
   </data>
   <data name="PROP_SP_1" xml:space="preserve">

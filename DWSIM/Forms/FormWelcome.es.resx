@@ -125,7 +125,7 @@
     <value>282, 13</value>
   </data>
   <data name="Label11.Text" xml:space="preserve">
-    <value>Abrir una nueva Ventana del Creador de Componentes.</value>
+    <value>Abrir herramienta de Regresión de Datos Experimentales.</value>
   </data>
   <data name="Label12.Size" type="System.Drawing.Size, System.Drawing">
     <value>194, 17</value>
@@ -225,13 +225,13 @@
     <value>257, 13</value>
   </data>
   <data name="Label6.Text" xml:space="preserve">
-    <value>Abrir la utilidad de regresión de datos experimentales.</value>
+    <value>Abrir nueva ventana de Creador de Componentes.</value>
   </data>
   <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
     <value>246, 17</value>
   </data>
   <data name="Label7.Text" xml:space="preserve">
-    <value>Crear Creador de Componentes</value>
+    <value>Crear Nuevo Componente</value>
   </data>
   <data name="Label10.Size" type="System.Drawing.Size, System.Drawing">
     <value>227, 13</value>

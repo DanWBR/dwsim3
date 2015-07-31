@@ -124,7 +124,7 @@
     <value>Temperatura Crítica </value>
   </data>
   <data name="LIQMassamolar" xml:space="preserve">
-    <value>LIQ masa molar </value>
+    <value>LIQ Masa molar </value>
   </data>
   <data name="doobjetoqualelaperte" xml:space="preserve">
     <value>el objeto al que pertenece. </value>
@@ -211,7 +211,7 @@
     <value>Coeficiente de traslacion de volumen (SRK)</value>
   </data>
   <data name="Massamolardafaselqui" xml:space="preserve">
-    <value>Masa molar de la Fase Líquida </value>
+    <value>Masa Molar de la Fase Líquida </value>
   </data>
   <data name="Configuroolayoutdasj" xml:space="preserve">
     <value>Configurar Diseño de las Ventanas</value>
@@ -334,7 +334,7 @@
     <value>Densidad de la Fase Líquida: Método Rackett </value>
   </data>
   <data name="Solomido" xml:space="preserve">
-    <value>Suelo (mojado) </value>
+    <value>Suelo (humedo) </value>
   </data>
   <data name="DCCondenserDuty" xml:space="preserve">
     <value>Calor Eliminado en el Condensador.</value>
@@ -382,7 +382,7 @@
     <value>Color 2 de la pendiente, si procede </value>
   </data>
   <data name="MassamolarFaseLquida" xml:space="preserve">
-    <value>Masa molar (Fase Líquida) </value>
+    <value>Masa Molar (Fase Líquida) </value>
   </data>
   <data name="DCFlows" xml:space="preserve">
     <value>Flujo entre las etapas </value>
@@ -400,7 +400,7 @@
     <value>5. Estimaciones Iníciales </value>
   </data>
   <data name="MassamolarMistura" xml:space="preserve">
-    <value>Masa molar (mezcla) </value>
+    <value>Masa Molar (mezcla) </value>
   </data>
   <data name="Calculadordesativado" xml:space="preserve">
     <value>Calculadora Deshabilitada</value>
@@ -469,7 +469,7 @@
     <value>Cargando Noticias ... </value>
   </data>
   <data name="VelocidadedoLquidoms" xml:space="preserve">
-    <value>Velocidad de líquido (m/s) </value>
+    <value>Velocidad del Líquido (m/s) </value>
   </data>
   <data name="Eficinciadoaquecedor2" xml:space="preserve">
     <value>Eficiencia de un calentador en un proceso ideal, donde todo el calor transferido por el flujo de la energía estará disponible para la corriente de salida </value>
@@ -586,7 +586,7 @@
     <value>LIQ específicas Entropía </value>
   </data>
   <data name="MassamolarFaseVapor" xml:space="preserve">
-    <value>Masa molar (vapor) </value>
+    <value>Masa Molar (vapor) </value>
   </data>
   <data name="Limitesdavarivelmani" xml:space="preserve">
     <value>Límites de la variable manipulada </value>
@@ -679,7 +679,7 @@
     <value>&lt;Sin variables manipuladas&gt;</value>
   </data>
   <data name="VolumeCrticom3kmol" xml:space="preserve">
-    <value>Volumen crítico (m3/kmol) </value>
+    <value>Volumen Crítico (m3/kmol) </value>
   </data>
   <data name="Ocalculadorexcedeuon" xml:space="preserve">
     <value>Se superó el número de iteraciones de Presión. </value>
@@ -988,7 +988,7 @@
     <value>Crea nueva simulación en estado estacionario.</value>
   </data>
   <data name="RCSTRPGridItem1Help" xml:space="preserve">
-    <value>Volumen de reactor </value>
+    <value>Volumen de Reactor </value>
   </data>
   <data name="FormTips_KryptonLabel13Text" xml:space="preserve">
     <value>Abrir el archivo de ayuda en línea de DWSIM.</value>
@@ -1030,7 +1030,7 @@
     <value>Buscando subintervalo de la solución...</value>
   </data>
   <data name="RCSTRPGridItem1" xml:space="preserve">
-    <value>Volumen de reactor </value>
+    <value>Volumen de Reactor </value>
   </data>
   <data name="OverallLiquid" xml:space="preserve">
     <value>Líquido (mezcla) </value>
@@ -1165,7 +1165,7 @@
     <value>Tensión Superficial (mezcla) </value>
   </data>
   <data name="VolumeCrtico" xml:space="preserve">
-    <value>Volumen crítico </value>
+    <value>Volumen Crítico </value>
   </data>
   <data name="ConcMssica" xml:space="preserve">
     <value>Conc. Másica</value>
@@ -1216,7 +1216,7 @@
     <value>Flujo @ T, P, </value>
   </data>
   <data name="LIQFraomolardafase" xml:space="preserve">
-    <value>LIQ fracción molar de la fase </value>
+    <value>LIQ Fracción molar de la fase </value>
   </data>
   <data name="Noforamencontradasco1" xml:space="preserve">
     <value>No hubo condiciones favorables para la formación de hidratos a la presión de la corriente.</value>
@@ -1384,7 +1384,7 @@
     <value>Entropía Específica (Mezcla)</value>
   </data>
   <data name="MolarEntropy" xml:space="preserve">
-    <value>Entropía molar</value>
+    <value>Entropía Molar</value>
   </data>
   <data name="BorderColor" xml:space="preserve">
     <value>BorderColor</value>
@@ -1615,13 +1615,13 @@
     <value>Pbol ( </value>
   </data>
   <data name="ConcentraoMolar" xml:space="preserve">
-    <value>Concentración molar </value>
+    <value>Concentración Molar </value>
   </data>
   <data name="SCLightKeyMF" xml:space="preserve">
     <value>Fracción Molar del comp. Clave Pesado en el Tope</value>
   </data>
   <data name="MISTMassamolar" xml:space="preserve">
-    <value>MIST masa molar </value>
+    <value>Mezc. Masa molar </value>
   </data>
   <data name="Potnciagerada" xml:space="preserve">
     <value>La energía generada</value>
@@ -1846,7 +1846,7 @@
     <value>Pseudo-componentes </value>
   </data>
   <data name="Massamolardafasevapo" xml:space="preserve">
-    <value>Masa molar del vapor </value>
+    <value>Masa Molar del vapor </value>
   </data>
   <data name="PerfilHidrulico" xml:space="preserve">
     <value>Perfil hidráulico </value>
@@ -2140,13 +2140,13 @@
     <value>Retraso en la aceleración </value>
   </data>
   <data name="VolumeEspecfico" xml:space="preserve">
-    <value>Volumen específico </value>
+    <value>Volumen Específico </value>
   </data>
   <data name="Tolerncia" xml:space="preserve">
     <value>Tolerancia </value>
   </data>
   <data name="FraodeLquido" xml:space="preserve">
-    <value>Fracción de líquido</value>
+    <value>Fracción de Líquido</value>
   </data>
   <data name="Incrementos" xml:space="preserve">
     <value>Incrementos </value>
@@ -2656,7 +2656,7 @@
     <value>Temperatura vs Volumen </value>
   </data>
   <data name="VelocidadedoLquido" xml:space="preserve">
-    <value>Velocidad de líquido</value>
+    <value>Velocidad del Líquido</value>
   </data>
   <data name="_Propano" xml:space="preserve">
     <value>Propano (C3) </value>
@@ -2671,7 +2671,7 @@
     <value>5. Varios </value>
   </data>
   <data name="Massamolar" xml:space="preserve">
-    <value>Masa molar </value>
+    <value>Masa Molar </value>
   </data>
   <data name="CompPseudo" xml:space="preserve">
     <value>Pseudo-componentes </value>
@@ -2797,7 +2797,7 @@
     <value>Rocas </value>
   </data>
   <data name="FormTips_KryptonLabel5Text" xml:space="preserve">
-    <value>Abrir una simulación</value>
+    <value>Abrir una Simulación</value>
   </data>
   <data name="_1Heptanol" xml:space="preserve">
     <value>1-heptanol (C7H15OH) </value>
@@ -3072,7 +3072,7 @@ Las propiedades se calculan directamente desde la Ecuación de Estado o datos ex
     <value>Tolerancia para el cálculo P </value>
   </data>
   <data name="Vazovolumtricadacorr" xml:space="preserve">
-    <value>Flujo volumétrico de la corriente de </value>
+    <value>Flujo Volumétrico de la corriente de </value>
   </data>
   <data name="Existeumafasevaporna21" xml:space="preserve">
     <value>Hay una entrada de vapor en el Intercambiador de Calor </value>
@@ -3579,7 +3579,7 @@ Las propiedades se calculan directamente desde la Ecuación de Estado o datos ex
     <value>O2 </value>
   </data>
   <data name="Massamolardamistura" xml:space="preserve">
-    <value>Masa molar de la mezcla </value>
+    <value>Masa Molar de la mezcla </value>
   </data>
   <data name="Pest" xml:space="preserve">
     <value>Plagas ( </value>
@@ -3681,7 +3681,7 @@ Las propiedades se calculan directamente desde la Ecuación de Estado o datos ex
     <value>Válvula </value>
   </data>
   <data name="MolarEnthalpy" xml:space="preserve">
-    <value>Entalpía molar</value>
+    <value>Entalpía Molar</value>
   </data>
   <data name="Nmerodeiteraesusadas" xml:space="preserve">
     <value>Número de iteraciones usadas en el cálculo. </value>
@@ -3876,7 +3876,7 @@ Las propiedades se calculan directamente desde la Ecuación de Estado o datos ex
     <value>Fracción volumétrica de la mezcla </value>
   </data>
   <data name="VolumeMolar" xml:space="preserve">
-    <value>Volumen molar </value>
+    <value>Volumen Molar </value>
   </data>
   <data name="SCMinimumRefluxRatio" xml:space="preserve">
     <value>Relación de Reflujo Mínimo</value>
@@ -3936,7 +3936,7 @@ Las propiedades se calculan directamente desde la Ecuación de Estado o datos ex
     <value>Este Paquete de Propiedades, Entalpias, Entropias y Capacidades Caloríficas  se calculan a partir de modelo Lee-Kesler.</value>
   </data>
   <data name="VolEspecfico" xml:space="preserve">
-    <value>Volumen específico </value>
+    <value>Vol. Específico </value>
   </data>
   <data name="AF" xml:space="preserve">
     <value>Factor Acéntrico</value>
@@ -3951,7 +3951,7 @@ Las propiedades se calculan directamente desde la Ecuación de Estado o datos ex
     <value>Flash PS – Numero Máximo de Iteraciones del Bucle Externo</value>
   </data>
   <data name="ChaoSeaderLiquidMolarVolume" xml:space="preserve">
-    <value>Volumen molar neto Chao-Seader</value>
+    <value>Volumen Molar Líquido Chao-Seader</value>
   </data>
   <data name="CASNumber" xml:space="preserve">
     <value>Número CAS</value>
@@ -4708,10 +4708,10 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
     <value>Usar Modelo Ideal para Fugacidade da Fase Vapor (0 = Desactivar, 1 = Activar)</value>
   </data>
   <data name="LiquidDensity" xml:space="preserve">
-    <value>Masa Específica de Líquido</value>
+    <value>Masa Específica del Líquido</value>
   </data>
   <data name="SolidDensity" xml:space="preserve">
-    <value>Massa Específica do Sólido</value>
+    <value>Masa Específica del Sólido</value>
   </data>
   <data name="Correntedeentrada4" xml:space="preserve">
     <value>Corriente de Entrada (4) </value>
