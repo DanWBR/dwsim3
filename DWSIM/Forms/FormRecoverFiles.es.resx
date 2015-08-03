@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Label1.Text" xml:space="preserve">
-    <value>El DWSIM no ha finalizado correctamente la última vez que se ejecutó. Además, los siguientes archivos se guardaron como copia de seguridad de las simulaciones abiertas en la ejecución anterior.Seleccione las simulaciones que desea abrir. Puede guardarlas una vez que se abran en DWSIM.</value>
+    <value>DWSIM no ha finalizado correctamente la última vez que se ejecutó. Además, los siguientes archivos se guardaron como copia de seguridad de las simulaciones abiertas en la ejecución anterior.Seleccione las simulaciones que desea abrir. Puede guardarlas una vez que se abran en DWSIM.</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Column1.Width" type="System.Int32, mscorlib">

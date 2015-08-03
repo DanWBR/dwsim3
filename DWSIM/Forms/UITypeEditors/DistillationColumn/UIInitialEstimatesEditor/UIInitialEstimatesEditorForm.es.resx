@@ -148,7 +148,7 @@
     <value>Archivo</value>
   </data>
   <data name="Column4.HeaderText" xml:space="preserve">
-    <value>Flujo de vapor</value>
+    <value>Flujo de Vapor</value>
   </data>
   <data name="ofd1.Filter" xml:space="preserve">
     <value>Archivo con las estimados iniciales para la columna de destilación | *. dwcdi</value>

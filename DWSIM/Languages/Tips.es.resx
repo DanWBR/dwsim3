@@ -199,9 +199,9 @@
     <value>Es importante definir bien la ubicación del Reciclo en el diagrama de flujo, para evitar cálculos innecesarios. Insertarlo en el punto más cercano del punto donde los flujos de cálculo retornan a un punto ya calculado.</value>
   </data>
   <data name="REQL001" xml:space="preserve">
-    <value>El reactor de equilibrio es utilizado se tenga conocimiento de las reacciones que se producirán. Cuando este no es el caso, utilice el reactor Gibbs.</value>
+    <value>El Reactor de Equilibrio es utilizado se tenga conocimiento de las reacciones que se producirán. Cuando este no es el caso, utilice el reactor Gibbs.</value>
   </data>
   <data name="RGIB001" xml:space="preserve">
-    <value>El reactor de Gibbs es útil cuando no hay información acerca de las reacciones que pueden ocurrir en el sistema. Recuerde que el simple hecho del resultado muestre algún tipo de reacción, no quiere decir que esta reacción será espontánea!</value>
+    <value>El Reactor de Gibbs es útil cuando no hay información acerca de las reacciones que pueden ocurrir en el sistema. Recuerde que el simple hecho del resultado muestre algún tipo de reacción, no quiere decir que esta reacción será espontánea!</value>
   </data>
 </root>

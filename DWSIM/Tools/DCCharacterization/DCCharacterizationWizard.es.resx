@@ -146,7 +146,7 @@
     <value>Haga clic en 'Siguiente' para continuar.</value>
   </data>
   <data name="Label5.Text" xml:space="preserve">
-    <value>Seleccione los elementos para que los datos experimentales están disponibles. Y debe proporcionar al menos la curva de destilación en una de las formas enumeradas en el cuadro de texto correspondiente.</value>
+    <value>Seleccione los elementos para los cuales tenga disponibles datos experimentales. Y debe proporcionar al menos la curva de destilación en una de las formas enumeradas en el cuadro de texto correspondiente.</value>
   </data>
   <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>198, 16</value>

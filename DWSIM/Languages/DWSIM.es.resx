@@ -535,7 +535,7 @@
     <value>Tratamiento de texto </value>
   </data>
   <data name="EsteSistemadeUnidade1" xml:space="preserve">
-    <value>El Sistema de Unidades no se puede guardar</value>
+    <value>Este Sistema de Unidades no se puede guardar</value>
   </data>
   <data name="VerifiqueEstequiometria" xml:space="preserve">
     <value>Por favor, consulte la estequiometria de la reacción. </value>
@@ -592,7 +592,7 @@
     <value>Límites de la variable manipulada </value>
   </data>
   <data name="SCReboilerDuty" xml:space="preserve">
-    <value>Duty del Reboiler</value>
+    <value>Carga Térmica del Rehervidor</value>
   </data>
   <data name="Gerencioobjetos" xml:space="preserve">
     <value>Gestión de objetos</value>
@@ -1540,7 +1540,7 @@
     <value>Tipografía</value>
   </data>
   <data name="Erronavazomssica" xml:space="preserve">
-    <value>Error en el flujo de masa </value>
+    <value>Error en el flujo másico</value>
   </data>
   <data name="PRIWVT" xml:space="preserve">
     <value>Peng-Robinson (traducción del volumen de agua y Imiscível)</value>
@@ -2089,7 +2089,7 @@
     <value>Tolueno (C7H8) </value>
   </data>
   <data name="SCCondenserDuty" xml:space="preserve">
-    <value>Duty del Condensador</value>
+    <value>Carga Térmica del Condensador</value>
   </data>
   <data name="Outros" xml:space="preserve">
     <value>Otro </value>
@@ -2317,7 +2317,7 @@
     <value>VAP fracción de masa de la fase </value>
   </data>
   <data name="VazomssicanaFaseVapo" xml:space="preserve">
-    <value>Flujo de masa en la Fase Vapor </value>
+    <value>Flujo de másico en la Fase Vapor </value>
   </data>
   <data name="Nmeromximodeiteraesd" xml:space="preserve">
     <value>Número máximo de iteraciones de Reciclo. </value>
@@ -2822,7 +2822,8 @@
   </data>
   <data name="DescSoaveRedlichKwongSRK" xml:space="preserve">
     <value>Paquete de Propiedades que utiliza la EE Redlich-Kwong modificado por Soave. Adecuado para su uso con aceite y no-condensables. 
-Las propiedades se calculan directamente desde el Estado o datos experimentales excepto: densidad de la Fase Líquida: conductividad térmica Rackett método de Fase Líquida: método de conductividad térmica de más tarde recibido et al vapor fase: método de viscosidad Ely y Hanley de Fase Vapor: Jossi método-Stiel-Thodos tensión de la Fase Líquida: método Brock-aves</value>
+Las propiedades se calculan directamente desde el Estado o datos experimentales excepto:
+Densidad de la Fase Líquida: conductividad térmica Rackett método de Fase Líquida: método de conductividad térmica de más tarde recibido et al vapor fase: método de viscosidad Ely y Hanley de Fase Vapor: Jossi método-Stiel-Thodos tensión de la Fase Líquida: método Brock-aves</value>
   </data>
   <data name="Joelhoem90" xml:space="preserve">
     <value>Codo 90 ° </value>
@@ -2861,7 +2862,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>Fenol (C6H6O)</value>
   </data>
   <data name="EsteSistemadeUnidade" xml:space="preserve">
-    <value>El Sistema de Unidades no se puede remover. </value>
+    <value>Este Sistema de Unidades no se puede remover. </value>
   </data>
   <data name="PC" xml:space="preserve">
     <value>Pc </value>
@@ -3041,7 +3042,7 @@ Las propiedades se calculan directamente desde el Estado o datos experimentales 
     <value>En este Paquete de Propiedades, las Entalpias, Entropías y Capacidades Caloríficas se calcula a partir del modelo de Lee-Kesler. </value>
   </data>
   <data name="FormTips_KryptonLabel8Text" xml:space="preserve">
-    <value>Guía del Usuario *</value>
+    <value>Guía de Usuario *</value>
   </data>
   <data name="Concreto" xml:space="preserve">
     <value>Concreto </value>
@@ -3288,7 +3289,7 @@ Las propiedades se calculan directamente desde la Ecuación de Estado o datos ex
     <value>No hay corriente de energía asociada con el calentador.</value>
   </data>
   <data name="Nohcorrentedeenergia3" xml:space="preserve">
-    <value>Flujo de energía no asociada a la tubería.</value>
+    <value>Flujo de Energía no asociada a la tubería.</value>
   </data>
   <data name="Nohcorrentedeenergia4" xml:space="preserve">
     <value>No hay corriente de energía asociada a la bomba.</value>
@@ -3528,7 +3529,7 @@ Las propiedades se calculan directamente desde la Ecuación de Estado o datos ex
     <value>Caida de Presión (caída de presión del líquido caliente)</value>
   </data>
   <data name="Atabelapodeseroculta" xml:space="preserve">
-    <value>El cuadro se puede ocultar desmarcando el tema "Mostrar" en el menú contextual </value>
+    <value>El cuadro se puede ocultar desmarcando la opción "Mostrar" en el menú contextual </value>
   </data>
   <data name="CalorRemovido" xml:space="preserve">
     <value>Calor Eliminado </value>
@@ -3618,7 +3619,7 @@ Las propiedades se calculan directamente desde la Ecuación de Estado o datos ex
     <value>Flujo volumétrico en la fase de vapor </value>
   </data>
   <data name="DCReboilerDuty" xml:space="preserve">
-    <value>El Calor Añadido en Rehervidor</value>
+    <value>Calor Añadido en Rehervidor</value>
   </data>
   <data name="Osvaloressoapagadosd" xml:space="preserve">
     <value>Los valores se borran de la memoria y no se pueden recuperar. </value>
@@ -4278,7 +4279,7 @@ Las propiedades se calculan directamente desde la Ecuación de Estado o datos ex
     <value>Balance de Masa (Elementos)</value>
   </data>
   <data name="RGElementBalance_description" xml:space="preserve">
-    <value>El elemento de balance de masa debe ser igual a 0 en la solución</value>
+    <value>El balance de masa para los elementos debe ser siempre igual a 0 en la solución</value>
   </data>
   <data name="RGElementMatrix" xml:space="preserve">
     <value>Matriz de Elementos</value>
@@ -4846,7 +4847,7 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
     <value>Añadir sistema de simulación de Unidades</value>
   </data>
   <data name="ConfirmAddUnitSystemFromSimulation" xml:space="preserve">
-    <value>La simulación cargada contiene un sistema de unidades definidas por el usuario que no está presente en la lista de sistema. ¿Quieres añadir este sistema a su lista?</value>
+    <value>La simulación cargada contiene un sistema de unidades definidas por el usuario que no está presente en la lista de sistema. ¿Quieres añadir este sistema a la lista?</value>
   </data>
   <data name="EnergyStreamRequired" xml:space="preserve">
     <value>El método de cálculo seleccionado exige que una Corriente de Energía esté conectada a la Operación Unitaria.</value>
@@ -5008,7 +5009,7 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
     <value>Actualizando datos de Diagrama de Flujo...</value>
   </data>
   <data name="ClientWaitingForResults" xml:space="preserve">
-    <value>A la espera de resultados del servidor ...</value>
+    <value>Esperando resultados del servidor ...</value>
   </data>
   <data name="AzureClientCheckingForServerOnEndpoint" xml:space="preserve">
     <value>Verificando la existencia de un servidor conectado al Service Bus...</value>
