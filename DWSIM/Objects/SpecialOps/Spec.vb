@@ -400,32 +400,19 @@ Namespace DWSIM.SimulationObjects.SpecialOps
 
             If Me.GraphicObject.Active Then
 
-                'If Me.ExpContext Is Nothing Then
-                '// Define the context of our expression
-                'ExpressionContext context = new ExpressionContext();
-                '// Import all members of the Math type into the default namespace
-                'context.Imports.ImportStaticMembers(typeof(Math));
                 Me.ExpContext = New Ciloci.Flee.ExpressionContext
-                With Me.ExpContext
-                    .Imports.AddType(GetType(System.Math))
-                End With
-                'End If
+                Me.ExpContext.Imports.AddType(GetType(System.Math))
 
                 If Not Me.GetSourceVarValue Is Nothing And Not Me.GetTargetVarValue Is Nothing Then
 
                     With Me
 
-                        '// Define an int variable
-                        'context.Variables.DefineVariable(DWSIM.App.GetLocalString("a"), typeof(int));
-                        'context.Variables.SetVariableValue(DWSIM.App.GetLocalString("a"), 100);
                         .ExpContext.Variables.Add("X", Double.Parse(.GetSourceVarValue))
                         .ExpContext.Variables.Add("Y", Double.Parse(.GetTargetVarValue))
-                        '// Create a dynamic expression that evaluates to an Object
-                        'IDynamicExpression eDynamic = ExpressionFactory.CreateDynamic("sqrt(a) + 1", context);
-                        '// Create a generic expression that evaluates to a double
-                        'IGenericExpression<double> eGeneric = ExpressionFactory.CreateGeneric<double>("sqrt(a) + 1", context);
                         .Expr = .ExpContext.CompileGeneric(Of Double)(.Expression)
+
                         Dim val = .Expr.Evaluate
+
                         If Not Me.MaxVal.HasValue And Not Me.MinVal.HasValue Then
                             Me.SetTargetVarValue(val)
                         Else
@@ -438,13 +425,7 @@ Namespace DWSIM.SimulationObjects.SpecialOps
                             End If
                             Exit Function
                         End If
-                        '// Evaluate the expressions
-                        'double result = (double)eDynamic.Evaluate();
-                        'result = eGeneric.Evaluate();
-                        '// Update the value of our variable
-                        'context.Variables.SetVariableValue(DWSIM.App.GetLocalString("a"), 144);
-                        '// Evaluate again to get the updated result
-                        'result = eGeneric.Evaluate();
+
                     End With
 
                     Me.GraphicObject.Calculated = True

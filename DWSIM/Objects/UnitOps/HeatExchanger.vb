@@ -1436,9 +1436,9 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.HeatExchanger
         Public Shell_Fouling As Double = 0.0#
         'baffle type: 0 = single, 1 = double, 2 = triple, 3 = grid
         Public Shell_BaffleType As Integer = 0
-        'baffle type: 0 = horizontal, 1 = vertical
-        Public Shell_BaffleOrientation As Integer = 0
-        'baffle cut in % area
+        'baffle orientation: 0 = horizontal, 1 = vertical
+        Public Shell_BaffleOrientation As Integer = 1
+        'baffle cut in % diameter
         Public Shell_BaffleCut As Double = 20
         'baffle spacing in m
         Public Shell_BaffleSpacing As Double = 0.25

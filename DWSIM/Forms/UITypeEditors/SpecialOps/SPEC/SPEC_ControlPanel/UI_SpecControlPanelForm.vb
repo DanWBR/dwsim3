@@ -41,19 +41,10 @@ Public Class UI_SpecControlPanelForm
 
     Private Sub KryptonButton1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KryptonButton1.Click
 
-        If Not mySPEC.ExpContext Is Nothing Then
-            '// Define the context of our expression
-            'ExpressionContext context = new ExpressionContext();
-            '// Import all members of the Math type into the default namespace
-            'context.Imports.ImportStaticMembers(typeof(Math));
-            mySPEC.ExpContext = New Ciloci.Flee.ExpressionContext
-            With mySPEC.ExpContext
-                .Imports.AddType(GetType(System.Math))
-            End With
-        End If
-
         With mySPEC
 
+            .ExpContext = New Ciloci.Flee.ExpressionContext
+            .ExpContext.Imports.AddType(GetType(System.Math))
             '// Define an int variable
             'context.Variables.DefineVariable(DWSIM.App.GetLocalString("a"), typeof(int));
             'context.Variables.SetVariableValue(DWSIM.App.GetLocalString("a"), 100);

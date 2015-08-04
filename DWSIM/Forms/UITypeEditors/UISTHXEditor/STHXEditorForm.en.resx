@@ -131,10 +131,10 @@
     <value>Baffle Type</value>
   </data>
   <data name="Label12.Size" type="System.Drawing.Size, System.Drawing">
-    <value>92, 13</value>
+    <value>113, 13</value>
   </data>
   <data name="Label12.Text" xml:space="preserve">
-    <value>Baffle Cut (%Area)</value>
+    <value>Baffle Cut (% diameter)</value>
   </data>
   <data name="Label10.Size" type="System.Drawing.Size, System.Drawing">
     <value>76, 13</value>
@@ -180,6 +180,9 @@
   </data>
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Shell</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Tubes</value>
   </data>
   <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
     <value>106, 13</value>
@@ -270,9 +273,6 @@
   </data>
   <data name="Label32.Text" xml:space="preserve">
     <value>Internal Diameter</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Tubes</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Shell and Tube Exchanger Properties</value>

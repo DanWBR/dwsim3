@@ -131,10 +131,10 @@
     <value>Tipo de Deflector</value>
   </data>
   <data name="Label12.Size" type="System.Drawing.Size, System.Drawing">
-    <value>117, 13</value>
+    <value>103, 13</value>
   </data>
   <data name="Label12.Text" xml:space="preserve">
-    <value>Corte Deflector (Área%)</value>
+    <value>Corte Deflector (%D)</value>
   </data>
   <data name="Label10.Size" type="System.Drawing.Size, System.Drawing">
     <value>137, 13</value>
@@ -194,7 +194,7 @@
     <value>Caliente</value>
   </data>
   <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>107, 13</value>
+    <value>83, 13</value>
   </data>
   <data name="Label3.Text" xml:space="preserve">
     <value>Fluido en Tubos</value>
