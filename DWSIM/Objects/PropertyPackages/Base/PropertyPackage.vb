@@ -942,7 +942,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public MustOverride Sub DW_CalcPhaseProps(ByVal fase As Fase)
 
-        Public MustOverride Sub DW_CalcTwoPhaseProps(ByVal fase1 As Fase, ByVal fase2 As Fase)
+        Public Overridable Sub DW_CalcTwoPhaseProps(ByVal fase1 As DWSIM.SimulationObjects.PropertyPackages.Fase, ByVal fase2 As DWSIM.SimulationObjects.PropertyPackages.Fase)
+
+            Dim T As Double
+
+            T = Me.CurrentMaterialStream.Fases(0).SPMProperties.temperature.GetValueOrDefault
+            Me.CurrentMaterialStream.Fases(0).TPMProperties.surfaceTension = Me.AUX_SURFTM(T)
+
+        End Sub
 
         Public Function DW_CalcGibbsEnergy(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double) As Double
 
@@ -2306,11 +2313,23 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
         End Function
 
-        Public MustOverride Sub DW_CalcVazaoMolar()
+        Public Overridable Sub DW_CalcVazaoMassica()
+            With Me.CurrentMaterialStream
+                .Fases(0).SPMProperties.massflow = .Fases(0).SPMProperties.molarflow.GetValueOrDefault * Me.AUX_MMM(Fase.Mixture) / 1000
+            End With
+        End Sub
 
-        Public MustOverride Sub DW_CalcVazaoMassica()
+        Public Overridable Sub DW_CalcVazaoMolar()
+            With Me.CurrentMaterialStream
+                .Fases(0).SPMProperties.molarflow = .Fases(0).SPMProperties.massflow.GetValueOrDefault / Me.AUX_MMM(Fase.Mixture) * 1000
+            End With
+        End Sub
 
-        Public MustOverride Sub DW_CalcVazaoVolumetrica()
+        Public Overridable Sub DW_CalcVazaoVolumetrica()
+            With Me.CurrentMaterialStream
+                .Fases(0).SPMProperties.volumetric_flow = .Fases(0).SPMProperties.massflow.GetValueOrDefault / .Fases(0).SPMProperties.density.GetValueOrDefault
+            End With
+        End Sub
 
         Public MustOverride Function DW_CalcMassaEspecifica_ISOL(ByVal fase1 As Fase, ByVal T As Double, ByVal P As Double, Optional ByVal Pvp As Double = 0) As Double
 

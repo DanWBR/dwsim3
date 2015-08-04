@@ -731,6 +731,8 @@
     <Compile Include="Interfaces\IUtilityPlugin.vb" />
     <Compile Include="Objects\Classes\Shared\ExtensionMethods.vb" />
     <Compile Include="Objects\Classes\Shared\STATaskScheduler.vb" />
+    <Compile Include="Objects\PropertyPackages\Base\ActivityCoefficientBase.vb" />
+    <Compile Include="Objects\PropertyPackages\Base\ActivityCoefficientPropertyPackage.vb" />
     <Compile Include="Objects\PropertyPackages\Base\Electrolyte.vb" />
     <Compile Include="Objects\PropertyPackages\Base\ElectrolyteBase.vb" />
     <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\Base.vb" />
