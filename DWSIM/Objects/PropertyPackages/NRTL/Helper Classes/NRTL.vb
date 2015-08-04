@@ -76,12 +76,17 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
     <System.Serializable()> Public Class NRTL
 
+        Implements IActivityCoefficientBase
+
         Private _ip As Dictionary(Of String, Dictionary(Of String, NRTL_IPData))
 
-        Public ReadOnly Property InteractionParameters() As Dictionary(Of String, Dictionary(Of String, NRTL_IPData))
+        Public Property InteractionParameters() As Dictionary(Of String, Dictionary(Of String, NRTL_IPData))
             Get
                 Return _ip
             End Get
+            Set(value As Dictionary(Of String, Dictionary(Of String, NRTL_IPData)))
+                _ip = value
+            End Set
         End Property
 
         Sub New()
@@ -343,7 +348,24 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-    End Class
+        Public Function CalcActivityCoefficients(T As Double, Vx As Array, otherargs As Object) As Array Implements IActivityCoefficientBase.CalcActivityCoefficients
 
+            Return GAMMA_MR(T, Vx, otherargs)
+
+        End Function
+
+        Public Function CalcExcessEnthalpy(T As Double, Vx As Array, otherargs As Object) As Double Implements IActivityCoefficientBase.CalcExcessEnthalpy
+
+            Return HEX_MIX(T, Vx, otherargs)
+
+        End Function
+
+        Public Function CalcExcessHeatCapacity(T As Double, Vx As Array, otherargs As Object) As Double Implements IActivityCoefficientBase.CalcExcessHeatCapacity
+
+            Return CPEX_MIX(T, Vx, otherargs)
+
+        End Function
+
+    End Class
 
 End Namespace

@@ -71,8 +71,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
     <System.Serializable()> Public Class UNIQUAC
 
+        Implements IActivityCoefficientBase
+
         Private _ip As Dictionary(Of String, Dictionary(Of String, UNIQUAC_IPData))
-        'Private _ip2 As Dictionary(Of String, Dictionary(Of String, UNIQUAC_IPData))
 
         Public ReadOnly Property InteractionParameters() As Dictionary(Of String, Dictionary(Of String, UNIQUAC_IPData))
             Get
@@ -373,6 +374,24 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             cpex = (hex2 - hex1) / epsilon
 
             Return cpex 'kJ/kmol.K
+
+        End Function
+
+        Public Function CalcActivityCoefficients(T As Double, Vx As Array, otherargs As Object) As Array Implements IActivityCoefficientBase.CalcActivityCoefficients
+
+            Return GAMMA_MR(T, Vx, otherargs(0), otherargs(1), otherargs(2))
+
+        End Function
+
+        Public Function CalcExcessEnthalpy(T As Double, Vx As Array, otherargs As Object) As Double Implements IActivityCoefficientBase.CalcExcessEnthalpy
+
+            Return HEX_MIX(T, Vx, otherargs(0), otherargs(1), otherargs(2))
+
+        End Function
+
+        Public Function CalcExcessHeatCapacity(T As Double, Vx As Array, otherargs As Object) As Double Implements IActivityCoefficientBase.CalcExcessHeatCapacity
+
+            Return CPEX_MIX(T, Vx, otherargs(0), otherargs(1), otherargs(2))
 
         End Function
 
