@@ -39,19 +39,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Sub New(ByVal comode As Boolean)
             MyBase.New(comode)
-            With Me.Parameters
-                .Add("PP_IDEAL_VAPOR_PHASE_FUG", 1)
-            End With
             Me.m_act = New Auxiliary.COSMO_SAC
         End Sub
 
         Public Sub New()
 
             MyBase.New(False)
-
-            With Me.Parameters
-                .Add("PP_IDEAL_VAPOR_PHASE_FUG", 1)
-            End With
 
             Me.m_act = New Auxiliary.COSMO_SAC
             Me.IsConfigurable = True
