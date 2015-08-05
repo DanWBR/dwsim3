@@ -214,8 +214,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             Dim HM, HV, HL As Double
 
-            HL = Me.m_lk.H_LK_MIX("L", T, P, RET_VMOL(Fase.Liquid), RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, Me.RET_Hid(298.15, T, Fase.Liquid))
-            HV = Me.m_lk.H_LK_MIX("V", T, P, RET_VMOL(Fase.Vapor), RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, Me.RET_Hid(298.15, T, Fase.Vapor))
+            HL = Me.DW_CalcEnthalpy(RET_VMOL(Fase.Liquid), T, P, State.Liquid)
+            HV = Me.DW_CalcEnthalpy(RET_VMOL(Fase.Vapor), T, P, State.Vapor)
             HM = Me.CurrentMaterialStream.Fases(1).SPMProperties.massfraction.GetValueOrDefault * HL + Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault * HV
 
             Dim ent_massica = HM
@@ -266,6 +266,28 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
 #Region "Main Property Routines"
 
+        Public Function GetArguments() As Object
+
+            If TypeOf Me Is NRTLPropertyPackage Then
+                Return DirectCast(Me, NRTLPropertyPackage).RET_VNAMES
+            ElseIf TypeOf Me Is UNIQUACPropertyPackage Then
+                Return New Object() {DirectCast(Me, UNIQUACPropertyPackage).RET_VNAMES, DirectCast(Me, UNIQUACPropertyPackage).RET_VQ, DirectCast(Me, UNIQUACPropertyPackage).RET_VR}
+            ElseIf TypeOf Me Is COSMOSACPropertyPackage Then
+                Return DirectCast(Me, COSMOSACPropertyPackage).RET_VCSACIDS
+            ElseIf TypeOf Me Is MODFACPropertyPackage Then
+                Return New Object() {DirectCast(Me, MODFACPropertyPackage).RET_VQ, DirectCast(Me, MODFACPropertyPackage).RET_VR, DirectCast(Me, MODFACPropertyPackage).RET_VEKI}
+            ElseIf TypeOf Me Is NISTMFACPropertyPackage Then
+                Return New Object() {DirectCast(Me, NISTMFACPropertyPackage).RET_VQ, DirectCast(Me, NISTMFACPropertyPackage).RET_VR, DirectCast(Me, NISTMFACPropertyPackage).RET_VEKI}
+            ElseIf TypeOf Me Is UNIFACPropertyPackage Then
+                Return New Object() {DirectCast(Me, UNIFACPropertyPackage).RET_VQ, DirectCast(Me, UNIFACPropertyPackage).RET_VR, DirectCast(Me, UNIFACPropertyPackage).RET_VEKI}
+            ElseIf TypeOf Me Is UNIFACLLPropertyPackage Then
+                Return New Object() {DirectCast(Me, UNIFACLLPropertyPackage).RET_VQ, DirectCast(Me, UNIFACLLPropertyPackage).RET_VR, DirectCast(Me, UNIFACLLPropertyPackage).RET_VEKI}
+            Else
+                Return Nothing
+            End If
+
+        End Function
+
         Public Overrides Function DW_CalcEnthalpy(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double
 
             Dim H As Double
@@ -277,7 +299,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     Case 1 'Ideal
                         H = Me.RET_Hid_L(298.15, T, Vx)
                     Case 2 'Excess
-                        H = Me.RET_Hid_L(298.15, T, Vx) + Me.m_act.CalcExcessEnthalpy(T, Vx, Me.RET_VNAMES) / Me.AUX_MMM(Vx)
+                        H = Me.RET_Hid_L(298.15, T, Vx) + Me.m_act.CalcExcessEnthalpy(T, Vx, Me.GetArguments()) / Me.AUX_MMM(Vx)
                 End Select
             Else
                 Select Case Me.Parameters("PP_ENTH_CP_CALC_METHOD")
@@ -286,7 +308,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     Case 1 'Ideal
                         H = Me.RET_Hid_L(298.15, T, Vx) + Me.RET_HVAPM(Me.AUX_CONVERT_MOL_TO_MASS(Vx), T)
                     Case 2 'Excess
-                        H = Me.RET_Hid_L(298.15, T, Vx) + Me.m_act.CalcExcessEnthalpy(T, Vx, Me.RET_VNAMES) / Me.AUX_MMM(Vx) + Me.RET_HVAPM(Me.AUX_CONVERT_MOL_TO_MASS(Vx), T)
+                        H = Me.RET_Hid_L(298.15, T, Vx) + Me.m_act.CalcExcessEnthalpy(T, Vx, Me.GetArguments()) / Me.AUX_MMM(Vx) + Me.RET_HVAPM(Me.AUX_CONVERT_MOL_TO_MASS(Vx), T)
                 End Select
             End If
 
@@ -304,7 +326,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     Case 1 'Ideal
                         H = 0.0#
                     Case 2 'Excess
-                        H = Me.m_act.CalcExcessEnthalpy(T, Vx, Me.RET_VNAMES) / Me.AUX_MMM(Vx)
+                        H = Me.m_act.CalcExcessEnthalpy(T, Vx, Me.GetArguments()) / Me.AUX_MMM(Vx)
                 End Select
             Else
                 Select Case Me.Parameters("PP_ENTH_CP_CALC_METHOD")
@@ -313,7 +335,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     Case 1 'Ideal
                         H = Me.RET_HVAPM(Me.AUX_CONVERT_MOL_TO_MASS(Vx), T)
                     Case 2 'Excess
-                        H = Me.m_act.CalcExcessEnthalpy(T, Vx, Me.RET_VNAMES) / Me.AUX_MMM(Vx) + Me.RET_HVAPM(Me.AUX_CONVERT_MOL_TO_MASS(Vx), T)
+                        H = Me.m_act.CalcExcessEnthalpy(T, Vx, Me.GetArguments()) / Me.AUX_MMM(Vx) + Me.RET_HVAPM(Me.AUX_CONVERT_MOL_TO_MASS(Vx), T)
                 End Select
             End If
 
@@ -332,7 +354,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     Case 1 'Ideal
                         S = Me.RET_Hid_L(298.15, T, Vx) / T
                     Case 2 'Excess
-                        S = (Me.RET_Hid_L(298.15, T, Vx) + Me.m_act.CalcExcessEnthalpy(T, Vx, Me.RET_VNAMES) / Me.AUX_MMM(Vx)) / T
+                        S = (Me.RET_Hid_L(298.15, T, Vx) + Me.m_act.CalcExcessEnthalpy(T, Vx, Me.GetArguments()) / Me.AUX_MMM(Vx)) / T
                 End Select
             Else
                 Select Case Me.Parameters("PP_ENTH_CP_CALC_METHOD")
@@ -341,7 +363,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     Case 1 'Ideal
                         S = Me.RET_Hid_L(298.15, T, Vx) / T + Me.RET_HVAPM(Me.AUX_CONVERT_MOL_TO_MASS(Vx), T) / T
                     Case 2 'Excess
-                        S = (Me.RET_Hid_L(298.15, T, Vx) + Me.m_act.CalcExcessEnthalpy(T, Vx, Me.RET_VNAMES) / Me.AUX_MMM(Vx)) / T + Me.RET_HVAPM(Me.AUX_CONVERT_MOL_TO_MASS(Vx), T) / T
+                        S = (Me.RET_Hid_L(298.15, T, Vx) + Me.m_act.CalcExcessEnthalpy(T, Vx, Me.GetArguments()) / Me.AUX_MMM(Vx)) / T + Me.RET_HVAPM(Me.AUX_CONVERT_MOL_TO_MASS(Vx), T) / T
                 End Select
             End If
 
@@ -357,12 +379,19 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     Case 0 'LK
                         S = Me.m_lk.S_LK_MIX("L", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, 0)
                     Case 1 'Ideal
-                        S = 0.0# '-Me.RET_HVAPM(Me.AUX_CONVERT_MOL_TO_MASS(Vx), T) / T
+                        S = 0.0#
                     Case 2 'Excess
-                        S = (Me.m_act.CalcExcessEnthalpy(T, Vx, Me.RET_VNAMES) / Me.AUX_MMM(Vx)) / T '- Me.RET_HVAPM(Me.AUX_CONVERT_MOL_TO_MASS(Vx), T) / T
+                        S = (Me.m_act.CalcExcessEnthalpy(T, Vx, Me.GetArguments()) / Me.AUX_MMM(Vx)) / T
                 End Select
             Else
-                S = Me.m_lk.S_LK_MIX("V", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, 0)
+                Select Case Me.Parameters("PP_ENTH_CP_CALC_METHOD")
+                    Case 0 'LK
+                        S = Me.m_lk.S_LK_MIX("V", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, 0)
+                    Case 1 'Ideal
+                        S = Me.RET_HVAPM(Me.AUX_CONVERT_MOL_TO_MASS(Vx), T) / T
+                    Case 2 'Excess
+                        S = (Me.m_act.CalcExcessEnthalpy(T, Vx, Me.GetArguments()) / Me.AUX_MMM(Vx)) / T + Me.RET_HVAPM(Me.AUX_CONVERT_MOL_TO_MASS(Vx), T) / T
+                End Select
             End If
 
             Return S
@@ -385,7 +414,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim Tc As Object = Me.RET_VTC()
             Dim Tr As Double
             If st = State.Liquid Then
-                ativ = Me.m_act.CalcActivityCoefficients(T, Vx, Me.RET_VNAMES)
+                ativ = Me.m_act.CalcActivityCoefficients(T, Vx, Me.GetArguments())
                 For i = 0 To n
                     Tr = T / Tc(i)
                     If Tr >= 1.02 Then
@@ -476,7 +505,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Case 1 'Ideal
                                 result = Me.AUX_LIQCPm(T, phaseID)
                             Case 2 'Excess
-                                result = Me.AUX_LIQCPm(T, phaseID) + Me.m_act.CalcExcessHeatCapacity(T, RET_VMOL(phase), Me.RET_VNAMES) / Me.AUX_MMM(phase)
+                                result = Me.AUX_LIQCPm(T, phaseID) + Me.m_act.CalcExcessHeatCapacity(T, RET_VMOL(phase), Me.GetArguments()) / Me.AUX_MMM(phase)
                         End Select
                     End If
                     Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = result
@@ -492,7 +521,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Case 1 'Ideal
                                 result = Me.AUX_LIQCPm(T, phaseID)
                             Case 2 'Excess
-                                result = Me.AUX_LIQCPm(T, phaseID) + Me.m_act.CalcExcessHeatCapacity(T, RET_VMOL(phase), Me.RET_VNAMES) / Me.AUX_MMM(phase)
+                                result = Me.AUX_LIQCPm(T, phaseID) + Me.m_act.CalcExcessHeatCapacity(T, RET_VMOL(phase), Me.GetArguments()) / Me.AUX_MMM(phase)
                         End Select
                     End If
                     Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = result
@@ -628,7 +657,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = result
                         Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = result
                     Case 2 'Excess
-                        result = Me.AUX_LIQCPm(T, phaseID) + Me.m_act.CalcExcessHeatCapacity(T, RET_VMOL(dwpl), Me.RET_VNAMES) / Me.AUX_MMM(dwpl)
+                        result = Me.AUX_LIQCPm(T, phaseID) + Me.m_act.CalcExcessHeatCapacity(T, RET_VMOL(dwpl), Me.GetArguments()) / Me.AUX_MMM(dwpl)
                         Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = result
                         Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = result
                 End Select

@@ -23,6 +23,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
     <System.Serializable()> Public Class Modfac
 
+        Implements Auxiliary.IActivityCoefficientBase
+
         Public ModfGroups As ModfacGroups
 
         Sub New()
@@ -241,7 +243,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-           Function RET_Ri(ByVal VN As Dictionary(Of Integer, Double)) As Double
+        Function RET_Ri(ByVal VN As Dictionary(Of Integer, Double)) As Double
 
             Dim i As Integer = 0
             Dim res As Double
@@ -349,6 +351,24 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             cpex = (hex2 - hex1) / epsilon
 
             Return cpex 'kJ/kmol.K
+
+        End Function
+
+        Public Function CalcActivityCoefficients(T As Double, Vx As Array, otherargs As Object) As Array Implements IActivityCoefficientBase.CalcActivityCoefficients
+
+            Return GAMMA_MR(T, Vx, otherargs(0), otherargs(1), otherargs(2))
+
+        End Function
+
+        Public Function CalcExcessEnthalpy(T As Double, Vx As Array, otherargs As Object) As Double Implements IActivityCoefficientBase.CalcExcessEnthalpy
+
+            Return HEX_MIX(T, Vx, otherargs(0), otherargs(1), otherargs(2))
+
+        End Function
+
+        Public Function CalcExcessHeatCapacity(T As Double, Vx As Array, otherargs As Object) As Double Implements IActivityCoefficientBase.CalcExcessHeatCapacity
+
+            Return CPEX_MIX(T, Vx, otherargs(0), otherargs(1), otherargs(2))
 
         End Function
 

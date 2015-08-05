@@ -24,6 +24,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
     <System.Serializable()> Public Class COSMO_SAC
 
+        Implements Auxiliary.IActivityCoefficientBase
+
         <System.NonSerialized()> Dim db As COSMOSACDataBase
         Dim casids As Dictionary(Of String, String)
 
@@ -299,6 +301,73 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Return gammav
 
         End Function
+
+        Function DLNGAMMA_DT(ByVal T As Double, ByVal Vx As Array, ByVal Vids As Array) As Array
+
+            Dim gamma1, gamma2 As Double()
+
+            Dim epsilon As Double = 0.001
+
+            gamma1 = GAMMA_MR(T, Vx, Vids)
+            gamma2 = GAMMA_MR(T + epsilon, Vx, Vids)
+
+            Dim dgamma(gamma1.Length - 1) As Double
+
+            For i As Integer = 0 To Vx.Length - 1
+                dgamma(i) = (gamma2(i) - gamma1(i)) / (epsilon)
+            Next
+
+            Return dgamma
+
+        End Function
+
+        Function HEX_MIX(ByVal T As Double, ByVal Vx As Array, ByVal Vids As Array) As Double
+
+            Dim dgamma As Double() = DLNGAMMA_DT(T, Vx, Vids)
+
+            Dim hex As Double = 0.0#
+
+            For i As Integer = 0 To Vx.Length - 1
+                hex += -8.314 * T ^ 2 * Vx(i) * dgamma(i)
+            Next
+
+            Return hex 'kJ/kmol
+
+        End Function
+
+        Function CPEX_MIX(ByVal T As Double, ByVal Vx As Array, ByVal Vids As Array) As Double
+
+            Dim hex1, hex2, cpex As Double
+
+            Dim epsilon As Double = 0.001
+
+            hex1 = HEX_MIX(T, Vx, Vids)
+            hex2 = HEX_MIX(T + epsilon, Vx, Vids)
+
+            cpex = (hex2 - hex1) / epsilon
+
+            Return cpex 'kJ/kmol.K
+
+        End Function
+
+        Public Function CalcActivityCoefficients(T As Double, Vx As Array, otherargs As Object) As Array Implements IActivityCoefficientBase.CalcActivityCoefficients
+
+            Return GAMMA_MR(T, Vx, otherargs)
+
+        End Function
+
+        Public Function CalcExcessEnthalpy(T As Double, Vx As Array, otherargs As Object) As Double Implements IActivityCoefficientBase.CalcExcessEnthalpy
+
+            Return HEX_MIX(T, Vx, otherargs)
+
+        End Function
+
+        Public Function CalcExcessHeatCapacity(T As Double, Vx As Array, otherargs As Object) As Double Implements IActivityCoefficientBase.CalcExcessHeatCapacity
+
+            Return CPEX_MIX(T, Vx, otherargs)
+
+        End Function
+
 
     End Class
 
