@@ -22,6 +22,7 @@ Partial Class AboutBoxMONO
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(AboutBoxMONO))
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Button1 = New System.Windows.Forms.Button()
@@ -64,6 +65,8 @@ Partial Class AboutBoxMONO
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.AssemblyNamesComboBox = New System.Windows.Forms.ComboBox()
+        Me.Lblmem = New System.Windows.Forms.Label()
+        Me.Label11 = New System.Windows.Forms.Label()
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStrip1.SuspendLayout()
         Me.FaTabStripItem1.SuspendLayout()
@@ -78,7 +81,6 @@ Partial Class AboutBoxMONO
         Me.Label1.AutoSize = True
         Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
         Me.Label1.Location = New System.Drawing.Point(12, 10)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(404, 13)
@@ -87,7 +89,7 @@ Partial Class AboutBoxMONO
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(614, 494)
+        Me.Button1.Location = New System.Drawing.Point(614, 530)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 23)
         Me.Button1.TabIndex = 3
@@ -98,7 +100,6 @@ Partial Class AboutBoxMONO
         '
         Me.Version.AutoSize = True
         Me.Version.BackColor = System.Drawing.Color.Transparent
-        Me.Version.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
         Me.Version.Location = New System.Drawing.Point(12, 28)
         Me.Version.Name = "Version"
         Me.Version.Size = New System.Drawing.Size(121, 13)
@@ -109,7 +110,6 @@ Partial Class AboutBoxMONO
         '
         Me.Copyright.AutoSize = True
         Me.Copyright.BackColor = System.Drawing.Color.Transparent
-        Me.Copyright.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
         Me.Copyright.Location = New System.Drawing.Point(12, 46)
         Me.Copyright.Name = "Copyright"
         Me.Copyright.Size = New System.Drawing.Size(54, 13)
@@ -125,13 +125,15 @@ Partial Class AboutBoxMONO
         Me.FaTabStrip1.Location = New System.Drawing.Point(8, 69)
         Me.FaTabStrip1.Name = "FaTabStrip1"
         Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem1
-        Me.FaTabStrip1.Size = New System.Drawing.Size(679, 419)
+        Me.FaTabStrip1.Size = New System.Drawing.Size(679, 455)
         Me.FaTabStrip1.TabIndex = 23
         Me.FaTabStrip1.Text = "FaTabStrip1"
         '
         'FaTabStripItem1
         '
         Me.FaTabStripItem1.CanClose = False
+        Me.FaTabStripItem1.Controls.Add(Me.Lblmem)
+        Me.FaTabStripItem1.Controls.Add(Me.Label11)
         Me.FaTabStripItem1.Controls.Add(Me.Label9)
         Me.FaTabStripItem1.Controls.Add(Me.LinkLabel1)
         Me.FaTabStripItem1.Controls.Add(Me.Label10)
@@ -150,7 +152,7 @@ Partial Class AboutBoxMONO
         Me.FaTabStripItem1.IsDrawn = True
         Me.FaTabStripItem1.Name = "FaTabStripItem1"
         Me.FaTabStripItem1.Selected = True
-        Me.FaTabStripItem1.Size = New System.Drawing.Size(677, 398)
+        Me.FaTabStripItem1.Size = New System.Drawing.Size(677, 434)
         Me.FaTabStripItem1.TabIndex = 0
         Me.FaTabStripItem1.Title = "General Info"
         '
@@ -158,7 +160,7 @@ Partial Class AboutBoxMONO
         '
         Me.Label9.AutoSize = True
         Me.Label9.BackColor = System.Drawing.Color.Transparent
-        Me.Label9.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
+        Me.Label9.ForeColor = System.Drawing.SystemColors.ControlText
         Me.Label9.Location = New System.Drawing.Point(133, 10)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(253, 13)
@@ -169,6 +171,7 @@ Partial Class AboutBoxMONO
         '
         Me.LinkLabel1.AutoSize = True
         Me.LinkLabel1.BackColor = System.Drawing.Color.Transparent
+        Me.LinkLabel1.ForeColor = System.Drawing.SystemColors.ControlText
         Me.LinkLabel1.Location = New System.Drawing.Point(133, 79)
         Me.LinkLabel1.Name = "LinkLabel1"
         Me.LinkLabel1.Size = New System.Drawing.Size(150, 13)
@@ -180,7 +183,7 @@ Partial Class AboutBoxMONO
         '
         Me.Label10.AutoSize = True
         Me.Label10.BackColor = System.Drawing.Color.Transparent
-        Me.Label10.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
+        Me.Label10.ForeColor = System.Drawing.SystemColors.ControlText
         Me.Label10.Location = New System.Drawing.Point(12, 10)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(65, 13)
@@ -191,7 +194,7 @@ Partial Class AboutBoxMONO
         '
         Me.Label2.AutoSize = True
         Me.Label2.BackColor = System.Drawing.Color.Transparent
-        Me.Label2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
+        Me.Label2.ForeColor = System.Drawing.SystemColors.ControlText
         Me.Label2.Location = New System.Drawing.Point(12, 79)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(55, 13)
@@ -202,7 +205,7 @@ Partial Class AboutBoxMONO
         '
         Me.Label8.AutoSize = True
         Me.Label8.BackColor = System.Drawing.Color.Transparent
-        Me.Label8.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
+        Me.Label8.ForeColor = System.Drawing.SystemColors.ControlText
         Me.Label8.Location = New System.Drawing.Point(133, 56)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(213, 13)
@@ -213,6 +216,7 @@ Partial Class AboutBoxMONO
         '
         Me.LinkLabel2.AutoSize = True
         Me.LinkLabel2.BackColor = System.Drawing.Color.Transparent
+        Me.LinkLabel2.ForeColor = System.Drawing.SystemColors.ControlText
         Me.LinkLabel2.Location = New System.Drawing.Point(133, 102)
         Me.LinkLabel2.Name = "LinkLabel2"
         Me.LinkLabel2.Size = New System.Drawing.Size(221, 13)
@@ -224,7 +228,7 @@ Partial Class AboutBoxMONO
         '
         Me.Label3.AutoSize = True
         Me.Label3.BackColor = System.Drawing.Color.Transparent
-        Me.Label3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
+        Me.Label3.ForeColor = System.Drawing.SystemColors.ControlText
         Me.Label3.Location = New System.Drawing.Point(12, 56)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(113, 13)
@@ -235,7 +239,7 @@ Partial Class AboutBoxMONO
         '
         Me.Label5.AutoSize = True
         Me.Label5.BackColor = System.Drawing.Color.Transparent
-        Me.Label5.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
+        Me.Label5.ForeColor = System.Drawing.SystemColors.ControlText
         Me.Label5.Location = New System.Drawing.Point(12, 33)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(65, 13)
@@ -246,7 +250,7 @@ Partial Class AboutBoxMONO
         '
         Me.LblCLRInfo.AutoSize = True
         Me.LblCLRInfo.BackColor = System.Drawing.Color.Transparent
-        Me.LblCLRInfo.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
+        Me.LblCLRInfo.ForeColor = System.Drawing.SystemColors.ControlText
         Me.LblCLRInfo.Location = New System.Drawing.Point(133, 153)
         Me.LblCLRInfo.Name = "LblCLRInfo"
         Me.LblCLRInfo.Size = New System.Drawing.Size(44, 13)
@@ -257,7 +261,7 @@ Partial Class AboutBoxMONO
         '
         Me.Label6.AutoSize = True
         Me.Label6.BackColor = System.Drawing.Color.Transparent
-        Me.Label6.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
+        Me.Label6.ForeColor = System.Drawing.SystemColors.ControlText
         Me.Label6.Location = New System.Drawing.Point(133, 33)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(506, 13)
@@ -269,7 +273,7 @@ Partial Class AboutBoxMONO
         '
         Me.Label4.AutoSize = True
         Me.Label4.BackColor = System.Drawing.Color.Transparent
-        Me.Label4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
+        Me.Label4.ForeColor = System.Drawing.SystemColors.ControlText
         Me.Label4.Location = New System.Drawing.Point(12, 153)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(53, 13)
@@ -282,8 +286,8 @@ Partial Class AboutBoxMONO
         Me.LabelLicense.BackColor = System.Drawing.Color.Transparent
         Me.LabelLicense.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.LabelLicense.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelLicense.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
-        Me.LabelLicense.Location = New System.Drawing.Point(12, 183)
+        Me.LabelLicense.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.LabelLicense.Location = New System.Drawing.Point(12, 212)
         Me.LabelLicense.Name = "LabelLicense"
         Me.LabelLicense.Size = New System.Drawing.Size(422, 13)
         Me.LabelLicense.TabIndex = 12
@@ -294,7 +298,7 @@ Partial Class AboutBoxMONO
         '
         Me.LblOSInfo.AutoSize = True
         Me.LblOSInfo.BackColor = System.Drawing.Color.Transparent
-        Me.LblOSInfo.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
+        Me.LblOSInfo.ForeColor = System.Drawing.SystemColors.ControlText
         Me.LblOSInfo.Location = New System.Drawing.Point(133, 129)
         Me.LblOSInfo.Name = "LblOSInfo"
         Me.LblOSInfo.Size = New System.Drawing.Size(44, 13)
@@ -305,7 +309,7 @@ Partial Class AboutBoxMONO
         '
         Me.TextBox1.BackColor = System.Drawing.Color.White
         Me.TextBox1.Font = New System.Drawing.Font("Courier New", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox1.Location = New System.Drawing.Point(15, 199)
+        Me.TextBox1.Location = New System.Drawing.Point(15, 232)
         Me.TextBox1.Multiline = True
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.ReadOnly = True
@@ -318,7 +322,7 @@ Partial Class AboutBoxMONO
         '
         Me.Label7.AutoSize = True
         Me.Label7.BackColor = System.Drawing.Color.Transparent
-        Me.Label7.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
+        Me.Label7.ForeColor = System.Drawing.SystemColors.ControlText
         Me.Label7.Location = New System.Drawing.Point(12, 129)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(48, 13)
@@ -496,12 +500,32 @@ Partial Class AboutBoxMONO
         Me.AssemblyNamesComboBox.Sorted = True
         Me.AssemblyNamesComboBox.TabIndex = 20
         '
+        'Lblmem
+        '
+        Me.Lblmem.AutoSize = True
+        Me.Lblmem.BackColor = System.Drawing.Color.Transparent
+        Me.Lblmem.Location = New System.Drawing.Point(133, 178)
+        Me.Lblmem.Name = "Lblmem"
+        Me.Lblmem.Size = New System.Drawing.Size(55, 13)
+        Me.Lblmem.TabIndex = 25
+        Me.Lblmem.Text = "[meminfo]"
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.BackColor = System.Drawing.Color.Transparent
+        Me.Label11.Location = New System.Drawing.Point(12, 178)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(82, 13)
+        Me.Label11.TabIndex = 24
+        Me.Label11.Text = "Memory Usage:"
+        '
         'AboutBoxMONO
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(703, 548)
+        Me.ClientSize = New System.Drawing.Size(699, 589)
         Me.ControlBox = False
         Me.Controls.Add(Me.FaTabStrip1)
         Me.Controls.Add(Me.Copyright)
@@ -568,4 +592,6 @@ Partial Class AboutBoxMONO
     Friend WithEvents ColumnHeader1 As System.Windows.Forms.ColumnHeader
     Friend WithEvents ColumnHeader2 As System.Windows.Forms.ColumnHeader
     Friend WithEvents AssemblyNamesComboBox As System.Windows.Forms.ComboBox
+    Public WithEvents Lblmem As System.Windows.Forms.Label
+    Public WithEvents Label11 As System.Windows.Forms.Label
 End Class
