@@ -154,8 +154,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             If Vx(wid) <> 1.0# Then
                 MW = 0.0#
                 For i As Integer = 0 To n
-                    Hex += -8.314 * T ^ 2 * Vx(i) * (Log(activcoeffT2(i)) - Log(activcoeffT1(i))) / (0.1) 'kJ/kmol
-                    MW += Vx(i) * cprops(i).Molar_Weight
+                    If Vx(i) <> 0.0# Then
+                        Hex += -8.314 * T ^ 2 * Vx(i) * (Log(activcoeffT2(i)) - Log(activcoeffT1(i))) / (0.1) 'kJ/kmol
+                        MW += Vx(i) * cprops(i).Molar_Weight
+                    End If
                 Next
             End If
 

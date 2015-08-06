@@ -190,7 +190,7 @@
     <value>Only kinetic-type reactions will be taken into account by the PFR.</value>
   </data>
   <data name="PURE001" xml:space="preserve">
-    <value>The properties shown on this tool corresponds to the ones of DWSIM compounds only. CAPE-OPEN compound properties are not displayed here.</value>
+    <value>The properties shown on this tool are for DWSIM compounds only. CAPE-OPEN compound properties are not displayed here.</value>
   </data>
   <data name="RCON001" xml:space="preserve">
     <value>Only the conversion reactions will be considered by the conversion reactor.</value>

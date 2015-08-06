@@ -132,6 +132,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 For i = 0 To n
                     ids.Add(CompoundProperties(i).Name)
                     Vp(i) = proppack.AUX_PVAPi(i, T)
+                    If Double.IsNaN(Vp(i)) Then Vp(i) = 0.0#
                 Next
 
                 'get the default reaction set.
@@ -152,14 +153,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     'calculate chemical equilibria between ions, salts and water. 
                     ''SolveChemicalEquilibria' returns the equilibrium molar amounts in the liquid phase, including precipitates.
 
-                    If CalculateChemicalEquilibria Then
-                        result = SolveChemicalEquilibria(Vf, T, P, ids, rext)
-                        Vf = result(0).clone
+                    If CalculateChemicalEquilibria And Vp(wid) < P Then
+                        result = SolveChemicalEquilibria(Vnl, T, P, ids, rext)
+                        Vnl = result(0).clone
                         rext = result(1)
                     End If
 
                     For i = 0 To n
-                        Vxl(i) = Vf(i) / Vf.Sum()
+                        Vxl(i) = Vnl(i) / Vnl.Sum()
                     Next
 
                     'calculate activity coefficients.
@@ -203,19 +204,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                             Vnl(i) = Vxl(i) * L
                             Vns(i) = Vf(i) - Vnl(i)
                         Else
-                            Vnl(i) = Vf(i)
+                            'Vnl(i) = Vf(i)
                             Vns(i) = 0
                         End If
                     Next
-
-                    'check for vapors
-                    'For i = 0 To n
-                    '    If P < Vp(i) Then
-                    '        Vxl(i) = 0
-                    '        Vnl(i) = 0
-                    '        Vnv(i) = Vf(i)
-                    '    End If
-                    'Next
 
                     'liquid mole amounts
 
@@ -255,6 +247,24 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 End If
 
             End If
+
+            For i = 0 To n
+                If Vp(i) > P Then
+                    Vnv(i) = Vnl(i)
+                    Vxl(i) = 0.0#
+                    Vnl(i) = 0.0#
+                End If
+            Next
+
+            L = Vnl.Sum()
+            S = Vns.Sum()
+            V = Vnv.Sum()
+
+            For i = 0 To n
+                If Sum(Vnl) <> 0.0# Then Vxl(i) = Vnl(i) / Sum(Vnl) Else Vxl(i) = 0.0#
+                If Sum(Vns) <> 0.0# Then Vxs(i) = Vns(i) / Sum(Vns) Else Vxs(i) = 0.0#
+                If Sum(Vnv) <> 0.0# Then Vxv(i) = Vnv(i) / Sum(Vnv) Else Vxv(i) = 0.0#
+            Next
 
             L = L / sumN
             S = S / sumN
@@ -438,7 +448,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         If form.Options.Reactions(rxnsb.ReactionID).ReactionType = ReactionType.Equilibrium And rxnsb.IsActive Then
                             rxn = form.Options.Reactions(rxnsb.ReactionID)
                             If rxn.ConstantKeqValue < 1 Then
-                                REx(i) = 0.0#
+                                REx(i) = 0.01#
                             ElseIf rxn.ConstantKeqValue > 70 Then
                                 REx(i) = ubound(i)
                             Else
@@ -753,7 +763,124 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         End Function
 
-        Public Function Flash_PH(ByVal Vz As Array, ByVal P As Double, ByVal H As Double, ByVal Tref As Double) As Dictionary(Of String, Object)
+        Public Function Flash_PH(ByVal Vz As Double(), ByVal P As Double, ByVal H As Double, ByVal Tref As Double, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
+
+            Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
+
+            Dim Vn(1) As String, Vx(1), Vy(1), Vx_ant(1), Vy_ant(1), Vp(1), Ki(1), Ki_ant(1), fi(1) As Double
+            Dim j, n, ecount As Integer
+            Dim d1, d2 As Date, dt As TimeSpan
+            Dim L, V, T, Pf As Double
+
+            d1 = Date.Now
+
+            n = UBound(Vz)
+
+            Hf = H
+            Pf = P
+
+            ReDim Vn(n), Vx(n), Vy(n), Vx_ant(n), Vy_ant(n), Vp(n), Ki(n), fi(n)
+
+            fi = Vz.Clone
+
+            Dim maxitINT As Integer = CInt(proppack.Parameters("PP_PHFMII"))
+            Dim maxitEXT As Integer = CInt(proppack.Parameters("PP_PHFMEI"))
+            Dim tolINT As Double = CDbl(proppack.Parameters("PP_PHFILT"))
+            Dim tolEXT As Double = CDbl(proppack.Parameters("PP_PHFELT"))
+
+            Dim Tmin, Tmax, epsilon(4), maxDT As Double
+
+            Tmax = 2000.0#
+            Tmin = 50.0#
+            maxDT = 30.0#
+
+            epsilon(0) = 0.1
+            epsilon(1) = 0.01
+            epsilon(2) = 0.001
+            epsilon(3) = 0.0001
+            epsilon(4) = 0.00001
+
+            Dim fx, fx2, dfdx, x1, dx As Double
+
+            Dim cnt As Integer
+
+            If Tref = 0.0# Then Tref = 298.15
+
+            For j = 0 To 4
+
+                cnt = 0
+                x1 = Tref
+
+                Do
+
+                    fx = Herror(x1, P, Vz)(0)
+                    fx2 = Herror(x1 + epsilon(j), P, Vz)(0)
+
+                    If Abs(fx) <= tolEXT Then Exit Do
+
+                    dfdx = (fx2 - fx) / epsilon(j)
+                    dx = fx / dfdx
+
+                    If Abs(dx) > maxDT Then dx = maxDT * Sign(dx)
+
+                    x1 = x1 - dx
+
+                    cnt += 1
+
+                Loop Until cnt > maxitEXT Or Double.IsNaN(x1) Or x1 < 0.0#
+
+                T = x1
+
+                If Not Double.IsNaN(T) And Not Double.IsInfinity(T) And Not cnt > maxitEXT Then
+                    If T > Tmin And T < Tmax Then Exit For
+                End If
+
+            Next
+
+            If Double.IsNaN(T) Or T <= Tmin Or T >= Tmax Or cnt > maxitEXT Or Abs(fx) > tolEXT Then Throw New Exception("PH Flash [Electrolyte]: Invalid result: Temperature did not converge.")
+
+            Dim tmp As Object = Flash_PT(Vz, P, T)
+
+            Dim S, Vs(), sumN As Double
+
+            sumN = tmp("MoleSum")
+            L = tmp("LiquidPhaseMoleFraction")
+            V = tmp("VaporPhaseMoleFraction")
+            S = tmp("SolidPhaseMoleFraction")
+            Vx = tmp("LiquidPhaseMolarComposition")
+            Vy = tmp("VaporPhaseMolarComposition")
+            Vs = tmp("SolidPhaseMolarComposition")
+
+            d2 = Date.Now
+
+            dt = d2 - d1
+
+            WriteDebugInfo("PH Flash [Electrolyte]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
+
+            'return flash calculation results.
+
+            Dim results As New Dictionary(Of String, Object)
+
+            results.Add("MixtureMoleFlows", Vz)
+            results.Add("VaporPhaseMoleFraction", V)
+            results.Add("LiquidPhaseMoleFraction", L)
+            results.Add("SolidPhaseMoleFraction", S)
+            results.Add("VaporPhaseMolarComposition", Vy)
+            results.Add("LiquidPhaseMolarComposition", Vx)
+            results.Add("SolidPhaseMolarComposition", Vs)
+            results.Add("MoleSum", sumN)
+            results.Add("Temperature", T)
+            results.Add("LiquidPhaseActivityCoefficients", tmp("LiquidPhaseActivityCoefficients"))
+
+            Return results
+
+        End Function
+
+        Function Herror(ByVal X As Double, ByVal P As Double, ByVal Vz() As Double) As Object
+            Return OBJ_FUNC_PH_FLASH(X, P, Vz)
+        End Function
+
+        Public Function Flash_PH0(ByVal Vz As Array, ByVal P As Double, ByVal H As Double, ByVal Tref As Double) As Dictionary(Of String, Object)
 
             Dim n As Integer
             Dim d1, d2 As Date, dt As TimeSpan
@@ -917,7 +1044,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         End Function
 
-        Function OBJ_FUNC_PH_FLASH(ByVal T As Double, ByVal H As Double, ByVal P As Double, ByVal Vz As Object) As Object
+        Function OBJ_FUNC_PH_FLASH(ByVal T As Double, ByVal P As Double, ByVal Vz As Object) As Object
 
             Dim tmp As Dictionary(Of String, Object) = Flash_PT(Vz, T, P)
 
@@ -951,10 +1078,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             WriteDebugInfo("PH Flash [Electrolyte]: Current T = " & T & ", Current H Error = " & herr)
 
-        End Function
-
-        Function Herror(ByVal Tt As Double, ByVal otherargs As Object) As Double
-            Return OBJ_FUNC_PH_FLASH(Tt, Hf, otherargs(0), otherargs(1))
         End Function
 
         Private Function EnthalpyTx(ByVal x As Double, ByVal otherargs As Object) As Double
