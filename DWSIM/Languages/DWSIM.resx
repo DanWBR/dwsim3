@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -5139,5 +5139,11 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   </data>
   <data name="SpreadsheetCell" xml:space="preserve">
     <value>Célula da Planilha</value>
+  </data>
+  <data name="FormTips_KryptonHeaderGroup1Text1" xml:space="preserve">
+    <value>Bem-vindo ao DWSIM</value>
+  </data>
+  <data name="Dica" xml:space="preserve">
+    <value>Dica</value>
   </data>
 </root>

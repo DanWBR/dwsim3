@@ -138,4 +138,64 @@
   <data name="cbXAxisBasis.Items" xml:space="preserve">
     <value>Fracción Molar</value>
   </data>
+  <data name="cbPropPack.Items2" xml:space="preserve">
+    <value>Porcentaje Molar</value>
+  </data>
+  <data name="cbPropPack.Items3" xml:space="preserve">
+    <value>Porcentaje Másico</value>
+  </data>
+  <data name="cbXAxisBasis.Items2" xml:space="preserve">
+    <value>Porcentaje Molar</value>
+  </data>
+  <data name="cbXAxisBasis.Items3" xml:space="preserve">
+    <value>Porcentaje Másico</value>
+  </data>
+  <data name="chkCritical.Text" xml:space="preserve">
+    <value>Puntos Críticos</value>
+  </data>
+  <data name="colx1.ToolTipText" xml:space="preserve">
+    <value>Fracción Molar de Componente 1 en Fase Líquida 1</value>
+  </data>
+  <data name="coly1.ToolTipText" xml:space="preserve">
+    <value>Fracción Molar de Componente 1 en Fase Vapor</value>
+  </data>
+  <data name="FaTabStripItem2.Title" xml:space="preserve">
+    <value>Tabla</value>
+  </data>
+  <data name="FaTabStripItem3.Title" xml:space="preserve">
+    <value>Datos Exp.</value>
+  </data>
+  <data name="GroupBox6.Text" xml:space="preserve">
+    <value>Configuración de Diagrama</value>
+  </data>
+  <data name="Label4.Text" xml:space="preserve">
+    <value>Presión</value>
+  </data>
+  <data name="Label6.Text" xml:space="preserve">
+    <value>Paquete de Propiedades</value>
+  </data>
+  <data name="Label7.Text" xml:space="preserve">
+    <value>Opciones del Diagrama T-x-y</value>
+  </data>
+  <data name="lblP.Text" xml:space="preserve">
+    <value>Presión</value>
+  </data>
+  <data name="lblT.Text" xml:space="preserve">
+    <value>Presión</value>
+  </data>
+  <data name="rbSolidSolution.Text" xml:space="preserve">
+    <value>Solución Sólida</value>
+  </data>
+  <data name="TSB_Copy.Text" xml:space="preserve">
+    <value>Copiar Gráfico al Portapapeles</value>
+  </data>
+  <data name="TSB_Preview.Text" xml:space="preserve">
+    <value>Vista Previa</value>
+  </data>
+  <data name="TSB_Print.Text" xml:space="preserve">
+    <value>Imprimir</value>
+  </data>
+  <data name="TSB_PrinterSetup.Text" xml:space="preserve">
+    <value>Configurar Impresora</value>
+  </data>
 </root>

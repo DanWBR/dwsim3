@@ -139,7 +139,7 @@
     <value>Punto de Nube</value>
   </data>
   <data name="Label8.Text" xml:space="preserve">
-    <value>Índice de refracción @ 20 ° c</value>
+    <value>Índice de refracción @ 20 °C</value>
   </data>
   <data name="Label10.Text" xml:space="preserve">
     <value>Viscosidad @ 37,8 °C</value>
@@ -164,5 +164,8 @@
   </data>
   <data name="HiddenToolStripMenuItem.Text" xml:space="preserve">
     <value>Oculto</value>
+  </data>
+  <data name="DocumentToolStripMenuItem.Text" xml:space="preserve">
+    <value>Documento</value>
   </data>
 </root>

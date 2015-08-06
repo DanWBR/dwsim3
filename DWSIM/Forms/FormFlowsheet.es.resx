@@ -356,7 +356,7 @@
     <value>276, 22</value>
   </data>
   <data name="TSMIPipe.Text" xml:space="preserve">
-    <value>Tuberia</value>
+    <value>Tubería</value>
   </data>
   <data name="TSMIValve.Size" type="System.Drawing.Size, System.Drawing">
     <value>276, 22</value>
@@ -814,5 +814,11 @@
   </data>
   <data name="ToolStripButton20.Text" xml:space="preserve">
     <value>Mostrar Todo</value>
+  </data>
+  <data name="tsbClearStates.Text" xml:space="preserve">
+    <value>Borrar Estados Guardados</value>
+  </data>
+  <data name="tsbRestoreSolutions.Text" xml:space="preserve">
+    <value>Restaurar Solución</value>
   </data>
 </root>

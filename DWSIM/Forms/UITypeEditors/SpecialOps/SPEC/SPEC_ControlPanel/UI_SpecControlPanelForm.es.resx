@@ -145,7 +145,7 @@
     <value>Arco-coseno (acos)</value>
   </data>
   <data name="KryptonContextMenuItem11.Text" xml:space="preserve">
-    <value>Inicie sesión base 10 (log10)</value>
+    <value>Log base 10 (log10)</value>
   </data>
   <data name="KryptonLabel2.Values.Text" xml:space="preserve">
     <value>Valor actual</value>
@@ -175,7 +175,7 @@
     <value>Expresión</value>
   </data>
   <data name="KryptonContextMenuItem3.Text" xml:space="preserve">
-    <value>Natural log (registro)</value>
+    <value>Log Natural (registro)</value>
   </data>
   <data name="KryptonContextMenuItem2.Text" xml:space="preserve">
     <value>Coseno (cos)</value>

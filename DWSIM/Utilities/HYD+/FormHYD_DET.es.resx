@@ -164,7 +164,7 @@
     <value>160, 13</value>
   </data>
   <data name="Label1.Text" xml:space="preserve">
-    <value>Temperatura de fusión del agua:</value>
+    <value>Temperatura de Fusión del agua:</value>
   </data>
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Información general</value>
@@ -608,5 +608,14 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Condiciones de disociación de Hidratos: Detalles</value>
+  </data>
+  <data name="Column3.HeaderText" xml:space="preserve">
+    <value>Gaseosa</value>
+  </data>
+  <data name="Column2.HeaderText" xml:space="preserve">
+    <value>Líquida</value>
+  </data>
+  <data name="Column4.HeaderText" xml:space="preserve">
+    <value>Hidrato</value>
   </data>
 </root>

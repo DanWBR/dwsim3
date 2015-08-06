@@ -130,7 +130,7 @@
     <value>T en K</value>
   </data>
   <data name="KryptonLabel2.Text" xml:space="preserve">
-    <value>Calor de reacción (kJ/kmol_CB) (25 ° c)</value>
+    <value>Calor de reacción (kJ/kmol_CB) (25 °C)</value>
   </data>
   <data name="KryptonLabel3.Text" xml:space="preserve">
     <value>Ecuación</value>
@@ -187,7 +187,7 @@
     <value>Parámetros de Reacción de Equilibrio</value>
   </data>
   <data name="KryptonLabel12.Text" xml:space="preserve">
-    <value>DelG_R (kJ/kmol_CB) (25 ° c)</value>
+    <value>DelG_R (kJ/kmol_CB) (25 °C)</value>
   </data>
   <data name="GroupBox4.Text" xml:space="preserve">
     <value>Identificación</value>

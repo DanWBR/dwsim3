@@ -157,7 +157,7 @@
     <value>Temperatura vs Volumen</value>
   </data>
   <data name="ComboBox1.Items8" xml:space="preserve">
-    <value>Volumen vsa Presión</value>
+    <value>Volumen vs Presión</value>
   </data>
   <data name="ComboBox1.Items9" xml:space="preserve">
     <value>Volumen vs Temperatura</value>
@@ -176,5 +176,17 @@
   </data>
   <data name="chkpip.Text" xml:space="preserve">
     <value>Incluir curva de Identificación de Fases</value>
+  </data>
+  <data name="CheckBoxHYDVAP.Text" xml:space="preserve">
+    <value>Solo Vapor</value>
+  </data>
+  <data name="chkhyd.Text" xml:space="preserve">
+    <value>Incluir Curva de Equilibrio de Hidratos</value>
+  </data>
+  <data name="ComboBox2.Items" xml:space="preserve">
+    <value>van der Waals &amp; Platteeuw Modificado(Parrish and Prausnitz) (1972)</value>
+  </data>
+  <data name="ComboBox2.Items3" xml:space="preserve">
+    <value>Klauda &amp; Sandler (con suporte de Inhibidores)</value>
   </data>
 </root>

@@ -164,7 +164,7 @@
     <value>24, 13</value>
   </data>
   <data name="Label43.Text" xml:space="preserve">
-    <value>Grado API</value>
+    <value>Gravedad API</value>
   </data>
   <data name="ComboBoxBasis.Items" xml:space="preserve">
     <value>Volumen de Líquido</value>
@@ -194,7 +194,7 @@
     <value>20, 13</value>
   </data>
   <data name="Label41.Text" xml:space="preserve">
-    <value>° F</value>
+    <value>°F</value>
   </data>
   <data name="TextBoxVT2.Location" type="System.Drawing.Point, System.Drawing">
     <value>294, 128</value>
@@ -251,7 +251,7 @@
     <value>148, 17</value>
   </data>
   <data name="CheckBox1.Text" xml:space="preserve">
-    <value>Temperatura de ebullición</value>
+    <value>Temperatura de Ebullición</value>
   </data>
   <data name="Label8.Size" type="System.Drawing.Size, System.Drawing">
     <value>190, 13</value>
@@ -308,7 +308,7 @@
     <value>Haga clic en 'siguiente' para continuar.</value>
   </data>
   <data name="Label13.Text" xml:space="preserve">
-    <value>La tabla anterior muestra los datos informados. En el siguiente paso puede establecer las temperaturas de corte o el número de pseudocomponentes deseado.</value>
+    <value>La tabla anterior muestra los datos suministrados. En el siguiente paso puede establecer las temperaturas de corte o el número de pseudocomponentes deseado.</value>
   </data>
   <data name="Label14.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 16</value>
@@ -415,9 +415,6 @@
   <data name="CheckBoxADJAF.Text" xml:space="preserve">
     <value>Ajuste de los factores acéntricos para igualar PEVs (entre correlación y paquete del propiedades)</value>
   </data>
-  <data name="ComboBoxSG.Items" xml:space="preserve">
-    <value>Riazi-al-Sahhaf (1996)</value>
-  </data>
   <data name="ComboBoxSG.Items1" xml:space="preserve">
     <value>Datos de Viscosidad</value>
   </data>
@@ -508,5 +505,8 @@
   </data>
   <data name="Button27.Text" xml:space="preserve">
     <value>Cargar Ensayo</value>
+  </data>
+  <data name="DataGridViewTextBoxColumn2.HeaderText" xml:space="preserve">
+    <value>NBP</value>
   </data>
 </root>

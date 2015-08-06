@@ -1764,4 +1764,7 @@
   <data name="sfd1.Title" xml:space="preserve">
     <value>Guardar Script</value>
   </data>
+  <data name="DocumentToolStripMenuItem.Text" xml:space="preserve">
+    <value>Documento</value>
+  </data>
 </root>

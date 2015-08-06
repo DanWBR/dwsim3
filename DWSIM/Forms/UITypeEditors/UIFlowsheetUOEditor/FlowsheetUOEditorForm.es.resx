@@ -158,10 +158,10 @@
     <value>Salida</value>
   </data>
   <data name="DataGridViewComboBoxColumn3.HeaderText" xml:space="preserve">
-    <value>Propriedad</value>
+    <value>Propiedad</value>
   </data>
   <data name="DataGridViewComboBoxColumn4.HeaderText" xml:space="preserve">
-    <value>Propriedad</value>
+    <value>Propiedad</value>
   </data>
   <data name="col1.HeaderText" xml:space="preserve">
     <value>Componente en Diagrama de Flujo Principal</value>

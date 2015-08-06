@@ -142,7 +142,7 @@
     <value>Balancear</value>
   </data>
   <data name="KryptonLabel2.Text" xml:space="preserve">
-    <value>Calor de reacción (kJ/kmol_CB) (25 ° c)</value>
+    <value>Calor de reacción (kJ/kmol_CB) (25 °C)</value>
   </data>
   <data name="KryptonLabel4.Text" xml:space="preserve">
     <value>Base de equipos</value>

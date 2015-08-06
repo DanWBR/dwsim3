@@ -241,7 +241,7 @@ If you have bulk sample data like Specific Gravity and/or Molar Weight, inform t
     <value>13, 13</value>
   </data>
   <data name="Label41.Text" xml:space="preserve">
-    <value>F</value>
+    <value>°F</value>
   </data>
   <data name="TextBoxVT2.Location" type="System.Drawing.Point, System.Drawing">
     <value>233, 130</value>
