@@ -315,56 +315,64 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             Select Case CalcMode
                 Case HeatExchangerCalcMode.CalcBothTemp_KA
-                    Dim UA, NTUh, NTUc, Ph, Pc, WWh, WWc, Rh, Rc, CPH_old, CPC_old As Double
+                    Dim Qh, Qc, Qi, Q_UA, Q_old As Double
+                    Dim tmp As Object
                     A = Area
                     U = OverallCoefficient
-                    UA = U * A
 
-                    Do
-                        WWc = Wc * CPC
-                        WWh = Wh * CPH
-                        NTUc = UA / WWc / 1000
-                        NTUh = UA / WWh / 1000
-                        Rh = WWh / WWc
-                        Rc = WWc / WWh
-
-                        CPH_old = CPH
-                        CPC_old = CPC
-
-                        Select Case Me.FlowDir
-                            Case FlowDirection.CounterCurrent
-                                If Rc = 1 Then
-                                    Ph = NTUh / (1 + NTUh)
-                                    Pc = NTUc / (1 + NTUc)
-                                Else
-                                    Ph = (1 - Exp((Rh - 1) * NTUh)) / (1 - Rh * Exp((Rh - 1) * NTUh))
-                                    Pc = (1 - Exp((Rc - 1) * NTUc)) / (1 - Rc * Exp((Rc - 1) * NTUc))
-                                End If
-
-                            Case FlowDirection.CoCurrent
-                                Ph = (1 - Exp(-NTUh * (1 + Rh))) / (1 + Rh)
-                                Pc = (1 - Exp(-NTUc * (1 + Rc))) / (1 + Rc)
-                        End Select
-
-                        Tc2 = Pc * (Th1 - Tc1) + Tc1
-                        Th2 = Th1 - Ph * (Th1 - Tc1)
-
-                        Dim tmp = StInCold.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Tc2, Pc2, Tc1)
-                        Hc2 = tmp(4)
-                        tmp = StInHot.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Th2, Ph2, Th1)
-                        Hh2 = tmp(4)
-
-                        CPC = (Hc2 - Hc1) / (Tc2 - Tc1)
-                        CPH = (Hh2 - Hh1) / (Th2 - Th1)
-                    Loop Until Abs(CPC_old - CPC) < 0.001 And Abs(CPH_old - CPH) < 0.001
-
-                    Q = -Wh * (Hh2 - Hh1)
                     Select Case Me.FlowDir
                         Case FlowDirection.CoCurrent
-                            LMTD = ((Th1 - Tc1) - (Th2 - Tc2)) / Math.Log((Th1 - Tc1) / (Th2 - Tc2))
+                            Tc2 = Tc1 + (Th1 - Tc1) * 0.49
+                            Th2 = Th1 - (Th1 - Tc1) * 0.49
                         Case FlowDirection.CounterCurrent
-                            LMTD = ((Th1 - Tc2) - (Th2 - Tc1)) / Math.Log((Th1 - Tc2) / (Th2 - Tc1))
+                            Tc2 = Th1 - (Th1 - Tc1) / 10
+                            Th2 = Tc1 + (Th1 - Tc1) / 10
                     End Select
+
+                    'calculate maximum possible exchanged heat for both sides.
+
+                    tmp = StInCold.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Tc2, Pc2, Tc1)
+                    Hc2 = tmp(4)
+                    Qc = Wc * (Hc2 - Hc1)
+
+                    tmp = StInCold.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Th2, Ph2, Th1)
+                    Hh2 = tmp(4)
+                    Qh = -Wh * (Hh2 - Hh1)
+
+                    'estimate Q as minimum value
+                    Qi = Min(Qc, Qh)
+
+                    Do
+                        'calculate exit temperatures from energy balance
+                        Hc2 = Qi / Wc + Hc1
+                        Hh2 = Hh1 - Qi / Wh
+                        tmp = StInCold.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pc2, Hc2, Tc2)
+                        Tc2 = tmp(2)
+                        tmp = StInHot.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Ph2, Hh2, Th2)
+                        Th2 = tmp(2)
+
+                        Select Case Me.FlowDir
+                            Case FlowDirection.CoCurrent
+                                If (Th1 - Tc1) / (Th2 - Tc2) = 1 Then
+                                    LMTD = ((Th1 - Tc1) + (Th2 - Tc2)) / 2
+                                End If
+                                LMTD = ((Th1 - Tc1) - (Th2 - Tc2)) / Math.Log((Th1 - Tc1) / (Th2 - Tc2))
+                            Case FlowDirection.CounterCurrent
+                                If (Th1 - Tc2) / (Th2 - Tc1) = 1 Then
+                                    LMTD = ((Th1 - Tc2) + (Th2 - Tc1)) / 2
+                                Else
+                                    LMTD = ((Th1 - Tc2) - (Th2 - Tc1)) / Math.Log((Th1 - Tc2) / (Th2 - Tc1))
+                                End If
+                        End Select
+
+                        Q_UA = U / 1000 * A * LMTD 'calculate Q due to temperature difference
+
+                        Q_old = Qi
+                        Qi = Qi - (Qi - Q_UA) * 0.2
+                        
+                    Loop Until Abs(Qi - Q_old) < 0.01
+                    Q = Qi
+
                 Case HeatExchangerCalcMode.CalcBothTemp
                     A = Area
                     DeltaHc = Q / Wc
@@ -543,7 +551,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             tms.PropertyPackage.DW_CalcPhaseProps(PropertyPackages.Fase.Mixture)
                         End With
                         rhoc = tms.Fases(0).SPMProperties.density.GetValueOrDefault
-                        cpc = tms.Fases(0).SPMProperties.heatCapacityCp.GetValueOrDefault
+                        CPC = tms.Fases(0).SPMProperties.heatCapacityCp.GetValueOrDefault
                         kc = tms.Fases(0).SPMProperties.thermalConductivity.GetValueOrDefault
                         muc = tms.Fases(1).SPMProperties.viscosity.GetValueOrDefault * tms.Fases(1).SPMProperties.molarfraction.GetValueOrDefault + tms.Fases(2).SPMProperties.viscosity.GetValueOrDefault * tms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
                         tms = StInHot.Clone
@@ -572,7 +580,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         End With
                         tms.PropertyPackage.DW_CalcPhaseProps(PropertyPackages.Fase.Mixture)
                         rhoh = tms.Fases(0).SPMProperties.density.GetValueOrDefault
-                        cph = tms.Fases(0).SPMProperties.heatCapacityCp.GetValueOrDefault
+                        CPH = tms.Fases(0).SPMProperties.heatCapacityCp.GetValueOrDefault
                         kh = tms.Fases(0).SPMProperties.thermalConductivity.GetValueOrDefault
                         muh = tms.Fases(1).SPMProperties.viscosity.GetValueOrDefault * tms.Fases(1).SPMProperties.molarfraction.GetValueOrDefault + tms.Fases(2).SPMProperties.viscosity.GetValueOrDefault * tms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
                         '6
@@ -594,12 +602,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             'cold
                             vt = Wc / (rhoc * nt * Math.PI * di ^ 2 / 4)
                             Ret = rhoc * vt * di / muc
-                            Prt = muc * cpc / kc * 1000
+                            Prt = muc * CPC / kc * 1000
                         Else
                             'hot
                             vt = Wh / (rhoh * nt * Math.PI * di ^ 2 / 4)
                             Ret = rhoh * vt * di / muh
-                            Prt = muh * cph / kh * 1000
+                            Prt = muh * CPH / kh * 1000
                         End If
                         'calcular DeltaP
                         Dim dpt, dps As Double
@@ -703,12 +711,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             'cold
                             Gsf = Wc / Ssf
                             Res = Gsf * de / muc
-                            Prs = muc * cpc / kc * 1000
+                            Prs = muc * CPC / kc * 1000
                         Else
                             'hot
                             Gsf = Wh / Ssf
                             Res = Gsf * de / muh
-                            Prs = muh * cph / kh * 1000
+                            Prs = muh * CPH / kh * 1000
                         End If
                         Select Case STProperties.Tube_Layout
                             Case 0, 1
