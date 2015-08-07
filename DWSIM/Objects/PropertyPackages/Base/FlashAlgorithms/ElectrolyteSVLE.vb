@@ -792,7 +792,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             Tmax = 2000.0#
             Tmin = 50.0#
-            maxDT = 30.0#
+            maxDT = 5.0#
 
             epsilon(0) = 0.1
             epsilon(1) = 0.01
@@ -813,8 +813,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 Do
 
-                    fx = Herror(x1, P, Vz)(0)
-                    fx2 = Herror(x1 + epsilon(j), P, Vz)(0)
+                    fx = Herror(x1, P, Vz)
+                    fx2 = Herror(x1 + epsilon(j), P, Vz)
 
                     If Abs(fx) <= tolEXT Then Exit Do
 
@@ -876,7 +876,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         End Function
 
-        Function Herror(ByVal X As Double, ByVal P As Double, ByVal Vz() As Double) As Object
+        Function Herror(ByVal X As Double, ByVal P As Double, ByVal Vz() As Double) As Double
             Return OBJ_FUNC_PH_FLASH(X, P, Vz)
         End Function
 
@@ -1044,7 +1044,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         End Function
 
-        Function OBJ_FUNC_PH_FLASH(ByVal T As Double, ByVal P As Double, ByVal Vz As Object) As Object
+        Function OBJ_FUNC_PH_FLASH(ByVal T As Double, ByVal P As Double, ByVal Vz As Object) As Double
 
             Dim tmp As Dictionary(Of String, Object) = Flash_PT(Vz, T, P)
 
