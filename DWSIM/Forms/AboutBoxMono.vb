@@ -30,6 +30,7 @@ Public Class AboutBoxMONO
         Else
             LblCLRInfo.Text = System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion.ToString()
         End If
+        Lblmem.Text = (GC.GetTotalMemory(False) / 1024 / 1024).ToString("#") & " MB managed, " & (My.Application.Info.WorkingSet / 1024 / 1024).ToString("#") & " MB total"
 
         With Me.DataGridView1.Rows
             .Clear()

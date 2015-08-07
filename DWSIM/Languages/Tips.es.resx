@@ -121,7 +121,7 @@
     <value>Si desea que el ajuste sea automáticamente resuelto por la Calculadora de DWSIM, establezca la propiedad "Ajuste Simultáneo" a "True". Así que no es necesario abrir el Panel de control y su variable será ajustada automáticamente cada vez que el diagrama de flujo se calcule por completo.</value>
   </data>
   <data name="BENV001" xml:space="preserve">
-    <value>Si desea agregar algun dato experimental al diagrama experimental, introduzca los datos de la tabla correspondiente antes de solicitar el cálculo.</value>
+    <value>Si desea agregar algún dato experimental al diagrama experimental, introduzca los datos de la tabla correspondiente antes de solicitar el cálculo.</value>
   </data>
   <data name="BENV002" xml:space="preserve">
     <value>La columna de datos experimentales "y" sólo se utiliza en los diagramas x-y. Para mostrar tanto los puntos de burbuja y rocío en un diagrama T / P-xy, introduzca todas las fracciones molares en la columna de datos "x".</value>
@@ -187,7 +187,7 @@
     <value>Al aplicar el método, todo diagrama de clases se calculan simultáneamente. Para cambiar la vista del diagrama no es necesario solicitar el cálculo de nuevo.</value>
   </data>
   <data name="PFR001" xml:space="preserve">
-    <value>Sólo reacciones de tipó cinéticas serán consideradas por PFR.</value>
+    <value>Sólo reacciones de tipo cinéticas serán consideradas por PFR.</value>
   </data>
   <data name="PURE001" xml:space="preserve">
     <value>Las propiedades que se muestran en esta herramienta corresponde a la información de los componentes DWSIM. No se mostrarán las propiedades de los componentes CAPE-OPEN aquí, en caso de que utilice un Paquete de Propiedades CAPE-OPEN.</value>

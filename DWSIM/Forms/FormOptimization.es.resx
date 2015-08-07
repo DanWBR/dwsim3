@@ -307,4 +307,10 @@
   <data name="$this.TabText" xml:space="preserve">
     <value>Optimizador Multivariable</value>
   </data>
+  <data name="ComboBox1.Items" xml:space="preserve">
+    <value>Brent (Sin Restricciones) </value>
+  </data>
+  <data name="ComboBox1.Items1" xml:space="preserve">
+    <value>Brent (Restringido)</value>
+  </data>
 </root>

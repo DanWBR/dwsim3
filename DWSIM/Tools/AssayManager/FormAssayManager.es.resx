@@ -204,4 +204,10 @@
   <data name="ToolStripButton2.Text" xml:space="preserve">
     <value>Exportar Archivo</value>
   </data>
+  <data name="visc1.HeaderText" xml:space="preserve">
+    <value>Viscosidad 1</value>
+  </data>
+  <data name="visc2.HeaderText" xml:space="preserve">
+    <value>Viscosidad 2</value>
+  </data>
 </root>

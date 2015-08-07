@@ -310,4 +310,7 @@
   <data name="TabPage5.Text" xml:space="preserve">
     <value>Gráfica</value>
   </data>
+  <data name="DocumentToolStripMenuItem.Text" xml:space="preserve">
+    <value>Documento</value>
+  </data>
 </root>

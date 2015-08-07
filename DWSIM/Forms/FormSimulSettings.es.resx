@@ -781,4 +781,13 @@
   <data name="Button3.Text" xml:space="preserve">
     <value>Abrir Administrador de Assay</value>
   </data>
+  <data name="ComboBox3.Items1" xml:space="preserve">
+    <value>Estándar</value>
+  </data>
+  <data name="ComboBox3.Items2" xml:space="preserve">
+    <value>Científica</value>
+  </data>
+  <data name="ComboBox3.Items3" xml:space="preserve">
+    <value>Número General</value>
+  </data>
 </root>

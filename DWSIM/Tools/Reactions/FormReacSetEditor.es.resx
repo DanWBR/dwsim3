@@ -133,7 +133,7 @@
     <value>DWSIM-Editor de Set de Reacciones</value>
   </data>
   <data name="KryptonButton1.Text" xml:space="preserve">
-    <value>Quitar reacción seleccionada</value>
+    <value>Remover reacción seleccionada</value>
   </data>
   <data name="Column4.HeaderText" xml:space="preserve">
     <value>Ecuación</value>

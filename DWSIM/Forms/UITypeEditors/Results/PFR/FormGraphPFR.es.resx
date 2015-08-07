@@ -165,4 +165,7 @@
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Gráfico</value>
   </data>
+  <data name="ComboBox2.Items2" xml:space="preserve">
+    <value>Temperatura</value>
+  </data>
 </root>

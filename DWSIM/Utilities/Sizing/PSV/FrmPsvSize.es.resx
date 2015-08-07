@@ -177,4 +177,7 @@
   <data name="Label22.Text" xml:space="preserve">
     <value>Kd</value>
   </data>
+  <data name="Label24.Text" xml:space="preserve">
+    <value>in.²</value>
+  </data>
 </root>

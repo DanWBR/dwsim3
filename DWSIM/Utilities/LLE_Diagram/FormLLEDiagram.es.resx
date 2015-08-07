@@ -133,4 +133,19 @@
   <data name="$this.Text" xml:space="preserve">
     <value>DWSIM - Utilidades: Diagrama de Fases Triangular (ELL)</value>
   </data>
+  <data name="TabPage2.Text" xml:space="preserve">
+    <value>Datos</value>
+  </data>
+  <data name="TSB_Print.Text" xml:space="preserve">
+    <value>Imprimir</value>
+  </data>
+  <data name="TSB_Print.ToolTipText" xml:space="preserve">
+    <value>Imprimir</value>
+  </data>
+  <data name="TSB_PrinterSetup.Text" xml:space="preserve">
+    <value>Configurar Impresora</value>
+  </data>
+  <data name="TSB_PrinterSetup.ToolTipText" xml:space="preserve">
+    <value>Configurar Impresora</value>
+  </data>
 </root>

@@ -122,7 +122,7 @@
     <value>295, 13</value>
   </data>
   <data name="Label3.Text" xml:space="preserve">
-    <value>Para editar valores haga click izquierdo en la celda deseada.</value>
+    <value>Para editar valores haga clic izquierdo en la celda deseada.</value>
   </data>
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Parámetros de Interacción</value>
@@ -131,7 +131,7 @@
     <value>168, 13</value>
   </data>
   <data name="Label2.Text" xml:space="preserve">
-    <value>Característica de implementación.</value>
+    <value>Acción en implementación.</value>
   </data>
   <data name="Button5.Location" type="System.Drawing.Point, System.Drawing">
     <value>185, 17</value>

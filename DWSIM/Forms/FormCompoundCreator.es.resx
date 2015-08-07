@@ -2075,4 +2075,10 @@
   <data name="UNIFACImageColumn.HeaderText" xml:space="preserve">
     <value>Ejemplo</value>
   </data>
+  <data name="FaTabStripItem4.Title" xml:space="preserve">
+    <value>Propiedades</value>
+  </data>
+  <data name="Label3.Text" xml:space="preserve">
+    <value>Estado:</value>
+  </data>
 </root>

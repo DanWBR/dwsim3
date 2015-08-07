@@ -222,6 +222,6 @@
     <value>Identificación</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>CompositionEditorForm</value>
+    <value>Editor de Composiciones</value>
   </data>
 </root>

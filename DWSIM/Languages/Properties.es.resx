@@ -138,7 +138,7 @@
     <comment>1</comment>
   </data>
   <data name="PROP_CL_2" xml:space="preserve">
-    <value>Temperatura de salida</value>
+    <value>Temperatura de Salida</value>
     <comment>1</comment>
   </data>
   <data name="PROP_CL_3" xml:space="preserve">
@@ -266,7 +266,7 @@
     <comment>1</comment>
   </data>
   <data name="PROP_HT_2" xml:space="preserve">
-    <value>Temperatura de salida</value>
+    <value>Temperatura de Salida</value>
     <comment>1</comment>
   </data>
   <data name="PROP_HT_3" xml:space="preserve">
@@ -317,10 +317,10 @@
     <comment>0</comment>
   </data>
   <data name="PROP_HX_3" xml:space="preserve">
-    <value>Temperatura de salida de fluido frío</value>
+    <value>Temperatura de Salida de Fluido Frío</value>
   </data>
   <data name="PROP_HX_4" xml:space="preserve">
-    <value>Temperatura de salida de fluido caliente</value>
+    <value>Temperatura de Salida de Fluido Caliente</value>
   </data>
   <data name="PROP_HX_5" xml:space="preserve">
     <value>[Coraza y Tubo] Diámetro Interno de Coraza</value>
@@ -935,11 +935,11 @@
     <comment>1</comment>
   </data>
   <data name="PROP_OP_4" xml:space="preserve">
-    <value>Caida de Presión Total</value>
+    <value>Caída de Presión Total</value>
     <comment>0</comment>
   </data>
   <data name="PROP_OP_5" xml:space="preserve">
-    <value>Caida de Presión en Orificio</value>
+    <value>Caída de Presión en Orificio</value>
     <comment>0</comment>
   </data>
   <data name="PROP_OP_6" xml:space="preserve">
@@ -947,15 +947,15 @@
     <comment>0</comment>
   </data>
   <data name="PROP_PF_0" xml:space="preserve">
-    <value>Caida de presión</value>
+    <value>Caída de presión</value>
     <comment>1</comment>
   </data>
   <data name="PROP_PS_0" xml:space="preserve">
-    <value>Caida de presión</value>
+    <value>Caída de presión</value>
     <comment>0</comment>
   </data>
   <data name="PROP_PS_1" xml:space="preserve">
-    <value>Caida de Temperatura</value>
+    <value>Caída de Temperatura</value>
     <comment>0</comment>
   </data>
   <data name="PROP_PS_2" xml:space="preserve">
@@ -1003,7 +1003,7 @@
     <comment>1</comment>
   </data>
   <data name="PROP_RF_2" xml:space="preserve">
-    <value>Caida de presión en el condensador</value>
+    <value>Caída de presión en el condensador</value>
     <comment>1</comment>
   </data>
   <data name="PROP_RF_3" xml:space="preserve">
@@ -1131,7 +1131,7 @@
     <comment>1</comment>
   </data>
   <data name="PROP_TK_0" xml:space="preserve">
-    <value>Caida de Presión</value>
+    <value>Caída de Presión</value>
     <comment>1</comment>
   </data>
   <data name="PROP_TK_1" xml:space="preserve">
@@ -1141,7 +1141,7 @@
     <value>Tiempo de Residencia</value>
   </data>
   <data name="PROP_TU_0" xml:space="preserve">
-    <value>Caida de Presión</value>
+    <value>Caída de Presión</value>
     <comment>1</comment>
   </data>
   <data name="PROP_TU_1" xml:space="preserve">
@@ -1161,7 +1161,7 @@
     <comment>1</comment>
   </data>
   <data name="PROP_VA_1" xml:space="preserve">
-    <value>Caida de presión</value>
+    <value>Caída de presión</value>
     <comment>1</comment>
   </data>
   <data name="PROP_VA_2" xml:space="preserve">
@@ -1169,7 +1169,7 @@
     <comment>1</comment>
   </data>
   <data name="PROP_VA_3" xml:space="preserve">
-    <value>Caida de Temperatura</value>
+    <value>Caída de Temperatura</value>
     <comment>0</comment>
   </data>
   <data name="PROP_CL_5" xml:space="preserve">

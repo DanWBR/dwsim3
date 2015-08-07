@@ -392,6 +392,9 @@ Imports DWSIM.DWSIM.Outros
 
         End If
 
+        'garbage collection (frees unused memory)
+        System.GC.Collect()
+        System.GC.WaitForPendingFinalizers()
         System.GC.Collect()
         System.GC.WaitForPendingFinalizers()
 

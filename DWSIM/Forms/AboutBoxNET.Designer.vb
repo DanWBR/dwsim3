@@ -22,6 +22,7 @@ Partial Class AboutBoxNET
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(AboutBoxNET))
         Me.Label1 = New System.Windows.Forms.Label()
         Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
@@ -46,6 +47,13 @@ Partial Class AboutBoxNET
         Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem()
         Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewLinkColumn()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column7 = New System.Windows.Forms.DataGridViewLinkColumn()
         Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem()
         Me.AssemblyInfoListView = New System.Windows.Forms.ListView()
         Me.colAssemblyName = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -57,13 +65,8 @@ Partial Class AboutBoxNET
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.AssemblyNamesComboBox = New System.Windows.Forms.ComboBox()
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column5 = New System.Windows.Forms.DataGridViewLinkColumn()
-        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column7 = New System.Windows.Forms.DataGridViewLinkColumn()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.Lblmem = New System.Windows.Forms.Label()
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStrip1.SuspendLayout()
         Me.FaTabStripItem1.SuspendLayout()
@@ -78,7 +81,6 @@ Partial Class AboutBoxNET
         Me.Label1.AutoSize = True
         Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
         Me.Label1.Location = New System.Drawing.Point(13, 8)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(404, 13)
@@ -98,7 +100,7 @@ Partial Class AboutBoxNET
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(611, 520)
+        Me.Button1.Location = New System.Drawing.Point(611, 551)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 23)
         Me.Button1.TabIndex = 3
@@ -109,7 +111,6 @@ Partial Class AboutBoxNET
         '
         Me.Version.AutoSize = True
         Me.Version.BackColor = System.Drawing.Color.Transparent
-        Me.Version.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
         Me.Version.Location = New System.Drawing.Point(13, 29)
         Me.Version.Name = "Version"
         Me.Version.Size = New System.Drawing.Size(121, 13)
@@ -120,7 +121,6 @@ Partial Class AboutBoxNET
         '
         Me.Copyright.AutoSize = True
         Me.Copyright.BackColor = System.Drawing.Color.Transparent
-        Me.Copyright.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
         Me.Copyright.Location = New System.Drawing.Point(13, 50)
         Me.Copyright.Name = "Copyright"
         Me.Copyright.Size = New System.Drawing.Size(54, 13)
@@ -131,7 +131,6 @@ Partial Class AboutBoxNET
         '
         Me.Label2.AutoSize = True
         Me.Label2.BackColor = System.Drawing.Color.Transparent
-        Me.Label2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
         Me.Label2.Location = New System.Drawing.Point(12, 79)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(55, 13)
@@ -153,7 +152,6 @@ Partial Class AboutBoxNET
         '
         Me.Label5.AutoSize = True
         Me.Label5.BackColor = System.Drawing.Color.Transparent
-        Me.Label5.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
         Me.Label5.Location = New System.Drawing.Point(12, 33)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(65, 13)
@@ -164,7 +162,6 @@ Partial Class AboutBoxNET
         '
         Me.Label6.AutoSize = True
         Me.Label6.BackColor = System.Drawing.Color.Transparent
-        Me.Label6.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
         Me.Label6.Location = New System.Drawing.Point(133, 33)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(506, 13)
@@ -178,8 +175,7 @@ Partial Class AboutBoxNET
         Me.LabelLicense.BackColor = System.Drawing.Color.Transparent
         Me.LabelLicense.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.LabelLicense.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelLicense.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
-        Me.LabelLicense.Location = New System.Drawing.Point(12, 183)
+        Me.LabelLicense.Location = New System.Drawing.Point(12, 203)
         Me.LabelLicense.Name = "LabelLicense"
         Me.LabelLicense.Size = New System.Drawing.Size(422, 13)
         Me.LabelLicense.TabIndex = 12
@@ -190,7 +186,7 @@ Partial Class AboutBoxNET
         '
         Me.TextBox1.BackColor = System.Drawing.Color.White
         Me.TextBox1.Font = New System.Drawing.Font("Courier New", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox1.Location = New System.Drawing.Point(15, 199)
+        Me.TextBox1.Location = New System.Drawing.Point(15, 226)
         Me.TextBox1.Multiline = True
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.ReadOnly = True
@@ -203,7 +199,6 @@ Partial Class AboutBoxNET
         '
         Me.Label7.AutoSize = True
         Me.Label7.BackColor = System.Drawing.Color.Transparent
-        Me.Label7.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
         Me.Label7.Location = New System.Drawing.Point(12, 129)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(48, 13)
@@ -214,7 +209,6 @@ Partial Class AboutBoxNET
         '
         Me.LblOSInfo.AutoSize = True
         Me.LblOSInfo.BackColor = System.Drawing.Color.Transparent
-        Me.LblOSInfo.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
         Me.LblOSInfo.Location = New System.Drawing.Point(133, 129)
         Me.LblOSInfo.Name = "LblOSInfo"
         Me.LblOSInfo.Size = New System.Drawing.Size(44, 13)
@@ -225,7 +219,6 @@ Partial Class AboutBoxNET
         '
         Me.LblCLRInfo.AutoSize = True
         Me.LblCLRInfo.BackColor = System.Drawing.Color.Transparent
-        Me.LblCLRInfo.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
         Me.LblCLRInfo.Location = New System.Drawing.Point(133, 153)
         Me.LblCLRInfo.Name = "LblCLRInfo"
         Me.LblCLRInfo.Size = New System.Drawing.Size(44, 13)
@@ -236,7 +229,6 @@ Partial Class AboutBoxNET
         '
         Me.Label4.AutoSize = True
         Me.Label4.BackColor = System.Drawing.Color.Transparent
-        Me.Label4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
         Me.Label4.Location = New System.Drawing.Point(12, 153)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(53, 13)
@@ -247,7 +239,6 @@ Partial Class AboutBoxNET
         '
         Me.Label3.AutoSize = True
         Me.Label3.BackColor = System.Drawing.Color.Transparent
-        Me.Label3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
         Me.Label3.Location = New System.Drawing.Point(12, 56)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(113, 13)
@@ -258,7 +249,6 @@ Partial Class AboutBoxNET
         '
         Me.Label8.AutoSize = True
         Me.Label8.BackColor = System.Drawing.Color.Transparent
-        Me.Label8.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
         Me.Label8.Location = New System.Drawing.Point(133, 56)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(213, 13)
@@ -269,7 +259,6 @@ Partial Class AboutBoxNET
         '
         Me.Label9.AutoSize = True
         Me.Label9.BackColor = System.Drawing.Color.Transparent
-        Me.Label9.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
         Me.Label9.Location = New System.Drawing.Point(133, 10)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(253, 13)
@@ -280,7 +269,6 @@ Partial Class AboutBoxNET
         '
         Me.Label10.AutoSize = True
         Me.Label10.BackColor = System.Drawing.Color.Transparent
-        Me.Label10.ForeColor = System.Drawing.Color.FromArgb(CType(CType(42, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(127, Byte), Integer))
         Me.Label10.Location = New System.Drawing.Point(12, 10)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(65, 13)
@@ -296,13 +284,15 @@ Partial Class AboutBoxNET
         Me.FaTabStrip1.Location = New System.Drawing.Point(7, 74)
         Me.FaTabStrip1.Name = "FaTabStrip1"
         Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem1
-        Me.FaTabStrip1.Size = New System.Drawing.Size(679, 438)
+        Me.FaTabStrip1.Size = New System.Drawing.Size(679, 471)
         Me.FaTabStrip1.TabIndex = 22
         Me.FaTabStrip1.Text = "FaTabStrip1"
         '
         'FaTabStripItem1
         '
         Me.FaTabStripItem1.CanClose = False
+        Me.FaTabStripItem1.Controls.Add(Me.Lblmem)
+        Me.FaTabStripItem1.Controls.Add(Me.Label11)
         Me.FaTabStripItem1.Controls.Add(Me.Label9)
         Me.FaTabStripItem1.Controls.Add(Me.LinkLabel1)
         Me.FaTabStripItem1.Controls.Add(Me.Label10)
@@ -321,7 +311,7 @@ Partial Class AboutBoxNET
         Me.FaTabStripItem1.IsDrawn = True
         Me.FaTabStripItem1.Name = "FaTabStripItem1"
         Me.FaTabStripItem1.Selected = True
-        Me.FaTabStripItem1.Size = New System.Drawing.Size(677, 417)
+        Me.FaTabStripItem1.Size = New System.Drawing.Size(677, 450)
         Me.FaTabStripItem1.TabIndex = 0
         Me.FaTabStripItem1.Title = "General Info"
         '
@@ -353,95 +343,6 @@ Partial Class AboutBoxNET
         Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.DataGridView1.Size = New System.Drawing.Size(677, 417)
         Me.DataGridView1.TabIndex = 0
-        '
-        'FaTabStripItem3
-        '
-        Me.FaTabStripItem3.CanClose = False
-        Me.FaTabStripItem3.Controls.Add(Me.AssemblyInfoListView)
-        Me.FaTabStripItem3.IsDrawn = True
-        Me.FaTabStripItem3.Name = "FaTabStripItem3"
-        Me.FaTabStripItem3.Size = New System.Drawing.Size(677, 437)
-        Me.FaTabStripItem3.TabIndex = 2
-        Me.FaTabStripItem3.Title = "Loaded Assemblies"
-        '
-        'AssemblyInfoListView
-        '
-        Me.AssemblyInfoListView.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.colAssemblyName, Me.colAssemblyVersion, Me.colAssemblyBuilt, Me.colAssemblyCodeBase})
-        Me.AssemblyInfoListView.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.AssemblyInfoListView.FullRowSelect = True
-        Me.AssemblyInfoListView.Location = New System.Drawing.Point(0, 0)
-        Me.AssemblyInfoListView.MultiSelect = False
-        Me.AssemblyInfoListView.Name = "AssemblyInfoListView"
-        Me.AssemblyInfoListView.Size = New System.Drawing.Size(677, 437)
-        Me.AssemblyInfoListView.Sorting = System.Windows.Forms.SortOrder.Ascending
-        Me.AssemblyInfoListView.TabIndex = 14
-        Me.AssemblyInfoListView.UseCompatibleStateImageBehavior = False
-        Me.AssemblyInfoListView.View = System.Windows.Forms.View.Details
-        '
-        'colAssemblyName
-        '
-        Me.colAssemblyName.Text = "Assembly"
-        Me.colAssemblyName.Width = 123
-        '
-        'colAssemblyVersion
-        '
-        Me.colAssemblyVersion.Text = "Version"
-        Me.colAssemblyVersion.Width = 100
-        '
-        'colAssemblyBuilt
-        '
-        Me.colAssemblyBuilt.Text = "Build Date"
-        Me.colAssemblyBuilt.Width = 130
-        '
-        'colAssemblyCodeBase
-        '
-        Me.colAssemblyCodeBase.Text = "CodeBase"
-        Me.colAssemblyCodeBase.Width = 750
-        '
-        'FaTabStripItem4
-        '
-        Me.FaTabStripItem4.CanClose = False
-        Me.FaTabStripItem4.Controls.Add(Me.AssemblyDetailsListView)
-        Me.FaTabStripItem4.Controls.Add(Me.AssemblyNamesComboBox)
-        Me.FaTabStripItem4.IsDrawn = True
-        Me.FaTabStripItem4.Name = "FaTabStripItem4"
-        Me.FaTabStripItem4.Size = New System.Drawing.Size(677, 437)
-        Me.FaTabStripItem4.TabIndex = 3
-        Me.FaTabStripItem4.Title = "Assembly Details"
-        '
-        'AssemblyDetailsListView
-        '
-        Me.AssemblyDetailsListView.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2})
-        Me.AssemblyDetailsListView.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.AssemblyDetailsListView.FullRowSelect = True
-        Me.AssemblyDetailsListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
-        Me.AssemblyDetailsListView.Location = New System.Drawing.Point(0, 21)
-        Me.AssemblyDetailsListView.Name = "AssemblyDetailsListView"
-        Me.AssemblyDetailsListView.Size = New System.Drawing.Size(677, 416)
-        Me.AssemblyDetailsListView.Sorting = System.Windows.Forms.SortOrder.Ascending
-        Me.AssemblyDetailsListView.TabIndex = 21
-        Me.AssemblyDetailsListView.UseCompatibleStateImageBehavior = False
-        Me.AssemblyDetailsListView.View = System.Windows.Forms.View.Details
-        '
-        'ColumnHeader1
-        '
-        Me.ColumnHeader1.Text = "Assembly Key"
-        Me.ColumnHeader1.Width = 120
-        '
-        'ColumnHeader2
-        '
-        Me.ColumnHeader2.Text = "Value"
-        Me.ColumnHeader2.Width = 700
-        '
-        'AssemblyNamesComboBox
-        '
-        Me.AssemblyNamesComboBox.Dock = System.Windows.Forms.DockStyle.Top
-        Me.AssemblyNamesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.AssemblyNamesComboBox.Location = New System.Drawing.Point(0, 0)
-        Me.AssemblyNamesComboBox.Name = "AssemblyNamesComboBox"
-        Me.AssemblyNamesComboBox.Size = New System.Drawing.Size(677, 21)
-        Me.AssemblyNamesComboBox.Sorted = True
-        Me.AssemblyNamesComboBox.TabIndex = 20
         '
         'Column1
         '
@@ -496,12 +397,121 @@ Partial Class AboutBoxNET
         Me.Column7.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
         Me.Column7.Width = 92
         '
+        'FaTabStripItem3
+        '
+        Me.FaTabStripItem3.CanClose = False
+        Me.FaTabStripItem3.Controls.Add(Me.AssemblyInfoListView)
+        Me.FaTabStripItem3.IsDrawn = True
+        Me.FaTabStripItem3.Name = "FaTabStripItem3"
+        Me.FaTabStripItem3.Size = New System.Drawing.Size(677, 417)
+        Me.FaTabStripItem3.TabIndex = 2
+        Me.FaTabStripItem3.Title = "Loaded Assemblies"
+        '
+        'AssemblyInfoListView
+        '
+        Me.AssemblyInfoListView.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.colAssemblyName, Me.colAssemblyVersion, Me.colAssemblyBuilt, Me.colAssemblyCodeBase})
+        Me.AssemblyInfoListView.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.AssemblyInfoListView.FullRowSelect = True
+        Me.AssemblyInfoListView.Location = New System.Drawing.Point(0, 0)
+        Me.AssemblyInfoListView.MultiSelect = False
+        Me.AssemblyInfoListView.Name = "AssemblyInfoListView"
+        Me.AssemblyInfoListView.Size = New System.Drawing.Size(677, 417)
+        Me.AssemblyInfoListView.Sorting = System.Windows.Forms.SortOrder.Ascending
+        Me.AssemblyInfoListView.TabIndex = 14
+        Me.AssemblyInfoListView.UseCompatibleStateImageBehavior = False
+        Me.AssemblyInfoListView.View = System.Windows.Forms.View.Details
+        '
+        'colAssemblyName
+        '
+        Me.colAssemblyName.Text = "Assembly"
+        Me.colAssemblyName.Width = 123
+        '
+        'colAssemblyVersion
+        '
+        Me.colAssemblyVersion.Text = "Version"
+        Me.colAssemblyVersion.Width = 100
+        '
+        'colAssemblyBuilt
+        '
+        Me.colAssemblyBuilt.Text = "Build Date"
+        Me.colAssemblyBuilt.Width = 130
+        '
+        'colAssemblyCodeBase
+        '
+        Me.colAssemblyCodeBase.Text = "CodeBase"
+        Me.colAssemblyCodeBase.Width = 750
+        '
+        'FaTabStripItem4
+        '
+        Me.FaTabStripItem4.CanClose = False
+        Me.FaTabStripItem4.Controls.Add(Me.AssemblyDetailsListView)
+        Me.FaTabStripItem4.Controls.Add(Me.AssemblyNamesComboBox)
+        Me.FaTabStripItem4.IsDrawn = True
+        Me.FaTabStripItem4.Name = "FaTabStripItem4"
+        Me.FaTabStripItem4.Size = New System.Drawing.Size(677, 417)
+        Me.FaTabStripItem4.TabIndex = 3
+        Me.FaTabStripItem4.Title = "Assembly Details"
+        '
+        'AssemblyDetailsListView
+        '
+        Me.AssemblyDetailsListView.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2})
+        Me.AssemblyDetailsListView.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.AssemblyDetailsListView.FullRowSelect = True
+        Me.AssemblyDetailsListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
+        Me.AssemblyDetailsListView.Location = New System.Drawing.Point(0, 21)
+        Me.AssemblyDetailsListView.Name = "AssemblyDetailsListView"
+        Me.AssemblyDetailsListView.Size = New System.Drawing.Size(677, 396)
+        Me.AssemblyDetailsListView.Sorting = System.Windows.Forms.SortOrder.Ascending
+        Me.AssemblyDetailsListView.TabIndex = 21
+        Me.AssemblyDetailsListView.UseCompatibleStateImageBehavior = False
+        Me.AssemblyDetailsListView.View = System.Windows.Forms.View.Details
+        '
+        'ColumnHeader1
+        '
+        Me.ColumnHeader1.Text = "Assembly Key"
+        Me.ColumnHeader1.Width = 120
+        '
+        'ColumnHeader2
+        '
+        Me.ColumnHeader2.Text = "Value"
+        Me.ColumnHeader2.Width = 700
+        '
+        'AssemblyNamesComboBox
+        '
+        Me.AssemblyNamesComboBox.Dock = System.Windows.Forms.DockStyle.Top
+        Me.AssemblyNamesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.AssemblyNamesComboBox.Location = New System.Drawing.Point(0, 0)
+        Me.AssemblyNamesComboBox.Name = "AssemblyNamesComboBox"
+        Me.AssemblyNamesComboBox.Size = New System.Drawing.Size(677, 21)
+        Me.AssemblyNamesComboBox.Sorted = True
+        Me.AssemblyNamesComboBox.TabIndex = 20
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.BackColor = System.Drawing.Color.Transparent
+        Me.Label11.Location = New System.Drawing.Point(12, 178)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(82, 13)
+        Me.Label11.TabIndex = 22
+        Me.Label11.Text = "Memory Usage:"
+        '
+        'Lblmem
+        '
+        Me.Lblmem.AutoSize = True
+        Me.Lblmem.BackColor = System.Drawing.Color.Transparent
+        Me.Lblmem.Location = New System.Drawing.Point(133, 178)
+        Me.Lblmem.Name = "Lblmem"
+        Me.Lblmem.Size = New System.Drawing.Size(55, 13)
+        Me.Lblmem.TabIndex = 23
+        Me.Lblmem.Text = "[meminfo]"
+        '
         'AboutBoxNET
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(694, 550)
+        Me.ClientSize = New System.Drawing.Size(690, 584)
         Me.ControlBox = False
         Me.Controls.Add(Me.Copyright)
         Me.Controls.Add(Me.FaTabStrip1)
@@ -568,4 +578,6 @@ Partial Class AboutBoxNET
     Friend WithEvents Column5 As System.Windows.Forms.DataGridViewLinkColumn
     Friend WithEvents Column6 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column7 As System.Windows.Forms.DataGridViewLinkColumn
+    Public WithEvents Lblmem As System.Windows.Forms.Label
+    Public WithEvents Label11 As System.Windows.Forms.Label
 End Class

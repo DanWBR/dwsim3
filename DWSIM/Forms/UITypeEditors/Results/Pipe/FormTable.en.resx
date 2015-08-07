@@ -124,7 +124,7 @@
     <value>Pressure (kPa)</value>
   </data>
   <data name="Column3.HeaderText" xml:space="preserve">
-    <value>Temperature (C)</value>
+    <value>Temperature (°C)</value>
   </data>
   <data name="Column4.HeaderText" xml:space="preserve">
     <value>Liquid Velocity (m/s)</value>
