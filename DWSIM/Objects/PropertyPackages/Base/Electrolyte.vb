@@ -151,7 +151,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Hex = 0.0#
             MW = 1.0#
 
-            If Vx(wid) <> 1.0# Then
+            If Vx(wid) <> 1.0# And Vx(wid) > 0.0# Then
                 MW = 0.0#
                 For i As Integer = 0 To n
                     If Vx(i) <> 0.0# Then

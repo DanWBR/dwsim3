@@ -116,6 +116,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 S = 1.0#
                 For i = 0 To n
                     Vxs(i) = Vnf(i)
+                    Vns(i) = Vnf(i)
                 Next
                 Vf = Vnf
                 sumN = 1.0#
@@ -819,6 +820,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     If Abs(fx) <= tolEXT Then Exit Do
 
                     dfdx = (fx2 - fx) / epsilon(j)
+
+                    If dfdx = 0.0# Then
+                        fx = 0.0#
+                        Exit Do
+                    End If
+
                     dx = fx / dfdx
 
                     If Abs(dx) > maxDT Then dx = maxDT * Sign(dx)
@@ -1066,9 +1073,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             _Hs = 0
 
             Dim mmg, mml, mms As Double
-            If V > 0 Then _Hv = proppack.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
-            If L > 0 Then _Hl = proppack.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
-            If S > 0 Then _Hs = proppack.DW_CalcSolidEnthalpy(T, Vs, CompoundProperties)
+            If V > 0.0# Then _Hv = proppack.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
+            If L > 0.0# Then _Hl = proppack.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
+            If S > 0.0# Then _Hs = proppack.DW_CalcSolidEnthalpy(T, Vs, CompoundProperties)
             mmg = proppack.AUX_MMM(Vy)
             mml = proppack.AUX_MMM(Vx)
             mms = proppack.AUX_MMM(Vs)
