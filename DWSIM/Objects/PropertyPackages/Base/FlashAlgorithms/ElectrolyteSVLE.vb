@@ -225,8 +225,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     sumN = 0
                     For i = 0 To n
-                        Vf(i) = Vnv(i) + Vnl(i) + Vns(i)
-                        sumN += Vf(i)
+                        'Vf(i) = Vnv(i) + Vnl(i) + Vns(i)
+                        sumN += Vnv(i) + Vnl(i) + Vns(i)
                     Next
 
                     err = 0
@@ -564,7 +564,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 Return New Object() {Vx, Nothing}
 
-                End If
+            End If
 
         End Function
 
@@ -846,7 +846,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             If Double.IsNaN(T) Or T <= Tmin Or T >= Tmax Or cnt > maxitEXT Or Abs(fx) > tolEXT Then Throw New Exception("PH Flash [Electrolyte]: Invalid result: Temperature did not converge.")
 
-            Dim tmp As Object = Flash_PT(Vz, P, T)
+            Dim tmp As Object = Flash_PT(Vz, T, P)
 
             Dim S, Vs(), sumN As Double
 
