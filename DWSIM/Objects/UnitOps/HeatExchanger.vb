@@ -32,10 +32,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
         CalcTempHotOut = 0
         CalcTempColdOut = 1
         CalcBothTemp = 2
-        CalcArea = 3
-        ShellandTube_Rating = 4
-        ShellandTube_CalcFoulingFactor = 5
-        CalcBothTemp_KA = 6
+        CalcBothTemp_KA = 3
+        CalcArea = 4
+        ShellandTube_Rating = 5
+        ShellandTube_CalcFoulingFactor = 6
     End Enum
 
     Public Enum SpecifiedTemperature
@@ -67,18 +67,18 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Protected m_Q As Nullable(Of Double) = 0
         Protected m_dp As Nullable(Of Double) = 0
-        Protected m_OverallCoefficient As Nullable(Of Double) = 0
+        Protected m_OverallCoefficient As Nullable(Of Double) = 1000
         Protected m_Area As Nullable(Of Double) = 1.0#
         Protected TempHotOut As Nullable(Of Double) = 298.15#
         Protected TempColdOut As Nullable(Of Double) = 298.15#
         Protected m_tempdiff As Double = 0
         Protected FoulingFactor As Nullable(Of Double) = 0
         Protected Type As Integer
-        Protected CalcMode As HeatExchangerCalcMode = HeatExchangerCalcMode.CalcBothTemp
+        Protected CalcMode As HeatExchangerCalcMode = HeatExchangerCalcMode.CalcBothTemp_KA
         Protected m_HotSidePressureDrop As Double = 0
         Protected m_ColdSidePressureDrop As Double = 0
         Protected m_specifiedtemperature As SpecifiedTemperature = SpecifiedTemperature.Cold_Fluid
-        Protected m_flowdirection As FlowDirection
+        Protected m_flowdirection As FlowDirection = FlowDirection.CounterCurrent
         Protected m_stprops As New STHXProperties
         Protected m_f As Double = 1.0#
 
@@ -129,7 +129,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             'Define the unitop type for later use.
             ObjectType = TipoObjeto.HeatExchanger
             Type = HeatExchangerType.DoublePipe
-            CalcMode = HeatExchangerCalcMode.CalcBothTemp
+            'CalcMode = HeatExchangerCalcMode.CalcBothTemp
 
         End Sub
 
