@@ -496,7 +496,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             ElseIf st = State.Solid Then
                 For i = 0 To n
                     If constprops(i).TemperatureOfFusion <> 0 Then
-                        lnfug(i) = Log(Me.AUX_PVAPi(i, T) * Exp(-constprops(i).EnthalpyOfFusionAtTf / (8.314 * T) * (1 - T / constprops(i).TemperatureOfFusion)))
+                        lnfug(i) = Log(Exp(-constprops(i).EnthalpyOfFusionAtTf / (0.00831447 * T) * (1 - T / constprops(i).TemperatureOfFusion)))
                     Else
                         lnfug(i) = 0.0#
                     End If

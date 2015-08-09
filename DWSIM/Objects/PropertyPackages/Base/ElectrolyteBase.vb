@@ -33,7 +33,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Private m_props As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
         Public m_elec As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Electrolyte
-        Public Property ElectrolyteFlash As DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms.ElectrolyteSVLE
+        Public Property ElectrolyteFlash As DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms.ElectrolyteSVLE2
         Private m_id As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Ideal
 
         Public Sub New(ByVal comode As Boolean)
@@ -44,7 +44,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Me._packagetype = PropertyPackages.PackageType.ActivityCoefficient
             Me.IsElectrolytePP = True
 
-            Me.ElectrolyteFlash = New Auxiliary.FlashAlgorithms.ElectrolyteSVLE
+            Me.ElectrolyteFlash = New Auxiliary.FlashAlgorithms.ElectrolyteSVLE2
 
         End Sub
 
@@ -56,7 +56,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Me._packagetype = PropertyPackages.PackageType.ActivityCoefficient
             Me.IsElectrolytePP = True
 
-            Me.ElectrolyteFlash = New Auxiliary.FlashAlgorithms.ElectrolyteSVLE
+            Me.ElectrolyteFlash = New Auxiliary.FlashAlgorithms.ElectrolyteSVLE2
 
         End Sub
 
@@ -410,7 +410,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Next
 
             Me.m_elec = New Auxiliary.Electrolyte
-            If Me.ElectrolyteFlash Is Nothing Then Me.ElectrolyteFlash = New Auxiliary.FlashAlgorithms.ElectrolyteSVLE
+            If Me.ElectrolyteFlash Is Nothing Then Me.ElectrolyteFlash = New Auxiliary.FlashAlgorithms.ElectrolyteSVLE2
             Me.ElectrolyteFlash.CompoundProperties = constprops
             Me.ElectrolyteFlash.proppack = Me
 
@@ -606,7 +606,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Next
 
             Me.m_elec = New Auxiliary.Electrolyte
-            If Me.ElectrolyteFlash Is Nothing Then Me.ElectrolyteFlash = New Auxiliary.FlashAlgorithms.ElectrolyteSVLE
+            If Me.ElectrolyteFlash Is Nothing Then Me.ElectrolyteFlash = New Auxiliary.FlashAlgorithms.ElectrolyteSVLE2
             Me.ElectrolyteFlash.CompoundProperties = constprops
             Me.ElectrolyteFlash.proppack = Me
 
@@ -975,7 +975,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             MyBase.LoadData(data)
 
-            Me.ElectrolyteFlash = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms.ElectrolyteSVLE
+            Me.ElectrolyteFlash = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms.ElectrolyteSVLE2
 
             Dim xel0 As XElement = (From xelv As XElement In data Where xelv.Name = "ElectrolyteFlash_ReactionSetID").SingleOrDefault
             If Not xel0 Is Nothing Then Me.ElectrolyteFlash.ReactionSet = xel0.Value
