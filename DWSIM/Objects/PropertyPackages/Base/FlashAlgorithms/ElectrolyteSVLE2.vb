@@ -225,7 +225,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Next
             For i = 0 To nr - 1
                 glow(n + 1 + i) = 0.0#
-                gup(n + 1 + i) = Tolerance
+                gup(n + 1 + i) = 0.0001
             Next
 
             ecount = 0
@@ -886,7 +886,7 @@ out:        'return flash calculation results.
 
         End Function
 
-        Private Function CheckMassBalance() As Double()
+        Private Function CheckEquilibrium() As Double()
 
             Dim i, nc As Integer
 
@@ -991,7 +991,7 @@ out:        'return flash calculation results.
                 End If
             Next
             If nr > 0 Then
-                Dim mcheck = CheckMassBalance()
+                Dim mcheck = CheckEquilibrium()
                 For i = 0 To nr - 1
                     g(m - 1 + i) = mcheck(i)
                 Next

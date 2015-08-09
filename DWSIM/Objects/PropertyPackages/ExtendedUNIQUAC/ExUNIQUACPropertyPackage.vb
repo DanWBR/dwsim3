@@ -511,36 +511,36 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                 For i = 0 To n
                     If constprops(i).IsIon Then
-                        lnfug(i) = Log(molality(i) * ativ(i))
+                        fugcoeff(i) = molality(i) * ativ(i)
                     ElseIf constprops(i).IsSalt Then
-                        lnfug(i) = Log(molality(i) * ativ(i))
+                        fugcoeff(i) = molality(i) * ativ(i)
                     Else
                         If T / Tc(i) >= 1 Then
-                            lnfug(i) = Math.Log(AUX_KHenry(Me.RET_VNAMES(i), T) / P)
+                            fugcoeff(i) = AUX_KHenry(Me.RET_VNAMES(i), T) / P
                         Else
-                            lnfug(i) = Math.Log(ativ(i) * Me.AUX_PVAPi(i, T) / (P))
+                            fugcoeff(i) = ativ(i) * Me.AUX_PVAPi(i, T) / (P)
                         End If
                     End If
-                   
                 Next
             ElseIf st = State.Vapor Then
                 For i = 0 To n
-                    lnfug(i) = 0.0#
+                    If constprops(i).IsIon Then
+                        fugcoeff(i) = 10000000000.0
+                    ElseIf constprops(i).IsSalt Then
+                        fugcoeff(i) = 10000000000.0
+                    Else
+                        fugcoeff(i) = 1.0#
+                    End If
                 Next
             ElseIf st = State.Solid Then
                 For i = 0 To n
                     If constprops(i).TemperatureOfFusion <> 0 Then
-                        lnfug(i) = Log(Exp(-constprops(i).EnthalpyOfFusionAtTf / (0.00831447 * T) * (1 - T / constprops(i).TemperatureOfFusion)))
+                        fugcoeff(i) = Exp(-constprops(i).EnthalpyOfFusionAtTf / (0.00831447 * T) * (1 - T / constprops(i).TemperatureOfFusion))
                     Else
-                        lnfug(i) = 0.0#
+                        fugcoeff(i) = 1.0#
                     End If
                 Next
             End If
-
-            For i = 0 To n
-                fugcoeff(i) = Exp(lnfug(i))
-            Next
-
             DWSIM.App.WriteToConsole("Result: " & fugcoeff.ToArrayString(), 2)
 
             Return fugcoeff
