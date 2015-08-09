@@ -199,7 +199,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Dim lconstr2(2 * n + 1) As Double
             Dim uconstr2(2 * n + 1) As Double
             Dim finalval2(2 * n + 1) As Double
-            Dim glow(n + nr), gup(n + nr), g(n + nr) As Double
+            Dim glow(n + 1), gup(n + 1), g(n + 1) As Double
 
             For i = 0 To n
                 If CompoundProperties(i).IsIon Then
@@ -223,17 +223,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     uconstr2(i) = 0.0#
                 End If
             Next
-            For i = 0 To nr - 1
-                glow(n + 1 + i) = 0.0#
-                gup(n + 1 + i) = 0.0001
-            Next
+            glow(n + 1) = 0.0#
+            gup(n + 1) = F
 
             ecount = 0
 
             Dim obj As Double
             Dim status As IpoptReturnCode
 
-            Using problem As New Ipopt(initval2.Length, lconstr2, uconstr2, n + 1 + nr, glow, gup, (n + 1) * 2, nr, _
+            Using problem As New Ipopt(initval2.Length, lconstr2, uconstr2, n + 2, glow, gup, (n + 1) * 2, (n + 1) * 2 + 1, _
                     AddressOf eval_f, AddressOf eval_g, _
                     AddressOf eval_grad_f, AddressOf eval_jac_g, AddressOf eval_h)
                 problem.AddOption("tol", Tolerance)
@@ -756,16 +754,26 @@ out:        'return flash calculation results.
             S = soma_s
             V = F - L - S
 
-            For i = 0 To N
-                If L <> 0.0# Then Vxl(i) = (x(i) / L) Else Vxl(i) = 0.0#
-                If S <> 0.0# Then Vxs(i) = (x(i + n + 1) / S) Else Vxs(i) = 0.0#
-                If V <> 0.0# Then Vxv(i) = ((fi(i) * F - Vxl(i) * L - Vxs(i) * S) / V) Else Vxv(i) = 0.0#
+            For i = 0 To n
+                If CompoundProperties(i).IsIon Then
+                    Vxs(i) = 0.0#
+                    Vxv(i) = 0.0#
+                    If L <> 0.0# Then Vxl(i) = (x(i) / L) Else Vxl(i) = 0.0#
+                ElseIf CompoundProperties(i).IsSalt Then
+                    Vxv(i) = 0.0#
+                    If L <> 0.0# Then Vxl(i) = (x(i) / L) Else Vxl(i) = 0.0#
+                    If S <> 0.0# Then Vxs(i) = (x(i + n + 1) / S) Else Vxs(i) = 0.0#
+                Else
+                    If L <> 0.0# Then Vxl(i) = (x(i) / L) Else Vxl(i) = 0.0#
+                    If S <> 0.0# Then Vxs(i) = (x(i + n + 1) / S) Else Vxs(i) = 0.0#
+                    If V <> 0.0# Then Vxv(i) = ((fi(i) * F - Vxl(i) * L - Vxs(i) * S) / V) Else Vxv(i) = 0.0#
+                End If
                 If Vxv(i) < 0.0# Then Vxv(i) = 1.0E-20
                 If Vxl(i) < 0.0# Then Vxl(i) = 1.0E-20
                 If Vxs(i) < 0.0# Then Vxs(i) = 1.0E-20
             Next
 
-            If V <> 0.0# Then
+            If V <> 0.0# And Vxv.Sum <> 0.0# Then
                 soma_y = 0
                 For i = 0 To n
                     soma_y += Vxv(i)
@@ -773,13 +781,16 @@ out:        'return flash calculation results.
                 For i = 0 To n
                     Vxv(i) /= soma_y
                 Next
+            Else
+                L += V
+                V = 0.0#
             End If
 
             fcv = proppack.DW_CalcFugCoeff(Vxv, Tf, Pf, State.Vapor)
             fcl = proppack.DW_CalcFugCoeff(Vxl, Tf, Pf, State.Liquid)
             fcs = proppack.DW_CalcFugCoeff(Vxs, Tf, Pf, State.Solid)
 
-            Dim Gv, Gl, Gs, Gm As Double
+            Dim Gv, Gl, Gs, Gm, Rx As Double
 
             Gv = 0.0#
             Gl = 0.0#
@@ -792,61 +803,37 @@ out:        'return flash calculation results.
 
             Gm = Gv + Gl + Gs
 
+            Rx = CheckEquilibrium().Sum
+
             WriteDebugInfo("[GM] V = " & Format(V / 1000, "N4") & ", L = " & Format(L / 1000, "N4") & ", S= " & Format(S / 1000, "N4") & " / GE = " & Format(Gm * 8.314 * Tf / 1000, "N2") & " kJ/kmol")
 
             ecount += 1
 
-            Return Gm
+            Return Gm + Rx
 
         End Function
 
-        Private Function FunctionGradient(ByVal x() As Double) As Double()
+      Private Function FunctionGradient(ByVal x() As Double) As Double()
 
             Dim g(x.Length - 1) As Double
-            Dim epsilon As Double = 0.000001
-            Dim fcv(x.Length - 1), fcl(x.Length - 1), fcs(x.Length - 1) As Double
-            Dim i As Integer
 
-            soma_x = 0
-            For i = 0 To x.Length - n - 2
-                soma_x += x(i)
-            Next
-            soma_s = 0
-            For i = x.Length - n - 1 To x.Length - 1
-                soma_s += x(i)
-            Next
-            L = soma_x
-            S = soma_s
-            V = F - L - S
+            Dim epsilon As Double = 0.1
 
-            For i = 0 To n
-                If L <> 0.0# Then Vxl(i) = (x(i) / L) Else Vxl(i) = 0.0#
-                If S <> 0.0# Then Vxs(i) = (x(i + n + 1) / S) Else Vxs(i) = 0.0#
-                If V <> 0.0# Then Vxv(i) = ((fi(i) * F - Vxl(i) * L - Vxs(i) * S) / V) Else Vxv(i) = 0.0#
-                If Vxv(i) < 0.0# Then Vxv(i) = 1.0E-20
-                If Vxl(i) < 0.0# Then Vxl(i) = 1.0E-20
-                If Vxs(i) < 0.0# Then Vxs(i) = 1.0E-20
-            Next
+            Dim f2(x.Length - 1), f3(x.Length - 1) As Double
+            Dim x2(x.Length - 1), x3(x.Length - 1) As Double
+            Dim i, j As Integer
 
-            If V <> 0.0# Then
-                soma_y = 0
-                For i = 0 To n
-                    soma_y += Vxv(i)
+            For i = 0 To x.Length - 1
+                For j = 0 To x.Length - 1
+                    x2(j) = x(j)
+                    x3(j) = x(j)
                 Next
-                For i = 0 To n
-                    Vxv(i) /= soma_y
-                Next
-            End If
-
-            fcv = proppack.DW_CalcFugCoeff(Vxv, Tf, Pf, State.Vapor)
-            fcl = proppack.DW_CalcFugCoeff(Vxl, Tf, Pf, State.Liquid)
-            fcs = proppack.DW_CalcFugCoeff(Vxs, Tf, Pf, State.Solid)
-           
-            For i = 0 To x.Length - n - 2
-                If Vxl(i) <> 0 And Vxv(i) <> 0 Then g(i) = Log(fcl(i) * Vxl(i)) - Log(fcv(i) * Vxv(i))
-            Next
-            For i = x.Length - n - 1 To (x.Length - 1)
-                If Vxs(i - (x.Length - n - 1)) <> 0 And Vxv(i - (x.Length - n - 1)) <> 0 Then g(i) = Log(fcs(i - (x.Length - n - 1)) * Vxs(i - (x.Length - n - 1))) - Log(fcv(i - (x.Length - n - 1)) * Vxv(i - (x.Length - n - 1)))
+                x2(i) = x(i) + epsilon
+                x3(i) = x(i) - epsilon
+                f2(i) = FunctionValue(x2)
+                f3(i) = FunctionValue(x3)
+                g(i) = (f2(i) - f3(i)) / (x2(i) - x3(i))
+                If Double.IsNaN(g(i)) Then g(i) = 0.0#
             Next
 
             Return g
@@ -855,7 +842,7 @@ out:        'return flash calculation results.
 
         Private Function FunctionHessian(ByVal x() As Double) As Double()
 
-            Dim epsilon As Double = 0.001
+            Dim epsilon As Double = 0.01
 
             Dim f2() As Double = Nothing
             Dim f3() As Double = Nothing
@@ -981,21 +968,16 @@ out:        'return flash calculation results.
         End Function
 
         Public Function eval_g(ByVal n As Integer, ByVal x As Double(), ByVal new_x As Boolean, ByVal m As Integer, ByRef g As Double()) As Boolean
-            For i = 0 To m - 1 - nr
+            For i = 0 To m - 1 - 1
                 If CompoundProperties(i).IsIon Then
                     g(i) = x(i)
                 ElseIf CompoundProperties(i).IsSalt Then
-                    g(i) = x(i + (m - nr))
+                    g(i) = x(i + m - 1)
                 Else
-                    g(i) = fi(i) * F - (x(i) + x(i + (m - nr)))
+                    g(i) = fi(i) * F - (x(i) + x(i + m - 1))
                 End If
             Next
-            If nr > 0 Then
-                Dim mcheck = CheckEquilibrium()
-                For i = 0 To nr - 1
-                    g(m - 1 + i) = mcheck(i)
-                Next
-            End If
+            g(m - 1) = V
             Return True
         End Function
 
@@ -1007,11 +989,11 @@ out:        'return flash calculation results.
                 Dim row(nele_jac - 1), col(nele_jac - 1) As Integer
 
                 k = 0
-                For i = 0 To m - 1 - nr
+                For i = 0 To m - 1 - 1
                     row(i) = i
-                    row(i + m - nr) = i
+                    row(i + m - 1) = i
                     col(i) = i
-                    col(i + m - nr) = i + m - nr
+                    col(i + m - 1) = i + m - 1
                 Next
 
                 iRow = row
