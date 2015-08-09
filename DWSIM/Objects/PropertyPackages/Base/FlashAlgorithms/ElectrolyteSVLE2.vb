@@ -38,7 +38,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Dim Hf, Hl, Hv, Hs, Tf, Pf, P0, Ninerts, Winerts, E(,) As Double
         Dim r, c, els, comps As Integer
 
-        Dim n, ecount As Integer
+        Dim n, nr, ecount As Integer
         Dim etol As Double = 0.01
         Dim itol As Double = 0.01
         Dim maxit_i As Integer = 1000
@@ -89,11 +89,86 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             n = CompoundProperties.Count - 1
 
+            If Me.Reactions Is Nothing Then Me.Reactions = New List(Of String)
+         
+            Dim form As FormFlowsheet = proppack.CurrentMaterialStream.FlowSheet
+
+            Me.Reactions.Clear()
+      
+            Dim i, j As Integer
+
+            P0 = 101325
+
+            Dim rxn As Reaction
+
+            'check active reactions (equilibrium only) in the reaction set
+            For Each rxnsb As ReactionSetBase In form.Options.ReactionSets(Me.ReactionSet).Reactions.Values
+                If form.Options.Reactions(rxnsb.ReactionID).ReactionType = ReactionType.Equilibrium And rxnsb.IsActive Then
+                    Me.Reactions.Add(rxnsb.ReactionID)
+                    rxn = form.Options.Reactions(rxnsb.ReactionID)
+                    'equilibrium constant calculation
+                    Select Case rxn.KExprType
+                        Case Reaction.KOpt.Constant
+                            'rxn.ConstantKeqValue = rxn.ConstantKeqValue
+                        Case Reaction.KOpt.Expression
+                            If rxn.ExpContext Is Nothing Then
+                                rxn.ExpContext = New Ciloci.Flee.ExpressionContext
+                                With rxn.ExpContext
+                                    .Imports.AddType(GetType(System.Math))
+                                End With
+                            End If
+                            rxn.ExpContext.Variables.Add("T", T)
+                            rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.Expression)
+                            rxn.ConstantKeqValue = Exp(rxn.Expr.Evaluate)
+                        Case Reaction.KOpt.Gibbs
+                            Dim id(rxn.Components.Count - 1) As String
+                            Dim stcoef(rxn.Components.Count - 1) As Double
+                            Dim bcidx As Integer = 0
+                            j = 0
+                            For Each sb As ReactionStoichBase In rxn.Components.Values
+                                id(j) = sb.CompName
+                                stcoef(j) = sb.StoichCoeff
+                                If sb.IsBaseReactant Then bcidx = j
+                                j += 1
+                            Next
+                            Dim DelG_RT = proppack.AUX_DELGig_RT(298.15, T, id, stcoef, bcidx, True)
+                            rxn.ConstantKeqValue = Exp(-DelG_RT)
+                    End Select
+                End If
+            Next
+
+            nr = Me.Reactions.Count
+
+            Dim rx As Reaction
+
+            If Me.ComponentConversions Is Nothing Then Me.ComponentConversions = New Dictionary(Of String, Double)
+            If Me.ComponentIDs Is Nothing Then Me.ComponentIDs = New List(Of String)
+
+            Me.ComponentConversions.Clear()
+            Me.ComponentIDs.Clear()
+
+            'r: number of reactions
+            'c: number of components
+            'i,j: iterators
+
+            i = 0
+            For Each rxid As String In Me.Reactions
+                rx = form.Options.Reactions(rxid)
+                j = 0
+                For Each comp As ReactionStoichBase In rx.Components.Values
+                    If Not Me.ComponentIDs.Contains(comp.CompName) Then
+                        Me.ComponentIDs.Add(comp.CompName)
+                        Me.ComponentConversions.Add(comp.CompName, 0)
+                    End If
+                    j += 1
+                Next
+                i += 1
+            Next
+
             ReDim Vxv(n), Vxl(n), Vxs(n)
 
             Dim activcoeff(n) As Double
-            Dim i As Integer
-
+            
             'Vnf = feed molar amounts (considering 1 mol of feed)
             'Vnl = liquid phase molar amounts
             'Vnv = vapor phase molar amounts
@@ -124,16 +199,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Dim lconstr2(2 * n + 1) As Double
             Dim uconstr2(2 * n + 1) As Double
             Dim finalval2(2 * n + 1) As Double
-            Dim glow(n), gup(n), g(n) As Double
-
+            Dim glow(n + nr), gup(n + nr), g(n + nr) As Double
 
             For i = 0 To n
                 If CompoundProperties(i).IsIon Then
-                    If Vz(i) = 0.0# Then
-                        initval2(i) = 10.0#
-                    Else
-                        initval2(i) = Vz(i) * F
-                    End If
+                    initval2(i) = Vz(i) * F
                     uconstr2(i) = F
                 Else
                     initval2(i) = Vz(i) * F
@@ -146,12 +216,16 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             For i = n + 1 To 2 * n + 1
                 lconstr2(i) = 0.0#
                 If CompoundProperties(i - n - 1).IsSalt Then
-                    initval2(i) = 10.0#
+                    initval2(i) = 0.0#
                     uconstr2(i) = Vz(i - n - 1) * F
                 Else
                     initval2(i) = 0.0#
                     uconstr2(i) = 0.0#
                 End If
+            Next
+            For i = 0 To nr - 1
+                glow(n + 1 + i) = 0.0#
+                gup(n + 1 + i) = Tolerance
             Next
 
             ecount = 0
@@ -159,7 +233,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Dim obj As Double
             Dim status As IpoptReturnCode
 
-            Using problem As New Ipopt(initval2.Length, lconstr2, uconstr2, n + 1, glow, gup, (n + 1) * 2, 0, _
+            Using problem As New Ipopt(initval2.Length, lconstr2, uconstr2, n + 1 + nr, glow, gup, (n + 1) * 2, nr, _
                     AddressOf eval_f, AddressOf eval_g, _
                     AddressOf eval_grad_f, AddressOf eval_jac_g, AddressOf eval_h)
                 problem.AddOption("tol", Tolerance)
@@ -691,13 +765,15 @@ out:        'return flash calculation results.
                 If Vxs(i) < 0.0# Then Vxs(i) = 1.0E-20
             Next
 
-            soma_y = 0
-            For i = 0 To n
-                soma_y += Vxv(i)
-            Next
-            For i = 0 To n
-                Vxv(i) /= soma_y
-            Next
+            If V <> 0.0# Then
+                soma_y = 0
+                For i = 0 To n
+                    soma_y += Vxv(i)
+                Next
+                For i = 0 To n
+                    Vxv(i) /= soma_y
+                Next
+            End If
 
             fcv = proppack.DW_CalcFugCoeff(Vxv, Tf, Pf, State.Vapor)
             fcl = proppack.DW_CalcFugCoeff(Vxl, Tf, Pf, State.Liquid)
@@ -810,6 +886,86 @@ out:        'return flash calculation results.
 
         End Function
 
+        Private Function CheckMassBalance() As Double()
+
+            Dim i, nc As Integer
+
+            nc = Me.CompoundProperties.Count - 1
+
+            'calculate molality considering 1 mol of mixture.
+
+            Dim wtotal As Double = 0
+            Dim mtotal As Double = 0
+            Dim molality(nc) As Double
+
+            i = 0
+            Do
+                If CompoundProperties(i).Name = "Water" Then
+                    wtotal += Vxl(i) * CompoundProperties(i).Molar_Weight / 1000
+                End If
+                mtotal += Vxl(i)
+                i += 1
+            Loop Until i = nc + 1
+
+            Dim Xsolv As Double = 1
+
+            i = 0
+            Do
+                molality(i) = Vxl(i) / wtotal
+                i += 1
+            Loop Until i = nc + 1
+
+            Dim activcoeff(nc) As Double
+
+            If TypeOf proppack Is ExUNIQUACPropertyPackage Then
+                activcoeff = CType(proppack, ExUNIQUACPropertyPackage).m_uni.GAMMA_MR(Tf, Vxl, CompoundProperties)
+            ElseIf TypeOf proppack Is LIQUAC2PropertyPackage Then
+                activcoeff = CType(proppack, LIQUAC2PropertyPackage).m_uni.GAMMA_MR(Tf, Vxl, CompoundProperties)
+            End If
+
+            Dim CP(nc) As Double
+            Dim f(nr - 1) As Double
+            Dim prod(nr - 1) As Double
+
+            For i = 0 To nc
+                If CompoundProperties(i).IsIon Then
+                    CP(i) = molality(i) * activcoeff(i)
+                ElseIf CompoundProperties(i).IsSalt Then
+                    CP(i) = 1.0#
+                Else
+                    CP(i) = Vxl(i) * activcoeff(i)
+                End If
+            Next
+
+            For i = 0 To Me.Reactions.Count - 1
+                prod(i) = 1
+                For Each s As String In Me.ComponentIDs
+                    With proppack.CurrentMaterialStream.FlowSheet.Options.Reactions(Me.Reactions(i))
+                        If .Components.ContainsKey(s) Then
+                            If .Components(s).StoichCoeff > 0 Then
+                                For j = 0 To nc
+                                    If CompoundProperties(j).Name = s Then
+                                        prod(i) *= CP(j) ^ .Components(s).StoichCoeff
+                                        Exit For
+                                    End If
+                                Next
+                            End If
+                        End If
+                    End With
+                Next
+            Next
+
+            For i = 0 To Me.Reactions.Count - 1
+                With proppack.CurrentMaterialStream.FlowSheet.Options.Reactions(Me.Reactions(i))
+                    f(i) = Abs(prod(i) - .ConstantKeqValue) ^ 2
+                End With
+            Next
+
+            Return f
+
+        End Function
+
+
         'IPOPT
 
         Public Function eval_f(ByVal n As Integer, ByVal x As Double(), ByVal new_x As Boolean, ByRef obj_value As Double) As Boolean
@@ -825,15 +981,21 @@ out:        'return flash calculation results.
         End Function
 
         Public Function eval_g(ByVal n As Integer, ByVal x As Double(), ByVal new_x As Boolean, ByVal m As Integer, ByRef g As Double()) As Boolean
-            For i = 0 To m - 1
+            For i = 0 To m - 1 - nr
                 If CompoundProperties(i).IsIon Then
                     g(i) = x(i)
                 ElseIf CompoundProperties(i).IsSalt Then
-                    g(i) = x(i + m)
+                    g(i) = x(i + (m - nr))
                 Else
-                    g(i) = fi(i) * F - x(i) - x(i + m)
+                    g(i) = fi(i) * F - (x(i) + x(i + (m - nr)))
                 End If
             Next
+            If nr > 0 Then
+                Dim mcheck = CheckMassBalance()
+                For i = 0 To nr - 1
+                    g(m - 1 + i) = mcheck(i)
+                Next
+            End If
             Return True
         End Function
 
@@ -845,11 +1007,11 @@ out:        'return flash calculation results.
                 Dim row(nele_jac - 1), col(nele_jac - 1) As Integer
 
                 k = 0
-                For i = 0 To m - 1
+                For i = 0 To m - 1 - nr
                     row(i) = i
-                    row(i + m) = i
+                    row(i + m - nr) = i
                     col(i) = i
-                    col(i + m) = i + m
+                    col(i + m - nr) = i + m - nr
                 Next
 
                 iRow = row

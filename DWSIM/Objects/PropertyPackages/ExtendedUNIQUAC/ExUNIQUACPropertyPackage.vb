@@ -485,13 +485,43 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Next
 
             If st = State.Liquid Then
-                ativ = Me.m_uni.GAMMA_MR(T, Vx, constprops)
-                For i = 0 To n
-                    If T / Tc(i) >= 1 Then
-                        lnfug(i) = Math.Log(AUX_KHenry(Me.RET_VNAMES(i), T) / P)
-                    Else
-                        lnfug(i) = Math.Log(ativ(i) * Me.AUX_PVAPi(i, T) / (P))
+
+                Dim wtotal As Double = 0
+                Dim mtotal As Double = 0
+                Dim molality(n) As Double
+
+                i = 0
+                Do
+                    If constprops(i).Name = "Water" Then
+                        wtotal += Vx(i) * constprops(i).Molar_Weight / 1000
                     End If
+                    mtotal += Vx(i)
+                    i += 1
+                Loop Until i = n + 1
+
+                Dim Xsolv As Double = 1
+
+                i = 0
+                Do
+                    molality(i) = Vx(i) / wtotal
+                    i += 1
+                Loop Until i = n + 1
+
+                ativ = Me.m_uni.GAMMA_MR(T, Vx, constprops)
+
+                For i = 0 To n
+                    If constprops(i).IsIon Then
+                        lnfug(i) = Log(molality(i) * ativ(i))
+                    ElseIf constprops(i).IsSalt Then
+                        lnfug(i) = Log(molality(i) * ativ(i))
+                    Else
+                        If T / Tc(i) >= 1 Then
+                            lnfug(i) = Math.Log(AUX_KHenry(Me.RET_VNAMES(i), T) / P)
+                        Else
+                            lnfug(i) = Math.Log(ativ(i) * Me.AUX_PVAPi(i, T) / (P))
+                        End If
+                    End If
+                   
                 Next
             ElseIf st = State.Vapor Then
                 For i = 0 To n
