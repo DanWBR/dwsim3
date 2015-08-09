@@ -128,13 +128,18 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
 
             For i = 0 To n
-                If CompoundProperties(i).IsIon And Vz(i) = 0.0# Then
-                    initval2(i) = 10.0#
+                If CompoundProperties(i).IsIon Then
+                    If Vz(i) = 0.0# Then
+                        initval2(i) = 10.0#
+                    Else
+                        initval2(i) = Vz(i) * F
+                    End If
+                    uconstr2(i) = F
                 Else
                     initval2(i) = Vz(i) * F
+                    uconstr2(i) = Vz(i) * F
                 End If
                 lconstr2(i) = 0.0#
-                uconstr2(i) = F
                 glow(i) = 0.0#
                 gup(i) = F
             Next
@@ -142,7 +147,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 lconstr2(i) = 0.0#
                 If CompoundProperties(i - n - 1).IsSalt Then
                     initval2(i) = 10.0#
-                    uconstr2(i) = F
+                    uconstr2(i) = Vz(i - n - 1) * F
                 Else
                     initval2(i) = 0.0#
                     uconstr2(i) = 0.0#
