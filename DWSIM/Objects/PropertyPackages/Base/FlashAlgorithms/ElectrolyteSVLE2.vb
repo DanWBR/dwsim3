@@ -44,7 +44,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Dim maxit_i As Integer = 1000
         Dim maxit_e As Integer = 1000
 
-        Dim Vxl(n), Vxs(n), Vxv(n), Vv(n), Vl(n), Vs(n), fi(n), Vp(n) As Double
+        Dim Vxl(n), Vxs(n), Vxv(n), Vv(n), Vl(n), Vs(n), fi(n), Vp(n) As Double, Vn(n) As String
 
         Dim F, L, S, V As Double
 
@@ -97,7 +97,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
       
             Dim i, j As Integer
 
-            ReDim Vxv(n), Vxl(n), Vxs(n)
+            ReDim Vxv(n), Vxl(n), Vxs(n), Vn(n), Vp(n)
 
             Dim activcoeff(n) As Double
 
@@ -109,7 +109,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             'Vxv = vapor phase molar fractions
             'Vxs = solid phase molar fractions
             'V, S, L = phase molar amounts (F = 1 = V + S + L)
+
             Dim sumN As Double = 0
+
+            Vn = proppack.RET_VNAMES
+
+            For i = 0 To n
+                Vp(i) = proppack.AUX_PVAPi(i, T)
+            Next
 
             'get water index in the array.
 
@@ -211,9 +218,17 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 For i = 0 To n
                     If CompoundProperties(i).IsIon Then
                         initval2(i) = Vz(i) * F
-                        uconstr2(i) = F
+                        If ComponentIDs.Contains(Vn(i)) Then
+                            uconstr2(i) = F
+                        Else
+                            uconstr2(i) = Vz(i) * F
+                        End If
                     Else
-                        initval2(i) = Vz(i) * F
+                        If Vp(i) > P Then
+                            initval2(i) = 0.0#
+                        Else
+                            initval2(i) = Vz(i) * F
+                        End If
                         uconstr2(i) = Vz(i) * F
                     End If
                     lconstr2(i) = 0.0#
@@ -803,7 +818,7 @@ out:        'return flash calculation results.
             Gl = 0.0#
             Gs = 0.0#
             For i = 0 To n
-                If fcl(i) = 0.0# Or Double.IsInfinity(fcl(i)) Then fcl(i) = 1.0#
+                If fcl(i) = 0.0# Or Double.IsInfinity(fcl(i)) Or Double.IsNaN(fcl(i)) Then fcl(i) = 1.0#
                 If Vxv(i) <> 0.0# Then Gv += Vxv(i) * V * Log(fcv(i) * Vxv(i))
                 If Vxl(i) <> 0.0# Then Gl += Vxl(i) * L * Log(fcl(i) * Vxl(i))
                 If Vxs(i) <> 0.0# Then Gs += Vxs(i) * S * Log(fcs(i) * Vxs(i))
@@ -812,6 +827,8 @@ out:        'return flash calculation results.
             Gm = Gv + Gl + Gs
 
             Rx = CheckEquilibrium().Sum
+
+            If Double.IsNaN(Rx) Then Rx = 0.0#
 
             WriteDebugInfo("[GM] V = " & Format(V / 1000, "N4") & ", L = " & Format(L / 1000, "N4") & ", S= " & Format(S / 1000, "N4") & " / GE = " & Format(Gm * 8.314 * Tf / 1000, "N2") & " kJ/kmol")
 
