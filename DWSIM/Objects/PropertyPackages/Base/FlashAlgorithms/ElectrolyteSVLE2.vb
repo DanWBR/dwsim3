@@ -213,7 +213,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Dim lconstr2(2 * n + 1) As Double
                 Dim uconstr2(2 * n + 1) As Double
                 Dim finalval2(2 * n + 1) As Double
-                Dim glow(n + 1), gup(n + 1), g(n + 1) As Double
 
                 For i = 0 To n
                     If CompoundProperties(i).IsIon Then
@@ -232,8 +231,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         uconstr2(i) = Vz(i) * F
                     End If
                     lconstr2(i) = 0.0#
-                    glow(i) = 0.0#
-                    gup(i) = F
                 Next
                 For i = n + 1 To 2 * n + 1
                     lconstr2(i) = 0.0#
@@ -245,15 +242,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         uconstr2(i) = 0.0#
                     End If
                 Next
-                glow(n + 1) = 0.0#
-                gup(n + 1) = 10.0#
 
                 ecount = 0
 
                 Dim obj As Double
                 Dim status As IpoptReturnCode
 
-                Using problem As New Ipopt(initval2.Length, lconstr2, uconstr2, n + 2, glow, gup, (n + 1) * 2, (n + 1) * 2 + 1, _
+                Using problem As New Ipopt(initval2.Length, lconstr2, uconstr2, 0, Nothing, Nothing, 0, 0, _
                         AddressOf eval_f, AddressOf eval_g, _
                         AddressOf eval_grad_f, AddressOf eval_jac_g, AddressOf eval_h)
                     problem.AddOption("tol", 0.00001)
@@ -263,7 +258,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     problem.AddOption("hessian_approximation", "limited-memory")
                     'problem.SetIntermediateCallback(AddressOf intermediate)
                     'solve the problem 
-                    status = problem.SolveProblem(initval2, obj, g, Nothing, Nothing, Nothing)
+                    status = problem.SolveProblem(initval2, obj, Nothing, Nothing, Nothing, Nothing)
                 End Using
 
                 FunctionValue(initval2)
