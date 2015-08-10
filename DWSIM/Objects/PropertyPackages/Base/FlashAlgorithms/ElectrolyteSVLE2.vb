@@ -256,7 +256,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     problem.AddOption("mu_strategy", "adaptive")
                     'problem.AddOption("mehrotra_algorithm", "yes")
                     problem.AddOption("hessian_approximation", "limited-memory")
-                    'problem.SetIntermediateCallback(AddressOf intermediate)
                     'solve the problem 
                     status = problem.SolveProblem(initval2, obj, Nothing, Nothing, Nothing, Nothing)
                 End Using
@@ -264,6 +263,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 FunctionValue(initval2)
 
                 'check if maximum iterations exceeded.
+
                 If status = IpoptReturnCode.Maximum_Iterations_Exceeded Then
                     WriteDebugInfo("PT Flash [Electrolyte]: Maximum iterations exceeded...")
                 Else
@@ -276,8 +276,19 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             dt = d2 - d1
 
-            
 out:        'return flash calculation results.
+
+            If L > 0.0# Then
+
+                'calculate activity coefficients.
+
+                If TypeOf proppack Is ExUNIQUACPropertyPackage Then
+                    activcoeff = CType(proppack, ExUNIQUACPropertyPackage).m_uni.GAMMA_MR(T, Vxl, CompoundProperties)
+                ElseIf TypeOf proppack Is LIQUAC2PropertyPackage Then
+                    activcoeff = CType(proppack, LIQUAC2PropertyPackage).m_uni.GAMMA_MR(T, Vxl, CompoundProperties)
+                End If
+
+            End If
 
             Dim results As New Dictionary(Of String, Object)
 
