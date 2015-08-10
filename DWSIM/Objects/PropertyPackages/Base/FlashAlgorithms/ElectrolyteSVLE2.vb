@@ -204,7 +204,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             For i = 0 To n
                 If CompoundProperties(i).IsIon Then
                     initval2(i) = Vz(i) * F
-                    uconstr2(i) = F
+                    If CalculateChemicalEquilibria Then
+                        uconstr2(i) = F
+                    Else
+                        uconstr2(i) = Vz(i) * F
+                    End If
                 Else
                     initval2(i) = Vz(i) * F
                     uconstr2(i) = Vz(i) * F
@@ -750,9 +754,19 @@ out:        'return flash calculation results.
             For i = x.Length - n - 1 To x.Length - 1
                 soma_s += x(i)
             Next
+
             L = soma_x
             S = soma_s
-            V = F - L - S
+
+            For i = 0 To n
+                If proppack.AUX_PVAPi(i, Tf) > Pf Then
+                    Vxv(i) = fi(i) * F - x(i) - x(i + n + 1)
+                Else
+                    Vxv(i) = 0.0#
+                End If
+            Next
+
+            V = Vxv.Sum
 
             For i = 0 To n
                 If CompoundProperties(i).IsIon Then
@@ -766,14 +780,13 @@ out:        'return flash calculation results.
                 Else
                     If L <> 0.0# Then Vxl(i) = (x(i) / L) Else Vxl(i) = 0.0#
                     If S <> 0.0# Then Vxs(i) = (x(i + n + 1) / S) Else Vxs(i) = 0.0#
-                    If V <> 0.0# Then Vxv(i) = ((fi(i) * F - Vxl(i) * L - Vxs(i) * S) / V) Else Vxv(i) = 0.0#
                 End If
-                If Vxv(i) < 0.0# Then Vxv(i) = 1.0E-20
-                If Vxl(i) < 0.0# Then Vxl(i) = 1.0E-20
-                If Vxs(i) < 0.0# Then Vxs(i) = 1.0E-20
+                If Vxv(i) < 0.0# Then Vxv(i) = 0.0#
+                If Vxl(i) < 0.0# Then Vxl(i) = 0.0#
+                If Vxs(i) < 0.0# Then Vxs(i) = 0.0#
             Next
 
-            If V > 0.0# And Vxv.Sum <> 0.0# Then
+            If V > 0.0# Then
                 soma_y = 0
                 For i = 0 To n
                     soma_y += Vxv(i)
@@ -830,7 +843,7 @@ out:        'return flash calculation results.
                 f2(i) = FunctionValue(x2)
                 f3(i) = FunctionValue(x3)
                 g(i) = (f2(i) - f3(i)) / (x2(i) - x3(i))
-                If Double.IsNaN(g(i)) Then g(i) = 0.0#
+                If Double.IsNaN(g(i)) Or Double.IsInfinity(g(i)) Then g(i) = 0.0#
             Next
 
             Return g
