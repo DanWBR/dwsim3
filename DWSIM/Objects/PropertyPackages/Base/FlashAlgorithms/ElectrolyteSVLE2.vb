@@ -71,9 +71,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Select Case My.Settings.DebugLevel
                 Case 0
                     'do nothing
-                Case 1
+                Case Else
                     Console.WriteLine(text)
-                Case 2
             End Select
 
         End Sub
@@ -155,12 +154,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                             Case Reaction.KOpt.Constant
                                 'rxn.ConstantKeqValue = rxn.ConstantKeqValue
                             Case Reaction.KOpt.Expression
-                                If rxn.ExpContext Is Nothing Then
-                                    rxn.ExpContext = New Ciloci.Flee.ExpressionContext
-                                    With rxn.ExpContext
-                                        .Imports.AddType(GetType(System.Math))
-                                    End With
-                                End If
+                                rxn.ExpContext = New Ciloci.Flee.ExpressionContext
+                                rxn.ExpContext.Imports.AddType(GetType(System.Math))
                                 rxn.ExpContext.Variables.Add("T", T)
                                 rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.Expression)
                                 rxn.ConstantKeqValue = Exp(rxn.Expr.Evaluate)
@@ -251,7 +246,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Using problem As New Ipopt(initval2.Length, lconstr2, uconstr2, 0, Nothing, Nothing, 0, 0, _
                         AddressOf eval_f, AddressOf eval_g, _
                         AddressOf eval_grad_f, AddressOf eval_jac_g, AddressOf eval_h)
-                    problem.AddOption("tol", 0.00001)
+                    problem.AddOption("tol", Tolerance)
                     problem.AddOption("max_iter", MaximumIterations)
                     problem.AddOption("mu_strategy", "adaptive")
                     'problem.AddOption("mehrotra_algorithm", "yes")
@@ -260,7 +255,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     status = problem.SolveProblem(initval2, obj, Nothing, Nothing, Nothing, Nothing)
                 End Using
 
-                FunctionValue(initval2)
+                'FunctionValue(initval2)
 
                 'check if maximum iterations exceeded.
 
@@ -818,7 +813,7 @@ out:        'return flash calculation results.
             fcl = proppack.DW_CalcFugCoeff(Vxl, Tf, Pf, State.Liquid)
             fcs = proppack.DW_CalcFugCoeff(Vxs, Tf, Pf, State.Solid)
 
-            Dim Gv, Gl, Gs, Gm, Rx As Double
+            Dim Gv, Gl, Gs, Gm, Rx, Pv As Double
 
             Gv = 0.0#
             Gl = 0.0#
@@ -830,17 +825,22 @@ out:        'return flash calculation results.
                 If Vxs(i) <> 0.0# Then Gs += Vxs(i) * S * Log(fcs(i) * Vxs(i))
             Next
 
+            'WriteDebugInfo("[GM] V = " & Format(V / 1000, "N4") & ", L = " & Format(L / 1000, "N4") & ", S= " & Format(S / 1000, "N4") & " / GE = " & Format(Gm * 8.314 * Tf / 1000, "N2") & " kJ/kmol")
+
+            ecount += 1
+
             Gm = Gv + Gl + Gs
 
             Rx = CheckEquilibrium().Sum
 
             If Double.IsNaN(Rx) Then Rx = 0.0#
 
-            WriteDebugInfo("[GM] V = " & Format(V / 1000, "N4") & ", L = " & Format(L / 1000, "N4") & ", S= " & Format(S / 1000, "N4") & " / GE = " & Format(Gm * 8.314 * Tf / 1000, "N2") & " kJ/kmol")
-
-            ecount += 1
-
-            Return Gm + Rx
+            With proppack
+                Pv = F * .AUX_MMM(fi) - L * .AUX_MMM(Vxl) - S * .AUX_MMM(Vxs) - V * .AUX_MMM(Vxv)
+                Pv = Pv ^ 2
+            End With
+            
+            Return Gm + Rx + Pv
 
         End Function
 
