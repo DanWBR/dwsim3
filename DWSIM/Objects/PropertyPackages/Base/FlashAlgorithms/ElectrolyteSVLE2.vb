@@ -773,7 +773,7 @@ out:        'return flash calculation results.
                 If Vxs(i) < 0.0# Then Vxs(i) = 1.0E-20
             Next
 
-            If V <> 0.0# And Vxv.Sum <> 0.0# Then
+            If V > 0.0# And Vxv.Sum <> 0.0# Then
                 soma_y = 0
                 For i = 0 To n
                     soma_y += Vxv(i)
@@ -781,9 +781,6 @@ out:        'return flash calculation results.
                 For i = 0 To n
                     Vxv(i) /= soma_y
                 Next
-            Else
-                L += V
-                V = 0.0#
             End If
 
             fcv = proppack.DW_CalcFugCoeff(Vxv, Tf, Pf, State.Vapor)
