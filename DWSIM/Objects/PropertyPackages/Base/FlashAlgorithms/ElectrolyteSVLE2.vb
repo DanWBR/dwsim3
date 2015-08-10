@@ -36,7 +36,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Dim tmpx As Double(), tmpdx As Double()
 
         Dim Hf, Hl, Hv, Hs, Tf, Pf, P0, Ninerts, Winerts, E(,) As Double
-        Dim r, c, els, comps As Integer
+        Dim r, c, els, comps, wid As Integer
 
         Dim n, nr, ecount As Integer
         Dim etol As Double = 0.01
@@ -97,78 +97,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
       
             Dim i, j As Integer
 
-            P0 = 101325
-
-            Dim rxn As Reaction
-
-            'check active reactions (equilibrium only) in the reaction set
-            For Each rxnsb As ReactionSetBase In form.Options.ReactionSets(Me.ReactionSet).Reactions.Values
-                If form.Options.Reactions(rxnsb.ReactionID).ReactionType = ReactionType.Equilibrium And rxnsb.IsActive Then
-                    Me.Reactions.Add(rxnsb.ReactionID)
-                    rxn = form.Options.Reactions(rxnsb.ReactionID)
-                    'equilibrium constant calculation
-                    Select Case rxn.KExprType
-                        Case Reaction.KOpt.Constant
-                            'rxn.ConstantKeqValue = rxn.ConstantKeqValue
-                        Case Reaction.KOpt.Expression
-                            If rxn.ExpContext Is Nothing Then
-                                rxn.ExpContext = New Ciloci.Flee.ExpressionContext
-                                With rxn.ExpContext
-                                    .Imports.AddType(GetType(System.Math))
-                                End With
-                            End If
-                            rxn.ExpContext.Variables.Add("T", T)
-                            rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.Expression)
-                            rxn.ConstantKeqValue = Exp(rxn.Expr.Evaluate)
-                        Case Reaction.KOpt.Gibbs
-                            Dim id(rxn.Components.Count - 1) As String
-                            Dim stcoef(rxn.Components.Count - 1) As Double
-                            Dim bcidx As Integer = 0
-                            j = 0
-                            For Each sb As ReactionStoichBase In rxn.Components.Values
-                                id(j) = sb.CompName
-                                stcoef(j) = sb.StoichCoeff
-                                If sb.IsBaseReactant Then bcidx = j
-                                j += 1
-                            Next
-                            Dim DelG_RT = proppack.AUX_DELGig_RT(298.15, T, id, stcoef, bcidx, True)
-                            rxn.ConstantKeqValue = Exp(-DelG_RT)
-                    End Select
-                End If
-            Next
-
-            nr = Me.Reactions.Count
-
-            Dim rx As Reaction
-
-            If Me.ComponentConversions Is Nothing Then Me.ComponentConversions = New Dictionary(Of String, Double)
-            If Me.ComponentIDs Is Nothing Then Me.ComponentIDs = New List(Of String)
-
-            Me.ComponentConversions.Clear()
-            Me.ComponentIDs.Clear()
-
-            'r: number of reactions
-            'c: number of components
-            'i,j: iterators
-
-            i = 0
-            For Each rxid As String In Me.Reactions
-                rx = form.Options.Reactions(rxid)
-                j = 0
-                For Each comp As ReactionStoichBase In rx.Components.Values
-                    If Not Me.ComponentIDs.Contains(comp.CompName) Then
-                        Me.ComponentIDs.Add(comp.CompName)
-                        Me.ComponentConversions.Add(comp.CompName, 0)
-                    End If
-                    j += 1
-                Next
-                i += 1
-            Next
-
             ReDim Vxv(n), Vxl(n), Vxs(n)
 
             Dim activcoeff(n) As Double
-            
+
             'Vnf = feed molar amounts (considering 1 mol of feed)
             'Vnl = liquid phase molar amounts
             'Vnv = vapor phase molar amounts
@@ -181,12 +113,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             'get water index in the array.
 
-            Dim wid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Name = "Water").SingleOrDefault)
-
-            Dim initval(n) As Double
-            Dim lconstr(n) As Double
-            Dim uconstr(n) As Double
-            Dim finalval(n) As Double
+            wid = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Name = "Water").SingleOrDefault)
 
             F = 1000.0#
 
@@ -195,68 +122,151 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             fi = Vz.Clone()
 
-            Dim initval2(2 * n + 1) As Double
-            Dim lconstr2(2 * n + 1) As Double
-            Dim uconstr2(2 * n + 1) As Double
-            Dim finalval2(2 * n + 1) As Double
-            Dim glow(n + 1), gup(n + 1), g(n + 1) As Double
+            If Vz(wid) = 0.0# Then
 
-            For i = 0 To n
-                If CompoundProperties(i).IsIon Then
-                    initval2(i) = Vz(i) * F
-                    uconstr2(i) = F
+                'only solids in the stream (no liquid water).
+
+                V = 0.0#
+                L = 0.0#
+                S = 1000.0#
+                For i = 0 To n
+                    Vxs(i) = Vz(i)
+                Next
+                sumN = 1.0#
+
+            Else
+
+                Dim rxn As Reaction
+
+                'check active reactions (equilibrium only) in the reaction set
+                For Each rxnsb As ReactionSetBase In form.Options.ReactionSets(Me.ReactionSet).Reactions.Values
+                    If form.Options.Reactions(rxnsb.ReactionID).ReactionType = ReactionType.Equilibrium And rxnsb.IsActive Then
+                        Me.Reactions.Add(rxnsb.ReactionID)
+                        rxn = form.Options.Reactions(rxnsb.ReactionID)
+                        'equilibrium constant calculation
+                        Select Case rxn.KExprType
+                            Case Reaction.KOpt.Constant
+                                'rxn.ConstantKeqValue = rxn.ConstantKeqValue
+                            Case Reaction.KOpt.Expression
+                                If rxn.ExpContext Is Nothing Then
+                                    rxn.ExpContext = New Ciloci.Flee.ExpressionContext
+                                    With rxn.ExpContext
+                                        .Imports.AddType(GetType(System.Math))
+                                    End With
+                                End If
+                                rxn.ExpContext.Variables.Add("T", T)
+                                rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.Expression)
+                                rxn.ConstantKeqValue = Exp(rxn.Expr.Evaluate)
+                            Case Reaction.KOpt.Gibbs
+                                Dim id(rxn.Components.Count - 1) As String
+                                Dim stcoef(rxn.Components.Count - 1) As Double
+                                Dim bcidx As Integer = 0
+                                j = 0
+                                For Each sb As ReactionStoichBase In rxn.Components.Values
+                                    id(j) = sb.CompName
+                                    stcoef(j) = sb.StoichCoeff
+                                    If sb.IsBaseReactant Then bcidx = j
+                                    j += 1
+                                Next
+                                Dim DelG_RT = proppack.AUX_DELGig_RT(298.15, T, id, stcoef, bcidx, True)
+                                rxn.ConstantKeqValue = Exp(-DelG_RT)
+                        End Select
+                    End If
+                Next
+
+                nr = Me.Reactions.Count
+
+                Dim rx As Reaction
+
+                If Me.ComponentConversions Is Nothing Then Me.ComponentConversions = New Dictionary(Of String, Double)
+                If Me.ComponentIDs Is Nothing Then Me.ComponentIDs = New List(Of String)
+
+                Me.ComponentConversions.Clear()
+                Me.ComponentIDs.Clear()
+
+                'r: number of reactions
+                'c: number of components
+                'i,j: iterators
+
+                i = 0
+                For Each rxid As String In Me.Reactions
+                    rx = form.Options.Reactions(rxid)
+                    j = 0
+                    For Each comp As ReactionStoichBase In rx.Components.Values
+                        If Not Me.ComponentIDs.Contains(comp.CompName) Then
+                            Me.ComponentIDs.Add(comp.CompName)
+                            Me.ComponentConversions.Add(comp.CompName, 0)
+                        End If
+                        j += 1
+                    Next
+                    i += 1
+                Next
+
+                Dim initval2(2 * n + 1) As Double
+                Dim lconstr2(2 * n + 1) As Double
+                Dim uconstr2(2 * n + 1) As Double
+                Dim finalval2(2 * n + 1) As Double
+                Dim glow(n + 1), gup(n + 1), g(n + 1) As Double
+
+                For i = 0 To n
+                    If CompoundProperties(i).IsIon Then
+                        initval2(i) = Vz(i) * F
+                        uconstr2(i) = F
+                    Else
+                        initval2(i) = Vz(i) * F
+                        uconstr2(i) = Vz(i) * F
+                    End If
+                    lconstr2(i) = 0.0#
+                    glow(i) = 0.0#
+                    gup(i) = F
+                Next
+                For i = n + 1 To 2 * n + 1
+                    lconstr2(i) = 0.0#
+                    If CompoundProperties(i - n - 1).IsSalt Then
+                        initval2(i) = 0.0#
+                        uconstr2(i) = Vz(i - n - 1) * F
+                    Else
+                        initval2(i) = 0.0#
+                        uconstr2(i) = 0.0#
+                    End If
+                Next
+                glow(n + 1) = 0.0#
+                gup(n + 1) = 10.0#
+
+                ecount = 0
+
+                Dim obj As Double
+                Dim status As IpoptReturnCode
+
+                Using problem As New Ipopt(initval2.Length, lconstr2, uconstr2, n + 2, glow, gup, (n + 1) * 2, (n + 1) * 2 + 1, _
+                        AddressOf eval_f, AddressOf eval_g, _
+                        AddressOf eval_grad_f, AddressOf eval_jac_g, AddressOf eval_h)
+                    problem.AddOption("tol", 0.00001)
+                    problem.AddOption("max_iter", MaximumIterations)
+                    problem.AddOption("mu_strategy", "adaptive")
+                    'problem.AddOption("mehrotra_algorithm", "yes")
+                    problem.AddOption("hessian_approximation", "limited-memory")
+                    'problem.SetIntermediateCallback(AddressOf intermediate)
+                    'solve the problem 
+                    status = problem.SolveProblem(initval2, obj, g, Nothing, Nothing, Nothing)
+                End Using
+
+                FunctionValue(initval2)
+
+                'check if maximum iterations exceeded.
+                If status = IpoptReturnCode.Maximum_Iterations_Exceeded Then
+                    WriteDebugInfo("PT Flash [Electrolyte]: Maximum iterations exceeded...")
                 Else
-                    initval2(i) = Vz(i) * F
-                    uconstr2(i) = Vz(i) * F
+                    WriteDebugInfo("PT Flash [Electrolyte]: Converged in " & ecount & " iterations. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status) & ". Time taken: " & dt.TotalMilliseconds & " ms")
                 End If
-                lconstr2(i) = 0.0#
-                glow(i) = 0.0#
-                gup(i) = F
-            Next
-            For i = n + 1 To 2 * n + 1
-                lconstr2(i) = 0.0#
-                If CompoundProperties(i - n - 1).IsSalt Then
-                    initval2(i) = 0.0#
-                    uconstr2(i) = Vz(i - n - 1) * F
-                Else
-                    initval2(i) = 0.0#
-                    uconstr2(i) = 0.0#
-                End If
-            Next
-            glow(n + 1) = 0.0#
-            gup(n + 1) = F
 
-            ecount = 0
-
-            Dim obj As Double
-            Dim status As IpoptReturnCode
-
-            Using problem As New Ipopt(initval2.Length, lconstr2, uconstr2, n + 2, glow, gup, (n + 1) * 2, (n + 1) * 2 + 1, _
-                    AddressOf eval_f, AddressOf eval_g, _
-                    AddressOf eval_grad_f, AddressOf eval_jac_g, AddressOf eval_h)
-                problem.AddOption("tol", Tolerance)
-                problem.AddOption("max_iter", MaximumIterations)
-                problem.AddOption("mu_strategy", "adaptive")
-                'problem.AddOption("mehrotra_algorithm", "yes")
-                problem.AddOption("hessian_approximation", "limited-memory")
-                'problem.SetIntermediateCallback(AddressOf intermediate)
-                'solve the problem 
-                status = problem.SolveProblem(initval2, obj, g, Nothing, Nothing, Nothing)
-            End Using
-
-            FunctionValue(initval2)
-
-            'check if maximum iterations exceeded.
-            If status = IpoptReturnCode.Maximum_Iterations_Exceeded Then
-                WriteDebugInfo("PT Flash [GM]: Maximum iterations exceeded. Recalculating with Nested-Loops PT-Flash...")
             End If
 
             d2 = Date.Now
 
             dt = d2 - d1
 
-            WriteDebugInfo("PT Flash [GM]: Converged in " & ecount & " iterations. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status) & ". Time taken: " & dt.TotalMilliseconds & " ms")
-
+            
 out:        'return flash calculation results.
 
             Dim results As New Dictionary(Of String, Object)
@@ -793,6 +803,7 @@ out:        'return flash calculation results.
             Gl = 0.0#
             Gs = 0.0#
             For i = 0 To n
+                If fcl(i) = 0.0# Or Double.IsInfinity(fcl(i)) Then fcl(i) = 1.0#
                 If Vxv(i) <> 0.0# Then Gv += Vxv(i) * V * Log(fcv(i) * Vxv(i))
                 If Vxl(i) <> 0.0# Then Gl += Vxl(i) * L * Log(fcl(i) * Vxl(i))
                 If Vxs(i) <> 0.0# Then Gs += Vxs(i) * S * Log(fcs(i) * Vxs(i))
@@ -830,7 +841,7 @@ out:        'return flash calculation results.
                 f2(i) = FunctionValue(x2)
                 f3(i) = FunctionValue(x3)
                 g(i) = (f2(i) - f3(i)) / (x2(i) - x3(i))
-                If Double.IsNaN(g(i)) Then g(i) = 0.0#
+                If Double.IsNaN(g(i)) Or Double.IsInfinity(g(i)) Then g(i) = 0.0#
             Next
 
             Return g
@@ -974,7 +985,10 @@ out:        'return flash calculation results.
                     g(i) = fi(i) * F - (x(i) + x(i + m - 1))
                 End If
             Next
-            g(m - 1) = V
+            If Me.ComponentIDs.Contains("Water") Then g(wid) = x(wid)
+            With proppack
+                g(m - 1) = F * .AUX_MMM(fi) - L * .AUX_MMM(Vxl) - S * .AUX_MMM(Vxs) - V * .AUX_MMM(Vxv)
+            End With
             Return True
         End Function
 
