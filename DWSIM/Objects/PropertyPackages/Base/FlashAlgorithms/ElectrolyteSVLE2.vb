@@ -98,7 +98,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             ReDim Vxv(n), Vxl(n), Vxs(n), Vn(n), Vp(n)
 
-            Dim activcoeff(n) As Double
+            Dim activcoeff(n), VxVp(n) As Double
 
             'Vnf = feed molar amounts (considering 1 mol of feed)
             'Vnl = liquid phase molar amounts
@@ -115,6 +115,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             For i = 0 To n
                 Vp(i) = proppack.AUX_PVAPi(i, T)
+                If Double.IsNaN(Vp(i)) Or Double.IsInfinity(Vp(i)) Then Vp(i) = 1.0E+20
+                VxVp(i) = Vz(i) * Vp(i)
             Next
 
             'get water index in the array.
@@ -137,6 +139,18 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 S = 1000.0#
                 For i = 0 To n
                     Vxs(i) = Vz(i)
+                Next
+                sumN = 1.0#
+
+            ElseIf VxVp.Min > P Then
+
+                'all vapor
+
+                V = 1000.0#
+                L = 0.0#
+                S = 0.0#
+                For i = 0 To n
+                    Vxv(i) = Vz(i)
                 Next
                 sumN = 1.0#
 
@@ -832,7 +846,7 @@ out:        'return flash calculation results.
             If Double.IsNaN(Rx) Then Rx = 0.0#
 
             With proppack
-                Pv = F * .AUX_MMM(fi) - Abs(L * .AUX_MMM(Vxl)) - Abs(S * .AUX_MMM(Vxs)) - Abs(V * .AUX_MMM(Vxv))
+                Pv = F * .AUX_MMM(fi) - (Abs(L * .AUX_MMM(Vxl)) + Abs(S * .AUX_MMM(Vxs)) + Abs(V * .AUX_MMM(Vxv)))
                 Pv = Pv ^ 2
             End With
 
