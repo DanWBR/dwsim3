@@ -57,8 +57,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Public Property CompoundProperties As List(Of ConstantProperties)
         Public Property ComponentConversions As Dictionary(Of String, Double)
 
-        Public Property MaximumIterations As Integer = 1000
-        Public Property Tolerance As Double = 1.0E-20
+        Public Property MaximumIterations As Integer = 5000
+        Public Property Tolerance As Double = 0.001
 
         Public Property CalculateChemicalEquilibria As Boolean = True
 
@@ -210,7 +210,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Dim finalval2(2 * n + 1) As Double
 
                 For i = 0 To n
-                    If CompoundProperties(i).IsIon Then
+                    If CompoundProperties(i).IsIon Or CompoundProperties(i).IsSalt Then
                         initval2(i) = Vz(i) * F
                         If ComponentIDs.Contains(Vn(i)) Then
                             uconstr2(i) = F
@@ -246,7 +246,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Using problem As New Ipopt(initval2.Length, lconstr2, uconstr2, 0, Nothing, Nothing, 0, 0, _
                         AddressOf eval_f, AddressOf eval_g, _
                         AddressOf eval_grad_f, AddressOf eval_jac_g, AddressOf eval_h)
-                    problem.AddOption("tol", 0.01)
+                    problem.AddOption("tol", Tolerance)
                     problem.AddOption("max_iter", MaximumIterations)
                     'problem.AddOption("mu_strategy", "adaptive")
                     'problem.AddOption("mehrotra_algorithm", "yes")
@@ -258,7 +258,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 FunctionValue(initval2)
 
                 If status = IpoptReturnCode.Solve_Succeeded Or status = IpoptReturnCode.Solved_To_Acceptable_Level Then
-                    WriteDebugInfo("PT Flash [Electrolyte]: Converged in " & ecount & " iterations. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status) & ". Time taken: " & dt.TotalMilliseconds & " ms")
+                    WriteDebugInfo("PT Flash [Electrolyte]: converged in " & ecount & " iterations. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status) & ". Time taken: " & dt.TotalMilliseconds & " ms")
                 Else
                     Throw New Exception("PT Flash [Electrolyte]: unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status))
                 End If
