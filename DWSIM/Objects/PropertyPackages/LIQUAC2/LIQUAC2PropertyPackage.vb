@@ -481,32 +481,62 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Next
 
             If st = State.Liquid Then
+
+                Dim wtotal As Double = 0
+                Dim mtotal As Double = 0
+                Dim molality(n) As Double
+
+                i = 0
+                Do
+                    If constprops(i).Name = "Water" Then
+                        wtotal += Vx(i) * constprops(i).Molar_Weight / 1000
+                    End If
+                    mtotal += Vx(i)
+                    i += 1
+                Loop Until i = n + 1
+
+                Dim Xsolv As Double = 1
+
+                i = 0
+                Do
+                    molality(i) = Vx(i) / wtotal
+                    i += 1
+                Loop Until i = n + 1
+
                 ativ = Me.m_uni.GAMMA_MR(T, Vx, constprops)
+
                 For i = 0 To n
-                    If T / Tc(i) >= 1 Then
-                        lnfug(i) = Math.Log(AUX_KHenry(Me.RET_VNAMES(i), T) / P)
+                    If constprops(i).IsIon Then
+                        fugcoeff(i) = molality(i) * ativ(i)
+                    ElseIf constprops(i).IsSalt Then
+                        fugcoeff(i) = molality(i) * ativ(i)
                     Else
-                        lnfug(i) = Math.Log(ativ(i) * Me.AUX_PVAPi(i, T) / (P))
+                        If T / Tc(i) >= 1 Then
+                            fugcoeff(i) = AUX_KHenry(Me.RET_VNAMES(i), T) / P
+                        Else
+                            fugcoeff(i) = ativ(i) * Me.AUX_PVAPi(i, T) / (P)
+                        End If
                     End If
                 Next
             ElseIf st = State.Vapor Then
                 For i = 0 To n
-                    lnfug(i) = 0.0#
+                    If constprops(i).IsIon Then
+                        fugcoeff(i) = 1.0E+20
+                    ElseIf constprops(i).IsSalt Then
+                        fugcoeff(i) = 1.0E+20
+                    Else
+                        fugcoeff(i) = 1.0#
+                    End If
                 Next
             ElseIf st = State.Solid Then
                 For i = 0 To n
                     If constprops(i).TemperatureOfFusion <> 0 Then
-                        lnfug(i) = Log(Exp(-constprops(i).EnthalpyOfFusionAtTf / (0.00831447 * T) * (1 - T / constprops(i).TemperatureOfFusion)))
+                        fugcoeff(i) = Exp(-constprops(i).EnthalpyOfFusionAtTf / (0.00831447 * T) * (1 - T / constprops(i).TemperatureOfFusion))
                     Else
-                        lnfug(i) = 0.0#
+                        fugcoeff(i) = 1.0#
                     End If
                 Next
             End If
-
-            For i = 0 To n
-                fugcoeff(i) = Exp(lnfug(i))
-            Next
-
             DWSIM.App.WriteToConsole("Result: " & fugcoeff.ToArrayString(), 2)
 
             Return fugcoeff

@@ -525,9 +525,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             ElseIf st = State.Vapor Then
                 For i = 0 To n
                     If constprops(i).IsIon Then
-                        fugcoeff(i) = 10000000000.0
+                        fugcoeff(i) = 1.0E+20
                     ElseIf constprops(i).IsSalt Then
-                        fugcoeff(i) = 10000000000.0
+                        fugcoeff(i) = 1.0E+20
                     Else
                         fugcoeff(i) = 1.0#
                     End If

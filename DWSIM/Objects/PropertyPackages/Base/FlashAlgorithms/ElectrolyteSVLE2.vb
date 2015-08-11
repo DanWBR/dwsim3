@@ -246,23 +246,21 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Using problem As New Ipopt(initval2.Length, lconstr2, uconstr2, 0, Nothing, Nothing, 0, 0, _
                         AddressOf eval_f, AddressOf eval_g, _
                         AddressOf eval_grad_f, AddressOf eval_jac_g, AddressOf eval_h)
-                    problem.AddOption("tol", Tolerance)
+                    problem.AddOption("tol", 0.01)
                     problem.AddOption("max_iter", MaximumIterations)
-                    problem.AddOption("mu_strategy", "adaptive")
+                    'problem.AddOption("mu_strategy", "adaptive")
                     'problem.AddOption("mehrotra_algorithm", "yes")
                     problem.AddOption("hessian_approximation", "limited-memory")
                     'solve the problem 
                     status = problem.SolveProblem(initval2, obj, Nothing, Nothing, Nothing, Nothing)
                 End Using
 
-                'FunctionValue(initval2)
+                FunctionValue(initval2)
 
-                'check if maximum iterations exceeded.
-
-                If status = IpoptReturnCode.Maximum_Iterations_Exceeded Then
-                    WriteDebugInfo("PT Flash [Electrolyte]: Maximum iterations exceeded...")
-                Else
+                If status = IpoptReturnCode.Solve_Succeeded Or status = IpoptReturnCode.Solved_To_Acceptable_Level Then
                     WriteDebugInfo("PT Flash [Electrolyte]: Converged in " & ecount & " iterations. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status) & ". Time taken: " & dt.TotalMilliseconds & " ms")
+                Else
+                    Throw New Exception("PT Flash [Electrolyte]: unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status))
                 End If
 
             End If
@@ -819,13 +817,11 @@ out:        'return flash calculation results.
             Gl = 0.0#
             Gs = 0.0#
             For i = 0 To n
-                If fcl(i) = 0.0# Or Double.IsInfinity(fcl(i)) Or Double.IsNaN(fcl(i)) Then fcl(i) = 1.0#
+                If fcl(i) = 0.0# Or Double.IsInfinity(fcl(i)) Or Double.IsNaN(fcl(i)) Then fcl(i) = 1.0E+20
                 If Vxv(i) <> 0.0# Then Gv += Vxv(i) * V * Log(fcv(i) * Vxv(i))
                 If Vxl(i) <> 0.0# Then Gl += Vxl(i) * L * Log(fcl(i) * Vxl(i))
                 If Vxs(i) <> 0.0# Then Gs += Vxs(i) * S * Log(fcs(i) * Vxs(i))
             Next
-
-            'WriteDebugInfo("[GM] V = " & Format(V / 1000, "N4") & ", L = " & Format(L / 1000, "N4") & ", S= " & Format(S / 1000, "N4") & " / GE = " & Format(Gm * 8.314 * Tf / 1000, "N2") & " kJ/kmol")
 
             ecount += 1
 
@@ -839,7 +835,7 @@ out:        'return flash calculation results.
                 Pv = F * .AUX_MMM(fi) - L * .AUX_MMM(Vxl) - S * .AUX_MMM(Vxs) - V * .AUX_MMM(Vxv)
                 Pv = Pv ^ 2
             End With
-            
+
             Return Gm + Rx + Pv
 
         End Function
