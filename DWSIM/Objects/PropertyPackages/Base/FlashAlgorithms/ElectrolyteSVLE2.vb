@@ -248,7 +248,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         AddressOf eval_grad_f, AddressOf eval_jac_g, AddressOf eval_h)
                     problem.AddOption("tol", Tolerance)
                     problem.AddOption("max_iter", MaximumIterations)
-                    'problem.AddOption("mu_strategy", "adaptive")
+                    problem.AddOption("mu_strategy", "adaptive")
                     'problem.AddOption("mehrotra_algorithm", "yes")
                     problem.AddOption("hessian_approximation", "limited-memory")
                     'solve the problem 
@@ -792,9 +792,9 @@ out:        'return flash calculation results.
                     If S <> 0.0# Then Vxs(i) = (x(i + n + 1) / S) Else Vxs(i) = 0.0#
                     If V <> 0.0# Then Vxv(i) = ((fi(i) * F - Vxl(i) * L - Vxs(i) * S) / V) Else Vxv(i) = 0.0#
                 End If
-                If Vxv(i) < 0.0# Then Vxv(i) = 1.0E-20
-                If Vxl(i) < 0.0# Then Vxl(i) = 1.0E-20
-                If Vxs(i) < 0.0# Then Vxs(i) = 1.0E-20
+                If Vxv(i) < 0.0# Then Vxv(i) = 0.0#
+                If Vxl(i) < 0.0# Then Vxl(i) = 0.0#
+                If Vxs(i) < 0.0# Then Vxs(i) = 0.0#
             Next
 
             If V > 0.0# And Vxv.Sum <> 0.0# Then
@@ -832,11 +832,11 @@ out:        'return flash calculation results.
             If Double.IsNaN(Rx) Then Rx = 0.0#
 
             With proppack
-                Pv = F * .AUX_MMM(fi) - L * .AUX_MMM(Vxl) - S * .AUX_MMM(Vxs) - V * .AUX_MMM(Vxv)
+                Pv = F * .AUX_MMM(fi) - Abs(L * .AUX_MMM(Vxl)) - Abs(S * .AUX_MMM(Vxs)) - Abs(V * .AUX_MMM(Vxv))
                 Pv = Pv ^ 2
             End With
 
-            Return Gm + Rx + Pv
+            Return Gm / 1000 + Rx + Pv
 
         End Function
 
