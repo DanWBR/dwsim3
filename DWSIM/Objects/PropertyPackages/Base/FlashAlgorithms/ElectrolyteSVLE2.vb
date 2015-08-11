@@ -273,6 +273,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 If status = IpoptReturnCode.Solve_Succeeded Or status = IpoptReturnCode.Solved_To_Acceptable_Level Then
                     WriteDebugInfo("PT Flash [Electrolyte]: converged in " & ecount & " iterations. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status) & ". Time taken: " & dt.TotalMilliseconds & " ms")
+                ElseIf status = IpoptReturnCode.Maximum_Iterations_Exceeded Then
+                    form.WriteToLog("PT Flash [Electrolyte]: maximum iteration exceeded, compositions may not be in equilibrium.", Color.DarkOrange, FormClasses.TipoAviso.Aviso)
                 Else
                     Throw New Exception("PT Flash [Electrolyte]: unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status))
                 End If
