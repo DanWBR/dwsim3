@@ -290,14 +290,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     problem.AddOption("acceptable_tol", etol)
                     problem.AddOption("acceptable_iter", maxit_e)
                     problem.AddOption("mu_strategy", "adaptive")
-                    'problem.AddOption("mehrotra_algorithm", "no")
                     problem.AddOption("hessian_approximation", "limited-memory")
                     problem.AddOption("print_level", 5)
                     'solve the problem 
                     status = problem.SolveProblem(initval2, obj, Nothing, Nothing, Nothing, Nothing)
                 End Using
 
-                'FunctionValue(initval2)
+                FunctionValue(initval2)
 
                 Dim CE, MB As Double
 
@@ -307,7 +306,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 If status = IpoptReturnCode.Solve_Succeeded Or status = IpoptReturnCode.Solved_To_Acceptable_Level Then
                     WriteDebugInfo("PT Flash [Electrolyte]: Converged in " & ecount & " iterations. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status) & ". Time taken: " & dt.TotalMilliseconds & " ms")
                 ElseIf CE < Tolerance And MB < etol Then
-                    form.WriteToLog("PT Flash [Electrolyte]: Maximum iterations exceeded, although mass balance and chemical equilibrium are satisfied within tolerance. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status), Color.DarkOrange, FormClasses.TipoAviso.Aviso)
+                    form.WriteToLog("PT Flash [Electrolyte]: Error while solving the problem, but mass balance and chemical equilibrium are satisfied within tolerance. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status), Color.DarkOrange, FormClasses.TipoAviso.Aviso)
                 Else
                     Throw New Exception("PT Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status))
                 End If
@@ -545,7 +544,7 @@ out:        'return flash calculation results.
                 If status = IpoptReturnCode.Solve_Succeeded Or status = IpoptReturnCode.Solved_To_Acceptable_Level Then
                     WriteDebugInfo("PH Flash [Electrolyte]: Converged in " & ecount & " iterations. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status) & ". Time taken: " & dt.TotalMilliseconds & " ms")
                 ElseIf CE < Tolerance And MB < etol Then
-                    form.WriteToLog("PH Flash [Electrolyte]: Maximum iterations exceeded, although mass balance and chemical equilibrium are satisfied within tolerance. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status), Color.DarkOrange, FormClasses.TipoAviso.Aviso)
+                    form.WriteToLog("PH Flash [Electrolyte]: Error while solving the problem, but mass balance and chemical equilibrium are satisfied within tolerance. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status), Color.DarkOrange, FormClasses.TipoAviso.Aviso)
                 Else
                     Throw New Exception("PH Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status))
                 End If
@@ -792,7 +791,15 @@ out:        'return flash calculation results.
 
             CheckCalculatorStatus()
 
-            Dim fcv(n), fcl(n), fcs(n) As Double
+            Dim fcv(n), fcl(n), fcs(n), Vnv(n) As Double
+
+            For i = 0 To n
+                If CompoundProperties(i).IsIon Or CompoundProperties(i).IsSalt Then
+                    Vnv(i) = 0.0#
+                Else
+                    Vnv(i) = fi(i) - x(i) + x(i + n + 1)
+                End If
+            Next
 
             soma_x = 0
             For i = 0 To x.Length - n - 2
@@ -804,28 +811,18 @@ out:        'return flash calculation results.
             Next
             L = soma_x
             S = soma_s
-            V = F - L - S
+            V = Vnv.Sum
 
             For i = 0 To n
-                If CompoundProperties(i).IsIon Then
-                    Vxs(i) = 0.0#
-                    Vxv(i) = 0.0#
-                    If L <> 0.0# Then Vxl(i) = (x(i) / L) Else Vxl(i) = 0.0#
-                ElseIf CompoundProperties(i).IsSalt Then
-                    Vxv(i) = 0.0#
-                    If L <> 0.0# Then Vxl(i) = (x(i) / L) Else Vxl(i) = 0.0#
-                    If S <> 0.0# Then Vxs(i) = (x(i + n + 1) / S) Else Vxs(i) = 0.0#
-                Else
-                    If L <> 0.0# Then Vxl(i) = (x(i) / L) Else Vxl(i) = 0.0#
-                    If S <> 0.0# Then Vxs(i) = (x(i + n + 1) / S) Else Vxs(i) = 0.0#
-                    If V <> 0.0# Then Vxv(i) = ((fi(i) * F - Vxl(i) * L - Vxs(i) * S) / V) Else Vxv(i) = 0.0#
-                End If
+                If L <> 0.0# Then Vxl(i) = (x(i) / L) Else Vxl(i) = 0.0#
+                If S <> 0.0# Then Vxs(i) = (x(i + n + 1) / S) Else Vxs(i) = 0.0#
+                If V <> 0.0# Then Vxv(i) = Vnv(i) / V Else Vxv(i) = 0.0#
                 If Vxv(i) < 0.0# Then Vxv(i) = 0.0#
                 If Vxl(i) < 0.0# Then Vxl(i) = 0.0#
                 If Vxs(i) < 0.0# Then Vxs(i) = 0.0#
             Next
 
-            If V > 0.0# And Vxv.Sum <> 0.0# Then
+            If Vxv.Sum <> 0.0# Then
                 soma_y = 0
                 For i = 0 To n
                     soma_y += Vxv(i)
@@ -839,16 +836,16 @@ out:        'return flash calculation results.
             fcl = proppack.DW_CalcFugCoeff(Vxl, Tf, Pf, State.Liquid)
             fcs = proppack.DW_CalcFugCoeff(Vxs, Tf, Pf, State.Solid)
 
-            Dim Gv, Gl, Gs, Gm, Rx, Pv As Double
+            Dim Gv, Gl, Gs, Gm, Rx, Pv, Mb As Double
 
             Gv = 0.0#
             Gl = 0.0#
             Gs = 0.0#
             For i = 0 To n
                 If fcl(i) = 0.0# Or Double.IsInfinity(fcl(i)) Or Double.IsNaN(fcl(i)) Then fcl(i) = 1.0E+20
-                If Vxv(i) <> 0.0# Then Gv += Vxv(i) * V * Log(fcv(i) * Vxv(i))
-                If Vxl(i) <> 0.0# Then Gl += Vxl(i) * L * Log(fcl(i) * Vxl(i))
-                If Vxs(i) <> 0.0# Then Gs += Vxs(i) * S * Log(fcs(i) * Vxs(i))
+                If Vxv(i) <> 0.0# Then Gv += Vxv(i) * V * (Log(fcv(i) * Vxv(i)) + proppack.RET_Gid(298.15, Tf, Pf, Vxv))
+                If Vxl(i) <> 0.0# Then Gl += Vxl(i) * L * (Log(fcl(i) * Vxl(i)) + proppack.RET_Gid(298.15, Tf, Pf, Vxl))
+                If Vxs(i) <> 0.0# Then Gs += Vxs(i) * S * (Log(fcs(i) * Vxs(i)) + proppack.RET_Gid(298.15, Tf, Pf, Vxs))
             Next
 
             ecount += 1
@@ -859,9 +856,11 @@ out:        'return flash calculation results.
 
             If Double.IsNaN(Rx) Then Rx = 0.0#
 
-            Pv = CheckMassBalance() ^ 2
+            Mb = CheckMassBalance() ^ 2
 
-            Return Gm + Rx + Pv
+            If V < 0.0# Then Pv = (V * 1000) ^ 2 Else Pv = 0.0#
+
+            Return Gm + Rx + Mb + Pv
 
         End Function
 
@@ -902,42 +901,40 @@ out:        'return flash calculation results.
 
             CheckCalculatorStatus()
 
-            Dim fcv(n), fcl(n), fcs(n) As Double
+            Dim fcv(n), fcl(n), fcs(n), Vnv(n) As Double
+
+            For i = 0 To n
+                If CompoundProperties(i).IsIon Or CompoundProperties(i).IsSalt Then
+                    Vnv(i) = 0.0#
+                Else
+                    Vnv(i) = fi(i) - x(i) + x(i + n + 1)
+                End If
+            Next
 
             soma_x = 0
-            For i = 0 To x.Length - n - 3
+            For i = 0 To x.Length - n - 2
                 soma_x += x(i)
             Next
             soma_s = 0
-            For i = x.Length - n - 1 To x.Length - 2
+            For i = x.Length - n - 1 To x.Length - 1
                 soma_s += x(i)
             Next
             L = soma_x
             S = soma_s
-            V = F - L - S
+            V = Vnv.Sum
 
             Tf = x(x.Length - 1)
 
-            For i = 0 To n
-                If CompoundProperties(i).IsIon Then
-                    Vxs(i) = 0.0#
-                    Vxv(i) = 0.0#
-                    If L <> 0.0# Then Vxl(i) = (x(i) / L) Else Vxl(i) = 0.0#
-                ElseIf CompoundProperties(i).IsSalt Then
-                    Vxv(i) = 0.0#
-                    If L <> 0.0# Then Vxl(i) = (x(i) / L) Else Vxl(i) = 0.0#
-                    If S <> 0.0# Then Vxs(i) = (x(i + n + 1) / S) Else Vxs(i) = 0.0#
-                Else
-                    If L <> 0.0# Then Vxl(i) = (x(i) / L) Else Vxl(i) = 0.0#
-                    If S <> 0.0# Then Vxs(i) = (x(i + n + 1) / S) Else Vxs(i) = 0.0#
-                    If V <> 0.0# Then Vxv(i) = ((fi(i) * F - Vxl(i) * L - Vxs(i) * S) / V) Else Vxv(i) = 0.0#
-                End If
+           For i = 0 To n
+                If L <> 0.0# Then Vxl(i) = (x(i) / L) Else Vxl(i) = 0.0#
+                If S <> 0.0# Then Vxs(i) = (x(i + n + 1) / S) Else Vxs(i) = 0.0#
+                If V <> 0.0# Then Vxv(i) = Vnv(i) / V Else Vxv(i) = 0.0#
                 If Vxv(i) < 0.0# Then Vxv(i) = 0.0#
                 If Vxl(i) < 0.0# Then Vxl(i) = 0.0#
                 If Vxs(i) < 0.0# Then Vxs(i) = 0.0#
             Next
 
-            If V > 0.0# And Vxv.Sum <> 0.0# Then
+            If Vxv.Sum <> 0.0# Then
                 soma_y = 0
                 For i = 0 To n
                     soma_y += Vxv(i)
@@ -951,16 +948,16 @@ out:        'return flash calculation results.
             fcl = proppack.DW_CalcFugCoeff(Vxl, Tf, Pf, State.Liquid)
             fcs = proppack.DW_CalcFugCoeff(Vxs, Tf, Pf, State.Solid)
 
-            Dim Gv, Gl, Gs, Gm, Rx, Pv, Herr As Double
+            Dim Gv, Gl, Gs, Gm, Rx, Pv, Mb, Herr As Double
 
             Gv = 0.0#
             Gl = 0.0#
             Gs = 0.0#
             For i = 0 To n
                 If fcl(i) = 0.0# Or Double.IsInfinity(fcl(i)) Or Double.IsNaN(fcl(i)) Then fcl(i) = 1.0E+20
-                If Vxv(i) <> 0.0# Then Gv += Vxv(i) * V * Log(fcv(i) * Vxv(i))
-                If Vxl(i) <> 0.0# Then Gl += Vxl(i) * L * Log(fcl(i) * Vxl(i))
-                If Vxs(i) <> 0.0# Then Gs += Vxs(i) * S * Log(fcs(i) * Vxs(i))
+                If Vxv(i) <> 0.0# Then Gv += Vxv(i) * V * (Log(fcv(i) * Vxv(i)) + proppack.RET_Gid(298.15, Tf, Pf, Vxv))
+                If Vxl(i) <> 0.0# Then Gl += Vxl(i) * L * (Log(fcl(i) * Vxl(i)) + proppack.RET_Gid(298.15, Tf, Pf, Vxl))
+                If Vxs(i) <> 0.0# Then Gs += Vxs(i) * S * (Log(fcs(i) * Vxs(i)) + proppack.RET_Gid(298.15, Tf, Pf, Vxs))
             Next
 
             ecount += 1
@@ -971,11 +968,13 @@ out:        'return flash calculation results.
 
             If Double.IsNaN(Rx) Then Rx = 0.0#
 
-            Pv = CheckMassBalance() ^ 2
+            Mb = CheckMassBalance() ^ 2
 
             Herr = EnthalpyError(Tf) ^ 2
 
-            Return Gm + Rx + Pv + Herr
+            If V < 0.0# Then Pv = (V * 1000) ^ 2 Else Pv = 0.0#
+
+            Return Gm + Rx + Mb + Pv + Herr
 
         End Function
 
@@ -1093,7 +1092,7 @@ out:        'return flash calculation results.
 
             For i = 0 To Me.Reactions.Count - 1
                 With proppack.CurrentMaterialStream.FlowSheet.Options.Reactions(Me.Reactions(i))
-                    f(i) = Abs(prod(i) - .ConstantKeqValue) ^ 2
+                    f(i) = Abs((prod(i) - .ConstantKeqValue) / .ConstantKeqValue) * 100 ^ 2
                 End With
             Next
 
