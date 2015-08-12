@@ -149,7 +149,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Next
                 sumN = 1.0#
 
-            ElseIf VxVp.Min > P Then
+            ElseIf Vp.Min > P Then
 
                 'all vapor
 
@@ -239,11 +239,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                             uconstr2(i) = Vz(i) * F
                         End If
                     Else
-                        If Vp(i) > P Then
-                            initval2(i) = 0.0#
-                        Else
-                            initval2(i) = Vz(i) * F
-                        End If
+                        initval2(i) = Vz(i) * F
                         uconstr2(i) = Vz(i) * F
                     End If
                     lconstr2(i) = 0.0#
@@ -843,9 +839,9 @@ out:        'return flash calculation results.
             Gs = 0.0#
             For i = 0 To n
                 If fcl(i) = 0.0# Or Double.IsInfinity(fcl(i)) Or Double.IsNaN(fcl(i)) Then fcl(i) = 1.0E+20
-                If Vxv(i) <> 0.0# Then Gv += Vxv(i) * V * (Log(fcv(i) * Vxv(i)) + proppack.RET_Gid(298.15, Tf, Pf, Vxv))
-                If Vxl(i) <> 0.0# Then Gl += Vxl(i) * L * (Log(fcl(i) * Vxl(i)) + proppack.RET_Gid(298.15, Tf, Pf, Vxl))
-                If Vxs(i) <> 0.0# Then Gs += Vxs(i) * S * (Log(fcs(i) * Vxs(i)) + proppack.RET_Gid(298.15, Tf, Pf, Vxs))
+                If Vxv(i) <> 0.0# Then Gv += Vxv(i) * V * Log(fcv(i) * Vxv(i))
+                If Vxl(i) <> 0.0# Then Gl += Vxl(i) * L * Log(fcl(i) * Vxl(i))
+                If Vxs(i) <> 0.0# Then Gs += Vxs(i) * S * Log(fcs(i) * Vxs(i))
             Next
 
             ecount += 1
@@ -955,9 +951,9 @@ out:        'return flash calculation results.
             Gs = 0.0#
             For i = 0 To n
                 If fcl(i) = 0.0# Or Double.IsInfinity(fcl(i)) Or Double.IsNaN(fcl(i)) Then fcl(i) = 1.0E+20
-                If Vxv(i) <> 0.0# Then Gv += Vxv(i) * V * (Log(fcv(i) * Vxv(i)) + proppack.RET_Gid(298.15, Tf, Pf, Vxv))
-                If Vxl(i) <> 0.0# Then Gl += Vxl(i) * L * (Log(fcl(i) * Vxl(i)) + proppack.RET_Gid(298.15, Tf, Pf, Vxl))
-                If Vxs(i) <> 0.0# Then Gs += Vxs(i) * S * (Log(fcs(i) * Vxs(i)) + proppack.RET_Gid(298.15, Tf, Pf, Vxs))
+                If Vxv(i) <> 0.0# Then Gv += Vxv(i) * V * Log(fcv(i) * Vxv(i))
+                If Vxl(i) <> 0.0# Then Gl += Vxl(i) * L * Log(fcl(i) * Vxl(i))
+                If Vxs(i) <> 0.0# Then Gs += Vxs(i) * S * Log(fcs(i) * Vxs(i))
             Next
 
             ecount += 1
@@ -1092,7 +1088,7 @@ out:        'return flash calculation results.
 
             For i = 0 To Me.Reactions.Count - 1
                 With proppack.CurrentMaterialStream.FlowSheet.Options.Reactions(Me.Reactions(i))
-                    f(i) = Abs((prod(i) - .ConstantKeqValue) / .ConstantKeqValue) * 100 ^ 2
+                    f(i) = Abs((prod(i) - .ConstantKeqValue) / .ConstantKeqValue) ^ 2
                 End With
             Next
 
