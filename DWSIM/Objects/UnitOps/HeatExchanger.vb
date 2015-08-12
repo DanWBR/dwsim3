@@ -1538,7 +1538,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.HeatExchanger
         'tube layout: 0 = triangular, 1 = triangular rotated, 2 = square, 2 = square rotated
         Public Tube_Layout As Integer = 0
         'tube pitch in m
-        Public Tube_Pitch As Double = 0.002
+        Public Tube_Pitch As Double = 0.04
         'fluid in tubes: 0 = cold, 1 = hot
         Public Tube_Fluid As Integer = 0
         'tube material roughness in m
