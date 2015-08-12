@@ -99,6 +99,7 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(id1) Then
 
         Me.tbMaxIts.Text = ppu.ElectrolyteFlash.MaximumIterations
         Me.tbTol.Text = ppu.ElectrolyteFlash.Tolerance
+        Me.tbEps.Text = ppu.ElectrolyteFlash.NumericalDerivativePerturbation
 
         Me.chkCalcChemEq.Checked = ppu.ElectrolyteFlash.CalculateChemicalEquilibria
 
@@ -186,6 +187,18 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(id1) Then
             Dim ppu As DWSIM.SimulationObjects.PropertyPackages.ExUNIQUACPropertyPackage = _pp
             Dim reacsetID As String = (From rset As ReactionSet In _form.Options.ReactionSets.Values Select rset Where rset.Name = cbReacSets.SelectedItem.ToString).FirstOrDefault.ID
             ppu.ElectrolyteFlash.ReactionSet = reacsetID
+        End If
+    End Sub
+
+    Private Sub tbEps_TextChanged(sender As Object, e As EventArgs) Handles tbEps.TextChanged
+        If Loaded Then
+            Dim ppu As DWSIM.SimulationObjects.PropertyPackages.LIQUAC2PropertyPackage = _pp
+            If Double.TryParse(tbTol.Text, New Double) Then
+                tbEps.ForeColor = Color.Blue
+                ppu.ElectrolyteFlash.NumericalDerivativePerturbation = tbEps.Text
+            Else
+                tbEps.ForeColor = Color.Red
+            End If
         End If
     End Sub
 

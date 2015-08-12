@@ -104,6 +104,7 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(id1) Then
 
         Me.tbMaxIts.Text = ppu.ElectrolyteFlash.MaximumIterations
         Me.tbTol.Text = ppu.ElectrolyteFlash.Tolerance
+        Me.tbEps.Text = ppu.ElectrolyteFlash.NumericalDerivativePerturbation
 
         Me.chkCalcChemEq.Checked = ppu.ElectrolyteFlash.CalculateChemicalEquilibria
 
@@ -169,133 +170,6 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(id1) Then
         End If
     End Sub
 
-    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click, Button2.Click, Button5.Click
-
-        Dim row As Integer = dgvu1.SelectedCells(0).RowIndex
-        Dim count As Integer = 0
-        Dim delta1 As Double = 10
-        Dim delta2 As Double = 10
-
-        Dim ms As New DWSIM.SimulationObjects.Streams.MaterialStream("", "")
-
-        Dim ppn As New DWSIM.SimulationObjects.PropertyPackages.UNIQUACPropertyPackage
-        Dim uniquac As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC
-
-        Dim ppu, unifac As Object
-
-        If sender.Name = "Button1" Then
-            ppu = New DWSIM.SimulationObjects.PropertyPackages.UNIFACPropertyPackage
-            unifac = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac
-        ElseIf sender.Name = "Button5" Then
-            ppu = New DWSIM.SimulationObjects.PropertyPackages.UNIFACLLPropertyPackage
-            unifac = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UnifacLL
-        Else
-            ppu = New DWSIM.SimulationObjects.PropertyPackages.MODFACPropertyPackage
-            unifac = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Modfac
-        End If
-
-        Dim id1 As String = dgvu1.Rows(row).Cells(0).Tag.ToString
-        Dim id2 As String = dgvu1.Rows(row).Cells(1).Tag.ToString
-
-        Dim comp1, comp2 As ConstantProperties
-        comp1 = _comps(id1)
-        comp2 = _comps(id2)
-
-        With ms
-            For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In ms.Fases.Values
-                With phase
-                    .Componentes.Add(comp1.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(comp1.Name, ""))
-                    .Componentes(comp1.Name).ConstantProperties = comp1
-                    .Componentes.Add(comp2.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(comp2.Name, ""))
-                    .Componentes(comp2.Name).ConstantProperties = comp2
-                End With
-            Next
-        End With
-
-        ppn.CurrentMaterialStream = ms
-        ppu.CurrentMaterialStream = ms
-
-        Dim T1 = 298.15
-
-        Dim actu(1), actn(1), actnd(1), fx(1), fxd(1), dfdx(1, 1), x(1), x0(1), dx(1) As Double
-
-        actu(0) = unifac.GAMMA(T1, New Object() {0.25, 0.75}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI, 0)
-        actu(1) = unifac.GAMMA(T1, New Object() {0.75, 0.25}, ppu.RET_VQ(), ppu.RET_VR, ppu.RET_VEKI, 0)
-
-        x(0) = dgvu1.Rows(row).Cells(2).Value
-        x(1) = dgvu1.Rows(row).Cells(3).Value
-
-        If x(0) = 0 Then x(0) = -100
-        If x(1) = 0 Then x(1) = 100
-
-        Do
-
-            uniquac.InteractionParameters.Clear()
-            uniquac.InteractionParameters.Add(ppn.RET_VIDS()(0), New Dictionary(Of String, DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC_IPData))
-            uniquac.InteractionParameters(ppn.RET_VIDS()(0)).Add(ppn.RET_VIDS()(1), New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC_IPData())
-            uniquac.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A12 = x(0)
-            uniquac.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A21 = x(1)
-
-            actnd(0) = uniquac.GAMMA(T1, New Object() {0.25, 0.75}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
-            actnd(1) = uniquac.GAMMA(T1, New Object() {0.75, 0.25}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
-
-            fx(0) = Math.Log(actu(0) / actnd(0))
-            fx(1) = Math.Log(actu(1) / actnd(1))
-
-            uniquac.InteractionParameters.Clear()
-            uniquac.InteractionParameters.Add(ppn.RET_VIDS()(0), New Dictionary(Of String, DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC_IPData))
-            uniquac.InteractionParameters(ppn.RET_VIDS()(0)).Add(ppn.RET_VIDS()(1), New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC_IPData())
-            uniquac.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A12 = x(0) + delta1
-            uniquac.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A21 = x(1)
-
-            actnd(0) = uniquac.GAMMA(T1, New Object() {0.25, 0.75}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
-            actnd(1) = uniquac.GAMMA(T1, New Object() {0.75, 0.25}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
-
-            fxd(0) = Math.Log(actu(0) / actnd(0))
-            fxd(1) = Math.Log(actu(1) / actnd(1))
-
-            dfdx(0, 0) = -(fxd(0) - fx(0)) / delta1
-            dfdx(1, 0) = -(fxd(1) - fx(1)) / delta1
-
-            uniquac.InteractionParameters.Clear()
-            uniquac.InteractionParameters.Add(ppn.RET_VIDS()(0), New Dictionary(Of String, DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC_IPData))
-            uniquac.InteractionParameters(ppn.RET_VIDS()(0)).Add(ppn.RET_VIDS()(1), New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UNIQUAC_IPData())
-            uniquac.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A12 = x(0)
-            uniquac.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A21 = x(1) + delta2
-
-            actnd(0) = uniquac.GAMMA(T1, New Object() {0.25, 0.75}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
-            actnd(1) = uniquac.GAMMA(T1, New Object() {0.75, 0.25}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
-
-            fxd(0) = Math.Log(actu(0) / actnd(0))
-            fxd(1) = Math.Log(actu(1) / actnd(1))
-
-            dfdx(0, 1) = -(fxd(0) - fx(0)) / delta2
-            dfdx(1, 1) = -(fxd(1) - fx(1)) / delta2
-
-            'solve linear system
-            DWSIM.MathEx.SysLin.rsolve.rmatrixsolve(dfdx, fx, UBound(fx) + 1, dx)
-
-            x0(0) = x(0)
-            x0(1) = x(1)
-
-            x(0) += dx(0)
-            x(1) += dx(1)
-
-            count += 1
-
-        Loop Until Math.Abs(fx(0) + fx(1)) < 0.03 Or count > 50
-
-        If count < 50 Then
-            dgvu1.Rows(row).Cells(2).Value = x0(0)
-            dgvu1.Rows(row).Cells(3).Value = x0(1)
-        Else
-            dgvu1.Rows(row).Cells(2).Value = 0
-            dgvu1.Rows(row).Cells(3).Value = 0
-        End If
-
-
-    End Sub
-
     Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button4.Click
         Process.Start(My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "data" & Path.DirectorySeparatorChar & "uniquacip.dat")
     End Sub
@@ -339,4 +213,15 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(id1) Then
         End If
     End Sub
 
+    Private Sub tbEps_TextChanged(sender As Object, e As EventArgs) Handles tbEps.TextChanged
+        If Loaded Then
+            Dim ppu As DWSIM.SimulationObjects.PropertyPackages.LIQUAC2PropertyPackage = _pp
+            If Double.TryParse(tbTol.Text, New Double) Then
+                tbEps.ForeColor = Color.Blue
+                ppu.ElectrolyteFlash.NumericalDerivativePerturbation = tbEps.Text
+            Else
+                tbEps.ForeColor = Color.Red
+            End If
+        End If
+    End Sub
 End Class

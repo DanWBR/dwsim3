@@ -7183,10 +7183,10 @@ Final3:
                     '<SolidHeatCapacityCp name="Solid heat capacity"  units="J/kmol/K" >
                     result = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, 0) / 1000 / mw 'kJ/kg.K
                     Cpi = result
-                Else
-                    Cpi = 0.0#
+                    HS += Vx(i) * Cpi * (T - 298)
+                ElseIf cprops(i).TemperatureOfFusion <> 0.0# Then
+                    HS += -Vx(i) * cprops(i).EnthalpyOfFusionAtTf * 1000 / cprops(i).Molar_Weight
                 End If
-                HS += Vx(i) * Cpi * (T - 298)
             Next
 
             Return HS 'kJ/kg

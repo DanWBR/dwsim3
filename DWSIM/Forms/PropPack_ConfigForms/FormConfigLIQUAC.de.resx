@@ -117,28 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="FaTabStripItem2.Title" xml:space="preserve">
+    <value>Erweiterte Einstellungen</value>
+  </data>
   <data name="FaTabStripItem1.Title" xml:space="preserve">
     <value>Allgemeine Einstellungen</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>546, 332</value>
+  <data name="GroupBox3.Text" xml:space="preserve">
+    <value>Interaktionsparameter</value>
   </data>
-  <data name="Button3.Text" xml:space="preserve">
-    <value>Abschätzen</value>
-  </data>
-  <data name="KryptonDataGridView2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 54</value>
-  </data>
-  <data name="KryptonDataGridView2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>531, 326</value>
-  </data>
-  <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>284, 13</value>
-  </data>
-  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 13</value>
-  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Button5.Location" type="System.Drawing.Point, System.Drawing">
     <value>158, 17</value>
   </data>
@@ -166,6 +154,42 @@
   <data name="Button1.Text" xml:space="preserve">
     <value>Abschätzen (UNIFAC)</value>
   </data>
+  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>622, 332</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Chemische Gleichgewicht</value>
+  </data>
+  <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>167, 13</value>
+  </data>
+  <data name="Label4.Text" xml:space="preserve">
+    <value>Numerical derivative perturbation</value>
+  </data>
+  <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>108, 13</value>
+  </data>
+  <data name="Label3.Text" xml:space="preserve">
+    <value>Konvergenz Toleranz</value>
+  </data>
+  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>164, 13</value>
+  </data>
+  <data name="Label2.Text" xml:space="preserve">
+    <value>Maximale Anzahl von Iterationen</value>
+  </data>
+  <data name="chkCalcChemEq.Size" type="System.Drawing.Size, System.Drawing">
+    <value>205, 17</value>
+  </data>
+  <data name="chkCalcChemEq.Text" xml:space="preserve">
+    <value>Berechnung Chemische Gleichgewicht</value>
+  </data>
+  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>68, 13</value>
+  </data>
+  <data name="Label1.Text" xml:space="preserve">
+    <value>Reaktion Set</value>
+  </data>
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Allgemeine Einstellungen</value>
   </data>
@@ -174,26 +198,5 @@
   </data>
   <data name="Column1.HeaderText" xml:space="preserve">
     <value>Wert</value>
-  </data>
-  <data name="chkCalcChemEq.Text" xml:space="preserve">
-    <value>Berechnung Chemische Gleichgewicht</value>
-  </data>
-  <data name="FaTabStripItem2.Title" xml:space="preserve">
-    <value>Erweiterte Einstellungen</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Chemische Gleichgewicht</value>
-  </data>
-  <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Interaktionsparameter</value>
-  </data>
-  <data name="Label1.Text" xml:space="preserve">
-    <value>Reaktion Set</value>
-  </data>
-  <data name="Label2.Text" xml:space="preserve">
-    <value>Maximale Anzahl von Iterationen</value>
-  </data>
-  <data name="Label3.Text" xml:space="preserve">
-    <value>Konvergenz Toleranz</value>
   </data>
 </root>

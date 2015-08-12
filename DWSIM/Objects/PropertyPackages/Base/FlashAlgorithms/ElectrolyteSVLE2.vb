@@ -26,6 +26,7 @@ Imports DWSIM.DWSIM.MathEx.Common
 Imports Ciloci.Flee
 Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
 Imports Cureos.Numerics
+Imports DotNumerics.Optimization
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
@@ -59,6 +60,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         Public Property MaximumIterations As Integer = 5000
         Public Property Tolerance As Double = 0.001
+        Public Property NumericalDerivativePerturbation As Double = 0.0000000001
 
         Public Property CalculateChemicalEquilibria As Boolean = True
 
@@ -82,6 +84,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             'This flash algorithm is for Electrolye/Salt systems with Water as the single solvent.
             'The vapor and solid phases are considered to be ideal.
             'Chemical equilibria is calculated using the reactions enabled in the default reaction set.
+
+            etol = CDbl(proppack.Parameters("PP_PTFELT"))
+            maxit_e = CInt(proppack.Parameters("PP_PTFMEI"))
+            itol = CDbl(proppack.Parameters("PP_PTFILT"))
+            maxit_i = CInt(proppack.Parameters("PP_PTFMII"))
 
             Dim d1, d2 As Date, dt As TimeSpan
             d1 = Date.Now
@@ -123,7 +130,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             wid = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Name = "Water").SingleOrDefault)
 
-            F = 1000.0#
+            F = 1.0#
 
             Pf = P
             Tf = T
@@ -136,7 +143,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 V = 0.0#
                 L = 0.0#
-                S = 1000.0#
+                S = 1.0#
                 For i = 0 To n
                     Vxs(i) = Vz(i)
                 Next
@@ -146,7 +153,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 'all vapor
 
-                V = 1000.0#
+                V = 1.0#
                 L = 0.0#
                 S = 0.0#
                 For i = 0 To n
@@ -252,32 +259,62 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     End If
                 Next
 
+                'run a few iterations of the simplex method to refine initial estimates
+
                 ecount = 0
 
+                'Dim variables(initval2.Length - 1) As OptSimplexBoundVariable
+                'For i = 0 To initval2.Length - 1
+                '    variables(i) = New OptSimplexBoundVariable(initval2(i), lconstr2(i), uconstr2(i))
+                'Next
+                'Dim solver As New Simplex
+                'solver.Tolerance = 1.0E-20
+                'solver.MaxFunEvaluations = 10000
+                'initval2 = solver.ComputeMin(AddressOf FunctionValue, variables)
+
+                'For i = 0 To 2 * n + 1
+                '    If initval2(i) < lconstr2(i) Then initval2(i) = lconstr2(i)
+                '    If initval2(i) > uconstr2(i) Then initval2(i) = uconstr2(i)
+                'Next
+
+                'find optimim solution with IPOPT solver
+
                 Dim obj As Double
-                Dim status As IpoptReturnCode
+                Dim status As IpoptReturnCode = IpoptReturnCode.Solve_Succeeded
 
                 Using problem As New Ipopt(initval2.Length, lconstr2, uconstr2, 0, Nothing, Nothing, 0, 0, _
                         AddressOf eval_f, AddressOf eval_g, _
                         AddressOf eval_grad_f, AddressOf eval_jac_g, AddressOf eval_h)
                     problem.AddOption("tol", Tolerance)
                     problem.AddOption("max_iter", MaximumIterations)
+                    problem.AddOption("acceptable_tol", etol)
+                    problem.AddOption("acceptable_iter", maxit_e)
                     problem.AddOption("mu_strategy", "adaptive")
-                    'problem.AddOption("mehrotra_algorithm", "yes")
+                    'problem.AddOption("mehrotra_algorithm", "no")
                     problem.AddOption("hessian_approximation", "limited-memory")
+                    problem.AddOption("print_level", 5)
                     'solve the problem 
                     status = problem.SolveProblem(initval2, obj, Nothing, Nothing, Nothing, Nothing)
                 End Using
 
-                FunctionValue(initval2)
+                'FunctionValue(initval2)
+
+                Dim CE, MB As Double
+
+                CE = CheckEquilibrium().Sum
+                MB = CheckMassBalance() ^ 2
 
                 If status = IpoptReturnCode.Solve_Succeeded Or status = IpoptReturnCode.Solved_To_Acceptable_Level Then
-                    WriteDebugInfo("PT Flash [Electrolyte]: converged in " & ecount & " iterations. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status) & ". Time taken: " & dt.TotalMilliseconds & " ms")
-                ElseIf status = IpoptReturnCode.Maximum_Iterations_Exceeded Then
-                    form.WriteToLog("PT Flash [Electrolyte]: maximum iteration exceeded, compositions may not be in equilibrium.", Color.DarkOrange, FormClasses.TipoAviso.Aviso)
+                    WriteDebugInfo("PT Flash [Electrolyte]: Converged in " & ecount & " iterations. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status) & ". Time taken: " & dt.TotalMilliseconds & " ms")
+                ElseIf CE < Tolerance And MB < etol Then
+                    form.WriteToLog("PT Flash [Electrolyte]: Maximum iterations exceeded, although mass balance and chemical equilibrium are satisfied within tolerance. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status), Color.DarkOrange, FormClasses.TipoAviso.Aviso)
                 Else
-                    Throw New Exception("PT Flash [Electrolyte]: unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status))
+                    Throw New Exception("PT Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status))
                 End If
+
+                For i = 0 To n
+                    fi(i) = (L * Vxl(i) + V * Vxv(i) + S * Vxs(i)) / F
+                Next
 
             End If
 
@@ -301,7 +338,7 @@ out:        'return flash calculation results.
 
             Dim results As New Dictionary(Of String, Object)
 
-            results.Add("MixtureMoleFlows", Vz)
+            results.Add("MixtureMoleFlows", fi)
             results.Add("VaporPhaseMoleFraction", V / F)
             results.Add("LiquidPhaseMoleFraction", L / F)
             results.Add("SolidPhaseMoleFraction", S / F)
@@ -317,118 +354,238 @@ out:        'return flash calculation results.
 
         Public Function Flash_PH(ByVal Vz As Double(), ByVal P As Double, ByVal H As Double, ByVal Tref As Double, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
-            Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
+            'This flash algorithm is for Electrolye/Salt systems with Water as the single solvent.
+            'The vapor and solid phases are considered to be ideal.
+            'Chemical equilibria is calculated using the reactions enabled in the default reaction set.
 
-            Dim Vn(1) As String, Vx(1), Vy(1), Vx_ant(1), Vy_ant(1), Vp(1), Ki(1), Ki_ant(1), fi(1) As Double
-            Dim j, n, ecount As Integer
+            etol = CDbl(proppack.Parameters("PP_PHFELT"))
+            maxit_e = CInt(proppack.Parameters("PP_PHFMEI"))
+            itol = CDbl(proppack.Parameters("PP_PHFILT"))
+            maxit_i = CInt(proppack.Parameters("PP_PHFMII"))
+
             Dim d1, d2 As Date, dt As TimeSpan
-            Dim L, V, T, Pf As Double
-
             d1 = Date.Now
 
-            n = UBound(Vz)
+            n = CompoundProperties.Count - 1
 
-            Hf = H
+            If Me.Reactions Is Nothing Then Me.Reactions = New List(Of String)
+
+            Dim form As FormFlowsheet = proppack.CurrentMaterialStream.FlowSheet
+
+            Me.Reactions.Clear()
+
+            Dim i, j As Integer
+
+            ReDim Vxv(n), Vxl(n), Vxs(n)
+
+            Dim activcoeff(n) As Double
+
+            'Vnf = feed molar amounts (considering 1 mol of feed)
+            'Vnl = liquid phase molar amounts
+            'Vnv = vapor phase molar amounts
+            'Vns = solid phase molar amounts
+            'Vxl = liquid phase molar fractions
+            'Vxv = vapor phase molar fractions
+            'Vxs = solid phase molar fractions
+            'V, S, L = phase molar amounts (F = 1 = V + S + L)
+
+            Dim sumN As Double = 0
+
+            'get water index in the array.
+
+            wid = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Name = "Water").SingleOrDefault)
+
+            F = 1.0#
+
             Pf = P
+            Hf = H
 
-            ReDim Vn(n), Vx(n), Vy(n), Vx_ant(n), Vy_ant(n), Vp(n), Ki(n), fi(n)
+            fi = Vz.Clone()
 
-            fi = Vz.Clone
+            If Vz(wid) = 0.0# Then
 
-            Dim maxitINT As Integer = CInt(proppack.Parameters("PP_PHFMII"))
-            Dim maxitEXT As Integer = CInt(proppack.Parameters("PP_PHFMEI"))
-            Dim tolINT As Double = CDbl(proppack.Parameters("PP_PHFILT"))
-            Dim tolEXT As Double = CDbl(proppack.Parameters("PP_PHFELT"))
+                'only solids in the stream (no liquid water).
 
-            Dim Tmin, Tmax, epsilon(4), maxDT As Double
+                V = 0.0#
+                L = 0.0#
+                S = 1.0#
+                For i = 0 To n
+                    Vxs(i) = Vz(i)
+                Next
+                sumN = 1.0#
 
-            Tmax = 2000.0#
-            Tmin = 50.0#
-            maxDT = 5.0#
+            Else
 
-            epsilon(0) = 0.1
-            epsilon(1) = 0.01
-            epsilon(2) = 0.001
-            epsilon(3) = 0.0001
-            epsilon(4) = 0.00001
+                Dim rxn As Reaction
 
-            Dim fx, fx2, dfdx, x1, dx As Double
-
-            Dim cnt As Integer
-
-            If Tref = 0.0# Then Tref = 298.15
-
-            For j = 0 To 4
-
-                cnt = 0
-                x1 = Tref
-
-                Do
-
-                    fx = Herror(x1, P, Vz)
-                    fx2 = Herror(x1 + epsilon(j), P, Vz)
-
-                    If Abs(fx) <= tolEXT Then Exit Do
-
-                    dfdx = (fx2 - fx) / epsilon(j)
-
-                    If dfdx = 0.0# Then
-                        fx = 0.0#
-                        Exit Do
+                'check active reactions (equilibrium only) in the reaction set
+                For Each rxnsb As ReactionSetBase In form.Options.ReactionSets(Me.ReactionSet).Reactions.Values
+                    If form.Options.Reactions(rxnsb.ReactionID).ReactionType = ReactionType.Equilibrium And rxnsb.IsActive Then
+                        Me.Reactions.Add(rxnsb.ReactionID)
+                        rxn = form.Options.Reactions(rxnsb.ReactionID)
+                        'equilibrium constant calculation
+                        Select Case rxn.KExprType
+                            Case Reaction.KOpt.Constant
+                                'rxn.ConstantKeqValue = rxn.ConstantKeqValue
+                            Case Reaction.KOpt.Expression
+                                rxn.ExpContext = New Ciloci.Flee.ExpressionContext
+                                rxn.ExpContext.Imports.AddType(GetType(System.Math))
+                                rxn.ExpContext.Variables.Add("T", Tf)
+                                rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.Expression)
+                                rxn.ConstantKeqValue = Exp(rxn.Expr.Evaluate)
+                            Case Reaction.KOpt.Gibbs
+                                Dim id(rxn.Components.Count - 1) As String
+                                Dim stcoef(rxn.Components.Count - 1) As Double
+                                Dim bcidx As Integer = 0
+                                j = 0
+                                For Each sb As ReactionStoichBase In rxn.Components.Values
+                                    id(j) = sb.CompName
+                                    stcoef(j) = sb.StoichCoeff
+                                    If sb.IsBaseReactant Then bcidx = j
+                                    j += 1
+                                Next
+                                Dim DelG_RT = proppack.AUX_DELGig_RT(298.15, Tf, id, stcoef, bcidx, True)
+                                rxn.ConstantKeqValue = Exp(-DelG_RT)
+                        End Select
                     End If
+                Next
 
-                    dx = fx / dfdx
+                nr = Me.Reactions.Count
 
-                    If Abs(dx) > maxDT Then dx = maxDT * Sign(dx)
+                Dim rx As Reaction
 
-                    x1 = x1 - dx
+                If Me.ComponentConversions Is Nothing Then Me.ComponentConversions = New Dictionary(Of String, Double)
+                If Me.ComponentIDs Is Nothing Then Me.ComponentIDs = New List(Of String)
 
-                    cnt += 1
+                Me.ComponentConversions.Clear()
+                Me.ComponentIDs.Clear()
 
-                Loop Until cnt > maxitEXT Or Double.IsNaN(x1) Or x1 < 0.0#
+                'r: number of reactions
+                'c: number of components
+                'i,j: iterators
 
-                T = x1
+                i = 0
+                For Each rxid As String In Me.Reactions
+                    rx = form.Options.Reactions(rxid)
+                    j = 0
+                    For Each comp As ReactionStoichBase In rx.Components.Values
+                        If Not Me.ComponentIDs.Contains(comp.CompName) Then
+                            Me.ComponentIDs.Add(comp.CompName)
+                            Me.ComponentConversions.Add(comp.CompName, 0)
+                        End If
+                        j += 1
+                    Next
+                    i += 1
+                Next
 
-                If Not Double.IsNaN(T) And Not Double.IsInfinity(T) And Not cnt > maxitEXT Then
-                    If T > Tmin And T < Tmax Then Exit For
+                Dim initval2(2 * n + 2) As Double
+                Dim lconstr2(2 * n + 2) As Double
+                Dim uconstr2(2 * n + 2) As Double
+                Dim finalval2(2 * n + 2) As Double
+
+                For i = 0 To n
+                    If CompoundProperties(i).IsIon Or CompoundProperties(i).IsSalt Then
+                        initval2(i) = Vz(i) * F
+                        If ComponentIDs.Contains(Vn(i)) Then
+                            uconstr2(i) = F
+                        Else
+                            uconstr2(i) = Vz(i) * F
+                        End If
+                    Else
+                        If Vp(i) > P Then
+                            initval2(i) = 0.0#
+                        Else
+                            initval2(i) = Vz(i) * F
+                        End If
+                        uconstr2(i) = Vz(i) * F
+                    End If
+                    lconstr2(i) = 0.0#
+                Next
+                For i = n + 1 To 2 * n + 1
+                    lconstr2(i) = 0.0#
+                    If CompoundProperties(i - n - 1).IsSalt Then
+                        initval2(i) = 0.0#
+                        uconstr2(i) = Vz(i - n - 1) * F
+                    Else
+                        initval2(i) = 0.0#
+                        uconstr2(i) = 0.0#
+                    End If
+                Next
+                initval2(2 * n + 2) = Tref
+                lconstr2(2 * n + 2) = 273
+                uconstr2(2 * n + 2) = 2000
+
+                ecount = 0
+
+                Dim obj As Double
+                Dim status As IpoptReturnCode
+
+                Using problem As New Ipopt(initval2.Length, lconstr2, uconstr2, 0, Nothing, Nothing, 0, 0, _
+                        AddressOf eval_fh, AddressOf eval_g, _
+                        AddressOf eval_grad_fh, AddressOf eval_jac_g, AddressOf eval_h)
+                    problem.AddOption("tol", Tolerance)
+                    problem.AddOption("max_iter", MaximumIterations)
+                    problem.AddOption("acceptable_tol", etol)
+                    problem.AddOption("acceptable_iter", maxit_e)
+                    problem.AddOption("mu_strategy", "adaptive")
+                    'problem.AddOption("mehrotra_algorithm", "no")
+                    problem.AddOption("hessian_approximation", "limited-memory")
+                    problem.AddOption("print_level", 5)
+                    'solve the problem 
+                    status = problem.SolveProblem(initval2, obj, Nothing, Nothing, Nothing, Nothing)
+                End Using
+
+                'FunctionValueH(initval2)
+
+                Dim CE, MB As Double
+
+                CE = CheckEquilibrium().Sum
+                MB = CheckMassBalance() ^ 2
+
+                If status = IpoptReturnCode.Solve_Succeeded Or status = IpoptReturnCode.Solved_To_Acceptable_Level Then
+                    WriteDebugInfo("PH Flash [Electrolyte]: Converged in " & ecount & " iterations. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status) & ". Time taken: " & dt.TotalMilliseconds & " ms")
+                ElseIf CE < Tolerance And MB < etol Then
+                    form.WriteToLog("PH Flash [Electrolyte]: Maximum iterations exceeded, although mass balance and chemical equilibrium are satisfied within tolerance. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status), Color.DarkOrange, FormClasses.TipoAviso.Aviso)
+                Else
+                    Throw New Exception("PH Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status))
                 End If
 
-            Next
+                For i = 0 To n
+                    fi(i) = (L * Vxl(i) + V * Vxv(i) + S * Vxs(i)) / F
+                Next
 
-            If Double.IsNaN(T) Or T <= Tmin Or T >= Tmax Or cnt > maxitEXT Or Abs(fx) > tolEXT Then Throw New Exception("PH Flash [Electrolyte]: Invalid result: Temperature did not converge.")
-
-            Dim tmp As Object = Flash_PT(Vz, T, P)
-
-            Dim S, Vs(), sumN As Double
-
-            sumN = tmp("MoleSum")
-            L = tmp("LiquidPhaseMoleFraction")
-            V = tmp("VaporPhaseMoleFraction")
-            S = tmp("SolidPhaseMoleFraction")
-            Vx = tmp("LiquidPhaseMolarComposition")
-            Vy = tmp("VaporPhaseMolarComposition")
-            Vs = tmp("SolidPhaseMolarComposition")
+            End If
 
             d2 = Date.Now
 
             dt = d2 - d1
 
-            WriteDebugInfo("PH Flash [Electrolyte]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
+out:        'return flash calculation results.
 
-            'return flash calculation results.
+            If L > 0.0# Then
+
+                'calculate activity coefficients.
+
+                If TypeOf proppack Is ExUNIQUACPropertyPackage Then
+                    activcoeff = CType(proppack, ExUNIQUACPropertyPackage).m_uni.GAMMA_MR(Tf, Vxl, CompoundProperties)
+                ElseIf TypeOf proppack Is LIQUAC2PropertyPackage Then
+                    activcoeff = CType(proppack, LIQUAC2PropertyPackage).m_uni.GAMMA_MR(Tf, Vxl, CompoundProperties)
+                End If
+
+            End If
 
             Dim results As New Dictionary(Of String, Object)
 
-            results.Add("MixtureMoleFlows", Vz)
-            results.Add("VaporPhaseMoleFraction", V)
-            results.Add("LiquidPhaseMoleFraction", L)
-            results.Add("SolidPhaseMoleFraction", S)
-            results.Add("VaporPhaseMolarComposition", Vy)
-            results.Add("LiquidPhaseMolarComposition", Vx)
-            results.Add("SolidPhaseMolarComposition", Vs)
-            results.Add("MoleSum", sumN)
-            results.Add("Temperature", T)
-            results.Add("LiquidPhaseActivityCoefficients", tmp("LiquidPhaseActivityCoefficients"))
+            results.Add("MixtureMoleFlows", fi)
+            results.Add("VaporPhaseMoleFraction", V / F)
+            results.Add("LiquidPhaseMoleFraction", L / F)
+            results.Add("SolidPhaseMoleFraction", S / F)
+            results.Add("VaporPhaseMolarComposition", Vxv)
+            results.Add("LiquidPhaseMolarComposition", Vxl)
+            results.Add("SolidPhaseMolarComposition", Vxs)
+            results.Add("LiquidPhaseActivityCoefficients", activcoeff)
+            results.Add("MoleSum", 1.0#)
+            results.Add("Temperature", Tf)
 
             Return results
 
@@ -438,167 +595,22 @@ out:        'return flash calculation results.
             Return OBJ_FUNC_PH_FLASH(X, P, Vz)
         End Function
 
-        Public Function Flash_PH0(ByVal Vz As Array, ByVal P As Double, ByVal H As Double, ByVal Tref As Double) As Dictionary(Of String, Object)
+        Function EnthalpyError(T As Double) As Double
 
-            Dim n As Integer
-            Dim d1, d2 As Date, dt As TimeSpan
-            Dim L, V, T, S, Pf, sumN As Double
+            Dim _Hv, _Hl, _Hs As Double
+            Dim mmg, mml, mms As Double
 
-            d1 = Date.Now
+            If V > 0.0# Then _Hv = proppack.DW_CalcEnthalpy(Vxv, T, Pf, State.Vapor)
+            If L > 0.0# Then _Hl = proppack.DW_CalcEnthalpy(Vxl, T, Pf, State.Liquid)
+            If S > 0.0# Then _Hs = proppack.DW_CalcSolidEnthalpy(T, Vxs, CompoundProperties)
 
-            n = UBound(Vz)
+            mmg = proppack.AUX_MMM(Vxv)
+            mml = proppack.AUX_MMM(Vxl)
+            mms = proppack.AUX_MMM(Vxs)
 
-            Hf = H
-            Pf = P
+            Dim herr As Double = Hf - ((mmg * V / (mmg * V + mml * L + mms * S)) * _Hv + (mml * L / (mmg * V + mml * L + mms * S)) * _Hl + (mms * S / (mmg * V + mml * L + mms * S)) * _Hs)
 
-            Dim Vx(n), Vx2(n), Vy(n), Vs(n), Vz0(n) As Double
-
-            Dim maxitINT As Integer = Me.MaximumIterations
-            Dim maxitEXT As Integer = Me.MaximumIterations
-            Dim tolINT As Double = 0.0001
-            Dim tolEXT As Double = 0.0001
-
-            Dim hl, hv, Tsat, Tsat_ant, Psat, xv, xv_ant, xl, wac, wx, deltaT, sumnw As Double
-
-            Dim wid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Name = "Water").SingleOrDefault)
-
-            Dim tmp As Dictionary(Of String, Object) = Nothing
-
-            'calculate water saturation temperature.
-
-            Tsat = proppack.AUX_TSATi(P, wid)
-
-            'calculate activity coefficient
-
-            deltaT = 1
-
-            If Vz(wid) <> 0.0# Then
-                'Do
-                '    Tsat = Tsat - deltaT
-                '    Try
-                '        tmp = Flash_PT(Vz, Tsat, P)
-                '        wac = tmp("LiquidPhaseActivityCoefficients")(wid)
-                '        wx = tmp("LiquidPhaseMolarComposition")(wid)
-                '    Catch ex As Exception
-                '        wx = 0.0#
-                '    End Try
-                'Loop Until wx > 0.0#
-
-                Psat = P '/ (wx * wac)
-                Tsat = 300 'proppack.AUX_TSATi(Psat, wid)
-            End If
-
-            Dim icount As Integer = 0
-
-            Do
-
-                hl = proppack.DW_CalcEnthalpy(Vz, Tsat, P, State.Liquid)
-                hv = proppack.DW_CalcEnthalpy(Vz, Tsat, P, State.Vapor)
-
-                xv_ant = xv
-
-                If H <= hl Then
-                    xv = 0
-                    LoopVarState = State.Liquid
-                ElseIf H >= hv Then
-                    xv = 1
-                    LoopVarState = State.Vapor
-                Else
-                    xv = (H - hl) / (hv - hl)
-                End If
-                xl = 1 - xv
-
-                If xv <> 0.0# And xv <> 1.0# Then
-                    T = Tsat
-                Else
-                    LoopVarF = H
-                    LoopVarX = P
-                    LoopVarVz = Vz
-                    Dim x0, x, fx, dfdx As Double, k As Integer
-                    x = Tsat - 5
-                    k = 0
-                    Do
-                        fx = EnthalpyTx(x, Nothing)
-                        If Abs(fx) < 0.0001 Then Exit Do
-                        dfdx = (EnthalpyTx(x + 0.1, Nothing) - EnthalpyTx(x, Nothing)) / 0.1
-                        x0 = x
-                        x -= fx / dfdx
-                        k += 1
-                    Loop Until k >= 100 Or Double.IsNaN(x)
-                    If Double.IsNaN(x) Then Throw New Exception("Temperature loop did not converge. Calculation aborted.")
-                    T = x
-                End If
-
-                Vz0 = Vz.Clone
-
-                V = Vz0(wid) * xv
-                Vz(wid) = Vz0(wid) * (1 - xv)
-                sumnw = 0.0#
-                For i = 0 To n
-                    If i <> wid Then
-                        sumnw += Vz0(i)
-                    End If
-                Next
-                For i = 0 To n
-                    If i <> wid Then
-                        Vz(i) = Vz0(i) / sumnw * (1 - Vz(wid))
-                    End If
-                Next
-
-                tmp = Flash_PT(Vz, T, P)
-
-                L = tmp("LiquidPhaseMoleFraction") * (1 - V)
-                S = tmp("SolidPhaseMoleFraction") * (1 - V)
-                Vx = tmp("LiquidPhaseMolarComposition")
-                Vy = proppack.RET_NullVector()
-                Vy(wid) = 1.0#
-                Vs = tmp("SolidPhaseMolarComposition")
-                sumN = tmp("MoleSum")
-                Vz = Vz0
-
-                If Vz(wid) <> 0.0# And xv <> 0.0# And xv <> 1.0# Then
-                    wac = tmp("LiquidPhaseActivityCoefficients")(wid)
-                    wx = tmp("LiquidPhaseMolarComposition")(wid)
-                    'If wx < 0.6 Then Throw New Exception("Water mole fraction in liquid phase is less than 0.6. Calculation aborted.")
-                    Psat = P / (wx * wac)
-                    Tsat_ant = Tsat
-                    Tsat = proppack.AUX_TSATi(Psat, wid)
-                End If
-
-                'If wx < 0.6 Then Throw New Exception("Water mole fraction in liquid phase is less than 0.6. Calculation aborted.")
-
-                If Double.IsNaN(Tsat) Then Throw New Exception("Temperature loop did not converge. Calculation aborted.")
-
-                'If Tsat < 273.15 Then Throw New Exception("Temperature loop did not converge. Calculation aborted.")
-
-                If icount > maxitINT Then Throw New Exception("Temperature loop did not converge. Maximum iterations reached.")
-
-                icount += 1
-
-            Loop Until Abs(xv - xv_ant) < 0.001
-
-            d2 = Date.Now
-
-            dt = d2 - d1
-
-            WriteDebugInfo("PH Flash [Electrolyte]: Converged successfully. Time taken: " & dt.TotalMilliseconds & " ms.")
-
-            'return flash calculation results.
-
-            Dim results As New Dictionary(Of String, Object)
-
-            results.Add("MixtureMoleFlows", Vz)
-            results.Add("VaporPhaseMoleFraction", V)
-            results.Add("LiquidPhaseMoleFraction", L)
-            results.Add("SolidPhaseMoleFraction", S)
-            results.Add("VaporPhaseMolarComposition", Vy)
-            results.Add("LiquidPhaseMolarComposition", Vx)
-            results.Add("SolidPhaseMolarComposition", Vs)
-            results.Add("MoleSum", sumN)
-            results.Add("Temperature", T)
-            results.Add("LiquidPhaseActivityCoefficients", tmp("LiquidPhaseActivityCoefficients"))
-
-            Return results
+            Return herr
 
         End Function
 
@@ -847,72 +859,166 @@ out:        'return flash calculation results.
 
             If Double.IsNaN(Rx) Then Rx = 0.0#
 
-            With proppack
-                Pv = F * .AUX_MMM(fi) - (Abs(L * .AUX_MMM(Vxl)) + Abs(S * .AUX_MMM(Vxs)) + Abs(V * .AUX_MMM(Vxv)))
-                Pv = Pv ^ 2
-            End With
+            Pv = CheckMassBalance() ^ 2
 
-            Return Gm / 1000 + Rx + Pv
+            Return Gm + Rx + Pv
 
         End Function
 
-      Private Function FunctionGradient(ByVal x() As Double) As Double()
+        Private Function FunctionGradient(ByVal x() As Double) As Double()
 
-            Dim g(x.Length - 1) As Double
+            Dim epsilon As Double = NumericalDerivativePerturbation
 
-            Dim epsilon As Double = 0.1
-
-            Dim f2(x.Length - 1), f3(x.Length - 1) As Double
-            Dim x2(x.Length - 1), x3(x.Length - 1) As Double
+            Dim f1, f2 As Double
+            Dim g(x.Length - 1), x2(x.Length - 1) As Double
             Dim i, j As Integer
 
             For i = 0 To x.Length - 1
+                f1 = FunctionValue(x)
                 For j = 0 To x.Length - 1
-                    x2(j) = x(j)
-                    x3(j) = x(j)
+                    If x(j) = 0.0# Then
+                        If i <> j Then
+                            x2(j) = x(j)
+                        Else
+                            x2(j) = x(j) + epsilon
+                        End If
+                    Else
+                        If i <> j Then
+                            x2(j) = x(j)
+                        Else
+                            x2(j) = x(j) * (1 + epsilon)
+                        End If
+                    End If
                 Next
-                x2(i) = x(i) + epsilon
-                x3(i) = x(i) - epsilon
-                f2(i) = FunctionValue(x2)
-                f3(i) = FunctionValue(x3)
-                g(i) = (f2(i) - f3(i)) / (x2(i) - x3(i))
-                If Double.IsNaN(g(i)) Or Double.IsInfinity(g(i)) Then g(i) = 0.0#
+                f2 = FunctionValue(x2)
+                g(i) = (f2 - f1) / (x2(i) - x(i))
             Next
 
             Return g
 
         End Function
 
-        Private Function FunctionHessian(ByVal x() As Double) As Double()
+        Private Function FunctionValueH(ByVal x() As Double) As Double
 
-            Dim epsilon As Double = 0.01
+            CheckCalculatorStatus()
 
-            Dim f2() As Double = Nothing
-            Dim f3() As Double = Nothing
-            Dim h((x.Length) * (x.Length) - 1), x2(x.Length - 1), x3(x.Length - 1) As Double
-            Dim m As Integer
+            Dim fcv(n), fcl(n), fcs(n) As Double
 
-            m = 0
-            For i = 0 To x.Length - 1
-                For j = 0 To x.Length - 1
-                    If i <> j Then
-                        x2(j) = x(j)
-                        x3(j) = x(j)
-                    Else
-                        x2(j) = x(j) * (1 + epsilon)
-                        x3(j) = x(j) * (1 - epsilon)
-                    End If
-                Next
-                f2 = FunctionGradient(x2)
-                f3 = FunctionGradient(x3)
-                For k2 = 0 To x.Length - 1
-                    h(m) = (f2(k2) - f3(k)) / (x2(i) - x3(i))
-                    If Double.IsNaN(h(m)) Then h(m) = 0.0#
-                    m += 1
-                Next
+            soma_x = 0
+            For i = 0 To x.Length - n - 3
+                soma_x += x(i)
+            Next
+            soma_s = 0
+            For i = x.Length - n - 1 To x.Length - 2
+                soma_s += x(i)
+            Next
+            L = soma_x
+            S = soma_s
+            V = F - L - S
+
+            Tf = x(x.Length - 1)
+
+            For i = 0 To n
+                If CompoundProperties(i).IsIon Then
+                    Vxs(i) = 0.0#
+                    Vxv(i) = 0.0#
+                    If L <> 0.0# Then Vxl(i) = (x(i) / L) Else Vxl(i) = 0.0#
+                ElseIf CompoundProperties(i).IsSalt Then
+                    Vxv(i) = 0.0#
+                    If L <> 0.0# Then Vxl(i) = (x(i) / L) Else Vxl(i) = 0.0#
+                    If S <> 0.0# Then Vxs(i) = (x(i + n + 1) / S) Else Vxs(i) = 0.0#
+                Else
+                    If L <> 0.0# Then Vxl(i) = (x(i) / L) Else Vxl(i) = 0.0#
+                    If S <> 0.0# Then Vxs(i) = (x(i + n + 1) / S) Else Vxs(i) = 0.0#
+                    If V <> 0.0# Then Vxv(i) = ((fi(i) * F - Vxl(i) * L - Vxs(i) * S) / V) Else Vxv(i) = 0.0#
+                End If
+                If Vxv(i) < 0.0# Then Vxv(i) = 0.0#
+                If Vxl(i) < 0.0# Then Vxl(i) = 0.0#
+                If Vxs(i) < 0.0# Then Vxs(i) = 0.0#
             Next
 
-            Return h
+            If V > 0.0# And Vxv.Sum <> 0.0# Then
+                soma_y = 0
+                For i = 0 To n
+                    soma_y += Vxv(i)
+                Next
+                For i = 0 To n
+                    Vxv(i) /= soma_y
+                Next
+            End If
+
+            fcv = proppack.DW_CalcFugCoeff(Vxv, Tf, Pf, State.Vapor)
+            fcl = proppack.DW_CalcFugCoeff(Vxl, Tf, Pf, State.Liquid)
+            fcs = proppack.DW_CalcFugCoeff(Vxs, Tf, Pf, State.Solid)
+
+            Dim Gv, Gl, Gs, Gm, Rx, Pv, Herr As Double
+
+            Gv = 0.0#
+            Gl = 0.0#
+            Gs = 0.0#
+            For i = 0 To n
+                If fcl(i) = 0.0# Or Double.IsInfinity(fcl(i)) Or Double.IsNaN(fcl(i)) Then fcl(i) = 1.0E+20
+                If Vxv(i) <> 0.0# Then Gv += Vxv(i) * V * Log(fcv(i) * Vxv(i))
+                If Vxl(i) <> 0.0# Then Gl += Vxl(i) * L * Log(fcl(i) * Vxl(i))
+                If Vxs(i) <> 0.0# Then Gs += Vxs(i) * S * Log(fcs(i) * Vxs(i))
+            Next
+
+            ecount += 1
+
+            Gm = Gv + Gl + Gs
+
+            Rx = CheckEquilibrium().Sum
+
+            If Double.IsNaN(Rx) Then Rx = 0.0#
+
+            Pv = CheckMassBalance() ^ 2
+
+            Herr = EnthalpyError(Tf) ^ 2
+
+            Return Gm + Rx + Pv + Herr
+
+        End Function
+
+        Private Function FunctionGradientH(ByVal x() As Double) As Double()
+
+            Dim epsilon As Double = NumericalDerivativePerturbation
+
+            Dim f1, f2 As Double
+            Dim g(x.Length - 1), x2(x.Length - 1) As Double
+            Dim i, j As Integer
+
+            For i = 0 To x.Length - 1
+                f1 = FunctionValueH(x)
+                For j = 0 To x.Length - 1
+                    If x(j) = 0.0# Then
+                        If i <> j Then
+                            x2(j) = x(j)
+                        Else
+                            x2(j) = x(j) + epsilon
+                        End If
+                    Else
+                        If i <> j Then
+                            x2(j) = x(j)
+                        Else
+                            x2(j) = x(j) * (1 + epsilon)
+                        End If
+                    End If
+                Next
+                f2 = FunctionValueH(x2)
+                g(i) = (f2 - f1) / (x2(i) - x(i))
+            Next
+
+            Return g
+
+        End Function
+
+        Private Function CheckMassBalance() As Double
+
+            Dim Mb As Double
+            With proppack
+                Mb = F * .AUX_MMM(fi) - (Abs(L * .AUX_MMM(Vxl)) + Abs(S * .AUX_MMM(Vxs)) + Abs(V * .AUX_MMM(Vxv)))
+            End With
+            Return Abs(Mb) * 1000
 
         End Function
 
@@ -1004,26 +1110,25 @@ out:        'return flash calculation results.
             Return True
         End Function
 
+        Public Function eval_fh(ByVal n As Integer, ByVal x As Double(), ByVal new_x As Boolean, ByRef obj_value As Double) As Boolean
+            Dim fval As Double = FunctionValueH(x)
+            obj_value = fval
+            Return True
+        End Function
+
         Public Function eval_grad_f(ByVal n As Integer, ByVal x As Double(), ByVal new_x As Boolean, ByRef grad_f As Double()) As Boolean
             Dim g As Double() = FunctionGradient(x)
             grad_f = g
             Return True
         End Function
 
+        Public Function eval_grad_fh(ByVal n As Integer, ByVal x As Double(), ByVal new_x As Boolean, ByRef grad_f As Double()) As Boolean
+            Dim g As Double() = FunctionGradientH(x)
+            grad_f = g
+            Return True
+        End Function
+
         Public Function eval_g(ByVal n As Integer, ByVal x As Double(), ByVal new_x As Boolean, ByVal m As Integer, ByRef g As Double()) As Boolean
-            For i = 0 To m - 1 - 1
-                If CompoundProperties(i).IsIon Then
-                    g(i) = x(i)
-                ElseIf CompoundProperties(i).IsSalt Then
-                    g(i) = x(i + m - 1)
-                Else
-                    g(i) = fi(i) * F - (x(i) + x(i + m - 1))
-                End If
-            Next
-            If Me.ComponentIDs.Contains("Water") Then g(wid) = x(wid)
-            With proppack
-                g(m - 1) = F * .AUX_MMM(fi) - L * .AUX_MMM(Vxl) - S * .AUX_MMM(Vxs) - V * .AUX_MMM(Vxv)
-            End With
             Return True
         End Function
 
@@ -1071,7 +1176,7 @@ out:        'return flash calculation results.
 
             Else
 
-                values = FunctionHessian(x)
+                'values = FunctionHessian(x)
 
             End If
 
