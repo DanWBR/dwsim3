@@ -96,16 +96,17 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             n = CompoundProperties.Count - 1
 
             If Me.Reactions Is Nothing Then Me.Reactions = New List(Of String)
-         
+
             Dim form As FormFlowsheet = proppack.CurrentMaterialStream.FlowSheet
 
             Me.Reactions.Clear()
-      
+
             Dim i, j As Integer
 
             ReDim Vxv(n), Vxl(n), Vxs(n), Vn(n), Vp(n)
 
             Dim activcoeff(n), VxVp(n) As Double
+            Dim CE As Object = Nothing, MB As Double
 
             'Vnf = feed molar amounts (considering 1 mol of feed)
             'Vnl = liquid phase molar amounts
@@ -163,37 +164,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             Else
 
-                Dim rxn As Reaction
-
                 'check active reactions (equilibrium only) in the reaction set
                 For Each rxnsb As ReactionSetBase In form.Options.ReactionSets(Me.ReactionSet).Reactions.Values
                     If form.Options.Reactions(rxnsb.ReactionID).ReactionType = ReactionType.Equilibrium And rxnsb.IsActive Then
                         Me.Reactions.Add(rxnsb.ReactionID)
-                        rxn = form.Options.Reactions(rxnsb.ReactionID)
-                        'equilibrium constant calculation
-                        Select Case rxn.KExprType
-                            Case Reaction.KOpt.Constant
-                                'rxn.ConstantKeqValue = rxn.ConstantKeqValue
-                            Case Reaction.KOpt.Expression
-                                rxn.ExpContext = New Ciloci.Flee.ExpressionContext
-                                rxn.ExpContext.Imports.AddType(GetType(System.Math))
-                                rxn.ExpContext.Variables.Add("T", T)
-                                rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.Expression)
-                                rxn.ConstantKeqValue = Exp(rxn.Expr.Evaluate)
-                            Case Reaction.KOpt.Gibbs
-                                Dim id(rxn.Components.Count - 1) As String
-                                Dim stcoef(rxn.Components.Count - 1) As Double
-                                Dim bcidx As Integer = 0
-                                j = 0
-                                For Each sb As ReactionStoichBase In rxn.Components.Values
-                                    id(j) = sb.CompName
-                                    stcoef(j) = sb.StoichCoeff
-                                    If sb.IsBaseReactant Then bcidx = j
-                                    j += 1
-                                Next
-                                Dim DelG_RT = proppack.AUX_DELGig_RT(298.15, T, id, stcoef, bcidx, True)
-                                rxn.ConstantKeqValue = Exp(-DelG_RT)
-                        End Select
                     End If
                 Next
 
@@ -294,14 +268,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 FunctionValue(initval2)
 
-                Dim CE, MB As Double
-
-                CE = CheckEquilibrium().Sum
-                MB = CheckMassBalance() ^ 2
+                CE = CheckEquilibrium()
+                MB = CheckMassBalance()
 
                 If status = IpoptReturnCode.Solve_Succeeded Or status = IpoptReturnCode.Solved_To_Acceptable_Level Then
                     WriteDebugInfo("PT Flash [Electrolyte]: Converged in " & ecount & " iterations. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status) & ". Time taken: " & dt.TotalMilliseconds & " ms")
-                ElseIf CE < Tolerance And MB < etol Then
+                ElseIf DirectCast(CE(0), Double()).Sum < Tolerance And MB < etol Then
                     form.WriteToLog("PT Flash [Electrolyte]: Error while solving the problem, but mass balance and chemical equilibrium are satisfied within tolerance. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status), Color.DarkOrange, FormClasses.TipoAviso.Aviso)
                 Else
                     Throw New Exception("PT Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status))
@@ -342,6 +314,11 @@ out:        'return flash calculation results.
             results.Add("SolidPhaseMolarComposition", Vxs)
             results.Add("LiquidPhaseActivityCoefficients", activcoeff)
             results.Add("MoleSum", 1.0#)
+            results.Add("MassBalanceResidual", MB / 1000)
+            If L > 0.0# Then
+                results.Add("EquilibriumConstants", CE(1))
+                results.Add("CalculatedEquilibriumConstants", CE(2))
+            End If
 
             Return results
 
@@ -374,6 +351,7 @@ out:        'return flash calculation results.
             ReDim Vxv(n), Vxl(n), Vxs(n)
 
             Dim activcoeff(n) As Double
+            Dim CE As Object, MB As Double
 
             'Vnf = feed molar amounts (considering 1 mol of feed)
             'Vnl = liquid phase molar amounts
@@ -532,14 +510,12 @@ out:        'return flash calculation results.
 
                 'FunctionValueH(initval2)
 
-                Dim CE, MB As Double
-
-                CE = CheckEquilibrium().Sum
+                CE = CheckEquilibrium()
                 MB = CheckMassBalance() ^ 2
 
                 If status = IpoptReturnCode.Solve_Succeeded Or status = IpoptReturnCode.Solved_To_Acceptable_Level Then
                     WriteDebugInfo("PH Flash [Electrolyte]: Converged in " & ecount & " iterations. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status) & ". Time taken: " & dt.TotalMilliseconds & " ms")
-                ElseIf CE < Tolerance And MB < etol Then
+                ElseIf DirectCast(CE(0), Double()).Sum < Tolerance And MB < etol Then
                     form.WriteToLog("PH Flash [Electrolyte]: Error while solving the problem, but mass balance and chemical equilibrium are satisfied within tolerance. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status), Color.DarkOrange, FormClasses.TipoAviso.Aviso)
                 Else
                     Throw New Exception("PH Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status))
@@ -793,7 +769,11 @@ out:        'return flash calculation results.
                 If CompoundProperties(i).IsIon Or CompoundProperties(i).IsSalt Then
                     Vnv(i) = 0.0#
                 Else
-                    Vnv(i) = fi(i) - x(i) + x(i + n + 1)
+                    If Vp(i) < Pf Then
+                        Vnv(i) = 0.0#
+                    Else
+                        Vnv(i) = fi(i) - x(i) + x(i + n + 1)
+                    End If
                 End If
             Next
 
@@ -848,9 +828,9 @@ out:        'return flash calculation results.
 
             Gm = Gv + Gl + Gs
 
-            Rx = CheckEquilibrium().Sum
+            Rx = DirectCast(CheckEquilibrium()(0), Double()).Sum
 
-            If Double.IsNaN(Rx) Then Rx = 0.0#
+            If Double.IsNaN(Rx) Then Rx = 1000.0
 
             Mb = CheckMassBalance() ^ 2
 
@@ -899,11 +879,21 @@ out:        'return flash calculation results.
 
             Dim fcv(n), fcl(n), fcs(n), Vnv(n) As Double
 
+            Tf = x(x.Length - 1)
+
+            For i = 0 To n
+                Vp(i) = proppack.AUX_PVAPi(i, Tf)
+            Next
+
             For i = 0 To n
                 If CompoundProperties(i).IsIon Or CompoundProperties(i).IsSalt Then
                     Vnv(i) = 0.0#
                 Else
-                    Vnv(i) = fi(i) - x(i) + x(i + n + 1)
+                    If Vp(i) < Pf Then
+                        Vnv(i) = 0.0#
+                    Else
+                        Vnv(i) = fi(i) - x(i) + x(i + n + 1)
+                    End If
                 End If
             Next
 
@@ -919,9 +909,7 @@ out:        'return flash calculation results.
             S = soma_s
             V = Vnv.Sum
 
-            Tf = x(x.Length - 1)
-
-           For i = 0 To n
+            For i = 0 To n
                 If L <> 0.0# Then Vxl(i) = (x(i) / L) Else Vxl(i) = 0.0#
                 If S <> 0.0# Then Vxs(i) = (x(i + n + 1) / S) Else Vxs(i) = 0.0#
                 If V <> 0.0# Then Vxv(i) = Vnv(i) / V Else Vxv(i) = 0.0#
@@ -960,9 +948,9 @@ out:        'return flash calculation results.
 
             Gm = Gv + Gl + Gs
 
-            Rx = CheckEquilibrium().Sum
+            Rx = DirectCast(CheckEquilibrium()(0), Double()).Sum
 
-            If Double.IsNaN(Rx) Then Rx = 0.0#
+            If Double.IsNaN(Rx) Then Rx = 1000.0#
 
             Mb = CheckMassBalance() ^ 2
 
@@ -1013,15 +1001,47 @@ out:        'return flash calculation results.
             With proppack
                 Mb = F * .AUX_MMM(fi) - (Abs(L * .AUX_MMM(Vxl)) + Abs(S * .AUX_MMM(Vxs)) + Abs(V * .AUX_MMM(Vxv)))
             End With
-            Return Abs(Mb) * 1000
+            Return Abs(Mb)
 
         End Function
 
-        Private Function CheckEquilibrium() As Double()
+        Private Function CheckEquilibrium() As Object()
 
-            Dim i, nc As Integer
+            Dim i, j, nc As Integer
 
             nc = Me.CompoundProperties.Count - 1
+
+            Dim form As FormFlowsheet = proppack.CurrentMaterialStream.FlowSheet
+            Dim rxn As Reaction
+
+            'check active reactions (equilibrium only) in the reaction set
+            For Each rxid In Me.Reactions
+                rxn = form.Options.Reactions(rxid)
+                'equilibrium constant calculation
+                Select Case rxn.KExprType
+                    Case Reaction.KOpt.Constant
+                        'rxn.ConstantKeqValue = rxn.ConstantKeqValue
+                    Case Reaction.KOpt.Expression
+                        rxn.ExpContext = New Ciloci.Flee.ExpressionContext
+                        rxn.ExpContext.Imports.AddType(GetType(System.Math))
+                        rxn.ExpContext.Variables.Add("T", Tf)
+                        rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.Expression)
+                        rxn.ConstantKeqValue = Exp(rxn.Expr.Evaluate)
+                    Case Reaction.KOpt.Gibbs
+                        Dim id(rxn.Components.Count - 1) As String
+                        Dim stcoef(rxn.Components.Count - 1) As Double
+                        Dim bcidx As Integer = 0
+                        j = 0
+                        For Each sb As ReactionStoichBase In rxn.Components.Values
+                            id(j) = sb.CompName
+                            stcoef(j) = sb.StoichCoeff
+                            If sb.IsBaseReactant Then bcidx = j
+                            j += 1
+                        Next
+                        Dim DelG_RT = proppack.AUX_DELGig_RT(298.15, Tf, id, stcoef, bcidx, True)
+                        rxn.ConstantKeqValue = Exp(-DelG_RT)
+                End Select
+            Next
 
             'calculate molality considering 1 mol of mixture.
 
@@ -1056,7 +1076,7 @@ out:        'return flash calculation results.
 
             Dim CP(nc) As Double
             Dim f(nr - 1) As Double
-            Dim prod(nr - 1) As Double
+            Dim prod(nr - 1), keq(nr - 1) As Double
 
             For i = 0 To nc
                 If CompoundProperties(i).IsIon Then
@@ -1088,11 +1108,12 @@ out:        'return flash calculation results.
 
             For i = 0 To Me.Reactions.Count - 1
                 With proppack.CurrentMaterialStream.FlowSheet.Options.Reactions(Me.Reactions(i))
-                    f(i) = Abs((prod(i) - .ConstantKeqValue) / .ConstantKeqValue) ^ 2
+                    keq(i) = .ConstantKeqValue
+                    f(i) = Abs(Log(prod(i)) - Log(.ConstantKeqValue)) ^ 2
                 End With
             Next
 
-            Return f
+            Return New Object() {f, prod, keq}
 
         End Function
 
