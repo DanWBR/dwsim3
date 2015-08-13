@@ -272,13 +272,22 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 CE = CheckEquilibrium()
                 MB = CheckMassBalance()
 
-                If status = IpoptReturnCode.Solve_Succeeded Or status = IpoptReturnCode.Solved_To_Acceptable_Level Or status = IpoptReturnCode.User_Requested_Stop Then
-                    WriteDebugInfo("PT Flash [Electrolyte]: Converged in " & ecount & " iterations. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status) & ". Time taken: " & dt.TotalMilliseconds & " ms")
-                ElseIf DirectCast(CE(0), Double()).Sum < Tolerance And MB < etol Then
-                    form.WriteToLog("PT Flash [Electrolyte]: Error while solving the problem, but mass balance and chemical equilibrium are satisfied within tolerance. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status), Color.DarkOrange, FormClasses.TipoAviso.Aviso)
-                Else
-                    Throw New Exception("PT Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status))
-                End If
+                Select Case status
+                    Case IpoptReturnCode.Solve_Succeeded, IpoptReturnCode.Solved_To_Acceptable_Level, IpoptReturnCode.User_Requested_Stop
+                        If DirectCast(CE(0), Double()).Sum < Tolerance And MB < etol Then
+                            WriteDebugInfo("PT Flash [Electrolyte]: Converged in " & ecount & " iterations. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status) & ". Time taken: " & dt.TotalMilliseconds & " ms")
+                        Else
+                            Throw New Exception("PT Flash [Electrolyte]: Unable to solve - mass balance and/or chemical equilibrium not satisfied within tolerance")
+                        End If
+                    Case IpoptReturnCode.Maximum_Iterations_Exceeded, IpoptReturnCode.Restoration_Failed
+                        If DirectCast(CE(0), Double()).Sum < Tolerance And MB < etol Then
+                            form.WriteToLog("PT Flash [Electrolyte]: An error was found while solving the problem, but mass balance and chemical equilibrium are satisfied within tolerance. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status), Color.DarkOrange, FormClasses.TipoAviso.Aviso)
+                        Else
+                            Throw New Exception("PT Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status))
+                        End If
+                    Case Else
+                        Throw New Exception("PT Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status))
+                End Select
 
                 For i = 0 To n
                     fi(i) = (L * Vxl(i) + V * Vxv(i) + S * Vxs(i)) / F
@@ -515,13 +524,22 @@ out:        'return flash calculation results.
                 CE = CheckEquilibrium()
                 MB = CheckMassBalance() ^ 2
 
-                If status = IpoptReturnCode.Solve_Succeeded Or status = IpoptReturnCode.Solved_To_Acceptable_Level Or status = IpoptReturnCode.User_Requested_Stop Then
-                    WriteDebugInfo("PH Flash [Electrolyte]: Converged in " & ecount & " iterations. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status) & ". Time taken: " & dt.TotalMilliseconds & " ms")
-                ElseIf DirectCast(CE(0), Double()).Sum < Tolerance And MB < etol Then
-                    form.WriteToLog("PH Flash [Electrolyte]: Error while solving the problem, but mass balance and chemical equilibrium are satisfied within tolerance. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status), Color.DarkOrange, FormClasses.TipoAviso.Aviso)
-                Else
-                    Throw New Exception("PH Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status))
-                End If
+                Select Case status
+                    Case IpoptReturnCode.Solve_Succeeded, IpoptReturnCode.Solved_To_Acceptable_Level, IpoptReturnCode.User_Requested_Stop
+                        If DirectCast(CE(0), Double()).Sum < Tolerance And MB < etol Then
+                            WriteDebugInfo("PT Flash [Electrolyte]: Converged in " & ecount & " iterations. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status) & ". Time taken: " & dt.TotalMilliseconds & " ms")
+                        Else
+                            Throw New Exception("PT Flash [Electrolyte]: Unable to solve - mass balance and/or chemical equilibrium not satisfied within tolerance")
+                        End If
+                    Case IpoptReturnCode.Maximum_Iterations_Exceeded, IpoptReturnCode.Restoration_Failed
+                        If DirectCast(CE(0), Double()).Sum < Tolerance And MB < etol Then
+                            form.WriteToLog("PT Flash [Electrolyte]: An error was found while solving the problem, but mass balance and chemical equilibrium are satisfied within tolerance. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status), Color.DarkOrange, FormClasses.TipoAviso.Aviso)
+                        Else
+                            Throw New Exception("PT Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status))
+                        End If
+                    Case Else
+                        Throw New Exception("PT Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status))
+                End Select
 
                 For i = 0 To n
                     fi(i) = (L * Vxl(i) + V * Vxv(i) + S * Vxs(i)) / F
