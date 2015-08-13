@@ -61,6 +61,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Public Property MaximumIterations As Integer = 5000
         Public Property Tolerance As Double = 0.001
         Public Property NumericalDerivativePerturbation As Double = 0.0000000001
+        Public Property ObjFuncGibbsWeight As Double = 1.0#
+        Public Property ObjFuncChemEqWeight As Double = 1.0#
+        Public Property ObjFuncMassBalWeight As Double = 100.0#
 
         Public Property CalculateChemicalEquilibria As Boolean = True
 
@@ -850,11 +853,11 @@ out:        'return flash calculation results.
 
             If Double.IsNaN(Rx) Then Rx = 1000.0
 
-            Mb = CheckMassBalance() ^ 2 * 100.0#
+            Mb = CheckMassBalance() ^ 2
 
             If V < 0.0# Then Pv = (V * 1000) ^ 2 Else Pv = 0.0#
 
-            Return Gm + Rx + Mb + Pv
+            Return Gm * Me.ObjFuncGibbsWeight + Rx * Me.ObjFuncChemEqWeight + Mb * Me.ObjFuncMassBalWeight + Pv
 
         End Function
 
@@ -974,7 +977,7 @@ out:        'return flash calculation results.
 
             If V < 0.0# Then Pv = (V * 1000) ^ 2 Else Pv = 0.0#
 
-            Return Gm + Rx + Mb + Pv + Herr
+            Return Gm * Me.ObjFuncGibbsWeight + Rx * Me.ObjFuncChemEqWeight + Mb * Me.ObjFuncMassBalWeight + Pv + Herr
 
         End Function
 

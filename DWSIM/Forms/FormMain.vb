@@ -540,11 +540,11 @@ Public Class FormMain
 
         End If
 
-        Dim LQPP As LIQUAC2PropertyPackage = New LIQUAC2PropertyPackage()
-        LQPP.ComponentName = "LIQUAC2 (Aqueous Electrolytes)"
-        LQPP.ComponentDescription = DWSIM.App.GetLocalString("DescLQPP")
+        'Dim LQPP As LIQUAC2PropertyPackage = New LIQUAC2PropertyPackage()
+        'LQPP.ComponentName = "LIQUAC2 (Aqueous Electrolytes)"
+        'LQPP.ComponentDescription = DWSIM.App.GetLocalString("DescLQPP")
 
-        PropertyPackages.Add(LQPP.ComponentName.ToString, LQPP)
+        'PropertyPackages.Add(LQPP.ComponentName.ToString, LQPP)
 
         Dim EUQPP As ExUNIQUACPropertyPackage = New ExUNIQUACPropertyPackage()
         EUQPP.ComponentName = "Extended UNIQUAC (Aqueous Electrolytes)"

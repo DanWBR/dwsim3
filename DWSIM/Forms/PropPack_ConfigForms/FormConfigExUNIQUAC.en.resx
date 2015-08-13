@@ -117,15 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="FaTabStripItem2.Title" xml:space="preserve">
-    <value>Advanced Settings</value>
-  </data>
-  <data name="FaTabStripItem1.Title" xml:space="preserve">
-    <value>General Options</value>
-  </data>
-  <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Interaction Parameters</value>
-  </data>
   <data name="Button5.Text" xml:space="preserve">
     <value>Estimate (UNIFAC-LL)</value>
   </data>
@@ -138,10 +129,31 @@
   <data name="Button1.Text" xml:space="preserve">
     <value>Estimate (UNIFAC)</value>
   </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Chemical Equilibrium</value>
+  <data name="GroupBox3.Text" xml:space="preserve">
+    <value>Interaction Parameters</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>181, 13</value>
+  </data>
+  <data name="Label5.Text" xml:space="preserve">
+    <value>Mass Balance error term weight (p3)</value>
+  </data>
+  <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>212, 13</value>
+  </data>
+  <data name="Label6.Text" xml:space="preserve">
+    <value>Chemical Equilibrium error term weight (p2)</value>
+  </data>
+  <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 13</value>
+  </data>
+  <data name="Label7.Text" xml:space="preserve">
+    <value>Gibbs Free Energy term weight (p1)</value>
+  </data>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Objective Function Parameters</value>
+  </data>
   <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
     <value>167, 13</value>
   </data>
@@ -172,13 +184,22 @@
   <data name="Label1.Text" xml:space="preserve">
     <value>Reaction Set</value>
   </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>General Options</value>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Chemical Equilibrium</value>
+  </data>
+  <data name="FaTabStripItem2.Title" xml:space="preserve">
+    <value>Advanced Settings</value>
   </data>
   <data name="Column2.HeaderText" xml:space="preserve">
     <value>Parameter</value>
   </data>
   <data name="Column1.HeaderText" xml:space="preserve">
     <value>Value</value>
+  </data>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>General Options</value>
+  </data>
+  <data name="FaTabStripItem1.Title" xml:space="preserve">
+    <value>General Options</value>
   </data>
 </root>

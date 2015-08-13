@@ -154,14 +154,17 @@
   <data name="Button1.Text" xml:space="preserve">
     <value>Abschätzen (UNIFAC)</value>
   </data>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Ziel Funktionsparameter</value>
+  </data>
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Chemische Gleichgewicht</value>
   </data>
   <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>167, 13</value>
+    <value>151, 13</value>
   </data>
   <data name="Label4.Text" xml:space="preserve">
-    <value>Numerical derivative perturbation</value>
+    <value>Numerische Ableitung Störung</value>
   </data>
   <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>108, 13</value>
