@@ -129,7 +129,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
             'Define the unitop type for later use.
             ObjectType = TipoObjeto.HeatExchanger
             Type = HeatExchangerType.DoublePipe
-            'CalcMode = HeatExchangerCalcMode.CalcBothTemp
 
         End Sub
 
@@ -317,6 +316,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Case HeatExchangerCalcMode.CalcBothTemp_KA
                     Dim Qh, Qc, Qi, Q_UA, Q_old As Double
                     Dim tmp As Object
+                    Dim count As Integer
                     A = Area
                     U = OverallCoefficient
 
@@ -343,6 +343,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Qi = Min(Qc, Qh)
 
                     Do
+                        count += 1
                         'calculate exit temperatures from energy balance
                         Hc2 = Qi / Wc + Hc1
                         Hh2 = Hh1 - Qi / Wh
@@ -369,9 +370,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                         Q_old = Qi
                         Qi = Qi - (Qi - Q_UA) * 0.2
-                        
-                    Loop Until Abs(Qi - Q_old) < 0.01
+
+
+                    Loop Until Abs(Qi - Q_old) < 0.01 Or count > 100
                     Q = Qi
+
+                    If count > 100 Then
+                        FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": Iteration loop did not converge.", Color.DarkOrange, FormClasses.TipoAviso.Aviso)
+                    End If
 
                 Case HeatExchangerCalcMode.CalcBothTemp
                     A = Area
@@ -1355,6 +1361,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     value = cv.ConverterDoSI(su.foulingfactor, Me.STProperties.OverallFoulingFactor)
                 Case 18
                     value = Me.LMTD_F
+                Case 19
+                    value = cv.ConverterDoSI(su.spmp_deltaT, Me.LMTD)
             End Select
 
             Return value
@@ -1369,11 +1377,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     For i = 2 To 4
                         proplist.Add("PROP_HX_" + CStr(i))
                     Next
-                    For i = 17 To 18
+                    For i = 17 To 19
                         proplist.Add("PROP_HX_" + CStr(i))
                     Next
                 Case PropertyType.RW
-                    For i = 0 To 18
+                    For i = 0 To 19
                         proplist.Add("PROP_HX_" + CStr(i))
                     Next
                 Case PropertyType.WR
@@ -1381,7 +1389,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         proplist.Add("PROP_HX_" + CStr(i))
                     Next
                 Case PropertyType.ALL
-                    For i = 0 To 18
+                    For i = 0 To 19
                         proplist.Add("PROP_HX_" + CStr(i))
                     Next
             End Select
@@ -1490,6 +1498,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     value = su.foulingfactor
                 Case 18
                     value = ""
+                Case 19
+                    value = su.spmp_deltaT
             End Select
 
             Return value
