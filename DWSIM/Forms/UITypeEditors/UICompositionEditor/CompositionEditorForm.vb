@@ -16,6 +16,8 @@ Public Class CompositionEditorForm
 
         Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
         GridComp.Rows.Clear()
+        GridComp.Columns(0).CellTemplate.Style.Format = Stream.FlowSheet.Options.FractionNumberFormat
+        GridComp.Columns(1).CellTemplate.Style.Format = Stream.FlowSheet.Options.FractionNumberFormat
         ComboBox1.Items.Clear()
         If Solvent Is Nothing Then Solvent = ""
         If InitialComposition Is Nothing Then InitialComposition = New Dictionary(Of String, Double)()

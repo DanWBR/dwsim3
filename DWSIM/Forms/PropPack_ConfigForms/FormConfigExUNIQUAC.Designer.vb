@@ -45,6 +45,9 @@ Partial Class FormConfigExUNIQUAC
         Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.LabelWithDivider3 = New System.Windows.Forms.LabelWithDivider()
         Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem()
+        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.cbLS = New System.Windows.Forms.ComboBox()
+        Me.Label9 = New System.Windows.Forms.Label()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.tbp3 = New System.Windows.Forms.TextBox()
@@ -75,6 +78,7 @@ Partial Class FormConfigExUNIQUAC
         Me.GroupBox3.SuspendLayout()
         CType(Me.dgvu1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStripItem2.SuspendLayout()
+        Me.GroupBox5.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.FaTabStripItem1.SuspendLayout()
@@ -196,10 +200,32 @@ Partial Class FormConfigExUNIQUAC
         '
         resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
         Me.FaTabStripItem2.CanClose = False
+        Me.FaTabStripItem2.Controls.Add(Me.GroupBox5)
         Me.FaTabStripItem2.Controls.Add(Me.GroupBox4)
         Me.FaTabStripItem2.Controls.Add(Me.GroupBox2)
         Me.FaTabStripItem2.IsDrawn = True
         Me.FaTabStripItem2.Name = "FaTabStripItem2"
+        '
+        'GroupBox5
+        '
+        resources.ApplyResources(Me.GroupBox5, "GroupBox5")
+        Me.GroupBox5.Controls.Add(Me.cbLS)
+        Me.GroupBox5.Controls.Add(Me.Label9)
+        Me.GroupBox5.Name = "GroupBox5"
+        Me.GroupBox5.TabStop = False
+        '
+        'cbLS
+        '
+        resources.ApplyResources(Me.cbLS, "cbLS")
+        Me.cbLS.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbLS.FormattingEnabled = True
+        Me.cbLS.Items.AddRange(New Object() {resources.GetString("cbLS.Items"), resources.GetString("cbLS.Items1"), resources.GetString("cbLS.Items2"), resources.GetString("cbLS.Items3"), resources.GetString("cbLS.Items4"), resources.GetString("cbLS.Items5"), resources.GetString("cbLS.Items6"), resources.GetString("cbLS.Items7")})
+        Me.cbLS.Name = "cbLS"
+        '
+        'Label9
+        '
+        resources.ApplyResources(Me.Label9, "Label9")
+        Me.Label9.Name = "Label9"
         '
         'GroupBox4
         '
@@ -376,6 +402,8 @@ Partial Class FormConfigExUNIQUAC
         Me.GroupBox3.ResumeLayout(False)
         CType(Me.dgvu1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FaTabStripItem2.ResumeLayout(False)
+        Me.GroupBox5.ResumeLayout(False)
+        Me.GroupBox5.PerformLayout()
         Me.GroupBox4.ResumeLayout(False)
         Me.GroupBox4.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
@@ -424,4 +452,7 @@ Partial Class FormConfigExUNIQUAC
     Friend WithEvents tbp2 As System.Windows.Forms.TextBox
     Friend WithEvents Label7 As System.Windows.Forms.Label
     Friend WithEvents tbp1 As System.Windows.Forms.TextBox
+    Friend WithEvents GroupBox5 As System.Windows.Forms.GroupBox
+    Friend WithEvents cbLS As System.Windows.Forms.ComboBox
+    Friend WithEvents Label9 As System.Windows.Forms.Label
 End Class

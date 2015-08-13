@@ -105,6 +105,8 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(id1) Then
         Me.tbp2.Text = ppu.ElectrolyteFlash.ObjFuncChemEqWeight
         Me.tbp3.Text = ppu.ElectrolyteFlash.ObjFuncMassBalWeight
 
+        Me.cbLS.SelectedItem = ppu.ElectrolyteFlash.LinearSolver
+
         Me.chkCalcChemEq.Checked = ppu.ElectrolyteFlash.CalculateChemicalEquilibria
 
         Try
@@ -240,5 +242,10 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(id1) Then
                 tbp3.ForeColor = Color.Red
             End If
         End If
+    End Sub
+
+    Private Sub cbLS_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbLS.SelectedIndexChanged
+        Dim ppu As DWSIM.SimulationObjects.PropertyPackages.ExUNIQUACPropertyPackage = _pp
+        ppu.ElectrolyteFlash.LinearSolver = Me.cbLS.SelectedItem
     End Sub
 End Class

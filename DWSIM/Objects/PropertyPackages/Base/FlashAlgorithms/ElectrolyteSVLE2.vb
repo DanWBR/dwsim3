@@ -56,7 +56,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Public Property ReactionExtents As Dictionary(Of String, Double)
         Public Property ComponentIDs As List(Of String)
         Public Property CompoundProperties As List(Of ConstantProperties)
-        Public Property ComponentConversions As Dictionary(Of String, Double)
+        Public Property MaxCompoundAmounts As Dictionary(Of String, Double)
+        Public Property InitialCompoundAmounts As Dictionary(Of String, Double)
 
         Public Property MaximumIterations As Integer = 5000
         Public Property Tolerance As Double = 0.001
@@ -64,6 +65,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Public Property ObjFuncGibbsWeight As Double = 1.0#
         Public Property ObjFuncChemEqWeight As Double = 1.0#
         Public Property ObjFuncMassBalWeight As Double = 100.0#
+        Public Property LinearSolver = "mumps"
 
         Public Property CalculateChemicalEquilibria As Boolean = True
 
@@ -178,28 +180,44 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 Dim rx As Reaction
 
-                If Me.ComponentConversions Is Nothing Then Me.ComponentConversions = New Dictionary(Of String, Double)
+                If Me.MaxCompoundAmounts Is Nothing Then Me.MaxCompoundAmounts = New Dictionary(Of String, Double)
+                If Me.InitialCompoundAmounts Is Nothing Then Me.InitialCompoundAmounts = New Dictionary(Of String, Double)
                 If Me.ComponentIDs Is Nothing Then Me.ComponentIDs = New List(Of String)
 
-                Me.ComponentConversions.Clear()
+                Me.MaxCompoundAmounts.Clear()
+                Me.InitialCompoundAmounts.Clear()
                 Me.ComponentIDs.Clear()
+
+                For i = 0 To n
+                    Me.InitialCompoundAmounts.Add(CompoundProperties(i).Name, Vz(i))
+                Next
 
                 'r: number of reactions
                 'c: number of components
                 'i,j: iterators
 
-                i = 0
                 For Each rxid As String In Me.Reactions
                     rx = form.Options.Reactions(rxid)
-                    j = 0
+                    Dim minp As Double = 1.0#
+                    Dim minr As Double = 1.0#
                     For Each comp As ReactionStoichBase In rx.Components.Values
-                        If Not Me.ComponentIDs.Contains(comp.CompName) Then
-                            Me.ComponentIDs.Add(comp.CompName)
-                            Me.ComponentConversions.Add(comp.CompName, 0)
+                        If Not Me.ComponentIDs.Contains(comp.CompName) Then Me.ComponentIDs.Add(comp.CompName)
+                        If Not Me.MaxCompoundAmounts.ContainsKey(comp.CompName) Then Me.MaxCompoundAmounts.Add(comp.CompName, 0)
+                        If comp.StoichCoeff < 0 And Me.InitialCompoundAmounts(comp.CompName) / Abs(comp.StoichCoeff) < minr Then
+                            minr = Me.InitialCompoundAmounts(comp.CompName) / Abs(comp.StoichCoeff)
                         End If
-                        j += 1
+                        If comp.StoichCoeff > 0 And Me.InitialCompoundAmounts(comp.CompName) / Abs(comp.StoichCoeff) < minp Then
+                            minp = Me.InitialCompoundAmounts(comp.CompName) / Abs(comp.StoichCoeff)
+                        End If
                     Next
-                    i += 1
+                    For Each comp As ReactionStoichBase In rx.Components.Values
+                        If comp.StoichCoeff > 0 Then
+                            Me.MaxCompoundAmounts(comp.CompName) += Me.InitialCompoundAmounts(comp.CompName) + minr * Abs(comp.StoichCoeff)
+                        End If
+                        If comp.StoichCoeff < 0 Then
+                            Me.MaxCompoundAmounts(comp.CompName) += Me.InitialCompoundAmounts(comp.CompName) + minp * Abs(comp.StoichCoeff)
+                        End If
+                    Next
                 Next
 
                 Dim initval2(2 * n + 1) As Double
@@ -208,15 +226,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Dim finalval2(2 * n + 1) As Double
 
                 For i = 0 To n
-                    If CompoundProperties(i).IsIon Or CompoundProperties(i).IsSalt Then
-                        initval2(i) = Vz(i) * F
-                        If ComponentIDs.Contains(Vn(i)) Then
-                            uconstr2(i) = F
-                        Else
-                            uconstr2(i) = Vz(i) * F
-                        End If
+                    initval2(i) = Vz(i) * F
+                    If ComponentIDs.Contains(Vn(i)) Then
+                        uconstr2(i) = Me.MaxCompoundAmounts(Vn(i))
                     Else
-                        initval2(i) = Vz(i) * F
                         uconstr2(i) = Vz(i) * F
                     End If
                     lconstr2(i) = 0.0#
@@ -265,6 +278,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     problem.AddOption("mu_strategy", "adaptive")
                     problem.AddOption("hessian_approximation", "limited-memory")
                     problem.AddOption("print_level", 5)
+                    problem.AddOption("linear_solver", LinearSolver)
                     problem.SetIntermediateCallback(AddressOf intermediate)
                     'solve the problem 
                     status = problem.SolveProblem(initval2, obj, Nothing, Nothing, Nothing, Nothing)
@@ -288,6 +302,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         Else
                             Throw New Exception("PT Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status) & ", mass balance (" & MB.ToString & ") and/or chemical equilibrium (" & DirectCast(CE(0), Double()).Sum.ToString & ") not satisfied within tolerance")
                         End If
+                    Case IpoptReturnCode.Invalid_Option
+                        Throw New Exception("PT Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status) & ", IPOPT linear solver option invalid (library not found)")
                     Case Else
                         Throw New Exception("PT Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status) & ", mass balance (" & MB.ToString & ") and/or chemical equilibrium (" & DirectCast(CE(0), Double()).Sum.ToString & ") not satisfied within tolerance")
                 End Select
@@ -326,7 +342,7 @@ out:        'return flash calculation results.
             results.Add("LiquidPhaseMolarComposition", Vxl)
             results.Add("SolidPhaseMolarComposition", Vxs)
             results.Add("LiquidPhaseActivityCoefficients", activcoeff)
-            results.Add("MoleSum", 1.0#)
+            results.Add("MoleSum", V + L + S)
             results.Add("MassBalanceResidual", MB / 1000)
             If L > 0.0# Then
                 results.Add("EquilibriumConstants", CE(1))
@@ -440,28 +456,44 @@ out:        'return flash calculation results.
 
                 Dim rx As Reaction
 
-                If Me.ComponentConversions Is Nothing Then Me.ComponentConversions = New Dictionary(Of String, Double)
+                If Me.MaxCompoundAmounts Is Nothing Then Me.MaxCompoundAmounts = New Dictionary(Of String, Double)
+                If Me.InitialCompoundAmounts Is Nothing Then Me.InitialCompoundAmounts = New Dictionary(Of String, Double)
                 If Me.ComponentIDs Is Nothing Then Me.ComponentIDs = New List(Of String)
 
-                Me.ComponentConversions.Clear()
+                Me.MaxCompoundAmounts.Clear()
+                Me.InitialCompoundAmounts.Clear()
                 Me.ComponentIDs.Clear()
+
+                For i = 0 To n
+                    Me.InitialCompoundAmounts.Add(CompoundProperties(i).Name, Vz(i))
+                Next
 
                 'r: number of reactions
                 'c: number of components
                 'i,j: iterators
 
-                i = 0
                 For Each rxid As String In Me.Reactions
                     rx = form.Options.Reactions(rxid)
-                    j = 0
+                    Dim minp As Double = 1.0#
+                    Dim minr As Double = 1.0#
                     For Each comp As ReactionStoichBase In rx.Components.Values
-                        If Not Me.ComponentIDs.Contains(comp.CompName) Then
-                            Me.ComponentIDs.Add(comp.CompName)
-                            Me.ComponentConversions.Add(comp.CompName, 0)
+                        If Not Me.ComponentIDs.Contains(comp.CompName) Then Me.ComponentIDs.Add(comp.CompName)
+                        If Not Me.MaxCompoundAmounts.ContainsKey(comp.CompName) Then Me.MaxCompoundAmounts.Add(comp.CompName, 0)
+                        If comp.StoichCoeff < 0 And Me.InitialCompoundAmounts(comp.CompName) / Abs(comp.StoichCoeff) < minr Then
+                            minr = Me.InitialCompoundAmounts(comp.CompName) / Abs(comp.StoichCoeff)
                         End If
-                        j += 1
+                        If comp.StoichCoeff > 0 And Me.InitialCompoundAmounts(comp.CompName) / Abs(comp.StoichCoeff) < minp Then
+                            minp = Me.InitialCompoundAmounts(comp.CompName) / Abs(comp.StoichCoeff)
+                        End If
                     Next
-                    i += 1
+                    For Each comp As ReactionStoichBase In rx.Components.Values
+                        If comp.StoichCoeff > 0 Then
+                            Me.MaxCompoundAmounts(comp.CompName) += Me.InitialCompoundAmounts(comp.CompName) + minr * Abs(comp.StoichCoeff)
+                        End If
+                        If comp.StoichCoeff < 0 Then
+                            Me.MaxCompoundAmounts(comp.CompName) += Me.InitialCompoundAmounts(comp.CompName) + minp * Abs(comp.StoichCoeff)
+                        End If
+                    Next
                 Next
 
                 Dim initval2(2 * n + 2) As Double
@@ -470,19 +502,10 @@ out:        'return flash calculation results.
                 Dim finalval2(2 * n + 2) As Double
 
                 For i = 0 To n
-                    If CompoundProperties(i).IsIon Or CompoundProperties(i).IsSalt Then
-                        initval2(i) = Vz(i) * F
-                        If ComponentIDs.Contains(Vn(i)) Then
-                            uconstr2(i) = F
-                        Else
-                            uconstr2(i) = Vz(i) * F
-                        End If
+                    initval2(i) = Vz(i) * F
+                    If ComponentIDs.Contains(Vn(i)) Then
+                        uconstr2(i) = Me.MaxCompoundAmounts(Vn(i))
                     Else
-                        If Vp(i) > P Then
-                            initval2(i) = 0.0#
-                        Else
-                            initval2(i) = Vz(i) * F
-                        End If
                         uconstr2(i) = Vz(i) * F
                     End If
                     lconstr2(i) = 0.0#
@@ -514,9 +537,9 @@ out:        'return flash calculation results.
                     problem.AddOption("acceptable_tol", etol)
                     problem.AddOption("acceptable_iter", maxit_e)
                     problem.AddOption("mu_strategy", "adaptive")
-                    'problem.AddOption("mehrotra_algorithm", "no")
                     problem.AddOption("hessian_approximation", "limited-memory")
                     problem.AddOption("print_level", 5)
+                    problem.AddOption("linear_solver", LinearSolver)
                     problem.SetIntermediateCallback(AddressOf intermediate)
                     'solve the problem 
                     status = problem.SolveProblem(initval2, obj, Nothing, Nothing, Nothing, Nothing)
@@ -540,6 +563,8 @@ out:        'return flash calculation results.
                         Else
                             Throw New Exception("PH Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status) & ", mass balance (" & MB.ToString & ") and/or chemical equilibrium (" & DirectCast(CE(0), Double()).Sum.ToString & ") not satisfied within tolerance")
                         End If
+                    Case IpoptReturnCode.Invalid_Option
+                        Throw New Exception("PT Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status) & ", IPOPT linear solver option invalid (library not found)")
                     Case Else
                         Throw New Exception("PT Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status) & ", mass balance (" & MB.ToString & ") and/or chemical equilibrium (" & DirectCast(CE(0), Double()).Sum.ToString & ") not satisfied within tolerance")
                 End Select
@@ -578,7 +603,7 @@ out:        'return flash calculation results.
             results.Add("LiquidPhaseMolarComposition", Vxl)
             results.Add("SolidPhaseMolarComposition", Vxs)
             results.Add("LiquidPhaseActivityCoefficients", activcoeff)
-            results.Add("MoleSum", 1.0#)
+            results.Add("MoleSum", V + L + S)
             results.Add("Temperature", Tf)
 
             Return results
@@ -1016,10 +1041,10 @@ out:        'return flash calculation results.
 
         Private Function CheckMassBalance() As Double
 
-            Dim Mb As Double
-            With proppack
-                Mb = F * .AUX_MMM(fi) - (Abs(L * .AUX_MMM(Vxl)) + Abs(S * .AUX_MMM(Vxs)) + Abs(V * .AUX_MMM(Vxv)))
-            End With
+            Dim Mb As Double = 0.0#
+            For i = 0 To n
+                Mb += (F * fi(i) - Abs(L) * Vxl(i) - Abs(S) * Vxs(i) - Abs(V) * Vxv(i)) * CompoundProperties(i).Molar_Weight
+            Next
             Return Abs(Mb)
 
         End Function
