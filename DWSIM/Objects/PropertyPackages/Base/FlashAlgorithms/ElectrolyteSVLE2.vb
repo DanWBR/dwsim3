@@ -106,7 +106,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             Me.Reactions.Clear()
 
-            Dim i, j As Integer
+            Dim i As Integer
 
             ReDim Vxv(n), Vxl(n), Vxs(n), Vn(n), Vp(n)
 
@@ -291,13 +291,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 Select Case status
                     Case IpoptReturnCode.Solve_Succeeded, IpoptReturnCode.Solved_To_Acceptable_Level, IpoptReturnCode.User_Requested_Stop
-                        If DirectCast(CE(0), Double()).Sum < Tolerance And MB < etol Then
+                        If DirectCast(CE(0), Double()).Sum < Tolerance And MB < Tolerance Then
                             WriteDebugInfo("PT Flash [Electrolyte]: Converged in " & ecount & " iterations. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status) & ". Time taken: " & dt.TotalMilliseconds & " ms")
                         Else
                             Throw New Exception("PT Flash [Electrolyte]: Unable to solve - mass balance (" & MB.ToString & ") and/or chemical equilibrium (" & DirectCast(CE(0), Double()).Sum.ToString & ") not satisfied within tolerance")
                         End If
                     Case IpoptReturnCode.Maximum_Iterations_Exceeded, IpoptReturnCode.Restoration_Failed
-                        If DirectCast(CE(0), Double()).Sum < Tolerance And MB < etol Then
+                        If DirectCast(CE(0), Double()).Sum < Tolerance And MB < Tolerance Then
                             form.WriteToLog("PT Flash [Electrolyte]: An error was found while solving the problem, but mass balance and chemical equilibrium are satisfied within tolerance. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status), Color.DarkOrange, FormClasses.TipoAviso.Aviso)
                         Else
                             Throw New Exception("PT Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status) & ", mass balance (" & MB.ToString & ") and/or chemical equilibrium (" & DirectCast(CE(0), Double()).Sum.ToString & ") not satisfied within tolerance")
@@ -552,13 +552,13 @@ out:        'return flash calculation results.
 
                 Select Case status
                     Case IpoptReturnCode.Solve_Succeeded, IpoptReturnCode.Solved_To_Acceptable_Level, IpoptReturnCode.User_Requested_Stop
-                        If DirectCast(CE(0), Double()).Sum < Tolerance And MB < etol Then
+                        If DirectCast(CE(0), Double()).Sum < Tolerance And MB < Tolerance Then
                             WriteDebugInfo("PH Flash [Electrolyte]: Converged in " & ecount & " iterations. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status) & ". Time taken: " & dt.TotalMilliseconds & " ms")
                         Else
                             Throw New Exception("PH Flash [Electrolyte]: Unable to solve - mass balance (" & MB.ToString & ") and/or chemical equilibrium (" & DirectCast(CE(0), Double()).Sum.ToString & ") not satisfied within tolerance")
                         End If
                     Case IpoptReturnCode.Maximum_Iterations_Exceeded, IpoptReturnCode.Restoration_Failed
-                        If DirectCast(CE(0), Double()).Sum < Tolerance And MB < etol Then
+                        If DirectCast(CE(0), Double()).Sum < Tolerance And MB < Tolerance Then
                             form.WriteToLog("PH Flash [Electrolyte]: An error was found while solving the problem, but mass balance and chemical equilibrium are satisfied within tolerance. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status), Color.DarkOrange, FormClasses.TipoAviso.Aviso)
                         Else
                             Throw New Exception("PH Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status) & ", mass balance (" & MB.ToString & ") and/or chemical equilibrium (" & DirectCast(CE(0), Double()).Sum.ToString & ") not satisfied within tolerance")
@@ -628,6 +628,8 @@ out:        'return flash calculation results.
             mms = proppack.AUX_MMM(Vxs)
 
             Dim herr As Double = Hf - ((mmg * V / (mmg * V + mml * L + mms * S)) * _Hv + (mml * L / (mmg * V + mml * L + mms * S)) * _Hl + (mms * S / (mmg * V + mml * L + mms * S)) * _Hs)
+
+            If Double.IsNaN(herr) Then herr = 10000000000.0
 
             Return herr
 
@@ -948,7 +950,7 @@ out:        'return flash calculation results.
                 soma_x += x(i)
             Next
             soma_s = 0
-            For i = x.Length - n - 1 To x.Length - 1
+            For i = x.Length - n - 1 To x.Length - 2
                 soma_s += x(i)
             Next
             L = soma_x
