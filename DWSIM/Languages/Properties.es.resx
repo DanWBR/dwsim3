@@ -1193,4 +1193,7 @@
   <data name="PROP_TU_2" xml:space="preserve">
     <value>ΔT</value>
   </data>
+  <data name="PROP_HX_19" xml:space="preserve">
+    <value>Logarithmic mean temperature difference LMTD</value>
+  </data>
 </root>

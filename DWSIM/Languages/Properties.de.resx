@@ -324,6 +324,9 @@
   <data name="PROP_HX_18" xml:space="preserve">
     <value>[Shell and Tube] LMTD Correction Factor (F)</value>
   </data>
+  <data name="PROP_HX_19" xml:space="preserve">
+    <value>Log mittl. Temperaturdifferenz LMTD</value>
+  </data>
   <data name="PROP_HX_2" xml:space="preserve">
     <value>Wärmezufuhr</value>
     <comment>0</comment>
