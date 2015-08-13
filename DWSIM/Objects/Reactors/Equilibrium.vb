@@ -690,16 +690,15 @@ Namespace DWSIM.SimulationObjects.Reactors
                         Case Reaction.KOpt.Constant
                             'rxn.ConstantKeqValue = rxn.ConstantKeqValue
                         Case Reaction.KOpt.Expression
-                            If rxn.ExpContext Is Nothing Then
-                                rxn.ExpContext = New Ciloci.Flee.ExpressionContext
-                                With rxn.ExpContext
-                                    .Imports.AddType(GetType(System.Math))
-                                    .Variables.DefineVariable("T", GetType(Double))
-                                End With
-                            End If
+                            rxn.ExpContext = New Ciloci.Flee.ExpressionContext
+                            rxn.ExpContext.Imports.AddType(GetType(System.Math))
                             rxn.ExpContext.Variables.Add("T", T)
                             rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.Expression)
-                            rxn.ConstantKeqValue = Exp(rxn.Expr.Evaluate)
+                            Try
+                                rxn.ConstantKeqValue = Exp(rxn.Expr.Evaluate)
+                            Catch ex As Exception
+                                Throw New Exception("Error evaluating equilibrium constant expression for reaction '" & rxn.Name & "': " & ex.Message.ToString)
+                            End Try
                         Case Reaction.KOpt.Gibbs
                             Dim id(rxn.Components.Count - 1) As String
                             Dim stcoef(rxn.Components.Count - 1) As Double

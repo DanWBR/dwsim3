@@ -1348,9 +1348,11 @@ Public Class FormOptimization
                     If .objectID = "SpreadsheetCell" Then
                         dgrow.Cells(3).Value = DWSIM.App.GetLocalString(.objectID)
                     Else
-                        dgrow.Cells(3).Value = .objectTAG
+                        If form.Collections.ObjectCollection.ContainsKey(.objectID) Then
+                            dgrow.Cells(3).Value = form.Collections.ObjectCollection(.objectID).GraphicObject.Tag
+                            dgrow.Cells(4).Value = DWSIM.App.GetPropertyName(.propID)
+                        End If
                     End If
-                    dgrow.Cells(4).Value = DWSIM.App.GetPropertyName(.propID)
                     dgrow.Cells(9).Value = .unit
                     dgrow.Cells(5).Value = cv.ConverterDoSI(.unit, .lowerlimit)
                     dgrow.Cells(6).Value = cv.ConverterDoSI(.unit, .upperlimit)

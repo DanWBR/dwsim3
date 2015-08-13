@@ -1024,7 +1024,11 @@ out:        'return flash calculation results.
                         rxn.ExpContext.Imports.AddType(GetType(System.Math))
                         rxn.ExpContext.Variables.Add("T", Tf)
                         rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.Expression)
-                        rxn.ConstantKeqValue = Exp(rxn.Expr.Evaluate)
+                        Try
+                            rxn.ConstantKeqValue = Exp(rxn.Expr.Evaluate)
+                        Catch ex As Exception
+                            Throw New Exception("Error evaluating equilibrium constant expression for reaction '" & rxn.Name & "': " & ex.Message.ToString)
+                        End Try
                     Case Reaction.KOpt.Gibbs
                         Dim id(rxn.Components.Count - 1) As String
                         Dim stcoef(rxn.Components.Count - 1) As Double

@@ -246,11 +246,14 @@ Public Class FormSensAnalysis
             Me.tbCaseDesc.Text = sacase.description
             With sacase.iv1
                 If .objectID <> "SpreadsheetCell" Then
-                    Me.cbObjIndVar1.SelectedIndex = Me.cbObjIndVar1.Items.IndexOf(.objectTAG)
+                    If form.Collections.ObjectCollection.ContainsKey(.objectID) Then
+                        Me.cbObjIndVar1.SelectedIndex = Me.cbObjIndVar1.Items.IndexOf(form.Collections.ObjectCollection(.objectID).GraphicObject.Tag)
+                        Me.cbPropIndVar1.SelectedIndex = Me.cbPropIndVar1.Items.IndexOf(DWSIM.App.GetPropertyName(.propID))
+                    End If
                 Else
                     Me.cbObjIndVar1.SelectedIndex = Me.cbObjIndVar1.Items.IndexOf(DWSIM.App.GetLocalString("SpreadsheetCell"))
+                    Me.cbPropIndVar1.SelectedIndex = Me.cbPropIndVar1.Items.IndexOf(DWSIM.App.GetPropertyName(.propID))
                 End If
-                Me.cbPropIndVar1.SelectedIndex = Me.cbPropIndVar1.Items.IndexOf(DWSIM.App.GetPropertyName(.propID))
                 If .propID <> "" Then
                     btnRun.Enabled = True
                     chkIndVar2.Enabled = True
@@ -264,11 +267,14 @@ Public Class FormSensAnalysis
             End With
             With sacase.iv2
                 If .objectID <> "SpreadsheetCell" Then
-                    Me.cbObjIndVar2.SelectedIndex = Me.cbObjIndVar2.Items.IndexOf(.objectTAG)
+                    If form.Collections.ObjectCollection.ContainsKey(.objectID) Then
+                        Me.cbObjIndVar2.SelectedIndex = Me.cbObjIndVar2.Items.IndexOf(form.Collections.ObjectCollection(.objectID).GraphicObject.Tag)
+                        Me.cbPropIndVar2.SelectedIndex = Me.cbPropIndVar2.Items.IndexOf(DWSIM.App.GetPropertyName(.propID))
+                    End If
                 Else
                     Me.cbObjIndVar2.SelectedIndex = Me.cbObjIndVar2.Items.IndexOf(DWSIM.App.GetLocalString("SpreadsheetCell"))
+                    Me.cbPropIndVar2.SelectedItem = DWSIM.App.GetPropertyName(.propID)
                 End If
-                Me.cbPropIndVar2.SelectedItem = DWSIM.App.GetPropertyName(.propID)
                 Me.tbLowerLimIndVar2.Text = .lowerlimit.GetValueOrDefault
                 Me.tbUpperLimIndVar2.Text = .upperlimit.GetValueOrDefault
                 Me.nuNumPointsIndVar2.Value = .points
@@ -280,11 +286,14 @@ Public Class FormSensAnalysis
                     Dim dgrow As DataGridViewRow = Me.dgDepVariables.Rows(Me.dgDepVariables.Rows.Count - 1)
                     dgrow.Cells(0).Value = .id
                     If .objectID <> "SpreadsheetCell" Then
-                        dgrow.Cells(1).Value = .objectTAG
+                        If form.Collections.ObjectCollection.ContainsKey(.objectID) Then
+                            dgrow.Cells(1).Value = form.Collections.ObjectCollection(.objectID).GraphicObject.Tag
+                            dgrow.Cells(2).Value = DWSIM.App.GetPropertyName(.propID)
+                        End If
                     Else
                         dgrow.Cells(1).Value = DWSIM.App.GetLocalString("SpreadsheetCell")
+                        dgrow.Cells(2).Value = DWSIM.App.GetPropertyName(.propID)
                     End If
-                    dgrow.Cells(2).Value = DWSIM.App.GetPropertyName(.propID)
                     dgrow.Cells(3).Value = .unit
                 End With
             Next
@@ -304,11 +313,14 @@ Public Class FormSensAnalysis
                     dgrow.Cells(0).Value = .id
                     dgrow.Cells(1).Value = .name
                     If .objectID <> "SpreadsheetCell" Then
-                        dgrow.Cells(2).Value = .objectTAG
+                        If form.Collections.ObjectCollection.ContainsKey(.objectID) Then
+                            dgrow.Cells(2).Value = form.Collections.ObjectCollection(.objectID).GraphicObject.Tag
+                            dgrow.Cells(3).Value = DWSIM.App.GetPropertyName(.propID)
+                        End If
                     Else
                         dgrow.Cells(2).Value = DWSIM.App.GetLocalString("SpreadsheetCell")
+                        dgrow.Cells(3).Value = DWSIM.App.GetPropertyName(.propID)
                     End If
-                    dgrow.Cells(3).Value = DWSIM.App.GetPropertyName(.propID)
                     dgrow.Cells(4).Value = cv.ConverterDoSI(.unit, .currentvalue)
                     dgrow.Cells(5).Value = .unit
                 End With
