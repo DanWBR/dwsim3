@@ -262,6 +262,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     problem.AddOption("mu_strategy", "adaptive")
                     problem.AddOption("hessian_approximation", "limited-memory")
                     problem.AddOption("print_level", 5)
+                    problem.SetIntermediateCallback(AddressOf intermediate)
                     'solve the problem 
                     status = problem.SolveProblem(initval2, obj, Nothing, Nothing, Nothing, Nothing)
                 End Using
@@ -271,7 +272,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 CE = CheckEquilibrium()
                 MB = CheckMassBalance()
 
-                If status = IpoptReturnCode.Solve_Succeeded Or status = IpoptReturnCode.Solved_To_Acceptable_Level Then
+                If status = IpoptReturnCode.Solve_Succeeded Or status = IpoptReturnCode.Solved_To_Acceptable_Level Or status = IpoptReturnCode.User_Requested_Stop Then
                     WriteDebugInfo("PT Flash [Electrolyte]: Converged in " & ecount & " iterations. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status) & ". Time taken: " & dt.TotalMilliseconds & " ms")
                 ElseIf DirectCast(CE(0), Double()).Sum < Tolerance And MB < etol Then
                     form.WriteToLog("PT Flash [Electrolyte]: Error while solving the problem, but mass balance and chemical equilibrium are satisfied within tolerance. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status), Color.DarkOrange, FormClasses.TipoAviso.Aviso)
@@ -504,6 +505,7 @@ out:        'return flash calculation results.
                     'problem.AddOption("mehrotra_algorithm", "no")
                     problem.AddOption("hessian_approximation", "limited-memory")
                     problem.AddOption("print_level", 5)
+                    problem.SetIntermediateCallback(AddressOf intermediate)
                     'solve the problem 
                     status = problem.SolveProblem(initval2, obj, Nothing, Nothing, Nothing, Nothing)
                 End Using
@@ -513,7 +515,7 @@ out:        'return flash calculation results.
                 CE = CheckEquilibrium()
                 MB = CheckMassBalance() ^ 2
 
-                If status = IpoptReturnCode.Solve_Succeeded Or status = IpoptReturnCode.Solved_To_Acceptable_Level Then
+                If status = IpoptReturnCode.Solve_Succeeded Or status = IpoptReturnCode.Solved_To_Acceptable_Level Or status = IpoptReturnCode.User_Requested_Stop Then
                     WriteDebugInfo("PH Flash [Electrolyte]: Converged in " & ecount & " iterations. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status) & ". Time taken: " & dt.TotalMilliseconds & " ms")
                 ElseIf DirectCast(CE(0), Double()).Sum < Tolerance And MB < etol Then
                     form.WriteToLog("PH Flash [Electrolyte]: Error while solving the problem, but mass balance and chemical equilibrium are satisfied within tolerance. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status), Color.DarkOrange, FormClasses.TipoAviso.Aviso)
@@ -824,8 +826,6 @@ out:        'return flash calculation results.
                 If Vxs(i) <> 0.0# Then Gs += Vxs(i) * S * Log(fcs(i) * Vxs(i))
             Next
 
-            ecount += 1
-
             Gm = Gv + Gl + Gs
 
             Rx = DirectCast(CheckEquilibrium()(0), Double()).Sum
@@ -943,8 +943,6 @@ out:        'return flash calculation results.
                 If Vxl(i) <> 0.0# Then Gl += Vxl(i) * L * Log(fcl(i) * Vxl(i))
                 If Vxs(i) <> 0.0# Then Gs += Vxs(i) * S * Log(fcs(i) * Vxs(i))
             Next
-
-            ecount += 1
 
             Gm = Gv + Gl + Gs
 
@@ -1205,7 +1203,8 @@ out:        'return flash calculation results.
                                      ByVal d_norm As Double, ByVal regularization_size As Double, ByVal alpha_du As Double, _
                                      ByVal alpha_pr As Double, ByVal ls_trials As Integer) As Boolean
 
-            Return True
+            ecount += 1
+            If iter_count > 10 And d_norm ^ 2 < Tolerance Then Return False Else Return True
 
         End Function
 
