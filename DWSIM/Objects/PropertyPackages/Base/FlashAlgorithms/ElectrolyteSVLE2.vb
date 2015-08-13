@@ -519,7 +519,7 @@ out:        'return flash calculation results.
                     status = problem.SolveProblem(initval2, obj, Nothing, Nothing, Nothing, Nothing)
                 End Using
 
-                'FunctionValueH(initval2)
+                FunctionValueH(initval2)
 
                 CE = CheckEquilibrium()
                 MB = CheckMassBalance() ^ 2
@@ -527,15 +527,15 @@ out:        'return flash calculation results.
                 Select Case status
                     Case IpoptReturnCode.Solve_Succeeded, IpoptReturnCode.Solved_To_Acceptable_Level, IpoptReturnCode.User_Requested_Stop
                         If DirectCast(CE(0), Double()).Sum < Tolerance And MB < etol Then
-                            WriteDebugInfo("PT Flash [Electrolyte]: Converged in " & ecount & " iterations. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status) & ". Time taken: " & dt.TotalMilliseconds & " ms")
+                            WriteDebugInfo("PH Flash [Electrolyte]: Converged in " & ecount & " iterations. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status) & ". Time taken: " & dt.TotalMilliseconds & " ms")
                         Else
-                            Throw New Exception("PT Flash [Electrolyte]: Unable to solve - mass balance (" & MB.ToString & ") and/or chemical equilibrium (" & DirectCast(CE(0), Double()).Sum.ToString & ") not satisfied within tolerance")
+                            Throw New Exception("PH Flash [Electrolyte]: Unable to solve - mass balance (" & MB.ToString & ") and/or chemical equilibrium (" & DirectCast(CE(0), Double()).Sum.ToString & ") not satisfied within tolerance")
                         End If
                     Case IpoptReturnCode.Maximum_Iterations_Exceeded, IpoptReturnCode.Restoration_Failed
                         If DirectCast(CE(0), Double()).Sum < Tolerance And MB < etol Then
-                            form.WriteToLog("PT Flash [Electrolyte]: An error was found while solving the problem, but mass balance and chemical equilibrium are satisfied within tolerance. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status), Color.DarkOrange, FormClasses.TipoAviso.Aviso)
+                            form.WriteToLog("PH Flash [Electrolyte]: An error was found while solving the problem, but mass balance and chemical equilibrium are satisfied within tolerance. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status), Color.DarkOrange, FormClasses.TipoAviso.Aviso)
                         Else
-                            Throw New Exception("PT Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status) & ", mass balance (" & MB.ToString & ") and/or chemical equilibrium (" & DirectCast(CE(0), Double()).Sum.ToString & ") not satisfied within tolerance")
+                            Throw New Exception("PH Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status) & ", mass balance (" & MB.ToString & ") and/or chemical equilibrium (" & DirectCast(CE(0), Double()).Sum.ToString & ") not satisfied within tolerance")
                         End If
                     Case Else
                         Throw New Exception("PT Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status) & ", mass balance (" & MB.ToString & ") and/or chemical equilibrium (" & DirectCast(CE(0), Double()).Sum.ToString & ") not satisfied within tolerance")
@@ -1226,7 +1226,8 @@ out:        'return flash calculation results.
                                      ByVal alpha_pr As Double, ByVal ls_trials As Integer) As Boolean
 
             ecount += 1
-            If iter_count > 10 And d_norm < Tolerance Then Return False Else Return True
+            'If iter_count > 100 And d_norm < 0.00000001 Then Return False Else Return True
+            Return True
 
         End Function
 
