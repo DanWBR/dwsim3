@@ -290,7 +290,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 MB = CheckMassBalance() ^ 2
 
                 Select Case status
-                    Case IpoptReturnCode.Solve_Succeeded, IpoptReturnCode.Solved_To_Acceptable_Level, IpoptReturnCode.User_Requested_Stop
+                    Case IpoptReturnCode.Solve_Succeeded, IpoptReturnCode.Solved_To_Acceptable_Level, IpoptReturnCode.User_Requested_Stop,
+                        IpoptReturnCode.Search_Direction_Becomes_Too_Small
                         If DirectCast(CE(0), Double()).Sum < Tolerance And MB < Tolerance Then
                             WriteDebugInfo("PT Flash [Electrolyte]: Converged in " & ecount & " iterations. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status) & ". Time taken: " & dt.TotalMilliseconds & " ms")
                         Else
@@ -303,9 +304,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                             Throw New Exception("PT Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status) & ", mass balance (" & MB.ToString & ") and/or chemical equilibrium (" & DirectCast(CE(0), Double()).Sum.ToString & ") not satisfied within tolerance")
                         End If
                     Case IpoptReturnCode.Invalid_Option
-                        Throw New Exception("PT Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status) & ", IPOPT linear solver option invalid (library not found)")
+                        Throw New Exception("PT Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status) & ", IPOPT linear solver option invalid.")
                     Case Else
-                        Throw New Exception("PT Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status) & ", mass balance (" & MB.ToString & ") and/or chemical equilibrium (" & DirectCast(CE(0), Double()).Sum.ToString & ") not satisfied within tolerance")
+                        Throw New Exception("PT Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status))
                 End Select
 
                 For i = 0 To n
@@ -551,22 +552,23 @@ out:        'return flash calculation results.
                 MB = CheckMassBalance() ^ 2
 
                 Select Case status
-                    Case IpoptReturnCode.Solve_Succeeded, IpoptReturnCode.Solved_To_Acceptable_Level, IpoptReturnCode.User_Requested_Stop
+                    Case IpoptReturnCode.Solve_Succeeded, IpoptReturnCode.Solved_To_Acceptable_Level, IpoptReturnCode.User_Requested_Stop,
+                        IpoptReturnCode.Search_Direction_Becomes_Too_Small
                         If DirectCast(CE(0), Double()).Sum < Tolerance And MB < Tolerance Then
-                            WriteDebugInfo("PH Flash [Electrolyte]: Converged in " & ecount & " iterations. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status) & ". Time taken: " & dt.TotalMilliseconds & " ms")
+                            WriteDebugInfo("PT Flash [Electrolyte]: Converged in " & ecount & " iterations. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status) & ". Time taken: " & dt.TotalMilliseconds & " ms")
                         Else
-                            Throw New Exception("PH Flash [Electrolyte]: Unable to solve - mass balance (" & MB.ToString & ") and/or chemical equilibrium (" & DirectCast(CE(0), Double()).Sum.ToString & ") not satisfied within tolerance")
+                            Throw New Exception("PT Flash [Electrolyte]: Unable to solve - mass balance (" & MB.ToString & ") and/or chemical equilibrium (" & DirectCast(CE(0), Double()).Sum.ToString & ") not satisfied within tolerance")
                         End If
                     Case IpoptReturnCode.Maximum_Iterations_Exceeded, IpoptReturnCode.Restoration_Failed
                         If DirectCast(CE(0), Double()).Sum < Tolerance And MB < Tolerance Then
-                            form.WriteToLog("PH Flash [Electrolyte]: An error was found while solving the problem, but mass balance and chemical equilibrium are satisfied within tolerance. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status), Color.DarkOrange, FormClasses.TipoAviso.Aviso)
+                            form.WriteToLog("PT Flash [Electrolyte]: An error was found while solving the problem, but mass balance and chemical equilibrium are satisfied within tolerance. Status: " & [Enum].GetName(GetType(IpoptReturnCode), status), Color.DarkOrange, FormClasses.TipoAviso.Aviso)
                         Else
-                            Throw New Exception("PH Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status) & ", mass balance (" & MB.ToString & ") and/or chemical equilibrium (" & DirectCast(CE(0), Double()).Sum.ToString & ") not satisfied within tolerance")
+                            Throw New Exception("PT Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status) & ", mass balance (" & MB.ToString & ") and/or chemical equilibrium (" & DirectCast(CE(0), Double()).Sum.ToString & ") not satisfied within tolerance")
                         End If
                     Case IpoptReturnCode.Invalid_Option
-                        Throw New Exception("PT Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status) & ", IPOPT linear solver option invalid (library not found)")
+                        Throw New Exception("PT Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status) & ", IPOPT linear solver option invalid.")
                     Case Else
-                        Throw New Exception("PT Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status) & ", mass balance (" & MB.ToString & ") and/or chemical equilibrium (" & DirectCast(CE(0), Double()).Sum.ToString & ") not satisfied within tolerance")
+                        Throw New Exception("PT Flash [Electrolyte]: Unable to solve - " & [Enum].GetName(GetType(IpoptReturnCode), status))
                 End Select
 
                 For i = 0 To n
