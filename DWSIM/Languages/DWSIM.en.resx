@@ -5140,4 +5140,22 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="SpreadsheetCell" xml:space="preserve">
     <value>Spreadsheet Cell</value>
   </data>
+  <data name="HXFFouling" xml:space="preserve">
+    <value>Thermal resistance - Fouling</value>
+  </data>
+  <data name="HXFPipe" xml:space="preserve">
+    <value>Thermal resistance - heat conductivity pipe</value>
+  </data>
+  <data name="HXFShell" xml:space="preserve">
+    <value>Thermal resistance - Fluid shell side</value>
+  </data>
+  <data name="HXFTube" xml:space="preserve">
+    <value>Thermal resistance - Fluid tube side</value>
+  </data>
+  <data name="HXReShell" xml:space="preserve">
+    <value>Reynolds number shell side</value>
+  </data>
+  <data name="HXReTube" xml:space="preserve">
+    <value>Reynolds number tube side</value>
+  </data>
 </root>

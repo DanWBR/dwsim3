@@ -5134,4 +5134,22 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
   <data name="SolidCp" xml:space="preserve">
     <value>Capacidad Calorífica de Solido</value>
   </data>
+  <data name="HXFFouling" xml:space="preserve">
+    <value>Resistencia termica - Ensuciamiento</value>
+  </data>
+  <data name="HXFPipe" xml:space="preserve">
+    <value>Resistencia termica - Conductividad Térmica Tubos</value>
+  </data>
+  <data name="HXFShell" xml:space="preserve">
+    <value>Resistencia termica - Fluido Toraza</value>
+  </data>
+  <data name="HXFTube" xml:space="preserve">
+    <value>Resistencia termica - Fluido Tubos</value>
+  </data>
+  <data name="HXReShell" xml:space="preserve">
+    <value>Número de Reynolds coraza</value>
+  </data>
+  <data name="HXReTube" xml:space="preserve">
+    <value>Número de Reynolds tubos</value>
+  </data>
 </root>

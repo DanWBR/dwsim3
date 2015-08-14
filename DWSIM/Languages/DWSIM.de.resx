@@ -5124,4 +5124,22 @@ Die erhaltenen Daten werden hauptsächlich für die Berechnung von VLE-Daten emp
   <data name="SpreadsheetCell" xml:space="preserve">
     <value>Kalkulationstabellenzelle</value>
   </data>
+  <data name="HXFFouling" xml:space="preserve">
+    <value>Wärmeübergangswiderstand - Verschmutzungen</value>
+  </data>
+  <data name="HXFPipe" xml:space="preserve">
+    <value>Wärmeübergangswiderstand - Wärmeleitung Rohr</value>
+  </data>
+  <data name="HXFShell" xml:space="preserve">
+    <value>Wärmeübergangswiderstand - Fluid Mantelseite</value>
+  </data>
+  <data name="HXFTube" xml:space="preserve">
+    <value>Wärmeübergangswiderstand - Fluid Rohrseite</value>
+  </data>
+  <data name="HXReShell" xml:space="preserve">
+    <value>Reynolds-Zahl Mantel</value>
+  </data>
+  <data name="HXReTube" xml:space="preserve">
+    <value>Reynolds-Zahl Rohr</value>
+  </data>
 </root>

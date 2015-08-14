@@ -335,6 +335,21 @@
     <value>Heat Load</value>
     <comment>0</comment>
   </data>
+  <data name="PROP_HX_20" xml:space="preserve">
+    <value>[Shell and Tube] Resistance heat transfer pipes</value>
+  </data>
+  <data name="PROP_HX_21" xml:space="preserve">
+    <value>[Shell and Tube] Resistance thermal conductivity pipes</value>
+  </data>
+  <data name="PROP_HX_22" xml:space="preserve">
+    <value>[Shell and Tube] Resistance heat transfer shell</value>
+  </data>
+  <data name="PROP_HX_23" xml:space="preserve">
+    <value>[Shell and Tube] Reynolds number shell</value>
+  </data>
+  <data name="PROP_HX_24" xml:space="preserve">
+    <value>[Shell and Tube] Reynolds number tubes</value>
+  </data>
   <data name="PROP_HX_3" xml:space="preserve">
     <value>Cold fluid outlet temperature</value>
   </data>

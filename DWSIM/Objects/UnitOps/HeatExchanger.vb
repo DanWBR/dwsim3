@@ -878,13 +878,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             Ur = f1 + f3 + f5
                             Ur = 1 / Ur
                             Rf = 1 / Ud - 1 / Ur
-                            Me.STProperties.OverallFoulingFactor = Rf
+                            STProperties.OverallFoulingFactor = Rf
                             U_ant = U
                             U = 1 / Ur + Rf
                             U = 1 / U
                         Else
                             U_ant = U
                             U = f1 + f2 + f3 + f4 + f5
+                            STProperties.OverallFoulingFactor = f2 + f4
                             U = 1 / U
                             Q = U * A * F * LMTD / 1000
                             DeltaHc = Q / Wc
@@ -902,6 +903,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             Th2 = tmp(2)
                             Th2 = 0.1 * Th2 + 0.9 * Th2_ant
                         End If
+                        STProperties.Ft = f1 'tube side
+                        STProperties.Fc = f3 'heat conductivity pipe
+                        STProperties.Fs = f5 'shell side
+                        STProperties.Ff = STProperties.OverallFoulingFactor
+                        STProperties.ReS = Res 'Reynolds number shell side
+                        STProperties.ReT = Ret 'Reynolds number tube side
+
                         If STProperties.Shell_Fluid = 0 Then
                             Pc2 = Pc1 - dps
                             Ph2 = Ph1 - dpt
@@ -1298,11 +1306,26 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             AValue = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.ColdSidePressureDrop), FlowSheet.Options.NumberFormat)
                             .Item.Add(FT(DWSIM.App.GetLocalString("HXColdSidePressureDrop"), su.spmp_deltaP), AValue, True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("HXColdSidePressureDrop"), True)
                             AValue = Format(Me.LMTD_F, FlowSheet.Options.NumberFormat)
-                            .Item.Add("F", AValue, True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("HXColdSidePressureDrop"), True)
+                            .Item.Add("F", AValue, True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("HXLMTDCorr"), True)
                     End Select
 
                     AValue = Format(Conversor.ConverterDoSI(su.spmp_deltaT, Me.LMTD), FlowSheet.Options.NumberFormat)
                     .Item.Add(FT(DWSIM.App.GetLocalString("HXLMTD"), su.spmp_deltaT), AValue, True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("HXLMTDDesc"), True)
+
+                    If CalcMode = HeatExchangerCalcMode.ShellandTube_CalcFoulingFactor Or CalcMode = HeatExchangerCalcMode.ShellandTube_Rating Then
+                        AValue = Format(Me.STProperties.ReS, FlowSheet.Options.NumberFormat)
+                        .Item.Add("Re Shell", AValue, True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("HXReShell"), True)
+                        AValue = Format(Me.STProperties.ReT, FlowSheet.Options.NumberFormat)
+                        .Item.Add("Re Tube", AValue, True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("HXReTube"), True)
+                        AValue = Format(Me.STProperties.Fs, FlowSheet.Options.NumberFormat)
+                        .Item.Add(FT("F Shell", su.foulingfactor), AValue, True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("HXFShell"), True)
+                        AValue = Format(Me.STProperties.Ft, FlowSheet.Options.NumberFormat)
+                        .Item.Add(FT("F Tube", su.foulingfactor), AValue, True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("HXFTube"), True)
+                        AValue = Format(Me.STProperties.Fc, FlowSheet.Options.NumberFormat)
+                        .Item.Add(FT("F Pipe", su.foulingfactor), AValue, True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("HXFPipe"), True)
+                        AValue = Format(Me.STProperties.Ff, FlowSheet.Options.NumberFormat)
+                        .Item.Add(FT("F Fouling", su.foulingfactor), AValue, True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("HXFFouling"), True)
+                    End If
 
                 End If
 
@@ -1363,10 +1386,19 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     value = Me.LMTD_F
                 Case 19
                     value = cv.ConverterDoSI(su.spmp_deltaT, Me.LMTD)
+                Case 20
+                    value = cv.ConverterDoSI(su.foulingfactor, Me.STProperties.Ft)
+                Case 21
+                    value = cv.ConverterDoSI(su.foulingfactor, Me.STProperties.Fc)
+                Case 22
+                    value = cv.ConverterDoSI(su.foulingfactor, Me.STProperties.Fs)
+                Case 23
+                    value = cv.ConverterDoSI("", Me.STProperties.ReS)
+                Case 24
+                    value = cv.ConverterDoSI("", Me.STProperties.ReT)
             End Select
 
             Return value
-
         End Function
 
         Public Overloads Overrides Function GetProperties(ByVal proptype As SimulationObjects_BaseClass.PropertyType) As String()
@@ -1377,11 +1409,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     For i = 2 To 4
                         proplist.Add("PROP_HX_" + CStr(i))
                     Next
-                    For i = 17 To 19
+                    For i = 17 To 24
                         proplist.Add("PROP_HX_" + CStr(i))
                     Next
                 Case PropertyType.RW
-                    For i = 0 To 19
+                    For i = 0 To 24
                         proplist.Add("PROP_HX_" + CStr(i))
                     Next
                 Case PropertyType.WR
@@ -1389,7 +1421,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         proplist.Add("PROP_HX_" + CStr(i))
                     Next
                 Case PropertyType.ALL
-                    For i = 0 To 19
+                    For i = 0 To 24
                         proplist.Add("PROP_HX_" + CStr(i))
                     Next
             End Select
@@ -1500,6 +1532,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     value = ""
                 Case 19
                     value = su.spmp_deltaT
+                Case 20, 21, 22
+                    value = su.foulingfactor
+                Case 23, 24
+                    value = ""
             End Select
 
             Return value
@@ -1561,6 +1597,10 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.HeatExchanger
         Public Tube_ThermalConductivity As Double = 70.0#
         'overall fouling factor, used only in design mode (as a calculation result)
         Public OverallFoulingFactor = 0.0#
+        'partial heat exchange resistances (tube, conduction, shell, fouling), only as calculation result
+        Public Ft, Fc, Fs, Ff As Double
+        'Reynold numbers, only as calculation results
+        Public ReT, ReS As Double
 
         Public Overrides Function ToString() As String
             Return DWSIM.App.GetLocalString("Cliqueparaeditar")

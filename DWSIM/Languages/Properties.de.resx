@@ -298,38 +298,53 @@
     <comment>1</comment>
   </data>
   <data name="PROP_HX_10" xml:space="preserve">
-    <value>[Shell and Tube] Internal Tube Diameter</value>
+    <value>[Rohrbündel WT] Interner Rohrdurchmesser</value>
   </data>
   <data name="PROP_HX_11" xml:space="preserve">
-    <value>[Shell and Tube] External Tube Diameter</value>
+    <value>[Rohrbündel WT] Externer Rohrdurchmesser</value>
   </data>
   <data name="PROP_HX_12" xml:space="preserve">
-    <value>[Shell and Tube] Tube Length</value>
+    <value>[Rohrbündel WT] Rohrlänge</value>
   </data>
   <data name="PROP_HX_13" xml:space="preserve">
-    <value>[Shell and Tube] Tube Fouling factor</value>
+    <value>[Rohrbündel WT] Verschmutzungsfaktor</value>
   </data>
   <data name="PROP_HX_14" xml:space="preserve">
-    <value>[Shell and Tube] Tube Passes Per Shell</value>
+    <value>[Rohrbündel WT] Rohrzüge je Mantel</value>
   </data>
   <data name="PROP_HX_15" xml:space="preserve">
-    <value>[Shell and Tube] Number of Tubes</value>
+    <value>[Rohrbündel WT] anzahl Rohre</value>
   </data>
   <data name="PROP_HX_16" xml:space="preserve">
-    <value>[Shell and Tube] Tube Pitch</value>
+    <value>[Rohrbündel WT] Achsabstand Rohre</value>
   </data>
   <data name="PROP_HX_17" xml:space="preserve">
-    <value>[Shell and Tube] Fouling Factor (Design)</value>
+    <value>[Rohrbündel WT] Verschutzungsfaktor (Design)</value>
   </data>
   <data name="PROP_HX_18" xml:space="preserve">
-    <value>[Shell and Tube] LMTD Correction Factor (F)</value>
+    <value>[Rohrbündel WT] LMTD Korrekturfaktor (F)</value>
   </data>
   <data name="PROP_HX_19" xml:space="preserve">
     <value>Log mittl. Temperaturdifferenz LMTD</value>
   </data>
   <data name="PROP_HX_2" xml:space="preserve">
-    <value>Wärmezufuhr</value>
+    <value>Wärmeleistung</value>
     <comment>0</comment>
+  </data>
+  <data name="PROP_HX_20" xml:space="preserve">
+    <value>[Rohrbündel WT] Wärmeübergangswiderstand Rohre</value>
+  </data>
+  <data name="PROP_HX_21" xml:space="preserve">
+    <value>[Rohrbündel WT] Wärmedurchgangswiderstand Rohre</value>
+  </data>
+  <data name="PROP_HX_22" xml:space="preserve">
+    <value>[Rohrbündel WT] Wärmeüberganswiderstand Mantel</value>
+  </data>
+  <data name="PROP_HX_23" xml:space="preserve">
+    <value>[Rohrbündel WT] Reynolds-Zahl Mantel</value>
+  </data>
+  <data name="PROP_HX_24" xml:space="preserve">
+    <value>[Rohrbündel WT] Reynolds-Zahl Rohre</value>
   </data>
   <data name="PROP_HX_3" xml:space="preserve">
     <value>Austrittstemperatur des kalten Mediums</value>
@@ -338,19 +353,19 @@
     <value>Austrittstemperatur des heißen Mediums</value>
   </data>
   <data name="PROP_HX_5" xml:space="preserve">
-    <value>[Shell and Tube] Internal Shell Diameter</value>
+    <value>[Rohrbündel WT] Interner Manteldurchmesser</value>
   </data>
   <data name="PROP_HX_6" xml:space="preserve">
-    <value>[Shell and Tube] Shell Fouling Factor</value>
+    <value>[Rohrbündel WT] Mantel Fouling Factor</value>
   </data>
   <data name="PROP_HX_7" xml:space="preserve">
-    <value>[Shell and Tube] Baffle Cut</value>
+    <value>[Rohrbündel WT] Öffnung Umlenkung</value>
   </data>
   <data name="PROP_HX_8" xml:space="preserve">
-    <value>[Shell and Tube] Shells in Series</value>
+    <value>[Rohrbündel WT] Mäntel in Reihe</value>
   </data>
   <data name="PROP_HX_9" xml:space="preserve">
-    <value>[Shell and Tube] Baffle Spacing</value>
+    <value>[Rohrbündel WT] Abstand Umlenkungen</value>
   </data>
   <data name="PROP_MS_0" xml:space="preserve">
     <value>Temperatur</value>

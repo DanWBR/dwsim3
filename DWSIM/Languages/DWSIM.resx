@@ -5146,4 +5146,25 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="Dica" xml:space="preserve">
     <value>Dica</value>
   </data>
+  <data name="HXFFouling" xml:space="preserve">
+    <value>Resistência à transferência de calor devido à incrustação</value>
+  </data>
+  <data name="HXFPipe" xml:space="preserve">
+    <value>Resistência à transferência de calor devido à condutividade térmica de tubo</value>
+  </data>
+  <data name="HXFShell" xml:space="preserve">
+    <value>Resistência à transferência de calor devido ao fluido de casco</value>
+  </data>
+  <data name="HXFTube" xml:space="preserve">
+    <value>Resistência à transferência de calor devido ao fluido de tubo</value>
+  </data>
+  <data name="HXLMTDCorr" xml:space="preserve">
+    <value>Fator de Correção de média Logarítmica da Diferença de Temperaturas (MLDT)</value>
+  </data>
+  <data name="HXReShell" xml:space="preserve">
+    <value>Número de Reynolds de casco</value>
+  </data>
+  <data name="HXReTube" xml:space="preserve">
+    <value>Número de Reynolds de tubo</value>
+  </data>
 </root>

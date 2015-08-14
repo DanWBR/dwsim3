@@ -1201,4 +1201,19 @@
   <data name="PROP_HX_19" xml:space="preserve">
     <value>Logarithmic temperatura difference MLDT</value>
   </data>
+  <data name="PROP_HX_20" xml:space="preserve">
+    <value>[Casco e Tubo] Resistência ao fluido de tubo</value>
+  </data>
+  <data name="PROP_HX_21" xml:space="preserve">
+    <value>[Casco e Tubo] Resistência à condutividade térmica</value>
+  </data>
+  <data name="PROP_HX_22" xml:space="preserve">
+    <value>[Casco e Tubo] Resistência ao fluido de casco</value>
+  </data>
+  <data name="PROP_HX_23" xml:space="preserve">
+    <value>[Casco e Tubo] Número de Reynolds de casco</value>
+  </data>
+  <data name="PROP_HX_24" xml:space="preserve">
+    <value>[Casco e Tubo] Número de Reynolds de tubo</value>
+  </data>
 </root>
