@@ -989,6 +989,21 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim xel3 As XElement = (From xelv As XElement In data Where xelv.Name = "ElectrolyteFlash_MaximumIterations").SingleOrDefault
             If Not xel3 Is Nothing Then Me.ElectrolyteFlash.MaximumIterations = xel3.Value
 
+            xel = (From xelv As XElement In data Where xelv.Name = "ElectrolyteFlash_NumericalDerivativePerturbation").SingleOrDefault
+            If Not xel Is Nothing Then Me.ElectrolyteFlash.NumericalDerivativePerturbation = xel.Value
+
+            xel = (From xelv As XElement In data Where xelv.Name = "ElectrolyteFlash_ObjFuncGibbsWeight").SingleOrDefault
+            If Not xel Is Nothing Then Me.ElectrolyteFlash.ObjFuncGibbsWeight = xel.Value
+
+            xel = (From xelv As XElement In data Where xelv.Name = "ElectrolyteFlash_ObjFuncChemEqWeight").SingleOrDefault
+            If Not xel Is Nothing Then Me.ElectrolyteFlash.ObjFuncChemEqWeight = xel.Value
+
+            xel = (From xelv As XElement In data Where xelv.Name = "ElectrolyteFlash_ObjFuncMassBalWeight").SingleOrDefault
+            If Not xel Is Nothing Then Me.ElectrolyteFlash.ObjFuncMassBalWeight = xel.Value
+
+            xel = (From xelv As XElement In data Where xelv.Name = "ElectrolyteFlash_LinearSolver").SingleOrDefault
+            If Not xel Is Nothing Then Me.ElectrolyteFlash.LinearSolver = xel.Value
+
         End Function
 
         Public Overrides Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement)
@@ -1001,6 +1016,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 .Add(New XElement("ElectrolyteFlash_CalculateChemicalEquilibria", Me.ElectrolyteFlash.CalculateChemicalEquilibria))
                 .Add(New XElement("ElectrolyteFlash_Tolerance", Me.ElectrolyteFlash.Tolerance))
                 .Add(New XElement("ElectrolyteFlash_MaximumIterations", Me.ElectrolyteFlash.MaximumIterations))
+                .Add(New XElement("ElectrolyteFlash_NumericalDerivativePerturbation", Me.ElectrolyteFlash.NumericalDerivativePerturbation))
+                .Add(New XElement("ElectrolyteFlash_ObjFuncGibbsWeight", Me.ElectrolyteFlash.ObjFuncGibbsWeight))
+                .Add(New XElement("ElectrolyteFlash_ObjFuncChemEqWeight", Me.ElectrolyteFlash.ObjFuncChemEqWeight))
+                .Add(New XElement("ElectrolyteFlash_ObjFuncMassBalWeight", Me.ElectrolyteFlash.ObjFuncMassBalWeight))
+                .Add(New XElement("ElectrolyteFlash_LinearSolver", Me.ElectrolyteFlash.LinearSolver))
             End With
 
             Return elements
