@@ -4899,7 +4899,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Eintrittsstrom 9</value>
   </data>
   <data name="Correntedesaida10" xml:space="preserve">
-    <value>Eintrittsstrom 10</value>
+    <value>Austrittsstrom 10</value>
   </data>
   <data name="Correntedesaida5" xml:space="preserve">
     <value>Austrittsstrom 5</value>

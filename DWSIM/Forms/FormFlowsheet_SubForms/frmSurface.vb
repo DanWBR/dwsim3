@@ -2518,7 +2518,7 @@ Public Class frmSurface
 
             Case TipoObjeto.Vessel
 
-                Dim myVessel As New VesselGraphic(mpx, mpy, 50, 68, 0)
+                Dim myVessel As New VesselGraphic(mpx, mpy, 50, 70, 0)
                 myVessel.LineWidth = 2
                 myVessel.Fill = True
                 myVessel.FillColor = fillclr
