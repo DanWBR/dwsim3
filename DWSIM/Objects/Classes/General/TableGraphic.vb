@@ -1368,28 +1368,6 @@ Namespace DWSIM.GraphicObjects
 
         End Sub
 
-        Public Sub DrawRoundRect(ByVal g As Graphics, ByVal p As Pen, ByVal x As Integer, ByVal y As Integer, ByVal width As Integer, ByVal height As Integer, ByVal radius As Integer, ByVal myBrush As Brush)
-
-            Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
-
-            gp.AddLine(x + radius, y, x + width - radius, y)
-            gp.AddArc(x + width - radius, y, radius, radius, 270, 90)
-            gp.AddLine(x + width, y + radius, x + width, y + height - radius)
-            gp.AddArc(x + width - radius, y + height - radius, radius, radius, 0, 90)
-            gp.AddLine(x + width - radius, y + height, x + radius, y + height)
-            gp.AddArc(x, y + height - radius, radius, radius, 90, 90)
-            gp.AddLine(x, y + height - radius, x, y + radius)
-            gp.AddArc(x, y, radius, radius, 180, 90)
-
-            gp.CloseFigure()
-
-            g.DrawPath(p, gp)
-            g.FillPath(myBrush, gp)
-
-            gp.Dispose()
-
-        End Sub
-
     End Class
 
     <Serializable()> Public Class SpreadsheetTableGraphic
