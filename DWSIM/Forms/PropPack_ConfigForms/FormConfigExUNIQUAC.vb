@@ -199,7 +199,7 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(id1) Then
     Private Sub tbEps_TextChanged(sender As Object, e As EventArgs) Handles tbEps.TextChanged
         If Loaded Then
             Dim ppu As DWSIM.SimulationObjects.PropertyPackages.ExUNIQUACPropertyPackage = _pp
-            If Double.TryParse(tbTol.Text, New Double) Then
+            If Double.TryParse(tbEps.Text, New Double) Then
                 tbEps.ForeColor = Color.Blue
                 ppu.ElectrolyteFlash.NumericalDerivativePerturbation = tbEps.Text
             Else
