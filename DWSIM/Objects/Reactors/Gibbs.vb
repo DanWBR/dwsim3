@@ -1022,6 +1022,8 @@ Namespace DWSIM.SimulationObjects.Reactors
                     niter = 0
                     Do
 
+                        tms = ims.Clone()
+
                         fx = Me.FunctionValue2N(x)
                         dfdx = Me.FunctionGradient2N(x)
 
