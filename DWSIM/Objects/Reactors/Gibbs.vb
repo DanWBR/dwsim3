@@ -1030,11 +1030,11 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                         tmpx = x
                         tmpdx = dx
-                        df = 1
+                        df = 1.0#
 
                         'this call to the brent solver calculates the damping factor which minimizes the error (fval).
 
-                        fval = brentsolver.brentoptimize(0.3, 1, 0.0001, df)
+                        fval = brentsolver.brentoptimize(0.01, 2.0#, 0.0001, df)
 
                         Dim multipl As Double = 1.0#
                         'For i = 0 To c + e + 1
@@ -1053,6 +1053,8 @@ Namespace DWSIM.SimulationObjects.Reactors
                         If AbsSum(dx) = 0.0# Then
                             Throw New Exception("No solution found - reached a stationary point of the objective function (singular gradient matrix).")
                         End If
+
+                        If Double.IsNaN(Sum(fx)) Then Throw New Exception("Calculation error")
 
                     Loop Until AbsSum(fx) < 0.001 Or niter > 249
 

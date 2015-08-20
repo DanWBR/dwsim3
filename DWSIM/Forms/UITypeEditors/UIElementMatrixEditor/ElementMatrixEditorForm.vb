@@ -48,7 +48,11 @@ Public Class ElementMatrixEditorForm
             For i = 0 To e_
                 .Rows(i).Cells(0).Value = gr.Elements(i)
                 For j = 0 To c
-                    .Rows(i).Cells(j + 1).Value = elmat(i, j)
+                    Try
+                        .Rows(i).Cells(j + 1).Value = elmat(i, j)
+                    Catch ex As Exception
+
+                    End Try
                 Next
             Next
         End With
