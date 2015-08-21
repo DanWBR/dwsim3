@@ -23,19 +23,19 @@ Public Class GibbsInitialEstimatesEditorForm
     Dim loaded As Boolean = False
     Public gr As Reactor_Gibbs
     Public form As FormFlowsheet
-    Public inlet As Streams.MaterialStream
+    Public inlet, outletv, outletl As Streams.MaterialStream
     Dim cv As New DWSIM.SistemasDeUnidades.Conversor
     Dim su As DWSIM.SistemasDeUnidades.Unidades
+    Dim nf As String = ""
 
     Public ie As List(Of Double)
 
     Private Sub GibbsInitialEstimatesEditorForm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        Dim nf As String = form.Options.NumberFormat
+        nf = form.Options.NumberFormat
         su = form.Options.SelectedUnitSystem
 
         Me.grid.Columns(1).HeaderText += " (" & su.spmp_molarflow & ")"
-        Me.grid.Columns(2).HeaderText += " (" & su.spmp_molarflow & ")"
 
         If ie.Count <> gr.ComponentIDs.Count Then
             ie = New List(Of Double)
@@ -46,7 +46,7 @@ Public Class GibbsInitialEstimatesEditorForm
 
         Dim i As Integer = 0
         For Each s As String In gr.ComponentIDs
-            Me.grid.Rows.Add(New Object() {DWSIM.App.GetComponentName(s), Format(cv.ConverterDoSI(su.spmp_molarflow, inlet.Fases(0).Componentes(s).MolarFlow.GetValueOrDefault), nf), Format(cv.ConverterDoSI(su.spmp_molarflow, ie(i)), nf)})
+            Me.grid.Rows.Add(New Object() {DWSIM.App.GetComponentName(s), Format(cv.ConverterDoSI(su.spmp_molarflow, ie(i)), nf)})
             i += 1
         Next
 
@@ -62,7 +62,23 @@ Public Class GibbsInitialEstimatesEditorForm
 
     Private Sub Button4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button4.Click
         For Each r As DataGridViewRow In grid.Rows
-            r.Cells(2).Value = r.Cells(1).Value
+            Dim s As String = gr.ComponentIDs(r.Index)
+            r.Cells(1).Value = Format(cv.ConverterDoSI(su.spmp_molarflow, inlet.Fases(0).Componentes(s).MolarFlow.GetValueOrDefault), nf)
         Next
     End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        For Each r As DataGridViewRow In grid.Rows
+            Dim s As String = gr.ComponentIDs(r.Index)
+            r.Cells(1).Value = Format(cv.ConverterDoSI(su.spmp_molarflow, outletv.Fases(0).Componentes(s).MolarFlow.GetValueOrDefault), nf)
+        Next
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        For Each r As DataGridViewRow In grid.Rows
+            Dim s As String = gr.ComponentIDs(r.Index)
+            r.Cells(1).Value = Format(cv.ConverterDoSI(su.spmp_molarflow, outletl.Fases(0).Componentes(s).MolarFlow.GetValueOrDefault), nf)
+        Next
+    End Sub
+
 End Class

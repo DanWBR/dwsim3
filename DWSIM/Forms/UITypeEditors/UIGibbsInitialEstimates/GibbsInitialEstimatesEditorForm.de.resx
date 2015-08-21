@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -119,7 +119,7 @@
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Button2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>302, 49</value>
+    <value>297, 50</value>
   </data>
   <data name="Button2.Size" type="System.Drawing.Size, System.Drawing">
     <value>154, 23</value>
@@ -128,7 +128,7 @@
     <value>Copy from outlet liquid stream</value>
   </data>
   <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>139, 49</value>
+    <value>134, 50</value>
   </data>
   <data name="Button1.Size" type="System.Drawing.Size, System.Drawing">
     <value>157, 23</value>
@@ -143,7 +143,7 @@
     <value>Enter initial estimates for the FINAL composition of the mixture on the reactor outlet.</value>
   </data>
   <data name="Button4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 49</value>
+    <value>8, 50</value>
   </data>
   <data name="Button4.Size" type="System.Drawing.Size, System.Drawing">
     <value>120, 23</value>
@@ -152,19 +152,19 @@
     <value>Copy from inlet stream</value>
   </data>
   <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>467, 85</value>
+    <value>462, 85</value>
   </data>
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Configuration</value>
   </data>
   <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>467, 239</value>
+    <value>462, 239</value>
   </data>
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Initial Estimates</value>
   </data>
   <data name="grid.Size" type="System.Drawing.Size, System.Drawing">
-    <value>461, 220</value>
+    <value>456, 220</value>
   </data>
   <data name="col1.HeaderText" xml:space="preserve">
     <value>Compound</value>
@@ -173,7 +173,7 @@
     <value>Estimates for Outlet Mole Flows</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>480, 341</value>
+    <value>475, 341</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Initial Estimates</value>

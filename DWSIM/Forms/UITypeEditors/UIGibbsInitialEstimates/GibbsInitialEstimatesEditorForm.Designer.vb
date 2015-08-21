@@ -23,16 +23,16 @@ Partial Class GibbsInitialEstimatesEditorForm
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(GibbsInitialEstimatesEditorForm))
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Button4 = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.grid = New System.Windows.Forms.DataGridView()
         Me.col1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.col2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.col3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -42,10 +42,24 @@ Partial Class GibbsInitialEstimatesEditorForm
         'GroupBox2
         '
         resources.ApplyResources(Me.GroupBox2, "GroupBox2")
+        Me.GroupBox2.Controls.Add(Me.Button2)
+        Me.GroupBox2.Controls.Add(Me.Button1)
         Me.GroupBox2.Controls.Add(Me.Label1)
         Me.GroupBox2.Controls.Add(Me.Button4)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.TabStop = False
+        '
+        'Button2
+        '
+        resources.ApplyResources(Me.Button2, "Button2")
+        Me.Button2.Name = "Button2"
+        Me.Button2.UseVisualStyleBackColor = True
+        '
+        'Button1
+        '
+        resources.ApplyResources(Me.Button1, "Button1")
+        Me.Button1.Name = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
         '
         'Label1
         '
@@ -72,31 +86,22 @@ Partial Class GibbsInitialEstimatesEditorForm
         Me.grid.AllowUserToDeleteRows = False
         Me.grid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.grid.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.col1, Me.col2, Me.col3})
+        Me.grid.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.col1, Me.col3})
         Me.grid.Name = "grid"
         Me.grid.RowHeadersVisible = False
         '
         'col1
         '
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        Me.col1.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        Me.col1.DefaultCellStyle = DataGridViewCellStyle3
         resources.ApplyResources(Me.col1, "col1")
         Me.col1.Name = "col1"
         Me.col1.ReadOnly = True
         '
-        'col2
-        '
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control
-        Me.col2.DefaultCellStyle = DataGridViewCellStyle5
-        resources.ApplyResources(Me.col2, "col2")
-        Me.col2.Name = "col2"
-        Me.col2.ReadOnly = True
-        '
         'col3
         '
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.col3.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.col3.DefaultCellStyle = DataGridViewCellStyle4
         resources.ApplyResources(Me.col3, "col3")
         Me.col3.Name = "col3"
         '
@@ -122,7 +127,8 @@ Partial Class GibbsInitialEstimatesEditorForm
     Public WithEvents Button4 As System.Windows.Forms.Button
     Public WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     Public WithEvents grid As System.Windows.Forms.DataGridView
+    Public WithEvents Button2 As System.Windows.Forms.Button
+    Public WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents col1 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents col2 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents col3 As System.Windows.Forms.DataGridViewTextBoxColumn
 End Class

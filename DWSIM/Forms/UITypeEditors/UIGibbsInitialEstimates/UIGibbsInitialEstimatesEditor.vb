@@ -52,6 +52,12 @@ Namespace DWSIM.Editors.Reactors
                 If selectionControl.gr.GraphicObject.InputConnectors(0).IsAttached Then
                     selectionControl.inlet = form.Collections.CLCS_MaterialStreamCollection(selectionControl.gr.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name)
                 End If
+                If selectionControl.gr.GraphicObject.OutputConnectors(0).IsAttached Then
+                    selectionControl.outletv = form.Collections.CLCS_MaterialStreamCollection(selectionControl.gr.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name)
+                End If
+                If selectionControl.gr.GraphicObject.OutputConnectors(1).IsAttached Then
+                    selectionControl.outletl = form.Collections.CLCS_MaterialStreamCollection(selectionControl.gr.GraphicObject.OutputConnectors(1).AttachedConnector.AttachedTo.Name)
+                End If
 
                 editorService.ShowDialog(selectionControl)
 

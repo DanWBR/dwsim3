@@ -1433,6 +1433,9 @@
     <EmbeddedResource Include="Forms\UITypeEditors\UIFlowsheetUOViewer\FlowsheetUOViewerForm.resx">
       <DependentUpon>FlowsheetUOViewerForm.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UITypeEditors\UIGibbsInitialEstimates\GibbsInitialEstimatesEditorForm.de.resx">
+      <DependentUpon>GibbsInitialEstimatesEditorForm.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\UITypeEditors\UIGibbsInitialEstimates\GibbsInitialEstimatesEditorForm.en.resx">
       <DependentUpon>GibbsInitialEstimatesEditorForm.vb</DependentUpon>
     </EmbeddedResource>

@@ -118,6 +118,24 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="Button2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>371, 49</value>
+  </data>
+  <data name="Button2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>197, 23</value>
+  </data>
+  <data name="Button2.Text" xml:space="preserve">
+    <value>Copiar de Corriente de Salida (Liquido)</value>
+  </data>
+  <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>174, 49</value>
+  </data>
+  <data name="Button1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>191, 23</value>
+  </data>
+  <data name="Button1.Text" xml:space="preserve">
+    <value>Copiar de Corriente de Salida (Vapor)</value>
+  </data>
   <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>414, 13</value>
   </data>
@@ -125,7 +143,7 @@
     <value>Ingresar estimados para la composición inicial de la corriente final de salida del reactor.</value>
   </data>
   <data name="Button4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>452, 20</value>
+    <value>6, 49</value>
   </data>
   <data name="Button4.Size" type="System.Drawing.Size, System.Drawing">
     <value>162, 23</value>
@@ -133,17 +151,26 @@
   <data name="Button4.Text" xml:space="preserve">
     <value>Copiar de Corriente de Entrada</value>
   </data>
+  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>578, 85</value>
+  </data>
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Configuración</value>
+  </data>
+  <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>578, 239</value>
   </data>
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>Estimados Iniciales</value>
   </data>
-  <data name="col2.HeaderText" xml:space="preserve">
-    <value>Volumen Molar en Entrada</value>
+  <data name="grid.Size" type="System.Drawing.Size, System.Drawing">
+    <value>572, 220</value>
   </data>
   <data name="col3.HeaderText" xml:space="preserve">
     <value>Estimados Iniciales</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>591, 341</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Editor para Estimados Iniciales</value>

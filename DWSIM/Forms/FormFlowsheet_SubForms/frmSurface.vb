@@ -3707,6 +3707,15 @@ Public Class frmSurface
                         If selectionControl.gr.GraphicObject.InputConnectors(0).IsAttached Then
                             selectionControl.inlet = myobj.FlowSheet.Collections.CLCS_MaterialStreamCollection(selectionControl.gr.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name)
                         End If
+                        If selectionControl.gr.GraphicObject.InputConnectors(0).IsAttached Then
+                            selectionControl.inlet = myobj.FlowSheet.Collections.CLCS_MaterialStreamCollection(selectionControl.gr.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name)
+                        End If
+                        If selectionControl.gr.GraphicObject.OutputConnectors(0).IsAttached Then
+                            selectionControl.outletv = myobj.FlowSheet.Collections.CLCS_MaterialStreamCollection(selectionControl.gr.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name)
+                        End If
+                        If selectionControl.gr.GraphicObject.OutputConnectors(1).IsAttached Then
+                            selectionControl.outletl = myobj.FlowSheet.Collections.CLCS_MaterialStreamCollection(selectionControl.gr.GraphicObject.OutputConnectors(1).AttachedConnector.AttachedTo.Name)
+                        End If
                         selectionControl.ShowDialog()
                         myobj.InitialEstimates = selectionControl.ie
                         selectionControl.Dispose()
