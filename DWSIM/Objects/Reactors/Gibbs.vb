@@ -57,6 +57,7 @@ Namespace DWSIM.SimulationObjects.Reactors
         Dim N As New Dictionary(Of String, Double)
         Dim T, P, P0, Ninerts, Winerts, E(,) As Double
         Dim r, c, els, comps As Integer
+        Dim ims As DWSIM.SimulationObjects.Streams.MaterialStream
 
         Public Sub New()
             MyBase.New()
@@ -304,6 +305,8 @@ Namespace DWSIM.SimulationObjects.Reactors
 
         Private Function FunctionValue(ByVal x() As Double) As Double
 
+            tms = ims.Clone()
+
             Dim i As Integer
 
             Dim pp As SimulationObjects.PropertyPackages.PropertyPackage = Me.PropertyPackage
@@ -319,6 +322,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
             For Each s As String In DN.Keys
                 N(s) = N0(s) + DN(s)
+                If N(s) > -0.0001 And N(s) < 0 Then N(s) = 0.0#
             Next
 
             Dim fw(comps), fm(comps), sumfm, sum1, sumn, sumw As Double
@@ -834,7 +838,7 @@ Namespace DWSIM.SimulationObjects.Reactors
             Me.DeltaT = 0
 
             Dim rx As Reaction
-            Dim ims As DWSIM.SimulationObjects.Streams.MaterialStream = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Clone
+            ims = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Clone
             Dim pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage = Me.PropertyPackage
             Dim ppr As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage()
 
@@ -1602,6 +1606,7 @@ Namespace DWSIM.SimulationObjects.Reactors
             If cp.IsAttached Then
                 ms = form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name)
                 With ms
+                    .ClearAllProps()
                     .Fases(0).SPMProperties.temperature = T
                     .Fases(0).SPMProperties.pressure = P
                     .Fases(0).SPMProperties.enthalpy = H * (wtotaly * xv / (wtotaly * xv + wtotalx * xl))
@@ -1612,19 +1617,19 @@ Namespace DWSIM.SimulationObjects.Reactors
                         comp.FracaoMassica = Vwy(j)
                         j += 1
                     Next
-                    j = 0
-                    For Each comp In .Fases(2).Componentes.Values
-                        comp.FracaoMolar = Vy(j)
-                        comp.FracaoMassica = Vwy(j)
-                        j += 1
-                    Next
+                    'j = 0
+                    'For Each comp In .Fases(2).Componentes.Values
+                    '    comp.FracaoMolar = Vy(j)
+                    '    comp.FracaoMassica = Vwy(j)
+                    '    j += 1
+                    'Next
                     .Fases(0).SPMProperties.massflow = W * (wtotaly * xv / (wtotaly * xv + wtotalx * xl))
-                    .Fases(0).SPMProperties.massfraction = (wtotaly * xv / (wtotaly * xv + wtotalx * xl))
-                    .Fases(0).SPMProperties.molarfraction = 1
-                    .Fases(3).SPMProperties.massfraction = 0
-                    .Fases(3).SPMProperties.molarfraction = 0
-                    .Fases(2).SPMProperties.massfraction = 1
-                    .Fases(2).SPMProperties.molarfraction = 1
+                    '.Fases(0).SPMProperties.massfraction = (wtotaly * xv / (wtotaly * xv + wtotalx * xl))
+                    '.Fases(0).SPMProperties.molarfraction = 1
+                    '.Fases(3).SPMProperties.massfraction = 0
+                    '.Fases(3).SPMProperties.molarfraction = 0
+                    '.Fases(2).SPMProperties.massfraction = 1
+                    '.Fases(2).SPMProperties.molarfraction = 1
                 End With
             End If
 
@@ -1632,6 +1637,7 @@ Namespace DWSIM.SimulationObjects.Reactors
             If cp.IsAttached Then
                 ms = form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name)
                 With ms
+                    .ClearAllProps()
                     .Fases(0).SPMProperties.temperature = T
                     .Fases(0).SPMProperties.pressure = P
                     .Fases(0).SPMProperties.enthalpy = H * (wtotalx * xl / (wtotaly * xv + wtotalx * xl))
@@ -1642,19 +1648,19 @@ Namespace DWSIM.SimulationObjects.Reactors
                         comp.FracaoMassica = Vwx(j)
                         j += 1
                     Next
-                    j = 0
-                    For Each comp In .Fases(3).Componentes.Values
-                        comp.FracaoMolar = Vx(j)
-                        comp.FracaoMassica = Vwx(j)
-                        j += 1
-                    Next
+                    'j = 0
+                    'For Each comp In .Fases(3).Componentes.Values
+                    '    comp.FracaoMolar = Vx(j)
+                    '    comp.FracaoMassica = Vwx(j)
+                    '    j += 1
+                    'Next
                     .Fases(0).SPMProperties.massflow = W * (wtotalx * xl / (wtotaly * xv + wtotalx * xl))
-                    .Fases(0).SPMProperties.massfraction = (wtotalx * xl / (wtotaly * xv + wtotalx * xl))
-                    .Fases(0).SPMProperties.molarfraction = 1
-                    .Fases(3).SPMProperties.massfraction = 1
-                    .Fases(3).SPMProperties.molarfraction = 1
-                    .Fases(2).SPMProperties.massfraction = 0
-                    .Fases(2).SPMProperties.molarfraction = 0
+                    '.Fases(0).SPMProperties.massfraction = (wtotalx * xl / (wtotaly * xv + wtotalx * xl))
+                    '.Fases(0).SPMProperties.molarfraction = 1
+                    '.Fases(3).SPMProperties.massfraction = 1
+                    '.Fases(3).SPMProperties.molarfraction = 1
+                    '.Fases(2).SPMProperties.massfraction = 0
+                    '.Fases(2).SPMProperties.molarfraction = 0
                 End With
             End If
 
