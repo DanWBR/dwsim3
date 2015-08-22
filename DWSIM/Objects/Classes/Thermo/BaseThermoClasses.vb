@@ -689,8 +689,9 @@ Namespace DWSIM.ClassesBasicasTermodinamica
 
             XMLSerializer.XMLSerializer.Deserialize(Me, data)
 
+            Dim ci As CultureInfo = CultureInfo.InvariantCulture
             For Each xel2 As XElement In (From xel As XElement In data Select xel Where xel.Name = "Compounds").Elements
-                Me.Components.Add(xel2.@Name, New ReactionStoichBase(xel2.@Name, xel2.@StoichCoeff, xel2.@IsBaseReactant, xel2.@DirectOrder, xel2.@ReverseOrder))
+                Me.Components.Add(xel2.@Name, New ReactionStoichBase(xel2.@Name, Double.Parse(xel2.@StoichCoeff, ci), xel2.@IsBaseReactant, Double.Parse(xel2.@DirectOrder, ci), Double.Parse(xel2.@ReverseOrder, ci)))
             Next
 
         End Function
@@ -705,9 +706,9 @@ Namespace DWSIM.ClassesBasicasTermodinamica
                 .Add(New XElement("Compounds"))
                 For Each rsb As ReactionStoichBase In Me.Components.Values
                     .Item(.Count - 1).Add(New XElement("Compound", New XAttribute("Name", rsb.CompName),
-                                                    New XAttribute("StoichCoeff", Double.Parse(rsb.StoichCoeff, ci)),
-                                                    New XAttribute("DirectOrder", Double.Parse(rsb.DirectOrder, ci)),
-                                                    New XAttribute("ReverseOrder", Double.Parse(rsb.ReverseOrder, ci)),
+                                                    New XAttribute("StoichCoeff", rsb.StoichCoeff.ToString(ci)),
+                                                    New XAttribute("DirectOrder", rsb.DirectOrder.ToString(ci)),
+                                                    New XAttribute("ReverseOrder", rsb.ReverseOrder.ToString(ci)),
                                                     New XAttribute("IsBaseReactant", rsb.IsBaseReactant)))
                 Next
 
@@ -1451,9 +1452,9 @@ Namespace DWSIM.ClassesBasicasTermodinamica
     <System.Serializable()> Public Class ReactionStoichBase
 
         Protected m_compname As String = ""
-        Protected m_stoichcoeff As Double = 0
-        Protected m_directorder As Double = 0
-        Protected m_reverseorder As Double = 0
+        Protected m_stoichcoeff As Double = 0.0#
+        Protected m_directorder As Double = 0.0#
+        Protected m_reverseorder As Double = 0.0#
         Protected m_basecomp As Boolean = False
 
         Public Property CompName() As String
@@ -1996,6 +1997,7 @@ Namespace DWSIM.ClassesBasicasTermodinamica
         End Property
 
     End Class
+
     <System.Serializable()> Public Class InteractionParameter
 
         Implements ICloneable, XMLSerializer.Interfaces.ICustomXMLSerialization
@@ -2047,6 +2049,7 @@ Namespace DWSIM.ClassesBasicasTermodinamica
         End Function
 
     End Class
+
     <System.Serializable()> Public Class ConstantProperties
 
         Implements ICloneable, XMLSerializer.Interfaces.ICustomXMLSerialization
