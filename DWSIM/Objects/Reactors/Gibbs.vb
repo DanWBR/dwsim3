@@ -322,7 +322,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
             For Each s As String In DN.Keys
                 N(s) = N0(s) + DN(s)
-                If N(s) > -0.0001 And N(s) < 0 Then N(s) = 0.0#
+                If N(s) > -0.1 And N(s) < 0 Then N(s) = 0.0#
             Next
 
             Dim fw(comps), fm(comps), sumfm, sum1, sumn, sumw As Double
