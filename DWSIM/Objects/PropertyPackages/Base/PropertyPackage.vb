@@ -1043,9 +1043,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             If xl = 1 Then
                 vl = 1
                 vv = 0
-            ElseIf xl = 0 Then
+                vs = 0
+            ElseIf xv = 1 Then
                 vl = 0
                 vv = 1
+                vs = 0
+            ElseIf xs = 1 Then
+                vl = 0
+                vv = 0
+                vs = 1
             End If
 
             result = vl * DL.GetValueOrDefault + vv * DV.GetValueOrDefault + vs * DS.GetValueOrDefault
@@ -2327,7 +2333,11 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
         Public Overridable Sub DW_CalcVazaoVolumetrica()
             With Me.CurrentMaterialStream
-                .Fases(0).SPMProperties.volumetric_flow = .Fases(0).SPMProperties.massflow.GetValueOrDefault / .Fases(0).SPMProperties.density.GetValueOrDefault
+                If .Fases(0).SPMProperties.density.GetValueOrDefault > 0 Then
+                    .Fases(0).SPMProperties.volumetric_flow = .Fases(0).SPMProperties.massflow.GetValueOrDefault / .Fases(0).SPMProperties.density.GetValueOrDefault
+                Else
+                    .Fases(0).SPMProperties.volumetric_flow = 0
+                End If
             End With
         End Sub
 
@@ -5288,8 +5298,13 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
             Next
 
             'Calculate volumetric fractions for the mixture.
+
             For Each Subs As Substancia In CurrentMaterialStream.Fases(0).Componentes.Values
-                Subs.VolumetricFraction = Subs.VolumetricFlow.GetValueOrDefault / CurrentMaterialStream.Fases(0).SPMProperties.volumetric_flow.GetValueOrDefault
+                If CurrentMaterialStream.Fases(0).SPMProperties.volumetric_flow.GetValueOrDefault > 0 Then
+                    Subs.VolumetricFraction = Subs.VolumetricFlow.GetValueOrDefault / CurrentMaterialStream.Fases(0).SPMProperties.volumetric_flow.GetValueOrDefault
+                Else
+                    Subs.VolumetricFraction = 0
+                End If
             Next
 
         End Sub
