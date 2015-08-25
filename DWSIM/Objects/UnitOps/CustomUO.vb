@@ -283,7 +283,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         engine = Nothing
                         scope = Nothing
                         source = Nothing
-                        Throw ex
+                        Throw New Exception(Me.ErrorMessage, ex)
                     Finally
                         engine = Nothing
                         scope = Nothing
