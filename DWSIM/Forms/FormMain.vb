@@ -3457,12 +3457,14 @@ ruf:                Application.DoEvents()
                     Application.DoEvents()
                     If Path.GetExtension(Me.filename).ToLower = ".dwxml" Then
                         Task.Factory.StartNew(Sub() SaveXML(Me.filename, Me.ActiveMdiChild)).ContinueWith(Sub(t)
-                                                                                                              form2.WriteToLog(DWSIM.App.GetLocalString("Erroaosalvararquivo") & t.Exception.ToString, Color.Red, TipoAviso.Erro)
-                                                                                                          End Sub, TaskContinuationOptions.OnlyOnFaulted).ContinueWith(Sub() Me.ToolStripStatusLabel1.Text = "", TaskContinuationOptions.ExecuteSynchronously)
+                                                                                                              Me.ToolStripStatusLabel1.Text = ""
+                                                                                                              If Not t.Exception Is Nothing Then form2.WriteToLog(DWSIM.App.GetLocalString("Erroaosalvararquivo") & t.Exception.ToString, Color.Red, TipoAviso.Erro)
+                                                                                                          End Sub, TaskContinuationOptions.ExecuteSynchronously)
                     ElseIf Path.GetExtension(Me.filename).ToLower = ".dwxmz" Then
                         Task.Factory.StartNew(Sub() SaveXMLZIP(Me.filename, Me.ActiveMdiChild)).ContinueWith(Sub(t)
-                                                                                                                 form2.WriteToLog(DWSIM.App.GetLocalString("Erroaosalvararquivo") & t.Exception.ToString, Color.Red, TipoAviso.Erro)
-                                                                                                             End Sub, TaskContinuationOptions.OnlyOnFaulted).ContinueWith(Sub() Me.ToolStripStatusLabel1.Text = "", TaskContinuationOptions.ExecuteSynchronously)
+                                                                                                                 Me.ToolStripStatusLabel1.Text = ""
+                                                                                                                 If Not t.Exception Is Nothing Then form2.WriteToLog(DWSIM.App.GetLocalString("Erroaosalvararquivo") & t.Exception.ToString, Color.Red, TipoAviso.Erro)
+                                                                                                             End Sub, TaskContinuationOptions.ExecuteSynchronously)
                     Else
                         Me.bgSaveFile.RunWorkerAsync()
                     End If
@@ -3843,6 +3845,8 @@ ruf:                Application.DoEvents()
 
     Public Sub SaveFile(ByVal saveasync As Boolean)
 
+        If My.Computer.Keyboard.ShiftKeyDown Then saveasync = False
+
         If Not Me.ActiveMdiChild Is Nothing Then
             If TypeOf Me.ActiveMdiChild Is FormFlowsheet Then
                 Dim form2 As FormFlowsheet = Me.ActiveMdiChild
@@ -3861,8 +3865,9 @@ ruf:                Application.DoEvents()
                     ElseIf Path.GetExtension(Me.filename).ToLower = ".dwxml" Then
                         If saveasync Then
                             Task.Factory.StartNew(Sub() SaveXML(form2.Options.FilePath, form2)).ContinueWith(Sub(t)
-                                                                                                                 form2.WriteToLog(DWSIM.App.GetLocalString("Erroaosalvararquivo") & t.Exception.ToString, Color.Red, TipoAviso.Erro)
-                                                                                                             End Sub, TaskContinuationOptions.OnlyOnFaulted).ContinueWith(Sub() Me.ToolStripStatusLabel1.Text = "", TaskContinuationOptions.ExecuteSynchronously)
+                                                                                                                 Me.ToolStripStatusLabel1.Text = ""
+                                                                                                                 If Not t.Exception Is Nothing Then form2.WriteToLog(DWSIM.App.GetLocalString("Erroaosalvararquivo") & t.Exception.ToString, Color.Red, TipoAviso.Erro)
+                                                                                                             End Sub, TaskContinuationOptions.ExecuteSynchronously)
                         Else
                             SaveXML(form2.Options.FilePath, form2)
                             Me.ToolStripStatusLabel1.Text = ""
@@ -3870,8 +3875,9 @@ ruf:                Application.DoEvents()
                     ElseIf Path.GetExtension(Me.filename).ToLower = ".dwxmz" Then
                         If saveasync Then
                             Task.Factory.StartNew(Sub() SaveXMLZIP(form2.Options.FilePath, form2)).ContinueWith(Sub(t)
-                                                                                                                    form2.WriteToLog(DWSIM.App.GetLocalString("Erroaosalvararquivo") & t.Exception.ToString, Color.Red, TipoAviso.Erro)
-                                                                                                                End Sub, TaskContinuationOptions.OnlyOnFaulted).ContinueWith(Sub() Me.ToolStripStatusLabel1.Text = "", TaskContinuationOptions.ExecuteSynchronously)
+                                                                                                                    Me.ToolStripStatusLabel1.Text = ""
+                                                                                                                    If Not t.Exception Is Nothing Then form2.WriteToLog(DWSIM.App.GetLocalString("Erroaosalvararquivo") & t.Exception.ToString, Color.Red, TipoAviso.Erro)
+                                                                                                                End Sub, TaskContinuationOptions.ExecuteSynchronously)
                         Else
                             SaveXMLZIP(form2.Options.FilePath, form2)
                             Me.ToolStripStatusLabel1.Text = ""
