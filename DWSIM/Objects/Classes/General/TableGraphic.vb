@@ -739,21 +739,6 @@ Namespace DWSIM.GraphicObjects
             Dim elements As System.Collections.Generic.List(Of System.Xml.Linq.XElement) = MyBase.SaveData()
 
             With elements
-                '.Add(New XElement("Font_Col1", m_Font_Col1.ToString))
-                '.Add(New XElement("Font_Col2", m_Font_Col2.ToString))
-                '.Add(New XElement("Font_Col3", m_Font_Col3.ToString))
-                '.Add(New XElement("Font_Header", m_HeaderFont.ToString))
-                '.Add(New XElement("TableText", m_Text.ToString))
-                '.Add(New XElement("Color_BG", m_Color_Bg.ToString))
-                '.Add(New XElement("Color_Grad1", m_Color_Gradient_1.ToString))
-                '.Add(New XElement("Color_Grad2", m_Color_Gradient_2.ToString))
-                '.Add(New XElement("BGOpacity", m_bgOpacity.ToString))
-                '.Add(New XElement("IsGradientBG", m_IsGradientBg.ToString))
-                '.Add(New XElement("BorderThickness", m_BorderThickness.ToString))
-                '.Add(New XElement("BorderStyle", m_BorderStyle.ToString))
-                '.Add(New XElement("BorderColor", m_BorderColor.ToString))
-                '.Add(New XElement("Padding", m_Padding.ToString))
-                '.Add(New XElement("TextRenderStyle", m_TextRenderStyle.ToString))
                 If BaseOwner IsNot Nothing Then .Add(New XElement("Owner", BaseOwner.Nome))
             End With
 
@@ -1607,7 +1592,7 @@ Namespace DWSIM.GraphicObjects
                             Else
                                 size = g.MeasureString(grid.Rows(i).Cells(j).Value.ToString, Me.FontCol1, New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                             End If
-                            If size.Width > maxW(k) Then maxW(k) = size.Width + 2 * Padding
+                            If size.Width > maxW(k) Then maxW(k) = size.Width + 4 * Padding
                         Else
                             'maxW(k) = 10
                         End If

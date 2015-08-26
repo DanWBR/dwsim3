@@ -97,8 +97,12 @@ Public Class XMLSerializer
                                 End If
                             ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is Font Then
                                 Dim xel As XElement = (From xmlprop In xmlprops Select xmlprop Where xmlprop.Name = propname).SingleOrDefault
-                                Dim val As Font = GetFontByString(xel.Value)
-                                obj.GetType.GetProperty(prop.Name).SetValue(obj, val, Nothing)
+                                Try
+                                    Dim val As Font = New FontConverter().ConvertFromInvariantString(xel.Value)
+                                    obj.GetType.GetProperty(prop.Name).SetValue(obj, val, Nothing)
+                                Catch ex As Exception
+                                    obj.GetType.GetProperty(prop.Name).SetValue(obj, New Font("Arial", 8), Nothing)
+                                End Try
                             ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is Color Then
                                 Dim xel As XElement = (From xmlprop In xmlprops Select xmlprop Where xmlprop.Name = propname).SingleOrDefault
                                 Dim val As Color = ColorTranslator.FromHtml(xel.Value)
@@ -188,8 +192,12 @@ Public Class XMLSerializer
                         ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is Font Then
                             Dim xel As XElement = (From xmlprop In xmlprops Select xmlprop Where xmlprop.Name = propname).SingleOrDefault
                             If Not xel Is Nothing Then
-                                Dim val As Font = GetFontByString(xel.Value)
-                                obj.GetType.GetField(prop.Name).SetValue(obj, val)
+                                Try
+                                    Dim val As Font = New FontConverter().ConvertFromInvariantString(xel.Value)
+                                    obj.GetType.GetField(prop.Name).SetValue(obj, val)
+                                Catch ex As Exception
+                                    obj.GetType.GetField(prop.Name).SetValue(obj, New Font("Arial", 8))
+                                End Try
                             End If
                         ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is Color Then
                             Dim xel As XElement = (From xmlprop In xmlprops Select xmlprop Where xmlprop.Name = propname).SingleOrDefault
@@ -271,7 +279,7 @@ Public Class XMLSerializer
                             ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is [Enum] Then
                                 .Add(New XElement(prop.Name, obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing)))
                             ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is Font Then
-                                .Add(New XElement(prop.Name, obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing)))
+                                .Add(New XElement(prop.Name, New FontConverter().ConvertToInvariantString(obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing))))
                             ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is Color Then
                                 .Add(New XElement(prop.Name, ColorTranslator.ToHtml(obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing))))
                             ElseIf TypeOf obj.GetType.GetProperty(prop.Name).GetValue(obj, Nothing) Is Byte Then
@@ -317,7 +325,7 @@ Public Class XMLSerializer
                         ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is [Enum] Then
                             .Add(New XElement(prop.Name, obj.GetType.GetField(prop.Name).GetValue(obj)))
                         ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is Font Then
-                            .Add(New XElement(prop.Name, obj.GetType.GetField(prop.Name).GetValue(obj)))
+                            .Add(New XElement(prop.Name, New FontConverter().ConvertToInvariantString(obj.GetType.GetField(prop.Name).GetValue(obj))))
                         ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is Color Then
                             .Add(New XElement(prop.Name, ColorTranslator.ToHtml(obj.GetType.GetField(prop.Name).GetValue(obj))))
                         ElseIf TypeOf obj.GetType.GetField(prop.Name).GetValue(obj) Is Byte Then
@@ -331,41 +339,6 @@ Public Class XMLSerializer
         End With
         Return elements
 
-    End Function
-
-    Public Shared Function GetFontByString(ByVal sFont As String) As Font
-        sFont = sFont.Substring(1, sFont.Length - 2)
-        sFont = Replace(sFont, ",", vbNullString)
-        sFont = Replace(sFont, "Font:", vbNullString)
-        Dim sElement() As String = Split(sFont, " ")
-        Dim sSingle() As String
-        Dim sValue As String
-        Dim FontName As String = ""
-        Dim FontSize As Single
-        Dim FontStyle As FontStyle = Drawing.FontStyle.Regular
-        Dim FontUnit As GraphicsUnit = GraphicsUnit.Point
-        Dim gdiCharSet As Byte
-        Dim gdiVerticalFont As Boolean
-
-        For Each sValue In sElement
-            sValue = Trim(sValue)
-            sSingle = Split(sValue, "=")
-            If sSingle.GetUpperBound(0) > 0 Then
-                If sSingle(0) = "Name" Then
-                    FontName = sSingle(1)
-                ElseIf sSingle(0) = "Size" Then
-                    FontSize = CSng(sSingle(1))
-                    If FontSize > 100 Then FontSize /= 100
-                ElseIf sSingle(0) = "Units" Then
-                    FontUnit = CInt(sSingle(1))
-                ElseIf sSingle(0) = "GdiCharSet" Then
-                    gdiCharSet = CByte(sSingle(1))
-                ElseIf sSingle(0) = "GdiVerticalFont" Then
-                    gdiVerticalFont = CBool(sSingle(1))
-                End If
-            End If
-        Next
-        Return New Font(FontName, FontSize, FontStyle, FontUnit, gdiCharSet, gdiVerticalFont)
     End Function
 
     Public Shared Function ArrayToString(sourcearray As ArrayList, ci As CultureInfo) As String
