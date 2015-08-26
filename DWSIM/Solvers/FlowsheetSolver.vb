@@ -1156,7 +1156,14 @@ Namespace DWSIM.Flowsheet
         ''' </summary>
         ''' <param name="form">Flowsheet to be calculated (FormChild object)</param>
         ''' <remarks></remarks>
-        Public Shared Sub ProcessCalculationQueue(ByVal form As FormFlowsheet, Optional ByVal Isolated As Boolean = False, Optional ByVal FlowsheetSolverMode As Boolean = False, Optional ByVal mode As Integer = 0, Optional orderedlist As Object = Nothing, Optional ByVal ct As Threading.CancellationToken = Nothing)
+        Public Shared Sub ProcessCalculationQueue(ByVal form As FormFlowsheet, Optional ByVal tasksc As TaskScheduler = Nothing,
+                                                  Optional ByVal Isolated As Boolean = False,
+                                                  Optional ByVal FlowsheetSolverMode As Boolean = False,
+                                                  Optional ByVal mode As Integer = 0,
+                                                  Optional orderedlist As Object = Nothing,
+                                                  Optional ByVal ct As Threading.CancellationToken = Nothing)
+
+            If tasksc Is Nothing Then tasksc = TaskScheduler.Default
 
             If mode = 0 Then
                 'UI thread
@@ -1164,13 +1171,13 @@ Namespace DWSIM.Flowsheet
                 SolveSimultaneousAdjusts(form)
             ElseIf mode = 1 Then
                 'bg thread
-                ProcessQueueInternalAsync(form, ct)
+                ProcessQueueInternalAsync(form, ct, tasksc)
                 SolveSimultaneousAdjustsAsync(form, ct)
             ElseIf mode = 2 Then
                 'bg parallel thread
                 Dim prevset As Boolean = My.Settings.EnableParallelProcessing
                 My.Settings.EnableParallelProcessing = False
-                ProcessQueueInternalAsyncParallel(form, orderedlist, ct)
+                ProcessQueueInternalAsyncParallel(form, orderedlist, ct, tasksc)
                 SolveSimultaneousAdjustsAsync(form, ct)
                 My.Settings.EnableParallelProcessing = prevset
             End If
@@ -1299,7 +1306,7 @@ Namespace DWSIM.Flowsheet
         ''' <param name="form">Flowsheet to be calculated (FormChild object)</param>
         ''' <param name="ct">The cancellation token, used to listen for calculation cancellation requests from the user.</param>
         ''' <remarks></remarks>
-        Private Shared Sub ProcessQueueInternalAsync(ByVal form As FormFlowsheet, ByVal ct As Threading.CancellationToken)
+        Private Shared Sub ProcessQueueInternalAsync(ByVal form As FormFlowsheet, ByVal ct As Threading.CancellationToken, tasksc As TaskScheduler)
 
             If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
 
@@ -1352,7 +1359,7 @@ Namespace DWSIM.Flowsheet
         ''' <param name="form">Flowsheet to be calculated (FormChild object)</param>
         ''' <param name="ct">The cancellation token, used to listen for calculation cancellation requests from the user.</param>
         ''' <remarks></remarks>
-        Private Shared Sub ProcessQueueInternalAsyncParallel(ByVal form As FormFlowsheet, ByVal orderedlist As Dictionary(Of Integer, List(Of StatusChangeEventArgs)), ct As Threading.CancellationToken)
+        Private Shared Sub ProcessQueueInternalAsyncParallel(ByVal form As FormFlowsheet, ByVal orderedlist As Dictionary(Of Integer, List(Of StatusChangeEventArgs)), ct As Threading.CancellationToken, tasksc As TaskScheduler)
 
             If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
 
@@ -1371,7 +1378,7 @@ Namespace DWSIM.Flowsheet
                 End If
             Next
 
-            Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism}
+            Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism, .TaskScheduler = tasksc}
 
             For Each li In orderedlist
                 Dim objlist As New ArrayList
@@ -1502,7 +1509,7 @@ Namespace DWSIM.Flowsheet
             Dim lists As New Dictionary(Of Integer, List(Of String))
             Dim filteredlist As New Dictionary(Of Integer, List(Of String))
             Dim objstack As New List(Of String)
-           
+
             Dim onqueue As DWSIM.Outros.StatusChangeEventArgs = Nothing
 
             Dim listidx As Integer = 0
@@ -1795,7 +1802,7 @@ Namespace DWSIM.Flowsheet
 
                                     Try
                                         t0 = New Task(Sub()
-                                                          ProcessCalculationQueue(form, True, True, 0, , ct)
+                                                          ProcessCalculationQueue(form, Nothing, True, True, 0, , ct)
                                                       End Sub, ct)
                                         t0.RunSynchronously()
                                     Catch agex As AggregateException
@@ -1847,16 +1854,15 @@ Namespace DWSIM.Flowsheet
                                         If form.Visible Then form.FormSurface.Enabled = False
                                         form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & DWSIM.App.GetLocalString("Fluxograma") & "...")
                                         t0 = Task.Factory.StartNew(Sub()
-                                                                       Dim t As New task(Sub()
-                                                                                             ProcessCalculationQueue(form,
-                                                                                                                     True,
-                                                                                                                     True,
-                                                                                                                     mode,
-                                                                                                                     filteredlist2,
-                                                                                                                     ct)
-                                                                                         End Sub,
-                                                                                     ct)
-                                                                       If Not t.IsCanceled Then t.Start()
+                                                                       Dim t = Task.Factory.StartNew(Sub()
+                                                                                                         ProcessCalculationQueue(form,
+                                                                                                                                 tsch,
+                                                                                                                                 True,
+                                                                                                                                 True,
+                                                                                                                                 mode,
+                                                                                                                                 filteredlist2,
+                                                                                                                                 ct)
+                                                                                                     End Sub, ct, TaskCreationOptions.PreferFairness, tsch)
                                                                        If Not t.Wait(My.Settings.SolverTimeoutSeconds * 1000, ct) Then
                                                                            Throw New TimeoutException(DWSIM.App.GetLocalString("SolverTimeout"))
                                                                        End If
@@ -2269,7 +2275,7 @@ Namespace DWSIM.Flowsheet
                     o.SetFlowsheet(form)
                 Next
 
-                ProcessQueueInternalAsync(form, ct)
+                ProcessQueueInternalAsync(form, ct, TaskScheduler.Default)
 
             End If
 

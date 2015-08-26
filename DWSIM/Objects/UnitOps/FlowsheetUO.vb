@@ -1092,7 +1092,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             .Nome = Me.Nome
                             .Tipo = TipoObjeto.FlowsheetUO
                         End With
-                        CalculateFlowsheet(FlowSheet, objargs, Nothing)
                         Throw New Exception(DWSIM.App.GetLocalString("Verifiqueasconexesdo"))
                     End If
                 End If

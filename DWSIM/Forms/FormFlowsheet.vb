@@ -1779,7 +1779,7 @@ Imports DWSIM.DWSIM.Outros
                 End If
             End If
 
-            If triggercalc Then ProcessCalculationQueue(Me, False, False) Else Me.CalculationQueue.Clear()
+            If triggercalc Then ProcessCalculationQueue(Me, Nothing, False, False) Else Me.CalculationQueue.Clear()
 
         End If
     End Sub
@@ -1843,7 +1843,7 @@ Imports DWSIM.DWSIM.Outros
             End If
         End If
 
-        If triggercalc Then ProcessCalculationQueue(Me, False, False) Else Me.CalculationQueue.Clear()
+        If triggercalc Then ProcessCalculationQueue(Me, Nothing, False, False) Else Me.CalculationQueue.Clear()
 
     End Sub
 
