@@ -28,6 +28,8 @@ Namespace My
         Public Shared IsRunningParallelTasks As Boolean = False
         Public Shared TaskCancellationTokenSource As Threading.CancellationTokenSource
 
+        Public Shared AppTaskScheduler As Tasks.TaskScheduler = Tasks.TaskScheduler.Default
+
         Public ActiveSimulation As FormFlowsheet
         Public CAPEOPENMode As Boolean = False
         Public Shared gpu As Cudafy.Host.GPGPU

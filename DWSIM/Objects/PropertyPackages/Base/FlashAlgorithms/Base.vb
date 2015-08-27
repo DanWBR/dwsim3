@@ -191,14 +191,18 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     'My.MyApplication.gpu.EnableMultithreading()
                 End If
                 Try
-                    Dim task1 As Task = New Task(Sub()
-                                                     fcv = pp.DW_CalcFugCoeff(Vz, T, P, State.Vapor)
-                                                 End Sub)
-                    Dim task2 As Task = New Task(Sub()
-                                                     fcl = pp.DW_CalcFugCoeff(Vz, T, P, State.Liquid)
-                                                 End Sub)
-                    task1.Start()
-                    task2.Start()
+                    Dim task1 = Task.Factory.StartNew(Sub()
+                                                          fcv = pp.DW_CalcFugCoeff(Vz, T, P, State.Vapor)
+                                                      End Sub,
+                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      TaskCreationOptions.None,
+                                                      My.MyApplication.AppTaskScheduler)
+                    Dim task2 = Task.Factory.StartNew(Sub()
+                                                          fcl = pp.DW_CalcFugCoeff(Vz, T, P, State.Liquid)
+                                                      End Sub,
+                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      TaskCreationOptions.None,
+                                                      My.MyApplication.AppTaskScheduler)
                     Task.WaitAll(task1, task2)
                 Catch ae As AggregateException
                     Throw ae.Flatten().InnerException
@@ -322,26 +326,22 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                         If My.Settings.EnableParallelProcessing Then
                             My.MyApplication.IsRunningParallelTasks = True
-                            If My.Settings.EnableGPUProcessing Then
-                                '   My.MyApplication.gpu.EnableMultithreading()
-                            End If
                             Try
-                                Dim task1 As Task = New Task(Sub()
-                                                                 fcv = pp.DW_CalcFugCoeff(currcomp, T, P, State.Vapor)
-                                                             End Sub)
-                                Dim task2 As Task = New Task(Sub()
-                                                                 fcl = pp.DW_CalcFugCoeff(currcomp, T, P, State.Liquid)
-                                                             End Sub)
-                                task1.Start()
-                                task2.Start()
+                                Dim task1 = Task.Factory.StartNew(Sub()
+                                                                      fcv = pp.DW_CalcFugCoeff(currcomp, T, P, State.Vapor)
+                                                                  End Sub,
+                                                                  My.MyApplication.TaskCancellationTokenSource.Token,
+                                                                  TaskCreationOptions.None,
+                                                                  My.MyApplication.AppTaskScheduler)
+                                Dim task2 = Task.Factory.StartNew(Sub()
+                                                                      fcl = pp.DW_CalcFugCoeff(currcomp, T, P, State.Liquid)
+                                                                  End Sub,
+                                                                  My.MyApplication.TaskCancellationTokenSource.Token,
+                                                                  TaskCreationOptions.None,
+                                                                  My.MyApplication.AppTaskScheduler)
                                 Task.WaitAll(task1, task2)
                             Catch ae As AggregateException
                                 Throw ae.Flatten().InnerException
-                                'Finally
-                                '    If My.Settings.EnableGPUProcessing Then
-                                '        My.MyApplication.gpu.DisableMultithreading()
-                                '        My.MyApplication.gpu.FreeAll()
-                                '    End If
                             End Try
                             My.MyApplication.IsRunningParallelTasks = False
                         Else

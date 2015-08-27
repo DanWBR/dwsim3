@@ -1770,10 +1770,11 @@ restart:            fx = Me.FunctionValue(xvar)
                                                                  Else
                                                                      tmp(ipar) = pp.DW_CalcKvalue(xc(ipar), yc(ipar), Tj(ipar), P(ipar))
                                                                  End If
-                                                             End Sub))
-                    While Not task1.IsCompleted
-                        Application.DoEvents()
-                    End While
+                                                             End Sub),
+                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      TaskCreationOptions.None,
+                                                      My.MyApplication.AppTaskScheduler)
+                    task1.Wait()
                     For i = 0 To ns
                         For j = 0 To nc - 1
                             K_ant(i, j) = K(i, j)
@@ -1843,10 +1844,11 @@ restart:            fx = Me.FunctionValue(xvar)
                                                              Sub(ipar)
                                                                  'new Ks
                                                                  K2(ipar) = pp.DW_CalcKvalue(xc(ipar), yc(ipar), Tj2(ipar), P(ipar))
-                                                             End Sub))
-                    While Not task1.IsCompleted
-                        Application.DoEvents()
-                    End While
+                                                             End Sub),
+                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      TaskCreationOptions.None,
+                                                      My.MyApplication.AppTaskScheduler)
+                    task1.Wait()
                     For i = 0 To ns
                         For j = 0 To nc - 1
                             K2j(i, j) = K2(i)(j)
@@ -1889,10 +1891,11 @@ restart:            fx = Me.FunctionValue(xvar)
                                                                   End If
                                                                   Hl1(ipar) = pp.DW_CalcEnthalpyDeparture(xc(ipar), Tj1(ipar), P(ipar), PropertyPackages.State.Liquid)
                                                                   Hl2(ipar) = pp.DW_CalcEnthalpyDeparture(xc(ipar), Tj2(ipar), P(ipar), PropertyPackages.State.Liquid)
-                                                              End Sub))
-                    While Not task1.IsCompleted
-                        Application.DoEvents()
-                    End While
+                                                              End Sub),
+                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      TaskCreationOptions.None,
+                                                      My.MyApplication.AppTaskScheduler)
+                    task1.Wait()
                     My.MyApplication.IsRunningParallelTasks = False
                     'If My.Settings.EnableGPUProcessing Then
                     '    My.MyApplication.gpu.DisableMultithreading()
@@ -2096,7 +2099,10 @@ restart:            fx = Me.FunctionValue(xvar)
                                                          Sub(ipar)
                                                              Hl(ipar) = pp.DW_CalcEnthalpy(x(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Liquid) * pp.AUX_MMM(x(ipar)) / 1000
                                                              Hv(ipar) = pp.DW_CalcEnthalpy(y(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Vapor) * pp.AUX_MMM(y(ipar)) / 1000
-                                                         End Sub))
+                                                         End Sub),
+                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      TaskCreationOptions.None,
+                                                      My.MyApplication.AppTaskScheduler)
                     task1.Wait()
                 Catch ae As AggregateException
                     Throw ae.Flatten().InnerException
@@ -2227,7 +2233,10 @@ restart:            fx = Me.FunctionValue(xvar)
                         Dim t1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, nc, poptions,
                                                                  Sub(ipar)
                                                                      xt(ipar) = Tomich.TDMASolve(at(ipar), bt(ipar), ct(ipar), dt(ipar))
-                                                                 End Sub))
+                                                                 End Sub),
+                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      TaskCreationOptions.None,
+                                                      My.MyApplication.AppTaskScheduler)
                         t1.Wait()
                     Catch ae As AggregateException
                         Throw ae.Flatten().InnerException
@@ -2287,7 +2296,10 @@ restart:            fx = Me.FunctionValue(xvar)
                                                                      Dim tmpvar As Object = pp.DW_CalcBubT(xc(ipar), P(ipar), Tj(ipar), K(ipar), True)
                                                                      Tj(ipar) = tmpvar(4)
                                                                      K(ipar) = tmpvar(6)
-                                                                 End Sub))
+                                                                 End Sub),
+                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      TaskCreationOptions.None,
+                                                      My.MyApplication.AppTaskScheduler)
                         t1.Wait()
                     Catch ae As AggregateException
                         Throw ae.Flatten().InnerException
@@ -2350,7 +2362,10 @@ restart:            fx = Me.FunctionValue(xvar)
                                                                                      Sub(ipar)
                                                                                          Hl(ipar) = pp.DW_CalcEnthalpy(xc(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Liquid) * pp.AUX_MMM(xc(ipar)) / 1000
                                                                                          Hv(ipar) = pp.DW_CalcEnthalpy(yc(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Vapor) * pp.AUX_MMM(yc(ipar)) / 1000
-                                                                                     End Sub))
+                                                                                     End Sub),
+                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      TaskCreationOptions.None,
+                                                      My.MyApplication.AppTaskScheduler)
                         t1.Wait()
                     Catch ae As AggregateException
                         Throw ae.Flatten().InnerException
@@ -2720,7 +2735,10 @@ restart:            fx = Me.FunctionValue(xvar)
                                                                      Hv(ipar) = pp.DW_CalcEnthalpy(yc(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Vapor) * pp.AUX_MMM(yc(ipar)) / 1000
                                                                      dHv(ipar) = pp.DW_CalcEnthalpy(yc(ipar), Tj(ipar) - 1, P(ipar), PropertyPackages.State.Vapor) * pp.AUX_MMM(yc(ipar)) / 1000
                                                                  End If
-                                                             End Sub))
+                                                             End Sub),
+                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      TaskCreationOptions.None,
+                                                      My.MyApplication.AppTaskScheduler)
                     While Not task1.IsCompleted
                         Application.DoEvents()
                     End While
@@ -2983,10 +3001,11 @@ restart:            fx = Me.FunctionValue(xvar)
                                                              For jj = 0 To nc - 1
                                                                  Kval(ipar)(jj) = tmp0(jj)
                                                              Next
-                                                         End Sub))
-                While Not task1.IsCompleted
-                    Application.DoEvents()
-                End While
+                                                         End Sub),
+                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      TaskCreationOptions.None,
+                                                      My.MyApplication.AppTaskScheduler)
+                task1.Wait()
                 My.MyApplication.IsRunningParallelTasks = False
             Else
                 Dim tmp0 As Object
@@ -3025,10 +3044,11 @@ restart:            fx = Me.FunctionValue(xvar)
                                                              Else
                                                                  Hl(ipar) = 0
                                                              End If
-                                                         End Sub))
-                While Not task1.IsCompleted
-                    Application.DoEvents()
-                End While
+                                                         End Sub),
+                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      TaskCreationOptions.None,
+                                                      My.MyApplication.AppTaskScheduler)
+                task1.Wait()
                 My.MyApplication.IsRunningParallelTasks = False
             Else
                 For i = 0 To ns

@@ -347,102 +347,71 @@ Namespace DWSIM.SimulationObjects.Streams
 
                     If doparallel Then
                         My.MyApplication.IsRunningParallelTasks = True
-                        If My.Settings.EnableGPUProcessing Then
-                            'My.MyApplication.gpu.EnableMultithreading()
-                        End If
                         Try
-                            Dim task1 As Task = New Task(Sub()
-                                                             If Me.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
-                                                             Else
-                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
-                                                             End If
-                                                         End Sub)
-                            Dim task2 As Task = New Task(Sub()
-                                                             If Me.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
-                                                             Else
-                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
-                                                             End If
-                                                         End Sub)
-                            Dim task3 As Task = New Task(Sub()
-                                                             If Me.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
-                                                             Else
-                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
-                                                             End If
-                                                         End Sub)
-                            Dim task4 As Task = New Task(Sub()
-                                                             If Me.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
-                                                             Else
-                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
-                                                             End If
-                                                         End Sub)
-                            Dim task5 As Task = New Task(Sub()
-                                                             If Me.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                                                 .DW_CalcSolidPhaseProps()
-                                                             Else
-                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
-                                                             End If
-                                                         End Sub)
-                            Dim task6 As Task = New Task(Sub()
-                                                             If Me.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                                                             Else
-                                                                 .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                                                             End If
-                                                         End Sub)
-                            Select Case My.Settings.MaxDegreeOfParallelism
-                                Case 1
-                                    task1.Start()
-                                    task1.Wait()
-                                    task2.Start()
-                                    task2.Wait()
-                                    task3.Start()
-                                    task3.Wait()
-                                    task4.Start()
-                                    task4.Wait()
-                                    task5.Start()
-                                    task5.Wait()
-                                    task6.Start()
-                                    task6.Wait()
-                                Case 2
-                                    task1.Start()
-                                    task2.Start()
-                                    Task.WaitAll(task1, task2)
-                                    task3.Start()
-                                    task4.Start()
-                                    Task.WaitAll(task3, task4)
-                                    task5.Start()
-                                    task6.Start()
-                                    Task.WaitAll(task5, task6)
-                                Case 3
-                                    task1.Start()
-                                    task2.Start()
-                                    task3.Start()
-                                    Task.WaitAll(task1, task2, task3)
-                                    task4.Start()
-                                    task5.Start()
-                                    task6.Start()
-                                    Task.WaitAll(task4, task5, task6)
-                                Case Else
-                                    task1.Start()
-                                    task2.Start()
-                                    task3.Start()
-                                    task4.Start()
-                                    task5.Start()
-                                    task6.Start()
-                                    Task.WaitAll(task1, task2, task3, task4, task5, task6)
-                            End Select
+                            Dim task1 = Task.Factory.StartNew(Sub()
+                                                                  If Me.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                      .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                                                                  Else
+                                                                      .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                                                                  End If
+                                                              End Sub,
+                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      TaskCreationOptions.None,
+                                                      My.MyApplication.AppTaskScheduler)
+                            Dim task2 = Task.Factory.StartNew(Sub()
+                                                                  If Me.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                      .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                                                                  Else
+                                                                      .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                                                                  End If
+                                                              End Sub,
+                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      TaskCreationOptions.None,
+                                                      My.MyApplication.AppTaskScheduler)
+                            Dim task3 = Task.Factory.StartNew(Sub()
+                                                                  If Me.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                      .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
+                                                                  Else
+                                                                      .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
+                                                                  End If
+                                                              End Sub,
+                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      TaskCreationOptions.None,
+                                                      My.MyApplication.AppTaskScheduler)
+                            Dim task4 = Task.Factory.StartNew(Sub()
+                                                                  If Me.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                      .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
+                                                                  Else
+                                                                      .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
+                                                                  End If
+                                                              End Sub,
+                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      TaskCreationOptions.None,
+                                                      My.MyApplication.AppTaskScheduler)
+                            Dim task5 = Task.Factory.StartNew(Sub()
+                                                                  If Me.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                      .DW_CalcSolidPhaseProps()
+                                                                  Else
+                                                                      .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
+                                                                  End If
+                                                              End Sub,
+                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      TaskCreationOptions.None,
+                                                      My.MyApplication.AppTaskScheduler)
+                            Dim task6 = Task.Factory.StartNew(Sub()
+                                                                  If Me.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                                                      .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                                                                  Else
+                                                                      .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                                                                  End If
+                                                              End Sub,
+                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      TaskCreationOptions.None,
+                                                      My.MyApplication.AppTaskScheduler)
+                            Task.WaitAll(task1, task2, task3, task4, task5, task6)
                         Catch ae As AggregateException
                             Me.FlowSheet.ProcessScripts(Outros.Script.EventType.ObjectCalculationError, Outros.Script.ObjectType.FlowsheetObject, Me.Name)
                             Throw ae.Flatten().InnerException
-                        Finally
-                            'If My.Settings.EnableGPUProcessing Then
-                            '    My.MyApplication.gpu.DisableMultithreading()
-                            '    My.MyApplication.gpu.FreeAll()
-                            'End If
                         End Try
                         My.MyApplication.IsRunningParallelTasks = False
                     Else

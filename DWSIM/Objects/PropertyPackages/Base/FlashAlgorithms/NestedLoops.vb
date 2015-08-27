@@ -374,14 +374,18 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                             'My.MyApplication.gpu.EnableMultithreading()
                         End If
                         Try
-                            Dim task1 As Task = New Task(Sub()
-                                                             fx = Herror("PT", x1, P, Vz, PP)(0)
-                                                         End Sub)
-                            Dim task2 As Task = New Task(Sub()
-                                                             fx2 = Herror("PT", x1 + epsilon(j), P, Vz, PP)(0)
-                                                         End Sub)
-                            task1.Start()
-                            task2.Start()
+                            Dim task1 = Task.Factory.StartNew(Sub()
+                                                                  fx = Herror("PT", x1, P, Vz, PP)(0)
+                                                              End Sub,
+                                                              My.MyApplication.TaskCancellationTokenSource.Token,
+                                                              TaskCreationOptions.None,
+                                                              My.MyApplication.AppTaskScheduler)
+                            Dim task2 = Task.Factory.StartNew(Sub()
+                                                                  fx2 = Herror("PT", x1 + epsilon(j), P, Vz, PP)(0)
+                                                              End Sub,
+                                                              My.MyApplication.TaskCancellationTokenSource.Token,
+                                                              TaskCreationOptions.None,
+                                                              My.MyApplication.AppTaskScheduler)
                             Task.WaitAll(task1, task2)
                         Catch ae As AggregateException
                             Throw ae.Flatten().InnerException
@@ -493,18 +497,22 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     'End If
                 End If
                 Try
-                    Dim task1 As Task = New Task(Sub()
-                                                     Dim ErrRes1 = Herror("PV", 0, P, Vz, PP)
-                                                     Hb = ErrRes1(0)
-                                                     Tb = ErrRes1(1)
-                                                 End Sub)
-                    Dim task2 As Task = New Task(Sub()
-                                                     Dim ErrRes2 = Herror("PV", 1, P, Vz, PP)
-                                                     Hd = ErrRes2(0)
-                                                     Td = ErrRes2(1)
-                                                 End Sub)
-                    task1.Start()
-                    task2.Start()
+                    Dim task1 = Task.Factory.StartNew(Sub()
+                                                          Dim ErrRes1 = Herror("PV", 0, P, Vz, PP)
+                                                          Hb = ErrRes1(0)
+                                                          Tb = ErrRes1(1)
+                                                      End Sub,
+                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      TaskCreationOptions.None,
+                                                      My.MyApplication.AppTaskScheduler)
+                    Dim task2 = Task.Factory.StartNew(Sub()
+                                                          Dim ErrRes2 = Herror("PV", 1, P, Vz, PP)
+                                                          Hd = ErrRes2(0)
+                                                          Td = ErrRes2(1)
+                                                      End Sub,
+                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      TaskCreationOptions.None,
+                                                      My.MyApplication.AppTaskScheduler)
                     Task.WaitAll(task1, task2)
                 Catch ae As AggregateException
                     Throw ae.Flatten().InnerException
@@ -687,14 +695,18 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                             'My.MyApplication.gpu.EnableMultithreading()
                         End If
                         Try
-                            Dim task1 As Task = New Task(Sub()
-                                                             fx = Serror("PT", x1, P, Vz, PP)(0)
-                                                         End Sub)
-                            Dim task2 As Task = New Task(Sub()
-                                                             fx2 = Serror("PT", x1 + epsilon(j), P, Vz, PP)(0)
-                                                         End Sub)
-                            task1.Start()
-                            task2.Start()
+                            Dim task1 = Task.Factory.StartNew(Sub()
+                                                                  fx = Serror("PT", x1, P, Vz, PP)(0)
+                                                              End Sub,
+                                                              My.MyApplication.TaskCancellationTokenSource.Token,
+                                                              TaskCreationOptions.None,
+                                                              My.MyApplication.AppTaskScheduler)
+                            Dim task2 = Task.Factory.StartNew(Sub()
+                                                                  fx2 = Serror("PT", x1 + epsilon(j), P, Vz, PP)(0)
+                                                              End Sub,
+                                                              My.MyApplication.TaskCancellationTokenSource.Token,
+                                                              TaskCreationOptions.None,
+                                                              My.MyApplication.AppTaskScheduler)
                             Task.WaitAll(task1, task2)
                         Catch ae As AggregateException
                             Throw ae.Flatten().InnerException
@@ -805,18 +817,22 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     'End If
                 End If
                 Try
-                    Dim task1 As Task = New Task(Sub()
-                                                     Dim ErrRes1 = Serror("PV", 0, P, Vz, PP)
-                                                     Sb = ErrRes1(0)
-                                                     Tb = ErrRes1(1)
-                                                 End Sub)
-                    Dim task2 As Task = New Task(Sub()
-                                                     Dim ErrRes2 = Serror("PV", 1, P, Vz, PP)
-                                                     Sd = ErrRes2(0)
-                                                     Td = ErrRes2(1)
-                                                 End Sub)
-                    task1.Start()
-                    task2.Start()
+                    Dim task1 = Task.Factory.StartNew(Sub()
+                                                          Dim ErrRes1 = Serror("PV", 0, P, Vz, PP)
+                                                          Sb = ErrRes1(0)
+                                                          Tb = ErrRes1(1)
+                                                      End Sub,
+                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      TaskCreationOptions.None,
+                                                      My.MyApplication.AppTaskScheduler)
+                    Dim task2 = Task.Factory.StartNew(Sub()
+                                                          Dim ErrRes2 = Serror("PV", 1, P, Vz, PP)
+                                                          Sd = ErrRes2(0)
+                                                          Td = ErrRes2(1)
+                                                      End Sub,
+                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      TaskCreationOptions.None,
+                                                      My.MyApplication.AppTaskScheduler)
                     Task.WaitAll(task1, task2)
                 Catch ae As AggregateException
                     Throw ae.Flatten().InnerException

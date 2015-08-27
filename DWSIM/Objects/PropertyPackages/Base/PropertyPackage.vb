@@ -728,37 +728,26 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             If My.Settings.EnableParallelProcessing Then
                 My.MyApplication.IsRunningParallelTasks = True
-                If My.Settings.EnableGPUProcessing Then
-                    'If Not My.MyApplication.gpu.IsMultithreadingEnabled Then
-                    '    My.MyApplication.gpu.EnableMultithreading()
-                    'Else
-                    '    alreadymt = True
-                    'End If
-                End If
                 Try
-                    Dim task1 As Task = New Task(Sub()
-                                                     fugliq = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
-                                                 End Sub)
-                    Dim task2 As Task = New Task(Sub()
-                                                     If type = "LV" Then
-                                                         fugvap = Me.DW_CalcFugCoeff(Vy, T, P, State.Vapor)
-                                                     Else ' LL
-                                                         fugvap = Me.DW_CalcFugCoeff(Vy, T, P, State.Liquid)
-                                                     End If
-                                                 End Sub)
-
-                    task1.Start()
-                    task2.Start()
+                    Dim task1 = Task.Factory.StartNew(Sub()
+                                                          fugliq = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
+                                                      End Sub,
+                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      TaskCreationOptions.None,
+                                                      My.MyApplication.AppTaskScheduler)
+                    Dim task2 = Task.Factory.StartNew(Sub()
+                                                          If type = "LV" Then
+                                                              fugvap = Me.DW_CalcFugCoeff(Vy, T, P, State.Vapor)
+                                                          Else ' LL
+                                                              fugvap = Me.DW_CalcFugCoeff(Vy, T, P, State.Liquid)
+                                                          End If
+                                                      End Sub,
+                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      TaskCreationOptions.None,
+                                                      My.MyApplication.AppTaskScheduler)
                     Task.WaitAll(task1, task2)
                 Catch ae As AggregateException
                     Throw ae.Flatten().InnerException
-                Finally
-                    'If My.Settings.EnableGPUProcessing Then
-                    '    If Not alreadymt Then
-                    '        My.MyApplication.gpu.DisableMultithreading()
-                    '        My.MyApplication.gpu.FreeAll()
-                    '    End If
-                    'End If
                 End Try
                 My.MyApplication.IsRunningParallelTasks = False
             Else
@@ -2731,7 +2720,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
             End Select
 
-            Return New Object() {xl, xv, T, P, H, S, 1, 1, Vx, Vy, result}
+            Return New Object() {xl, xv, T, P, H, S, 1, 1, Vx, Vy, result, xl2, Vx2}
 
         End Function
 

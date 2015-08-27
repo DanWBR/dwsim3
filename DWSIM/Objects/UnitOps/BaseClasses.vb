@@ -97,17 +97,15 @@ Imports PropertyGridEx
             .Clear()
 
             Dim props As String() = Me.GetProperties(PropertyType.ALL)
+
             Dim key As Integer = 0
-
-            Dim rnd As New Random
-
             For Each prop As String In props
-                key = rnd.Next()
                 If Not NoPropVals Then
                     .Add(key, New DWSIM.Outros.NodeItem(prop, GetPropertyValue(prop, FlowSheet.Options.SelectedUnitSystem), GetPropertyUnit(prop, FlowSheet.Options.SelectedUnitSystem), key, 0, ""))
                 Else
                     .Add(key, New DWSIM.Outros.NodeItem(prop, "", "", key, 0, ""))
                 End If
+                key += 1
             Next
 
         End With

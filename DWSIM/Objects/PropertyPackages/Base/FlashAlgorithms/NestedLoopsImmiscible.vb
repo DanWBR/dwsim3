@@ -73,7 +73,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             If PP.Parameters("PP_FLASHALGORITHMFASTMODE") = 1 Then
 
                 For i = 0 To n
-                    If CompoundProperties(i).Name = PP._tpcompids(0) Then
+                    If CompoundProperties(i).Name = Me.StabSearchCompIDs(0) Then
                         wid = i
                         nwm = fi(i)
                         fi(i) = 0
@@ -206,14 +206,18 @@ out:        Return New Object() {xl1, V, Vx1, Vy, ecount, xl2, Vx2, 0.0#, PP.RET
                         'My.MyApplication.gpu.EnableMultithreading()
                     End If
                     Try
-                        Dim task1 As Task = New Task(Sub()
-                                                         fx = Herror(x1, {P, Vz, PP})
-                                                     End Sub)
-                        Dim task2 As Task = New Task(Sub()
-                                                         fx2 = Herror(x1 + 1, {P, Vz, PP})
-                                                     End Sub)
-                        task1.Start()
-                        task2.Start()
+                        Dim task1 = Task.Factory.StartNew(Sub()
+                                                              fx = Herror(x1, {P, Vz, PP})
+                                                          End Sub,
+                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      TaskCreationOptions.None,
+                                                      My.MyApplication.AppTaskScheduler)
+                        Dim task2 = Task.Factory.StartNew(Sub()
+                                                              fx2 = Herror(x1 + 1, {P, Vz, PP})
+                                                          End Sub,
+                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      TaskCreationOptions.None,
+                                                      My.MyApplication.AppTaskScheduler)
                         Task.WaitAll(task1, task2)
                     Catch ae As AggregateException
                         Throw ae.Flatten().InnerException

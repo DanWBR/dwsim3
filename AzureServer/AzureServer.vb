@@ -245,7 +245,7 @@ Module AzureServer
         Using bytestream As New MemoryStream(bytes)
             Using form As FormFlowsheet = DWSIM.DWSIM.SimulationObjects.UnitOps.Flowsheet.InitializeFlowsheet(bytestream)
                 If Not solutions.ContainsKey(form.Options.Key) Then
-                    DWSIM.DWSIM.Flowsheet.FlowsheetSolver.CalculateAll2(form, 2, ts)
+                    DWSIM.DWSIM.Flowsheet.FlowsheetSolver.CalculateAll2(form, 1, ts)
                     Using retbytes As MemoryStream = DWSIM.DWSIM.SimulationObjects.UnitOps.Flowsheet.ReturnProcessData(form)
                         Dim uncompressedbytes As Byte() = retbytes.ToArray
                         Using compressedstream As New MemoryStream()
