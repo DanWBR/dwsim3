@@ -5167,4 +5167,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="HXReTube" xml:space="preserve">
     <value>Número de Reynolds de tubo</value>
   </data>
+  <data name="SeparatorVessel_SecondLiquidPhaseFound" xml:space="preserve">
+    <value>Foi encontrada uma segunda fase líquida, por favor conecte uma corrente de matéria à saída correspondente.</value>
+  </data>
 </root>

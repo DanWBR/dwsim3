@@ -5142,4 +5142,7 @@ Die erhaltenen Daten werden hauptsächlich für die Berechnung von VLE-Daten emp
   <data name="HXReTube" xml:space="preserve">
     <value>Reynolds-Zahl Rohr</value>
   </data>
+  <data name="SeparatorVessel_SecondLiquidPhaseFound" xml:space="preserve">
+    <value>A second liquid phase was found, please connect another stream to the second liquid phase vessel outlet.</value>
+  </data>
 </root>

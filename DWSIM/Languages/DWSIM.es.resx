@@ -5152,4 +5152,7 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
   <data name="HXReTube" xml:space="preserve">
     <value>Número de Reynolds tubos</value>
   </data>
+  <data name="SeparatorVessel_SecondLiquidPhaseFound" xml:space="preserve">
+    <value>Foi encontrada uma segunda fase líquida, por favor conecte uma corrente de matéria à saída correspondente.</value>
+  </data>
 </root>

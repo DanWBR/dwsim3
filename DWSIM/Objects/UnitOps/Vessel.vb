@@ -414,7 +414,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Next
                     End With
                 Else
-                    Throw New Exception("A second liquid phase was found, please connect another stream to the second liquid phase vessel outlet.")
+                    Throw New Exception(DWSIM.App.GetLocalString("SeparatorVessel_SecondLiquidPhaseFound"))
                 End If
             End If
 
