@@ -1031,7 +1031,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 ur.selectedReport = r
                                 Dim msg2 As String = ""
                                 ur.ProduceReport(msg2)
-                                Me.FlowSheet.FormCOReports.TextBox1.AppendText(Date.Now.ToString + ", " + Me.GraphicObject.Tag + " (" + r + "):" + vbCrLf + vbCrLf + msg2 + vbCrLf + vbCrLf)
+                                Me.FlowSheet.FormCOReports.UIThread(Sub()
+                                                                        Me.FlowSheet.FormCOReports.TextBox1.AppendText(Date.Now.ToString + ", " +
+                                                                                                                       Me.GraphicObject.Tag + " (" + r + "):" +
+                                                                                                                       vbCrLf + vbCrLf + msg2 + vbCrLf + vbCrLf)
+                                                                    End Sub)
                             Next
                         End If
                     Catch ex As Exception

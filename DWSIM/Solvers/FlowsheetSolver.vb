@@ -1881,11 +1881,13 @@ Namespace DWSIM.Flowsheet
 
                             Else
 
-                                Thread.Sleep(100)
-
                                 'checks for the status of the task.
 
-                                If t0.IsCanceled Then
+                                If t0.Status = TaskStatus.Running Then
+
+                                    Thread.Sleep(100)
+
+                                ElseIf t0.IsCanceled Then
 
                                     'user cancelled the operation.
 
@@ -1927,18 +1929,18 @@ Namespace DWSIM.Flowsheet
                                 End If
                             End If
 
-                            CheckCalculatorStatus()
+                                CheckCalculatorStatus()
 
-                            'if the all recycles have converged (if any), then exit the loop.
+                                'if the all recycles have converged (if any), then exit the loop.
 
-                            If converged Then Exit While
+                                If converged Then Exit While
 
-                            If frompgrid Then
-                                objl = GetSolvingList(form, False)
-                                lists = objl(1)
-                                filteredlist = objl(2)
-                                objstack = objl(0)
-                            End If
+                                If frompgrid Then
+                                    objl = GetSolvingList(form, False)
+                                    lists = objl(1)
+                                    filteredlist = objl(2)
+                                    objstack = objl(0)
+                                End If
 
                         End While
 
@@ -2063,17 +2065,6 @@ Namespace DWSIM.Flowsheet
                         End While
                         baseexception = ex
                         form.WriteToLog(baseexception.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                        'Try
-                        '    Dim st As New StackTrace(ex, True)
-                        '    If Not baseexception Is Nothing Then st = New StackTrace(baseexception, True)
-                        '    If st.FrameCount > 0 Then
-                        '        form.WriteToLog(ex.Message.ToString & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
-                        '    Else
-                        '        form.WriteToLog(ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                        '    End If
-                        'Catch iex As Exception
-
-                        'End Try
                     Next
                     If Not form.Visible Then Throw age Else age = Nothing
 
