@@ -191,6 +191,10 @@ Namespace DWSIM
             End If
         End Function
 
+        Public Shared Function IsMainThread()
+            Return System.Threading.Thread.CurrentThread.ManagedThreadId = My.MyApplication.MainThreadId
+        End Function
+
         Public Shared Function IsRunningOnMono() As Boolean
             Return Not Type.GetType("Mono.Runtime") Is Nothing
         End Function

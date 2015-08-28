@@ -32,6 +32,7 @@ Imports System.Reflection
 Imports System.Runtime.Serialization.Formatters.Binary
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports DWSIM.DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen
+Imports System.Threading
 
 Namespace DWSIM.SimulationObjects.UnitOps
 
@@ -953,6 +954,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
         End Function
 
         Public Overrides Function Calculate(Optional ByVal args As Object = Nothing) As Integer
+
+            If Not DWSIM.App.IsMainThread Then
+                Dim data = Me.SaveData()
+                Me.LoadData(data)
+            End If
 
             UpdatePortsFromConnectors()
 

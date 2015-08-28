@@ -5170,4 +5170,10 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="SeparatorVessel_SecondLiquidPhaseFound" xml:space="preserve">
     <value>Foi encontrada uma segunda fase líquida, por favor conecte uma corrente de matéria à saída correspondente.</value>
   </data>
+  <data name="Solving" xml:space="preserve">
+    <value>Calculando</value>
+  </data>
+  <data name="PartialCalcTime" xml:space="preserve">
+    <value>calculado com sucesso, tempo requerido:</value>
+  </data>
 </root>

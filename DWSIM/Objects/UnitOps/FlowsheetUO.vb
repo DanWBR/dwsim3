@@ -851,6 +851,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             Validate()
 
+            Me.Fsheet.MasterUnitOp = Me
+
             Calculated = False
 
             MassBalanceError = 0.0#
@@ -966,7 +968,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             Fsheet.Options.CalculatorActivated = True
 
-            DWSIM.Flowsheet.FlowsheetSolver.CalculateAll2(Fsheet, My.Settings.SolverMode, My.MyApplication.TaskCancellationTokenSource)
+            Select Case My.Settings.SolverMode
+                Case 0, 3, 4
+                    DWSIM.Flowsheet.FlowsheetSolver.CalculateAll2(Fsheet, 0, My.MyApplication.TaskCancellationTokenSource)
+                Case 1, 2
+                    DWSIM.Flowsheet.FlowsheetSolver.CalculateAll2(Fsheet, 1, My.MyApplication.TaskCancellationTokenSource)
+            End Select
 
             wout = 0.0#
             For Each c In Me.GraphicObject.OutputConnectors

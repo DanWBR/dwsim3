@@ -183,6 +183,8 @@ Public Class FormMain
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
+        My.MyApplication.MainThreadID = Threading.Thread.CurrentThread.ManagedThreadId
+
         If My.Settings.BackupFolder = "" Then My.Settings.BackupFolder = My.Computer.FileSystem.SpecialDirectories.Temp & Path.DirectorySeparatorChar & "DWSIM"
         If My.Settings.BackupActivated Then
             Me.TimerBackup.Interval = My.Settings.BackupInterval * 60000
@@ -4172,20 +4174,21 @@ ruf:                Application.DoEvents()
     End Sub
 
     Private Sub bgSaveBackup_DoWork(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles bgSaveBackup.DoWork
-        Dim bw As BackgroundWorker = CType(sender, BackgroundWorker)
-        ' Start the time-consuming operation.
-        Dim folder As String = My.Settings.BackupFolder
-        Dim path As String = ""
-        For Each form0 As Form In Me.MdiChildren
-            If TypeOf form0 Is FormFlowsheet Then
-                path = folder + IO.Path.DirectorySeparatorChar + CType(form0, FormFlowsheet).Options.BackupFileName
-                Me.SaveF(path, form0)
-                If Not My.Settings.BackupFiles.Contains(path) Then
-                    My.Settings.BackupFiles.Add(path)
-                    My.Settings.Save()
+        If Not My.MyApplication.CalculatorBusy Then
+            Dim bw As BackgroundWorker = CType(sender, BackgroundWorker)
+            Dim folder As String = My.Settings.BackupFolder
+            Dim path As String = ""
+            For Each form0 As Form In Me.MdiChildren
+                If TypeOf form0 Is FormFlowsheet Then
+                    path = folder + IO.Path.DirectorySeparatorChar + CType(form0, FormFlowsheet).Options.BackupFileName
+                    Me.SaveF(path, form0)
+                    If Not My.Settings.BackupFiles.Contains(path) Then
+                        My.Settings.BackupFiles.Add(path)
+                        My.Settings.Save()
+                    End If
                 End If
-            End If
-        Next
+            Next
+        End If
     End Sub
 
     Private Sub bgSaveBackup_RunWorkerCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgSaveBackup.RunWorkerCompleted

@@ -5145,4 +5145,10 @@ Die erhaltenen Daten werden hauptsächlich für die Berechnung von VLE-Daten emp
   <data name="SeparatorVessel_SecondLiquidPhaseFound" xml:space="preserve">
     <value>A second liquid phase was found, please connect another stream to the second liquid phase vessel outlet.</value>
   </data>
+  <data name="Solving" xml:space="preserve">
+    <value>Solving</value>
+  </data>
+  <data name="PartialCalcTime" xml:space="preserve">
+    <value>solving succeeded, time taken:</value>
+  </data>
 </root>

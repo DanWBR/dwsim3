@@ -23,6 +23,9 @@ Namespace My
         Public Shared MasterCalculatorStopRequested As Boolean = False
         Public Shared CommandLineMode As Boolean = False
 
+        Public Shared MainThreadId As Integer
+        Public Shared CalculatorBusy As Boolean = False
+
         Public Shared UtilityPlugins As Dictionary(Of String, Interfaces.IUtilityPlugin)
 
         Public Shared IsRunningParallelTasks As Boolean = False

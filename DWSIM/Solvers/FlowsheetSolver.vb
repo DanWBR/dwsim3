@@ -998,7 +998,15 @@ Namespace DWSIM.Flowsheet
 
             If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
 
+            RaiseEvent MaterialStreamCalculationStarted(form, New System.EventArgs(), ms)
+
+            form.ProcessScripts(Script.EventType.ObjectCalculationStarted, Script.ObjectType.FlowsheetObject, ms.Nome)
+
             ms.Calculate(True, True)
+
+            form.ProcessScripts(Script.EventType.ObjectCalculationFinished, Script.ObjectType.FlowsheetObject, ms.Nome)
+
+            RaiseEvent MaterialStreamCalculationFinished(form, New System.EventArgs(), ms)
 
             If ms.IsSpecAttached = True And ms.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(ms.AttachedSpecId).Calculate()
 
@@ -1328,12 +1336,6 @@ Namespace DWSIM.Flowsheet
                         myobj.GraphicObject.Calculated = True
                     End If
                 Catch ex As Exception
-                    'Dim st As New StackTrace(ex, True)
-                    'If st.FrameCount > 0 Then
-                    '    form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
-                    'Else
-                    '    form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                    'End If
                     myobj.ErrorMessage = ex.Message.ToString
                     loopex = New Exception(myinfo.Tag & ": " & ex.Message)
                     If My.Settings.SolverBreakOnException Then Exit While
@@ -1375,7 +1377,8 @@ Namespace DWSIM.Flowsheet
                 End If
             Next
 
-            Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism, .TaskScheduler = My.MyApplication.AppTaskScheduler}
+            Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism,
+                                                        .TaskScheduler = My.MyApplication.AppTaskScheduler}
 
             For Each li In orderedlist
                 Dim objlist As New ArrayList
@@ -1422,23 +1425,23 @@ Namespace DWSIM.Flowsheet
         ''' </summary>
         ''' <remarks></remarks>
         Public Shared Sub CheckCalculatorStatus()
-
-            If Not My.MyApplication.IsRunningParallelTasks Then
-                If Not My.Application.CAPEOPENMode Then
-                    If My.MyApplication.CalculatorStopRequested = True Then
-                        My.MyApplication.MasterCalculatorStopRequested = True
-                        My.MyApplication.CalculatorStopRequested = False
-                        If My.MyApplication.TaskCancellationTokenSource IsNot Nothing Then
-                            My.MyApplication.TaskCancellationTokenSource.Cancel()
-                            My.MyApplication.TaskCancellationTokenSource.Token.ThrowIfCancellationRequested()
-                        Else
-                            Throw New Exception(DWSIM.App.GetLocalString("CalculationAborted"))
+            If DWSIM.App.IsMainThread Then
+                If Not My.MyApplication.IsRunningParallelTasks Then
+                    If Not My.Application.CAPEOPENMode Then
+                        If My.MyApplication.CalculatorStopRequested = True Then
+                            My.MyApplication.MasterCalculatorStopRequested = True
+                            My.MyApplication.CalculatorStopRequested = False
+                            If My.MyApplication.TaskCancellationTokenSource IsNot Nothing Then
+                                My.MyApplication.TaskCancellationTokenSource.Cancel()
+                                My.MyApplication.TaskCancellationTokenSource.Token.ThrowIfCancellationRequested()
+                            Else
+                                Throw New Exception(DWSIM.App.GetLocalString("CalculationAborted"))
+                            End If
                         End If
                     End If
+                    Application.DoEvents()
                 End If
-                Application.DoEvents()
             End If
-
         End Sub
 
         ''' <summary>
@@ -1450,7 +1453,7 @@ Namespace DWSIM.Flowsheet
         ''' <remarks></remarks>
         Shared Sub UpdateDisplayStatus(form As FormFlowsheet, Optional ByVal ObjIDlist() As String = Nothing, Optional ByVal calculating As Boolean = False)
             If form.Visible Then
-                form.FormSurface.Enabled = True
+                'form.FormSurface.Enabled = True
                 If ObjIDlist Is Nothing Then
                     For Each baseobj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
                         If Not baseobj.GraphicObject Is Nothing Then
@@ -1481,7 +1484,8 @@ Namespace DWSIM.Flowsheet
                         End If
                     Next
                 End If
-                form.FormSurface.Enabled = False
+                'form.FormSurface.Enabled = False
+                form.UIThread(Sub() Application.DoEvents())
             End If
         End Sub
 
@@ -1653,12 +1657,15 @@ Namespace DWSIM.Flowsheet
 
             If form.Options.CalculatorActivated Then
 
+                If form.MasterFlowsheet Is Nothing Then My.MyApplication.CalculatorBusy = True
+
                 'this is the cancellation token for background threads. it checks for calculator stop requests and passes the request to the tasks.
 
-                Dim ct As CancellationToken
-                If ts Is Nothing Then ts = New CancellationTokenSource
-                My.MyApplication.TaskCancellationTokenSource = ts
-                ct = My.MyApplication.TaskCancellationTokenSource.Token
+                If form.MasterFlowsheet Is Nothing Then
+                    If ts Is Nothing Then ts = New CancellationTokenSource
+                    My.MyApplication.TaskCancellationTokenSource = ts
+                End If
+                Dim ct As CancellationToken = My.MyApplication.TaskCancellationTokenSource.Token
 
                 Dim obj As SimulationObjects_BaseClass
 
@@ -1681,7 +1688,11 @@ Namespace DWSIM.Flowsheet
 
                 'adds a message to the log window to indicate that the flowsheet started solving
 
-                form.WriteToLog(DWSIM.App.GetLocalString("FSstartedsolving"), Color.Blue, FormClasses.TipoAviso.Informacao)
+                If form.MasterFlowsheet Is Nothing Then
+                    form.WriteToLog(DWSIM.App.GetLocalString("FSstartedsolving"), Color.Blue, FormClasses.TipoAviso.Informacao)
+                Else
+                    form.WriteToLog(DWSIM.App.GetLocalString("Solving") & " '" & form.MasterUnitOp.GraphicObject.Tag & "'...", Color.Blue, FormClasses.TipoAviso.Informacao)
+                End If
 
                 'gets a list of objects to be solved in the flowsheet
 
@@ -1730,7 +1741,7 @@ Namespace DWSIM.Flowsheet
 
                 'gets the GPU ready if option enabled
 
-                If My.Settings.EnableGPUProcessing Then
+                If My.Settings.EnableGPUProcessing And form.MasterFlowsheet Is Nothing Then
                     DWSIM.App.InitComputeDevice()
                     My.MyApplication.gpu.EnableMultithreading()
                 End If
@@ -1755,199 +1766,144 @@ Namespace DWSIM.Flowsheet
 
                         Dim objargs As DWSIM.Outros.StatusChangeEventArgs = Nothing
 
-                        'creates a task object which will be responsible for the calculation of all objects in the queue.
+                        Dim maintask As New Task(Sub()
 
-                        Dim t0 As task = Nothing
+                                                     While Not converged
 
-                        While Not converged
+                                                         'add the objects to the calculation queue.
 
-                            If t0 Is Nothing Then
+                                                         For Each o As String In objstack
+                                                             obj = form.Collections.ObjectCollection(o)
+                                                             objargs = New DWSIM.Outros.StatusChangeEventArgs
+                                                             With objargs
+                                                                 .Emissor = "FlowsheetSolver"
+                                                                 .Calculado = True
+                                                                 .Nome = obj.Nome
+                                                                 .Tipo = obj.GraphicObject.TipoObjeto
+                                                                 .Tag = obj.GraphicObject.Tag
+                                                                 form.CalculationQueue.Enqueue(objargs)
+                                                             End With
+                                                         Next
 
-                                'if the task hasn't been created yet, then do it...
+                                                         'set the flowsheet instance for all objects, this is required for the async threads
 
-                                'add the objects to the calculation queue.
+                                                         For Each o In form.Collections.ObjectCollection.Values
+                                                             o.SetFlowsheet(form)
+                                                         Next
 
-                                For Each o As String In objstack
-                                    obj = form.Collections.ObjectCollection(o)
-                                    objargs = New DWSIM.Outros.StatusChangeEventArgs
-                                    With objargs
-                                        .Emissor = "FlowsheetSolver"
-                                        .Calculado = True
-                                        .Nome = obj.Nome
-                                        .Tipo = obj.GraphicObject.TipoObjeto
-                                        .Tag = obj.GraphicObject.Tag
-                                        form.CalculationQueue.Enqueue(objargs)
-                                    End With
-                                Next
+                                                         If mode = 0 Then
 
-                                'set the flowsheet instance for all objects, this is required for the async threads
+                                                             ProcessCalculationQueue(form, True, True, 0, Nothing, ct)
 
-                                For Each o In form.Collections.ObjectCollection.Values
-                                    o.SetFlowsheet(form)
-                                Next
+                                                         ElseIf mode = 1 Or mode = 2 Then
 
-                                If mode = 0 Then
+                                                             filteredlist2.Clear()
 
-                                    ' this task will run synchronously with the UI thread.
+                                                             For Each li In filteredlist
+                                                                 Dim objcalclist As New List(Of StatusChangeEventArgs)
+                                                                 For Each o In li.Value
+                                                                     obj = form.Collections.ObjectCollection(o)
+                                                                     objcalclist.Add(New StatusChangeEventArgs() With {.Emissor = "FlowsheetSolver", .Nome = obj.Nome, .Tipo = obj.GraphicObject.TipoObjeto, .Tag = obj.GraphicObject.Tag})
+                                                                 Next
+                                                                 filteredlist2.Add(li.Key, objcalclist)
+                                                             Next
 
-                                    Try
-                                        t0 = New Task(Sub()
-                                                          ProcessCalculationQueue(form, True, True, 0, Nothing, ct)
-                                                      End Sub, ct)
-                                        t0.RunSynchronously()
-                                    Catch agex As AggregateException
-                                        age = agex
-                                        Exit While
-                                    Catch ex As OperationCanceledException
-                                        age = New AggregateException(DWSIM.App.GetLocalString("CalculationAborted"), ex)
-                                        Exit While
-                                    Catch ex As Exception
-                                        age = New AggregateException(ex.Message.ToString, ex)
-                                        Exit While
-                                    End Try
+                                                             ProcessCalculationQueue(form, True, True, mode, filteredlist2, ct)
 
-                                ElseIf mode = 1 Or mode = 2 Then
+                                                         End If
 
-                                    'this task will run asynchronously. the filteredlist contains the list of grouped objects to be calculated by
-                                    'the parallel solver if selected by the user.
+                                                         'checks for recycle convergence.
 
-                                    filteredlist2.Clear()
+                                                         converged = True
+                                                         For Each r As String In recycles
+                                                             obj = form.Collections.CLCS_RecycleCollection(r)
+                                                             converged = DirectCast(obj, SpecialOps.Recycle).Converged
+                                                             If Not converged Then Exit For
+                                                         Next
 
-                                    For Each li In filteredlist
-                                        Dim objcalclist As New List(Of StatusChangeEventArgs)
-                                        For Each o In li.Value
-                                            obj = form.Collections.ObjectCollection(o)
-                                            objcalclist.Add(New StatusChangeEventArgs() With {.Emissor = "FlowsheetSolver", .Nome = obj.Nome, .Tipo = obj.GraphicObject.TipoObjeto, .Tag = obj.GraphicObject.Tag})
-                                        Next
-                                        filteredlist2.Add(li.Key, objcalclist)
-                                    Next
+                                                         'process the scripts associated with the recycle loop event.
 
-                                    'starts the calculation task asynchronously.
+                                                         form.ProcessScripts(Script.EventType.SolverRecycleLoop, Script.ObjectType.Solver)
 
-                                    Dim HasCOMobj As Boolean = False
+                                                         'if the all recycles have converged (if any), then exit the loop.
 
-                                    'if the flowsheet contains COM objects, use a STA task scheduler
+                                                         If converged Then Exit While
 
-                                    If form.MasterFlowsheet Is Nothing Then
+                                                         If frompgrid Then
+                                                             objl = GetSolvingList(form, False)
+                                                             lists = objl(1)
+                                                             filteredlist = objl(2)
+                                                             objstack = objl(0)
+                                                         End If
 
-                                        For Each s In objstack
-                                            If TypeOf form.Collections.ObjectCollection(s) Is SimulationObjects.UnitOps.CapeOpenUO Or
-                                                TypeOf form.Collections.ObjectCollection(s) Is SimulationObjects.UnitOps.ExcelUO Then
-                                                HasCOMobj = True
-                                                Exit For
-                                            ElseIf TypeOf form.Collections.ObjectCollection(s) Is SimulationObjects.UnitOps.Flowsheet Then
-                                                Dim fsuo = DirectCast(form.Collections.ObjectCollection(s), SimulationObjects.UnitOps.Flowsheet)
-                                                For Each obj In fsuo.Fsheet.Collections.ObjectCollection.Values
-                                                    If TypeOf obj Is SimulationObjects.UnitOps.CapeOpenUO Or TypeOf obj Is SimulationObjects.UnitOps.ExcelUO Then
-                                                        HasCOMobj = True
-                                                        Exit For
-                                                    End If
-                                                Next
-                                            End If
-                                        Next
+                                                     End While
 
-                                        If HasCOMobj Then
-                                            My.MyApplication.AppTaskScheduler = New DWSIM.Auxiliary.TaskSchedulers.StaTaskScheduler(System.Environment.ProcessorCount)
-                                        Else
-                                            My.MyApplication.AppTaskScheduler = Tasks.TaskScheduler.Default
+                                                 End Sub)
+
+                        Dim HasCOMobj As Boolean = False
+
+                        'if the flowsheet contains COM objects, use a STA task scheduler
+
+                        If form.MasterFlowsheet Is Nothing Then
+
+                            For Each s In objstack
+                                If TypeOf form.Collections.ObjectCollection(s) Is SimulationObjects.UnitOps.CapeOpenUO Or
+                                    TypeOf form.Collections.ObjectCollection(s) Is SimulationObjects.UnitOps.ExcelUO Then
+                                    HasCOMobj = True
+                                    Exit For
+                                ElseIf TypeOf form.Collections.ObjectCollection(s) Is SimulationObjects.UnitOps.Flowsheet Then
+                                    Dim fsuo = DirectCast(form.Collections.ObjectCollection(s), SimulationObjects.UnitOps.Flowsheet)
+                                    For Each obj In fsuo.Fsheet.Collections.ObjectCollection.Values
+                                        If TypeOf obj Is SimulationObjects.UnitOps.CapeOpenUO Or TypeOf obj Is SimulationObjects.UnitOps.ExcelUO Then
+                                            HasCOMobj = True
+                                            Exit For
                                         End If
-
-                                    End If
-
-                                    If form.Visible Then form.FormSurface.Enabled = False
-
-                                    form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & DWSIM.App.GetLocalString("Fluxograma") & "...")
-
-                                    t0 = Task.Factory.StartNew(Sub()
-                                                                   Dim t = Task.Factory.StartNew(Sub()
-                                                                                                     ProcessCalculationQueue(form,
-                                                                                                                             True,
-                                                                                                                             True,
-                                                                                                                              mode,
-                                                                                                                              filteredlist2,
-                                                                                                                              ct)
-                                                                                                 End Sub, ct, TaskCreationOptions.None, My.MyApplication.AppTaskScheduler)
-                                                                   If Not t.Wait(My.Settings.SolverTimeoutSeconds * 1000, ct) Then
-                                                                       Throw New TimeoutException(DWSIM.App.GetLocalString("SolverTimeout"))
-                                                                   End If
-                                                               End Sub, ct, TaskCreationOptions.PreferFairness, My.MyApplication.AppTaskScheduler)
-
-                                    End If
-
-                            Else
-
-                                Try
-                                    t0.Wait(100, ct)
-                                Catch agex As AggregateException
-                                    age = agex
-                                    Exit While
-                                Catch ex As OperationCanceledException
-                                    age = New AggregateException(DWSIM.App.GetLocalString("CalculationAborted"), ex)
-                                    Exit While
-                                Catch ex As Exception
-                                    age = New AggregateException(ex.Message.ToString, ex)
-                                    Exit While
-                                End Try
-
-                                'checks for the status of the task.
-
-                                If t0.IsCanceled Then
-
-                                    'user cancelled the operation.
-
-                                    age = New AggregateException(DWSIM.App.GetLocalString("CalculationAborted"), New OperationCanceledException(DWSIM.App.GetLocalString("CalculationAborted")))
-                                    Exit While
-
-                                ElseIf t0.IsFaulted And ts.IsCancellationRequested Then
-
-                                    'an error occurred during the calculation because of the cancellation request.
-
-                                    age = New AggregateException(DWSIM.App.GetLocalString("CalculationAborted"), t0.Exception)
-                                    Exit While
-
-                                ElseIf t0.IsFaulted Then
-
-                                    'an error occurred during the calculation.
-
-                                    age = New AggregateException(DWSIM.App.GetLocalString("FSfinishedsolvingerror"), t0.Exception)
-                                    Exit While
-
-                                ElseIf t0.Status = TaskStatus.RanToCompletion Then
-
-                                    'the calculation finished succesfully.
-
-                                    'checks for recycle convergence.
-
-                                    converged = True
-                                    For Each r As String In recycles
-                                        obj = form.Collections.CLCS_RecycleCollection(r)
-                                        converged = DirectCast(obj, SpecialOps.Recycle).Converged
-                                        If Not converged Then Exit For
                                     Next
-                                    t0.Dispose()
-                                    t0 = Nothing
+                                End If
+                            Next
 
-                                    'process the scripts associated with the recycle loop event.
+                            If HasCOMobj Then
+                                Dim nthreads As Integer
+                                If My.Settings.MaxDegreeOfParallelism = -1 Then
+                                    nthreads = 4 * System.Environment.ProcessorCount
+                                Else
+                                    nthreads = 4 * My.Settings.MaxDegreeOfParallelism
+                                End If
+                                My.MyApplication.AppTaskScheduler = New DWSIM.Auxiliary.TaskSchedulers.StaTaskScheduler(nthreads)
+                            Else
+                                My.MyApplication.AppTaskScheduler = Tasks.TaskScheduler.Default
+                            End If
 
-                                    form.ProcessScripts(Script.EventType.SolverRecycleLoop, Script.ObjectType.Solver)
+                        End If
 
+                        Try
+                            If mode = 0 Then
+                                'this task will run synchronously with the UI thread.
+                                maintask.RunSynchronously(My.MyApplication.AppTaskScheduler)
+                            Else
+                                form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & DWSIM.App.GetLocalString("Fluxograma") & "...")
+                                'this task will run asynchronously.
+                                maintask.Start(My.MyApplication.AppTaskScheduler)
+                                If form.MasterFlowsheet Is Nothing Then
+                                    While Not (Date.Now - d1).TotalMilliseconds >= My.Settings.SolverTimeoutSeconds * 1000
+                                        maintask.Wait(150, ct)
+                                        CheckCalculatorStatus()
+                                        If maintask.Status = TaskStatus.RanToCompletion Then Exit While
+                                    End While
+                                    If maintask.Status = TaskStatus.Running Then Throw New TimeoutException(DWSIM.App.GetLocalString("SolverTimeout"))
+                                Else
+                                    maintask.Wait()
                                 End If
                             End If
+                        Catch agex As AggregateException
+                            age = agex
+                        Catch ex As OperationCanceledException
+                            age = New AggregateException(DWSIM.App.GetLocalString("CalculationAborted"), ex)
+                        Catch ex As Exception
+                            age = New AggregateException(ex.Message.ToString, ex)
+                        End Try
 
-                            CheckCalculatorStatus()
-
-                            'if the all recycles have converged (if any), then exit the loop.
-
-                            If converged Then Exit While
-
-                            If frompgrid Then
-                                objl = GetSolvingList(form, False)
-                                lists = objl(1)
-                                filteredlist = objl(2)
-                                objstack = objl(0)
-                            End If
-
-                        End While
+                        maintask.Dispose()
 
                         'clears the calculation queue.
 
@@ -1974,7 +1930,6 @@ Namespace DWSIM.Flowsheet
                         Dim azureclient As New Flowsheet.AzureSolverClient()
 
                         Try
-                            form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & DWSIM.App.GetLocalString("Fluxograma") & "...")
                             azureclient.SolveFlowsheet(form)
                             For Each baseobj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
                                 If baseobj.Calculated Then baseobj.LastUpdated = Date.Now
@@ -1995,7 +1950,6 @@ Namespace DWSIM.Flowsheet
                         Dim tcpclient As New Flowsheet.TCPSolverClient()
 
                         Try
-                            form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & DWSIM.App.GetLocalString("Fluxograma") & "...")
                             tcpclient.SolveFlowsheet(form)
                             For Each baseobj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
                                 If baseobj.Calculated Then baseobj.LastUpdated = Date.Now
@@ -2012,7 +1966,7 @@ Namespace DWSIM.Flowsheet
 
                 'Frees GPU memory if enabled.
 
-                If My.Settings.EnableGPUProcessing Then
+                If My.Settings.EnableGPUProcessing And form.MasterFlowsheet Is Nothing Then
                     My.MyApplication.gpu.DisableMultithreading()
                     My.MyApplication.gpu.FreeAll()
                 End If
@@ -2025,8 +1979,12 @@ Namespace DWSIM.Flowsheet
 
                 If age Is Nothing Then
 
-                    form.WriteToLog(DWSIM.App.GetLocalString("FSfinishedsolvingok"), Color.Blue, FormClasses.TipoAviso.Informacao)
-                    form.WriteToLog(DWSIM.App.GetLocalString("Runtime") & ": " & (Date.Now - d1).ToString("g"), Color.MediumBlue, DWSIM.FormClasses.TipoAviso.Informacao)
+                    If form.MasterFlowsheet Is Nothing Then
+                        form.WriteToLog(DWSIM.App.GetLocalString("FSfinishedsolvingok"), Color.Blue, FormClasses.TipoAviso.Informacao)
+                        form.WriteToLog(DWSIM.App.GetLocalString("Runtime") & ": " & (Date.Now - d1).ToString("g"), Color.MediumBlue, DWSIM.FormClasses.TipoAviso.Informacao)
+                    Else
+                        form.WriteToLog(form.MasterUnitOp.GraphicObject.Tag & ": " & DWSIM.App.GetLocalString("PartialCalcTime") & " " & (Date.Now - d1).ToString("g") & ".", Color.Blue, FormClasses.TipoAviso.Informacao)
+                    End If
 
                     If My.Settings.StorePreviousSolutions Then
 
@@ -2073,16 +2031,13 @@ Namespace DWSIM.Flowsheet
                         form.WriteToLog(baseexception.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
                     Next
 
-                    'If Not form.Visible Then Throw age Else age = Nothing
                     age = Nothing
 
                 End If
 
                 'updates the flowsheet display information if the form is visible.
 
-                If form.Visible Then
-
-                    form.FormSurface.Enabled = True
+                If form.Visible And form.MasterFlowsheet Is Nothing Then
 
                     form.FormWatch.UpdateList()
 
@@ -2110,11 +2065,11 @@ Namespace DWSIM.Flowsheet
 
                     If Not form.FormSurface.FlowsheetDesignSurface.SelectedObject Is Nothing Then Call form.FormSurface.UpdateSelectedObject()
 
-                    'form.FormSurface.FlowsheetDesignSurface.Focus()
-
                     Application.DoEvents()
 
                 End If
+
+                If form.MasterFlowsheet Is Nothing Then My.MyApplication.CalculatorBusy = False
 
                 form.ProcessScripts(Script.EventType.SolverFinished, Script.ObjectType.Solver)
 

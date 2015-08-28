@@ -250,10 +250,8 @@ Namespace DWSIM.SimulationObjects.SpecialOps
                     .Nome = Me.Nome
                     .Tipo = TipoObjeto.OT_Reciclo
                 End With
-                'CalculateFlowsheet(Flowsheet, objargs, Nothing)
                 Throw New Exception(DWSIM.App.GetLocalString("Nohcorrentedematriac7"))
             ElseIf Not Me.GraphicObject.InputConnectors(0).IsAttached Then
-                'Call function to calculate flowsheet
                 With objargs
                     .Calculado = False
                     .Nome = Me.Nome
@@ -524,49 +522,6 @@ Namespace DWSIM.SimulationObjects.SpecialOps
             Dim form As Global.DWSIM.FormFlowsheet = Me.Flowsheet
 
             Me.IterationCount = 0
-
-            If Not Me.GraphicObject.OutputConnectors(0).IsAttached Then
-                GoTo final
-            End If
-
-            'Dim i As Integer = 0
-            'Dim j As Integer = 0
-
-            'Dim ms As DWSIM.SimulationObjects.Streams.MaterialStream
-            'Dim cp As ConnectionPoint
-            'For Each cp In Me.GraphicObject.OutputConnectors
-            '    If cp.IsAttached Then
-            '        ms = Form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name)
-            '        j = 0
-            '        With ms
-            '            .Fases(0).SPMProperties.temperature = Nothing
-            '            .Fases(0).SPMProperties.pressure = Nothing
-            '            .Fases(0).SPMProperties.enthalpy = Nothing
-            '            Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
-            '            For Each comp In .Fases(0).Componentes.Values
-            '                comp.FracaoMolar = 0
-            '                comp.FracaoMassica = 0
-            '                j += 1
-            '            Next
-            '            .Fases(0).SPMProperties.massflow = Nothing
-            '            .Fases(0).SPMProperties.massfraction = 1
-            '            .Fases(0).SPMProperties.molarfraction = 1
-            '        End With
-            '    End If
-            '    i += 1
-            'Next
-
-final:      'Call function to calculate flowsheet
-            'Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
-            'With objargs
-            '    .Calculado = False
-            '    .Nome = Me.Nome
-            '    .Tag = Me.GraphicObject.Tag
-            '    .Tipo = TipoObjeto.OT_Reciclo
-            'End With
-
-            'CalculateFlowsheet(Flowsheet, objargs, Nothing)
-
 
         End Function
 

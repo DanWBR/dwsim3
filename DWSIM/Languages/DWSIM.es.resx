@@ -5155,4 +5155,10 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
   <data name="SeparatorVessel_SecondLiquidPhaseFound" xml:space="preserve">
     <value>Foi encontrada uma segunda fase líquida, por favor conecte uma corrente de matéria à saída correspondente.</value>
   </data>
+  <data name="Solving" xml:space="preserve">
+    <value>Calculando</value>
+  </data>
+  <data name="PartialCalcTime" xml:space="preserve">
+    <value>calculado com sucesso, tempo requerido:</value>
+  </data>
 </root>

@@ -9995,6 +9995,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to calculado com sucesso, tempo requerido:.
+        '''</summary>
+        Friend Shared ReadOnly Property PartialCalcTime() As String
+            Get
+                Return ResourceManager.GetString("PartialCalcTime", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Pbol (.
         '''</summary>
         Friend Shared ReadOnly Property Pbol() As String
@@ -13078,6 +13087,15 @@ Namespace My.Resources
         Friend Shared ReadOnly Property SolverTimeout() As String
             Get
                 Return ResourceManager.GetString("SolverTimeout", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Calculando.
+        '''</summary>
+        Friend Shared ReadOnly Property Solving() As String
+            Get
+                Return ResourceManager.GetString("Solving", resourceCulture)
             End Get
         End Property
         

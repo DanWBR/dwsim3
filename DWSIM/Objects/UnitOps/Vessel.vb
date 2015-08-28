@@ -357,6 +357,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 Me.PropertyPackage.CurrentMaterialStream = mix
 
+                mix.PropertyPackage = Me.PropertyPackage
+
                 mix.Calculate(True, True)
 
             End If
