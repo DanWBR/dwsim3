@@ -1827,17 +1827,31 @@ Namespace DWSIM.Flowsheet
                                     Dim HasCOMobj As Boolean = False
 
                                     'if the flowsheet contains COM objects, use a STA task scheduler
-                                    For Each s In objstack
-                                        If TypeOf form.Collections.ObjectCollection(s) Is SimulationObjects.UnitOps.CapeOpenUO Or
-                                            TypeOf form.Collections.ObjectCollection(s) Is SimulationObjects.UnitOps.ExcelUO Then
-                                            HasCOMobj = True
-                                        End If
-                                    Next
 
-                                    If HasCOMobj Then
-                                        My.MyApplication.AppTaskScheduler = New DWSIM.Auxiliary.TaskSchedulers.StaTaskScheduler(System.Environment.ProcessorCount)
-                                    Else
-                                        My.MyApplication.AppTaskScheduler = Tasks.TaskScheduler.Default
+                                    If form.MasterFlowsheet Is Nothing Then
+
+                                        For Each s In objstack
+                                            If TypeOf form.Collections.ObjectCollection(s) Is SimulationObjects.UnitOps.CapeOpenUO Or
+                                                TypeOf form.Collections.ObjectCollection(s) Is SimulationObjects.UnitOps.ExcelUO Then
+                                                HasCOMobj = True
+                                                Exit For
+                                            ElseIf TypeOf form.Collections.ObjectCollection(s) Is SimulationObjects.UnitOps.Flowsheet Then
+                                                Dim fsuo = DirectCast(form.Collections.ObjectCollection(s), SimulationObjects.UnitOps.Flowsheet)
+                                                For Each obj In fsuo.Fsheet.Collections.ObjectCollection.Values
+                                                    If TypeOf obj Is SimulationObjects.UnitOps.CapeOpenUO Or TypeOf obj Is SimulationObjects.UnitOps.ExcelUO Then
+                                                        HasCOMobj = True
+                                                        Exit For
+                                                    End If
+                                                Next
+                                            End If
+                                        Next
+
+                                        If HasCOMobj Then
+                                            My.MyApplication.AppTaskScheduler = New DWSIM.Auxiliary.TaskSchedulers.StaTaskScheduler(System.Environment.ProcessorCount)
+                                        Else
+                                            My.MyApplication.AppTaskScheduler = Tasks.TaskScheduler.Default
+                                        End If
+
                                     End If
 
                                     If form.Visible Then form.FormSurface.Enabled = False
@@ -1849,16 +1863,16 @@ Namespace DWSIM.Flowsheet
                                                                                                      ProcessCalculationQueue(form,
                                                                                                                              True,
                                                                                                                              True,
-                                                                                                                             mode,
-                                                                                                                             filteredlist2,
-                                                                                                                             ct)
+                                                                                                                              mode,
+                                                                                                                              filteredlist2,
+                                                                                                                              ct)
                                                                                                  End Sub, ct, TaskCreationOptions.None, My.MyApplication.AppTaskScheduler)
                                                                    If Not t.Wait(My.Settings.SolverTimeoutSeconds * 1000, ct) Then
                                                                        Throw New TimeoutException(DWSIM.App.GetLocalString("SolverTimeout"))
                                                                    End If
                                                                End Sub, ct, TaskCreationOptions.PreferFairness, My.MyApplication.AppTaskScheduler)
 
-                                End If
+                                    End If
 
                             Else
 
@@ -1920,18 +1934,18 @@ Namespace DWSIM.Flowsheet
                                 End If
                             End If
 
-                                CheckCalculatorStatus()
+                            CheckCalculatorStatus()
 
-                                'if the all recycles have converged (if any), then exit the loop.
+                            'if the all recycles have converged (if any), then exit the loop.
 
-                                If converged Then Exit While
+                            If converged Then Exit While
 
-                                If frompgrid Then
-                                    objl = GetSolvingList(form, False)
-                                    lists = objl(1)
-                                    filteredlist = objl(2)
-                                    objstack = objl(0)
-                                End If
+                            If frompgrid Then
+                                objl = GetSolvingList(form, False)
+                                lists = objl(1)
+                                filteredlist = objl(2)
+                                objstack = objl(0)
+                            End If
 
                         End While
 
