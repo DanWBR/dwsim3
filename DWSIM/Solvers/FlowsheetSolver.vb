@@ -1842,6 +1842,15 @@ Namespace DWSIM.Flowsheet
 
                         Dim HasCOMobj As Boolean = False
 
+                        'save temporary data of cape-open objects
+
+                        For Each s In objstack
+                            If TypeOf form.Collections.ObjectCollection(s) Is SimulationObjects.UnitOps.CapeOpenUO Then
+                               'saves UO data to a temporary list so it can be loaded correctly by the background threads
+                                form.Collections.CLCS_CapeOpenUOCollection(s).SaveTempData()
+                            End If
+                        Next
+
                         'if the flowsheet contains COM objects, use a STA task scheduler
 
                         If form.MasterFlowsheet Is Nothing Then

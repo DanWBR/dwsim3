@@ -50,6 +50,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Private Shadows _ports As List(Of ICapeUnitPort)
         <System.NonSerialized()> Private _params As List(Of ICapeParameter)
 
+        <System.NonSerialized> Private _tempdata As List(Of XElement)
+
         <System.NonSerialized()> Private _istr As DWSIM.SimulationObjects.UnitOps.Auxiliary.CapeOpen.ComIStreamWrapper
         Private _persisteddata As Byte()
 
@@ -901,6 +903,15 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         End Function
 
+        ''' <summary>
+        ''' Saves the current UO data in a temporary placeholder, so it can be loaded by another thread which will
+        ''' reinstantiate the COM object because of interop restrictions.
+        ''' </summary>
+        ''' <remarks></remarks>
+        Public Sub SaveTempData()
+            _tempdata = SaveData()
+        End Sub
+
         Public Property ReactionSetID() As String
             Get
                 Return Me.m_reactionSetID
@@ -956,8 +967,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Public Overrides Function Calculate(Optional ByVal args As Object = Nothing) As Integer
 
             If Not DWSIM.App.IsMainThread Then
-                Dim data = Me.SaveData()
-                Me.LoadData(data)
+                'load current configuration from temporary data and re-instantiate the COM object using the current thread.
+                'this is called only when solving the object with a background thread.
+                Me.LoadData(_tempdata)
             End If
 
             UpdatePortsFromConnectors()
