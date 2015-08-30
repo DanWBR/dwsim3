@@ -1904,6 +1904,7 @@ Namespace DWSIM.Flowsheet
                                     maintask.Wait()
                                 End If
                             End If
+                            maintask.Dispose()
                         Catch agex As AggregateException
                             age = agex
                         Catch ex As OperationCanceledException
@@ -1911,8 +1912,6 @@ Namespace DWSIM.Flowsheet
                         Catch ex As Exception
                             age = New AggregateException(ex.Message.ToString, ex)
                         End Try
-
-                        maintask.Dispose()
 
                         'clears the calculation queue.
 
