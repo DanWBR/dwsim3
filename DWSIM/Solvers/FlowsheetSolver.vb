@@ -1857,13 +1857,15 @@ Namespace DWSIM.Flowsheet
 
                             For Each s In objstack
                                 If TypeOf form.Collections.ObjectCollection(s) Is SimulationObjects.UnitOps.CapeOpenUO Or
-                                    TypeOf form.Collections.ObjectCollection(s) Is SimulationObjects.UnitOps.ExcelUO Then
+                                    TypeOf form.Collections.ObjectCollection(s) Is SimulationObjects.UnitOps.ExcelUO And
+                                    form.Collections.ObjectCollection(s).GraphicObject.Active Then
                                     HasCOMobj = True
                                     Exit For
                                 ElseIf TypeOf form.Collections.ObjectCollection(s) Is SimulationObjects.UnitOps.Flowsheet Then
                                     Dim fsuo = DirectCast(form.Collections.ObjectCollection(s), SimulationObjects.UnitOps.Flowsheet)
                                     For Each obj In fsuo.Fsheet.Collections.ObjectCollection.Values
-                                        If TypeOf obj Is SimulationObjects.UnitOps.CapeOpenUO Or TypeOf obj Is SimulationObjects.UnitOps.ExcelUO Then
+                                        If TypeOf obj Is SimulationObjects.UnitOps.CapeOpenUO Or TypeOf obj Is SimulationObjects.UnitOps.ExcelUO And
+                                            obj.GraphicObject.Active Then
                                             HasCOMobj = True
                                             Exit For
                                         End If
