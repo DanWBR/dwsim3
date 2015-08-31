@@ -56,7 +56,7 @@ Namespace DWSIM.SimulationObjects.Reactors
         Dim DN As New Dictionary(Of String, Double)
         Dim N As New Dictionary(Of String, Double)
         Dim T, P, P0, Ninerts, Winerts, E(,) As Double
-        Dim r, c, els, comps As Integer
+        Dim r, c, els, comps, cnt As Integer
         Dim ims As DWSIM.SimulationObjects.Streams.MaterialStream
 
         Public Sub New()
@@ -311,6 +311,8 @@ Namespace DWSIM.SimulationObjects.Reactors
 
             Dim pp As SimulationObjects.PropertyPackages.PropertyPackage = Me.PropertyPackage
 
+            cnt += 1
+
             i = 0
             For Each s As String In N.Keys
                 DN(s) = 0
@@ -322,7 +324,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
             For Each s As String In DN.Keys
                 N(s) = N0(s) + DN(s)
-                If N(s) > -0.1 And N(s) < 0 Then N(s) = 0.0#
+                'If N(s) > -0.1 And N(s) < 0 Then N(s) = 0.0#
             Next
 
             Dim fw(comps), fm(comps), sumfm, sum1, sumn, sumw As Double
@@ -381,7 +383,12 @@ Namespace DWSIM.SimulationObjects.Reactors
                 If s.FracaoMolar <> 0.0# Then
                     DGf = pp.AUX_DELGF_T(298.15, T, s.Nome) * s.ConstantProperties.Molar_Weight
                     fugs(i) = s.FugacityCoeff.GetValueOrDefault
-                    CP(i) = s.FracaoMolar * (DGf + Log(fugs(i) * s.FracaoMolar.GetValueOrDefault * P / P0))
+                    'XC = s.FracaoMolar.GetValueOrDefault
+                    If s.FracaoMolar.GetValueOrDefault <= 0 Then
+                        CP(i) = s.FracaoMolar * DGf * 10
+                    Else
+                        CP(i) = s.FracaoMolar * (DGf + Log(fugs(i) * s.FracaoMolar * P / P0))
+                    End If
                 Else
                     CP(i) = 0
                 End If
@@ -827,7 +834,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
             Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
 
-            Dim i, j As Integer
+            Dim i, j, l, m As Integer
 
             Me.Reactions.Clear()
             Me.ReactionExtents.Clear()
@@ -1337,20 +1344,39 @@ Namespace DWSIM.SimulationObjects.Reactors
                     i = 0
                     For Each rxid As String In Me.Reactions
                         rx = FlowSheet.Options.Reactions(rxid)
-                        j = 0
+                        l = 0
+                        m = 0
                         For Each comp As ReactionStoichBase In rx.Components.Values
                             var1 = -N0(comp.CompName) / comp.StoichCoeff
-                            If j = 0 Then
-                                lbound(i) = var1
-                                ubound(i) = var1
+
+                            If comp.StoichCoeff < 0 Then
+                                If var1 < ubound(i) Or l = 0 Then ubound(i) = var1
+                                l += 1
                             Else
-                                If var1 < lbound(i) Then lbound(i) = var1
-                                If var1 > ubound(i) Then ubound(i) = var1
+                                If var1 > lbound(i) Or m = 0 Then lbound(i) = var1
+                                m += 1
                             End If
-                            j += 1
+
                         Next
                         i += 1
                     Next
+                    'i = 0
+                    'For Each rxid As String In Me.Reactions
+                    '    rx = FlowSheet.Options.Reactions(rxid)
+                    '    j = 0
+                    '    For Each comp As ReactionStoichBase In rx.Components.Values
+                    '        var1 = -N0(comp.CompName) / comp.StoichCoeff
+                    '        If j = 0 Then
+                    '            lbound(i) = var1
+                    '            ubound(i) = var1
+                    '        Else
+                    '            If var1 < lbound(i) Then lbound(i) = var1
+                    '            If var1 > ubound(i) Then ubound(i) = var1
+                    '        End If
+                    '        j += 1
+                    '    Next
+                    '    i += 1
+                    'Next
 
                     'solve the minimization problem using reaction extents as variables.
                     'define bounds for the extents.
@@ -1360,6 +1386,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                         variables(i) = New OptBoundVariable("ksi" & CStr(i + 1), (lbound(i) + ubound(i)) / 2, lbound(i), ubound(i))
                     Next
 
+
                     Dim g0, g1 As Double
 
                     'this call to FunctionVAlue returns the initial gibbs energy of the system.
@@ -1368,17 +1395,23 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                     Me.InitialGibbsEnergy = g0
 
+                    cnt = 0
+
+                    'use my own solver
+                    REx = SolveSimplex(variables)
+
+
                     'use the Simplex solver to solve the minimization problem.
 
-                    'Dim solver As New L_BFGS_B
-                    'Dim solver As New TruncatedNewton
-                    Dim solver As New Simplex
-                    With solver
-                        .Tolerance = 0.00000001
-                        .MaxFunEvaluations = 10000
-                        REx = .ComputeMin(AddressOf FunctionValue, variables)
-                        'REx = .ComputeMin(AddressOf FunctionValue, AddressOf FunctionGradient, variables)
-                    End With
+                    ''Dim solver As New L_BFGS_B
+                    ''Dim solver As New TruncatedNewton
+                    'Dim solver As New Simplex
+                    'With solver
+                    '    .Tolerance = 0.00000001
+                    '    .MaxFunEvaluations = 10000
+                    '    REx = .ComputeMin(AddressOf FunctionValue, variables)
+                    '    'REx = .ComputeMin(AddressOf FunctionValue, AddressOf FunctionGradient, variables)
+                    'End With
 
                     'reevaluate function
                     'this call to FunctionValue returns the final gibbs energy of the system.
@@ -2024,7 +2057,115 @@ Namespace DWSIM.SimulationObjects.Reactors
             Return value
         End Function
 
-    End Class
+        Public Function SolveSimplex(ByVal Var() As OptBoundVariable) As Double()
+            'Simplified implementation of Nelder-Mead-Simplex-Downhill algorithm
+            'No "Reduction" and no "Expansion" implemented yet
+            'https://en.wikipedia.org/wiki/Nelder%E2%80%93Mead_method
 
+            Dim i, k, IdxMax As Integer
+            Dim Dx, FVnew, LF, LF1 As Double
+            Dim Beta As Double = 0.5
+            'Dimension 0: point number
+            'Dimension 1: coordinates of points; last column = 1 is indicating "at limiting border"
+            Dim Points(Var.Length, Var.Length - 1) As Double
+            Dim FuncVal(Var.Length) As Double
+            Dim Pt(Var.Length - 1) As Double
+            Dim CenterPt(Var.Length - 1) As Double
+
+            'Calculate initial value
+            For i = 0 To Var.Length - 1
+                Pt(i) = (Var(i).UpperBound - Var(i).LowerBound) / 2
+            Next
+
+            'Initialise points
+            For k = 0 To Var.Length  'points
+                For i = 0 To Var.Length - 1 'coordinates
+                    Points(k, i) = Pt(i)
+                Next
+            Next
+            For k = 1 To Var.Length
+                Dx = (Var(k - 1).UpperBound - Var(k - 1).LowerBound) / 10
+                Points(k, k - 1) += Dx
+            Next
+
+            'Calculate point values
+            For k = 0 To Var.Length
+                For i = 0 To Var.Length - 1
+                    Pt(i) = Points(k, i)
+                Next
+                FuncVal(k) = FunctionValue(Pt)
+            Next
+
+            Do
+                cnt += 1
+
+                'Search worst value e.g. maximum Gibbs Enthalpy
+                IdxMax = 0
+                For k = 1 To Var.Length
+                    If FuncVal(k) > FuncVal(IdxMax) Then IdxMax = k
+                Next
+
+                'Calculate center point as average from all points except max
+                For i = 0 To Var.Length - 1
+                    CenterPt(i) = 0
+                Next
+                For k = 0 To Var.Length
+                    If k <> IdxMax Then
+                        For i = 0 To Var.Length - 1
+                            CenterPt(i) += Points(k, i) / Var.Length
+                        Next
+                    End If
+                Next
+
+                'reflect worst point at center point
+                LF = 1
+                For i = 0 To Var.Length - 1
+                    LF1 = 1
+                    Pt(i) = CenterPt(i) + CenterPt(i) - Points(IdxMax, i)
+                    'Check if point is inside bounds
+                    If Pt(i) < Var(i).LowerBound Then
+                        LF1 = (Var(i).LowerBound - CenterPt(i)) / (Points(IdxMax, i) - CenterPt(i))
+                    End If
+                    If LF1 < LF Then LF = LF1
+                    If Pt(i) > Var(i).UpperBound Then
+                        LF1 = (Var(i).UpperBound - CenterPt(i)) / (Points(IdxMax, i) - CenterPt(i))
+                    End If
+                    If LF1 < LF Then LF = -LF1
+                Next
+                If LF < 1 Then
+                    For i = 0 To Var.Length - 1
+                        Pt(i) = CenterPt(i) + LF * (CenterPt(i) - Points(IdxMax, i))
+                    Next
+                End If
+                FVnew = FunctionValue(Pt)
+
+                If FVnew < FuncVal(IdxMax) Then
+                    'replace worst point by new one
+                    FuncVal(IdxMax) = FVnew
+                    For i = 0 To Var.Length - 1
+                        Points(IdxMax, i) = Pt(i)
+                    Next
+                Else
+                    'contract worst point to center point
+                    For i = 0 To Var.Length - 1
+                        Pt(i) = 0.5 * CenterPt(i) + 0.5 * Points(IdxMax, i)
+                    Next
+                    FVnew = FunctionValue(Pt)
+
+                    'check if solution is not improving anymore
+                    If FVnew > FuncVal(IdxMax) - 1 Then Exit Do
+
+                    'and replace worst value by contracted value
+                    FuncVal(IdxMax) = FVnew
+                    For i = 0 To Var.Length - 1
+                        Points(IdxMax, i) = Pt(i)
+                    Next
+                End If
+            Loop
+
+            Return Pt
+        End Function
+    End Class
+    
 End Namespace
 
