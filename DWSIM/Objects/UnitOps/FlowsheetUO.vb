@@ -27,6 +27,7 @@ Imports Microsoft.Msdn.Samples
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports DWSIM.DWSIM.Outros
 Imports System.IO
+Imports System.Threading.Tasks
 
 Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary
 
@@ -160,7 +161,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             Dim ci As CultureInfo = CultureInfo.InvariantCulture
 
-            Dim excs As New List(Of Exception)
+            Dim excs As New Concurrent.ConcurrentBag(Of Exception)
 
             Dim form As FormFlowsheet = New FormFlowsheet()
 
@@ -446,15 +447,26 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             data = xdoc.Element("DWSIM_Simulation_Data").Element("Compounds").Elements.ToList
 
-            For Each xel As XElement In data
-                Try
-                    Dim obj As New ConstantProperties
-                    obj.LoadData(xel.Elements.ToList)
-                    form.Options.SelectedComponents.Add(obj.Name, obj)
-                Catch ex As Exception
-                    excs.Add(New Exception("Error Loading Compound Information", ex))
-                End Try
+            Dim complist As New Concurrent.ConcurrentBag(Of ConstantProperties)
+
+            Parallel.ForEach(data, Sub(xel)
+                                       Try
+                                           Dim obj As New ConstantProperties
+                                           obj.LoadData(xel.Elements.ToList)
+                                           complist.Add(obj)
+                                       Catch ex As Exception
+                                           excs.Add(New Exception("Error Loading Compound Information", ex))
+                                       End Try
+                                   End Sub)
+
+            Dim orderedlist = complist.OrderBy(Function(o) o.Molar_Weight)
+
+            For Each obj In orderedlist
+                form.Options.SelectedComponents.Add(obj.Name, obj)
             Next
+
+            complist = Nothing
+            orderedlist = Nothing
 
             data = xdoc.Element("DWSIM_Simulation_Data").Element("PropertyPackages").Elements.ToList
 
@@ -473,115 +485,128 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             data = xdoc.Element("DWSIM_Simulation_Data").Element("SimulationObjects").Elements.ToList
 
-            For Each xel As XElement In data
+            Dim objlist As New Concurrent.ConcurrentBag(Of SimulationObjects_BaseClass)
+
+            Parallel.ForEach(data, Sub(xel)
+                                       Try
+                                           Dim id As String = xel.<Nome>.Value
+                                           Dim t As Type = Type.GetType(xel.Element("Type").Value, False)
+                                           Dim obj As SimulationObjects_BaseClass = Activator.CreateInstance(t)
+                                           Dim gobj As GraphicObject = (From go As GraphicObject In
+                                                               form.FormSurface.FlowsheetDesignSurface.drawingObjects Where go.Name = id).SingleOrDefault
+                                           obj.GraphicObject = gobj
+                                           obj.SetFlowsheet(form)
+                                           If Not obj.GraphicObject.TipoObjeto = TipoObjeto.FlowsheetUO Then
+                                               obj.FillNodeItems(True)
+                                               obj.QTFillNodeItems()
+                                           End If
+                                           If Not gobj Is Nothing Then
+                                               obj.LoadData(xel.Elements.ToList)
+                                               If TypeOf obj Is Streams.MaterialStream Then
+                                                   For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In DirectCast(obj, Streams.MaterialStream).Fases.Values
+                                                       For Each c As ConstantProperties In form.Options.SelectedComponents.Values
+                                                           phase.Componentes(c.Name).ConstantProperties = c
+                                                       Next
+                                                   Next
+                                               End If
+                                           End If
+                                           objlist.Add(obj)
+                                       Catch ex As Exception
+                                           excs.Add(New Exception("Error Loading Unit Operation Information", ex))
+                                       End Try
+                                   End Sub)
+
+            For Each obj In objlist
                 Try
-                    Dim id As String = xel.<Nome>.Value
-                    Dim t As Type = Type.GetType(xel.Element("Type").Value, False)
-                    Dim obj As SimulationObjects_BaseClass = Activator.CreateInstance(t)
-                    Dim gobj As GraphicObject = (From go As GraphicObject In
-                                        form.FormSurface.FlowsheetDesignSurface.drawingObjects Where go.Name = id).SingleOrDefault
-                    obj.GraphicObject = gobj
-                    obj.SetFlowsheet(form)
-                    obj.FillNodeItems(True)
-                    obj.QTFillNodeItems()
-                    If Not gobj Is Nothing Then
-                        form.Collections.ObjectCollection.Add(id, obj)
-                        obj.LoadData(xel.Elements.ToList)
-                        'obj.SetFlowsheet(form)
-                        If TypeOf obj Is Streams.MaterialStream Then
-                            For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In DirectCast(obj, Streams.MaterialStream).Fases.Values
-                                For Each c As ConstantProperties In form.Options.SelectedComponents.Values
-                                    phase.Componentes(c.Name).ConstantProperties = c
-                                Next
-                            Next
-                        End If
-                        With form.Collections
-                            Select Case gobj.TipoObjeto
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Compressor
-                                    .CLCS_CompressorCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Cooler
-                                    .CLCS_CoolerCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.EnergyStream
-                                    .CLCS_EnergyStreamCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Heater
-                                    .CLCS_HeaterCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.MaterialStream
-                                    .CLCS_MaterialStreamCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.NodeEn
-                                    .CLCS_EnergyMixerCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.NodeIn
-                                    .CLCS_MixerCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.NodeOut
-                                    .CLCS_SplitterCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Pipe
-                                    .CLCS_PipeCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Pump
-                                    .CLCS_PumpCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Tank
-                                    .CLCS_TankCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Expander
-                                    .CLCS_TurbineCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Valve
-                                    .CLCS_ValveCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Vessel
-                                    .CLCS_VesselCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.GO_Tabela
-                                    .ObjectCollection(gobj.Tag).Tabela = gobj
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Expander
-                                    .CLCS_TurbineCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_Ajuste
-                                    .CLCS_AdjustCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_Reciclo
-                                    .CLCS_RecycleCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_Especificacao
-                                    .CLCS_SpecCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_Conversion
-                                    .CLCS_ReactorConversionCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_Equilibrium
-                                    .CLCS_ReactorEquilibriumCollection.Add(id, obj)
-                                    .ReactorEquilibriumCollection(gobj.Name) = gobj
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_Gibbs
-                                    .CLCS_ReactorGibbsCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_CSTR
-                                    .CLCS_ReactorCSTRCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_PFR
-                                    .CLCS_ReactorPFRCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.HeatExchanger
-                                    .CLCS_HeatExchangerCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ShortcutColumn
-                                    .CLCS_ShortcutColumnCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.DistillationColumn
-                                    .CLCS_DistillationColumnCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.AbsorptionColumn
-                                    .CLCS_AbsorptionColumnCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RefluxedAbsorber
-                                    .CLCS_RefluxedAbsorberCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ReboiledAbsorber
-                                    .CLCS_ReboiledAbsorberCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_EnergyRecycle
-                                    .CLCS_EnergyRecycleCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.GO_TabelaRapida
-                                    .ObjectCollection(CType(gobj, DWSIM.GraphicObjects.QuickTableGraphic).BaseOwner.Nome).TabelaRapida = gobj
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ComponentSeparator
-                                    .CLCS_ComponentSeparatorCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OrificePlate
-                                    .CLCS_OrificePlateCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CustomUO
-                                    .CLCS_CustomUOCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ExcelUO
-                                    .CLCS_ExcelUOCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CapeOpenUO
-                                    .CLCS_CapeOpenUOCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.SolidSeparator
-                                    .CLCS_SolidsSeparatorCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Filter
-                                    .CLCS_FilterCollection.Add(id, obj)
-                                Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.FlowsheetUO
-                                    .CLCS_FlowsheetUOCollection.Add(id, obj)
-                            End Select
-                        End With
-                        obj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                    End If
+                    Dim id = obj.Nome
+                    Dim gobj = obj.GraphicObject
+                    form.Collections.ObjectCollection.Add(id, obj)
+                    With form.Collections
+                        Select Case obj.GraphicObject.TipoObjeto
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Compressor
+                                .CLCS_CompressorCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Cooler
+                                .CLCS_CoolerCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.EnergyStream
+                                .CLCS_EnergyStreamCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Heater
+                                .CLCS_HeaterCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.MaterialStream
+                                .CLCS_MaterialStreamCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.NodeEn
+                                .CLCS_EnergyMixerCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.NodeIn
+                                .CLCS_MixerCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.NodeOut
+                                .CLCS_SplitterCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Pipe
+                                .CLCS_PipeCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Pump
+                                .CLCS_PumpCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Tank
+                                .CLCS_TankCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Expander
+                                .CLCS_TurbineCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Valve
+                                .CLCS_ValveCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Vessel
+                                .CLCS_VesselCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.GO_Tabela
+                                .ObjectCollection(gobj.Tag).Tabela = gobj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Expander
+                                .CLCS_TurbineCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_Ajuste
+                                .CLCS_AdjustCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_Reciclo
+                                .CLCS_RecycleCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_Especificacao
+                                .CLCS_SpecCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_Conversion
+                                .CLCS_ReactorConversionCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_Equilibrium
+                                .CLCS_ReactorEquilibriumCollection.Add(id, obj)
+                                .ReactorEquilibriumCollection(gobj.Name) = gobj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_Gibbs
+                                .CLCS_ReactorGibbsCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_CSTR
+                                .CLCS_ReactorCSTRCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_PFR
+                                .CLCS_ReactorPFRCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.HeatExchanger
+                                .CLCS_HeatExchangerCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ShortcutColumn
+                                .CLCS_ShortcutColumnCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.DistillationColumn
+                                .CLCS_DistillationColumnCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.AbsorptionColumn
+                                .CLCS_AbsorptionColumnCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RefluxedAbsorber
+                                .CLCS_RefluxedAbsorberCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ReboiledAbsorber
+                                .CLCS_ReboiledAbsorberCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_EnergyRecycle
+                                .CLCS_EnergyRecycleCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.GO_TabelaRapida
+                                .ObjectCollection(CType(gobj, DWSIM.GraphicObjects.QuickTableGraphic).BaseOwner.Nome).TabelaRapida = gobj
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ComponentSeparator
+                                .CLCS_ComponentSeparatorCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OrificePlate
+                                .CLCS_OrificePlateCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CustomUO
+                                .CLCS_CustomUOCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ExcelUO
+                                .CLCS_ExcelUOCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CapeOpenUO
+                                .CLCS_CapeOpenUOCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.SolidSeparator
+                                .CLCS_SolidsSeparatorCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Filter
+                                .CLCS_FilterCollection.Add(id, obj)
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.FlowsheetUO
+                                .CLCS_FlowsheetUOCollection.Add(id, obj)
+                        End Select
+                    End With
+                    obj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
                 Catch ex As Exception
                     excs.Add(New Exception("Error Loading Unit Operation Information", ex))
                 End Try
@@ -769,7 +794,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Next
                     End If
                     obj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
-                 Catch ex As Exception
+                Catch ex As Exception
                     excs.Add(New Exception("Error Loading Unit Operation Information", ex))
                 End Try
             Next
