@@ -560,6 +560,7 @@ Imports DWSIM.DWSIM.Outros
         Dim frsht As FormFlowsheet
         If Not Me.MasterFlowsheet Is Nothing And Me.RedirectMessages Then
             frsht = Me.MasterFlowsheet
+            texto = "[" & Me.MasterUnitOp.GraphicObject.Tag & "] " & texto
         Else
             frsht = Me
         End If
@@ -2506,6 +2507,7 @@ Imports DWSIM.DWSIM.Outros
         Return NamedValueList()
 
     End Function
+
     Public ReadOnly Property NamedValueList() As Object Implements CapeOpen.ICapeCOSEUtilities.NamedValueList
         Get
             Return New String() {Nothing}
