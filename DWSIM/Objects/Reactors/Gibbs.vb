@@ -385,7 +385,8 @@ Namespace DWSIM.SimulationObjects.Reactors
                     fugs(i) = s.FugacityCoeff.GetValueOrDefault
                     'XC = s.FracaoMolar.GetValueOrDefault
                     If s.FracaoMolar.GetValueOrDefault <= 0 Then
-                        CP(i) = s.FracaoMolar * DGf * 10
+                        'CP(i) = s.FracaoMolar * DGf * 10
+                        CP(i) = s.FracaoMolar * -200
                     Else
                         CP(i) = s.FracaoMolar * (DGf + Log(fugs(i) * s.FracaoMolar * P / P0))
                     End If
@@ -2074,7 +2075,8 @@ Namespace DWSIM.SimulationObjects.Reactors
 
             'Calculate initial value
             For i = 0 To Var.Length - 1
-                Pt(i) = (Var(i).UpperBound - Var(i).LowerBound) / 2
+                'Pt(i) = (Var(i).UpperBound - Var(i).LowerBound) / 2
+                Pt(i) = 0
             Next
 
             'Initialise points
