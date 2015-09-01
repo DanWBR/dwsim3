@@ -67,12 +67,20 @@ Namespace DWSIM.Editors.Composition
 
             End If
 
-            Application.DoEvents()
-            CalculateMaterialStream(form, form.Collections.CLCS_MaterialStreamCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name))
+            'Call function to calculate flowsheet
+            Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+            With objargs
+                .Calculado = False
+                .Tag = form.Collections.CLCS_MaterialStreamCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).GraphicObject.Tag
+                .Nome = form.Collections.CLCS_MaterialStreamCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).Nome
+                .Tipo = form.Collections.CLCS_MaterialStreamCollection(form.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).GraphicObject.TipoObjeto
+                .Emissor = "PropertyGrid"
+            End With
+
             Call form.FormSurface.UpdateSelectedObject()
             Call form.FormSurface.FlowsheetDesignSurface.Invalidate()
-            Application.DoEvents()
-            ProcessCalculationQueue(form)
+
+            CalculateAll2(form, My.Settings.SolverMode, , True)
 
             Return value
 

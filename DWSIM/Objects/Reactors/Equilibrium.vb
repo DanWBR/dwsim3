@@ -879,7 +879,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                 i += 1
             Next
 
-            Dim DHr, Hid_r, Hid_p, Hp As Double
+            Dim DHr, Hp As Double
 
             DHr = 0
 
@@ -907,7 +907,7 @@ Namespace DWSIM.SimulationObjects.Reactors
             Loop Until i = Me.Reactions.Count
 
             'Ideal Gas Reactants Enthalpy (kJ/kg * kg/s = kW)
-            Hid_r += 0 'ppr.RET_Hid(298.15, ims.Fases(0).SPMProperties.temperature.GetValueOrDefault, PropertyPackages.Fase.Mixture) * ims.Fases(0).SPMProperties.massflow.GetValueOrDefault
+            'Hid_r += 0 'ppr.RET_Hid(298.15, ims.Fases(0).SPMProperties.temperature.GetValueOrDefault, PropertyPackages.Fase.Mixture) * ims.Fases(0).SPMProperties.massflow.GetValueOrDefault
 
             ' comp. conversions
             For Each sb As Substancia In ims.Fases(0).Componentes.Values
