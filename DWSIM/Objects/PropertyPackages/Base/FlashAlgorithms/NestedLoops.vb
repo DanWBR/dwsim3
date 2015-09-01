@@ -345,7 +345,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
 
             Dim Tmin, Tmax, epsilon(4), maxDT As Double
 
-            Tmax = 2000.0#
+            Tmax = 4000.0#
             Tmin = 50.0#
             maxDT = 30.0#
 

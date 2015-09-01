@@ -1127,10 +1127,10 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                         Case OperationMode.Adiabatic
 
-                            Me.DeltaQ = form.Collections.CLCS_EnergyStreamCollection(Me.GraphicObject.InputConnectors(1).AttachedConnector.AttachedFrom.Name).Energia.GetValueOrDefault
+                            Me.DeltaQ = 0.0#
 
                             'Products Enthalpy (kJ/kg * kg/s = kW)
-                            Dim Hp = Me.DeltaQ.GetValueOrDefault + Hr0 - DHr
+                            Dim Hp = Hr0 - DHr
 
                             tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P, Hp / ims.Fases(0).SPMProperties.massflow.GetValueOrDefault, 0)
                             Dim Tout As Double = tmp(2)
@@ -1193,7 +1193,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                             Dim Hp = ims.Fases(0).SPMProperties.enthalpy.GetValueOrDefault * ims.Fases(0).SPMProperties.massflow.GetValueOrDefault
 
                             'Heat (kW)
-                            Me.DeltaQ = Me.DeltaQ.GetValueOrDefault + Hp - Hr0 + DHr
+                            Me.DeltaQ = Hp - Hr0 + DHr
 
                             Me.DeltaT = 0
 
@@ -1234,7 +1234,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                             Dim Hp = ims.Fases(0).SPMProperties.enthalpy.GetValueOrDefault * ims.Fases(0).SPMProperties.massflow.GetValueOrDefault
 
                             'Heat (kW)
-                            Me.DeltaQ = Me.DeltaQ.GetValueOrDefault + Hp - Hr0 + DHr
+                            Me.DeltaQ = Hp - Hr0 + DHr
 
                     End Select
 
@@ -1485,7 +1485,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                         Case OperationMode.Adiabatic
 
                             'Me.DeltaQ = form.Collections.CLCS_EnergyStreamCollection(Me.GraphicObject.InputConnectors(1).AttachedConnector.AttachedFrom.Name).Energia.GetValueOrDefault
-                            Me.DeltaQ = 0 'adiabatic !
+                            Me.DeltaQ = 0.0# 'adiabatic !
 
                             'Products Enthalpy (kJ/kg * kg/s = kW)
                             'Hp = Me.DeltaQ.GetValueOrDefault + Hr0 + Hid_p - Hid_r + DHr
@@ -2165,6 +2165,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
             Return Pt
         End Function
+
     End Class
     
 End Namespace

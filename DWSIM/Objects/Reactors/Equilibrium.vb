@@ -935,10 +935,10 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                 Case OperationMode.Adiabatic
 
-                    Me.DeltaQ = form.Collections.CLCS_EnergyStreamCollection(Me.GraphicObject.InputConnectors(1).AttachedConnector.AttachedFrom.Name).Energia.GetValueOrDefault
+                    Me.DeltaQ = 0.0#
 
                     'Products Enthalpy (kJ/kg * kg/s = kW)
-                    Hp = Me.DeltaQ.GetValueOrDefault + Hr0 + Hid_p - Hid_r + DHr
+                    Hp = Hr0 + DHr
 
                     tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P, Hp / ims.Fases(0).SPMProperties.massflow.GetValueOrDefault, 0)
                     Dim Tout As Double = tmp(2)
@@ -1003,7 +1003,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                     Hp = ims.Fases(0).SPMProperties.enthalpy.GetValueOrDefault * ims.Fases(0).SPMProperties.massflow.GetValueOrDefault
 
                     'Heat (kW)
-                    Me.DeltaQ = Me.DeltaQ.GetValueOrDefault - DHr + Hid_r + Hp - Hr0 - Hid_p
+                    Me.DeltaQ = Hp - Hr0 - DHr
 
                     Me.DeltaT = 0
 
@@ -1016,9 +1016,9 @@ Namespace DWSIM.SimulationObjects.Reactors
                     ims.Fases(0).SPMProperties.temperature = Tout
 
                     With pp
-
+                        .CurrentMaterialStream = ims
                         'Calcular corrente de matéria com T e P
-                        .DW_CalcVazaoMolar()
+                        '.DW_CalcVazaoMolar()
                         .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
                         If ims.Fases(1).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
                             .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
@@ -1033,6 +1033,9 @@ Namespace DWSIM.SimulationObjects.Reactors
                         .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Mixture)
                         .DW_CalcOverallProps()
                         .DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                        .DW_CalcCompMassFlow(-1)
+                        .DW_CalcCompMolarFlow(-1)
+                        .DW_CalcCompVolFlow(-1)
                         .DW_CalcVazaoVolumetrica()
 
                     End With
@@ -1041,7 +1044,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                     Hp = ims.Fases(0).SPMProperties.enthalpy.GetValueOrDefault * ims.Fases(0).SPMProperties.massflow.GetValueOrDefault
 
                     'Heat (kW)
-                    Me.DeltaQ = Me.DeltaQ.GetValueOrDefault + DHr + Hid_r + Hp - Hr0 - Hid_p
+                    Me.DeltaQ = Hp - Hr0 - DHr
 
             End Select
 
