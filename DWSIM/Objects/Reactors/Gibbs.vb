@@ -55,7 +55,7 @@ Namespace DWSIM.SimulationObjects.Reactors
         Dim N0 As New Dictionary(Of String, Double)
         Dim DN As New Dictionary(Of String, Double)
         Dim N As New Dictionary(Of String, Double)
-        Dim T, P, P0, Ninerts, Winerts, E(,) As Double
+        Dim T, T0, P, P0, Ninerts, Winerts, E(,) As Double
         Dim r, c, els, comps, cnt As Integer
         Dim ims As DWSIM.SimulationObjects.Streams.MaterialStream
 
@@ -865,6 +865,7 @@ Namespace DWSIM.SimulationObjects.Reactors
             T = ims.Fases(0).SPMProperties.temperature.GetValueOrDefault
             P = ims.Fases(0).SPMProperties.pressure.GetValueOrDefault
             P0 = 101325
+            T0 = T
 
             'now check the selected solving method
 
@@ -1252,7 +1253,19 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                     'read stream conditions, which will be the same in the reactor.
 
-                    T = ims.Fases(0).SPMProperties.temperature.GetValueOrDefault
+                    'T0 = ims.Fases(0).SPMProperties.temperature.GetValueOrDefault
+
+                    Select Case Me.ReactorOperationMode
+                        Case OperationMode.Adiabatic
+                            T = T0 'initial value only, final value will be calculated by an iterative procedure
+                        Case OperationMode.Isothermic
+                            T = T0
+                        Case OperationMode.OutletTemperature
+                            T = OutletTemperature
+                    End Select
+
+                    ims.Fases(0).SPMProperties.temperature = T
+
                     P = ims.Fases(0).SPMProperties.pressure.GetValueOrDefault
                     P0 = 101325
 
@@ -1261,7 +1274,6 @@ Namespace DWSIM.SimulationObjects.Reactors
 
 
                     'initial estimates for reaction extents
-
                     tms = ims.Clone()
 
                     Me.ComponentConversions.Clear()
@@ -1342,6 +1354,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                     Dim ubound(Me.ReactionExtents.Count - 1) As Double
                     Dim var1 As Double
 
+                    'define bounds for the extents.
                     i = 0
                     For Each rxid As String In Me.Reactions
                         rx = FlowSheet.Options.Reactions(rxid)
@@ -1361,27 +1374,8 @@ Namespace DWSIM.SimulationObjects.Reactors
                         Next
                         i += 1
                     Next
-                    'i = 0
-                    'For Each rxid As String In Me.Reactions
-                    '    rx = FlowSheet.Options.Reactions(rxid)
-                    '    j = 0
-                    '    For Each comp As ReactionStoichBase In rx.Components.Values
-                    '        var1 = -N0(comp.CompName) / comp.StoichCoeff
-                    '        If j = 0 Then
-                    '            lbound(i) = var1
-                    '            ubound(i) = var1
-                    '        Else
-                    '            If var1 < lbound(i) Then lbound(i) = var1
-                    '            If var1 > ubound(i) Then ubound(i) = var1
-                    '        End If
-                    '        j += 1
-                    '    Next
-                    '    i += 1
-                    'Next
 
                     'solve the minimization problem using reaction extents as variables.
-                    'define bounds for the extents.
-
                     Dim variables(Me.ReactionExtents.Count - 1) As OptBoundVariable
                     For i = 0 To Me.ReactionExtents.Count - 1
                         variables(i) = New OptBoundVariable("ksi" & CStr(i + 1), (lbound(i) + ubound(i)) / 2, lbound(i), ubound(i))
@@ -1390,220 +1384,215 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                     Dim g0, g1 As Double
 
-                    'this call to FunctionVAlue returns the initial gibbs energy of the system.
-
+                    'this call to FunctionValue returns the initial gibbs energy of the system.
                     g0 = FunctionValue(REx)
-
                     Me.InitialGibbsEnergy = g0
 
-                    cnt = 0
 
-                    'use my own solver
-                    REx = SolveSimplex(variables)
-
-
-                    'use the Simplex solver to solve the minimization problem.
-
-                    ''Dim solver As New L_BFGS_B
-                    ''Dim solver As New TruncatedNewton
-                    'Dim solver As New Simplex
-                    'With solver
-                    '    .Tolerance = 0.00000001
-                    '    .MaxFunEvaluations = 10000
-                    '    REx = .ComputeMin(AddressOf FunctionValue, variables)
-                    '    'REx = .ComputeMin(AddressOf FunctionValue, AddressOf FunctionGradient, variables)
-                    'End With
-
-                    'reevaluate function
-                    'this call to FunctionValue returns the final gibbs energy of the system.
-
-                    g1 = FunctionValue(REx)
-
-                    Me.FinalGibbsEnergy = g1
-
-                    i = 0
-                    For Each r As String In Me.Reactions
-                        Me.ReactionExtents(r) = REx(i)
-                        i += 1
-                    Next
-
-                    Dim DHr, Hp As Double
-
-                    DHr = 0
-
-                    i = 0
+                    Dim CalcFinished As Boolean = False
+                    Dim TLast As Double = T0 'remember T for iteration loops
                     Do
-                        'process reaction i
-                        rx = FlowSheet.Options.Reactions(Me.Reactions(i))
+                        'use my own solver
+                        'hier wieder einspringen
+                        cnt = 0
+                        REx = SolveSimplex(variables)
 
-                        Dim id(rx.Components.Count - 1) As String
-                        Dim stcoef(rx.Components.Count - 1) As Double
-                        Dim bcidx As Integer = 0
-                        j = 0
-                        For Each sb As ReactionStoichBase In rx.Components.Values
-                            id(j) = sb.CompName
-                            stcoef(j) = sb.StoichCoeff
-                            If sb.IsBaseReactant Then bcidx = j
-                            j += 1
+                        'use the Simplex solver to solve the minimization problem.
+                        ''Dim solver As New L_BFGS_B
+                        ''Dim solver As New TruncatedNewton
+                        'Dim solver As New Simplex
+                        'With solver
+                        '    .Tolerance = 0.00000001
+                        '    .MaxFunEvaluations = 10000
+                        '    REx = .ComputeMin(AddressOf FunctionValue, variables)
+                        '    'REx = .ComputeMin(AddressOf FunctionValue, AddressOf FunctionGradient, variables)
+                        'End With
+
+                        'reevaluate function
+                        'this call to FunctionValue returns the final gibbs energy of the system.
+                        g1 = FunctionValue(REx)
+                        Me.FinalGibbsEnergy = g1
+
+                        i = 0
+                        For Each r As String In Me.Reactions
+                            Me.ReactionExtents(r) = REx(i)
+                            i += 1
                         Next
 
-                        'Heat released (or absorbed) (kJ/s = kW) (Ideal Gas)
-                        DHr += rx.ReactionHeat * Me.ReactionExtents(Me.Reactions(i)) * rx.Components(rx.BaseReactant).StoichCoeff / 1000
-                        'DHr += rx.ReactionHeat * Me.ReactionExtents(Me.Reactions(i)) * rx.Components(rx.BaseReactant).StoichCoeff / 1000
-                        'DHfT = pp.AUX_DELHig_RT(298.15, 298.15, id, stcoef, bcidx)
-                        'DHr += DHfT * Me.ReactionExtents(Me.Reactions(i)) * rx.Components(rx.BaseReactant).StoichCoeff / 1000
-                        i += 1
-                    Loop Until i = Me.Reactions.Count
+                        Dim DHr, Hp As Double
+
+                        DHr = 0
+
+                        i = 0
+                        Do
+                            'process reaction i
+                            rx = FlowSheet.Options.Reactions(Me.Reactions(i))
+
+                            Dim id(rx.Components.Count - 1) As String
+                            Dim stcoef(rx.Components.Count - 1) As Double
+                            Dim bcidx As Integer = 0
+                            j = 0
+                            For Each sb As ReactionStoichBase In rx.Components.Values
+                                id(j) = sb.CompName
+                                stcoef(j) = sb.StoichCoeff
+                                If sb.IsBaseReactant Then bcidx = j
+                                j += 1
+                            Next
+
+                            'Heat released (or absorbed) (kJ/s = kW) (Ideal Gas)
+                            DHr += rx.ReactionHeat * Me.ReactionExtents(Me.Reactions(i)) * rx.Components(rx.BaseReactant).StoichCoeff / 1000
+                            i += 1
+                        Loop Until i = Me.Reactions.Count
 
 
-                    'Ideal Gas Reactants Enthalpy (kJ/kg * kg/s = kW)
-                    'Hid_r += 0 'ppr.RET_Hid(298.15, ims.Fases(0).SPMProperties.temperature.GetValueOrDefault, PropertyPackages.Fase.Mixture) * ims.Fases(0).SPMProperties.massflow.GetValueOrDefault
+                        ' comp. conversions
+                        For Each sb As Substancia In ims.Fases(0).Componentes.Values
+                            If Me.ComponentConversions.ContainsKey(sb.Nome) Then
+                                Me.ComponentConversions(sb.Nome) = -DN(sb.Nome) / N0(sb.Nome)
+                            End If
+                        Next
 
-                    ' comp. conversions
-                    For Each sb As Substancia In ims.Fases(0).Componentes.Values
-                        If Me.ComponentConversions.ContainsKey(sb.Nome) Then
-                            Me.ComponentConversions(sb.Nome) = -DN(sb.Nome) / N0(sb.Nome)
-                        End If
-                    Next
+                        'Check to see if there are negative molar fractions.
+                        Dim sum1 As Double = 0
+                        For Each subst As Substancia In tms.Fases(0).Componentes.Values
+                            If subst.FracaoMolar.GetValueOrDefault < 0 Then
+                                subst.MolarFlow = 0
+                            Else
+                                sum1 += subst.MolarFlow.GetValueOrDefault
+                            End If
+                        Next
+                        For Each subst As Substancia In tms.Fases(0).Componentes.Values
+                            subst.FracaoMolar = subst.MolarFlow.GetValueOrDefault / sum1
+                        Next
 
-                    'Check to see if are negative molar fractions.
-                    Dim sum1 As Double = 0
-                    For Each subst As Substancia In tms.Fases(0).Componentes.Values
-                        If subst.FracaoMolar.GetValueOrDefault < 0 Then
-                            subst.MolarFlow = 0
-                        Else
-                            sum1 += subst.MolarFlow.GetValueOrDefault
-                        End If
-                    Next
-                    For Each subst As Substancia In tms.Fases(0).Componentes.Values
-                        subst.FracaoMolar = subst.MolarFlow.GetValueOrDefault / sum1
-                    Next
+                        ims = tms.Clone
 
-                    ims = tms.Clone
+                        Select Case Me.ReactorOperationMode
 
-                    Select Case Me.ReactorOperationMode
+                            Case OperationMode.Adiabatic
 
-                        Case OperationMode.Adiabatic
+                                'Me.DeltaQ = form.Collections.CLCS_EnergyStreamCollection(Me.GraphicObject.InputConnectors(1).AttachedConnector.AttachedFrom.Name).Energia.GetValueOrDefault
+                                Me.DeltaQ = 0.0# 'adiabatic !
 
-                            'Me.DeltaQ = form.Collections.CLCS_EnergyStreamCollection(Me.GraphicObject.InputConnectors(1).AttachedConnector.AttachedFrom.Name).Energia.GetValueOrDefault
-                            Me.DeltaQ = 0.0# 'adiabatic !
+                                'Products Enthalpy (kJ/kg * kg/s = kW)
+                                Hp = Hr0 + DHr
 
-                            'Products Enthalpy (kJ/kg * kg/s = kW)
-                            'Hp = Me.DeltaQ.GetValueOrDefault + Hr0 + Hid_p - Hid_r + DHr
-                            Hp = Hr0 + DHr
+                                tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P, Hp / ims.Fases(0).SPMProperties.massflow.GetValueOrDefault, 0)
+                                T = tmp(2)
 
-                            tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P, Hp / ims.Fases(0).SPMProperties.massflow.GetValueOrDefault, 0)
-                            Dim Tout As Double = tmp(2)
+                                If Math.Abs(T - TLast) < 0.1 Then CalcFinished = True
+                                TLast = T
+                                Me.DeltaT = T - T0
 
-                            Me.DeltaT = Tout - T
-                            ims.Fases(0).SPMProperties.temperature = Tout
-                            T = ims.Fases(0).SPMProperties.temperature.GetValueOrDefault
+                                ims.Fases(0).SPMProperties.temperature = T
 
-                            With pp
-                                .CurrentMaterialStream = ims
-                                'Calcular corrente de matéria com T e P
-                                '.DW_CalcVazaoMolar()
-                                .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
-                                If ims.Fases(1).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
-                                Else
-                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
-                                End If
-                                If ims.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                                Else
-                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                                End If
-                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Mixture)
-                                .DW_CalcOverallProps()
-                                .DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                                .DW_CalcCompMassFlow(-1)
-                                .DW_CalcCompMolarFlow(-1)
-                                .DW_CalcCompVolFlow(-1)
-                                .DW_CalcVazaoVolumetrica()
+                                With pp
+                                    .CurrentMaterialStream = ims
+                                    'Calcular corrente de matéria com T e P
+                                    '.DW_CalcVazaoMolar()
+                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
+                                    If ims.Fases(1).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                        .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
+                                    Else
+                                        .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
+                                    End If
+                                    If ims.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                        .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                                    Else
+                                        .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                                    End If
+                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Mixture)
+                                    .DW_CalcOverallProps()
+                                    .DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                                    .DW_CalcCompMassFlow(-1)
+                                    .DW_CalcCompMolarFlow(-1)
+                                    .DW_CalcCompVolFlow(-1)
+                                    .DW_CalcVazaoVolumetrica()
 
-                            End With
+                                End With
 
-                        Case OperationMode.Isothermic
+                            Case OperationMode.Isothermic
 
-                            With pp
-                                .CurrentMaterialStream = ims
-                                'Calcular corrente de matéria com T e P
-                                '.DW_CalcVazaoMolar()
-                                .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
-                                If ims.Fases(1).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
-                                Else
-                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
-                                End If
-                                If ims.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                With pp
+                                    .CurrentMaterialStream = ims
+                                    'Calcular corrente de matéria com T e P
+                                    '.DW_CalcVazaoMolar()
+                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
+                                    If ims.Fases(1).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                        .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
+                                    Else
+                                        .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
+                                    End If
+                                    If ims.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
 
-                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                                Else
-                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                                End If
-                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Mixture)
-                                .DW_CalcOverallProps()
-                                .DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                                .DW_CalcCompMassFlow(-1)
-                                .DW_CalcCompMolarFlow(-1)
-                                .DW_CalcCompVolFlow(-1)
-                                .DW_CalcVazaoVolumetrica()
+                                        .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                                    Else
+                                        .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                                    End If
+                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Mixture)
+                                    .DW_CalcOverallProps()
+                                    .DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                                    .DW_CalcCompMassFlow(-1)
+                                    .DW_CalcCompMolarFlow(-1)
+                                    .DW_CalcCompVolFlow(-1)
+                                    .DW_CalcVazaoVolumetrica()
 
-                            End With
+                                End With
 
-                            'Products Enthalpy (kJ/kg * kg/s = kW)
-                            Hp = ims.Fases(0).SPMProperties.enthalpy.GetValueOrDefault * ims.Fases(0).SPMProperties.massflow.GetValueOrDefault
+                                'Products Enthalpy (kJ/kg * kg/s = kW)
+                                Hp = ims.Fases(0).SPMProperties.enthalpy.GetValueOrDefault * ims.Fases(0).SPMProperties.massflow.GetValueOrDefault
 
-                            'Heat (kW)
-                            'Me.DeltaQ = Me.DeltaQ.GetValueOrDefault - DHr + Hid_r + Hp - Hr0 - Hid_p
-                            Me.DeltaQ = Hp - Hr0 - DHr
+                                'Heat (kW)
+                                Me.DeltaQ = Hp - Hr0 - DHr
 
-                            Me.DeltaT = 0
+                                Me.DeltaT = 0
+                                CalcFinished = True
 
-                        Case OperationMode.OutletTemperature
+                            Case OperationMode.OutletTemperature
 
-                            Dim Tout As Double = Me.OutletTemperature
+                                'Dim Tout As Double = Me.OutletTemperature
 
-                            Me.DeltaT = Tout - T
+                                Me.DeltaT = T - T0
 
-                            ims.Fases(0).SPMProperties.temperature = Tout
+                                ims.Fases(0).SPMProperties.temperature = OutletTemperature
+                                With pp
+                                    .CurrentMaterialStream = ims
+                                    'Calcular corrente de matéria com T e P
+                                    '.DW_CalcVazaoMolar()
+                                    .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
+                                    If ims.Fases(1).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                        .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
+                                    Else
+                                        .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
+                                    End If
+                                    If ims.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                        .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                                    Else
+                                        .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                                    End If
+                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Mixture)
+                                    .DW_CalcOverallProps()
+                                    .DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                                    .DW_CalcCompMassFlow(-1)
+                                    .DW_CalcCompMolarFlow(-1)
+                                    .DW_CalcCompVolFlow(-1)
+                                    .DW_CalcVazaoVolumetrica()
 
-                            With pp
-                                .CurrentMaterialStream = ims
-                                'Calcular corrente de matéria com T e P
-                                '.DW_CalcVazaoMolar()
-                                .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
-                                If ims.Fases(1).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
-                                Else
-                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
-                                End If
-                                If ims.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                                Else
-                                    .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                                End If
-                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Mixture)
-                                .DW_CalcOverallProps()
-                                .DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                                .DW_CalcCompMassFlow(-1)
-                                .DW_CalcCompMolarFlow(-1)
-                                .DW_CalcCompVolFlow(-1)
-                                .DW_CalcVazaoVolumetrica()
+                                End With
 
-                            End With
+                                'Products Enthalpy (kJ/kg * kg/s = kW)
+                                Hp = ims.Fases(0).SPMProperties.enthalpy.GetValueOrDefault * ims.Fases(0).SPMProperties.massflow.GetValueOrDefault
 
-                            'Products Enthalpy (kJ/kg * kg/s = kW)
-                            Hp = ims.Fases(0).SPMProperties.enthalpy.GetValueOrDefault * ims.Fases(0).SPMProperties.massflow.GetValueOrDefault
+                                'Heat (kW)
+                                Me.DeltaQ = Hp - Hr0 - DHr
 
-                            'Heat (kW)
-                            'Me.DeltaQ = Me.DeltaQ.GetValueOrDefault + Hp - Hr0 + DHr
-                            Me.DeltaQ = Hp - Hr0 - DHr
+                                CalcFinished = True
+                        End Select
 
-                    End Select
+                    Loop Until CalcFinished
 
             End Select
+
 
             Dim W As Double = ims.Fases(0).SPMProperties.massflow.GetValueOrDefault
 
@@ -2155,7 +2144,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                     FVnew = FunctionValue(Pt)
 
                     'check if solution is not improving anymore
-                    If FVnew > FuncVal(IdxMax) - 1 Then Exit Do
+                    If FVnew > FuncVal(IdxMax) - 0.01 Then Exit Do
 
                     'and replace worst value by contracted value
                     FuncVal(IdxMax) = FVnew
@@ -2165,6 +2154,14 @@ Namespace DWSIM.SimulationObjects.Reactors
                 End If
             Loop
 
+            'Search best value to be returned e.g. minimum Gibbs Enthalpy
+            IdxMax = 0
+            For k = 1 To Var.Length
+                If FuncVal(k) < FuncVal(IdxMax) Then IdxMax = k
+            Next
+            For i = 0 To Var.Length - 1
+                Pt(i) = Points(IdxMax, i)
+            Next
             Return Pt
         End Function
 
