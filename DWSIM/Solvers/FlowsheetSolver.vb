@@ -1906,13 +1906,15 @@ Namespace DWSIM.Flowsheet
                                     maintask.Wait()
                                 End If
                             End If
-                            maintask.Dispose()
+                            If maintask.IsFaulted Then Throw maintask.Exception
                         Catch agex As AggregateException
                             age = agex
                         Catch ex As OperationCanceledException
                             age = New AggregateException(DWSIM.App.GetLocalString("CalculationAborted"), ex)
                         Catch ex As Exception
                             age = New AggregateException(ex.Message.ToString, ex)
+                        Finally
+                            maintask.Dispose()
                         End Try
 
                         'clears the calculation queue.
