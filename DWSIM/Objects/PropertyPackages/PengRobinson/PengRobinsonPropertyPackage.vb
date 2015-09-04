@@ -310,7 +310,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molarflow = result
                 result = result * Me.AUX_MMM(fase) / 1000
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.massflow = result
-                result = phasemolarfrac * overallmolarflow * Me.AUX_MMM(fase) / 1000 / Me.CurrentMaterialStream.Fases(0).SPMProperties.massflow.GetValueOrDefault
+                If Me.CurrentMaterialStream.Fases(0).SPMProperties.massflow.GetValueOrDefault > 0 Then
+                    result = phasemolarfrac * overallmolarflow * Me.AUX_MMM(fase) / 1000 / Me.CurrentMaterialStream.Fases(0).SPMProperties.massflow.GetValueOrDefault
+                Else
+                    result = 0
+                End If
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.massfraction = result
                 Me.DW_CalcCompVolFlow(phaseID)
                 Me.DW_CalcCompFugCoeff(fase)
