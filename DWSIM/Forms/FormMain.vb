@@ -2279,34 +2279,69 @@ Public Class FormMain
 
         Dim objlist As New Concurrent.ConcurrentBag(Of SimulationObjects_BaseClass)
 
-        Parallel.ForEach(data, Sub(xel)
-                                   Try
-                                       Dim id As String = xel.<Nome>.Value
-                                       Dim t As Type = Type.GetType(xel.Element("Type").Value, False)
-                                       Dim obj As SimulationObjects_BaseClass = Activator.CreateInstance(t)
-                                       Dim gobj As GraphicObjects.GraphicObject = (From go As GraphicObjects.GraphicObject In
-                                                           form.FormSurface.FlowsheetDesignSurface.drawingObjects Where go.Name = id).SingleOrDefault
-                                       obj.GraphicObject = gobj
-                                       obj.SetFlowsheet(form)
-                                       If Not obj.GraphicObject.TipoObjeto = TipoObjeto.FlowsheetUO Then
-                                           obj.FillNodeItems(True)
-                                           obj.QTFillNodeItems()
-                                       End If
-                                       If Not gobj Is Nothing Then
-                                           obj.LoadData(xel.Elements.ToList)
-                                           If TypeOf obj Is Streams.MaterialStream Then
-                                               For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In DirectCast(obj, Streams.MaterialStream).Fases.Values
-                                                   For Each c As ConstantProperties In form.Options.SelectedComponents.Values
-                                                       phase.Componentes(c.Name).ConstantProperties = c
-                                                   Next
-                                               Next
+        If form.Collections.FlowsheetUOCollection.Count = 0 Then
+
+            Parallel.ForEach(data, Sub(xel)
+                                       Try
+                                           Dim id As String = xel.<Nome>.Value
+                                           Dim t As Type = Type.GetType(xel.Element("Type").Value, False)
+                                           Dim obj As SimulationObjects_BaseClass = Activator.CreateInstance(t)
+                                           Dim gobj As GraphicObjects.GraphicObject = (From go As GraphicObjects.GraphicObject In
+                                                               form.FormSurface.FlowsheetDesignSurface.drawingObjects Where go.Name = id).SingleOrDefault
+                                           obj.GraphicObject = gobj
+                                           obj.SetFlowsheet(form)
+                                           If Not obj.GraphicObject.TipoObjeto = TipoObjeto.FlowsheetUO Then
+                                               obj.FillNodeItems(True)
+                                               obj.QTFillNodeItems()
                                            End If
-                                       End If
-                                       objlist.Add(obj)
-                                   Catch ex As Exception
-                                       excs.Add(New Exception("Error Loading Unit Operation Information", ex))
-                                   End Try
-                               End Sub)
+                                           If Not gobj Is Nothing Then
+                                               obj.LoadData(xel.Elements.ToList)
+                                               If TypeOf obj Is Streams.MaterialStream Then
+                                                   For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In DirectCast(obj, Streams.MaterialStream).Fases.Values
+                                                       For Each c As ConstantProperties In form.Options.SelectedComponents.Values
+                                                           phase.Componentes(c.Name).ConstantProperties = c
+                                                       Next
+                                                   Next
+                                               End If
+                                           End If
+                                           objlist.Add(obj)
+                                       Catch ex As Exception
+                                           excs.Add(New Exception("Error Loading Unit Operation Information", ex))
+                                       End Try
+                                   End Sub)
+
+        Else
+
+            For Each xel In data
+                Try
+                    Dim id As String = xel.<Nome>.Value
+                    Dim t As Type = Type.GetType(xel.Element("Type").Value, False)
+                    Dim obj As SimulationObjects_BaseClass = Activator.CreateInstance(t)
+                    Dim gobj As GraphicObjects.GraphicObject = (From go As GraphicObjects.GraphicObject In
+                                        form.FormSurface.FlowsheetDesignSurface.drawingObjects Where go.Name = id).SingleOrDefault
+                    obj.GraphicObject = gobj
+                    obj.SetFlowsheet(form)
+                    If Not obj.GraphicObject.TipoObjeto = TipoObjeto.FlowsheetUO Then
+                        obj.FillNodeItems(True)
+                        obj.QTFillNodeItems()
+                    End If
+                    If Not gobj Is Nothing Then
+                        obj.LoadData(xel.Elements.ToList)
+                        If TypeOf obj Is Streams.MaterialStream Then
+                            For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In DirectCast(obj, Streams.MaterialStream).Fases.Values
+                                For Each c As ConstantProperties In form.Options.SelectedComponents.Values
+                                    phase.Componentes(c.Name).ConstantProperties = c
+                                Next
+                            Next
+                        End If
+                    End If
+                    objlist.Add(obj)
+                Catch ex As Exception
+                    excs.Add(New Exception("Error Loading Unit Operation Information", ex))
+                End Try
+            Next
+
+        End If
 
         For Each obj In objlist
             Try
@@ -4264,5 +4299,5 @@ ruf:                Application.DoEvents()
 
 #End Region
 
-    
+
 End Class
