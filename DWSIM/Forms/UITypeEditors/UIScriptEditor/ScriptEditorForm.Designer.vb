@@ -27,7 +27,7 @@ Partial Class ScriptEditorForm
         Me.FaTabStrip2 = New FarsiLibrary.Win.FATabStrip()
         Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem()
         Me.textBoxTooltip = New System.Windows.Forms.TextBox()
-        Me.listBoxAutoComplete = New GListBox
+        Me.listBoxAutoComplete = New Global.DWSIM.GListBox()
         Me.imageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.txtScript = New Alsing.Windows.Forms.SyntaxBoxControl()
         Me.FaTabStripItem4 = New FarsiLibrary.Win.FATabStripItem()
@@ -48,6 +48,11 @@ Partial Class ScriptEditorForm
         Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton5 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
+        Me.btnDebug = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
+        Me.HelpToolStripButton = New System.Windows.Forms.ToolStripButton()
+        Me.APIHelptsbutton = New System.Windows.Forms.ToolStripButton()
         Me.ofd1 = New System.Windows.Forms.OpenFileDialog()
         Me.sfd1 = New System.Windows.Forms.SaveFileDialog()
         Me.ofd2 = New System.Windows.Forms.OpenFileDialog()
@@ -78,6 +83,7 @@ Partial Class ScriptEditorForm
         Me.FaTabStripItem3.Controls.Add(Me.txtScript)
         Me.FaTabStripItem3.IsDrawn = True
         Me.FaTabStripItem3.Name = "FaTabStripItem3"
+        Me.FaTabStripItem3.Selected = True
         '
         'textBoxTooltip
         '
@@ -142,7 +148,6 @@ Partial Class ScriptEditorForm
         Me.FaTabStripItem4.Controls.Add(Me.ListBox1)
         Me.FaTabStripItem4.IsDrawn = True
         Me.FaTabStripItem4.Name = "FaTabStripItem4"
-        Me.FaTabStripItem4.Selected = True
         '
         'ListBox1
         '
@@ -155,7 +160,7 @@ Partial Class ScriptEditorForm
         'ToolStrip1
         '
         resources.ApplyResources(Me.ToolStrip1, "ToolStrip1")
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenToolStripButton, Me.SaveToolStripButton, Me.PrintToolStripButton, Me.toolStripSeparator, Me.CutToolStripButton, Me.CopyToolStripButton, Me.PasteToolStripButton, Me.toolStripSeparator1, Me.tscb1, Me.tscb2, Me.ToolStripSeparator2, Me.ToolStripButton2, Me.ToolStripButton3, Me.ToolStripButton4, Me.ToolStripButton5})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenToolStripButton, Me.SaveToolStripButton, Me.PrintToolStripButton, Me.toolStripSeparator, Me.CutToolStripButton, Me.CopyToolStripButton, Me.PasteToolStripButton, Me.toolStripSeparator1, Me.tscb1, Me.tscb2, Me.ToolStripSeparator2, Me.ToolStripButton2, Me.ToolStripButton3, Me.ToolStripButton4, Me.ToolStripButton5, Me.ToolStripSeparator3, Me.btnDebug, Me.ToolStripSeparator4, Me.HelpToolStripButton, Me.APIHelptsbutton})
         Me.ToolStrip1.Name = "ToolStrip1"
         '
         'OpenToolStripButton
@@ -253,6 +258,36 @@ Partial Class ScriptEditorForm
         Me.ToolStripButton5.Image = Global.DWSIM.My.Resources.Resources.shape_square_delete
         Me.ToolStripButton5.Name = "ToolStripButton5"
         '
+        'ToolStripSeparator3
+        '
+        resources.ApplyResources(Me.ToolStripSeparator3, "ToolStripSeparator3")
+        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
+        '
+        'btnDebug
+        '
+        resources.ApplyResources(Me.btnDebug, "btnDebug")
+        Me.btnDebug.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.btnDebug.Image = Global.DWSIM.My.Resources.Resources.control_play
+        Me.btnDebug.Name = "btnDebug"
+        '
+        'ToolStripSeparator4
+        '
+        resources.ApplyResources(Me.ToolStripSeparator4, "ToolStripSeparator4")
+        Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
+        '
+        'HelpToolStripButton
+        '
+        resources.ApplyResources(Me.HelpToolStripButton, "HelpToolStripButton")
+        Me.HelpToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.HelpToolStripButton.Name = "HelpToolStripButton"
+        '
+        'APIHelptsbutton
+        '
+        resources.ApplyResources(Me.APIHelptsbutton, "APIHelptsbutton")
+        Me.APIHelptsbutton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.APIHelptsbutton.Image = Global.DWSIM.My.Resources.Resources.script_code
+        Me.APIHelptsbutton.Name = "APIHelptsbutton"
+        '
         'ofd1
         '
         Me.ofd1.FileName = "OpenFileDialog1"
@@ -332,4 +367,9 @@ Partial Class ScriptEditorForm
     Friend WithEvents listBoxAutoComplete As GListBox
     Public WithEvents treeViewItems As System.Windows.Forms.TreeView
     Public WithEvents imageList1 As System.Windows.Forms.ImageList
+    Friend WithEvents ToolStripSeparator3 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents APIHelptsbutton As System.Windows.Forms.ToolStripButton
+    Friend WithEvents HelpToolStripButton As System.Windows.Forms.ToolStripButton
+    Public WithEvents btnDebug As System.Windows.Forms.ToolStripButton
+    Public WithEvents ToolStripSeparator4 As System.Windows.Forms.ToolStripSeparator
 End Class

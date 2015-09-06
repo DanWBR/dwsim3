@@ -327,6 +327,10 @@ Imports System.Drawing.Text
                 ' Hide the member list view
                 If e.KeyCode <> Keys.ShiftKey Then Me.listBoxAutoComplete.Hide()
             End If
+        ElseIf e.KeyValue = Keys.F5 Then
+
+            btnDebug_Click(sender, e)
+
         Else
             ' Letter or number typed, search for it in the listview
             If Me.listBoxAutoComplete.Visible Then
@@ -731,5 +735,20 @@ Imports System.Drawing.Text
     End Function
 
 #End Region
+
+    Private Sub APIHelptsbutton_Click(sender As Object, e As EventArgs) Handles APIHelptsbutton.Click
+        Process.Start("http://dwsim.inforside.com.br/api_help/index.html")
+    End Sub
+
+    Private Sub HelpToolStripButton_Click(sender As Object, e As EventArgs) Handles HelpToolStripButton.Click
+        Process.Start("http://dwsim.inforside.com.br/wiki/index.php?title=Using_the_IronPython_Script_Manager")
+    End Sub
+
+    Private Sub btnDebug_Click(sender As Object, e As EventArgs) Handles btnDebug.Click
+        Dim mycuo As DWSIM.SimulationObjects.UnitOps.CustomUO = My.Application.ActiveSimulation.Collections.ObjectCollection(My.Application.ActiveSimulation.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
+        mycuo.Includes = includes
+        mycuo.ScriptText = Me.txtScript.Document.Text
+        DWSIM.Flowsheet.FlowsheetSolver.CalculateObject(My.Application.ActiveSimulation, mycuo.Name)
+    End Sub
 
 End Class

@@ -2175,6 +2175,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="dwsim_splash.ico" />
+    <None Include="Resources\script_code.png" />
     <None Include="Resources\table_relationship.png" />
     <EmbeddedResource Include="Utilities\UNIFAC_Regression\FormUNIFACRegression.de.resx">
       <DependentUpon>FormUNIFACRegression.vb</DependentUpon>

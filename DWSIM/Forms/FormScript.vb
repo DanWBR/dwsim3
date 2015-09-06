@@ -567,6 +567,10 @@ Imports DWSIM.DWSIM.Outros
 
     End Sub
 
+    Private Sub APIHelptsbutton_Click(sender As Object, e As EventArgs) Handles APIHelptsbutton.Click
+        Process.Start("http://dwsim.inforside.com.br/api_help/index.html")
+    End Sub
+
 End Class
 
 Public Class TextBoxStream

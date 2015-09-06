@@ -2166,6 +2166,6 @@ Namespace DWSIM.SimulationObjects.Reactors
         End Function
 
     End Class
-    
+
 End Namespace
 

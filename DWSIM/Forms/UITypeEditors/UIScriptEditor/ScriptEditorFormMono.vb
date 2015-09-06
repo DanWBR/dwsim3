@@ -178,4 +178,15 @@ Imports System.Drawing.Text
         If Me.Opacity > 0.0# Then Me.Opacity -= 0.05
     End Sub
 
+    Private Sub APIHelptsbutton_Click(sender As Object, e As EventArgs) Handles APIHelptsbutton.Click
+        Process.Start("http://dwsim.inforside.com.br/api_help/index.html")
+    End Sub
+
+    Private Sub HelpToolStripButton_Click(sender As Object, e As EventArgs) Handles HelpToolStripButton.Click
+        Process.Start("http://dwsim.inforside.com.br/wiki/index.php?title=Using_the_IronPython_Script_Manager")
+    End Sub
+
+    Private Sub txtScript_KeyDown_1(sender As Object, e As KeyEventArgs) Handles txtScript.KeyDown
+        If e.KeyCode = Keys.F5 Then ToolStripButton1_Click(sender, e)
+    End Sub
 End Class
