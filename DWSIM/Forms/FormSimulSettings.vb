@@ -1033,28 +1033,6 @@ Public Class FormSimulSettings
         'End If
     End Sub
 
-    Sub AddComponent(ByVal compID As String)
-        If Not Me.FrmChild.Options.SelectedComponents.ContainsKey(compID) Then
-            Dim tmpcomp As New DWSIM.ClassesBasicasTermodinamica.ConstantProperties
-            tmpcomp = Me.FrmChild.Options.NotSelectedComponents(compID)
-            Me.FrmChild.Options.SelectedComponents.Add(tmpcomp.Name, tmpcomp)
-            Me.FrmChild.Options.NotSelectedComponents.Remove(tmpcomp.Name)
-            Dim ms As DWSIM.SimulationObjects.Streams.MaterialStream
-            For Each ms In FrmChild.Collections.CLCS_MaterialStreamCollection.Values
-                For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In ms.Fases.Values
-                    phase.Componentes.Add(tmpcomp.Name, New DWSIM.ClassesBasicasTermodinamica.Substancia(tmpcomp.Name, ""))
-                    phase.Componentes(tmpcomp.Name).ConstantProperties = tmpcomp
-                Next
-            Next
-            Me.ListViewA.Items.Add(tmpcomp.Name, DWSIM.App.GetComponentName(tmpcomp.Name), 0).Tag = tmpcomp.Name
-            SetupKeyCompounds()
-        End If
-    End Sub
-
-    Sub RemoveComponent(ByVal compID As String)
-        Me.RemoveCompFromSimulation(compID)
-    End Sub
-
     Sub AddCompToSimulation(ByVal index As Integer)
 
         ' TODO Add code to check that index is within range. If it is out of range, don't do anything.
@@ -1143,17 +1121,21 @@ Public Class FormSimulSettings
     End Sub
 
     Private Sub Button10_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button10.Click
-        If Me.ListViewA.SelectedItems.Count > 0 Then
-            For Each lvi As ListViewItem In Me.ListViewA.SelectedItems
-                Me.RemoveCompFromSimulation(lvi.Tag)
-            Next
+        If MessageBox.Show(DWSIM.App.GetLocalString("ConfirmOperation"), "DWSIM", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
+            If Me.ListViewA.SelectedItems.Count > 0 Then
+                For Each lvi As ListViewItem In Me.ListViewA.SelectedItems
+                    Me.RemoveCompFromSimulation(lvi.Tag)
+                Next
+            End If
         End If
     End Sub
 
     Private Sub Button11_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button11.Click
-        For Each lvi As ListViewItem In Me.ListViewA.Items
-            Me.RemoveCompFromSimulation(lvi.Tag)
-        Next
+        If MessageBox.Show(DWSIM.App.GetLocalString("ConfirmOperation"), "DWSIM", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
+            For Each lvi As ListViewItem In Me.ListViewA.Items
+                Me.RemoveCompFromSimulation(lvi.Tag)
+            Next
+        End If
     End Sub
 
     Private Sub ogc1_DataError(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewDataErrorEventArgs) Handles ogc1.DataError
@@ -1356,5 +1338,61 @@ Public Class FormSimulSettings
             Next
             DWSIM.Databases.UserDB.AddCompounds(comps.ToArray, sfdxml1.FileName, True)
         End If
+    End Sub
+
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
+
+        If Me.loaded Then
+            If MessageBox.Show(DWSIM.App.GetLocalString("ConfirmOperation"), "DWSIM", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
+
+                Dim tmpsubst As New DWSIM.ClassesBasicasTermodinamica.Substancia("", "")
+                Dim toreplace As DWSIM.ClassesBasicasTermodinamica.ConstantProperties = Nothing
+
+                If DWSIM.App.IsRunningOnMono Then
+                    If Me.ogc1.SelectedCells.Count > 0 Then
+                        toreplace = FrmChild.Options.NotSelectedComponents(ogc1.Rows(ogc1.SelectedCells(0).RowIndex).Cells(0).Value)
+                    End If
+                Else
+                    If Me.ogc1.SelectedRows.Count > 0 Then
+                        toreplace = FrmChild.Options.NotSelectedComponents(ogc1.Rows(ogc1.SelectedRows(0).Index).Cells(0).Value)
+                    End If
+                End If
+
+                Dim proplist As New ArrayList
+                For Each mstr In FrmChild.Collections.CLCS_MaterialStreamCollection.Values
+                    For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In mstr.Fases.Values
+                        tmpsubst = phase.Componentes(Me.ListViewA.SelectedItems(0).Tag)
+                        phase.Componentes.Remove(Me.ListViewA.SelectedItems(0).Tag)
+                        tmpsubst.ConstantProperties = toreplace
+                        tmpsubst.Nome = toreplace.Name
+                        phase.Componentes.Add(tmpsubst.Nome, tmpsubst)
+                    Next
+                    proplist.Clear()
+                    For Each pi As DWSIM.Outros.NodeItem In mstr.NodeTableItems.Values
+                        If pi.Checked Then
+                            proplist.Add(pi.Text)
+                        End If
+                    Next
+                    mstr.FillNodeItems()
+                    For Each pi As DWSIM.Outros.NodeItem In mstr.NodeTableItems.Values
+                        If proplist.Contains(pi.Text) Then
+                            pi.Checked = True
+                        End If
+                    Next
+                Next
+                If Not DWSIM.App.IsRunningOnMono Then Me.ogc1.Rows.RemoveAt(Me.ogc1.SelectedRows(0).Index)
+                Me.FrmChild.Options.NotSelectedComponents.Add(Me.ListViewA.SelectedItems(0).Tag, Me.FrmChild.Options.SelectedComponents(Me.ListViewA.SelectedItems(0).Tag))
+                Me.FrmChild.Options.SelectedComponents.Remove(Me.ListViewA.SelectedItems(0).Tag)
+                Me.FrmChild.Options.SelectedComponents.Add(toreplace.Name, toreplace)
+                Me.ListViewA.SelectedItems(0).Tag = toreplace.Name
+                Me.ListViewA.SelectedItems(0).Text = DWSIM.App.GetLocalString(toreplace.Name)
+                SetupKeyCompounds()
+            End If
+        End If
+
+    End Sub
+
+    Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
+        TextBox1.Text = ""
     End Sub
 End Class

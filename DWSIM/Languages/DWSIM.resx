@@ -5176,4 +5176,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="PartialCalcTime" xml:space="preserve">
     <value>calculado com sucesso, tempo requerido:</value>
   </data>
+  <data name="ConfirmOperation" xml:space="preserve">
+    <value>Confirma a operação?</value>
+  </data>
 </root>

@@ -5161,4 +5161,7 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
   <data name="PartialCalcTime" xml:space="preserve">
     <value>calculado com sucesso, tempo requerido:</value>
   </data>
+  <data name="ConfirmOperation" xml:space="preserve">
+    <value>Confirma la operación?</value>
+  </data>
 </root>

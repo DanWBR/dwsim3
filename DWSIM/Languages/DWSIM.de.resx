@@ -5151,4 +5151,7 @@ Die erhaltenen Daten werden hauptsächlich für die Berechnung von VLE-Daten emp
   <data name="PartialCalcTime" xml:space="preserve">
     <value>solving succeeded, time taken:</value>
   </data>
+  <data name="ConfirmOperation" xml:space="preserve">
+    <value>Gehen sie bei der angeforderten aktion?</value>
+  </data>
 </root>

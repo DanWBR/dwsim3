@@ -2333,6 +2333,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Confirma a operação?.
+        '''</summary>
+        Friend Shared ReadOnly Property ConfirmOperation() As String
+            Get
+                Return ResourceManager.GetString("ConfirmOperation", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Contração Rápida d/D = 1/2.
         '''</summary>
         Friend Shared ReadOnly Property ContraoRpidadD12() As String
