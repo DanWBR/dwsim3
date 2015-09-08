@@ -567,68 +567,68 @@ Imports DWSIM.DWSIM.Outros
 
         If frsht.Visible Then
 
-            Me.UIThread(New System.Action(Sub()
+            frsht.UIThread(New System.Action(Sub()
 
-                                              If Not My.MyApplication.CommandLineMode Then
+                                                 If Not My.MyApplication.CommandLineMode Then
 
-                                                  Dim frlog = frsht.FormLog
+                                                     Dim frlog = frsht.FormLog
 
-                                                  Dim img As Bitmap
-                                                  Dim strtipo As String
-                                                  Select Case tipo
-                                                      Case DWSIM.FormClasses.TipoAviso.Aviso
-                                                          img = My.Resources._error
-                                                          strtipo = DWSIM.App.GetLocalString("Aviso")
-                                                      Case DWSIM.FormClasses.TipoAviso.Erro
-                                                          img = My.Resources.exclamation
-                                                          strtipo = DWSIM.App.GetLocalString("Erro")
-                                                      Case DWSIM.FormClasses.TipoAviso.Dica
-                                                          If Not My.Settings.ShowTips Then Exit Sub
-                                                          img = My.Resources.lightbulb
-                                                          strtipo = DWSIM.App.GetLocalString("Dica")
-                                                      Case Else
-                                                          img = My.Resources.information
-                                                          strtipo = DWSIM.App.GetLocalString("Mensagem")
-                                                  End Select
+                                                     Dim img As Bitmap
+                                                     Dim strtipo As String
+                                                     Select Case tipo
+                                                         Case DWSIM.FormClasses.TipoAviso.Aviso
+                                                             img = My.Resources._error
+                                                             strtipo = DWSIM.App.GetLocalString("Aviso")
+                                                         Case DWSIM.FormClasses.TipoAviso.Erro
+                                                             img = My.Resources.exclamation
+                                                             strtipo = DWSIM.App.GetLocalString("Erro")
+                                                         Case DWSIM.FormClasses.TipoAviso.Dica
+                                                             If Not My.Settings.ShowTips Then Exit Sub
+                                                             img = My.Resources.lightbulb
+                                                             strtipo = DWSIM.App.GetLocalString("Dica")
+                                                         Case Else
+                                                             img = My.Resources.information
+                                                             strtipo = DWSIM.App.GetLocalString("Mensagem")
+                                                     End Select
 
-                                                  If frlog.GridDT.Columns.Count < 4 Then
-                                                      frlog.GridDT.Columns.Add("Imagem", GetType(Bitmap))
-                                                      frlog.GridDT.Columns.Add("Data")
-                                                      frlog.GridDT.Columns.Add("Tipo")
-                                                      frlog.GridDT.Columns.Add("Mensagem")
-                                                      frlog.GridDT.Columns.Add("Cor", GetType(Color))
-                                                      frlog.GridDT.Columns.Add("Indice")
-                                                  ElseIf frlog.GridDT.Columns.Count = 4 Then
-                                                      frlog.GridDT.Columns.Add("Cor", GetType(Color))
-                                                      frlog.GridDT.Columns.Add("Indice")
-                                                  ElseIf frlog.GridDT.Columns.Count = 5 Then
-                                                      frlog.GridDT.Columns.Add("Indice")
-                                                  End If
-                                                  frlog.GridDT.PrimaryKey = New DataColumn() {frlog.GridDT.Columns("Indice")}
-                                                  With frlog.GridDT.Columns("Indice")
-                                                      .AutoIncrement = True
-                                                      .AutoIncrementSeed = 1
-                                                      .AutoIncrementStep = 1
-                                                      .Unique = True
-                                                  End With
+                                                     If frlog.GridDT.Columns.Count < 4 Then
+                                                         frlog.GridDT.Columns.Add("Imagem", GetType(Bitmap))
+                                                         frlog.GridDT.Columns.Add("Data")
+                                                         frlog.GridDT.Columns.Add("Tipo")
+                                                         frlog.GridDT.Columns.Add("Mensagem")
+                                                         frlog.GridDT.Columns.Add("Cor", GetType(Color))
+                                                         frlog.GridDT.Columns.Add("Indice")
+                                                     ElseIf frlog.GridDT.Columns.Count = 4 Then
+                                                         frlog.GridDT.Columns.Add("Cor", GetType(Color))
+                                                         frlog.GridDT.Columns.Add("Indice")
+                                                     ElseIf frlog.GridDT.Columns.Count = 5 Then
+                                                         frlog.GridDT.Columns.Add("Indice")
+                                                     End If
+                                                     frlog.GridDT.PrimaryKey = New DataColumn() {frlog.GridDT.Columns("Indice")}
+                                                     With frlog.GridDT.Columns("Indice")
+                                                         .AutoIncrement = True
+                                                         .AutoIncrementSeed = 1
+                                                         .AutoIncrementStep = 1
+                                                         .Unique = True
+                                                     End With
 
-                                                  frlog.GridDT.Rows.Add(New Object() {img, Date.Now, strtipo, texto, cor, frlog.GridDT.Rows.Count})
+                                                     frlog.GridDT.Rows.Add(New Object() {img, Date.Now, strtipo, texto, cor, frlog.GridDT.Rows.Count})
 
-                                                  If DWSIM.App.IsRunningOnMono Then
-                                                      frlog.Grid1.Rows.Add(New Object() {img, frlog.GridDT.Rows.Count, Date.Now, strtipo, texto})
-                                                  End If
+                                                     If DWSIM.App.IsRunningOnMono Then
+                                                         frlog.Grid1.Rows.Add(New Object() {img, frlog.GridDT.Rows.Count, Date.Now, strtipo, texto})
+                                                     End If
 
-                                                  frlog.Grid1.Sort(frlog.Grid1.Columns(1), ListSortDirection.Descending)
+                                                     frlog.Grid1.Sort(frlog.Grid1.Columns(1), ListSortDirection.Descending)
 
-                                              Else
+                                                 Else
 
-                                                  If Not Me.FormCL Is Nothing Then
-                                                      Me.FormCL.LBLogMsg.Items.Insert(0, Date.Now.ToString & " " & texto)
-                                                  End If
+                                                     If Not frsht.FormCL Is Nothing Then
+                                                         frsht.FormCL.LBLogMsg.Items.Insert(0, Date.Now.ToString & " " & texto)
+                                                     End If
 
-                                              End If
+                                                 End If
 
-                                          End Sub))
+                                             End Sub))
 
         End If
 

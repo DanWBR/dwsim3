@@ -2224,7 +2224,7 @@ Public Class FormMain
                                    End Try
                                End Sub)
 
-        Dim orderedlist = complist.OrderBy(Function(o) o.Molar_Weight)
+        Dim orderedlist = complist.OrderBy(Function(o) o.Normal_Boiling_Point)
 
         For Each obj In orderedlist
             form.Options.SelectedComponents.Add(obj.Name, obj)
@@ -2342,6 +2342,20 @@ Public Class FormMain
             Next
 
         End If
+
+        'reorder compound lists in streams
+        For Each obj In objlist
+            If TypeOf obj Is Streams.MaterialStream Then
+                Dim mstr As Streams.MaterialStream = DirectCast(obj, Streams.MaterialStream)
+                For Each p In mstr.Fases.Values
+                    Dim clist = p.Componentes.Values.ToList().OrderBy(Function(o) o.ConstantProperties.Normal_Boiling_Point)
+                    p.Componentes.Clear()
+                    For Each c In clist
+                        p.Componentes.Add(c.Nome, c)
+                    Next
+                Next
+            End If
+        Next
 
         For Each obj In objlist
             Try

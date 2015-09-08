@@ -163,7 +163,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             Dim excs As New Concurrent.ConcurrentBag(Of Exception)
 
-            Dim form As FormFlowsheet = New FormFlowsheet()
+            Dim form As FormFlowsheet = Nothing
+
+            form = New FormFlowsheet()
 
             Dim data As List(Of XElement) = xdoc.Element("DWSIM_Simulation_Data").Element("Settings").Elements.ToList
 
@@ -1456,13 +1458,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Next
 
             For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InputParameters").Elements.ToList
-                Dim fp As New FlowsheetUOParameter()
+        Dim fp As New FlowsheetUOParameter()
                 fp.LoadData(xel.Elements.ToList)
                 If Fsheet.Collections.ObjectCollection.ContainsKey(fp.ObjectID) Then Me.InputParams.Add(fp.ID, fp)
             Next
 
             For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "OutputParameters").Elements.ToList
-                Dim fp As New FlowsheetUOParameter()
+        Dim fp As New FlowsheetUOParameter()
                 fp.LoadData(xel.Elements.ToList)
                 If Fsheet.Collections.ObjectCollection.ContainsKey(fp.ObjectID) Then Me.OutputParams.Add(fp.ID, fp)
             Next
@@ -1476,8 +1478,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
             QTFillNodeItems()
 
             For Each xel2 As XElement In (From xel As XElement In data Select xel Where xel.Name = "NodeItems").Elements
-                Dim text As String = xel2.@Text
-                Dim ni2 As DWSIM.Outros.NodeItem = (From ni As DWSIM.Outros.NodeItem In m_nodeitems.Values Select ni Where ni.Text = text).SingleOrDefault
+        Dim text As String = xel2.@Text
+        Dim ni2 As DWSIM.Outros.NodeItem = (From ni As DWSIM.Outros.NodeItem In m_nodeitems.Values Select ni Where ni.Text = text).SingleOrDefault
                 If Not ni2 Is Nothing Then
                     ni2.Checked = True
                 End If
