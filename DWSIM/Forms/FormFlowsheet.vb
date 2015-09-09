@@ -1638,7 +1638,7 @@ Imports DWSIM.DWSIM.Outros
                                 Case TipoObjeto.OT_EnergyRecycle
                                     Me.Collections.EnergyRecycleCollection.Remove(namesel)
                                     'DWSIM
-                                    Me.Collections.CLCS_EnergyStreamCollection.Remove(namesel)
+                                    Me.Collections.CLCS_EnergyRecycleCollection.Remove(namesel)
                                     Me.Collections.ObjectCollection.Remove(namesel)
                                 Case TipoObjeto.HeatExchanger
                                     Me.Collections.HeatExchangerCollection.Remove(namesel)

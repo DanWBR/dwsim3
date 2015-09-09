@@ -1544,10 +1544,6 @@ Namespace DWSIM.Flowsheet
                                             lists(listidx).Add(c.AttachedConnector.AttachedTo.Name)
                                         End If
                                     Next
-                                    'if the object has a spec attached to it, set the destination object to be calculated after it.
-                                    If obj.IsSpecAttached And obj.SpecVarType = SpecialOps.Helpers.Spec.TipoVar.Fonte Then
-                                        lists(listidx).Add(form.Collections.CLCS_SpecCollection(obj.AttachedSpecId).TargetObjectData.m_ID)
-                                    End If
                                 End If
                             Next
                         Else
@@ -1622,10 +1618,6 @@ Namespace DWSIM.Flowsheet
                                     End If
                                 End If
                             Next
-                            'if the object has a spec attached to it, set the destination object to be calculated after it.
-                            If obj.IsSpecAttached And obj.SpecVarType = SpecialOps.Helpers.Spec.TipoVar.Fonte Then
-                                lists(listidx).Add(form.Collections.CLCS_SpecCollection(obj.AttachedSpecId).TargetObjectData.m_ID)
-                            End If
                         Next
                     Else
                         Exit Do
@@ -1656,6 +1648,32 @@ Namespace DWSIM.Flowsheet
                     listidx -= 1
                 Loop
 
+            End If
+
+            If form.Collections.CLCS_SpecCollection.Count > 0 Then
+                Dim newstack As New List(Of String)
+                For Each o In objstack
+                    newstack.Add(o)
+                    obj = form.Collections.ObjectCollection(o)
+                    'if the object has a spec attached to it, set the destination object to be calculated after it.
+                    If obj.IsSpecAttached And obj.SpecVarType = SpecialOps.Helpers.Spec.TipoVar.Fonte Then
+                        newstack.Add(form.Collections.CLCS_SpecCollection(obj.AttachedSpecId).TargetObjectData.m_ID)
+                    End If
+                Next
+                Dim newfilteredlist As New Dictionary(Of Integer, List(Of String))
+                For Each kvp In filteredlist
+                    Dim newlist As New List(Of String)
+                    For Each o In kvp.Value
+                        newlist.Add(o)
+                        obj = form.Collections.ObjectCollection(o)
+                        'if the object has a spec attached to it, set the destination object to be calculated after it.
+                        If obj.IsSpecAttached And obj.SpecVarType = SpecialOps.Helpers.Spec.TipoVar.Fonte Then
+                            newlist.Add(form.Collections.CLCS_SpecCollection(obj.AttachedSpecId).TargetObjectData.m_ID)
+                        End If
+                    Next
+                    newfilteredlist.Add(kvp.Key, newlist)
+                Next
+                Return New Object() {newstack, lists, newfilteredlist}
             End If
 
             Return New Object() {objstack, lists, filteredlist}

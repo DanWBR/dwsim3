@@ -650,7 +650,7 @@ Imports PropertyGridEx
                 Dim adj As DWSIM.SimulationObjects.SpecialOps.Adjust = FlowSheet.Collections.CLCS_AdjustCollection.Item(sobj.Name)
 
                 With adj
-                    If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Controlada")) Then
+                    If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("VarivelControlada")) Then
                         .ControlledObject = FlowSheet.Collections.ObjectCollection(.ControlledObjectData.m_ID)
                         .ControlledVariable = .ControlledObjectData.m_Property
                         CType(FlowSheet.Collections.AdjustCollection(adj.Nome), AdjustGraphic).ConnectedToCv = .ControlledObject.GraphicObject
@@ -662,7 +662,7 @@ Imports PropertyGridEx
                             .m_Property = ""
                             .m_Type = ""
                         End With
-                    ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Manipulada")) Then
+                    ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("VarivelManipulada")) Then
                         .ManipulatedObject = FlowSheet.Collections.ObjectCollection(.ManipulatedObjectData.m_ID)
                         Dim gr As AdjustGraphic = FlowSheet.Collections.AdjustCollection(adj.Nome)
                         gr.ConnectedToMv = .ManipulatedObject.GraphicObject
@@ -686,11 +686,11 @@ Imports PropertyGridEx
                 Dim spec As DWSIM.SimulationObjects.SpecialOps.Spec = FlowSheet.Collections.CLCS_SpecCollection.Item(sobj.Name)
 
                 With spec
-                    If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Destino")) Then
+                    If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("VarivelDestino")) Then
                         .TargetObject = FlowSheet.Collections.ObjectCollection(.TargetObjectData.m_ID)
                         .TargetVariable = .TargetObjectData.m_Property
                         CType(FlowSheet.Collections.SpecCollection(spec.Nome), SpecGraphic).ConnectedToTv = .TargetObject.GraphicObject
-                    ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Fonte")) Then
+                    ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("VarivelFonte")) Then
                         .SourceObject = FlowSheet.Collections.ObjectCollection(.SourceObjectData.m_ID)
                         Dim gr As SpecGraphic = FlowSheet.Collections.SpecCollection(spec.Nome)
                         gr.ConnectedToSv = .SourceObject.GraphicObject
