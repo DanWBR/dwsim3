@@ -1049,7 +1049,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                         'this call to the brent solver calculates the damping factor which minimizes the error (fval).
 
-                        fval = brentsolver.brentoptimize(0.5#, 2.0#, 0.0001, df)
+                        fval = 0.0# 'brentsolver.brentoptimize(0.01#, 2.0#, 0.0001, df)
 
                         Dim multipl As Double = 1.0#
                         'For i = 0 To c + e + 1
