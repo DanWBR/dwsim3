@@ -93,6 +93,7 @@ Namespace DWSIM.Flowsheet
                                     End If
                                 End If
                             End If
+                            If myObj.IsSpecAttached And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
                             form.FormSurface.Refresh()
                         End If
                     Case TipoObjeto.EnergyStream
@@ -122,6 +123,7 @@ Namespace DWSIM.Flowsheet
                                 myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
                                 form.FormSurface.Refresh()
                             End If
+                            If myObj.IsSpecAttached And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
                         End If
                     Case Else
                         If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Adjust" Or objArgs.Emissor = "FlowsheetSolver" Then
@@ -151,6 +153,7 @@ Namespace DWSIM.Flowsheet
                                     End If
                                 Next
                             End If
+                            If myObj.IsSpecAttached And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
                             myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
                         End If
                 End Select
@@ -190,16 +193,19 @@ Namespace DWSIM.Flowsheet
                         Dim myObj As DWSIM.SimulationObjects.Streams.MaterialStream = form.Collections.CLCS_MaterialStreamCollection(objArgs.Nome)
                         RaiseEvent MaterialStreamCalculationStarted(form, New System.EventArgs(), myObj)
                         CalculateMaterialStreamAsync(form, myObj, ct)
+                        If myObj.IsSpecAttached And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
                         myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
                         RaiseEvent MaterialStreamCalculationFinished(form, New System.EventArgs(), myObj)
                     Case TipoObjeto.EnergyStream
                         Dim myObj As DWSIM.SimulationObjects.Streams.EnergyStream = form.Collections.CLCS_EnergyStreamCollection(objArgs.Nome)
+                        If myObj.IsSpecAttached And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
                         myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
                         myObj.Calculated = True
                     Case Else
                         Dim myObj As SimulationObjects_UnitOpBaseClass = form.Collections.ObjectCollection(objArgs.Nome)
                         RaiseEvent UnitOpCalculationStarted(form, New System.EventArgs(), objArgs)
                         myObj.Solve()
+                        If myObj.IsSpecAttached And myObj.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myObj.AttachedSpecId).Calculate()
                         myObj.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
                         RaiseEvent UnitOpCalculationFinished(form, New System.EventArgs(), objArgs)
                 End Select
@@ -1168,22 +1174,23 @@ Namespace DWSIM.Flowsheet
                                                   Optional ByVal FlowsheetSolverMode As Boolean = False,
                                                   Optional ByVal mode As Integer = 0,
                                                   Optional orderedlist As Object = Nothing,
-                                                  Optional ByVal ct As Threading.CancellationToken = Nothing)
+                                                  Optional ByVal ct As Threading.CancellationToken = Nothing,
+                                                  Optional ByVal Adjusting As Boolean = False)
 
             If mode = 0 Then
                 'UI thread
                 ProcessQueueInternal(form, Isolated, FlowsheetSolverMode, ct)
-                SolveSimultaneousAdjusts(form)
+                If Not Adjusting Then SolveSimultaneousAdjusts(form)
             ElseIf mode = 1 Then
                 'bg thread
                 ProcessQueueInternalAsync(form, ct)
-                SolveSimultaneousAdjustsAsync(form, ct)
+                If Not Adjusting Then SolveSimultaneousAdjustsAsync(form, ct)
             ElseIf mode = 2 Then
                 'bg parallel thread
                 'Dim prevset As Boolean = My.Settings.EnableParallelProcessing
                 'My.Settings.EnableParallelProcessing = False
                 ProcessQueueInternalAsyncParallel(form, orderedlist, ct)
-                SolveSimultaneousAdjustsAsync(form, ct)
+                If Not Adjusting Then SolveSimultaneousAdjustsAsync(form, ct)
                 'My.Settings.EnableParallelProcessing = prevset
             End If
 
@@ -1248,6 +1255,7 @@ Namespace DWSIM.Flowsheet
                                     CalculateFlowsheet(form, myinfo, Nothing, Isolated)
                                 End If
                             End If
+                            myobj.GraphicObject.Calculated = True
                         End If
                     Catch ex As Exception
                         'Dim st As New StackTrace(ex, True)
@@ -1536,6 +1544,10 @@ Namespace DWSIM.Flowsheet
                                             lists(listidx).Add(c.AttachedConnector.AttachedTo.Name)
                                         End If
                                     Next
+                                    'if the object has a spec attached to it, set the destination object to be calculated after it.
+                                    If obj.IsSpecAttached And obj.SpecVarType = SpecialOps.Helpers.Spec.TipoVar.Fonte Then
+                                        lists(listidx).Add(form.Collections.CLCS_SpecCollection(obj.AttachedSpecId).TargetObjectData.m_ID)
+                                    End If
                                 End If
                             Next
                         Else
@@ -1610,6 +1622,10 @@ Namespace DWSIM.Flowsheet
                                     End If
                                 End If
                             Next
+                            'if the object has a spec attached to it, set the destination object to be calculated after it.
+                            If obj.IsSpecAttached And obj.SpecVarType = SpecialOps.Helpers.Spec.TipoVar.Fonte Then
+                                lists(listidx).Add(form.Collections.CLCS_SpecCollection(obj.AttachedSpecId).TargetObjectData.m_ID)
+                            End If
                         Next
                     Else
                         Exit Do
@@ -1651,7 +1667,7 @@ Namespace DWSIM.Flowsheet
         ''' </summary>
         ''' <param name="form">Flowsheet to be calculated (FormChild object)</param>
         ''' <remarks></remarks>
-        Public Shared Sub CalculateAll2(ByVal form As FormFlowsheet, mode As Integer, Optional ByVal ts As CancellationTokenSource = Nothing, Optional frompgrid As Boolean = False)
+        Public Shared Sub CalculateAll2(ByVal form As FormFlowsheet, mode As Integer, Optional ByVal ts As CancellationTokenSource = Nothing, Optional frompgrid As Boolean = False, Optional Adjusting As Boolean = False)
 
             'checks if the calculator is activated.
 
@@ -1793,7 +1809,7 @@ Namespace DWSIM.Flowsheet
 
                                                          If mode = 0 Then
 
-                                                             ProcessCalculationQueue(form, True, True, 0, Nothing, ct)
+                                                             ProcessCalculationQueue(form, True, True, 0, Nothing, ct, Adjusting)
 
                                                          ElseIf mode = 1 Or mode = 2 Then
 
@@ -1808,7 +1824,7 @@ Namespace DWSIM.Flowsheet
                                                                  filteredlist2.Add(li.Key, objcalclist)
                                                              Next
 
-                                                             ProcessCalculationQueue(form, True, True, mode, filteredlist2, ct)
+                                                             ProcessCalculationQueue(form, True, True, mode, filteredlist2, ct, Adjusting)
 
                                                          End If
 
@@ -1846,7 +1862,7 @@ Namespace DWSIM.Flowsheet
 
                         For Each s In objstack
                             If TypeOf form.Collections.ObjectCollection(s) Is SimulationObjects.UnitOps.CapeOpenUO Then
-                               'saves UO data to a temporary list so it can be loaded correctly by the background threads
+                                'saves UO data to a temporary list so it can be loaded correctly by the background threads
                                 form.Collections.CLCS_CapeOpenUOCollection(s).SaveTempData()
                             End If
                         Next
@@ -2438,11 +2454,7 @@ Namespace DWSIM.Flowsheet
                 End If
             Next
 
-            For Each adj As SimulationObjects.SpecialOps.Adjust In form.Collections.CLCS_AdjustCollection.Values
-                If adj.SimultaneousAdjust Then
-                    CalculateObjectSync(form, adj.ManipulatedObject.Nome)
-                End If
-            Next
+            CalculateAll2(form, My.Settings.SolverMode, Nothing, False, True)
 
             Dim fx(x.Length - 1) As Double
             i = 0
@@ -2520,11 +2532,7 @@ Namespace DWSIM.Flowsheet
                 End If
             Next
 
-            For Each adj As SimulationObjects.SpecialOps.Adjust In form.Collections.CLCS_AdjustCollection.Values
-                If adj.SimultaneousAdjust Then
-                    CalculateObjectAsync(form, adj.ManipulatedObject.Nome, ct)
-                End If
-            Next
+            CalculateAll2(form, My.Settings.SolverMode, Nothing, False, True)
 
             Dim fx(x.Length - 1) As Double
             i = 0

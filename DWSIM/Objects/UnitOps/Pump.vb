@@ -170,6 +170,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             OutletPressure = 1
             EnergyStream = 2
             Curves = 3
+            Power = 4
         End Enum
 
         Protected m_dp As Nullable(Of Double)
@@ -629,6 +630,31 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                     Me.NPSH = (Pi - Me.PropertyPackage.DW_CalcPVAP_ISOL(Ti)) / (rho_li * 9.81)
 
+                Case CalculationMode.Power
+
+                    Dim tmp As Object
+
+                    'Corrente de energia - pegar valor do DH
+                    With form.Collections.CLCS_EnergyStreamCollection(Me.GraphicObject.InputConnectors(1).AttachedConnector.AttachedFrom.Name)
+                        .Energia = Me.DeltaQ
+                    End With
+
+                    H2 = Hi + Me.DeltaQ.GetValueOrDefault * (Me.Eficiencia.GetValueOrDefault / 100) / Wi
+                    CheckSpec(H2, False, "outlet enthalpy")
+
+                    P2 = Pi + (H2 - Hi) * rho_li * 1000
+                    CheckSpec(P2, True, "outlet pressure")
+
+                    DeltaP = P2 - Pi
+
+                    tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, H2, Ti)
+                    T2 = tmp(2)
+                    CheckSpec(T2, True, "outlet temperature")
+
+                    Me.DeltaT = T2 - Ti
+
+                    Me.NPSH = (Pi - Me.PropertyPackage.DW_CalcPVAP_ISOL(Ti)) / (rho_li * 9.81)
+
                 Case CalculationMode.Delta_P
 
                     qvi = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(2).SPMProperties.volumetric_flow.GetValueOrDefault.ToString
@@ -924,6 +950,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             .DefaultValue = Nothing
                             .DefaultType = GetType(Nullable(Of Double))
                         End With
+                    Case CalculationMode.Power
+                        Dim valor = Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ.GetValueOrDefault), FlowSheet.Options.NumberFormat)
+                        .Item.Add(FT(DWSIM.App.GetLocalString("Energianecessria"), su.spmp_heatflow), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Potnciarequeridapela"), True)
+                        With .Item(.Item.Count - 1)
+                            .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_pressure, "E"}
+                            .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
+                        End With
                     Case CalculationMode.OutletPressure
                         Dim valor = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.Pout), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("Pressoajusante"), su.spmp_pressure), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Diferenadepressoentr"), True)
@@ -977,7 +1010,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 .DefaultValue = Nothing
                                 .DefaultType = GetType(Nullable(Of Double))
                             End With
-                        Case CalculationMode.EnergyStream
+                        Case CalculationMode.EnergyStream, CalculationMode.Power
                             Dim valor = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                             .Item.Add(FT("Delta P", su.spmp_deltaP), valor, True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("Diferenadepressoentr"), True)
                             With .Item(.Item.Count - 1)
@@ -1059,15 +1092,15 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Dim proplist As New ArrayList
             Select Case proptype
                 Case PropertyType.RO
-                    For i = 2 To 3
+                    For i = 2 To 2
                         proplist.Add("PROP_PU_" + CStr(i))
                     Next
                 Case PropertyType.RW
-                    For i = 0 To 1
+                    For i = 0 To 3
                         proplist.Add("PROP_PU_" + CStr(i))
                     Next
                 Case PropertyType.WR
-                    For i = 0 To 1
+                    For i = 0 To 3
                         proplist.Add("PROP_PU_" + CStr(i))
                     Next
                 Case PropertyType.ALL
@@ -1091,6 +1124,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Case 1
                     'PROP_PU_1(Efficiency)
                     Me.Eficiencia = propval
+                Case 3
+                    Me.DeltaQ = cv.ConverterParaSI(su.spmp_heatflow, propval)
             End Select
             Return 1
         End Function
