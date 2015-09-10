@@ -1248,6 +1248,7 @@ alt:
             WriteDebugInfo("PS Flash [NL-3PV3]: Current T = " & T & ", Current S Error = " & serr)
 
         End Function
+
         Function Herror(ByVal type As String, ByVal X As Double, ByVal P As Double, ByVal Vz() As Double, ByVal PP As PropertyPackages.PropertyPackage) As Object
             CheckCalculatorStatus()
             Return OBJ_FUNC_PH_FLASH(type, X, P, Vz, PP)
