@@ -117,15 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="FaTabStripItem3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>864, 452</value>
-  </data>
   <data name="FaTabStripItem3.Title" xml:space="preserve">
     <value>Bases de datos</value>
-  </data>
-  <data name="FaTabStripItem6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>864, 452</value>
   </data>
   <data name="FaTabStripItem6.Title" xml:space="preserve">
     <value>Parámetros de interacción</value>
@@ -133,15 +126,13 @@
   <data name="FaTabStripItem2.Title" xml:space="preserve">
     <value>Seguridad</value>
   </data>
-  <data name="FaTabStripItem5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>864, 452</value>
-  </data>
   <data name="FaTabStripItem7.Title" xml:space="preserve">
     <value>Otras Opciones</value>
   </data>
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Avisos</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="chkStorePreviousSolutions.Size" type="System.Drawing.Size, System.Drawing">
     <value>180, 17</value>
   </data>
@@ -149,7 +140,7 @@
     <value>Almacenar soluciones anteriores</value>
   </data>
   <data name="chkSolverBreak.Size" type="System.Drawing.Size, System.Drawing">
-    <value>265, 17</value>
+    <value>259, 17</value>
   </data>
   <data name="chkSolverBreak.Text" xml:space="preserve">
     <value>Interrumpir cálculo cuando ocurra una excepción</value>
@@ -162,6 +153,30 @@
   </data>
   <data name="Label8.Text" xml:space="preserve">
     <value>String de Conexión</value>
+  </data>
+  <data name="cbSolverMode.Items1" xml:space="preserve">
+    <value>Thread en Segundo Plano</value>
+  </data>
+  <data name="cbSolverMode.Items2" xml:space="preserve">
+    <value>Threads Paralelas en Segundo Plano</value>
+  </data>
+  <data name="cbSolverMode.Items4" xml:space="preserve">
+    <value>Servidor en la Red</value>
+  </data>
+  <data name="GroupBoxNetworkComputerConfig.Text" xml:space="preserve">
+    <value>Configuración para conexión al computador en la red</value>
+  </data>
+  <data name="Label15.Size" type="System.Drawing.Size, System.Drawing">
+    <value>61, 13</value>
+  </data>
+  <data name="Label15.Text" xml:space="preserve">
+    <value>Puerto TCP</value>
+  </data>
+  <data name="Label16.Size" type="System.Drawing.Size, System.Drawing">
+    <value>63, 13</value>
+  </data>
+  <data name="Label16.Text" xml:space="preserve">
+    <value>Dirección IP</value>
   </data>
   <data name="GroupBox7.Text" xml:space="preserve">
     <value>Recursos</value>
@@ -202,9 +217,6 @@
   <data name="chkEnableParallelCalcs.Text" xml:space="preserve">
     <value>Activar Cálculos en Paralelo (CPU)</value>
   </data>
-  <data name="GroupBox11.Size" type="System.Drawing.Size, System.Drawing">
-    <value>848, 81</value>
-  </data>
   <data name="GroupBox11.Text" xml:space="preserve">
     <value>Tareas</value>
   </data>
@@ -220,14 +232,8 @@
   <data name="Button7.Text" xml:space="preserve">
     <value>Agregar base de datos de usuario</value>
   </data>
-  <data name="GroupBox4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>849, 352</value>
-  </data>
   <data name="GroupBox4.Text" xml:space="preserve">
     <value>Bases de datos</value>
-  </data>
-  <data name="dgvdb.Size" type="System.Drawing.Size, System.Drawing">
-    <value>843, 329</value>
   </data>
   <data name="DataGridViewCellStyle4.NullValue" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -263,8 +269,8 @@
         hIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEAAA=
 </value>
   </data>
-  <data name="GroupBox12.Size" type="System.Drawing.Size, System.Drawing">
-    <value>842, 54</value>
+  <data name="BtnEdit.HeaderText" xml:space="preserve">
+    <value>Editar</value>
   </data>
   <data name="GroupBox12.Text" xml:space="preserve">
     <value>Tareas</value>
@@ -272,14 +278,8 @@
   <data name="Button4.Text" xml:space="preserve">
     <value>Agregar base de datos de usuario</value>
   </data>
-  <data name="GroupBox10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>842, 376</value>
-  </data>
   <data name="GroupBox10.Text" xml:space="preserve">
     <value>Bases de datos de parámetro de interacción</value>
-  </data>
-  <data name="dgvIPDB.Size" type="System.Drawing.Size, System.Drawing">
-    <value>836, 356</value>
   </data>
   <data name="DataGridViewCellStyle6.NullValue" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -297,6 +297,9 @@
         ///Gw8YAAAAAAISChP///////////////////////////////////////////8bDxgAAAAAAhIKEhIKE
         hIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEAAA=
 </value>
+  </data>
+  <data name="GroupBox3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>848, 185</value>
   </data>
   <data name="GroupBox3.Text" xml:space="preserve">
     <value>Copia de seguridad</value>
@@ -316,6 +319,9 @@
   <data name="KryptonLabel1.Text" xml:space="preserve">
     <value>Directorio para copias de seguridad:</value>
   </data>
+  <data name="KryptonCheckBox6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>158, 17</value>
+  </data>
   <data name="KryptonCheckBox6.Text" xml:space="preserve">
     <value>Activar copias de seguridad</value>
   </data>
@@ -323,7 +329,7 @@
     <value>IronPython y IronRuby</value>
   </data>
   <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>57, 13</value>
+    <value>34, 13</value>
   </data>
   <data name="Label5.Text" xml:space="preserve">
     <value>Ruta:</value>
@@ -335,7 +341,7 @@
     <value>Añadir</value>
   </data>
   <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>390, 13</value>
+    <value>382, 13</value>
   </data>
   <data name="Label4.Text" xml:space="preserve">
     <value>Gestionar rutas donde el compilador deberá buscar los archivos para importar:</value>
@@ -359,7 +365,7 @@
     <value>Mostrar consejos al inicio</value>
   </data>
   <data name="chkUpdates.Size" type="System.Drawing.Size, System.Drawing">
-    <value>174, 17</value>
+    <value>175, 17</value>
   </data>
   <data name="chkUpdates.Text" xml:space="preserve">
     <value>Buscar Actualizaciones al iniciar</value>
@@ -377,7 +383,7 @@
     <value>Medio</value>
   </data>
   <data name="cbDebugLevel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>296, 27</value>
+    <value>117, 23</value>
   </data>
   <data name="Label13.Size" type="System.Drawing.Size, System.Drawing">
     <value>101, 13</value>
@@ -396,7 +402,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABo
-        KgAAAk1TRnQBSQFMAgEBCgEAATwBBAE8AQQBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        KgAAAk1TRnQBSQFMAgEBCgEAAUQBBAFEAQQBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABMAMAAQEBAAEYBgABJBIAAekCpwHpAqcB5wKlAeUCowHlAqMB5QKjAeQCogHiAqAB4QKfAd4CnAHe
         ApwB3AKaAdoCmAHaApgB2gKYAdoCmAHkAqIB4gKgAeECnwHeApwB3AGcAZoB2gKYAdoCmAHZApcB1wKV
         AdYClAHTApEB0wKRAdECjwHPAo0BzwKNAc8CjWAABvYD9APzAfIB8wHyA/ED8APuA+0D6wPpA+gB5wLm
@@ -597,26 +603,5 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>DWSIM - Configuración General</value>
-  </data>
-  <data name="BtnEdit.HeaderText" xml:space="preserve">
-    <value>Editar</value>
-  </data>
-  <data name="cbSolverMode.Items1" xml:space="preserve">
-    <value>Thread en Segundo Plano</value>
-  </data>
-  <data name="cbSolverMode.Items2" xml:space="preserve">
-    <value>Threads Paralelas en Segundo Plano</value>
-  </data>
-  <data name="cbSolverMode.Items4" xml:space="preserve">
-    <value>Servidor en la Red</value>
-  </data>
-  <data name="Label15.Text" xml:space="preserve">
-    <value>Puerto TCP</value>
-  </data>
-  <data name="Label16.Text" xml:space="preserve">
-    <value>Dirección IP</value>
-  </data>
-  <data name="GroupBoxNetworkComputerConfig.Text" xml:space="preserve">
-    <value>Configuración para conexión al computador en la red</value>
   </data>
 </root>

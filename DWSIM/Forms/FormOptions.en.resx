@@ -322,8 +322,17 @@
         hIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEAAA=
 </value>
   </data>
+  <data name="GroupBox3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>848, 183</value>
+  </data>
   <data name="GroupBox3.Text" xml:space="preserve">
     <value>Backup Copies</value>
+  </data>
+  <data name="chkSaveBackupFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>223, 17</value>
+  </data>
+  <data name="chkSaveBackupFile.Text" xml:space="preserve">
+    <value>Keep a copy of existing files when saving</value>
   </data>
   <data name="Button2.Location" type="System.Drawing.Point, System.Drawing">
     <value>598, 56</value>
@@ -367,6 +376,9 @@
   <data name="KryptonCheckBox6.Location" type="System.Drawing.Point, System.Drawing">
     <value>9, 27</value>
   </data>
+  <data name="KryptonCheckBox6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>128, 17</value>
+  </data>
   <data name="KryptonCheckBox6.Text" xml:space="preserve">
     <value>Enable backup copies</value>
   </data>
@@ -390,6 +402,15 @@
   </data>
   <data name="Label4.Text" xml:space="preserve">
     <value>Manage the paths were the compiler should search files for importing into scripts:</value>
+  </data>
+  <data name="GroupBox13.Text" xml:space="preserve">
+    <value>Compatibility</value>
+  </data>
+  <data name="chkLoadLegacyFiles.Size" type="System.Drawing.Size, System.Drawing">
+    <value>347, 17</value>
+  </data>
+  <data name="chkLoadLegacyFiles.Text" xml:space="preserve">
+    <value>Load binary (*.dwsim) files using legacy settings (pre-3.0 versions)</value>
   </data>
   <data name="GroupBox1.Text" xml:space="preserve">
     <value>UI Language</value>
@@ -437,10 +458,10 @@
     <value>High</value>
   </data>
   <data name="cbDebugLevel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>246, 26</value>
+    <value>79, 23</value>
   </data>
   <data name="Label13.Location" type="System.Drawing.Point, System.Drawing">
-    <value>177, 30</value>
+    <value>10, 27</value>
   </data>
   <data name="Label13.Size" type="System.Drawing.Size, System.Drawing">
     <value>63, 13</value>
@@ -459,7 +480,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABo
-        KgAAAk1TRnQBSQFMAgEBCgEAAQgBBAEIAQQBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        KgAAAk1TRnQBSQFMAgEBCgEAASABBAEgAQQBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABMAMAAQEBAAEYBgABJBIAAekCpwHpAqcB5wKlAeUCowHlAqMB5QKjAeQCogHiAqAB4QKfAd4CnAHe
         ApwB3AKaAdoCmAHaApgB2gKYAdoCmAHkAqIB4gKgAeECnwHeApwB3AGcAZoB2gKYAdoCmAHZApcB1wKV
         AdYClAHTApEB0wKRAdECjwHPAo0BzwKNAc8CjWAABvYD9APzAfIB8wHyA/ED8APuA+0D6wPpA+gB5wLm

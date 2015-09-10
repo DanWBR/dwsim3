@@ -118,24 +118,14 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>634, 302</value>
-  </data>
-  <data name="KryptonButton1.Values.Text" xml:space="preserve">
-    <value>Abrir arquivos selecionados</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Label1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="KryptonButton2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>524, 267</value>
   </data>
   <data name="&gt;&gt;KryptonButton1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="&gt;&gt;Panel1.Type" xml:space="preserve">
     <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="KryptonButton2.Values.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value />
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FormRecoverFiles</value>
@@ -155,14 +145,15 @@
   <data name="&gt;&gt;KryptonButton2.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Column1.Width" type="System.Int32, mscorlib">
-    <value>21</value>
+    <value>19</value>
   </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>
   </data>
-  <data name="LabelWithDivider1.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
+  <data name="Label1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="&gt;&gt;Grid1.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -179,11 +170,8 @@
   <data name="&gt;&gt;Label1.Name" xml:space="preserve">
     <value>Label1</value>
   </data>
-  <data name="KryptonButton2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>101, 25</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;Column2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Panel1.ZOrder" xml:space="preserve">
     <value>5</value>
@@ -197,8 +185,8 @@
   <data name="KryptonButton2.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
   </data>
-  <data name="&gt;&gt;Column2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="KryptonButton2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>101, 25</value>
   </data>
   <data name="Panel1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
@@ -260,17 +248,14 @@ Selecione as simulações que deseja abrir. Você poderá salvá-las uma vez que
   <data name="LabelWithDivider1.Size" type="System.Drawing.Size, System.Drawing">
     <value>649, 10</value>
   </data>
-  <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>9, 9</value>
+  <data name="&gt;&gt;Column1.Name" xml:space="preserve">
+    <value>Column1</value>
   </data>
   <data name="Column2.HeaderText" xml:space="preserve">
     <value>Arquivo</value>
   </data>
-  <data name="&gt;&gt;Panel1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="Panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>634, 261</value>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Grid1.Parent" xml:space="preserve">
     <value>$this</value>
@@ -287,8 +272,8 @@ Selecione as simulações que deseja abrir. Você poderá salvá-las uma vez que
   <data name="Column3.HeaderText" xml:space="preserve">
     <value>Data</value>
   </data>
-  <data name="&gt;&gt;Column1.Name" xml:space="preserve">
-    <value>Column1</value>
+  <data name="KryptonButton1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>356, 267</value>
   </data>
   <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>610, 57</value>
@@ -296,36 +281,42 @@ Selecione as simulações que deseja abrir. Você poderá salvá-las uma vez que
   <data name="&gt;&gt;Column2.Name" xml:space="preserve">
     <value>Column2</value>
   </data>
-  <data name="KryptonButton1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>356, 267</value>
+  <data name="Panel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>634, 261</value>
   </data>
   <data name="&gt;&gt;Grid1.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <data name="LabelWithDivider1.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
   <data name="Grid1.Size" type="System.Drawing.Size, System.Drawing">
     <value>616, 184</value>
+  </data>
+  <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 9</value>
   </data>
   <data name="LabelWithDivider1.Location" type="System.Drawing.Point, System.Drawing">
     <value>-6, 260</value>
   </data>
-  <data name="KryptonButton2.Values.Text" xml:space="preserve">
-    <value>Iniciar sem abrir</value>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>634, 302</value>
   </data>
   <data name="KryptonButton2.Text" xml:space="preserve">
     <value>Iniciar sem abrir</value>
   </data>
-  <data name="KryptonButton1.Values.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
-    <value />
-  </data>
-  <data name="KryptonButton2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>524, 267</value>
+  <data name="&gt;&gt;Panel1.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
   <data name="Column3.Width" type="System.Int32, mscorlib">
-    <value>58</value>
+    <value>55</value>
   </data>
   <data name="&gt;&gt;Column3.Name" xml:space="preserve">
     <value>Column3</value>
   </data>
+  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>en</value>
+  </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>

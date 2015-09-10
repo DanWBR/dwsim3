@@ -411,6 +411,25 @@ Public Class FormMain
             My.Settings.MostRecentFiles = New System.Collections.Specialized.StringCollection
         End If
 
+        Dim latestfolders As New List(Of String)
+
+        For Each f As String In My.Settings.MostRecentFiles
+            If File.Exists(f) And Path.GetExtension(f).ToLower <> ".dwbcs" Then
+                If Not latestfolders.Contains(Path.GetDirectoryName(f)) Then latestfolders.Add(Path.GetDirectoryName(f))
+            End If
+        Next
+
+        For Each s In latestfolders
+            Dim tsmi As New ToolStripMenuItem With {.Text = s, .Tag = s, .DisplayStyle = ToolStripItemDisplayStyle.Text}
+            Me.FileToolStripMenuItem.DropDownItems.Insert(Me.FileToolStripMenuItem.DropDownItems.Count - 1, tsmi)
+            Me.dropdownlist.Add(Me.FileToolStripMenuItem.DropDownItems.Count - 2)
+            AddHandler tsmi.Click, AddressOf Me.OpenRecentFolder_click
+        Next
+
+        If latestfolders.Count > 0 Then
+            Me.FileToolStripMenuItem.DropDownItems.Insert(Me.FileToolStripMenuItem.DropDownItems.Count - 1, New ToolStripSeparator())
+       End If
+
     End Sub
 
     Sub AddPropPacks()
@@ -621,7 +640,10 @@ Public Class FormMain
         Else
             If My.Settings.BackupFiles.Count > 0 Then
                 Me.FrmRec = New FormRecoverFiles
-                Me.FrmRec.ShowDialog(Me)
+                If Me.FrmRec.ShowDialog(Me) = Windows.Forms.DialogResult.Ignore Then
+                    Dim frmw As New FormWelcome
+                    frmw.ShowDialog(Me)
+                End If
             Else
                 Dim frmw As New FormWelcome
                 frmw.ShowDialog(Me)
@@ -1254,7 +1276,7 @@ Public Class FormMain
 
             Dim mySerializer As Binary.BinaryFormatter = New Binary.BinaryFormatter(Nothing, New System.Runtime.Serialization.StreamingContext())
 
-            mySerializer.Binder = New DWSIM.Outros.VersionDeserializationBinder
+            If My.Settings.LegacyBinaryFileLoading Then mySerializer.Binder = New DWSIM.Outros.VersionDeserializationBinder
 
             Dim fs3 As New FileStream(My.Computer.FileSystem.SpecialDirectories.Temp & "\3.bin", FileMode.Open)
 
@@ -1654,7 +1676,7 @@ Public Class FormMain
 
                 Dim mySerializer As Binary.BinaryFormatter = New Binary.BinaryFormatter(Nothing, New System.Runtime.Serialization.StreamingContext())
 
-                mySerializer.Binder = New DWSIM.Outros.VersionDeserializationBinder
+                If My.Settings.LegacyBinaryFileLoading Then mySerializer.Binder = New DWSIM.Outros.VersionDeserializationBinder
 
                 Dim fs3 As New FileStream(My.Computer.FileSystem.SpecialDirectories.Temp & "\3.bin", FileMode.Open)
                 Try
@@ -3528,12 +3550,24 @@ ruf:                Application.DoEvents()
 
     End Sub
 
+    Sub SaveBackup(sfile As String)
+
+        If My.Settings.SaveBackupFile Then
+            If File.Exists(sfile) Then
+                Dim dfile = Path.GetDirectoryName(sfile) & Path.DirectorySeparatorChar & Path.GetFileNameWithoutExtension(sfile) & "_backup" & Path.GetExtension(sfile)
+                File.Copy(sfile, dfile, True)
+            End If
+        End If
+
+    End Sub
+
     Sub SaveFileDialog()
 
         If TypeOf Me.ActiveMdiChild Is FormFlowsheet Then
             Dim myStream As System.IO.FileStream
             Dim form2 As FormFlowsheet = Me.ActiveMdiChild
             If Me.SaveFileDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
+                SaveBackup(Me.SaveFileDialog1.FileName)
                 myStream = Me.SaveFileDialog1.OpenFile()
                 Me.filename = myStream.Name
                 myStream.Close()
@@ -3557,6 +3591,7 @@ ruf:                Application.DoEvents()
             End If
         ElseIf TypeOf Me.ActiveMdiChild Is FormCompoundCreator Then
             If Me.SaveStudyDlg.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
+                SaveBackup(Me.SaveStudyDlg.FileName)
                 CType(Me.ActiveMdiChild, FormCompoundCreator).StoreData()
                 Dim objStreamWriter As New FileStream(Me.SaveStudyDlg.FileName, FileMode.OpenOrCreate)
                 Dim x As New BinaryFormatter
@@ -3568,33 +3603,13 @@ ruf:                Application.DoEvents()
             End If
         ElseIf TypeOf Me.ActiveMdiChild Is FormDataRegression Then
             If Me.SaveRegStudyDlg.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
+                SaveBackup(Me.SaveRegStudyDlg.FileName)
                 Dim objStreamWriter As New FileStream(Me.SaveRegStudyDlg.FileName, FileMode.OpenOrCreate)
                 Dim x As New BinaryFormatter
                 x.Serialize(objStreamWriter, CType(Me.ActiveMdiChild, FormDataRegression).StoreCase())
                 objStreamWriter.Close()
                 Me.filename = Me.SaveRegStudyDlg.FileName
                 Me.ActiveMdiChild.Text = Me.filename
-            End If
-        End If
-
-    End Sub
-
-    Sub SaveFileDialog_NoBG()
-
-        Dim myStream As System.IO.FileStream
-
-        Me.SaveFileDialog1.Filter = DWSIM.App.GetLocalString("SimulaesdoDWSIMdwsim")
-        Me.SaveFileDialog1.AddExtension = True
-        If Me.SaveFileDialog1.FilterIndex = 1 Then
-            If Me.SaveFileDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
-                myStream = Me.SaveFileDialog1.OpenFile()
-                Me.filename = myStream.Name
-                myStream.Close()
-                If Not (myStream Is Nothing) Then
-                    Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Salvandosimulao") + " (" + Me.filename + ")"
-                    Application.DoEvents()
-                    Me.SaveF(Me.filename, Me.ActiveMdiChild)
-                End If
             End If
         End If
 
@@ -3834,6 +3849,14 @@ ruf:                Application.DoEvents()
         End If
     End Sub
 
+    Private Sub OpenRecentFolder_click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+
+        Dim myLink As ToolStripMenuItem = CType(sender, ToolStripMenuItem)
+        OpenFileDialog1.InitialDirectory = myLink.Tag
+        LoadFileDialog()
+
+    End Sub
+
     Private Sub SaveAllToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SaveAllToolStripButton.Click, SaveAllToolStripMenuItem.Click
         If Me.MdiChildren.Length > 0 Then
             Dim result As MsgBoxResult = MessageBox.Show(DWSIM.App.GetLocalString("Istoirsalvartodasass"), DWSIM.App.GetLocalString("Ateno2"), MessageBoxButtons.YesNo, MessageBoxIcon.Question)
@@ -3843,6 +3866,7 @@ ruf:                Application.DoEvents()
                         Dim form2 As FormFlowsheet = form0
                         If form2.Options.FilePath <> "" Then
                             Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Salvandosimulao") + " (" + Me.filename + ")"
+                            SaveBackup(form2.Options.FilePath)
                             If Path.GetExtension(form2.Options.FilePath).ToLower = ".dwsim" Then
                                 Try
                                     SaveF(form2.Options.FilePath, form2)
@@ -3863,6 +3887,7 @@ ruf:                Application.DoEvents()
                         Else
                             Dim myStream As System.IO.FileStream
                             If Me.SaveFileDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
+                                SaveBackup(Me.SaveFileDialog1.FileName)
                                 myStream = Me.SaveFileDialog1.OpenFile()
                                 myStream.Close()
                                 If Not (myStream Is Nothing) Then
@@ -3891,6 +3916,7 @@ ruf:                Application.DoEvents()
                         Dim filename As String = CType(Me.ActiveMdiChild, FormCompoundCreator).mycase.Filename
                         If filename = "" Then
                             If Me.SaveStudyDlg.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
+                                SaveBackup(Me.SaveStudyDlg.FileName)
                                 CType(Me.ActiveMdiChild, FormCompoundCreator).mycase.Filename = Me.SaveStudyDlg.FileName
                                 CType(Me.ActiveMdiChild, FormCompoundCreator).StoreData()
                                 Dim objStreamWriter As New FileStream(Me.SaveStudyDlg.FileName, FileMode.OpenOrCreate)
@@ -3900,6 +3926,7 @@ ruf:                Application.DoEvents()
                                 CType(Me.ActiveMdiChild, FormCompoundCreator).SetCompCreatorSaveStatus(True)
                             End If
                         Else
+                            SaveBackup(filename)
                             CType(Me.ActiveMdiChild, FormCompoundCreator).StoreData()
                             Dim objStreamWriter As New FileStream(filename, FileMode.OpenOrCreate)
                             Dim x As New BinaryFormatter
@@ -3909,6 +3936,7 @@ ruf:                Application.DoEvents()
                         End If
                     ElseIf TypeOf form0 Is FormDataRegression Then
                         If Me.SaveRegStudyDlg.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
+                            SaveBackup(Me.SaveRegStudyDlg.FileName)
                             Dim objStreamWriter As New FileStream(Me.SaveRegStudyDlg.FileName, FileMode.OpenOrCreate)
                             Dim x As New BinaryFormatter
                             x.Serialize(objStreamWriter, CType(form0, FormDataRegression).StoreCase())
@@ -3939,6 +3967,7 @@ ruf:                Application.DoEvents()
                     Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Salvandosimulao") + " (" + Me.filename + ")"
                     Application.DoEvents()
                     Me.filename = form2.Options.FilePath
+                    SaveBackup(Me.filename)
                     If Path.GetExtension(Me.filename).ToLower = ".dwsim" Then
                         Try
                             SaveF(form2.Options.FilePath, form2)
@@ -3971,6 +4000,7 @@ ruf:                Application.DoEvents()
                 Else
                     Dim myStream As System.IO.FileStream
                     If Me.SaveFileDialog1.ShowDialog() = Windows.Forms.DialogResult.OK Then
+                        SaveBackup(Me.SaveFileDialog1.FileName)
                         myStream = Me.SaveFileDialog1.OpenFile()
                         Me.filename = myStream.Name
                         myStream.Close()
@@ -4011,6 +4041,7 @@ ruf:                Application.DoEvents()
                 Dim filename As String = CType(Me.ActiveMdiChild, FormCompoundCreator).mycase.Filename
                 If filename = "" Then
                     If Me.SaveStudyDlg.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
+                        SaveBackup(Me.SaveStudyDlg.FileName)
                         CType(Me.ActiveMdiChild, FormCompoundCreator).mycase.Filename = Me.SaveStudyDlg.FileName
                         CType(Me.ActiveMdiChild, FormCompoundCreator).StoreData()
                         Dim objStreamWriter As New FileStream(Me.SaveStudyDlg.FileName, FileMode.OpenOrCreate)
@@ -4022,6 +4053,7 @@ ruf:                Application.DoEvents()
                         Me.ActiveMdiChild.Text = Me.filename
                     End If
                 Else
+                    SaveBackup(filename)
                     CType(Me.ActiveMdiChild, FormCompoundCreator).StoreData()
                     Dim objStreamWriter As New FileStream(filename, FileMode.OpenOrCreate)
                     Dim x As New BinaryFormatter
@@ -4033,6 +4065,7 @@ ruf:                Application.DoEvents()
                 End If
             ElseIf TypeOf Me.ActiveMdiChild Is FormDataRegression Then
                 If Me.SaveRegStudyDlg.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
+                    SaveBackup(Me.SaveRegStudyDlg.FileName)
                     Dim objStreamWriter As New FileStream(Me.SaveRegStudyDlg.FileName, FileMode.OpenOrCreate)
                     Dim x As New BinaryFormatter
                     x.Serialize(objStreamWriter, CType(Me.ActiveMdiChild, FormDataRegression).StoreCase())
@@ -4042,6 +4075,7 @@ ruf:                Application.DoEvents()
                 End If
             ElseIf TypeOf Me.ActiveMdiChild Is FormUNIFACRegression Then
                 If Me.SaveUnifacIPRegrDlg.ShowDialog(Me) = Windows.Forms.DialogResult.OK Then
+                    SaveBackup(Me.SaveUnifacIPRegrDlg.FileName)
                     CType(Me.ActiveMdiChild, FormUNIFACRegression).StoreData()
                     Dim objStreamWriter As New FileStream(Me.SaveUnifacIPRegrDlg.FileName, FileMode.OpenOrCreate)
                     Dim x As New BinaryFormatter
@@ -4056,7 +4090,6 @@ ruf:                Application.DoEvents()
         End If
 
     End Sub
-
 
     Private Sub ToolStripButton1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton1.Click, SaveAsToolStripMenuItem.Click
         Call Me.SaveFileDialog()

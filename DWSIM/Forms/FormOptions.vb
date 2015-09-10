@@ -57,11 +57,14 @@ Public Class FormOptions
 
         Me.KryptonCheckBox1.Checked = My.Settings.ShowTips
 
+        Me.chkSaveBackupFile.Checked = My.Settings.SaveBackupFile
         Me.KryptonCheckBox6.Checked = My.Settings.BackupActivated
         Me.KryptonTextBox1.Text = My.Settings.BackupFolder
         Me.TrackBar1.Value = My.Settings.BackupInterval
 
         Me.chkconsole.Checked = My.Settings.RedirectOutput
+
+        Me.chkLoadLegacyFiles.Checked = My.Settings.LegacyBinaryFileLoading
 
         Me.chkUpdates.Checked = My.Settings.CheckForUpdates
 
@@ -671,4 +674,13 @@ Public Class FormOptions
     Private Sub chkShowWhatsNew_CheckedChanged(sender As Object, e As EventArgs) Handles chkShowWhatsNew.CheckedChanged
         My.Settings.ShowWhatsNew = chkShowWhatsNew.Checked
     End Sub
+
+    Private Sub chkSaveBackupFile_CheckedChanged(sender As Object, e As EventArgs) Handles chkSaveBackupFile.CheckedChanged
+        My.Settings.SaveBackupFile = chkSaveBackupFile.Checked
+    End Sub
+
+    Private Sub chkLoadLegacyFiles_CheckedChanged(sender As Object, e As EventArgs) Handles chkLoadLegacyFiles.CheckedChanged
+        My.Settings.LegacyBinaryFileLoading = Me.chkLoadLegacyFiles.Checked
+    End Sub
+
 End Class

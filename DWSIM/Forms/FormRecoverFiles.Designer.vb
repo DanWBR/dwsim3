@@ -23,7 +23,7 @@ Partial Class FormRecoverFiles
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormRecoverFiles))
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Grid1 = New System.Windows.Forms.DataGridView()
         Me.Column1 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
@@ -49,8 +49,8 @@ Partial Class FormRecoverFiles
         Me.Grid1.AllowUserToDeleteRows = False
         Me.Grid1.AllowUserToOrderColumns = True
         Me.Grid1.AllowUserToResizeRows = False
-        DataGridViewCellStyle3.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.Grid1.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.Grid1.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.Grid1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.Grid1.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
         Me.Grid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -103,11 +103,13 @@ Partial Class FormRecoverFiles
         'KryptonButton2
         '
         resources.ApplyResources(Me.KryptonButton2, "KryptonButton2")
+        Me.KryptonButton2.DialogResult = System.Windows.Forms.DialogResult.Ignore
         Me.KryptonButton2.Name = "KryptonButton2"
         '
         'KryptonButton1
         '
         resources.ApplyResources(Me.KryptonButton1, "KryptonButton1")
+        Me.KryptonButton1.DialogResult = System.Windows.Forms.DialogResult.OK
         Me.KryptonButton1.Name = "KryptonButton1"
         '
         'FormRecoverFiles
