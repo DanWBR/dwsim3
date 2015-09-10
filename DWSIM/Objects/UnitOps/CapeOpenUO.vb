@@ -230,6 +230,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             If _restorefromcollections Then
                 RestoreParams()
+            Else
+                GetParams()
             End If
 
         End Sub
@@ -380,6 +382,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Sub GetParams()
             If Not _couo Is Nothing Then
+                If _params Is Nothing Then _params = New List(Of ICapeParameter)
                 Dim myuo As CapeOpen.ICapeUtilities = _couo
                 Dim myparms As ICapeCollection = myuo.parameters
                 Dim paramcount As Integer = myparms.Count

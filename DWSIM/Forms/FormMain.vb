@@ -3389,12 +3389,6 @@ Label_00CC:
         Dim ext As String = Path.GetExtension(caminho)
         Dim diretorio As String = Path.GetDirectoryName(caminho)
 
-        If ext <> ".dwbcs" Then
-            If File.Exists(caminho) Then
-                File.Copy(caminho, diretorio + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension(caminho) + ".dwbak", True)
-            End If
-        End If
-
         Directory.Delete(filespath, True)
 
     End Sub
