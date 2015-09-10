@@ -11,7 +11,7 @@ Public Class FlowsheetUOEditorForm
 
         For Each r As DataGridViewRow In dgmap.Rows
             Dim comp As String = r.Cells(0).Value
-            Dim map As String = r.Cells(3).Value
+            Dim map As String = r.Cells(2).Value
             fsuo.CompoundMappings(comp) = map
         Next
 
