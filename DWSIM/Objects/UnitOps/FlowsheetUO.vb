@@ -1399,21 +1399,25 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     .Item(.Item.Count - 1).CustomEditor = New DWSIM.Editors.FlowsheetUO.UIFlowsheetUOViewer
 
                     For Each p In InputParams.Values
-                        .Item.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & ", " &
-                                  DWSIM.App.GetPropertyName(p.ObjectProperty) &
-                                  " (" & Fsheet.Collections.ObjectCollection(p.ObjectID).GetPropertyUnit(p.ObjectProperty, Me.FlowSheet.Options.SelectedUnitSystem) & ")",
-                                  Fsheet.Collections.ObjectCollection(p.ObjectID).GetPropertyValue(p.ObjectProperty, Me.FlowSheet.Options.SelectedUnitSystem), False,
-                                  DWSIM.App.GetLocalString("LinkedInputParms"), DWSIM.App.GetLocalString(""), True)
-                        .Item(.Item.Count - 1).Tag = p.ID
+                        If Fsheet.Collections.ObjectCollection.ContainsKey(p.ObjectID) Then
+                            .Item.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & ", " &
+                                      DWSIM.App.GetPropertyName(p.ObjectProperty) &
+                                      " (" & Fsheet.Collections.ObjectCollection(p.ObjectID).GetPropertyUnit(p.ObjectProperty, Me.FlowSheet.Options.SelectedUnitSystem) & ")",
+                                      Fsheet.Collections.ObjectCollection(p.ObjectID).GetPropertyValue(p.ObjectProperty, Me.FlowSheet.Options.SelectedUnitSystem), False,
+                                      DWSIM.App.GetLocalString("LinkedInputParms"), DWSIM.App.GetLocalString(""), True)
+                            .Item(.Item.Count - 1).Tag = p.ID
+                        End If
                     Next
 
                     For Each p In OutputParams.Values
-                        .Item.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & ", " &
-                                  DWSIM.App.GetPropertyName(p.ObjectProperty) &
-                                  " (" & Fsheet.Collections.ObjectCollection(p.ObjectID).GetPropertyUnit(p.ObjectProperty, Me.FlowSheet.Options.SelectedUnitSystem) & ")",
-                                  Fsheet.Collections.ObjectCollection(p.ObjectID).GetPropertyValue(p.ObjectProperty, Me.FlowSheet.Options.SelectedUnitSystem), True,
-                                  DWSIM.App.GetLocalString("LinkedOutputParms"), DWSIM.App.GetLocalString(""), True)
-                        .Item(.Item.Count - 1).Tag = p.ID
+                        If Fsheet.Collections.ObjectCollection.ContainsKey(p.ObjectID) Then
+                            .Item.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & ", " &
+                                      DWSIM.App.GetPropertyName(p.ObjectProperty) &
+                                      " (" & Fsheet.Collections.ObjectCollection(p.ObjectID).GetPropertyUnit(p.ObjectProperty, Me.FlowSheet.Options.SelectedUnitSystem) & ")",
+                                      Fsheet.Collections.ObjectCollection(p.ObjectID).GetPropertyValue(p.ObjectProperty, Me.FlowSheet.Options.SelectedUnitSystem), True,
+                                      DWSIM.App.GetLocalString("LinkedOutputParms"), DWSIM.App.GetLocalString(""), True)
+                            .Item(.Item.Count - 1).Tag = p.ID
+                        End If
                     Next
 
                 End If
@@ -1458,15 +1462,15 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Next
 
             For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "InputParameters").Elements.ToList
-        Dim fp As New FlowsheetUOParameter()
+                Dim fp As New FlowsheetUOParameter()
                 fp.LoadData(xel.Elements.ToList)
-                If Fsheet.Collections.ObjectCollection.ContainsKey(fp.ObjectID) Then Me.InputParams.Add(fp.ID, fp)
+                Me.InputParams.Add(fp.ID, fp)
             Next
 
             For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "OutputParameters").Elements.ToList
-        Dim fp As New FlowsheetUOParameter()
+                Dim fp As New FlowsheetUOParameter()
                 fp.LoadData(xel.Elements.ToList)
-                If Fsheet.Collections.ObjectCollection.ContainsKey(fp.ObjectID) Then Me.OutputParams.Add(fp.ID, fp)
+                Me.OutputParams.Add(fp.ID, fp)
             Next
 
             For Each xel As XElement In (From xel2 As XElement In data Select xel2 Where xel2.Name = "CompoundMappings").Elements.ToList
@@ -1478,8 +1482,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
             QTFillNodeItems()
 
             For Each xel2 As XElement In (From xel As XElement In data Select xel Where xel.Name = "NodeItems").Elements
-        Dim text As String = xel2.@Text
-        Dim ni2 As DWSIM.Outros.NodeItem = (From ni As DWSIM.Outros.NodeItem In m_nodeitems.Values Select ni Where ni.Text = text).SingleOrDefault
+                Dim text As String = xel2.@Text
+                Dim ni2 As DWSIM.Outros.NodeItem = (From ni As DWSIM.Outros.NodeItem In m_nodeitems.Values Select ni Where ni.Text = text).SingleOrDefault
                 If Not ni2 Is Nothing Then
                     ni2.Checked = True
                 End If
