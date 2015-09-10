@@ -488,11 +488,16 @@ Public Class SpreadsheetForm
                 ccparams = cell.Tag
                 ccparams.Expression = expression
                 If ccparams.CellType = VarType.Write Then
-                    ccparams.ToolTipText = DWSIM.App.GetLocalString("CellWillWrite") & vbCrLf & _
-                    DWSIM.App.GetLocalString("Objeto") & ": " & formc.Collections.ObjectCollection(ccparams.ObjectID).GraphicObject.Tag & vbCrLf & _
-                    DWSIM.App.GetLocalString("Propriedade") & ": " & DWSIM.App.GetPropertyName(ccparams.PropID)
+                    If formc.Collections.ObjectCollection.ContainsKey(ccparams.ObjectID) Then
+                        ccparams.ToolTipText = DWSIM.App.GetLocalString("CellWillWrite") & vbCrLf & _
+                        DWSIM.App.GetLocalString("Objeto") & ": " & formc.Collections.ObjectCollection(ccparams.ObjectID).GraphicObject.Tag & vbCrLf & _
+                        DWSIM.App.GetLocalString("Propriedade") & ": " & DWSIM.App.GetPropertyName(ccparams.PropID)
+                        cell.Style.BackColor = Color.LightBlue
+                    Else
+                        ccparams.CellType = VarType.Expression
+                        ccparams.ToolTipText = expression
+                    End If
                     cell.ToolTipText = ccparams.ToolTipText
-                    cell.Style.BackColor = Color.LightBlue
                 End If
                 If expression <> "" Then
                     If expression.Substring(0, 1) = "=" Then

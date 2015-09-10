@@ -1461,7 +1461,6 @@ Namespace DWSIM.Flowsheet
         ''' <remarks></remarks>
         Shared Sub UpdateDisplayStatus(form As FormFlowsheet, Optional ByVal ObjIDlist() As String = Nothing, Optional ByVal calculating As Boolean = False)
             If form.Visible Then
-                'form.FormSurface.Enabled = True
                 If ObjIDlist Is Nothing Then
                     For Each baseobj As SimulationObjects_BaseClass In form.Collections.ObjectCollection.Values
                         If Not baseobj.GraphicObject Is Nothing Then
@@ -1492,8 +1491,7 @@ Namespace DWSIM.Flowsheet
                         End If
                     Next
                 End If
-                'form.FormSurface.Enabled = False
-                form.UIThread(Sub() Application.DoEvents())
+                form.UIThread(Sub() form.FormSurface.FlowsheetDesignSurface.Invalidate())
             End If
         End Sub
 
@@ -1957,10 +1955,8 @@ Namespace DWSIM.Flowsheet
 
                         'disposes the cancellation token source.
 
-                        'If form.Visible Then
-                        '    ts.Dispose()
-                        'End If
-
+                        'If form.Visible Then ts.Dispose()
+                        
                         'My.MyApplication.TaskCancellationTokenSource = Nothing
 
                         'clears the object lists.
