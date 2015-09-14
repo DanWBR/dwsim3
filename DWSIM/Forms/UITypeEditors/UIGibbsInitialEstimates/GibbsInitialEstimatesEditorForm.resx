@@ -117,10 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="Button2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>363, 49</value>
-  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Button4.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -138,6 +134,7 @@
   <data name="&gt;&gt;Button1.Name" xml:space="preserve">
     <value>Button1</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Button2.Size" type="System.Drawing.Size, System.Drawing">
     <value>190, 23</value>
   </data>
@@ -213,9 +210,6 @@
   <data name="GroupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
-  <data name="grid.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 16</value>
-  </data>
   <data name="&gt;&gt;grid.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
@@ -252,14 +246,14 @@
   <data name="&gt;&gt;GroupBox2.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Estimativas Iniciais</value>
+  <data name="Button2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>363, 49</value>
   </data>
   <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
     <value>562, 239</value>
   </data>
-  <data name="&gt;&gt;grid.Name" xml:space="preserve">
-    <value>grid</value>
+  <data name="grid.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 16</value>
   </data>
   <data name="&gt;&gt;Button4.Parent" xml:space="preserve">
     <value>GroupBox2</value>
@@ -272,6 +266,9 @@
   </data>
   <data name="&gt;&gt;Button2.Parent" xml:space="preserve">
     <value>GroupBox2</value>
+  </data>
+  <data name="&gt;&gt;grid.Name" xml:space="preserve">
+    <value>grid</value>
   </data>
   <data name="Button2.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
     <value>GrowAndShrink</value>
@@ -320,6 +317,9 @@
   </data>
   <data name="grid.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
+  </data>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Estimativas Iniciais</value>
   </data>
   <data name="&gt;&gt;GroupBox1.Name" xml:space="preserve">
     <value>GroupBox1</value>

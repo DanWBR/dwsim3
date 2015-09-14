@@ -157,20 +157,20 @@
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Configuration</value>
   </data>
-  <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>467, 239</value>
-  </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Initial Estimates</value>
-  </data>
-  <data name="grid.Size" type="System.Drawing.Size, System.Drawing">
-    <value>461, 220</value>
-  </data>
   <data name="col1.HeaderText" xml:space="preserve">
     <value>Compound</value>
   </data>
   <data name="col3.HeaderText" xml:space="preserve">
     <value>Estimates for Outlet Mole Flows</value>
+  </data>
+  <data name="grid.Size" type="System.Drawing.Size, System.Drawing">
+    <value>461, 220</value>
+  </data>
+  <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>467, 239</value>
+  </data>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Initial Estimates</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>480, 341</value>

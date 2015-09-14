@@ -119,63 +119,63 @@
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Button2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>297, 50</value>
+    <value>280, 50</value>
   </data>
   <data name="Button2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>154, 23</value>
+    <value>165, 23</value>
   </data>
   <data name="Button2.Text" xml:space="preserve">
-    <value>Copy from outlet liquid stream</value>
+    <value>Kopiere Austrittstrom Flüssigkeit</value>
   </data>
   <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>134, 50</value>
+    <value>139, 50</value>
   </data>
   <data name="Button1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 23</value>
+    <value>135, 23</value>
   </data>
   <data name="Button1.Text" xml:space="preserve">
-    <value>Copy from outlet vapor stream</value>
+    <value>Kopiere Austrittstrom Gas</value>
   </data>
   <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>397, 13</value>
+    <value>472, 13</value>
   </data>
   <data name="Label1.Text" xml:space="preserve">
-    <value>Enter initial estimates for the FINAL composition of the mixture on the reactor outlet.</value>
+    <value>Definieren Sie eine anfängliche Schätzung für die FINALE Zusammensetzung des Reaktoraustritts.</value>
   </data>
   <data name="Button4.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 50</value>
   </data>
   <data name="Button4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 23</value>
+    <value>125, 23</value>
   </data>
   <data name="Button4.Text" xml:space="preserve">
-    <value>Copy from inlet stream</value>
+    <value>Kopiere Eingangsstrom</value>
   </data>
   <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>462, 85</value>
+    <value>490, 85</value>
   </data>
   <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Configuration</value>
-  </data>
-  <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>462, 239</value>
-  </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Initial Estimates</value>
-  </data>
-  <data name="grid.Size" type="System.Drawing.Size, System.Drawing">
-    <value>456, 220</value>
+    <value>Konfiguration</value>
   </data>
   <data name="col1.HeaderText" xml:space="preserve">
-    <value>Compound</value>
+    <value>Komponente</value>
   </data>
   <data name="col3.HeaderText" xml:space="preserve">
-    <value>Estimates for Outlet Mole Flows</value>
+    <value>Schätzung für Molenstrom Austritt</value>
+  </data>
+  <data name="grid.Size" type="System.Drawing.Size, System.Drawing">
+    <value>484, 220</value>
+  </data>
+  <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>490, 239</value>
+  </data>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Anfangsschätzung</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>475, 341</value>
+    <value>503, 341</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Initial Estimates</value>
+    <value>Initialisierung Zusammensetzung</value>
   </data>
 </root>
