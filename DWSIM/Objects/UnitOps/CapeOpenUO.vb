@@ -383,6 +383,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Sub GetParams()
             If Not _couo Is Nothing Then
                 If _params Is Nothing Then _params = New List(Of ICapeParameter)
+                '_params.Clear()
                 Dim myuo As CapeOpen.ICapeUtilities = _couo
                 Dim myparms As ICapeCollection = myuo.parameters
                 Dim paramcount As Integer = myparms.Count
@@ -969,11 +970,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Public Overrides Function Calculate(Optional ByVal args As Object = Nothing) As Integer
 
-            If Not DWSIM.App.IsMainThread Then
-                Me.Dispose()
+            If Not CreatedWithThreadID = Thread.CurrentThread.ManagedThreadId Then
+                disposedValue = False
+                Me.Dispose(True)
                 'load current configuration from temporary data and re-instantiate the COM object using the current thread.
                 'this is called only when solving the object with a background thread.
                 Me.LoadData(_tempdata)
+                CreatedWithThreadID = Thread.CurrentThread.ManagedThreadId
             End If
 
             UpdatePortsFromConnectors()
@@ -1473,7 +1476,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 ' If disposing equals true, dispose all managed 
                 ' and unmanaged resources.
                 If disposing Then
-                    ' Dispose managed resources.
+                    If _ports IsNot Nothing Then _ports.Clear()
+                    If _params IsNot Nothing Then _params.Clear()
+                    If _parameters IsNot Nothing Then _parameters.Clear()
                 End If
 
                 ' Call the appropriate methods to clean up 

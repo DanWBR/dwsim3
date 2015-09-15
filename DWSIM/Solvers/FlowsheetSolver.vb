@@ -1681,7 +1681,11 @@ Namespace DWSIM.Flowsheet
         ''' <summary>
         ''' Calculate all objects in the Flowsheet using a ordering method.
         ''' </summary>
-        ''' <param name="form">Flowsheet to be calculated (FormChild object)</param>
+        ''' <param name="form">Flowsheet to be calculated (FormFlowsheet object).</param>
+        ''' <param name="Adjusting">True if the routine is called from the Simultaneous Adjust Solver.</param>
+        ''' <param name="frompgrid">True if the routine is called from a PropertyGrid PropertyChanged event.</param>
+        ''' <param name="mode">0 = Main Thread, 1 = Background Thread, 2 = Background Parallel Threads, 3 = Azure Service Bus, 4 = Network Computer</param>
+        ''' <param name="ts">CancellationTokenSource instance from main flowsheet when calculating subflowsheets.</param>
         ''' <remarks></remarks>
         Public Shared Sub CalculateAll2(ByVal form As FormFlowsheet, mode As Integer, Optional ByVal ts As CancellationTokenSource = Nothing, Optional frompgrid As Boolean = False, Optional Adjusting As Boolean = False)
 
@@ -1691,7 +1695,7 @@ Namespace DWSIM.Flowsheet
 
                 If form.MasterFlowsheet Is Nothing Then My.MyApplication.CalculatorBusy = True
 
-                'this is the cancellation token for background threads. it checks for calculator stop requests and passes the request to the tasks.
+                'this is the cancellation token for background threads. it checks for calculator stop requests and forwards the request to the tasks.
 
                 If form.MasterFlowsheet Is Nothing Then
                     If ts Is Nothing Then ts = New CancellationTokenSource
@@ -1771,7 +1775,7 @@ Namespace DWSIM.Flowsheet
 
                 Application.DoEvents()
 
-                'gets the GPU ready if option enabled
+                'initialize GPU if option enabled
 
                 If My.Settings.EnableGPUProcessing And form.MasterFlowsheet Is Nothing Then
                     DWSIM.App.InitComputeDevice()
@@ -1790,7 +1794,7 @@ Namespace DWSIM.Flowsheet
 
                         Dim loopidx As Integer = 0
 
-                        'process/calculate the stack.
+                        'process/calculate the queue.
 
                         If form.CalculationQueue Is Nothing Then form.CalculationQueue = New Queue(Of DWSIM.Outros.StatusChangeEventArgs)
 
@@ -1840,8 +1844,11 @@ Namespace DWSIM.Flowsheet
                                                                  filteredlist2.Add(li.Key, objcalclist)
                                                              Next
 
-                                                             ProcessCalculationQueue(form, True, True, mode, filteredlist2, ct, Adjusting)
-
+                                                             If form.MasterFlowsheet Is Nothing Then
+                                                                 ProcessCalculationQueue(form, True, True, mode, filteredlist2, ct, Adjusting)
+                                                             Else
+                                                                 ProcessCalculationQueue(form, True, True, 1, filteredlist2, ct, Adjusting)
+                                                             End If
                                                          End If
 
                                                          'checks for recycle convergence.

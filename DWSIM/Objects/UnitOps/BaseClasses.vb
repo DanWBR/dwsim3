@@ -62,6 +62,7 @@ Imports PropertyGridEx
     Protected m_errormessage As String = ""
 
     Public Property Calculated As Boolean = False
+    <Xml.Serialization.XmlIgnore> Public Property CreatedWithThreadID As Integer = 0
     <Xml.Serialization.XmlIgnore> Public Property LastUpdated As New Date
 
     Public MustOverride Sub UpdatePropertyNodes(ByVal su As DWSIM.SistemasDeUnidades.Unidades, ByVal nf As String)
@@ -3074,6 +3075,7 @@ Imports PropertyGridEx
     End Property
 
     Sub CreateNew()
+        CreatedWithThreadID = Threading.Thread.CurrentThread.ManagedThreadId
         Me.m_annotation = New DWSIM.Outros.Annotation
         Me.m_nodeitems = New System.Collections.Generic.Dictionary(Of Integer, DWSIM.Outros.NodeItem)
         Me.m_qtnodeitems = New System.Collections.Generic.Dictionary(Of Integer, DWSIM.Outros.NodeItem)
