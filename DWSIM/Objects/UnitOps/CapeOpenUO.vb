@@ -1049,19 +1049,19 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 c.AttachedConnector.AttachedTo.Calculated = True
                             End If
                         Next
-                        Dim ur As CapeOpen.ICapeUnitReport = _couo
-                        If Not ur Is Nothing Then
-                            Dim reps As String() = ur.reports
-                            For Each r As String In reps
-                                ur.selectedReport = r
-                                Dim msg2 As String = ""
-                                ur.ProduceReport(msg2)
-                                Me.FlowSheet.FormCOReports.UIThread(Sub()
-                                                                        Me.FlowSheet.FormCOReports.TextBox1.AppendText(Date.Now.ToString + ", " +
-                                                                                                                       Me.GraphicObject.Tag + " (" + r + "):" +
-                                                                                                                       vbCrLf + vbCrLf + msg2 + vbCrLf + vbCrLf)
-                                                                    End Sub)
-                            Next
+                        If DWSIM.App.IsMainThread Then
+                            Dim ur As CapeOpen.ICapeUnitReport = _couo
+                            If Not ur Is Nothing Then
+                                Dim reps As String() = ur.reports
+                                For Each r As String In reps
+                                    ur.selectedReport = r
+                                    Dim msg2 As String = ""
+                                    ur.ProduceReport(msg2)
+                                    Me.FlowSheet.FormCOReports.TextBox1.AppendText(Date.Now.ToString + ", " +
+                                                                                    Me.GraphicObject.Tag + " (" + r + "):" +
+                                                                                    vbCrLf + vbCrLf + msg2 + vbCrLf + vbCrLf)
+                                Next
+                            End If
                         End If
                     Catch ex As Exception
                         With objargs
