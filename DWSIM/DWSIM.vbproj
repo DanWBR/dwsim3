@@ -730,6 +730,7 @@
     <Compile Include="Forms\UITypeEditors\UIUnitConverter\UIUnitConverter.vb" />
     <Compile Include="Interfaces\IUtilityPlugin.vb" />
     <Compile Include="Objects\Classes\Shared\ExtensionMethods.vb" />
+    <Compile Include="Objects\Classes\Shared\LimitedConcurrencyLevelTaskScheduler.vb" />
     <Compile Include="Objects\Classes\Shared\STATaskScheduler.vb" />
     <Compile Include="Objects\PropertyPackages\Base\ActivityCoefficientBase.vb" />
     <Compile Include="Objects\PropertyPackages\Base\ActivityCoefficientPropertyPackage.vb" />

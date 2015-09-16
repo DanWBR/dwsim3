@@ -1889,41 +1889,20 @@ Namespace DWSIM.Flowsheet
                             End If
                         Next
 
-                        'if the flowsheet contains COM objects, use a STA task scheduler
+                        'configure the application task scheduler
 
                         If form.MasterFlowsheet Is Nothing Then
 
-                            Dim HasCOMobj As Boolean = False
+                            Dim nthreads As Integer = My.Settings.MaxThreadMultiplier * System.Environment.ProcessorCount
 
-                            For Each s In objstack
-                                If TypeOf form.Collections.ObjectCollection(s) Is SimulationObjects.UnitOps.CapeOpenUO Or
-                                    TypeOf form.Collections.ObjectCollection(s) Is SimulationObjects.UnitOps.ExcelUO And
-                                    form.Collections.ObjectCollection(s).GraphicObject.Active Then
-                                    HasCOMobj = True
-                                    Exit For
-                                ElseIf TypeOf form.Collections.ObjectCollection(s) Is SimulationObjects.UnitOps.Flowsheet Then
-                                    Dim fsuo = DirectCast(form.Collections.ObjectCollection(s), SimulationObjects.UnitOps.Flowsheet)
-                                    For Each obj In fsuo.Fsheet.Collections.ObjectCollection.Values
-                                        If TypeOf obj Is SimulationObjects.UnitOps.CapeOpenUO Or TypeOf obj Is SimulationObjects.UnitOps.ExcelUO And
-                                            obj.GraphicObject.Active Then
-                                            HasCOMobj = True
-                                            Exit For
-                                        End If
-                                    Next
-                                End If
-                            Next
-
-                            If HasCOMobj Then
-                                Dim nthreads As Integer
-                                If My.Settings.MaxDegreeOfParallelism = -1 Then
-                                    nthreads = 5 * System.Environment.ProcessorCount
-                                Else
-                                    nthreads = 5 * My.Settings.MaxDegreeOfParallelism
-                                End If
-                                My.MyApplication.AppTaskScheduler = New DWSIM.Auxiliary.TaskSchedulers.StaTaskScheduler(nthreads)
-                            Else
-                                My.MyApplication.AppTaskScheduler = Tasks.TaskScheduler.Default
-                            End If
+                            Select Case My.Settings.TaskScheduler
+                                Case 0 'default
+                                    My.MyApplication.AppTaskScheduler = Tasks.TaskScheduler.Default
+                                Case 1 'sta
+                                    My.MyApplication.AppTaskScheduler = New DWSIM.Auxiliary.TaskSchedulers.StaTaskScheduler(nthreads)
+                                Case 2 'limited concurrency
+                                    My.MyApplication.AppTaskScheduler = New DWSIM.Auxiliary.TaskSchedulers.LimitedConcurrencyLevelTaskScheduler(nthreads)
+                            End Select
 
                         End If
 
