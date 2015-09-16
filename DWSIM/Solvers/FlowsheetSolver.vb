@@ -1229,7 +1229,7 @@ Namespace DWSIM.Flowsheet
                         form.FormQueue.TextBox1.AppendText(form.Collections.ObjectCollection(c.Nome).GraphicObject.Tag & vbTab & vbTab & vbTab & "[" & DWSIM.App.GetLocalString(form.Collections.ObjectCollection(c.Nome).Descricao) & "]" & vbCrLf)
                     Next
                 Catch ex As Exception
-                    'form.WriteToLog(ex.Message, Color.Black, DWSIM.FormClasses.TipoAviso.Erro)
+
                 End Try
 
                 If form.Collections.ObjectCollection.ContainsKey(myinfo.Nome) Then
@@ -1258,12 +1258,6 @@ Namespace DWSIM.Flowsheet
                             myobj.GraphicObject.Calculated = True
                         End If
                     Catch ex As Exception
-                        'Dim st As New StackTrace(ex, True)
-                        'If st.FrameCount > 0 Then
-                        '    form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString & " (" & Path.GetFileName(st.GetFrame(0).GetFileName) & ", " & st.GetFrame(0).GetFileLineNumber & ")", Color.Red, FormClasses.TipoAviso.Erro)
-                        'Else
-                        '    form.WriteToLog(myinfo.Tag & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
-                        'End If
                         myobj.ErrorMessage = ex.Message
                         loopex = New Exception(myinfo.Tag & ": " & ex.Message)
                         If My.Settings.SolverBreakOnException Then Exit While

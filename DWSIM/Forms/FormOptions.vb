@@ -693,4 +693,8 @@ Public Class FormOptions
         If cbTaskScheduler.SelectedIndex = 0 Then tbMaxThreadMultiplier.Enabled = False Else tbMaxThreadMultiplier.Enabled = True
         My.Settings.TaskScheduler = cbTaskScheduler.SelectedIndex
     End Sub
+
+    Private Sub tbMaxThreadMultiplier_TextChanged(sender As Object, e As EventArgs) Handles tbMaxThreadMultiplier.TextChanged
+        My.Settings.MaxThreadMultiplier = tbMaxThreadMultiplier.Text
+    End Sub
 End Class
