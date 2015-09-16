@@ -508,7 +508,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("5")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("8")>  _
         Public Property MaxThreadMultiplier() As Integer
             Get
                 Return CType(Me("MaxThreadMultiplier"),Integer)

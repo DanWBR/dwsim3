@@ -1933,7 +1933,7 @@ Namespace DWSIM.Flowsheet
                         Catch ex As Exception
                             age = New AggregateException(ex.Message.ToString, ex)
                         Finally
-                            maintask.Dispose()
+                            If maintask.IsCompleted Then maintask.Dispose() Else maintask = Nothing
                         End Try
 
                         'clears the calculation queue.
