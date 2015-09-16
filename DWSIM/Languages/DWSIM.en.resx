@@ -4883,7 +4883,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Add User (Simulation) Units System</value>
   </data>
   <data name="ConfirmAddUnitSystemFromSimulation" xml:space="preserve">
-    <value>The loaded simulation contains a user unit system definition that is not present in your list of user-defined units systems. Do you want to add this units system to your list?</value>
+    <value>The loaded simulation contains a new user units system definition. Do you want to add this units system to your list?</value>
   </data>
   <data name="EnergyStreamRequired" xml:space="preserve">
     <value>The current calculation mode requires an Energy Stream to be connected to the Unit Operation.</value>

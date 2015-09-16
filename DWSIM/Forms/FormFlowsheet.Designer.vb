@@ -21,24 +21,24 @@ Partial Class FormFlowsheet
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormFlowsheet))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DockPanelSkin1 As WeifenLuo.WinFormsUI.Docking.DockPanelSkin = New WeifenLuo.WinFormsUI.Docking.DockPanelSkin()
-        Dim AutoHideStripSkin1 As WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin = New WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin()
-        Dim DockPanelGradient1 As WeifenLuo.WinFormsUI.Docking.DockPanelGradient = New WeifenLuo.WinFormsUI.Docking.DockPanelGradient()
-        Dim TabGradient1 As WeifenLuo.WinFormsUI.Docking.TabGradient = New WeifenLuo.WinFormsUI.Docking.TabGradient()
-        Dim DockPaneStripSkin1 As WeifenLuo.WinFormsUI.Docking.DockPaneStripSkin = New WeifenLuo.WinFormsUI.Docking.DockPaneStripSkin()
-        Dim DockPaneStripGradient1 As WeifenLuo.WinFormsUI.Docking.DockPaneStripGradient = New WeifenLuo.WinFormsUI.Docking.DockPaneStripGradient()
-        Dim TabGradient2 As WeifenLuo.WinFormsUI.Docking.TabGradient = New WeifenLuo.WinFormsUI.Docking.TabGradient()
-        Dim DockPanelGradient2 As WeifenLuo.WinFormsUI.Docking.DockPanelGradient = New WeifenLuo.WinFormsUI.Docking.DockPanelGradient()
-        Dim TabGradient3 As WeifenLuo.WinFormsUI.Docking.TabGradient = New WeifenLuo.WinFormsUI.Docking.TabGradient()
-        Dim DockPaneStripToolWindowGradient1 As WeifenLuo.WinFormsUI.Docking.DockPaneStripToolWindowGradient = New WeifenLuo.WinFormsUI.Docking.DockPaneStripToolWindowGradient()
-        Dim TabGradient4 As WeifenLuo.WinFormsUI.Docking.TabGradient = New WeifenLuo.WinFormsUI.Docking.TabGradient()
-        Dim TabGradient5 As WeifenLuo.WinFormsUI.Docking.TabGradient = New WeifenLuo.WinFormsUI.Docking.TabGradient()
-        Dim DockPanelGradient3 As WeifenLuo.WinFormsUI.Docking.DockPanelGradient = New WeifenLuo.WinFormsUI.Docking.DockPanelGradient()
-        Dim TabGradient6 As WeifenLuo.WinFormsUI.Docking.TabGradient = New WeifenLuo.WinFormsUI.Docking.TabGradient()
-        Dim TabGradient7 As WeifenLuo.WinFormsUI.Docking.TabGradient = New WeifenLuo.WinFormsUI.Docking.TabGradient()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DockPanelSkin3 As WeifenLuo.WinFormsUI.Docking.DockPanelSkin = New WeifenLuo.WinFormsUI.Docking.DockPanelSkin()
+        Dim AutoHideStripSkin3 As WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin = New WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin()
+        Dim DockPanelGradient7 As WeifenLuo.WinFormsUI.Docking.DockPanelGradient = New WeifenLuo.WinFormsUI.Docking.DockPanelGradient()
+        Dim TabGradient15 As WeifenLuo.WinFormsUI.Docking.TabGradient = New WeifenLuo.WinFormsUI.Docking.TabGradient()
+        Dim DockPaneStripSkin3 As WeifenLuo.WinFormsUI.Docking.DockPaneStripSkin = New WeifenLuo.WinFormsUI.Docking.DockPaneStripSkin()
+        Dim DockPaneStripGradient3 As WeifenLuo.WinFormsUI.Docking.DockPaneStripGradient = New WeifenLuo.WinFormsUI.Docking.DockPaneStripGradient()
+        Dim TabGradient16 As WeifenLuo.WinFormsUI.Docking.TabGradient = New WeifenLuo.WinFormsUI.Docking.TabGradient()
+        Dim DockPanelGradient8 As WeifenLuo.WinFormsUI.Docking.DockPanelGradient = New WeifenLuo.WinFormsUI.Docking.DockPanelGradient()
+        Dim TabGradient17 As WeifenLuo.WinFormsUI.Docking.TabGradient = New WeifenLuo.WinFormsUI.Docking.TabGradient()
+        Dim DockPaneStripToolWindowGradient3 As WeifenLuo.WinFormsUI.Docking.DockPaneStripToolWindowGradient = New WeifenLuo.WinFormsUI.Docking.DockPaneStripToolWindowGradient()
+        Dim TabGradient18 As WeifenLuo.WinFormsUI.Docking.TabGradient = New WeifenLuo.WinFormsUI.Docking.TabGradient()
+        Dim TabGradient19 As WeifenLuo.WinFormsUI.Docking.TabGradient = New WeifenLuo.WinFormsUI.Docking.TabGradient()
+        Dim DockPanelGradient9 As WeifenLuo.WinFormsUI.Docking.DockPanelGradient = New WeifenLuo.WinFormsUI.Docking.DockPanelGradient()
+        Dim TabGradient20 As WeifenLuo.WinFormsUI.Docking.TabGradient = New WeifenLuo.WinFormsUI.Docking.TabGradient()
+        Dim TabGradient21 As WeifenLuo.WinFormsUI.Docking.TabGradient = New WeifenLuo.WinFormsUI.Docking.TabGradient()
         Me.ToolStrip4 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripLabel4 = New System.Windows.Forms.ToolStripLabel()
         Me.TSBtabela = New System.Windows.Forms.ToolStripButton()
@@ -187,6 +187,11 @@ Partial Class FormFlowsheet
         Me.TimerScripts15 = New System.Windows.Forms.Timer(Me.components)
         Me.TimerScripts30 = New System.Windows.Forms.Timer(Me.components)
         Me.TimerScripts60 = New System.Windows.Forms.Timer(Me.components)
+        Me.QuestionBox_Panel = New System.Windows.Forms.Panel()
+        Me.QuestionBox_Label1 = New System.Windows.Forms.Label()
+        Me.QuestionBox_PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.QuestionBox_Button1 = New System.Windows.Forms.Button()
+        Me.QuestionBox_Button2 = New System.Windows.Forms.Button()
         Me.ToolStrip4.SuspendLayout()
         Me.ToolStrip7.SuspendLayout()
         Me.ToolStrip6.SuspendLayout()
@@ -196,6 +201,8 @@ Partial Class FormFlowsheet
         Me.ToolStrip1.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
         Me.FlowLayoutPanel1.SuspendLayout()
+        Me.QuestionBox_Panel.SuspendLayout()
+        CType(Me.QuestionBox_PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'ToolStrip4
@@ -434,33 +441,33 @@ Partial Class FormFlowsheet
         '
         'DataGridView1
         '
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridView1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridView1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DataGridView1.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DataGridView1.DefaultCellStyle = DataGridViewCellStyle8
         resources.ApplyResources(Me.DataGridView1, "DataGridView1")
         Me.DataGridView1.Name = "DataGridView1"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridView1.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridView1.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
         '
         'TSTable
         '
@@ -1119,52 +1126,52 @@ Partial Class FormFlowsheet
         Me.dckPanel.DockBackColor = System.Drawing.SystemColors.Control
         Me.dckPanel.DocumentStyle = WeifenLuo.WinFormsUI.Docking.DocumentStyle.DockingWindow
         Me.dckPanel.Name = "dckPanel"
-        DockPanelGradient1.EndColor = System.Drawing.SystemColors.ControlLight
-        DockPanelGradient1.StartColor = System.Drawing.SystemColors.ControlLight
-        AutoHideStripSkin1.DockStripGradient = DockPanelGradient1
-        TabGradient1.EndColor = System.Drawing.SystemColors.Control
-        TabGradient1.StartColor = System.Drawing.SystemColors.Control
-        TabGradient1.TextColor = System.Drawing.SystemColors.ControlDarkDark
-        AutoHideStripSkin1.TabGradient = TabGradient1
-        AutoHideStripSkin1.TextFont = New System.Drawing.Font("Tahoma", 8.25!)
-        DockPanelSkin1.AutoHideStripSkin = AutoHideStripSkin1
-        TabGradient2.EndColor = System.Drawing.SystemColors.ControlLightLight
-        TabGradient2.StartColor = System.Drawing.SystemColors.ControlLightLight
-        TabGradient2.TextColor = System.Drawing.SystemColors.ControlText
-        DockPaneStripGradient1.ActiveTabGradient = TabGradient2
-        DockPanelGradient2.EndColor = System.Drawing.SystemColors.Control
-        DockPanelGradient2.StartColor = System.Drawing.SystemColors.Control
-        DockPaneStripGradient1.DockStripGradient = DockPanelGradient2
-        TabGradient3.EndColor = System.Drawing.SystemColors.ControlLight
-        TabGradient3.StartColor = System.Drawing.SystemColors.ControlLight
-        TabGradient3.TextColor = System.Drawing.SystemColors.ControlText
-        DockPaneStripGradient1.InactiveTabGradient = TabGradient3
-        DockPaneStripSkin1.DocumentGradient = DockPaneStripGradient1
-        DockPaneStripSkin1.TextFont = New System.Drawing.Font("Tahoma", 8.25!)
-        TabGradient4.EndColor = System.Drawing.SystemColors.ActiveCaption
-        TabGradient4.LinearGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical
-        TabGradient4.StartColor = System.Drawing.SystemColors.GradientActiveCaption
-        TabGradient4.TextColor = System.Drawing.SystemColors.ActiveCaptionText
-        DockPaneStripToolWindowGradient1.ActiveCaptionGradient = TabGradient4
-        TabGradient5.EndColor = System.Drawing.SystemColors.Control
-        TabGradient5.StartColor = System.Drawing.SystemColors.Control
-        TabGradient5.TextColor = System.Drawing.SystemColors.ControlText
-        DockPaneStripToolWindowGradient1.ActiveTabGradient = TabGradient5
-        DockPanelGradient3.EndColor = System.Drawing.SystemColors.ControlLight
-        DockPanelGradient3.StartColor = System.Drawing.SystemColors.ControlLight
-        DockPaneStripToolWindowGradient1.DockStripGradient = DockPanelGradient3
-        TabGradient6.EndColor = System.Drawing.SystemColors.InactiveCaption
-        TabGradient6.LinearGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical
-        TabGradient6.StartColor = System.Drawing.SystemColors.GradientInactiveCaption
-        TabGradient6.TextColor = System.Drawing.SystemColors.InactiveCaptionText
-        DockPaneStripToolWindowGradient1.InactiveCaptionGradient = TabGradient6
-        TabGradient7.EndColor = System.Drawing.Color.Transparent
-        TabGradient7.StartColor = System.Drawing.Color.Transparent
-        TabGradient7.TextColor = System.Drawing.SystemColors.ControlDarkDark
-        DockPaneStripToolWindowGradient1.InactiveTabGradient = TabGradient7
-        DockPaneStripSkin1.ToolWindowGradient = DockPaneStripToolWindowGradient1
-        DockPanelSkin1.DockPaneStripSkin = DockPaneStripSkin1
-        Me.dckPanel.Skin = DockPanelSkin1
+        DockPanelGradient7.EndColor = System.Drawing.SystemColors.ControlLight
+        DockPanelGradient7.StartColor = System.Drawing.SystemColors.ControlLight
+        AutoHideStripSkin3.DockStripGradient = DockPanelGradient7
+        TabGradient15.EndColor = System.Drawing.SystemColors.Control
+        TabGradient15.StartColor = System.Drawing.SystemColors.Control
+        TabGradient15.TextColor = System.Drawing.SystemColors.ControlDarkDark
+        AutoHideStripSkin3.TabGradient = TabGradient15
+        AutoHideStripSkin3.TextFont = New System.Drawing.Font("Tahoma", 8.25!)
+        DockPanelSkin3.AutoHideStripSkin = AutoHideStripSkin3
+        TabGradient16.EndColor = System.Drawing.SystemColors.ControlLightLight
+        TabGradient16.StartColor = System.Drawing.SystemColors.ControlLightLight
+        TabGradient16.TextColor = System.Drawing.SystemColors.ControlText
+        DockPaneStripGradient3.ActiveTabGradient = TabGradient16
+        DockPanelGradient8.EndColor = System.Drawing.SystemColors.Control
+        DockPanelGradient8.StartColor = System.Drawing.SystemColors.Control
+        DockPaneStripGradient3.DockStripGradient = DockPanelGradient8
+        TabGradient17.EndColor = System.Drawing.SystemColors.ControlLight
+        TabGradient17.StartColor = System.Drawing.SystemColors.ControlLight
+        TabGradient17.TextColor = System.Drawing.SystemColors.ControlText
+        DockPaneStripGradient3.InactiveTabGradient = TabGradient17
+        DockPaneStripSkin3.DocumentGradient = DockPaneStripGradient3
+        DockPaneStripSkin3.TextFont = New System.Drawing.Font("Tahoma", 8.25!)
+        TabGradient18.EndColor = System.Drawing.SystemColors.ActiveCaption
+        TabGradient18.LinearGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical
+        TabGradient18.StartColor = System.Drawing.SystemColors.GradientActiveCaption
+        TabGradient18.TextColor = System.Drawing.SystemColors.ActiveCaptionText
+        DockPaneStripToolWindowGradient3.ActiveCaptionGradient = TabGradient18
+        TabGradient19.EndColor = System.Drawing.SystemColors.Control
+        TabGradient19.StartColor = System.Drawing.SystemColors.Control
+        TabGradient19.TextColor = System.Drawing.SystemColors.ControlText
+        DockPaneStripToolWindowGradient3.ActiveTabGradient = TabGradient19
+        DockPanelGradient9.EndColor = System.Drawing.SystemColors.ControlLight
+        DockPanelGradient9.StartColor = System.Drawing.SystemColors.ControlLight
+        DockPaneStripToolWindowGradient3.DockStripGradient = DockPanelGradient9
+        TabGradient20.EndColor = System.Drawing.SystemColors.InactiveCaption
+        TabGradient20.LinearGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical
+        TabGradient20.StartColor = System.Drawing.SystemColors.GradientInactiveCaption
+        TabGradient20.TextColor = System.Drawing.SystemColors.InactiveCaptionText
+        DockPaneStripToolWindowGradient3.InactiveCaptionGradient = TabGradient20
+        TabGradient21.EndColor = System.Drawing.Color.Transparent
+        TabGradient21.StartColor = System.Drawing.Color.Transparent
+        TabGradient21.TextColor = System.Drawing.SystemColors.ControlDarkDark
+        DockPaneStripToolWindowGradient3.InactiveTabGradient = TabGradient21
+        DockPaneStripSkin3.ToolWindowGradient = DockPaneStripToolWindowGradient3
+        DockPanelSkin3.DockPaneStripSkin = DockPaneStripSkin3
+        Me.dckPanel.Skin = DockPanelSkin3
         '
         'FlowLayoutPanel1
         '
@@ -1206,35 +1213,75 @@ Partial Class FormFlowsheet
         Me.TimerScripts60.Enabled = True
         Me.TimerScripts60.Interval = 3600000
         '
+        'QuestionBox_Panel
+        '
+        Me.QuestionBox_Panel.BackColor = System.Drawing.SystemColors.ActiveCaption
+        Me.QuestionBox_Panel.Controls.Add(Me.QuestionBox_Button2)
+        Me.QuestionBox_Panel.Controls.Add(Me.QuestionBox_Button1)
+        Me.QuestionBox_Panel.Controls.Add(Me.QuestionBox_PictureBox1)
+        Me.QuestionBox_Panel.Controls.Add(Me.QuestionBox_Label1)
+        resources.ApplyResources(Me.QuestionBox_Panel, "QuestionBox_Panel")
+        Me.QuestionBox_Panel.Name = "QuestionBox_Panel"
+        '
+        'QuestionBox_Label1
+        '
+        resources.ApplyResources(Me.QuestionBox_Label1, "QuestionBox_Label1")
+        Me.QuestionBox_Label1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.QuestionBox_Label1.Name = "QuestionBox_Label1"
+        '
+        'QuestionBox_PictureBox1
+        '
+        resources.ApplyResources(Me.QuestionBox_PictureBox1, "QuestionBox_PictureBox1")
+        Me.QuestionBox_PictureBox1.Name = "QuestionBox_PictureBox1"
+        Me.QuestionBox_PictureBox1.TabStop = false
+        '
+        'QuestionBox_Button1
+        '
+        resources.ApplyResources(Me.QuestionBox_Button1, "QuestionBox_Button1")
+        Me.QuestionBox_Button1.DialogResult = System.Windows.Forms.DialogResult.Yes
+        Me.QuestionBox_Button1.Name = "QuestionBox_Button1"
+        Me.QuestionBox_Button1.UseVisualStyleBackColor = true
+        '
+        'QuestionBox_Button2
+        '
+        resources.ApplyResources(Me.QuestionBox_Button2, "QuestionBox_Button2")
+        Me.QuestionBox_Button2.DialogResult = System.Windows.Forms.DialogResult.No
+        Me.QuestionBox_Button2.Name = "QuestionBox_Button2"
+        Me.QuestionBox_Button2.UseVisualStyleBackColor = true
+        '
         'FormFlowsheet
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.Controls.Add(Me.FlowLayoutPanel1)
-        Me.Controls.Add(Me.MenuStrip1)
         Me.Controls.Add(Me.dckPanel)
-        Me.DoubleBuffered = True
+        Me.Controls.Add(Me.FlowLayoutPanel1)
+        Me.Controls.Add(Me.QuestionBox_Panel)
+        Me.Controls.Add(Me.MenuStrip1)
+        Me.DoubleBuffered = true
         Me.Name = "FormFlowsheet"
-        Me.ToolStrip4.ResumeLayout(False)
-        Me.ToolStrip4.PerformLayout()
-        Me.ToolStrip7.ResumeLayout(False)
-        Me.ToolStrip7.PerformLayout()
-        Me.ToolStrip6.ResumeLayout(False)
-        Me.ToolStrip6.PerformLayout()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TSTable.ResumeLayout(False)
-        Me.ToolStrip2.ResumeLayout(False)
-        Me.ToolStrip2.PerformLayout()
-        Me.ToolStrip1.ResumeLayout(False)
-        Me.ToolStrip1.PerformLayout()
-        Me.MenuStrip1.ResumeLayout(False)
-        Me.MenuStrip1.PerformLayout()
-        Me.FlowLayoutPanel1.ResumeLayout(False)
-        Me.FlowLayoutPanel1.PerformLayout()
-        Me.ResumeLayout(False)
-        Me.PerformLayout()
+        Me.ToolStrip4.ResumeLayout(false)
+        Me.ToolStrip4.PerformLayout
+        Me.ToolStrip7.ResumeLayout(false)
+        Me.ToolStrip7.PerformLayout
+        Me.ToolStrip6.ResumeLayout(false)
+        Me.ToolStrip6.PerformLayout
+        CType(Me.DataGridView1,System.ComponentModel.ISupportInitialize).EndInit
+        Me.TSTable.ResumeLayout(false)
+        Me.ToolStrip2.ResumeLayout(false)
+        Me.ToolStrip2.PerformLayout
+        Me.ToolStrip1.ResumeLayout(false)
+        Me.ToolStrip1.PerformLayout
+        Me.MenuStrip1.ResumeLayout(false)
+        Me.MenuStrip1.PerformLayout
+        Me.FlowLayoutPanel1.ResumeLayout(false)
+        Me.FlowLayoutPanel1.PerformLayout
+        Me.QuestionBox_Panel.ResumeLayout(false)
+        Me.QuestionBox_Panel.PerformLayout
+        CType(Me.QuestionBox_PictureBox1,System.ComponentModel.ISupportInitialize).EndInit
+        Me.ResumeLayout(false)
+        Me.PerformLayout
 
-    End Sub
+End Sub
     Public WithEvents ToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents ToolStripMenuItem2 As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents ToolStripMenuItem3 As System.Windows.Forms.ToolStripMenuItem
@@ -1383,4 +1430,9 @@ Partial Class FormFlowsheet
     Friend WithEvents ToolStripLabel5 As System.Windows.Forms.ToolStripLabel
     Friend WithEvents tsbRestoreSolutions As System.Windows.Forms.ToolStripDropDownButton
     Friend WithEvents ToolStripButton4 As System.Windows.Forms.ToolStripButton
+    Friend WithEvents QuestionBox_Panel As System.Windows.Forms.Panel
+    Friend WithEvents QuestionBox_Button2 As System.Windows.Forms.Button
+    Friend WithEvents QuestionBox_Button1 As System.Windows.Forms.Button
+    Friend WithEvents QuestionBox_PictureBox1 As System.Windows.Forms.PictureBox
+    Friend WithEvents QuestionBox_Label1 As System.Windows.Forms.Label
 End Class
