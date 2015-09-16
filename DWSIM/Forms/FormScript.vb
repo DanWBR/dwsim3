@@ -122,6 +122,7 @@ Imports DWSIM.DWSIM.Outros
         scope = engine.CreateScope()
         scope.SetVariable("Plugins", My.MyApplication.UtilityPlugins)
         scope.SetVariable("Flowsheet", fsheet)
+        scope.SetVariable("Spreadsheet", fsheet.FormSpreadsheet)
         Dim Solver As New DWSIM.Flowsheet.FlowsheetSolver
         scope.SetVariable("Solver", Solver)
         For Each obj As SimulationObjects_BaseClass In fsheet.Collections.ObjectCollection.Values
