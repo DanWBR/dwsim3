@@ -970,14 +970,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Public Overrides Function Calculate(Optional ByVal args As Object = Nothing) As Integer
 
-            If Not CreatedWithThreadID = Thread.CurrentThread.ManagedThreadId Then
-                disposedValue = False
-                Me.Dispose(True)
-                'load current configuration from temporary data and re-instantiate the COM object using the current thread.
-                'this is called only when solving the object with a background thread.
-                Me.LoadData(_tempdata)
-                CreatedWithThreadID = Thread.CurrentThread.ManagedThreadId
-            End If
+            'If Not CreatedWithThreadID = Thread.CurrentThread.ManagedThreadId Then
+            '    disposedValue = False
+            '    Me.Dispose(True)
+            '    'load current configuration from temporary data and re-instantiate the COM object using the current thread.
+            '    'this is called only when solving the object with a background thread.
+            '    Me.LoadData(_tempdata)
+            '    CreatedWithThreadID = Thread.CurrentThread.ManagedThreadId
+            'End If
 
             UpdatePortsFromConnectors()
 

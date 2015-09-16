@@ -1844,11 +1844,12 @@ Namespace DWSIM.Flowsheet
                                                                  filteredlist2.Add(li.Key, objcalclist)
                                                              Next
 
-                                                             If form.MasterFlowsheet Is Nothing Then
-                                                                 ProcessCalculationQueue(form, True, True, mode, filteredlist2, ct, Adjusting)
-                                                             Else
-                                                                 ProcessCalculationQueue(form, True, True, 1, filteredlist2, ct, Adjusting)
-                                                             End If
+                                                             'If form.MasterFlowsheet Is Nothing Then
+                                                             ProcessCalculationQueue(form, True, True, mode, filteredlist2, ct, Adjusting)
+                                                             'Else
+                                                             '    ProcessCalculationQueue(form, True, True, 1, filteredlist2, ct, Adjusting)
+                                                             'End If
+
                                                          End If
 
                                                          'checks for recycle convergence.
@@ -1879,13 +1880,11 @@ Namespace DWSIM.Flowsheet
 
                                                  End Sub)
 
-                        Dim HasCOMobj As Boolean = False
-
                         'save temporary data of cape-open objects
 
                         For Each s In objstack
                             If TypeOf form.Collections.ObjectCollection(s) Is SimulationObjects.UnitOps.CapeOpenUO Then
-                                'saves UO data to a temporary list so it can be loaded correctly by the background threads
+                                'saves UO data to a temporary list so it can be loaded correctly by other threads
                                 form.Collections.CLCS_CapeOpenUOCollection(s).SaveTempData()
                             End If
                         Next
@@ -1893,6 +1892,8 @@ Namespace DWSIM.Flowsheet
                         'if the flowsheet contains COM objects, use a STA task scheduler
 
                         If form.MasterFlowsheet Is Nothing Then
+
+                            Dim HasCOMobj As Boolean = False
 
                             For Each s In objstack
                                 If TypeOf form.Collections.ObjectCollection(s) Is SimulationObjects.UnitOps.CapeOpenUO Or
@@ -1915,9 +1916,9 @@ Namespace DWSIM.Flowsheet
                             If HasCOMobj Then
                                 Dim nthreads As Integer
                                 If My.Settings.MaxDegreeOfParallelism = -1 Then
-                                    nthreads = 4 * System.Environment.ProcessorCount
+                                    nthreads = 5 * System.Environment.ProcessorCount
                                 Else
-                                    nthreads = 4 * My.Settings.MaxDegreeOfParallelism
+                                    nthreads = 5 * My.Settings.MaxDegreeOfParallelism
                                 End If
                                 My.MyApplication.AppTaskScheduler = New DWSIM.Auxiliary.TaskSchedulers.StaTaskScheduler(nthreads)
                             Else
