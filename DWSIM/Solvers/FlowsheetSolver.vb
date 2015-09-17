@@ -1485,7 +1485,10 @@ Namespace DWSIM.Flowsheet
                         End If
                     Next
                 End If
-                form.UIThread(Sub() form.FormSurface.FlowsheetDesignSurface.Invalidate())
+                form.UIThread(Sub()
+                                  form.FormSurface.FlowsheetDesignSurface.Invalidate()
+                                  Application.DoEvents()
+                              End Sub)
             End If
         End Sub
 
@@ -2074,7 +2077,10 @@ Namespace DWSIM.Flowsheet
                     Next
 
                     If Not form.FormSpreadsheet Is Nothing Then
-                        If form.FormSpreadsheet.chkUpdate.Checked Then form.FormSpreadsheet.EvaluateAll()
+                        If form.FormSpreadsheet.chkUpdate.Checked Then
+                            form.FormSpreadsheet.EvaluateAll()
+                            form.FormSpreadsheet.EvaluateAll()
+                        End If
                     End If
 
                     form.UpdateStatusLabel(preLab)
