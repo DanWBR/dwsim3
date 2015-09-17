@@ -229,6 +229,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\jcosmo_net.dll</HintPath>
     </Reference>
+    <Reference Include="Jolt">
+      <HintPath>References\Jolt.dll</HintPath>
+    </Reference>
+    <Reference Include="Jolt.Testing.GeneratedTypes">
+      <HintPath>References\Jolt.Testing.GeneratedTypes.dll</HintPath>
+    </Reference>
     <Reference Include="LabelWithDivider, Version=1.1.0.1, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\LabelWithDivider.dll</HintPath>
@@ -282,6 +288,9 @@
     <Reference Include="RichTextBoxExtended, Version=2.0.2954.894, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\RichTextBoxExtended.dll</HintPath>
+    </Reference>
+    <Reference Include="ScintillaNET">
+      <HintPath>..\packages\jacobslusser.ScintillaNET.3.5.1\lib\net40\ScintillaNET.dll</HintPath>
     </Reference>
     <Reference Include="SpinningProgress, Version=1.0.2444.27714, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -2176,6 +2185,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="dwsim_splash.ico" />
+    <None Include="Resources\turn_left.png" />
+    <None Include="Resources\turn_right.png" />
     <None Include="Resources\script_code.png" />
     <None Include="Resources\table_relationship.png" />
     <EmbeddedResource Include="Utilities\UNIFAC_Regression\FormUNIFACRegression.de.resx">

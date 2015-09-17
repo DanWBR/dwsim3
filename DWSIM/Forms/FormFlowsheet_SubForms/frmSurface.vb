@@ -3583,12 +3583,16 @@ Public Class frmSurface
                         selectionControl.fontname = myobj.FontName
                         selectionControl.fontsize = myobj.FontSize
                         selectionControl.includes = myobj.Includes
+                        selectionControl.highlightspaces = myobj.HighlightSpaces
+                        selectionControl.highlighttabs = myobj.HighlightTabs
                         selectionControl.Text = Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag & " - " & DWSIM.App.GetLocalString("ScriptEditor")
-                        selectionControl.ShowDialog()
+                        selectionControl.ShowDialog(Me)
                         myobj.FontName = selectionControl.tscb1.SelectedItem
                         myobj.FontSize = selectionControl.tscb2.SelectedItem
                         myobj.Includes = selectionControl.includes
-                        myobj.ScriptText = selectionControl.txtScript.Document.Text
+                        myobj.ScriptText = selectionControl.scripttext
+                        myobj.HighlightSpaces = selectionControl.highlightspaces
+                        myobj.HighlightTabs = selectionControl.highlighttabs
                         selectionControl.Dispose()
                         selectionControl = Nothing
                     Else
@@ -3791,9 +3795,6 @@ Public Class frmSurface
 
             End If
         End If
-
-
-
     End Sub
 
     Private Sub ExibirTudoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExibirTudoToolStripMenuItem.Click

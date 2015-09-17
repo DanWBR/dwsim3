@@ -38,6 +38,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Private _fontname As String = "Courier New"
         Private _fontsize As Integer = 10
 
+        Public Property HighlightSpaces As Boolean = False
+        Public Property HighlightTabs As Boolean = False
+
         Public Shadows Const ClassId As String = "1FD2DC53-DC7B-4c4d-BBEE-F37F4E5ADDFB"
 
 #Region "   DWSIM Methods"
@@ -713,7 +716,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Me.FontName = .fontname
                 Me.FontSize = .fontsize
                 Me.Includes = .includes
-                Me.ScriptText = .txtScript.Document.Text
+                Me.ScriptText = .txtScript.Text
             End With
             edform.Dispose()
             edform = Nothing
