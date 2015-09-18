@@ -256,7 +256,6 @@
     <Reference Include="Microsoft.ServiceBus">
       <HintPath>..\AzureServer\References\Microsoft.ServiceBus.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.VisualBasic.Compatibility" />
     <Reference Include="Mono.CSharp, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\Mono.CSharp.dll</HintPath>
@@ -281,10 +280,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\OutlookGrid.dll</HintPath>
     </Reference>
-    <Reference Include="Puzzle.SyntaxBox.NET2.0, Version=1.4.10.17492, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\Puzzle.SyntaxBox.NET2.0.dll</HintPath>
-    </Reference>
     <Reference Include="RichTextBoxExtended, Version=2.0.2954.894, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\RichTextBoxExtended.dll</HintPath>
@@ -303,9 +298,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Design" />
-    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Net" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
@@ -334,7 +327,6 @@
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
-    <Import Include="Microsoft.VisualBasic.Compatibility" />
     <Import Include="System" />
     <Import Include="System.Collections" />
     <Import Include="System.Collections.Generic" />
@@ -740,6 +732,8 @@
     <Compile Include="Interfaces\IUtilityPlugin.vb" />
     <Compile Include="Objects\Classes\Shared\ExtensionMethods.vb" />
     <Compile Include="Objects\Classes\Shared\LimitedConcurrencyLevelTaskScheduler.vb" />
+    <Compile Include="Objects\Classes\Shared\ScintillaExtender.vb" />
+    <Compile Include="Objects\Classes\Shared\SimplexExtender.vb" />
     <Compile Include="Objects\Classes\Shared\STATaskScheduler.vb" />
     <Compile Include="Objects\PropertyPackages\Base\ActivityCoefficientBase.vb" />
     <Compile Include="Objects\PropertyPackages\Base\ActivityCoefficientPropertyPackage.vb" />

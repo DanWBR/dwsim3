@@ -15,8 +15,11 @@ Imports DWSIM.DWSIM.Outros
     Inherits WeifenLuo.WinFormsUI.Docking.DockContent
 
     Public fc As FormFlowsheet
+    Private reader As Jolt.XmlDocCommentReader
 
     Private Sub FormVBScript_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Me.Load
+
+        reader = New Jolt.XmlDocCommentReader(Assembly.GetExecutingAssembly())
 
         ' Get the installed fonts collection.
         Dim installed_fonts As New InstalledFontCollection
@@ -90,7 +93,7 @@ Imports DWSIM.DWSIM.Outros
             If DWSIM.App.IsRunningOnMono Then
                 RunScript(DirectCast(Me.TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControlMono).txtScript.Text, fc)
             Else
-                RunScript(DirectCast(Me.TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl).txtScript.Document.Text, fc)
+                RunScript(DirectCast(Me.TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl).txtScript.Text, fc)
             End If
         End If
 
@@ -153,10 +156,7 @@ Imports DWSIM.DWSIM.Outros
     Private Sub CutToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CutToolStripButton.Click
         If Not DWSIM.App.IsRunningOnMono Then
             Dim scontrol As ScriptEditorControl = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl)
-            If scontrol.txtScript.Selection.Text <> "" Then
-                Clipboard.SetText(scontrol.txtScript.Selection.Text)
-                scontrol.txtScript.Selection.DeleteSelection()
-            End If
+            scontrol.txtScript.Cut()
         Else
             Dim scontrol As ScriptEditorControlMono = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControlMono)
             If scontrol.txtScript.SelectedText <> "" Then
@@ -168,7 +168,7 @@ Imports DWSIM.DWSIM.Outros
     Private Sub CopyToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CopyToolStripButton.Click
         If Not DWSIM.App.IsRunningOnMono Then
             Dim scontrol As ScriptEditorControl = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl)
-            If scontrol.txtScript.Selection.Text <> "" Then Clipboard.SetText(scontrol.txtScript.Selection.Text)
+            scontrol.txtScript.Copy()
         Else
             Dim scontrol As ScriptEditorControlMono = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControlMono)
             If scontrol.txtScript.SelectedText <> "" Then Clipboard.SetText(scontrol.txtScript.SelectedText)
@@ -178,11 +178,7 @@ Imports DWSIM.DWSIM.Outros
     Private Sub PasteToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PasteToolStripButton.Click
         If Not DWSIM.App.IsRunningOnMono Then
             Dim scontrol As ScriptEditorControl = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl)
-            If scontrol.txtScript.Selection.SelLength <> 0 Then
-                scontrol.txtScript.Selection.Text = Clipboard.GetText()
-            Else
-                scontrol.txtScript.Document.InsertText(Clipboard.GetText(), scontrol.txtScript.Caret.Position.X, scontrol.txtScript.Caret.Position.Y)
-            End If
+            scontrol.txtScript.Paste()
         Else
             Dim scontrol As ScriptEditorControlMono = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControlMono)
             If scontrol.txtScript.SelectionLength <> 0 Then
@@ -231,7 +227,7 @@ Imports DWSIM.DWSIM.Outros
                                 {.ID = Guid.NewGuid().ToString,
                                  .Title = tab.Title,
                                  .Linked = seditor.chkLink.Checked,
-                                .ScriptText = seditor.txtScript.Document.Text}
+                                .ScriptText = seditor.txtScript.Text}
                 Select Case seditor.cbLinkedObject.SelectedIndex
                     Case 0
                         scr.LinkedObjectType = Script.ObjectType.Simulation
@@ -336,23 +332,10 @@ Imports DWSIM.DWSIM.Outros
 
     End Sub
 
-
-
-    Private Sub PrintToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PrintToolStripButton.Click
-        If Not DWSIM.App.IsRunningOnMono Then
-            Dim pd As Alsing.SourceCode.SourceCodePrintDocument
-            pd = New Alsing.SourceCode.SourceCodePrintDocument(DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl).txtScript.Document)
-            pd1.Document = pd
-            If pd1.ShowDialog(Me) = DialogResult.OK Then
-                pd.Print()
-            End If
-        End If
-    End Sub
-
     Private Sub tscb1_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles tscb1.SelectedIndexChanged
         For Each ft As FATabStripItem In TabStripScripts.Items
             If Not DWSIM.App.IsRunningOnMono Then
-                DirectCast(ft.Controls(0).Controls(0), ScriptEditorControl).txtScript.FontName = tscb1.SelectedItem.ToString
+                DirectCast(ft.Controls(0).Controls(0), ScriptEditorControl).txtScript.SetEditorStyle(tscb1.SelectedItem.ToString, tscb2.SelectedItem.ToString, False)
             Else
                 DirectCast(ft.Controls(0).Controls(0), ScriptEditorControlMono).txtScript.Font = New Font(tscb1.SelectedItem.ToString, 10)
             End If
@@ -362,7 +345,7 @@ Imports DWSIM.DWSIM.Outros
     Private Sub tscb2_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles tscb2.SelectedIndexChanged
         For Each ft As FATabStripItem In TabStripScripts.Items
             If Not DWSIM.App.IsRunningOnMono Then
-                DirectCast(ft.Controls(0).Controls(0), ScriptEditorControl).txtScript.FontSize = tscb2.SelectedItem
+                DirectCast(ft.Controls(0).Controls(0), ScriptEditorControl).txtScript.SetEditorStyle(tscb1.SelectedItem.ToString, tscb2.SelectedItem.ToString, False)
             Else
                 DirectCast(ft.Controls(0).Controls(0), ScriptEditorControlMono).txtScript.Font = New Font(DirectCast(ft.Controls(0).Controls(0), ScriptEditorControlMono).txtScript.Font.Name, tscb2.SelectedItem)
             End If
@@ -386,21 +369,12 @@ Imports DWSIM.DWSIM.Outros
 
                 AddHandler scontrol.txtScript.KeyDown, AddressOf scriptcontrol_KeyDown
 
-                .txtScript.Document = New Alsing.SourceCode.SyntaxDocument()
-                .txtScript.Document.SyntaxFile = My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "SyntaxFiles" & Path.DirectorySeparatorChar & "Python.syn"
-                .txtScript.FontName = tscb1.SelectedItem.ToString
-                .txtScript.FontSize = tscb2.SelectedItem
-                .txtScript.Document.Text = scriptdata.ScriptText
-
-                .readAssembly(GetType(DWSIM.ClassesBasicasTermodinamica.Fase).Assembly)
-                .readAssembly(GetType(System.String).Assembly)
-                .readAssembly(GetType(CapeOpen.BaseUnitEditor).Assembly)
-                .readAssembly(GetType(CAPEOPEN110.ICapeThermoPhases).Assembly)
-
-                .listBoxAutoComplete.Font = New Font("Arial", 8, FontStyle.Regular, GraphicsUnit.Point)
-                .listBoxAutoComplete.Height = 250
+                .txtScript.Text = scriptdata.ScriptText
+                .txtScript.Tag = 1
+                .txtScript.SetEditorStyle(tscb1.SelectedItem.ToString, tscb2.SelectedItem.ToString, False)
 
                 .form = fc
+                .reader = reader
 
                 .chkLink.Checked = scriptdata.Linked
 
@@ -572,23 +546,27 @@ Imports DWSIM.DWSIM.Outros
         Process.Start("http://dwsim.inforside.com.br/api_help/index.html")
     End Sub
 
-End Class
-
-Public Class TextBoxStream
-    Inherits MemoryStream
-    Private target As TextBox
-
-    Public Sub New(ByVal target As TextBox)
-        Me.target = target
+    Private Sub btnUndo_Click(sender As Object, e As EventArgs) Handles btnUndo.Click
+        If Not DWSIM.App.IsRunningOnMono Then
+            Dim scontrol As ScriptEditorControl = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl)
+            scontrol.txtScript.Undo()
+        Else
+            Dim scontrol As ScriptEditorControlMono = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControlMono)
+            scontrol.txtScript.Undo()
+        End If
     End Sub
 
-    Public Overrides Sub Write(ByVal buffer As Byte(), ByVal offset As Integer, ByVal count As Integer)
-        Dim output As String = Encoding.UTF8.GetString(buffer, offset, count)
-        target.AppendText(output)
+    Private Sub btnRedo_Click(sender As Object, e As EventArgs) Handles btnRedo.Click
+        If Not DWSIM.App.IsRunningOnMono Then
+            Dim scontrol As ScriptEditorControl = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl)
+            scontrol.txtScript.Redo()
+        End If
     End Sub
+
 End Class
 
 Public Class DataGridViewTextStream
+
     Inherits MemoryStream
     Private target As FormFlowsheet
 
@@ -601,7 +579,6 @@ Public Class DataGridViewTextStream
         target.WriteToLog(output, Color.DarkGray, DWSIM.FormClasses.TipoAviso.Informacao)
     End Sub
 
-   
 End Class
 
 

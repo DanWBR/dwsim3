@@ -3584,7 +3584,6 @@ Public Class frmSurface
                         selectionControl.fontsize = myobj.FontSize
                         selectionControl.includes = myobj.Includes
                         selectionControl.highlightspaces = myobj.HighlightSpaces
-                        selectionControl.highlighttabs = myobj.HighlightTabs
                         selectionControl.Text = Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag & " - " & DWSIM.App.GetLocalString("ScriptEditor")
                         selectionControl.ShowDialog(Me)
                         myobj.FontName = selectionControl.tscb1.SelectedItem
@@ -3592,7 +3591,6 @@ Public Class frmSurface
                         myobj.Includes = selectionControl.includes
                         myobj.ScriptText = selectionControl.scripttext
                         myobj.HighlightSpaces = selectionControl.highlightspaces
-                        myobj.HighlightTabs = selectionControl.highlighttabs
                         selectionControl.Dispose()
                         selectionControl = Nothing
                     Else

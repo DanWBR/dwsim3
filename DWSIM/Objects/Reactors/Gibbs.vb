@@ -306,6 +306,7 @@ Namespace DWSIM.SimulationObjects.Reactors
         Private Function FunctionValue(ByVal x() As Double) As Double
 
             tms = ims.Clone()
+            tms.SetFlowsheet(ims.FlowSheet)
 
             Dim i As Integer
 
@@ -879,6 +880,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                     els = e
                     comps = c
                     tms = ims.Clone()
+                    tms.SetFlowsheet(ims.FlowSheet)
 
                     Dim fm0(c), N0tot, W0tot, wm0 As Double
 
@@ -1036,6 +1038,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                     Do
 
                         tms = ims.Clone()
+                        tms.SetFlowsheet(ims.FlowSheet)
 
                         fx = Me.FunctionValue2N(x)
                         dfdx = Me.FunctionGradient2N(x)
@@ -1122,6 +1125,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                     Next
 
                     ims = tms.Clone
+                    ims.SetFlowsheet(tms.FlowSheet)
 
                     Me.PropertyPackage.CurrentMaterialStream = ims
 
@@ -1395,18 +1399,14 @@ Namespace DWSIM.SimulationObjects.Reactors
                         'use my own solver
                         'hier wieder einspringen
                         cnt = 0
-                        REx = SolveSimplex(variables)
 
                         'use the Simplex solver to solve the minimization problem.
-                        ''Dim solver As New L_BFGS_B
-                        ''Dim solver As New TruncatedNewton
-                        'Dim solver As New Simplex
-                        'With solver
-                        '    .Tolerance = 0.00000001
-                        '    .MaxFunEvaluations = 10000
-                        '    REx = .ComputeMin(AddressOf FunctionValue, variables)
-                        '    'REx = .ComputeMin(AddressOf FunctionValue, AddressOf FunctionGradient, variables)
-                        'End With
+                        Dim solver As New Simplex
+                        With solver
+                            .Tolerance = 0.00000001
+                            .MaxFunEvaluations = 10000
+                            REx = .ComputeMin2(AddressOf FunctionValue, variables)
+                       End With
 
                         'reevaluate function
                         'this call to FunctionValue returns the final gibbs energy of the system.
@@ -1466,6 +1466,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                         Next
 
                         ims = tms.Clone
+                        ims.SetFlowsheet(tms.FlowSheet)
 
                         Select Case Me.ReactorOperationMode
 
@@ -2045,124 +2046,6 @@ Namespace DWSIM.SimulationObjects.Reactors
             End Select
 
             Return value
-        End Function
-
-        Public Function SolveSimplex(ByVal Var() As OptBoundVariable) As Double()
-            'Simplified implementation of Nelder-Mead-Simplex-Downhill algorithm
-            'No "Reduction" and no "Expansion" implemented yet
-            'https://en.wikipedia.org/wiki/Nelder%E2%80%93Mead_method
-
-            Dim i, k, IdxMax As Integer
-            Dim Dx, FVnew, LF, LF1 As Double
-            Dim Beta As Double = 0.5
-            'Dimension 0: point number
-            'Dimension 1: coordinates of points; last column = 1 is indicating "at limiting border"
-            Dim Points(Var.Length, Var.Length - 1) As Double
-            Dim FuncVal(Var.Length) As Double
-            Dim Pt(Var.Length - 1) As Double
-            Dim CenterPt(Var.Length - 1) As Double
-
-            'Calculate initial value
-            For i = 0 To Var.Length - 1
-                'Pt(i) = (Var(i).UpperBound - Var(i).LowerBound) / 2
-                Pt(i) = 0
-            Next
-
-            'Initialise points
-            For k = 0 To Var.Length  'points
-                For i = 0 To Var.Length - 1 'coordinates
-                    Points(k, i) = Pt(i)
-                Next
-            Next
-            For k = 1 To Var.Length
-                Dx = (Var(k - 1).UpperBound - Var(k - 1).LowerBound) / 10
-                Points(k, k - 1) += Dx
-            Next
-
-            'Calculate point values
-            For k = 0 To Var.Length
-                For i = 0 To Var.Length - 1
-                    Pt(i) = Points(k, i)
-                Next
-                FuncVal(k) = FunctionValue(Pt)
-            Next
-
-            Do
-                cnt += 1
-
-                'Search worst value e.g. maximum Gibbs Enthalpy
-                IdxMax = 0
-                For k = 1 To Var.Length
-                    If FuncVal(k) > FuncVal(IdxMax) Then IdxMax = k
-                Next
-
-                'Calculate center point as average from all points except max
-                For i = 0 To Var.Length - 1
-                    CenterPt(i) = 0
-                Next
-                For k = 0 To Var.Length
-                    If k <> IdxMax Then
-                        For i = 0 To Var.Length - 1
-                            CenterPt(i) += Points(k, i) / Var.Length
-                        Next
-                    End If
-                Next
-
-                'reflect worst point at center point
-                LF = 1
-                For i = 0 To Var.Length - 1
-                    LF1 = 1
-                    Pt(i) = CenterPt(i) + CenterPt(i) - Points(IdxMax, i)
-                    'Check if point is inside bounds
-                    If Pt(i) < Var(i).LowerBound Then
-                        LF1 = (Var(i).LowerBound - CenterPt(i)) / (Points(IdxMax, i) - CenterPt(i))
-                    End If
-                    If LF1 < LF Then LF = LF1
-                    If Pt(i) > Var(i).UpperBound Then
-                        LF1 = (Var(i).UpperBound - CenterPt(i)) / (Points(IdxMax, i) - CenterPt(i))
-                    End If
-                    If LF1 < LF Then LF = -LF1
-                Next
-                If LF < 1 Then
-                    For i = 0 To Var.Length - 1
-                        Pt(i) = CenterPt(i) + LF * (CenterPt(i) - Points(IdxMax, i))
-                    Next
-                End If
-                FVnew = FunctionValue(Pt)
-
-                If FVnew < FuncVal(IdxMax) Then
-                    'replace worst point by new one
-                    FuncVal(IdxMax) = FVnew
-                    For i = 0 To Var.Length - 1
-                        Points(IdxMax, i) = Pt(i)
-                    Next
-                Else
-                    'contract worst point to center point
-                    For i = 0 To Var.Length - 1
-                        Pt(i) = 0.5 * CenterPt(i) + 0.5 * Points(IdxMax, i)
-                    Next
-                    FVnew = FunctionValue(Pt)
-
-                    'check if solution is not improving anymore
-                    If FVnew > FuncVal(IdxMax) - 0.01 Then Exit Do
-
-                    'and replace worst value by contracted value
-                    FuncVal(IdxMax) = FVnew
-                    For i = 0 To Var.Length - 1
-                        Points(IdxMax, i) = Pt(i)
-                    Next
-                End If
-            Loop
-
-            'Search best value to be returned e.g. minimum Gibbs Enthalpy
-            IdxMax = 0
-            For k = 1 To Var.Length
-                If FuncVal(k) < FuncVal(IdxMax) Then IdxMax = k
-            Next
-            For i = 0 To Var.Length - 1
-                Pt(i) = Points(IdxMax, i)
-            Next
-            Return Pt
         End Function
 
     End Class

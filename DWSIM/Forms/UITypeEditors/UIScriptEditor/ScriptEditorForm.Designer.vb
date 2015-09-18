@@ -33,7 +33,6 @@ Partial Class ScriptEditorForm
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.OpenToolStripButton = New System.Windows.Forms.ToolStripButton()
         Me.SaveToolStripButton = New System.Windows.Forms.ToolStripButton()
-        Me.PrintToolStripButton = New System.Windows.Forms.ToolStripButton()
         Me.toolStripSeparator = New System.Windows.Forms.ToolStripSeparator()
         Me.CutToolStripButton = New System.Windows.Forms.ToolStripButton()
         Me.CopyToolStripButton = New System.Windows.Forms.ToolStripButton()
@@ -42,7 +41,6 @@ Partial Class ScriptEditorForm
         Me.tscb1 = New System.Windows.Forms.ToolStripComboBox()
         Me.tscb2 = New System.Windows.Forms.ToolStripComboBox()
         Me.btnHighlightSpaces = New System.Windows.Forms.ToolStripButton()
-        Me.btnHighlightTabs = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.btnUndo = New System.Windows.Forms.ToolStripButton()
         Me.btnRedo = New System.Windows.Forms.ToolStripButton()
@@ -62,6 +60,7 @@ Partial Class ScriptEditorForm
         Me.ofd2 = New System.Windows.Forms.OpenFileDialog()
         Me.pd1 = New System.Windows.Forms.PrintDialog()
         Me.treeViewItems = New System.Windows.Forms.TreeView()
+        Me.PrintToolStripButton = New System.Windows.Forms.ToolStripButton()
         CType(Me.FaTabStrip2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStrip2.SuspendLayout()
         Me.FaTabStripItem3.SuspendLayout()
@@ -127,7 +126,7 @@ Partial Class ScriptEditorForm
         '
         'ToolStrip1
         '
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenToolStripButton, Me.SaveToolStripButton, Me.PrintToolStripButton, Me.toolStripSeparator, Me.CutToolStripButton, Me.CopyToolStripButton, Me.PasteToolStripButton, Me.toolStripSeparator1, Me.tscb1, Me.tscb2, Me.btnHighlightSpaces, Me.btnHighlightTabs, Me.ToolStripSeparator2, Me.btnUndo, Me.btnRedo, Me.ToolStripSeparator6, Me.ToolStripButton2, Me.ToolStripButton3, Me.ToolStripButton4, Me.ToolStripButton5, Me.ToolStripSeparator3, Me.btnDebug, Me.ToolStripSeparator4, Me.HelpToolStripButton, Me.APIHelptsbutton, Me.ToolStripSeparator5})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenToolStripButton, Me.SaveToolStripButton, Me.PrintToolStripButton, Me.toolStripSeparator, Me.CutToolStripButton, Me.CopyToolStripButton, Me.PasteToolStripButton, Me.toolStripSeparator1, Me.tscb1, Me.tscb2, Me.btnHighlightSpaces, Me.ToolStripSeparator2, Me.btnUndo, Me.btnRedo, Me.ToolStripSeparator6, Me.ToolStripButton2, Me.ToolStripButton3, Me.ToolStripButton4, Me.ToolStripButton5, Me.ToolStripSeparator3, Me.btnDebug, Me.ToolStripSeparator4, Me.HelpToolStripButton, Me.APIHelptsbutton, Me.ToolStripSeparator5})
         resources.ApplyResources(Me.ToolStrip1, "ToolStrip1")
         Me.ToolStrip1.Name = "ToolStrip1"
         '
@@ -142,12 +141,6 @@ Partial Class ScriptEditorForm
         Me.SaveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         resources.ApplyResources(Me.SaveToolStripButton, "SaveToolStripButton")
         Me.SaveToolStripButton.Name = "SaveToolStripButton"
-        '
-        'PrintToolStripButton
-        '
-        Me.PrintToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        resources.ApplyResources(Me.PrintToolStripButton, "PrintToolStripButton")
-        Me.PrintToolStripButton.Name = "PrintToolStripButton"
         '
         'toolStripSeparator
         '
@@ -199,15 +192,6 @@ Partial Class ScriptEditorForm
         Me.btnHighlightSpaces.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
         resources.ApplyResources(Me.btnHighlightSpaces, "btnHighlightSpaces")
         Me.btnHighlightSpaces.Name = "btnHighlightSpaces"
-        '
-        'btnHighlightTabs
-        '
-        Me.btnHighlightTabs.Checked = True
-        Me.btnHighlightTabs.CheckOnClick = True
-        Me.btnHighlightTabs.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.btnHighlightTabs.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        resources.ApplyResources(Me.btnHighlightTabs, "btnHighlightTabs")
-        Me.btnHighlightTabs.Name = "btnHighlightTabs"
         '
         'ToolStripSeparator2
         '
@@ -327,6 +311,12 @@ Partial Class ScriptEditorForm
         Me.treeViewItems.Name = "treeViewItems"
         Me.treeViewItems.PathSeparator = "."
         '
+        'PrintToolStripButton
+        '
+        Me.PrintToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        resources.ApplyResources(Me.PrintToolStripButton, "PrintToolStripButton")
+        Me.PrintToolStripButton.Name = "PrintToolStripButton"
+        '
         'ScriptEditorForm
         '
         resources.ApplyResources(Me, "$this")
@@ -354,7 +344,6 @@ End Sub
     Public WithEvents ToolStrip1 As System.Windows.Forms.ToolStrip
     Public WithEvents OpenToolStripButton As System.Windows.Forms.ToolStripButton
     Public WithEvents SaveToolStripButton As System.Windows.Forms.ToolStripButton
-    Public WithEvents PrintToolStripButton As System.Windows.Forms.ToolStripButton
     Public WithEvents toolStripSeparator As System.Windows.Forms.ToolStripSeparator
     Public WithEvents CutToolStripButton As System.Windows.Forms.ToolStripButton
     Public WithEvents CopyToolStripButton As System.Windows.Forms.ToolStripButton
@@ -380,9 +369,9 @@ End Sub
     Public WithEvents ToolStripSeparator4 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents txtScript As ScintillaNET.Scintilla
     Friend WithEvents btnHighlightSpaces As System.Windows.Forms.ToolStripButton
-    Friend WithEvents btnHighlightTabs As System.Windows.Forms.ToolStripButton
     Friend WithEvents btnUndo As System.Windows.Forms.ToolStripButton
     Friend WithEvents btnRedo As System.Windows.Forms.ToolStripButton
     Friend WithEvents ToolStripSeparator6 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents ToolStripSeparator5 As System.Windows.Forms.ToolStripSeparator
+    Public WithEvents PrintToolStripButton As System.Windows.Forms.ToolStripButton
 End Class

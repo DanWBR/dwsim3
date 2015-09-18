@@ -1,4 +1,5 @@
 Module ControlExtensions
+
     <System.Runtime.CompilerServices.Extension()> _
     Public Sub UIThread(control As Control, code As Action)
         If control.InvokeRequired Then
@@ -149,7 +150,6 @@ Module ControlExtensions
         Next
 
     End Sub
-
     Function GetNextVisibleCol(dgv As DataGridView, stidx As Integer) As Integer
 
         Dim i As Integer

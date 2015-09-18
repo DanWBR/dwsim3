@@ -56,7 +56,6 @@ Namespace DWSIM.Editors.CustomUO
                             selectionControl.fontsize = .FontSize
                             selectionControl.includes = .Includes
                             selectionControl.highlightspaces = .HighlightSpaces
-                            selectionControl.highlighttabs = .HighlightTabs
                         End With
                     Else
                         If ctx.CustomProperty.Tag = "B" Then selectionControl.scripttext = obj.ScriptExt_ScriptTextB
@@ -74,7 +73,6 @@ Namespace DWSIM.Editors.CustomUO
                             .FontSize = selectionControl.tscb2.SelectedItem
                             .Includes = selectionControl.includes
                             .HighlightSpaces = selectionControl.highlightspaces
-                            .HighlightTabs = selectionControl.highlighttabs
                         End With
                    Else
                         obj.ScriptExt_FontName = selectionControl.tscb1.SelectedItem

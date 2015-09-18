@@ -727,6 +727,7 @@ Namespace DWSIM.SimulationObjects.Reactors
             'initial estimates for reaction extents
 
             tms = ims.Clone()
+            tms.SetFlowsheet(ims.FlowSheet)
 
             Me.ComponentConversions.Clear()
             Me.ComponentIDs.Clear()
@@ -930,6 +931,7 @@ Namespace DWSIM.SimulationObjects.Reactors
             Next
 
             ims = tms.Clone
+            ims.SetFlowsheet(tms.FlowSheet)
 
             Select Case Me.ReactorOperationMode
 
