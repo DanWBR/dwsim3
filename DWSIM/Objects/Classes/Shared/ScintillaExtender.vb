@@ -408,7 +408,8 @@ Module ScintillaExtender
 
             Case MemberTypes.Method
 
-                Dim method = Type.GetType(member.DeclaringType.FullName).GetMethod(member.Name)
+                Dim methods = Type.GetType(member.DeclaringType.FullName).GetMethods().Where(Function(m) m.Name = member.Name).ToList
+                Dim method = methods(0)
 
                 Dim summary As String = ""
                 Dim returntype As String = ""
@@ -472,7 +473,8 @@ Module ScintillaExtender
 
             Case MemberTypes.Property
 
-                Dim prop = Type.GetType(member.DeclaringType.FullName).GetProperty(member.Name)
+                Dim props = Type.GetType(member.DeclaringType.FullName).GetProperties().Where(Function(p) p.Name = member.Name).ToList
+                Dim prop = props(0)
 
                 Dim summary As String = ""
                 Dim proptype As String = ""
