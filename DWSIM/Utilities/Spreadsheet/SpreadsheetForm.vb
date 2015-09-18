@@ -121,6 +121,12 @@ Public Class SpreadsheetForm
 
     End Sub
 
+    ''' <summary>
+    ''' Gets the Cell instance.
+    ''' </summary>
+    ''' <param name="cell">Cell reference in "Letter-Number" style (ex. "A1").</param>
+    ''' <returns></returns>
+    ''' <remarks>To get the actual cell's value, read the 'Value' property of the returning object.</remarks>
     Public Function GetCellValue(ByVal cell As String) As DataGridViewCell
 
         Dim column, row As Integer
@@ -190,6 +196,12 @@ Public Class SpreadsheetForm
 
     End Function
 
+    ''' <summary>
+    ''' Sets a cell's value.
+    ''' </summary>
+    ''' <param name="cell">Cell reference in "Letter-Number" style (ex. "A1").</param>
+    ''' <param name="value">The value to set.</param>
+    ''' <remarks></remarks>
     Public Sub SetCellValue(ByVal cell As String, value As Object)
 
         UpdateValue(GetCellValue(cell), value)
@@ -242,6 +254,12 @@ Public Class SpreadsheetForm
 
     End Sub
 
+    ''' <summary>
+    ''' Gets the cell address in letter-number style.
+    ''' </summary>
+    ''' <param name="cell">DataGridViewCell instance.</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
     Public Function GetCellString(ByVal cell As DataGridViewCell) As String
 
         Dim str As String = Me.DataGridView1.Columns(cell.ColumnIndex).Name & CStr(cell.RowIndex + 1)
@@ -267,6 +285,7 @@ Public Class SpreadsheetForm
     Private Sub UISpreadsheetEditorForm_Shown(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Shown
         Me.loaded = True
     End Sub
+
 
     Sub DefineVariables()
 
@@ -462,6 +481,12 @@ Public Class SpreadsheetForm
 
     End Sub
 
+    ''' <summary>
+    ''' Updates the cell value, parsing the expression if any.
+    ''' </summary>
+    ''' <param name="cell"></param>
+    ''' <param name="expression"></param>
+    ''' <remarks></remarks>
     Sub UpdateValue(ByRef cell As DataGridViewCell, ByVal expression As String)
 
 
@@ -552,6 +577,10 @@ Public Class SpreadsheetForm
 
     End Sub
 
+    ''' <summary>
+    ''' Updates the cell colors.
+    ''' </summary>
+    ''' <remarks></remarks>
     Sub UpdateColors()
 
         For Each cell In Me.DataGridView1.Rows
@@ -646,6 +675,10 @@ Public Class SpreadsheetForm
         EvaluateAll()
     End Sub
 
+    ''' <summary>
+    ''' Evaluates all the cells in the spreadsheet, reading and writing the values to/from the flowsheet accordingly.
+    ''' </summary>
+    ''' <remarks></remarks>
     Public Sub EvaluateAll()
 
         Application.DoEvents()
@@ -699,6 +732,10 @@ Public Class SpreadsheetForm
 
     End Sub
 
+    ''' <summary>
+    ''' Write the values from the cells to the flowsheet, for those who have this behavior.
+    ''' </summary>
+    ''' <remarks></remarks>
     Public Sub WriteAll()
 
         Dim obj As SimulationObjects_BaseClass = Nothing

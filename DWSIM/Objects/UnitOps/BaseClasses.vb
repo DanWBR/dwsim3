@@ -73,6 +73,12 @@ Imports PropertyGridEx
 
     End Sub
 
+    ''' <summary>
+    ''' Gets or sets the error message regarding the last calculation attempt.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
     Public Property ErrorMessage() As String
         Get
             Return m_errormessage
@@ -82,6 +88,13 @@ Imports PropertyGridEx
         End Set
     End Property
 
+    ''' <summary>
+    ''' Checks if a value is valid.
+    ''' </summary>
+    ''' <param name="val">Value to be checked.</param>
+    ''' <param name="onlypositive">Value should be a positive double or not.</param>
+    ''' <param name="paramname">Name of the parameter (ex. P, T, W, H etc.)</param>
+    ''' <remarks></remarks>
     Public Sub CheckSpec(val As Double, onlypositive As Boolean, paramname As String)
 
         If Not val.IsValid Then Throw New ArgumentException(DWSIM.App.GetLocalString("ErrorInvalidUOSpecValue") & " (name: " & paramname & ", value: " & val & ")")
@@ -89,6 +102,11 @@ Imports PropertyGridEx
 
     End Sub
 
+    ''' <summary>
+    ''' Updates the property selection list to display tables in the flowsheet.
+    ''' </summary>
+    ''' <param name="NoPropVals"></param>
+    ''' <remarks></remarks>
     Public Overridable Sub FillNodeItems(Optional ByVal NoPropVals As Boolean = False)
 
         If Me.NodeTableItems Is Nothing Then Me.NodeTableItems = New Dictionary(Of Integer, DWSIM.Outros.NodeItem)
@@ -113,6 +131,10 @@ Imports PropertyGridEx
 
     End Sub
 
+    ''' <summary>
+    ''' Updates the values of the variables displayed in the object's tooltip in the flowsheet.
+    ''' </summary>
+    ''' <remarks></remarks>
     Public MustOverride Sub QTFillNodeItems()
 
     Protected m_graphicobject As GraphicObject = Nothing
@@ -126,9 +148,37 @@ Imports PropertyGridEx
         ALL = 3
     End Enum
 
+    ''' <summary>
+    ''' Get a list of all properties of the object.
+    ''' </summary>
+    ''' <param name="proptype">Type of the property.</param>
+    ''' <returns>A list of property identifiers.</returns>
+    ''' <remarks>More details at http://dwsim.inforside.com.br/wiki/index.php?title=Object_Property_Codes </remarks>
     Public MustOverride Function GetProperties(ByVal proptype As PropertyType) As String()
+    ''' <summary>
+    ''' Gets the value of a property.
+    ''' </summary>
+    ''' <param name="prop">Property identifier.</param>
+    ''' <param name="su">Units system to use. Null to use the default (SI) system.</param>
+    ''' <returns>Property value.</returns>
+    ''' <remarks>More details at http://dwsim.inforside.com.br/wiki/index.php?title=Object_Property_Codes </remarks>
     Public MustOverride Function GetPropertyValue(ByVal prop As String, Optional ByVal su As DWSIM.SistemasDeUnidades.Unidades = Nothing)
+    ''' <summary>
+    ''' Gets the units of a property.
+    ''' </summary>
+    ''' <param name="prop">Property identifier.</param>
+    ''' <param name="su">Units system to use. Null to use the default (SI) system.</param>
+    ''' <returns>Property units.</returns>
+    ''' <remarks>More details at http://dwsim.inforside.com.br/wiki/index.php?title=Object_Property_Codes </remarks>
     Public MustOverride Function GetPropertyUnit(ByVal prop As String, Optional ByVal su As DWSIM.SistemasDeUnidades.Unidades = Nothing)
+    ''' <summary>
+    ''' Sets the value of a property.
+    ''' </summary>
+    ''' <param name="prop">Property identifier.</param>
+    ''' <param name="propval">Property value to set at the specified units.</param>
+    ''' <param name="su">Units system to use. Null to use the default (SI) system.</param>
+    ''' <returns></returns>
+    ''' <remarks>More details at http://dwsim.inforside.com.br/wiki/index.php?title=Object_Property_Codes </remarks>
     Public MustOverride Function SetPropertyValue(ByVal prop As String, ByVal propval As Object, Optional ByVal su As DWSIM.SistemasDeUnidades.Unidades = Nothing)
 
     Public Sub HandlePropertyChange(ByVal s As Object, ByVal e As System.Windows.Forms.PropertyValueChangedEventArgs)
@@ -2895,14 +2945,32 @@ Imports PropertyGridEx
 
     End Sub
 
+    ''' <summary>
+    ''' Formats a property string, adding its units in parenthesis.
+    ''' </summary>
+    ''' <param name="prop">Property string</param>
+    ''' <param name="unit">Property units</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
     Public Function FT(ByRef prop As String, ByVal unit As String)
         Return prop & " (" & unit & ")"
     End Function
 
+    ''' <summary>
+    ''' Sets the Flowsheet to which this object belongs to.
+    ''' </summary>
+    ''' <param name="flowsheet">Flowsheet instance.</param>
+    ''' <remarks></remarks>
     Public Sub SetFlowsheet(ByVal flowsheet As FormFlowsheet)
         m_flowsheet = flowsheet
     End Sub
 
+    ''' <summary>
+    ''' Gets the current flowsheet where this object is.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns>Flowsheet instance.</returns>
+    ''' <remarks></remarks>
     Public Overridable ReadOnly Property FlowSheet() As Global.DWSIM.FormFlowsheet
         Get
             If Not m_flowsheet Is Nothing Then
@@ -2946,6 +3014,12 @@ Imports PropertyGridEx
         End Set
     End Property
 
+    ''' <summary>
+    ''' Checks if an Adjust operation is attached to this object.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
     Public Property IsAdjustAttached() As Boolean
         Get
             Return Me.m_IsAdjustAttached
@@ -2955,6 +3029,12 @@ Imports PropertyGridEx
         End Set
     End Property
 
+    ''' <summary>
+    ''' If an Adjust object is attached to this object, returns its ID.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
     Public Property AttachedAdjustId() As String
         Get
             Return Me.m_AdjustId
@@ -2964,6 +3044,12 @@ Imports PropertyGridEx
         End Set
     End Property
 
+    ''' <summary>
+    ''' If an Adjust object is attached to this object, returns a variable describing how this object is used by it (manipulated, controlled or reference).
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
     Public Property AdjustVarType() As DWSIM.SimulationObjects.SpecialOps.Helpers.Adjust.TipoVar
         Get
             Return Me.m_AdjustVarType
@@ -2973,6 +3059,12 @@ Imports PropertyGridEx
         End Set
     End Property
 
+    ''' <summary>
+    ''' Checks if an Specification operation is attached to this object.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
     Public Property IsSpecAttached() As Boolean
         Get
             Return Me.m_IsSpecAttached
@@ -2982,6 +3074,12 @@ Imports PropertyGridEx
         End Set
     End Property
 
+    ''' <summary>
+    ''' If an Specification object is attached to this object, returns its ID.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
     Public Property AttachedSpecId() As String
         Get
             Return Me.m_SpecId
@@ -2990,7 +3088,12 @@ Imports PropertyGridEx
             Me.m_SpecId = value
         End Set
     End Property
-
+    ''' <summary>
+    ''' If an Specification object is attached to this object, returns a variable describing how this object is used by it (target or source).
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
     Public Property SpecVarType() As DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar
         Get
             Return Me.m_SpecVarType
@@ -2999,7 +3102,12 @@ Imports PropertyGridEx
             Me.m_SpecVarType = value
         End Set
     End Property
-
+    ''' <summary>
+    ''' Gets or sets the graphic object representation of this object in the flowsheet.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
     Public Property GraphicObject() As GraphicObject
         Get
             Return m_graphicobject
@@ -3028,7 +3136,12 @@ Imports PropertyGridEx
             m_qtnodeitems = value
         End Set
     End Property
-
+    ''' <summary>
+    ''' Object's description
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
     Public Property Descricao() As String
         Get
             Return m_ComponentDescription
@@ -3038,6 +3151,12 @@ Imports PropertyGridEx
         End Set
     End Property
 
+    ''' <summary>
+    ''' Object's Unique ID (Name)
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks>This property is the same as the graphic object 'Name' property.</remarks>
     Public Property Nome() As String
         Get
             Return m_ComponentName
@@ -3047,6 +3166,12 @@ Imports PropertyGridEx
         End Set
     End Property
 
+    ''' <summary>
+    ''' Gets or sets the flowsheet table object associated with this object.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
     Public Property Tabela() As DWSIM.GraphicObjects.TableGraphic
         Get
             Return m_table
@@ -3056,6 +3181,12 @@ Imports PropertyGridEx
         End Set
     End Property
 
+    ''' <summary>
+    ''' Gets or sets the tooltip (quick table) object associated with this object.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
     Public Property TabelaRapida() As DWSIM.GraphicObjects.QuickTableGraphic
         Get
             Return m_qtable
@@ -3081,6 +3212,11 @@ Imports PropertyGridEx
         Me.m_qtnodeitems = New System.Collections.Generic.Dictionary(Of Integer, DWSIM.Outros.NodeItem)
     End Sub
 
+    ''' <summary>
+    ''' Clones the current object, returning a new one with identical properties.
+    ''' </summary>
+    ''' <returns>An object of the same type with the same properties.</returns>
+    ''' <remarks>Properties and fields marked with the 'NonSerializable' attribute aren't cloned.</remarks>
     Public Function Clone() As Object Implements System.ICloneable.Clone
 
         Return ObjectCopy(Me)
@@ -3126,6 +3262,12 @@ Imports PropertyGridEx
     End Sub
 #End Region
 
+    ''' <summary>
+    ''' Loads object data stored in a collection of XML elements.
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
     Public Overridable Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean Implements XMLSerializer.Interfaces.ICustomXMLSerialization.LoadData
 
         XMLSerializer.XMLSerializer.Deserialize(Me, data)
@@ -3142,6 +3284,11 @@ Imports PropertyGridEx
 
     End Function
 
+    ''' <summary>
+    ''' Saves object data in a collection of XML elements.
+    ''' </summary>
+    ''' <returns>A List of XML elements containing object data.</returns>
+    ''' <remarks></remarks>
     Public Overridable Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement) Implements XMLSerializer.Interfaces.ICustomXMLSerialization.SaveData
 
         Dim elements As System.Collections.Generic.List(Of System.Xml.Linq.XElement) = XMLSerializer.XMLSerializer.Serialize(Me)
@@ -3164,7 +3311,12 @@ Imports PropertyGridEx
         Return elements
 
     End Function
-
+    ''' <summary>
+    ''' Copies the object properties to the Clipboard.
+    ''' </summary>
+    ''' <param name="su">Units system to use.</param>
+    ''' <param name="nf">Number format to use.</param>
+    ''' <remarks></remarks>
     Public Sub CopyDataToClipboard(su As DWSIM.SistemasDeUnidades.Unidades, nf As String)
 
         Dim DT As New DataTable
@@ -3424,6 +3576,12 @@ End Class
         End Set
     End Property
 
+    ''' <summary>
+    ''' Gets or sets the property package associated with this object.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
     <Xml.Serialization.XmlIgnore()> Property PropertyPackage() As PropertyPackage
         Get
             If Not _pp Is Nothing Then Return _pp
@@ -3449,10 +3607,21 @@ End Class
         End Set
     End Property
 
+    ''' <summary>
+    ''' Calculates the object.
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
+    ''' <remarks>Use 'Solve()' to calculate the object instead.</remarks>
     Public Overridable Function Calculate(Optional ByVal args As Object = Nothing) As Integer
         Return Nothing
     End Function
 
+    ''' <summary>
+    ''' Calculates the object.
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <remarks></remarks>
     Public Sub Solve(Optional ByVal args As Object = Nothing)
 
         Calculated = False
@@ -3464,10 +3633,19 @@ End Class
 
     End Sub
 
+    ''' <summary>
+    ''' Decalculates the object.
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
     Public Overridable Function DeCalculate() As Integer
         Return Nothing
     End Function
 
+    ''' <summary>
+    ''' Decalculates the object.
+    ''' </summary>
+    ''' <remarks></remarks>
     Public Sub Unsolve()
 
         DeCalculate()
@@ -3476,6 +3654,10 @@ End Class
 
     End Sub
 
+    ''' <summary>
+    ''' Validates the object, checking its connections and other parameters.
+    ''' </summary>
+    ''' <remarks></remarks>
     Public Overridable Sub Validate()
 
         Dim vForm As Global.DWSIM.FormFlowsheet = FlowSheet
@@ -3506,104 +3688,12 @@ End Class
 
     End Sub
 
-    Sub RunScript_Before()
-
-        Select Case ScriptExt_Language
-            Case 2
-                engine = IronPython.Hosting.Python.CreateEngine()
-                Dim paths(My.Settings.ScriptPaths.Count - 1) As String
-                My.Settings.ScriptPaths.CopyTo(paths, 0)
-                Try
-                    engine.SetSearchPaths(paths)
-                Catch ex As Exception
-                End Try
-                engine.Runtime.LoadAssembly(GetType(System.String).Assembly)
-                engine.Runtime.LoadAssembly(GetType(DWSIM.ClassesBasicasTermodinamica.ConstantProperties).Assembly)
-                engine.Runtime.LoadAssembly(GetType(Microsoft.Msdn.Samples.GraphicObjects.GraphicObject).Assembly)
-                engine.Runtime.LoadAssembly(GetType(Microsoft.Msdn.Samples.DesignSurface.GraphicsSurface).Assembly)
-                scope = engine.CreateScope()
-                scope.SetVariable("Flowsheet", FlowSheet)
-                scope.SetVariable("Spreadsheet", FlowSheet.FormSpreadsheet)
-                scope.SetVariable("Me", Me)
-                Dim Solver As New DWSIM.Flowsheet.FlowsheetSolver
-                scope.SetVariable("Solver", Solver)
-                Dim txtcode As String = ""
-                If Not ScriptExt_Includes Is Nothing Then
-                    For Each fname As String In Me.ScriptExt_Includes
-                        txtcode += File.ReadAllText(fname) + vbCrLf
-                    Next
-                End If
-                txtcode += Me.ScriptExt_ScriptTextB
-                Dim source As Microsoft.Scripting.Hosting.ScriptSource = Me.engine.CreateScriptSourceFromString(txtcode, Microsoft.Scripting.SourceCodeKind.Statements)
-                Try
-                    Me.ErrorMessage = ""
-                    source.Execute(Me.scope)
-                Catch ex As Exception
-                    Dim ops As ExceptionOperations = engine.GetService(Of ExceptionOperations)()
-                    Me.ErrorMessage = ops.FormatException(ex).ToString
-                    Me.Unsolve()
-                    engine = Nothing
-                    scope = Nothing
-                    source = Nothing
-                    Throw ex
-                Finally
-                    engine = Nothing
-                    scope = Nothing
-                    source = Nothing
-                End Try
-        End Select
-
-    End Sub
-
-    Sub RunScript_After()
-
-        Select Case ScriptExt_Language
-            Case 2
-                engine = IronPython.Hosting.Python.CreateEngine()
-                Dim paths(My.Settings.ScriptPaths.Count - 1) As String
-                My.Settings.ScriptPaths.CopyTo(paths, 0)
-                Try
-                    engine.SetSearchPaths(paths)
-                Catch ex As Exception
-                End Try
-                engine.Runtime.LoadAssembly(GetType(System.String).Assembly)
-                engine.Runtime.LoadAssembly(GetType(DWSIM.ClassesBasicasTermodinamica.ConstantProperties).Assembly)
-                engine.Runtime.LoadAssembly(GetType(Microsoft.Msdn.Samples.GraphicObjects.GraphicObject).Assembly)
-                engine.Runtime.LoadAssembly(GetType(Microsoft.Msdn.Samples.DesignSurface.GraphicsSurface).Assembly)
-                scope = engine.CreateScope()
-                scope.SetVariable("Flowsheet", FlowSheet)
-                scope.SetVariable("Spreadsheet", FlowSheet.FormSpreadsheet)
-                scope.SetVariable("Me", Me)
-                Dim Solver As New DWSIM.Flowsheet.FlowsheetSolver
-                scope.SetVariable("Solver", Solver)
-                Dim txtcode As String = ""
-                If Not ScriptExt_Includes Is Nothing Then
-                    For Each fname As String In Me.ScriptExt_Includes
-                        txtcode += File.ReadAllText(fname) + vbCrLf
-                    Next
-                End If
-                txtcode += Me.ScriptExt_ScriptTextA
-                Dim source As Microsoft.Scripting.Hosting.ScriptSource = Me.engine.CreateScriptSourceFromString(txtcode, Microsoft.Scripting.SourceCodeKind.Statements)
-                Try
-                    Me.ErrorMessage = ""
-                    source.Execute(Me.scope)
-                Catch ex As Exception
-                    Dim ops As ExceptionOperations = engine.GetService(Of ExceptionOperations)()
-                    Me.ErrorMessage = ops.FormatException(ex).ToString
-                    Me.Unsolve()
-                    engine = Nothing
-                    scope = Nothing
-                    source = Nothing
-                    Throw ex
-                Finally
-                    engine = Nothing
-                    scope = Nothing
-                    source = Nothing
-                End Try
-        End Select
-
-    End Sub
-
+    ''' <summary>
+    ''' Populates the Property Grid with properties from this object.
+    ''' </summary>
+    ''' <param name="pgrid"></param>
+    ''' <param name="su"></param>
+    ''' <remarks></remarks>
     Public Overrides Sub PopulatePropertyGrid(ByRef pgrid As PropertyGridEx.PropertyGridEx, ByVal su As DWSIM.SistemasDeUnidades.Unidades)
         With pgrid
             '.Item.Add(DWSIM.App.GetLocalString("UO_ScriptLanguage"), Me, "ScriptExt_Language", False, DWSIM.App.GetLocalString("UO_ScriptExtension"), "", True)

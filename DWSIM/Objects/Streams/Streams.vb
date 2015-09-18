@@ -131,7 +131,12 @@ Namespace DWSIM.SimulationObjects.Streams
             If Not Me.Fases(0).SPMProperties.entropy.IsValid Then Throw New ArgumentException(DWSIM.App.GetLocalString("ErrorInvalidMSSpecValue") & " (stream: " & mytag & ", name: entropy, value: " & Me.Fases(0).SPMProperties.entropy.GetValueOrDefault & ")")
 
         End Sub
-
+        ''' <summary>
+        ''' Gets or sets if this stream is at thermodynamic equilbirium or not.
+        ''' </summary>
+        ''' <value></value>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
         Public Property AtEquilibrium() As Boolean
             Get
                 Return _inequilibrium
@@ -141,6 +146,12 @@ Namespace DWSIM.SimulationObjects.Streams
             End Set
         End Property
 
+        ''' <summary>
+        ''' Gets or sets the associated Property Package for this stream.
+        ''' </summary>
+        ''' <value></value>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
         <Xml.Serialization.XmlIgnore()> Public Property PropertyPackage() As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage
             Get
                 If Not _pp Is Nothing Then Return _pp
@@ -260,6 +271,12 @@ Namespace DWSIM.SimulationObjects.Streams
 
         End Sub
 
+        ''' <summary>
+        ''' Gets the collection of phases in this stream.
+        ''' </summary>
+        ''' <value></value>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
         Public ReadOnly Property Fases() As Dictionary(Of String, DWSIM.ClassesBasicasTermodinamica.Fase)
             Get
                 Return m_Phases
@@ -583,6 +600,11 @@ Namespace DWSIM.SimulationObjects.Streams
 
         End Sub
 
+        ''' <summary>
+        ''' Copies basic properties from another stream.
+        ''' </summary>
+        ''' <param name="ASource">Stream to be used as the source</param>
+        ''' <remarks>Properties copied: phase temperature, pressure, enthalpy and mole/mass flows.</remarks>
         Public Sub Assign(ByVal ASource As MaterialStream)
 
             Me.AtEquilibrium = ASource.AtEquilibrium
@@ -622,6 +644,11 @@ Namespace DWSIM.SimulationObjects.Streams
 
         End Sub
 
+        ''' <summary>
+        ''' Copies phase properties from another stream.
+        ''' </summary>
+        ''' <param name="ASource">Source stream</param>
+        ''' <remarks></remarks>
         Public Sub AssignProps(ByVal ASource As MaterialStream)
 
             'Copy properties from the ASource stream.
@@ -667,6 +694,10 @@ Namespace DWSIM.SimulationObjects.Streams
 
         End Sub
 
+        ''' <summary>
+        ''' Clears the basic phase properties of this stream.
+        ''' </summary>
+        ''' <remarks>Properties cleared: phase temperature, pressure, enthalpy and mole/mass flows/fractions.</remarks>
         Public Sub Clear()
 
             Dim i As Integer
@@ -700,6 +731,11 @@ Namespace DWSIM.SimulationObjects.Streams
 
         End Sub
 
+        ''' <summary>
+        ''' Sets the overall molar composition of the mixture.
+        ''' </summary>
+        ''' <param name="Vx"></param>
+        ''' <remarks></remarks>
         Public Sub SetOverallComposition(ByVal Vx As Array)
 
             Dim i As Integer = 0
@@ -770,7 +806,12 @@ Namespace DWSIM.SimulationObjects.Streams
 
         End Sub
 
-
+        ''' <summary>
+        ''' Sets the molar composition of a phase.
+        ''' </summary>
+        ''' <param name="Vx">Molar composition array</param>
+        ''' <param name="phase">Phase to set composition of</param>
+        ''' <remarks></remarks>
         Public Sub SetPhaseComposition(ByVal Vx As Array, ByVal phase As PropertyPackages.Fase)
 
             Dim i As Integer = 0, idx As Integer = 0
@@ -5220,6 +5261,12 @@ Namespace DWSIM.SimulationObjects.Streams
             '  End If
         End Sub
 
+        ''' <summary>
+        ''' Power (energy) associated with this stream.
+        ''' </summary>
+        ''' <value></value>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
         Public Property Energia() As Nullable(Of Double)
             Get
                 Return Me.m_energy
