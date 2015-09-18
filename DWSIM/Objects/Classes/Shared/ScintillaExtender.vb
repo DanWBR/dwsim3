@@ -37,13 +37,14 @@ Module ScintillaExtender
     ''' <remarks></remarks>
     <System.Runtime.CompilerServices.Extension()> Sub SetEditorStyle(scintilla As ScintillaNET.Scintilla, fontname As String, fontsize As Integer, viewspaces As Boolean)
 
-        ' Reset the styles
         scintilla.StyleResetDefault()
         scintilla.Styles(Style.[Default]).Font = fontname
         scintilla.Styles(Style.[Default]).Size = fontsize
         scintilla.StyleClearAll()
+
         ' i.e. Apply to all
         ' Set the lexer
+
         scintilla.Lexer = Lexer.Python
 
         ' Known lexer properties:
@@ -58,24 +59,28 @@ Module ScintillaExtender
         ' "fold"
 
         ' Some properties we like
+
         scintilla.SetProperty("tab.timmy.whinge.level", "1")
         scintilla.SetProperty("fold", "1")
 
         scintilla.Margins(0).Width = 20
 
         ' Use margin 2 for fold markers
+
         scintilla.Margins(1).Type = MarginType.Symbol
         scintilla.Margins(1).Mask = Marker.MaskFolders
         scintilla.Margins(1).Sensitive = True
         scintilla.Margins(1).Width = 20
 
         ' Reset folder markers
+
         For i As Integer = Marker.FolderEnd To Marker.FolderOpen
             scintilla.Markers(i).SetForeColor(SystemColors.ControlLightLight)
             scintilla.Markers(i).SetBackColor(SystemColors.ControlDark)
         Next
 
         ' Style the folder markers
+
         scintilla.Markers(Marker.Folder).Symbol = MarkerSymbol.BoxPlus
         scintilla.Markers(Marker.Folder).SetBackColor(SystemColors.ControlText)
         scintilla.Markers(Marker.FolderOpen).Symbol = MarkerSymbol.BoxMinus
@@ -87,9 +92,11 @@ Module ScintillaExtender
         scintilla.Markers(Marker.FolderTail).Symbol = MarkerSymbol.LCorner
 
         ' Enable automatic folding
+
         scintilla.AutomaticFold = (AutomaticFold.Show Or AutomaticFold.Click Or AutomaticFold.Change)
 
         ' Set the styles
+
         scintilla.Styles(Style.Python.[Default]).ForeColor = Color.FromArgb(&H80, &H80, &H80)
         scintilla.Styles(Style.Python.CommentLine).ForeColor = Color.FromArgb(&H0, &H7F, &H0)
         scintilla.Styles(Style.Python.CommentLine).Italic = True
@@ -123,7 +130,6 @@ Module ScintillaExtender
             .ForeColor = Color.FromKnownColor(KnownColor.ActiveCaptionText)
         End With
 
-        ' Important for Python
         If viewspaces Then scintilla.ViewWhitespace = WhitespaceMode.VisibleAfterIndent
 
         ' Keyword lists:
@@ -132,6 +138,8 @@ Module ScintillaExtender
 
         Dim python2 = "and as assert break class continue def del elif else except exec finally for from global if import in is lambda not or pass print raise return try while with yield"
         Dim python3 = "False None True and as assert break class continue def del elif else except finally for from global if import in is lambda nonlocal not or pass raise return try while with yield"
+
+        'add keywords from DWSIM classes properties and methods
 
         Dim netprops As String = ""
 
@@ -167,8 +175,11 @@ Module ScintillaExtender
         For Each m In methods
             netprops += m.Name + " "
         Next
+
         Dim objects As String = ""
+
         If scintilla.Tag = 1 Then
+            'editor is being used at flowsheet level.
             props = Type.GetType("DWSIM.DWSIM.Flowsheet.FlowsheetSolver").GetProperties()
             For Each p In props
                 If p.PropertyType.Namespace <> "System.Windows.Forms" Then netprops += p.Name + " "
@@ -178,8 +189,11 @@ Module ScintillaExtender
                 netprops += m.Name + " "
             Next
             objects = "MaterialStream EnergyStream PropertyPackage UnitOp Flowsheet Spreadsheet Plugins Solver DWSIM"
+
         Else
+            'editor is being used at script unit operation level
             objects = "ims1 ims2 ims3 ims4 ims5 ims6 ies1 oms1 oms2 oms3 oms4 oms5 oms6 oes1 Flowsheet Spreadsheet Plugins Solver Me DWSIM"
+
         End If
 
 
@@ -212,6 +226,8 @@ Module ScintillaExtender
     <System.Runtime.CompilerServices.Extension()> Sub ShowAutoComplete(scintilla As ScintillaNET.Scintilla)
 
         Dim suggestions As String = ""
+
+        'parses the last keyword (object) (before the ".") and get suggestions for the autocomplete box from its properties and methods
 
         Dim text = scintilla.getLastWord().Split({".", "(", ")", " ", vbCr, vbLf, vbCrLf}, StringSplitOptions.RemoveEmptyEntries)
         Dim lastchar = Chr(scintilla.GetCharAt(scintilla.CurrentPosition))
@@ -292,8 +308,10 @@ Module ScintillaExtender
             End Select
         Else
             If scintilla.Tag = 1 Then
+                'editor is being used at flowsheet level.
                 suggestions = "MaterialStream EnergyStream PropertyPackage UnitOp Flowsheet Spreadsheet Plugins Solver DWSIM"
             Else
+                'editor is being used at script unit operation level
                 suggestions = "ims1 ims2 ims3 ims4 ims5 ims6 ies1 oms1 oms2 oms3 oms4 oms5 oms6 oes1 Flowsheet Spreadsheet Plugins Solver Me DWSIM"
             End If
         End If
@@ -319,6 +337,8 @@ Module ScintillaExtender
     ''' <param name="reader">Jolt's XmlDocCommentReader instance, to get and display comments from assembly-generated XML file.</param>
     ''' <remarks></remarks>
     <System.Runtime.CompilerServices.Extension()> Sub ShowToolTip(scintilla As ScintillaNET.Scintilla, reader As Jolt.XmlDocCommentReader)
+
+        'parses the last keyword (object) (before the ".") and get suggestions for the autocomplete box from its properties and methods
 
         Dim text = scintilla.getLastWord().Split({".", "(", ")", " ", vbCr, vbLf, vbCrLf}, StringSplitOptions.RemoveEmptyEntries)
         Dim lastchar = Chr(scintilla.GetCharAt(scintilla.CurrentPosition))
@@ -352,9 +372,13 @@ Module ScintillaExtender
                     If prop.Length > 0 Then helptext = scintilla.FormatHelpTip(prop(0), reader)
             End Select
 
+            'shows the tooltip
+
             If helptext <> "" Then scintilla.CallTipShow(scintilla.CurrentPosition, helptext) Else scintilla.CallTipCancel()
 
         Else
+
+            'hides tooltip if visible
 
             scintilla.CallTipCancel()
 
