@@ -194,9 +194,9 @@ Imports System.Linq
         btnUndo.Enabled = txtScript.CanUndo
         btnRedo.Enabled = txtScript.CanRedo
 
-        ShowAutoComplete(txtScript)
+        txtScript.ShowAutoComplete()
 
-        ShowToolTip(txtScript, reader)
+        txtScript.ShowToolTip(reader)
 
     End Sub
 
