@@ -175,6 +175,14 @@ Module ScintillaExtender
         For Each m In methods
             netprops += m.Name + " "
         Next
+        props = Type.GetType("DWSIM.DWSIM.SimulationObjects.PropertyPackages.PropertyPackage").GetProperties()
+        For Each p In props
+            If p.PropertyType.Namespace <> "System.Windows.Forms" Then netprops += p.Name + " "
+        Next
+        methods = Type.GetType("DWSIM.DWSIM.SimulationObjects.PropertyPackages.PropertyPackage").GetMethods()
+        For Each m In methods
+            netprops += m.Name + " "
+        Next
 
         Dim objects As String = ""
 
@@ -362,7 +370,7 @@ Module ScintillaExtender
                     Dim prop = Type.GetType("DWSIM.SpreadsheetForm").GetMember(lastkeyword)
                     If prop.Length > 0 Then helptext = scintilla.FormatHelpTip(prop(0), reader)
                 Case "PropertyPackage"
-                    Dim prop = Type.GetType("DWSIM.DWSIM.DWSIM.SimulationObjects.PropertyPackages.PropertyPackage").GetMember(lastkeyword)
+                    Dim prop = Type.GetType("DWSIM.DWSIM.SimulationObjects.PropertyPackages.PropertyPackage").GetMember(lastkeyword)
                     If prop.Length > 0 Then helptext = scintilla.FormatHelpTip(prop(0), reader)
                 Case "UnitOp", "Me"
                     Dim prop = Type.GetType("DWSIM.SimulationObjects_UnitOpBaseClass").GetMember(lastkeyword)
