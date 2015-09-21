@@ -721,8 +721,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         ''' <remarks>The composition vector must follow the same sequence as the components which were added in the material stream.</remarks>
         Public Overridable Overloads Function DW_CalcKvalue(ByVal Vx As System.Array, ByVal Vy As System.Array, ByVal T As Double, ByVal P As Double, Optional ByVal type As String = "LV") As Object
 
-            Dim fugvap As Object = Nothing
-            Dim fugliq As Object = Nothing
+            Dim fugvap As Double() = Nothing
+            Dim fugliq As Double() = Nothing
 
             Dim alreadymt As Boolean = False
 
@@ -811,7 +811,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         ''' <param name="P">Pressure of the system, in Pa.</param>
         ''' <returns>An array containing K-values for all components in the mixture.</returns>
         ''' <remarks>The composition vector must follow the same sequence as the components which were added in the material stream.</remarks>
-        Public Overridable Overloads Function DW_CalcKvalue(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double) As [Object]
+        Public Overridable Overloads Function DW_CalcKvalue(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double) As Double()
 
             Dim i As Integer
             Dim result = Me.FlashBase.Flash_PT(Vx, P, T, Me)
@@ -1403,10 +1403,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             xl2 = result(5)
                             xs = result(7)
 
-                            Dim Vx = result(2)
-                            Dim Vy = result(3)
-                            Dim Vx2 = result(6)
-                            Dim Vs = result(8)
+                            Dim Vx As Double() = result(2)
+                            Dim Vy As Double() = result(3)
+                            Dim Vx2 As Double() = result(6)
+                            Dim Vs As Double() = result(8)
 
                             If Not My.Application.CAPEOPENMode Then
 
@@ -5655,7 +5655,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
         End Function
 
-        Public Overridable Function AUX_CPi(ByVal sub1 As String, ByVal T As Double)
+        Public Overridable Function AUX_CPi(ByVal sub1 As String, ByVal T As Double) As Double
 
             If Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.IsPF = 1 Then
 
@@ -5831,7 +5831,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
         End Function
 
-        Public Overridable Function AUX_PVAPi(ByVal index As Integer, ByVal T As Double)
+        Public Overridable Function AUX_PVAPi(ByVal index As Integer, ByVal T As Double) As Double
 
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
             Dim nome As String = ""
@@ -6937,7 +6937,7 @@ Final3:
 
         End Function
 
-        Public Function AUX_INT_CPDTm(ByVal T1 As Double, ByVal T2 As Double, ByVal fase As Fase)
+        Public Function AUX_INT_CPDTm(ByVal T1 As Double, ByVal T2 As Double, ByVal fase As Fase) As Double
 
             Dim val As Double = 0
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
@@ -7452,19 +7452,19 @@ Final3:
 
         End Function
 
-        Public Function RET_Hid(ByVal T1 As Double, ByVal T2 As Double, ByVal Vz As Object) As Double
+        Public Function RET_Hid(ByVal T1 As Double, ByVal T2 As Double, ByVal Vz As Double()) As Double
 
             Return Me.AUX_INT_CPDTm(T1, T2, Me.AUX_CONVERT_MOL_TO_MASS(Vz))
 
         End Function
 
-        Public Function RET_Hid_L(ByVal T1 As Double, ByVal T2 As Double, ByVal Vz As Object) As Double
+        Public Function RET_Hid_L(ByVal T1 As Double, ByVal T2 As Double, ByVal Vz As Double()) As Double
 
             Return Me.AUX_INT_CPDTm_L(T1, T2, Me.AUX_CONVERT_MOL_TO_MASS(Vz))
 
         End Function
 
-        Public Function RET_Sid_L(ByVal T1 As Double, ByVal T2 As Double, ByVal Vz As Object) As Double
+        Public Function RET_Sid_L(ByVal T1 As Double, ByVal T2 As Double, ByVal Vz As Double()) As Double
 
             Return Me.RET_Hid_L(T1, T2, Vz) / T2
 
@@ -7506,7 +7506,7 @@ Final3:
 
         End Function
 
-        Public Function RET_Sid(ByVal T1 As Double, ByVal T2 As Double, ByVal P2 As Double, ByVal Vz As Object) As Double
+        Public Function RET_Sid(ByVal T1 As Double, ByVal T2 As Double, ByVal P2 As Double, ByVal Vz As Double()) As Double
 
             Dim val As Double
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
@@ -7536,7 +7536,7 @@ Final3:
 
         End Function
 
-        Public Function RET_Gid(ByVal T1 As Double, ByVal T2 As Double, ByVal P2 As Double, ByVal Vz As Object) As Double
+        Public Function RET_Gid(ByVal T1 As Double, ByVal T2 As Double, ByVal P2 As Double, ByVal Vz As Double()) As Double
 
             Dim hid = Me.RET_Hid(T1, T2, Vz)
             Dim sid = Me.RET_Sid(T1, T2, P2, Vz)
@@ -7761,7 +7761,7 @@ Final3:
 
         End Function
 
-        Public Function AUX_ERASE(ByVal Vx As Object) As Double()
+        Public Function AUX_ERASE(ByVal Vx As Double()) As Double()
 
             Dim i, n As Integer
 
@@ -7836,7 +7836,7 @@ Final3:
 
         End Function
 
-        Public Function AUX_INT_CPDTm(ByVal T1 As Double, ByVal T2 As Double, ByVal Vw As Object)
+        Public Function AUX_INT_CPDTm(ByVal T1 As Double, ByVal T2 As Double, ByVal Vw As Double()) As Double
 
             Dim val As Double
             Dim i As Integer = 0
@@ -7850,7 +7850,7 @@ Final3:
 
         End Function
 
-        Public Function AUX_INT_CPDTm_L(ByVal T1 As Double, ByVal T2 As Double, ByVal Vw As Object)
+        Public Function AUX_INT_CPDTm_L(ByVal T1 As Double, ByVal T2 As Double, ByVal Vw As Double()) As Double
 
             Dim val As Double
             Dim i As Integer = 0
@@ -7864,7 +7864,7 @@ Final3:
 
         End Function
 
-        Public Function AUX_INT_CPDT_Tm(ByVal T1 As Double, ByVal T2 As Double, ByVal Vw As Object)
+        Public Function AUX_INT_CPDT_Tm(ByVal T1 As Double, ByVal T2 As Double, ByVal Vw As Double()) As Double
 
             Dim val As Double
             Dim i As Integer = 0
@@ -7878,7 +7878,7 @@ Final3:
 
         End Function
 
-        Public Overridable Function AUX_CONVERT_MOL_TO_MASS(ByVal Vz As Object) As Double()
+        Public Overridable Function AUX_CONVERT_MOL_TO_MASS(ByVal Vz As Double()) As Double()
 
             Dim Vwe(UBound(Vz)) As Double
             Dim mol_x_mm As Double = 0
@@ -7903,7 +7903,7 @@ Final3:
 
         End Function
 
-        Public Overridable Function AUX_CONVERT_MASS_TO_MOL(ByVal Vz As Object) As Double()
+        Public Overridable Function AUX_CONVERT_MASS_TO_MOL(ByVal Vz As Double()) As Double()
 
             Dim Vw(UBound(Vz)) As Double
             Dim mass_div_mm As Double
@@ -7924,7 +7924,7 @@ Final3:
 
         End Function
 
-        Public Function AUX_CalculateSumSquares(ByVal Vz As Object) As Double
+        Public Function AUX_CalculateSumSquares(ByVal Vz As Double()) As Double
 
             Dim n, i As Integer
             n = UBound(Vz)
@@ -7938,7 +7938,7 @@ Final3:
 
         End Function
 
-        Public Function AUX_CalculateAbsSumSquares(ByVal Vz As Object) As Double
+        Public Function AUX_CalculateAbsSumSquares(ByVal Vz As Double()) As Double
 
             Dim n, i As Integer
             n = UBound(Vz)
@@ -7952,7 +7952,7 @@ Final3:
 
         End Function
 
-        Public Function AUX_CalculateSum(ByVal Vz As Object) As Double
+        Public Function AUX_CalculateSum(ByVal Vz As Double()) As Double
 
             Dim n, i As Integer
             n = UBound(Vz)
@@ -7966,7 +7966,7 @@ Final3:
 
         End Function
 
-        Public Function AUX_CalculateAbsSum(ByVal Vz As Object) As Double
+        Public Function AUX_CalculateAbsSum(ByVal Vz As Double()) As Double
 
             Dim n, i As Integer
             n = UBound(Vz)

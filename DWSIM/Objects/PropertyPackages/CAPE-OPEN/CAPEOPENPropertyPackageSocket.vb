@@ -1107,7 +1107,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         End Function
 
-        Public Overrides Function AUX_CONVERT_MOL_TO_MASS(ByVal Vz As Object) As Double()
+        Public Overrides Function AUX_CONVERT_MOL_TO_MASS(ByVal Vz As Double()) As Double()
 
             Dim complist As Object = Nothing
             Dim mw As Object = Nothing
@@ -1132,7 +1132,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         End Function
 
-        Public Overrides Function AUX_CONVERT_MASS_TO_MOL(ByVal Vz As Object) As Double()
+        Public Overrides Function AUX_CONVERT_MASS_TO_MOL(ByVal Vz As Double()) As Double()
 
             Dim complist As Object = Nothing
             Me.GetCompoundList(complist, Nothing, Nothing, Nothing, Nothing, Nothing)
@@ -1141,7 +1141,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim Vw(UBound(Vz)) As Double
             Dim mass_div_mm As Double
             Dim i As Integer = 0
-           For i = 0 To UBound(Vz)
+            For i = 0 To UBound(Vz)
                 mass_div_mm += Vz(i) / mw(i)
             Next
 

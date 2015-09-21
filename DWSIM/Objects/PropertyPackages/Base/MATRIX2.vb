@@ -27,7 +27,7 @@
 
     'End Function
 
-    Function Poly_Roots(ByVal Coeff)
+    Function Poly_Roots(ByVal Coeff) As Double(,)
         'returns all roots of a polynomial
         'Dim tiny#, ErrMsg
         'Const Itermax = 1000, TRIALS = 5
@@ -44,7 +44,7 @@
 
     End Function
 
-    Function CalcRoots(ByVal a As Double, ByVal b As Double, ByVal c As Double, ByVal d As Double) As Object
+    Function CalcRoots(ByVal a As Double, ByVal b As Double, ByVal c As Double, ByVal d As Double) As Double(,)
 
         Dim cnt As Integer = 0
         Dim r, rant, rant2, fi, fi_ant, fi_ant2, dfidr As Double

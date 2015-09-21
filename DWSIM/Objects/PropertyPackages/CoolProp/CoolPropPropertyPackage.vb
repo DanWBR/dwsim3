@@ -81,7 +81,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             End Select
         End Sub
 
-        Public Overrides Function AUX_CPi(sub1 As String, T As Double) As Object
+        Public Overrides Function AUX_CPi(sub1 As String, T As Double) As Double
             Dim Tmin, Tmax, Tc, val As Double
             If IsCompoundSupported(sub1) Then
                 Tmin = CoolProp.Props1SI(sub1, "TMIN")
@@ -109,7 +109,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Return val
         End Function
 
-        Public Overrides Function AUX_PVAPi(index As Integer, T As Double) As Object
+        Public Overrides Function AUX_PVAPi(index As Integer, T As Double) As Double
             Dim sub1 As String = RET_VNAMES()(index)
             Dim Tmin, Tmax, Tc, val As Double
             If IsCompoundSupported(sub1) Then

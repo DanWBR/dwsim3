@@ -248,7 +248,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
         End Function
 
-        Public Overrides Function CalcLnFug(ByVal T As Double, ByVal P As Double, ByVal Vx As Array, ByVal VKij As Object, ByVal VTc As Array, ByVal VPc As Array, ByVal Vw As Array, Optional ByVal otherargs As Object = Nothing, Optional ByVal forcephase As String = "")
+        Public Overrides Function CalcLnFug(ByVal T As Double, ByVal P As Double, ByVal Vx As Array, ByVal VKij As Object, ByVal VTc As Array, ByVal VPc As Array, ByVal Vw As Array, Optional ByVal otherargs As Object = Nothing, Optional ByVal forcephase As String = "") As Double()
 
             If My.Settings.EnableGPUProcessing Then
                 Return CalcLnFugGPU(T, P, Vx, VKij, VTc, VPc, Vw, otherargs, forcephase)
@@ -549,17 +549,16 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
         End Sub
 
-        Shared Function CalcZ(ByVal T, ByVal P, ByVal Vx, ByVal VKij, ByVal VTc, ByVal VPc, ByVal Vw) As ArrayList
+        Shared Function CalcZ(ByVal T As Double, ByVal P As Double, ByVal Vx As Double(), ByVal VKij As Double(,), ByVal VTc As Double(), ByVal VPc As Double(), ByVal Vw As Double()) As ArrayList
 
-            Dim ai(), bi(), aml2(), amv2() As Double
-            Dim n, R, coeff(3), tmp() As Double
-            Dim Tc(), Pc(), W(), alpha(), Vant(0, 4), m(), a(,), b(,), Tr() As Double
+            Dim n, R, coeff(3) As Double
+            Dim Vant(0, 4) As Double
 
             n = UBound(Vx)
 
-            ReDim ai(n), bi(n), tmp(n + 1), a(n, n), b(n, n)
-            ReDim aml2(n), amv2(n)
-            ReDim Tc(n), Pc(n), W(n), alpha(n), m(n), Tr(n)
+            Dim ai(n), bi(n), tmp(n + 1), a(n, n), b(n, n) As Double
+            Dim aml2(n), amv2(n) As Double
+            Dim Tc(n), Pc(n), W(n), alpha(n), m(n), Tr(n) As Double
 
             R = 8.314
 
@@ -630,62 +629,42 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
             Dim result As New ArrayList
 
-            If Not IsNumeric(temp1) Then
-
-                If temp1(0, 0) > temp1(1, 0) Then
-                    tv = temp1(1, 0)
-                    temp1(1, 0) = temp1(0, 0)
-                    temp1(0, 0) = tv
-                    tv2 = temp1(1, 1)
-                    temp1(1, 1) = temp1(0, 1)
-                    temp1(0, 1) = tv2
-                End If
-                If temp1(0, 0) > temp1(2, 0) Then
-                    tv = temp1(2, 0)
-                    temp1(2, 0) = temp1(0, 0)
-                    temp1(0, 0) = tv
-                    tv2 = temp1(2, 1)
-                    temp1(2, 1) = temp1(0, 1)
-                    temp1(0, 1) = tv2
-                End If
-                If temp1(1, 0) > temp1(2, 0) Then
-                    tv = temp1(2, 0)
-                    temp1(2, 0) = temp1(1, 0)
-                    temp1(1, 0) = tv
-                    tv2 = temp1(2, 1)
-                    temp1(2, 1) = temp1(1, 1)
-                    temp1(1, 1) = tv2
-                End If
-
-                ZV = temp1(2, 0)
-                If temp1(2, 1) <> 0 Then
-                    ZV = temp1(1, 0)
-                    If temp1(1, 1) <> 0 Then
-                        ZV = temp1(0, 0)
-                    End If
-                End If
-
-                If temp1(0, 1) = 0.0# And temp1(0, 0) > 0.0# Then result.Add(temp1(0, 0))
-                If temp1(1, 1) = 0.0# And temp1(1, 0) > 0.0# Then result.Add(temp1(1, 0))
-                If temp1(2, 1) = 0.0# And temp1(2, 0) > 0.0# Then result.Add(temp1(2, 0))
-
-            Else
-
-                Dim findZV
-                Dim lc As Integer = 0
-                ZV = 1
-                Do
-                    findZV = coeff(3) * ZV ^ 3 + coeff(2) * ZV ^ 2 + coeff(1) * ZV + coeff(0)
-                    ZV -= 0.00001
-                    If ZV < 0 Then ZV = 1
-                    lc += 1
-                Loop Until Math.Abs(findZV) < 0.0001 Or lc > 10000
-
-                result.Add(ZV)
-
-                Return result
-
+            If temp1(0, 0) > temp1(1, 0) Then
+                tv = temp1(1, 0)
+                temp1(1, 0) = temp1(0, 0)
+                temp1(0, 0) = tv
+                tv2 = temp1(1, 1)
+                temp1(1, 1) = temp1(0, 1)
+                temp1(0, 1) = tv2
             End If
+            If temp1(0, 0) > temp1(2, 0) Then
+                tv = temp1(2, 0)
+                temp1(2, 0) = temp1(0, 0)
+                temp1(0, 0) = tv
+                tv2 = temp1(2, 1)
+                temp1(2, 1) = temp1(0, 1)
+                temp1(0, 1) = tv2
+            End If
+            If temp1(1, 0) > temp1(2, 0) Then
+                tv = temp1(2, 0)
+                temp1(2, 0) = temp1(1, 0)
+                temp1(1, 0) = tv
+                tv2 = temp1(2, 1)
+                temp1(2, 1) = temp1(1, 1)
+                temp1(1, 1) = tv2
+            End If
+
+            ZV = temp1(2, 0)
+            If temp1(2, 1) <> 0 Then
+                ZV = temp1(1, 0)
+                If temp1(1, 1) <> 0 Then
+                    ZV = temp1(0, 0)
+                End If
+            End If
+
+            If temp1(0, 1) = 0.0# And temp1(0, 0) > 0.0# Then result.Add(temp1(0, 0))
+            If temp1(1, 1) = 0.0# And temp1(1, 0) > 0.0# Then result.Add(temp1(1, 0))
+            If temp1(2, 1) = 0.0# And temp1(2, 0) > 0.0# Then result.Add(temp1(2, 0))
 
             Return result
 
@@ -1533,7 +1512,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
         End Function
 
-        Public Overrides Function CalcLnFugTV(ByVal T As Double, ByVal V As Double, ByVal Vx As System.Array, ByVal VKij As Object, ByVal VTc As System.Array, ByVal VPc As System.Array, ByVal Vw As System.Array, Optional ByVal otherargs As Object = Nothing, Optional ByVal forcephase As String = "") As Object
+        Public Overrides Function CalcLnFugTV(ByVal T As Double, ByVal V As Double, ByVal Vx As System.Array, ByVal VKij As Object, ByVal VTc As System.Array, ByVal VPc As System.Array, ByVal Vw As System.Array, Optional ByVal otherargs As Object = Nothing, Optional ByVal forcephase As String = "") As Double()
 
             Dim P As Double = Me.CalcP(V, T, Vx, VKij, VTc, VPc, Vw, otherargs)
 

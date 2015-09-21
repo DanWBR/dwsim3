@@ -1835,7 +1835,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             Dim prn As New PropertyPackages.ThermoPlugs.PR
 
-            Dim lnfug As Object
+            Dim lnfug As Double()
 
             If st = State.Liquid Then
                 lnfug = prn.CalcLnFug(T, P, Vx, Me.RET_VKij, Me.RET_VTC, Me.RET_VPC, Me.RET_VW, Nothing, "L")

@@ -92,15 +92,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             'Estimativa da viscosidade de líquidos pelo método de Letsou e Stiel
 
-            Dim Tr = T / Tc
+            Dim Tr As Double = T / Tc
 
             Pc = Pc / 100000
 
-            Dim e0 = (2.648 - 3.725 * Tr + 1.309 * Tr ^ 2) * 0.001
+            Dim e0 As Double = (2.648 - 3.725 * Tr + 1.309 * Tr ^ 2) * 0.001
 
-            Dim e1 = (7.425 - 13.39 * Tr + 5.933 * Tr ^ 2) * 0.001
+            Dim e1 As Double = (7.425 - 13.39 * Tr + 5.933 * Tr ^ 2) * 0.001
 
-            Dim e = 0.176 * (Tc / (MM ^ 3 * Pc ^ 4)) ^ (1 / 6)
+            Dim e As Double = 0.176 * (Tc / (MM ^ 3 * Pc ^ 4)) ^ (1 / 6)
 
             viscl_letsti = (e0 + e1) / e / 1000 'Pa.s
 
@@ -110,13 +110,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             'Estimativa da viscosidade de gases pelo método de Lucas
 
-            Dim Tr = T / Tc
+            Dim Tr As Double = T / Tc
 
             Pc = Pc / 100000
 
-            Dim e = 0.176 * (Tc / (MM ^ 3 * Pc ^ 4)) ^ (1 / 6)
+            Dim e As Double = 0.176 * (Tc / (MM ^ 3 * Pc ^ 4)) ^ (1 / 6)
 
-            Dim tmp = (1 / e) * (0.807 * Tr ^ 0.618 - 0.357 * Math.Exp(-0.449 * Tr) + 0.34 * Math.Exp(-4.058 * Tr) + 0.018)
+            Dim tmp As Double = (1 / e) * (0.807 * Tr ^ 0.618 - 0.357 * Math.Exp(-0.449 * Tr) + 0.34 * Math.Exp(-4.058 * Tr) + 0.018)
 
             viscg_lucas = tmp / 1000000.0 * 100 / 1000 'Pa.s
 
@@ -128,7 +128,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             If Double.IsNaN(Pvp) Then Pvp = 0.0#
 
-            Dim R, Tr
+            Dim R, Tr As Double
 
             R = 83.14
 
@@ -158,7 +158,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 e = Math.Exp(f + g * w + h * w ^ 2)
                 c = j + k * w
 
-                Dim beta = Pc * 100000 * (-1 + a * (1 - Tr) ^ (1 / 3) + b * (1 - Tr) ^ (2 / 3) + d * (1 - Tr) + e * (1 - Tr) ^ (4 / 3))
+                Dim beta As Double = Pc * 100000 * (-1 + a * (1 - Tr) ^ (1 / 3) + b * (1 - Tr) ^ (2 / 3) + d * (1 - Tr) + e * (1 - Tr) ^ (4 / 3))
 
                 Dim tmpcor As Double
 
@@ -191,7 +191,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             'para gases
 
-            Dim Tpr = T / Tpc
+            Dim Tpr As Double = T / Tpc
             Dim eta As Double
 
             If fluido = "V" Then eta = 0.0048823 * Tpc * (18 / Tpr ^ 2 - 1) / (Ppc * Cp * SG)
@@ -326,7 +326,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         Function Tcm(ByVal Vz, ByVal VTc) As Double
 
-            Dim i, n
+            Dim i, n As Integer
 
             n = UBound(Vz)
 
@@ -346,7 +346,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         Function Pcm(ByVal Vz, ByVal VPc) As Double
 
-            Dim i, n
+            Dim i, n As Integer
 
             n = UBound(Vz)
 
@@ -366,7 +366,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         Function Vcm(ByVal Vz, ByVal VVc) As Double
 
-            Dim i, j, n
+            Dim i, j, n As Integer
 
             n = UBound(Vz)
 
@@ -385,7 +385,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         Function Zcm(ByVal Vz, ByVal VZc) As Double
 
-            Dim i, n
+            Dim i, n As Integer
 
             n = UBound(Vz)
 
@@ -405,7 +405,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         Function wm(ByVal Vz, ByVal Vw) As Double
 
-            Dim i, n
+            Dim i, n As Integer
 
             n = UBound(Vz)
 
@@ -425,7 +425,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         Function MMm(ByVal Vz, ByVal VMM) As Double
 
-            Dim i, n
+            Dim i, n As Integer
 
             n = UBound(Vz)
 
@@ -448,17 +448,17 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             'Estimativa da viscosidade de gases em pressões elevadas pelo 
             'método de Jossi-Stiel-Thodos
 
-            Dim Tr = T / Tc
+            Dim Tr As Double = T / Tc
 
             Pc = Pc / 101325
 
-            Dim rho_r = Vc / V
+            Dim rho_r As Double = Vc / V
 
-            Dim xit = (Tc / MM ^ 3 / Pc ^ 4) ^ (1 / 6)
+            Dim xit As Double = (Tc / MM ^ 3 / Pc ^ 4) ^ (1 / 6)
 
             eta0 = eta0 * 1000000.0 / 100 * 1000
 
-            Dim tmp = ((1.023 + 0.23364 * rho_r + 0.58533 * rho_r ^ 2 - 0.40758 * rho_r ^ 3 + 0.093324 * rho_r ^ 4) ^ 4 - 1) / xit + eta0
+            Dim tmp As Double = ((1.023 + 0.23364 * rho_r + 0.58533 * rho_r ^ 2 - 0.40758 * rho_r ^ 3 + 0.093324 * rho_r ^ 4) ^ 4 - 1) / xit + eta0
 
             viscg_jossi_stiel_thodos = tmp / 10000 / 1000 'Pa.s
 
@@ -486,7 +486,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             Dim n = UBound(Vz)
 
-            Dim phi(n) As Double, somaz, i, j
+            Dim phi(n), somaz As Double, i, j As Integer
 
             somaz = 0.0#
             i = 0
@@ -518,7 +518,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         Function CPig_pol(ByVal VCOEFF, ByVal T)
 
-            Dim tmp2 = VCOEFF(0) + VCOEFF(1) * T + VCOEFF(2) * T ^ 2 + VCOEFF(3) * T ^ 3 + VCOEFF(4) * T ^ 4
+            Dim tmp2 As Double = VCOEFF(0) + VCOEFF(1) * T + VCOEFF(2) * T ^ 2 + VCOEFF(3) * T ^ 3 + VCOEFF(4) * T ^ 4
 
             CPig_pol = tmp2
 
@@ -527,9 +527,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
         Function Vc(ByVal T, ByVal Tc, ByVal Tb, ByVal Pc)
 
             Pc = Pc / 101325
-            Dim R = 82.0575
-            Dim s = Tb / Tc * Math.Log(Pc) / (1 - Tb / Tc)
-            Dim tmp = (R * Tc / Pc) * (0.3883 - 0.0179 * s)
+            Dim R As Double = 82.0575
+            Dim s As Double = Tb / Tc * Math.Log(Pc) / (1 - Tb / Tc)
+            Dim tmp As Double = (R * Tc / Pc) * (0.3883 - 0.0179 * s)
 
             Vc = tmp * 0.000001
 
@@ -551,8 +551,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Z1 = vk1 + 0.7 + Math.Exp(-1.47 - 1.84 * vk1 - 0.51 * vk1 ^ 2)
             Z2 = vk2 + 0.7 + Math.Exp(-1.47 - 1.84 * vk2 - 0.51 * vk2 ^ 2)
 
-            Dim var1 = (Math.Log(Math.Log(Z1)) + Math.Log(Math.Log(Z2)))
-            Dim var2 = (Math.Log(T1) + Math.Log(T2))
+            Dim var1 As Double = (Math.Log(Math.Log(Z1)) + Math.Log(Math.Log(Z2)))
+            Dim var2 As Double = (Math.Log(T1) + Math.Log(T2))
             B = var1 / var2
 
             Z = Math.Exp(Math.Exp(Math.Log(Math.Log(Z1)) + B * (Math.Log(T) - Math.Log(T2))))
@@ -563,17 +563,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function CpCvR(ByVal TIPO, ByVal T, ByVal P, ByVal Vz, ByVal VKij, ByVal Vzmass, ByVal VTc, ByVal VPc, ByVal VCpig, ByVal VMM, ByVal Vw, ByVal VZRa)
+        Function CpCvR(ByVal TIPO As String, ByVal T As Double, ByVal P As Double, ByVal Vz As Double(), ByVal VKij As Double(,), ByVal Vzmass As Double(), ByVal VTc As Double(), ByVal VPc As Double(), ByVal VCpig As Double(), ByVal VMM As Double(), ByVal Vw As Double(), ByVal VZRa As Double()) As Double()
 
-            Dim ai(), bi(), ci() As Double
-            Dim n, R As Double
-            Dim Tc(), Pc(), Vc(), w(), Zc(), alpha(), m(), a(,), b(,), Z, Tr() As Double
-            Dim i, j, dadT
+            Dim dadt, n, R, Z As Double
+            Dim i, j As Integer
 
             n = UBound(Vz)
 
-            ReDim ai(n), bi(n), ci(n), a(n, n), b(n, n)
-            ReDim Tc(n), Pc(n), Vc(n), Zc(n), w(n), alpha(n), m(n), Tr(n)
+            Dim ai(n), bi(n), ci(n), a(n, n), b(n, n) As Double
+            Dim Tc(n), Pc(n), Vc(n), Zc(n), w(n), alpha(n), m(n), Tr(n) As Double
 
             R = 8.314
 
@@ -642,9 +640,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             coeff(2) = BG1 - 1
             coeff(3) = 1
 
-            Dim temp1 = Poly_Roots(coeff)
-            Dim tv
-            Dim tv2
+            Dim temp1 As Double(,) = Poly_Roots(coeff)
+            Dim tv, tv2 As Double
 
             If Not IsNumeric(temp1) Then
 
@@ -707,13 +704,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             End If
 
-            Dim V = (Z * R * T / P) ' m3/mol
+            Dim V As Double = (Z * R * T / P) ' m3/mol
 
-            Dim tmp1 = MMm / V / 1000
+            Dim tmp1 As Double = MMm / V / 1000
 
-            Dim aux1 = -R / 2 * (0.45724 / T) ^ 0.5
+            Dim aux1 As Double = -R / 2 * (0.45724 / T) ^ 0.5
             i = 0
-            Dim aux2 = 0.0#
+            Dim aux2 As Double = 0.0#
             Do
                 j = 0
                 Do
@@ -723,36 +720,36 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 i = i + 1
             Loop Until i = n + 1
 
-            dadT = aux1 * aux2
-            Dim d2adt2 = R / 4 * (0.45724 / T) ^ 0.5 * (1 / T) * aux2
+            dadt = aux1 * aux2
+            Dim d2adt2 As Double = R / 4 * (0.45724 / T) ^ 0.5 * (1 / T) * aux2
             'Dim d2adt2 = 0.169049 * R / (T ^ (3 / 2))
 
-            Dim dP_dT_V = R / (V - bm) - dadT / (V ^ 2 + 2 * bm * V - bm ^ 2)
+            Dim dP_dT_V As Double = R / (V - bm) - dadt / (V ^ 2 + 2 * bm * V - bm ^ 2)
 
-            Dim dV_dT_P = dP_dT_V / (R * T / (V - bm) ^ 2 - am * (2 * V + 2 * bm) / (V * (V + bm) + bm * (V - bm)) ^ 2)
+            Dim dV_dT_P As Double = dP_dT_V / (R * T / (V - bm) ^ 2 - am * (2 * V + 2 * bm) / (V * (V + bm) + bm * (V - bm)) ^ 2)
 
-            Dim dP_dV_T = -R * T * (V - bm) ^ -2 - am * (V ^ 2 + 2 * bm * V - bm ^ 2) ^ -2 * (2 * V + 2 * bm)
+            Dim dP_dV_T As Double = -R * T * (V - bm) ^ -2 - am * (V ^ 2 + 2 * bm * V - bm ^ 2) ^ -2 * (2 * V + 2 * bm)
 
-            Dim d2P_dT2 = -1 / (V ^ 2 + 2 * bm * V - bm ^ 2) * d2adt2
+            Dim d2P_dT2 As Double = -1 / (V ^ 2 + 2 * bm * V - bm ^ 2) * d2adt2
 
-            Dim var = (bm + V) / (2 ^ 0.5 * bm)
+            Dim var As Double = (bm + V) / (2 ^ 0.5 * bm)
 
-            Dim Int_d2P_dT2_V_dV = -d2adt2 * Math.Log((-(2 ^ 0.5) * bm + bm + V) / ((2 ^ 0.5) * bm + bm + V)) / (8 ^ 0.5 * bm)
+            Dim Int_d2P_dT2_V_dV As Double = -d2adt2 * Math.Log((-(2 ^ 0.5) * bm + bm + V) / ((2 ^ 0.5) * bm + bm + V)) / (8 ^ 0.5 * bm)
 
-            Dim Cpm_ig = 0.0#
+            Dim Cpm_ig As Double = 0.0#
             i = 0
             Do
                 Cpm_ig += Vzmass(i) * VCpig(i) * MMm
                 i += 1
             Loop Until i = n + 1
 
-            Dim Cv = T * Int_d2P_dT2_V_dV + Cpm_ig - 2 * R - T * dP_dT_V ^ 2 / dP_dV_T
+            Dim Cv As Double = T * Int_d2P_dT2_V_dV + Cpm_ig - 2 * R - T * dP_dT_V ^ 2 / dP_dV_T
             'Dim Cp = Cpm_ig + T * Int_d2P_dT2_V_dV - T * dP_dT_V ^ 2 / dP_dV_T - R
-            Dim Cp = Cpm_ig - R + T * dP_dT_V * dV_dT_P - T * d2adt2 / (8 ^ 0.5 * bm) * Math.Log((V + (1 - 2 ^ 0.5) * bm) / (V + (1 + 2 ^ 0.5) * bm))
+            Dim Cp As Double = Cpm_ig - R + T * dP_dT_V * dV_dT_P - T * d2adt2 / (8 ^ 0.5 * bm) * Math.Log((V + (1 - 2 ^ 0.5) * bm) / (V + (1 + 2 ^ 0.5) * bm))
 
-            Dim Cp_Cv2 = Cp / Cv
+            Dim Cp_Cv2 As Double = Cp / Cv
 
-            Dim Cp_Cv = 1 - (T * dP_dT_V ^ 2 / dP_dV_T) / (Cpm_ig - R + T * Int_d2P_dT2_V_dV)
+            Dim Cp_Cv As Double = 1 - (T * dP_dT_V ^ 2 / dP_dV_T) / (Cpm_ig - R + T * Int_d2P_dT2_V_dV)
             'Cv = Cp / Cp_Cv
 
             Dim tmp(2) As Double
@@ -854,11 +851,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function Pvp_leekesler(ByVal T, ByVal Tc, ByVal Pc, ByVal w)
+        Function Pvp_leekesler(ByVal T As Double, ByVal Tc As Double, ByVal Pc As Double, ByVal w As Double)
 
             Dim tmp, f0, f1 As Double
 
-            Dim Tr = T / Tc
+            Dim Tr As Double = T / Tc
 
             f0 = 5.92714 - 6.09648 / Tr - 1.28862 * Math.Log(Tr) + 0.169347 * Tr ^ 6
             f1 = 15.2518 - 15.6875 / Tr - 13.4721 * Math.Log(Tr) + 0.43577 * Tr ^ 6
@@ -869,7 +866,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function mu_ml(ByVal mu_aq, ByVal mu_ol, ByVal xv_ol)
+        Function mu_ml(ByVal mu_aq As Double, ByVal mu_ol As Double, ByVal xv_ol As Double) As Double
 
             mu_ml = 0.0#
 

@@ -48,7 +48,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
            Public Overrides Function Flash_PT(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
-            Dim Vn(1) As String, Vx(1), Vy(1), Vx_ant(1), Vy_ant(1), Vp(1), Ki(1), Ki_ant(1), fi(1) As Double
             Dim i, n, ecount As Integer
             Dim d1, d2 As Date, dt As TimeSpan
             Dim L, V As Double
@@ -62,7 +61,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             n = UBound(Vz)
 
-            ReDim Vn(n), Vx(n), Vy(n), Vx_ant(n), Vy_ant(n), Vp(n), Ki(n), fi(n)
+            Dim Vn(n) As String, Vx(n), Vy(n), Vx_ant(n), Vy_ant(n), Vp(n), Ki(n), Ki_ant(n), fi(n) As Double
 
             Vn = PP.RET_VNAMES()
             fi = Vz.Clone
@@ -155,7 +154,6 @@ out:        Return New Object() {xl1, V, Vx1, Vy, ecount, xl2, Vx2, 0.0#, PP.RET
 
             Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
 
-            Dim Vn(1) As String, Vx(1), Vx2(1), Vy(1), Vx_ant(1), Vy_ant(1), Vp(1), Ki(1), Ki_ant(1), fi(1) As Double
             Dim i, n, ecount As Integer
             Dim d1, d2 As Date, dt As TimeSpan
             Dim L1, L2, V, T, Pf As Double
@@ -168,7 +166,7 @@ out:        Return New Object() {xl1, V, Vx1, Vy, ecount, xl2, Vx2, 0.0#, PP.RET
             Hf = H
             Pf = P
 
-            ReDim Vn(n), Vx(n), Vx2(n), Vy(n), Vx_ant(n), Vy_ant(n), Vp(n), Ki(n), fi(n)
+            Dim Vn(n) As String, Vx(n), Vx2(n), Vy(n), Vx_ant(n), Vy_ant(n), Vp(n), Ki(n), Ki_ant(n), fi(n) As Double
 
             Vn = PP.RET_VNAMES()
             fi = Vz.Clone
@@ -202,9 +200,6 @@ out:        Return New Object() {xl1, V, Vx1, Vy, ecount, xl2, Vx2, 0.0#, PP.RET
             Do
                 If My.Settings.EnableParallelProcessing Then
                     My.MyApplication.IsRunningParallelTasks = True
-                    If My.Settings.EnableGPUProcessing Then
-                        'My.MyApplication.gpu.EnableMultithreading()
-                    End If
                     Try
                         Dim task1 = Task.Factory.StartNew(Sub()
                                                               fx = Herror(x1, {P, Vz, PP})
@@ -221,11 +216,6 @@ out:        Return New Object() {xl1, V, Vx1, Vy, ecount, xl2, Vx2, 0.0#, PP.RET
                         Task.WaitAll(task1, task2)
                     Catch ae As AggregateException
                         Throw ae.Flatten().InnerException
-                    Finally
-                        'If My.Settings.EnableGPUProcessing Then
-                        '    My.MyApplication.gpu.DisableMultithreading()
-                        '    My.MyApplication.gpu.FreeAll()
-                        'End If
                     End Try
                     My.MyApplication.IsRunningParallelTasks = False
                 Else
@@ -243,8 +233,6 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             Else
                 T = x1
             End If
-
-            'End If
 
             Dim tmp As Object = Flash_PT(Vz, P, T, PP)
 

@@ -26,9 +26,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public MustOverride Function CalcP(ByVal V As Double, ByVal T As Double, ByVal Vx As Array, ByVal VKij As Object, ByVal VTc As Array, ByVal VPc As Array, ByVal Vw As Array, Optional ByVal otherargs As Object = Nothing)
 
-        Public MustOverride Function CalcLnFug(ByVal T As Double, ByVal P As Double, ByVal Vx As Array, ByVal VKij As Object, ByVal VTc As Array, ByVal VPc As Array, ByVal Vw As Array, Optional ByVal otherargs As Object = Nothing, Optional ByVal forcephase As String = "")
+        Public MustOverride Function CalcLnFug(ByVal T As Double, ByVal P As Double, ByVal Vx As Array, ByVal VKij As Object, ByVal VTc As Array, ByVal VPc As Array, ByVal Vw As Array, Optional ByVal otherargs As Object = Nothing, Optional ByVal forcephase As String = "") As Double()
 
-        Public MustOverride Function CalcLnFugTV(ByVal T As Double, ByVal V As Double, ByVal Vx As Array, ByVal VKij As Object, ByVal VTc As Array, ByVal VPc As Array, ByVal Vw As Array, Optional ByVal otherargs As Object = Nothing, Optional ByVal forcephase As String = "")
+        Public MustOverride Function CalcLnFugTV(ByVal T As Double, ByVal V As Double, ByVal Vx As Array, ByVal VKij As Object, ByVal VTc As Array, ByVal VPc As Array, ByVal Vw As Array, Optional ByVal otherargs As Object = Nothing, Optional ByVal forcephase As String = "") As Double()
 
         Public MustOverride Function PhaseType(ByVal T As Double, ByVal P As Double, ByVal Vx As Array, ByVal VKij As Object, ByVal VTc As Array, ByVal VPc As Array, ByVal Vw As Array, Optional ByVal otherargs As Object = Nothing)
 
@@ -1865,11 +1865,11 @@ Final:
             Do
 
                 LN_CFV = thermobase.CalcLnFug(T, P, Vy, VKij, VTc, VPc, Vw, otherargs)
-
+             
                 Dim cont_int = 1
                 Do
 
-                    LN_CFL(i) = thermobase.CalcLnFug(T, P, Vx, VKij, VTc, VPc, Vw, otherargs)
+                    LN_CFL = thermobase.CalcLnFug(T, P, Vx, VKij, VTc, VPc, Vw, otherargs)
 
                     i = 0
                     Do
