@@ -1,4 +1,4 @@
-Module ControlExtensions
+Module Extensions
 
     <System.Runtime.CompilerServices.Extension()> _
     Public Sub UIThread(control As Control, code As Action)
@@ -206,6 +206,16 @@ Module ControlExtensions
         Else
             Throw New ArgumentException("invalid double")
         End If
+    End Function
+    ''' <summary>
+    ''' Alternative implementation for the Exponential (Exp) function.
+    ''' </summary>
+    ''' <param name="val"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    <System.Runtime.CompilerServices.Extension()> Public Function Exp2(val As Double) As Double
+        Dim tmp As Long = CLng(1512775 * val + 1072632447)
+        Return BitConverter.Int64BitsToDouble(tmp << 32)
     End Function
 
 End Module

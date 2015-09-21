@@ -33,7 +33,6 @@ Public Class FormCompoundCreator
     Public nf As String
 
     Public methods As DWSIM.Utilities.Hypos.Methods.HYP
-    Friend methods2 As DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
     Public jb As DWSIM.Utilities.Hypos.Methods.Joback
     Friend m_props As PROPS
 
@@ -856,7 +855,6 @@ Public Class FormCompoundCreator
             loaded = False 'prevent recalculation due to edit field event procedures
 
             jb = New DWSIM.Utilities.Hypos.Methods.Joback
-            methods2 = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
             methods = New DWSIM.Utilities.Hypos.Methods.HYP()
 
             'get UNIFAC group amounts
@@ -1011,7 +1009,7 @@ Public Class FormCompoundCreator
                     w = -1
                     If CheckBoxAF.Checked Then Me.TextBoxAF.Text = ""
                 End If
-                
+
 
                 If CheckBoxDHF.Checked Then Me.TextBoxDHF.Text = cv.ConverterDoSI(su.spmp_enthalpy, jb.CalcDHf(JGD) / MM)
                 If CheckBoxDGF.Checked Then Me.TextBoxDGF.Text = cv.ConverterDoSI(su.spmp_enthalpy, jb.CalcDGf(JGD) / MM)
@@ -1025,8 +1023,8 @@ Public Class FormCompoundCreator
 
                 If Tc > 0 And Pc > 0 And Tb > 0 And MM > 0 And w > 0 Then
                     Hvb = methods.DHvb_Vetere(Tc, Pc, Tb) / MM
-                    If CheckBoxCSSP.Checked Then Me.TextBoxCSSP.Text = ((Hvb * MM - 8.314 * Tb) * 238.846 * methods2.liq_dens_rackett(Tb, Tc, Pc, w, MM) / MM / 1000000.0) ^ 0.5
-                    If CheckBoxCSLV.Checked Then Me.TextBoxCSLV.Text = 1 / methods2.liq_dens_rackett(Tb, Tc, Pc, w, MM) * MM / 1000 * 1000000.0
+                    If CheckBoxCSSP.Checked Then Me.TextBoxCSSP.Text = ((Hvb * MM - 8.314 * Tb) * 238.846 * DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS.liq_dens_rackett(Tb, Tc, Pc, w, MM) / MM / 1000000.0) ^ 0.5
+                    If CheckBoxCSLV.Checked Then Me.TextBoxCSLV.Text = 1 / DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS.liq_dens_rackett(Tb, Tc, Pc, w, MM) * MM / 1000 * 1000000.0
                 Else
                     If CheckBoxCSSP.Checked Then Me.TextBoxCSSP.Text = ""
                     If CheckBoxCSLV.Checked Then Me.TextBoxCSLV.Text = ""
@@ -1060,7 +1058,7 @@ Public Class FormCompoundCreator
                 'estimate solid density - DWSIM-Method
                 If rbEstimateSolidDens.Checked Then
                     Dim RoSMP, RoLMP As Double 'solid+liquid density at melting point
-                    RoLMP = methods2.liq_dens_rackett(Tf, Tc, Pc, w, MM, ZRa, 101325, methods2.Pvp_leekesler(Tf, Tc, Pc, w))
+                    RoLMP = DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS.liq_dens_rackett(Tf, Tc, Pc, w, MM, ZRa, 101325, DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS.Pvp_leekesler(Tf, Tc, Pc, w))
                     RoSMP = RoLMP * 1.0933 + 0.000037886 * RoLMP ^ 2
                     tbRoS_A.Text = RoSMP / MM + 0.005 * Tf
                     tbRoS_B.Text = -0.005
@@ -1601,7 +1599,7 @@ Public Class FormCompoundCreator
         BothSaveStatusModified(sender, e)
     End Sub
 
-  
+
     Private Sub GridExpData_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles GridExpDataRoS.KeyDown, GridExpDataCpS.KeyDown, GridExpDataPVAP.KeyDown, GridExpDataLIQVISC.KeyDown, GridExpDataLIQDENS.KeyDown, GridExpDataCPLiquid.KeyDown, GridExpDataCPIG.KeyDown
 
         If e.KeyCode = Keys.Delete And e.Modifiers = Keys.Shift Then
@@ -1696,7 +1694,6 @@ Public Class FormCompoundCreator
         Dim CurveCount As Integer
         Dim pp As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage(False)
         Dim frc As New FormChart
-        Me.methods2 = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
 
         StoreData()
         Eq = cbEqPVAP.SelectedItem.Split(":")(0)
@@ -1730,7 +1727,7 @@ Public Class FormCompoundCreator
         'Add calculated Lee-Kesler Data
         For k2 = 0 To px.Count - 1
             T = cv.ConverterParaSI(su.spmp_temperature, px(k2))
-            y = cv.ConverterDoSI(su.spmp_pressure, methods2.Pvp_leekesler(T, cv.ConverterParaSI(su.spmp_temperature, TextBoxTc.Text), cv.ConverterParaSI(su.spmp_pressure, TextBoxPc.Text), TextBoxAF.Text))
+            y = cv.ConverterDoSI(su.spmp_pressure, DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS.Pvp_leekesler(T, cv.ConverterParaSI(su.spmp_temperature, TextBoxTc.Text), cv.ConverterParaSI(su.spmp_pressure, TextBoxPc.Text), TextBoxAF.Text))
             Select Case CurveCount
                 Case 0
                     py1.Add(y)
@@ -1873,7 +1870,6 @@ Public Class FormCompoundCreator
         Dim CurveCount As Integer
         Dim pp As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage(False)
         Dim frc As New FormChart
-        Me.methods2 = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
 
         StoreData()
         Eq = cbEqLIQDENS.SelectedItem.Split(":")(0)
@@ -1905,8 +1901,8 @@ Public Class FormCompoundCreator
         'Add calculated Rackett Data
         For k2 = 0 To px.Count - 1
             T = cv.ConverterParaSI(su.spmp_temperature, px(k2))
-            PV = methods2.Pvp_leekesler(T, cv.ConverterParaSI(su.spmp_temperature, TextBoxTc.Text), cv.ConverterParaSI(su.spmp_pressure, TextBoxPc.Text), TextBoxAF.Text)
-            y = cv.ConverterDoSI(su.spmp_density, methods2.liq_dens_rackett(T, cv.ConverterParaSI(su.spmp_temperature, TextBoxTc.Text), cv.ConverterParaSI(su.spmp_pressure, TextBoxPc.Text), TextBoxAF.Text, TextBoxMW.Text, TextBoxZRa.Text, 101325, PV))
+            PV = DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS.Pvp_leekesler(T, cv.ConverterParaSI(su.spmp_temperature, TextBoxTc.Text), cv.ConverterParaSI(su.spmp_pressure, TextBoxPc.Text), TextBoxAF.Text)
+            y = cv.ConverterDoSI(su.spmp_density, DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS.liq_dens_rackett(T, cv.ConverterParaSI(su.spmp_temperature, TextBoxTc.Text), cv.ConverterParaSI(su.spmp_pressure, TextBoxPc.Text), TextBoxAF.Text, TextBoxMW.Text, TextBoxZRa.Text, 101325, PV))
 
             Select Case CurveCount
                 Case 0
@@ -2126,7 +2122,6 @@ Public Class FormCompoundCreator
         Dim CurveCount As Integer
         Dim pp As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage(False)
         Dim frc As New FormChart
-        Me.methods2 = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
 
         StoreData()
         Eq = cbEqLIQVISC.SelectedItem.Split(":")(0)
@@ -2158,7 +2153,7 @@ Public Class FormCompoundCreator
         'Add calculated Letsou-Stiel Data
         For k2 = 0 To px.Count - 1
             T = cv.ConverterParaSI(su.spmp_temperature, px(k2))
-            y = cv.ConverterDoSI(su.spmp_viscosity, methods2.viscl_letsti(T, cv.ConverterParaSI(su.spmp_temperature, TextBoxTc.Text), cv.ConverterParaSI(su.spmp_pressure, TextBoxPc.Text), TextBoxAF.Text, TextBoxMW.Text))
+            y = cv.ConverterDoSI(su.spmp_viscosity, DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS.viscl_letsti(T, cv.ConverterParaSI(su.spmp_temperature, TextBoxTc.Text), cv.ConverterParaSI(su.spmp_pressure, TextBoxPc.Text), TextBoxAF.Text, TextBoxMW.Text))
             Select Case CurveCount
                 Case 0
                     py1.Add(y)

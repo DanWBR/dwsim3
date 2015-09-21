@@ -21,6 +21,7 @@ Imports DWSIM.DWSIM.MathEx
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports DWSIM.DWSIM.Utilities.PetroleumCharacterization.Methods
 Imports DWSIM.DWSIM.Utilities.PetroleumCharacterization
+Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
 
 
 Public Class DCCharacterizationWizard
@@ -361,7 +362,7 @@ Public Class DCCharacterizationWizard
 
     Private Sub Button18_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button18.Click
 
-        'select property methods
+        'select Auxiliary.PROPSerty methods
 
         If Me.CheckBoxMW.Checked Then Me.ComboBoxMW.Enabled = False Else Me.ComboBoxMW.Enabled = True
         If Me.CheckBoxSG.Checked Then Me.ComboBoxSG.Enabled = False Else Me.ComboBoxSG.Enabled = True
@@ -379,8 +380,7 @@ Public Class DCCharacterizationWizard
 
         'calculate all properties and display in the datagrid
 
-        Dim prop As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
-        Dim prop2 As New DWSIM.Utilities.PetroleumCharacterization.Methods.GL
+        Dim methods2 As New DWSIM.Utilities.PetroleumCharacterization.Methods.GL
         Dim rnd As New Random
         Dim id = rnd.Next(1000, 9999)
 
@@ -390,9 +390,9 @@ Public Class DCCharacterizationWizard
 
         For Each tc As tmpcomp In tccol
 
-            Dim cprop As New ConstantProperties()
+            Dim cprops As New ConstantProperties()
 
-            With cprop
+            With cprops
 
                 .NBP = tc.tbpm
                 .OriginalDB = "DWSIM"
@@ -442,15 +442,15 @@ Public Class DCCharacterizationWizard
 
             i += 1
 
-            Dim subst As New Substancia(cprop.Name, "")
+            Dim subst As New Substancia(cprops.Name, "")
 
             With subst
-                .ConstantProperties = cprop
-                .Nome = cprop.Name
+                .ConstantProperties = cprops
+                .Nome = cprops.Name
                 .FracaoDePetroleo = True
             End With
 
-            ccol.Add(cprop.Name, subst)
+            ccol.Add(cprops.Name, subst)
 
         Next
 
@@ -481,9 +481,9 @@ Public Class DCCharacterizationWizard
         i = 0
         For Each subst As Substancia In ccol.Values
 
-            Dim cprop As ConstantProperties = subst.ConstantProperties
+            Dim cprops As ConstantProperties = subst.ConstantProperties
 
-            With cprop
+            With cprops
 
                 Dim tc As tmpcomp = tccol(i)
 
@@ -550,7 +550,7 @@ Public Class DCCharacterizationWizard
                 .IsPF = 1
                 .PF_Watson_K = (1.8 * .NBP.GetValueOrDefault) ^ (1 / 3) / .PF_SG.GetValueOrDefault
 
-                Dim tmp = prop2.calculate_Hf_Sf(.PF_SG, .Molar_Weight, .NBP)
+                Dim tmp = methods2.calculate_Hf_Sf(.PF_SG, .Molar_Weight, .NBP)
 
                 .IG_Enthalpy_of_Formation_25C = tmp(0)
                 .IG_Entropy_of_Formation_25C = tmp(1)
@@ -558,24 +558,21 @@ Public Class DCCharacterizationWizard
                 .Element_C = tmp(2)
                 .Element_H = tmp(3)
 
-                Dim methods2 As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
                 Dim methods As New DWSIM.Utilities.Hypos.Methods.HYP
 
                 .HVap_A = methods.DHvb_Vetere(.Critical_Temperature, .Critical_Pressure, .Normal_Boiling_Point) / .Molar_Weight
 
-                .Critical_Compressibility = prop.Zc1(.Acentric_Factor)
+                .Critical_Compressibility = DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS.Zc1(.Acentric_Factor)
                 .Critical_Volume = 8314 * .Critical_Compressibility * .Critical_Temperature / .Critical_Pressure
-                .Z_Rackett = prop.Zc1(.Acentric_Factor)
+                .Z_Rackett = DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS.Zc1(.Acentric_Factor)
                 If .Z_Rackett < 0 Then
                     .Z_Rackett = 0.2
                 End If
 
                 .Chao_Seader_Acentricity = .Acentric_Factor
-                .Chao_Seader_Solubility_Parameter = ((.HVap_A * .Molar_Weight - 8.314 * .Normal_Boiling_Point) * 238.846 * methods2.liq_dens_rackett(.Normal_Boiling_Point, .Critical_Temperature, .Critical_Pressure, .Acentric_Factor, .Molar_Weight) / .Molar_Weight / 1000000.0) ^ 0.5
-                .Chao_Seader_Liquid_Molar_Volume = 1 / methods2.liq_dens_rackett(.Normal_Boiling_Point, .Critical_Temperature, .Critical_Pressure, .Acentric_Factor, .Molar_Weight) * .Molar_Weight / 1000 * 1000000.0
+                .Chao_Seader_Solubility_Parameter = ((.HVap_A * .Molar_Weight - 8.314 * .Normal_Boiling_Point) * 238.846 * DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS.liq_dens_rackett(.Normal_Boiling_Point, .Critical_Temperature, .Critical_Pressure, .Acentric_Factor, .Molar_Weight) / .Molar_Weight / 1000000.0) ^ 0.5
+                .Chao_Seader_Liquid_Molar_Volume = 1 / DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS.liq_dens_rackett(.Normal_Boiling_Point, .Critical_Temperature, .Critical_Pressure, .Acentric_Factor, .Molar_Weight) * .Molar_Weight / 1000 * 1000000.0
 
-
-                methods2 = Nothing
                 methods = Nothing
 
                 .ID = -id - i + 1
@@ -632,13 +629,13 @@ Public Class DCCharacterizationWizard
                 End With
                 With c.ConstantProperties
                     c.ConstantProperties.Acentric_Factor *= fw
-                    c.ConstantProperties.Z_Rackett = prop.Zc1(c.ConstantProperties.Acentric_Factor)
+                    c.ConstantProperties.Z_Rackett = DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS.Zc1(c.ConstantProperties.Acentric_Factor)
                     If .Z_Rackett < 0 Then
                         .Z_Rackett = 0.2
                         recalcVc = True
                     End If
-                    .Critical_Compressibility = prop.Zc1(.Acentric_Factor)
-                    .Critical_Volume = prop.Vc(.Critical_Temperature, .Critical_Pressure, .Acentric_Factor, .Critical_Compressibility)
+                    .Critical_Compressibility = DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS.Zc1(.Acentric_Factor)
+                    .Critical_Volume = DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS.Vc(.Critical_Temperature, .Critical_Pressure, .Acentric_Factor, .Critical_Compressibility)
                 End With
             End If
             If Me.CheckBoxADJZRA.Checked Then
@@ -663,7 +660,7 @@ Public Class DCCharacterizationWizard
                     .Z_Rackett *= fzra
                     If .Critical_Compressibility < 0 Or recalcVc Then
                         .Critical_Compressibility = .Z_Rackett
-                        .Critical_Volume = prop.Vc(.Critical_Temperature, .Critical_Pressure, .Acentric_Factor, .Critical_Compressibility)
+                        .Critical_Volume = Auxiliary.PROPS.Vc(.Critical_Temperature, .Critical_Pressure, .Acentric_Factor, .Critical_Compressibility)
                     End If
                 End With
             End If

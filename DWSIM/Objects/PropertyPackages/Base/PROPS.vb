@@ -20,11 +20,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
     <System.Serializable()> Class PROPS
 
-        Sub New()
-
-        End Sub
-
-        Function Cpl_rb(cpig As Double, T As Double, Tc As Double, w As Double, MW As Double) As Double
+        Shared Function Cpl_rb(cpig As Double, T As Double, Tc As Double, w As Double, MW As Double) As Double
 
             'liquid heat capacity by Rowlinson/Bondi correlation
 
@@ -46,7 +42,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function Cpig_lk(ByVal WK As Double, ByVal w As Double, ByVal T As Double) As Double
+        Shared Function Cpig_lk(ByVal WK As Double, ByVal w As Double, ByVal T As Double) As Double
 
             'Ideal gas state heat capacity for petroleum fractions (pseudos) by Lee-Kesler
 
@@ -66,7 +62,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function sigma_bb(ByVal T As Double, ByVal Tb As Double, ByVal Tc As Double, ByVal Pc As Double) As Double
+        Shared Function sigma_bb(ByVal T As Double, ByVal Tb As Double, ByVal Tc As Double, ByVal Pc As Double) As Double
 
             'Estimativa da tensão interfacial pelo método de Brock e Bird
 
@@ -88,7 +84,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function viscl_letsti(ByVal T As Double, ByVal Tc As Double, ByVal Pc As Double, ByVal w As Double, ByVal MM As Double) As Double
+        Shared Function viscl_letsti(ByVal T As Double, ByVal Tc As Double, ByVal Pc As Double, ByVal w As Double, ByVal MM As Double) As Double
 
             'Estimativa da viscosidade de líquidos pelo método de Letsou e Stiel
 
@@ -106,7 +102,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function viscg_lucas(ByVal T As Double, ByVal Tc As Double, ByVal Pc As Double, ByVal w As Double, ByVal MM As Double) As Double
+        Shared Function viscg_lucas(ByVal T As Double, ByVal Tc As Double, ByVal Pc As Double, ByVal w As Double, ByVal MM As Double) As Double
 
             'Estimativa da viscosidade de gases pelo método de Lucas
 
@@ -122,7 +118,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function liq_dens_rackett(ByVal T As Double, ByVal Tc As Double, ByVal Pc As Double, ByVal w As Double, ByVal MM As Double, Optional ByVal ZRa As Double = 0, Optional ByVal P As Double = 0, Optional ByVal Pvp As Double = 0) As Double
+        Shared Function liq_dens_rackett(ByVal T As Double, ByVal Tc As Double, ByVal Pc As Double, ByVal w As Double, ByVal MM As Double, Optional ByVal ZRa As Double = 0, Optional ByVal P As Double = 0, Optional ByVal Pvp As Double = 0) As Double
 
             'Cálculo da densidade do líquido utilizando o método de Rackett
 
@@ -174,7 +170,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function JT_Goldzberg(ByVal T As Double, ByVal Tpc As Double, ByVal Ppc As Double, ByVal Cp As Double, ByVal fluido As Double, ByVal SG As Double)
+        Shared Function JT_Goldzberg(ByVal T As Double, ByVal Tpc As Double, ByVal Ppc As Double, ByVal Cp As Double, ByVal fluido As Double, ByVal SG As Double)
 
             'T em °F
             T = 5 / 9 * (T + 459.7)
@@ -204,7 +200,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function condl_latini(ByVal T As Double, ByVal Tb As Double, ByVal Tc As Double, ByVal M As Double, ByVal Tipo As String) As Double
+        Shared Function condl_latini(ByVal T As Double, ByVal Tb As Double, ByVal Tc As Double, ByVal M As Double, ByVal Tipo As String) As Double
 
             Dim Tr, A, A_, alpha, beta, lambda, gamma As Double
 
@@ -260,7 +256,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function condtg_elyhanley(ByVal T As Double, ByVal Tc As Double, ByVal Vc As Double, ByVal Zc As Double, ByVal w As Double, ByVal M As Double, ByVal Cv As Double)
+        Shared Function condtg_elyhanley(ByVal T As Double, ByVal Tc As Double, ByVal Vc As Double, ByVal Zc As Double, ByVal w As Double, ByVal M As Double, ByVal Cv As Double)
 
             Dim Tr, Tplus, teta, omega, f, h, T0, eta0, lambda0, C(8), lambda_, eta_, Hgrande
 
@@ -324,7 +320,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function Tcm(ByVal Vz, ByVal VTc) As Double
+        Shared Function Tcm(ByVal Vz, ByVal VTc) As Double
 
             Dim i, n As Integer
 
@@ -344,7 +340,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function Pcm(ByVal Vz, ByVal VPc) As Double
+        Shared Function Pcm(ByVal Vz, ByVal VPc) As Double
 
             Dim i, n As Integer
 
@@ -364,7 +360,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function Vcm(ByVal Vz, ByVal VVc) As Double
+        Shared Function Vcm(ByVal Vz, ByVal VVc) As Double
 
             Dim i, j, n As Integer
 
@@ -383,7 +379,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function Zcm(ByVal Vz, ByVal VZc) As Double
+        Shared Function Zcm(ByVal Vz, ByVal VZc) As Double
 
             Dim i, n As Integer
 
@@ -403,7 +399,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function wm(ByVal Vz, ByVal Vw) As Double
+        Shared Function wm(ByVal Vz, ByVal Vw) As Double
 
             Dim i, n As Integer
 
@@ -423,7 +419,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function MMm(ByVal Vz, ByVal VMM) As Double
+        Shared Function MMm(ByVal Vz, ByVal VMM) As Double
 
             Dim i, n As Integer
 
@@ -443,7 +439,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function viscg_jossi_stiel_thodos(ByVal eta0 As Double, ByVal T As Double, ByVal V As Double, ByVal Tc As Double, ByVal Pc As Double, ByVal Vc As Double, ByVal MM As Double) As Double
+        Shared Function viscg_jossi_stiel_thodos(ByVal eta0 As Double, ByVal T As Double, ByVal V As Double, ByVal Tc As Double, ByVal Pc As Double, ByVal Vc As Double, ByVal MM As Double) As Double
 
             'Estimativa da viscosidade de gases em pressões elevadas pelo 
             'método de Jossi-Stiel-Thodos
@@ -464,25 +460,25 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function Vc(ByVal Tc As Double, ByVal Pc As Double, ByVal w As Double) As Double
+        Shared Function Vc(ByVal Tc As Double, ByVal Pc As Double, ByVal w As Double) As Double
 
             Vc = 8.314 * (0.291 - 0.08 * w) * Tc / Pc * 1000 'm3/kmol
 
         End Function
 
-        Function Vc(ByVal Tc As Double, ByVal Pc As Double, ByVal w As Double, ByVal Zc As Double) As Double
+        Shared Function Vc(ByVal Tc As Double, ByVal Pc As Double, ByVal w As Double, ByVal Zc As Double) As Double
 
             Vc = 8.314 * Zc * Tc / Pc * 1000 'm3/kmol
 
         End Function
 
-        Function Zc1(ByVal w As Double) As Double
+        Shared Function Zc1(ByVal w As Double) As Double
 
             Zc1 = 0.291 - 0.08 * w
 
         End Function
 
-        Function condlm_li(ByVal VVl, ByVal Vcondl, ByVal Vz) As Double
+        Shared Function condlm_li(ByVal VVl, ByVal Vcondl, ByVal Vz) As Double
 
             Dim n = UBound(Vz)
 
@@ -516,7 +512,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function CPig_pol(ByVal VCOEFF, ByVal T)
+        Shared Function CPig_pol(ByVal VCOEFF, ByVal T)
 
             Dim tmp2 As Double = VCOEFF(0) + VCOEFF(1) * T + VCOEFF(2) * T ^ 2 + VCOEFF(3) * T ^ 3 + VCOEFF(4) * T ^ 4
 
@@ -524,7 +520,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function Vc(ByVal T, ByVal Tc, ByVal Tb, ByVal Pc)
+        Shared Function Vc(ByVal T, ByVal Tc, ByVal Tb, ByVal Pc)
 
             Pc = Pc / 101325
             Dim R As Double = 82.0575
@@ -535,7 +531,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function oilvisc_twu(ByVal T, ByVal T1, ByVal T2, ByVal v1, ByVal v2)
+        Shared Function oilvisc_twu(ByVal T, ByVal T1, ByVal T2, ByVal v1, ByVal v2)
 
             'v = m2/s, T = K
 
@@ -563,7 +559,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function CpCvR(ByVal TIPO As String, ByVal T As Double, ByVal P As Double, ByVal Vz As Double(), ByVal VKij As Double(,), ByVal Vzmass As Double(), ByVal VTc As Double(), ByVal VPc As Double(), ByVal VCpig As Double(), ByVal VMM As Double(), ByVal Vw As Double(), ByVal VZRa As Double()) As Double()
+        Shared Function CpCvR(ByVal TIPO As String, ByVal T As Double, ByVal P As Double, ByVal Vz As Double(), ByVal VKij As Double(,), ByVal Vzmass As Double(), ByVal VTc As Double(), ByVal VPc As Double(), ByVal VCpig As Double(), ByVal VMM As Double(), ByVal Vw As Double(), ByVal VZRa As Double()) As Double()
 
             Dim dadt, n, R, Z As Double
             Dim i, j As Integer
@@ -721,6 +717,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Loop Until i = n + 1
 
             dadt = aux1 * aux2
+
             Dim d2adt2 As Double = R / 4 * (0.45724 / T) ^ 0.5 * (1 / T) * aux2
             'Dim d2adt2 = 0.169049 * R / (T ^ (3 / 2))
 
@@ -761,7 +758,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function JT_PR(ByVal TIPO, ByVal T, ByVal P, ByVal Vz, ByVal Vzmass, ByVal VTc, ByVal VPc, ByVal VCpig, ByVal VMM, ByVal Vw, ByVal VZRa)
+        Shared Function JT_PR(ByVal TIPO, ByVal T, ByVal P, ByVal Vz, ByVal Vzmass, ByVal VTc, ByVal VPc, ByVal VCpig, ByVal VMM, ByVal Vw, ByVal VZRa)
 
             Dim n, R, Cpm_ig As Double
             Dim vetor(8) As Double
@@ -851,7 +848,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function Pvp_leekesler(ByVal T As Double, ByVal Tc As Double, ByVal Pc As Double, ByVal w As Double)
+        Shared Function Pvp_leekesler(ByVal T As Double, ByVal Tc As Double, ByVal Pc As Double, ByVal w As Double)
 
             Dim tmp, f0, f1 As Double
 
@@ -866,7 +863,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function mu_ml(ByVal mu_aq As Double, ByVal mu_ol As Double, ByVal xv_ol As Double) As Double
+        Shared Function mu_ml(ByVal mu_aq As Double, ByVal mu_ol As Double, ByVal xv_ol As Double) As Double
 
             mu_ml = 0.0#
 

@@ -20,8 +20,6 @@ Namespace DWSIM.Utilities.PetroleumCharacterization.Methods
 
     <System.Serializable()> Public Class Riazi
 
-        Private m_prop As DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
-
         Function Distr_Riazi(ByVal n As Integer, ByVal MW As Double, ByVal SG As Double, ByVal WK As Double, ByVal T1 As Double, ByVal T2 As Double, ByVal V1 As Double, ByVal V2 As Double)
 
             Dim i As Integer
@@ -301,7 +299,7 @@ Namespace DWSIM.Utilities.PetroleumCharacterization.Methods
 
                 i = 0
                 Do
-                    v1_p(i) = 1000 * Me.m_prop.viscl_letsti(T1 + 273.15, Tc_p(i), Pc_p(i) * 100000.0, w_p(i), MW_p(i))
+                    v1_p(i) = 1000 * SimulationObjects.PropertyPackages.Auxiliary.PROPS.viscl_letsti(T1 + 273.15, Tc_p(i), Pc_p(i) * 100000.0, w_p(i), MW_p(i))
                     i = i + 1
                 Loop Until i = n
 
@@ -362,7 +360,7 @@ Namespace DWSIM.Utilities.PetroleumCharacterization.Methods
 
                 i = 0
                 Do
-                    v2_p(i) = 1000 * Me.m_prop.viscl_letsti(T2 + 273.15, Tc_p(i), Pc_p(i) * 100000.0, w_p(i), MW_p(i))
+                    v2_p(i) = 1000 * SimulationObjects.PropertyPackages.Auxiliary.PROPS.viscl_letsti(T2 + 273.15, Tc_p(i), Pc_p(i) * 100000.0, w_p(i), MW_p(i))
                     i = i + 1
                 Loop Until i = n
 
@@ -455,10 +453,6 @@ Namespace DWSIM.Utilities.PetroleumCharacterization.Methods
             Distr_Riazi = mat
 
         End Function
-
-        Sub New()
-            m_prop = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
-        End Sub
 
     End Class
 

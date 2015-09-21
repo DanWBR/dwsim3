@@ -347,9 +347,9 @@ Public Class FormPCBulk
                 .IsPF = 1
                 .Name = "PSE_" & id & "_" & i + 1
                 .PF_Watson_K = (1.8 * .NBP.GetValueOrDefault) ^ (1 / 3) / .PF_SG.GetValueOrDefault
-                .Critical_Compressibility = prop.Zc1(.Acentric_Factor)
+                .Critical_Compressibility = PROPS.Zc1(.Acentric_Factor)
                 .Critical_Volume = 8314 * .Critical_Compressibility * .Critical_Temperature / .Critical_Pressure
-                .Z_Rackett = prop.Zc1(.Acentric_Factor)
+                .Z_Rackett = PROPS.Zc1(.Acentric_Factor)
                 If .Z_Rackett < 0 Then .Z_Rackett = 0.2
 
                 Dim tmp = prop2.calculate_Hf_Sf(.PF_SG, .Molar_Weight, .NBP)
@@ -369,16 +369,16 @@ Public Class FormPCBulk
 
                 .HVap_A = methods.DHvb_Vetere(.Critical_Temperature, .Critical_Pressure, .Normal_Boiling_Point) / .Molar_Weight
 
-                .Critical_Compressibility = prop.Zc1(.Acentric_Factor)
-                .Critical_Volume = prop.Vc(.Critical_Temperature, .Critical_Pressure, .Acentric_Factor, .Critical_Compressibility)
-                .Z_Rackett = prop.Zc1(.Acentric_Factor)
+                .Critical_Compressibility = PROPS.Zc1(.Acentric_Factor)
+                .Critical_Volume = PROPS.Vc(.Critical_Temperature, .Critical_Pressure, .Acentric_Factor, .Critical_Compressibility)
+                .Z_Rackett = PROPS.Zc1(.Acentric_Factor)
                 If .Z_Rackett < 0 Then
                     .Z_Rackett = 0.2
                 End If
 
                 .Chao_Seader_Acentricity = .Acentric_Factor
-                .Chao_Seader_Solubility_Parameter = ((.HVap_A * .Molar_Weight - 8.314 * .Normal_Boiling_Point) * 238.846 * methods2.liq_dens_rackett(.Normal_Boiling_Point, .Critical_Temperature, .Critical_Pressure, .Acentric_Factor, .Molar_Weight) / .Molar_Weight / 1000000.0) ^ 0.5
-                .Chao_Seader_Liquid_Molar_Volume = 1 / methods2.liq_dens_rackett(.Normal_Boiling_Point, .Critical_Temperature, .Critical_Pressure, .Acentric_Factor, .Molar_Weight) * .Molar_Weight / 1000 * 1000000.0
+                .Chao_Seader_Solubility_Parameter = ((.HVap_A * .Molar_Weight - 8.314 * .Normal_Boiling_Point) * 238.846 * PROPS.liq_dens_rackett(.Normal_Boiling_Point, .Critical_Temperature, .Critical_Pressure, .Acentric_Factor, .Molar_Weight) / .Molar_Weight / 1000000.0) ^ 0.5
+                .Chao_Seader_Liquid_Molar_Volume = 1 / PROPS.liq_dens_rackett(.Normal_Boiling_Point, .Critical_Temperature, .Critical_Pressure, .Acentric_Factor, .Molar_Weight) * .Molar_Weight / 1000 * 1000000.0
 
                 methods2 = Nothing
                 methods = Nothing
@@ -442,13 +442,13 @@ Public Class FormPCBulk
                 End With
                 With c.ConstantProperties
                     c.ConstantProperties.Acentric_Factor *= fw
-                    c.ConstantProperties.Z_Rackett = prop.Zc1(c.ConstantProperties.Acentric_Factor)
+                    c.ConstantProperties.Z_Rackett = PROPS.Zc1(c.ConstantProperties.Acentric_Factor)
                     If .Z_Rackett < 0 Then
                         .Z_Rackett = 0.2
                         recalcVc = True
                     End If
-                    .Critical_Compressibility = prop.Zc1(.Acentric_Factor)
-                    .Critical_Volume = prop.Vc(.Critical_Temperature, .Critical_Pressure, .Acentric_Factor, .Critical_Compressibility)
+                    .Critical_Compressibility = PROPS.Zc1(.Acentric_Factor)
+                    .Critical_Volume = PROPS.Vc(.Critical_Temperature, .Critical_Pressure, .Acentric_Factor, .Critical_Compressibility)
                 End With
             End If
             If Me.CheckBoxADJZRA.Checked Then
@@ -469,7 +469,7 @@ Public Class FormPCBulk
                     .Z_Rackett *= fzra
                     If .Critical_Compressibility < 0 Or recalcVc Then
                         .Critical_Compressibility = .Z_Rackett
-                        .Critical_Volume = prop.Vc(.Critical_Temperature, .Critical_Pressure, .Acentric_Factor, .Critical_Compressibility)
+                        .Critical_Volume = PROPS.Vc(.Critical_Temperature, .Critical_Pressure, .Acentric_Factor, .Critical_Compressibility)
                     End If
                 End With
             End If
@@ -683,7 +683,6 @@ Public Class FormPCBulk
         Me.ComboBox1.SelectedIndex = 9
 
         Me.m_riazi = New Methods.Riazi
-        Me.m_props = New PROPS
         Me.m_gl = New Methods.GL
 
         'opcoes

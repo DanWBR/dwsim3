@@ -1203,6 +1203,8 @@ out:        'return flash calculation results.
         Public Function eval_jac_g(ByVal n As Integer, ByVal x As Double(), ByVal new_x As Boolean, ByVal m As Integer, ByVal nele_jac As Integer, ByRef iRow As Integer(), _
          ByRef jCol As Integer(), ByRef values As Double()) As Boolean
 
+            Dim k As Integer
+
             If values Is Nothing Then
 
                 Dim row(nele_jac - 1), col(nele_jac - 1) As Integer

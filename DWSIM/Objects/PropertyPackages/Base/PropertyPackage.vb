@@ -144,8 +144,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Const ClassId As String = ""
 
-        Private m_props As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
-
         <System.NonSerialized()> Private m_ms As DWSIM.SimulationObjects.Streams.MaterialStream = Nothing
         Private m_ss As New System.Collections.Generic.List(Of String)
         Private m_configurable As Boolean = False
@@ -719,7 +717,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         ''' <param name="P">Pressure of the system.</param>
         ''' <returns>An array containing K-values for all components in the mixture.</returns>
         ''' <remarks>The composition vector must follow the same sequence as the components which were added in the material stream.</remarks>
-        Public Overridable Overloads Function DW_CalcKvalue(ByVal Vx As System.Array, ByVal Vy As System.Array, ByVal T As Double, ByVal P As Double, Optional ByVal type As String = "LV") As Object
+        Public Overridable Overloads Function DW_CalcKvalue(ByVal Vx As System.Array, ByVal Vy As System.Array, ByVal T As Double, ByVal P As Double, Optional ByVal type As String = "LV") As Double()
 
             Dim fugvap As Double() = Nothing
             Dim fugliq As Double() = Nothing
@@ -5513,7 +5511,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
             For Each subst In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes.Values
                 vc = subst.ConstantProperties.Critical_Volume
                 If vc = 0.0# Then
-                    vc = m_props.Vc(subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor)
+                    vc = Auxiliary.PROPS.Vc(subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor)
                 End If
                 val += subst.FracaoMolar.GetValueOrDefault * vc
             Next
@@ -5605,7 +5603,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
             Dim val, vc As Double
             vc = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Volume
-            If vc = 0.0# Then vc = m_props.Vc(Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes(sub1).ConstantProperties.Critical_Temperature, Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes(sub1).ConstantProperties.Critical_Pressure, Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes(sub1).ConstantProperties.Acentric_Factor)
+            If vc = 0.0# Then vc = Auxiliary.PROPS.Vc(Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes(sub1).ConstantProperties.Critical_Temperature, Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes(sub1).ConstantProperties.Critical_Pressure, Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes(sub1).ConstantProperties.Acentric_Factor)
 
             val = Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes(sub1).FracaoMolar.GetValueOrDefault * vc
 
@@ -5620,8 +5618,8 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
             Dim Vc1 As Double = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Volume
             Dim Vc2 As Double = Me.CurrentMaterialStream.Fases(0).Componentes(sub2).ConstantProperties.Critical_Volume
 
-            If Vc1 = 0.0# Then Vc1 = m_props.Vc(Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Temperature, Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Pressure, Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Acentric_Factor)
-            If Vc2 = 0.0# Then Vc2 = m_props.Vc(Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Temperature, Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Pressure, Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Acentric_Factor)
+            If Vc1 = 0.0# Then Vc1 = Auxiliary.PROPS.Vc(Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Temperature, Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Pressure, Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Acentric_Factor)
+            If Vc2 = 0.0# Then Vc2 = Auxiliary.PROPS.Vc(Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Temperature, Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Pressure, Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Acentric_Factor)
 
             Dim tmp As Double = 8 * (Vc1 * Vc2) ^ 0.5 / ((Vc1 ^ (1 / 3) + Vc2 ^ (1 / 3)) ^ 3)
 
@@ -5661,7 +5659,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
                 With Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties
 
-                    Return Me.m_props.Cpig_lk(.PF_Watson_K, .Acentric_Factor, T) '* .Molar_Weight
+                    Return Auxiliary.PROPS.Cpig_lk(.PF_Watson_K, .Acentric_Factor, T) '* .Molar_Weight
 
                 End With
 
@@ -5768,7 +5766,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
                 With Me.CurrentMaterialStream.Fases(0).Componentes(sub1)
 
-                    Return Me.m_props.Pvp_leekesler(T, .ConstantProperties.Critical_Temperature, .ConstantProperties.Critical_Pressure, .ConstantProperties.Acentric_Factor)
+                    Return Auxiliary.PROPS.Pvp_leekesler(T, .ConstantProperties.Critical_Temperature, .ConstantProperties.Critical_Pressure, .ConstantProperties.Acentric_Factor)
 
                 End With
 
@@ -5807,7 +5805,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     result = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, 0) 'Pa
                     If eqno = "0" Then
                         With Me.CurrentMaterialStream.Fases(0).Componentes(sub1)
-                            result = Me.m_props.Pvp_leekesler(T, .ConstantProperties.Critical_Temperature, .ConstantProperties.Critical_Pressure, .ConstantProperties.Acentric_Factor)
+                            result = Auxiliary.PROPS.Pvp_leekesler(T, .ConstantProperties.Critical_Temperature, .ConstantProperties.Critical_Pressure, .ConstantProperties.Acentric_Factor)
                         End With
                     End If
                     Return result
@@ -5823,7 +5821,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     Return result * 1000
                 Else
                     With Me.CurrentMaterialStream.Fases(0).Componentes(sub1)
-                        Return Me.m_props.Pvp_leekesler(T, .ConstantProperties.Critical_Temperature, .ConstantProperties.Critical_Pressure, .ConstantProperties.Acentric_Factor)
+                        Return Auxiliary.PROPS.Pvp_leekesler(T, .ConstantProperties.Critical_Temperature, .ConstantProperties.Critical_Pressure, .ConstantProperties.Acentric_Factor)
                     End With
                 End If
 
@@ -5843,7 +5841,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
             Next
             If Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.IsPF = 1 Then
                 With Me.CurrentMaterialStream.Fases(0).Componentes(nome)
-                    Return Me.m_props.Pvp_leekesler(T, .ConstantProperties.Critical_Temperature, .ConstantProperties.Critical_Pressure, .ConstantProperties.Acentric_Factor)
+                    Return Auxiliary.PROPS.Pvp_leekesler(T, .ConstantProperties.Critical_Temperature, .ConstantProperties.Critical_Pressure, .ConstantProperties.Acentric_Factor)
                 End With
             Else
                 If Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.OriginalDB = "DWSIM" Or _
@@ -5878,7 +5876,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     result = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, 0) 'Pa.s
                     If eqno = "0" Then
                         With Me.CurrentMaterialStream.Fases(0).Componentes(nome)
-                            result = Me.m_props.Pvp_leekesler(T, .ConstantProperties.Critical_Temperature, .ConstantProperties.Critical_Pressure, .ConstantProperties.Acentric_Factor)
+                            result = Auxiliary.PROPS.Pvp_leekesler(T, .ConstantProperties.Critical_Temperature, .ConstantProperties.Critical_Pressure, .ConstantProperties.Acentric_Factor)
                         End With
                     End If
                     Return result
@@ -5894,7 +5892,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     Return result * 1000
                 Else
                     With Me.CurrentMaterialStream.Fases(0).Componentes(nome)
-                        Return Me.m_props.Pvp_leekesler(T, .ConstantProperties.Critical_Temperature, .ConstantProperties.Critical_Pressure, .ConstantProperties.Acentric_Factor)
+                        Return Auxiliary.PROPS.Pvp_leekesler(T, .ConstantProperties.Critical_Temperature, .ConstantProperties.Critical_Pressure, .ConstantProperties.Acentric_Factor)
                     End With
                 End If
             End If
@@ -6178,7 +6176,7 @@ Final3:
 
                     With Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties
 
-                        Return Me.m_props.oilvisc_twu(T, .PF_Tv1, .PF_Tv2, .PF_v1, .PF_v2) * Me.m_props.liq_dens_rackett(T, .Critical_Temperature, .Critical_Pressure, .Acentric_Factor, .Molar_Weight, .Z_Rackett)
+                        Return Auxiliary.PROPS.oilvisc_twu(T, .PF_Tv1, .PF_Tv2, .PF_v1, .PF_v2) * Auxiliary.PROPS.liq_dens_rackett(T, .Critical_Temperature, .Critical_Pressure, .Acentric_Factor, .Molar_Weight, .Z_Rackett)
 
                     End With
 
@@ -6218,7 +6216,7 @@ Final3:
                             Pc = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Pressure
                             w = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Acentric_Factor
                             mw = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Molar_Weight
-                            result = Me.m_props.viscl_letsti(T, Tc, Pc, w, mw)
+                            result = Auxiliary.PROPS.viscl_letsti(T, Tc, Pc, w, mw)
                         End If
                         Return result
                     ElseIf Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.OriginalDB = "Biodiesel" Then
@@ -6228,7 +6226,7 @@ Final3:
                         Pc = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Critical_Pressure
                         w = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Acentric_Factor
                         Mw = Me.CurrentMaterialStream.Fases(0).Componentes(sub1).ConstantProperties.Molar_Weight
-                        result = Me.m_props.viscl_letsti(T, Tc, Pc, w, Mw)
+                        result = Auxiliary.PROPS.viscl_letsti(T, Tc, Pc, w, Mw)
                         Return result
                     Else
                         Return 0
@@ -6268,8 +6266,6 @@ Final3:
 
         Public Overridable Function AUX_SURFTM(ByVal T As Double) As Double
 
-            If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
-
             Dim val As Double = 0
             Dim nbp As Double
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
@@ -6285,7 +6281,7 @@ Final3:
                         Else
                             nbp = subst.ConstantProperties.Normal_Boiling_Point
                             If nbp = 0 Then nbp = 0.7 * subst.ConstantProperties.Critical_Temperature
-                            subst.TDProperties.surfaceTension = Me.m_props.sigma_bb(T, nbp, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure)
+                            subst.TDProperties.surfaceTension = Auxiliary.PROPS.sigma_bb(T, nbp, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure)
                         End If
                     End With
                 Else
@@ -6301,7 +6297,7 @@ Final3:
 
         Public Overridable Function AUX_SURFTi(ByVal constprop As ConstantProperties, ByVal T As Double) As Double
 
-            If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
+
 
             Dim val As Double = 0
             Dim nbp As Double
@@ -6316,7 +6312,7 @@ Final3:
                     Else
                         nbp = constprop.Normal_Boiling_Point
                         If nbp = 0 Then nbp = 0.7 * constprop.Critical_Temperature
-                        val = Me.m_props.sigma_bb(T, nbp, constprop.Critical_Temperature, constprop.Critical_Pressure)
+                        val = Auxiliary.PROPS.sigma_bb(T, nbp, constprop.Critical_Temperature, constprop.Critical_Pressure)
                     End If
                 End With
             Else
@@ -6328,8 +6324,6 @@ Final3:
 
         Public Overridable Function AUX_CONDTL(ByVal T As Double, Optional ByVal phaseid As Integer = 3) As Double
 
-            If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
-
             Dim val As Double
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
             Dim vcl(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1)
@@ -6340,19 +6334,19 @@ Final3:
                 ElseIf subst.ConstantProperties.IsIon Or subst.ConstantProperties.IsSalt Then
                     vcl(i) = 0.0#
                 Else
-                    vcl(i) = Me.m_props.condl_latini(T, subst.ConstantProperties.Normal_Boiling_Point, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Molar_Weight, "")
+                    vcl(i) = Auxiliary.PROPS.condl_latini(T, subst.ConstantProperties.Normal_Boiling_Point, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Molar_Weight, "")
                 End If
 
                 i = i + 1
             Next
-            val = Me.m_props.condlm_li(Me.RET_VVC, vcl, Me.RET_VMOL(Me.RET_PHASECODE(phaseid)))
+            val = Auxiliary.PROPS.condlm_li(Me.RET_VVC, vcl, Me.RET_VMOL(Me.RET_PHASECODE(phaseid)))
             Return val
 
         End Function
 
         Public Overridable Function AUX_CONDTG(ByVal T As Double, ByVal P As Double) As Double
 
-            If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
+
 
             Dim val As Double
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
@@ -6361,7 +6355,7 @@ Final3:
                 If subst.ConstantProperties.VaporThermalConductivityEquation <> "" Then
                     val += subst.FracaoMolar.GetValueOrDefault * Me.CalcCSTDepProp(subst.ConstantProperties.VaporThermalConductivityEquation, subst.ConstantProperties.Vapor_Thermal_Conductivity_Const_A, subst.ConstantProperties.Vapor_Thermal_Conductivity_Const_B, subst.ConstantProperties.Vapor_Thermal_Conductivity_Const_C, subst.ConstantProperties.Vapor_Thermal_Conductivity_Const_D, subst.ConstantProperties.Vapor_Thermal_Conductivity_Const_E, T, subst.ConstantProperties.Critical_Temperature)
                 Else
-                    val += subst.FracaoMolar.GetValueOrDefault * Me.m_props.condtg_elyhanley(T, Me.AUX_TCM(Fase.Vapor), Me.AUX_VCM(Fase.Vapor), Me.AUX_ZCM(Fase.Vapor), Me.AUX_WM(Fase.Vapor), Me.AUX_MMM(Fase.Vapor), Me.DW_CalcCv_ISOL(Fase.Vapor, T, P) * Me.AUX_MMM(Fase.Vapor))
+                    val += subst.FracaoMolar.GetValueOrDefault * Auxiliary.PROPS.condtg_elyhanley(T, Me.AUX_TCM(Fase.Vapor), Me.AUX_VCM(Fase.Vapor), Me.AUX_ZCM(Fase.Vapor), Me.AUX_WM(Fase.Vapor), Me.AUX_MMM(Fase.Vapor), Me.DW_CalcCv_ISOL(Fase.Vapor, T, P) * Me.AUX_MMM(Fase.Vapor))
                 End If
                 i = i + 1
             Next
@@ -6379,7 +6373,7 @@ Final3:
             ElseIf cprop.IsIon Or cprop.IsSalt Then
                 val = 0.0#
             Else
-                val = Me.m_props.condl_latini(T, cprop.Normal_Boiling_Point, cprop.Critical_Temperature, cprop.Molar_Weight, "")
+                val = Auxiliary.PROPS.condl_latini(T, cprop.Normal_Boiling_Point, cprop.Critical_Temperature, cprop.Molar_Weight, "")
             End If
 
             Return val
@@ -6395,7 +6389,7 @@ Final3:
             ElseIf cprop.IsIon Or cprop.IsSalt Then
                 val = 0.0#
             Else
-                val = Me.m_props.condtg_elyhanley(T, cprop.Critical_Temperature, cprop.Critical_Volume / 1000, cprop.Critical_Compressibility, cprop.Acentric_Factor, cprop.Molar_Weight, Me.AUX_CPi(cprop.Name, T) * cprop.Molar_Weight - 8.314)
+                val = Auxiliary.PROPS.condtg_elyhanley(T, cprop.Critical_Temperature, cprop.Critical_Volume / 1000, cprop.Critical_Compressibility, cprop.Acentric_Factor, cprop.Molar_Weight, Me.AUX_CPi(cprop.Name, T) * cprop.Molar_Weight - 8.314)
             End If
 
             Return val
@@ -6404,7 +6398,7 @@ Final3:
 
         Public Overridable Function AUX_VAPVISCm(ByVal T As Double, ByVal RHO As Double, ByVal MM As Double) As Double
 
-            If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
+
 
             Dim val As Double = 0.0#
 
@@ -6412,7 +6406,7 @@ Final3:
                 val += subst.FracaoMolar.GetValueOrDefault * Me.AUX_VAPVISCi(subst.ConstantProperties, T)
             Next
 
-            val = Me.m_props.viscg_jossi_stiel_thodos(val, T, MM / RHO / 1000, AUX_TCM(Fase.Vapor), AUX_PCM(Fase.Vapor), AUX_VCM(Fase.Vapor), AUX_MMM(Fase.Vapor))
+            val = Auxiliary.PROPS.viscg_jossi_stiel_thodos(val, T, MM / RHO / 1000, AUX_TCM(Fase.Vapor), AUX_PCM(Fase.Vapor), AUX_VCM(Fase.Vapor), AUX_MMM(Fase.Vapor))
 
             Return val
 
@@ -6427,7 +6421,7 @@ Final3:
             ElseIf cprop.IsIon Or cprop.IsSalt Then
                 val = 0.0#
             Else
-                val = Me.m_props.viscg_lucas(T, cprop.Critical_Temperature, cprop.Critical_Pressure, cprop.Acentric_Factor, cprop.Molar_Weight)
+                val = Auxiliary.PROPS.viscg_lucas(T, cprop.Critical_Temperature, cprop.Critical_Pressure, cprop.Acentric_Factor, cprop.Molar_Weight)
             End If
 
             Return val
@@ -6532,7 +6526,7 @@ Final3:
 
         Public Overridable Function AUX_LIQDENS(ByVal T As Double, Optional ByVal P As Double = 0, Optional ByVal Pvp As Double = 0, Optional ByVal phaseid As Integer = 3, Optional ByVal FORCE_EOS As Boolean = False) As Double
 
-            If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
+
 
             Dim val As Double
             Dim m_pr2 As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PengRobinson
@@ -6559,23 +6553,23 @@ Final3:
                                             vk(i) = Me.CalcCSTDepProp(subst.ConstantProperties.LiquidDensityEquation, subst.ConstantProperties.Liquid_Density_Const_A, subst.ConstantProperties.Liquid_Density_Const_B, subst.ConstantProperties.Liquid_Density_Const_C, subst.ConstantProperties.Liquid_Density_Const_D, subst.ConstantProperties.Liquid_Density_Const_E, T, subst.ConstantProperties.Critical_Temperature)
                                             vk(i) = subst.ConstantProperties.Molar_Weight * vk(i)
                                         Else
-                                            vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
+                                            vk(i) = Auxiliary.PROPS.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
                                         End If
                                     Else
-                                        vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
+                                        vk(i) = Auxiliary.PROPS.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
                                     End If
                                 Else
-                                    vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
+                                    vk(i) = Auxiliary.PROPS.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
                                 End If
                                 vk(i) = subst.FracaoMassica / vk(i)
                                 i = i + 1
                             Next
                             val = 1 / MathEx.Common.Sum(vk)
                         Else
-                            val = Me.m_props.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Liquid), Me.AUX_PCM(Fase.Liquid), Me.AUX_WM(Fase.Liquid), Me.AUX_MMM(Fase.Liquid), Me.AUX_ZRAM(Fase.Liquid), P, Me.AUX_PVAPM(T))
+                            val = Auxiliary.PROPS.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Liquid), Me.AUX_PCM(Fase.Liquid), Me.AUX_WM(Fase.Liquid), Me.AUX_MMM(Fase.Liquid), Me.AUX_ZRAM(Fase.Liquid), P, Me.AUX_PVAPM(T))
                         End If
                     Else
-                        val = Me.m_props.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Liquid), Me.AUX_PCM(Fase.Liquid), Me.AUX_WM(Fase.Liquid), Me.AUX_MMM(Fase.Liquid), Me.AUX_ZRAM(Fase.Liquid), P, Me.AUX_PVAPM(T))
+                        val = Auxiliary.PROPS.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Liquid), Me.AUX_PCM(Fase.Liquid), Me.AUX_WM(Fase.Liquid), Me.AUX_MMM(Fase.Liquid), Me.AUX_ZRAM(Fase.Liquid), P, Me.AUX_PVAPM(T))
                     End If
 
                 End If
@@ -6591,7 +6585,7 @@ Final3:
                 Else
 
                     Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
-                    val = Me.m_props.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Vapor), Me.AUX_PCM(Fase.Vapor), Me.AUX_WM(Fase.Vapor), Me.AUX_MMM(Fase.Vapor), Me.AUX_ZRAM(Fase.Vapor), P, Me.AUX_PVAPM(T))
+                    val = Auxiliary.PROPS.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Vapor), Me.AUX_PCM(Fase.Vapor), Me.AUX_WM(Fase.Vapor), Me.AUX_MMM(Fase.Vapor), Me.AUX_ZRAM(Fase.Vapor), P, Me.AUX_PVAPM(T))
 
                 End If
             ElseIf phaseid = 3 Then
@@ -6620,23 +6614,23 @@ Final3:
                                         ElseIf subst.ConstantProperties.IsIon Or subst.ConstantProperties.IsSalt Then
                                             vk(i) = 1.0E+20
                                         Else
-                                            vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
+                                            vk(i) = Auxiliary.PROPS.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
                                         End If
                                     Else
-                                        vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
+                                        vk(i) = Auxiliary.PROPS.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
                                     End If
                                 Else
-                                    vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
+                                    vk(i) = Auxiliary.PROPS.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
                                 End If
                                 vk(i) = subst.FracaoMassica / vk(i)
                                 i = i + 1
                             Next
                             val = 1 / MathEx.Common.Sum(vk)
                         Else
-                            val = Me.m_props.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Liquid1), Me.AUX_PCM(Fase.Liquid1), Me.AUX_WM(Fase.Liquid1), Me.AUX_MMM(Fase.Liquid1), Me.AUX_ZRAM(Fase.Liquid1), P, Me.AUX_PVAPM(T))
+                            val = Auxiliary.PROPS.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Liquid1), Me.AUX_PCM(Fase.Liquid1), Me.AUX_WM(Fase.Liquid1), Me.AUX_MMM(Fase.Liquid1), Me.AUX_ZRAM(Fase.Liquid1), P, Me.AUX_PVAPM(T))
                         End If
                     Else
-                        val = Me.m_props.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Liquid1), Me.AUX_PCM(Fase.Liquid1), Me.AUX_WM(Fase.Liquid1), Me.AUX_MMM(Fase.Liquid1), Me.AUX_ZRAM(Fase.Liquid1), P, Me.AUX_PVAPM(T))
+                        val = Auxiliary.PROPS.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Liquid1), Me.AUX_PCM(Fase.Liquid1), Me.AUX_WM(Fase.Liquid1), Me.AUX_MMM(Fase.Liquid1), Me.AUX_ZRAM(Fase.Liquid1), P, Me.AUX_PVAPM(T))
                     End If
 
                 End If
@@ -6663,23 +6657,23 @@ Final3:
                                         ElseIf T > subst.ConstantProperties.Critical_Temperature Then
                                             vk(i) = 800
                                         Else
-                                            vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
+                                            vk(i) = Auxiliary.PROPS.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
                                         End If
                                     Else
-                                        vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
+                                        vk(i) = Auxiliary.PROPS.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
                                     End If
                                 Else
-                                    vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
+                                    vk(i) = Auxiliary.PROPS.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
                                 End If
                                 vk(i) = subst.FracaoMassica / vk(i)
                                 i = i + 1
                             Next
                             val = 1 / MathEx.Common.Sum(vk)
                         Else
-                            val = Me.m_props.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Liquid2), Me.AUX_PCM(Fase.Liquid2), Me.AUX_WM(Fase.Liquid2), Me.AUX_MMM(Fase.Liquid2), Me.AUX_ZRAM(Fase.Liquid2), P, Me.AUX_PVAPM(T))
+                            val = Auxiliary.PROPS.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Liquid2), Me.AUX_PCM(Fase.Liquid2), Me.AUX_WM(Fase.Liquid2), Me.AUX_MMM(Fase.Liquid2), Me.AUX_ZRAM(Fase.Liquid2), P, Me.AUX_PVAPM(T))
                         End If
                     Else
-                        val = Me.m_props.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Liquid2), Me.AUX_PCM(Fase.Liquid2), Me.AUX_WM(Fase.Liquid2), Me.AUX_MMM(Fase.Liquid2), Me.AUX_ZRAM(Fase.Liquid2), P, Me.AUX_PVAPM(T))
+                        val = Auxiliary.PROPS.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Liquid2), Me.AUX_PCM(Fase.Liquid2), Me.AUX_WM(Fase.Liquid2), Me.AUX_MMM(Fase.Liquid2), Me.AUX_ZRAM(Fase.Liquid2), P, Me.AUX_PVAPM(T))
                     End If
 
                 End If
@@ -6706,23 +6700,23 @@ Final3:
                                         ElseIf T > subst.ConstantProperties.Critical_Temperature Then
                                             vk(i) = 800
                                         Else
-                                            vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
+                                            vk(i) = Auxiliary.PROPS.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
                                         End If
                                     Else
-                                        vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
+                                        vk(i) = Auxiliary.PROPS.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
                                     End If
                                 Else
-                                    vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
+                                    vk(i) = Auxiliary.PROPS.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
                                 End If
                                 vk(i) = subst.FracaoMassica / vk(i)
                                 i = i + 1
                             Next
                             val = 1 / MathEx.Common.Sum(vk)
                         Else
-                            val = Me.m_props.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Liquid3), Me.AUX_PCM(Fase.Liquid3), Me.AUX_WM(Fase.Liquid3), Me.AUX_MMM(Fase.Liquid3), Me.AUX_ZRAM(Fase.Liquid3), P, Me.AUX_PVAPM(T))
+                            val = Auxiliary.PROPS.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Liquid3), Me.AUX_PCM(Fase.Liquid3), Me.AUX_WM(Fase.Liquid3), Me.AUX_MMM(Fase.Liquid3), Me.AUX_ZRAM(Fase.Liquid3), P, Me.AUX_PVAPM(T))
                         End If
                     Else
-                        val = Me.m_props.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Liquid3), Me.AUX_PCM(Fase.Liquid3), Me.AUX_WM(Fase.Liquid3), Me.AUX_MMM(Fase.Liquid3), Me.AUX_ZRAM(Fase.Liquid3), P, Me.AUX_PVAPM(T))
+                        val = Auxiliary.PROPS.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Liquid3), Me.AUX_PCM(Fase.Liquid3), Me.AUX_WM(Fase.Liquid3), Me.AUX_MMM(Fase.Liquid3), Me.AUX_ZRAM(Fase.Liquid3), P, Me.AUX_PVAPM(T))
                     End If
 
                 End If
@@ -6747,23 +6741,23 @@ Final3:
                                             vk(i) = Me.CalcCSTDepProp(subst.ConstantProperties.LiquidDensityEquation, subst.ConstantProperties.Liquid_Density_Const_A, subst.ConstantProperties.Liquid_Density_Const_B, subst.ConstantProperties.Liquid_Density_Const_C, subst.ConstantProperties.Liquid_Density_Const_D, subst.ConstantProperties.Liquid_Density_Const_E, T, subst.ConstantProperties.Critical_Temperature)
                                             vk(i) = subst.ConstantProperties.Molar_Weight * vk(i)
                                         Else
-                                            vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
+                                            vk(i) = Auxiliary.PROPS.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
                                         End If
                                     Else
-                                        vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
+                                        vk(i) = Auxiliary.PROPS.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
                                     End If
                                 Else
-                                    vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
+                                    vk(i) = Auxiliary.PROPS.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
                                 End If
                                 vk(i) = subst.FracaoMassica / vk(i)
                                 i = i + 1
                             Next
                             val = 1 / MathEx.Common.Sum(vk)
                         Else
-                            val = Me.m_props.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Aqueous), Me.AUX_PCM(Fase.Aqueous), Me.AUX_WM(Fase.Aqueous), Me.AUX_MMM(Fase.Aqueous), Me.AUX_ZRAM(Fase.Aqueous), P, Me.AUX_PVAPM(T))
+                            val = Auxiliary.PROPS.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Aqueous), Me.AUX_PCM(Fase.Aqueous), Me.AUX_WM(Fase.Aqueous), Me.AUX_MMM(Fase.Aqueous), Me.AUX_ZRAM(Fase.Aqueous), P, Me.AUX_PVAPM(T))
                         End If
                     Else
-                        val = Me.m_props.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Aqueous), Me.AUX_PCM(Fase.Aqueous), Me.AUX_WM(Fase.Aqueous), Me.AUX_MMM(Fase.Aqueous), Me.AUX_ZRAM(Fase.Aqueous), P, Me.AUX_PVAPM(T))
+                        val = Auxiliary.PROPS.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Aqueous), Me.AUX_PCM(Fase.Aqueous), Me.AUX_WM(Fase.Aqueous), Me.AUX_MMM(Fase.Aqueous), Me.AUX_ZRAM(Fase.Aqueous), P, Me.AUX_PVAPM(T))
                     End If
 
                 End If
@@ -6777,7 +6771,7 @@ Final3:
 
         Public Overridable Function AUX_LIQDENS(ByVal T As Double, ByVal Vx As Array, Optional ByVal P As Double = 0, Optional ByVal Pvp As Double = 0, Optional ByVal FORCE_EOS As Boolean = False) As Double
 
-            If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
+
 
             Dim val As Double
             Dim m_pr2 As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PengRobinson
@@ -6792,13 +6786,13 @@ Final3:
                             vk(i) = Me.CalcCSTDepProp(subst.ConstantProperties.LiquidDensityEquation, subst.ConstantProperties.Liquid_Density_Const_A, subst.ConstantProperties.Liquid_Density_Const_B, subst.ConstantProperties.Liquid_Density_Const_C, subst.ConstantProperties.Liquid_Density_Const_D, subst.ConstantProperties.Liquid_Density_Const_E, T, subst.ConstantProperties.Critical_Temperature)
                             vk(i) = subst.ConstantProperties.Molar_Weight * vk(i)
                         Else
-                            vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
+                            vk(i) = Auxiliary.PROPS.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
                         End If
                     Else
-                        vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
+                        vk(i) = Auxiliary.PROPS.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
                     End If
                 Else
-                    vk(i) = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
+                    vk(i) = Auxiliary.PROPS.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, P, Me.AUX_PVAPi(subst.Nome, T))
                 End If
                 If T > subst.ConstantProperties.Critical_Temperature Then
                     vk(i) = 1.0E+20
@@ -6816,7 +6810,7 @@ Final3:
 
         Public Overridable Function AUX_LIQDENSi(ByVal subst As Substancia, ByVal T As Double) As Double
 
-            If m_props Is Nothing Then m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
+
 
             Dim val As Double
 
@@ -6824,7 +6818,7 @@ Final3:
                 val = Me.CalcCSTDepProp(subst.ConstantProperties.LiquidDensityEquation, subst.ConstantProperties.Liquid_Density_Const_A, subst.ConstantProperties.Liquid_Density_Const_B, subst.ConstantProperties.Liquid_Density_Const_C, subst.ConstantProperties.Liquid_Density_Const_D, subst.ConstantProperties.Liquid_Density_Const_E, T, subst.ConstantProperties.Critical_Temperature)
                 val = subst.ConstantProperties.Molar_Weight * val
             Else
-                val = Me.m_props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, 101325, Me.AUX_PVAPi(subst.Nome, T))
+                val = Auxiliary.PROPS.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight, subst.ConstantProperties.Z_Rackett, 101325, Me.AUX_PVAPi(subst.Nome, T))
             End If
 
             Return val 'kg/m3
@@ -6839,7 +6833,7 @@ Final3:
                 val = Me.CalcCSTDepProp(cprop.LiquidDensityEquation, cprop.Liquid_Density_Const_A, cprop.Liquid_Density_Const_B, cprop.Liquid_Density_Const_C, cprop.Liquid_Density_Const_D, cprop.Liquid_Density_Const_E, T, cprop.Critical_Temperature)
                 val = cprop.Molar_Weight * val
             Else
-                val = Me.m_props.liq_dens_rackett(T, cprop.Critical_Temperature, cprop.Critical_Pressure, cprop.Acentric_Factor, cprop.Molar_Weight, cprop.Z_Rackett, 101325, Me.AUX_PVAPi(cprop.Name, T))
+                val = Auxiliary.PROPS.liq_dens_rackett(T, cprop.Critical_Temperature, cprop.Critical_Pressure, cprop.Acentric_Factor, cprop.Molar_Weight, cprop.Z_Rackett, 101325, Me.AUX_PVAPi(cprop.Name, T))
             End If
 
             Return val 'kg/m3
@@ -6873,7 +6867,7 @@ Final3:
                     val = val / 1000 / cprop.Molar_Weight 'kJ/kg.K
                 Else
                     'estimate using Rownlinson/Bondi correlation
-                    val = Me.m_props.Cpl_rb(AUX_CPi(cprop.Name, T), T, cprop.Critical_Temperature, cprop.Acentric_Factor, cprop.Molar_Weight) 'kJ/kg.K
+                    val = Auxiliary.PROPS.Cpl_rb(AUX_CPi(cprop.Name, T), T, cprop.Critical_Temperature, cprop.Acentric_Factor, cprop.Molar_Weight) 'kJ/kg.K
                 End If
             End If
 
@@ -7375,7 +7369,7 @@ Final3:
             For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
                 vc = subst.ConstantProperties.Critical_Volume
                 If subst.ConstantProperties.Critical_Volume = 0.0# Then
-                    vc = m_props.Vc(subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor)
+                    vc = Auxiliary.PROPS.Vc(subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure, subst.ConstantProperties.Acentric_Factor)
                 End If
                 val(i) = vc
                 i += 1
@@ -10323,7 +10317,6 @@ Final3:
         Public Overridable Sub Initialize() Implements CapeOpen.ICapeUtilities.Initialize
 
             Me.m_ip = New DataTable
-            Me.m_props = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
             ConfigParameters()
 
             'load Henry Coefficients

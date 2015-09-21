@@ -590,19 +590,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             Dim tmp1 = MMm / V / 1000
 
-            Dim aux1 = -R / 2 * (0.45724 / T) ^ 0.5
-            i = 0
-            Dim aux2 = 0.0#
-            Do
-                j = 0
-                Do
-                    aux2 += Vz(i) * Vz(j) * (1 - VKij(i, j)) * (ci(j) * (ai(i) * Tc(j) / Pc(j)) ^ 0.5 + ci(i) * (ai(j) * Tc(i) / Pc(i)) ^ 0.5)
-                    j = j + 1
-                Loop Until j = n + 1
-                i = i + 1
-            Loop Until i = n + 1
-
-            dadT = aux1 * aux2
+            dadT = ThermoPlugs.PR.Calc_dadT(T, Vz, VKij, Tc, Pc, ai, ci)
 
             Dim uu, ww As Double
             uu = 2
@@ -766,19 +754,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             Dim tmp1 = MMm / V / 1000
 
-            Dim aux1 = -R / 2 * (0.45724 / T) ^ 0.5
-            i = 0
-            Dim aux2 = 0.0#
-            Do
-                j = 0
-                Do
-                    aux2 += Vz(i) * Vz(j) * (1 - VKij(i, j)) * (ci(j) * (ai(i) * Tc(j) / Pc(j)) ^ 0.5 + ci(i) * (ai(j) * Tc(i) / Pc(i)) ^ 0.5)
-                    j = j + 1
-                Loop Until j = n + 1
-                i = i + 1
-            Loop Until i = n + 1
-
-            dadT = aux1 * aux2
+            dadT = ThermoPlugs.PR.Calc_dadT(T, Vz, VKij, Tc, Pc, ai, ci)
 
             Dim V0 As Double = R * 298.15 / 101325
             'Dim DSres = R * Math.Log((Z - BG1) / Z) + R * Math.Log(V / V0) - 1 / (8 ^ 0.5 * bm) * dadT * Math.Log((2 * Z + BG1 * (2 - 8 ^ 0.5)) / (2 * Z + BG1 * (2 + 8 ^ 0.5)))

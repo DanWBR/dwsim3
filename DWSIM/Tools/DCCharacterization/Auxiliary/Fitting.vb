@@ -51,12 +51,11 @@ Namespace DWSIM.Utilities.PetroleumCharacterization.Methods
         Public Function CalcDensityDiff(ByVal T As Double, ByVal multipl As Double, ByVal comp As Substancia) As Double
 
             Dim dens1, dens2 As Double
-            Dim prop As New PROPS
 
             dens1 = comp.ConstantProperties.PF_SG * 999.96
 
             With comp.ConstantProperties
-                dens2 = prop.liq_dens_rackett(T, .Critical_Temperature, .Critical_Pressure, .Acentric_Factor, .Molar_Weight, .Z_Rackett * multipl)
+                dens2 = DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS.liq_dens_rackett(T, .Critical_Temperature, .Critical_Pressure, .Acentric_Factor, .Molar_Weight, .Z_Rackett * multipl)
             End With
 
             If Double.IsNaN(dens1 - dens2) Then

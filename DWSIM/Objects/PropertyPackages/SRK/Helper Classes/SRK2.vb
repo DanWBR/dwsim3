@@ -17,12 +17,46 @@
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
 Imports DWSIM.DWSIM.MathEx
+Imports System.Threading.Tasks
+Imports System.Linq
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
     <System.Serializable()> Public Class SRK
 
         Inherits DWSIM.SimulationObjects.PropertyPackages.ThermoPlug
+
+        Shared Function Calc_dadT(T As Double, Vz As Double(), VKij As Double(,), Tc As Double(), Pc As Double(), ai As Double(), ci As Double()) As Double
+
+            Dim n As Integer = UBound(Vz)
+
+            Dim aux1, aux2, auxtmp(n) As Double
+            aux1 = -8.314 / 2 * (0.45724 / T) ^ 0.5
+
+            If My.Settings.EnableParallelProcessing Then
+                Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism, .TaskScheduler = My.MyApplication.AppTaskScheduler}
+                Parallel.For(0, n + 1, poptions, Sub(k)
+                                                     For l As Integer = 0 To n
+                                                         auxtmp(k) += Vz(k) * Vz(l) * (1 - VKij(k, l)) * (ci(l) * (ai(k) * Tc(l) / Pc(l)) ^ 0.5 + ci(k) * (ai(l) * Tc(k) / Pc(k)) ^ 0.5)
+                                                     Next
+                                                 End Sub)
+                aux2 = auxtmp.Sum
+            Else
+                Dim i, j As Integer
+                aux2 = 0.0#
+                Do
+                    j = 0
+                    Do
+                        aux2 += Vz(i) * Vz(j) * (1 - VKij(i, j)) * (ci(j) * (ai(i) * Tc(j) / Pc(j)) ^ 0.5 + ci(i) * (ai(j) * Tc(i) / Pc(i)) ^ 0.5)
+                        j = j + 1
+                    Loop Until j = n + 1
+                    i = i + 1
+                Loop Until i = n + 1
+            End If
+
+            Return aux1 * aux2
+
+        End Function
 
         Shared Function ReturnParameters(ByVal T As Double, ByVal P As Double, ByVal Vx As Array, ByVal VKij As Object, ByVal VTc As Array, ByVal VPc As Array, ByVal Vw As Array)
 
@@ -125,17 +159,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
             Dim S, H, Z As Double
 
-            Dim ai(), bi(), ci() As Double
             Dim n, R, dadT As Double
-            Dim Tc(), Pc(), Vc(), w(), Zc(), alpha(), m(), a(,), b(,), Tr() As Double
             Dim i, j, k, l As Integer
 
             n = UBound(Vz)
 
             Dim G(UBound(Z_)) As Double
 
-            ReDim ai(n), bi(n), ci(n), a(n, n), b(n, n)
-            ReDim Tc(n), Pc(n), Vc(n), Zc(n), w(n), alpha(n), m(n), Tr(n)
+            Dim ai(n), bi(n), ci(n), a(n, n), b(n, n) As Double
+            Dim Tc(n), Pc(n), Vc(n), Zc(n), w(n), alpha(n), m(n), Tr(n) As Double
 
             R = 8.314
 
@@ -195,19 +227,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
                 Dim tmp1 = 1 / V / 1000
 
-                Dim aux1 = -R / 2 * (0.45724 / T) ^ 0.5
-                i = 0
-                Dim aux2 = 0.0#
-                Do
-                    j = 0
-                    Do
-                        aux2 += Vz(i) * Vz(j) * (1 - VKij(i, j)) * (ci(j) * (ai(i) * Tc(j) / Pc(j)) ^ 0.5 + ci(i) * (ai(j) * Tc(i) / Pc(i)) ^ 0.5)
-                        j = j + 1
-                    Loop Until j = n + 1
-                    i = i + 1
-                Loop Until i = n + 1
-
-                dadT = aux1 * aux2
+                dadT = Calc_dadT(T, Vz, VKij, Tc, Pc, ai, ci)
 
                 Dim uu, ww As Double
                 uu = 1
@@ -254,9 +274,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
             n = UBound(Vx)
 
-            Dim ai(n), bi(n), tmp(n + 1), a(n, n), b(n, n)
+            Dim ai(n), bi(n), tmp(n + 1), a(n, n), b(n, n) As Double
             Dim aml2(n), amv2(n), LN_CF(n), PHI(n) As Double
-            Dim Tc(n), Pc(n), W(n), alpha(n), m(n), Tr(n)
+            Dim Tc(n), Pc(n), W(n), alpha(n), m(n), Tr(n) As Double
 
             R = 8.314
 

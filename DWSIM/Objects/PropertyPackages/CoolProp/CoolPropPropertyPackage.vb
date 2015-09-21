@@ -34,8 +34,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Shadows Const ClassId As String = "1F5B0263-E936-40d5-BA5B-FFAB11595E43"
 
-        Private props As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
-
         Public Sub New(ByVal comode As Boolean)
             MyBase.New(comode)
         End Sub
@@ -272,7 +270,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                 vk(i) = CoolProp.PropsSI("L", "T", T, "P", P, subst.ConstantProperties.Name)
                             Catch ex As Exception
                                 WriteWarningMessage(ex.Message.ToString & ". Estimating value using Ely-Hanley [Fluid: " & subst.ConstantProperties.Name & "]")
-                                vk(i) = props.condtg_elyhanley(T, subst.ConstantProperties.Critical_Temperature,
+                                vk(i) = Auxiliary.PROPS.condtg_elyhanley(T, subst.ConstantProperties.Critical_Temperature,
                                                                subst.ConstantProperties.Critical_Volume / 1000, subst.ConstantProperties.Critical_Compressibility,
                                                                subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight,
                                                                Me.AUX_CPi(subst.ConstantProperties.Name, T) * subst.ConstantProperties.Molar_Weight - 8.314)
@@ -295,7 +293,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                 vk(i) = Interpolation.polinterpolation.nevilleinterpolation(New Double() {x1, x2, x3, x4, x5}, New Double() {p1, p2, p3, p4, p5}, 5, T)
                             Catch ex As Exception
                                 WriteWarningMessage(ex.Message.ToString & ". Estimating value using Ely-Hanley [Fluid: " & subst.ConstantProperties.Name & "]")
-                                vk(i) = props.condtg_elyhanley(T, subst.ConstantProperties.Critical_Temperature,
+                                vk(i) = Auxiliary.PROPS.condtg_elyhanley(T, subst.ConstantProperties.Critical_Temperature,
                                                                subst.ConstantProperties.Critical_Volume / 1000, subst.ConstantProperties.Critical_Compressibility,
                                                                subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight,
                                                                Me.AUX_CPi(subst.ConstantProperties.Name, T) * subst.ConstantProperties.Molar_Weight - 8.314)
@@ -305,14 +303,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         WriteWarningMessage("CoolProp Warning: unable to calculate Vapor Phase Thermal Conductivity for " &
                                                                               subst.ConstantProperties.Name & " at T = " & T & " K and P = " & P &
                                                                               " Pa. Estimating value using Ely-Hanley...")
-                        vk(i) = props.condtg_elyhanley(T, subst.ConstantProperties.Critical_Temperature,
+                        vk(i) = Auxiliary.PROPS.condtg_elyhanley(T, subst.ConstantProperties.Critical_Temperature,
                                                        subst.ConstantProperties.Critical_Volume / 1000, subst.ConstantProperties.Critical_Compressibility,
                                                        subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight,
                                                        Me.AUX_CPi(subst.ConstantProperties.Name, T) * subst.ConstantProperties.Molar_Weight - 8.314)
                     End If
                 Else
                     WriteWarningMessage("CoolProp Warning: compound " & subst.ConstantProperties.Name & " not supported. Estimating Vapor Thermal Conductivity with Ely-Hanley method...")
-                    vk(i) = props.condtg_elyhanley(T, subst.ConstantProperties.Critical_Temperature,
+                    vk(i) = Auxiliary.PROPS.condtg_elyhanley(T, subst.ConstantProperties.Critical_Temperature,
                                                    subst.ConstantProperties.Critical_Volume / 1000, subst.ConstantProperties.Critical_Compressibility,
                                                    subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight,
                                                    Me.AUX_CPi(subst.ConstantProperties.Name, T) * subst.ConstantProperties.Molar_Weight - 8.314)
@@ -360,18 +358,18 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             End If
                         Catch ex As Exception
                             WriteWarningMessage(ex.Message.ToString & ". Estimating value using Latini [Fluid: " & subst.ConstantProperties.Name & "]")
-                            vk(i) = props.condl_latini(T, subst.ConstantProperties.Normal_Boiling_Point, subst.ConstantProperties.Critical_Temperature,
+                            vk(i) = Auxiliary.PROPS.condl_latini(T, subst.ConstantProperties.Normal_Boiling_Point, subst.ConstantProperties.Critical_Temperature,
                                                        subst.ConstantProperties.Molar_Weight, "X")
                         End Try
                     Else
                         WriteWarningMessage("CoolProp Warning: unable to calculate Liquid Phase Thermal Conductivity for " &
                                                                               subst.ConstantProperties.Name & " at T = " & T & " K. Estimating value using Latini...")
-                        vk(i) = props.condl_latini(T, subst.ConstantProperties.Normal_Boiling_Point, subst.ConstantProperties.Critical_Temperature,
+                        vk(i) = Auxiliary.PROPS.condl_latini(T, subst.ConstantProperties.Normal_Boiling_Point, subst.ConstantProperties.Critical_Temperature,
                                                    subst.ConstantProperties.Molar_Weight, "X")
                     End If
                 Else
                     WriteWarningMessage("CoolProp Warning: compound " & subst.ConstantProperties.Name & " not supported. Estimating Liquid Thermal Conductivity with Latini method...")
-                    vk(i) = props.condl_latini(T, subst.ConstantProperties.Normal_Boiling_Point, subst.ConstantProperties.Critical_Temperature,
+                    vk(i) = Auxiliary.PROPS.condl_latini(T, subst.ConstantProperties.Normal_Boiling_Point, subst.ConstantProperties.Critical_Temperature,
                                                subst.ConstantProperties.Molar_Weight, "X")
                 End If
                 If Double.IsNaN(vk(i)) Or Double.IsInfinity(vk(i)) Then vk(i) = 0.0#
@@ -398,19 +396,19 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             vk(i) = CoolProp.PropsSI("D", "T", T, "Q", 0, subst.ConstantProperties.Name)
                         Catch ex As Exception
                             WriteWarningMessage(ex.Message.ToString & ". Estimating value using Rackett [Fluid: " & subst.ConstantProperties.Name & "]")
-                            vk(i) = props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure,
+                            vk(i) = Auxiliary.PROPS.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure,
                                                            subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight)
                         End Try
                     Else
                         WriteWarningMessage("CoolProp Warning: unable to calculate Liquid Phase Density for " &
                                                                               subst.ConstantProperties.Name & " at T = " & T & " K and P = " & P &
                                                                               " Pa. Estimating value using Rackett...")
-                        vk(i) = props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure,
+                        vk(i) = Auxiliary.PROPS.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure,
                                                        subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight)
                     End If
                 Else
                     WriteWarningMessage("CoolProp Warning: compound " & subst.ConstantProperties.Name & " not supported. Estimating Liquid Phase Density with Rackett method...")
-                    vk(i) = props.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure,
+                    vk(i) = Auxiliary.PROPS.liq_dens_rackett(T, subst.ConstantProperties.Critical_Temperature, subst.ConstantProperties.Critical_Pressure,
                                                    subst.ConstantProperties.Acentric_Factor, subst.ConstantProperties.Molar_Weight)
                 End If
                 If Vx(i) <> 0.0# Then vk(i) = Vx(i) / vk(i)
@@ -551,7 +549,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             val = CoolProp.PropsSI("L", "T", T, "P", P, cprop.Name) * 1000
                         Catch ex As Exception
                             WriteWarningMessage(ex.Message.ToString & ". Estimating value using Ely-Hanley [Fluid: " & cprop.Name & "]")
-                            val = props.condtg_elyhanley(T, cprop.Critical_Temperature,
+                            val = Auxiliary.PROPS.condtg_elyhanley(T, cprop.Critical_Temperature,
                                                            cprop.Critical_Volume / 1000, cprop.Critical_Compressibility,
                                                            cprop.Acentric_Factor, cprop.Molar_Weight,
                                                            Me.AUX_CPi(cprop.Name, T) * cprop.Molar_Weight - 8.314)

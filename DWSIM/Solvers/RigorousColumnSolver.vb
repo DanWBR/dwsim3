@@ -187,7 +187,6 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
 
         Public Function FunctionValue(ByVal x() As Double) As Double()
 
-
             Dim errors(x.Length - 1) As Double
 
             Dim cv As New SistemasDeUnidades.Conversor
@@ -1134,7 +1133,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                                 Optional ByVal llex As Boolean = False) As Object
 
             Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
-            Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism}
+            Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism, .TaskScheduler = My.MyApplication.AppTaskScheduler}
 
             llextr = llex 'liq-liq extractor
 
@@ -2013,7 +2012,7 @@ restart:            fx = Me.FunctionValue(xvar)
                                 ByVal specs As Dictionary(Of String, SepOps.ColumnSpec)) As Object
 
             Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
-            Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism}
+            Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism, .TaskScheduler = My.MyApplication.AppTaskScheduler}
 
             Dim ic As Integer
             Dim t_error, t_error_ant As Double
@@ -2093,7 +2092,6 @@ restart:            fx = Me.FunctionValue(xvar)
 
             If doparallel Then
                 My.MyApplication.IsRunningParallelTasks = True
-                'If My.Settings.EnableGPUProcessing Then My.MyApplication.gpu.EnableMultithreading()
                 Try
                     Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                          Sub(ipar)
@@ -2106,11 +2104,6 @@ restart:            fx = Me.FunctionValue(xvar)
                     task1.Wait()
                 Catch ae As AggregateException
                     Throw ae.Flatten().InnerException
-                Finally
-                    'If My.Settings.EnableGPUProcessing Then
-                    '    My.MyApplication.gpu.DisableMultithreading()
-                    '    My.MyApplication.gpu.FreeAll()
-                    'End If
                 End Try
                 My.MyApplication.IsRunningParallelTasks = False
             Else
@@ -2879,7 +2872,7 @@ restart:            fx = Me.FunctionValue(xvar)
         Public Function FunctionValue(ByVal x() As Double) As Double()
 
             Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
-            Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism}
+            Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism, .TaskScheduler = My.MyApplication.AppTaskScheduler}
 
             Dim nc, ns As Integer
             Dim i, j As Integer
