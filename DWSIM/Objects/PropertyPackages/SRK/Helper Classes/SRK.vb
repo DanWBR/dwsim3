@@ -16,6 +16,7 @@
 '    You should have received a copy of the GNU General Public License
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 Imports FileHelpers
+Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.SRK
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 

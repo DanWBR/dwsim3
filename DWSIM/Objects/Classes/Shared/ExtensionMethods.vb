@@ -207,15 +207,154 @@ Module Extensions
             Throw New ArgumentException("invalid double")
         End If
     End Function
+
     ''' <summary>
     ''' Alternative implementation for the Exponential (Exp) function.
     ''' </summary>
     ''' <param name="val"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <System.Runtime.CompilerServices.Extension()> Public Function Exp2(val As Double) As Double
+    <System.Runtime.CompilerServices.Extension()> Public Function ExpY(val As Double) As Double
         Dim tmp As Long = CLng(1512775 * val + 1072632447)
         Return BitConverter.Int64BitsToDouble(tmp << 32)
+    End Function
+
+    ''' <summary>
+    ''' Computes the exponential of each vector element.
+    ''' </summary>
+    ''' <param name="vector"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    <System.Runtime.CompilerServices.Extension()> Public Function ExpY(vector As Double()) As Double()
+
+        Dim vector2(vector.Length - 1) As Double
+
+        Yeppp.Math.Exp_V64f_V64f(vector, 0, vector2, 0, vector.Length)
+
+        Return vector2
+
+    End Function
+
+    ''' <summary>
+    ''' Sum of the vector elements.
+    ''' </summary>
+    ''' <param name="vector"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    <System.Runtime.CompilerServices.Extension()> Public Function SumY(vector As Double()) As Double
+
+        Return Yeppp.Core.Sum_V64f_S64f(vector, 0, vector.Length)
+
+    End Function
+
+    ''' <summary>
+    ''' Absolute sum of the vector elements
+    ''' </summary>
+    ''' <param name="vector"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    <System.Runtime.CompilerServices.Extension()> Public Function AbsSumY(vector As Double()) As Double
+
+        Return Yeppp.Core.SumAbs_V64f_S64f(vector, 0, vector.Length)
+
+    End Function
+
+    ''' <summary>
+    ''' Absolute square sum of vector elements.
+    ''' </summary>
+    ''' <param name="vector"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    <System.Runtime.CompilerServices.Extension()> Public Function AbsSqrSumY(vector As Double()) As Double
+
+        Return Yeppp.Core.SumSquares_V64f_S64f(vector, 0, vector.Length)
+
+    End Function
+
+    ''' <summary>
+    ''' Multiplies vector elements.
+    ''' </summary>
+    ''' <param name="vector"></param>
+    ''' <param name="vector2"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    <System.Runtime.CompilerServices.Extension()> Public Function MultiplyY(vector As Double(), vector2 As Double()) As Double()
+
+        Dim vector0(vector.Length - 1) As Double
+
+        Yeppp.Core.Multiply_V64fV64f_V64f(vector, 0, vector2, 0, vector0, 0, vector.Length)
+
+        Return vector0
+
+    End Function
+
+    ''' <summary>
+    ''' Subtracts vector elements.
+    ''' </summary>
+    ''' <param name="vector"></param>
+    ''' <param name="vector2"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    <System.Runtime.CompilerServices.Extension()> Public Function SubtractY(vector As Double(), vector2 As Double()) As Double()
+
+        Dim vector0(vector.Length - 1) As Double
+
+        Yeppp.Core.Subtract_V64fV64f_V64f(vector, 0, vector2, 0, vector0, 0, vector.Length)
+
+        Return vector0
+
+    End Function
+
+    ''' <summary>
+    ''' Multiplies vector elements by a constant.
+    ''' </summary>
+    ''' <param name="vector"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    <System.Runtime.CompilerServices.Extension()> Public Function MultiplyConstY(vector As Double(), constant As Double) As Double()
+
+        Dim vector0(vector.Length - 1) As Double
+
+        Yeppp.Core.Multiply_V64fS64f_V64f(vector, 0, constant, vector0, 0, vector.Length)
+
+        Return vector0
+
+    End Function
+
+    ''' <summary>
+    ''' Multiplies vector elements by a constant.
+    ''' </summary>
+    ''' <param name="vector"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    <System.Runtime.CompilerServices.Extension()> Public Function NormalizeY(vector As Double()) As Double()
+
+        Dim vector0(vector.Length - 1) As Double
+
+        Dim sum As Double = Yeppp.Core.SumAbs_V64f_S64f(vector, 0, vector.Length)
+
+        Yeppp.Core.Multiply_V64fS64f_V64f(vector, 0, 1 / sum, vector0, 0, vector.Length)
+
+        Return vector0
+
+    End Function
+
+
+    ''' <summary>
+    ''' Adds vector elements.
+    ''' </summary>
+    ''' <param name="vector"></param>
+    ''' <param name="vector2"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    <System.Runtime.CompilerServices.Extension()> Public Function AddY(vector As Double(), vector2 As Double()) As Double()
+
+        Dim vector0 As Double() = vector.Clone()
+
+        Yeppp.Core.Add_IV64fV64f_IV64f(vector0, 0, vector2, 0, vector.Length)
+
+        Return vector0
+
     End Function
 
 End Module

@@ -44,7 +44,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Public Overrides Function Flash_PT(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
             Dim i, n, ecount As Integer
-            Dim Pb, Pd, Pmin, Pmax, Px, soma_x, soma_y As Double
+            Dim Pb, Pd, Pmin, Pmax, Px As Double
             Dim d1, d2 As Date, dt As TimeSpan
             Dim L, V, Vant As Double
 
@@ -171,24 +171,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 i += 1
             Loop Until i = n + 1
 
-            i = 0
-            soma_x = 0
-            soma_y = 0
-            Do
-                soma_x = soma_x + Vx(i)
-                soma_y = soma_y + Vy(i)
-                i = i + 1
-            Loop Until i = n + 1
-            i = 0
-            Do
-                Vx(i) = Vx(i) / soma_x
-                Vy(i) = Vy(i) / soma_y
-                i = i + 1
-            Loop Until i = n + 1
+            Vx = Vx.NormalizeY
+            Vy = Vy.NormalizeY
 
             ecount = 0
             Dim convergiu As Integer = 0
-            Dim F, dF As Double
+            Dim F, dF, e1, e2, e3 As Double
 
             Do
 
@@ -209,34 +197,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     i += 1
                 Loop Until i = n + 1
 
-                i = 0
-                soma_x = 0
-                soma_y = 0
-                Do
-                    soma_x = soma_x + Vx(i)
-                    soma_y = soma_y + Vy(i)
-                    i = i + 1
-                Loop Until i = n + 1
-                i = 0
-                Do
-                    Vx(i) = Vx(i) / soma_x
-                    Vy(i) = Vy(i) / soma_y
-                    i = i + 1
-                Loop Until i = n + 1
+                Vx = Vx.NormalizeY
+                Vy = Vy.NormalizeY
 
-                Dim e1 As Double = 0
-                Dim e2 As Double = 0
-                Dim e3 As Double = 0
-                i = 0
-                Do
-                    e1 = e1 + (Vx(i) - Vx_ant(i))
-                    e2 = e2 + (Vy(i) - Vy_ant(i))
-                    i = i + 1
-                Loop Until i = n + 1
+                e1 = Vx.SubtractY(Vx_ant).AbsSumY
+                e2 = Vy.SubtractY(Vy_ant).AbsSumY
 
                 e3 = (V - Vant)
 
-                If Double.IsNaN(Math.Abs(e1) + Math.Abs(e2)) Then
+                If Double.IsNaN(e1 + e2) Then
 
                     Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
 

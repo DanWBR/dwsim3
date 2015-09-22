@@ -17,6 +17,7 @@
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 Imports FileHelpers
 Imports System.Linq
+Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.PR
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
@@ -120,7 +121,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             R = 8.314
 
-            Dim i, j As Integer
+            Dim i As Integer
             i = 0
             Do
                 Tc(i) = VTc(i)
@@ -138,33 +139,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 i = i + 1
             Loop Until i = n + 1
 
-            i = 0
-            Do
-                j = 0
-                Do
-                    a(i, j) = (ai(i) * ai(j)) ^ 0.5 * (1 - VKij(i, j))
-                    j = j + 1
-                Loop Until j = n + 1
-                i = i + 1
-            Loop Until i = n + 1
+            a = Calc_SUM1(n, ai, VKij)
 
-            i = 0
-            Do
-                aml2(i) = 0
-                i = i + 1
-            Loop Until i = n + 1
+            Dim tmpa As Object = Calc_SUM2(n, Vx, a)
 
-            i = 0
-            Dim aml = 0.0#
-            Do
-                j = 0
-                Do
-                    aml = aml + Vx(i) * Vx(j) * a(i, j)
-                    aml2(i) = aml2(i) + Vx(j) * a(j, i)
-                    j = j + 1
-                Loop Until j = n + 1
-                i = i + 1
-            Loop Until i = n + 1
+            aml2 = tmpa(0)
+            Dim aml As Double = tmpa(1)
 
             i = 0
             Dim bml = 0.0#
