@@ -236,6 +236,46 @@ Module Extensions
     End Function
 
     ''' <summary>
+    ''' Computes the natural logarithm of each vector element.
+    ''' </summary>
+    ''' <param name="vector"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    <System.Runtime.CompilerServices.Extension()> Public Function LogY(vector As Double()) As Double()
+
+        Dim vector2(vector.Length - 1) As Double
+
+        Yeppp.Math.Log_V64f_V64f(vector, 0, vector2, 0, vector.Length)
+
+        Return vector2
+
+    End Function
+
+    ''' <summary>
+    ''' Returns the smallest element in the vector.
+    ''' </summary>
+    ''' <param name="vector"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    <System.Runtime.CompilerServices.Extension()> Public Function MinY(vector As Double()) As Double
+
+        Return Yeppp.Core.Min_V64f_S64f(vector, 0, vector.Length)
+
+    End Function
+
+    ''' <summary>
+    ''' Returns the biggest element in the vector.
+    ''' </summary>
+    ''' <param name="vector"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    <System.Runtime.CompilerServices.Extension()> Public Function MaxY(vector As Double()) As Double
+
+        Return Yeppp.Core.Max_V64f_S64f(vector, 0, vector.Length)
+
+    End Function
+
+    ''' <summary>
     ''' Sum of the vector elements.
     ''' </summary>
     ''' <param name="vector"></param>
@@ -272,6 +312,22 @@ Module Extensions
     End Function
 
     ''' <summary>
+    ''' Negates the elements of a vector.
+    ''' </summary>
+    ''' <param name="vector"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    <System.Runtime.CompilerServices.Extension()> Public Function NegateY(vector As Double()) As Double()
+
+        Dim vector0(vector.Length - 1) As Double
+
+        Yeppp.Core.Negate_V64f_V64f(vector, 0, vector0, 0, vector.Length)
+
+        Return vector0
+
+    End Function
+
+    ''' <summary>
     ''' Multiplies vector elements.
     ''' </summary>
     ''' <param name="vector"></param>
@@ -289,6 +345,28 @@ Module Extensions
     End Function
 
     ''' <summary>
+    ''' Divides vector elements.
+    ''' </summary>
+    ''' <param name="vector"></param>
+    ''' <param name="vector2"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    <System.Runtime.CompilerServices.Extension()> Public Function DivideY(vector As Double(), vector2 As Double()) As Double()
+
+        Dim vector0(vector.Length - 1) As Double
+        Dim invvector2(vector.Length - 1) As Double
+
+        For i As Integer = 0 To vector2.Length - 1
+            invvector2(i) = 1 / vector2(i)
+        Next
+
+        Yeppp.Core.Multiply_V64fV64f_V64f(vector, 0, invvector2, 0, vector0, 0, vector.Length)
+
+        Return vector0
+
+    End Function
+
+    ''' <summary>
     ''' Subtracts vector elements.
     ''' </summary>
     ''' <param name="vector"></param>
@@ -300,6 +378,37 @@ Module Extensions
         Dim vector0(vector.Length - 1) As Double
 
         Yeppp.Core.Subtract_V64fV64f_V64f(vector, 0, vector2, 0, vector0, 0, vector.Length)
+
+        Return vector0
+
+    End Function
+
+    <System.Runtime.CompilerServices.Extension()> Public Function SubtractInversesY(vector As Double(), vector2 As Double()) As Double()
+
+        Dim vector0(vector.Length - 1) As Double
+        Dim invvector1(vector.Length - 1), invvector2(vector.Length - 1) As Double
+
+        For i As Integer = 0 To vector.Length - 1
+            invvector1(i) = 1 / vector(i)
+            invvector2(i) = 1 / vector2(i)
+        Next
+
+        Yeppp.Core.Subtract_V64fV64f_V64f(invvector1, 0, invvector2, 0, vector0, 0, vector.Length)
+
+        Return vector0
+
+    End Function
+
+    <System.Runtime.CompilerServices.Extension()> Public Function SubtractInverseY(vector As Double(), vector2 As Double()) As Double()
+
+        Dim vector0(vector.Length - 1) As Double
+        Dim invvector2(vector.Length - 1) As Double
+
+        For i As Integer = 0 To vector.Length - 1
+            invvector2(i) = 1 / vector2(i)
+        Next
+
+        Yeppp.Core.Subtract_V64fV64f_V64f(vector, 0, invvector2, 0, vector0, 0, vector.Length)
 
         Return vector0
 
@@ -339,7 +448,6 @@ Module Extensions
 
     End Function
 
-
     ''' <summary>
     ''' Adds vector elements.
     ''' </summary>
@@ -354,6 +462,62 @@ Module Extensions
         Yeppp.Core.Add_IV64fV64f_IV64f(vector0, 0, vector2, 0, vector.Length)
 
         Return vector0
+
+    End Function
+
+    ''' <summary>
+    ''' Converts a two-dimensional array to a jagged array.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="twoDimensionalArray"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    <System.Runtime.CompilerServices.Extension> Public Function ToJaggedArray(Of T)(twoDimensionalArray As t(,)) As t()()
+
+        Dim rowsFirstIndex As Integer = twoDimensionalArray.GetLowerBound(0)
+        Dim rowsLastIndex As Integer = twoDimensionalArray.GetUpperBound(0)
+        Dim numberOfRows As Integer = rowsLastIndex + 1
+
+        Dim columnsFirstIndex As Integer = twoDimensionalArray.GetLowerBound(1)
+        Dim columnsLastIndex As Integer = twoDimensionalArray.GetUpperBound(1)
+        Dim numberOfColumns As Integer = columnsLastIndex + 1
+
+        Dim jaggedArray As T()() = New T(numberOfRows - 1)() {}
+        For i As Integer = rowsFirstIndex To rowsLastIndex
+            jaggedArray(i) = New T(numberOfColumns - 1) {}
+
+            For j As Integer = columnsFirstIndex To columnsLastIndex
+                jaggedArray(i)(j) = twoDimensionalArray(i, j)
+            Next
+        Next
+        Return jaggedArray
+
+    End Function
+
+    ''' <summary>
+    ''' Converts a jagged array to a two-dimensional array.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="jaggedArray"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    <System.Runtime.CompilerServices.Extension> Public Function FromJaggedArray(Of T)(jaggedArray As t()()) As t(,)
+
+        Dim rowsFirstIndex As Integer = jaggedArray.GetLowerBound(0)
+        Dim rowsLastIndex As Integer = jaggedArray.GetUpperBound(0)
+        Dim numberOfRows As Integer = rowsLastIndex + 1
+
+        Dim columnsFirstIndex As Integer = jaggedArray(0).GetLowerBound(0)
+        Dim columnsLastIndex As Integer = jaggedArray(0).GetUpperBound(0)
+        Dim numberOfColumns As Integer = columnsLastIndex + 1
+
+        Dim twoDimensionalArray As T(,) = New T(numberOfRows - 1, numberOfColumns - 1) {}
+        For i As Integer = rowsFirstIndex To rowsLastIndex
+            For j As Integer = columnsFirstIndex To columnsLastIndex
+                twoDimensionalArray(i, j) = jaggedArray(i)(j)
+            Next
+        Next
+        Return twoDimensionalArray
 
     End Function
 

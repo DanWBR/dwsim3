@@ -1276,10 +1276,8 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
 
         Public Overrides Function Flash_PV(ByVal Vz As Double(), ByVal P As Double, ByVal V As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
-            Dim Vn(1) As String, Vx(1), Vy(1), Vx_ant(1), Vy_ant(1), Vp(1), Ki(1), Ki_ant(1), fi(1) As Double
             Dim i, n, ecount As Integer
             Dim d1, d2 As Date, dt As TimeSpan
-            Dim soma_x, soma_y As Double
             Dim L, Lf, Vf, T, Tf, deltaT As Double
             Dim e1 As Double
             Dim AF As Double = 1
@@ -1299,7 +1297,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             Lf = 1 - Vf
             Tf = T
 
-            ReDim Vn(n), Vx(n), Vy(n), Vx_ant(n), Vy_ant(n), Vp(n), Ki(n), fi(n)
+            Dim Vn(n) As String, Vx(n), Vy(n), Vx_ant(n), Vy_ant(n), Vp(n), Ki(n), fi(n) As Double
             Dim Vt(n), VTc(n), Tmin, Tmax, dFdT, Tsat(n) As Double
 
             Vn = PP.RET_VNAMES()
@@ -1310,22 +1308,17 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             Tmax = 0.0#
 
             If Tref = 0.0# Then
-
                 i = 0
-                Tref = 0
+                Tref = 0.0#
                 Do
-                    Tsat(i) = PP.AUX_TSATi(P, i)
-                    Tref += Vz(i) * Tsat(i)
+                    Tref += 0.8 * Vz(i) * VTc(i)
                     Tmin += 0.1 * Vz(i) * VTc(i)
-                    Tmax += 1.0 * Vz(i) * VTc(i)
+                    Tmax += 2.0 * Vz(i) * VTc(i)
                     i += 1
                 Loop Until i = n + 1
-
             Else
-
                 Tmin = Tref - 50
                 Tmax = Tref + 50
-
             End If
 
             T = Tref
@@ -1368,20 +1361,8 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                 i += 1
             Loop Until i = n + 1
 
-            i = 0
-            soma_x = 0
-            soma_y = 0
-            Do
-                soma_x = soma_x + Vx(i)
-                soma_y = soma_y + Vy(i)
-                i = i + 1
-            Loop Until i = n + 1
-            i = 0
-            Do
-                Vx(i) = Vx(i) / soma_x
-                Vy(i) = Vy(i) / soma_y
-                i = i + 1
-            Loop Until i = n + 1
+            Vx = Vx.NormalizeY()
+            Vy = Vy.NormalizeY()
 
             If PP.AUX_IS_SINGLECOMP(Vz) Then
                 WriteDebugInfo("PV Flash [NL]: Converged in 1 iteration.")
@@ -1406,7 +1387,6 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     Dim cont_int = 0
                     Do
 
-
                         Ki = PP.DW_CalcKvalue(Vx, Vy, T, P)
 
                         marcador = 0
@@ -1416,35 +1396,41 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                         stmp4_ant = stmp4
 
                         If V = 0 Then
-                            i = 0
-                            stmp4 = 0
-                            Do
-                                stmp4 = stmp4 + Ki(i) * Vx(i)
-                                i = i + 1
-                            Loop Until i = n + 1
+                            stmp4 = Ki.MultiplyY(Vx).SumY
+                            'i = 0
+                            'stmp4 = 0
+                            'Do
+                            '    stmp4 = stmp4 + Ki(i) * Vx(i)
+                            '    i = i + 1
+                            'Loop Until i = n + 1
                         Else
-                            i = 0
-                            stmp4 = 0
-                            Do
-                                stmp4 = stmp4 + Vy(i) / Ki(i)
-                                i = i + 1
-                            Loop Until i = n + 1
+                            stmp4 = Vy.DivideY(Ki).SumY
+                            'i = 0
+                            'stmp4 = 0
+                            'Do
+                            '    stmp4 = stmp4 + Vy(i) / Ki(i)
+                            '    i = i + 1
+                            'Loop Until i = n + 1
                         End If
 
                         If V = 0 Then
-                            i = 0
-                            Do
-                                Vy_ant(i) = Vy(i)
-                                Vy(i) = Ki(i) * Vx(i) / stmp4
-                                i = i + 1
-                            Loop Until i = n + 1
+                            Vy_ant = Vy.Clone
+                            Vy = Ki.MultiplyY(Vx).MultiplyConstY(1 / stmp4)
+                            'i = 0
+                            'Do
+                            '    Vy_ant(i) = Vy(i)
+                            '    Vy(i) = Ki(i) * Vx(i) / stmp4
+                            '    i = i + 1
+                            'Loop Until i = n + 1
                         Else
-                            i = 0
-                            Do
-                                Vx_ant(i) = Vx(i)
-                                Vx(i) = (Vy(i) / Ki(i)) / stmp4
-                                i = i + 1
-                            Loop Until i = n + 1
+                            Vx_ant = Vx.Clone
+                            Vx = Vy.DivideY(Ki).MultiplyConstY(1 / stmp4)
+                            'i = 0
+                            'Do
+                            '    Vx_ant(i) = Vx(i)
+                            '    Vx(i) = (Vy(i) / Ki(i)) / stmp4
+                            '    i = i + 1
+                            'Loop Until i = n + 1
                         End If
 
                         marcador2 = 0
@@ -1469,9 +1455,10 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     K1 = PP.DW_CalcKvalue(Vx, Vy, T, P)
                     K2 = PP.DW_CalcKvalue(Vx, Vy, T + 0.01, P)
 
-                    For i = 0 To n
-                        dKdT(i) = (K2(i) - K1(i)) / 0.01
-                    Next
+                    dKdT = K2.SubtractY(K1).MultiplyConstY(1 / 0.01)
+                    'For i = 0 To n
+                    '    dKdT(i) = (K2(i) - K1(i)) / 0.01
+                    'Next
 
                     fval = stmp4 - 1
 
@@ -1481,9 +1468,11 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     dFdT = 0
                     Do
                         If V = 0 Then
-                            dFdT = dFdT + Vx(i) * dKdT(i)
+                            dFdT = Vx.MultiplyY(dKdT).SumY
+                            'dFdT = dFdT + Vx(i) * dKdT(i)
                         Else
-                            dFdT = dFdT - Vy(i) / (Ki(i) ^ 2) * dKdT(i)
+                            dFdT = -Vy.DivideY(Ki).DivideY(Ki).MultiplyY(dKdT).SumY
+                            'dFdT = dFdT - Vy(i) / (Ki(i) ^ 2) * dKdT(i)
                         End If
                         i = i + 1
                     Loop Until i = n + 1
@@ -1524,70 +1513,65 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                         End If
                         i += 1
                     Loop Until i = n + 1
-                    i = 0
-                    soma_x = 0
-                    soma_y = 0
-                    Do
-                        soma_x = soma_x + Vx(i)
-                        soma_y = soma_y + Vy(i)
-                        i = i + 1
-                    Loop Until i = n + 1
-                    i = 0
-                    Do
-                        Vx(i) = Vx(i) / soma_x
-                        Vy(i) = Vy(i) / soma_y
-                        i = i + 1
-                    Loop Until i = n + 1
+
+                    Vx = Vx.NormalizeY()
+                    Vy = Vy.NormalizeY()
 
                     If V <= 0.5 Then
 
-                        i = 0
-                        stmp4 = 0
-                        Do
-                            stmp4 = stmp4 + Ki(i) * Vx(i)
-                            i = i + 1
-                        Loop Until i = n + 1
+                        stmp4 = Ki.MultiplyY(Vx).SumY
+                        'i = 0
+                        'stmp4 = 0
+                        'Do
+                        '    stmp4 = stmp4 + Ki(i) * Vx(i)
+                        '    i = i + 1
+                        'Loop Until i = n + 1
 
                         Dim K1(n), K2(n), dKdT(n) As Double
 
                         K1 = PP.DW_CalcKvalue(Vx, Vy, T, P)
                         K2 = PP.DW_CalcKvalue(Vx, Vy, T + 0.1, P)
 
-                        For i = 0 To n
-                            dKdT(i) = (K2(i) - K1(i)) / (0.1)
-                        Next
+                        dKdT = K2.SubtractY(K1).MultiplyConstY(1 / 0.1)
+                        'For i = 0 To n
+                        '    dKdT(i) = (K2(i) - K1(i)) / (0.1)
+                        'Next
 
-                        i = 0
-                        dFdT = 0
-                        Do
-                            dFdT = dFdT + Vx(i) * dKdT(i)
-                            i = i + 1
-                        Loop Until i = n + 1
+                        dFdT = Vx.MultiplyY(dKdT).SumY
+                        'i = 0
+                        'dFdT = 0
+                        'Do
+                        '    dFdT = dFdT + Vx(i) * dKdT(i)
+                        '    i = i + 1
+                        'Loop Until i = n + 1
 
                     Else
 
-                        i = 0
-                        stmp4 = 0
-                        Do
-                            stmp4 = stmp4 + Vy(i) / Ki(i)
-                            i = i + 1
-                        Loop Until i = n + 1
+                        stmp4 = Vy.DivideY(Ki).SumY
+                        'i = 0
+                        'stmp4 = 0
+                        'Do
+                        '    stmp4 = stmp4 + Vy(i) / Ki(i)
+                        '    i = i + 1
+                        'Loop Until i = n + 1
 
                         Dim K1(n), K2(n), dKdT(n) As Double
 
                         K1 = PP.DW_CalcKvalue(Vx, Vy, T, P)
                         K2 = PP.DW_CalcKvalue(Vx, Vy, T + 1, P)
 
-                        For i = 0 To n
-                            dKdT(i) = (K2(i) - K1(i)) / (1)
-                        Next
+                        dKdT = K2.SubtractY(K1)
+                        'For i = 0 To n
+                        '    dKdT(i) = (K2(i) - K1(i)) / (1)
+                        'Next
 
-                        i = 0
-                        dFdT = 0
-                        Do
-                            dFdT = dFdT - Vy(i) / (Ki(i) ^ 2) * dKdT(i)
-                            i = i + 1
-                        Loop Until i = n + 1
+                        dFdT = -Vy.DivideY(Ki).DivideY(Ki).MultiplyY(dKdT).SumY
+                        'i = 0
+                        'dFdT = 0
+                        'Do
+                        '    dFdT = dFdT - Vy(i) / (Ki(i) ^ 2) * dKdT(i)
+                        '    i = i + 1
+                        'Loop Until i = n + 1
 
                     End If
 
@@ -1604,12 +1588,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                         T = T + deltaT
                     End If
 
-                    e1 = 0
-                    For i = 0 To n
-                        e1 += Math.Abs(Vx(i) - Vx_ant(i))
-                        e1 += Math.Abs(Vy(i) - Vy_ant(i))
-                    Next
-                    e1 += Math.Abs(T - Tant)
+                    e1 = Vx.SubtractY(Vx_ant).AbsSumY + Vy.SubtractY(Vy_ant).AbsSumY + Math.Abs(T - Tant)
 
                     WriteDebugInfo("PV Flash [NL]: Iteration #" & ecount & ", T = " & T & ", VF = " & V)
 
