@@ -19,7 +19,7 @@ Imports DWSIM.DWSIM.Outros
 
     Private Sub FormVBScript_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Me.Load
 
-        reader = New Jolt.XmlDocCommentReader(Assembly.GetExecutingAssembly())
+        If Not DWSIM.App.IsRunningOnMono Then reader = New Jolt.XmlDocCommentReader(Assembly.GetExecutingAssembly())
 
         ' Get the installed fonts collection.
         Dim installed_fonts As New InstalledFontCollection

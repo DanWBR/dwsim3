@@ -449,6 +449,8 @@ Imports System.Runtime.Serialization
 
         'draw the actual objects onto the page, on top of the grid
 
+        If Me.SelectedObject Is Nothing Then Me.SelectedObjects.Clear()
+
         For Each gr As GraphicObject In Me.SelectedObjects.Values
             Me.drawingObjects.DrawSelectedObject(g, gr, Me.Zoom)
         Next
@@ -563,6 +565,8 @@ Imports System.Runtime.Serialization
             ByVal e As MouseEventArgs) _
             Handles MyBase.MouseDown
 
+        Me.Invalidate()
+
         Dim mousePT As Point = gscTogoc(e.X, e.Y)
         dragStart = New Point(e.X, e.Y)
         Me.SelectedObject = Me.drawingObjects.FindObjectAtPoint(mousePT)
@@ -588,8 +592,7 @@ Imports System.Runtime.Serialization
                 justselected = False
             End If
         End If
-        'Me.Invalidate()
-
+        
         If Not m_SelectedObject Is Nothing Then
             If e.Button And Windows.Forms.MouseButtons.Right Then
                 'rotating = True
