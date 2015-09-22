@@ -86,16 +86,16 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
         End Function
 
-        Shared Function Calc_SUM2(n As Integer, Vx As Double(), a As Double(,)) As Double()
+      Shared Function Calc_SUM2(n As Integer, Vx As Double(), a As Double(,)) As Object
 
-            Dim saml, aml(n), aml2(n + 1) As Double
+            Dim saml, aml(n), aml2(n) As Double
 
             If My.Settings.EnableParallelProcessing Then
                 Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism, .TaskScheduler = My.MyApplication.AppTaskScheduler}
                 Parallel.For(0, n + 1, poptions, Sub(k)
                                                      For j As Integer = 0 To n
-                                                         aml(k) = Vx(k) * Vx(j) * a(k, j)
-                                                         aml2(k) = aml2(k) + Vx(j) * a(j, k)
+                                                         aml(k) += Vx(k) * Vx(j) * a(k, j)
+                                                         aml2(k) += Vx(j) * a(j, k)
                                                      Next
                                                  End Sub)
                 saml = aml.SumY
@@ -113,9 +113,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
                 Loop Until i = n + 1
             End If
 
-            aml2(n + 1) = saml
-
-            Return aml2
+            Return {aml2, saml}
 
         End Function
 
