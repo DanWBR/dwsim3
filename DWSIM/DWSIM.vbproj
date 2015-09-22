@@ -960,7 +960,7 @@
     </Compile>
     <Compile Include="Objects\PropertyPackages\SRK\Helper Classes\SRK.vb" />
     <Compile Include="Objects\PropertyPackages\SRK\SRKPropertyPackage.vb" />
-    <Compile Include="Objects\Classes\Shared\Shared Functions.vb" />
+    <Compile Include="Objects\Classes\Shared\SharedFunctions.vb" />
     <Compile Include="Objects\Classes\Optimization\SensitivityAnalysis.vb" />
     <Compile Include="Solvers\AzureSolverClient.vb" />
     <Compile Include="Solvers\CommandLineProcessor.vb" />
