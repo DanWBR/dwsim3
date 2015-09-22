@@ -44,7 +44,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
                                                          auxtmp(k) += Vz(k) * Vz(l) * (1 - VKij(k, l)) * (ci(l) * (ai(k) * Tc(l) / Pc(l)) ^ 0.5 + ci(k) * (ai(l) * Tc(k) / Pc(k)) ^ 0.5)
                                                      Next
                                                  End Sub)
-                aux2 = auxtmp.Sum
+                aux2 = auxtmp.SumY
             Else
                 Dim i, j As Integer
                 aux2 = 0.0#
@@ -62,6 +62,64 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
         End Function
 
+        Shared Function Calc_SUM1(n As Integer, ai As Double(), vkij As Double(,))
+
+            Dim a(n, n) As Double
+
+            If My.Settings.EnableParallelProcessing Then
+                Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism, .TaskScheduler = My.MyApplication.AppTaskScheduler}
+                Parallel.For(0, n + 1, poptions, Sub(k)
+                                                     For j As Integer = 0 To n
+                                                         a(k, j) = (ai(k) * ai(j)) ^ 0.5 * (1 - vkij(k, j))
+                                                     Next
+                                                 End Sub)
+            Else
+                Dim i, j As Integer
+                i = 0
+                Do
+                    j = 0
+                    Do
+                        a(i, j) = (ai(i) * ai(j)) ^ 0.5 * (1 - vkij(i, j))
+                        j = j + 1
+                    Loop Until j = n + 1
+                    i = i + 1
+                Loop Until i = n + 1
+            End If
+
+            Return a
+
+        End Function
+
+        Shared Function Calc_SUM2(n As Integer, Vx As Double(), a As Double(,)) As Object
+
+            Dim saml, aml(n), aml2(n) As Double
+
+            If My.Settings.EnableParallelProcessing Then
+                Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism, .TaskScheduler = My.MyApplication.AppTaskScheduler}
+                Parallel.For(0, n + 1, poptions, Sub(k)
+                                                     For j As Integer = 0 To n
+                                                         aml(k) += Vx(k) * Vx(j) * a(k, j)
+                                                         aml2(k) += Vx(j) * a(j, k)
+                                                     Next
+                                                 End Sub)
+                saml = aml.SumY
+            Else
+                Dim i, j As Integer
+                i = 0
+                Do
+                    j = 0
+                    Do
+                        saml = saml + Vx(i) * Vx(j) * a(i, j)
+                        aml2(i) = aml2(i) + Vx(j) * a(j, i)
+                        j = j + 1
+                    Loop Until j = n + 1
+                    i = i + 1
+                Loop Until i = n + 1
+            End If
+
+            Return {aml2, saml}
+
+        End Function
 
         Shared Function ReturnParameters(ByVal T As Double, ByVal P As Double, ByVal Vx As Array, ByVal VKij As Object, ByVal VTc As Array, ByVal VPc As Array, ByVal Vw As Array)
 
@@ -193,16 +251,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
                 ci(i) = 0.37464 + 1.54226 * w(i) - 0.26992 * w(i) ^ 2
                 i = i + 1
             Loop Until i = n + 1
-
-            i = 0
-            Do
-                j = 0
-                Do
-                    a(i, j) = (ai(i) * ai(j)) ^ 0.5 * (1 - VKij(i, j))
-                    j = j + 1
-                Loop Until j = n + 1
-                i = i + 1
-            Loop Until i = n + 1
+            
+            a = Calc_SUM1(n, ai, VKij)
 
             i = 0
             Dim am = 0.0#
@@ -214,6 +264,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
                 Loop Until j = n + 1
                 i = i + 1
             Loop Until i = n + 1
+
 
             i = 0
             Dim bm = 0.0#
@@ -295,7 +346,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
             R = 8.314
 
-            Dim i, j As Integer
+            Dim i As Integer
             i = 0
             Do
                 Tc(i) = VTc(i)
@@ -313,33 +364,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
                 i = i + 1
             Loop Until i = n + 1
 
-            i = 0
-            Do
-                j = 0
-                Do
-                    a(i, j) = (ai(i) * ai(j)) ^ 0.5 * (1 - VKij(i, j))
-                    j = j + 1
-                Loop Until j = n + 1
-                i = i + 1
-            Loop Until i = n + 1
+            a = Calc_SUM1(n, ai, VKij)
 
-            i = 0
-            Do
-                aml2(i) = 0
-                i = i + 1
-            Loop Until i = n + 1
+            Dim tmpa As Object = Calc_SUM2(n, Vx, a)
 
-            i = 0
-            aml = 0
-            Do
-                j = 0
-                Do
-                    aml = aml + Vx(i) * Vx(j) * a(i, j)
-                    aml2(i) = aml2(i) + Vx(j) * a(j, i)
-                    j = j + 1
-                Loop Until j = n + 1
-                i = i + 1
-            Loop Until i = n + 1
+            aml2 = tmpa(0)
+            aml = tmpa(1)
 
             i = 0
             bml = 0
@@ -578,12 +608,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             n = UBound(Vx)
 
             Dim ai(n), bi(n), tmp(n + 1), a(n, n), b(n, n) As Double
-            Dim aml2(n), amv2(n) As Double
+            Dim aml, aml2(n), amv2(n) As Double
             Dim Tc(n), Pc(n), W(n), alpha(n), m(n), Tr(n) As Double
 
             R = 8.314
 
-            Dim i, j As Integer
+            Dim i As Integer
             i = 0
             Do
                 Tc(i) = VTc(i)
@@ -601,33 +631,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
                 i = i + 1
             Loop Until i = n + 1
 
-            i = 0
-            Do
-                j = 0
-                Do
-                    a(i, j) = (ai(i) * ai(j)) ^ 0.5 * (1 - VKij(i, j))
-                    j = j + 1
-                Loop Until j = n + 1
-                i = i + 1
-            Loop Until i = n + 1
+            a = Calc_SUM1(n, ai, VKij)
 
-            i = 0
-            Do
-                aml2(i) = 0
-                i = i + 1
-            Loop Until i = n + 1
+            Dim tmpa As Object = Calc_SUM2(n, Vx, a)
 
-            i = 0
-            Dim aml = 0.0#
-            Do
-                j = 0
-                Do
-                    aml = aml + Vx(i) * Vx(j) * a(i, j)
-                    aml2(i) = aml2(i) + Vx(j) * a(j, i)
-                    j = j + 1
-                Loop Until j = n + 1
-                i = i + 1
-            Loop Until i = n + 1
+            aml2 = tmpa(0)
+            aml = tmpa(1)
 
             i = 0
             Dim bml = 0.0#

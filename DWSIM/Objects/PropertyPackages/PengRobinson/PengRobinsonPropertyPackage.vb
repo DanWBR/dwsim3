@@ -1492,14 +1492,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim i As Integer = 0
             Dim l As Integer = 0
 
-            i = 0
-            For Each cp As ClassesBasicasTermodinamica.Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                l = 0
-                For Each cp2 As ClassesBasicasTermodinamica.Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                    val(i, l) = Me.RET_KIJ(cp.Nome, cp2.Nome)
-                    l = l + 1
+            Dim vn As String() = RET_VNAMES()
+            Dim n As Integer = vn.Length - 1
+
+            For i = 0 To n
+                For l = 0 To n
+                    val(i, l) = Me.RET_KIJ(vn(i), vn(l))
                 Next
-                i = i + 1
             Next
 
             Return val
@@ -1846,7 +1845,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim n As Integer = UBound(lnfug)
             Dim fugcoeff(n) As Double
 
-            Yeppp.Math.Exp_V64f_V64f(lnfug, 0, fugcoeff, 0, lnfug.Length)
+            fugcoeff = lnfug.ExpY
             
             DWSIM.App.WriteToConsole("Result: " & fugcoeff.ToArrayString(), 2)
 

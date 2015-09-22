@@ -81,6 +81,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             Next
 
             Return x
+
         End Function
 
     End Class
@@ -2282,7 +2283,6 @@ restart:            fx = Me.FunctionValue(xvar)
 
                 If doparallel Then
                     My.MyApplication.IsRunningParallelTasks = True
-                    'If My.Settings.EnableGPUProcessing Then My.MyApplication.gpu.EnableMultithreading()
                     Try
                         Dim t1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                                  Sub(ipar)
@@ -2296,11 +2296,6 @@ restart:            fx = Me.FunctionValue(xvar)
                         t1.Wait()
                     Catch ae As AggregateException
                         Throw ae.Flatten().InnerException
-                    Finally
-                        'If My.Settings.EnableGPUProcessing Then
-                        '    My.MyApplication.gpu.DisableMultithreading()
-                        '    My.MyApplication.gpu.FreeAll()
-                        'End If
                     End Try
                     My.MyApplication.IsRunningParallelTasks = False
                 Else
@@ -2317,15 +2312,8 @@ restart:            fx = Me.FunctionValue(xvar)
                     If Double.IsNaN(Tj(i)) Or Double.IsInfinity(Tj(i)) Then Tj(i) = Tj_ant(i)
                 Next
 
-
                 t_error_ant = t_error
-                t_error = 0
-                For i = 0 To ns
-                    For j = 1 To nc
-                        If Double.IsNaN(K(i)(j - 1)) Or Double.IsInfinity(K(i)(j - 1)) Then K(i)(j - 1) = pp.AUX_PVAPi(j - 1, Tj(i)) / P(i)
-                    Next
-                    t_error += Abs(Tj(i) - Tj_ant(i)) ^ 2
-                Next
+                t_error = Tj.SubtractY(Tj_ant).AbsSqrSumY
 
                 For i = ns To 0 Step -1
                     sumy(i) = 0
@@ -2340,16 +2328,14 @@ restart:            fx = Me.FunctionValue(xvar)
                 Next
 
                 For i = 0 To ns
-                    For j = 0 To nc - 1
-                        yc(i)(j) = yc(i)(j) / sumy(i)
-                    Next
+                    yc(i) = yc(i).MultiplyConstY(1 / sumy(i))
+                    'For j = 0 To nc - 1
+                    'yc(i)(j) = yc(i)(j) / sumy(i)
+                    'Next
                 Next
-
-                ''''''''''''''''''''
 
                 If doparallel Then
                     My.MyApplication.IsRunningParallelTasks = True
-                    'If My.Settings.EnableGPUProcessing Then My.MyApplication.gpu.EnableMultithreading()
                     Try
                         Dim t1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                                                      Sub(ipar)
@@ -2362,11 +2348,6 @@ restart:            fx = Me.FunctionValue(xvar)
                         t1.Wait()
                     Catch ae As AggregateException
                         Throw ae.Flatten().InnerException
-                    Finally
-                        'If My.Settings.EnableGPUProcessing Then
-                        '    My.MyApplication.gpu.DisableMultithreading()
-                        '    My.MyApplication.gpu.FreeAll()
-                        'End If
                     End Try
                     My.MyApplication.IsRunningParallelTasks = False
                 Else
@@ -2376,7 +2357,6 @@ restart:            fx = Me.FunctionValue(xvar)
                         Hv(i) = pp.DW_CalcEnthalpy(yc(i), Tj(i), P(i), PropertyPackages.State.Vapor) * pp.AUX_MMM(yc(i)) / 1000
                     Next
                 End If
-
 
                 'handle specs
 
@@ -2414,7 +2394,7 @@ restart:            fx = Me.FunctionValue(xvar)
                         val1 = sum3 - Q(ns)
                         sum4 = 0
                         For i = 0 To ns - 1
-                            sum4 += Q(i) '- Lj(ns) * Hl(ns)
+                            sum4 += Q(i)
                         Next
                         B = -(val1 - (sum4 - Vj(0) * Hv(0))) / Hl(ns)
                 End Select

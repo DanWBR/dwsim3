@@ -1,6 +1,8 @@
 ﻿Imports System.Reflection
 Imports System.Text.RegularExpressions
 Imports System.IO
+Imports Yeppp
+Imports System.Linq
 
 Public Class AboutBoxNET
 
@@ -22,6 +24,19 @@ Public Class AboutBoxNET
         LblOSInfo.Text = My.Computer.Info.OSFullName & ", Version " & My.Computer.Info.OSVersion & ", " & My.Computer.Info.OSPlatform & " Platform"
         LblCLRInfo.Text = "Microsoft .NET Framework, Runtime Version " & System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion.ToString()
         Lblmem.Text = (GC.GetTotalMemory(False) / 1024 / 1024).ToString("#") & " MB managed, " & (My.Application.Info.WorkingSet / 1024 / 1024).ToString("#") & " MB total"
+
+        Dim scrh As New System.Management.ManagementObjectSearcher("select * from Win32_Processor")
+
+        Lblcpuinfo.Text = System.Environment.GetEnvironmentVariable("PROCESSOR_IDENTIFIER")
+
+        For Each qinfo In scrh.Get()
+            Lblcpuinfo.Text += " / " & qinfo.Properties("Name").Value.ToString
+        Next
+
+        Lblcpusimd.Text = ""
+        For Each item In Library.GetCpuArchitecture.CpuSimdFeatures
+            Lblcpusimd.Text += item.ToString & " "
+        Next
 
         With Me.DataGridView1.Rows
             .Clear()
