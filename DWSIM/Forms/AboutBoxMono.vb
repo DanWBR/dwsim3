@@ -83,6 +83,7 @@ Public Class AboutBoxMONO
             .Add(New Object() {"ZedGraph", "5.1.0.32336", "2005", "John Champion", "https://sourceforge.net/projects/zedgraph", "LGPLv2", "http://www.gnu.org/licenses/lgpl.html"})
             .Add(New Object() {"ScintillaNET", "3.5.1.0", "2015", "Jacob Slusser", "https://github.com/jacobslusser/ScintillaNET", "MIT License", "http://www.opensource.org/licenses/mit-license.html"})
             .Add(New Object() {"Jolt.NET", "0.4", "2009", "Steve Guidi", "https://github.com/jacobslusser/ScintillaNET", "New BSD License (BSD)", "http://jolt.codeplex.com/license"})
+            .Add(New Object() {"Yeppp!", Yeppp.Library.GetVersion.ToString, "2014", "Marat Dukhan", "http://www.yeppp.info", "Yeppp! License", "http://www.yeppp.info/resources/yeppp-license.txt"})
         End With
         Me.DataGridView1.Sort(Me.DataGridView1.Columns(0), System.ComponentModel.ListSortDirection.Ascending)
 

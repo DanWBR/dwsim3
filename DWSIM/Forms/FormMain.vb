@@ -141,21 +141,28 @@ Public Class FormMain
             End If
         End If
 
-        'Check if DWSIM is running in Portable/Mono mode, then save settings to file.
-        If File.Exists(My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "default.ini") Or DWSIM.App.IsRunningOnMono Then
-            DWSIM.App.SaveSettings()
-        End If
-        My.Application.SaveMySettingsOnExit = True
-        My.Settings.Save()
-        'save an ini file for Excel/CAPE-OPEN compatibility purposes
-        Try
-            If Not Directory.Exists(My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data") Then
-                Directory.CreateDirectory(My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data")
+        If Not e.Cancel Then
+
+            'Check if DWSIM is running in Portable/Mono mode, then save settings to file.
+            If File.Exists(My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "default.ini") Or DWSIM.App.IsRunningOnMono Then
+                DWSIM.App.SaveSettings()
             End If
-            DWSIM.App.SaveSettings(My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data" & Path.DirectorySeparatorChar & "config.ini")
-        Catch ex As Exception
-            Console.WriteLine(ex.ToString)
-        End Try
+            My.Application.SaveMySettingsOnExit = True
+            My.Settings.Save()
+            'save an ini file for Excel/CAPE-OPEN compatibility purposes
+            Try
+                If Not Directory.Exists(My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data") Then
+                    Directory.CreateDirectory(My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data")
+                End If
+                DWSIM.App.SaveSettings(My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data" & Path.DirectorySeparatorChar & "config.ini")
+            Catch ex As Exception
+                Console.WriteLine(ex.ToString)
+            End Try
+
+            'release yeppp! resources
+            Yeppp.Library.Release()
+
+        End If
 
     End Sub
 
