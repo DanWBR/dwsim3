@@ -50,7 +50,10 @@ Public Class AboutBoxMONO
                                                       End If
                                                   Next
                                                   Return lbltext
-                                              End Function).ContinueWith(Sub(t) Lblcpuinfo.Text = t.Result, Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext)
+                                              End Function).ContinueWith(Sub(t)
+                                                                             Lblcpuinfo.Text = t.Result
+                                                                             Lblcpuinfo.Text += " (" & Yeppp.Library.GetProcessABI().Description & ")"
+                                                                         End Sub, Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext)
 
         Lblcpusimd.Text = ""
         For Each item In Yeppp.Library.GetCpuArchitecture.CpuSimdFeatures

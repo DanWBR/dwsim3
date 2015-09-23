@@ -33,6 +33,8 @@ Public Class AboutBoxNET
             Lblcpuinfo.Text += " / " & qinfo.Properties("Name").Value.ToString
         Next
 
+        Lblcpuinfo.Text += " (" & Yeppp.Library.GetProcessABI().Description & ")"
+
         Lblcpusimd.Text = ""
         For Each item In Library.GetCpuArchitecture.CpuSimdFeatures
             Lblcpusimd.Text += item.ToString & " "
