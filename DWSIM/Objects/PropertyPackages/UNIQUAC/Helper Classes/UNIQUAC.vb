@@ -18,6 +18,7 @@
 
 Imports System.Collections.Generic
 Imports FileHelpers
+Imports System.Threading.Tasks
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
@@ -212,41 +213,57 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Sub
 
-        Function GAMMA(ByVal T As Double, ByVal Vx As Array, ByVal Vids As Array, ByVal VQ As Array, ByVal VR As Array, ByVal index As Integer)
+        Function GAMMA(ByVal T As Double, ByVal Vx As Double(), ByVal Vids As String(), ByVal VQ As Double(), ByVal VR As Double(), ByVal index As Integer)
 
             Return GAMMA_MR(T, Vx, Vids, VQ, VR)(index)
 
         End Function
 
-        Function GAMMA_MR(ByVal T, ByVal Vx, ByVal Vids, ByVal VQ, ByVal VR)
+        Function GAMMA_MR(ByVal T As Double, ByVal Vx As Double(), ByVal Vids As String(), ByVal VQ As Double(), ByVal VR As Double())
+
+            Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
+            Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism, .TaskScheduler = My.MyApplication.AppTaskScheduler}
 
             Dim n As Integer = UBound(Vx)
 
-            Dim tau_ij(n, n), tau_ji(n, n), a12(n, n), a21(n, n), b12(n, n), b21(n, n), c12(n, n), c21(n, n) As Double
+            Dim tau_ij(n)(), tau_ji(n)(), a12(n)(), a21(n)(), b12(n)(), b21(n)(), c12(n)(), c21(n)() As Double
+            Dim teta(n), fi(n), l(n), S(n), lngc(n), lngr(n), lng(n), g(n), sum1(n), sum2 As Double
+            Dim z As Double = 10.0#
+            Dim r, q As Double
 
             Dim i, j As Integer
 
+            For i = 0 To n
+                Array.Resize(tau_ij(i), n + 1)
+                Array.Resize(tau_ji(i), n + 1)
+                Array.Resize(a12(i), n + 1)
+                Array.Resize(a21(i), n + 1)
+                Array.Resize(b12(i), n + 1)
+                Array.Resize(b21(i), n + 1)
+                Array.Resize(c12(i), n + 1)
+                Array.Resize(c21(i), n + 1)
+            Next
             i = 0
             Do
                 j = 0
                 Do
                     If Me.InteractionParameters.ContainsKey(Vids(i)) Then
                         If Me.InteractionParameters(Vids(i)).ContainsKey(Vids(j)) Then
-                            a12(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).A12
-                            a21(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).A21
-                            b12(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).B12
-                            b21(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).B21
-                            c12(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).C12
-                            c21(i, j) = Me.InteractionParameters(Vids(i))(Vids(j)).C21
+                            a12(i)(j) = Me.InteractionParameters(Vids(i))(Vids(j)).A12
+                            a21(i)(j) = Me.InteractionParameters(Vids(i))(Vids(j)).A21
+                            b12(i)(j) = Me.InteractionParameters(Vids(i))(Vids(j)).B12
+                            b21(i)(j) = Me.InteractionParameters(Vids(i))(Vids(j)).B21
+                            c12(i)(j) = Me.InteractionParameters(Vids(i))(Vids(j)).C12
+                            c21(i)(j) = Me.InteractionParameters(Vids(i))(Vids(j)).C21
                         Else
                             If Me.InteractionParameters.ContainsKey(Vids(j)) Then
                                 If Me.InteractionParameters(Vids(j)).ContainsKey(Vids(i)) Then
-                                    a12(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).A21
-                                    a21(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).A12
-                                    b12(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).B21
-                                    b21(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).B12
-                                    c12(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).C21
-                                    c21(i, j) = Me.InteractionParameters(Vids(j))(Vids(i)).C12
+                                    a12(i)(j) = Me.InteractionParameters(Vids(j))(Vids(i)).A21
+                                    a21(i)(j) = Me.InteractionParameters(Vids(j))(Vids(i)).A12
+                                    b12(i)(j) = Me.InteractionParameters(Vids(j))(Vids(i)).B21
+                                    b21(i)(j) = Me.InteractionParameters(Vids(j))(Vids(i)).B12
+                                    c12(i)(j) = Me.InteractionParameters(Vids(j))(Vids(i)).C21
+                                    c21(i)(j) = Me.InteractionParameters(Vids(j))(Vids(i)).C12
                                 End If
                             End If
                         End If
@@ -256,76 +273,118 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 i = i + 1
             Loop Until i = n + 1
 
-            i = 0
-            Do
-                j = 0
-                Do
-                    tau_ij(i, j) = Math.Exp(-(a12(i, j) + b12(i, j) * T + c12(i, j) * T ^ 2) / (1.98721 * T))
-                    tau_ji(j, i) = Math.Exp(-(a21(i, j) + b21(i, j) * T + c21(i, j) * T ^ 2) / (1.98721 * T))
-                    j = j + 1
-                Loop Until j = n + 1
-                i = i + 1
-            Loop Until i = n + 1
+            'i = 0
+            'Do
+            '    j = 0
+            '    Do
+            '        tau_ij(i)(j) = Math.Exp(-(a12(i)(j) + b12(i)(j) * T + c12(i)(j) * T ^ 2) / (1.98721 * T))
+            '        tau_ji(j)(i) = Math.Exp(-(a21(i)(j) + b21(i)(j) * T + c21(i)(j) * T ^ 2) / (1.98721 * T))
+            '        j = j + 1
+            '    Loop Until j = n + 1
+            '    i = i + 1
+            'Loop Until i = n + 1
 
-            Dim r, q As Double
+            If doparallel And n > 10 Then
+                Parallel.For(0, n + 1, poptions, Sub(ip)
+                                                     tau_ij(ip) = a12(ip).NegateY.AddY(b12(ip).MultiplyConstY(T).AddY(c12(ip).MultiplyConstY(T ^ 2))).MultiplyConstY(1 / (1.98721 * T)).ExpY
+                                                     tau_ji(ip) = a21(ip).NegateY.AddY(b21(ip).MultiplyConstY(T).AddY(c21(ip).MultiplyConstY(T ^ 2))).MultiplyConstY(1 / (1.98721 * T)).ExpY
+                                                 End Sub)
+            Else
+                For i = 0 To n
+                    tau_ij(i) = a12(i).NegateY.AddY(b12(i).MultiplyConstY(T).AddY(c12(i).MultiplyConstY(T ^ 2))).MultiplyConstY(1 / (1.98721 * T)).ExpY
+                    tau_ji(i) = a21(i).NegateY.AddY(b21(i).MultiplyConstY(T).AddY(c21(i).MultiplyConstY(T ^ 2))).MultiplyConstY(1 / (1.98721 * T)).ExpY
+                Next
+            End If
 
-            i = 0
-            Do
-                r += Vx(i) * VR(i)
-                q += Vx(i) * VQ(i)
-                i = i + 1
-            Loop Until i = n + 1
+            'r = 0.0#
+            'q = 0.0#
+            'i = 0
+            'Do
+            '    r += Vx(i) * VR(i)
+            '    q += Vx(i) * VQ(i)
+            '    i = i + 1
+            'Loop Until i = n + 1
 
-            Dim teta(n), fi(n), l(n), S(n), lngc(n), lngr(n), lng(n), g(n), sum1(n), sum2 As Double
-            Dim z As Double = 10.0#
+            r = Vx.MultiplyY(VR).SumY
+            q = Vx.MultiplyY(VQ).SumY
 
-            i = 0
-            Do
-                fi(i) = Vx(i) * VR(i) / r
-                teta(i) = Vx(i) * VQ(i) / q
-                l(i) = z / 2 * (VR(i) - VQ(i)) - (VR(i) - 1)
-                i = i + 1
-            Loop Until i = n + 1
+            'i = 0
+            'Do
+            '    fi(i) = Vx(i) * VR(i) / r
+            '    teta(i) = Vx(i) * VQ(i) / q
+            '    l(i) = z / 2 * (VR(i) - VQ(i)) - (VR(i) - 1)
+            '    i = i + 1
+            'Loop Until i = n + 1
 
-            i = 0
-            Do
-                S(i) = 0
-                j = 0
-                Do
-                    S(i) += teta(j) * tau_ji(j, i)
-                    j = j + 1
-                Loop Until j = n + 1
-                i = i + 1
-            Loop Until i = n + 1
+            fi = Vx.MultiplyY(VR).MultiplyConstY(1 / r)
+            teta = Vx.MultiplyY(VQ).MultiplyConstY(1 / q)
+            l = VR.SubtractY(VQ).MultiplyConstY(z / 2).SubtractY(VR.AddConstY(-1))
 
-            i = 0
-            Do
-                sum1(i) = 0
-                j = 0
-                Do
-                    sum1(i) += teta(j) * tau_ij(i, j) / S(j)
-                    j = j + 1
-                Loop Until j = n + 1
-                sum2 += Vx(i) * l(i)
-                i = i + 1
-            Loop Until i = n + 1
+            'i = 0
+            'Do
+            '    S(i) = 0
+            '    j = 0
+            '    Do
+            '        S(i) += teta(j) * tau_ji(j)(i)
+            '        j = j + 1
+            '    Loop Until j = n + 1
+            '    i = i + 1
+            'Loop Until i = n + 1
+
+            If doparallel And n > 10 Then
+                Parallel.For(0, n + 1, poptions, Sub(ip)
+                                                     S(ip) = teta.MultiplyY(tau_ij(ip)).SumY
+                                                 End Sub)
+            Else
+                For i = 0 To n
+                    S(i) = teta.MultiplyY(tau_ij(i)).SumY
+                Next
+            End If
 
 
-            i = 0
-            Do
-                If Vx(i) <> 0.0# Then
-                    lngc(i) = 1 - VR(i) / r + Math.Log(VR(i) / r) - z / 2 * VQ(i) * (1 - fi(i) / teta(i) + Math.Log(fi(i) / teta(i)))
-                Else
-                    lngc(i) = 1 - VR(i) / r
-                End If
-                lngr(i) = VQ(i) * (1 - Math.Log(S(i)) - sum1(i))
-                lng(i) = lngc(i) + lngr(i)
-                g(i) = Math.Exp(lng(i))
-                i = i + 1
-            Loop Until i = n + 1
+            'i = 0
+            'Do
+            '    sum1(i) = 0
+            '    j = 0
+            '    Do
+            '        sum1(i) += teta(j) * tau_ij(i)(j) / S(j)
+            '        j = j + 1
+            '    Loop Until j = n + 1
+            '    sum2 += Vx(i) * l(i)
+            '    i = i + 1
+            'Loop Until i = n + 1
+
+            If doparallel And n > 10 Then
+                Parallel.For(0, n + 1, poptions, Sub(ip)
+                                                     sum1(ip) = teta.MultiplyY(tau_ij(ip).DivideY(S)).SumY
+                                                 End Sub)
+            Else
+                For i = 0 To n
+                    sum1(i) = teta.MultiplyY(tau_ij(i).DivideY(S)).SumY
+                Next
+            End If
+
+            sum2 = Vx.MultiplyY(l).SumY
+
+            'i = 0
+            'Do
+            '    If Vx(i) <> 0.0# Then
+            '        lngc(i) = 1 - VR(i) / r + Math.Log(VR(i) / r) - z / 2 * VQ(i) * (1 - fi(i) / teta(i) + Math.Log(fi(i) / teta(i)))
+            '    Else
+            '        lngc(i) = 1 - VR(i) / r
+            '    End If
+            '    lngr(i) = VQ(i) * (1 - Math.Log(S(i)) - sum1(i))
+            '    lng(i) = lngc(i) + lngr(i)
+            '    g(i) = Math.Exp(lng(i))
+            '    i = i + 1
+            'Loop Until i = n + 1
+
+            lngc = VR.MultiplyConstY(-1 / r).AddConstY(1).AddY(VR.MultiplyConstY(1 / r).LogY.AddY(VQ.MultiplyConstY(-z / 2).MultiplyY(fi.DivideY(teta).NegateY.AddConstY(1).AddY(fi.DivideY(teta).LogY))))
+            lngr = VQ.MultiplyY(S.LogY.NegateY.SubtractY(sum1).AddConstY(1))
+            lng = lngc.AddY(lngr)
+            g = lng.ExpY
 
             Return g
-
 
         End Function
 

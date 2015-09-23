@@ -281,7 +281,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             '    i = i + 1
             'Loop Until i = n + 1
 
-            If doparallel Then
+            If doparallel And n > 10 Then
                 Parallel.For(0, n + 1, poptions, Sub(ip)
                                                      Gij(ip) = alpha12(ip).NegateY.MultiplyY(tau_ij(ip)).ExpY
                                                      Gji(ip) = alpha12(ip).NegateY.MultiplyY(tau_ji(ip)).ExpY
@@ -306,7 +306,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             '    i = i + 1
             'Loop Until i = n + 1
 
-            If doparallel Then
+            If doparallel And n > 10 Then
                 Parallel.For(0, n + 1, poptions, Sub(ip)
                                                      S(ip) = Vx.MultiplyY(Gji(ip)).SumY
                                                      C(ip) = Vx.MultiplyY(Gji(ip)).MultiplyY(tau_ji(ip)).SumY
@@ -332,7 +332,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             lnVg = C.DivideY(S)
 
-            If doparallel Then
+            If doparallel And n > 10 Then
                 Parallel.For(0, n + 1, poptions, Sub(ip)
                                                      lnVg(ip) += Vx.MultiplyY(Gij(ip)).MultiplyY(tau_ij(ip).SubtractY(C.DivideY(S))).DivideY(S).SumY
                                                  End Sub)

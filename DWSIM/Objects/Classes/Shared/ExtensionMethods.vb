@@ -466,6 +466,22 @@ Module Extensions
     End Function
 
     ''' <summary>
+    ''' Adds a constant value to vector elements.
+    ''' </summary>
+    ''' <param name="vector"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    <System.Runtime.CompilerServices.Extension()> Public Function AddConstY(vector As Double(), constant As Double) As Double()
+
+        Dim vector0 As Double() = vector.Clone()
+
+        Yeppp.Core.Add_V64fS64f_V64f(vector, 0, constant, vector0, 0, vector.Length)
+
+        Return vector0
+
+    End Function
+
+    ''' <summary>
     ''' Converts a two-dimensional array to a jagged array.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>

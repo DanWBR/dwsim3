@@ -2752,13 +2752,13 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             My.MyApplication.IsRunningParallelTasks = True
             Try
                 Dim task1 As Task = New Task(Sub()
-                                                 a1 = uniquac.GAMMA_MR(298.15, New Object() {0.25, 0.75}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR)
+                                                 a1 = uniquac.GAMMA_MR(298.15, New Double() {0.25, 0.75}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR)
                                              End Sub)
                 Dim task2 As Task = New Task(Sub()
-                                                 a2 = uniquac.GAMMA_MR(298.15, New Object() {0.5, 0.5}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR)
+                                                 a2 = uniquac.GAMMA_MR(298.15, New Double() {0.5, 0.5}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR)
                                              End Sub)
                 Dim task3 As Task = New Task(Sub()
-                                                 a3 = uniquac.GAMMA_MR(298.15, New Object() {0.75, 0.25}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR)
+                                                 a3 = uniquac.GAMMA_MR(298.15, New Double() {0.75, 0.25}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR)
                                              End Sub)
                 task1.Start()
                 task2.Start()
@@ -2769,9 +2769,9 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             End Try
             My.MyApplication.IsRunningParallelTasks = False
         Else
-            a1 = uniquac.GAMMA_MR(298.15, New Object() {0.25, 0.75}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR)
-            a2 = uniquac.GAMMA_MR(298.15, New Object() {0.5, 0.5}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR)
-            a3 = uniquac.GAMMA_MR(298.15, New Object() {0.75, 0.25}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR)
+            a1 = uniquac.GAMMA_MR(298.15, New Double() {0.25, 0.75}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR)
+            a2 = uniquac.GAMMA_MR(298.15, New Double() {0.5, 0.5}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR)
+            a3 = uniquac.GAMMA_MR(298.15, New Double() {0.75, 0.25}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR)
         End If
 
         actn(0) = a1(0)

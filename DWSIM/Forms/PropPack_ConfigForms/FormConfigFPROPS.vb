@@ -288,8 +288,8 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
             uniquac.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A12 = x(0)
             uniquac.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A21 = x(1)
 
-            actnd(0) = uniquac.GAMMA(T1, New Object() {0.25, 0.75}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
-            actnd(1) = uniquac.GAMMA(T1, New Object() {0.75, 0.25}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
+            actnd(0) = uniquac.GAMMA(T1, New Double() {0.25, 0.75}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
+            actnd(1) = uniquac.GAMMA(T1, New Double() {0.75, 0.25}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
 
             fx(0) = Math.Log(actu(0) / actnd(0))
             fx(1) = Math.Log(actu(1) / actnd(1))
@@ -300,8 +300,8 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
             uniquac.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A12 = x(0) + delta1
             uniquac.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A21 = x(1)
 
-            actnd(0) = uniquac.GAMMA(T1, New Object() {0.25, 0.75}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
-            actnd(1) = uniquac.GAMMA(T1, New Object() {0.75, 0.25}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
+            actnd(0) = uniquac.GAMMA(T1, New Double() {0.25, 0.75}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
+            actnd(1) = uniquac.GAMMA(T1, New Double() {0.75, 0.25}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
 
             fxd(0) = Math.Log(actu(0) / actnd(0))
             fxd(1) = Math.Log(actu(1) / actnd(1))
@@ -315,8 +315,8 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
             uniquac.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A12 = x(0)
             uniquac.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).A21 = x(1) + delta2
 
-            actnd(0) = uniquac.GAMMA(T1, New Object() {0.25, 0.75}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
-            actnd(1) = uniquac.GAMMA(T1, New Object() {0.75, 0.25}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
+            actnd(0) = uniquac.GAMMA(T1, New Double() {0.25, 0.75}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
+            actnd(1) = uniquac.GAMMA(T1, New Double() {0.75, 0.25}, ppn.RET_VIDS, ppn.RET_VQ, ppn.RET_VR, 0)
 
             fxd(0) = Math.Log(actu(0) / actnd(0))
             fxd(1) = Math.Log(actu(1) / actnd(1))
