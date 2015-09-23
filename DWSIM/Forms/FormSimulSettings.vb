@@ -77,6 +77,11 @@ Public Class FormSimulSettings
             FrmChild.FormProps.PGEx2.Refresh()
         End If
 
+        If DWSIM.App.IsRunningOnMono Then
+            e.Cancel = True
+            Me.Hide()
+        End If
+
     End Sub
 
     Sub Init(Optional ByVal reset As Boolean = False)
@@ -1343,6 +1348,7 @@ Public Class FormSimulSettings
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
 
         If Me.loaded Then
+
             If MessageBox.Show(DWSIM.App.GetLocalString("ConfirmOperation"), "DWSIM", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
 
                 Dim tmpsubst As New DWSIM.ClassesBasicasTermodinamica.Substancia("", "")
@@ -1395,4 +1401,5 @@ Public Class FormSimulSettings
     Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
         TextBox1.Text = ""
     End Sub
+
 End Class

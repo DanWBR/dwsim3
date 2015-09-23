@@ -23,14 +23,39 @@ Public Class AboutBoxMONO
         If DWSIM.App.IsRunningOnMono() Then
             Dim displayName As MethodInfo = Type.GetType("Mono.Runtime").GetMethod("GetDisplayName", BindingFlags.NonPublic Or BindingFlags.[Static])
             If displayName IsNot Nothing Then
-                LblCLRInfo.Text = "Mono " + displayName.Invoke(Nothing, Nothing) + " / " + System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion.ToString()
+                LblCLRInfo.Text = "Mono " + displayName.Invoke(Nothing, Nothing) + " / CLR " + System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion.ToString()
             Else
                 LblCLRInfo.Text = System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion.ToString()
             End If
         Else
             LblCLRInfo.Text = System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion.ToString()
         End If
-        Lblmem.Text = (GC.GetTotalMemory(False) / 1024 / 1024).ToString("#") & " MB managed, " & (My.Application.Info.WorkingSet / 1024 / 1024).ToString("#") & " MB total"
+
+        Lblcpuinfo.Text = "Retrieving CPU info..."
+
+        Threading.Tasks.Task.Factory.StartNew(Function()
+                                                  Dim sinfo As New ProcessStartInfo With {.FileName = "lshw", .Arguments = "-c CPU", .RedirectStandardOutput = True, .UseShellExecute = False}
+                                                  Dim p As New Process With {.StartInfo = sinfo}
+                                                  p.Start()
+                                                  Dim output As String = p.StandardOutput.ReadToEnd
+                                                  p.WaitForExit()
+                                                  Dim lbltext As String = ""
+                                                  For Each l In output.Split(New Char() {vbCrLf, vbLf, vbCr})
+                                                      If l.Contains("product") Then
+                                                          lbltext = l.Split(":")(1).TrimStart(" ")
+                                                      End If
+                                                      If l.Contains("vendor") Then
+                                                          lbltext += " / " & l.Split(": ")(1).TrimStart(" ")
+                                                          Exit For
+                                                      End If
+                                                  Next
+                                                  Return lbltext
+                                              End Function).ContinueWith(Sub(t) Lblcpuinfo.Text = t.Result, Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext)
+
+        Lblcpusimd.Text = ""
+        For Each item In Yeppp.Library.GetCpuArchitecture.CpuSimdFeatures
+            Lblcpusimd.Text += item.ToString & " "
+        Next
 
         With Me.DataGridView1.Rows
             .Clear()

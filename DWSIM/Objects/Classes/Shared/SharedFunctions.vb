@@ -382,9 +382,9 @@ Namespace DWSIM
                                     .CompileMode = eCudafyCompileMode.Default
                                     .Platform = ePlatform.x86
                                     .WorkingDirectory = My.Computer.FileSystem.SpecialDirectories.Temp
-                                    'CUDA SDK v5.0 path
-                                    .CompilerPath = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.0\bin\nvcc.exe"
-                                    .IncludeDirectoryPath = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v5.0\include"
+                                    'CUDA SDK v6.5 path
+                                    .CompilerPath = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\bin\nvcc.exe"
+                                    .IncludeDirectoryPath = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\include"
                                 End With
                                 My.MyApplication.gpumod = CudafyTranslator.Cudafy(cp, GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.LeeKeslerPlocker), _
                                             GetType(DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.PR), _

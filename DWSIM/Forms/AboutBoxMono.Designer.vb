@@ -30,6 +30,10 @@ Partial Class AboutBoxMONO
         Me.Copyright = New System.Windows.Forms.Label()
         Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip()
         Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem()
+        Me.Lblcpusimd = New System.Windows.Forms.Label()
+        Me.Lblcpuinfo = New System.Windows.Forms.Label()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.Label12 = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
         Me.Label10 = New System.Windows.Forms.Label()
@@ -65,8 +69,6 @@ Partial Class AboutBoxMONO
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.AssemblyNamesComboBox = New System.Windows.Forms.ComboBox()
-        Me.Lblmem = New System.Windows.Forms.Label()
-        Me.Label11 = New System.Windows.Forms.Label()
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStrip1.SuspendLayout()
         Me.FaTabStripItem1.SuspendLayout()
@@ -89,7 +91,7 @@ Partial Class AboutBoxMONO
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(614, 530)
+        Me.Button1.Location = New System.Drawing.Point(706, 519)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 23)
         Me.Button1.TabIndex = 3
@@ -125,15 +127,17 @@ Partial Class AboutBoxMONO
         Me.FaTabStrip1.Location = New System.Drawing.Point(8, 69)
         Me.FaTabStrip1.Name = "FaTabStrip1"
         Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem1
-        Me.FaTabStrip1.Size = New System.Drawing.Size(679, 455)
+        Me.FaTabStrip1.Size = New System.Drawing.Size(773, 444)
         Me.FaTabStrip1.TabIndex = 23
         Me.FaTabStrip1.Text = "FaTabStrip1"
         '
         'FaTabStripItem1
         '
         Me.FaTabStripItem1.CanClose = False
-        Me.FaTabStripItem1.Controls.Add(Me.Lblmem)
-        Me.FaTabStripItem1.Controls.Add(Me.Label11)
+        Me.FaTabStripItem1.Controls.Add(Me.Lblcpusimd)
+        Me.FaTabStripItem1.Controls.Add(Me.Lblcpuinfo)
+        Me.FaTabStripItem1.Controls.Add(Me.Label13)
+        Me.FaTabStripItem1.Controls.Add(Me.Label12)
         Me.FaTabStripItem1.Controls.Add(Me.Label9)
         Me.FaTabStripItem1.Controls.Add(Me.LinkLabel1)
         Me.FaTabStripItem1.Controls.Add(Me.Label10)
@@ -152,9 +156,48 @@ Partial Class AboutBoxMONO
         Me.FaTabStripItem1.IsDrawn = True
         Me.FaTabStripItem1.Name = "FaTabStripItem1"
         Me.FaTabStripItem1.Selected = True
-        Me.FaTabStripItem1.Size = New System.Drawing.Size(677, 434)
+        Me.FaTabStripItem1.Size = New System.Drawing.Size(771, 423)
         Me.FaTabStripItem1.TabIndex = 0
         Me.FaTabStripItem1.Title = "General Info"
+        '
+        'Lblcpusimd
+        '
+        Me.Lblcpusimd.BackColor = System.Drawing.Color.Transparent
+        Me.Lblcpusimd.Location = New System.Drawing.Point(133, 171)
+        Me.Lblcpusimd.Name = "Lblcpusimd"
+        Me.Lblcpusimd.Size = New System.Drawing.Size(629, 32)
+        Me.Lblcpusimd.TabIndex = 31
+        Me.Lblcpusimd.Text = "[meminfo]"
+        '
+        'Lblcpuinfo
+        '
+        Me.Lblcpuinfo.AutoSize = True
+        Me.Lblcpuinfo.BackColor = System.Drawing.Color.Transparent
+        Me.Lblcpuinfo.Location = New System.Drawing.Point(133, 148)
+        Me.Lblcpuinfo.Name = "Lblcpuinfo"
+        Me.Lblcpuinfo.Size = New System.Drawing.Size(55, 13)
+        Me.Lblcpuinfo.TabIndex = 30
+        Me.Lblcpuinfo.Text = "[meminfo]"
+        '
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.BackColor = System.Drawing.Color.Transparent
+        Me.Label13.Location = New System.Drawing.Point(12, 171)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(114, 13)
+        Me.Label13.TabIndex = 29
+        Me.Label13.Text = "CPU SIMD Extensions:"
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.BackColor = System.Drawing.Color.Transparent
+        Me.Label12.Location = New System.Drawing.Point(12, 148)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(54, 13)
+        Me.Label12.TabIndex = 28
+        Me.Label12.Text = "CPU Info:"
         '
         'Label9
         '
@@ -217,7 +260,7 @@ Partial Class AboutBoxMONO
         Me.LinkLabel2.AutoSize = True
         Me.LinkLabel2.BackColor = System.Drawing.Color.Transparent
         Me.LinkLabel2.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.LinkLabel2.Location = New System.Drawing.Point(133, 102)
+        Me.LinkLabel2.Location = New System.Drawing.Point(289, 79)
         Me.LinkLabel2.Name = "LinkLabel2"
         Me.LinkLabel2.Size = New System.Drawing.Size(221, 13)
         Me.LinkLabel2.TabIndex = 7
@@ -251,7 +294,7 @@ Partial Class AboutBoxMONO
         Me.LblCLRInfo.AutoSize = True
         Me.LblCLRInfo.BackColor = System.Drawing.Color.Transparent
         Me.LblCLRInfo.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.LblCLRInfo.Location = New System.Drawing.Point(133, 153)
+        Me.LblCLRInfo.Location = New System.Drawing.Point(133, 125)
         Me.LblCLRInfo.Name = "LblCLRInfo"
         Me.LblCLRInfo.Size = New System.Drawing.Size(44, 13)
         Me.LblCLRInfo.TabIndex = 17
@@ -274,7 +317,7 @@ Partial Class AboutBoxMONO
         Me.Label4.AutoSize = True
         Me.Label4.BackColor = System.Drawing.Color.Transparent
         Me.Label4.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Label4.Location = New System.Drawing.Point(12, 153)
+        Me.Label4.Location = New System.Drawing.Point(12, 125)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(53, 13)
         Me.Label4.TabIndex = 16
@@ -287,7 +330,7 @@ Partial Class AboutBoxMONO
         Me.LabelLicense.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.LabelLicense.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelLicense.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.LabelLicense.Location = New System.Drawing.Point(12, 212)
+        Me.LabelLicense.Location = New System.Drawing.Point(12, 208)
         Me.LabelLicense.Name = "LabelLicense"
         Me.LabelLicense.Size = New System.Drawing.Size(422, 13)
         Me.LabelLicense.TabIndex = 12
@@ -299,7 +342,7 @@ Partial Class AboutBoxMONO
         Me.LblOSInfo.AutoSize = True
         Me.LblOSInfo.BackColor = System.Drawing.Color.Transparent
         Me.LblOSInfo.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.LblOSInfo.Location = New System.Drawing.Point(133, 129)
+        Me.LblOSInfo.Location = New System.Drawing.Point(133, 102)
         Me.LblOSInfo.Name = "LblOSInfo"
         Me.LblOSInfo.Size = New System.Drawing.Size(44, 13)
         Me.LblOSInfo.TabIndex = 15
@@ -309,12 +352,12 @@ Partial Class AboutBoxMONO
         '
         Me.TextBox1.BackColor = System.Drawing.Color.White
         Me.TextBox1.Font = New System.Drawing.Font("Courier New", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox1.Location = New System.Drawing.Point(15, 232)
+        Me.TextBox1.Location = New System.Drawing.Point(15, 224)
         Me.TextBox1.Multiline = True
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.ReadOnly = True
         Me.TextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.TextBox1.Size = New System.Drawing.Size(649, 192)
+        Me.TextBox1.Size = New System.Drawing.Size(743, 189)
         Me.TextBox1.TabIndex = 13
         Me.TextBox1.Text = resources.GetString("TextBox1.Text")
         '
@@ -323,7 +366,7 @@ Partial Class AboutBoxMONO
         Me.Label7.AutoSize = True
         Me.Label7.BackColor = System.Drawing.Color.Transparent
         Me.Label7.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Label7.Location = New System.Drawing.Point(12, 129)
+        Me.Label7.Location = New System.Drawing.Point(12, 102)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(48, 13)
         Me.Label7.TabIndex = 14
@@ -500,32 +543,12 @@ Partial Class AboutBoxMONO
         Me.AssemblyNamesComboBox.Sorted = True
         Me.AssemblyNamesComboBox.TabIndex = 20
         '
-        'Lblmem
-        '
-        Me.Lblmem.AutoSize = True
-        Me.Lblmem.BackColor = System.Drawing.Color.Transparent
-        Me.Lblmem.Location = New System.Drawing.Point(133, 178)
-        Me.Lblmem.Name = "Lblmem"
-        Me.Lblmem.Size = New System.Drawing.Size(55, 13)
-        Me.Lblmem.TabIndex = 25
-        Me.Lblmem.Text = "[meminfo]"
-        '
-        'Label11
-        '
-        Me.Label11.AutoSize = True
-        Me.Label11.BackColor = System.Drawing.Color.Transparent
-        Me.Label11.Location = New System.Drawing.Point(12, 178)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(82, 13)
-        Me.Label11.TabIndex = 24
-        Me.Label11.Text = "Memory Usage:"
-        '
         'AboutBoxMONO
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(699, 589)
+        Me.ClientSize = New System.Drawing.Size(791, 565)
         Me.ControlBox = False
         Me.Controls.Add(Me.FaTabStrip1)
         Me.Controls.Add(Me.Copyright)
@@ -592,6 +615,8 @@ Partial Class AboutBoxMONO
     Friend WithEvents ColumnHeader1 As System.Windows.Forms.ColumnHeader
     Friend WithEvents ColumnHeader2 As System.Windows.Forms.ColumnHeader
     Friend WithEvents AssemblyNamesComboBox As System.Windows.Forms.ComboBox
-    Public WithEvents Lblmem As System.Windows.Forms.Label
-    Public WithEvents Label11 As System.Windows.Forms.Label
+    Public WithEvents Lblcpusimd As System.Windows.Forms.Label
+    Public WithEvents Lblcpuinfo As System.Windows.Forms.Label
+    Public WithEvents Label13 As System.Windows.Forms.Label
+    Public WithEvents Label12 As System.Windows.Forms.Label
 End Class
