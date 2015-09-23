@@ -1170,6 +1170,7 @@ Imports DWSIM.DWSIM.Outros
 
     Private Sub ComponentesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ComponentesToolStripMenuItem.Click
         If DWSIM.App.IsRunningOnMono Then
+            Me.FrmStSim1 = New FormSimulSettings()
             Me.FrmStSim1.Show(Me)
         Else
             Me.FrmStSim1.ShowDialog(Me)

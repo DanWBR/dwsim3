@@ -943,10 +943,10 @@ Public Class FormOptimization
             Me.selectedoptcase.econtext = New ExpressionContext
             With Me.selectedoptcase.econtext
                 .Imports.AddType(GetType(System.Math))
-                For i = 1 To Me.keysind.Count
+                For i = 0 To Me.keysind.Count - 1
                     .Variables.Add(objName(i), cv.ConverterDoSI(Me.selectedoptcase.variables(varID(i)).unit, x(i)))
                 Next
-                For i = 1 To Me.keysaux.Count
+                For i = 0 To Me.keysaux.Count - 1
                     .Variables.Add(AobjName(i), cv.ConverterDoSI(Me.selectedoptcase.variables(AvarID(i)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(i - 1)).objectID).GetPropertyValue(AobjProp(i))))
                 Next
             End With

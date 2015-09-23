@@ -77,10 +77,10 @@ Public Class FormSimulSettings
             FrmChild.FormProps.PGEx2.Refresh()
         End If
 
-        If DWSIM.App.IsRunningOnMono Then
-            e.Cancel = True
-            Me.Hide()
-        End If
+        'If DWSIM.App.IsRunningOnMono Then
+        '    e.Cancel = True
+        '    Me.Hide()
+        'End If
 
     End Sub
 
