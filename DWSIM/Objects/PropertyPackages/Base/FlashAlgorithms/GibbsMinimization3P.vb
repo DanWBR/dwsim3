@@ -217,20 +217,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 i += 1
             Loop Until i = n + 1
 
-            i = 0
-            soma_x1 = 0
-            soma_y = 0
-            Do
-                soma_x1 = soma_x1 + Vx1(i)
-                soma_y = soma_y + Vy(i)
-                i = i + 1
-            Loop Until i = n + 1
-            i = 0
-            Do
-                Vx1(i) = Vx1(i) / soma_x1
-                Vy(i) = Vy(i) / soma_y
-                i = i + 1
-            Loop Until i = n + 1
+            Vx1 = Vx1.NormalizeY
+            Vy = Vy.NormalizeY
 
             Dim initval(n) As Double
             Dim lconstr(n) As Double
@@ -239,7 +227,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             'F = 1000.0#
 
-            Dim maxy As Double = MathEx.Common.Max(Vy)
+            Dim maxy As Double = Vy.MaxY
             Dim imaxy As Integer = Array.IndexOf(Vy, maxy)
 
             If maxy * V > Vz(imaxy) Then
@@ -284,9 +272,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 If Double.IsNaN(initval(i)) Then initval(i) = 0.0#
             Next
 
-            For i = 0 To n
-                Ki(i) = Vy(i) / Vx1(i)
-            Next
+            Ki = Vy.DivideY(Vx1)
 
             'check if the algorithm converged to the trivial solution.
             If PP.AUX_CheckTrivial(Ki) Then
