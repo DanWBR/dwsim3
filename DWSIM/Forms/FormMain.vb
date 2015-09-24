@@ -200,10 +200,6 @@ Public Class FormMain
 
         Me.Text = DWSIM.App.GetLocalString("FormParent_FormText")
 
-        Global.EWSoftware.StatusBarText.StatusBarTextProvider.ApplicationStatusBar = Me.ToolStripStatusLabel1
-
-        Me.StatusBarTextProvider1.InstanceStatusBar = Me.ToolStripStatusLabel1
-
         Me.dropdownlist = New ArrayList
         Me.UpdateMRUList()
 

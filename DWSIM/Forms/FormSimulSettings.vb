@@ -292,7 +292,7 @@ Public Class FormSimulSettings
         Next
     End Sub
 
-    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
+    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
         Me.Close()
 
@@ -713,42 +713,6 @@ Public Class FormSimulSettings
 
         End If
 
-    End Sub
-
-    Private Sub TreeView2_AfterSelect(ByVal sender As System.Object, ByVal e As System.Windows.Forms.TreeNodeMouseClickEventArgs) Handles TreeView2.NodeMouseClick
-        Select Case e.Node.Index
-            Case 0
-                Me.PanelComps.BringToFront()
-            Case 1
-                Me.PanelCarPet.BringToFront()
-        End Select
-    End Sub
-
-    Private Sub TreeView4_AfterSelect(ByVal sender As System.Object, ByVal e As System.Windows.Forms.TreeNodeMouseClickEventArgs) Handles TreeView4.NodeMouseClick
-        Select Case e.Node.Index
-            Case 0
-                Me.PanelDescricao.BringToFront()
-        End Select
-    End Sub
-
-    Private Sub TreeView1_AfterSelect(ByVal sender As System.Object, ByVal e As System.Windows.Forms.TreeNodeMouseClickEventArgs) Handles TreeView1.NodeMouseClick
-        Select Case e.Node.Index
-            Case 0
-                Me.PanelUnits.BringToFront()
-            Case 1
-                Me.PanelOptions.BringToFront()
-        End Select
-    End Sub
-
-    Private Sub TreeView5_NodeMouseClick(ByVal sender As Object, ByVal e As System.Windows.Forms.TreeNodeMouseClickEventArgs) Handles TreeView5.NodeMouseClick
-        Select Case e.Node.Index
-            Case 0
-                Me.PanelPP.BringToFront()
-            Case 2
-                Me.PanelReactions.BringToFront()
-            Case 1
-                Me.PanelPPAdv.BringToFront()
-        End Select
     End Sub
 
     Private Sub KryptonButton15_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KryptonButton15.Click

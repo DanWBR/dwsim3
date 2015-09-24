@@ -177,7 +177,6 @@ Partial Class FormFlowsheet
         Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
         Me.BGLoadComp = New System.ComponentModel.BackgroundWorker()
         Me.bgCalc = New System.ComponentModel.BackgroundWorker()
-        Me.StatusBarTextProvider1 = New EWSoftware.StatusBarText.StatusBarTextProvider(Me.components)
         Me.dckPanel = New WeifenLuo.WinFormsUI.Docking.DockPanel()
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
@@ -609,8 +608,7 @@ Partial Class FormFlowsheet
         Me.ComponentesToolStripMenuItem.MergeIndex = 0
         Me.ComponentesToolStripMenuItem.Name = "ComponentesToolStripMenuItem"
         resources.ApplyResources(Me.ComponentesToolStripMenuItem, "ComponentesToolStripMenuItem")
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.ComponentesToolStripMenuItem, resources.GetString("ComponentesToolStripMenuItem.StatusBarText"))
-        '
+       '
         'ExibirToolStripMenuItem
         '
         Me.ExibirToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExibirSaídaDoConsoleToolStripMenuItem, Me.ExibirListaDeItensACalcularToolStripMenuItem, Me.PainelDeVariáveisToolStripMenuItem, Me.ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem})
@@ -910,46 +908,39 @@ Partial Class FormFlowsheet
         Me.PontoCríticoRealToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.cog1
         Me.PontoCríticoRealToolStripMenuItem.Name = "PontoCríticoRealToolStripMenuItem"
         resources.ApplyResources(Me.PontoCríticoRealToolStripMenuItem, "PontoCríticoRealToolStripMenuItem")
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.PontoCríticoRealToolStripMenuItem, resources.GetString("PontoCríticoRealToolStripMenuItem.StatusBarText"))
-        '
+       '
         'HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem
         '
         Me.HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.cog
         Me.HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem.Name = "HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem"
         resources.ApplyResources(Me.HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem, "HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem")
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem, resources.GetString("HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem.StatusBarText"))
-        '
+       '
         'PropriedadesDosComponentesToolStripMenuItem
         '
         resources.ApplyResources(Me.PropriedadesDosComponentesToolStripMenuItem, "PropriedadesDosComponentesToolStripMenuItem")
         Me.PropriedadesDosComponentesToolStripMenuItem.Name = "PropriedadesDosComponentesToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.PropriedadesDosComponentesToolStripMenuItem, resources.GetString("PropriedadesDosComponentesToolStripMenuItem.StatusBarText"))
-        '
+       '
         'AnáliseDePetróleosToolStripMenuItem
         '
         resources.ApplyResources(Me.AnáliseDePetróleosToolStripMenuItem, "AnáliseDePetróleosToolStripMenuItem")
         Me.AnáliseDePetróleosToolStripMenuItem.Name = "AnáliseDePetróleosToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.AnáliseDePetróleosToolStripMenuItem, resources.GetString("AnáliseDePetróleosToolStripMenuItem.StatusBarText"))
-        '
+         '
         'DiagramaDeFasesToolStripMenuItem
         '
         resources.ApplyResources(Me.DiagramaDeFasesToolStripMenuItem, "DiagramaDeFasesToolStripMenuItem")
         Me.DiagramaDeFasesToolStripMenuItem.Name = "DiagramaDeFasesToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.DiagramaDeFasesToolStripMenuItem, resources.GetString("DiagramaDeFasesToolStripMenuItem.StatusBarText"))
         '
         'DiagramaDeFasesToolStripMenuItem1
         '
         Me.DiagramaDeFasesToolStripMenuItem1.Image = Global.DWSIM.My.Resources.Resources.cog
         Me.DiagramaDeFasesToolStripMenuItem1.Name = "DiagramaDeFasesToolStripMenuItem1"
         resources.ApplyResources(Me.DiagramaDeFasesToolStripMenuItem1, "DiagramaDeFasesToolStripMenuItem1")
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.DiagramaDeFasesToolStripMenuItem1, resources.GetString("DiagramaDeFasesToolStripMenuItem1.StatusBarText"))
         '
         'DiagramaBinárioToolStripMenuItem
         '
         Me.DiagramaBinárioToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.cog1
         Me.DiagramaBinárioToolStripMenuItem.Name = "DiagramaBinárioToolStripMenuItem"
         resources.ApplyResources(Me.DiagramaBinárioToolStripMenuItem, "DiagramaBinárioToolStripMenuItem")
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.DiagramaBinárioToolStripMenuItem, resources.GetString("DiagramaBinárioToolStripMenuItem.StatusBarText"))
         '
         'LLEDiagramToolStripMenuItem
         '
@@ -962,27 +953,23 @@ Partial Class FormFlowsheet
         resources.ApplyResources(Me.PropriedadesEspeciaisToolStripMenuItem, "PropriedadesEspeciaisToolStripMenuItem")
         Me.PropriedadesEspeciaisToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.cog
         Me.PropriedadesEspeciaisToolStripMenuItem.Name = "PropriedadesEspeciaisToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.PropriedadesEspeciaisToolStripMenuItem, resources.GetString("PropriedadesEspeciaisToolStripMenuItem.StatusBarText"))
         '
         'PSVSizingToolStripMenuItem
         '
         resources.ApplyResources(Me.PSVSizingToolStripMenuItem, "PSVSizingToolStripMenuItem")
         Me.PSVSizingToolStripMenuItem.Name = "PSVSizingToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.PSVSizingToolStripMenuItem, resources.GetString("PSVSizingToolStripMenuItem.StatusBarText"))
-        '
+         '
         'FlashVesselSizingToolStripMenuItem
         '
         resources.ApplyResources(Me.FlashVesselSizingToolStripMenuItem, "FlashVesselSizingToolStripMenuItem")
         Me.FlashVesselSizingToolStripMenuItem.Name = "FlashVesselSizingToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.FlashVesselSizingToolStripMenuItem, resources.GetString("FlashVesselSizingToolStripMenuItem.StatusBarText"))
         '
         'PropriedadesDePetróleosToolStripMenuItem
         '
         Me.PropriedadesDePetróleosToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.cog
         Me.PropriedadesDePetróleosToolStripMenuItem.Name = "PropriedadesDePetróleosToolStripMenuItem"
         resources.ApplyResources(Me.PropriedadesDePetróleosToolStripMenuItem, "PropriedadesDePetróleosToolStripMenuItem")
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.PropriedadesDePetróleosToolStripMenuItem, resources.GetString("PropriedadesDePetróleosToolStripMenuItem.StatusBarText"))
-        '
+         '
         'OtimizaToolStripMenuItem
         '
         Me.OtimizaToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AnáliseDeSensibilidadeToolStripMenuItem, Me.MultivariateOptimizerToolStripMenuItem})
@@ -1016,8 +1003,7 @@ Partial Class FormFlowsheet
         Me.GerarRelatórioToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.report
         Me.GerarRelatórioToolStripMenuItem.Name = "GerarRelatórioToolStripMenuItem"
         resources.ApplyResources(Me.GerarRelatórioToolStripMenuItem, "GerarRelatórioToolStripMenuItem")
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.GerarRelatórioToolStripMenuItem, resources.GetString("GerarRelatórioToolStripMenuItem.StatusBarText"))
-        '
+         '
         'ArquivoToolStripMenuItem
         '
         Me.ArquivoToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CloseToolStripMenuItem})
@@ -1307,7 +1293,6 @@ End Sub
     Public WithEvents DiagramaDeFasesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents OtimizaToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents AnáliseDeSensibilidadeToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Public WithEvents StatusBarTextProvider1 As EWSoftware.StatusBarText.StatusBarTextProvider
     Public WithEvents ToolStrip4 As System.Windows.Forms.ToolStrip
     Public WithEvents ToolStripLabel4 As System.Windows.Forms.ToolStripLabel
     Public WithEvents TSBTexto As System.Windows.Forms.ToolStripButton

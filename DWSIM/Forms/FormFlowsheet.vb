@@ -142,8 +142,6 @@ Imports DWSIM.DWSIM.Outros
 
         Me.CalculationQueue = New Generic.Queue(Of DWSIM.Outros.StatusChangeEventArgs)
 
-        Me.StatusBarTextProvider1.InstanceStatusBar = My.Forms.FormMain.ToolStripStatusLabel1
-
         Me.TSTBZoom.Text = Format(Me.FormSurface.FlowsheetDesignSurface.Zoom, "#%")
 
         If Me.Options.CalculatorActivated Then

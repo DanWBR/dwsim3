@@ -90,7 +90,6 @@ Partial Class FormMain
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.tslupd = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.StatusBarTextProvider1 = New EWSoftware.StatusBarText.StatusBarTextProvider(Me.components)
         Me.TimerBackup = New System.Windows.Forms.Timer(Me.components)
         Me.bgSaveBackup = New System.ComponentModel.BackgroundWorker()
         Me.CultureManager1 = New Infralution.Localization.CultureManager(Me.components)
@@ -118,125 +117,107 @@ Partial Class FormMain
         Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripMenuItem, Me.NovoEstudoDoCriadorDeComponentesToolStripMenuItem, Me.NovoEstudoDeRegressãoDeDadosToolStripMenuItem, Me.NovoRegressaoUNIFACIPs, Me.OpenToolStripMenuItem, Me.ToolStripMenuItem1, Me.toolStripSeparator, Me.SaveToolStripMenuItem, Me.SaveAllToolStripMenuItem, Me.SaveAsToolStripMenuItem, Me.ToolStripSeparator2, Me.CloseAllToolstripMenuItem, Me.toolStripSeparator1, Me.ExitToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Overflow = System.Windows.Forms.ToolStripItemOverflow.AsNeeded
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.FileToolStripMenuItem, resources.GetString("FileToolStripMenuItem.StatusBarText"))
         '
         'NewToolStripMenuItem
         '
         resources.ApplyResources(Me.NewToolStripMenuItem, "NewToolStripMenuItem")
         Me.NewToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.page_white
         Me.NewToolStripMenuItem.Name = "NewToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.NewToolStripMenuItem, resources.GetString("NewToolStripMenuItem.StatusBarText"))
         '
         'NovoEstudoDoCriadorDeComponentesToolStripMenuItem
         '
         resources.ApplyResources(Me.NovoEstudoDoCriadorDeComponentesToolStripMenuItem, "NovoEstudoDoCriadorDeComponentesToolStripMenuItem")
         Me.NovoEstudoDoCriadorDeComponentesToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.wi0124_16
         Me.NovoEstudoDoCriadorDeComponentesToolStripMenuItem.Name = "NovoEstudoDoCriadorDeComponentesToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.NovoEstudoDoCriadorDeComponentesToolStripMenuItem, resources.GetString("NovoEstudoDoCriadorDeComponentesToolStripMenuItem.StatusBarText"))
-        '
+          '
         'NovoEstudoDeRegressãoDeDadosToolStripMenuItem
         '
         resources.ApplyResources(Me.NovoEstudoDeRegressãoDeDadosToolStripMenuItem, "NovoEstudoDeRegressãoDeDadosToolStripMenuItem")
         Me.NovoEstudoDeRegressãoDeDadosToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.chart_line
         Me.NovoEstudoDeRegressãoDeDadosToolStripMenuItem.Name = "NovoEstudoDeRegressãoDeDadosToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.NovoEstudoDeRegressãoDeDadosToolStripMenuItem, resources.GetString("NovoEstudoDeRegressãoDeDadosToolStripMenuItem.StatusBarText"))
         '
         'NovoRegressaoUNIFACIPs
         '
         resources.ApplyResources(Me.NovoRegressaoUNIFACIPs, "NovoRegressaoUNIFACIPs")
         Me.NovoRegressaoUNIFACIPs.Image = Global.DWSIM.My.Resources.Resources.chart_line1
         Me.NovoRegressaoUNIFACIPs.Name = "NovoRegressaoUNIFACIPs"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.NovoRegressaoUNIFACIPs, resources.GetString("NovoRegressaoUNIFACIPs.StatusBarText"))
         '
         'OpenToolStripMenuItem
         '
         resources.ApplyResources(Me.OpenToolStripMenuItem, "OpenToolStripMenuItem")
         Me.OpenToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.folder_page_white
         Me.OpenToolStripMenuItem.Name = "OpenToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.OpenToolStripMenuItem, resources.GetString("OpenToolStripMenuItem.StatusBarText"))
         '
         'ToolStripMenuItem1
         '
         resources.ApplyResources(Me.ToolStripMenuItem1, "ToolStripMenuItem1")
         Me.ToolStripMenuItem1.Image = Global.DWSIM.My.Resources.Resources.folder_page_white
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripMenuItem1, resources.GetString("ToolStripMenuItem1.StatusBarText"))
         '
         'toolStripSeparator
         '
         resources.ApplyResources(Me.toolStripSeparator, "toolStripSeparator")
         Me.toolStripSeparator.Name = "toolStripSeparator"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.toolStripSeparator, resources.GetString("toolStripSeparator.StatusBarText"))
         '
         'SaveToolStripMenuItem
         '
         resources.ApplyResources(Me.SaveToolStripMenuItem, "SaveToolStripMenuItem")
         Me.SaveToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.page_save
         Me.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.SaveToolStripMenuItem, resources.GetString("SaveToolStripMenuItem.StatusBarText"))
         '
         'SaveAllToolStripMenuItem
         '
         resources.ApplyResources(Me.SaveAllToolStripMenuItem, "SaveAllToolStripMenuItem")
         Me.SaveAllToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.disk_multiple
         Me.SaveAllToolStripMenuItem.Name = "SaveAllToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.SaveAllToolStripMenuItem, resources.GetString("SaveAllToolStripMenuItem.StatusBarText"))
         '
         'SaveAsToolStripMenuItem
         '
         resources.ApplyResources(Me.SaveAsToolStripMenuItem, "SaveAsToolStripMenuItem")
         Me.SaveAsToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.disk
         Me.SaveAsToolStripMenuItem.Name = "SaveAsToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.SaveAsToolStripMenuItem, resources.GetString("SaveAsToolStripMenuItem.StatusBarText"))
         '
         'ToolStripSeparator2
         '
         resources.ApplyResources(Me.ToolStripSeparator2, "ToolStripSeparator2")
         Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripSeparator2, resources.GetString("ToolStripSeparator2.StatusBarText"))
         '
         'CloseAllToolstripMenuItem
         '
         resources.ApplyResources(Me.CloseAllToolstripMenuItem, "CloseAllToolstripMenuItem")
         Me.CloseAllToolstripMenuItem.Image = Global.DWSIM.My.Resources.Resources.cross
         Me.CloseAllToolstripMenuItem.Name = "CloseAllToolstripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.CloseAllToolstripMenuItem, resources.GetString("CloseAllToolstripMenuItem.StatusBarText"))
         '
         'toolStripSeparator1
         '
         resources.ApplyResources(Me.toolStripSeparator1, "toolStripSeparator1")
         Me.toolStripSeparator1.Name = "toolStripSeparator1"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.toolStripSeparator1, resources.GetString("toolStripSeparator1.StatusBarText"))
         '
         'ExitToolStripMenuItem
         '
         resources.ApplyResources(Me.ExitToolStripMenuItem, "ExitToolStripMenuItem")
         Me.ExitToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.undo_16
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.ExitToolStripMenuItem, resources.GetString("ExitToolStripMenuItem.StatusBarText"))
-        '
+       '
         'VerToolStripMenuItem
         '
         resources.ApplyResources(Me.VerToolStripMenuItem, "VerToolStripMenuItem")
         Me.VerToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PreferênciasDoDWSIMToolStripMenuItem, Me.DatabaseManagerToolStripMenuItem, Me.MostrarBarraDeFerramentasToolStripMenuItem})
         Me.VerToolStripMenuItem.Name = "VerToolStripMenuItem"
         Me.VerToolStripMenuItem.Overflow = System.Windows.Forms.ToolStripItemOverflow.AsNeeded
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.VerToolStripMenuItem, resources.GetString("VerToolStripMenuItem.StatusBarText"))
         '
         'PreferênciasDoDWSIMToolStripMenuItem
         '
         resources.ApplyResources(Me.PreferênciasDoDWSIMToolStripMenuItem, "PreferênciasDoDWSIMToolStripMenuItem")
         Me.PreferênciasDoDWSIMToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.application_edit
         Me.PreferênciasDoDWSIMToolStripMenuItem.Name = "PreferênciasDoDWSIMToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.PreferênciasDoDWSIMToolStripMenuItem, resources.GetString("PreferênciasDoDWSIMToolStripMenuItem.StatusBarText"))
         '
         'DatabaseManagerToolStripMenuItem
         '
         resources.ApplyResources(Me.DatabaseManagerToolStripMenuItem, "DatabaseManagerToolStripMenuItem")
         Me.DatabaseManagerToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.application_form_edit
         Me.DatabaseManagerToolStripMenuItem.Name = "DatabaseManagerToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.DatabaseManagerToolStripMenuItem, resources.GetString("DatabaseManagerToolStripMenuItem.StatusBarText"))
-        '
+         '
         'MostrarBarraDeFerramentasToolStripMenuItem
         '
         resources.ApplyResources(Me.MostrarBarraDeFerramentasToolStripMenuItem, "MostrarBarraDeFerramentasToolStripMenuItem")
@@ -244,15 +225,13 @@ Partial Class FormMain
         Me.MostrarBarraDeFerramentasToolStripMenuItem.CheckOnClick = True
         Me.MostrarBarraDeFerramentasToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
         Me.MostrarBarraDeFerramentasToolStripMenuItem.Name = "MostrarBarraDeFerramentasToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.MostrarBarraDeFerramentasToolStripMenuItem, resources.GetString("MostrarBarraDeFerramentasToolStripMenuItem.StatusBarText"))
-        '
+       '
         'WindowsMenu
         '
         resources.ApplyResources(Me.WindowsMenu, "WindowsMenu")
         Me.WindowsMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CascadeToolStripMenuItem, Me.TileVerticalToolStripMenuItem, Me.TileHorizontalToolStripMenuItem})
         Me.WindowsMenu.MergeIndex = 102
         Me.WindowsMenu.Name = "WindowsMenu"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.WindowsMenu, resources.GetString("WindowsMenu.StatusBarText"))
         '
         'CascadeToolStripMenuItem
         '
@@ -261,8 +240,7 @@ Partial Class FormMain
         Me.CascadeToolStripMenuItem.CheckOnClick = True
         Me.CascadeToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.application_cascade
         Me.CascadeToolStripMenuItem.Name = "CascadeToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.CascadeToolStripMenuItem, resources.GetString("CascadeToolStripMenuItem.StatusBarText"))
-        '
+         '
         'TileVerticalToolStripMenuItem
         '
         resources.ApplyResources(Me.TileVerticalToolStripMenuItem, "TileVerticalToolStripMenuItem")
@@ -270,8 +248,7 @@ Partial Class FormMain
         Me.TileVerticalToolStripMenuItem.CheckOnClick = True
         Me.TileVerticalToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.application_tile_horizontal
         Me.TileVerticalToolStripMenuItem.Name = "TileVerticalToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.TileVerticalToolStripMenuItem, resources.GetString("TileVerticalToolStripMenuItem.StatusBarText"))
-        '
+       '
         'TileHorizontalToolStripMenuItem
         '
         resources.ApplyResources(Me.TileHorizontalToolStripMenuItem, "TileHorizontalToolStripMenuItem")
@@ -279,7 +256,6 @@ Partial Class FormMain
         Me.TileHorizontalToolStripMenuItem.CheckOnClick = True
         Me.TileHorizontalToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.application_tile_vertical
         Me.TileHorizontalToolStripMenuItem.Name = "TileHorizontalToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.TileHorizontalToolStripMenuItem, resources.GetString("TileHorizontalToolStripMenuItem.StatusBarText"))
         '
         'HelpToolStripMenuItem
         '
@@ -288,90 +264,76 @@ Partial Class FormMain
         Me.HelpToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert
         Me.HelpToolStripMenuItem.MergeIndex = 102
         Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.HelpToolStripMenuItem, resources.GetString("HelpToolStripMenuItem.StatusBarText"))
         '
         'ContentsToolStripMenuItem
         '
         resources.ApplyResources(Me.ContentsToolStripMenuItem, "ContentsToolStripMenuItem")
         Me.ContentsToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.help
         Me.ContentsToolStripMenuItem.Name = "ContentsToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.ContentsToolStripMenuItem, resources.GetString("ContentsToolStripMenuItem.StatusBarText"))
         '
         'toolStripSeparator5
         '
         resources.ApplyResources(Me.toolStripSeparator5, "toolStripSeparator5")
         Me.toolStripSeparator5.Name = "toolStripSeparator5"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.toolStripSeparator5, resources.GetString("toolStripSeparator5.StatusBarText"))
         '
         'DWSIMNaInternetToolStripMenuItem
         '
         resources.ApplyResources(Me.DWSIMNaInternetToolStripMenuItem, "DWSIMNaInternetToolStripMenuItem")
         Me.DWSIMNaInternetToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BlogDeDesenvolvimentoToolStripMenuItem, Me.DownloadsToolStripMenuItem, Me.WikiToolStripMenuItem, Me.FórumToolStripMenuItem, Me.RastreamentoDeBugsToolStripMenuItem})
         Me.DWSIMNaInternetToolStripMenuItem.Name = "DWSIMNaInternetToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.DWSIMNaInternetToolStripMenuItem, resources.GetString("DWSIMNaInternetToolStripMenuItem.StatusBarText"))
         '
         'BlogDeDesenvolvimentoToolStripMenuItem
         '
         resources.ApplyResources(Me.BlogDeDesenvolvimentoToolStripMenuItem, "BlogDeDesenvolvimentoToolStripMenuItem")
         Me.BlogDeDesenvolvimentoToolStripMenuItem.Name = "BlogDeDesenvolvimentoToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.BlogDeDesenvolvimentoToolStripMenuItem, resources.GetString("BlogDeDesenvolvimentoToolStripMenuItem.StatusBarText"))
-        '
+         '
         'DownloadsToolStripMenuItem
         '
         resources.ApplyResources(Me.DownloadsToolStripMenuItem, "DownloadsToolStripMenuItem")
         Me.DownloadsToolStripMenuItem.Name = "DownloadsToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.DownloadsToolStripMenuItem, resources.GetString("DownloadsToolStripMenuItem.StatusBarText"))
         '
         'WikiToolStripMenuItem
         '
         resources.ApplyResources(Me.WikiToolStripMenuItem, "WikiToolStripMenuItem")
         Me.WikiToolStripMenuItem.Name = "WikiToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.WikiToolStripMenuItem, resources.GetString("WikiToolStripMenuItem.StatusBarText"))
-        '
+         '
         'FórumToolStripMenuItem
         '
         resources.ApplyResources(Me.FórumToolStripMenuItem, "FórumToolStripMenuItem")
         Me.FórumToolStripMenuItem.Name = "FórumToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.FórumToolStripMenuItem, resources.GetString("FórumToolStripMenuItem.StatusBarText"))
-        '
+         '
         'RastreamentoDeBugsToolStripMenuItem
         '
         resources.ApplyResources(Me.RastreamentoDeBugsToolStripMenuItem, "RastreamentoDeBugsToolStripMenuItem")
         Me.RastreamentoDeBugsToolStripMenuItem.Name = "RastreamentoDeBugsToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.RastreamentoDeBugsToolStripMenuItem, resources.GetString("RastreamentoDeBugsToolStripMenuItem.StatusBarText"))
         '
         'RegistroToolStripMenuItem
         '
         resources.ApplyResources(Me.RegistroToolStripMenuItem, "RegistroToolStripMenuItem")
         Me.RegistroToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RegistrarTiposCOMToolStripMenuItem, Me.DeToolStripMenuItem})
         Me.RegistroToolStripMenuItem.Name = "RegistroToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.RegistroToolStripMenuItem, resources.GetString("RegistroToolStripMenuItem.StatusBarText"))
         '
         'RegistrarTiposCOMToolStripMenuItem
         '
         resources.ApplyResources(Me.RegistrarTiposCOMToolStripMenuItem, "RegistrarTiposCOMToolStripMenuItem")
         Me.RegistrarTiposCOMToolStripMenuItem.Name = "RegistrarTiposCOMToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.RegistrarTiposCOMToolStripMenuItem, resources.GetString("RegistrarTiposCOMToolStripMenuItem.StatusBarText"))
-        '
+         '
         'DeToolStripMenuItem
         '
         resources.ApplyResources(Me.DeToolStripMenuItem, "DeToolStripMenuItem")
         Me.DeToolStripMenuItem.Name = "DeToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.DeToolStripMenuItem, resources.GetString("DeToolStripMenuItem.StatusBarText"))
-        '
+         '
         'DonateToolStripMenuItem
         '
         resources.ApplyResources(Me.DonateToolStripMenuItem, "DonateToolStripMenuItem")
         Me.DonateToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.money_add
         Me.DonateToolStripMenuItem.Name = "DonateToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.DonateToolStripMenuItem, resources.GetString("DonateToolStripMenuItem.StatusBarText"))
         '
         'AboutToolStripMenuItem
         '
         resources.ApplyResources(Me.AboutToolStripMenuItem, "AboutToolStripMenuItem")
         Me.AboutToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.information
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.AboutToolStripMenuItem, resources.GetString("AboutToolStripMenuItem.StatusBarText"))
         '
         'ToolStrip1
         '
@@ -385,7 +347,6 @@ Partial Class FormMain
         Me.NewToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.NewToolStripButton.Image = Global.DWSIM.My.Resources.Resources.page_white
         Me.NewToolStripButton.Name = "NewToolStripButton"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.NewToolStripButton, resources.GetString("NewToolStripButton.StatusBarText"))
         '
         'OpenToolStripButton
         '
@@ -393,7 +354,6 @@ Partial Class FormMain
         Me.OpenToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.OpenToolStripButton.Image = Global.DWSIM.My.Resources.Resources.folder_page_white
         Me.OpenToolStripButton.Name = "OpenToolStripButton"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.OpenToolStripButton, resources.GetString("OpenToolStripButton.StatusBarText"))
         '
         'SaveToolStripButton
         '
@@ -401,7 +361,6 @@ Partial Class FormMain
         Me.SaveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.SaveToolStripButton.Image = Global.DWSIM.My.Resources.Resources.page_save
         Me.SaveToolStripButton.Name = "SaveToolStripButton"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.SaveToolStripButton, resources.GetString("SaveToolStripButton.StatusBarText"))
         '
         'ToolStripButton1
         '
@@ -409,21 +368,18 @@ Partial Class FormMain
         Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton1.Image = Global.DWSIM.My.Resources.Resources.disk
         Me.ToolStripButton1.Name = "ToolStripButton1"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripButton1, resources.GetString("ToolStripButton1.StatusBarText"))
-        '
+         '
         'SaveAllToolStripButton
         '
         resources.ApplyResources(Me.SaveAllToolStripButton, "SaveAllToolStripButton")
         Me.SaveAllToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.SaveAllToolStripButton.Image = Global.DWSIM.My.Resources.Resources.disk_multiple
         Me.SaveAllToolStripButton.Name = "SaveAllToolStripButton"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.SaveAllToolStripButton, resources.GetString("SaveAllToolStripButton.StatusBarText"))
         '
         'ToolStripSeparator3
         '
         resources.ApplyResources(Me.ToolStripSeparator3, "ToolStripSeparator3")
         Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripSeparator3, resources.GetString("ToolStripSeparator3.StatusBarText"))
         '
         'ToolStripButton2
         '
@@ -431,13 +387,11 @@ Partial Class FormMain
         Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton2.Image = Global.DWSIM.My.Resources.Resources.application_edit
         Me.ToolStripButton2.Name = "ToolStripButton2"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripButton2, resources.GetString("ToolStripButton2.StatusBarText"))
         '
         'ToolStripSeparator4
         '
         resources.ApplyResources(Me.ToolStripSeparator4, "ToolStripSeparator4")
         Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripSeparator4, resources.GetString("ToolStripSeparator4.StatusBarText"))
         '
         'ToolStripButton3
         '
@@ -445,7 +399,6 @@ Partial Class FormMain
         Me.ToolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton3.Image = Global.DWSIM.My.Resources.Resources.application_cascade
         Me.ToolStripButton3.Name = "ToolStripButton3"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripButton3, resources.GetString("ToolStripButton3.StatusBarText"))
         '
         'ToolStripButton5
         '
@@ -453,7 +406,6 @@ Partial Class FormMain
         Me.ToolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton5.Image = Global.DWSIM.My.Resources.Resources.application_tile_horizontal
         Me.ToolStripButton5.Name = "ToolStripButton5"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripButton5, resources.GetString("ToolStripButton5.StatusBarText"))
         '
         'ToolStripButton4
         '
@@ -461,13 +413,11 @@ Partial Class FormMain
         Me.ToolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton4.Image = Global.DWSIM.My.Resources.Resources.application_tile_vertical
         Me.ToolStripButton4.Name = "ToolStripButton4"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripButton4, resources.GetString("ToolStripButton4.StatusBarText"))
         '
         'ToolStripSeparator6
         '
         resources.ApplyResources(Me.ToolStripSeparator6, "ToolStripSeparator6")
         Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripSeparator6, resources.GetString("ToolStripSeparator6.StatusBarText"))
         '
         'ToolStripButton6
         '
@@ -475,7 +425,6 @@ Partial Class FormMain
         Me.ToolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton6.Image = Global.DWSIM.My.Resources.Resources.help
         Me.ToolStripButton6.Name = "ToolStripButton6"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripButton6, resources.GetString("ToolStripButton6.StatusBarText"))
         '
         'ToolStripButton7
         '
@@ -483,7 +432,6 @@ Partial Class FormMain
         Me.ToolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton7.Image = Global.DWSIM.My.Resources.Resources.money_add
         Me.ToolStripButton7.Name = "ToolStripButton7"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripButton7, resources.GetString("ToolStripButton7.StatusBarText"))
         '
         'ToolStripButton8
         '
@@ -491,7 +439,6 @@ Partial Class FormMain
         Me.ToolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton8.Image = Global.DWSIM.My.Resources.Resources.information
         Me.ToolStripButton8.Name = "ToolStripButton8"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripButton8, resources.GetString("ToolStripButton8.StatusBarText"))
         '
         'BgLoadComp
         '
@@ -536,7 +483,6 @@ Partial Class FormMain
         Me.ToolStripStatusLabel1.Margin = New System.Windows.Forms.Padding(0)
         Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
         Me.ToolStripStatusLabel1.Spring = True
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.ToolStripStatusLabel1, resources.GetString("ToolStripStatusLabel1.StatusBarText"))
         '
         'tslupd
         '
@@ -545,7 +491,6 @@ Partial Class FormMain
         Me.tslupd.IsLink = True
         Me.tslupd.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
         Me.tslupd.Name = "tslupd"
-        Me.StatusBarTextProvider1.SetStatusBarText(Me.tslupd, resources.GetString("tslupd.StatusBarText"))
         '
         'TimerBackup
         '
@@ -633,7 +578,6 @@ Partial Class FormMain
     Public WithEvents TileHorizontalToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents VerToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents bgLoadNews As System.ComponentModel.BackgroundWorker
-    Public WithEvents StatusBarTextProvider1 As EWSoftware.StatusBarText.StatusBarTextProvider
     Public WithEvents StatusStrip1 As System.Windows.Forms.StatusStrip
     Public WithEvents ToolStripStatusLabel1 As System.Windows.Forms.ToolStripStatusLabel
 

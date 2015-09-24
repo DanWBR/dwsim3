@@ -22,6 +22,7 @@ Imports System.Runtime.Serialization.Formatters
 Imports System.IO
 Imports Cudafy
 Imports Cudafy.Host
+Imports System.Threading.Tasks
 
 Public Class FormOptions
 
@@ -100,43 +101,39 @@ Public Class FormOptions
 
         Me.cbGPU.Items.Clear()
 
-        Try
-            CudafyModes.Target = eGPUType.Emulator
-            For Each prop As GPGPUProperties In CudafyHost.GetDeviceProperties(CudafyModes.Target, False)
-                Me.cbGPU.Items.Add("Emulator | " & prop.Name & " (" & prop.DeviceId & ")")
-            Next
-        Catch ex As Exception
+        Task.Factory.StartNew(Function()
+                                  Dim list As New List(Of String)
+                                  CudafyModes.Target = eGPUType.Emulator
+                                  For Each prop As GPGPUProperties In CudafyHost.GetDeviceProperties(CudafyModes.Target, False)
+                                      list.Add("Emulator | " & prop.Name & " (" & prop.DeviceId & ")")
+                                  Next
+                                  Try
+                                      CudafyModes.Target = eGPUType.Cuda
+                                      For Each prop As GPGPUProperties In CudafyHost.GetDeviceProperties(CudafyModes.Target, False)
+                                          list.Add("CUDA | " & prop.Name & " (" & prop.DeviceId & ")")
+                                      Next
+                                  Catch ex As Exception
 
-        End Try
-        Try
-            CudafyModes.Target = eGPUType.Cuda
-            For Each prop As GPGPUProperties In CudafyHost.GetDeviceProperties(CudafyModes.Target, False)
-                Me.cbGPU.Items.Add("CUDA | " & prop.Name & " (" & prop.DeviceId & ")")
-            Next
-        Catch ex As Exception
-
-        End Try
-        Try
-            CudafyModes.Target = eGPUType.OpenCL
-            For Each prop As GPGPUProperties In CudafyHost.GetDeviceProperties(CudafyModes.Target, False)
-                Me.cbGPU.Items.Add("OpenCL | " & prop.Name & " (" & prop.DeviceId & ")")
-            Next
-        Catch ex As Exception
-
-        End Try
-
-        CudafyModes.Target = My.Settings.CudafyTarget
-
-        If My.Settings.SelectedGPU <> "" Then
-            For Each s As String In Me.cbGPU.Items
-                If s = My.Settings.SelectedGPU Then
-                    Me.cbGPU.SelectedItem = s
-                    Exit For
-                End If
-            Next
-        Else
-            If Me.cbGPU.Items.Count > 0 Then Me.cbGPU.SelectedIndex = 0
-        End If
+                                  End Try
+                                  CudafyModes.Target = eGPUType.OpenCL
+                                  For Each prop As GPGPUProperties In CudafyHost.GetDeviceProperties(CudafyModes.Target, False)
+                                      list.Add("OpenCL | " & prop.Name & " (" & prop.DeviceId & ")")
+                                  Next
+                                  Return list
+                              End Function).ContinueWith(Sub(t)
+                                                             Me.cbGPU.Items.AddRange(t.Result.ToArray)
+                                                             CudafyModes.Target = My.Settings.CudafyTarget
+                                                             If My.Settings.SelectedGPU <> "" Then
+                                                                 For Each s As String In Me.cbGPU.Items
+                                                                     If s = My.Settings.SelectedGPU Then
+                                                                         Me.cbGPU.SelectedItem = s
+                                                                         Exit For
+                                                                     End If
+                                                                 Next
+                                                             Else
+                                                                 If Me.cbGPU.Items.Count > 0 Then Me.cbGPU.SelectedIndex = 0
+                                                             End If
+                                                         End Sub, TaskScheduler.FromCurrentSynchronizationContext)
 
         Select Case My.Settings.CultureInfo
             Case "pt-BR"
@@ -148,8 +145,6 @@ Public Class FormOptions
             Case "es"
                 Me.ComboBoxUILanguage.SelectedIndex = 3
         End Select
-
-        loaded = True
 
     End Sub
 
@@ -551,6 +546,8 @@ Public Class FormOptions
         Try
             For Each prop As GPGPUProperties In CudafyHost.GetDeviceProperties(CudafyModes.Target, False)
                 If Me.cbGPU.SelectedItem.ToString.Split("|")(1).Contains(prop.Name) Then
+                    My.Settings.SelectedGPU = Me.cbGPU.SelectedItem.ToString
+                    My.Settings.CudafyDeviceID = prop.DeviceId
                     GetCUDACaps(prop)
                     Exit For
                 End If
@@ -558,23 +555,7 @@ Public Class FormOptions
         Catch ex As Exception
 
         End Try
-
-        If loaded Then
-            Try
-                For Each prop As GPGPUProperties In CudafyHost.GetDeviceProperties(CudafyModes.Target, False)
-                    If Me.cbGPU.SelectedItem.ToString.Split("|")(1).Contains(prop.Name) Then
-                        My.Settings.SelectedGPU = Me.cbGPU.SelectedItem.ToString
-                        My.Settings.CudafyDeviceID = prop.DeviceId
-                        GetCUDACaps(prop)
-                        Exit For
-                    End If
-                Next
-            Catch ex As Exception
-
-            End Try
-            MessageBox.Show(DWSIM.App.GetLocalString("NextStartupOnly"))
-        End If
-
+        
     End Sub
 
     Private Sub chkEnableGPUProcessing_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkEnableGPUProcessing.CheckedChanged

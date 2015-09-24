@@ -134,15 +134,6 @@
     <Reference Include="AeroWizard">
       <HintPath>References\AeroWizard.dll</HintPath>
     </Reference>
-    <Reference Include="Ascend, Version=1.0.0.6, Culture=neutral, PublicKeyToken=25c7a393ba3f37cd, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\Ascend.dll</HintPath>
-    </Reference>
-    <Reference Include="Ascend.Windows.Forms, Version=1.0.0.6, Culture=neutral, PublicKeyToken=ecd86ece2d3eb46d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\Ascend.Windows.Forms.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="CapeOpen, Version=1.0.4118.14986, Culture=neutral, PublicKeyToken=100cc1b5ee8fe630, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\CapeOpen.dll</HintPath>
@@ -163,10 +154,6 @@
     <Reference Include="DotNumerics, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\DotNumerics.dll</HintPath>
-    </Reference>
-    <Reference Include="EWSoftware.StatusBarText, Version=2.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\EWSoftware.StatusBarText.dll</HintPath>
     </Reference>
     <Reference Include="ExcelApi">
       <HintPath>References\ExcelApi.dll</HintPath>
@@ -257,10 +244,6 @@
     <Reference Include="Microsoft.ServiceBus">
       <HintPath>..\AzureServer\References\Microsoft.ServiceBus.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.CSharp, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\Mono.CSharp.dll</HintPath>
-    </Reference>
     <Reference Include="NeoDataType.MyNeoReport, Version=1.4.0.0, Culture=neutral, PublicKeyToken=cc45d3430ba4f561, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\NeoDataType.MyNeoReport.dll</HintPath>
@@ -291,10 +274,6 @@
     <Reference Include="SpinningProgress, Version=1.0.2444.27714, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\SpinningProgress.dll</HintPath>
-    </Reference>
-    <Reference Include="SuperToolTip, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\SuperToolTip.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
