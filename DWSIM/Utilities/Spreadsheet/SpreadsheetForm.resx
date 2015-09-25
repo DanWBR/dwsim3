@@ -363,55 +363,74 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="CelulaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>218, 22</value>
+    <value>258, 22</value>
   </data>
   <data name="CelulaToolStripMenuItem.Text" xml:space="preserve">
     <value>Celula</value>
   </data>
   <data name="ToolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>215, 6</value>
+    <value>255, 6</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="AvaliarFórmulaToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>F9</value>
   </data>
   <data name="AvaliarFórmulaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>218, 22</value>
+    <value>258, 22</value>
   </data>
   <data name="AvaliarFórmulaToolStripMenuItem.Text" xml:space="preserve">
     <value>Avaliar Fórmula</value>
   </data>
+  <data name="ImportarDadosToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Ctrl+I</value>
+  </data>
   <data name="ImportarDadosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>218, 22</value>
+    <value>258, 22</value>
   </data>
   <data name="ImportarDadosToolStripMenuItem.Text" xml:space="preserve">
     <value>Importar Dados</value>
   </data>
+  <data name="ExportarDadosToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Ctrl+E</value>
+  </data>
   <data name="ExportarDadosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>218, 22</value>
+    <value>258, 22</value>
   </data>
   <data name="ExportarDadosToolStripMenuItem.Text" xml:space="preserve">
     <value>Exportar como Propriedade</value>
   </data>
   <data name="ToolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>215, 6</value>
+    <value>255, 6</value>
+  </data>
+  <data name="LimparToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Del</value>
   </data>
   <data name="LimparToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>218, 22</value>
+    <value>258, 22</value>
   </data>
   <data name="LimparToolStripMenuItem.Text" xml:space="preserve">
     <value>Limpar</value>
   </data>
+  <data name="CopiarToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Ctrl+C</value>
+  </data>
   <data name="CopiarToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>218, 22</value>
+    <value>258, 22</value>
   </data>
   <data name="CopiarToolStripMenuItem.Text" xml:space="preserve">
     <value>Copiar</value>
   </data>
+  <data name="ColarToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Ctrl+V</value>
+  </data>
   <data name="ColarToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>218, 22</value>
+    <value>258, 22</value>
   </data>
   <data name="ColarToolStripMenuItem.Text" xml:space="preserve">
     <value>Colar</value>
   </data>
   <data name="ContextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>219, 170</value>
+    <value>259, 192</value>
   </data>
   <data name="&gt;&gt;ContextMenuStrip1.Name" xml:space="preserve">
     <value>ContextMenuStrip1</value>
@@ -419,7 +438,6 @@
   <data name="&gt;&gt;ContextMenuStrip1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="DataGridView1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -925,7 +943,7 @@
     <value>Document</value>
   </data>
   <data name="dckMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>197, 246</value>
+    <value>197, 224</value>
   </data>
   <data name="&gt;&gt;dckMenu.Name" xml:space="preserve">
     <value>dckMenu</value>

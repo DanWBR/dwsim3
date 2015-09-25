@@ -653,16 +653,20 @@ Public Class SpreadsheetForm
     End Sub
 
     Private Sub LimparToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles LimparToolStripMenuItem.Click
-        Me.DataGridView1.SelectedCells(0).Value = ""
-        Me.DataGridView1.SelectedCells(0).Tag = New SpreadsheetCellParameters
-        UpdateValue(Me.DataGridView1.SelectedCells(0), "")
+        For Each sc In Me.DataGridView1.SelectedCells
+            sc.Value = ""
+            sc.Tag = New SpreadsheetCellParameters
+            UpdateValue(sc, "")
+        Next
     End Sub
 
     Private Sub AvaliarFórmulaToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AvaliarFórmulaToolStripMenuItem.Click
-        If Not Me.DataGridView1.SelectedCells(0).Tag Is Nothing Then
-            ccparams = Me.DataGridView1.SelectedCells(0).Tag
-            UpdateValue(Me.DataGridView1.SelectedCells(0), ccparams.Expression)
-        End If
+        For Each sc In Me.DataGridView1.SelectedCells
+            If Not sc.Tag Is Nothing Then
+                ccparams = sc.Tag
+                UpdateValue(sc, ccparams.Expression)
+            End If
+        Next
     End Sub
 
     Private Sub ImportarDadosToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ImportarDadosToolStripMenuItem.Click
