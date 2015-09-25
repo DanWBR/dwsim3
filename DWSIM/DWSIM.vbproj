@@ -328,12 +328,6 @@
     <Compile Include="Forms\AboutBoxMono.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Controls\GListBox.Designer.vb">
-      <DependentUpon>GListBox.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Controls\GListBox.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Forms\Controls\ScriptEditorControlMono.Designer.vb">
       <DependentUpon>ScriptEditorControlMono.vb</DependentUpon>
     </Compile>
@@ -1228,9 +1222,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AboutBoxMono.resx">
       <DependentUpon>AboutBoxMono.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Controls\GListBox.resx">
-      <DependentUpon>GListBox.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Controls\ScriptEditorControl.es.resx">
       <DependentUpon>ScriptEditorControl.vb</DependentUpon>

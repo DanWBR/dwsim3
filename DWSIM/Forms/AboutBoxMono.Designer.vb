@@ -91,7 +91,7 @@ Partial Class AboutBoxMONO
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(706, 519)
+        Me.Button1.Location = New System.Drawing.Point(669, 493)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 23)
         Me.Button1.TabIndex = 3
@@ -127,7 +127,7 @@ Partial Class AboutBoxMONO
         Me.FaTabStrip1.Location = New System.Drawing.Point(8, 69)
         Me.FaTabStrip1.Name = "FaTabStrip1"
         Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem1
-        Me.FaTabStrip1.Size = New System.Drawing.Size(773, 444)
+        Me.FaTabStrip1.Size = New System.Drawing.Size(737, 418)
         Me.FaTabStrip1.TabIndex = 23
         Me.FaTabStrip1.Text = "FaTabStrip1"
         '
@@ -156,7 +156,7 @@ Partial Class AboutBoxMONO
         Me.FaTabStripItem1.IsDrawn = True
         Me.FaTabStripItem1.Name = "FaTabStripItem1"
         Me.FaTabStripItem1.Selected = True
-        Me.FaTabStripItem1.Size = New System.Drawing.Size(771, 423)
+        Me.FaTabStripItem1.Size = New System.Drawing.Size(735, 397)
         Me.FaTabStripItem1.TabIndex = 0
         Me.FaTabStripItem1.Title = "General Info"
         '
@@ -165,7 +165,7 @@ Partial Class AboutBoxMONO
         Me.Lblcpusimd.BackColor = System.Drawing.Color.Transparent
         Me.Lblcpusimd.Location = New System.Drawing.Point(133, 171)
         Me.Lblcpusimd.Name = "Lblcpusimd"
-        Me.Lblcpusimd.Size = New System.Drawing.Size(629, 32)
+        Me.Lblcpusimd.Size = New System.Drawing.Size(593, 32)
         Me.Lblcpusimd.TabIndex = 31
         Me.Lblcpusimd.Text = "[meminfo]"
         '
@@ -357,7 +357,7 @@ Partial Class AboutBoxMONO
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.ReadOnly = True
         Me.TextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.TextBox1.Size = New System.Drawing.Size(743, 189)
+        Me.TextBox1.Size = New System.Drawing.Size(711, 165)
         Me.TextBox1.TabIndex = 13
         Me.TextBox1.Text = resources.GetString("TextBox1.Text")
         '
@@ -548,7 +548,7 @@ Partial Class AboutBoxMONO
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(791, 565)
+        Me.ClientSize = New System.Drawing.Size(755, 540)
         Me.ControlBox = False
         Me.Controls.Add(Me.FaTabStrip1)
         Me.Controls.Add(Me.Copyright)

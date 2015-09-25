@@ -219,9 +219,10 @@ Namespace DWSIM.Outros
 
     <System.Serializable()> Public Class Annotation
 
-        Protected m_ann(1) As String
-        Protected m_text As String = ""
-        Protected m_rtfText As String = ""
+        Implements XMLSerializer.Interfaces.ICustomXMLSerialization
+
+        Public m_text As String = ""
+        Public m_rtfText As String = ""
 
         Sub New(ByVal rtf As String, ByVal text As String)
             m_rtfText = rtf
@@ -244,6 +245,14 @@ Namespace DWSIM.Outros
 
         Public Overrides Function ToString() As String
             Return m_text
+        End Function
+
+        Public Function LoadData(data As List(Of XElement)) As Boolean Implements XMLSerializer.Interfaces.ICustomXMLSerialization.LoadData
+            XMLSerializer.XMLSerializer.Deserialize(Me, data, True)
+        End Function
+
+        Public Function SaveData() As List(Of XElement) Implements XMLSerializer.Interfaces.ICustomXMLSerialization.SaveData
+            Return XMLSerializer.XMLSerializer.Serialize(Me, True)
         End Function
 
     End Class
