@@ -544,7 +544,7 @@ Public Class FormOptions
             My.Settings.CudafyTarget = eGPUType.OpenCL
         End If
         Try
-            For Each prop As GPGPUProperties In CudafyHost.GetDeviceProperties(CudafyModes.Target, False)
+            For Each prop As GPGPUProperties In CudafyHost.GetDeviceProperties(My.Settings.CudafyTarget, False)
                 If Me.cbGPU.SelectedItem.ToString.Split("|")(1).Contains(prop.Name) Then
                     My.Settings.SelectedGPU = Me.cbGPU.SelectedItem.ToString
                     My.Settings.CudafyDeviceID = prop.DeviceId
