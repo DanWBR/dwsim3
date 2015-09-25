@@ -613,7 +613,7 @@ Public Class FormOptions
     End Sub
 
     Private Sub FormOptions_HelpRequested(sender As Object, hlpevent As HelpEventArgs) Handles MyBase.HelpRequested
-        Select Case FaTabStrip1.SelectedItem.Name
+        Select Case FaTabStrip1.SelectedTab.Name
             Case "FaTabStripItem1"
                 DWSIM.App.HelpRequested("CONF_GlobalSettings1.htm")
             Case "FaTabStripItem3"
