@@ -3272,8 +3272,6 @@ Imports PropertyGridEx
 
         XMLSerializer.XMLSerializer.Deserialize(Me, data)
 
-        Me.Annotation.annotation = New Object() {"", (From xel As XElement In data Select xel Where xel.Name = "Annotation").SingleOrDefault.Value}
-
         For Each xel2 As XElement In (From xel As XElement In data Select xel Where xel.Name = "NodeItems").Elements
             Dim text As String = xel2.@Text
             Dim ni2 As DWSIM.Outros.NodeItem = (From ni As DWSIM.Outros.NodeItem In m_nodeitems.Values Select ni Where ni.Text = text).SingleOrDefault
@@ -3296,7 +3294,6 @@ Imports PropertyGridEx
 
         With elements
 
-            .Add(New XElement("Annotation", m_annotation.annotation.ToString))
             .Add(New XElement("NodeItems"))
             For Each kvp As KeyValuePair(Of Integer, DWSIM.Outros.NodeItem) In m_nodeitems
                 If kvp.Value.Checked Then .Item(.Count - 1).Add(New XElement("NodeItem", New XAttribute("ID", kvp.Key),
