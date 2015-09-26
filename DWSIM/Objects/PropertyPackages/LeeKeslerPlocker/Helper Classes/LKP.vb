@@ -914,7 +914,7 @@ Final3:
 
             Dim gpu As GPGPU = My.MyApplication.gpu
 
-            If gpu.IsMultithreadingEnabled Then gpu.Lock()
+            If gpu.IsMultithreadingEnabled Then gpu.SetCurrentContext()
 
             ' allocate the memory on the GPU
             Dim dev_vcjk As Double(,) = gpu.Allocate(Of Double)(vcjk)
@@ -984,7 +984,7 @@ Final3:
             gpu.Free(dev_dpcmdx)
             gpu.Free(dev_dzcmdx)
 
-            If gpu.IsMultithreadingEnabled Then gpu.Unlock()
+            'If gpu.IsMultithreadingEnabled Then gpu.Unlock()
 
         End Sub
 

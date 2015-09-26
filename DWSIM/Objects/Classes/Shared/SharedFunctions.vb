@@ -375,7 +375,11 @@ Namespace DWSIM
                     End Select
                     If My.MyApplication.gpumod Is Nothing OrElse Not My.MyApplication.gpumod.TryVerifyChecksums() Then
                         Select Case My.Settings.CudafyTarget
-                            Case 0, 1
+                            Case 0
+                                My.MyApplication.gpumod = CudafyTranslator.Cudafy(GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.LeeKeslerPlocker), _
+                                            GetType(DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.PR))
+                                My.MyApplication.gpumod.Serialize("emulator.cdfy")
+                            Case 1
                                 Dim cp As New Cudafy.CompileProperties()
                                 With cp
                                     .Architecture = eArchitecture.sm_20
@@ -387,15 +391,11 @@ Namespace DWSIM
                                     .IncludeDirectoryPath = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\include"
                                 End With
                                 My.MyApplication.gpumod = CudafyTranslator.Cudafy(cp, GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.LeeKeslerPlocker), _
-                                            GetType(DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.PR), _
-                                            GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac), _
-                                            GetType(DWSIM.MathEx.Broyden))
+                                            GetType(DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.PR))
                                 My.MyApplication.gpumod.Serialize("cudacode.cdfy")
                             Case 2
                                 My.MyApplication.gpumod = CudafyTranslator.Cudafy(GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.LeeKeslerPlocker), _
-                                           GetType(DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.PR), _
-                                           GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac), _
-                                           GetType(DWSIM.MathEx.Broyden))
+                                            GetType(DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.PR))
                         End Select
                     End If
                 End If

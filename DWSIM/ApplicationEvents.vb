@@ -33,6 +33,7 @@ Namespace My
 
         Public Shared AppTaskScheduler As Tasks.TaskScheduler = Tasks.TaskScheduler.Default
 
+
         Public ActiveSimulation As FormFlowsheet
         Public CAPEOPENMode As Boolean = False
         Public Shared gpu As Cudafy.Host.GPGPU

@@ -492,21 +492,35 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
             Dim gpu As GPGPU = My.MyApplication.gpu
 
-            If gpu.IsMultithreadingEnabled Then gpu.Lock()
+            'gpu.Lock()
+            gpu.SetCurrentContext()
+          
+            Dim dev_alpha As Double() = Nothing
+            Dim dev_ai As Double() = Nothing
+            Dim dev_bi As Double() = Nothing
+            Dim dev_Tc As Double() = Nothing
+            Dim dev_Pc As Double() = Nothing
+            Dim dev_W As Double() = Nothing
+            Dim dev_a As Double(,) = Nothing
+            Dim dev_vkij As Double(,) = Nothing
+            Dim dev_Vx As Double() = Nothing
+            Dim dev_aml2_temp As Double() = Nothing
+            Dim dev_aml_temp As Double() = Nothing
+            Dim dev_bml_temp As Double() = Nothing
 
             ' allocate the memory on the GPU
-            Dim dev_alpha As Double() = gpu.Allocate(Of Double)(alpha)
-            Dim dev_ai As Double() = gpu.Allocate(Of Double)(ai)
-            Dim dev_bi As Double() = gpu.Allocate(Of Double)(bi)
-            Dim dev_Tc As Double() = gpu.Allocate(Of Double)(Tc)
-            Dim dev_Pc As Double() = gpu.Allocate(Of Double)(Pc)
-            Dim dev_W As Double() = gpu.Allocate(Of Double)(w)
-            Dim dev_a As Double(,) = gpu.Allocate(Of Double)(a)
-            Dim dev_vkij As Double(,) = gpu.Allocate(Of Double)(VKij)
-            Dim dev_Vx As Double() = gpu.Allocate(Of Double)(Vx)
-            Dim dev_aml2_temp As Double() = gpu.Allocate(Of Double)(aml2_temp)
-            Dim dev_aml_temp As Double() = gpu.Allocate(Of Double)(aml_temp)
-            Dim dev_bml_temp As Double() = gpu.Allocate(Of Double)(bml_temp)
+            dev_alpha = gpu.Allocate(Of Double)(alpha)
+            dev_ai = gpu.Allocate(Of Double)(ai)
+            dev_bi = gpu.Allocate(Of Double)(bi)
+            dev_Tc = gpu.Allocate(Of Double)(Tc)
+            dev_Pc = gpu.Allocate(Of Double)(Pc)
+            dev_W = gpu.Allocate(Of Double)(w)
+            dev_a = gpu.Allocate(Of Double)(a)
+            dev_vkij = gpu.Allocate(Of Double)(VKij)
+            dev_Vx = gpu.Allocate(Of Double)(Vx)
+            dev_aml2_temp = gpu.Allocate(Of Double)(aml2_temp)
+            dev_aml_temp = gpu.Allocate(Of Double)(aml_temp)
+            dev_bml_temp = gpu.Allocate(Of Double)(bml_temp)
 
             ' copy the arrays to the GPU
             gpu.CopyToDevice(alpha, dev_alpha)
@@ -556,7 +570,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             gpu.Free(dev_aml_temp)
             gpu.Free(dev_bml_temp)
 
-            If gpu.IsMultithreadingEnabled Then gpu.Unlock()
+            'gpu.Unlock()
 
         End Sub
 
