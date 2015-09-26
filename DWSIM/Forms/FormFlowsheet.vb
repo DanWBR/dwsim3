@@ -950,35 +950,19 @@ Imports DWSIM.DWSIM.Outros
     End Sub
 
     Private Sub tsbAtivar_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles tsbAtivar.Click
-       Me.tsbDesat.Checked = False
+        Me.tsbDesat.Checked = False
         Me.tsbAtivar.Checked = True
         Me.Options.CalculatorActivated = True
         Me.FormSurface.LabelCalculator.Text = DWSIM.App.GetLocalString("CalculadorOcioso")
         Me.WriteToLog(DWSIM.App.GetLocalString("Calculadorativado"), Color.DimGray, DWSIM.FormClasses.TipoAviso.Informacao)
-        If Not Me.CalculationQueue Is Nothing Then
-            Me.CalculationQueue.Clear()
-            'If Me.CalculationQueue.Count >= 1 Then
-            'Dim msgres As MsgBoxResult = MessageBox.Show(DWSIM.App.GetLocalString("Existemobjetosespera"), _
-            'DWSIM.App.GetLocalString("Objetosnafiladeclcul"), _
-            'MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-            'If msgres = MsgBoxResult.Yes Then
-            '    ProcessCalculationQueue(Me)
-            'End If
-            'End If
-        End If
+        If Not Me.CalculationQueue Is Nothing Then Me.CalculationQueue.Clear()
     End Sub
 
     Private Sub tsbDesat_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsbDesat.Click
-        'If Me.tsbDesat.Checked = True Then
         Me.tsbAtivar.Checked = False
         Me.tsbDesat.Checked = True
         Me.Options.CalculatorActivated = False
         Me.FormSurface.LabelCalculator.Text = DWSIM.App.GetLocalString("CalculadorDesativado1")
-        'Else
-        'Me.tsbAtivar.Checked = True
-        'Me.Options.CalculatorActivated = True
-        'Me.FormSurface.LabelSimMode.Text = DWSIM.App.GetLocalString("CalculadorOcioso")
-        'End If
     End Sub
 
     Private Sub HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem.Click

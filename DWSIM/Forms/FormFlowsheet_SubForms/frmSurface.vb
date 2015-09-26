@@ -192,12 +192,24 @@ Public Class frmSurface
             Call Me.EditCompTSMI_Click(sender, e)
         ElseIf e.KeyCode = Keys.F5 Then
             If My.Computer.Keyboard.ShiftKeyDown Then
-                CalculateAll(Me.Flowsheet)
-            Else
-                CalculateAll2(Me.Flowsheet, My.Settings.SolverMode)
+                Flowsheet.tsbDesat.Checked = False
+                Flowsheet.tsbAtivar.Checked = True
+                Flowsheet.Options.CalculatorActivated = True
             End If
+            CalculateAll2(Me.Flowsheet, My.Settings.SolverMode)
         ElseIf e.KeyCode = Keys.F6 Then
             If Not Me.FlowsheetDesignSurface.SelectedObject Is Nothing Then RecalcularToolStripMenuItem_Click(sender, e)
+        ElseIf e.KeyCode = Keys.D And e.Control Then
+            Flowsheet.tsbAtivar.Checked = False
+            Flowsheet.tsbDesat.Checked = True
+            Flowsheet.Options.CalculatorActivated = False
+            Flowsheet.FormSurface.LabelCalculator.Text = DWSIM.App.GetLocalString("CalculadorDesativado1")
+        ElseIf e.KeyCode = Keys.A And e.Control Then
+            Flowsheet.tsbDesat.Checked = False
+            Flowsheet.tsbAtivar.Checked = True
+            Flowsheet.Options.CalculatorActivated = True
+            Flowsheet.FormSurface.LabelCalculator.Text = DWSIM.App.GetLocalString("CalculadorOcioso")
+            Flowsheet.WriteToLog(DWSIM.App.GetLocalString("Calculadorativado"), Color.DimGray, DWSIM.FormClasses.TipoAviso.Informacao)
         End If
 
         If Not Me.FlowsheetDesignSurface.SelectedObject Is Nothing Then

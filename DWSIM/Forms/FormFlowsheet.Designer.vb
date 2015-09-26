@@ -608,7 +608,7 @@ Partial Class FormFlowsheet
         Me.ComponentesToolStripMenuItem.MergeIndex = 0
         Me.ComponentesToolStripMenuItem.Name = "ComponentesToolStripMenuItem"
         resources.ApplyResources(Me.ComponentesToolStripMenuItem, "ComponentesToolStripMenuItem")
-       '
+        '
         'ExibirToolStripMenuItem
         '
         Me.ExibirToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExibirSaídaDoConsoleToolStripMenuItem, Me.ExibirListaDeItensACalcularToolStripMenuItem, Me.PainelDeVariáveisToolStripMenuItem, Me.ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem})
@@ -908,23 +908,23 @@ Partial Class FormFlowsheet
         Me.PontoCríticoRealToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.cog1
         Me.PontoCríticoRealToolStripMenuItem.Name = "PontoCríticoRealToolStripMenuItem"
         resources.ApplyResources(Me.PontoCríticoRealToolStripMenuItem, "PontoCríticoRealToolStripMenuItem")
-       '
+        '
         'HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem
         '
         Me.HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.cog
         Me.HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem.Name = "HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem"
         resources.ApplyResources(Me.HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem, "HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem")
-       '
+        '
         'PropriedadesDosComponentesToolStripMenuItem
         '
         resources.ApplyResources(Me.PropriedadesDosComponentesToolStripMenuItem, "PropriedadesDosComponentesToolStripMenuItem")
         Me.PropriedadesDosComponentesToolStripMenuItem.Name = "PropriedadesDosComponentesToolStripMenuItem"
-       '
+        '
         'AnáliseDePetróleosToolStripMenuItem
         '
         resources.ApplyResources(Me.AnáliseDePetróleosToolStripMenuItem, "AnáliseDePetróleosToolStripMenuItem")
         Me.AnáliseDePetróleosToolStripMenuItem.Name = "AnáliseDePetróleosToolStripMenuItem"
-         '
+        '
         'DiagramaDeFasesToolStripMenuItem
         '
         resources.ApplyResources(Me.DiagramaDeFasesToolStripMenuItem, "DiagramaDeFasesToolStripMenuItem")
@@ -958,7 +958,7 @@ Partial Class FormFlowsheet
         '
         resources.ApplyResources(Me.PSVSizingToolStripMenuItem, "PSVSizingToolStripMenuItem")
         Me.PSVSizingToolStripMenuItem.Name = "PSVSizingToolStripMenuItem"
-         '
+        '
         'FlashVesselSizingToolStripMenuItem
         '
         resources.ApplyResources(Me.FlashVesselSizingToolStripMenuItem, "FlashVesselSizingToolStripMenuItem")
@@ -969,7 +969,7 @@ Partial Class FormFlowsheet
         Me.PropriedadesDePetróleosToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.cog
         Me.PropriedadesDePetróleosToolStripMenuItem.Name = "PropriedadesDePetróleosToolStripMenuItem"
         resources.ApplyResources(Me.PropriedadesDePetróleosToolStripMenuItem, "PropriedadesDePetróleosToolStripMenuItem")
-         '
+        '
         'OtimizaToolStripMenuItem
         '
         Me.OtimizaToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AnáliseDeSensibilidadeToolStripMenuItem, Me.MultivariateOptimizerToolStripMenuItem})
@@ -1003,7 +1003,7 @@ Partial Class FormFlowsheet
         Me.GerarRelatórioToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.report
         Me.GerarRelatórioToolStripMenuItem.Name = "GerarRelatórioToolStripMenuItem"
         resources.ApplyResources(Me.GerarRelatórioToolStripMenuItem, "GerarRelatórioToolStripMenuItem")
-         '
+        '
         'ArquivoToolStripMenuItem
         '
         Me.ArquivoToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CloseToolStripMenuItem})
