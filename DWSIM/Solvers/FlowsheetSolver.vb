@@ -1881,7 +1881,7 @@ Namespace DWSIM.Flowsheet
                                                                      End If
                                                                  Next
 
-                                                                 If icount < 3 Then
+                                                                 If icount < 1 Then
                                                                      DWSIM.MathEx.Broyden.broydn(totalv - 1, recvars, recerrs, recdvars, recvarsb, recerrsb, rechess, 0)
                                                                  Else
                                                                      DWSIM.MathEx.Broyden.broydn(totalv - 1, recvars, recerrs, recdvars, recvarsb, recerrsb, rechess, 1)
@@ -1890,7 +1890,7 @@ Namespace DWSIM.Flowsheet
                                                                  i = 0
                                                                  For Each r As String In recycles
                                                                      Dim rec = DirectCast(form.Collections.CLCS_RecycleCollection(r), SpecialOps.Recycle)
-                                                                     If rec.AccelerationMethod = SpecialOps.Helpers.Recycle.AccelMethod.GlobalBroyden And icount >= 3 Then
+                                                                     If rec.AccelerationMethod = SpecialOps.Helpers.Recycle.AccelMethod.GlobalBroyden And icount >= 2 Then
                                                                          For Each kvp In rec.Errors
                                                                              rec.Values(kvp.Key) = recvars(i) + recdvars(i)
                                                                              i += 1

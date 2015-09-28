@@ -344,6 +344,12 @@ Namespace DWSIM.SimulationObjects.SpecialOps
                     Me.Errors("Enthalpy") = Me.Values("Enthalpy") - .enthalpy.GetValueOrDefault
                 End If
 
+            End With
+
+            Dim oms As DWSIM.SimulationObjects.Streams.MaterialStream = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name)
+
+            With oms.Fases(0).SPMProperties
+
                 If Me.Values.Count = 0 Then
                     Me.Values.Add("Temperature", .temperature.GetValueOrDefault)
                     Me.Values.Add("Pressure", .pressure.GetValueOrDefault)
