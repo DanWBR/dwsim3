@@ -183,19 +183,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Ki_ant = Ki.Clone
                 Ki = PP.DW_CalcKvalue(Vx, Vy, T, P)
 
-                i = 0
-                Do
-                    If Vz(i) <> 0 Then
-                        Vy_ant(i) = Vy(i)
-                        Vx_ant(i) = Vx(i)
-                        Vy(i) = Vz(i) * Ki(i) / ((Ki(i) - 1) * V + 1)
-                        Vx(i) = Vy(i) / Ki(i)
-                    Else
-                        Vy(i) = 0
-                        Vx(i) = 0
-                    End If
-                    i += 1
-                Loop Until i = n + 1
+                Vy_ant = Vy.Clone
+                Vx_ant = Vx.Clone
+
+                Vy = Vz.MultiplyY(Ki).DivideY(Ki.AddConstY(-1).MultiplyConstY(V).AddConstY(1))
+                Vx = Vy.DivideY(Ki)
 
                 Vx = Vx.NormalizeY
                 Vy = Vy.NormalizeY
@@ -209,7 +201,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
 
-                ElseIf Math.Abs(e3) < 0.0000000001 And ecount > 0 Then
+                ElseIf Math.Abs(e3 / 1000) < itol And ecount > 0 Then
 
                     convergiu = 1
 
@@ -219,22 +211,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     Vant = V
 
-                    F = 0.0#
-                    dF = 0.0#
-                    i = 0
-                    Do
-                        If Vz(i) > 0 Then
-                            F = F + Vz(i) * (Ki(i) - 1) / (1 + V * (Ki(i) - 1))
-                            dF = dF - Vz(i) * (Ki(i) - 1) ^ 2 / (1 + V * (Ki(i) - 1)) ^ 2
-                        End If
-                        i = i + 1
-                    Loop Until i = n + 1
+                    F = Vz.MultiplyY(Ki.AddConstY(-1).DivideY(Ki.AddConstY(-1).MultiplyConstY(V).AddConstY(1))).SumY
+                    dF = Vz.NegateY.MultiplyY(Ki.AddConstY(-1).MultiplyY(Ki.AddConstY(-1)).DivideY(Ki.AddConstY(-1).MultiplyConstY(V).AddConstY(1)).DivideY(Ki.AddConstY(-1).MultiplyConstY(V).AddConstY(1))).SumY
 
                     If Abs(F) < etol / 100 Then Exit Do
 
                     V = -F / dF + Vant
-
-                    'If V >= 1.01 Or V <= -0.01 Then V = -0.1 * F / dF + Vant
 
                 End If
 

@@ -1722,12 +1722,27 @@ Namespace DWSIM.Flowsheet
                 'find recycles
 
                 Dim recycles As New List(Of String)
+                Dim totalv As Integer = 0
 
                 For Each r In objstack
                     Dim robj = form.Collections.ObjectCollection(r)
                     If robj.GraphicObject.TipoObjeto = TipoObjeto.OT_Reciclo Then
                         recycles.Add(robj.Nome)
+                        If form.Collections.CLCS_RecycleCollection(robj.Nome).AccelerationMethod = SpecialOps.Helpers.Recycle.AccelMethod.GlobalBroyden Then
+                            form.Collections.CLCS_RecycleCollection(robj.Nome).Calculate()
+                            totalv += form.Collections.CLCS_RecycleCollection(robj.Nome).Values.Count
+                        End If
                     End If
+                Next
+
+                'size jacobian matrix, variables and error vectors for recycle simultaneous solving.
+
+                Dim rechess(totalv - 1, totalv - 1), recvars(totalv - 1), recdvars(totalv - 1), recerrs(totalv - 1), recvarsb(totalv - 1), recerrsb(totalv - 1) As Double
+
+                'identity matrix as first hessian.
+
+                For i As Integer = 0 To totalv - 1
+                    rechess(i, i) = 1
                 Next
 
                 'set all objects' status to 'not calculated' (red) in the list
@@ -1776,6 +1791,8 @@ Namespace DWSIM.Flowsheet
                         Dim objargs As DWSIM.Outros.StatusChangeEventArgs = Nothing
 
                         Dim maintask As New Task(Sub()
+
+                                                     Dim icount As Integer = 0
 
                                                      While Not converged
 
@@ -1834,13 +1851,45 @@ Namespace DWSIM.Flowsheet
                                                              If Not converged Then Exit For
                                                          Next
 
+
                                                          'process the scripts associated with the recycle loop event.
 
                                                          form.ProcessScripts(Script.EventType.SolverRecycleLoop, Script.ObjectType.Solver)
 
                                                          'if the all recycles have converged (if any), then exit the loop.
 
-                                                         If converged Then Exit While
+                                                         If converged Then
+                                                             Exit While
+                                                         Else
+                                                             'update variables of all recycles set to global broyden.
+                                                             Dim i As Integer = 0
+                                                             For Each r As String In recycles
+                                                                 Dim rec = DirectCast(form.Collections.CLCS_RecycleCollection(r), SpecialOps.Recycle)
+                                                                 If rec.AccelerationMethod = SpecialOps.Helpers.Recycle.AccelMethod.GlobalBroyden Then
+                                                                     For Each kvp In rec.Values
+                                                                         recvars(i) = kvp.Value
+                                                                         recerrs(i) = rec.Errors(kvp.Key)
+                                                                         i += 1
+                                                                     Next
+                                                                 End If
+                                                             Next
+                                                             If icount < 3 Then
+                                                                 DWSIM.MathEx.Broyden.broydn(totalv - 1, recvars, recerrs, recdvars, recvarsb, recerrsb, rechess, 0)
+                                                             Else
+                                                                 DWSIM.MathEx.Broyden.broydn(totalv - 1, recvars, recerrs, recdvars, recvarsb, recerrsb, rechess, 1)
+                                                             End If
+                                                             i = 0
+                                                             For Each r As String In recycles
+                                                                 Dim rec = DirectCast(form.Collections.CLCS_RecycleCollection(r), SpecialOps.Recycle)
+                                                                 If rec.AccelerationMethod = SpecialOps.Helpers.Recycle.AccelMethod.GlobalBroyden And icount > 2 Then
+                                                                     For Each kvp In rec.Errors
+                                                                         rec.Values(kvp.Key) = recvars(i) + recdvars(i)
+                                                                         i += 1
+                                                                     Next
+                                                                 End If
+                                                                 rec.SetOutletStreamProperties()
+                                                             Next
+                                                         End If
 
                                                          If frompgrid Then
                                                              objl = GetSolvingList(form, False)
@@ -1848,6 +1897,8 @@ Namespace DWSIM.Flowsheet
                                                              filteredlist = objl(2)
                                                              objstack = objl(0)
                                                          End If
+
+                                                         icount += 1
 
                                                      End While
 
