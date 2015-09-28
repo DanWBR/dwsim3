@@ -1728,8 +1728,9 @@ Namespace DWSIM.Flowsheet
                     Dim robj = form.Collections.ObjectCollection(r)
                     If robj.GraphicObject.TipoObjeto = TipoObjeto.OT_Reciclo Then
                         recycles.Add(robj.Nome)
-                        If form.Collections.CLCS_RecycleCollection(robj.Nome).AccelerationMethod = SpecialOps.Helpers.Recycle.AccelMethod.GlobalBroyden Then
-                            form.Collections.CLCS_RecycleCollection(robj.Nome).Calculate()
+                        Dim rec = form.Collections.CLCS_RecycleCollection(robj.Nome)
+                        If rec.AccelerationMethod = SpecialOps.Helpers.Recycle.AccelMethod.GlobalBroyden Then
+                            If rec.Values.Count = 0 Then rec.Calculate()
                             totalv += form.Collections.CLCS_RecycleCollection(robj.Nome).Values.Count
                         End If
                     End If
