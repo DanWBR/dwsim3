@@ -313,6 +313,10 @@ Namespace DWSIM.SimulationObjects.SpecialOps
 
             With ems.Fases(0).SPMProperties
 
+                Me.ConvergenceHistory.TemperaturaE = .temperature.GetValueOrDefault - Me.ConvergenceHistory.Temperatura
+                Me.ConvergenceHistory.PressaoE = .pressure.GetValueOrDefault - Me.ConvergenceHistory.Pressao
+                Me.ConvergenceHistory.VazaoMassicaE = .massflow.GetValueOrDefault - Me.ConvergenceHistory.VazaoMassica
+
                 Me.ConvergenceHistory.TemperaturaE0 = Me.ConvergenceHistory.Temperatura - Me.ConvergenceHistory.Temperatura0
                 Me.ConvergenceHistory.PressaoE0 = Me.ConvergenceHistory.Pressao - Me.ConvergenceHistory.Pressao0
                 Me.ConvergenceHistory.VazaoMassicaE0 = Me.ConvergenceHistory.VazaoMassica - Me.ConvergenceHistory.VazaoMassica0
@@ -350,20 +354,6 @@ Namespace DWSIM.SimulationObjects.SpecialOps
                     Me.Values("Pressure") = .pressure.GetValueOrDefault
                     Me.Values("MassFlow") = .massflow.GetValueOrDefault
                     Me.Values("Enthalpy") = .enthalpy.GetValueOrDefault
-                End If
-
-                If Not Me.AccelerationMethod = AccelMethod.GlobalBroyden Then
-
-                    Me.ConvergenceHistory.TemperaturaE = .temperature.GetValueOrDefault - Me.ConvergenceHistory.Temperatura
-                    Me.ConvergenceHistory.PressaoE = .pressure.GetValueOrDefault - Me.ConvergenceHistory.Pressao
-                    Me.ConvergenceHistory.VazaoMassicaE = .massflow.GetValueOrDefault - Me.ConvergenceHistory.VazaoMassica
-
-                Else
-
-                    Me.ConvergenceHistory.TemperaturaE = Errors("Temperature")
-                    Me.ConvergenceHistory.PressaoE = Errors("Pressure")
-                    Me.ConvergenceHistory.VazaoMassicaE = Errors("MassFlow")
-
                 End If
 
             End With
