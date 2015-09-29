@@ -5154,4 +5154,10 @@ Die erhaltenen Daten werden hauptsächlich für die Berechnung von VLE-Daten emp
   <data name="ConfirmOperation" xml:space="preserve">
     <value>Gehen sie bei der angeforderten aktion?</value>
   </data>
+  <data name="CopyOnError" xml:space="preserve">
+    <value>Copy stream data on error</value>
+  </data>
+  <data name="CopyOnErrorDesc" xml:space="preserve">
+    <value>Copies data from inlet to outlet stream even if it is not valid.</value>
+  </data>
 </root>

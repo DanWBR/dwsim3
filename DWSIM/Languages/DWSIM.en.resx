@@ -5170,4 +5170,10 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="ConfirmOperation" xml:space="preserve">
     <value>Proceed with the requested action?</value>
   </data>
+  <data name="CopyOnError" xml:space="preserve">
+    <value>Copy stream data on error</value>
+  </data>
+  <data name="CopyOnErrorDesc" xml:space="preserve">
+    <value>Copies data from inlet to outlet stream even if it is not valid.</value>
+  </data>
 </root>

@@ -43,6 +43,8 @@ Namespace DWSIM.SimulationObjects.SpecialOps
 
         Public Property Converged As Boolean = False
 
+        Public Property CopyOnStreamDataError As Boolean = False
+
         Protected m_Errors As New Dictionary(Of String, Double)
         Protected m_Values As New Dictionary(Of String, Double)
 
@@ -287,7 +289,7 @@ Namespace DWSIM.SimulationObjects.SpecialOps
 
         Public Overrides Function Calculate(Optional ByVal args As Object = Nothing) As Integer
 
-            Dim form As Global.DWSIM.FormFlowsheet = Me.Flowsheet
+            Dim form As Global.DWSIM.FormFlowsheet = Me.FlowSheet
             Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
 
             If Not Me.GraphicObject.OutputConnectors(0).IsAttached Then
@@ -454,7 +456,17 @@ Namespace DWSIM.SimulationObjects.SpecialOps
 
             End If
 
-            If Not Me.AccelerationMethod = AccelMethod.GlobalBroyden Then
+            Dim copydata As Boolean = True
+
+            ems.PropertyPackage.CurrentMaterialStream = ems
+
+            If Me.CopyOnStreamDataError Then
+                copydata = True
+            Else
+                If Not Tnew.IsValid Or Not Pnew.IsValid Or Not Wnew.IsValid Or Not ems.PropertyPackage.RET_VMOL(PropertyPackages.Fase.Mixture).SumY.IsValid Then copydata = False
+            End If
+
+            If Not Me.AccelerationMethod = AccelMethod.GlobalBroyden And copydata Then
 
                 Dim tmp As Object = Nothing
                 Me.PropertyPackage.CurrentMaterialStream = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name)
@@ -679,6 +691,7 @@ Namespace DWSIM.SimulationObjects.SpecialOps
 
                 .Item.Add(DWSIM.App.GetLocalString("TipodeFlash"), Me, "FlashType", False, DWSIM.App.GetLocalString("Configuraes2"), DWSIM.App.GetLocalString("Selecioneotipodeclcu"), True)
                 .Item.Add(DWSIM.App.GetLocalString("NmeroMximodeIteraes"), Me, "MaximumIterations", False, DWSIM.App.GetLocalString("Configuraes2"), DWSIM.App.GetLocalString("Nmeromximodeiteraesd"), True)
+                .Item.Add(DWSIM.App.GetLocalString("CopyOnError"), Me, "CopyOnStreamDataError", False, DWSIM.App.GetLocalString("Configuraes2"), DWSIM.App.GetLocalString("CopyOnErrorDesc"), True)
 
                 Dim valor As Double
 

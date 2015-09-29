@@ -5164,4 +5164,10 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
   <data name="ConfirmOperation" xml:space="preserve">
     <value>Confirma la operación?</value>
   </data>
+  <data name="CopyOnError" xml:space="preserve">
+    <value>Copiar em caso de erro</value>
+  </data>
+  <data name="CopyOnErrorDesc" xml:space="preserve">
+    <value>Copia os dados da corrente de entrada para a de saída mesmo em caso de erro nos dados.</value>
+  </data>
 </root>

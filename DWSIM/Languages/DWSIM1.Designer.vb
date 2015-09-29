@@ -2423,6 +2423,24 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Copiar em caso de erro.
+        '''</summary>
+        Friend Shared ReadOnly Property CopyOnError() As String
+            Get
+                Return ResourceManager.GetString("CopyOnError", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Copia os dados da corrente de entrada para a de saída mesmo em caso de erro nos dados..
+        '''</summary>
+        Friend Shared ReadOnly Property CopyOnErrorDesc() As String
+            Get
+                Return ResourceManager.GetString("CopyOnErrorDesc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Cor.
         '''</summary>
         Friend Shared ReadOnly Property Cor() As String

@@ -5179,4 +5179,10 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="ConfirmOperation" xml:space="preserve">
     <value>Confirma a operação?</value>
   </data>
+  <data name="CopyOnError" xml:space="preserve">
+    <value>Copiar em caso de erro</value>
+  </data>
+  <data name="CopyOnErrorDesc" xml:space="preserve">
+    <value>Copia os dados da corrente de entrada para a de saída mesmo em caso de erro nos dados.</value>
+  </data>
 </root>
