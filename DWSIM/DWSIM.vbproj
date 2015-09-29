@@ -2174,7 +2174,6 @@
     <None Include="Resources\table_row_insert1.png" />
     <None Include="Resources\zoom_extend.png" />
     <None Include="Resources\zoom_refresh.png" />
-    <None Include="My Project\DataSources\RssItem.datasource" />
     <None Include="Resources\calculating.bmp" />
     <None Include="Resources\calculating.gif" />
     <None Include="Resources\applications-development.png" />
