@@ -1736,7 +1736,7 @@ Namespace DWSIM.Flowsheet
                     End If
                 Next
 
-                'size jacobian matrix, variables and error vectors for recycle simultaneous solving.
+                'size hessian matrix, variables and error vectors for recycle simultaneous solving.
 
                 Dim rechess(totalv - 1, totalv - 1), recvars(totalv - 1), recdvars(totalv - 1), recerrs(totalv - 1), recvarsb(totalv - 1), recerrsb(totalv - 1) As Double
 
@@ -1881,11 +1881,7 @@ Namespace DWSIM.Flowsheet
                                                                      End If
                                                                  Next
 
-                                                                 If icount < 1 Then
-                                                                     DWSIM.MathEx.Broyden.broydn(totalv - 1, recvars, recerrs, recdvars, recvarsb, recerrsb, rechess, 0)
-                                                                 Else
-                                                                     DWSIM.MathEx.Broyden.broydn(totalv - 1, recvars, recerrs, recdvars, recvarsb, recerrsb, rechess, 1)
-                                                                 End If
+                                                                 DWSIM.MathEx.Broyden.broydn(totalv - 1, recvars, recerrs, recdvars, recvarsb, recerrsb, rechess, If(icount < 1, 0, 1))
 
                                                                  i = 0
                                                                  For Each r As String In recycles
@@ -1933,7 +1929,11 @@ Namespace DWSIM.Flowsheet
 
                             Select Case My.Settings.TaskScheduler
                                 Case 0 'default
-                                    My.MyApplication.AppTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext
+                                    If My.Settings.EnableGPUProcessing Then
+                                        My.MyApplication.AppTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext
+                                    Else
+                                        My.MyApplication.AppTaskScheduler = TaskScheduler.Default
+                                    End If
                                 Case 1 'sta
                                     My.MyApplication.AppTaskScheduler = New DWSIM.Auxiliary.TaskSchedulers.StaTaskScheduler(nthreads)
                                 Case 2 'limited concurrency
