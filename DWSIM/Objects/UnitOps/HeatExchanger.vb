@@ -312,13 +312,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
             CPC = StInCold.Fases(0).SPMProperties.heatCapacityCp.GetValueOrDefault
             CPH = StInHot.Fases(0).SPMProperties.heatCapacityCp.GetValueOrDefault
 
-            StInCold.PropertyPackage.CurrentMaterialStream = StInCold
-            StInHot.PropertyPackage.CurrentMaterialStream = StInHot
-
             Select Case CalcMode
-
                 Case HeatExchangerCalcMode.CalcBothTemp_KA
-
                     Dim Qh, Qc, Qi, Q_UA, Q_old As Double
                     Dim tmp As Object
                     Dim count As Integer
@@ -336,6 +331,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                     'calculate maximum possible exchanged heat for both sides.
 
+                    StInCold.PropertyPackage.CurrentMaterialStream = StInCold
+                    StInHot.PropertyPackage.CurrentMaterialStream = StInHot
+
                     tmp = StInCold.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Tc2, Pc2, Tc1)
                     Hc2 = tmp(4)
                     Qc = Wc * (Hc2 - Hc1)
@@ -348,7 +346,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Qi = Min(Qc, Qh)
 
                     Do
-
                         count += 1
                         'calculate exit temperatures from energy balance
                         Hc2 = Qi / Wc + Hc1
@@ -377,8 +374,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Q_old = Qi
                         Qi = Qi - (Qi - Q_UA) * 0.2
 
-                    Loop Until Abs(Qi - Q_old) < 0.01 Or count > 100
 
+                    Loop Until Abs(Qi - Q_old) < 0.01 Or count > 100
                     Q = Qi
 
                     If count > 100 Then
@@ -386,15 +383,16 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     End If
 
                 Case HeatExchangerCalcMode.CalcBothTemp
-
                     A = Area
                     DeltaHc = Q / Wc
                     DeltaHh = -Q / Wh
                     Hc2 = Hc1 + DeltaHc
                     Hh2 = Hh1 + DeltaHh
+                    StInCold.PropertyPackage.CurrentMaterialStream = StInCold
                     Dim tmp = StInCold.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pc2, Hc2, Tc1)
                     Tc2 = tmp(2)
                     Hh2 = Hh1 + DeltaHh
+                    StInHot.PropertyPackage.CurrentMaterialStream = StInHot
                     tmp = StInHot.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Ph2, Hh2, Th1)
                     Th2 = tmp(2)
                     Select Case Me.FlowDir
@@ -404,16 +402,16 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             LMTD = ((Th1 - Tc2) - (Th2 - Tc1)) / Math.Log((Th1 - Tc2) / (Th2 - Tc1))
                     End Select
                     U = Q / (A * LMTD) * 1000
-
                 Case HeatExchangerCalcMode.CalcTempColdOut
-
                     A = Area
                     Th2 = TempHotOut
+                    StInHot.PropertyPackage.CurrentMaterialStream = StInHot
                     Dim tmp = StInHot.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Th2, Ph2, 0)
                     Hh2 = tmp(4)
                     Q = -Wh * (Hh2 - Hh1)
                     DeltaHc = Q / Wc
                     Hc2 = Hc1 + DeltaHc
+                    StInCold.PropertyPackage.CurrentMaterialStream = StInCold
                     tmp = StInCold.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pc2, Hc2, Tc1)
                     Tc2 = tmp(2)
                     Select Case Me.FlowDir
@@ -423,16 +421,16 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             LMTD = ((Th1 - Tc2) - (Th2 - Tc1)) / Math.Log((Th1 - Tc2) / (Th2 - Tc1))
                     End Select
                     U = Q / (A * LMTD) * 1000
-
                 Case HeatExchangerCalcMode.CalcTempHotOut
-
                     A = Area
                     Tc2 = TempColdOut
-                   Dim tmp = StInCold.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Tc2, Pc2, 0)
+                    StInCold.PropertyPackage.CurrentMaterialStream = StInCold
+                    Dim tmp = StInCold.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Tc2, Pc2, 0)
                     Hc2 = tmp(4)
                     Q = Wc * (Hc2 - Hc1)
                     DeltaHh = -Q / Wh
                     Hh2 = Hh1 + DeltaHh
+                    StInHot.PropertyPackage.CurrentMaterialStream = StInHot
                     tmp = StInHot.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Ph2, Hh2, Th1)
                     Th2 = tmp(2)
                     Select Case Me.FlowDir
@@ -442,30 +440,31 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             LMTD = ((Th1 - Tc2) - (Th2 - Tc1)) / Math.Log((Th1 - Tc2) / (Th2 - Tc1))
                     End Select
                     U = Q / (A * LMTD) * 1000
-
                 Case HeatExchangerCalcMode.CalcArea
-
                     Select Case Me.DefinedTemperature
                         Case SpecifiedTemperature.Cold_Fluid
                             Tc2 = TempColdOut
+                            StInCold.PropertyPackage.CurrentMaterialStream = StInCold
                             Dim tmp = StInCold.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Tc2, Pc2, 0)
                             Hc2 = tmp(4)
                             Q = Wc * (Hc2 - Hc1)
                             DeltaHh = -Q / Wh
                             Hh2 = Hh1 + DeltaHh
+                            StInHot.PropertyPackage.CurrentMaterialStream = StInHot
                             tmp = StInHot.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Ph2, Hh2, 0)
                             Th2 = tmp(2)
                         Case SpecifiedTemperature.Hot_Fluid
                             Th2 = TempHotOut
+                            StInHot.PropertyPackage.CurrentMaterialStream = StInHot
                             Dim tmp = StInHot.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Th2, Ph2, 0)
                             Hh2 = tmp(4)
                             Q = -Wh * (Hh2 - Hh1)
                             DeltaHc = Q / Wc
                             Hc2 = Hc1 + DeltaHc
+                            StInCold.PropertyPackage.CurrentMaterialStream = StInCold
                             tmp = StInCold.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pc2, Hc2, 0)
                             Tc2 = tmp(2)
                     End Select
-
                     Select Case Me.FlowDir
                         Case FlowDirection.CoCurrent
                             LMTD = ((Th1 - Tc1) - (Th2 - Tc2)) / Math.Log((Th1 - Tc1) / (Th2 - Tc2))
@@ -474,9 +473,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     End Select
                     U = Me.OverallCoefficient
                     A = Q / (LMTD * U) * 1000
-
                 Case HeatExchangerCalcMode.ShellandTube_Rating, HeatExchangerCalcMode.ShellandTube_CalcFoulingFactor
-
                     'Shell and Tube HX calculation using Tinker's method.
                     Dim Tc2_ant, Th2_ant As Double
                     Dim Ud, Ur, U_ant, Rf, fx, Fant, F As Double
@@ -485,7 +482,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     cph0 = StInHot.Fases(0).SPMProperties.heatCapacityCp.GetValueOrDefault
                     cpc0 = StInCold.Fases(0).SPMProperties.heatCapacityCp.GetValueOrDefault
                     x0 = Wh * cph0 / (Wc * cpc0)
-
                     If CalculationMode = HeatExchangerCalcMode.ShellandTube_Rating Then
                         Tc2 = (Tc1 + x0 * Th1) / (1 + x0)
                         q0 = Wc * cpc0 * (Tc2 - Tc1)
@@ -495,7 +491,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Tc2 = TempColdOut
                         Th2 = TempHotOut
                     End If
-
                     Pc2 = Pc1
                     Ph2 = Ph1
                     F = 1.0#
@@ -537,6 +532,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Tcm = (Tc2 - Tc1) / 2 + Tc1
                         Thm = (Th1 - Th2) / 2 + Th2
                         '4, 5
+                        StInCold.PropertyPackage.CurrentMaterialStream = StInCold
                         Dim tmp = StInCold.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Tc2, Pc2, 0)
                         Hc2 = tmp(4)
                         Q = Wc * (Hc2 - Hc1)
@@ -899,11 +895,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             DeltaHh = -Q / Wh
                             Hc2 = Hc1 + DeltaHc
                             Hh2 = Hh1 + DeltaHh
+                            StInCold.PropertyPackage.CurrentMaterialStream = StInCold
                             tmp = StInCold.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pc2, Hc2, Tc2)
                             Tc2_ant = Tc2
                             Tc2 = tmp(2)
                             Tc2 = 0.1 * Tc2 + 0.9 * Tc2_ant
-                           tmp = StInHot.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Ph2, Hh2, Th2)
+                            StInHot.PropertyPackage.CurrentMaterialStream = StInHot
+                            tmp = StInHot.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Ph2, Hh2, Th2)
                             Th2_ant = Th2
                             Th2 = tmp(2)
                             Th2 = 0.1 * Th2 + 0.9 * Th2_ant
