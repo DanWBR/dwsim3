@@ -1881,12 +1881,12 @@ Namespace DWSIM.Flowsheet
                                                                      End If
                                                                  Next
 
-                                                                 DWSIM.MathEx.Broyden.broydn(totalv - 1, recvars, recerrs, recdvars, recvarsb, recerrsb, rechess, If(icount < 1, 0, 1))
+                                                                 DWSIM.MathEx.Broyden.broydn(totalv - 1, recvars, recerrs, recdvars, recvarsb, recerrsb, rechess, If(icount < 2, 0, 1))
 
                                                                  i = 0
                                                                  For Each r As String In recycles
                                                                      Dim rec = DirectCast(form.Collections.CLCS_RecycleCollection(r), SpecialOps.Recycle)
-                                                                     If rec.AccelerationMethod = SpecialOps.Helpers.Recycle.AccelMethod.GlobalBroyden And icount >= 2 Then
+                                                                     If rec.AccelerationMethod = SpecialOps.Helpers.Recycle.AccelMethod.GlobalBroyden Then
                                                                          For Each kvp In rec.Errors
                                                                              rec.Values(kvp.Key) = recvars(i) + recdvars(i)
                                                                              i += 1
