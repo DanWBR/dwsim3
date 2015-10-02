@@ -529,6 +529,18 @@ Namespace My
                 Me("TaskScheduler") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property UseSIMDExtensions() As Boolean
+            Get
+                Return CType(Me("UseSIMDExtensions"),Boolean)
+            End Get
+            Set
+                Me("UseSIMDExtensions") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

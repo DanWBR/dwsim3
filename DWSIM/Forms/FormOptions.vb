@@ -57,6 +57,7 @@ Public Class FormOptions
         Me.cbParallelism.Enabled = Me.chkEnableParallelCalcs.Checked
         Me.cbTaskScheduler.SelectedIndex = My.Settings.TaskScheduler
         Me.tbMaxThreadMultiplier.Text = My.Settings.MaxThreadMultiplier
+        Me.chkEnableSIMD.Checked = My.Settings.UseSIMDExtensions
 
         Me.KryptonCheckBox1.Checked = My.Settings.ShowTips
 
@@ -677,5 +678,9 @@ Public Class FormOptions
 
     Private Sub tbMaxThreadMultiplier_TextChanged(sender As Object, e As EventArgs) Handles tbMaxThreadMultiplier.TextChanged
         My.Settings.MaxThreadMultiplier = tbMaxThreadMultiplier.Text
+    End Sub
+
+    Private Sub chkEnableSIMD_CheckedChanged(sender As Object, e As EventArgs) Handles chkEnableSIMD.CheckedChanged
+        My.Settings.UseSIMDExtensions = chkEnableSIMD.Checked
     End Sub
 End Class

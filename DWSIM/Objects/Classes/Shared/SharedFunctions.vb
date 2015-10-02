@@ -279,6 +279,11 @@ Namespace DWSIM
             My.Settings.ServerPort = source.Configs("Misc").Get("ServerPort", "")
             My.Settings.SolverTimeoutSeconds = source.Configs("Misc").GetInt("SolverTimeoutSeconds", 300)
 
+            My.Settings.SaveBackupFile = source.Configs("Misc").GetBoolean("SaveBackupFile", True)
+            My.Settings.LegacyBinaryFileLoading = source.Configs("Misc").GetBoolean("LegacyBinaryFileLoading", False)
+            My.Settings.MaxThreadMultiplier = source.Configs("Misc").GetInt("MaxThreadMultiplier", 8)
+            My.Settings.TaskScheduler = source.Configs("Misc").GetInt("TaskScheduler", 0)
+            My.Settings.UseSIMDExtensions = source.Configs("Misc").GetBoolean("UseSIMDExtensions", 300)
 
         End Sub
 
@@ -340,6 +345,11 @@ Namespace DWSIM
             source.Configs("Misc").Set("ServerIPAddress", My.Settings.ServerIPAddress)
             source.Configs("Misc").Set("ServerPort", My.Settings.ServerPort)
             source.Configs("Misc").Set("SolverTimeoutSeconds", My.Settings.SolverTimeoutSeconds)
+            source.Configs("Misc").Set("SaveBackupFile", My.Settings.SaveBackupFile)
+            source.Configs("Misc").Set("LegacyBinaryFileLoading", My.Settings.LegacyBinaryFileLoading)
+            source.Configs("Misc").Set("MaxThreadMultiplier", My.Settings.MaxThreadMultiplier)
+            source.Configs("Misc").Set("TaskScheduler", My.Settings.TaskScheduler)
+            source.Configs("Misc").Set("UseSIMDExtensions", My.Settings.UseSIMDExtensions)
 
             source.Save(configfile)
 
