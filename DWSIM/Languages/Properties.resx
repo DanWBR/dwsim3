@@ -1216,4 +1216,8 @@
   <data name="PROP_HX_24" xml:space="preserve">
     <value>[Casco e Tubo] Número de Reynolds de tubo</value>
   </data>
+  <data name="PROP_GR_1" xml:space="preserve">
+    <value>Temperatura da Saída</value>
+    <comment>1</comment>
+  </data>
 </root>

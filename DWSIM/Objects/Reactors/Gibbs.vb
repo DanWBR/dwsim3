@@ -746,7 +746,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
         Public Sub New(ByVal nome As String, ByVal descricao As String)
 
-            MyBase.new()
+            MyBase.New()
             Me.m_ComponentName = nome
             Me.m_ComponentDescription = descricao
             Me.FillNodeItems()
@@ -1074,7 +1074,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                         If Double.IsNaN(Sum(fx)) Then Throw New Exception("Calculation error")
 
-                    Loop Until AbsSum(fx) < 0.001 Or niter > 249
+                    Loop Until fx.AbsSumY < 0.001 Or niter > 249
 
                     If niter > 249 Then
                         Throw New Exception("Reached the maximum number of iterations without converging.")
@@ -1382,7 +1382,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                     'solve the minimization problem using reaction extents as variables.
                     Dim variables(Me.ReactionExtents.Count - 1) As OptBoundVariable
                     For i = 0 To Me.ReactionExtents.Count - 1
-                        variables(i) = New OptBoundVariable("ksi" & CStr(i + 1), (lbound(i) + ubound(i)) / 2, lbound(i), ubound(i))
+                        variables(i) = New OptBoundVariable("ksi" & CStr(i + 1), 0, lbound(i), ubound(i))
                     Next
 
 
@@ -1397,16 +1397,15 @@ Namespace DWSIM.SimulationObjects.Reactors
                     Dim TLast As Double = T0 'remember T for iteration loops
                     Do
                         'use my own solver
-                        'hier wieder einspringen
                         cnt = 0
 
                         'use the Simplex solver to solve the minimization problem.
                         Dim solver As New Simplex
                         With solver
-                            .Tolerance = 0.00000001
-                            .MaxFunEvaluations = 10000
+                            .Tolerance = 0.01
+                            .MaxFunEvaluations = 1000
                             REx = .ComputeMin2(AddressOf FunctionValue, variables)
-                       End With
+                        End With
 
                         'reevaluate function
                         'this call to FunctionValue returns the final gibbs energy of the system.
@@ -1719,7 +1718,7 @@ Namespace DWSIM.SimulationObjects.Reactors
             'If Not Me.GraphicObject.OutputConnectors(0).IsAttached Then Throw New Exception(DWSIM.App.GetLocalString("Nohcorrentedematriac11"))
             'If Not Me.GraphicObject.OutputConnectors(1).IsAttached Then Throw New Exception(DWSIM.App.GetLocalString("Nohcorrentedematriac11"))
 
-            Dim form As Global.DWSIM.FormFlowsheet = Me.Flowsheet
+            Dim form As Global.DWSIM.FormFlowsheet = Me.FlowSheet
 
             'Dim ems As DWSIM.SimulationObjects.Streams.MaterialStream = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name)
             'Dim W As Double = ems.Fases(0).SPMProperties.massflow.GetValueOrDefault
@@ -1985,11 +1984,12 @@ Namespace DWSIM.SimulationObjects.Reactors
             Dim propidx As Integer = CInt(prop.Split("_")(2))
 
             Select Case propidx
-
                 Case 0
-                    'PROP_HT_0	Pressure Drop
+                    'PROP_GR_0	Pressure Drop
                     value = cv.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault)
-
+                Case 0
+                    'PROP_GR_1	Outlet Temperature
+                    value = cv.ConverterDoSI(su.spmp_temperature, Me.OutletTemperature)
             End Select
 
             Return value
@@ -2000,15 +2000,15 @@ Namespace DWSIM.SimulationObjects.Reactors
             Dim proplist As New ArrayList
             Select Case proptype
                 Case PropertyType.RW
-                    For i = 0 To 0
+                    For i = 0 To 1
                         proplist.Add("PROP_GR_" + CStr(i))
                     Next
                 Case PropertyType.WR
-                    For i = 0 To 0
+                    For i = 0 To 1
                         proplist.Add("PROP_GR_" + CStr(i))
                     Next
                 Case PropertyType.ALL
-                    For i = 0 To 0
+                    For i = 0 To 1
                         proplist.Add("PROP_GR_" + CStr(i))
                     Next
             End Select
@@ -2024,8 +2024,11 @@ Namespace DWSIM.SimulationObjects.Reactors
             Select Case propidx
 
                 Case 0
-                    'PROP_HT_0	Pressure Drop
+                    'PROP_GR_0	Pressure Drop
                     Me.DeltaP = cv.ConverterParaSI(su.spmp_deltaP, propval)
+                Case 1
+                    'PROP_GR_1	Outlet Temperature
+                    Me.OutletTemperature = cv.ConverterParaSI(su.spmp_temperature, propval)
 
             End Select
             Return 1
@@ -2040,9 +2043,11 @@ Namespace DWSIM.SimulationObjects.Reactors
             Select Case propidx
 
                 Case 0
-                    'PROP_HT_0	Pressure Drop
+                    'PROP_GR_0	Pressure Drop
                     value = su.spmp_deltaP
-
+                Case 1
+                    'PROP_GR_1	Outlet Temperature
+                    value = su.spmp_temperature
             End Select
 
             Return value

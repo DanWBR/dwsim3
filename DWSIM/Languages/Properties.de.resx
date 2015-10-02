@@ -265,6 +265,10 @@
     <value>Druckverlust</value>
     <comment>1</comment>
   </data>
+  <data name="PROP_GR_1" xml:space="preserve">
+    <value>Austrittstemperatur</value>
+    <comment>1</comment>
+  </data>
   <data name="PROP_HT_0" xml:space="preserve">
     <value>Druckverlust</value>
     <comment>1</comment>

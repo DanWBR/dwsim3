@@ -1196,4 +1196,8 @@
   <data name="PROP_HX_19" xml:space="preserve">
     <value>Logarithmic mean temperature difference LMTD</value>
   </data>
+  <data name="PROP_GR_1" xml:space="preserve">
+    <value>Temperatura de Salida</value>
+    <comment>1</comment>
+  </data>
 </root>

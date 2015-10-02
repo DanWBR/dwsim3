@@ -161,3 +161,15 @@ obj
 /DWSIM/bin/x86/Release/GemBox.Spreadsheet.xml
 /DWSIM/version.txt
 /DWSIM/Resources/Thumbs.db
+
+DWSIM/bin/x86/Release/Jolt.Testing.GeneratedTypes.xml
+DWSIM/bin/x86/Release/Jolt.xml
+DWSIM/bin/x86/Release/Jolt.pdb
+DWSIM/bin/x86/Release/Jolt.Testing.GeneratedTypes.dll
+DWSIM/bin/x86/Release/Jolt.Testing.GeneratedTypes.pdb
+DWSIM/bin/x86/Release/Jolt.dll
+DWSIM/bin/x86/Release/ScintillaNET.dll
+DWSIM/bin/x86/Release/ScintillaNET.xml
+DWSIM/bin/x86/Release/Yeppp.CLR.Bundle.dll
+DWSIM/bin/x86/Release/Yeppp.CLR.Bundle.pdb
+DWSIM/bin/x86/Release/Yeppp.CLR.Bundle.xml

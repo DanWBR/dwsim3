@@ -47,7 +47,8 @@ Module SimplexExtender
         'Calculate initial value
         For i = 0 To Var.Length - 1
             'Pt(i) = (Var(i).UpperBound - Var(i).LowerBound) / 2
-            Pt(i) = 0
+            'Pt(i) = 0
+            Pt(i) = Var(i).InitialGuess
         Next
 
         'Initialise points
@@ -126,7 +127,7 @@ Module SimplexExtender
                 FVnew = objfunc(Pt)
 
                 'check if solution is not improving anymore
-                If FVnew > FuncVal(IdxMax) - 0.01 Then Exit Do
+                If FVnew > FuncVal(IdxMax) - simplexsolver.Tolerance Or cnt > simplexsolver.MaxFunEvaluations Then Exit Do
 
                 'and replace worst value by contracted value
                 FuncVal(IdxMax) = FVnew
