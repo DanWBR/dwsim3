@@ -623,7 +623,7 @@ out:        'return flash calculation results.
 
             If V > 0.0# Then _Hv = proppack.DW_CalcEnthalpy(Vxv, T, Pf, State.Vapor)
             If L > 0.0# Then _Hl = proppack.DW_CalcEnthalpy(Vxl, T, Pf, State.Liquid)
-            If S > 0.0# Then _Hs = proppack.DW_CalcSolidEnthalpy(T, Vxs, CompoundProperties)
+            If S > 0.0# Then _Hs = proppack.DW_CalcSolidEnthalpy(T, Vxs)
 
             mmg = proppack.AUX_MMM(Vxv)
             mml = proppack.AUX_MMM(Vxl)
@@ -661,7 +661,7 @@ out:        'return flash calculation results.
             Dim mmg, mml, mms As Double
             If V > 0.0# Then _Hv = proppack.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
             If L > 0.0# Then _Hl = proppack.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
-            If S > 0.0# Then _Hs = proppack.DW_CalcSolidEnthalpy(T, Vs, CompoundProperties)
+            If S > 0.0# Then _Hs = proppack.DW_CalcSolidEnthalpy(T, Vs)
             mmg = proppack.AUX_MMM(Vy)
             mml = proppack.AUX_MMM(Vx)
             mms = proppack.AUX_MMM(Vs)
