@@ -46,7 +46,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Dim i, n, ecount As Integer
             Dim Pb, Pd, Pmin, Pmax, Px As Double
             Dim d1, d2 As Date, dt As TimeSpan
-            Dim L, V, S, Vant As Double
+            Dim L, V, Vant As Double
 
             d1 = Date.Now
 
@@ -58,33 +58,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             n = UBound(Vz)
 
             Dim Vn(n) As String, Vx(n), Vy(n), Vx_ant(n), Vy_ant(n), Vp(n), Ki(n), Ki_ant(n), fi(n) As Double
-            Dim Tf(n), Vs(n) As Double
 
             Vn = PP.RET_VNAMES()
             fi = Vz.Clone
 
-            'Get fusion temperatures
-            Tf = PP.RET_VTF
-
-            'remove all solids from stream to solid phase
-            'solid don't take part in equilibrium calculations and are assumed to be completely unsoluble
-            For i = 0 To n
-                If T < Tf(i) Then
-                    S += Vz(i)
-                    Vs(i) = Vz(i)
-                    Vz(i) = 0
-                End If
-            Next
-            Vz = Vz.NormalizeY()
-            Vs = Vs.NormalizeY()
-            If S = 1 Then
-                'solids only
-                V = 0
-                L = 0
-                GoTo out
-            End If
-
             'Calculate Ki`s
+
             If Not ReuseKI Then
                 i = 0
                 Do
@@ -114,7 +93,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 If Vp(i) <> 0.0# Then Px = Px + (Vz(i) / Vp(i))
                 i = i + 1
             Loop Until i = n + 1
-            If Px > 0 Then Px = 1 / Px
+            Px = 1 / Px
             Pmin = Px
             i = 0
             Px = 0
@@ -300,10 +279,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Error function value: " & F)
 
-out:        ' calculate true fractions of vapour and liquid
-            L = L * (1 - S)
-            V = V * (1 - S)
-            Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, S, Vs}
+out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
 
         End Function
 

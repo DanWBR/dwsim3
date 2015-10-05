@@ -1585,13 +1585,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             If xl <> 0 Then SL = Me.DW_CalcEntropy(Vx, T, P, State.Liquid)
                             If xl2 <> 0 Then SL2 = Me.DW_CalcEntropy(Vx2, T, P, State.Liquid)
                             If xv <> 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor)
-                            If xs <> 0 Then
-                                If T <> 298.15 Then
-                                    SS = Me.DW_CalcSolidEnthalpy(T, Vs, constprops) / (T - 298.15)
-                                Else
-                                    SS = 0
-                                End If
-                            End If
+                            If xs <> 0 Then SS = Me.DW_CalcSolidEnthalpy(T, Vs, constprops) / (T - 298.15)
                             SM = Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction.GetValueOrDefault * SL2 + Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction.GetValueOrDefault * SL + Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault * SV + Me.CurrentMaterialStream.Fases(7).SPMProperties.massfraction.GetValueOrDefault * SS
 
                             S = SM
@@ -7187,7 +7181,7 @@ Final3:
                     '<SolidHeatCapacityCp name="Solid heat capacity"  units="J/kmol/K" >
                     result = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, 0) / 1000 / mw 'kJ/kg.K
                     Cpi = result
-                    HS += Vx(i) * Cpi * (T - 298.15)
+                    HS += Vx(i) * Cpi * (T - 298)
                 ElseIf cprops(i).TemperatureOfFusion <> 0.0# Then
                     HS += -Vx(i) * cprops(i).EnthalpyOfFusionAtTf * 1000 / cprops(i).Molar_Weight
                 End If
@@ -7202,10 +7196,9 @@ Final3:
             Dim n As Integer = UBound(Vx)
             Dim i As Integer
             Dim Cp As Double = 0.0#
-            Dim Cpi, MM As Double
+            Dim Cpi As Double
 
             For i = 0 To n
-                MM += Vx(i) * cprops(i).Molar_Weight
                 If cprops(i).OriginalDB = "ChemSep" Or cprops(i).OriginalDB = "User" Then
                     Dim A, B, C, D, E, result As Double
                     Dim eqno As String = cprops(i).SolidHeatCapacityEquation
@@ -7221,9 +7214,9 @@ Final3:
                 Else
                     Cpi = 0.0#
                 End If
-                Cp += Vx(i) * cprops(i).Molar_Weight * Cpi
+                Cp += Vx(i) * Cpi
             Next
-            Cp /= MM
+
             Return Cp 'kJ/kg.K
 
         End Function
