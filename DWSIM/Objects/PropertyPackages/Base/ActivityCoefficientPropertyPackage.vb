@@ -291,27 +291,26 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         Public Overrides Function DW_CalcEnthalpy(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double
 
             Dim H As Double
-            Select Case st
-                Case State.Liquid
-                    Select Case Me.Parameters("PP_ENTH_CP_CALC_METHOD")
-                        Case 0 'LK
-                            H = Me.m_lk.H_LK_MIX("L", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, Me.RET_Hid(298.15, T, Vx))
-                        Case 1 'Ideal
-                            H = Me.RET_Hid_L(298.15, T, Vx)
-                        Case 2 'Excess
-                            H = Me.RET_Hid_L(298.15, T, Vx) + Me.m_act.CalcExcessEnthalpy(T, Vx, Me.GetArguments()) / Me.AUX_MMM(Vx)
-                    End Select
 
-                Case State.Vapor
-                    Select Case Me.Parameters("PP_ENTH_CP_CALC_METHOD")
-                        Case 0 'LK
-                            H = Me.m_lk.H_LK_MIX("V", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, Me.RET_Hid(298.15, T, Vx))
-                        Case 1 'Ideal
-                            H = Me.RET_Hid_L(298.15, T, Vx) + Me.RET_HVAPM(Me.AUX_CONVERT_MOL_TO_MASS(Vx), T)
-                        Case 2 'Excess
-                            H = Me.RET_Hid_L(298.15, T, Vx) + Me.m_act.CalcExcessEnthalpy(T, Vx, Me.GetArguments()) / Me.AUX_MMM(Vx) + Me.RET_HVAPM(Me.AUX_CONVERT_MOL_TO_MASS(Vx), T)
-                    End Select
-            End Select
+            If st = State.Liquid Then
+                Select Case Me.Parameters("PP_ENTH_CP_CALC_METHOD")
+                    Case 0 'LK
+                        H = Me.m_lk.H_LK_MIX("L", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, Me.RET_Hid(298.15, T, Vx))
+                    Case 1 'Ideal
+                        H = Me.RET_Hid_L(298.15, T, Vx)
+                    Case 2 'Excess
+                        H = Me.RET_Hid_L(298.15, T, Vx) + Me.m_act.CalcExcessEnthalpy(T, Vx, Me.GetArguments()) / Me.AUX_MMM(Vx)
+                End Select
+            Else
+                Select Case Me.Parameters("PP_ENTH_CP_CALC_METHOD")
+                    Case 0 'LK
+                        H = Me.m_lk.H_LK_MIX("V", T, P, Vx, RET_VKij(), RET_VTC, RET_VPC, RET_VW, RET_VMM, Me.RET_Hid(298.15, T, Vx))
+                    Case 1 'Ideal
+                        H = Me.RET_Hid_L(298.15, T, Vx) + Me.RET_HVAPM(Me.AUX_CONVERT_MOL_TO_MASS(Vx), T)
+                    Case 2 'Excess
+                        H = Me.RET_Hid_L(298.15, T, Vx) + Me.m_act.CalcExcessEnthalpy(T, Vx, Me.GetArguments()) / Me.AUX_MMM(Vx) + Me.RET_HVAPM(Me.AUX_CONVERT_MOL_TO_MASS(Vx), T)
+                End Select
+            End If
 
             Return H
 
@@ -710,11 +709,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
                     constprops.Add(su.ConstantProperties)
                 Next
-                result = Me.DW_CalcSolidEnthalpy(T, RET_VMOL(PropertyPackages.Fase.Solid))
+                result = Me.DW_CalcSolidEnthalpy(T, RET_VMOL(PropertyPackages.Fase.Solid), constprops)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = result
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = result / T
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = 0.0# 'result
-                result = Me.DW_CalcSolidHeatCapacityCp(T, RET_VMOL(PropertyPackages.Fase.Solid))
+                result = Me.DW_CalcSolidHeatCapacityCp(T, RET_VMOL(PropertyPackages.Fase.Solid), constprops)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = result
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = result
                 result = Me.AUX_MMM(fase)
