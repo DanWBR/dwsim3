@@ -2354,11 +2354,16 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                 Me._tpcompids = New String() {}
             End Try
 
-            Dim P, T, H, S, xv, xl, xl2 As Double
+            Dim P, T, H, S, xv, xl, xl2, xs As Double
             Dim result As Object = Nothing
             Dim n As Integer = Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1
-            Dim Vx2(n), Vx(n), Vy(n) As Double
+            Dim Vx2(n), Vx(n), Vy(n), Vs(n) As Double
             Dim i As Integer = 0
+
+            Dim constprops As New List(Of ConstantProperties)
+            For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
+                constprops.Add(su.ConstantProperties)
+            Next
 
             Select Case spec1
 
@@ -2386,10 +2391,12 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                             xl = result(0)
                             xv = result(1)
                             xl2 = result(5)
+                            xs = result(7)
 
                             Vx = result(2)
                             Vy = result(3)
                             Vx2 = result(6)
+                            Vs = result(8)
 
                             If Not My.Application.CAPEOPENMode Then
                                 If Me.CurrentMaterialStream.Flowsheet.Options.ValidateEquilibriumCalc _
@@ -2411,21 +2418,28 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                                 End If
                             End If
 
-                            Dim HM, HV, HL1, HL2 As Double
-
+                            Dim HM, HV, HL1, HL2, HS As Double
+                           
                             If xl <> 0 Then HL1 = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx)
                             If xl2 <> 0 Then HL2 = Me.DW_CalcEnthalpy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2)
                             If xv <> 0 Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy)
-                            HM = (xl * HL1 + xl2 * HL2 + xv * HV) / Me.AUX_MMM(Fase.Mixture)
+                            If xs <> 0 Then HS = Me.DW_CalcSolidEnthalpy(T, Vs, constprops) * Me.AUX_MMM(Vs)
+                            HM = (xl * HL1 + xl2 * HL2 + xv * HV + xs * HS) / Me.AUX_MMM(Fase.Mixture)
 
                             H = HM
 
-                            Dim SM, SV, SL1, SL2 As Double
+                            Dim SM, SV, SL1, SL2, SS As Double
 
                             If xl <> 0 Then SL1 = Me.DW_CalcEntropy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx)
                             If xl2 <> 0 Then SL2 = Me.DW_CalcEntropy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2)
                             If xv <> 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy)
-                            SM = (xl * SL1 + xl2 * SL2 + xv * SV) / Me.AUX_MMM(Fase.Mixture)
+                            If T <> 298.15 Then
+                                If xs <> 0 Then SS = Me.DW_CalcSolidEnthalpy(T, Vs, constprops) / (T - 298.15) * Me.AUX_MMM(Vs)
+                            Else
+                                SS = 0
+                            End If
+
+                            SM = (xl * SL1 + xl2 * SL2 + xv * SV + xs * SS) / Me.AUX_MMM(Fase.Mixture)
 
                             S = SM
 
@@ -7169,21 +7183,31 @@ Final3:
             Dim Cpi As Double
 
             For i = 0 To n
-                If cprops(i).OriginalDB = "ChemSep" Or cprops(i).OriginalDB = "User" Then
-                    Dim A, B, C, D, E, result As Double
-                    Dim eqno As String = cprops(i).SolidHeatCapacityEquation
-                    Dim mw As Double = cprops(i).Molar_Weight
-                    A = cprops(i).Solid_Heat_Capacity_Const_A
-                    B = cprops(i).Solid_Heat_Capacity_Const_B
-                    C = cprops(i).Solid_Heat_Capacity_Const_C
-                    D = cprops(i).Solid_Heat_Capacity_Const_D
-                    E = cprops(i).Solid_Heat_Capacity_Const_E
-                    '<SolidHeatCapacityCp name="Solid heat capacity"  units="J/kmol/K" >
-                    result = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, 0) / 1000 / mw 'kJ/kg.K
-                    Cpi = result
-                    HS += Vx(i) * Cpi * (T - 298)
-                ElseIf cprops(i).TemperatureOfFusion <> 0.0# Then
-                    HS += -Vx(i) * cprops(i).EnthalpyOfFusionAtTf * 1000 / cprops(i).Molar_Weight
+                If Vx(i) > 0 Then
+                    If cprops(i).OriginalDB = "ChemSep" Or cprops(i).OriginalDB = "User" Then
+                        Dim A, B, C, D, E As Double
+                        Dim eqno As String = cprops(i).SolidHeatCapacityEquation
+                        Dim mw As Double = cprops(i).Molar_Weight
+                        A = cprops(i).Solid_Heat_Capacity_Const_A
+                        B = cprops(i).Solid_Heat_Capacity_Const_B
+                        C = cprops(i).Solid_Heat_Capacity_Const_C
+                        D = cprops(i).Solid_Heat_Capacity_Const_D
+                        E = cprops(i).Solid_Heat_Capacity_Const_E
+                        '<SolidHeatCapacityCp name="Solid heat capacity"  units="J/kmol/K" >
+                        Cpi = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, 0) / 1000 / mw 'kJ/kg.K
+
+                        If cprops(i).TemperatureOfFusion < 298.15 Then
+                            HS += Vx(i) * Me.AUX_INT_CPDTi_L(298.15, cprops(i).TemperatureOfFusion, cprops(i).Name)
+                            HS -= Vx(i) * cprops(i).EnthalpyOfFusionAtTf * 1000 / mw
+                            HS -= Vx(i) * Cpi * (cprops(i).TemperatureOfFusion - T)
+                        Else
+                            HS -= Vx(i) * cprops(i).EnthalpyOfFusionAtTf * 1000 / mw
+                            HS -= Vx(i) * Cpi * (298.15 - T)
+                        End If
+
+                    ElseIf cprops(i).TemperatureOfFusion <> 0.0# Then
+                        HS += -Vx(i) * cprops(i).EnthalpyOfFusionAtTf * 1000 / cprops(i).Molar_Weight
+                    End If
                 End If
             Next
 
@@ -7199,22 +7223,21 @@ Final3:
             Dim Cpi As Double
 
             For i = 0 To n
-                If cprops(i).OriginalDB = "ChemSep" Or cprops(i).OriginalDB = "User" Then
-                    Dim A, B, C, D, E, result As Double
-                    Dim eqno As String = cprops(i).SolidHeatCapacityEquation
-                    Dim mw As Double = cprops(i).Molar_Weight
-                    A = cprops(i).Solid_Heat_Capacity_Const_A
-                    B = cprops(i).Solid_Heat_Capacity_Const_B
-                    C = cprops(i).Solid_Heat_Capacity_Const_C
-                    D = cprops(i).Solid_Heat_Capacity_Const_D
-                    E = cprops(i).Solid_Heat_Capacity_Const_E
-                    '<SolidHeatCapacityCp name="Solid heat capacity"  units="J/kmol/K" >
-                    result = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, 0) / 1000 / mw 'kJ/kg.K
-                    Cpi = result
-                Else
-                    Cpi = 0.0#
+                If Vx(i) > 0 Then
+                    If cprops(i).OriginalDB = "ChemSep" Or cprops(i).OriginalDB = "User" Then
+                        Dim A, B, C, D, E As Double
+                        Dim eqno As String = cprops(i).SolidHeatCapacityEquation
+                        Dim mw As Double = cprops(i).Molar_Weight
+                        A = cprops(i).Solid_Heat_Capacity_Const_A
+                        B = cprops(i).Solid_Heat_Capacity_Const_B
+                        C = cprops(i).Solid_Heat_Capacity_Const_C
+                        D = cprops(i).Solid_Heat_Capacity_Const_D
+                        E = cprops(i).Solid_Heat_Capacity_Const_E
+                        '<SolidHeatCapacityCp name="Solid heat capacity"  units="J/kmol/K" >
+                        Cpi = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, 0) / 1000 / mw 'kJ/kg.K
+                        Cp += Vx(i) * Cpi
+                    End If
                 End If
-                Cp += Vx(i) * Cpi
             Next
 
             Return Cp 'kJ/kg.K
@@ -7295,6 +7318,21 @@ Final3:
 
             For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
                 val(i) = subst.ConstantProperties.TemperatureOfFusion
+                i += 1
+            Next
+
+            Return val
+
+        End Function
+
+        Public Function RET_VHF() As Double()
+
+            Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
+            Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
+            Dim i As Integer = 0
+
+            For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
+                val(i) = subst.ConstantProperties.EnthalpyOfFusionAtTf
                 i += 1
             Next
 
