@@ -5170,4 +5170,7 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
   <data name="CopyOnErrorDesc" xml:space="preserve">
     <value>Copia os dados da corrente de entrada para a de saída mesmo em caso de erro nos dados.</value>
   </data>
+  <data name="PropPack_FlashPSFError" xml:space="preserve">
+    <value>El cálculo Flash PSF no está soportado.</value>
+  </data>
 </root>

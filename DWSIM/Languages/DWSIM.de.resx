@@ -5160,4 +5160,7 @@ Die erhaltenen Daten werden hauptsächlich für die Berechnung von VLE-Daten emp
   <data name="CopyOnErrorDesc" xml:space="preserve">
     <value>Copies data from inlet to outlet stream even if it is not valid.</value>
   </data>
+  <data name="PropPack_FlashPSFError" xml:space="preserve">
+    <value>PSF Flash wird nicht unterstützt</value>
+  </data>
 </root>

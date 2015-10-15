@@ -51,7 +51,7 @@ Public Class FormBinEnv
             If Me.DockState = WeifenLuo.WinFormsUI.Docking.DockState.Float Then
                 Dim floatWin = Me.DockHandler.FloatPane.FloatWindow
                 If Not floatWin Is Nothing Then
-                    floatWin.SetBounds(floatWin.Location.X, floatWin.Location.Y, 804, 464)
+                    floatWin.SetBounds(floatWin.Location.X, floatWin.Location.Y, 1029, 572)
                 End If
             End If
         End If

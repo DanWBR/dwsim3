@@ -62,6 +62,8 @@ Partial Class FormBinEnv
         Me.Label23 = New System.Windows.Forms.Label()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip()
+        Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem()
+        Me.GraphControl = New ZedGraph.ZedGraphControl()
         Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem()
         Me.GridExpData = New System.Windows.Forms.DataGridView()
         Me.check = New System.Windows.Forms.DataGridViewCheckBoxColumn()
@@ -69,8 +71,6 @@ Partial Class FormBinEnv
         Me.coly1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colT = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colP = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem()
-        Me.GraphControl = New ZedGraph.ZedGraphControl()
         Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem()
         Me.Grid1 = New System.Windows.Forms.DataGridView()
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
@@ -98,9 +98,9 @@ Partial Class FormBinEnv
         Me.GroupBox2.SuspendLayout()
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStrip1.SuspendLayout()
+        Me.FaTabStripItem1.SuspendLayout()
         Me.FaTabStripItem3.SuspendLayout()
         CType(Me.GridExpData, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.FaTabStripItem1.SuspendLayout()
         Me.FaTabStripItem2.SuspendLayout()
         CType(Me.Grid1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ToolStrip1.SuspendLayout()
@@ -338,9 +338,33 @@ Partial Class FormBinEnv
         resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
         Me.FaTabStrip1.AlwaysShowClose = False
         Me.FaTabStrip1.AlwaysShowMenuGlyph = False
-        Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem3, Me.FaTabStripItem1, Me.FaTabStripItem2})
+        Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem3, Me.FaTabStripItem2})
         Me.FaTabStrip1.Name = "FaTabStrip1"
         Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem1
+        '
+        'FaTabStripItem1
+        '
+        resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
+        Me.FaTabStripItem1.CanClose = False
+        Me.FaTabStripItem1.Controls.Add(Me.GraphControl)
+        Me.FaTabStripItem1.IsDrawn = True
+        Me.FaTabStripItem1.Name = "FaTabStripItem1"
+        Me.FaTabStripItem1.Selected = True
+        '
+        'GraphControl
+        '
+        resources.ApplyResources(Me.GraphControl, "GraphControl")
+        Me.GraphControl.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.GraphControl.IsAntiAlias = True
+        Me.GraphControl.IsAutoScrollRange = True
+        Me.GraphControl.Name = "GraphControl"
+        Me.GraphControl.ScrollGrace = 0.0R
+        Me.GraphControl.ScrollMaxX = 0.0R
+        Me.GraphControl.ScrollMaxY = 0.0R
+        Me.GraphControl.ScrollMaxY2 = 0.0R
+        Me.GraphControl.ScrollMinX = 0.0R
+        Me.GraphControl.ScrollMinY = 0.0R
+        Me.GraphControl.ScrollMinY2 = 0.0R
         '
         'FaTabStripItem3
         '
@@ -395,30 +419,6 @@ Partial Class FormBinEnv
         Me.colP.FillWeight = 107.8173!
         resources.ApplyResources(Me.colP, "colP")
         Me.colP.Name = "colP"
-        '
-        'FaTabStripItem1
-        '
-        resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
-        Me.FaTabStripItem1.CanClose = False
-        Me.FaTabStripItem1.Controls.Add(Me.GraphControl)
-        Me.FaTabStripItem1.IsDrawn = True
-        Me.FaTabStripItem1.Name = "FaTabStripItem1"
-        Me.FaTabStripItem1.Selected = True
-        '
-        'GraphControl
-        '
-        resources.ApplyResources(Me.GraphControl, "GraphControl")
-        Me.GraphControl.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.GraphControl.IsAntiAlias = True
-        Me.GraphControl.IsAutoScrollRange = True
-        Me.GraphControl.Name = "GraphControl"
-        Me.GraphControl.ScrollGrace = 0.0R
-        Me.GraphControl.ScrollMaxX = 0.0R
-        Me.GraphControl.ScrollMaxY = 0.0R
-        Me.GraphControl.ScrollMaxY2 = 0.0R
-        Me.GraphControl.ScrollMinX = 0.0R
-        Me.GraphControl.ScrollMinY = 0.0R
-        Me.GraphControl.ScrollMinY2 = 0.0R
         '
         'FaTabStripItem2
         '
@@ -573,9 +573,9 @@ Partial Class FormBinEnv
         Me.GroupBox2.ResumeLayout(False)
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FaTabStrip1.ResumeLayout(False)
+        Me.FaTabStripItem1.ResumeLayout(False)
         Me.FaTabStripItem3.ResumeLayout(False)
         CType(Me.GridExpData, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.FaTabStripItem1.ResumeLayout(False)
         Me.FaTabStripItem2.ResumeLayout(False)
         CType(Me.Grid1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ToolStrip1.ResumeLayout(False)

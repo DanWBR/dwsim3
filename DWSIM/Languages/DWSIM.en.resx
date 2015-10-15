@@ -5176,4 +5176,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="CopyOnErrorDesc" xml:space="preserve">
     <value>Copies data from inlet to outlet stream even if it is not valid.</value>
   </data>
+  <data name="PropPack_FlashPSFError" xml:space="preserve">
+    <value>PSF Flash is not supported.</value>
+  </data>
 </root>

@@ -3302,7 +3302,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                         Do
                             If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "SLE 1 (" & i + 1 & "/42)")
                             Try
-                                tmp1 = nlsle.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, L1, 0, Me)
+                                tmp1 = nlsle.Flash_PSF(New Double() {i * dx, 1 - i * dx}, P, L1, 0, Me)
                                 y1 = tmp1(4)
                                 x = i * dx
                                 pxs1.Add(x)
@@ -3316,7 +3316,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                         Do
                             If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "SLE 2 (" & i + 1 & "/42)")
                             Try
-                                tmp1 = nlsle.Flash_PV(New Double() {i * dx, 1 - i * dx}, P, L2, 0, Me)
+                                tmp1 = nlsle.Flash_PSF(New Double() {i * dx, 1 - i * dx}, P, L2, 0, Me)
                                 y2 = tmp1(4)
                                 Test2 = y2
                                 x = i * dx

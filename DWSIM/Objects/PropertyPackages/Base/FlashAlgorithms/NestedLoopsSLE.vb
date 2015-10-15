@@ -959,17 +959,356 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             Return OBJ_FUNC_PS_FLASH(Tt, Sf, otherargs(0), otherargs(1), otherargs(2))
         End Function
 
+
         Public Overrides Function Flash_PV(ByVal Vz As Double(), ByVal P As Double, ByVal V As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
-            If SolidSolution Then
-                Return Flash_PV_SS(Vz, P, V, Tref, PP)
+            Dim i, n, ecount As Integer
+            Dim d1, d2 As Date, dt As TimeSpan
+            Dim L, Lf, Vf, T, Tf, deltaT As Double
+            Dim e1 As Double
+            Dim AF As Double = 1
+
+            d1 = Date.Now
+
+            etol = CDbl(PP.Parameters("PP_PTFELT"))
+            maxit_e = CInt(PP.Parameters("PP_PTFMEI"))
+            itol = CDbl(PP.Parameters("PP_PTFILT"))
+            maxit_i = CInt(PP.Parameters("PP_PTFMII"))
+
+            n = UBound(Vz)
+
+            PP = PP
+            Vf = V
+            L = 1 - V
+            Lf = 1 - Vf
+            Tf = T
+
+            Dim Vn(n) As String, Vx(n), Vy(n), Vx_ant(n), Vy_ant(n), Vp(n), Ki(n), fi(n) As Double
+            Dim Vt(n), VTc(n), Tmin, Tmax, dFdT, Tsat(n) As Double
+
+            Vn = PP.RET_VNAMES()
+            VTc = PP.RET_VTC()
+            fi = Vz.Clone
+
+            Tmin = 0.0#
+            Tmax = 0.0#
+
+            If Tref = 0.0# Then
+                i = 0
+                Tref = 0.0#
+                Do
+                    Tref += 0.8 * Vz(i) * VTc(i)
+                    Tmin += 0.1 * Vz(i) * VTc(i)
+                    Tmax += 2.0 * Vz(i) * VTc(i)
+                    i += 1
+                Loop Until i = n + 1
             Else
-                Return Flash_PV_E(Vz, P, V, Tref, PP)
+                Tmin = Tref - 50
+                Tmax = Tref + 50
+            End If
+
+            T = Tref
+
+            'Calculate Ki`s
+
+            If Not ReuseKI Then
+                i = 0
+                Do
+                    Vp(i) = PP.AUX_PVAPi(Vn(i), T)
+                    Ki(i) = Vp(i) / P
+                    i += 1
+                Loop Until i = n + 1
+            Else
+                If Not PP.AUX_CheckTrivial(PrevKi) And Not Double.IsNaN(PrevKi(0)) Then
+                    For i = 0 To n
+                        Vp(i) = PP.AUX_PVAPi(Vn(i), T)
+                        Ki(i) = PrevKi(i)
+                    Next
+                Else
+                    i = 0
+                    Do
+                        Vp(i) = PP.AUX_PVAPi(Vn(i), T)
+                        Ki(i) = Vp(i) / P
+                        i += 1
+                    Loop Until i = n + 1
+                End If
+            End If
+
+            i = 0
+            Do
+                If Vz(i) <> 0 Then
+                    Vy(i) = Vz(i) * Ki(i) / ((Ki(i) - 1) * V + 1)
+                    If Double.IsInfinity(Vy(i)) Then Vy(i) = 0.0#
+                    Vx(i) = Vy(i) / Ki(i)
+                Else
+                    Vy(i) = 0
+                    Vx(i) = 0
+                End If
+                i += 1
+            Loop Until i = n + 1
+
+            Vx = Vx.NormalizeY()
+            Vy = Vy.NormalizeY()
+
+            If PP.AUX_IS_SINGLECOMP(Vz) Then
+                WriteDebugInfo("PV Flash [SLE]: Converged in 1 iteration.")
+                T = 0
+                For i = 0 To n
+                    T += Vz(i) * PP.AUX_TSATi(P, i)
+                Next
+                Return New Object() {L, V, Vx, Vy, T, 0, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
+            End If
+
+            Dim marcador3, marcador2, marcador As Integer
+            Dim stmp4_ant, stmp4, Tant, fval As Double
+            Dim chk As Boolean = False
+
+            If V = 1.0# Or V = 0.0# Then
+
+                ecount = 0
+                Do
+
+                    marcador3 = 0
+
+                    Dim cont_int = 0
+                    Do
+
+                        Ki = PP.DW_CalcKvalue(Vx, Vy, T, P)
+
+                        marcador = 0
+                        If stmp4_ant <> 0 Then
+                            marcador = 1
+                        End If
+                        stmp4_ant = stmp4
+
+                        If V = 0 Then
+                            stmp4 = Ki.MultiplyY(Vx).SumY
+                            'i = 0
+                            'stmp4 = 0
+                            'Do
+                            '    stmp4 = stmp4 + Ki(i) * Vx(i)
+                            '    i = i + 1
+                            'Loop Until i = n + 1
+                        Else
+                            stmp4 = Vy.DivideY(Ki).SumY
+                            'i = 0
+                            'stmp4 = 0
+                            'Do
+                            '    stmp4 = stmp4 + Vy(i) / Ki(i)
+                            '    i = i + 1
+                            'Loop Until i = n + 1
+                        End If
+
+                        If V = 0 Then
+                            Vy_ant = Vy.Clone
+                            Vy = Ki.MultiplyY(Vx).MultiplyConstY(1 / stmp4)
+                            'i = 0
+                            'Do
+                            '    Vy_ant(i) = Vy(i)
+                            '    Vy(i) = Ki(i) * Vx(i) / stmp4
+                            '    i = i + 1
+                            'Loop Until i = n + 1
+                        Else
+                            Vx_ant = Vx.Clone
+                            Vx = Vy.DivideY(Ki).MultiplyConstY(1 / stmp4)
+                            'i = 0
+                            'Do
+                            '    Vx_ant(i) = Vx(i)
+                            '    Vx(i) = (Vy(i) / Ki(i)) / stmp4
+                            '    i = i + 1
+                            'Loop Until i = n + 1
+                        End If
+
+                        marcador2 = 0
+                        If marcador = 1 Then
+                            If V = 0 Then
+                                If Math.Abs(Vy(0) - Vy_ant(0)) < itol Then
+                                    marcador2 = 1
+                                End If
+                            Else
+                                If Math.Abs(Vx(0) - Vx_ant(0)) < itol Then
+                                    marcador2 = 1
+                                End If
+                            End If
+                        End If
+
+                        cont_int = cont_int + 1
+
+                    Loop Until marcador2 = 1 Or Double.IsNaN(stmp4) Or cont_int > maxit_i
+
+                    Dim K1(n), K2(n), dKdT(n) As Double
+
+                    K1 = PP.DW_CalcKvalue(Vx, Vy, T, P)
+                    K2 = PP.DW_CalcKvalue(Vx, Vy, T + 0.01, P)
+
+                    dKdT = K2.SubtractY(K1).MultiplyConstY(1 / 0.01)
+                    'For i = 0 To n
+                    '    dKdT(i) = (K2(i) - K1(i)) / 0.01
+                    'Next
+
+                    fval = stmp4 - 1
+
+                    ecount += 1
+
+                    i = 0
+                    dFdT = 0
+                    Do
+                        If V = 0 Then
+                            dFdT = Vx.MultiplyY(dKdT).SumY
+                            'dFdT = dFdT + Vx(i) * dKdT(i)
+                        Else
+                            dFdT = -Vy.DivideY(Ki).DivideY(Ki).MultiplyY(dKdT).SumY
+                            'dFdT = dFdT - Vy(i) / (Ki(i) ^ 2) * dKdT(i)
+                        End If
+                        i = i + 1
+                    Loop Until i = n + 1
+
+                    Tant = T
+                    deltaT = -fval / dFdT
+
+                    If Abs(deltaT) > 0.1 * T Then
+                        T = T + Sign(deltaT) * 0.1 * T
+                    Else
+                        T = T + deltaT
+                    End If
+
+                    WriteDebugInfo("PV Flash [SLE]: Iteration #" & ecount & ", T = " & T & ", VF = " & V)
+
+                    CheckCalculatorStatus()
+
+                Loop Until Math.Abs(fval) < etol Or Double.IsNaN(T) = True Or ecount > maxit_e
+
+            Else
+
+                ecount = 0
+
+                Do
+
+                    Ki = PP.DW_CalcKvalue(Vx, Vy, T, P)
+
+                    i = 0
+                    Do
+                        If Vz(i) <> 0 Then
+                            Vy_ant(i) = Vy(i)
+                            Vx_ant(i) = Vx(i)
+                            Vy(i) = Vz(i) * Ki(i) / ((Ki(i) - 1) * V + 1)
+                            Vx(i) = Vy(i) / Ki(i)
+                        Else
+                            Vy(i) = 0
+                            Vx(i) = 0
+                        End If
+                        i += 1
+                    Loop Until i = n + 1
+
+                    Vx = Vx.NormalizeY()
+                    Vy = Vy.NormalizeY()
+
+                    If V <= 0.5 Then
+
+                        stmp4 = Ki.MultiplyY(Vx).SumY
+                        'i = 0
+                        'stmp4 = 0
+                        'Do
+                        '    stmp4 = stmp4 + Ki(i) * Vx(i)
+                        '    i = i + 1
+                        'Loop Until i = n + 1
+
+                        Dim K1(n), K2(n), dKdT(n) As Double
+
+                        K1 = PP.DW_CalcKvalue(Vx, Vy, T, P)
+                        K2 = PP.DW_CalcKvalue(Vx, Vy, T + 0.1, P)
+
+                        dKdT = K2.SubtractY(K1).MultiplyConstY(1 / 0.1)
+                        'For i = 0 To n
+                        '    dKdT(i) = (K2(i) - K1(i)) / (0.1)
+                        'Next
+
+                        dFdT = Vx.MultiplyY(dKdT).SumY
+                        'i = 0
+                        'dFdT = 0
+                        'Do
+                        '    dFdT = dFdT + Vx(i) * dKdT(i)
+                        '    i = i + 1
+                        'Loop Until i = n + 1
+
+                    Else
+
+                        stmp4 = Vy.DivideY(Ki).SumY
+                        'i = 0
+                        'stmp4 = 0
+                        'Do
+                        '    stmp4 = stmp4 + Vy(i) / Ki(i)
+                        '    i = i + 1
+                        'Loop Until i = n + 1
+
+                        Dim K1(n), K2(n), dKdT(n) As Double
+
+                        K1 = PP.DW_CalcKvalue(Vx, Vy, T, P)
+                        K2 = PP.DW_CalcKvalue(Vx, Vy, T + 1, P)
+
+                        dKdT = K2.SubtractY(K1)
+                        'For i = 0 To n
+                        '    dKdT(i) = (K2(i) - K1(i)) / (1)
+                        'Next
+
+                        dFdT = -Vy.DivideY(Ki).DivideY(Ki).MultiplyY(dKdT).SumY
+                        'i = 0
+                        'dFdT = 0
+                        'Do
+                        '    dFdT = dFdT - Vy(i) / (Ki(i) ^ 2) * dKdT(i)
+                        '    i = i + 1
+                        'Loop Until i = n + 1
+
+                    End If
+
+                    ecount += 1
+
+                    fval = stmp4 - 1
+
+                    Tant = T
+                    deltaT = -fval / dFdT * AF
+                    AF *= 1.01
+                    If Abs(deltaT) > 0.1 * T Then
+                        T = T + Sign(deltaT) * 0.1 * T
+                    Else
+                        T = T + deltaT
+                    End If
+
+                    e1 = Vx.SubtractY(Vx_ant).AbsSumY + Vy.SubtractY(Vy_ant).AbsSumY + Math.Abs(T - Tant)
+
+                    WriteDebugInfo("PV Flash [SLE]: Iteration #" & ecount & ", T = " & T & ", VF = " & V)
+
+                    CheckCalculatorStatus()
+
+                Loop Until (Math.Abs(fval) < etol And e1 < etol) Or Double.IsNaN(T) = True Or ecount > maxit_e
+
+            End If
+
+            d2 = Date.Now
+
+            dt = d2 - d1
+
+            If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
+
+            If PP.AUX_CheckTrivial(Ki) Then Throw New Exception("PV Flash [SLE]: Invalid result: converged to the trivial solution (T = " & T & " ).")
+
+            WriteDebugInfo("PV Flash [SLE]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
+
+            Return New Object() {L, V, Vx, Vy, T, ecount, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
+
+        End Function
+
+        Public Overrides Function Flash_PSF(ByVal Vz As Double(), ByVal P As Double, ByVal V As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
+            'Pressure/Solid fraction flash
+            If SolidSolution Then
+                Return Flash_PSF_SS(Vz, P, V, Tref, PP)
+            Else
+                Return Flash_PSF_E(Vz, P, V, Tref, PP)
             End If
 
         End Function
 
-        Public Function Flash_PV_SS(ByVal Vz As Double(), ByVal P As Double, ByVal V As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
+        Public Function Flash_PSF_SS(ByVal Vz As Double(), ByVal P As Double, ByVal V As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
             Dim i, n, ecount As Integer
             Dim d1, d2 As Date, dt As TimeSpan
@@ -1208,7 +1547,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
         End Function
 
-        Public Function Flash_PV_E(ByVal Vz As Double(), ByVal P As Double, ByVal V As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
+        Public Function Flash_PSF_E(ByVal Vz As Double(), ByVal P As Double, ByVal V As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
             Dim i, n, ecount As Integer
             Dim d1, d2 As Date, dt As TimeSpan

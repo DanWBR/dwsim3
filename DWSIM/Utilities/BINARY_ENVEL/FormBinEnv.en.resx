@@ -160,6 +160,9 @@
   <data name="Label7.Text" xml:space="preserve">
     <value>Txy Diagram Options</value>
   </data>
+  <data name="cbPropPack.Items1" xml:space="preserve">
+    <value>Mass Fraction</value>
+  </data>
   <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>92, 13</value>
   </data>
@@ -229,11 +232,11 @@
   <data name="GroupBox6.Text" xml:space="preserve">
     <value>Diagram Settings</value>
   </data>
-  <data name="FaTabStripItem3.Title" xml:space="preserve">
-    <value>Exp. Data</value>
-  </data>
   <data name="FaTabStripItem1.Title" xml:space="preserve">
     <value>Graph</value>
+  </data>
+  <data name="FaTabStripItem3.Title" xml:space="preserve">
+    <value>Exp. Data</value>
   </data>
   <data name="FaTabStripItem2.Title" xml:space="preserve">
     <value>Table</value>
@@ -255,8 +258,5 @@
   </data>
   <data name="TSB_Copy.Text" xml:space="preserve">
     <value>Copy Chart to Clipboard </value>
-  </data>
-  <data name="cbPropPack.Items1" xml:space="preserve">
-    <value>Mass Fraction</value>
   </data>
 </root>

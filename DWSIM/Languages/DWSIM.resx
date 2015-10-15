@@ -5185,4 +5185,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="CopyOnErrorDesc" xml:space="preserve">
     <value>Copia os dados da corrente de entrada para a de saída mesmo em caso de erro nos dados.</value>
   </data>
+  <data name="PropPack_FlashPSFError" xml:space="preserve">
+    <value>O cálculo Flash PSF não é suportado.</value>
+  </data>
 </root>
