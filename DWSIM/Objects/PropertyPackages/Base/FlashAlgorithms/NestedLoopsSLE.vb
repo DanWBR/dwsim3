@@ -260,13 +260,89 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
 
         End Function
 
-        '==================================================================
+        Function Flash_SL(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage) As Object
+            'This flash is used to calculate the solid/liquid equilibrium at given pressure and temperature
+            'Input parameters:  global mole fractions Vz
+            'Result Parameters: number of moles in each phase
+
+            Dim MaxError As Double = 0.0000001
+
+            Dim i, n, ecount As Integer
+
+            n = UBound(Vz)
+
+            Dim Vx(n), MaxAct(n), MaxX(n), Tf(n), Hf(n), ActCoeff(n), VnL(n), VnS(n), Vp(n) As Double
+            Dim L, L_old, SF, SLP As Double
+
+            Vx = Vz.Clone 'assuming initially only liquids
+
+            Tf = PP.RET_VTF 'Fusion temperature
+            Hf = PP.RET_VHF 'Enthalpy of fusion
+
+            'Calculate max activities for solubility of solids
+            For i = 0 To n
+                MaxAct(i) = Exp(-Hf(i) * 1000 / 8.31446 / T * (1 - T / Tf(i)))
+                Vp(i) = PP.AUX_PVAPi(i, T)
+            Next
+
+            L = 1
+            Do
+                ecount += 1
+
+                ActCoeff = PP.DW_CalcFugCoeff(Vx, T, P, State.Liquid).MultiplyConstY(P).DivideY(Vp)
+                MaxX = MaxAct.DivideY(ActCoeff)
+
+                If MaxX.SumY <= 1 Then
+                    'below total freezing point, only solids left
+                    VnL = PP.RET_NullVector
+                    VnS = Vz.Clone
+                    Exit Do
+                End If
+
+                VnL = PP.RET_NullVector
+                VnS = PP.RET_NullVector
+                Vx = PP.RET_NullVector
+
+                L_old = L
+
+                For i = 0 To n
+                    If Vz(i) > MaxX(i) Then
+                        Vx(i) = MaxX(i) 'Component fraction above max solubility. -> fix fraction to max solubility
+                    Else
+                        VnL(i) = Vz(i) 'Component fraction below max solubility. -> put to liquid completely
+                    End If
+                Next
+
+                SLP = VnL.SumY 'Sum moles of components in liquid phase
+                SF = Vx.SumY 'Sum mole fractions of components fixed by max solubility
+                L = SLP / (1 - SF)
+
+                If L = 1 Then
+                    'all components are below max solubility, only liquid left
+                    VnL = Vz.Clone
+                    VnS = PP.RET_NullVector
+                    Exit Do
+                End If
+
+                'calculate moles in liquid phase of components above max solubility
+                For i = 0 To n
+                    If Vz(i) > MaxX(i) Then
+                        VnL(i) = MaxX(i) * L
+                    End If
+                    VnS(i) = Vz(i) - VnL(i)
+                Next
+                Vx = VnL.NormalizeY
+            Loop Until Abs(L - L_old) < MaxError
+
+            Return New Object() {VnL, VnS, ecount}
+        End Function
+
         Public Function Flash_PT_NL(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
             Dim i, n, ecount As Integer
             Dim Pb, Pd, Pmin, Pmax, Px As Double
             Dim d1, d2 As Date, dt As TimeSpan
-            Dim L, V, S, Vant, dx As Double
+            Dim L, V, S, Vant As Double
 
             d1 = Date.Now
 
@@ -277,23 +353,40 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
 
             n = UBound(Vz)
 
-            Dim Vn(n) As String, Vx(n), Vy(n), Vs(n), Vx_ant(n), Vy_ant(n), Vp(n), Ki(n), Ki_ant(n) As Double
+            Dim Vx(n), Vy(n), Vs(n), Vx_ant(n), Vy_ant(n), Vp(n), Ki(n), Ki_ant(n) As Double
+            Dim VnL(n), VnS(n) As Double
 
-            Dim MaxAct(n), MaxX(n), Tf(n), Hf(n), ActCoeff(n), VnL(n), VnV(n), VnS(n), VnZ(n), VnFeed(n) As Double
-            Dim hasSolids As Boolean
-
-            Vn = PP.RET_VNAMES()
-
-            VnFeed = Vz.Clone
-            VnZ = Vz.Clone
-            VnL = VnZ.Clone
-            Vx = VnZ.Clone
-            L = 1
-            S = 0
+            '================================================
+            '== Do initial SLE flash to precipitate solids ==
+            '================================================
+            Dim SL_FlashResult As Object
+            SL_FlashResult = Flash_SL(Vz, P, T, PP) 'initially put all to liquid phase
+            VnL = SL_FlashResult(0)
+            VnS = SL_FlashResult(1)
+            L = VnL.SumY
+            S = 1 - L
             V = 0
+            Vx = VnL.NormalizeY
+            Vs = VnS.NormalizeY
 
-            Tf = PP.RET_VTF 'Fusion temperature
-            Hf = PP.RET_VHF 'Enthalpy of fusion
+            If L < 0.0000001 Then 'only solids left
+                L = 0
+                S = 1
+                V = 0
+                Vx = PP.RET_NullVector
+                Vy = PP.RET_NullVector
+                Vs = Vz
+                GoTo out
+            End If
+
+            'take remaining liquid as input for VLE calculation 
+            Vz = Vx.Clone
+
+
+            '================================================
+            '== Do VLE flash ================================
+            '================================================
+
             'Calculate Ki`s
             If Not ReuseKI Then
                 i = 0
@@ -308,41 +401,6 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     Ki(i) = PrevKi(i)
                 Next
             End If
-
-            'Calculate max activities for solubility of solids
-            For i = 0 To n
-                MaxAct(i) = Exp(-Hf(i) * 1000 / 8.31446 / T * (1 - T / Tf(i)))
-            Next
-
-            Do 'do SLE flash, assuming no vapour phase
-                ActCoeff = PP.DW_CalcFugCoeff(Vx, T, P, State.Liquid).MultiplyConstY(P).DivideY(Vp)
-                MaxX = MaxAct.DivideY(ActCoeff)
-                hasSolids = False
-                For i = 0 To n
-                    If Vx(i) - MaxX(i) > 0.00001 Then 'precipitate component from liquid
-                        dx = L * (Vx(i) - MaxX(i))
-                        VnS(i) += dx
-                        VnL(i) -= dx
-                        hasSolids = True
-                    End If
-                Next
-                S = VnS.SumY
-                Vs = VnS.NormalizeY
-
-                L = 1 - S
-                Vx = VnL.NormalizeY
-                ecount += 1
-            Loop Until Not hasSolids Or L < 0.0000001 Or dx < 0.0000001
-
-            If L < 0.0000001 Then 'only solids left
-                L = 0
-                S = 1
-                Vx = PP.RET_NullVector
-                Vs = Vz
-                GoTo out
-            End If
-
-            Vz = Vx.Clone 'take remaining liquid for VLE calculation
 
             'Estimate V
             If T > DWSIM.MathEx.Common.Max(PP.RET_VTC, Vz) Then
@@ -532,12 +590,13 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
                 End If
 
-                WriteDebugInfo("PT Flash [NL]: Iteration #" & ecount & ", VF = " & V)
+                WriteDebugInfo("PT Flash [NL-SLE]: Iteration #" & ecount & ", VF = " & V)
 
                 CheckCalculatorStatus()
 
             Loop Until convergiu = 1
 
+            'transfer amount of phase fractions back to global fractions including solids
             L = L * (1 - S)
             V = V * (1 - S)
 
@@ -545,7 +604,7 @@ out:        d2 = Date.Now
 
             dt = d2 - d1
 
-            WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Error function value: " & F)
+            WriteDebugInfo("PT Flash [NL-SLE]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds)
 
             Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, S, Vs}
 
@@ -876,8 +935,8 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
         End Function
 
         Function SolidFractionError(x As Double, otherargs As Object)
-
-            Dim val As Double = (1 - otherargs(0)) - Me.Flash_PT(otherargs(1), otherargs(2), x, otherargs(3))(7)
+            Dim res As Object = Me.Flash_PT(otherargs(1), otherargs(2), x, otherargs(3))
+            Dim val As Double = (1 - otherargs(0)) - res(7)
 
             Return val
 
@@ -1540,7 +1599,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
             dt = d2 - d1
 
-            WriteDebugInfo("PV Flash [NL-SLE]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
+            WriteDebugInfo("PSF Flash [NL-SLE]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             Return New Object() {L, V, Vx, PP.RET_NullVector, T, ecount, Ki, 0.0#, PP.RET_NullVector, S, Vs}
 
@@ -1551,7 +1610,6 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
             Dim i, n, ecount As Integer
             Dim d1, d2 As Date, dt As TimeSpan
-            Dim soma_x, soma_s As Double
             Dim L, S, Lf, Sf, T, Tf As Double
             Dim ids As New List(Of String)
 
@@ -1630,20 +1688,8 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
                 i += 1
             Loop Until i = n + 1
 
-            i = 0
-            soma_x = 0.0#
-            soma_s = 0.0#
-            Do
-                soma_x = soma_x + Vx(i)
-                soma_s = soma_s + Vs(i)
-                i = i + 1
-            Loop Until i = n + 1
-            i = 0
-            Do
-                Vx(i) = Vx(i) / soma_x
-                Vs(i) = Vs(i) / soma_s
-                i = i + 1
-            Loop Until i = n + 1
+            Vx = Vx.NormalizeY
+            Vs = Vx.NormalizeY
 
             Dim chk As Boolean = False
 
@@ -1666,20 +1712,34 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
             ecount = 0
 
-            Dim bm As New MathEx.BrentOpt.Brent
+            Dim SF0, SF1, T0, T1 As Double
+            T0 = Common.Min(VTF) * 0.6
+            T1 = Common.Max(VTF) + 10
 
-            bm.DefineFuncDelegate(AddressOf SolidFractionError)
+            SF0 = Flash_PT(Vz, P, T0, PP)(7)
+            SF1 = Flash_PT(Vz, P, T1, PP)(7)
 
-            T = bm.BrentOpt(Common.Min(VTF) * 0.6, Common.Max(VTF) + 70, 50, etol, 100, New Object() {L, Vz, P, PP})
+            Do
+                T = (T0 + T1) / 2
+                Sf = Flash_PT(Vz, P, T, PP)(7)
 
-            'result = Me.Flash_PT_E(Vz, P, T, PP)
+                If Sf > V Then
+                    T0 = T
+                    SF0 = Sf
+                Else
+                    T1 = T
+                    SF1 = Sf
+                End If
+                ecount += 1
+            Loop Until (T1 - T0) <= itol
+            
             result = Me.Flash_PT_NL(Vz, P, T, PP)
 
             d2 = Date.Now
 
             dt = d2 - d1
 
-            WriteDebugInfo("PV Flash [NL-SLE]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
+            WriteDebugInfo("PSF Flash [NL-SLE]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             Return New Object() {result(0), result(1), result(2), result(3), T, ecount, PP.RET_NullVector, 0.0#, PP.RET_NullVector, result(7), result(8)}
 
