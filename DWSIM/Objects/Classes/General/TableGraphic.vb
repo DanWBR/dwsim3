@@ -194,7 +194,7 @@ Namespace DWSIM.GraphicObjects
                 m_objectfamily = value
                 m_objectlist.Clear()
                 m_propertylist.Clear()
-                m_sortby = "Name | DESC"
+                If m_sortby = "" Then m_sortby = "Name | DESC"
             End Set
         End Property
 
