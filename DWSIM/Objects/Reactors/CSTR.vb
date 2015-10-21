@@ -73,18 +73,18 @@ Namespace DWSIM.SimulationObjects.Reactors
 
             MyBase.New()
 
-            Me.FillNodeItems()
-            Me.QTFillNodeItems()
-  
-            N00 = New Dictionary(Of String, Double)
-            DN = New Dictionary(Of String, Double)
-            C0 = New Dictionary(Of String, Double)
-            C = New Dictionary(Of String, Double)
-            Ri = New Dictionary(Of String, Double)
-            Rxi = New Dictionary(Of String, Double)
-            DHRi = New Dictionary(Of String, Double)
-            Kf = New ArrayList
-            Kr = New ArrayList
+            'Me.FillNodeItems()
+            'Me.QTFillNodeItems()
+
+            'N00 = New Dictionary(Of String, Double)
+            'DN = New Dictionary(Of String, Double)
+            'C0 = New Dictionary(Of String, Double)
+            'C = New Dictionary(Of String, Double)
+            'Ri = New Dictionary(Of String, Double)
+            'Rxi = New Dictionary(Of String, Double)
+            'DHRi = New Dictionary(Of String, Double)
+            'Kf = New ArrayList
+            'Kr = New ArrayList
 
         End Sub
 
