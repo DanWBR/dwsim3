@@ -195,10 +195,14 @@ Public Class FormReportConfig
     End Sub
 
     Private Sub FormReportConfig_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
         frm = My.Application.ActiveSimulation
         Me.Text = frm.Options.SimNome & " - " & DWSIM.App.GetLocalString("RelatoriodaSimulacao")
 
         Me.ListView1.Items.Clear()
+
+        KButton4.Enabled = Not DWSIM.App.IsRunningOnMono
+        KButton5.Enabled = Not DWSIM.App.IsRunningOnMono
 
         Dim obj As SimulationObjects_BaseClass
 
