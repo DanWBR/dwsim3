@@ -260,24 +260,50 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
 
         End Function
 
-        Function Flash_SL(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage) As Object
+        Function Flash_SL(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage) As FlashResult
             'This flash is used to calculate the solid/liquid equilibrium at given pressure and temperature
             'Input parameters:  global mole fractions Vz
             'Result Parameters: number of moles in each phase
 
+            Dim Result As New FlashResult
             Dim MaxError As Double = 0.0000001
 
             Dim i, n, ecount As Integer
+            Dim d1, d2 As Date
 
+            d1 = Date.Now
             n = UBound(Vz)
 
-            Dim Vx(n), MaxAct(n), MaxX(n), Tf(n), Hf(n), ActCoeff(n), VnL(n), VnS(n), Vp(n) As Double
+            Dim Vx(n), Vs(n), MaxAct(n), MaxX(n), Tf(n), Hf(n), ActCoeff(n), VnL(n), VnS(n), Vp(n) As Double
             Dim L, L_old, SF, SLP As Double
 
-            Vx = Vz.Clone 'assuming initially only liquids
+            Vx = Vz.Clone 'assuming initially only liquids exist
 
             Tf = PP.RET_VTF 'Fusion temperature
             Hf = PP.RET_VHF 'Enthalpy of fusion
+
+            If Vz.MaxY = 1 Then 'only a single component
+                ecount = 0
+                For i = 0 To n
+                    If Vz(i) = 1 Then
+                        If T > Tf(i) Then
+                            'above melting temperature, only liquid
+                            L = 1
+                            L_old = L
+                            Vx = Vz.Clone
+                            Vs = PP.RET_NullVector
+                            GoTo out
+                        Else
+                            'below melting temperature, only solid
+                            L = 0
+                            L_old = L
+                            Vs = Vz.Clone
+                            Vx = PP.RET_NullVector
+                            GoTo out
+                        End If
+                    End If
+                Next
+            End If
 
             'Calculate max activities for solubility of solids
             For i = 0 To n
@@ -294,8 +320,9 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
 
                 If MaxX.SumY <= 1 Then
                     'below total freezing point, only solids left
-                    VnL = PP.RET_NullVector
-                    VnS = Vz.Clone
+                    Vx = PP.RET_NullVector
+                    Vs = Vz.Clone
+                    L = 0
                     Exit Do
                 End If
 
@@ -319,8 +346,8 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
 
                 If L = 1 Then
                     'all components are below max solubility, only liquid left
-                    VnL = Vz.Clone
-                    VnS = PP.RET_NullVector
+                    Vx = Vz.Clone
+                    Vs = PP.RET_NullVector
                     Exit Do
                 End If
 
@@ -332,9 +359,22 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     VnS(i) = Vz(i) - VnL(i)
                 Next
                 Vx = VnL.NormalizeY
+                Vs = VnS.NormalizeY
             Loop Until Abs(L - L_old) < MaxError
 
-            Return New Object() {VnL, VnS, ecount}
+out:        d2 = Date.Now
+            With Result
+                .LF = L
+                .SF = 1 - L
+                .VF = 0
+                .Vx = Vx
+                .Vs = Vs
+                .Err = L - L_old
+                .Counter = ecount
+                .dT = d2 - d1
+            End With
+
+            Return Result
         End Function
 
         Public Function Flash_PT_NL(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
@@ -354,30 +394,20 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             n = UBound(Vz)
 
             Dim Vx(n), Vy(n), Vs(n), Vx_ant(n), Vy_ant(n), Vp(n), Ki(n), Ki_ant(n) As Double
-            Dim VnL(n), VnS(n) As Double
 
             '================================================
             '== Do initial SLE flash to precipitate solids ==
             '================================================
-            Dim SL_FlashResult As Object
-            SL_FlashResult = Flash_SL(Vz, P, T, PP) 'initially put all to liquid phase
-            VnL = SL_FlashResult(0)
-            VnS = SL_FlashResult(1)
-            L = VnL.SumY
-            S = 1 - L
+            Dim SL_Result As FlashResult
+            SL_Result = Flash_SL(Vz, P, T, PP)
+            L = SL_Result.LF
+            S = SL_Result.SF
             V = 0
-            Vx = VnL.NormalizeY
-            Vs = VnS.NormalizeY
+            Vx = SL_Result.Vx
+            Vs = SL_Result.Vs
 
-            If L < 0.0000001 Then 'only solids left
-                L = 0
-                S = 1
-                V = 0
-                Vx = PP.RET_NullVector
-                Vy = PP.RET_NullVector
-                Vs = Vz
-                GoTo out
-            End If
+            'only solids left
+            If L = 0 Then GoTo out
 
             'take remaining liquid as input for VLE calculation 
             Vz = Vx.Clone
@@ -1732,7 +1762,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
                 End If
                 ecount += 1
             Loop Until (T1 - T0) <= itol
-            
+
             result = Me.Flash_PT_NL(Vz, P, T, PP)
 
             d2 = Date.Now
