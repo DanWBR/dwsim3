@@ -62,8 +62,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         ''' </summary>
         ''' <param name="spec1">Flash state specification 1</param>
         ''' <param name="spec2">Flash state specification 2</param>
-        ''' <param name="val1">Value of the first flash state specification (P in Pa, T in K, H in kJ/kg, S in kJ/[kg.K], VAP in mole fraction from 0 to 1)</param>
-        ''' <param name="val2">Value of the second flash state specification (P in Pa, T in K, H in kJ/kg, S in kJ/[kg.K], VAP in mole fraction from 0 to 1)</param>
+        ''' <param name="val1">Value of the first flash state specification (P in Pa, T in K, H in kJ/kg, S in kJ/[kg.K], VAP/SF in mole fraction from 0 to 1)</param>
+        ''' <param name="val2">Value of the second flash state specification (P in Pa, T in K, H in kJ/kg, S in kJ/[kg.K], VAP/SF in mole fraction from 0 to 1)</param>
         ''' <param name="pp">Property Package instance</param>
         ''' <param name="mixmolefrac">Vector of mixture mole fractions</param>
         ''' <param name="initialKval">Vector containing initial estimates for the K-values (set to 'Nothing' (VB) or 'null' (C#) if none).</param>
@@ -72,11 +72,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         ''' <remarks>This function must be used instead of the older type-specific flash functions.
         ''' Check if the 'ResultException' property of the result object is nothing/null before proceeding.</remarks>
         Public Function CalculateEquilibrium(spec1 As FlashSpec, spec2 As FlashSpec,
-                                             val1 As Double, val2 As Double,
-                                             pp As PropertyPackage,
-                                             mixmolefrac As Double(),
-                                             initialKval As Double(),
-                                             initialestimate As Double) As FlashCalculationResult
+                                            val1 As Double, val2 As Double,
+                                            pp As PropertyPackage,
+                                            mixmolefrac As Double(),
+                                            initialKval As Double(),
+                                            initialestimate As Double) As FlashCalculationResult
 
             Dim constprops As List(Of ConstantProperties) = pp.DW_GetConstantProperties()
 
@@ -1038,7 +1038,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         End Function
 
-        Public Function GetSolidPhase1MassFractions() As Double()
+        Public Function GetSolidPhaseMassFractions() As Double()
 
             Return ConvertToMassFractions(GetSolidPhaseMoleFractions())
 

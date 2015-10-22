@@ -1398,10 +1398,17 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                             result = Me.FlashBase.Flash_PT(RET_VMOL(Fase.Mixture), P, T, Me)
 
+                            'Dim result2 = Me.FlashBase.CalculateEquilibrium(FlashSpec.P, FlashSpec.T, P, T, Me, RET_VMOL(Fase.Mixture), Nothing, 0)
+
                             xl = result(0)
                             xv = result(1)
                             xl2 = result(5)
                             xs = result(7)
+
+                            'xl = result2.GetLiquidPhase1MoleFraction
+                            'xv = result2.GetVaporPhaseMoleFraction
+                            'xl2 = result2.GetLiquidPhase2MoleFraction
+                            'xs = result2.GetSolidPhaseMoleFraction
 
                             Dim Vx As Double() = result(2)
                             Dim Vy As Double() = result(3)
