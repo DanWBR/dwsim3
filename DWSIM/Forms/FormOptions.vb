@@ -147,6 +147,8 @@ Public Class FormOptions
                 Me.ComboBoxUILanguage.SelectedIndex = 3
         End Select
 
+        loaded = True
+
     End Sub
 
     Public Sub GetCUDACaps(prop As GPGPUProperties)
