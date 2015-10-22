@@ -1,5 +1,5 @@
 '    Flash Algorithm Abstract Base Class
-'    Copyright 2010-2014 Daniel Wagner O. de Medeiros
+'    Copyright 2010-2015 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -19,8 +19,22 @@
 Imports System.Math
 Imports System.Threading.Tasks
 Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
+Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
+Imports System.Linq
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
+
+    Public Enum FlashCalculationType
+        PressureTemperature = 0
+        PressureEnthalpy = 1
+        PressureEntropy = 2
+        TemperatureEnthalpy = 3
+        TemperatureEntropy = 4
+        PressureVaporFraction = 5
+        TemperatureVaporFraction = 6
+        PressureSolidFraction = 7
+        TemperatureSolidFraction = 8
+    End Enum
 
     ''' <summary>
     ''' This is the base class for the flash algorithms.
@@ -43,6 +57,145 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         End Sub
 
+        ''' <summary>
+        ''' Calculates Phase Equilibria for a given mixture at specified conditions.
+        ''' </summary>
+        ''' <param name="spec1">Flash state specification 1</param>
+        ''' <param name="spec2">Flash state specification 2</param>
+        ''' <param name="val1">Value of the first flash state specification (P in Pa, T in K, H in kJ/kg, S in kJ/[kg.K], VAP in mole fraction from 0 to 1)</param>
+        ''' <param name="val2">Value of the second flash state specification (P in Pa, T in K, H in kJ/kg, S in kJ/[kg.K], VAP in mole fraction from 0 to 1)</param>
+        ''' <param name="pp">Property Package instance</param>
+        ''' <param name="mixmolefrac">Vector of mixture mole fractions</param>
+        ''' <param name="initialKval">Vector containing initial estimates for the K-values (set to 'Nothing' (VB) or 'null' (C#) if none).</param>
+        ''' <param name="initialestimate">Initial estimate for Temperature (K) or Pressure (Pa), whichever will be calculated</param>
+        ''' <returns>A FlashCalculationResult instance with the results of the calculations</returns>
+        ''' <remarks>This function must be used instead of the older type-specific flash functions.
+        ''' Check if the 'ResultException' property of the result object is nothing/null before proceeding.</remarks>
+        Public Function CalculateEquilibrium(spec1 As FlashSpec, spec2 As FlashSpec,
+                                             val1 As Double, val2 As Double,
+                                             pp As PropertyPackage,
+                                             mixmolefrac As Double(),
+                                             initialKval As Double(),
+                                             initialestimate As Double) As FlashCalculationResult
+
+            Dim constprops As List(Of ConstantProperties) = pp.DW_GetConstantProperties()
+
+            Dim d1, d2 As Date
+
+            Dim result As Object = Nothing
+            Dim calcresult As New FlashCalculationResult(constprops)
+
+            With calcresult
+                .MixtureMoleAmounts = New List(Of Double)(mixmolefrac)
+                .FlashAlgorithmType = Me.GetType.ToString
+                .FlashSpecification1 = spec1
+                .FlashSpecification2 = spec2
+            End With
+
+            Dim useestimates = False
+
+            If Not initialKval Is Nothing Then useestimates = True
+
+            d1 = Date.Now
+
+            Try
+                If spec1 = FlashSpec.P And spec2 = FlashSpec.T Then
+                    'PT = {L1, V, Vx1, Vy, ecount, L2, Vx2, S, Vs}
+                    result = Flash_PT(mixmolefrac, val1, val2, pp, useestimates, initialKval)
+                    With calcresult
+                        .VaporPhaseMoleAmounts = New List(Of Double)(DirectCast(result(3), Double()).MultiplyConstY(Convert.ToDouble(result(1))))
+                        .LiquidPhase1MoleAmounts = New List(Of Double)(DirectCast(result(2), Double()).MultiplyConstY(Convert.ToDouble(result(0))))
+                        .LiquidPhase2MoleAmounts = New List(Of Double)(DirectCast(result(6), Double()).MultiplyConstY(Convert.ToDouble(result(5))))
+                        .SolidPhaseMoleAmounts = New List(Of Double)(DirectCast(result(8), Double()).MultiplyConstY(Convert.ToDouble(result(7))))
+                        .IterationsTaken = Convert.ToInt32(result(4))
+                    End With
+                ElseIf spec1 = FlashSpec.T And spec2 = FlashSpec.P Then
+                    'PT = {L1, V, Vx1, Vy, ecount, L2, Vx2, S, Vs}
+                    result = Flash_PT(mixmolefrac, val2, val1, pp, useestimates, initialKval)
+                    With calcresult
+                        .VaporPhaseMoleAmounts = New List(Of Double)(DirectCast(result(3), Double()).MultiplyConstY(Convert.ToDouble(result(1))))
+                        .LiquidPhase1MoleAmounts = New List(Of Double)(DirectCast(result(2), Double()).MultiplyConstY(Convert.ToDouble(result(0))))
+                        .LiquidPhase2MoleAmounts = New List(Of Double)(DirectCast(result(6), Double()).MultiplyConstY(Convert.ToDouble(result(5))))
+                        .SolidPhaseMoleAmounts = New List(Of Double)(DirectCast(result(8), Double()).MultiplyConstY(Convert.ToDouble(result(7))))
+                        .IterationsTaken = Convert.ToInt32(result(4))
+                    End With
+                ElseIf spec1 = FlashSpec.P And spec2 = FlashSpec.H Then
+                    'PH, PS, PV {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, S, Vs}
+                    result = Flash_PH(mixmolefrac, val1, val2, initialestimate, pp, useestimates, initialKval)
+                    With calcresult
+                        .VaporPhaseMoleAmounts = New List(Of Double)(DirectCast(result(3), Double()).MultiplyConstY(Convert.ToDouble(result(1))))
+                        .LiquidPhase1MoleAmounts = New List(Of Double)(DirectCast(result(2), Double()).MultiplyConstY(Convert.ToDouble(result(0))))
+                        .LiquidPhase2MoleAmounts = New List(Of Double)(DirectCast(result(8), Double()).MultiplyConstY(Convert.ToDouble(result(7))))
+                        .SolidPhaseMoleAmounts = New List(Of Double)(DirectCast(result(10), Double()).MultiplyConstY(Convert.ToDouble(result(9))))
+                        .CalculatedTemperature = Convert.ToDouble(result(4))
+                        .IterationsTaken = Convert.ToInt32(result(5))
+                    End With
+                ElseIf spec1 = FlashSpec.P And spec2 = FlashSpec.S Then
+                    'PH, PS, PV {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, S, Vs}
+                    result = Flash_PS(mixmolefrac, val1, val2, initialestimate, pp, useestimates, initialKval)
+                    With calcresult
+                        .VaporPhaseMoleAmounts = New List(Of Double)(DirectCast(result(3), Double()).MultiplyConstY(Convert.ToDouble(result(1))))
+                        .LiquidPhase1MoleAmounts = New List(Of Double)(DirectCast(result(2), Double()).MultiplyConstY(Convert.ToDouble(result(0))))
+                        .LiquidPhase2MoleAmounts = New List(Of Double)(DirectCast(result(8), Double()).MultiplyConstY(Convert.ToDouble(result(7))))
+                        .SolidPhaseMoleAmounts = New List(Of Double)(DirectCast(result(10), Double()).MultiplyConstY(Convert.ToDouble(result(9))))
+                        .CalculatedTemperature = Convert.ToDouble(result(4))
+                        .IterationsTaken = Convert.ToInt32(result(5))
+                    End With
+                ElseIf spec1 = FlashSpec.P And spec2 = FlashSpec.VAP Then
+                    'PH, PS, PV {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, S, Vs}
+                    result = Flash_PV(mixmolefrac, val1, val2, initialestimate, pp, useestimates, initialKval)
+                    With calcresult
+                        .VaporPhaseMoleAmounts = New List(Of Double)(DirectCast(result(3), Double()).MultiplyConstY(Convert.ToDouble(result(1))))
+                        .LiquidPhase1MoleAmounts = New List(Of Double)(DirectCast(result(2), Double()).MultiplyConstY(Convert.ToDouble(result(0))))
+                        .LiquidPhase2MoleAmounts = New List(Of Double)(DirectCast(result(8), Double()).MultiplyConstY(Convert.ToDouble(result(7))))
+                        .SolidPhaseMoleAmounts = New List(Of Double)(DirectCast(result(10), Double()).MultiplyConstY(Convert.ToDouble(result(9))))
+                        .CalculatedTemperature = Convert.ToDouble(result(4))
+                        .IterationsTaken = Convert.ToInt32(result(5))
+                    End With
+                ElseIf spec1 = FlashSpec.T And spec2 = FlashSpec.VAP Then
+                    'TV {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, S, Vs}
+                    result = Flash_TV(mixmolefrac, val1, val2, initialestimate, pp, useestimates, initialKval)
+                    With calcresult
+                        .VaporPhaseMoleAmounts = New List(Of Double)(DirectCast(result(3), Double()).MultiplyConstY(Convert.ToDouble(result(1))))
+                        .LiquidPhase1MoleAmounts = New List(Of Double)(DirectCast(result(2), Double()).MultiplyConstY(Convert.ToDouble(result(0))))
+                        .LiquidPhase2MoleAmounts = New List(Of Double)(DirectCast(result(8), Double()).MultiplyConstY(Convert.ToDouble(result(7))))
+                        .SolidPhaseMoleAmounts = New List(Of Double)(DirectCast(result(10), Double()).MultiplyConstY(Convert.ToDouble(result(9))))
+                        .CalculatedPressure = Convert.ToDouble(result(4))
+                        .IterationsTaken = Convert.ToInt32(result(5))
+                    End With
+                ElseIf spec1 = FlashSpec.P And spec2 = FlashSpec.SF Then
+                    'PH, PS, PV {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, S, Vs}
+                    result = Flash_PSF(mixmolefrac, val1, val2, initialestimate, pp, useestimates, initialKval)
+                    With calcresult
+                        .VaporPhaseMoleAmounts = New List(Of Double)(DirectCast(result(3), Double()).MultiplyConstY(Convert.ToDouble(result(1))))
+                        .LiquidPhase1MoleAmounts = New List(Of Double)(DirectCast(result(2), Double()).MultiplyConstY(Convert.ToDouble(result(0))))
+                        .LiquidPhase2MoleAmounts = New List(Of Double)(DirectCast(result(8), Double()).MultiplyConstY(Convert.ToDouble(result(7))))
+                        .SolidPhaseMoleAmounts = New List(Of Double)(DirectCast(result(10), Double()).MultiplyConstY(Convert.ToDouble(result(9))))
+                        .CalculatedTemperature = Convert.ToDouble(result(4))
+                        .IterationsTaken = Convert.ToInt32(result(5))
+                    End With
+                ElseIf spec1 = FlashSpec.T And spec2 = FlashSpec.SF Then
+                    Throw New NotImplementedException("Flash specification set not supported.")
+                Else
+                    Throw New NotImplementedException("Flash specification set not supported.")
+                End If
+
+                d2 = Date.Now
+
+                calcresult.TimeTaken = (d2 - d1)
+
+            Catch ex As Exception
+
+                calcresult.ResultException = ex
+
+            End Try
+
+            Return calcresult
+
+        End Function
+
+#Region "Generic Functions"
+
         Public Overridable Function Flash_PSF(ByVal Vz As Double(), ByVal P As Double, ByVal V As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
             Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashPSFError"))
             Return Nothing
@@ -58,7 +211,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         Public MustOverride Function Flash_TV(ByVal Vz As Double(), ByVal T As Double, ByVal V As Double, ByVal Pref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
+#End Region
 
+#Region "Auxiliary Functions"
 
         Public Function BubbleTemperature_LLE(ByVal Vz As Double(), ByVal Vx1est As Double(), ByVal Vx2est As Double(), ByVal P As Double, ByVal Tmin As Double, ByVal Tmax As Double, ByVal PP As PropertyPackages.PropertyPackage) As Double
 
@@ -145,6 +300,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Return _P
 
         End Function
+
+#End Region
+
+#Region "Liquid Phase Stability Check"
 
         Public Function StabTest(ByVal T As Double, ByVal P As Double, ByVal Vz As Array, ByVal pp As PropertyPackage, Optional ByVal VzArray(,) As Double = Nothing, Optional ByVal searchseverity As Integer = 0)
 
@@ -568,6 +727,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         End Function
 
+#End Region
+
+#Region "Phase Type Verification"
+
         ''' <summary>
         ''' This algorithm returns the state of a fluid given its composition and system conditions.
         ''' </summary>
@@ -716,6 +879,251 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Private Shared Function PIPressureF(x As Double, otherargs As Object)
 
             Return 1 - CalcPIP(otherargs(0), x, otherargs(1), otherargs(2), otherargs(3))(0)
+
+        End Function
+
+#End Region
+
+    End Class
+
+    ''' <summary>
+    ''' Class to store flash calculation results.
+    ''' </summary>
+    ''' <remarks></remarks>
+    <System.Serializable> Public Class FlashCalculationResult
+
+        ''' <summary>
+        ''' Defines the base mole amount for determination of phase/compound fractions. Default is 1.
+        ''' </summary>
+        ''' <value></value>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        Public Property BaseMoleAmount As Double = 1.0#
+        Public Property MixtureMoleAmounts As New List(Of Double)
+        Public Property VaporPhaseMoleAmounts As New List(Of Double)
+        Public Property LiquidPhase1MoleAmounts As New List(Of Double)
+        Public Property LiquidPhase2MoleAmounts As New List(Of Double)
+        Public Property SolidPhaseMoleAmounts As New List(Of Double)
+        Public Property CalculatedTemperature As Nullable(Of Double)
+        Public Property CalculatedPressure As Nullable(Of Double)
+        Public Property CompoundProperties As List(Of ConstantProperties)
+        Public Property FlashAlgorithmType As String = ""
+        Public Property FlashSpecification1 As PropertyPackages.FlashSpec
+        Public Property FlashSpecification2 As PropertyPackages.FlashSpec
+        Public Property ResultException As Exception
+        Public Property IterationsTaken As Integer = 0
+        Public Property TimeTaken As New TimeSpan()
+
+        Sub New()
+
+        End Sub
+
+        Sub New(constprop As List(Of ConstantProperties))
+
+            CompoundProperties = constprop
+
+        End Sub
+
+        Public Function GetVaporPhaseMoleFractions() As Double()
+
+            Dim collection As List(Of Double) = VaporPhaseMoleAmounts
+
+            Dim total As Double = collection.ToArray.SumY
+
+            Dim molefracs As New List(Of Double)
+
+            For Each value As Double In collection
+                molefracs.Add(value / total)
+            Next
+
+            Return molefracs.ToArray
+
+        End Function
+
+        Public Function GetLiquidPhase1MoleFractions() As Double()
+
+            Dim collection As List(Of Double) = LiquidPhase1MoleAmounts
+
+            Dim total As Double = collection.ToArray.SumY
+
+            Dim molefracs As New List(Of Double)
+
+            For Each value As Double In collection
+                molefracs.Add(value / total)
+            Next
+
+            Return molefracs.ToArray
+
+        End Function
+
+        Public Function GetLiquidPhase2MoleFractions() As Double()
+
+            Dim collection As List(Of Double) = LiquidPhase2MoleAmounts
+
+            Dim total As Double = collection.ToArray.SumY
+
+            Dim molefracs As New List(Of Double)
+
+            For Each value As Double In collection
+                molefracs.Add(value / total)
+            Next
+
+            Return molefracs.ToArray
+
+        End Function
+
+        Public Function GetSolidPhaseMoleFractions() As Double()
+
+            Dim collection As List(Of Double) = SolidPhaseMoleAmounts
+
+            Dim total As Double = collection.ToArray.SumY
+
+            Dim molefracs As New List(Of Double)
+
+            For Each value As Double In collection
+                molefracs.Add(value / total)
+            Next
+
+            Return molefracs.ToArray
+
+        End Function
+
+        Public Function GetVaporPhaseMoleFraction() As Double
+
+            Dim collection As List(Of Double) = VaporPhaseMoleAmounts
+
+            Return collection.ToArray.SumY
+
+        End Function
+
+        Public Function GetLiquidPhase1MoleFraction() As Double
+
+            Dim collection As List(Of Double) = LiquidPhase1MoleAmounts
+
+            Return collection.ToArray.SumY
+
+        End Function
+
+        Public Function GetLiquidPhase2MoleFraction() As Double
+
+            Dim collection As List(Of Double) = LiquidPhase2MoleAmounts
+
+            Return collection.ToArray.SumY
+
+        End Function
+
+        Public Function GetSolidPhaseMoleFraction() As Double
+
+            Dim collection As List(Of Double) = SolidPhaseMoleAmounts
+
+            Return collection.ToArray.SumY
+
+        End Function
+
+        Public Function GetVaporPhaseMassFractions() As Double()
+
+            Return ConvertToMassFractions(GetVaporPhaseMoleFractions())
+
+        End Function
+
+        Public Function GetLiquidPhase1MassFractions() As Double()
+
+            Return ConvertToMassFractions(GetLiquidPhase1MoleFractions())
+
+        End Function
+
+        Public Function GetLiquidPhase2MassFractions() As Double()
+
+            Return ConvertToMassFractions(GetLiquidPhase2MoleFractions())
+
+        End Function
+
+        Public Function GetSolidPhase1MassFractions() As Double()
+
+            Return ConvertToMassFractions(GetSolidPhaseMoleFractions())
+
+        End Function
+
+        Private Function ConvertToMassFractions(ByVal Vz As Double()) As Double()
+
+            Dim Vwe(UBound(Vz)) As Double
+            Dim mol_x_mm As Double = 0
+            Dim i As Integer = 0
+            For Each sub1 As ConstantProperties In CompoundProperties
+                mol_x_mm += Vz(i) * sub1.Molar_Weight
+                i += 1
+            Next
+
+            i = 0
+            For Each sub1 As ConstantProperties In CompoundProperties
+                If mol_x_mm <> 0 Then
+                    Vwe(i) = Vz(i) * sub1.Molar_Weight / mol_x_mm
+                Else
+                    Vwe(i) = 0.0#
+                End If
+                i += 1
+            Next
+
+            Return Vwe
+
+        End Function
+
+        Private Function CalcMolarWeight(ByVal Vz() As Double) As Double
+
+            Dim val As Double
+
+            Dim i As Integer = 0
+
+            For Each subst As ConstantProperties In CompoundProperties
+                val += Vz(i) * subst.Molar_Weight
+                i += 1
+            Next
+
+            Return val
+
+        End Function
+
+        Public Function GetVaporPhaseMassFraction() As Double
+
+            Dim mw, vw As Double
+
+            mw = MixtureMoleAmounts.Sum * CalcMolarWeight(MixtureMoleAmounts.ToArray.MultiplyConstY(1 / BaseMoleAmount))
+            vw = VaporPhaseMoleAmounts.Sum * CalcMolarWeight(GetVaporPhaseMoleFractions())
+
+            Return vw / mw
+
+        End Function
+
+        Public Function GetLiquidPhase1MassFraction() As Double
+
+            Dim mw, l1w As Double
+
+            mw = MixtureMoleAmounts.Sum * CalcMolarWeight(MixtureMoleAmounts.ToArray.MultiplyConstY(1 / BaseMoleAmount))
+            l1w = LiquidPhase1MoleAmounts.Sum * CalcMolarWeight(GetLiquidPhase1MoleFractions())
+
+            Return l1w / mw
+
+        End Function
+
+        Public Function GetLiquidPhase2MassFraction() As Double
+
+            Dim mw, l2w As Double
+
+            mw = MixtureMoleAmounts.Sum * CalcMolarWeight(MixtureMoleAmounts.ToArray.MultiplyConstY(1 / BaseMoleAmount))
+            l2w = LiquidPhase2MoleAmounts.Sum * CalcMolarWeight(GetLiquidPhase2MoleFractions())
+
+            Return l2w / mw
+
+        End Function
+
+        Public Function GetSolidPhaseMassFraction() As Double
+
+            Dim mw, sw As Double
+
+            mw = MixtureMoleAmounts.Sum * CalcMolarWeight(MixtureMoleAmounts.ToArray.MultiplyConstY(1 / BaseMoleAmount))
+            sw = SolidPhaseMoleAmounts.Sum * CalcMolarWeight(GetSolidPhaseMoleFractions())
+
+            Return sw / mw
 
         End Function
 

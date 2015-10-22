@@ -32,6 +32,7 @@ Imports System.Xml.Serialization
 Imports System.Runtime.Serialization.Formatters
 Imports System.Threading.Tasks
 Imports DWSIM.DWSIM.MathEx
+Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
 Namespace DWSIM.SimulationObjects.PropertyPackages
 
@@ -58,13 +59,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
     Public Enum FlashSpec
 
-        P
-        T
-        S
-        H
-        V
-        U
-        VAP
+        P = 0
+        T = 1
+        S = 2
+        H = 3
+        V = 4
+        U = 5
+        VAP = 6
+        SF = 7
 
     End Enum
 
@@ -448,7 +450,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
                             constprops.Add(su.ConstantProperties)
                         Next
-                       If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then
+                        If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then
                             Return New Auxiliary.FlashAlgorithms.NestedLoopsSLE With {.CompoundProperties = constprops}
                         Else
                             If _nlsle Is Nothing Then _nlsle = New Auxiliary.FlashAlgorithms.NestedLoopsSLE
@@ -5132,6 +5134,18 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 #End Region
 
 #Region "   Commmon Functions"
+
+        Public Function DW_GetConstantProperties() As List(Of ConstantProperties)
+
+            Dim constprops As New List(Of ConstantProperties)
+
+            For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
+                constprops.Add(su.ConstantProperties)
+            Next
+
+            Return constprops
+
+        End Function
 
         Public Overloads Sub DW_CalcKvalue()
 
@@ -11242,7 +11256,7 @@ Final3:
                                                                         New XAttribute("Value", kvp2.Value.kij.ToString(ci))))
                                     End If
                                 End If
-                             Next
+                            Next
                         Next
 
                         .Add(New XElement("InteractionParameters_NRTL"))
