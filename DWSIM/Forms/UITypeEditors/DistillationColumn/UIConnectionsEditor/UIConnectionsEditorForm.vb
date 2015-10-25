@@ -437,8 +437,8 @@ Public Class UIConnectionsEditorForm
 
     Private Sub dgv1_CellValueChanged(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv1.CellValueChanged
         If loaded Then
-            Dim id As String = dgv1.Rows(e.RowIndex).Cells(3).Value
-            Dim value As String = dgv1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
+            Dim id As String = Convert.ToString(dgv1.Rows(e.RowIndex).Cells(3).Value)
+            Dim value As String = Convert.ToString(dgv1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value)
             Select Case e.ColumnIndex
                 Case 2
                     If value <> "" Then
@@ -483,7 +483,7 @@ Public Class UIConnectionsEditorForm
                     End If
                 Case 1
                     If value <> "" Then
-                        Dim st = (From st2 As Stage In dc.Stages Select st2 Where st2.Name = dgv1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value).SingleOrDefault
+                        Dim st = (From st2 As Stage In dc.Stages Select st2 Where st2.Name = Convert.ToString(dgv1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value)).SingleOrDefault
                         If dc.MaterialStreams.ContainsKey(id) Then dc.MaterialStreams(id).AssociatedStage = st.ID
                     End If
             End Select
@@ -494,8 +494,8 @@ Public Class UIConnectionsEditorForm
 
     Private Sub dgv2_CellValueChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv2.CellValueChanged
         If loaded Then
-            Dim id As String = dgv2.Rows(e.RowIndex).Cells(5).Value
-            Dim value As String = dgv2.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
+            Dim id As String = Convert.ToString(dgv2.Rows(e.RowIndex).Cells(5).Value)
+            Dim value As String = Convert.ToString(dgv2.Rows(e.RowIndex).Cells(e.ColumnIndex).Value)
             Select Case e.ColumnIndex
                 Case 2
                     If value <> "" Then
@@ -540,17 +540,17 @@ Public Class UIConnectionsEditorForm
                     End If
                 Case 1
                     If value <> "" Then
-                        Dim st = (From st2 As Stage In dc.Stages Select st2 Where st2.Name = dgv2.Rows(e.RowIndex).Cells(e.ColumnIndex).Value).SingleOrDefault
+                        Dim st = (From st2 As Stage In dc.Stages Select st2 Where st2.Name = Convert.ToString(dgv2.Rows(e.RowIndex).Cells(e.ColumnIndex).Value)).SingleOrDefault
                         If dc.MaterialStreams.ContainsKey(id) Then dc.MaterialStreams(id).AssociatedStage = st.ID
                     End If
                 Case 3
                     If dgv2.Rows(e.RowIndex).Cells(e.ColumnIndex).Value = "L" Then
-                        dc.MaterialStreams(id).StreamPhase = StreamInformation.Phase.L
+                        If dc.MaterialStreams.ContainsKey(id) Then dc.MaterialStreams(id).StreamPhase = StreamInformation.Phase.L
                     Else
-                        dc.MaterialStreams(id).StreamPhase = StreamInformation.Phase.V
+                        If dc.MaterialStreams.ContainsKey(id) Then dc.MaterialStreams(id).StreamPhase = StreamInformation.Phase.V
                     End If
                 Case 4
-                    dc.MaterialStreams(id).FlowRate.Value = cvt.ConverterParaSI(form.Options.SelectedUnitSystem.spmp_molarflow, value)
+                    If dc.MaterialStreams.ContainsKey(id) Then dc.MaterialStreams(id).FlowRate.Value = cvt.ConverterParaSI(form.Options.SelectedUnitSystem.spmp_molarflow, value)
             End Select
             dc.CheckConnPos()
             form.FormSurface.FlowsheetDesignSurface.Invalidate()
@@ -559,8 +559,8 @@ Public Class UIConnectionsEditorForm
 
     Private Sub dgv3_CellValueChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv3.CellValueChanged
         If loaded Then
-            Dim id As String = dgv3.Rows(e.RowIndex).Cells(2).Value
-            Dim value As String = dgv3.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
+            Dim id As String = Convert.ToString(dgv3.Rows(e.RowIndex).Cells(2).Value)
+            Dim value As String = Convert.ToString(dgv3.Rows(e.RowIndex).Cells(e.ColumnIndex).Value)
             Select Case e.ColumnIndex
                 Case 1
                     If value <> "" Then
@@ -636,8 +636,8 @@ Public Class UIConnectionsEditorForm
 
     Private Sub dgv4_CellValueChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgv4.CellValueChanged
         If loaded Then
-            Dim id As String = dgv4.Rows(e.RowIndex).Cells(2).Value
-            Dim value As String = dgv4.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
+            Dim id As String = Convert.ToString(dgv4.Rows(e.RowIndex).Cells(2).Value)
+            Dim value As String = Convert.ToString(dgv4.Rows(e.RowIndex).Cells(e.ColumnIndex).Value)
             Select Case e.ColumnIndex
                 Case 1
                     If value <> "" Then
