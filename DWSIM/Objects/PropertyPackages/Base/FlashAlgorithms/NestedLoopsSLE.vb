@@ -276,11 +276,11 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
 
             Dim Vx(n), Vs(n), MaxAct(n), MaxX(n), Tf(n), Hf(n), ActCoeff(n), VnL(n), VnS(n), Vp(n) As Double
             Dim L, L_old, SF, SLP As Double
+            Dim cpl(n), cps(n), dCp(n) As Double
+            Dim Vn(n) As String
+            Dim constprop As ConstantProperties
 
             Vx = Vz.Clone 'assuming initially only liquids exist
-
-            Tf = PP.RET_VTF 'Fusion temperature
-            Hf = PP.RET_VHF 'Enthalpy of fusion
 
             If Vz.MaxY = 1 Then 'only a single component
                 ecount = 0
@@ -305,9 +305,20 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                 Next
             End If
 
+            Tf = PP.RET_VTF 'Fusion temperature
+            Hf = PP.RET_VHF 'Enthalpy of fusion
+
+            Vn = PP.RET_VNAMES()
+            For i = 0 To n
+                constprop = PP.CurrentMaterialStream.Fases(0).Componentes(Vn(i)).ConstantProperties
+                cpl(i) = PP.AUX_LIQ_Cpi(constprop, Tf(i))
+                cps(i) = PP.AUX_SolidHeatCapacity(constprop, Tf(i))
+                dCp(i) = (cpl(i) - cps(i)) * constprop.Molar_Weight
+            Next
+
             'Calculate max activities for solubility of solids
             For i = 0 To n
-                MaxAct(i) = Exp(-Hf(i) * 1000 / 8.31446 / T * (1 - T / Tf(i)))
+                MaxAct(i) = Exp(-Hf(i) * 1000 / 8.31446 / T * (1 - T / Tf(i)) - dCp(i) / 8.31446 * ((T - Tf(i)) / T + Log(Tf(i) / T)))
                 Vp(i) = PP.AUX_PVAPi(i, T)
             Next
 
@@ -317,14 +328,6 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
 
                 ActCoeff = PP.DW_CalcFugCoeff(Vx, T, P, State.Liquid).MultiplyConstY(P).DivideY(Vp)
                 MaxX = MaxAct.DivideY(ActCoeff)
-
-                If MaxX.SumY <= 1 Then
-                    'below total freezing point, only solids left
-                    Vx = PP.RET_NullVector
-                    Vs = Vz.Clone
-                    L = 0
-                    Exit Do
-                End If
 
                 VnL = PP.RET_NullVector
                 VnS = PP.RET_NullVector
@@ -358,8 +361,17 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     End If
                     VnS(i) = Vz(i) - VnL(i)
                 Next
-                Vx = VnL.NormalizeY
-                Vs = VnS.NormalizeY
+                If L > 0 Then
+                    Vx = VnL.NormalizeY
+                    Vs = VnS.NormalizeY
+                Else
+                    'only solid remaining
+                    Vx = PP.RET_NullVector
+                    Vs = Vz.Clone
+                    Exit Do
+                End If
+
+
             Loop Until Abs(L - L_old) < MaxError
 
 out:        d2 = Date.Now
