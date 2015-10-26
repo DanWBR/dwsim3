@@ -276,7 +276,7 @@ Module Extensions
         If My.Settings.UseSIMDExtensions Then
             Return Yeppp.Core.Min_V64f_S64f(vector, 0, vector.Length)
         Else
-            Return Double.Parse(DWSIM.MathEx.Common.Min(vector))
+            Return Convert.ToDouble(DWSIM.MathEx.Common.Min(vector))
         End If
 
     End Function
@@ -292,7 +292,7 @@ Module Extensions
         If My.Settings.UseSIMDExtensions Then
             Return Yeppp.Core.Max_V64f_S64f(vector, 0, vector.Length)
         Else
-            Return Double.Parse(DWSIM.MathEx.Common.Max(vector))
+            Return Convert.ToDouble(DWSIM.MathEx.Common.Max(vector))
         End If
 
     End Function
