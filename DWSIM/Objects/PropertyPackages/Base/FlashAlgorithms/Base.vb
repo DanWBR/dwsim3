@@ -1128,5 +1128,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         End Function
 
     End Class
-
+    <System.Serializable()> Public Class FlashResult
+        Public P, T, H, S As Double 'pressure, temperature, enthalpy, entropy
+        Public LF, L1F, L2F, VF, SF As Double 'molar fraction of phases
+        Public Vx(), Vx1(), Vx2(), Vy(), Vs() As Double 'molar fractions in each phase
+        Public Counter As Integer 'number of iterations
+        Public Err As Double 'final error
+        Public dT As TimeSpan
+    End Class
 End Namespace

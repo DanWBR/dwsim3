@@ -3207,7 +3207,8 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     Dim x, y1, y2, Test1, Test2 As Double
                     Dim tmp1 As Object = Nothing, tmp2 As Object = Nothing
 
-                    If VLE And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
+                    'If VLE And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE And Not Me.FlashAlgorithm = FlashMethod.NestedLoopsSLE_SS Then
+                    If VLE Then
                         i = 0
                         Do
                             If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "VLE (" & i + 1 & "/41)")
@@ -3325,10 +3326,16 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                         Do
                             If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "SLE 2 (" & i + 1 & "/42)")
                             Try
-                                tmp1 = nlsle.Flash_PSF(New Double() {i * dx, 1 - i * dx}, P, L2, 0, Me)
+                                If i = 0 Then
+                                    x = 0.001
+                                ElseIf i * dx = 1 Then
+                                    x = 0.999
+                                Else
+                                    x = i * dx
+                                End If
+                                tmp1 = nlsle.Flash_PSF(New Double() {x, 1 - x}, P, L2, 0, Me)
                                 y2 = tmp1(4)
                                 Test2 = y2
-                                x = i * dx
                                 pxs2.Add(x)
                                 pys2.Add(y2)
                             Catch ex As Exception
