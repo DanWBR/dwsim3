@@ -108,10 +108,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         .LiquidPhase2MoleAmounts = New List(Of Double)(DirectCast(result(6), Double()).MultiplyConstY(Convert.ToDouble(result(5))))
                         .SolidPhaseMoleAmounts = New List(Of Double)(DirectCast(result(8), Double()).MultiplyConstY(Convert.ToDouble(result(7))))
                         .IterationsTaken = Convert.ToInt32(result(4))
-                        .CalculatedEnthalpy = CalculateMixtureEnthalpy(val1, val2, .GetLiquidPhase1MoleFraction, .GetLiquidPhase2MoleFraction, .GetVaporPhaseMoleFraction, .GetSolidPhaseMoleFraction,
+                        .CalculatedEnthalpy = CalculateMixtureEnthalpy(val2, val1, .GetLiquidPhase1MoleFraction, .GetLiquidPhase2MoleFraction, .GetVaporPhaseMoleFraction, .GetSolidPhaseMoleFraction,
                                                                        .GetLiquidPhase1MoleFractions, .GetLiquidPhase2MoleFractions, .GetVaporPhaseMoleFractions, .GetSolidPhaseMoleFractions,
                                                                        pp)
-                        .CalculatedEntropy = CalculateMixtureEntropy(val1, val2, .GetLiquidPhase1MoleFraction, .GetLiquidPhase2MoleFraction, .GetVaporPhaseMoleFraction, .GetSolidPhaseMoleFraction,
+                        .CalculatedEntropy = CalculateMixtureEntropy(val2, val1, .GetLiquidPhase1MoleFraction, .GetLiquidPhase2MoleFraction, .GetVaporPhaseMoleFraction, .GetSolidPhaseMoleFraction,
                                                                        .GetLiquidPhase1MoleFractions, .GetLiquidPhase2MoleFractions, .GetVaporPhaseMoleFractions, .GetSolidPhaseMoleFractions,
                                                                        pp)
                     End With
@@ -124,10 +124,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         .LiquidPhase2MoleAmounts = New List(Of Double)(DirectCast(result(6), Double()).MultiplyConstY(Convert.ToDouble(result(5))))
                         .SolidPhaseMoleAmounts = New List(Of Double)(DirectCast(result(8), Double()).MultiplyConstY(Convert.ToDouble(result(7))))
                         .IterationsTaken = Convert.ToInt32(result(4))
-                        .CalculatedEnthalpy = CalculateMixtureEnthalpy(val2, val1, .GetLiquidPhase1MoleFraction, .GetLiquidPhase2MoleFraction, .GetVaporPhaseMoleFraction, .GetSolidPhaseMoleFraction,
+                        .CalculatedEnthalpy = CalculateMixtureEnthalpy(val1, val2, .GetLiquidPhase1MoleFraction, .GetLiquidPhase2MoleFraction, .GetVaporPhaseMoleFraction, .GetSolidPhaseMoleFraction,
                                                         .GetLiquidPhase1MoleFractions, .GetLiquidPhase2MoleFractions, .GetVaporPhaseMoleFractions, .GetSolidPhaseMoleFractions,
                                                         pp)
-                        .CalculatedEntropy = CalculateMixtureEntropy(val2, val1, .GetLiquidPhase1MoleFraction, .GetLiquidPhase2MoleFraction, .GetVaporPhaseMoleFraction, .GetSolidPhaseMoleFraction,
+                        .CalculatedEntropy = CalculateMixtureEntropy(val1, val2, .GetLiquidPhase1MoleFraction, .GetLiquidPhase2MoleFraction, .GetVaporPhaseMoleFraction, .GetSolidPhaseMoleFraction,
                                                                        .GetLiquidPhase1MoleFractions, .GetLiquidPhase2MoleFractions, .GetVaporPhaseMoleFractions, .GetSolidPhaseMoleFractions,
                                                                        pp)
                     End With
@@ -230,7 +230,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         End Function
 
-
         Function CalculateMixtureEnthalpy(ByVal T As Double, ByVal P As Double, ByVal L As Double, ByVal L2 As Double, ByVal V As Double, ByVal S As Double,
                                           ByVal Vx As Double(), ByVal Vx2 As Double(), ByVal Vy As Double(), ByVal Vs As Double(), ByVal pp As PropertyPackage) As Double
 
@@ -245,15 +244,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             Dim mmg, mml, mml2, mms As Double
 
-            If V > 0.0# Then _Hv = pp.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
-            If L > 0.0# Then _Hl = pp.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
-            If L2 > 0.0# Then _Hl2 = pp.DW_CalcEnthalpy(Vx2, T, P, State.Liquid)
-            If S > 0.0# Then _Hs = pp.DW_CalcSolidEnthalpy(T, Vs, pp.DW_GetConstantProperties)
+            If V > 0.0# And Vy.Sum = 1.0# Then _Hv = pp.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
+            If L > 0.0# And Vx.Sum = 1.0# Then _Hl = pp.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
+            If L2 > 0.0# And Vx2.Sum = 1.0# Then _Hl2 = pp.DW_CalcEnthalpy(Vx2, T, P, State.Liquid)
+            If S > 0.0# And Vs.Sum = 1.0# Then _Hs = pp.DW_CalcSolidEnthalpy(T, Vs, pp.DW_GetConstantProperties)
 
-            mmg = pp.AUX_MMM(Vy)
-            mml = pp.AUX_MMM(Vx)
-            mml2 = pp.AUX_MMM(Vx2)
-            mms = pp.AUX_MMM(Vs)
+            If V > 0.0# And Vy.Sum = 1.0# Then mmg = pp.AUX_MMM(Vy)
+            If L > 0.0# And Vx.Sum = 1.0# Then mml = pp.AUX_MMM(Vx)
+            If L2 > 0.0# And Vx2.Sum = 1.0# Then mml2 = pp.AUX_MMM(Vx2)
+            If S > 0.0# And Vs.Sum = 1.0# Then mms = pp.AUX_MMM(Vs)
 
             Return (mmg * V / (mmg * V + mml * L + mml2 * L2 + mms * S)) * _Hv +
                 (mml * L / (mmg * V + mml * L + mml2 * L2 + mms * S)) * _Hl +
@@ -275,20 +274,19 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             Dim mmg, mml, mml2, mms As Double
 
-            If V > 0.0# Then _Sv = pp.DW_CalcEntropy(Vy, T, P, State.Vapor)
-            If L > 0.0# Then _Sl = pp.DW_CalcEntropy(Vx, T, P, State.Liquid)
-            If L2 > 0.0# Then _Sl2 = pp.DW_CalcEntropy(Vx2, T, P, State.Liquid)
+            If V > 0.0# And Vy.Sum = 1.0# Then _Sv = pp.DW_CalcEntropy(Vy, T, P, State.Vapor)
+            If L > 0.0# And Vx.Sum = 1.0# Then _Sl = pp.DW_CalcEntropy(Vx, T, P, State.Liquid)
+            If L2 > 0.0# And Vx2.Sum = 1.0# Then _Sl2 = pp.DW_CalcEntropy(Vx2, T, P, State.Liquid)
 
-            mmg = pp.AUX_MMM(Vy)
-            mml = pp.AUX_MMM(Vx)
-            mml2 = pp.AUX_MMM(Vx2)
+            If V > 0.0# And Vy.Sum = 1.0# Then mmg = pp.AUX_MMM(Vy)
+            If L > 0.0# And Vx.Sum = 1.0# Then mml = pp.AUX_MMM(Vx)
+            If L2 > 0.0# And Vx2.Sum = 1.0# Then mml2 = pp.AUX_MMM(Vx2)
 
             Return (mmg * V / (mmg * V + mml * L + mml2 * L2 + mms * S)) * _Sv +
                 (mml * L / (mmg * V + mml * L + mml2 * L2 + mms * S)) * _Sl +
                 (mml2 * L2 / (mmg * V + mml * L + mml2 * L2 + mms * S)) * _Sl2
 
         End Function
-
 
 #Region "Generic Functions"
 
