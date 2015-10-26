@@ -560,8 +560,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Pmin = 101325
             Tmin = 0.3 * TCR
 
-            dP = (PCR - Pmin) / 50
-            dT = (TCR - Tmin) / 50
+            dP = (PCR - Pmin) / 100
+            dT = (TCR - Tmin) / 100
 
             Dim beta As Double = 10
 
@@ -597,6 +597,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     If beta < 20 Then
                         Try
                             tmp2 = Me.FlashBase.Flash_TV(Me.RET_VMOL(Fase.Mixture), T, 0, PB(i - 1), Me, True, KI)
+                            If Abs(tmp2(4) - PB(i - 1)) > 200000 Then Exit Do
                             TVB.Add(T)
                             PB.Add(tmp2(4))
                             P = PB(i)
@@ -608,7 +609,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                         Finally
                             If Math.Abs(T - TCR) / TCR < 0.01 And Math.Abs(P - PCR) / PCR < 0.02 Then
-                                T = T + dT * 0.5
+                                T = T + dT * 0.05
                             Else
                                 T = T + dT
                             End If
@@ -616,6 +617,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     Else
                         Try
                             tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, 0, TVB(i - 1), Me, True, KI)
+                            If Abs(tmp2(4) - TVB(i - 1)) > 20 Then Exit Do
                             TVB.Add(tmp2(4))
                             PB.Add(P)
                             T = TVB(i)
@@ -627,7 +629,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                         Finally
                             If Math.Abs(T - TCR) / TCR < 0.01 And Math.Abs(P - PCR) / PCR < 0.01 Then
-                                P = P + dP * 0.1
+                                P = P + dP * 0.05
                             Else
                                 P = P + dP
                             End If
@@ -680,7 +682,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         Catch ex As Exception
                         Finally
                             If Math.Abs(T - TCR) / TCR < 0.01 And Math.Abs(P - PCR) / PCR < 0.01 Then
-                                P = P + dP * 0.1
+                                P = P + dP * 0.05
                             Else
                                 P = P + dP
                             End If
@@ -689,6 +691,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         If Abs(beta) < 2 Then
                             Try
                                 tmp2 = Me.FlashBase.Flash_TV(Vzwf, T, 1, POWF(i - 1), Me, True, KI)
+                                If Abs(tmp2(4) - POWF(i - 1)) > 200000 Then Exit Do
                                 TOWF.Add(T)
                                 POWF.Add(tmp2(4))
                                 P = POWF(i)
@@ -698,15 +701,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                 KI = tmp2(6)
                             Catch ex As Exception
                             Finally
-                                If TOWF(i) - TOWF(i - 1) <= 0 Then
+                                If TOWF(i - 1) - TOWF(i - 2) <= 0 Then
                                     If Math.Abs(T - TCR) / TCR < 0.02 And Math.Abs(P - PCR) / PCR < 0.02 Then
-                                        T = T - dT * 0.1
+                                        T = T - dT * 0.05
                                     Else
                                         T = T - dT
                                     End If
                                 Else
                                     If Math.Abs(T - TCR) / TCR < 0.02 And Math.Abs(P - PCR) / PCR < 0.02 Then
-                                        T = T + dT * 0.1
+                                        T = T + dT * 0.05
                                     Else
                                         T = T + dT
                                     End If
@@ -715,6 +718,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         Else
                             Try
                                 tmp2 = Me.FlashBase.Flash_PV(Vzwf, P, 1, TOWF(i - 1), Me, False, KI)
+                                If Abs(tmp2(4) - TOWF(i - 1)) > 20 Then Exit Do
                                 TOWF.Add(tmp2(4))
                                 POWF.Add(P)
                                 T = TOWF(i)
@@ -725,7 +729,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Catch ex As Exception
                             Finally
                                 If Math.Abs(T - TCR) / TCR < 0.05 And Math.Abs(P - PCR) / PCR < 0.05 Then
-                                    P = P + dP * 0.25
+                                    P = P + dP * 0.05
                                 Else
                                     P = P + dP
                                 End If
@@ -769,7 +773,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     Catch ex As Exception
                     Finally
                         If Math.Abs(T - TCR) / TCR < 0.01 And Math.Abs(P - PCR) / PCR < 0.01 Then
-                            P = P + dP * 0.1
+                            P = P + dP * 0.05
                         Else
                             P = P + dP
                         End If
@@ -778,6 +782,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     If Abs(beta) < 2 Then
                         Try
                             tmp2 = Me.FlashBase.Flash_TV(Me.RET_VMOL(Fase.Mixture), T, 1, PO(i - 1), Me, True, KI)
+                            If Abs(tmp2(4) - PO(i - 1)) > 200000 Then Exit Do
                             TVD.Add(T)
                             PO.Add(tmp2(4))
                             P = PO(i)
@@ -787,9 +792,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             KI = tmp2(6)
                         Catch ex As Exception
                         Finally
-                            If TVD(i) - TVD(i - 1) <= 0 Then
+                            If TVD(i - 1) - TVD(i - 2) <= 0 Then
                                 If Math.Abs(T - TCR) / TCR < 0.02 And Math.Abs(P - PCR) / PCR < 0.02 Then
-                                    T = T - dT * 0.1
+                                    T = T - dT * 0.05
                                 Else
                                     T = T - dT
                                 End If
@@ -804,6 +809,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     Else
                         Try
                             tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, 1, TVD(i - 1), Me, False, KI)
+                            If Abs(tmp2(4) - TVD(i - 1)) > 20 Then Exit Do
                             TVD.Add(tmp2(4))
                             PO.Add(P)
                             T = TVD(i)
@@ -814,7 +820,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         Catch ex As Exception
                         Finally
                             If Math.Abs(T - TCR) / TCR < 0.05 And Math.Abs(P - PCR) / PCR < 0.05 Then
-                                P = P + dP * 0.25
+                                P = P + dP * 0.05
                             Else
                                 P = P + dP
                             End If
@@ -868,7 +874,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Catch ex As Exception
                             Finally
                                 If Math.Abs(T - TCR) / TCR < 0.1 And Math.Abs(P - PCR) / PCR < 0.2 Then
-                                    T = T + dT * 0.25
+                                    T = T + dT * 0.05
                                 Else
                                     T = T + dT
                                 End If
@@ -883,7 +889,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                             Catch ex As Exception
                             Finally
                                 If Math.Abs(T - TCR) / TCR < 0.1 And Math.Abs(P - PCR) / PCR < 0.1 Then
-                                    P = P + dP * 0.1
+                                    P = P + dP * 0.05
                                 Else
                                     P = P + dP
                                 End If
@@ -1062,8 +1068,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                  Dim Pmin, Tmin, dP, dT, T, P As Double
                                                  Pmin = 101325
                                                  Tmin = 0.3 * TCR
-                                                 dP = (PCR - Pmin) / 50
-                                                 dT = (TCR - Tmin) / 50
+                                                 dP = (PCR - Pmin) / 200
+                                                 dT = (TCR - Tmin) / 200
                                                  Dim tmp2 As Object
                                                  Dim KI(n) As Double
                                                  j = 0
@@ -1076,45 +1082,57 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                  T = Tmin
                                                  Do
                                                      If ii < 2 Then
-                                                         tmp2 = Me.FlashBase.Flash_PV(Vz, P, 0, 0, Me)
-                                                         TVB.Add(tmp2(4))
-                                                         PB.Add(P)
-                                                         T = TVB(ii)
-                                                         HB.Add(Me.DW_CalcEnthalpy(Vz, T, P, State.Liquid))
-                                                         SB.Add(Me.DW_CalcEntropy(Vz, T, P, State.Liquid))
-                                                         VB.Add(Me.m_pr.Z_PR(T, P, Vz, Me.RET_VKij, Me.RET_VTC, Me.RET_VPC, Me.RET_VW, "L") * 8.314 * T / P)
-                                                         P = P + dP
-                                                         KI = tmp2(6)
-                                                     Else
-                                                         If beta < 20 Then
-                                                             tmp2 = Me.FlashBase.Flash_TV(Vz, T, 0, PB(ii - 1), Me, True, KI)
-                                                             'tmp2 = BUBP_PR_M2(T, Vz, Me.RET_VKij, Me.RET_VTC, Me.RET_VPC, Me.RET_VTB, Me.RET_VW, KI, PB(ii - 1))
-                                                             TVB.Add(T)
-                                                             PB.Add(tmp2(4))
-                                                             P = PB(ii)
-                                                             HB.Add(Me.DW_CalcEnthalpy(Vz, T, P, State.Liquid))
-                                                             SB.Add(Me.DW_CalcEntropy(Vz, T, P, State.Liquid))
-                                                             VB.Add(Me.m_pr.Z_PR(T, P, Vz, Me.RET_VKij, Me.RET_VTC, Me.RET_VPC, Me.RET_VW, "L") * 8.314 * T / P)
-                                                             If Math.Abs(T - TCR) / TCR < 0.01 And Math.Abs(P - PCR) / PCR < 0.02 Then
-                                                                 T = T + dT * 0.5
-                                                             Else
-                                                                 T = T + dT
-                                                             End If
-                                                             KI = tmp2(6)
-                                                         Else
-                                                             tmp2 = Me.FlashBase.Flash_PV(Vz, P, 0, TVB(ii - 1), Me, True, KI)
+                                                         Try
+                                                             tmp2 = Me.FlashBase.Flash_PV(Vz, P, 0, 0, Me)
                                                              TVB.Add(tmp2(4))
                                                              PB.Add(P)
                                                              T = TVB(ii)
                                                              HB.Add(Me.DW_CalcEnthalpy(Vz, T, P, State.Liquid))
                                                              SB.Add(Me.DW_CalcEntropy(Vz, T, P, State.Liquid))
                                                              VB.Add(Me.m_pr.Z_PR(T, P, Vz, Me.RET_VKij, Me.RET_VTC, Me.RET_VPC, Me.RET_VW, "L") * 8.314 * T / P)
+                                                             KI = tmp2(6)
+                                                         Catch ex As Exception
+                                                         End Try
+                                                         P = P + dP
+                                                     Else
+                                                         If beta < 20 Then
+                                                             Try
+                                                                 tmp2 = Me.FlashBase.Flash_TV(Vz, T, 0, PB(ii - 1), Me, True, KI)
+                                                                 If Abs(tmp2(4) - PB(ii - 1)) > 200000 Then Exit Do
+                                                                 TVB.Add(T)
+                                                                 PB.Add(tmp2(4))
+                                                                 P = PB(ii)
+                                                                 HB.Add(Me.DW_CalcEnthalpy(Vz, T, P, State.Liquid))
+                                                                 SB.Add(Me.DW_CalcEntropy(Vz, T, P, State.Liquid))
+                                                                 VB.Add(Me.m_pr.Z_PR(T, P, Vz, Me.RET_VKij, Me.RET_VTC, Me.RET_VPC, Me.RET_VW, "L") * 8.314 * T / P)
+                                                                 KI = tmp2(6)
+                                                             Catch ex As Exception
+
+                                                             End Try
+                                                             If Math.Abs(T - TCR) / TCR < 0.01 And Math.Abs(P - PCR) / PCR < 0.02 Then
+                                                                 T = T + dT * 0.05
+                                                             Else
+                                                                 T = T + dT
+                                                             End If
+                                                         Else
+                                                             Try
+                                                                 tmp2 = Me.FlashBase.Flash_PV(Vz, P, 0, TVB(ii - 1), Me, True, KI)
+                                                                 If Abs(tmp2(4) - TVB(ii - 1)) > 20 Then Exit Do
+                                                                 TVB.Add(tmp2(4))
+                                                                 PB.Add(P)
+                                                                 T = TVB(ii)
+                                                                 HB.Add(Me.DW_CalcEnthalpy(Vz, T, P, State.Liquid))
+                                                                 SB.Add(Me.DW_CalcEntropy(Vz, T, P, State.Liquid))
+                                                                 VB.Add(Me.m_pr.Z_PR(T, P, Vz, Me.RET_VKij, Me.RET_VTC, Me.RET_VPC, Me.RET_VW, "L") * 8.314 * T / P)
+                                                                 KI = tmp2(6)
+                                                             Catch ex As Exception
+
+                                                             End Try
                                                              If Math.Abs(T - TCR) / TCR < 0.01 And Math.Abs(P - PCR) / PCR < 0.01 Then
-                                                                 P = P + dP * 0.1
+                                                                 P = P + dP * 0.05
                                                              Else
                                                                  P = P + dP
                                                              End If
-                                                             KI = tmp2(6)
                                                          End If
                                                          beta = (Math.Log(PB(ii) / 101325) - Math.Log(PB(ii - 1) / 101325)) / (Math.Log(TVB(ii)) - Math.Log(TVB(ii - 1)))
                                                      End If
@@ -1131,8 +1149,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                  Dim Pmin, Tmin, dP, dT, T, P As Double
                                                  Pmin = 101325
                                                  Tmin = 0.3 * TCR
-                                                 dP = (PCR - Pmin) / 50
-                                                 dT = (TCR - Tmin) / 50
+                                                 dP = (PCR - Pmin) / 200
+                                                 dT = (TCR - Tmin) / 200
                                                  Dim tmp2 As Object
                                                  Dim KI(n) As Double
                                                  j = 0
@@ -1159,41 +1177,49 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                          KI = tmp2(6)
                                                      Else
                                                          If Abs(beta) < 2 Then
-                                                             tmp2 = Me.FlashBase.Flash_TV(Vz, T, 1, PO(ii - 1), Me, True, KI)
-                                                             TVD.Add(T)
-                                                             PO.Add(tmp2(4))
-                                                             P = PO(ii)
-                                                             HO.Add(Me.DW_CalcEnthalpy(Vz, T, P, State.Vapor))
-                                                             SO.Add(Me.DW_CalcEntropy(Vz, T, P, State.Vapor))
-                                                             VO.Add(Me.m_pr.Z_PR(T, P, Vz, Me.RET_VKij, Me.RET_VTC, Me.RET_VPC, Me.RET_VW, "V") * 8.314 * T / P)
-                                                             If TVD(ii) - TVD(ii - 1) <= 0 Then
+                                                             Try
+                                                                 tmp2 = Me.FlashBase.Flash_TV(Vz, T, 1, PO(ii - 1), Me, True, KI)
+                                                                 If Abs(tmp2(4) - PO(ii - 1)) > 200000 Then Exit Do
+                                                                 TVD.Add(T)
+                                                                 PO.Add(tmp2(4))
+                                                                 P = PO(ii)
+                                                                 HO.Add(Me.DW_CalcEnthalpy(Vz, T, P, State.Vapor))
+                                                                 SO.Add(Me.DW_CalcEntropy(Vz, T, P, State.Vapor))
+                                                                 VO.Add(Me.m_pr.Z_PR(T, P, Vz, Me.RET_VKij, Me.RET_VTC, Me.RET_VPC, Me.RET_VW, "V") * 8.314 * T / P)
+                                                                 KI = tmp2(6)
+                                                             Catch ex As Exception
+                                                             End Try
+                                                             If TVD(ii - 1) - TVD(ii - 2) <= 0 Then
                                                                  If Math.Abs(T - TCR) / TCR < 0.02 And Math.Abs(P - PCR) / PCR < 0.02 Then
-                                                                     T = T - dT * 0.1
+                                                                     T = T - dT * 0.05
                                                                  Else
                                                                      T = T - dT
                                                                  End If
                                                              Else
                                                                  If Math.Abs(T - TCR) / TCR < 0.02 And Math.Abs(P - PCR) / PCR < 0.02 Then
-                                                                     T = T + dT * 0.1
+                                                                     T = T + dT * 0.05
                                                                  Else
                                                                      T = T + dT
                                                                  End If
                                                              End If
-                                                             KI = tmp2(6)
                                                          Else
-                                                             tmp2 = Me.FlashBase.Flash_PV(Vz, P, 1, TVD(ii - 1), Me, False, KI)
-                                                             TVD.Add(tmp2(4))
-                                                             PO.Add(P)
-                                                             T = TVD(ii)
-                                                             HO.Add(Me.DW_CalcEnthalpy(Vz, T, P, State.Vapor))
-                                                             SO.Add(Me.DW_CalcEntropy(Vz, T, P, State.Vapor))
-                                                             VO.Add(Me.m_pr.Z_PR(T, P, Vz, Me.RET_VKij, Me.RET_VTC, Me.RET_VPC, Me.RET_VW, "V") * 8.314 * T / P)
+                                                             Try
+                                                                 tmp2 = Me.FlashBase.Flash_PV(Vz, P, 1, TVD(ii - 1), Me, False, KI)
+                                                                 If Abs(tmp2(4) - TVD(ii - 1)) > 20 Then Exit Do
+                                                                 TVD.Add(tmp2(4))
+                                                                 PO.Add(P)
+                                                                 T = TVD(ii)
+                                                                 HO.Add(Me.DW_CalcEnthalpy(Vz, T, P, State.Vapor))
+                                                                 SO.Add(Me.DW_CalcEntropy(Vz, T, P, State.Vapor))
+                                                                 VO.Add(Me.m_pr.Z_PR(T, P, Vz, Me.RET_VKij, Me.RET_VTC, Me.RET_VPC, Me.RET_VW, "V") * 8.314 * T / P)
+                                                                 KI = tmp2(6)
+                                                             Catch ex As Exception
+                                                             End Try
                                                              If Math.Abs(T - TCR) / TCR < 0.05 And Math.Abs(P - PCR) / PCR < 0.05 Then
-                                                                 P = P + dP * 0.25
+                                                                 P = P + dP * 0.05
                                                              Else
                                                                  P = P + dP
                                                              End If
-                                                             KI = tmp2(6)
                                                          End If
                                                          If ii >= PO.Count Then
                                                              ii = ii - 1
@@ -1228,8 +1254,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                      Dim Pmin, Tmin, dP, dT, T, P As Double
                                                      Pmin = 101325
                                                      Tmin = 0.3 * TCR
-                                                     dP = (PCR - Pmin) / 50
-                                                     dT = (TCR - Tmin) / 50
+                                                     dP = (PCR - Pmin) / 200
+                                                     dT = (TCR - Tmin) / 200
                                                      Dim tmp2 As Object
                                                      Dim KI(n) As Double
                                                      j = 0
@@ -1256,7 +1282,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                              Catch ex As Exception
                                                              Finally
                                                                  If Math.Abs(T - TCR) / TCR < 0.01 And Math.Abs(P - PCR) / PCR < 0.01 Then
-                                                                     P = P + dP * 0.1
+                                                                     P = P + dP * 0.05
                                                                  Else
                                                                      P = P + dP
                                                                  End If
@@ -1265,6 +1291,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                              If Abs(beta) < 2 Then
                                                                  Try
                                                                      tmp2 = Me.FlashBase.Flash_TV(Vzwf, T, 1, POWF(ii - 1), Me, True, KI)
+                                                                     If Abs(tmp2(4) - POWF(ii - 1)) > 200000 Then Exit Do
                                                                      TOWF.Add(T)
                                                                      POWF.Add(tmp2(4))
                                                                      P = POWF(ii)
@@ -1274,15 +1301,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                                      KI = tmp2(6)
                                                                  Catch ex As Exception
                                                                  Finally
-                                                                     If TOWF(ii) - TOWF(ii - 1) <= 0 Then
+                                                                     If TOWF(ii - 1) - TOWF(ii - 2) <= 0 Then
                                                                          If Math.Abs(T - TCR) / TCR < 0.02 And Math.Abs(P - PCR) / PCR < 0.02 Then
-                                                                             T = T - dT * 0.1
+                                                                             T = T - dT * 0.05
                                                                          Else
                                                                              T = T - dT
                                                                          End If
                                                                      Else
                                                                          If Math.Abs(T - TCR) / TCR < 0.02 And Math.Abs(P - PCR) / PCR < 0.02 Then
-                                                                             T = T + dT * 0.1
+                                                                             T = T + dT * 0.05
                                                                          Else
                                                                              T = T + dT
                                                                          End If
@@ -1291,6 +1318,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                              Else
                                                                  Try
                                                                      tmp2 = Me.FlashBase.Flash_PV(Vzwf, P, 1, TOWF(ii - 1), Me, False, KI)
+                                                                     If Abs(tmp2(4) - TOWF(ii - 1)) > 20 Then Exit Do
                                                                      TOWF.Add(tmp2(4))
                                                                      POWF.Add(P)
                                                                      T = TOWF(ii)
@@ -1301,7 +1329,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                                  Catch ex As Exception
                                                                  Finally
                                                                      If Math.Abs(T - TCR) / TCR < 0.05 And Math.Abs(P - PCR) / PCR < 0.05 Then
-                                                                         P = P + dP * 0.25
+                                                                         P = P + dP * 0.05
                                                                      Else
                                                                          P = P + dP
                                                                      End If
@@ -1329,8 +1357,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                      Dim Pmin, Tmin, dP, dT, T, P As Double
                                                      Pmin = 101325
                                                      Tmin = 0.3 * TCR
-                                                     dP = (PCR - Pmin) / 50
-                                                     dT = (TCR - Tmin) / 50
+                                                     dP = (PCR - Pmin) / 200
+                                                     dT = (TCR - Tmin) / 200
                                                      Dim tmp2 As Object
                                                      Dim KI(n) As Double
                                                      j = 0
@@ -1351,27 +1379,33 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                              KI = tmp2(6)
                                                          Else
                                                              If beta < 2 Then
-                                                                 tmp2 = Me.FlashBase.Flash_TV(Vz, T, parameters(1), PQ(ii - 1), Me, True, KI)
-                                                                 TQ.Add(T)
-                                                                 PQ.Add(tmp2(4))
-                                                                 P = PQ(ii)
+                                                                 Try
+                                                                     tmp2 = Me.FlashBase.Flash_TV(Vz, T, parameters(1), PQ(ii - 1), Me, True, KI)
+                                                                     TQ.Add(T)
+                                                                     PQ.Add(tmp2(4))
+                                                                     P = PQ(ii)
+                                                                     KI = tmp2(6)
+                                                                 Catch ex As Exception
+                                                                 End Try
                                                                  If Math.Abs(T - TCR) / TCR < 0.1 And Math.Abs(P - PCR) / PCR < 0.2 Then
-                                                                     T = T + dT * 0.25
+                                                                     T = T + dT * 0.05
                                                                  Else
                                                                      T = T + dT
                                                                  End If
-                                                                 KI = tmp2(6)
                                                              Else
-                                                                 tmp2 = Me.FlashBase.Flash_PV(Vz, P, parameters(1), TQ(ii - 1), Me, True, KI)
-                                                                 TQ.Add(tmp2(4))
-                                                                 PQ.Add(P)
-                                                                 T = TQ(ii)
+                                                                 Try
+                                                                     tmp2 = Me.FlashBase.Flash_PV(Vz, P, parameters(1), TQ(ii - 1), Me, True, KI)
+                                                                     TQ.Add(tmp2(4))
+                                                                     PQ.Add(P)
+                                                                     T = TQ(ii)
+                                                                     KI = tmp2(6)
+                                                                 Catch ex As Exception
+                                                                 End Try
                                                                  If Math.Abs(T - TCR) / TCR < 0.1 And Math.Abs(P - PCR) / PCR < 0.1 Then
-                                                                     P = P + dP * 0.1
+                                                                     P = P + dP * 0.05
                                                                  Else
                                                                      P = P + dP
                                                                  End If
-                                                                 KI = tmp2(6)
                                                              End If
                                                              beta = (Math.Log(PQ(ii) / 101325) - Math.Log(PQ(ii - 1) / 101325)) / (Math.Log(TQ(ii)) - Math.Log(TQ(ii - 1)))
                                                          End If
