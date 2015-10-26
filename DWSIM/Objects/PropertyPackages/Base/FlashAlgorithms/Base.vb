@@ -108,6 +108,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         .LiquidPhase2MoleAmounts = New List(Of Double)(DirectCast(result(6), Double()).MultiplyConstY(Convert.ToDouble(result(5))))
                         .SolidPhaseMoleAmounts = New List(Of Double)(DirectCast(result(8), Double()).MultiplyConstY(Convert.ToDouble(result(7))))
                         .IterationsTaken = Convert.ToInt32(result(4))
+                        .CalculatedEnthalpy = CalculateMixtureEnthalpy(val1, val2, .GetLiquidPhase1MoleFraction, .GetLiquidPhase2MoleFraction, .GetVaporPhaseMoleFraction, .GetSolidPhaseMoleFraction,
+                                                                       .GetLiquidPhase1MoleFractions, .GetLiquidPhase2MoleFractions, .GetVaporPhaseMoleFractions, .GetSolidPhaseMoleFractions,
+                                                                       pp)
+                        .CalculatedEntropy = CalculateMixtureEntropy(val1, val2, .GetLiquidPhase1MoleFraction, .GetLiquidPhase2MoleFraction, .GetVaporPhaseMoleFraction, .GetSolidPhaseMoleFraction,
+                                                                       .GetLiquidPhase1MoleFractions, .GetLiquidPhase2MoleFractions, .GetVaporPhaseMoleFractions, .GetSolidPhaseMoleFractions,
+                                                                       pp)
                     End With
                 ElseIf spec1 = FlashSpec.T And spec2 = FlashSpec.P Then
                     'PT = {L1, V, Vx1, Vy, ecount, L2, Vx2, S, Vs}
@@ -118,6 +124,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         .LiquidPhase2MoleAmounts = New List(Of Double)(DirectCast(result(6), Double()).MultiplyConstY(Convert.ToDouble(result(5))))
                         .SolidPhaseMoleAmounts = New List(Of Double)(DirectCast(result(8), Double()).MultiplyConstY(Convert.ToDouble(result(7))))
                         .IterationsTaken = Convert.ToInt32(result(4))
+                        .CalculatedEnthalpy = CalculateMixtureEnthalpy(val2, val1, .GetLiquidPhase1MoleFraction, .GetLiquidPhase2MoleFraction, .GetVaporPhaseMoleFraction, .GetSolidPhaseMoleFraction,
+                                                        .GetLiquidPhase1MoleFractions, .GetLiquidPhase2MoleFractions, .GetVaporPhaseMoleFractions, .GetSolidPhaseMoleFractions,
+                                                        pp)
+                        .CalculatedEntropy = CalculateMixtureEntropy(val2, val1, .GetLiquidPhase1MoleFraction, .GetLiquidPhase2MoleFraction, .GetVaporPhaseMoleFraction, .GetSolidPhaseMoleFraction,
+                                                                       .GetLiquidPhase1MoleFractions, .GetLiquidPhase2MoleFractions, .GetVaporPhaseMoleFractions, .GetSolidPhaseMoleFractions,
+                                                                       pp)
                     End With
                 ElseIf spec1 = FlashSpec.P And spec2 = FlashSpec.H Then
                     'PH, PS, PV {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, S, Vs}
@@ -129,6 +141,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         .SolidPhaseMoleAmounts = New List(Of Double)(DirectCast(result(10), Double()).MultiplyConstY(Convert.ToDouble(result(9))))
                         .CalculatedTemperature = Convert.ToDouble(result(4))
                         .IterationsTaken = Convert.ToInt32(result(5))
+                        .CalculatedEnthalpy = CalculateMixtureEnthalpy(.CalculatedTemperature.GetValueOrDefault, val1, .GetLiquidPhase1MoleFraction, .GetLiquidPhase2MoleFraction,
+                                                                       .GetVaporPhaseMoleFraction, .GetSolidPhaseMoleFraction, .GetLiquidPhase1MoleFractions, .GetLiquidPhase2MoleFractions,
+                                                                       .GetVaporPhaseMoleFractions, .GetSolidPhaseMoleFractions, pp)
+                        .CalculatedEntropy = CalculateMixtureEntropy(.CalculatedTemperature.GetValueOrDefault, val1, .GetLiquidPhase1MoleFraction, .GetLiquidPhase2MoleFraction,
+                                                                     .GetVaporPhaseMoleFraction, .GetSolidPhaseMoleFraction, .GetLiquidPhase1MoleFractions, .GetLiquidPhase2MoleFractions,
+                                                                     .GetVaporPhaseMoleFractions, .GetSolidPhaseMoleFractions, pp)
                     End With
                 ElseIf spec1 = FlashSpec.P And spec2 = FlashSpec.S Then
                     'PH, PS, PV {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, S, Vs}
@@ -140,6 +158,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         .SolidPhaseMoleAmounts = New List(Of Double)(DirectCast(result(10), Double()).MultiplyConstY(Convert.ToDouble(result(9))))
                         .CalculatedTemperature = Convert.ToDouble(result(4))
                         .IterationsTaken = Convert.ToInt32(result(5))
+                        .CalculatedEnthalpy = CalculateMixtureEnthalpy(.CalculatedTemperature.GetValueOrDefault, val1, .GetLiquidPhase1MoleFraction, .GetLiquidPhase2MoleFraction,
+                                                                        .GetVaporPhaseMoleFraction, .GetSolidPhaseMoleFraction, .GetLiquidPhase1MoleFractions, .GetLiquidPhase2MoleFractions,
+                                                                        .GetVaporPhaseMoleFractions, .GetSolidPhaseMoleFractions, pp)
+                        .CalculatedEntropy = CalculateMixtureEntropy(.CalculatedTemperature.GetValueOrDefault, val1, .GetLiquidPhase1MoleFraction, .GetLiquidPhase2MoleFraction,
+                                                                     .GetVaporPhaseMoleFraction, .GetSolidPhaseMoleFraction, .GetLiquidPhase1MoleFractions, .GetLiquidPhase2MoleFractions,
+                                                                     .GetVaporPhaseMoleFractions, .GetSolidPhaseMoleFractions, pp)
                     End With
                 ElseIf spec1 = FlashSpec.P And spec2 = FlashSpec.VAP Then
                     'PH, PS, PV {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, S, Vs}
@@ -151,6 +175,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         .SolidPhaseMoleAmounts = New List(Of Double)(DirectCast(result(10), Double()).MultiplyConstY(Convert.ToDouble(result(9))))
                         .CalculatedTemperature = Convert.ToDouble(result(4))
                         .IterationsTaken = Convert.ToInt32(result(5))
+                        .CalculatedEnthalpy = CalculateMixtureEnthalpy(.CalculatedTemperature.GetValueOrDefault, val1, .GetLiquidPhase1MoleFraction, .GetLiquidPhase2MoleFraction,
+                                                                             .GetVaporPhaseMoleFraction, .GetSolidPhaseMoleFraction, .GetLiquidPhase1MoleFractions, .GetLiquidPhase2MoleFractions,
+                                                                             .GetVaporPhaseMoleFractions, .GetSolidPhaseMoleFractions, pp)
+                        .CalculatedEntropy = CalculateMixtureEntropy(.CalculatedTemperature.GetValueOrDefault, val1, .GetLiquidPhase1MoleFraction, .GetLiquidPhase2MoleFraction,
+                                                                     .GetVaporPhaseMoleFraction, .GetSolidPhaseMoleFraction, .GetLiquidPhase1MoleFractions, .GetLiquidPhase2MoleFractions,
+                                                                     .GetVaporPhaseMoleFractions, .GetSolidPhaseMoleFractions, pp)
                     End With
                 ElseIf spec1 = FlashSpec.T And spec2 = FlashSpec.VAP Then
                     'TV {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, S, Vs}
@@ -162,6 +192,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         .SolidPhaseMoleAmounts = New List(Of Double)(DirectCast(result(10), Double()).MultiplyConstY(Convert.ToDouble(result(9))))
                         .CalculatedPressure = Convert.ToDouble(result(4))
                         .IterationsTaken = Convert.ToInt32(result(5))
+                        .CalculatedEnthalpy = CalculateMixtureEnthalpy(val1, .CalculatedPressure.GetValueOrDefault, .GetLiquidPhase1MoleFraction, .GetLiquidPhase2MoleFraction,
+                                                                            .GetVaporPhaseMoleFraction, .GetSolidPhaseMoleFraction, .GetLiquidPhase1MoleFractions, .GetLiquidPhase2MoleFractions,
+                                                                            .GetVaporPhaseMoleFractions, .GetSolidPhaseMoleFractions, pp)
+                        .CalculatedEntropy = CalculateMixtureEntropy(val1, .CalculatedPressure.GetValueOrDefault, .GetLiquidPhase1MoleFraction, .GetLiquidPhase2MoleFraction,
+                                                                     .GetVaporPhaseMoleFraction, .GetSolidPhaseMoleFraction, .GetLiquidPhase1MoleFractions, .GetLiquidPhase2MoleFractions,
+                                                                     .GetVaporPhaseMoleFractions, .GetSolidPhaseMoleFractions, pp)
                     End With
                 ElseIf spec1 = FlashSpec.P And spec2 = FlashSpec.SF Then
                     'PH, PS, PV {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, S, Vs}
@@ -193,6 +229,66 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Return calcresult
 
         End Function
+
+
+        Function CalculateMixtureEnthalpy(ByVal T As Double, ByVal P As Double, ByVal L As Double, ByVal L2 As Double, ByVal V As Double, ByVal S As Double,
+                                          ByVal Vx As Double(), ByVal Vx2 As Double(), ByVal Vy As Double(), ByVal Vs As Double(), ByVal pp As PropertyPackage) As Double
+
+            Dim _Hv, _Hl, _Hl2, _Hs As Double
+
+            Dim n As Integer = UBound(Vx)
+
+            _Hv = 0
+            _Hl = 0
+            _Hl2 = 0
+            _Hs = 0
+
+            Dim mmg, mml, mml2, mms As Double
+
+            If V > 0.0# Then _Hv = pp.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
+            If L > 0.0# Then _Hl = pp.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
+            If L2 > 0.0# Then _Hl2 = pp.DW_CalcEnthalpy(Vx2, T, P, State.Liquid)
+            If S > 0.0# Then _Hs = pp.DW_CalcSolidEnthalpy(T, Vs, pp.DW_GetConstantProperties)
+
+            mmg = pp.AUX_MMM(Vy)
+            mml = pp.AUX_MMM(Vx)
+            mml2 = pp.AUX_MMM(Vx2)
+            mms = pp.AUX_MMM(Vs)
+
+            Return (mmg * V / (mmg * V + mml * L + mml2 * L2 + mms * S)) * _Hv +
+                (mml * L / (mmg * V + mml * L + mml2 * L2 + mms * S)) * _Hl +
+                (mml2 * L2 / (mmg * V + mml * L + mml2 * L2 + mms * S)) * _Hl2 +
+                (mms * S / (mmg * V + mml * L + mml2 * L2 + mms * S)) * _Hs
+
+        End Function
+
+        Function CalculateMixtureEntropy(ByVal T As Double, ByVal P As Double, ByVal L As Double, ByVal L2 As Double, ByVal V As Double, ByVal S As Double,
+                                  ByVal Vx As Double(), ByVal Vx2 As Double(), ByVal Vy As Double(), ByVal Vs As Double(), ByVal pp As PropertyPackage) As Double
+
+            Dim _Sv, _Sl, _Sl2 As Double
+
+            Dim n As Integer = UBound(Vx)
+
+            _Sv = 0
+            _Sl = 0
+            _Sl2 = 0
+
+            Dim mmg, mml, mml2, mms As Double
+
+            If V > 0.0# Then _Sv = pp.DW_CalcEntropy(Vy, T, P, State.Vapor)
+            If L > 0.0# Then _Sl = pp.DW_CalcEntropy(Vx, T, P, State.Liquid)
+            If L2 > 0.0# Then _Sl2 = pp.DW_CalcEntropy(Vx2, T, P, State.Liquid)
+
+            mmg = pp.AUX_MMM(Vy)
+            mml = pp.AUX_MMM(Vx)
+            mml2 = pp.AUX_MMM(Vx2)
+
+            Return (mmg * V / (mmg * V + mml * L + mml2 * L2 + mms * S)) * _Sv +
+                (mml * L / (mmg * V + mml * L + mml2 * L2 + mms * S)) * _Sl +
+                (mml2 * L2 / (mmg * V + mml * L + mml2 * L2 + mms * S)) * _Sl2
+
+        End Function
+
 
 #Region "Generic Functions"
 
@@ -906,6 +1002,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Public Property SolidPhaseMoleAmounts As New List(Of Double)
         Public Property CalculatedTemperature As Nullable(Of Double)
         Public Property CalculatedPressure As Nullable(Of Double)
+        Public Property CalculatedEnthalpy As Nullable(Of Double)
+        Public Property CalculatedEntropy As Nullable(Of Double)
         Public Property CompoundProperties As List(Of ConstantProperties)
         Public Property FlashAlgorithmType As String = ""
         Public Property FlashSpecification1 As PropertyPackages.FlashSpec
