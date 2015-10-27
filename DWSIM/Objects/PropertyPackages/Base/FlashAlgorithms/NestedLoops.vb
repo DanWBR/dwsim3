@@ -58,8 +58,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             n = UBound(Vz)
 
             Dim Vn(n) As String, Vx(n), Vy(n), Vx_ant(n), Vy_ant(n), Vp(n), Ki(n), Ki_ant(n), fi(n) As Double
+            Dim VPc(n), VTc(n), Vw(n) As Double
 
+            VPc = PP.RET_VPC()
+            VTc = PP.RET_VTC()
+            Vw = PP.RET_VW()
             Vn = PP.RET_VNAMES()
+
             fi = Vz.Clone
 
             'Calculate Ki`s
@@ -67,7 +72,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             If Not ReuseKI Then
                 i = 0
                 Do
-                    Vp(i) = PP.AUX_PVAPi(i, T)
+                    Vp(i) = VPc(i) * Exp(5.37 * (1 + Vw(i)) * (1 - VTc(i) / T))
                     Ki(i) = Vp(i) / P
                     i += 1
                 Loop Until i = n + 1

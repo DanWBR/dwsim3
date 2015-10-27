@@ -79,8 +79,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             If Not ReuseKI Then
                 i = 0
                 Do
-                    Vp(i) = PP.AUX_PVAPi(Vn(i), T)
-                    'Vp(i) = Vpc(i) * Exp(5.37 * (1 + Vw(i)) * (1 - VTc(i) / T))
+                    'Vp(i) = PP.AUX_PVAPi(Vn(i), T)
+                    Vp(i) = Vpc(i) * Exp(5.37 * (1 + Vw(i)) * (1 - VTc(i) / T))
                     Ki(i) = Vp(i) / P
                     i += 1
                 Loop Until i = n + 1
