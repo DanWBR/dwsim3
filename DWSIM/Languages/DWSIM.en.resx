@@ -5179,4 +5179,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="PropPack_FlashPSFError" xml:space="preserve">
     <value>PSF Flash is not supported.</value>
   </data>
+  <data name="PP_FLASHALGORITHMIDEALKFALLBACK" xml:space="preserve">
+    <value>Fallback to ideal K on trivial solution</value>
+  </data>
 </root>

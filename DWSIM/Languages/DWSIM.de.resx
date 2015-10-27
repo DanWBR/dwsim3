@@ -5163,4 +5163,7 @@ Die erhaltenen Daten werden hauptsächlich für die Berechnung von VLE-Daten emp
   <data name="PropPack_FlashPSFError" xml:space="preserve">
     <value>PSF Flash wird nicht unterstützt</value>
   </data>
+  <data name="PP_FLASHALGORITHMIDEALKFALLBACK" xml:space="preserve">
+    <value>Fallback to ideal K on trivial solution</value>
+  </data>
 </root>

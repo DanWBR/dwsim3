@@ -308,6 +308,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 .Add("PP_PTFELT", 0.001)
                 .Add("PP_FLASHALGORITHM", 2)
                 .Add("PP_FLASHALGORITHMFASTMODE", 1)
+                .Add("PP_FLASHALGORITHMIDEALKFALLBACK", 1)
                 .Add("PP_IDEAL_MIXRULE_LIQDENS", 0)
                 .Add("PP_USEEXPLIQDENS", 0)
             End With
@@ -784,22 +785,25 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Next
 
             If Me.AUX_CheckTrivial(K) Then
-                i = 0
-                For Each subst As ClassesBasicasTermodinamica.Substancia In Me.CurrentMaterialStream.Fases(1).Componentes.Values
-                    Dim Pc, Tc, w As Double
-                    Pc = subst.ConstantProperties.Critical_Pressure
-                    Tc = subst.ConstantProperties.Critical_Temperature
-                    w = subst.ConstantProperties.Acentric_Factor
-                    If type = "LV" Then
-                        K(i) = Pc / P * Math.Exp(5.373 * (1 + w) * (1 - Tc / T))
-                    Else
-                        K(i) = 1.0#
-                    End If
-                    i += 1
-                Next
+                If Not Parameters.ContainsKey("PP_FLASHALGORITHMIDEALKFALLBACK") Then Parameters.Add("PP_FLASHALGORITHMIDEALKFALLBACK", 1)
+                If Parameters("PP_FLASHALGORITHMIDEALKFALLBACK") = 1 Then
+                    i = 0
+                    For Each subst As ClassesBasicasTermodinamica.Substancia In Me.CurrentMaterialStream.Fases(1).Componentes.Values
+                        Dim Pc, Tc, w As Double
+                        Pc = subst.ConstantProperties.Critical_Pressure
+                        Tc = subst.ConstantProperties.Critical_Temperature
+                        w = subst.ConstantProperties.Acentric_Factor
+                        If type = "LV" Then
+                            K(i) = Pc / P * Math.Exp(5.373 * (1 + w) * (1 - Tc / T))
+                        Else
+                            K(i) = 1.0#
+                        End If
+                        i += 1
+                    Next
+                End If
             End If
 
-            Return K
+                Return K
 
         End Function
 
@@ -8040,14 +8044,14 @@ Final3:
 
         End Function
 
-        Public Function AUX_CheckTrivial(ByVal KI As Object) As Boolean
+        Public Function AUX_CheckTrivial(ByVal KI As Double()) As Boolean
 
             Dim isTrivial As Boolean = True
             Dim n, i As Integer
             n = UBound(KI)
 
             For i = 0 To n
-                If Abs(KI(i) - 1) > 0.01 Then isTrivial = False
+                If Abs(KI(i) - 1) > 0.1 Then isTrivial = False
             Next
 
             Return isTrivial

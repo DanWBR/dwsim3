@@ -5188,4 +5188,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="PropPack_FlashPSFError" xml:space="preserve">
     <value>O cálculo Flash PSF não é suportado.</value>
   </data>
+  <data name="PP_FLASHALGORITHMIDEALKFALLBACK" xml:space="preserve">
+    <value>Utilizar K ideal na solução trivial</value>
+  </data>
 </root>

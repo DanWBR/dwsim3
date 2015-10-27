@@ -252,14 +252,22 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     If Abs(F) < etol / 100 Then Exit Do
 
-                    V = -F / dF + Vant
-
-                    'If V >= 1.01 Or V <= -0.01 Then V = -0.1 * F / dF + Vant
+                    V = -F / dF * 0.7 + Vant
 
                 End If
 
-                If V < 0.0# Then V = 0.0#
-                If V > 1.0# Then V = 1.0#
+                If V < 0.0# Then
+                    V = 0.0#
+                    L = 1.0#
+                    Vx = Vz
+                    Exit Do
+                End If
+                If V > 1.0# Then
+                    V = 1.0#
+                    L = 0.0#
+                    Vy = Vz
+                    Exit Do
+                End If
 
                 L = 1 - V
 
@@ -1473,9 +1481,9 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     Dim K1(n), K2(n), dKdT(n) As Double
 
                     K1 = PP.DW_CalcKvalue(Vx, Vy, T, P)
-                    K2 = PP.DW_CalcKvalue(Vx, Vy, T + 0.01, P)
+                    K2 = PP.DW_CalcKvalue(Vx, Vy, T + 0.1, P)
 
-                    dKdT = K2.SubtractY(K1).MultiplyConstY(1 / 0.01)
+                    dKdT = K2.SubtractY(K1).MultiplyConstY(1 / 0.1)
                     'For i = 0 To n
                     '    dKdT(i) = (K2(i) - K1(i)) / 0.01
                     'Next
@@ -1578,9 +1586,9 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                         Dim K1(n), K2(n), dKdT(n) As Double
 
                         K1 = PP.DW_CalcKvalue(Vx, Vy, T, P)
-                        K2 = PP.DW_CalcKvalue(Vx, Vy, T + 1, P)
+                        K2 = PP.DW_CalcKvalue(Vx, Vy, T + 0.1, P)
 
-                        dKdT = K2.SubtractY(K1)
+                        dKdT = K2.SubtractY(K1).MultiplyConstY(1 / 0.1)
                         'For i = 0 To n
                         '    dKdT(i) = (K2(i) - K1(i)) / (1)
                         'Next
@@ -1667,6 +1675,8 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
 
             WriteDebugInfo("PH Flash [NL]: Current T = " & T & ", Current H Error = " & herr)
 
+            CheckCalculatorStatus()
+
         End Function
 
         Function OBJ_FUNC_PS_FLASH(ByVal Type As String, ByVal X As Double, ByVal P As Double, ByVal Vz() As Double, ByVal PP As PropertyPackages.PropertyPackage) As Object
@@ -1703,6 +1713,8 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             OBJ_FUNC_PS_FLASH = {serr, T, V, L, Vy, Vx}
 
             WriteDebugInfo("PS Flash [NL]: Current T = " & T & ", Current S Error = " & serr)
+
+            CheckCalculatorStatus()
 
         End Function
 

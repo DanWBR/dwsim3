@@ -5173,4 +5173,7 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
   <data name="PropPack_FlashPSFError" xml:space="preserve">
     <value>El cálculo Flash PSF no está soportado.</value>
   </data>
+  <data name="PP_FLASHALGORITHMIDEALKFALLBACK" xml:space="preserve">
+    <value>Utilizar K ideal na solução trivial</value>
+  </data>
 </root>
