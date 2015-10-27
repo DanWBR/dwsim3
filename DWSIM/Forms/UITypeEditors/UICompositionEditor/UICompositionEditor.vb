@@ -77,8 +77,7 @@ Namespace DWSIM.Editors.Composition
                 .Emissor = "PropertyGrid"
             End With
 
-            Call form.FormSurface.UpdateSelectedObject()
-            Call form.FormSurface.FlowsheetDesignSurface.Invalidate()
+            form.CalculationQueue.Enqueue(objargs)
 
             CalculateAll2(form, My.Settings.SolverMode, , True)
 

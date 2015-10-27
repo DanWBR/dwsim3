@@ -3410,22 +3410,31 @@ Public Class frmSurface
                     selectionControl.Dispose()
                     selectionControl = Nothing
 
+                    'Call function to calculate flowsheet
+                    Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+                    With objargs
+                        .Calculado = False
+                        .Tag = mystr.GraphicObject.Tag
+                        .Nome = mystr.Nome
+                        .Tipo = mystr.GraphicObject.TipoObjeto
+                        .Emissor = "PropertyGrid"
+                    End With
+
                     Me.FlowsheetDesignSurface.SelectedObject = Nothing
                     Me.FlowsheetDesignSurface.SelectedObjects.Clear()
 
-                    Application.DoEvents()
-                    CalculateMaterialStream(Flowsheet, mystr)
-                    Application.DoEvents()
-                    Call Flowsheet.FormSurface.UpdateSelectedObject()
-                    Application.DoEvents()
-                    Call Flowsheet.FormSurface.FlowsheetDesignSurface.Invalidate()
-                    Application.DoEvents()
-                    ProcessCalculationQueue(Flowsheet)
-                    Application.DoEvents()
+                    Flowsheet.CalculationQueue.Enqueue(objargs)
+
+                    CalculateAll2(Flowsheet, My.Settings.SolverMode, , True)
+
+                    Me.FlowsheetDesignSurface.SelectedObject = mystr.GraphicObject
+                    Me.FlowsheetDesignSurface.SelectedObjects.Add(mystr.Name, mystr.GraphicObject)
+
+                    Me.Invalidate()
 
                 Else
 
-                    MessageBox.Show("This Material Stream's composition is read-only.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    MessageBox.Show("The composition of this material stream is read-only.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                 End If
 

@@ -1685,23 +1685,9 @@ Namespace DWSIM.Flowsheet
                 '3 = Azure Service Bus
                 '4 = Network Computer
 
-                'process scripts associated with the solverstarted event
-
-                form.ProcessScripts(Script.EventType.SolverStarted, Script.ObjectType.Solver)
-
-                RaiseEvent FlowsheetCalculationStarted(form, New System.EventArgs(), Nothing)
-
                 Dim d1 As Date = Date.Now
                 Dim preLab As String = form.FormSurface.LabelCalculator.Text
                 Dim age As AggregateException = Nothing
-
-                'adds a message to the log window to indicate that the flowsheet started solving
-
-                If form.MasterFlowsheet Is Nothing Then
-                    form.WriteToLog(DWSIM.App.GetLocalString("FSstartedsolving"), Color.Blue, FormClasses.TipoAviso.Informacao)
-                Else
-                    form.WriteToLog(DWSIM.App.GetLocalString("Solving") & " '" & form.MasterUnitOp.GraphicObject.Tag & "'...", Color.Blue, FormClasses.TipoAviso.Informacao)
-                End If
 
                 'gets a list of objects to be solved in the flowsheet
 
@@ -1718,6 +1704,22 @@ Namespace DWSIM.Flowsheet
                 Dim lists As Dictionary(Of Integer, List(Of String)) = objl(1)
                 Dim filteredlist As Dictionary(Of Integer, List(Of String)) = objl(2)
                 Dim objstack As List(Of String) = objl(0)
+
+                If objstack.Count = 0 Then Exit Sub
+
+                'adds a message to the log window to indicate that the flowsheet started solving
+
+                If form.MasterFlowsheet Is Nothing Then
+                    form.WriteToLog(DWSIM.App.GetLocalString("FSstartedsolving"), Color.Blue, FormClasses.TipoAviso.Informacao)
+                Else
+                    form.WriteToLog(DWSIM.App.GetLocalString("Solving") & " '" & form.MasterUnitOp.GraphicObject.Tag & "'...", Color.Blue, FormClasses.TipoAviso.Informacao)
+                End If
+
+                'process scripts associated with the solverstarted event
+
+                form.ProcessScripts(Script.EventType.SolverStarted, Script.ObjectType.Solver)
+
+                RaiseEvent FlowsheetCalculationStarted(form, New System.EventArgs(), Nothing)
 
                 'find recycles
 
