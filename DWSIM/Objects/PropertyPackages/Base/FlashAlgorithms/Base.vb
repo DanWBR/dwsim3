@@ -244,15 +244,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             Dim mmg, mml, mml2, mms As Double
 
-            If V > 0.0# And Vy.Sum = 1.0# Then _Hv = pp.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
-            If L > 0.0# And Vx.Sum = 1.0# Then _Hl = pp.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
-            If L2 > 0.0# And Vx2.Sum = 1.0# Then _Hl2 = pp.DW_CalcEnthalpy(Vx2, T, P, State.Liquid)
-            If S > 0.0# And Vs.Sum = 1.0# Then _Hs = pp.DW_CalcSolidEnthalpy(T, Vs, pp.DW_GetConstantProperties)
+            If V > 0.0# And Vy.Sum > 0.0# Then _Hv = pp.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
+            If L > 0.0# And Vx.Sum > 0.0# Then _Hl = pp.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
+            If L2 > 0.0# And Vx2.Sum > 0.0# Then _Hl2 = pp.DW_CalcEnthalpy(Vx2, T, P, State.Liquid)
+            If S > 0.0# And Vs.Sum > 0.0# Then _Hs = pp.DW_CalcSolidEnthalpy(T, Vs, pp.DW_GetConstantProperties)
 
-            If V > 0.0# And Vy.Sum = 1.0# Then mmg = pp.AUX_MMM(Vy)
-            If L > 0.0# And Vx.Sum = 1.0# Then mml = pp.AUX_MMM(Vx)
-            If L2 > 0.0# And Vx2.Sum = 1.0# Then mml2 = pp.AUX_MMM(Vx2)
-            If S > 0.0# And Vs.Sum = 1.0# Then mms = pp.AUX_MMM(Vs)
+            If V > 0.0# And Vy.Sum > 0.0# Then mmg = pp.AUX_MMM(Vy)
+            If L > 0.0# And Vx.Sum > 0.0# Then mml = pp.AUX_MMM(Vx)
+            If L2 > 0.0# And Vx2.Sum > 0.0# Then mml2 = pp.AUX_MMM(Vx2)
+            If S > 0.0# And Vs.Sum > 0.0# Then mms = pp.AUX_MMM(Vs)
 
             Return (mmg * V / (mmg * V + mml * L + mml2 * L2 + mms * S)) * _Hv +
                 (mml * L / (mmg * V + mml * L + mml2 * L2 + mms * S)) * _Hl +
@@ -274,13 +274,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             Dim mmg, mml, mml2, mms As Double
 
-            If V > 0.0# And Vy.Sum = 1.0# Then _Sv = pp.DW_CalcEntropy(Vy, T, P, State.Vapor)
-            If L > 0.0# And Vx.Sum = 1.0# Then _Sl = pp.DW_CalcEntropy(Vx, T, P, State.Liquid)
-            If L2 > 0.0# And Vx2.Sum = 1.0# Then _Sl2 = pp.DW_CalcEntropy(Vx2, T, P, State.Liquid)
+            If V > 0.0# And Vy.Sum > 0.0# Then _Sv = pp.DW_CalcEntropy(Vy, T, P, State.Vapor)
+            If L > 0.0# And Vx.Sum > 0.0# Then _Sl = pp.DW_CalcEntropy(Vx, T, P, State.Liquid)
+            If L2 > 0.0# And Vx2.Sum > 0.0# Then _Sl2 = pp.DW_CalcEntropy(Vx2, T, P, State.Liquid)
 
-            If V > 0.0# And Vy.Sum = 1.0# Then mmg = pp.AUX_MMM(Vy)
-            If L > 0.0# And Vx.Sum = 1.0# Then mml = pp.AUX_MMM(Vx)
-            If L2 > 0.0# And Vx2.Sum = 1.0# Then mml2 = pp.AUX_MMM(Vx2)
+            If V > 0.0# And Vy.Sum > 0.0# Then mmg = pp.AUX_MMM(Vy)
+            If L > 0.0# And Vx.Sum > 0.0# Then mml = pp.AUX_MMM(Vx)
+            If L2 > 0.0# And Vx2.Sum > 0.0# Then mml2 = pp.AUX_MMM(Vx2)
 
             Return (mmg * V / (mmg * V + mml * L + mml2 * L2 + mms * S)) * _Sv +
                 (mml * L / (mmg * V + mml * L + mml2 * L2 + mms * S)) * _Sl +
