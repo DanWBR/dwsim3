@@ -736,9 +736,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     End If
                     beta = (Math.Log(PB(i) / 101325) - Math.Log(PB(i - 1) / 101325)) / (Math.Log(TVB(i)) - Math.Log(TVB(i - 1)))
                 End If
-                If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Bubble Points (" & i + 1 & "/200)")
+                If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Bubble Points (" & i + 1 & "/300)")
                 i = i + 1
-            Loop Until i >= 200 Or PB(i - 1) = 0 Or PB(i - 1) < 0 Or TVB(i - 1) < 0 Or _
+            Loop Until i >= 300 Or PB(i - 1) = 0 Or PB(i - 1) < 0 Or TVB(i - 1) < 0 Or _
                         T >= TCR Or Double.IsNaN(PB(i - 1)) = True Or _
                         Double.IsNaN(TVB(i - 1)) = True Or Math.Abs(T - TCR) / TCR < 0.002 And _
                         Math.Abs(P - PCR) / PCR < 0.002
@@ -840,9 +840,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         beta = (Math.Log(POWF(i) / 101325) - Math.Log(POWF(i - 1) / 101325)) / (Math.Log(TOWF(i)) - Math.Log(TOWF(i - 1)))
                         If Double.IsNaN(beta) Or Double.IsInfinity(beta) Then beta = 0
                     End If
-                    If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Dew Points (Water-Free) (" & i + 1 & "/200)")
+                    If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Dew Points (Water-Free) (" & i + 1 & "/300)")
                     i = i + 1
-                Loop Until i >= 200 Or POWF(i - 1) = 0 Or POWF(i - 1) < 0 Or TOWF(i - 1) < 0 Or _
+                Loop Until i >= 300 Or POWF(i - 1) = 0 Or POWF(i - 1) < 0 Or TOWF(i - 1) < 0 Or _
                             Double.IsNaN(POWF(i - 1)) = True Or Double.IsNaN(TOWF(i - 1)) = True Or _
                             Math.Abs(T - TCR) / TCR < 0.03 And Math.Abs(P - PCR) / PCR < 0.03
 
@@ -931,9 +931,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     beta = (Math.Log(PO(i) / 101325) - Math.Log(PO(i - 1) / 101325)) / (Math.Log(TVD(i)) - Math.Log(TVD(i - 1)))
                     If Double.IsNaN(beta) Or Double.IsInfinity(beta) Then beta = 0
                 End If
-                If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Dew Points (" & i + 1 & "/200)")
+                If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Dew Points (" & i + 1 & "/300)")
                 i = i + 1
-            Loop Until i >= 200 Or PO(i - 1) = 0 Or PO(i - 1) < 0 Or TVD(i - 1) < 0 Or _
+            Loop Until i >= 300 Or PO(i - 1) = 0 Or PO(i - 1) < 0 Or TVD(i - 1) < 0 Or _
                         Double.IsNaN(PO(i - 1)) = True Or Double.IsNaN(TVD(i - 1)) = True Or _
                         Math.Abs(T - TCR) / TCR < 0.03 And Math.Abs(P - PCR) / PCR < 0.03
 
@@ -996,12 +996,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         End If
                         beta = (Math.Log(PQ(i) / 101325) - Math.Log(PQ(i - 1) / 101325)) / (Math.Log(TQ(i)) - Math.Log(TQ(i - 1)))
                     End If
-                    If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Quality Line (" & i + 1 & "/200)")
+                    If bw IsNot Nothing Then If bw.CancellationPending Then Exit Do Else bw.ReportProgress(0, "Quality Line (" & i + 1 & "/300)")
                     i = i + 1
                     If i > 2 Then
                         If PQ(i - 1) = PQ(i - 2) Or TQ(i - 1) = TQ(i - 2) Then Exit Do
                     End If
-                Loop Until i >= 200 Or PQ(i - 1) = 0 Or PQ(i - 1) < 0 Or TQ(i - 1) < 0 Or _
+                Loop Until i >= 300 Or PQ(i - 1) = 0 Or PQ(i - 1) < 0 Or TQ(i - 1) < 0 Or _
                             Double.IsNaN(PQ(i - 1)) = True Or Double.IsNaN(TQ(i - 1)) = True Or _
                             Math.Abs(T - TCR) / TCR < 0.02 And Math.Abs(P - PCR) / PCR < 0.02
             Else
@@ -1145,9 +1145,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                          PCR = cp0(1)
                                                          VCR = cp0(2)
                                                      Else
-                                                         TCR = 0
-                                                         PCR = 0
-                                                         VCR = 0
+                                                         TCR = Me.AUX_TCM(Fase.Mixture)
+                                                         PCR = Me.AUX_PCM(Fase.Mixture)
+                                                         VCR = Me.AUX_VCM(Fase.Mixture)
                                                      End If
                                                  Else
                                                      TCR = Me.AUX_TCM(Fase.Mixture)
@@ -1167,8 +1167,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                  Dim Pmin, Tmin, dP, dT, T, P As Double
                                                  Pmin = 101325
                                                  Tmin = 0.3 * TCR
-                                                 dP = (PCR - Pmin) / 200
-                                                 dT = (TCR - Tmin) / 200
+                                                 dP = (PCR - Pmin) / 100
+                                                 dT = (TCR - Tmin) / 100
                                                  Dim tmp2 As Object
                                                  Dim KI(n) As Double
                                                  j = 0
@@ -1236,7 +1236,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                          beta = (Math.Log(PB(ii) / 101325) - Math.Log(PB(ii - 1) / 101325)) / (Math.Log(TVB(ii)) - Math.Log(TVB(ii - 1)))
                                                      End If
                                                      ii = ii + 1
-                                                 Loop Until ii >= 200 Or PB(ii - 1) = 0 Or PB(ii - 1) < 0 Or TVB(ii - 1) < 0 Or _
+                                                 Loop Until ii >= 300 Or PB(ii - 1) = 0 Or PB(ii - 1) < 0 Or TVB(ii - 1) < 0 Or _
                                                              T >= TCR Or Double.IsNaN(PB(ii - 1)) = True Or _
                                                              Double.IsNaN(TVB(ii - 1)) = True Or Math.Abs(T - TCR) / TCR < 0.002 And _
                                                              Math.Abs(P - PCR) / PCR < 0.002
@@ -1327,7 +1327,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                          If Double.IsNaN(beta) Or Double.IsInfinity(beta) Then beta = 0
                                                      End If
                                                      ii = ii + 1
-                                                 Loop Until ii >= 200 Or PO(ii - 1) = 0 Or PO(ii - 1) < 0 Or TVD(ii - 1) < 0 Or _
+                                                 Loop Until ii >= 300 Or PO(ii - 1) = 0 Or PO(ii - 1) < 0 Or TVD(ii - 1) < 0 Or _
                                                              Double.IsNaN(PO(ii - 1)) = True Or Double.IsNaN(TVD(ii - 1)) = True Or _
                                                              (Math.Abs(T - TCR) / TCR < 0.03 And Math.Abs(P - PCR) / PCR < 0.01)
 
@@ -1353,8 +1353,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                      Dim Pmin, Tmin, dP, dT, T, P As Double
                                                      Pmin = 101325
                                                      Tmin = 0.3 * TCR
-                                                     dP = (PCR - Pmin) / 200
-                                                     dT = (TCR - Tmin) / 200
+                                                     dP = (PCR - Pmin) / 100
+                                                     dT = (TCR - Tmin) / 100
                                                      Dim tmp2 As Object
                                                      Dim KI(n) As Double
                                                      j = 0
@@ -1441,7 +1441,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                              If Double.IsNaN(beta) Or Double.IsInfinity(beta) Then beta = 0
                                                          End If
                                                          ii = ii + 1
-                                                     Loop Until ii >= 200 Or POWF(ii - 1) = 0 Or POWF(ii - 1) < 0 Or TOWF(ii - 1) < 0 Or _
+                                                     Loop Until ii >= 300 Or POWF(ii - 1) = 0 Or POWF(ii - 1) < 0 Or TOWF(ii - 1) < 0 Or _
                                                                  Double.IsNaN(POWF(ii - 1)) = True Or Double.IsNaN(TOWF(ii - 1)) = True Or _
                                                                  Math.Abs(T - TCR) / TCR < 0.03 And Math.Abs(P - PCR) / PCR < 0.03
 
@@ -1456,8 +1456,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                      Dim Pmin, Tmin, dP, dT, T, P As Double
                                                      Pmin = 101325
                                                      Tmin = 0.3 * TCR
-                                                     dP = (PCR - Pmin) / 200
-                                                     dT = (TCR - Tmin) / 200
+                                                     dP = (PCR - Pmin) / 100
+                                                     dT = (TCR - Tmin) / 100
                                                      Dim tmp2 As Object
                                                      Dim KI(n) As Double
                                                      j = 0
@@ -1512,7 +1512,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                          If ii > 2 Then
                                                              If PQ(ii - 1) = PQ(ii - 2) Or TQ(ii - 1) = TQ(ii - 2) Then Exit Do
                                                          End If
-                                                     Loop Until ii >= 200 Or PQ(ii - 1) = 0 Or PQ(ii - 1) < 0 Or TQ(ii - 1) < 0 Or _
+                                                     Loop Until ii >= 300 Or PQ(ii - 1) = 0 Or PQ(ii - 1) < 0 Or TQ(ii - 1) < 0 Or _
                                                                  Double.IsNaN(PQ(ii - 1)) = True Or Double.IsNaN(TQ(ii - 1)) = True Or _
                                                                  Math.Abs(T - TCR) / TCR < 0.02 And Math.Abs(P - PCR) / PCR < 0.02
 
