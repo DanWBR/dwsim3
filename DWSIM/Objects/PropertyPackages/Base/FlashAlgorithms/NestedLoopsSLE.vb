@@ -281,6 +281,8 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             Dim constprop As ConstantProperties
 
             Vx = Vz.Clone 'assuming initially only liquids exist
+            Tf = PP.RET_VTF 'Fusion temperature
+            Hf = PP.RET_VHF 'Enthalpy of fusion
 
             If Vz.MaxY = 1 Then 'only a single component
                 ecount = 0
@@ -304,9 +306,6 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     End If
                 Next
             End If
-
-            Tf = PP.RET_VTF 'Fusion temperature
-            Hf = PP.RET_VHF 'Enthalpy of fusion
 
             Vn = PP.RET_VNAMES()
             For i = 0 To n
@@ -638,11 +637,11 @@ out:        d2 = Date.Now
 
             Loop Until convergiu = 1
 
-            'transfer amount of phase fractions back to global fractions including solids
+out:        'transfer amount of phase fractions back to global fractions including solids
             L = L * (1 - S)
             V = V * (1 - S)
 
-out:        d2 = Date.Now
+            d2 = Date.Now
 
             dt = d2 - d1
 
