@@ -380,15 +380,15 @@
     <comment>1</comment>
   </data>
   <data name="PROP_MS_10" xml:space="preserve">
-    <value>molare Entropie des Gemisches</value>
+    <value>molare Entropie Gemisch</value>
     <comment>0</comment>
   </data>
   <data name="PROP_MS_100" xml:space="preserve">
-    <value>Massenanteil der Wasserphase</value>
+    <value>Massenanteil Wasserphase</value>
     <comment>0</comment>
   </data>
   <data name="PROP_MS_101" xml:space="preserve">
-    <value>Volumenanteil der Wasserphase</value>
+    <value>Volumenanteil Wasserphase</value>
     <comment>0</comment>
   </data>
   <data name="PROP_MS_102" xml:space="preserve">
@@ -520,62 +520,62 @@
     <comment>0</comment>
   </data>
   <data name="PROP_MS_131" xml:space="preserve">
-    <value>Solid Phase Density</value>
+    <value>Dichte Feststoff</value>
   </data>
   <data name="PROP_MS_132" xml:space="preserve">
-    <value>Solid Phase Molar Weight</value>
+    <value>Molare Masse Feststoff</value>
   </data>
   <data name="PROP_MS_133" xml:space="preserve">
-    <value>Solid Phase Specific Enthalpy</value>
+    <value>Spezifische Enthalpie Feststoff</value>
   </data>
   <data name="PROP_MS_134" xml:space="preserve">
-    <value>Solid Phase Specific Entropy</value>
+    <value>Spezifische Entropie Feststoff</value>
   </data>
   <data name="PROP_MS_135" xml:space="preserve">
-    <value>Solid Phase Molar Enthalpy</value>
+    <value>Molare Enthalpie Feststoff</value>
   </data>
   <data name="PROP_MS_136" xml:space="preserve">
-    <value>Solid Phase Molar Entropy</value>
+    <value>Molare Entropie Feststoff</value>
   </data>
   <data name="PROP_MS_137" xml:space="preserve">
-    <value>Solid Phase Thermal Conductivity</value>
+    <value>Wärmeleitfähigkeit Feststoff</value>
   </data>
   <data name="PROP_MS_138" xml:space="preserve">
-    <value>Solid Phase Kinematic Viscosity</value>
+    <value>Kinematische Viskosität Feststoff</value>
   </data>
   <data name="PROP_MS_139" xml:space="preserve">
-    <value>Solid Phase Dynamic Viscosity</value>
+    <value>Dynamische Viskosität Feststoff</value>
   </data>
   <data name="PROP_MS_14" xml:space="preserve">
     <value>Spezifische Enthalpie Dampfphase</value>
     <comment>0</comment>
   </data>
   <data name="PROP_MS_140" xml:space="preserve">
-    <value>Solid Phase Heat Capacity (Cp)</value>
+    <value>Wärmekapazität (Cp) Feststoff</value>
   </data>
   <data name="PROP_MS_141" xml:space="preserve">
-    <value>Solid Phase Heat Capacity Ratio (Cp/Cv)</value>
+    <value>Adiabatenexponent (Cp/Cv) Feststoff</value>
   </data>
   <data name="PROP_MS_142" xml:space="preserve">
-    <value>Solid Phase Mass Flow</value>
+    <value>Massenstrom Feststoff</value>
   </data>
   <data name="PROP_MS_143" xml:space="preserve">
-    <value>Solid Phase Molar Flow</value>
+    <value>Molenstrom Feststoff</value>
   </data>
   <data name="PROP_MS_144" xml:space="preserve">
-    <value>Solid Phase Volumetric Flow</value>
+    <value>Volumenstrom Feststoff</value>
   </data>
   <data name="PROP_MS_145" xml:space="preserve">
-    <value>Solid Phase Compressibility Factor</value>
+    <value>Kompressibilitätsfaktor Feststoff</value>
   </data>
   <data name="PROP_MS_146" xml:space="preserve">
-    <value>Solid Phase Molar Fraction</value>
+    <value>Molanteil Feststoff</value>
   </data>
   <data name="PROP_MS_147" xml:space="preserve">
-    <value>Solid Phase Mass Fraction</value>
+    <value>Massenanteil Feststoff</value>
   </data>
   <data name="PROP_MS_148" xml:space="preserve">
-    <value>Solid Phase Volumetric Fraction</value>
+    <value>Volumenanteil  Feststoff</value>
   </data>
   <data name="PROP_MS_149" xml:space="preserve">
     <value>Mole Fraction (Solid Phase)</value>

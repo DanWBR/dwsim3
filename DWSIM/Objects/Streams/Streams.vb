@@ -2121,58 +2121,76 @@ Namespace DWSIM.SimulationObjects.Streams
                         'PROP_MS_83	Liquid Phase (2) Volumetric Fraction
                         value = ""
                     Case 84, 131
-                        'PROP_MS_84	Aqueous Phase Density
+                        'PROP_MS_84	    Aqueous Phase Density
+                        'PROP_MS_131	Solid Phase Density
                         value = su.spmp_density
                     Case 85, 132
-                        'PROP_MS_85	Aqueous Phase Molar Weight
+                        'PROP_MS_85	    Aqueous Phase Molar Weight
+                        'PROP_MS_132	Solid Phase Molar Weight
                         value = su.spmp_molecularWeight
                     Case 86, 133
-                        'PROP_MS_86	Aqueous Phase Specific Enthalpy
+                        'PROP_MS_86	    Aqueous Phase Specific Enthalpy
+                        'PROP_MS_133	Solid Phase Specific Enthalpy
                         value = su.spmp_enthalpy
                     Case 87, 134
-                        'PROP_MS_87	Aqueous Phase Specific Entropy
+                        'PROP_MS_87	    Aqueous Phase Specific Entropy
+                        'PROP_MS_134	Solid Phase Specific Entropy
                         value = su.spmp_entropy
                     Case 88, 135
-                        'PROP_MS_88	Aqueous Phase Molar Enthalpy
+                        'PROP_MS_88	    Aqueous Phase Molar Enthalpy
+                        'PROP_MS_135	Solid Phase Molar Enthalpy
                         value = su.molar_enthalpy
                     Case 89, 136
-                        'PROP_MS_89	Aqueous Phase Molar Entropy
+                        'PROP_MS_89	    Aqueous Phase Molar Entropy
+                        'PROP_MS_136	Solid Phase Molar Entropy
                         value = su.molar_entropy
                     Case 90, 137
-                        'PROP_MS_90	Aqueous Phase Thermal Conductivity
+                        'PROP_MS_90	    Aqueous Phase Thermal Conductivity
+                        'PROP_MS_137	Solid Phase Thermal Conductivity
                         value = su.spmp_thermalConductivity
                     Case 91, 138
-                        'PROP_MS_91	Aqueous Phase Kinematic Viscosity
+                        'PROP_MS_91	    Aqueous Phase Kinematic Viscosity
+                        'PROP_MS_138	Solid Phase Kinematic Viscosity
                         value = su.spmp_cinematic_viscosity
                     Case 92, 139
-                        'PROP_MS_92	Aqueous Phase Dynamic Viscosity
+                        'PROP_MS_92	    Aqueous Phase Dynamic Viscosity
+                        'PROP_MS_139	Solid Phase Dynamic Viscosity
                         value = su.spmp_viscosity
                     Case 93, 140
-                        'PROP_MS_93	Aqueous Phase Heat Capacity (Cp)
+                        'PROP_MS_93	    Aqueous Phase Heat Capacity (Cp)
+                        'PROP_MS_140    Solid Phase Heat Capacity (Cp)
                         value = su.spmp_heatCapacityCp
                     Case 94, 141
-                        'PROP_MS_94	Aqueous Phase Heat Capacity Ratio (Cp/Cv)
+                        'PROP_MS_94	    Aqueous Phase Heat Capacity Ratio (Cp/Cv)
+                        'PROP_MS_141	Solid Phase Heat Capacity Ratio (Cp/Cv)
                         value = ""
                     Case 95, 142
-                        'PROP_MS_95	Aqueous Phase Mass Flow
+                        'PROP_MS_95	    Aqueous Phase Mass Flow
+                        'PROP_MS_142	Solid Phase Mass Flow
                         value = su.spmp_massflow
                     Case 96, 143
-                        'PROP_MS_96	Aqueous Phase Molar Flow
+                        'PROP_MS_96	    Aqueous Phase Molar Flow
+                        'PROP_MS_143	Solid Phase Molar Flow
                         value = su.spmp_molarflow
                     Case 97, 144
-                        'PROP_MS_97	Aqueous Phase Volumetric Flow
+                        'PROP_MS_97	    Aqueous Phase Volumetric Flow
+                        'PROP_MS_144	Solid Phase Volumetric Flow
                         value = su.spmp_volumetricFlow
                     Case 98, 145
-                        'PROP_MS_98	Aqueous Phase Compressibility Factor
+                        'PROP_MS_98	    Aqueous Phase Compressibility Factor
+                        'PROP_MS_145	Solid Phase Compressibility Factor
                         value = ""
                     Case 99, 146
-                        'PROP_MS_99	Aqueous Phase Molar Fraction
+                        'PROP_MS_99	    Aqueous Phase Molar Fraction
+                        'PROP_MS_146    Solid Phase Molar Fraction
                         value = ""
                     Case 100, 147
                         'PROP_MS_100	Aqueous Phase Mass Fraction
+                        'PROP_MS_147	Solid Phase Mass Fraction
                         value = ""
                     Case 101, 148
                         'PROP_MS_101	Aqueous Phase Volumetric Fraction
+                        'PROP_MS_148	Solid Phase Volumetric Fraction
                         value = ""
                     Case 102, 103, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 149, 150
                         value = ""

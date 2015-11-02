@@ -360,13 +360,15 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     End If
                     VnS(i) = Vz(i) - VnL(i)
                 Next
-                If L > 0 Then
+                If L > 0 And MaxX.SumY > 1 Then
                     Vx = VnL.NormalizeY
                     Vs = VnS.NormalizeY
                 Else
                     'only solid remaining
                     Vx = PP.RET_NullVector
                     Vs = Vz.Clone
+                    L = 0
+                    L_old = 0
                     Exit Do
                 End If
 
