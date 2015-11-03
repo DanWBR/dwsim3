@@ -128,6 +128,9 @@ Namespace GraphicObjects
                     drawObj.X += dx
                     drawObj.Y += dy
                     drawObj.Draw(g)
+                Next
+                For i = 0 To Me.InnerList.Count - 1
+                    drawObj = CType(Me.InnerList(i), GraphicObject)
                     drawObj.X -= dx
                     drawObj.Y -= dy
                 Next
