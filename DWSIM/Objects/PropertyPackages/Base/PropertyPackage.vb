@@ -8059,7 +8059,7 @@ Final3:
             n = UBound(KI)
 
             For i = 0 To n
-                If Abs(KI(i) - 1) > 0.1 Then isTrivial = False
+                If Abs(KI(i) - 1) > 0.02 Then isTrivial = False
             Next
 
             Return isTrivial
