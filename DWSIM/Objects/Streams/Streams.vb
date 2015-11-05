@@ -561,21 +561,25 @@ Namespace DWSIM.SimulationObjects.Streams
                 .Item(5).Value = valor
                 .Item(5).Unit = ""
 
+                valor = Format(Me.Fases(7).SPMProperties.molarfraction.GetValueOrDefault, nf)
+                .Item(6).Value = valor
+                .Item(6).Unit = ""
+
                 If Me.Fases(0).SPMProperties.molar_enthalpy.HasValue Then
                     valor = Format(Conversor.ConverterDoSI(su.molar_enthalpy, Me.Fases(0).SPMProperties.molar_enthalpy.GetValueOrDefault), nf)
                 Else
                     valor = DWSIM.App.GetLocalString("NC")
                 End If
-                .Item(6).Value = valor
-                .Item(6).Unit = su.molar_enthalpy
+                .Item(7).Value = valor
+                .Item(7).Unit = su.molar_enthalpy
 
                 If Me.Fases(0).SPMProperties.molar_entropy.HasValue Then
                     valor = Format(Conversor.ConverterDoSI(su.molar_entropy, Me.Fases(0).SPMProperties.molar_entropy.GetValueOrDefault), nf)
                 Else
                     valor = DWSIM.App.GetLocalString("NC")
                 End If
-                .Item(7).Value = valor
-                .Item(7).Unit = su.molar_entropy
+                .Item(8).Value = valor
+                .Item(8).Unit = su.molar_entropy
 
             End With
 
@@ -593,8 +597,9 @@ Namespace DWSIM.SimulationObjects.Streams
                 .Add(3, New DWSIM.Outros.NodeItem(DWSIM.App.GetLocalString("Vazomolar"), "", "", 3, 1, ""))
                 .Add(4, New DWSIM.Outros.NodeItem(DWSIM.App.GetLocalString("Vazovolumtrica"), "", "", 4, 1, ""))
                 .Add(5, New DWSIM.Outros.NodeItem(DWSIM.App.GetPropertyName("PROP_MS_106"), "", "", 5, 1, ""))
-                .Add(6, New DWSIM.Outros.NodeItem(DWSIM.App.GetLocalString("EntalpiaEspecfica"), "", "", 6, 1, ""))
-                .Add(7, New DWSIM.Outros.NodeItem(DWSIM.App.GetLocalString("EntropiaEspecfica"), "", "", 7, 1, ""))
+                .Add(6, New DWSIM.Outros.NodeItem(DWSIM.App.GetPropertyName("PROP_MS_146"), "", "", 5, 1, ""))
+                .Add(7, New DWSIM.Outros.NodeItem(DWSIM.App.GetLocalString("EntalpiaEspecfica"), "", "", 6, 1, ""))
+                .Add(8, New DWSIM.Outros.NodeItem(DWSIM.App.GetLocalString("EntropiaEspecfica"), "", "", 7, 1, ""))
 
             End With
 
@@ -909,7 +914,7 @@ Namespace DWSIM.SimulationObjects.Streams
                     .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                 End With
                 valor = Format(Me.Fases(2).SPMProperties.molarfraction.GetValueOrDefault, Flowsheet.Options.NumberFormat)
-                .Item.Add("[7] " & DWSIM.App.GetPropertyName("PROP_MS_106"), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True)
+                .Item.Add("[7a] " & DWSIM.App.GetPropertyName("PROP_MS_106"), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True)
                 With .Item(.Item.Count - 1)
                     .DefaultType = Type.GetType("System.Nullable(Of Double)")
                     .DefaultValue = Nothing
@@ -920,7 +925,9 @@ Namespace DWSIM.SimulationObjects.Streams
                             .IsReadOnly = False
                     End Select
                 End With
-                valor = Format(Conversor.ConverterDoSI(su.spmp_enthalpy, Me.Fases(0).SPMProperties.enthalpy.GetValueOrDefault), Flowsheet.Options.NumberFormat)
+                valor = Format(Me.Fases(7).SPMProperties.molarfraction.GetValueOrDefault, FlowSheet.Options.NumberFormat)
+                .Item.Add("[7b] " & DWSIM.App.GetPropertyName("PROP_MS_146"), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True)
+                valor = Format(Conversor.ConverterDoSI(su.spmp_enthalpy, Me.Fases(0).SPMProperties.enthalpy.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                 .Item.Add("[8] " & Flowsheet.FT(DWSIM.App.GetLocalString("EntalpiaEspecfica"), su.spmp_enthalpy), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("EntalpiaEspecficadam"), True)
                 With .Item(.Item.Count - 1)
                     Select Case Me.SpecType
