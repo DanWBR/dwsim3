@@ -7221,6 +7221,9 @@ Final3:
             Dim i As Integer
             Dim HS As Double = 0.0#
             Dim Cpi As Double
+            Dim VMF() As Double
+
+            VMF = RET_VMM().MultiplyY(Vx).NormalizeY 'calculate mass fractions
 
             For i = 0 To n
                 If Vx(i) > 0 Then
@@ -7237,16 +7240,16 @@ Final3:
                         Cpi = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, 0) / 1000 / mw 'kJ/kg.K
 
                         If cprops(i).TemperatureOfFusion < 298.15 Then
-                            HS += Vx(i) * Me.AUX_INT_CPDTi_L(298.15, cprops(i).TemperatureOfFusion, cprops(i).Name)
-                            HS -= Vx(i) * cprops(i).EnthalpyOfFusionAtTf * 1000 / mw
-                            HS -= Vx(i) * Cpi * (cprops(i).TemperatureOfFusion - T)
+                            HS += VMF(i) * Me.AUX_INT_CPDTi_L(298.15, cprops(i).TemperatureOfFusion, cprops(i).Name)
+                            HS -= VMF(i) * cprops(i).EnthalpyOfFusionAtTf * 1000 / mw
+                            HS -= VMF(i) * Cpi * (cprops(i).TemperatureOfFusion - T)
                         Else
-                            HS -= Vx(i) * cprops(i).EnthalpyOfFusionAtTf * 1000 / mw
-                            HS -= Vx(i) * Cpi * (298.15 - T)
+                            HS -= VMF(i) * cprops(i).EnthalpyOfFusionAtTf * 1000 / mw
+                            HS -= VMF(i) * Cpi * (298.15 - T)
                         End If
 
                     ElseIf cprops(i).TemperatureOfFusion <> 0.0# Then
-                        HS += -Vx(i) * cprops(i).EnthalpyOfFusionAtTf * 1000 / cprops(i).Molar_Weight
+                        HS += -VMF(i) * cprops(i).EnthalpyOfFusionAtTf * 1000 / cprops(i).Molar_Weight
                     End If
                 End If
             Next
@@ -7261,6 +7264,9 @@ Final3:
             Dim i As Integer
             Dim Cp As Double = 0.0#
             Dim Cpi As Double
+            Dim VMF() As Double
+
+            VMF = RET_VMM().MultiplyY(Vx).NormalizeY 'calculate mass fractions
 
             For i = 0 To n
                 If Vx(i) > 0 Then
@@ -7275,7 +7281,7 @@ Final3:
                         E = cprops(i).Solid_Heat_Capacity_Const_E
                         '<SolidHeatCapacityCp name="Solid heat capacity"  units="J/kmol/K" >
                         Cpi = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, 0) / 1000 / mw 'kJ/kg.K
-                        Cp += Vx(i) * Cpi
+                        Cp += VMF(i) * Cpi
                     End If
                 End If
             Next
@@ -7299,7 +7305,7 @@ Final3:
 
         End Function
 
-        Public Function RET_VMM()
+        Public Function RET_VMM() As Double()
 
             Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
