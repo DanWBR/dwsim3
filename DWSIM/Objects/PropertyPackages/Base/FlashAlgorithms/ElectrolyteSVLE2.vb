@@ -232,7 +232,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     Else
                         uconstr2(i) = Vz(i) * F
                     End If
-                    lconstr2(i) = 0.0#
+                    lconstr2(i) = 1.0E-20
                 Next
                 For i = n + 1 To 2 * n + 1
                     lconstr2(i) = 0.0#
@@ -273,13 +273,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         AddressOf eval_grad_f, AddressOf eval_jac_g, AddressOf eval_h)
                     problem.AddOption("tol", Tolerance)
                     problem.AddOption("max_iter", MaximumIterations)
-                    problem.AddOption("acceptable_tol", etol)
-                    problem.AddOption("acceptable_iter", maxit_e)
+                    'problem.AddOption("acceptable_tol", etol)
+                    'problem.AddOption("acceptable_iter", maxit_e)
                     problem.AddOption("mu_strategy", "adaptive")
                     problem.AddOption("hessian_approximation", "limited-memory")
                     problem.AddOption("print_level", 5)
                     problem.AddOption("linear_solver", LinearSolver)
-                    problem.SetIntermediateCallback(AddressOf intermediate)
+                    'problem.SetIntermediateCallback(AddressOf intermediate)
                     'solve the problem 
                     status = problem.SolveProblem(initval2, obj, Nothing, Nothing, Nothing, Nothing)
                 End Using
@@ -821,11 +821,11 @@ out:        'return flash calculation results.
                 If CompoundProperties(i).IsIon Or CompoundProperties(i).IsSalt Then
                     Vnv(i) = 0.0#
                 Else
-                    If Vp(i) < Pf Then
-                        Vnv(i) = 0.0#
-                    Else
-                        Vnv(i) = fi(i) - x(i) + x(i + n + 1)
-                    End If
+                    'If Vp(i) < Pf Then
+                    '    Vnv(i) = 0.0#
+                    'Else
+                    Vnv(i) = fi(i) - x(i) + x(i + n + 1)
+                    'End If
                 End If
             Next
 
@@ -871,10 +871,14 @@ out:        'return flash calculation results.
             Gs = 0.0#
             For i = 0 To n
                 If fcl(i) = 0.0# Or Double.IsInfinity(fcl(i)) Or Double.IsNaN(fcl(i)) Then fcl(i) = 1.0E+20
-                If Vxv(i) <> 0.0# Then Gv += Vxv(i) * V * Log(fcv(i) * Vxv(i))
-                If Vxl(i) <> 0.0# Then Gl += Vxl(i) * L * Log(fcl(i) * Vxl(i))
-                If Vxs(i) <> 0.0# Then Gs += Vxs(i) * S * Log(fcs(i) * Vxs(i))
+                If Vxv(i) <> 0.0# Then Gv += Vxv(i) * V * (Log(fcv(i) * Vxv(i)))
+                If Vxl(i) <> 0.0# Then Gl += Vxl(i) * L * (Log(fcl(i) * Vxl(i)))
+                If Vxs(i) <> 0.0# Then Gs += Vxs(i) * S * (Log(fcs(i) * Vxs(i)))
             Next
+
+            If Vxv.Sum > 0.0# Then Gv += V * proppack.RET_Gid(273.15, Tf, Pf, Vxv)
+            If Vxl.Sum > 0.0# Then Gl += L * proppack.RET_Gid(273.15, Tf, Pf, Vxl)
+            If Vxs.Sum > 0.0# Then Gs += S * proppack.RET_Gid(273.15, Tf, Pf, Vxs)
 
             Gm = Gv + Gl + Gs
 
@@ -1145,14 +1149,14 @@ out:        'return flash calculation results.
                 For Each s As String In Me.ComponentIDs
                     With proppack.CurrentMaterialStream.FlowSheet.Options.Reactions(Me.Reactions(i))
                         If .Components.ContainsKey(s) Then
-                            If .Components(s).StoichCoeff > 0 Then
-                                For j = 0 To nc
-                                    If CompoundProperties(j).Name = s Then
-                                        prod(i) *= CP(j) ^ .Components(s).StoichCoeff
-                                        Exit For
-                                    End If
-                                Next
-                            End If
+                            'If .Components(s).StoichCoeff > 0 Then
+                            For j = 0 To nc
+                                If CompoundProperties(j).Name = s And Not CompoundProperties(j).IsSalt Then
+                                    prod(i) *= CP(j) ^ .Components(s).StoichCoeff
+                                    Exit For
+                                End If
+                            Next
+                            'End If
                         End If
                     End With
                 Next
