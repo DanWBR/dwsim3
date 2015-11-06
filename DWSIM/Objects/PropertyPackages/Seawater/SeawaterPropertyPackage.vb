@@ -480,12 +480,16 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Overrides Function DW_CalcEnthalpy(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double
 
-            Select Case st
-                Case State.Liquid
-                    Return Me.SIA.sea_enthalpy_si(CalcSalinity(Vx), T, P) / 1000
-                Case State.Vapor
-                    Return Me.SIA.sea_enthalpy_si(CalcSalinity(Vx), T, P) / 1000 + Me.RET_HVAPM(AUX_CONVERT_MOL_TO_MASS(Vx), T)
-            End Select
+            If DirectCast(Vx, Double()).Sum > 0.0# Then
+                Select Case st
+                    Case State.Liquid
+                        Return Me.SIA.sea_enthalpy_si(CalcSalinity(Vx), T, P) / 1000
+                    Case State.Vapor
+                        Return Me.SIA.sea_enthalpy_si(CalcSalinity(Vx), T, P) / 1000 + Me.RET_HVAPM(AUX_CONVERT_MOL_TO_MASS(Vx), T)
+                End Select
+            Else
+                Return 0.0#
+            End If
 
         End Function
 
@@ -524,13 +528,17 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         End Sub
 
         Public Overrides Function DW_CalcEntropy(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double
-            Select Case st
-                Case State.Liquid
-                    Return Me.SIA.sea_entropy_si(CalcSalinity, T, P) / 1000
-                Case State.Vapor
-                    Return Me.SIA.sea_entropy_si(CalcSalinity(Vx), T, P) / 1000 + Me.RET_HVAPM(AUX_CONVERT_MOL_TO_MASS(Vx), T) / T
-            End Select
-        End Function
+            If DirectCast(Vx, Double()).Sum > 0.0# Then
+                Select Case st
+                    Case State.Liquid
+                        Return Me.SIA.sea_entropy_si(CalcSalinity, T, P) / 1000
+                    Case State.Vapor
+                        Return Me.SIA.sea_entropy_si(CalcSalinity(Vx), T, P) / 1000 + Me.RET_HVAPM(AUX_CONVERT_MOL_TO_MASS(Vx), T) / T
+                End Select
+            Else
+                Return 0.0#
+            End If
+      End Function
 
         Public Overrides Function DW_CalcEntropyDeparture(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double
 
@@ -653,6 +661,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             Dim salinity As Double = vxw(ids) / vxw(idw)
 
+            If Double.IsInfinity(salinity) Then salinity = 0.0#
+
             Return salinity
 
         End Function
@@ -666,6 +676,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             If salt Is Nothing Then Throw New Exception("Salt compound not found. Please setup your simulation accordingly.")
 
             Dim salinity As Double = salt.FracaoMassica.GetValueOrDefault / water.FracaoMassica.GetValueOrDefault
+
+            If Double.IsInfinity(salinity) Then salinity = 0.0#
 
             Return salinity
 

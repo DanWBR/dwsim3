@@ -151,7 +151,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 For i = 0 To n
                     If P < Vp(i) Then
                         V += Vnf(i)
-                        Vxl(i) = 0
+                        Vxl(i) = 0.0000000001
                         Vnv(i) = Vnf(i)
                     End If
                 Next
@@ -165,9 +165,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Next
 
                 For i = 0 To n
-                    If Sum(Vnl) <> 0.0# Then Vxl(i) = Vnl(i) / Sum(Vnl) Else Vxl(i) = 0.0#
-                    If Sum(Vns) <> 0.0# Then Vxs(i) = Vns(i) / Sum(Vns) Else Vxs(i) = 0.0#
-                    If Sum(Vnv) <> 0.0# Then Vxv(i) = Vnv(i) / Sum(Vnv) Else Vxv(i) = 0.0#
+                    If Sum(Vnl) <> 0.0# Then Vxl(i) = Vnl(i) / Sum(Vnl) Else Vxl(i) = 0.0000000001
+                    If Sum(Vns) <> 0.0# Then Vxs(i) = Vns(i) / Sum(Vns) Else Vxs(i) = 0.0000000001
+                    If Sum(Vnv) <> 0.0# Then Vxv(i) = Vnv(i) / Sum(Vnv) Else Vxv(i) = 0.0000000001
                 Next
 
                 errfunc = Abs(L - L_ant)
@@ -584,8 +584,10 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
                 Throw New InvalidOperationException("Vapor fraction higher than water mole fraction in the mixture.")
             End If
             L = tmp(0) * xl
+            If L < 0.000001 Then L = 0.0#
             V = xv
             S = tmp(7) * xl
+            If S < 0.000001 Then S = 0.0#
             Vx = tmp(2)
             Vy = PP.RET_NullVector()
             Vy(wid) = 1.0#
@@ -632,13 +634,15 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             If xv < Vz(wid) Then
                 Vz(wid) -= xv
                 Vz = Vz.NormalizeY()
-                tmp = Flash_PT(Vz, P, T - 0.01, PP)
+                tmp = Flash_PT(Vz, P, T - 0.05, PP)
             Else
                 Throw New InvalidOperationException("Vapor fraction higher than water mole fraction in the mixture.")
             End If
             L = tmp(0) * xl
+            If L < 0.000001 Then L = 0.0#
             V = xv
             S = tmp(7) * xl
+            If S < 0.000001 Then S = 0.0#
             Vx = tmp(2)
             Vy = PP.RET_NullVector()
             Vy(wid) = 1.0#

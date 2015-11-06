@@ -2732,10 +2732,10 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                             xl2 = result(7)
                             xs = result(9)
 
-                            If xl > 0 Then HL1 = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx)
-                            If xl2 > 0 Then HL2 = Me.DW_CalcEnthalpy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2)
-                            If xv > 0 Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy)
-                            If xs <> 0 Then HS = Me.DW_CalcSolidEnthalpy(T, Vs, constprops) * Me.AUX_MMM(Vs)
+                            If xl > 0.0# Then HL1 = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx)
+                            If xl2 > 0.0# Then HL2 = Me.DW_CalcEnthalpy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2)
+                            If xv > 0.0# Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy)
+                            If xs <> 0.0# Then HS = Me.DW_CalcSolidEnthalpy(T, Vs, constprops) * Me.AUX_MMM(Vs)
                             HM = (xl * HL1 + xl2 * HL2 + xv * HV + xs * HS) / Me.AUX_MMM(Fase.Mixture)
 
                             H = HM
