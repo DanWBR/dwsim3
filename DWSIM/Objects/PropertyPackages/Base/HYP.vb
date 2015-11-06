@@ -225,9 +225,9 @@ Namespace DWSIM.Utilities.Hypos.Methods
 
             Dim fval As Double
 
-            fval = (-0.88 + sum1) * 1000
+            fval = (-0.88 + sum1)
 
-            Return fval 'KJ/kmol
+            Return fval 'KJ/mol
 
         End Function
         Public Function CalcDHf(ByVal JC() As Integer) As Double

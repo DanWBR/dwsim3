@@ -1032,7 +1032,7 @@ Public Class FormCompoundCreator
 
 
                 If CheckBoxMeltingTemp.Checked Then Me.TextBoxMeltingTemp.Text = cv.ConverterDoSI(su.spmp_temperature, jb.CalcTf(JGD)) 'melting temperature - temperature of fusion
-                If CheckBoxEnthOfFusion.Checked Then Me.TextBoxEnthOfFusion.Text = cv.ConverterDoSI(su.spmp_enthalpy, jb.CalcHf(JGD) / MM) 'enthalpy of fusion
+                If CheckBoxEnthOfFusion.Checked Then Me.TextBoxEnthOfFusion.Text = jb.CalcHf(JGD) 'enthalpy of fusion - KJ/mol
                 If CheckValidDF(Me.TextBoxPc.Text) Then
                     Tf = cv.ConverterParaSI(su.spmp_temperature, Me.TextBoxMeltingTemp.Text)
                 Else : Tf = -1
@@ -2673,7 +2673,7 @@ Public Class FormCompoundCreator
 
     Private Sub TextBoxEnthOfFusion_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxEnthOfFusion.TextChanged
         Try
-            TextBoxEnthOfFusion2.Text = cv.ConverterParaSI(su.spmp_enthalpy, TextBoxEnthOfFusion.Text) * Me.TextBoxMW.Text / 1000
+            TextBoxEnthOfFusion2.Text = cv.ConverterParaSI(su.spmp_enthalpy, TextBoxEnthOfFusion.Text) / Me.TextBoxMW.Text * 1000
         Catch ex As Exception
             TextBoxEnthOfFusion2.Text = ""
         End Try
@@ -2859,7 +2859,6 @@ Public Class FormCompoundCreator
 
     End Sub
 
-    
 End Class
 
 <System.Serializable()> Public Class CompoundGeneratorCase
