@@ -5176,4 +5176,10 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
   <data name="PP_FLASHALGORITHMIDEALKFALLBACK" xml:space="preserve">
     <value>Utilizar K ideal na solução trivial</value>
   </data>
+  <data name="DescSEAPP" xml:space="preserve">
+    <value>Este Pacote de Propriedades contém rotinas para calcular propriedades da água do mar utilizando os procedimentos constantes na especificação IAPWS-08 ("Release on the IAPWS Formulation 2008 for the Thermodynamic Properties of Seawater").</value>
+  </data>
+  <data name="SEAPP" xml:space="preserve">
+    <value>Água do Mar (IAPWS-08)</value>
+  </data>
 </root>

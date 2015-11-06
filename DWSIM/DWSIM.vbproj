@@ -729,6 +729,7 @@
     <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\NestedLoops3PV3.vb" />
     <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\NestedLoopsImmiscible.vb" />
     <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\NestedLoopsSLE.vb" />
+    <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\Seawater.vb" />
     <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\SimpleLLE.vb" />
     <Compile Include="Objects\PropertyPackages\Base\MichelsenBase.vb" />
     <Compile Include="Objects\PropertyPackages\CAPE-OPEN\CAPEOPENPropertyPackageManager.vb" />
@@ -762,6 +763,8 @@
     <Compile Include="Objects\PropertyPackages\PRSV2\PRSV2PropertyPackage.vb" />
     <Compile Include="Objects\PropertyPackages\PRSV2\PRSV2VLPropertyPackage.vb" />
     <Compile Include="Objects\PropertyPackages\Raoult\Helper Classes\Ideal.vb" />
+    <Compile Include="Objects\PropertyPackages\Seawater\Helper Classes\SIA.vb" />
+    <Compile Include="Objects\PropertyPackages\Seawater\SeawaterPropertyPackage.vb" />
     <Compile Include="Objects\PropertyPackages\SRK\Helper Classes\SRK2.vb" />
     <Compile Include="Objects\PropertyPackages\MODFAC\Helper Classes\MODFAC.vb" />
     <Compile Include="Objects\PropertyPackages\MODFAC\MODFACPropertyPackage.vb" />

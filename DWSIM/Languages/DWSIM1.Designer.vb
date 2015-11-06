@@ -4148,6 +4148,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Este Pacote de Propriedades contém rotinas para calcular propriedades da água do mar utilizando os procedimentos constantes na especificação IAPWS-08 (&quot;Release on the IAPWS Formulation 2008 for the Thermodynamic Properties of Seawater&quot;)..
+        '''</summary>
+        Friend Shared ReadOnly Property DescSEAPP() As String
+            Get
+                Return ResourceManager.GetString("DescSEAPP", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Pacote de Propriedades que utiliza a EE Redlich-Kwong modificada por Soave. Indicado para uso com hidrocarbonetos e não-condensáveis.
         '''As propriedades são calculadas diretamente através da equação de estado e/ou de dados experimentais, exceto:
         '''Massa Específica da Fase Líquida: Método de Rackett
@@ -12565,6 +12574,15 @@ Namespace My.Resources
         Friend Shared ReadOnly Property SCStrippingVapor() As String
             Get
                 Return ResourceManager.GetString("SCStrippingVapor", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Água do Mar (IAPWS-08).
+        '''</summary>
+        Friend Shared ReadOnly Property SEAPP() As String
+            Get
+                Return ResourceManager.GetString("SEAPP", resourceCulture)
             End Get
         End Property
         

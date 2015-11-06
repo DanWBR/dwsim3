@@ -1550,4 +1550,25 @@
   <CpAq_b>-3.4446</CpAq_b>
   <CpAq_c>-51473</CpAq_c>
 </compound>
+<compound>
+  <Name>Salt</Name>
+  <Formula>NaCl</Formula>
+  <MW>58.44</MW>
+  <Ion>False</Ion>
+  <Salt>True</Salt>
+  <HydratedSalt>False</HydratedSalt>
+  <PositiveIon>Na+</PositiveIon>
+  <NegativeIon>Cl-</NegativeIon>
+  <PositiveIonStoichCoeff>1</PositiveIonStoichCoeff>
+  <NegativeIonStoichCoeff>1</NegativeIonStoichCoeff>
+  <StoichSum>2</StoichSum>
+  <Charge>0</Charge>
+  <DelGF_kJ_mol>-384.02</DelGF_kJ_mol>
+  <DelHf_kJ_mol>-411.12</DelHf_kJ_mol>
+  <Cp_J_mol_K>50.5</Cp_J_mol_K>
+  <Tf_C>800.85</Tf_C>
+  <Hfus_at_Tf_kJ_mol>28.16</Hfus_at_Tf_kJ_mol>
+  <DenS_T_C>25</DenS_T_C>
+  <DenS_g_mL>2.17</DenS_g_mL>
+</compound>
 </compounds>

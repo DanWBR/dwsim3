@@ -384,7 +384,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         ''' <value></value>
         ''' <returns>A FlashAlgorithm object to be used in flash calculations.</returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property FlashBase() As Auxiliary.FlashAlgorithms.FlashAlgorithm
+        Public Overridable ReadOnly Property FlashBase() As Auxiliary.FlashAlgorithms.FlashAlgorithm
             Get
                 If Not My.Application.CAPEOPENMode And Not My.MyApplication.IsRunningParallelTasks Then
                     If Not Me.Parameters.ContainsKey("PP_FLASHALGORITHM") Then
@@ -5893,63 +5893,8 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                 If i = index Then nome = subst.Nome
                 i += 1
             Next
-            If Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.IsPF = 1 Then
-                With Me.CurrentMaterialStream.Fases(0).Componentes(nome)
-                    Return Auxiliary.PROPS.Pvp_leekesler(T, .ConstantProperties.Critical_Temperature, .ConstantProperties.Critical_Pressure, .ConstantProperties.Acentric_Factor)
-                End With
-            Else
-                If Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.OriginalDB = "DWSIM" Or _
-                Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.OriginalDB = "" Then
-                    Dim A, B, C, D, E, result As Double
-                    A = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_A
-                    B = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_B
-                    C = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_C
-                    D = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_D
-                    E = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_E
-                    result = Math.Exp(A + B / T + C * Math.Log(T) + D * T ^ E)
-                    Return result
-                ElseIf Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.OriginalDB = "CheResources" Then
-                    Dim A, B, C, result As Double
-                    A = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_A
-                    B = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_B
-                    C = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_C
-                    '[LN(P)=A-B/(T+C), P(mmHG) T(K)]
-                    result = Math.Exp(A - B / (T + C)) * 133.322368 'mmHg to Pascal
-                    Return result
-                ElseIf Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.OriginalDB = "ChemSep" Or _
-                Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.OriginalDB = "User" Then
-                    Dim A, B, C, D, E, result As Double
-                    Dim eqno As String = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.VaporPressureEquation
-                    Dim mw As Double = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Molar_Weight
-                    A = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_A
-                    B = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_B
-                    C = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_C
-                    D = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_D
-                    E = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_E
-                    '<vp_c name="Vapour pressure"  units="Pa" >
-                    result = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, 0) 'Pa.s
-                    If eqno = "0" Then
-                        With Me.CurrentMaterialStream.Fases(0).Componentes(nome)
-                            result = Auxiliary.PROPS.Pvp_leekesler(T, .ConstantProperties.Critical_Temperature, .ConstantProperties.Critical_Pressure, .ConstantProperties.Acentric_Factor)
-                        End With
-                    End If
-                    Return result
-                ElseIf Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.OriginalDB = "Biodiesel" Then
-                    Dim A, B, C, D, E, result As Double
-                    Dim eqno As String = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.VaporPressureEquation
-                    A = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_A
-                    B = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_B
-                    C = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_C
-                    D = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_D
-                    E = Me.CurrentMaterialStream.Fases(0).Componentes(nome).ConstantProperties.Vapor_Pressure_Constant_E
-                    result = Me.CalcCSTDepProp(eqno, A, B, C, D, E, T, 0) 'kPa
-                    Return result * 1000
-                Else
-                    With Me.CurrentMaterialStream.Fases(0).Componentes(nome)
-                        Return Auxiliary.PROPS.Pvp_leekesler(T, .ConstantProperties.Critical_Temperature, .ConstantProperties.Critical_Pressure, .ConstantProperties.Acentric_Factor)
-                    End With
-                End If
-            End If
+
+            Return AUX_PVAPi(nome, T)
 
         End Function
 
@@ -5975,6 +5920,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                 Tinf = Tinf + delta_T
                 fT_inf = PVAP - Me.AUX_PVAPi(subst, Tinf)
             Loop Until fT * fT_inf < 0 Or fT_inf > fT Or i >= 100
+            If i = 100 Then Return 0.0#
             Tsup = Tinf
             Tinf = Tinf - delta_T
 

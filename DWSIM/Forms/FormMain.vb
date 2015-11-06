@@ -452,6 +452,11 @@ Public Class FormMain
         STPP.ComponentDescription = DWSIM.App.GetLocalString("DescSteamTablesPP")
         PropertyPackages.Add(STPP.ComponentName.ToString, STPP)
 
+        Dim SEAPP As SeawaterPropertyPackage = New SeawaterPropertyPackage()
+        SEAPP.ComponentName = DWSIM.App.GetLocalString("SEAPP")
+        SEAPP.ComponentDescription = DWSIM.App.GetLocalString("DescSEAPP")
+        PropertyPackages.Add(SEAPP.ComponentName.ToString, SEAPP)
+
         Dim PCSAFTPP As PCSAFTPropertyPackage = New PCSAFTPropertyPackage()
         PCSAFTPP.ComponentName = "PC-SAFT"
         PCSAFTPP.ComponentDescription = DWSIM.App.GetLocalString("DescPCSAFTPP")

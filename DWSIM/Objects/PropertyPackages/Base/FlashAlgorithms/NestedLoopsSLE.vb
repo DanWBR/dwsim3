@@ -139,7 +139,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 activcoeff = PP.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
 
                 For i = 0 To n
-                    activcoeff(i) = activcoeff(i) * P / Vp(i)
+                    If Not CompoundProperties(i).IsSalt Then activcoeff(i) = activcoeff(i) * P / Vp(i)
                     If CompoundProperties(i).TemperatureOfFusion <> 0.0# Then
                         Ki(i) = (1 / activcoeff(i)) * Exp(-CompoundProperties(i).EnthalpyOfFusionAtTf / (0.00831447 * T) * (1 - T / CompoundProperties(i).TemperatureOfFusion))
                     Else
