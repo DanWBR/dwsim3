@@ -1101,15 +1101,15 @@ Namespace DWSIM.Databases
                                 .Liquid_Density_Const_E = Double.Parse(node2.InnerText, nf)
                             Case "Liquid_Heat_Capacity_EqNo"
                                 If node2.InnerText <> "" Then .LiquidHeatCapacityEquation = Integer.Parse(node2.InnerText, nf)
-                            Case "Liquid_Heat_Capacity_Constant_A"
+                            Case "Liquid_Heat_Capacity_Const_A"
                                 .Liquid_Heat_Capacity_Const_A = Double.Parse(node2.InnerText, nf)
-                            Case "Liquid_Heat_Capacity_Constant_B"
+                            Case "Liquid_Heat_Capacity_Const_B"
                                 .Liquid_Heat_Capacity_Const_B = Double.Parse(node2.InnerText, nf)
-                            Case "Liquid_Heat_Capacity_Constant_C"
+                            Case "Liquid_Heat_Capacity_Const_C"
                                 .Liquid_Heat_Capacity_Const_C = Double.Parse(node2.InnerText, nf)
-                            Case "Liquid_Heat_Capacity_Constant_D"
+                            Case "Liquid_Heat_Capacity_Const_D"
                                 .Liquid_Heat_Capacity_Const_D = Double.Parse(node2.InnerText, nf)
-                            Case "Liquid_Heat_Capacity_Constant_E"
+                            Case "Liquid_Heat_Capacity_Const_E"
                                 .Liquid_Heat_Capacity_Const_E = Double.Parse(node2.InnerText, nf)
                             Case "Liquid_Heat_Capacity_TMin"
                                 .Liquid_Heat_Capacity_Tmin = Double.Parse(node2.InnerText, nf)
