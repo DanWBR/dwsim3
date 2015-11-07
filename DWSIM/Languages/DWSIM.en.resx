@@ -5188,4 +5188,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="SEAPP" xml:space="preserve">
     <value>IAPWS-08 Seawater</value>
   </data>
+  <data name="Salinity" xml:space="preserve">
+    <value>Salinity (kg/kg)</value>
+  </data>
 </root>

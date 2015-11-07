@@ -5166,4 +5166,7 @@ Die erhaltenen Daten werden hauptsächlich für die Berechnung von VLE-Daten emp
   <data name="PP_FLASHALGORITHMIDEALKFALLBACK" xml:space="preserve">
     <value>Fallback to ideal K on trivial solution</value>
   </data>
+  <data name="Salinity" xml:space="preserve">
+    <value>Salzgehalt (kg/kg)</value>
+  </data>
 </root>

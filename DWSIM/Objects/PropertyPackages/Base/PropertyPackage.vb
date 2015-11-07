@@ -4844,6 +4844,18 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                     Dim pl As New PropertyGridEx.CustomPropertyCollection()
                     'PropertyGridEx.CustomPropertyCollection - Liquido
 
+                    If TypeOf Me Is SeawaterPropertyPackage Then
+
+                        Dim water As Substancia = (From subst As Substancia In Me.CurrentMaterialStream.Fases(3).Componentes.Values Select subst Where subst.ConstantProperties.CAS_Number = "7732-18-5").SingleOrDefault
+                        Dim salt As Substancia = (From subst As Substancia In Me.CurrentMaterialStream.Fases(3).Componentes.Values Select subst Where subst.ConstantProperties.Name = "Salt").SingleOrDefault
+
+                        Dim salinity As Double = salt.FracaoMassica.GetValueOrDefault / water.FracaoMassica.GetValueOrDefault
+
+                        val = Format(salinity, Flowsheet.Options.NumberFormat)
+                        pl.Add(DWSIM.App.GetLocalString("Salinity"), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("Salinity"), True)
+
+                    End If
+
                     If Me.IsElectrolytePP Then
 
                         'Liquid Phase Activity Coefficients

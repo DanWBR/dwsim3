@@ -5182,4 +5182,7 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
   <data name="SEAPP" xml:space="preserve">
     <value>Água do Mar (IAPWS-08)</value>
   </data>
+  <data name="Salinity" xml:space="preserve">
+    <value>Salinidad (kg/kg)</value>
+  </data>
 </root>
