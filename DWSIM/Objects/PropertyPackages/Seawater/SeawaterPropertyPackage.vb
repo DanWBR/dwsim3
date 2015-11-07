@@ -663,6 +663,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             If Double.IsInfinity(salinity) Then salinity = 0.0#
 
+            If salinity > Seawater.sal_smax Then
+                If Me.CurrentMaterialStream.FlowSheet IsNot Nothing Then
+                    Me.CurrentMaterialStream.FlowSheet.WriteToLog(Me.ComponentName & ": maximum salinity exceeded for seawater calculations (" & Format(salinity, "0.00") & "/0.12). Switching to pure water calculations...", Color.DarkOrange, FormClasses.TipoAviso.Aviso)
+                End If
+                salinity = 0.0#
+            End If
+
             Return salinity
 
         End Function
@@ -678,6 +685,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim salinity As Double = salt.FracaoMassica.GetValueOrDefault / water.FracaoMassica.GetValueOrDefault
 
             If Double.IsInfinity(salinity) Then salinity = 0.0#
+
+            If salinity > Seawater.sal_smax Then
+                If Me.CurrentMaterialStream.FlowSheet IsNot Nothing Then
+                    Me.CurrentMaterialStream.FlowSheet.WriteToLog(Me.ComponentName & ": maximum salinity exceeded for seawater calculations (" & Format(salinity, "0.00") & "/0.12). Switching to pure water calculations...", Color.DarkOrange, FormClasses.TipoAviso.Aviso)
+                End If
+                salinity = 0.0#
+            End If
 
             Return salinity
 

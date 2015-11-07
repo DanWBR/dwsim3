@@ -583,12 +583,15 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             Else
                 Throw New InvalidOperationException("Vapor fraction higher than water mole fraction in the mixture.")
             End If
-            L = tmp(0) * xl
+            L = (tmp(0) + tmp(1)) * xl
             If L < 0.000001 Then L = 0.0#
             V = xv
             S = tmp(7) * xl
             If S < 0.000001 Then S = 0.0#
-            Vx = tmp(2)
+            For i = 0 To n
+                Vx(i) = (tmp(2)(i) * tmp(0) + tmp(3)(i) * tmp(1)) / L
+            Next
+            Vx = Vx.NormalizeY()
             Vy = PP.RET_NullVector()
             Vy(wid) = 1.0#
             Vs = tmp(8)
@@ -634,16 +637,19 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             If xv < Vz(wid) Then
                 Vz(wid) -= xv
                 Vz = Vz.NormalizeY()
-                tmp = Flash_PT(Vz, P, T - 0.05, PP)
+                tmp = Flash_PT(Vz, P, T, PP)
             Else
                 Throw New InvalidOperationException("Vapor fraction higher than water mole fraction in the mixture.")
             End If
-            L = tmp(0) * xl
+            L = (tmp(0) + tmp(1)) * xl
             If L < 0.000001 Then L = 0.0#
             V = xv
             S = tmp(7) * xl
             If S < 0.000001 Then S = 0.0#
-            Vx = tmp(2)
+            For i = 0 To n
+                Vx(i) = (tmp(2)(i) * tmp(0) + tmp(3)(i) * tmp(1)) / L
+            Next
+            Vx = Vx.NormalizeY()
             Vy = PP.RET_NullVector()
             Vy(wid) = 1.0#
             Vs = tmp(8)
