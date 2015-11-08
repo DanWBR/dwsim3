@@ -913,22 +913,32 @@ Namespace DWSIM.SimulationObjects.Streams
                     .Tag = New Object() {Flowsheet.Options.NumberFormat, su.spmp_volumetricFlow, "Q"}
                     .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                 End With
-                valor = Format(Me.Fases(2).SPMProperties.molarfraction.GetValueOrDefault, Flowsheet.Options.NumberFormat)
-                .Item.Add("[7a] " & DWSIM.App.GetPropertyName("PROP_MS_106"), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = Type.GetType("System.Nullable(Of Double)")
-                    .DefaultValue = Nothing
-                    Select Case Me.SpecType
-                        Case Flashspec.Pressure_and_Enthalpy, Flashspec.Pressure_and_Entropy, Flashspec.Temperature_and_Pressure
-                            .IsReadOnly = True
-                        Case Else
-                            .IsReadOnly = False
-                    End Select
-                End With
+
+                Dim f As New PropertyGridEx.CustomPropertyCollection()
                 valor = Format(Me.Fases(7).SPMProperties.molarfraction.GetValueOrDefault, FlowSheet.Options.NumberFormat)
-                .Item.Add("[7b] " & DWSIM.App.GetPropertyName("PROP_MS_146"), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True)
+                f.Add(DWSIM.App.GetLocalString("Solid"), valor, False, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True) 'solid
+                f.Item(0).IsReadOnly = True
+                valor = Format(Me.Fases(1).SPMProperties.molarfraction.GetValueOrDefault, FlowSheet.Options.NumberFormat)
+                f.Add(DWSIM.App.GetLocalString("OverallLiquid"), valor, False, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True) ' liquid
+                f.Item(1).IsReadOnly = True
+                valor = Format(Me.Fases(2).SPMProperties.molarfraction.GetValueOrDefault, FlowSheet.Options.NumberFormat)
+                f.Add(DWSIM.App.GetLocalString("Vapor"), valor, False, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True) 'vapour
+                Select Case Me.SpecType
+                    Case Flashspec.Pressure_and_VaporFraction
+                        f.Item(2).IsReadOnly = False
+                    Case Else
+                        f.Item(2).IsReadOnly = True
+                End Select
+                .Item.Add("[7] " & DWSIM.App.GetLocalString("Fraomolardafase"), f, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Fraomolardafase"), True)
+                With .Item(.Item.Count - 1)
+                    .IsReadOnly = False
+                    .IsBrowsable = True
+                    .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
+                    .CustomEditor = New System.Drawing.Design.UITypeEditor
+                End With
+
                 valor = Format(Conversor.ConverterDoSI(su.spmp_enthalpy, Me.Fases(0).SPMProperties.enthalpy.GetValueOrDefault), FlowSheet.Options.NumberFormat)
-                .Item.Add("[8] " & Flowsheet.FT(DWSIM.App.GetLocalString("EntalpiaEspecfica"), su.spmp_enthalpy), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("EntalpiaEspecficadam"), True)
+                .Item.Add("[8] " & FlowSheet.FT(DWSIM.App.GetLocalString("EntalpiaEspecfica"), su.spmp_enthalpy), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("EntalpiaEspecficadam"), True)
                 With .Item(.Item.Count - 1)
                     Select Case Me.SpecType
                         Case Flashspec.Pressure_and_Enthalpy

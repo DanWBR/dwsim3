@@ -274,7 +274,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             d1 = Date.Now
             n = UBound(Vz)
 
-            Dim Vx(n), Vs(n), MaxAct(n), MaxX(n), Tf(n), Hf(n), ActCoeff(n), VnL(n), VnS(n), Vp(n) As Double
+            Dim Vx(n), Vs(n), MaxAct(n), MaxX(n), MaxLiquPhase(n), Tf(n), Hf(n), ActCoeff(n), VnL(n), VnS(n), Vp(n) As Double
             Dim L, L_old, SF, SLP As Double
             Dim cpl(n), cps(n), dCp(n) As Double
             Dim Vn(n) As String
@@ -328,6 +328,22 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                 ActCoeff = PP.DW_CalcFugCoeff(Vx, T, P, State.Liquid).MultiplyConstY(P).DivideY(Vp)
                 MaxX = MaxAct.DivideY(ActCoeff)
 
+                MaxLiquPhase = Vz.DivideY(MaxX)
+                SF = 0
+                For i = 0 To n
+                    If MaxLiquPhase(i) > 0.0001 Then
+                        SF += MaxX(i)
+                    End If
+                Next
+                If SF < 1 Then
+                    'only solid remaining
+                    Vx = PP.RET_NullVector
+                    Vs = Vz.Clone
+                    L = 0
+                    L_old = 0
+                    Exit Do
+                End If
+
                 VnL = PP.RET_NullVector
                 VnS = PP.RET_NullVector
                 Vx = PP.RET_NullVector
@@ -360,6 +376,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     End If
                     VnS(i) = Vz(i) - VnL(i)
                 Next
+
                 If L > 0 And MaxX.SumY > 1 Then
                     Vx = VnL.NormalizeY
                     Vs = VnS.NormalizeY
@@ -455,7 +472,7 @@ out:        d2 = Date.Now
                 S = SL_Result.SF * (1 - V)
 
                 'only solids or vapour left
-                If L = 0 Then GoTo out
+                If L = 0 Then GoTo out2
 
                 '================================================
                 '== mix vapour and liquid phase =================
@@ -659,7 +676,7 @@ out:            'calculate global phase fractions
                 L = L * (1 - S)
                 V = V * (1 - S)
 
-                If (Math.Abs(GL_old - L) < 0.0000001) And (Math.Abs(GV_old - V) < 0.0000001) And (Math.Abs(GS_old - S) < 0.0000001) Then GlobalConv = True
+out2:           If (Math.Abs(GL_old - L) < 0.0000001) And (Math.Abs(GV_old - V) < 0.0000001) And (Math.Abs(GS_old - S) < 0.0000001) Then GlobalConv = True
 
 
             Loop Until GlobalConv

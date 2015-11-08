@@ -578,20 +578,20 @@
     <value>Volumenanteil  Feststoff</value>
   </data>
   <data name="PROP_MS_149" xml:space="preserve">
-    <value>Mole Fraction (Solid Phase)</value>
+    <value>Molanteil Feststoff</value>
   </data>
   <data name="PROP_MS_15" xml:space="preserve">
     <value>Spezifische Entropie Dampfphase</value>
     <comment>0</comment>
   </data>
   <data name="PROP_MS_150" xml:space="preserve">
-    <value>Mass Fraction (Solid Phase)</value>
+    <value>Massenanteil Feststoff</value>
   </data>
   <data name="PROP_MS_151" xml:space="preserve">
-    <value>Mole Flow (Solid Phase)</value>
+    <value>Molenstrom Feststoff</value>
   </data>
   <data name="PROP_MS_152" xml:space="preserve">
-    <value>Mass Flow (Solid Phase)</value>
+    <value>Massenstrom Feststoff</value>
   </data>
   <data name="PROP_MS_16" xml:space="preserve">
     <value>Molare Enthalpie Dampfphase</value>
