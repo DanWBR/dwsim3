@@ -696,7 +696,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     If beta < 20 Then
                         Try
                             tmp2 = Me.FlashBase.Flash_TV(Me.RET_VMOL(Fase.Mixture), T, 0, PB(i - 1), Me, True, KI)
-                            If Abs(tmp2(4) - PB(i - 1)) > 200000 Then Exit Do
+                            If Abs(tmp2(4) - PB(i - 1)) > 1000000 Then Exit Do
                             TVB.Add(T)
                             PB.Add(tmp2(4))
                             P = PB(i)
@@ -716,7 +716,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     Else
                         Try
                             tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, 0, TVB(i - 1), Me, True, KI)
-                            If Abs(tmp2(4) - TVB(i - 1)) > 20 Then Exit Do
+                            If Abs(tmp2(4) - TVB(i - 1)) > 50 Then Exit Do
                             TVB.Add(tmp2(4))
                             PB.Add(P)
                             T = TVB(i)
@@ -790,7 +790,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         If Abs(beta) < 2 Then
                             Try
                                 tmp2 = Me.FlashBase.Flash_TV(Vzwf, T, 1, POWF(i - 1), Me, True, KI)
-                                If Abs(tmp2(4) - POWF(i - 1)) > 200000 Then Exit Do
+                                If Abs(tmp2(4) - POWF(i - 1)) > 1000000 Then Exit Do
                                 TOWF.Add(T)
                                 POWF.Add(tmp2(4))
                                 P = POWF(i)
@@ -817,7 +817,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         Else
                             Try
                                 tmp2 = Me.FlashBase.Flash_PV(Vzwf, P, 1, TOWF(i - 1), Me, False, KI)
-                                If Abs(tmp2(4) - TOWF(i - 1)) > 20 Then Exit Do
+                                If Abs(tmp2(4) - TOWF(i - 1)) > 50 Then Exit Do
                                 TOWF.Add(tmp2(4))
                                 POWF.Add(P)
                                 T = TOWF(i)
@@ -881,7 +881,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     If Abs(beta) < 2 Then
                         Try
                             tmp2 = Me.FlashBase.Flash_TV(Me.RET_VMOL(Fase.Mixture), T, 1, PO(i - 1), Me, True, KI)
-                            If Abs(tmp2(4) - PO(i - 1)) > 200000 Then Exit Do
+                            If Abs(tmp2(4) - PO(i - 1)) > 1000000 Then Exit Do
                             TVD.Add(T)
                             PO.Add(tmp2(4))
                             P = PO(i)
@@ -908,7 +908,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                     Else
                         Try
                             tmp2 = Me.FlashBase.Flash_PV(Me.RET_VMOL(Fase.Mixture), P, 1, TVD(i - 1), Me, False, KI)
-                            If Abs(tmp2(4) - TVD(i - 1)) > 20 Then Exit Do
+                            If Abs(tmp2(4) - TVD(i - 1)) > 50 Then Exit Do
                             TVD.Add(tmp2(4))
                             PO.Add(P)
                             T = TVD(i)
@@ -1197,7 +1197,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                          If beta < 20 Then
                                                              Try
                                                                  tmp2 = Me.FlashBase.Flash_TV(Vz, T, 0, PB(ii - 1), Me, True, KI)
-                                                                 If Abs(tmp2(4) - PB(ii - 1)) > 200000 Then Exit Do
+                                                                 If Abs(tmp2(4) - PB(ii - 1)) > 1000000 Then Exit Do
                                                                  TVB.Add(T)
                                                                  PB.Add(tmp2(4))
                                                                  P = PB(ii)
@@ -1216,7 +1216,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                          Else
                                                              Try
                                                                  tmp2 = Me.FlashBase.Flash_PV(Vz, P, 0, TVB(ii - 1), Me, True, KI)
-                                                                 If Abs(tmp2(4) - TVB(ii - 1)) > 20 Then Exit Do
+                                                                 If Abs(tmp2(4) - TVB(ii - 1)) > 50 Then Exit Do
                                                                  TVB.Add(tmp2(4))
                                                                  PB.Add(P)
                                                                  T = TVB(ii)
@@ -1278,7 +1278,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                          If Abs(beta) < 2 Then
                                                              Try
                                                                  tmp2 = Me.FlashBase.Flash_TV(Vz, T, 1, PO(ii - 1), Me, True, KI)
-                                                                 If Abs(tmp2(4) - PO(ii - 1)) > 200000 Then Exit Do
+                                                                 If Abs(tmp2(4) - PO(ii - 1)) > 1000000 Then Exit Do
                                                                  TVD.Add(T)
                                                                  PO.Add(tmp2(4))
                                                                  P = PO(ii)
@@ -1304,7 +1304,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                          Else
                                                              Try
                                                                  tmp2 = Me.FlashBase.Flash_PV(Vz, P, 1, TVD(ii - 1), Me, False, KI)
-                                                                 If Abs(tmp2(4) - TVD(ii - 1)) > 20 Then Exit Do
+                                                                 If Abs(tmp2(4) - TVD(ii - 1)) > 50 Then Exit Do
                                                                  TVD.Add(tmp2(4))
                                                                  PO.Add(P)
                                                                  T = TVD(ii)
@@ -1390,7 +1390,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                              If Abs(beta) < 2 Then
                                                                  Try
                                                                      tmp2 = Me.FlashBase.Flash_TV(Vzwf, T, 1, POWF(ii - 1), Me, True, KI)
-                                                                     If Abs(tmp2(4) - POWF(ii - 1)) > 200000 Then Exit Do
+                                                                     If Abs(tmp2(4) - POWF(ii - 1)) > 1000000 Then Exit Do
                                                                      TOWF.Add(T)
                                                                      POWF.Add(tmp2(4))
                                                                      P = POWF(ii)
@@ -1417,7 +1417,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                              Else
                                                                  Try
                                                                      tmp2 = Me.FlashBase.Flash_PV(Vzwf, P, 1, TOWF(ii - 1), Me, False, KI)
-                                                                     If Abs(tmp2(4) - TOWF(ii - 1)) > 20 Then Exit Do
+                                                                     If Abs(tmp2(4) - TOWF(ii - 1)) > 50 Then Exit Do
                                                                      TOWF.Add(tmp2(4))
                                                                      POWF.Add(P)
                                                                      T = TOWF(ii)
