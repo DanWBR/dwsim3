@@ -5169,4 +5169,7 @@ Die erhaltenen Daten werden hauptsächlich für die Berechnung von VLE-Daten emp
   <data name="Salinity" xml:space="preserve">
     <value>Salzgehalt (kg/kg)</value>
   </data>
+  <data name="PP_IGNORE_SALINITY_LIMIT" xml:space="preserve">
+    <value>Ignorieren maximale salzgehaltsgrenze</value>
+  </data>
 </root>

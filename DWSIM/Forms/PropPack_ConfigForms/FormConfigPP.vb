@@ -209,6 +209,7 @@ Public Class FormConfigPP
             k += 1
         Next
     End Sub
+
     Private Sub FormConfigPR_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         Me.Text = DWSIM.App.GetLocalString("ConfigurarPacotedePropriedades") & _pp.Tag & " - " & _pp.ComponentName & ")"

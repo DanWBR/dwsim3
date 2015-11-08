@@ -5200,4 +5200,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="Salinity" xml:space="preserve">
     <value>Salinidade (kg/kg)</value>
   </data>
+  <data name="PP_IGNORE_SALINITY_LIMIT" xml:space="preserve">
+    <value>Ignorar limite máximo de salinidade</value>
+  </data>
 </root>

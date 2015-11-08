@@ -10616,6 +10616,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Ignorar limite máximo de salinidade.
+        '''</summary>
+        Friend Shared ReadOnly Property PP_IGNORE_SALINITY_LIMIT() As String
+            Get
+                Return ResourceManager.GetString("PP_IGNORE_SALINITY_LIMIT", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Flash PH - Tolerância do Loop Externo.
         '''</summary>
         Friend Shared ReadOnly Property PP_PHFELT() As String

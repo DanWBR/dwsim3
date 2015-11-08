@@ -24,11 +24,11 @@ Partial Class FormConfigPP
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormConfigPP))
-        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip()
         Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
@@ -63,21 +63,21 @@ Partial Class FormConfigPP
         '
         'FaTabStrip1
         '
-        resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
         Me.FaTabStrip1.AlwaysShowClose = False
         Me.FaTabStrip1.AlwaysShowMenuGlyph = False
+        resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
         Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem2, Me.FaTabStripItem1, Me.TabStripUNIFAC})
         Me.FaTabStrip1.Name = "FaTabStrip1"
-        Me.FaTabStrip1.SelectedItem = Me.TabStripUNIFAC
+        Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem1
         '
         'FaTabStripItem2
         '
-        resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
         Me.FaTabStripItem2.CanClose = False
         Me.FaTabStripItem2.Controls.Add(Me.GroupBox2)
         Me.FaTabStripItem2.Controls.Add(Me.Label2)
         Me.FaTabStripItem2.IsDrawn = True
         Me.FaTabStripItem2.Name = "FaTabStripItem2"
+        resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
         '
         'GroupBox2
         '
@@ -103,34 +103,34 @@ Partial Class FormConfigPP
         '
         'KryptonDataGridView2
         '
-        resources.ApplyResources(Me.KryptonDataGridView2, "KryptonDataGridView2")
         Me.KryptonDataGridView2.AllowUserToAddRows = False
         Me.KryptonDataGridView2.AllowUserToDeleteRows = False
         Me.KryptonDataGridView2.AllowUserToResizeColumns = False
         Me.KryptonDataGridView2.AllowUserToResizeRows = False
+        resources.ApplyResources(Me.KryptonDataGridView2, "KryptonDataGridView2")
         Me.KryptonDataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.KryptonDataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         Me.KryptonDataGridView2.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column3, Me.Column4, Me.Column5})
         Me.KryptonDataGridView2.Name = "KryptonDataGridView2"
         Me.KryptonDataGridView2.RowHeadersVisible = False
         Me.KryptonDataGridView2.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle13.Format = "N5"
-        Me.KryptonDataGridView2.RowsDefaultCellStyle = DataGridViewCellStyle13
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle3.Format = "N5"
+        Me.KryptonDataGridView2.RowsDefaultCellStyle = DataGridViewCellStyle3
         Me.KryptonDataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         '
         'Column3
         '
-        DataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-        Me.Column3.DefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        Me.Column3.DefaultCellStyle = DataGridViewCellStyle1
         resources.ApplyResources(Me.Column3, "Column3")
         Me.Column3.Name = "Column3"
         Me.Column3.ReadOnly = True
         '
         'Column4
         '
-        DataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
-        Me.Column4.DefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
+        Me.Column4.DefaultCellStyle = DataGridViewCellStyle2
         resources.ApplyResources(Me.Column4, "Column4")
         Me.Column4.Name = "Column4"
         Me.Column4.ReadOnly = True
@@ -152,11 +152,12 @@ Partial Class FormConfigPP
         '
         'FaTabStripItem1
         '
-        resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
         Me.FaTabStripItem1.CanClose = False
         Me.FaTabStripItem1.Controls.Add(Me.GroupBox1)
         Me.FaTabStripItem1.IsDrawn = True
         Me.FaTabStripItem1.Name = "FaTabStripItem1"
+        Me.FaTabStripItem1.Selected = True
+        resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
         '
         'GroupBox1
         '
@@ -167,10 +168,10 @@ Partial Class FormConfigPP
         '
         'KryptonDataGridView1
         '
-        resources.ApplyResources(Me.KryptonDataGridView1, "KryptonDataGridView1")
         Me.KryptonDataGridView1.AllowUserToAddRows = False
         Me.KryptonDataGridView1.AllowUserToDeleteRows = False
         Me.KryptonDataGridView1.AllowUserToResizeRows = False
+        resources.ApplyResources(Me.KryptonDataGridView1, "KryptonDataGridView1")
         Me.KryptonDataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.KryptonDataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.KryptonDataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ID, Me.Column2, Me.Column1})
@@ -187,8 +188,8 @@ Partial Class FormConfigPP
         '
         'Column2
         '
-        DataGridViewCellStyle14.BackColor = System.Drawing.Color.LightGray
-        Me.Column2.DefaultCellStyle = DataGridViewCellStyle14
+        DataGridViewCellStyle4.BackColor = System.Drawing.Color.LightGray
+        Me.Column2.DefaultCellStyle = DataGridViewCellStyle4
         Me.Column2.FillWeight = 149.2386!
         resources.ApplyResources(Me.Column2, "Column2")
         Me.Column2.Name = "Column2"
@@ -196,30 +197,29 @@ Partial Class FormConfigPP
         '
         'Column1
         '
-        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        Me.Column1.DefaultCellStyle = DataGridViewCellStyle15
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        Me.Column1.DefaultCellStyle = DataGridViewCellStyle5
         Me.Column1.FillWeight = 50.76142!
         resources.ApplyResources(Me.Column1, "Column1")
         Me.Column1.Name = "Column1"
         '
         'TabStripUNIFAC
         '
-        resources.ApplyResources(Me.TabStripUNIFAC, "TabStripUNIFAC")
         Me.TabStripUNIFAC.CanClose = False
         Me.TabStripUNIFAC.Controls.Add(Me.IPGrid)
         Me.TabStripUNIFAC.IsDrawn = True
         Me.TabStripUNIFAC.Name = "TabStripUNIFAC"
-        Me.TabStripUNIFAC.Selected = True
+        resources.ApplyResources(Me.TabStripUNIFAC, "TabStripUNIFAC")
         '
         'IPGrid
         '
-        resources.ApplyResources(Me.IPGrid, "IPGrid")
         Me.IPGrid.AllowUserToAddRows = False
         Me.IPGrid.AllowUserToDeleteRows = False
         Me.IPGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.IPGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.IPGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.IPGrid.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column6})
+        resources.ApplyResources(Me.IPGrid, "IPGrid")
         Me.IPGrid.MultiSelect = False
         Me.IPGrid.Name = "IPGrid"
         Me.IPGrid.ReadOnly = True

@@ -37,14 +37,47 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         Protected SIA As New Seawater
 
         Public Sub New(ByVal comode As Boolean)
+
             MyBase.New(comode)
+
         End Sub
 
         Public Sub New()
 
+            MyBase.New()
+
             Me.SupportedComponents.Add(15)
+
+            Me.IsConfigurable = True
+            Me.ConfigForm = New FormConfigPP
+
             Me._packagetype = PropertyPackages.PackageType.Miscelaneous
 
+        End Sub
+
+        Public Overrides Sub ConfigParameters()
+            m_par = New System.Collections.Generic.Dictionary(Of String, Double)
+            With Me.Parameters
+                .Clear()
+                .Add("PP_PHFILT", 0.001)
+                .Add("PP_PSFILT", 0.001)
+                .Add("PP_PHFELT", 0.001)
+                .Add("PP_PSFELT", 0.001)
+                .Add("PP_PHFMEI", 50)
+                .Add("PP_PSFMEI", 50)
+                .Add("PP_PHFMII", 100)
+                .Add("PP_PSFMII", 100)
+                .Add("PP_PTFMEI", 100)
+                .Add("PP_PTFMII", 100)
+                .Add("PP_PTFILT", 0.001)
+                .Add("PP_PTFELT", 0.001)
+                .Add("PP_IGNORE_SALINITY_LIMIT", 0)
+            End With
+        End Sub
+
+        Public Overrides Sub ReconfigureConfigForm()
+            MyBase.ReconfigureConfigForm()
+            Me.ConfigForm = New FormConfigPP
         End Sub
 
         Public Overrides ReadOnly Property FlashBase() As Auxiliary.FlashAlgorithms.FlashAlgorithm
@@ -663,12 +696,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             If Double.IsInfinity(salinity) Then salinity = 0.0#
 
-            If salinity > Seawater.sal_smax Then
-                If Me.CurrentMaterialStream.FlowSheet IsNot Nothing Then
-                    Me.CurrentMaterialStream.FlowSheet.WriteToLog(Me.ComponentName & ": maximum salinity exceeded for seawater calculations (" & Format(salinity, "0.00") & "/0.12). Switching to pure water calculations...", Color.DarkOrange, FormClasses.TipoAviso.Aviso)
+            If Parameters("PP_IGNORE_SALINITY_LIMIT") = 0 Then
+                If salinity > Seawater.sal_smax Then
+                    If Me.CurrentMaterialStream.FlowSheet IsNot Nothing Then
+                        Me.CurrentMaterialStream.FlowSheet.WriteToLog(Me.ComponentName & ": maximum salinity exceeded for seawater calculations (" & Format(salinity, "0.00") & "/0.12). Switching to pure water calculations...", Color.DarkOrange, FormClasses.TipoAviso.Aviso)
+                    End If
+                    salinity = 0.0#
                 End If
-                salinity = 0.0#
             End If
+
 
             Return salinity
 
@@ -686,11 +722,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             If Double.IsInfinity(salinity) Then salinity = 0.0#
 
-            If salinity > Seawater.sal_smax Then
-                If Me.CurrentMaterialStream.FlowSheet IsNot Nothing Then
-                    Me.CurrentMaterialStream.FlowSheet.WriteToLog(Me.ComponentName & ": maximum salinity exceeded for seawater calculations (" & Format(salinity, "0.00") & "/0.12). Switching to pure water calculations...", Color.DarkOrange, FormClasses.TipoAviso.Aviso)
+            If Parameters("PP_IGNORE_SALINITY_LIMIT") = 0 Then
+                If salinity > Seawater.sal_smax Then
+                    If Me.CurrentMaterialStream.FlowSheet IsNot Nothing Then
+                        Me.CurrentMaterialStream.FlowSheet.WriteToLog(Me.ComponentName & ": maximum salinity exceeded for seawater calculations (" & Format(salinity, "0.00") & "/0.12). Switching to pure water calculations...", Color.DarkOrange, FormClasses.TipoAviso.Aviso)
+                    End If
+                    salinity = 0.0#
                 End If
-                salinity = 0.0#
             End If
 
             Return salinity

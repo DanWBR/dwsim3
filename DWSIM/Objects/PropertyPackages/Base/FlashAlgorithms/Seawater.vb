@@ -42,11 +42,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         Public Overrides Function Flash_PT(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
-            Return Flash_PT_E(Vz, P, T, PP, ReuseKI, PrevKi)
-   
+            Return Flash_PT_Internal(True, Vz, P, T, PP, ReuseKI, PrevKi)
+
         End Function
 
-        Public Function Flash_PT_E(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
+
+        Public Function Flash_PT_Internal(ByVal include_vapor As Boolean, ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
             Dim d1, d2 As Date, dt As TimeSpan
 
@@ -147,14 +148,24 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Next
 
                 'check for vapors
-                V = 0.0#
-                For i = 0 To n
-                    If P < Vp(i) Then
-                        V += Vnf(i)
-                        Vxl(i) = 0.0000000001
-                        Vnv(i) = Vnf(i)
-                    End If
-                Next
+
+                If include_vapor Then
+
+                    V = 0.0#
+                    For i = 0 To n
+                        If P < Vp(i) Then
+                            V += Vnf(i)
+                            Vxl(i) = 0.0000000001
+                            Vnv(i) = Vnf(i)
+                        End If
+                    Next
+
+                Else
+
+                    V = 0.0#
+                    Vnv = PP.RET_NullVector
+
+                End If
 
                 L_ant = L
                 If hassolids Then L = 1 - S - V Else L = 1 - V
@@ -579,7 +590,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             If xv < Vz(wid) Then
                 Vz(wid) -= xv
                 Vz = Vz.NormalizeY()
-                tmp = Flash_PT(Vz, P, T - 0.01, PP)
+                tmp = Flash_PT_Internal(False, Vz, P, T, PP)
             Else
                 Throw New InvalidOperationException("Vapor fraction higher than water mole fraction in the mixture.")
             End If
@@ -614,7 +625,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
             Dim n, ecount As Integer
             Dim d1, d2 As Date, dt As TimeSpan
-       
+
             d1 = Date.Now
 
             etol = CDbl(PP.Parameters("PP_PTFELT"))
@@ -637,7 +648,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             If xv < Vz(wid) Then
                 Vz(wid) -= xv
                 Vz = Vz.NormalizeY()
-                tmp = Flash_PT(Vz, P, T, PP)
+                tmp = Flash_PT_Internal(False, Vz, P, T, PP)
             Else
                 Throw New InvalidOperationException("Vapor fraction higher than water mole fraction in the mixture.")
             End If
@@ -653,7 +664,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             Vy = PP.RET_NullVector()
             Vy(wid) = 1.0#
             Vs = tmp(8)
-          
+
             ecount = tmp(4)
 
             d2 = Date.Now

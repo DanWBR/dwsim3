@@ -5185,4 +5185,7 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
   <data name="Salinity" xml:space="preserve">
     <value>Salinidad (kg/kg)</value>
   </data>
+  <data name="PP_IGNORE_SALINITY_LIMIT" xml:space="preserve">
+    <value>Ignorar límite máximo de salinidad</value>
+  </data>
 </root>
