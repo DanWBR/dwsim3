@@ -452,24 +452,28 @@ out:        d2 = Date.Now
                 GV_old = V
                 GS_old = S
 
-                '================================================
-                '== mix solid and liquid phase ==================
-                '================================================
-                Vmix = Vs.MultiplyConstY(S)
-                Vmix = Vmix.AddY(Vx.MultiplyConstY(L))
-                Vz = Vmix.NormalizeY
+                If V < 1 Then
+                    'there is some liquid or solid
 
-                '================================================
-                '== Do initial SLE flash to precipitate solids ==
-                '================================================
-                Dim SL_Result As FlashResult
-                SL_Result = Flash_SL(Vz, P, T, PP)
-                Vx = SL_Result.Vx
-                Vs = SL_Result.Vs
+                    '================================================
+                    '== mix solid and liquid phase ==================
+                    '================================================
+                    Vmix = Vs.MultiplyConstY(S)
+                    Vmix = Vmix.AddY(Vx.MultiplyConstY(L))
+                    Vz = Vmix.NormalizeY
 
-                'calculate global phase fractions
-                L = SL_Result.LF * (1 - V)
-                S = SL_Result.SF * (1 - V)
+                    '================================================
+                    '== Do initial SLE flash to precipitate solids ==
+                    '================================================
+                    Dim SL_Result As FlashResult
+                    SL_Result = Flash_SL(Vz, P, T, PP)
+                    Vx = SL_Result.Vx
+                    Vs = SL_Result.Vs
+
+                    'calculate global phase fractions
+                    L = SL_Result.LF * (1 - V)
+                    S = SL_Result.SF * (1 - V)
+                End If
 
                 'only solids or vapour left
                 If L = 0 Then GoTo out2
