@@ -83,9 +83,9 @@
         'Impose necessary parameter limits
         'For the check, initialize initial_check_limits_value to 1. It is used internally
         'to turn all limit checking off within the iterative solution routines:
-        Public Const initial_check_limits_value = 1
+        'Public Const initial_check_limits_value = 1
         'To suppress all restrictive checks, initialize initial_check_limits_value to zero:
-        'Public Const initial_check_limits_value = 0
+        Public Const initial_check_limits_value = 0
 
         Private check_limits_value As Integer 'this is initialized in Property Get check_limits()
 

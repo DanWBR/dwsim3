@@ -200,7 +200,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                 Case Fase.Liquid1
 
-                    Dim salinity As Double = salt.FracaoMassica.GetValueOrDefault / water.FracaoMassica.GetValueOrDefault
+                    Dim salinity As Double = CalcSalinity()
 
                     Select Case [property].ToLower
                         Case "compressibilityfactor"
@@ -348,7 +348,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             ElseIf phaseID = 3 Then
 
-                Dim salinity As Double = salt.FracaoMassica.GetValueOrDefault / water.FracaoMassica.GetValueOrDefault
+                Dim salinity As Double = CalcSalinity()
 
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight = Me.AUX_MMM(PropertyPackages.Fase.Liquid1)
                 result = 1 / (Me.SIA.sea_density_si(salinity, T, P) * 1000 / 18) / 8.314 / T * P
@@ -699,9 +699,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             If Parameters("PP_IGNORE_SALINITY_LIMIT") = 0 Then
                 If salinity > Seawater.sal_smax Then
                     If Me.CurrentMaterialStream.FlowSheet IsNot Nothing Then
-                        Me.CurrentMaterialStream.FlowSheet.WriteToLog(Me.ComponentName & ": maximum salinity exceeded for seawater calculations (" & Format(salinity, "0.00") & "/0.12). Switching to pure water calculations...", Color.DarkOrange, FormClasses.TipoAviso.Aviso)
+                        Me.CurrentMaterialStream.FlowSheet.WriteToLog(Me.ComponentName & "/" & New StackFrame(1).GetMethod.Name & "(): maximum salinity exceeded (" & Format(salinity, "0.00") & " kg/kg). Using upper limit value (" & Format(Seawater.sal_smax, "0.00") & " kg/kg).", Color.DarkOrange, FormClasses.TipoAviso.Aviso)
                     End If
-                    salinity = 0.0#
+                    salinity = Seawater.sal_smax
                 End If
             End If
 
@@ -725,9 +725,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             If Parameters("PP_IGNORE_SALINITY_LIMIT") = 0 Then
                 If salinity > Seawater.sal_smax Then
                     If Me.CurrentMaterialStream.FlowSheet IsNot Nothing Then
-                        Me.CurrentMaterialStream.FlowSheet.WriteToLog(Me.ComponentName & ": maximum salinity exceeded for seawater calculations (" & Format(salinity, "0.00") & "/0.12). Switching to pure water calculations...", Color.DarkOrange, FormClasses.TipoAviso.Aviso)
+                        Me.CurrentMaterialStream.FlowSheet.WriteToLog(Me.ComponentName & "/" & New StackFrame(1).GetMethod.Name & "(): maximum salinity exceeded (" & Format(salinity, "0.00") & " kg/kg). Using upper limit value (" & Format(Seawater.sal_smax, "0.00") & " kg/kg).", Color.DarkOrange, FormClasses.TipoAviso.Aviso)
                     End If
-                    salinity = 0.0#
+                    salinity = Seawater.sal_smax
                 End If
             End If
 
