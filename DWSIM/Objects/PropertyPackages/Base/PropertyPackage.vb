@@ -1785,8 +1785,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                 Dim hl, hv, sl, sv, Tsat As Double
                                 Dim vz As Object = Me.RET_VMOL(Fase.Mixture)
 
-                                P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
-
                                 Tsat = 0.0#
                                 For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
                                     Tsat += subst.FracaoMolar * Me.AUX_TSATi(P, subst.Nome)
@@ -2603,12 +2601,14 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                                 Dim hl, hv, sl, sv, Tsat As Double
                                 Dim vz As Object = Me.RET_VMOL(Fase.Mixture)
 
-                                P = Me.CurrentMaterialStream.Fases(0).SPMProperties.pressure.GetValueOrDefault
-
                                 Tsat = 0.0#
                                 For i = 0 To n
                                     Tsat += vz(i) * Me.AUX_TSATi(P, i)
                                 Next
+
+                                Dim Tf As Double = AUX_TFM(Fase.Mixture)
+
+                                If Tsat < Tf Then Tsat = Tf + 0.1
 
                                 hl = Me.DW_CalcEnthalpy(vz, Tsat, P, State.Liquid)
                                 hv = Me.DW_CalcEnthalpy(vz, Tsat, P, State.Vapor)
@@ -5993,10 +5993,10 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
             Dim fT, fT_inf, nsub, delta_T As Double
 
-            Tinf = 100
+            Tinf = 10
             Tsup = 2000
 
-            nsub = 10
+            nsub = 25
 
             delta_T = (Tsup - Tinf) / nsub
 
@@ -6101,7 +6101,7 @@ Final3:
             Tinf = 10
             Tsup = 2000
 
-            nsub = 10
+            nsub = 25
 
             delta_T = (Tsup - Tinf) / nsub
 
