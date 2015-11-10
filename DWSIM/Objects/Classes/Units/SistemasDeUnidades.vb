@@ -29,6 +29,8 @@ Namespace DWSIM.SistemasDeUnidades
             heat_transf_coeff, force, accel, spec_vol, reac_rate, velocity, foulingfactor,
             cakeresistance, mediumresistance As String
 
+        Public gor As String = "m3/m3"
+
         Public molar_enthalpy, molar_entropy As String
 
         Public tdp_idealGasHeatCapacity As String
@@ -604,6 +606,8 @@ Namespace DWSIM.SistemasDeUnidades
             With Me
 
                 .nome = DWSIM.App.GetLocalString("SistemaIngls")
+
+                .gor = "ft3/bbl"
 
                 .accel = "ft/s2"
                 .area = "ft2"

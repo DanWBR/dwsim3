@@ -910,6 +910,18 @@ Namespace DWSIM.Databases
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "PC_SAFT_sigma", "")).InnerText = comp.PC_SAFT_sigma.ToString(cult)
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "PC_SAFT_m", "")).InnerText = comp.PC_SAFT_m.ToString(cult)
                     .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "PC_SAFT_epsilon_k", "")).InnerText = comp.PC_SAFT_epsilon_k.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "IsBlackOil", "")).InnerText = comp.IsBlackOil
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "BlackOil_GOR", "")).InnerText = comp.BO_GOR.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "BlackOil_BSW", "")).InnerText = comp.BO_BSW.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "BlackOil_SGG", "")).InnerText = comp.BO_SGG.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "BlackOil_SGO", "")).InnerText = comp.BO_SGO.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "BlackOil_OilVisc1", "")).InnerText = comp.BO_OilVisc1.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "BlackOil_OilVisc2", "")).InnerText = comp.BO_OilVisc2.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "BlackOil_OilViscTemp1", "")).InnerText = comp.BO_OilViscTemp1.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "BlackOil_OilViscTemp2", "")).InnerText = comp.BO_OilViscTemp2.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "BlackOil_PNA_A", "")).InnerText = comp.BO_PNA_A.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "BlackOil_PNA_N", "")).InnerText = comp.BO_PNA_N.ToString(cult)
+                    .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "BlackOil_PNA_P", "")).InnerText = comp.BO_PNA_P.ToString(cult)
 
                     If comp.UNIFACGroups.Collection.Count > 0 Then
                         With .AppendChild(xmldoc.CreateNode(XmlNodeType.Element, "UNIFAC", ""))
@@ -1209,6 +1221,28 @@ Namespace DWSIM.Databases
                                 For Each node3 As XmlNode In node2.ChildNodes
                                     .Elements.Collection.Add(node3.Attributes("name").InnerText, Integer.Parse(node3.InnerText))
                                 Next
+                            Case "BlackOil_GOR"
+                                .BO_GOR = Double.Parse(node2.InnerText, nf)
+                            Case "BlackOil_BSW"
+                                .BO_BSW = Double.Parse(node2.InnerText, nf)
+                            Case "BlackOil_SGG"
+                                .BO_SGG = Double.Parse(node2.InnerText, nf)
+                            Case "BlackOil_SGO"
+                                .BO_SGO = Double.Parse(node2.InnerText, nf)
+                            Case "BlackOil_OilVisc1"
+                                .BO_OilVisc1 = Double.Parse(node2.InnerText, nf)
+                            Case "BlackOil_OilVisc2"
+                                .BO_OilVisc2 = Double.Parse(node2.InnerText, nf)
+                            Case "BlackOil_OilViscTemp1"
+                                .BO_OilViscTemp1 = Double.Parse(node2.InnerText, nf)
+                            Case "BlackOil_OilViscTemp2"
+                                .BO_OilViscTemp2 = Double.Parse(node2.InnerText, nf)
+                            Case "BlackOil_PNA_A"
+                                .BO_PNA_A = Double.Parse(node2.InnerText, nf)
+                            Case "BlackOil_PNA_N"
+                                .BO_PNA_N = Double.Parse(node2.InnerText, nf)
+                            Case "BlackOil_PNA_P"
+                                .BO_PNA_P = Double.Parse(node2.InnerText, nf)
                         End Select
                     Next
                 End With

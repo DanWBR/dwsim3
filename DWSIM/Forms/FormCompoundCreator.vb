@@ -226,7 +226,6 @@ Public Class FormCompoundCreator
             Next
         End With
 
-
         With mycase
             .cp.VaporPressureEquation = 0
             .cp.IdealgasCpEquation = 0
@@ -250,6 +249,8 @@ Public Class FormCompoundCreator
         Next
 
         Me.cbUnits.SelectedIndex = 0
+
+        Me.RadioButton1.Checked = True
 
         Me.TextBoxID.Text = New Random().Next(100000)
 
@@ -314,6 +315,7 @@ Public Class FormCompoundCreator
         Dim i As Integer
 
         With mycase
+
             If File.Exists(.database) Then
                 Me.tbDBPath.Text = .database
             Else
@@ -337,267 +339,291 @@ Public Class FormCompoundCreator
             End If
             If cbUnits.Items.Contains(.su.nome) Then
                 cbUnits.SelectedIndex = cbUnits.Items.IndexOf(.su.nome)
-            Else : cbUnits.SelectedIndex = 0
+            Else
+                cbUnits.SelectedIndex = 0
             End If
 
             UpdateUnits()
 
-            'tbDBPath.Text = .database
-            TextBoxAF.Text = .cp.Acentric_Factor
-            TextBoxCAS.Text = .cp.CAS_Number
-            TextBoxCSAF.Text = .cp.Chao_Seader_Acentricity
-            TextBoxCSLV.Text = .cp.Chao_Seader_Liquid_Molar_Volume
-            TextBoxCSSP.Text = .cp.Chao_Seader_Solubility_Parameter
-            TextBoxDGF.Text = cv.ConverterDoSI(su.spmp_enthalpy, .cp.IG_Gibbs_Energy_of_Formation_25C)
-            TextBoxDHF.Text = cv.ConverterDoSI(su.spmp_enthalpy, .cp.IG_Enthalpy_of_Formation_25C)
-            TextBoxFormula.Text = .cp.Formula
-            TextBoxID.Text = .cp.ID
-            TextBoxMW.Text = .cp.Molar_Weight
-            TextBoxName.Text = .cp.Name
-            TextBoxNBP.Text = cv.ConverterDoSI(su.spmp_temperature, .cp.Normal_Boiling_Point)
-            TextBoxPc.Text = cv.ConverterDoSI(su.spmp_pressure, .cp.Critical_Pressure)
-            TextBoxPCSAFTEpsilon.Text = .cp.PC_SAFT_epsilon_k
-            TextBoxPCSAFTm.Text = .cp.PC_SAFT_m
-            TextBoxPCSAFTSigma.Text = .cp.PC_SAFT_sigma
-            TextBoxUNIQUAC_Q.Text = .cp.UNIQUAC_Q
-            TextBoxUNIQUAC_R.Text = .cp.UNIQUAC_R
-            TextBoxTc.Text = cv.ConverterDoSI(su.spmp_temperature, .cp.Critical_Temperature)
-            TextBoxVTCPR.Text = .cp.PR_Volume_Translation_Coefficient
-            TextBoxVTCSRK.Text = .cp.SRK_Volume_Translation_Coefficient
-            TextBoxZc.Text = .cp.Critical_Compressibility
-            TextBoxZRa.Text = .cp.Z_Rackett
-            TextBoxMeltingTemp.Text = cv.ConverterDoSI(su.spmp_temperature, .cp.TemperatureOfFusion)
-            TextBoxEnthOfFusion.Text = cv.ConverterDoSI(su.spmp_enthalpy, .cp.EnthalpyOfFusionAtTf)
-            TextBoxSMILES.Text = .cp.SMILES
-            If Not .cp.SMILES = "" Then
-                RenderSMILES()
+            If .cp.IsBlackOil Then
+
+                RadioButton2.Checked = True
+
+                tbBOName.Text = .cp.Name
+
+                tbBOGOR.Text = cv.ConverterDoSI(su.gor, .cp.BO_GOR)
+                tbBOBSW.Text = .cp.BO_BSW
+                tbBOSGG.Text = .cp.BO_SGG
+                tbBOSGO.Text = .cp.BO_SGO
+
+                tbBOV1.Text = cv.ConverterDoSI(su.spmp_cinematic_viscosity, .cp.BO_OilVisc1)
+                tbBOV2.Text = cv.ConverterDoSI(su.spmp_cinematic_viscosity, .cp.BO_OilVisc2)
+                tbBOT1.Text = cv.ConverterDoSI(su.spmp_temperature, .cp.BO_OilViscTemp1)
+                tbBOT2.Text = cv.ConverterDoSI(su.spmp_temperature, .cp.BO_OilViscTemp2)
+
+                tbBOPNAP.Text = .cp.BO_PNA_P
+                tbBOPNAN.Text = .cp.BO_PNA_N
+                tbBOPNAA.Text = .cp.BO_PNA_A
+
+            Else
+
+                RadioButton1.Checked = True
+
+                'tbDBPath.Text = .database
+                TextBoxAF.Text = .cp.Acentric_Factor
+                TextBoxCAS.Text = .cp.CAS_Number
+                TextBoxCSAF.Text = .cp.Chao_Seader_Acentricity
+                TextBoxCSLV.Text = .cp.Chao_Seader_Liquid_Molar_Volume
+                TextBoxCSSP.Text = .cp.Chao_Seader_Solubility_Parameter
+                TextBoxDGF.Text = cv.ConverterDoSI(su.spmp_enthalpy, .cp.IG_Gibbs_Energy_of_Formation_25C)
+                TextBoxDHF.Text = cv.ConverterDoSI(su.spmp_enthalpy, .cp.IG_Enthalpy_of_Formation_25C)
+                TextBoxFormula.Text = .cp.Formula
+                TextBoxID.Text = .cp.ID
+                TextBoxMW.Text = .cp.Molar_Weight
+                TextBoxName.Text = .cp.Name
+                TextBoxNBP.Text = cv.ConverterDoSI(su.spmp_temperature, .cp.Normal_Boiling_Point)
+                TextBoxPc.Text = cv.ConverterDoSI(su.spmp_pressure, .cp.Critical_Pressure)
+                TextBoxPCSAFTEpsilon.Text = .cp.PC_SAFT_epsilon_k
+                TextBoxPCSAFTm.Text = .cp.PC_SAFT_m
+                TextBoxPCSAFTSigma.Text = .cp.PC_SAFT_sigma
+                TextBoxUNIQUAC_Q.Text = .cp.UNIQUAC_Q
+                TextBoxUNIQUAC_R.Text = .cp.UNIQUAC_R
+                TextBoxTc.Text = cv.ConverterDoSI(su.spmp_temperature, .cp.Critical_Temperature)
+                TextBoxVTCPR.Text = .cp.PR_Volume_Translation_Coefficient
+                TextBoxVTCSRK.Text = .cp.SRK_Volume_Translation_Coefficient
+                TextBoxZc.Text = .cp.Critical_Compressibility
+                TextBoxZRa.Text = .cp.Z_Rackett
+                TextBoxMeltingTemp.Text = cv.ConverterDoSI(su.spmp_temperature, .cp.TemperatureOfFusion)
+                TextBoxEnthOfFusion.Text = cv.ConverterDoSI(su.spmp_enthalpy, .cp.EnthalpyOfFusionAtTf)
+                TextBoxSMILES.Text = .cp.SMILES
+                If Not .cp.SMILES = "" Then
+                    RenderSMILES()
+                End If
+
+                If .RegressPVAP Then rbRegressPVAP.Checked = True
+                If .RegressCPIG Then rbRegressCPIG.Checked = True
+                If .RegressCPLiquid Then rbRegressCPLiquid.Checked = True
+                If .RegressLDENS Then rbRegressLIQDENS.Checked = True
+                If .RegressLVISC Then rbRegressLIQVISC.Checked = True
+                If .RegressCpS Then rbRegressSolidCp.Checked = True
+                If .RegressRoS Then rbRegressSolidDens.Checked = True
+
+                If .EqPVAP Then rbCoeffPVAP.Checked = True
+                If .EqCPIG Then rbCoeffCPIG.Checked = True
+                If .EqCPLiquid Then rbCoeffCPLiquid.Checked = True
+                If .EqLDENS Then rbCoeffLIQDENS.Checked = True
+                If .EqLVISC Then rbCoeffLIQVISC.Checked = True
+                If .EqCpS Then rbCoeffSolidCp.Checked = True
+                If .EqSDens Then rbCoeffSolidDens.Checked = True
+
+                CheckBoxMW.Checked = .CalcMW
+                CheckBoxNBP.Checked = .CalcNBP
+                CheckBoxAF.Checked = .CalcAF
+                CheckBoxCSAF.Checked = .CalcCSAF
+                CheckBoxCSLV.Checked = .CalcCSMV
+                CheckBoxCSSP.Checked = .CalcCSSP
+                CheckBoxTc.Checked = .CalcTC
+                CheckBoxPc.Checked = .CalcPC
+                CheckBoxZc.Checked = .CalcZC
+                CheckBoxZRa.Checked = .CalcZRA
+                CheckBoxDHF.Checked = .CalcHF
+                CheckBoxDGF.Checked = .CalcGF
+                CheckBoxMeltingTemp.Checked = .CalcMP
+                CheckBoxEnthOfFusion.Checked = .CalcEM
+
+                AtomDataGrid.Rows.Clear()
+                For i = 0 To .cp.Elements.Collection.Count - 1
+                    AtomDataGrid.Rows.Add(New Object() {.cp.Elements.Collection.GetKey(i), .cp.Elements.Collection.GetByIndex(i)})
+                Next
+
+                For Each it As Object In cbEqPVAP.Items
+                    If it.ToString.Split(":")(0) = .cp.VaporPressureEquation Then
+                        cbEqPVAP.SelectedIndex = cbEqPVAP.Items.IndexOf(it)
+                        Exit For
+                    End If
+                Next
+
+                For Each it As Object In cbEqCPIG.Items
+                    If it.ToString.Split(":")(0) = .cp.IdealgasCpEquation Then
+                        cbEqCPIG.SelectedIndex = cbEqCPIG.Items.IndexOf(it)
+                        Exit For
+                    End If
+                Next
+
+                For Each it As Object In cbEqCPLiquid.Items
+                    If it.ToString.Split(":")(0) = .cp.LiquidHeatCapacityEquation Then
+                        cbEqCPLiquid.SelectedIndex = cbEqCPLiquid.Items.IndexOf(it)
+                        Exit For
+                    End If
+                Next
+
+                For Each it As Object In cbEqLIQDENS.Items
+                    If it.ToString.Split(":")(0) = .cp.LiquidDensityEquation Then
+                        cbEqLIQDENS.SelectedIndex = cbEqLIQDENS.Items.IndexOf(it)
+                        Exit For
+                    End If
+                Next
+
+                For Each it As Object In cbEqLIQVISC.Items
+                    If it.ToString.Split(":")(0) = .cp.LiquidViscosityEquation Then
+                        cbEqLIQVISC.SelectedIndex = cbEqLIQVISC.Items.IndexOf(it)
+                        Exit For
+                    End If
+                Next
+
+                For Each it As Object In cbEqCpS.Items
+                    If it.ToString.Split(":")(0) = .cp.SolidHeatCapacityEquation Then
+                        cbEqCpS.SelectedIndex = cbEqCpS.Items.IndexOf(it)
+                        Exit For
+                    End If
+                Next
+
+                For Each it As Object In cbEqSolidDENS.Items
+                    If it.ToString.Split(":")(0) = .cp.SolidDensityEquation Then
+                        cbEqSolidDENS.SelectedIndex = cbEqSolidDENS.Items.IndexOf(it)
+                        Exit For
+                    End If
+                Next
+
+                tbCpS_A.Text = .cp.Solid_Heat_Capacity_Const_A
+                tbCpS_B.Text = .cp.Solid_Heat_Capacity_Const_B
+                tbCpS_C.Text = .cp.Solid_Heat_Capacity_Const_C
+                tbCpS_D.Text = .cp.Solid_Heat_Capacity_Const_D
+                tbCpS_E.Text = .cp.Solid_Heat_Capacity_Const_E
+
+                tbRoS_A.Text = .cp.Solid_Density_Const_A
+                tbRoS_B.Text = .cp.Solid_Density_Const_B
+                tbRoS_C.Text = .cp.Solid_Density_Const_C
+                tbRoS_D.Text = .cp.Solid_Density_Const_D
+                tbRoS_E.Text = .cp.Solid_Density_Const_E
+
+                tbPVAP_A.Text = .cp.Vapor_Pressure_Constant_A
+                tbPVAP_B.Text = .cp.Vapor_Pressure_Constant_B
+                tbPVAP_C.Text = .cp.Vapor_Pressure_Constant_C
+                tbPVAP_D.Text = .cp.Vapor_Pressure_Constant_D
+                tbPVAP_E.Text = .cp.Vapor_Pressure_Constant_E
+
+                tbCPIG_A.Text = .cp.Ideal_Gas_Heat_Capacity_Const_A
+                tbCPIG_B.Text = .cp.Ideal_Gas_Heat_Capacity_Const_B
+                tbCPIG_C.Text = .cp.Ideal_Gas_Heat_Capacity_Const_C
+                tbCPIG_D.Text = .cp.Ideal_Gas_Heat_Capacity_Const_D
+                tbCPIG_E.Text = .cp.Ideal_Gas_Heat_Capacity_Const_E
+
+                tbCPLiquid_A.Text = .cp.Liquid_Heat_Capacity_Const_A
+                tbCPLiquid_B.Text = .cp.Liquid_Heat_Capacity_Const_B
+                tbCPLiquid_C.Text = .cp.Liquid_Heat_Capacity_Const_C
+                tbCPLiquid_D.Text = .cp.Liquid_Heat_Capacity_Const_D
+                tbCPLiquid_E.Text = .cp.Liquid_Heat_Capacity_Const_E
+
+                tbLIQDENS_A.Text = .cp.Liquid_Density_Const_A
+                tbLIQDENS_B.Text = .cp.Liquid_Density_Const_B
+                tbLIQDENS_C.Text = .cp.Liquid_Density_Const_C
+                tbLIQDENS_D.Text = .cp.Liquid_Density_Const_D
+                tbLIQDENS_E.Text = .cp.Liquid_Density_Const_E
+
+                tbLIQVISC_A.Text = .cp.Liquid_Viscosity_Const_A
+                tbLIQVISC_B.Text = .cp.Liquid_Viscosity_Const_B
+                tbLIQVISC_C.Text = .cp.Liquid_Viscosity_Const_C
+                tbLIQVISC_D.Text = .cp.Liquid_Viscosity_Const_D
+                tbLIQVISC_E.Text = .cp.Liquid_Viscosity_Const_E
+
+                populating = True
+                For Each r As DataGridViewRow In Me.GridUNIFAC.Rows
+                    If .cp.UNIFACGroups.Collection(r.Cells(1).Value) <> "" Then r.Cells(2).Value = .cp.UNIFACGroups.Collection(r.Cells(1).Value) 'old file format - Subgroup name
+                    If .cp.UNIFACGroups.Collection(r.Cells(3).Tag(2)) <> "" Then r.Cells(2).Value = .cp.UNIFACGroups.Collection(r.Cells(3).Tag(2)) 'new file format - Subgroup ID
+
+                    If r.Cells(2).Value > 0 Then
+                        r.Cells(2).Style.BackColor = Color.PaleGreen
+                    Else
+                        r.Cells(2).Style.BackColor = Color.White
+                    End If
+
+                Next
+                For Each r As DataGridViewRow In Me.GridMODFAC.Rows
+                    If .cp.MODFACGroups.Collection(r.Cells(1).Value) <> "" Then r.Cells(2).Value = .cp.MODFACGroups.Collection(r.Cells(1).Value) 'old file format - Subgroup name
+                    If .cp.MODFACGroups.Collection(r.Cells(3).Tag(2)) <> "" Then r.Cells(2).Value = .cp.MODFACGroups.Collection(r.Cells(3).Tag(2)) 'new file format - Subgroup ID
+
+                    If r.Cells(2).Value > 0 Then
+                        r.Cells(2).Style.BackColor = Color.PaleGreen
+                    Else
+                        r.Cells(2).Style.BackColor = Color.White
+                    End If
+                Next
+
+                If .cp.NISTMODFACGroups Is Nothing Then
+                    .cp.NISTMODFACGroups = New DWSIM.ClassesBasicasTermodinamica.UNIFACGroupCollection
+                End If
+
+                For Each r As DataGridViewRow In Me.GridNISTMODFAC.Rows
+                    If .cp.NISTMODFACGroups.Collection(r.Cells(1).Value) <> "" Then r.Cells(2).Value = .cp.NISTMODFACGroups.Collection(r.Cells(1).Value) 'old file format - Subgroup name
+                    If .cp.NISTMODFACGroups.Collection(r.Cells(3).Tag(2)) <> "" Then r.Cells(2).Value = .cp.NISTMODFACGroups.Collection(r.Cells(3).Tag(2)) 'new file format - Subgroup ID
+
+                    If r.Cells(2).Value > 0 Then
+                        r.Cells(2).Style.BackColor = Color.PaleGreen
+                    Else
+                        r.Cells(2).Style.BackColor = Color.White
+                    End If
+                Next
+
+                FillUnifacSubGroups()
+
+                'check for updated elements when loading older files and create them if not existing
+                If .JobackGroups Is Nothing Then .JobackGroups = New ArrayList()
+                If .AdditionalAtoms Is Nothing Then .AdditionalAtoms = New ArrayList
+                If .DataRoS Is Nothing Then .DataRoS = New ArrayList
+                If .DataCpS Is Nothing Then .DataCpS = New ArrayList
+                If .DataCPLiquid Is Nothing Then .DataCPLiquid = New ArrayList
+
+                'populating Joback Grid with additional Joback groups
+                For i = 0 To .JobackGroups.Count - 1
+                    Me.GridJoback.Rows.Item(.JobackGroups.Item(i)(0)).Cells(3).Value = .JobackGroups.Item(i)(1)
+                    If .JobackGroups.Item(i)(1) > 0 Then PureUNIFACCompound = False
+                Next
+
+                'populating AtomGrid with additional Atoms
+                For i = 0 To .AdditionalAtoms.Count - 1
+                    Me.AddAtomDataGrid.Rows(.AdditionalAtoms.Item(i)(0)).Cells(1).Value = .AdditionalAtoms.Item(i)(1)
+                Next
+
+                populating = False
+
+                Me.GridExpDataPVAP.Rows.Clear()
+                For i = 0 To .DataPVAP.Count - 1
+                    Me.GridExpDataPVAP.Rows.Add(New Object() {cv.ConverterDoSI(su.spmp_temperature, .DataPVAP(i)(0)), cv.ConverterDoSI(su.spmp_pressure, .DataPVAP(i)(1))})
+                Next
+                Me.GridExpDataCPIG.Rows.Clear()
+                For i = 0 To .DataCPIG.Count - 1
+                    Me.GridExpDataCPIG.Rows.Add(New Object() {cv.ConverterDoSI(su.spmp_temperature, .DataCPIG(i)(0)), cv.ConverterDoSI(su.spmp_heatCapacityCp, .DataCPIG(i)(1))})
+                Next
+                Me.GridExpDataCPLiquid.Rows.Clear()
+                For i = 0 To .DataCPLiquid.Count - 1
+                    Me.GridExpDataCPLiquid.Rows.Add(New Object() {cv.ConverterDoSI(su.spmp_temperature, .DataCPLiquid(i)(0)), cv.ConverterDoSI(su.spmp_heatCapacityCp, .DataCPLiquid(i)(1))})
+                Next
+                Me.GridExpDataLIQDENS.Rows.Clear()
+                For i = 0 To .DataLDENS.Count - 1
+                    Me.GridExpDataLIQDENS.Rows.Add(New Object() {cv.ConverterDoSI(su.spmp_temperature, .DataLDENS(i)(0)), cv.ConverterDoSI(su.spmp_density, .DataLDENS(i)(1))})
+                Next
+                Me.GridExpDataLIQVISC.Rows.Clear()
+                For i = 0 To .DataLVISC.Count - 1
+                    Me.GridExpDataLIQVISC.Rows.Add(New Object() {cv.ConverterDoSI(su.spmp_temperature, .DataLVISC(i)(0)), cv.ConverterDoSI(su.spmp_viscosity, .DataLVISC(i)(1))})
+                Next
+                Me.GridExpDataRoS.Rows.Clear()
+                For i = 0 To .DataRoS.Count - 1
+                    Me.GridExpDataRoS.Rows.Add(New Object() {cv.ConverterDoSI(su.spmp_temperature, .DataRoS(i)(0)), cv.ConverterDoSI(su.spmp_density, .DataRoS(i)(1)) * .cp.Molar_Weight})
+                Next
+                Me.GridExpDataCpS.Rows.Clear()
+                For i = 0 To .DataCpS.Count - 1
+                    Me.GridExpDataCpS.Rows.Add(New Object() {cv.ConverterDoSI(su.spmp_temperature, .DataCpS(i)(0)), cv.ConverterDoSI(su.spmp_heatCapacityCp, .DataCpS(i)(1)) / .cp.Molar_Weight})
+                Next
+                If .RegressOKPVAP Then tbStatusPVAP.Text = "OK" Else tbStatusPVAP.Text = .ErrorMsgPVAP
+                If .RegressOKCPIG Then tbStatusCPIG.Text = "OK" Else tbStatusCPIG.Text = .ErrorMsgCPIG
+                If .RegressOKCPLiquid Then tbStatusCPLiquid.Text = "OK" Else tbStatusCPLiquid.Text = .ErrorMsgCPLiquid
+                If .RegressOKLDENS Then tbStatusLIQDENS.Text = "OK" Else tbStatusLIQDENS.Text = .ErrorMsgLDENS
+                If .RegressOKLVISC Then tbStatusLIQVISC.Text = "OK" Else tbStatusLIQVISC.Text = .ErrorMsgLVISC
+                If .RegressOKRoS Then tbStatusSolidDens.Text = "OK" Else tbStatusSolidDens.Text = .ErrorMsgRoS
+                If .RegressOKCpS Then tbStatusSolidCp.Text = "OK" Else tbStatusSolidCp.Text = .ErrorMsgCpS
+
             End If
-
-
-
-            If .RegressPVAP Then rbRegressPVAP.Checked = True
-            If .RegressCPIG Then rbRegressCPIG.Checked = True
-            If .RegressCPLiquid Then rbRegressCPLiquid.Checked = True
-            If .RegressLDENS Then rbRegressLIQDENS.Checked = True
-            If .RegressLVISC Then rbRegressLIQVISC.Checked = True
-            If .RegressCpS Then rbRegressSolidCp.Checked = True
-            If .RegressRoS Then rbRegressSolidDens.Checked = True
-
-            If .EqPVAP Then rbCoeffPVAP.Checked = True
-            If .EqCPIG Then rbCoeffCPIG.Checked = True
-            If .EqCPLiquid Then rbCoeffCPLiquid.Checked = True
-            If .EqLDENS Then rbCoeffLIQDENS.Checked = True
-            If .EqLVISC Then rbCoeffLIQVISC.Checked = True
-            If .EqCpS Then rbCoeffSolidCp.Checked = True
-            If .EqSDens Then rbCoeffSolidDens.Checked = True
-
-            CheckBoxMW.Checked = .CalcMW
-            CheckBoxNBP.Checked = .CalcNBP
-            CheckBoxAF.Checked = .CalcAF
-            CheckBoxCSAF.Checked = .CalcCSAF
-            CheckBoxCSLV.Checked = .CalcCSMV
-            CheckBoxCSSP.Checked = .CalcCSSP
-            CheckBoxTc.Checked = .CalcTC
-            CheckBoxPc.Checked = .CalcPC
-            CheckBoxZc.Checked = .CalcZC
-            CheckBoxZRa.Checked = .CalcZRA
-            CheckBoxDHF.Checked = .CalcHF
-            CheckBoxDGF.Checked = .CalcGF
-            CheckBoxMeltingTemp.Checked = .CalcMP
-            CheckBoxEnthOfFusion.Checked = .CalcEM
-
-            AtomDataGrid.Rows.Clear()
-            For i = 0 To .cp.Elements.Collection.Count - 1
-                AtomDataGrid.Rows.Add(New Object() {.cp.Elements.Collection.GetKey(i), .cp.Elements.Collection.GetByIndex(i)})
-            Next
-
-            For Each it As Object In cbEqPVAP.Items
-                If it.ToString.Split(":")(0) = .cp.VaporPressureEquation Then
-                    cbEqPVAP.SelectedIndex = cbEqPVAP.Items.IndexOf(it)
-                    Exit For
-                End If
-            Next
-
-            For Each it As Object In cbEqCPIG.Items
-                If it.ToString.Split(":")(0) = .cp.IdealgasCpEquation Then
-                    cbEqCPIG.SelectedIndex = cbEqCPIG.Items.IndexOf(it)
-                    Exit For
-                End If
-            Next
-
-            For Each it As Object In cbEqCPLiquid.Items
-                If it.ToString.Split(":")(0) = .cp.LiquidHeatCapacityEquation Then
-                    cbEqCPLiquid.SelectedIndex = cbEqCPLiquid.Items.IndexOf(it)
-                    Exit For
-                End If
-            Next
-
-            For Each it As Object In cbEqLIQDENS.Items
-                If it.ToString.Split(":")(0) = .cp.LiquidDensityEquation Then
-                    cbEqLIQDENS.SelectedIndex = cbEqLIQDENS.Items.IndexOf(it)
-                    Exit For
-                End If
-            Next
-
-            For Each it As Object In cbEqLIQVISC.Items
-                If it.ToString.Split(":")(0) = .cp.LiquidViscosityEquation Then
-                    cbEqLIQVISC.SelectedIndex = cbEqLIQVISC.Items.IndexOf(it)
-                    Exit For
-                End If
-            Next
-
-            For Each it As Object In cbEqCpS.Items
-                If it.ToString.Split(":")(0) = .cp.SolidHeatCapacityEquation Then
-                    cbEqCpS.SelectedIndex = cbEqCpS.Items.IndexOf(it)
-                    Exit For
-                End If
-            Next
-
-            For Each it As Object In cbEqSolidDENS.Items
-                If it.ToString.Split(":")(0) = .cp.SolidDensityEquation Then
-                    cbEqSolidDENS.SelectedIndex = cbEqSolidDENS.Items.IndexOf(it)
-                    Exit For
-                End If
-            Next
-
-            tbCpS_A.Text = .cp.Solid_Heat_Capacity_Const_A
-            tbCpS_B.Text = .cp.Solid_Heat_Capacity_Const_B
-            tbCpS_C.Text = .cp.Solid_Heat_Capacity_Const_C
-            tbCpS_D.Text = .cp.Solid_Heat_Capacity_Const_D
-            tbCpS_E.Text = .cp.Solid_Heat_Capacity_Const_E
-
-            tbRoS_A.Text = .cp.Solid_Density_Const_A
-            tbRoS_B.Text = .cp.Solid_Density_Const_B
-            tbRoS_C.Text = .cp.Solid_Density_Const_C
-            tbRoS_D.Text = .cp.Solid_Density_Const_D
-            tbRoS_E.Text = .cp.Solid_Density_Const_E
-
-            tbPVAP_A.Text = .cp.Vapor_Pressure_Constant_A
-            tbPVAP_B.Text = .cp.Vapor_Pressure_Constant_B
-            tbPVAP_C.Text = .cp.Vapor_Pressure_Constant_C
-            tbPVAP_D.Text = .cp.Vapor_Pressure_Constant_D
-            tbPVAP_E.Text = .cp.Vapor_Pressure_Constant_E
-
-            tbCPIG_A.Text = .cp.Ideal_Gas_Heat_Capacity_Const_A
-            tbCPIG_B.Text = .cp.Ideal_Gas_Heat_Capacity_Const_B
-            tbCPIG_C.Text = .cp.Ideal_Gas_Heat_Capacity_Const_C
-            tbCPIG_D.Text = .cp.Ideal_Gas_Heat_Capacity_Const_D
-            tbCPIG_E.Text = .cp.Ideal_Gas_Heat_Capacity_Const_E
-
-            tbCPLiquid_A.Text = .cp.Liquid_Heat_Capacity_Const_A
-            tbCPLiquid_B.Text = .cp.Liquid_Heat_Capacity_Const_B
-            tbCPLiquid_C.Text = .cp.Liquid_Heat_Capacity_Const_C
-            tbCPLiquid_D.Text = .cp.Liquid_Heat_Capacity_Const_D
-            tbCPLiquid_E.Text = .cp.Liquid_Heat_Capacity_Const_E
-
-            tbLIQDENS_A.Text = .cp.Liquid_Density_Const_A
-            tbLIQDENS_B.Text = .cp.Liquid_Density_Const_B
-            tbLIQDENS_C.Text = .cp.Liquid_Density_Const_C
-            tbLIQDENS_D.Text = .cp.Liquid_Density_Const_D
-            tbLIQDENS_E.Text = .cp.Liquid_Density_Const_E
-
-            tbLIQVISC_A.Text = .cp.Liquid_Viscosity_Const_A
-            tbLIQVISC_B.Text = .cp.Liquid_Viscosity_Const_B
-            tbLIQVISC_C.Text = .cp.Liquid_Viscosity_Const_C
-            tbLIQVISC_D.Text = .cp.Liquid_Viscosity_Const_D
-            tbLIQVISC_E.Text = .cp.Liquid_Viscosity_Const_E
-
-            populating = True
-            For Each r As DataGridViewRow In Me.GridUNIFAC.Rows
-                If .cp.UNIFACGroups.Collection(r.Cells(1).Value) <> "" Then r.Cells(2).Value = .cp.UNIFACGroups.Collection(r.Cells(1).Value) 'old file format - Subgroup name
-                If .cp.UNIFACGroups.Collection(r.Cells(3).Tag(2)) <> "" Then r.Cells(2).Value = .cp.UNIFACGroups.Collection(r.Cells(3).Tag(2)) 'new file format - Subgroup ID
-
-                If r.Cells(2).Value > 0 Then
-                    r.Cells(2).Style.BackColor = Color.PaleGreen
-                Else
-                    r.Cells(2).Style.BackColor = Color.White
-                End If
-
-            Next
-            For Each r As DataGridViewRow In Me.GridMODFAC.Rows
-                If .cp.MODFACGroups.Collection(r.Cells(1).Value) <> "" Then r.Cells(2).Value = .cp.MODFACGroups.Collection(r.Cells(1).Value) 'old file format - Subgroup name
-                If .cp.MODFACGroups.Collection(r.Cells(3).Tag(2)) <> "" Then r.Cells(2).Value = .cp.MODFACGroups.Collection(r.Cells(3).Tag(2)) 'new file format - Subgroup ID
-
-                If r.Cells(2).Value > 0 Then
-                    r.Cells(2).Style.BackColor = Color.PaleGreen
-                Else
-                    r.Cells(2).Style.BackColor = Color.White
-                End If
-            Next
-
-            If .cp.NISTMODFACGroups Is Nothing Then
-                .cp.NISTMODFACGroups = New DWSIM.ClassesBasicasTermodinamica.UNIFACGroupCollection
-            End If
-
-            For Each r As DataGridViewRow In Me.GridNISTMODFAC.Rows
-                If .cp.NISTMODFACGroups.Collection(r.Cells(1).Value) <> "" Then r.Cells(2).Value = .cp.NISTMODFACGroups.Collection(r.Cells(1).Value) 'old file format - Subgroup name
-                If .cp.NISTMODFACGroups.Collection(r.Cells(3).Tag(2)) <> "" Then r.Cells(2).Value = .cp.NISTMODFACGroups.Collection(r.Cells(3).Tag(2)) 'new file format - Subgroup ID
-
-                If r.Cells(2).Value > 0 Then
-                    r.Cells(2).Style.BackColor = Color.PaleGreen
-                Else
-                    r.Cells(2).Style.BackColor = Color.White
-                End If
-            Next
-
-            FillUnifacSubGroups()
-
-            'check for updated elements when loading older files and create them if not existing
-            If .JobackGroups Is Nothing Then .JobackGroups = New ArrayList()
-            If .AdditionalAtoms Is Nothing Then .AdditionalAtoms = New ArrayList
-            If .DataRoS Is Nothing Then .DataRoS = New ArrayList
-            If .DataCpS Is Nothing Then .DataCpS = New ArrayList
-            If .DataCPLiquid Is Nothing Then .DataCPLiquid = New ArrayList
-
-            'populating Joback Grid with additional Joback groups
-            For i = 0 To .JobackGroups.Count - 1
-                Me.GridJoback.Rows.Item(.JobackGroups.Item(i)(0)).Cells(3).Value = .JobackGroups.Item(i)(1)
-                If .JobackGroups.Item(i)(1) > 0 Then PureUNIFACCompound = False
-            Next
-
-            'populating AtomGrid with additional Atoms
-            For i = 0 To .AdditionalAtoms.Count - 1
-                Me.AddAtomDataGrid.Rows(.AdditionalAtoms.Item(i)(0)).Cells(1).Value = .AdditionalAtoms.Item(i)(1)
-            Next
-
-
-            populating = False
-
-            Me.GridExpDataPVAP.Rows.Clear()
-            For i = 0 To .DataPVAP.Count - 1
-                Me.GridExpDataPVAP.Rows.Add(New Object() {cv.ConverterDoSI(su.spmp_temperature, .DataPVAP(i)(0)), cv.ConverterDoSI(su.spmp_pressure, .DataPVAP(i)(1))})
-            Next
-            Me.GridExpDataCPIG.Rows.Clear()
-            For i = 0 To .DataCPIG.Count - 1
-                Me.GridExpDataCPIG.Rows.Add(New Object() {cv.ConverterDoSI(su.spmp_temperature, .DataCPIG(i)(0)), cv.ConverterDoSI(su.spmp_heatCapacityCp, .DataCPIG(i)(1))})
-            Next
-            Me.GridExpDataCPLiquid.Rows.Clear()
-            For i = 0 To .DataCPLiquid.Count - 1
-                Me.GridExpDataCPLiquid.Rows.Add(New Object() {cv.ConverterDoSI(su.spmp_temperature, .DataCPLiquid(i)(0)), cv.ConverterDoSI(su.spmp_heatCapacityCp, .DataCPLiquid(i)(1))})
-            Next
-            Me.GridExpDataLIQDENS.Rows.Clear()
-            For i = 0 To .DataLDENS.Count - 1
-                Me.GridExpDataLIQDENS.Rows.Add(New Object() {cv.ConverterDoSI(su.spmp_temperature, .DataLDENS(i)(0)), cv.ConverterDoSI(su.spmp_density, .DataLDENS(i)(1))})
-            Next
-            Me.GridExpDataLIQVISC.Rows.Clear()
-            For i = 0 To .DataLVISC.Count - 1
-                Me.GridExpDataLIQVISC.Rows.Add(New Object() {cv.ConverterDoSI(su.spmp_temperature, .DataLVISC(i)(0)), cv.ConverterDoSI(su.spmp_viscosity, .DataLVISC(i)(1))})
-            Next
-            Me.GridExpDataRoS.Rows.Clear()
-            For i = 0 To .DataRoS.Count - 1
-                Me.GridExpDataRoS.Rows.Add(New Object() {cv.ConverterDoSI(su.spmp_temperature, .DataRoS(i)(0)), cv.ConverterDoSI(su.spmp_density, .DataRoS(i)(1)) * .cp.Molar_Weight})
-            Next
-            Me.GridExpDataCpS.Rows.Clear()
-            For i = 0 To .DataCpS.Count - 1
-                Me.GridExpDataCpS.Rows.Add(New Object() {cv.ConverterDoSI(su.spmp_temperature, .DataCpS(i)(0)), cv.ConverterDoSI(su.spmp_heatCapacityCp, .DataCpS(i)(1)) / .cp.Molar_Weight})
-            Next
-            If .RegressOKPVAP Then tbStatusPVAP.Text = "OK" Else tbStatusPVAP.Text = .ErrorMsgPVAP
-            If .RegressOKCPIG Then tbStatusCPIG.Text = "OK" Else tbStatusCPIG.Text = .ErrorMsgCPIG
-            If .RegressOKCPLiquid Then tbStatusCPLiquid.Text = "OK" Else tbStatusCPLiquid.Text = .ErrorMsgCPLiquid
-            If .RegressOKLDENS Then tbStatusLIQDENS.Text = "OK" Else tbStatusLIQDENS.Text = .ErrorMsgLDENS
-            If .RegressOKLVISC Then tbStatusLIQVISC.Text = "OK" Else tbStatusLIQVISC.Text = .ErrorMsgLVISC
-            If .RegressOKRoS Then tbStatusSolidDens.Text = "OK" Else tbStatusSolidDens.Text = .ErrorMsgRoS
-            If .RegressOKCpS Then tbStatusSolidCp.Text = "OK" Else tbStatusSolidCp.Text = .ErrorMsgCpS
 
         End With
 
@@ -634,191 +660,221 @@ Public Class FormCompoundCreator
     Sub StoreData()
 
         With mycase
+
             .su = Me.su
             .database = tbDBPath.Text
-            .cp.Acentric_Factor = CheckEmptyTextBox(TextBoxAF)
-            .cp.CAS_Number = TextBoxCAS.Text
-            .cp.CompCreatorStudyFile = .Filename
-            .cp.Chao_Seader_Acentricity = CheckEmptyTextBox(TextBoxCSAF)
-            .cp.Chao_Seader_Liquid_Molar_Volume = CheckEmptyTextBox(TextBoxCSLV)
-            .cp.Chao_Seader_Solubility_Parameter = CheckEmptyTextBox(TextBoxCSSP)
-            .cp.IG_Gibbs_Energy_of_Formation_25C = cv.ConverterParaSI(su.spmp_enthalpy, CheckEmptyTextBox(TextBoxDGF))
-            .cp.IG_Enthalpy_of_Formation_25C = cv.ConverterParaSI(su.spmp_enthalpy, CheckEmptyTextBox(TextBoxDHF))
-            .cp.Formula = TextBoxFormula.Text
-            .cp.ID = TextBoxID.Text
-            .cp.Molar_Weight = CheckEmptyTextBox(TextBoxMW)
-            .cp.Name = TextBoxName.Text
-            .cp.Normal_Boiling_Point = cv.ConverterParaSI(su.spmp_temperature, CheckEmptyTextBox(TextBoxNBP))
-            .cp.Critical_Pressure = cv.ConverterParaSI(su.spmp_pressure, CheckEmptyTextBox(TextBoxPc))
-            .cp.PC_SAFT_epsilon_k = CheckEmptyTextBox(TextBoxPCSAFTEpsilon)
-            .cp.PC_SAFT_m = CheckEmptyTextBox(TextBoxPCSAFTm)
-            .cp.PC_SAFT_sigma = CheckEmptyTextBox(TextBoxPCSAFTSigma)
-            .cp.UNIQUAC_Q = CheckEmptyTextBox(TextBoxUNIQUAC_Q)
-            .cp.UNIQUAC_R = CheckEmptyTextBox(TextBoxUNIQUAC_R)
-            .cp.Critical_Temperature = cv.ConverterParaSI(su.spmp_temperature, CheckEmptyTextBox(TextBoxTc))
-            .cp.PR_Volume_Translation_Coefficient = CheckEmptyTextBox(TextBoxVTCPR)
-            .cp.SRK_Volume_Translation_Coefficient = CheckEmptyTextBox(TextBoxVTCSRK)
-            .cp.Critical_Compressibility = CheckEmptyTextBox(TextBoxZc)
-            .cp.Z_Rackett = CheckEmptyTextBox(TextBoxZRa)
-            .cp.SMILES = TextBoxSMILES.Text
-            .cp.TemperatureOfFusion = cv.ConverterParaSI(su.spmp_temperature, CheckEmptyTextBox(TextBoxMeltingTemp))
-            .cp.EnthalpyOfFusionAtTf = cv.ConverterParaSI(su.spmp_enthalpy, CheckEmptyTextBox(TextBoxEnthOfFusion))
 
-            .RegressPVAP = rbRegressPVAP.Checked
-            .RegressCPIG = rbRegressCPIG.Checked
-            .RegressCPLiquid = rbRegressCPLiquid.Checked
-            .RegressLDENS = rbRegressLIQDENS.Checked
-            .RegressLVISC = rbRegressLIQVISC.Checked
-            .RegressRoS = rbRegressSolidDens.Checked
-            .RegressCpS = rbRegressSolidCp.Checked
+            If RadioButton1.Checked Then
 
-            .EqPVAP = rbCoeffPVAP.Checked
-            .EqCPIG = rbCoeffCPIG.Checked
-            .EqCPLiquid = rbCoeffCPLiquid.Checked
-            .EqLDENS = rbCoeffLIQDENS.Checked
-            .EqLVISC = rbCoeffLIQVISC.Checked
-            .EqSDens = rbCoeffSolidDens.Checked
-            .EqCpS = rbCoeffSolidCp.Checked
+                .cp.IsBlackOil = False
 
-            .CalcMW = CheckBoxMW.Checked
-            .CalcNBP = CheckBoxNBP.Checked
-            .CalcAF = CheckBoxAF.Checked
-            .CalcCSAF = CheckBoxCSAF.Checked
-            .CalcCSMV = CheckBoxCSLV.Checked
-            .CalcCSSP = CheckBoxCSSP.Checked
-            .CalcTC = CheckBoxTc.Checked
-            .CalcPC = CheckBoxPc.Checked
-            .CalcZC = CheckBoxZc.Checked
-            .CalcZRA = CheckBoxZRa.Checked
-            .CalcHF = CheckBoxDHF.Checked
-            .CalcGF = CheckBoxDGF.Checked
-            .CalcMP = CheckBoxMeltingTemp.Checked
-            .CalcEM = CheckBoxEnthOfFusion.Checked
+                .cp.Acentric_Factor = CheckEmptyTextBox(TextBoxAF)
+                .cp.CAS_Number = TextBoxCAS.Text
+                .cp.CompCreatorStudyFile = .Filename
+                .cp.Chao_Seader_Acentricity = CheckEmptyTextBox(TextBoxCSAF)
+                .cp.Chao_Seader_Liquid_Molar_Volume = CheckEmptyTextBox(TextBoxCSLV)
+                .cp.Chao_Seader_Solubility_Parameter = CheckEmptyTextBox(TextBoxCSSP)
+                .cp.IG_Gibbs_Energy_of_Formation_25C = cv.ConverterParaSI(su.spmp_enthalpy, CheckEmptyTextBox(TextBoxDGF))
+                .cp.IG_Enthalpy_of_Formation_25C = cv.ConverterParaSI(su.spmp_enthalpy, CheckEmptyTextBox(TextBoxDHF))
+                .cp.Formula = TextBoxFormula.Text
+                .cp.ID = TextBoxID.Text
+                .cp.Molar_Weight = CheckEmptyTextBox(TextBoxMW)
+                .cp.Name = TextBoxName.Text
+                .cp.Normal_Boiling_Point = cv.ConverterParaSI(su.spmp_temperature, CheckEmptyTextBox(TextBoxNBP))
+                .cp.Critical_Pressure = cv.ConverterParaSI(su.spmp_pressure, CheckEmptyTextBox(TextBoxPc))
+                .cp.PC_SAFT_epsilon_k = CheckEmptyTextBox(TextBoxPCSAFTEpsilon)
+                .cp.PC_SAFT_m = CheckEmptyTextBox(TextBoxPCSAFTm)
+                .cp.PC_SAFT_sigma = CheckEmptyTextBox(TextBoxPCSAFTSigma)
+                .cp.UNIQUAC_Q = CheckEmptyTextBox(TextBoxUNIQUAC_Q)
+                .cp.UNIQUAC_R = CheckEmptyTextBox(TextBoxUNIQUAC_R)
+                .cp.Critical_Temperature = cv.ConverterParaSI(su.spmp_temperature, CheckEmptyTextBox(TextBoxTc))
+                .cp.PR_Volume_Translation_Coefficient = CheckEmptyTextBox(TextBoxVTCPR)
+                .cp.SRK_Volume_Translation_Coefficient = CheckEmptyTextBox(TextBoxVTCSRK)
+                .cp.Critical_Compressibility = CheckEmptyTextBox(TextBoxZc)
+                .cp.Z_Rackett = CheckEmptyTextBox(TextBoxZRa)
+                .cp.SMILES = TextBoxSMILES.Text
+                .cp.TemperatureOfFusion = cv.ConverterParaSI(su.spmp_temperature, CheckEmptyTextBox(TextBoxMeltingTemp))
+                .cp.EnthalpyOfFusionAtTf = cv.ConverterParaSI(su.spmp_enthalpy, CheckEmptyTextBox(TextBoxEnthOfFusion))
 
-            .cp.VaporPressureEquation = cbEqPVAP.SelectedItem.ToString.Split(":")(0)
-            .cp.LiquidDensityEquation = cbEqLIQDENS.SelectedItem.ToString.Split(":")(0)
-            .cp.LiquidViscosityEquation = cbEqLIQVISC.SelectedItem.ToString.Split(":")(0)
-            .cp.SolidHeatCapacityEquation = cbEqCpS.SelectedIndex.ToString.Split(":")(0)
-            .cp.SolidDensityEquation = cbEqSolidDENS.SelectedIndex.ToString.Split(":")(0)
-            .cp.IdealgasCpEquation = cbEqCPIG.SelectedItem.ToString.Split(":")(0)
-            .cp.LiquidHeatCapacityEquation = cbEqCPLiquid.SelectedItem.ToString.Split(":")(0)
+                .RegressPVAP = rbRegressPVAP.Checked
+                .RegressCPIG = rbRegressCPIG.Checked
+                .RegressCPLiquid = rbRegressCPLiquid.Checked
+                .RegressLDENS = rbRegressLIQDENS.Checked
+                .RegressLVISC = rbRegressLIQVISC.Checked
+                .RegressRoS = rbRegressSolidDens.Checked
+                .RegressCpS = rbRegressSolidCp.Checked
 
-            .cp.Solid_Heat_Capacity_Const_A = CheckEmptyCell(tbCpS_A.Text)
-            .cp.Solid_Heat_Capacity_Const_B = CheckEmptyCell(tbCpS_B.Text)
-            .cp.Solid_Heat_Capacity_Const_C = CheckEmptyCell(tbCpS_C.Text)
-            .cp.Solid_Heat_Capacity_Const_D = CheckEmptyCell(tbCpS_D.Text)
-            .cp.Solid_Heat_Capacity_Const_E = CheckEmptyCell(tbCpS_E.Text)
-            .cp.Solid_Heat_Capacity_Tmin = 0
-            .cp.Solid_Heat_Capacity_Tmax = .cp.TemperatureOfFusion
+                .EqPVAP = rbCoeffPVAP.Checked
+                .EqCPIG = rbCoeffCPIG.Checked
+                .EqCPLiquid = rbCoeffCPLiquid.Checked
+                .EqLDENS = rbCoeffLIQDENS.Checked
+                .EqLVISC = rbCoeffLIQVISC.Checked
+                .EqSDens = rbCoeffSolidDens.Checked
+                .EqCpS = rbCoeffSolidCp.Checked
 
-            .cp.Solid_Density_Const_A = CheckEmptyCell(tbRoS_A.Text)
-            .cp.Solid_Density_Const_B = CheckEmptyCell(tbRoS_B.Text)
-            .cp.Solid_Density_Const_C = CheckEmptyCell(tbRoS_C.Text)
-            .cp.Solid_Density_Const_D = CheckEmptyCell(tbRoS_D.Text)
-            .cp.Solid_Density_Const_E = CheckEmptyCell(tbRoS_E.Text)
-            .cp.Solid_Density_Tmin = 0
-            .cp.Solid_Density_Tmax = .cp.TemperatureOfFusion
+                .CalcMW = CheckBoxMW.Checked
+                .CalcNBP = CheckBoxNBP.Checked
+                .CalcAF = CheckBoxAF.Checked
+                .CalcCSAF = CheckBoxCSAF.Checked
+                .CalcCSMV = CheckBoxCSLV.Checked
+                .CalcCSSP = CheckBoxCSSP.Checked
+                .CalcTC = CheckBoxTc.Checked
+                .CalcPC = CheckBoxPc.Checked
+                .CalcZC = CheckBoxZc.Checked
+                .CalcZRA = CheckBoxZRa.Checked
+                .CalcHF = CheckBoxDHF.Checked
+                .CalcGF = CheckBoxDGF.Checked
+                .CalcMP = CheckBoxMeltingTemp.Checked
+                .CalcEM = CheckBoxEnthOfFusion.Checked
 
-            .cp.Vapor_Pressure_Constant_A = CheckEmptyCell(tbPVAP_A.Text)
-            .cp.Vapor_Pressure_Constant_B = CheckEmptyCell(tbPVAP_B.Text)
-            .cp.Vapor_Pressure_Constant_C = CheckEmptyCell(tbPVAP_C.Text)
-            .cp.Vapor_Pressure_Constant_D = CheckEmptyCell(tbPVAP_D.Text)
-            .cp.Vapor_Pressure_Constant_E = CheckEmptyCell(tbPVAP_E.Text)
+                .cp.VaporPressureEquation = cbEqPVAP.SelectedItem.ToString.Split(":")(0)
+                .cp.LiquidDensityEquation = cbEqLIQDENS.SelectedItem.ToString.Split(":")(0)
+                .cp.LiquidViscosityEquation = cbEqLIQVISC.SelectedItem.ToString.Split(":")(0)
+                .cp.SolidHeatCapacityEquation = cbEqCpS.SelectedIndex.ToString.Split(":")(0)
+                .cp.SolidDensityEquation = cbEqSolidDENS.SelectedIndex.ToString.Split(":")(0)
+                .cp.IdealgasCpEquation = cbEqCPIG.SelectedItem.ToString.Split(":")(0)
+                .cp.LiquidHeatCapacityEquation = cbEqCPLiquid.SelectedItem.ToString.Split(":")(0)
 
-            .cp.Ideal_Gas_Heat_Capacity_Const_A = CheckEmptyCell(tbCPIG_A.Text)
-            .cp.Ideal_Gas_Heat_Capacity_Const_B = CheckEmptyCell(tbCPIG_B.Text)
-            .cp.Ideal_Gas_Heat_Capacity_Const_C = CheckEmptyCell(tbCPIG_C.Text)
-            .cp.Ideal_Gas_Heat_Capacity_Const_D = CheckEmptyCell(tbCPIG_D.Text)
-            .cp.Ideal_Gas_Heat_Capacity_Const_E = CheckEmptyCell(tbCPIG_E.Text)
+                .cp.Solid_Heat_Capacity_Const_A = CheckEmptyCell(tbCpS_A.Text)
+                .cp.Solid_Heat_Capacity_Const_B = CheckEmptyCell(tbCpS_B.Text)
+                .cp.Solid_Heat_Capacity_Const_C = CheckEmptyCell(tbCpS_C.Text)
+                .cp.Solid_Heat_Capacity_Const_D = CheckEmptyCell(tbCpS_D.Text)
+                .cp.Solid_Heat_Capacity_Const_E = CheckEmptyCell(tbCpS_E.Text)
+                .cp.Solid_Heat_Capacity_Tmin = 0
+                .cp.Solid_Heat_Capacity_Tmax = .cp.TemperatureOfFusion
 
-            .cp.Liquid_Heat_Capacity_Const_A = CheckEmptyCell(tbCPLiquid_A.Text)
-            .cp.Liquid_Heat_Capacity_Const_B = CheckEmptyCell(tbCPLiquid_B.Text)
-            .cp.Liquid_Heat_Capacity_Const_C = CheckEmptyCell(tbCPLiquid_C.Text)
-            .cp.Liquid_Heat_Capacity_Const_D = CheckEmptyCell(tbCPLiquid_D.Text)
-            .cp.Liquid_Heat_Capacity_Const_E = CheckEmptyCell(tbCPLiquid_E.Text)
+                .cp.Solid_Density_Const_A = CheckEmptyCell(tbRoS_A.Text)
+                .cp.Solid_Density_Const_B = CheckEmptyCell(tbRoS_B.Text)
+                .cp.Solid_Density_Const_C = CheckEmptyCell(tbRoS_C.Text)
+                .cp.Solid_Density_Const_D = CheckEmptyCell(tbRoS_D.Text)
+                .cp.Solid_Density_Const_E = CheckEmptyCell(tbRoS_E.Text)
+                .cp.Solid_Density_Tmin = 0
+                .cp.Solid_Density_Tmax = .cp.TemperatureOfFusion
 
-            .cp.Liquid_Density_Const_A = CheckEmptyCell(tbLIQDENS_A.Text)
-            .cp.Liquid_Density_Const_B = CheckEmptyCell(tbLIQDENS_B.Text)
-            .cp.Liquid_Density_Const_C = CheckEmptyCell(tbLIQDENS_C.Text)
-            .cp.Liquid_Density_Const_D = CheckEmptyCell(tbLIQDENS_D.Text)
-            .cp.Liquid_Density_Const_E = CheckEmptyCell(tbLIQDENS_E.Text)
+                .cp.Vapor_Pressure_Constant_A = CheckEmptyCell(tbPVAP_A.Text)
+                .cp.Vapor_Pressure_Constant_B = CheckEmptyCell(tbPVAP_B.Text)
+                .cp.Vapor_Pressure_Constant_C = CheckEmptyCell(tbPVAP_C.Text)
+                .cp.Vapor_Pressure_Constant_D = CheckEmptyCell(tbPVAP_D.Text)
+                .cp.Vapor_Pressure_Constant_E = CheckEmptyCell(tbPVAP_E.Text)
 
-            .cp.Liquid_Viscosity_Const_A = CheckEmptyCell(tbLIQVISC_A.Text)
-            .cp.Liquid_Viscosity_Const_B = CheckEmptyCell(tbLIQVISC_B.Text)
-            .cp.Liquid_Viscosity_Const_C = CheckEmptyCell(tbLIQVISC_C.Text)
-            .cp.Liquid_Viscosity_Const_D = CheckEmptyCell(tbLIQVISC_D.Text)
-            .cp.Liquid_Viscosity_Const_E = CheckEmptyCell(tbLIQVISC_E.Text)
+                .cp.Ideal_Gas_Heat_Capacity_Const_A = CheckEmptyCell(tbCPIG_A.Text)
+                .cp.Ideal_Gas_Heat_Capacity_Const_B = CheckEmptyCell(tbCPIG_B.Text)
+                .cp.Ideal_Gas_Heat_Capacity_Const_C = CheckEmptyCell(tbCPIG_C.Text)
+                .cp.Ideal_Gas_Heat_Capacity_Const_D = CheckEmptyCell(tbCPIG_D.Text)
+                .cp.Ideal_Gas_Heat_Capacity_Const_E = CheckEmptyCell(tbCPIG_E.Text)
 
-            .cp.UNIFACGroups.Collection.Clear()
-            For Each r As DataGridViewRow In Me.GridUNIFAC.Rows
-                If CInt(r.Cells(2).Value) <> 0 Then .cp.UNIFACGroups.Collection(r.Cells(3).Tag(2)) = r.Cells(2).Value
-            Next
+                .cp.Liquid_Heat_Capacity_Const_A = CheckEmptyCell(tbCPLiquid_A.Text)
+                .cp.Liquid_Heat_Capacity_Const_B = CheckEmptyCell(tbCPLiquid_B.Text)
+                .cp.Liquid_Heat_Capacity_Const_C = CheckEmptyCell(tbCPLiquid_C.Text)
+                .cp.Liquid_Heat_Capacity_Const_D = CheckEmptyCell(tbCPLiquid_D.Text)
+                .cp.Liquid_Heat_Capacity_Const_E = CheckEmptyCell(tbCPLiquid_E.Text)
 
-            .cp.MODFACGroups.Collection.Clear()
-            For Each r As DataGridViewRow In Me.GridMODFAC.Rows
-                If CInt(r.Cells(2).Value) <> 0 Then .cp.MODFACGroups.Collection(r.Cells(3).Tag(2)) = r.Cells(2).Value
-            Next
+                .cp.Liquid_Density_Const_A = CheckEmptyCell(tbLIQDENS_A.Text)
+                .cp.Liquid_Density_Const_B = CheckEmptyCell(tbLIQDENS_B.Text)
+                .cp.Liquid_Density_Const_C = CheckEmptyCell(tbLIQDENS_C.Text)
+                .cp.Liquid_Density_Const_D = CheckEmptyCell(tbLIQDENS_D.Text)
+                .cp.Liquid_Density_Const_E = CheckEmptyCell(tbLIQDENS_E.Text)
 
-            .cp.NISTMODFACGroups.Collection.Clear()
-            For Each r As DataGridViewRow In Me.GridNISTMODFAC.Rows
-                If CInt(r.Cells(2).Value) <> 0 Then .cp.NISTMODFACGroups.Collection(r.Cells(3).Tag(2)) = r.Cells(2).Value
-            Next
+                .cp.Liquid_Viscosity_Const_A = CheckEmptyCell(tbLIQVISC_A.Text)
+                .cp.Liquid_Viscosity_Const_B = CheckEmptyCell(tbLIQVISC_B.Text)
+                .cp.Liquid_Viscosity_Const_C = CheckEmptyCell(tbLIQVISC_C.Text)
+                .cp.Liquid_Viscosity_Const_D = CheckEmptyCell(tbLIQVISC_D.Text)
+                .cp.Liquid_Viscosity_Const_E = CheckEmptyCell(tbLIQVISC_E.Text)
 
-            Dim JC As Integer
-            If mycase.JobackGroups Is Nothing Then .JobackGroups = New ArrayList 'for old file versions where field was not defined
-            .JobackGroups.Clear()
-            For Each r As DataGridViewRow In Me.GridJoback.Rows
-                JC = r.Cells(3).Value
-                If JC > 0 Then .JobackGroups.Add(New Integer() {r.Index, JC})
-            Next
+                .cp.UNIFACGroups.Collection.Clear()
+                For Each r As DataGridViewRow In Me.GridUNIFAC.Rows
+                    If CInt(r.Cells(2).Value) <> 0 Then .cp.UNIFACGroups.Collection(r.Cells(3).Tag(2)) = r.Cells(2).Value
+                Next
 
-            If mycase.AdditionalAtoms Is Nothing Then .AdditionalAtoms = New ArrayList
-            .AdditionalAtoms.Clear()
-            For Each r As DataGridViewRow In AddAtomDataGrid.Rows
-                JC = r.Cells(1).Value
-                If JC > 0 Then .AdditionalAtoms.Add(New Integer() {r.Index, JC})
-            Next
+                .cp.MODFACGroups.Collection.Clear()
+                For Each r As DataGridViewRow In Me.GridMODFAC.Rows
+                    If CInt(r.Cells(2).Value) <> 0 Then .cp.MODFACGroups.Collection(r.Cells(3).Tag(2)) = r.Cells(2).Value
+                Next
 
-            .cp.Elements.Collection.Clear()
-            For Each r As DataGridViewRow In Me.AtomDataGrid.Rows
-                .cp.Elements.Collection.Add(r.Cells(0).Value, r.Cells(1).Value)
-            Next
+                .cp.NISTMODFACGroups.Collection.Clear()
+                For Each r As DataGridViewRow In Me.GridNISTMODFAC.Rows
+                    If CInt(r.Cells(2).Value) <> 0 Then .cp.NISTMODFACGroups.Collection(r.Cells(3).Tag(2)) = r.Cells(2).Value
+                Next
+
+                Dim JC As Integer
+                If mycase.JobackGroups Is Nothing Then .JobackGroups = New ArrayList 'for old file versions where field was not defined
+                .JobackGroups.Clear()
+                For Each r As DataGridViewRow In Me.GridJoback.Rows
+                    JC = r.Cells(3).Value
+                    If JC > 0 Then .JobackGroups.Add(New Integer() {r.Index, JC})
+                Next
+
+                If mycase.AdditionalAtoms Is Nothing Then .AdditionalAtoms = New ArrayList
+                .AdditionalAtoms.Clear()
+                For Each r As DataGridViewRow In AddAtomDataGrid.Rows
+                    JC = r.Cells(1).Value
+                    If JC > 0 Then .AdditionalAtoms.Add(New Integer() {r.Index, JC})
+                Next
+
+                .cp.Elements.Collection.Clear()
+                For Each r As DataGridViewRow In Me.AtomDataGrid.Rows
+                    .cp.Elements.Collection.Add(r.Cells(0).Value, r.Cells(1).Value)
+                Next
 
 
-            mycase.DataPVAP.Clear()
-            For Each row As DataGridViewRow In Me.GridExpDataPVAP.Rows
-                If row.Index < Me.GridExpDataPVAP.Rows.Count - 1 Then mycase.DataPVAP.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_pressure, row.Cells(1).Value)})
-            Next
+                mycase.DataPVAP.Clear()
+                For Each row As DataGridViewRow In Me.GridExpDataPVAP.Rows
+                    If row.Index < Me.GridExpDataPVAP.Rows.Count - 1 Then mycase.DataPVAP.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_pressure, row.Cells(1).Value)})
+                Next
 
-            mycase.DataCPIG.Clear()
-            For Each row As DataGridViewRow In Me.GridExpDataCPIG.Rows
-                If row.Index < Me.GridExpDataCPIG.Rows.Count - 1 Then mycase.DataCPIG.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_heatCapacityCp, row.Cells(1).Value)})
-            Next
+                mycase.DataCPIG.Clear()
+                For Each row As DataGridViewRow In Me.GridExpDataCPIG.Rows
+                    If row.Index < Me.GridExpDataCPIG.Rows.Count - 1 Then mycase.DataCPIG.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_heatCapacityCp, row.Cells(1).Value)})
+                Next
 
-            mycase.DataCPLiquid.Clear()
-            For Each row As DataGridViewRow In Me.GridExpDataCPLiquid.Rows
-                If row.Index < Me.GridExpDataCPLiquid.Rows.Count - 1 Then mycase.DataCPLiquid.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_heatCapacityCp, row.Cells(1).Value)})
-            Next
+                mycase.DataCPLiquid.Clear()
+                For Each row As DataGridViewRow In Me.GridExpDataCPLiquid.Rows
+                    If row.Index < Me.GridExpDataCPLiquid.Rows.Count - 1 Then mycase.DataCPLiquid.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_heatCapacityCp, row.Cells(1).Value)})
+                Next
 
-            mycase.DataLDENS.Clear()
-            For Each row As DataGridViewRow In Me.GridExpDataLIQDENS.Rows
-                If row.Index < Me.GridExpDataLIQDENS.Rows.Count - 1 Then mycase.DataLDENS.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_density, row.Cells(1).Value)})
-            Next
+                mycase.DataLDENS.Clear()
+                For Each row As DataGridViewRow In Me.GridExpDataLIQDENS.Rows
+                    If row.Index < Me.GridExpDataLIQDENS.Rows.Count - 1 Then mycase.DataLDENS.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_density, row.Cells(1).Value)})
+                Next
 
-            mycase.DataLVISC.Clear()
-            For Each row As DataGridViewRow In Me.GridExpDataLIQVISC.Rows
-                If row.Index < Me.GridExpDataLIQVISC.Rows.Count - 1 Then mycase.DataLVISC.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_viscosity, row.Cells(1).Value)})
-            Next
+                mycase.DataLVISC.Clear()
+                For Each row As DataGridViewRow In Me.GridExpDataLIQVISC.Rows
+                    If row.Index < Me.GridExpDataLIQVISC.Rows.Count - 1 Then mycase.DataLVISC.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_viscosity, row.Cells(1).Value)})
+                Next
 
-            mycase.DataRoS.Clear()
-            For Each row As DataGridViewRow In Me.GridExpDataRoS.Rows
-                If row.Index < Me.GridExpDataRoS.Rows.Count - 1 Then mycase.DataRoS.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_density, row.Cells(1).Value) / .cp.Molar_Weight})
-            Next
+                mycase.DataRoS.Clear()
+                For Each row As DataGridViewRow In Me.GridExpDataRoS.Rows
+                    If row.Index < Me.GridExpDataRoS.Rows.Count - 1 Then mycase.DataRoS.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_density, row.Cells(1).Value) / .cp.Molar_Weight})
+                Next
 
-            mycase.DataCpS.Clear()
-            For Each row As DataGridViewRow In Me.GridExpDataCpS.Rows
-                If row.Index < Me.GridExpDataCpS.Rows.Count - 1 Then mycase.DataCpS.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_heatCapacityCp, row.Cells(1).Value) * .cp.Molar_Weight})
-            Next
+                mycase.DataCpS.Clear()
+                For Each row As DataGridViewRow In Me.GridExpDataCpS.Rows
+                    If row.Index < Me.GridExpDataCpS.Rows.Count - 1 Then mycase.DataCpS.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_heatCapacityCp, row.Cells(1).Value) * .cp.Molar_Weight})
+                Next
+
+            Else
+
+                .cp.ID = New Random().Next(1000000)
+
+                .cp.IsBlackOil = True
+
+                .cp.Name = tbBOName.Text
+
+                .cp.BO_GOR = cv.ConverterParaSI(su.gor, CheckEmptyTextBox(tbBOGOR))
+                .cp.BO_BSW = CheckEmptyTextBox(tbBOBSW)
+                .cp.BO_SGG = CheckEmptyTextBox(tbBOSGG)
+                .cp.BO_SGO = CheckEmptyTextBox(tbBOSGO)
+
+                .cp.BO_OilVisc1 = cv.ConverterParaSI(su.spmp_cinematic_viscosity, CheckEmptyTextBox(tbBOV1))
+                .cp.BO_OilVisc2 = cv.ConverterParaSI(su.spmp_cinematic_viscosity, CheckEmptyTextBox(tbBOV2))
+                .cp.BO_OilViscTemp1 = cv.ConverterParaSI(su.spmp_temperature, CheckEmptyTextBox(tbBOT1))
+                .cp.BO_OilViscTemp2 = cv.ConverterParaSI(su.spmp_temperature, CheckEmptyTextBox(tbBOT2))
+
+                .cp.BO_PNA_P = CheckEmptyTextBox(tbBOPNAP)
+                .cp.BO_PNA_N = CheckEmptyTextBox(tbBOPNAN)
+                .cp.BO_PNA_A = CheckEmptyTextBox(tbBOPNAA)
+
+            End If
 
         End With
 
@@ -1167,7 +1223,9 @@ Public Class FormCompoundCreator
     End Sub
 
     Sub UpdateUnits()
+
         With su
+
             lblTc.Text = .spmp_temperature
             lblPc.Text = .spmp_pressure
             lblNBP.Text = .spmp_temperature
@@ -1176,6 +1234,13 @@ Public Class FormCompoundCreator
             lblDGF.Text = .spmp_enthalpy
             lblMeltingTemp.Text = .spmp_temperature
             lblEnthOfFusion.Text = .spmp_enthalpy
+
+            lblBORGO.Text = .gor
+            lblBOT1.Text = .spmp_temperature
+            lblBOT2.Text = .spmp_temperature
+            lblBOVisc1.Text = .spmp_cinematic_viscosity
+            lblBOVisc2.Text = .spmp_cinematic_viscosity
+
             Me.GridExpDataPVAP.Columns(0).HeaderText = "T [" & su.spmp_temperature & "]"
             Me.GridExpDataCPIG.Columns(0).HeaderText = "T [" & su.spmp_temperature & "]"
             Me.GridExpDataCPLiquid.Columns(0).HeaderText = "T [" & su.spmp_temperature & "]"
@@ -2856,6 +2921,43 @@ Public Class FormCompoundCreator
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
+
+    End Sub
+
+    Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged, RadioButton2.CheckedChanged
+
+        If RadioButton1.Checked Then
+            Me.FaTabStripItem1.Visible = True
+            Me.FaTabStripItem2.Visible = True
+            Me.FaTabStripItem3.Visible = True
+            Me.FaTabStripItem4.Visible = True
+            Me.FaTabStripItem5.Visible = True
+            Me.FaTabStripItem6.Visible = True
+            Me.FaTabStripItem7.Visible = True
+            Me.FaTabStripItem8.Visible = True
+            Me.FaTabStripItem9.Visible = True
+            Me.FaTabStripItem10.Visible = True
+            Me.FaTabStripItem11.Visible = True
+            Me.FaTabStripItemBO.Visible = False
+            Me.FaTabStrip2.SelectedItem = Me.FaTabStripItem1
+            Me.FaTabStripItem1.Selected = True
+        Else
+            Me.FaTabStripItem1.Visible = False
+            Me.FaTabStripItem2.Visible = False
+            Me.FaTabStripItem3.Visible = False
+            Me.FaTabStripItem4.Visible = False
+            Me.FaTabStripItem5.Visible = False
+            Me.FaTabStripItem6.Visible = False
+            Me.FaTabStripItem7.Visible = False
+            Me.FaTabStripItem8.Visible = False
+            Me.FaTabStripItem9.Visible = False
+            Me.FaTabStripItem10.Visible = False
+            Me.FaTabStripItem11.Visible = False
+            Me.FaTabStripItemBO.Visible = True
+            Me.FaTabStrip2.SelectedItem = Me.FaTabStripItemBO
+            Me.FaTabStripItemBO.Selected = True
+        End If
+        Me.FaTabStrip2.Refresh()
 
     End Sub
 

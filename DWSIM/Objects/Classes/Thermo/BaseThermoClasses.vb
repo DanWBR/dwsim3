@@ -2237,6 +2237,33 @@ Namespace DWSIM.ClassesBasicasTermodinamica
         Public Ion_CpAq_b As Double = 0.0#
         Public Ion_CpAq_c As Double = 0.0#
 
+        'Black-Oil Properties
+
+        Public IsBlackOil As Boolean = False
+
+        'gas specific gravity
+        Public BO_SGG As Double = 0.0#
+        'oil specific gravity
+        Public BO_SGO As Double = 0.0#
+        'gas-oil ratio (m3/m3 STD)
+        Public BO_GOR As Double = 0.0#
+        'basic sediments and water (%)
+        Public BO_BSW As Double = 0.0#
+        'oil viscosity at T1 (m2/s)
+        Public BO_OilVisc1 As Double = 0.0#
+        'oil viscosity T1 (K)
+        Public BO_OilViscTemp1 As Double = 0.0#
+        'oil viscosity at T2 (m2/s)
+        Public BO_OilVisc2 As Double = 0.0#
+        'oil viscosity T2 (K)
+        Public BO_OilViscTemp2 As Double = 0.0#
+        'oil parafins percentage
+        Public BO_PNA_P As Double = 0.0#
+        'oil napthenics percentage
+        Public BO_PNA_N As Double = 0.0#
+        'oil aromatics percentage
+        Public BO_PNA_A As Double = 0.0#
+
         'the following properties are no longer used but kept for compatibility reasons
         <XmlIgnore()> Public UNIFAC_Ri As Double
         <XmlIgnore()> Public UNIFAC_Qi As Double
@@ -2267,7 +2294,6 @@ Namespace DWSIM.ClassesBasicasTermodinamica
             MODFACGroups = New UNIFACGroupCollection
             NISTMODFACGroups = New UNIFACGroupCollection
         End Sub
-
 
         Public Function Clone() As Object Implements System.ICloneable.Clone
 
