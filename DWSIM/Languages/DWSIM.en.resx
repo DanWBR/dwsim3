@@ -5194,4 +5194,37 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="PP_IGNORE_SALINITY_LIMIT" xml:space="preserve">
     <value>Ignore maximum salinity limit</value>
   </data>
+  <data name="BlackOil_BSW" xml:space="preserve">
+    <value>[Black Oil] BSW (%)</value>
+  </data>
+  <data name="BlackOil_GOR" xml:space="preserve">
+    <value>[Black Oil] Gas-Oil Ratio @ SC</value>
+  </data>
+  <data name="BlackOil_PNA_A" xml:space="preserve">
+    <value>[Black Oil] Oil PNA analysis, Aromatics, %</value>
+  </data>
+  <data name="BlackOil_PNA_N" xml:space="preserve">
+    <value>[Black Oil] Oil PNA analysis, Naphthenes, %</value>
+  </data>
+  <data name="BlackOil_PNA_P" xml:space="preserve">
+    <value>[Black Oil] Oil PNA analysis, Paraffins, %</value>
+  </data>
+  <data name="BlackOil_SGG" xml:space="preserve">
+    <value>[Black Oil] Gas specific gravity</value>
+  </data>
+  <data name="BlackOil_SGO" xml:space="preserve">
+    <value>[Black Oil] Oil specific gravity</value>
+  </data>
+  <data name="BlackOil_T1" xml:space="preserve">
+    <value>[Black Oil] Oil viscosity 1 temperature</value>
+  </data>
+  <data name="BlackOil_T2" xml:space="preserve">
+    <value>[Black Oil] Oil viscosity 2 temperature</value>
+  </data>
+  <data name="BlackOil_V1" xml:space="preserve">
+    <value>[Black Oil] Oil viscosity 1</value>
+  </data>
+  <data name="BlackOil_V2" xml:space="preserve">
+    <value>[Black Oil] Oil viscosity 2</value>
+  </data>
 </root>

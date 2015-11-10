@@ -773,6 +773,8 @@ Namespace DWSIM.SistemasDeUnidades
 
             Select Case unidade
 
+                Case "ft3/bbl"
+                    Return valor * 0.177295
                 Case "g"
                     Return valor / 1000
                 Case "lb"
@@ -1177,6 +1179,8 @@ Namespace DWSIM.SistemasDeUnidades
 
             Select Case unidade
 
+                Case "ft3/bbl"
+                    Return valor / 0.177295
                 Case "g"
                     Return valor * 1000
                 Case "lb"

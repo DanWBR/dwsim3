@@ -5188,4 +5188,37 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
   <data name="PP_IGNORE_SALINITY_LIMIT" xml:space="preserve">
     <value>Ignorar límite máximo de salinidad</value>
   </data>
+  <data name="BlackOil_BSW" xml:space="preserve">
+    <value>[Black Oil] BSW (%)</value>
+  </data>
+  <data name="BlackOil_GOR" xml:space="preserve">
+    <value>[Black Oil] Razão Gás-Óleo @ SC</value>
+  </data>
+  <data name="BlackOil_PNA_A" xml:space="preserve">
+    <value>[Black Oil] Análise PNA do óleo, Aromáticos, %</value>
+  </data>
+  <data name="BlackOil_PNA_N" xml:space="preserve">
+    <value>[Black Oil] Análise PNA do óleo, Naftênicos, %</value>
+  </data>
+  <data name="BlackOil_PNA_P" xml:space="preserve">
+    <value>[Black Oil] Análise PNA do óleo, Parafínicos, %</value>
+  </data>
+  <data name="BlackOil_SGG" xml:space="preserve">
+    <value>[Black Oil] Densidade absoluta do gás</value>
+  </data>
+  <data name="BlackOil_SGO" xml:space="preserve">
+    <value>[Black Oil] Densidade absoluta do óleo</value>
+  </data>
+  <data name="BlackOil_T1" xml:space="preserve">
+    <value>[Black Oil] Temperatura da Viscosidade 1</value>
+  </data>
+  <data name="BlackOil_T2" xml:space="preserve">
+    <value>[Black Oil] Temperatura da Viscosidade 2</value>
+  </data>
+  <data name="BlackOil_V1" xml:space="preserve">
+    <value>[Black Oil] Viscosidade 1 do óleo</value>
+  </data>
+  <data name="BlackOil_V2" xml:space="preserve">
+    <value>[Black Oil] Viscosidade 2 do óleo</value>
+  </data>
 </root>

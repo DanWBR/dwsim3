@@ -1243,6 +1243,8 @@ Namespace DWSIM.Databases
                                 .BO_PNA_N = Double.Parse(node2.InnerText, nf)
                             Case "BlackOil_PNA_P"
                                 .BO_PNA_P = Double.Parse(node2.InnerText, nf)
+                            Case "IsBlackOil"
+                                .IsBlackOil = Boolean.Parse(node2.InnerText)
                         End Select
                     Next
                 End With
