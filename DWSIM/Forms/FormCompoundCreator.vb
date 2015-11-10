@@ -345,11 +345,12 @@ Public Class FormCompoundCreator
 
             UpdateUnits()
 
+            TextBoxID.Text = .cp.ID
+            TextBoxName.Text = .cp.Name
+
             If .cp.IsBlackOil Then
 
                 RadioButton2.Checked = True
-
-                tbBOName.Text = .cp.Name
 
                 tbBOGOR.Text = cv.ConverterDoSI(su.gor, .cp.BO_GOR)
                 tbBOBSW.Text = .cp.BO_BSW
@@ -378,9 +379,7 @@ Public Class FormCompoundCreator
                 TextBoxDGF.Text = cv.ConverterDoSI(su.spmp_enthalpy, .cp.IG_Gibbs_Energy_of_Formation_25C)
                 TextBoxDHF.Text = cv.ConverterDoSI(su.spmp_enthalpy, .cp.IG_Enthalpy_of_Formation_25C)
                 TextBoxFormula.Text = .cp.Formula
-                TextBoxID.Text = .cp.ID
                 TextBoxMW.Text = .cp.Molar_Weight
-                TextBoxName.Text = .cp.Name
                 TextBoxNBP.Text = cv.ConverterDoSI(su.spmp_temperature, .cp.Normal_Boiling_Point)
                 TextBoxPc.Text = cv.ConverterDoSI(su.spmp_pressure, .cp.Critical_Pressure)
                 TextBoxPCSAFTEpsilon.Text = .cp.PC_SAFT_epsilon_k
@@ -664,6 +663,9 @@ Public Class FormCompoundCreator
             .su = Me.su
             .database = tbDBPath.Text
 
+            .cp.ID = TextBoxID.Text
+            .cp.Name = TextBoxName.Text
+
             If RadioButton1.Checked Then
 
                 .cp.IsBlackOil = False
@@ -677,9 +679,7 @@ Public Class FormCompoundCreator
                 .cp.IG_Gibbs_Energy_of_Formation_25C = cv.ConverterParaSI(su.spmp_enthalpy, CheckEmptyTextBox(TextBoxDGF))
                 .cp.IG_Enthalpy_of_Formation_25C = cv.ConverterParaSI(su.spmp_enthalpy, CheckEmptyTextBox(TextBoxDHF))
                 .cp.Formula = TextBoxFormula.Text
-                .cp.ID = TextBoxID.Text
                 .cp.Molar_Weight = CheckEmptyTextBox(TextBoxMW)
-                .cp.Name = TextBoxName.Text
                 .cp.Normal_Boiling_Point = cv.ConverterParaSI(su.spmp_temperature, CheckEmptyTextBox(TextBoxNBP))
                 .cp.Critical_Pressure = cv.ConverterParaSI(su.spmp_pressure, CheckEmptyTextBox(TextBoxPc))
                 .cp.PC_SAFT_epsilon_k = CheckEmptyTextBox(TextBoxPCSAFTEpsilon)
@@ -854,11 +854,7 @@ Public Class FormCompoundCreator
 
             Else
 
-                .cp.ID = New Random().Next(1000000)
-
                 .cp.IsBlackOil = True
-
-                .cp.Name = tbBOName.Text
 
                 .cp.BO_GOR = cv.ConverterParaSI(su.gor, CheckEmptyTextBox(tbBOGOR))
                 .cp.BO_BSW = CheckEmptyTextBox(tbBOBSW)

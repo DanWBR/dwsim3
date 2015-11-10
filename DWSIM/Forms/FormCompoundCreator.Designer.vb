@@ -67,16 +67,16 @@ Partial Class FormCompoundCreator
         Me.btnCreateNewDB = New System.Windows.Forms.Button()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.RadioButton2 = New System.Windows.Forms.RadioButton()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.TextBoxName = New System.Windows.Forms.TextBox()
         Me.RadioButton1 = New System.Windows.Forms.RadioButton()
         Me.Label54 = New System.Windows.Forms.Label()
         Me.FaTabStrip2 = New FarsiLibrary.Win.FATabStrip()
         Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem()
         Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
-        Me.Label16 = New System.Windows.Forms.Label()
         Me.btnRenderSMILES = New System.Windows.Forms.Button()
-        Me.Label17 = New System.Windows.Forms.Label()
         Me.LinkPubChem = New System.Windows.Forms.LinkLabel()
-        Me.TextBoxName = New System.Windows.Forms.TextBox()
         Me.TextBoxSMILES = New System.Windows.Forms.TextBox()
         Me.TextBoxCAS = New System.Windows.Forms.TextBox()
         Me.Label51 = New System.Windows.Forms.Label()
@@ -85,7 +85,6 @@ Partial Class FormCompoundCreator
         Me.TextBoxFormula = New System.Windows.Forms.TextBox()
         Me.pbRender = New System.Windows.Forms.PictureBox()
         Me.Label22 = New System.Windows.Forms.Label()
-        Me.TextBoxID = New System.Windows.Forms.TextBox()
         Me.TextBoxMW = New System.Windows.Forms.TextBox()
         Me.lblMW = New System.Windows.Forms.Label()
         Me.CheckBoxMW = New System.Windows.Forms.CheckBox()
@@ -119,9 +118,7 @@ Partial Class FormCompoundCreator
         Me.tbBOSGG = New System.Windows.Forms.TextBox()
         Me.Label99 = New System.Windows.Forms.Label()
         Me.Label100 = New System.Windows.Forms.Label()
-        Me.Label94 = New System.Windows.Forms.Label()
         Me.Label98 = New System.Windows.Forms.Label()
-        Me.tbBOName = New System.Windows.Forms.TextBox()
         Me.Label97 = New System.Windows.Forms.Label()
         Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem()
         Me.TBUnifac = New System.Windows.Forms.TextBox()
@@ -418,6 +415,7 @@ Partial Class FormCompoundCreator
         Me.Label55 = New System.Windows.Forms.Label()
         Me.lblMeltingTemp = New System.Windows.Forms.Label()
         Me.CheckBoxMeltingTemp = New System.Windows.Forms.CheckBox()
+        Me.TextBoxID = New System.Windows.Forms.TextBox()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.cbUnits = New System.Windows.Forms.ComboBox()
@@ -543,9 +541,13 @@ Partial Class FormCompoundCreator
         '
         resources.ApplyResources(Me.GroupBox2, "GroupBox2")
         Me.GroupBox2.Controls.Add(Me.RadioButton2)
+        Me.GroupBox2.Controls.Add(Me.Label16)
+        Me.GroupBox2.Controls.Add(Me.Label17)
+        Me.GroupBox2.Controls.Add(Me.TextBoxName)
         Me.GroupBox2.Controls.Add(Me.RadioButton1)
         Me.GroupBox2.Controls.Add(Me.Label54)
         Me.GroupBox2.Controls.Add(Me.FaTabStrip2)
+        Me.GroupBox2.Controls.Add(Me.TextBoxID)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.TabStop = False
         Me.ToolTip1.SetToolTip(Me.GroupBox2, resources.GetString("GroupBox2.ToolTip"))
@@ -556,6 +558,25 @@ Partial Class FormCompoundCreator
         Me.RadioButton2.Name = "RadioButton2"
         Me.ToolTip1.SetToolTip(Me.RadioButton2, resources.GetString("RadioButton2.ToolTip"))
         Me.RadioButton2.UseVisualStyleBackColor = True
+        '
+        'Label16
+        '
+        resources.ApplyResources(Me.Label16, "Label16")
+        Me.Label16.Name = "Label16"
+        Me.ToolTip1.SetToolTip(Me.Label16, resources.GetString("Label16.ToolTip"))
+        '
+        'Label17
+        '
+        resources.ApplyResources(Me.Label17, "Label17")
+        Me.Label17.Name = "Label17"
+        Me.ToolTip1.SetToolTip(Me.Label17, resources.GetString("Label17.ToolTip"))
+        '
+        'TextBoxName
+        '
+        resources.ApplyResources(Me.TextBoxName, "TextBoxName")
+        Me.TextBoxName.BackColor = System.Drawing.Color.White
+        Me.TextBoxName.Name = "TextBoxName"
+        Me.ToolTip1.SetToolTip(Me.TextBoxName, resources.GetString("TextBoxName.ToolTip"))
         '
         'RadioButton1
         '
@@ -586,11 +607,8 @@ Partial Class FormCompoundCreator
         resources.ApplyResources(Me.FaTabStripItem1, "FaTabStripItem1")
         Me.FaTabStripItem1.CanClose = False
         Me.FaTabStripItem1.Controls.Add(Me.LinkLabel1)
-        Me.FaTabStripItem1.Controls.Add(Me.Label16)
         Me.FaTabStripItem1.Controls.Add(Me.btnRenderSMILES)
-        Me.FaTabStripItem1.Controls.Add(Me.Label17)
         Me.FaTabStripItem1.Controls.Add(Me.LinkPubChem)
-        Me.FaTabStripItem1.Controls.Add(Me.TextBoxName)
         Me.FaTabStripItem1.Controls.Add(Me.TextBoxSMILES)
         Me.FaTabStripItem1.Controls.Add(Me.TextBoxCAS)
         Me.FaTabStripItem1.Controls.Add(Me.Label51)
@@ -599,7 +617,6 @@ Partial Class FormCompoundCreator
         Me.FaTabStripItem1.Controls.Add(Me.TextBoxFormula)
         Me.FaTabStripItem1.Controls.Add(Me.pbRender)
         Me.FaTabStripItem1.Controls.Add(Me.Label22)
-        Me.FaTabStripItem1.Controls.Add(Me.TextBoxID)
         Me.FaTabStripItem1.Controls.Add(Me.TextBoxMW)
         Me.FaTabStripItem1.Controls.Add(Me.lblMW)
         Me.FaTabStripItem1.Controls.Add(Me.CheckBoxMW)
@@ -616,24 +633,12 @@ Partial Class FormCompoundCreator
         Me.ToolTip1.SetToolTip(Me.LinkLabel1, resources.GetString("LinkLabel1.ToolTip"))
         Me.LinkLabel1.UseCompatibleTextRendering = True
         '
-        'Label16
-        '
-        resources.ApplyResources(Me.Label16, "Label16")
-        Me.Label16.Name = "Label16"
-        Me.ToolTip1.SetToolTip(Me.Label16, resources.GetString("Label16.ToolTip"))
-        '
         'btnRenderSMILES
         '
         resources.ApplyResources(Me.btnRenderSMILES, "btnRenderSMILES")
         Me.btnRenderSMILES.Name = "btnRenderSMILES"
         Me.ToolTip1.SetToolTip(Me.btnRenderSMILES, resources.GetString("btnRenderSMILES.ToolTip"))
         Me.btnRenderSMILES.UseVisualStyleBackColor = True
-        '
-        'Label17
-        '
-        resources.ApplyResources(Me.Label17, "Label17")
-        Me.Label17.Name = "Label17"
-        Me.ToolTip1.SetToolTip(Me.Label17, resources.GetString("Label17.ToolTip"))
         '
         'LinkPubChem
         '
@@ -642,13 +647,6 @@ Partial Class FormCompoundCreator
         Me.LinkPubChem.TabStop = True
         Me.ToolTip1.SetToolTip(Me.LinkPubChem, resources.GetString("LinkPubChem.ToolTip"))
         Me.LinkPubChem.UseCompatibleTextRendering = True
-        '
-        'TextBoxName
-        '
-        resources.ApplyResources(Me.TextBoxName, "TextBoxName")
-        Me.TextBoxName.BackColor = System.Drawing.Color.White
-        Me.TextBoxName.Name = "TextBoxName"
-        Me.ToolTip1.SetToolTip(Me.TextBoxName, resources.GetString("TextBoxName.ToolTip"))
         '
         'TextBoxSMILES
         '
@@ -701,12 +699,6 @@ Partial Class FormCompoundCreator
         resources.ApplyResources(Me.Label22, "Label22")
         Me.Label22.Name = "Label22"
         Me.ToolTip1.SetToolTip(Me.Label22, resources.GetString("Label22.ToolTip"))
-        '
-        'TextBoxID
-        '
-        resources.ApplyResources(Me.TextBoxID, "TextBoxID")
-        Me.TextBoxID.Name = "TextBoxID"
-        Me.ToolTip1.SetToolTip(Me.TextBoxID, resources.GetString("TextBoxID.ToolTip"))
         '
         'TextBoxMW
         '
@@ -898,9 +890,7 @@ Partial Class FormCompoundCreator
         Me.GroupBox7.Controls.Add(Me.tbBOSGG)
         Me.GroupBox7.Controls.Add(Me.Label99)
         Me.GroupBox7.Controls.Add(Me.Label100)
-        Me.GroupBox7.Controls.Add(Me.Label94)
         Me.GroupBox7.Controls.Add(Me.Label98)
-        Me.GroupBox7.Controls.Add(Me.tbBOName)
         Me.GroupBox7.Controls.Add(Me.Label97)
         Me.GroupBox7.Name = "GroupBox7"
         Me.GroupBox7.TabStop = False
@@ -958,24 +948,11 @@ Partial Class FormCompoundCreator
         Me.Label100.Name = "Label100"
         Me.ToolTip1.SetToolTip(Me.Label100, resources.GetString("Label100.ToolTip"))
         '
-        'Label94
-        '
-        resources.ApplyResources(Me.Label94, "Label94")
-        Me.Label94.Name = "Label94"
-        Me.ToolTip1.SetToolTip(Me.Label94, resources.GetString("Label94.ToolTip"))
-        '
         'Label98
         '
         resources.ApplyResources(Me.Label98, "Label98")
         Me.Label98.Name = "Label98"
         Me.ToolTip1.SetToolTip(Me.Label98, resources.GetString("Label98.ToolTip"))
-        '
-        'tbBOName
-        '
-        resources.ApplyResources(Me.tbBOName, "tbBOName")
-        Me.tbBOName.BackColor = System.Drawing.Color.White
-        Me.tbBOName.Name = "tbBOName"
-        Me.ToolTip1.SetToolTip(Me.tbBOName, resources.GetString("tbBOName.ToolTip"))
         '
         'Label97
         '
@@ -2757,7 +2734,6 @@ Partial Class FormCompoundCreator
         Me.FaTabStripItem10.Controls.Add(Me.tbLIQVISC_A)
         Me.FaTabStripItem10.Controls.Add(Me.Label42)
         Me.FaTabStripItem10.Controls.Add(Me.Label41)
-        Me.FaTabStripItem10.IsDrawn = True
         Me.FaTabStripItem10.Name = "FaTabStripItem10"
         Me.ToolTip1.SetToolTip(Me.FaTabStripItem10, resources.GetString("FaTabStripItem10.ToolTip"))
         '
@@ -3411,6 +3387,12 @@ Partial Class FormCompoundCreator
         Me.ToolTip1.SetToolTip(Me.CheckBoxMeltingTemp, resources.GetString("CheckBoxMeltingTemp.ToolTip"))
         Me.CheckBoxMeltingTemp.UseVisualStyleBackColor = True
         '
+        'TextBoxID
+        '
+        resources.ApplyResources(Me.TextBoxID, "TextBoxID")
+        Me.TextBoxID.Name = "TextBoxID"
+        Me.ToolTip1.SetToolTip(Me.TextBoxID, resources.GetString("TextBoxID.ToolTip"))
+        '
         'GroupBox3
         '
         resources.ApplyResources(Me.GroupBox3, "GroupBox3")
@@ -3931,8 +3913,6 @@ Partial Class FormCompoundCreator
     Public WithEvents tbBOSGG As System.Windows.Forms.TextBox
     Public WithEvents Label99 As System.Windows.Forms.Label
     Public WithEvents Label100 As System.Windows.Forms.Label
-    Public WithEvents Label94 As System.Windows.Forms.Label
     Public WithEvents Label98 As System.Windows.Forms.Label
-    Public WithEvents tbBOName As System.Windows.Forms.TextBox
     Public WithEvents Label97 As System.Windows.Forms.Label
 End Class

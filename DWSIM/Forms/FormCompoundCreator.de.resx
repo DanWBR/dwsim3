@@ -117,15 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Komponentendatenbank</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnSaveToDB.Location" type="System.Drawing.Point, System.Drawing">
     <value>218, 47</value>
   </data>
   <data name="btnSaveToDB.Text" xml:space="preserve">
     <value>Speichere Komponente in Datenbank</value>
-  </data>
-  <data name="btnSaveToDB.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="chkReplaceComps.Location" type="System.Drawing.Point, System.Drawing">
     <value>452, 53</value>
@@ -136,21 +136,12 @@
   <data name="chkReplaceComps.Text" xml:space="preserve">
     <value>Ersetze Komponente mit selber ID</value>
   </data>
-  <data name="chkReplaceComps.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="tbDBPath.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left</value>
   </data>
-  <data name="tbDBPath.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="btnSearch.Text" xml:space="preserve">
     <value>Suche</value>
-  </data>
-  <data name="btnSearch.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>29, 13</value>
@@ -158,23 +149,71 @@
   <data name="Label1.Text" xml:space="preserve">
     <value>Pfad</value>
   </data>
-  <data name="Label1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="btnCreateNewDB.Size" type="System.Drawing.Size, System.Drawing">
     <value>121, 26</value>
   </data>
   <data name="btnCreateNewDB.Text" xml:space="preserve">
     <value>Neue Datenbank</value>
   </data>
-  <data name="btnCreateNewDB.ToolTip" xml:space="preserve">
-    <value />
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Komponenten Eigenschaften</value>
   </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Komponentendatenbank</value>
+  <data name="RadioButton2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>122, 20</value>
   </data>
-  <data name="GroupBox1.ToolTip" xml:space="preserve">
-    <value />
+  <data name="RadioButton2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>71, 17</value>
+  </data>
+  <data name="RadioButton2.Text" xml:space="preserve">
+    <value>'Black-Oil'</value>
+  </data>
+  <data name="Label16.Location" type="System.Drawing.Point, System.Drawing">
+    <value>204, 22</value>
+  </data>
+  <data name="Label17.Location" type="System.Drawing.Point, System.Drawing">
+    <value>371, 22</value>
+  </data>
+  <data name="Label17.Text" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="TextBoxName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>414, 19</value>
+  </data>
+  <data name="RadioButton1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>48, 20</value>
+  </data>
+  <data name="RadioButton1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>68, 17</value>
+  </data>
+  <data name="RadioButton1.Text" xml:space="preserve">
+    <value>Standard</value>
+  </data>
+  <data name="Label54.Size" type="System.Drawing.Size, System.Drawing">
+    <value>31, 13</value>
+  </data>
+  <data name="Label54.Text" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="FaTabStripItem1.Title" xml:space="preserve">
+    <value>Identifikation</value>
+  </data>
+  <data name="FaTabStripItem4.Title" xml:space="preserve">
+    <value>Eigenschaften</value>
+  </data>
+  <data name="FaTabStripItem7.Title" xml:space="preserve">
+    <value>Dampfdruck</value>
+  </data>
+  <data name="FaTabStripItem8.Title" xml:space="preserve">
+    <value>Wärmekapazität</value>
+  </data>
+  <data name="FaTabStripItem9.Title" xml:space="preserve">
+    <value>Flüssigkeitsdichte</value>
+  </data>
+  <data name="FaTabStripItem10.Title" xml:space="preserve">
+    <value>Viskositat Flüssigkeit</value>
+  </data>
+  <data name="FaTabStripItem11.Title" xml:space="preserve">
+    <value>Feststoff</value>
   </data>
   <data name="LinkLabel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>71, 18</value>
@@ -182,77 +221,17 @@
   <data name="LinkLabel1.Text" xml:space="preserve">
     <value>CAS Nummer</value>
   </data>
-  <data name="Label16.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="btnRenderSMILES.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label17.Text" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="Label17.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="LinkPubChem.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TextBoxName.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TextBoxSMILES.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TextBoxCAS.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label51.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="Label21.Size" type="System.Drawing.Size, System.Drawing">
     <value>39, 13</value>
   </data>
   <data name="Label21.Text" xml:space="preserve">
     <value>Formel</value>
   </data>
-  <data name="Label21.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label47.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TextBoxFormula.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="pbRender.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="Label22.Size" type="System.Drawing.Size, System.Drawing">
     <value>60, 13</value>
   </data>
   <data name="Label22.Text" xml:space="preserve">
     <value>Molgewicht</value>
-  </data>
-  <data name="Label22.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TextBoxID.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblMW.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="FaTabStripItem1.Title" xml:space="preserve">
-    <value>Identifikation</value>
-  </data>
-  <data name="FaTabStripItem1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TBUnifac.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="PicUNIFAC.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="LinkLabel2.ToolTip" xml:space="preserve">
     <value>Aufruf der Dortmund-Dataenbank zur Unterstützung bei der UNIFAC-Gruppenzuordnung.</value>
@@ -263,29 +242,11 @@
   <data name="Label60.Text" xml:space="preserve">
     <value>Tragen Sie die Anzahl aller UNIFAC Gruppen der Komponentenstruktur ein, falls vorhanden.</value>
   </data>
-  <data name="Label60.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="Column4.HeaderText" xml:space="preserve">
     <value>Anzahl</value>
   </data>
-  <data name="GridUNIFAC.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="FaTabStripItem2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TBModfac.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="PicMODFAC.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="DataGridViewTextBoxColumn13.HeaderText" xml:space="preserve">
     <value>Anzahl</value>
-  </data>
-  <data name="GridMODFAC.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="Label85.Size" type="System.Drawing.Size, System.Drawing">
     <value>451, 13</value>
@@ -293,26 +254,8 @@
   <data name="Label85.Text" xml:space="preserve">
     <value>Tragen Sie die Anzahl aller MODFAC Gruppen der Komponentenstruktur ein, falls vorhanden.</value>
   </data>
-  <data name="Label85.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="FaTabStripItem5.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TbNISTMODFAC.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="PicNISTMODFAC.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="DataGridViewImageColumn1.HeaderText" xml:space="preserve">
     <value>Beispiel</value>
-  </data>
-  <data name="GridNISTMODFAC.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="FaTabStripItem6.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="Label58.Size" type="System.Drawing.Size, System.Drawing">
     <value>116, 13</value>
@@ -320,23 +263,14 @@
   <data name="Label58.Text" xml:space="preserve">
     <value>Atom Anzahl zusätzlich</value>
   </data>
-  <data name="Label58.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="Atom.HeaderText" xml:space="preserve">
     <value>Atom</value>
   </data>
   <data name="Count.HeaderText" xml:space="preserve">
     <value>Anzahl</value>
   </data>
-  <data name="AddAtomDataGrid.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="TextBox1.Text" xml:space="preserve">
     <value>Achtung! Die Definition von zusätzlichen Jobackgruppen oder Atomen wird die  Verwendung der UNIFAC/MODFAC Pakete verhindern!</value>
-  </data>
-  <data name="TextBox1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="Label59.Size" type="System.Drawing.Size, System.Drawing">
     <value>108, 13</value>
@@ -344,17 +278,11 @@
   <data name="Label59.Text" xml:space="preserve">
     <value>Atom Anzahl UNIFAC</value>
   </data>
-  <data name="Label59.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="ColAtom.HeaderText" xml:space="preserve">
     <value>Atom</value>
   </data>
   <data name="ColCount.HeaderText" xml:space="preserve">
     <value>Anzahl</value>
-  </data>
-  <data name="AtomDataGrid.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="LinkLabel3.ToolTip" xml:space="preserve">
     <value>Aufruf der Chemeo-Dataenbank zur Unterstützung bei der Joback-Gruppenzuordnung.</value>
@@ -364,9 +292,6 @@
   </data>
   <data name="Label57.Text" xml:space="preserve">
     <value>Tragen Sie die Anzahl aller zusätzlicher Joback Gruppen der Komponentenstruktur ein, falls vorhanden.</value>
-  </data>
-  <data name="Label57.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="Column2.HeaderText" xml:space="preserve">
     <value>Typ</value>
@@ -393,83 +318,26 @@
   <data name="ColumnCountJoback.ToolTipText" xml:space="preserve">
     <value>Anzahl zusätzlicher Joback-Gruppen welche nicht bereits als UNIFAC-Untergruppe definiert sind.</value>
   </data>
-  <data name="GridJoback.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="FaTabStripItem3.ToolTip" xml:space="preserve">
-    <value />
+  <data name="GroupBox6.Text" xml:space="preserve">
+    <value>PC-SAFT Parameter</value>
   </data>
   <data name="LabelWithDivider8.Text" xml:space="preserve">
     <value>Attraktions-Parameter</value>
   </data>
-  <data name="LabelWithDivider8.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TextBoxPCSAFTEpsilon.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label20.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="LabelWithDivider9.Text" xml:space="preserve">
     <value>Segment Nummer</value>
-  </data>
-  <data name="LabelWithDivider9.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TextBoxPCSAFTm.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label25.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="LabelWithDivider10.Text" xml:space="preserve">
     <value>Segment Durchmesser</value>
   </data>
-  <data name="LabelWithDivider10.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TextBoxPCSAFTSigma.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label27.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GroupBox6.Text" xml:space="preserve">
-    <value>PC-SAFT Parameter</value>
-  </data>
-  <data name="GroupBox6.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TextBoxUNIQUAC_R.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label48.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TextBoxUNIQUAC_Q.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label49.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="GroupBox11.Text" xml:space="preserve">
     <value>UNIQUAC Parameter</value>
-  </data>
-  <data name="GroupBox11.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="LabelWithDivider12.Text" xml:space="preserve">
     <value>Bildungseigenschaften</value>
   </data>
-  <data name="LabelWithDivider12.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="LabelWithDivider2.Text" xml:space="preserve">
     <value>Kritische Temperatur</value>
-  </data>
-  <data name="LabelWithDivider2.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="Label50.Size" type="System.Drawing.Size, System.Drawing">
     <value>184, 13</value>
@@ -477,26 +345,8 @@
   <data name="Label50.Text" xml:space="preserve">
     <value>Bildungsenthalpy (Ideales Gas, 25 C)</value>
   </data>
-  <data name="Label50.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label4.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TextBoxDHF.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblDHF.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TextBoxTc.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="LabelWithDivider4.Text" xml:space="preserve">
     <value>Kritische Kompressibilität</value>
-  </data>
-  <data name="LabelWithDivider4.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="Label53.Size" type="System.Drawing.Size, System.Drawing">
     <value>207, 13</value>
@@ -504,44 +354,11 @@
   <data name="Label53.Text" xml:space="preserve">
     <value>Gibbs Bildungsenergie (Ideales Gas, 25 C)</value>
   </data>
-  <data name="Label53.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label12.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TextBoxDGF.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblTc.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label68.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TextBoxZc.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblDGF.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TextBoxVTCSRK.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TextBoxZRa.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="Label56.Size" type="System.Drawing.Size, System.Drawing">
     <value>144, 13</value>
   </data>
   <data name="Label56.Text" xml:space="preserve">
     <value>Normaler Siedepunkt (1 atm)</value>
-  </data>
-  <data name="Label56.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label8.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="Text1.Size" type="System.Drawing.Size, System.Drawing">
     <value>181, 13</value>
@@ -549,71 +366,20 @@
   <data name="Text1.Text" xml:space="preserve">
     <value>SRK Volumen-Translationskoeffizient</value>
   </data>
-  <data name="Text1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label11.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TextBoxNBP.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="LabelWithDivider6.Text" xml:space="preserve">
     <value>Azentrischer Faktor</value>
-  </data>
-  <data name="LabelWithDivider6.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label67.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="LabelWithDivider5.Text" xml:space="preserve">
     <value>Rackett Parameter</value>
   </data>
-  <data name="LabelWithDivider5.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblNBP.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TextBoxPc.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label66.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="LabelWithDivider3.Text" xml:space="preserve">
     <value>Kritischer Druck</value>
-  </data>
-  <data name="LabelWithDivider3.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="LabelWithDivider13.Text" xml:space="preserve">
     <value>Normaler Siedepunkt</value>
   </data>
-  <data name="LabelWithDivider13.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TextBoxAF.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TextBoxVTCPR.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label14.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="LabelWithDivider16.Text" xml:space="preserve">
     <value>Modellparameter</value>
-  </data>
-  <data name="LabelWithDivider16.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblPc.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TextBoxCSLV.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="Label62.Size" type="System.Drawing.Size, System.Drawing">
     <value>166, 13</value>
@@ -621,26 +387,11 @@
   <data name="Label62.Text" xml:space="preserve">
     <value>Chao-Seader azentrischer Faktor</value>
   </data>
-  <data name="Label62.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TextBoxCSSP.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TextBoxCSAF.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="Label65.Size" type="System.Drawing.Size, System.Drawing">
     <value>234, 13</value>
   </data>
   <data name="Label65.Text" xml:space="preserve">
     <value>Peng-Robinson Volumen-Translationskoeffizient</value>
-  </data>
-  <data name="Label65.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label61.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="Label64.Size" type="System.Drawing.Size, System.Drawing">
     <value>170, 13</value>
@@ -648,23 +399,11 @@
   <data name="Label64.Text" xml:space="preserve">
     <value>Chao-Seader Molvolumen (flüssig)</value>
   </data>
-  <data name="Label64.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="Label63.Size" type="System.Drawing.Size, System.Drawing">
     <value>176, 13</value>
   </data>
   <data name="Label63.Text" xml:space="preserve">
     <value>Chao-Seader Löslichkeitsparameter</value>
-  </data>
-  <data name="Label63.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="FaTabStripItem4.Title" xml:space="preserve">
-    <value>Eigenschaften</value>
-  </data>
-  <data name="FaTabStripItem4.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="Label43.Location" type="System.Drawing.Point, System.Drawing">
     <value>237, 197</value>
@@ -675,23 +414,14 @@
   <data name="Label43.Text" xml:space="preserve">
     <value>* Pvap in Pa, T in K</value>
   </data>
-  <data name="Label43.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="rbEstimatePVAP.Size" type="System.Drawing.Size, System.Drawing">
     <value>123, 17</value>
   </data>
   <data name="rbEstimatePVAP.Text" xml:space="preserve">
     <value>Schätze (Lee Kesler)</value>
   </data>
-  <data name="rbEstimatePVAP.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="tbPVAP_E.Location" type="System.Drawing.Point, System.Drawing">
     <value>257, 169</value>
-  </data>
-  <data name="tbPVAP_E.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="rbRegressPVAP.Size" type="System.Drawing.Size, System.Drawing">
     <value>152, 17</value>
@@ -699,65 +429,29 @@
   <data name="rbRegressPVAP.Text" xml:space="preserve">
     <value>Regression Versuchsdaten</value>
   </data>
-  <data name="rbRegressPVAP.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="Label13.Location" type="System.Drawing.Point, System.Drawing">
     <value>239, 172</value>
-  </data>
-  <data name="Label13.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridExpDataPVAP.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="tbPVAP_D.Location" type="System.Drawing.Point, System.Drawing">
     <value>257, 143</value>
   </data>
-  <data name="tbPVAP_D.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="btnRegressPVAP.Text" xml:space="preserve">
     <value>Datenregression</value>
-  </data>
-  <data name="btnRegressPVAP.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="Label10.Location" type="System.Drawing.Point, System.Drawing">
     <value>239, 146</value>
   </data>
-  <data name="Label10.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="btnViewPVAP.Text" xml:space="preserve">
     <value>Diagramm</value>
-  </data>
-  <data name="btnViewPVAP.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="tbPVAP_C.Location" type="System.Drawing.Point, System.Drawing">
     <value>257, 117</value>
   </data>
-  <data name="tbPVAP_C.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="Label6.Location" type="System.Drawing.Point, System.Drawing">
     <value>239, 120</value>
   </data>
-  <data name="Label6.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbStatusPVAP.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="tbPVAP_B.Location" type="System.Drawing.Point, System.Drawing">
     <value>257, 91</value>
-  </data>
-  <data name="tbPVAP_B.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="rbCoeffPVAP.Location" type="System.Drawing.Point, System.Drawing">
     <value>242, 16</value>
@@ -768,14 +462,8 @@
   <data name="rbCoeffPVAP.Text" xml:space="preserve">
     <value>Eingabe der Koeffizienten *</value>
   </data>
-  <data name="rbCoeffPVAP.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="Label5.Location" type="System.Drawing.Point, System.Drawing">
     <value>239, 94</value>
-  </data>
-  <data name="Label5.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="cbEqPVAP.Location" type="System.Drawing.Point, System.Drawing">
     <value>298, 38</value>
@@ -783,14 +471,8 @@
   <data name="cbEqPVAP.Size" type="System.Drawing.Size, System.Drawing">
     <value>146, 21</value>
   </data>
-  <data name="cbEqPVAP.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="tbPVAP_A.Location" type="System.Drawing.Point, System.Drawing">
     <value>257, 65</value>
-  </data>
-  <data name="tbPVAP_A.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="Label30.Location" type="System.Drawing.Point, System.Drawing">
     <value>239, 41</value>
@@ -801,23 +483,11 @@
   <data name="Label30.Text" xml:space="preserve">
     <value>Gleichung</value>
   </data>
-  <data name="Label30.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="Label29.Location" type="System.Drawing.Point, System.Drawing">
     <value>239, 68</value>
   </data>
-  <data name="Label29.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="FaTabStripItem7.Title" xml:space="preserve">
-    <value>Dampfdruck</value>
-  </data>
-  <data name="FaTabStripItem7.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label86.ToolTip" xml:space="preserve">
-    <value />
+  <data name="GroupBox5.Text" xml:space="preserve">
+    <value>Cp (Flüssigkeit)</value>
   </data>
   <data name="Label87.Size" type="System.Drawing.Size, System.Drawing">
     <value>124, 13</value>
@@ -825,47 +495,14 @@
   <data name="Label87.Text" xml:space="preserve">
     <value>* Cp in J/[kmol.K], T in K</value>
   </data>
-  <data name="Label87.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbStatusCPLiquid.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label88.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbCPLiquid_E.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="Label89.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 13</value>
   </data>
   <data name="Label89.Text" xml:space="preserve">
     <value>Gleichung</value>
   </data>
-  <data name="Label89.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbCPLiquid_A.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label90.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbEqCPLiquid.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="btnViewCPLiquid.Text" xml:space="preserve">
     <value>Diagramm</value>
-  </data>
-  <data name="btnViewCPLiquid.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label91.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbCPLiquid_D.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="rbCoeffCPLiquid.Size" type="System.Drawing.Size, System.Drawing">
     <value>154, 17</value>
@@ -873,26 +510,8 @@
   <data name="rbCoeffCPLiquid.Text" xml:space="preserve">
     <value>Eingabe der Koeffizienten*</value>
   </data>
-  <data name="rbCoeffCPLiquid.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="btnRegressCPLiquid.Text" xml:space="preserve">
     <value>Datenregression</value>
-  </data>
-  <data name="btnRegressCPLiquid.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbCPLiquid_B.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label92.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label93.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridExpDataCPLiquid.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="rbRegressCPLiquid.Size" type="System.Drawing.Size, System.Drawing">
     <value>152, 17</value>
@@ -900,20 +519,8 @@
   <data name="rbRegressCPLiquid.Text" xml:space="preserve">
     <value>Regression Versuchsdaten</value>
   </data>
-  <data name="rbRegressCPLiquid.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbCPLiquid_C.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GroupBox5.Text" xml:space="preserve">
-    <value>Cp (Flüssigkeit)</value>
-  </data>
-  <data name="GroupBox5.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label3.ToolTip" xml:space="preserve">
-    <value />
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Cp (Ideales Gas)</value>
   </data>
   <data name="Label44.Location" type="System.Drawing.Point, System.Drawing">
     <value>237, 203</value>
@@ -924,32 +531,17 @@
   <data name="Label44.Text" xml:space="preserve">
     <value>* Cp in J/[kmol.K], T in K</value>
   </data>
-  <data name="Label44.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="rbEstimateCPIG.Size" type="System.Drawing.Size, System.Drawing">
     <value>149, 17</value>
   </data>
   <data name="rbEstimateCPIG.Text" xml:space="preserve">
     <value>Schätze (Joback/UNIFAC)</value>
   </data>
-  <data name="rbEstimateCPIG.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbStatusCPIG.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="Label26.Location" type="System.Drawing.Point, System.Drawing">
     <value>238, 74</value>
   </data>
-  <data name="Label26.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="tbCPIG_E.Location" type="System.Drawing.Point, System.Drawing">
     <value>257, 175</value>
-  </data>
-  <data name="tbCPIG_E.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="Label28.Location" type="System.Drawing.Point, System.Drawing">
     <value>237, 42</value>
@@ -960,20 +552,11 @@
   <data name="Label28.Text" xml:space="preserve">
     <value>Gleichung</value>
   </data>
-  <data name="Label28.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="tbCPIG_A.Location" type="System.Drawing.Point, System.Drawing">
     <value>257, 71</value>
   </data>
-  <data name="tbCPIG_A.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="Label18.Location" type="System.Drawing.Point, System.Drawing">
     <value>238, 178</value>
-  </data>
-  <data name="Label18.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="cbEqCPIG.Location" type="System.Drawing.Point, System.Drawing">
     <value>298, 39</value>
@@ -981,26 +564,14 @@
   <data name="cbEqCPIG.Size" type="System.Drawing.Size, System.Drawing">
     <value>146, 21</value>
   </data>
-  <data name="cbEqCPIG.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="btnViewCPIG.Text" xml:space="preserve">
     <value>Diagramm</value>
-  </data>
-  <data name="btnViewCPIG.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="Label24.Location" type="System.Drawing.Point, System.Drawing">
     <value>238, 100</value>
   </data>
-  <data name="Label24.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="tbCPIG_D.Location" type="System.Drawing.Point, System.Drawing">
     <value>257, 149</value>
-  </data>
-  <data name="tbCPIG_D.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="rbCoeffCPIG.Location" type="System.Drawing.Point, System.Drawing">
     <value>240, 16</value>
@@ -1011,35 +582,17 @@
   <data name="rbCoeffCPIG.Text" xml:space="preserve">
     <value>Eingabe der Koeffizienten *</value>
   </data>
-  <data name="rbCoeffCPIG.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="btnRegressCPIG.Text" xml:space="preserve">
     <value>Datenregression</value>
-  </data>
-  <data name="btnRegressCPIG.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="tbCPIG_B.Location" type="System.Drawing.Point, System.Drawing">
     <value>257, 97</value>
   </data>
-  <data name="tbCPIG_B.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="Label19.Location" type="System.Drawing.Point, System.Drawing">
     <value>238, 152</value>
   </data>
-  <data name="Label19.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="Label23.Location" type="System.Drawing.Point, System.Drawing">
     <value>238, 126</value>
-  </data>
-  <data name="Label23.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridExpDataCPIG.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="rbRegressCPIG.Size" type="System.Drawing.Size, System.Drawing">
     <value>152, 17</value>
@@ -1047,26 +600,8 @@
   <data name="rbRegressCPIG.Text" xml:space="preserve">
     <value>Regression Versuchsdaten</value>
   </data>
-  <data name="rbRegressCPIG.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="tbCPIG_C.Location" type="System.Drawing.Point, System.Drawing">
     <value>257, 123</value>
-  </data>
-  <data name="tbCPIG_C.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GroupBox4.Text" xml:space="preserve">
-    <value>Cp (Ideales Gas)</value>
-  </data>
-  <data name="GroupBox4.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="FaTabStripItem8.Title" xml:space="preserve">
-    <value>Wärmekapazität</value>
-  </data>
-  <data name="FaTabStripItem8.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="Label45.Location" type="System.Drawing.Point, System.Drawing">
     <value>241, 203</value>
@@ -1077,23 +612,14 @@
   <data name="Label45.Text" xml:space="preserve">
     <value>* Dens in kg/m3, T in K</value>
   </data>
-  <data name="Label45.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="rbEstimateLIQDENS.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 17</value>
   </data>
   <data name="rbEstimateLIQDENS.Text" xml:space="preserve">
     <value>Schätze (Rackett)</value>
   </data>
-  <data name="rbEstimateLIQDENS.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="tbLIQDENS_E.Location" type="System.Drawing.Point, System.Drawing">
     <value>259, 175</value>
-  </data>
-  <data name="tbLIQDENS_E.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="rbRegressLIQDENS.Size" type="System.Drawing.Size, System.Drawing">
     <value>152, 17</value>
@@ -1101,68 +627,32 @@
   <data name="rbRegressLIQDENS.Text" xml:space="preserve">
     <value>Regression Versuchsdaten</value>
   </data>
-  <data name="rbRegressLIQDENS.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="Label31.Location" type="System.Drawing.Point, System.Drawing">
     <value>238, 180</value>
-  </data>
-  <data name="Label31.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="GridExpDataLIQDENS.Size" type="System.Drawing.Size, System.Drawing">
     <value>208, 170</value>
   </data>
-  <data name="GridExpDataLIQDENS.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="tbLIQDENS_D.Location" type="System.Drawing.Point, System.Drawing">
     <value>259, 149</value>
-  </data>
-  <data name="tbLIQDENS_D.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="btnRegressLIQDENS.Text" xml:space="preserve">
     <value>Datenregression</value>
   </data>
-  <data name="btnRegressLIQDENS.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="Label32.Location" type="System.Drawing.Point, System.Drawing">
     <value>238, 154</value>
-  </data>
-  <data name="Label32.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="btnViewLIQDENS.Text" xml:space="preserve">
     <value>Diagramm</value>
   </data>
-  <data name="btnViewLIQDENS.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="tbLIQDENS_C.Location" type="System.Drawing.Point, System.Drawing">
     <value>259, 123</value>
-  </data>
-  <data name="tbLIQDENS_C.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label7.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="Label33.Location" type="System.Drawing.Point, System.Drawing">
     <value>238, 128</value>
   </data>
-  <data name="Label33.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbStatusLIQDENS.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="tbLIQDENS_B.Location" type="System.Drawing.Point, System.Drawing">
     <value>259, 97</value>
-  </data>
-  <data name="tbLIQDENS_B.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="rbCoeffLIQDENS.Location" type="System.Drawing.Point, System.Drawing">
     <value>241, 16</value>
@@ -1173,14 +663,8 @@
   <data name="rbCoeffLIQDENS.Text" xml:space="preserve">
     <value>Eingabe der Koeffizienten *</value>
   </data>
-  <data name="rbCoeffLIQDENS.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="Label34.Location" type="System.Drawing.Point, System.Drawing">
     <value>238, 102</value>
-  </data>
-  <data name="Label34.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="cbEqLIQDENS.Location" type="System.Drawing.Point, System.Drawing">
     <value>300, 39</value>
@@ -1188,14 +672,8 @@
   <data name="cbEqLIQDENS.Size" type="System.Drawing.Size, System.Drawing">
     <value>146, 21</value>
   </data>
-  <data name="cbEqLIQDENS.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="tbLIQDENS_A.Location" type="System.Drawing.Point, System.Drawing">
     <value>259, 71</value>
-  </data>
-  <data name="tbLIQDENS_A.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="Label36.Location" type="System.Drawing.Point, System.Drawing">
     <value>239, 42</value>
@@ -1206,20 +684,8 @@
   <data name="Label36.Text" xml:space="preserve">
     <value>Gleichung</value>
   </data>
-  <data name="Label36.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="Label35.Location" type="System.Drawing.Point, System.Drawing">
     <value>238, 76</value>
-  </data>
-  <data name="Label35.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="FaTabStripItem9.Title" xml:space="preserve">
-    <value>Flüssigkeitsdichte</value>
-  </data>
-  <data name="FaTabStripItem9.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="Label46.Location" type="System.Drawing.Point, System.Drawing">
     <value>237, 202</value>
@@ -1230,23 +696,14 @@
   <data name="Label46.Text" xml:space="preserve">
     <value>* Visc in Pa.s, T in K</value>
   </data>
-  <data name="Label46.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="rbEstimateLIQVISC.Size" type="System.Drawing.Size, System.Drawing">
     <value>130, 17</value>
   </data>
   <data name="rbEstimateLIQVISC.Text" xml:space="preserve">
     <value>Schätze (Letsou-Stiel)</value>
   </data>
-  <data name="rbEstimateLIQVISC.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="tbLIQVISC_E.Location" type="System.Drawing.Point, System.Drawing">
     <value>257, 174</value>
-  </data>
-  <data name="tbLIQVISC_E.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="rbRegressLIQVISC.Size" type="System.Drawing.Size, System.Drawing">
     <value>152, 17</value>
@@ -1254,65 +711,29 @@
   <data name="rbRegressLIQVISC.Text" xml:space="preserve">
     <value>Regression Versuchsdaten</value>
   </data>
-  <data name="rbRegressLIQVISC.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="Label37.Location" type="System.Drawing.Point, System.Drawing">
     <value>237, 180</value>
-  </data>
-  <data name="Label37.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridExpDataLIQVISC.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="tbLIQVISC_D.Location" type="System.Drawing.Point, System.Drawing">
     <value>257, 148</value>
   </data>
-  <data name="tbLIQVISC_D.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="btnRegressLIQVISC.Text" xml:space="preserve">
     <value>Datenregression</value>
-  </data>
-  <data name="btnRegressLIQVISC.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="Label38.Location" type="System.Drawing.Point, System.Drawing">
     <value>237, 154</value>
   </data>
-  <data name="Label38.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="btnViewLIQVISC.Text" xml:space="preserve">
     <value>Diagramm</value>
-  </data>
-  <data name="btnViewLIQVISC.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="tbLIQVISC_C.Location" type="System.Drawing.Point, System.Drawing">
     <value>257, 122</value>
   </data>
-  <data name="tbLIQVISC_C.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label9.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="Label39.Location" type="System.Drawing.Point, System.Drawing">
     <value>237, 128</value>
   </data>
-  <data name="Label39.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbStatusLIQVISC.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="tbLIQVISC_B.Location" type="System.Drawing.Point, System.Drawing">
     <value>257, 96</value>
-  </data>
-  <data name="tbLIQVISC_B.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="rbCoeffLIQVISC.Location" type="System.Drawing.Point, System.Drawing">
     <value>240, 16</value>
@@ -1323,14 +744,8 @@
   <data name="rbCoeffLIQVISC.Text" xml:space="preserve">
     <value>Eingabe der Koeffizienten *</value>
   </data>
-  <data name="rbCoeffLIQVISC.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="Label40.Location" type="System.Drawing.Point, System.Drawing">
     <value>237, 102</value>
-  </data>
-  <data name="Label40.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="cbEqLIQVISC.Location" type="System.Drawing.Point, System.Drawing">
     <value>298, 38</value>
@@ -1338,14 +753,8 @@
   <data name="cbEqLIQVISC.Size" type="System.Drawing.Size, System.Drawing">
     <value>146, 21</value>
   </data>
-  <data name="cbEqLIQVISC.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="tbLIQVISC_A.Location" type="System.Drawing.Point, System.Drawing">
     <value>257, 70</value>
-  </data>
-  <data name="tbLIQVISC_A.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="Label42.Location" type="System.Drawing.Point, System.Drawing">
     <value>237, 41</value>
@@ -1356,32 +765,14 @@
   <data name="Label42.Text" xml:space="preserve">
     <value>Gleichung</value>
   </data>
-  <data name="Label42.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="Label41.Location" type="System.Drawing.Point, System.Drawing">
     <value>237, 76</value>
-  </data>
-  <data name="Label41.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="FaTabStripItem10.Title" xml:space="preserve">
-    <value>Viskositat Flüssigkeit</value>
-  </data>
-  <data name="FaTabStripItem10.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="LabelWithDivider7.Text" xml:space="preserve">
     <value>Dichte / Wärmekapazität</value>
   </data>
-  <data name="LabelWithDivider7.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label84.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbStatusSolidCp.ToolTip" xml:space="preserve">
-    <value />
+  <data name="gbCPs.Text" xml:space="preserve">
+    <value>Wärmekapazität (Feststoff)</value>
   </data>
   <data name="btnRegressSolidCp.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -1389,17 +780,11 @@
   <data name="btnRegressSolidCp.Text" xml:space="preserve">
     <value>Datenregression</value>
   </data>
-  <data name="btnRegressSolidCp.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="btnViewSolidCp.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="btnViewSolidCp.Text" xml:space="preserve">
     <value>Diagramm</value>
-  </data>
-  <data name="btnViewSolidCp.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="rbCoeffSolidCp.Size" type="System.Drawing.Size, System.Drawing">
     <value>157, 17</value>
@@ -1407,68 +792,17 @@
   <data name="rbCoeffSolidCp.Text" xml:space="preserve">
     <value>Eingabe der Koeffizienten *</value>
   </data>
-  <data name="rbCoeffSolidCp.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="rbRegressSolidCp.Size" type="System.Drawing.Size, System.Drawing">
     <value>152, 17</value>
   </data>
   <data name="rbRegressSolidCp.Text" xml:space="preserve">
     <value>Regression Versuchsdaten</value>
   </data>
-  <data name="rbRegressSolidCp.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridExpDataCpS.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label75.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbCpS_E.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label73.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbCpS_D.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label72.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbCpS_C.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label71.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbCpS_B.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label70.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label69.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbCpS_A.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbEqCpS.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="Label74.Text" xml:space="preserve">
     <value>Gleichung</value>
   </data>
-  <data name="Label74.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="gbCPs.Text" xml:space="preserve">
-    <value>Wärmekapazität (Feststoff)</value>
-  </data>
-  <data name="gbCPs.ToolTip" xml:space="preserve">
-    <value />
+  <data name="gbSolidDens.Text" xml:space="preserve">
+    <value>Dichte (Feststoff)</value>
   </data>
   <data name="rbEstimateSolidDens.Size" type="System.Drawing.Size, System.Drawing">
     <value>109, 17</value>
@@ -1476,23 +810,11 @@
   <data name="rbEstimateSolidDens.Text" xml:space="preserve">
     <value>Schätze (DWSIM)</value>
   </data>
-  <data name="rbEstimateSolidDens.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label83.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbStatusSolidDens.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="btnRegressSolidDens.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="btnRegressSolidDens.Text" xml:space="preserve">
     <value>Datenregression</value>
-  </data>
-  <data name="btnRegressSolidDens.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="btnViewSolidDens.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -1500,17 +822,11 @@
   <data name="btnViewSolidDens.Text" xml:space="preserve">
     <value>Diagramm</value>
   </data>
-  <data name="btnViewSolidDens.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="rbCoeffSolidDens.Size" type="System.Drawing.Size, System.Drawing">
     <value>157, 17</value>
   </data>
   <data name="rbCoeffSolidDens.Text" xml:space="preserve">
     <value>Eingabe der Koeffizienten *</value>
-  </data>
-  <data name="rbCoeffSolidDens.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="rbRegressSolidDens.Size" type="System.Drawing.Size, System.Drawing">
     <value>152, 17</value>
@@ -1518,74 +834,11 @@
   <data name="rbRegressSolidDens.Text" xml:space="preserve">
     <value>Regression Versuchsdaten</value>
   </data>
-  <data name="rbRegressSolidDens.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label77.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label78.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GridExpDataRoS.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbRoS_E.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label79.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbRoS_D.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label80.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbRoS_C.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label81.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbRoS_B.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label82.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tbRoS_A.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cbEqSolidDENS.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="Label76.Text" xml:space="preserve">
     <value>Gleichung</value>
   </data>
-  <data name="Label76.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="gbSolidDens.Text" xml:space="preserve">
-    <value>Dichte (Feststoff)</value>
-  </data>
-  <data name="gbSolidDens.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Label54.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TextBoxEnthOfFusion2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="LabelWithDivider1.Text" xml:space="preserve">
     <value>Schmelzpunkt Daten</value>
-  </data>
-  <data name="LabelWithDivider1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="lblEnthOfFusion.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="Label52.Size" type="System.Drawing.Size, System.Drawing">
     <value>72, 13</value>
@@ -1593,41 +846,17 @@
   <data name="Label52.Text" xml:space="preserve">
     <value>Schmelzpunkt</value>
   </data>
-  <data name="Label52.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TextBoxEnthOfFusion.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TextBoxMeltingTemp.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="Label55.Size" type="System.Drawing.Size, System.Drawing">
     <value>89, 13</value>
   </data>
   <data name="Label55.Text" xml:space="preserve">
     <value>Schmelzenthalpie</value>
   </data>
-  <data name="Label55.ToolTip" xml:space="preserve">
-    <value />
+  <data name="TextBoxID.Location" type="System.Drawing.Point, System.Drawing">
+    <value>228, 19</value>
   </data>
-  <data name="lblMeltingTemp.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="FaTabStripItem11.Title" xml:space="preserve">
-    <value>Feststoff</value>
-  </data>
-  <data name="FaTabStripItem11.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="FaTabStrip2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Komponenten Eigenschaften</value>
-  </data>
-  <data name="GroupBox2.ToolTip" xml:space="preserve">
-    <value />
+  <data name="GroupBox3.Text" xml:space="preserve">
+    <value>Einheitensystem</value>
   </data>
   <data name="Label15.Size" type="System.Drawing.Size, System.Drawing">
     <value>86, 13</value>
@@ -1635,32 +864,14 @@
   <data name="Label15.Text" xml:space="preserve">
     <value>Einheitensystem:</value>
   </data>
-  <data name="Label15.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="cbUnits.TabIndex" type="System.Int32, mscorlib">
     <value>41</value>
-  </data>
-  <data name="cbUnits.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Einheitensystem</value>
-  </data>
-  <data name="GroupBox3.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="DBOpenDlg.Filter" xml:space="preserve">
     <value>XML Files|*.xml</value>
   </data>
   <data name="DBOpenDlg.Title" xml:space="preserve">
     <value>Öffne/Erzeuge Database</value>
-  </data>
-  <data name="StatusStrip1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ComboBox1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -3108,8 +2319,5 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Komponente / Komponentenmanager</value>
-  </data>
-  <data name="$this.ToolTip" xml:space="preserve">
-    <value />
   </data>
 </root>
