@@ -362,6 +362,12 @@ Namespace DWSIM.SimulationObjects.Streams
 
                 If properties Then
 
+                    If foption = 2 Then
+                        .DW_CalcOverallDensity()
+                        Me.Fases(0).SPMProperties.massflow = QV * Me.Fases(0).SPMProperties.density.GetValueOrDefault
+                        .DW_CalcVazaoMolar()
+                    End If
+
                     If doparallel Then
                         My.MyApplication.IsRunningParallelTasks = True
                         Try
@@ -479,12 +485,12 @@ Namespace DWSIM.SimulationObjects.Streams
                             .DW_CalcVazaoVolumetrica()
                             .DW_CalcKvalue()
                         Case 2
-                            .DW_CalcOverallProps()
-                            Me.Fases(0).SPMProperties.massflow = QV * Me.Fases(0).SPMProperties.density.GetValueOrDefault
-                            .DW_CalcVazaoMolar()
+                            'Me.Fases(0).SPMProperties.massflow = QV * Me.Fases(0).SPMProperties.density.GetValueOrDefault
+                            '.DW_CalcVazaoMolar()
                             .DW_CalcCompMolarFlow(-1)
                             .DW_CalcCompMassFlow(-1)
                             .DW_CalcCompVolFlow(-1)
+                            .DW_CalcOverallProps()
                             .DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
                             .DW_CalcKvalue()
                     End Select

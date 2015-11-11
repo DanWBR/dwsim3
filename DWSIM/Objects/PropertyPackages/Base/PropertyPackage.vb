@@ -1153,6 +1153,115 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         End Sub
 
+        Public Overridable Sub DW_CalcOverallDensity()
+
+            Dim DL1, DL2, DL3, DL4, DV, DS As Nullable(Of Double)
+            Dim xl1, xl2, xl3, xl4, xv, xs, wl1, wl2, wl3, wl4, wv, ws, vl1, vl2, vl3, vl4, vv, vs, result As Double
+
+            xl1 = Me.CurrentMaterialStream.Fases(3).SPMProperties.molarfraction.GetValueOrDefault
+            xl2 = Me.CurrentMaterialStream.Fases(4).SPMProperties.molarfraction.GetValueOrDefault
+            xl3 = Me.CurrentMaterialStream.Fases(5).SPMProperties.molarfraction.GetValueOrDefault
+            xl4 = Me.CurrentMaterialStream.Fases(6).SPMProperties.molarfraction.GetValueOrDefault
+            xv = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
+            xs = Me.CurrentMaterialStream.Fases(7).SPMProperties.molarfraction.GetValueOrDefault
+
+            wl1 = Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction.GetValueOrDefault
+            wl2 = Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction.GetValueOrDefault
+            wl3 = Me.CurrentMaterialStream.Fases(5).SPMProperties.massfraction.GetValueOrDefault
+            wl4 = Me.CurrentMaterialStream.Fases(6).SPMProperties.massfraction.GetValueOrDefault
+            wv = Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault
+            ws = Me.CurrentMaterialStream.Fases(7).SPMProperties.massfraction.GetValueOrDefault
+
+            Me.DW_CalcProp("density", Fase.Liquid1)
+            Me.DW_CalcProp("density", Fase.Liquid2)
+            Me.DW_CalcProp("density", Fase.Liquid3)
+            Me.DW_CalcProp("density", Fase.Aqueous)
+            Me.DW_CalcProp("density", Fase.Vapor)
+
+            DL1 = Me.CurrentMaterialStream.Fases(3).SPMProperties.density.GetValueOrDefault
+            DL2 = Me.CurrentMaterialStream.Fases(4).SPMProperties.density.GetValueOrDefault
+            DL3 = Me.CurrentMaterialStream.Fases(5).SPMProperties.density.GetValueOrDefault
+            DL4 = Me.CurrentMaterialStream.Fases(6).SPMProperties.density.GetValueOrDefault
+            DV = Me.CurrentMaterialStream.Fases(2).SPMProperties.density.GetValueOrDefault
+            DS = Me.AUX_SOLIDDENS()
+
+            If Double.IsNaN(DL1) Or Double.IsInfinity(DL1) Then DL1 = 0.0#
+            If Double.IsNaN(DL2) Or Double.IsInfinity(DL2) Then DL2 = 0.0#
+            If Double.IsNaN(DL3) Or Double.IsInfinity(DL3) Then DL3 = 0.0#
+            If Double.IsNaN(DL4) Or Double.IsInfinity(DL4) Then DL4 = 0.0#
+            If Double.IsNaN(DV) Or Double.IsInfinity(DV) Then DV = 0.0#
+            If Double.IsNaN(DS) Or Double.IsInfinity(DS) Then DS = 0.0#
+
+            Dim tl1 As Double = 0.0#
+            Dim tl2 As Double = 0.0#
+            Dim tl3 As Double = 0.0#
+            Dim tl4 As Double = 0.0#
+            Dim tv As Double = 0.0#
+            Dim ts As Double = 0.0#
+
+            If DL1 <> 0.0# And Not Double.IsNaN(DL1) Then tl1 = Me.CurrentMaterialStream.Fases(3).SPMProperties.massfraction.GetValueOrDefault / DL1.GetValueOrDefault
+            If DL2 <> 0.0# And Not Double.IsNaN(DL2) Then tl2 = Me.CurrentMaterialStream.Fases(4).SPMProperties.massfraction.GetValueOrDefault / DL2.GetValueOrDefault
+            If DL3 <> 0.0# And Not Double.IsNaN(DL3) Then tl3 = Me.CurrentMaterialStream.Fases(5).SPMProperties.massfraction.GetValueOrDefault / DL3.GetValueOrDefault
+            If DL4 <> 0.0# And Not Double.IsNaN(DL4) Then tl4 = Me.CurrentMaterialStream.Fases(6).SPMProperties.massfraction.GetValueOrDefault / DL4.GetValueOrDefault
+            If DV <> 0.0# And Not Double.IsNaN(DV) Then tv = Me.CurrentMaterialStream.Fases(2).SPMProperties.massfraction.GetValueOrDefault / DV.GetValueOrDefault
+            If DS <> 0.0# And Not Double.IsNaN(DS) Then ts = Me.CurrentMaterialStream.Fases(7).SPMProperties.massfraction.GetValueOrDefault / DS.GetValueOrDefault
+
+            vl1 = tl1 / (tl1 + tl2 + tl3 + tl4 + tv + ts)
+            vl2 = tl2 / (tl1 + tl2 + tl3 + tl4 + tv + ts)
+            vl3 = tl3 / (tl1 + tl2 + tl3 + tl4 + tv + ts)
+            vl4 = tl4 / (tl1 + tl2 + tl3 + tl4 + tv + ts)
+            vv = tv / (tl1 + tl2 + tl3 + tl4 + tv + ts)
+            vs = ts / (tl1 + tl2 + tl3 + tl4 + tv + ts)
+
+            If xl1 = 1 Then
+                vl1 = 1
+                vl2 = 0
+                vl3 = 0
+                vl4 = 0
+                vv = 0
+                vs = 0
+            ElseIf xl2 = 1 Then
+                vl1 = 0
+                vl2 = 1
+                vl3 = 0
+                vl4 = 0
+                vv = 1
+                vs = 0
+            ElseIf xl3 = 1 Then
+                vl1 = 0
+                vl2 = 0
+                vl3 = 1
+                vl4 = 0
+                vv = 1
+                vs = 0
+            ElseIf xl4 = 1 Then
+                vl1 = 0
+                vl2 = 0
+                vl3 = 0
+                vl4 = 1
+                vv = 1
+                vs = 0
+            ElseIf xv = 1 Then
+                vl1 = 0
+                vl2 = 0
+                vl3 = 0
+                vl4 = 0
+                vv = 1
+                vs = 0
+            ElseIf xs = 1 Then
+                vl1 = 0
+                vl2 = 0
+                vl3 = 0
+                vl4 = 0
+                vv = 0
+                vs = 1
+            End If
+
+            result = vl1 * DL1.GetValueOrDefault + vl2 * DL2.GetValueOrDefault + vl3 * DL3.GetValueOrDefault + vl4 * DL4.GetValueOrDefault + vv * DV.GetValueOrDefault + vs * DS.GetValueOrDefault
+            Me.CurrentMaterialStream.Fases(0).SPMProperties.density = result
+
+        End Sub
+
         Public Overridable Sub DW_CalcLiqMixtureProps()
 
             Dim hl, hl1, hl2, hl3, hw, sl, sl1, sl2, sl3, sw, dl, dl1, dl2, dl3, dw As Double
@@ -6613,8 +6722,6 @@ Final3:
 
         Public Overridable Function AUX_LIQDENS(ByVal T As Double, Optional ByVal P As Double = 0, Optional ByVal Pvp As Double = 0, Optional ByVal phaseid As Integer = 3, Optional ByVal FORCE_EOS As Boolean = False) As Double
 
-
-
             Dim val As Double
             Dim m_pr2 As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PengRobinson
 
@@ -6675,6 +6782,7 @@ Final3:
                     val = Auxiliary.PROPS.liq_dens_rackett(T, Me.AUX_Rackett_Tcm(Fase.Vapor), Me.AUX_PCM(Fase.Vapor), Me.AUX_WM(Fase.Vapor), Me.AUX_MMM(Fase.Vapor), Me.AUX_ZRAM(Fase.Vapor), P, Me.AUX_PVAPM(T))
 
                 End If
+
             ElseIf phaseid = 3 Then
 
                 If T / Me.AUX_TCM(Fase.Liquid1) > 1 Then
@@ -6721,7 +6829,9 @@ Final3:
                     End If
 
                 End If
+
             ElseIf phaseid = 4 Then
+
                 If T / Me.AUX_TCM(Fase.Liquid2) > 1 Then
 
                     Dim Z = m_pr2.Z_PR(T, P, RET_VMOL(Fase.Liquid2), RET_VKij(), RET_VTC, RET_VPC, RET_VW, "L")
@@ -6764,7 +6874,9 @@ Final3:
                     End If
 
                 End If
+
             ElseIf phaseid = 5 Then
+
                 If T / Me.AUX_TCM(Fase.Liquid3) > 1 Then
 
                     Dim Z = m_pr2.Z_PR(T, P, RET_VMOL(Fase.Liquid3), RET_VKij(), RET_VTC, RET_VPC, RET_VW, "L")
@@ -6807,7 +6919,9 @@ Final3:
                     End If
 
                 End If
+
             ElseIf phaseid = 6 Then
+
                 If T / Me.AUX_TCM(Fase.Aqueous) > 1 Then
 
                     Dim Z = m_pr2.Z_PR(T, P, RET_VMOL(Fase.Aqueous), RET_VKij(), RET_VTC, RET_VPC, RET_VW, "L")

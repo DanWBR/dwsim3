@@ -1407,9 +1407,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Case Fase.Vapor
                     state = "V"
                     fstate = PropertyPackages.State.Vapor
-                Case Fase.Liquid, Fase.Liquid1, Fase.Liquid2, Fase.Liquid3
+                Case Fase.Liquid, Fase.Liquid1, Fase.Liquid2, Fase.Liquid3, Fase.Aqueous
                     state = "L"
                     fstate = PropertyPackages.State.Liquid
+                Case Fase.Solid
+                    state = "S"
+                    fstate = PropertyPackages.State.Solid
             End Select
 
             Select Case phase
