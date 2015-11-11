@@ -5227,4 +5227,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="BlackOil_V2" xml:space="preserve">
     <value>[Black Oil] Oil viscosity 2</value>
   </data>
+  <data name="DescBOPP" xml:space="preserve">
+    <value>A simplified Property Package for quick process calculations involving petroleum fluids characterized by simple properties like specific gravities and gas-oil ratio.</value>
+  </data>
 </root>

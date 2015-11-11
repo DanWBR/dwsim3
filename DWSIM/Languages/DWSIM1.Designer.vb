@@ -4052,6 +4052,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Um Pacote de Propriedades simplificado para cálculos rápidos de processo envolvendo fluidos de petróleo caracterizados por propriedades simples, tais como densidades e razão gás-óleo..
+        '''</summary>
+        Friend Shared ReadOnly Property DescBOPP() As String
+            Get
+                Return ResourceManager.GetString("DescBOPP", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Um Pacote de Propriedades CAPE-OPEN é uma coleção completa, consistente e reutilizável de métodos, compostos e parâmetros do modelo de cálculo de qualquer de um conjunto de propriedades físicas conhecidas para as fases de um material. Ele inclui todos os métodos e compostos puros dados, juntamente com as normas pertinentes à mistura e parâmetros de interação. Um Pacote de Propriedades normalmente cobre apenas um pequeno subconjunto dos compostos e métodos acessíveis através de um Sistema de Propriedades Fís [rest of string was truncated]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property DescCOPP() As String

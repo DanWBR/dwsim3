@@ -5221,4 +5221,7 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
   <data name="BlackOil_V2" xml:space="preserve">
     <value>[Black Oil] Viscosidade 2 do óleo</value>
   </data>
+  <data name="DescBOPP" xml:space="preserve">
+    <value>Um Pacote de Propriedades simplificado para cálculos rápidos de processo envolvendo fluidos de petróleo caracterizados por propriedades simples, tais como densidades e razão gás-óleo.</value>
+  </data>
 </root>
