@@ -581,6 +581,12 @@ Public Class FormMain
 
         PropertyPackages.Add(EUQPP.ComponentName.ToString, EUQPP)
 
+        Dim BOPP As BlackOilPropertyPackage = New BlackOilPropertyPackage()
+        BOPP.ComponentName = "Black Oil"
+        BOPP.ComponentDescription = DWSIM.App.GetLocalString("DescBOPP")
+
+        PropertyPackages.Add(BOPP.ComponentName.ToString, BOPP)
+
     End Sub
 
     Private Sub FormParent_MdiChildActivate(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.MdiChildActivate

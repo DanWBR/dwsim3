@@ -6542,8 +6542,6 @@ Final3:
 
         Public Overridable Function AUX_CONDTG(ByVal T As Double, ByVal P As Double) As Double
 
-
-
             Dim val As Double
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
             Dim i As Integer = 0

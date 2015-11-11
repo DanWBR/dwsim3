@@ -1,5 +1,5 @@
-'    DWSIM Nested Loops Flash Algorithms
-'    Copyright 2010-2015 Daniel Wagner O. de Medeiros, Gregor Reichert
+﻿'    DWSIM Black Oil Flash Algorithms
+'    Copyright 2015 Daniel Wagner O. de Medeiros, Gregor Reichert
 '
 '    This file is part of DWSIM.
 '
@@ -30,7 +30,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
     ''' The Flash algorithms in this class are based on the Nested Loops approach to solve equilibrium calculations.
     ''' </summary>
     ''' <remarks></remarks>
-    <System.Serializable()> Public Class DWSIMDefault
+    <System.Serializable()> Public Class BlackOil
 
         Inherits FlashAlgorithm
 
@@ -43,218 +43,19 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         Public Overrides Function Flash_PT(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
-            Dim i, n, ecount As Integer
-            Dim Pb, Pd, Pmin, Pmax, Px As Double
-            Dim d1, d2 As Date, dt As TimeSpan
-            Dim L, V, Vant As Double
+            Dim L, V As Double
+            Dim n = UBound(Vz)
 
-            d1 = Date.Now
+            Dim Vx(n), Vy(n) As Double
+      
+            Dim Vny As Double() = DirectCast(PP, BlackOilPropertyPackage).DW_CalcXY(T, P)
 
-            etol = CDbl(PP.Parameters("PP_PTFELT"))
-            maxit_e = CInt(PP.Parameters("PP_PTFMEI"))
-            itol = CDbl(PP.Parameters("PP_PTFILT"))
-            maxit_i = CInt(PP.Parameters("PP_PTFMII"))
-
-            n = UBound(Vz)
-
-            Dim Vn(n) As String, Vx(n), Vy(n), Vx_ant(n), Vy_ant(n), Vp(n), Ki(n), Ki_ant(n), fi(n) As Double
-            Dim VPc(n), VTc(n), Vw(n) As Double
-
-            VPc = PP.RET_VPC()
-            VTc = PP.RET_VTC()
-            Vw = PP.RET_VW()
-            Vn = PP.RET_VNAMES()
-
-            fi = Vz.Clone
-
-            'Calculate Ki`s
-
-            If Not ReuseKI Then
-                If VPc.Sum > 0 Then
-                    For i = 0 To n
-                        Vp(i) = VPc(i) * Exp(5.37 * (1 + Vw(i)) * (1 - VTc(i) / T))
-                        Ki(i) = Vp(i) / P
-                    Next
-                Else
-                    For i = 0 To n
-                        Vp(i) = PP.AUX_PVAPi(i, T)
-                        Ki(i) = Vp(i) / P
-                    Next
-                End If
-            Else
-                For i = 0 To n
-                    Vp(i) = PP.AUX_PVAPi(i, T)
-                    Ki(i) = PrevKi(i)
-                Next
-            End If
-
-            'Estimate V
-
-            If T > DWSIM.MathEx.Common.Max(PP.RET_VTC, Vz) Then
-                Vy = Vz
-                V = 1
-                L = 0
-                GoTo out
-            End If
-
-            i = 0
-            Px = 0
-            Do
-                If Vp(i) <> 0.0# Then Px = Px + (Vz(i) / Vp(i))
-                i = i + 1
-            Loop Until i = n + 1
-            Px = 1 / Px
-            Pmin = Px
-            i = 0
-            Px = 0
-            Do
-                Px = Px + Vz(i) * Vp(i)
-                i = i + 1
-            Loop Until i = n + 1
-            Pmax = Px
-            Pb = Pmax
-            Pd = Pmin
-
-            If Abs(Pb - Pd) / Pb < 0.0000001 Then
-                'one comp only
-                If Px <= P Then
-                    L = 1
-                    V = 0
-                    Vx = Vz
-                    GoTo out
-                Else
-                    L = 0
-                    V = 1
-                    Vy = Vz
-                    GoTo out
-                End If
-            End If
-
-            Dim Vmin, Vmax, g As Double
-            Vmin = 1.0#
-            Vmax = 0.0#
-            For i = 0 To n
-                If (Ki(i) * Vz(i) - 1) / (Ki(i) - 1) < Vmin Then Vmin = (Ki(i) * Vz(i) - 1) / (Ki(i) - 1)
-                If (1 - Vz(i)) / (1 - Ki(i)) > Vmax Then Vmax = (1 - Vz(i)) / (1 - Ki(i))
-            Next
-
-            If Vmin < 0.0# Then Vmin = 0.0#
-            If Vmin = 1.0# Then Vmin = 0.0#
-            If Vmax = 0.0# Then Vmax = 1.0#
-            If Vmax > 1.0# Then Vmax = 1.0#
-
-            V = (Vmin + Vmax) / 2
-
-            g = 0.0#
-            For i = 0 To n
-                g += Vz(i) * (Ki(i) - 1) / (V + (1 - V) * Ki(i))
-            Next
-
-            If g > 0 Then Vmin = V Else Vmax = V
-
-            V = Vmin + (Vmax - Vmin) / 2
-            'V = (P - Pd) / (Pb - Pd)
-
+            V = Vny.MultiplyY(Vz).Sum()
+            If V > 0.0# Then Vy = Vny.MultiplyY(Vz).MultiplyConstY(1 / V)
             L = 1 - V
 
-            If n = 0 Then
-                If Vp(0) <= P Then
-                    L = 1
-                    V = 0
-                Else
-                    L = 0
-                    V = 1
-                End If
-            End If
-
-            i = 0
-            Do
-                If Vz(i) <> 0 Then
-                    Vy(i) = Vz(i) * Ki(i) / ((Ki(i) - 1) * V + 1)
-                    If Ki(i) <> 0 Then Vx(i) = Vy(i) / Ki(i) Else Vx(i) = Vz(i)
-                    If Vy(i) < 0 Then Vy(i) = 0
-                    If Vx(i) < 0 Then Vx(i) = 0
-                Else
-                    Vy(i) = 0
-                    Vx(i) = 0
-                End If
-                i += 1
-            Loop Until i = n + 1
-
-            Vy_ant = Vy.Clone
-            Vx_ant = Vx.Clone
-
-            Vy = Vz.MultiplyY(Ki).DivideY(Ki.AddConstY(-1).MultiplyConstY(V).AddConstY(1))
-            Vx = Vy.DivideY(Ki)
-
-            Vx = Vx.NormalizeY
-            Vy = Vy.NormalizeY
-
-            ecount = 0
-            Dim convergiu As Integer = 0
-            Dim F, dF, e1, e2, e3 As Double
-
-            Do
-
-                Ki_ant = Ki.Clone
-                Ki = PP.DW_CalcKvalue(Vx, Vy, T, P)
-
-                Vy_ant = Vy.Clone
-                Vx_ant = Vx.Clone
-
-                Vy = Vz.MultiplyY(Ki).DivideY(Ki.AddConstY(-1).MultiplyConstY(V).AddConstY(1))
-                Vx = Vy.DivideY(Ki)
-
-                Vx = Vx.NormalizeY
-                Vy = Vy.NormalizeY
-
-                e1 = Vx.SubtractY(Vx_ant).AbsSumY
-                e2 = Vy.SubtractY(Vy_ant).AbsSumY
-
-                e3 = (V - Vant)
-
-                If Double.IsNaN(e1 + e2) Then
-
-                    Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
-
-                ElseIf Math.Abs(e3) < 0.0000000001 And ecount > 0 Then
-
-                    convergiu = 1
-
-                    Exit Do
-
-                Else
-
-                    Vant = V
-
-                    F = Vz.MultiplyY(Ki.AddConstY(-1).DivideY(Ki.AddConstY(-1).MultiplyConstY(V).AddConstY(1))).SumY
-                    dF = Vz.NegateY.MultiplyY(Ki.AddConstY(-1).MultiplyY(Ki.AddConstY(-1)).DivideY(Ki.AddConstY(-1).MultiplyConstY(V).AddConstY(1)).DivideY(Ki.AddConstY(-1).MultiplyConstY(V).AddConstY(1))).SumY
-
-                    If Abs(F) < etol / 100 Then Exit Do
-
-                    V = -F / dF + Vant
-
-                End If
-
-                If V < 0.0# Then V = 0.0#
-                If V > 1.0# Then V = 1.0#
-
-                L = 1 - V
-
-                ecount += 1
-
-                If Double.IsNaN(V) Then
-                    Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashTPVapFracError"))
-                End If
-                If ecount > maxit_e Then
-                    Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
-                End If
-
-                WriteDebugInfo("PT Flash [NL]: Iteration #" & ecount & ", VF = " & V)
-
-                CheckCalculatorStatus()
-
-            Loop Until convergiu = 1
+            Dim Vnx As Double() = Vz.SubtractY(Vny.MultiplyY(Vz))
+            If L > 0.0# Then Vx = Vnx.MultiplyConstY(1 / L)
 
             If V <= 0.0# Then
                 V = 0.0#
@@ -267,13 +68,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Vy = Vz
             End If
 
-            d2 = Date.Now
-
-            dt = d2 - d1
-
-            WriteDebugInfo("PT Flash [NL]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Error function value: " & F)
-
-out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
+out:        Return New Object() {L, V, Vx, Vy, 1, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
 
         End Function
 

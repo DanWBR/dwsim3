@@ -718,6 +718,7 @@
     <Compile Include="Objects\PropertyPackages\Base\Electrolyte.vb" />
     <Compile Include="Objects\PropertyPackages\Base\ElectrolyteBase.vb" />
     <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\Base.vb" />
+    <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\BlackOil.vb" />
     <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\BostonBrittInsideOut.vb" />
     <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\BostonFournierInsideOut3P.vb" />
     <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\ElectrolyteSVLE.vb" />
@@ -732,6 +733,8 @@
     <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\Seawater.vb" />
     <Compile Include="Objects\PropertyPackages\Base\FlashAlgorithms\SimpleLLE.vb" />
     <Compile Include="Objects\PropertyPackages\Base\MichelsenBase.vb" />
+    <Compile Include="Objects\PropertyPackages\BlackOil\BlackOilPropertyPackage.vb" />
+    <Compile Include="Objects\PropertyPackages\BlackOil\Helper Classes\BlackOilProperties.vb" />
     <Compile Include="Objects\PropertyPackages\CAPE-OPEN\CAPEOPENPropertyPackageManager.vb" />
     <Compile Include="Objects\PropertyPackages\CAPE-OPEN\CAPEOPENPropertyPackageSocket.vb" />
     <Compile Include="Objects\PropertyPackages\ChaoSeader\ChaoSeaderPropertyPackage.vb" />
