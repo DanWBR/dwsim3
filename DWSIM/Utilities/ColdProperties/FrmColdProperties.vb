@@ -85,112 +85,139 @@ Public Class FrmColdProperties
 
             pp.CurrentMaterialStream = mat
 
-            Dim ppi As New PropertyPackages.RaoultPropertyPackage
-            ppi.CurrentMaterialStream = mat
-
-            MABP = 0
-            CABP = 0
-
-            Dim i As Integer = 0
-            Dim Vx(mat.Fases(0).Componentes.Count - 1) As Double
-            For Each subst As Substancia In mat.Fases(0).Componentes.Values
-                MABP += subst.FracaoMolar.GetValueOrDefault * subst.ConstantProperties.Normal_Boiling_Point
-                CABP += subst.FracaoMolar.GetValueOrDefault * subst.ConstantProperties.Normal_Boiling_Point ^ (1 / 3)
-                Vx(i) = subst.FracaoMolar
-                i = i + 1
-            Next
-            CABP = CABP ^ 3
-            MeABP = (MABP + CABP) / 2
-
-            SG = pp.DW_CalcMassaEspecifica_ISOL(PropertyPackages.Fase.Liquid, 288.706, 101325) / 999
-            K = (1.8 * MeABP) ^ (1 / 3) / SG
-            API = 141.5 / SG - 131.5
-
             Dim FlashPoint, PourPoint, CloudPoint, FreezingPoint, RVP, TVP, RefractionIndex, Huang_I, CetaneIndex, v1, v2, kv1 As Double
-
-            TVP = pp.DW_CalcBubP(Vx, 310.95, 101325)(4)
-            v1 = pp.DW_CalcViscosidadeDinamica_ISOL(PropertyPackages.Fase.Liquid, 310.95, 101325)
-            kv1 = v1 / pp.DW_CalcMassaEspecifica_ISOL(PropertyPackages.Fase.Liquid, 310.95, 101325)
-            v2 = pp.DW_CalcViscosidadeDinamica_ISOL(PropertyPackages.Fase.Liquid, 372.05, 101325)
-
             Dim t10ASTM, t10TBP, bt, dp As Double
-            Try
-                bt = pp.DW_CalcBubT(Vx, 101325)(4)
-            Catch ex As Exception
-                bt = ppi.DW_CalcBubT(Vx, 101325)(4)
-            End Try
-            Try
-                dp = pp.DW_CalcDewP(Vx, 310.95)(4)
-            Catch ex As Exception
-                dp = ppi.DW_CalcDewP(Vx, 310.95)(4)
-            End Try
 
-            If dp < 0 Or Double.IsNaN(dp) Or Double.IsInfinity(dp) Then
-                dp = ppi.DW_CalcDewP(Vx, 310.95)(4)
-            End If
+            If TypeOf pp Is PropertyPackages.BlackOilPropertyPackage Then
 
-            Dim tmp, vv, vl, dv, dl, mwv, mwl As Object
-            Dim vwl(mat.Fases(0).Componentes.Count - 1), vwv(mat.Fases(0).Componentes.Count - 1) As Double
+                Dim bopp As PropertyPackages.BlackOilPropertyPackage = DirectCast(pp, PropertyPackages.BlackOilPropertyPackage)
 
-            Dim t, t_ant, t_ant2, ft, ft_ant, ft_ant2, v As Double, j As Integer
+                Dim bof = bopp.CalcBOFluid(bopp.RET_VMOL(PropertyPackages.Fase.Mixture), bopp.DW_GetConstantProperties)
 
-            t = bt + 15
-            i = 0
-            Do
-                ft_ant2 = ft_ant
-                ft_ant = ft
+                Dim bop As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.BlackOilProperties
+
+                MeABP = bop.LiquidNormalBoilingPoint(bof.SGO)
+                SG = bof.SGO
+                K = (1.8 * MeABP) ^ (1 / 3) / SG
+                API = 141.5 / SG - 131.5
+
+                TVP = bopp.DW_CalcBubP(bopp.RET_VMOL(PropertyPackages.Fase.Mixture), 310.95, 101325)(0)
+
+                v1 = bopp.DW_CalcViscosidadeDinamica_ISOL(PropertyPackages.Fase.Liquid, 310.95, 101325)
+                kv1 = v1 / bopp.DW_CalcMassaEspecifica_ISOL(PropertyPackages.Fase.Liquid, 310.95, 101325)
+                v2 = bopp.DW_CalcViscosidadeDinamica_ISOL(PropertyPackages.Fase.Liquid, 372.05, 101325)
+
+                t10ASTM = MeABP * 0.9
+
+            Else
+
+                Dim ppi As New PropertyPackages.RaoultPropertyPackage
+                ppi.CurrentMaterialStream = mat
+
+                MABP = 0
+                CABP = 0
+
+                Dim i As Integer = 0
+                Dim Vx(mat.Fases(0).Componentes.Count - 1) As Double
+                For Each subst As Substancia In mat.Fases(0).Componentes.Values
+                    MABP += subst.FracaoMolar.GetValueOrDefault * subst.ConstantProperties.Normal_Boiling_Point
+                    CABP += subst.FracaoMolar.GetValueOrDefault * subst.ConstantProperties.Normal_Boiling_Point ^ (1 / 3)
+                    Vx(i) = subst.FracaoMolar
+                    i = i + 1
+                Next
+                CABP = CABP ^ 3
+                MeABP = (MABP + CABP) / 2
+
+                SG = pp.DW_CalcMassaEspecifica_ISOL(PropertyPackages.Fase.Liquid, 288.706, 101325) / 999
+                K = (1.8 * MeABP) ^ (1 / 3) / SG
+                API = 141.5 / SG - 131.5
+
+
+                TVP = pp.DW_CalcBubP(Vx, 310.95, 101325)(4)
+                v1 = pp.DW_CalcViscosidadeDinamica_ISOL(PropertyPackages.Fase.Liquid, 310.95, 101325)
+                kv1 = v1 / pp.DW_CalcMassaEspecifica_ISOL(PropertyPackages.Fase.Liquid, 310.95, 101325)
+                v2 = pp.DW_CalcViscosidadeDinamica_ISOL(PropertyPackages.Fase.Liquid, 372.05, 101325)
+
                 Try
-                    tmp = pp.FlashBase.Flash_PT(pp.RET_VMOL(PropertyPackages.Fase.Mixture), 101325, t, pp)
-                    v = tmp(1)
-                    vv = tmp(3)
-                    vl = tmp(2)
+                    bt = pp.DW_CalcBubT(Vx, 101325)(4)
                 Catch ex As Exception
-                    tmp = ppi.FlashBase.Flash_PT(pp.RET_VMOL(PropertyPackages.Fase.Mixture), 101325, t, pp)
-                    v = tmp(1)
-                    vv = tmp(3)
-                    vl = tmp(2)
+                    bt = ppi.DW_CalcBubT(Vx, 101325)(4)
+                End Try
+                Try
+                    dp = pp.DW_CalcDewP(Vx, 310.95)(4)
+                Catch ex As Exception
+                    dp = ppi.DW_CalcDewP(Vx, 310.95)(4)
                 End Try
 
-                mwv = pp.AUX_MMM(vv)
-                mwl = pp.AUX_MMM(vl)
-
-                mat.Fases(0).SPMProperties.temperature = t
-                mat.Fases(0).SPMProperties.pressure = 101325
-                j = 0
-                For Each subst As Substancia In mat.Fases(1).Componentes.Values
-                    subst.FracaoMolar = vl(j)
-                    j += 1
-                Next
-                pp.DW_CalcProp("density", PropertyPackages.Fase.Liquid)
-                dl = mat.Fases(1).SPMProperties.density.GetValueOrDefault
-                j = 0
-                For Each subst As Substancia In mat.Fases(1).Componentes.Values
-                    subst.FracaoMolar = vv(j)
-                    j += 1
-                Next
-                pp.DW_CalcProp("density", PropertyPackages.Fase.Liquid)
-                dv = mat.Fases(1).SPMProperties.density.GetValueOrDefault
-
-                If v = 0 Then v = i * 0.0001
-
-                ft = v - (0.1 / dv) / ((0.1 / dv) + (0.9 / dl))
-
-                t_ant2 = t_ant
-                t_ant = t
-                If i > 2 Then
-                    If ft <> ft_ant2 Then
-                        t = t - 0.3 * ft * (t - t_ant2) / (ft - ft_ant2)
-                    Else
-                        t = t
-                    End If
-                Else
-                    t = t - 1
+                If dp < 0 Or Double.IsNaN(dp) Or Double.IsInfinity(dp) Then
+                    dp = ppi.DW_CalcDewP(Vx, 310.95)(4)
                 End If
-                i = i + 1
-            Loop Until Abs(ft) < 0.001 Or t < 0 Or Double.IsNaN(t) Or Double.IsInfinity(t) Or i > 200
-            t10TBP = t
 
-            t10ASTM = (t10TBP / 0.5564) ^ (1 / 1.09)
+                Dim tmp, vv, vl, dv, dl, mwv, mwl As Object
+                Dim vwl(mat.Fases(0).Componentes.Count - 1), vwv(mat.Fases(0).Componentes.Count - 1) As Double
+
+                Dim t, t_ant, t_ant2, ft, ft_ant, ft_ant2, v As Double, j As Integer
+
+                t = bt + 15
+                i = 0
+                Do
+                    ft_ant2 = ft_ant
+                    ft_ant = ft
+                    Try
+                        tmp = pp.FlashBase.Flash_PT(pp.RET_VMOL(PropertyPackages.Fase.Mixture), 101325, t, pp)
+                        v = tmp(1)
+                        vv = tmp(3)
+                        vl = tmp(2)
+                    Catch ex As Exception
+                        tmp = ppi.FlashBase.Flash_PT(pp.RET_VMOL(PropertyPackages.Fase.Mixture), 101325, t, pp)
+                        v = tmp(1)
+                        vv = tmp(3)
+                        vl = tmp(2)
+                    End Try
+
+                    mwv = pp.AUX_MMM(vv)
+                    mwl = pp.AUX_MMM(vl)
+
+                    mat.Fases(0).SPMProperties.temperature = t
+                    mat.Fases(0).SPMProperties.pressure = 101325
+                    j = 0
+                    For Each subst As Substancia In mat.Fases(1).Componentes.Values
+                        subst.FracaoMolar = vl(j)
+                        j += 1
+                    Next
+                    pp.DW_CalcProp("density", PropertyPackages.Fase.Liquid)
+                    dl = mat.Fases(1).SPMProperties.density.GetValueOrDefault
+                    j = 0
+                    For Each subst As Substancia In mat.Fases(1).Componentes.Values
+                        subst.FracaoMolar = vv(j)
+                        j += 1
+                    Next
+                    pp.DW_CalcProp("density", PropertyPackages.Fase.Liquid)
+                    dv = mat.Fases(1).SPMProperties.density.GetValueOrDefault
+
+                    If v = 0 Then v = i * 0.0001
+
+                    ft = v - (0.1 / dv) / ((0.1 / dv) + (0.9 / dl))
+
+                    t_ant2 = t_ant
+                    t_ant = t
+                    If i > 2 Then
+                        If ft <> ft_ant2 Then
+                            t = t - 0.3 * ft * (t - t_ant2) / (ft - ft_ant2)
+                        Else
+                            t = t
+                        End If
+                    Else
+                        t = t - 1
+                    End If
+                    i = i + 1
+                Loop Until Abs(ft) < 0.001 Or t < 0 Or Double.IsNaN(t) Or Double.IsInfinity(t) Or i > 200
+
+                t10TBP = t
+
+                t10ASTM = (t10TBP / 0.5564) ^ (1 / 1.09)
+
+            End If
 
             'API Procedure 2B5.1
             Huang_I = 0.02266 * Exp(0.0003905 * (1.8 * MeABP) + 2.468 * SG - 0.0005704 * (1.8 * MeABP) * SG) * (1.8 * MeABP) ^ 0.0572 * SG ^ -0.72
