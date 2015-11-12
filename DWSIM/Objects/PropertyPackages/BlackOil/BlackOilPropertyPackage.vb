@@ -211,7 +211,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                     Select Case [property].ToLower
                         Case "compressibilityfactor"
-                            result = 1 / (bop.LiquidDensity(T, P, bof.SGO, bof.SGG, bof.GOR, bof.BSW) * 1000 / bop.LiquidMolecularWeight(bof.SGO)) / 8.314 / T * P
+                            result = 1 / (bop.LiquidDensity(T, P, bof.SGO, bof.SGG, bof.GOR, bof.BSW) * 1000 / bop.LiquidMolecularWeight(bof.SGO, bof.BSW)) / 8.314 / T * P
                             Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = result
                         Case "heatcapacity", "heatcapacitycp"
                             result = bop.LiquidCp(T, P, bof.SGG, bof.SGO, bof.BSW)
@@ -351,7 +351,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                 Dim bof As BlackOilFluid = CalcBOFluid(RET_VMOL(fase.Liquid1), DW_GetConstantProperties())
 
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight = bop.LiquidMolecularWeight(bof.SGO)
+                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight = bop.LiquidMolecularWeight(bof.SGO, bof.BSW)
 
                 result = 1 / (bop.LiquidDensity(T, P, bof.SGO, bof.SGG, bof.GOR, bof.BSW) * 1000 / Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight) / 8.314 / T * P
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = result
@@ -465,7 +465,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         Public Overrides Function DW_CalcMM_ISOL(ByVal fase1 As DWSIM.SimulationObjects.PropertyPackages.Fase, ByVal T As Double, ByVal P As Double) As Double
             Dim bof As BlackOilFluid = CalcBOFluid(RET_VMOL(fase1), DW_GetConstantProperties())
             If fase1 = Fase.Liquid Then
-                Return bop.LiquidMolecularWeight(bof.SGO)
+                Return bop.LiquidMolecularWeight(bof.SGO, bof.BSW)
             ElseIf fase1 = Fase.Vapor Then
                 Return bop.VaporMolecularWeight(bof.SGG)
             End If
@@ -730,7 +730,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim bof As BlackOilFluid = CalcBOFluid(Vz, DW_GetConstantProperties())
 
             If state = "L" Then
-                Return bop.LiquidMolecularWeight(bof.SGO)
+                Return bop.LiquidMolecularWeight(bof.SGO, bof.BSW)
             Else
                 Return bop.VaporMolecularWeight(bof.SGG)
             End If
@@ -745,13 +745,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Case PropertyPackages.Fase.Vapor
                     Return bop.VaporMolecularWeight(bof.SGG)
                 Case PropertyPackages.Fase.Liquid, PropertyPackages.Fase.Liquid1, PropertyPackages.Fase.Liquid2, PropertyPackages.Fase.Liquid3
-                    Return bop.LiquidMolecularWeight(bof.SGO)
+                    Return bop.LiquidMolecularWeight(bof.SGO, bof.BSW)
                 Case PropertyPackages.Fase.Mixture
                     Dim mwv, mwl, xv, xl As Double
                     xv = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
                     xl = 1 - xv
                     mwv = bop.VaporMolecularWeight(bof.SGG)
-                    mwl = bop.LiquidMolecularWeight(bof.SGO)
+                    mwl = bop.LiquidMolecularWeight(bof.SGO, bof.BSW)
                     Return xv * mwv + xl * mwl
                 Case Else
                     Return 0.0#
@@ -768,9 +768,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 If phasenumber = 2 Then
                     mol_x_mm += sub1.FracaoMolar.GetValueOrDefault * bop.VaporMolecularWeight(sub1.ConstantProperties.BO_SGG)
                 ElseIf phasenumber = 3 Then
-                    mol_x_mm += sub1.FracaoMolar.GetValueOrDefault * bop.LiquidMolecularWeight(sub1.ConstantProperties.BO_SGO)
+                    mol_x_mm += sub1.FracaoMolar.GetValueOrDefault * bop.LiquidMolecularWeight(sub1.ConstantProperties.BO_SGO, sub1.ConstantProperties.BO_BSW)
                 Else
-                    mol_x_mm += sub1.FracaoMolar.GetValueOrDefault * bop.LiquidMolecularWeight(sub1.ConstantProperties.BO_SGG)
+                    mol_x_mm += sub1.FracaoMolar.GetValueOrDefault * bop.LiquidMolecularWeight(sub1.ConstantProperties.BO_SGG, sub1.ConstantProperties.BO_BSW)
                 End If
             Next
 
@@ -780,9 +780,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 If phasenumber = 2 Then
                     Return sub1.FracaoMolar.GetValueOrDefault * bop.VaporMolecularWeight(sub1.ConstantProperties.BO_SGG) / mol_x_mm
                 ElseIf phasenumber = 3 Then
-                    Return sub1.FracaoMolar.GetValueOrDefault * bop.LiquidMolecularWeight(sub1.ConstantProperties.BO_SGO) / mol_x_mm
+                    Return sub1.FracaoMolar.GetValueOrDefault * bop.LiquidMolecularWeight(sub1.ConstantProperties.BO_SGO, sub1.ConstantProperties.BO_BSW) / mol_x_mm
                 Else
-                    Return sub1.FracaoMolar.GetValueOrDefault * bop.LiquidMolecularWeight(sub1.ConstantProperties.BO_SGO) / mol_x_mm
+                    Return sub1.FracaoMolar.GetValueOrDefault * bop.LiquidMolecularWeight(sub1.ConstantProperties.BO_SGO, sub1.ConstantProperties.BO_BSW) / mol_x_mm
                 End If
             Else
                 Return 0.0#

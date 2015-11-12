@@ -96,7 +96,7 @@ Public Class FrmColdProperties
 
                 Dim bop As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.BlackOilProperties
 
-                MeABP = bop.LiquidNormalBoilingPoint(bof.SGO)
+                MeABP = bop.LiquidNormalBoilingPoint(bof.SGO, bof.BSW)
                 SG = bof.SGO
                 K = (1.8 * MeABP) ^ (1 / 3) / SG
                 API = 141.5 / SG - 131.5

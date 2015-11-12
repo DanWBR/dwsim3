@@ -33,23 +33,25 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
     <System.Serializable> Public Class BlackOilProperties
 
+        Private water As New Auxiliary.IAPWS_IF97
+
         Sub New()
 
 
         End Sub
 
-        Public Function LiquidNormalBoilingPoint(SGO As Double) As Double
-            Dim MW As Double = LiquidMolecularWeight(SGO)
-            Return 1080 - Math.Exp(6.97996 - 0.01964 * MW ^ (2 / 3))
+        Public Function LiquidNormalBoilingPoint(SGO As Double, BSW As Double) As Double
+            Dim MW As Double = LiquidMolecularWeight(SGO, 0)
+            Return (100 - BSW) / 100 * (1080 - Math.Exp(6.97996 - 0.01964 * MW ^ (2 / 3))) + BSW / 100 * 373.15
         End Function
-        Public Function LiquidMolecularWeight(SGO As Double) As Double
-            Return ((Math.Log(1.07 - SGO) - 3.56073) / (-2.93886)) ^ 10
+        Public Function LiquidMolecularWeight(SGO As Double, BSW As Double) As Double
+            Return (100 - BSW) / 100 * (((Math.Log(1.07 - SGO) - 3.56073) / (-2.93886)) ^ 10) + BSW / 100 * 18
         End Function
         Public Function VaporPressure(T As Double, SGO As Double, BSW As Double) As Double
 
             Dim Tc, Pc, w As Double
 
-            Dim MW As Double = LiquidMolecularWeight(SGO)
+            Dim MW As Double = LiquidMolecularWeight(SGO, 0)
 
             Dim NBP As Double = 1080 - Math.Exp(6.97996 - 0.01964 * MW ^ (2 / 3))
 
@@ -66,14 +68,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             tmp = Pc * Math.Exp(f0 + w * f1)
 
-            Return tmp
+            Return (100 - BSW) / 100 * tmp + BSW / 100 * water.pSatW(T)
 
         End Function
         Public Function LiquidEnthalpy(T As Double, P As Double, SGO As Double, SGG As Double, BSW As Double) As Double
 
             Dim methods As New DWSIM.Utilities.Hypos.Methods.HYP
             Dim Tc, Pc, MW As Double
-            Dim NBP As Double = LiquidNormalBoilingPoint(SGO)
+            Dim NBP As Double = LiquidNormalBoilingPoint(SGO, 0)
 
             Tc = props1.Tc_LeeKesler(NBP, SGO)
             Pc = props1.Pc_LeeKesler(NBP, SGO)
@@ -93,7 +95,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
                 Ti += deltaT
             Next
 
-            Return Hid - DHvap
+            Return (100 - BSW) / 100 * (Hid - DHvap) + BSW / 100 * water.enthalpyW(T, P / 100000)
 
         End Function
         Public Function LiquidDensity(T As Double, P As Double, SGO As Double, SGG As Double, GOR As Double, BSW As Double) As Double
@@ -128,29 +130,29 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             rhoo = (rhoo0 + Rs / 5.6738) / Bos
 
-            Return rhoo
+            Return (100 - BSW) / 100 * rhoo + BSW / 100 * water.densSatLiqTW(T)
 
         End Function
         Public Function LiquidCp(T As Double, P As Double, SGG As Double, SGO As Double, BSW As Double) As Double
             Dim Tc, Pc, w, MW As Double
-            Dim NBP As Double = LiquidNormalBoilingPoint(SGO)
+            Dim NBP As Double = LiquidNormalBoilingPoint(SGO, 0)
             Tc = props1.Tc_LeeKesler(NBP, SGO)
             Pc = props1.Pc_LeeKesler(NBP, SGO)
             w = props1.AcentricFactor_LeeKesler(Tc, Pc, NBP)
-            MW = LiquidMolecularWeight(SGO)
-            Return PROPS.Cpl_rb(VaporCp(T, P, SGG, SGO), T, Tc, w, MW)
+            MW = LiquidMolecularWeight(SGO, 0)
+            Return (100 - BSW) / 100 * PROPS.Cpl_rb(VaporCp(T, P, SGG, SGO), T, Tc, w, MW) + BSW / 100 * water.cpSatLiqTW(T)
         End Function
         Public Function LiquidCv(T As Double, P As Double, SGG As Double, SGO As Double, BSW As Double) As Double
             Return LiquidCp(T, P, SGG, SGO, BSW)
         End Function
         Public Function LiquidThermalConductivity(T As Double, P As Double, SGO As Double, BSW As Double) As Double
             Dim Tc, Pc, w, MW As Double
-            Dim NBP As Double = LiquidNormalBoilingPoint(SGO)
+            Dim NBP As Double = LiquidNormalBoilingPoint(SGO, 0)
             Tc = props1.Tc_LeeKesler(NBP, SGO)
             Pc = props1.Pc_LeeKesler(NBP, SGO)
             w = props1.AcentricFactor_LeeKesler(Tc, Pc, NBP)
-            MW = LiquidMolecularWeight(SGO)
-            Return PROPS.condl_latini(T, NBP, Tc, MW, "H")
+            MW = LiquidMolecularWeight(SGO, 0)
+            Return (100 - BSW) / 100 * PROPS.condl_latini(T, NBP, Tc, MW, "H") + BSW / 100 * water.thconSatLiqTW(T)
         End Function
         Public Function LiquidViscosity(T As Double, P As Double, SGO As Double, SGG As Double, GOR As Double, BSW As Double, v1 As Double, t1 As Double, v2 As Double, t2 As Double) As Double
 
@@ -201,7 +203,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
                 If Ppsia < Pb Then muo = muos Else muo = muoss
 
-                Return muo * 0.001
+                Return (100 - BSW) / 100 * (muo * 0.001) + BSW / 100 * water.viscSatLiqTW(T)
 
             End If
 
@@ -233,7 +235,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
         End Function
         Public Function VaporCp(T As Double, P As Double, SGG As Double, SGO As Double) As Double
             Dim WK, w As Double
-            Dim NBP As Double = LiquidNormalBoilingPoint(SGO)
+            Dim NBP As Double = LiquidNormalBoilingPoint(SGO, 0)
             WK = (1.8 * NBP) ^ (1 / 3) / SGO
             Dim Tc As Double = props1.Tc_LeeKesler(NBP, SGO)
             Dim Pc As Double = props1.Pc_LeeKesler(NBP, SGO)
@@ -246,7 +248,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
         End Function
         Public Function VaporThermalConductivity(T As Double, P As Double, SGG As Double, SGO As Double) As Double
             Dim Tc, Pc, Vc, Zc, w, MW, Cv As Double
-            Dim NBP As Double = LiquidNormalBoilingPoint(SGO)
+            Dim NBP As Double = LiquidNormalBoilingPoint(SGO, 0)
             Tc = props1.Tc_LeeKesler(NBP, SGO)
             Pc = props1.Pc_LeeKesler(NBP, SGO)
             w = props1.AcentricFactor_LeeKesler(Tc, Pc, NBP)
