@@ -2957,6 +2957,10 @@ Public Class FormCompoundCreator
 
     End Sub
 
+    Private Sub tbDBPath_TextChanged(sender As Object, e As EventArgs) Handles tbDBPath.TextChanged
+        If tbDBPath.Text <> "" Then btnSaveToDB.Enabled = True Else btnSaveToDB.Enabled = False
+    End Sub
+
 End Class
 
 <System.Serializable()> Public Class CompoundGeneratorCase
