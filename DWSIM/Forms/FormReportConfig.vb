@@ -298,13 +298,13 @@ Public Class FormReportConfig
         Select Case My.Settings.CultureInfo
             Case "pt-BR"
                 MyReport.LoadFrom(My.Application.Info.DirectoryPath & "\data\report_pt-BR.mr6")
-            Case "en-US"
+            Case "en"
                 MyReport.LoadFrom(My.Application.Info.DirectoryPath & "\data\report_en-US.mr6")
             Case Else
                 MyReport.LoadFrom(My.Application.Info.DirectoryPath & "\data\report_en-US.mr6")
         End Select
 
-        Dim ds As NeoDataType.MyNeoReport.TableDataSource = CType(MyReport.Page.Sections(2).DataSource, NeoDataType.MyNeoReport.TableDataSource)
+        Dim ds As NeoDataType.MyNeoReport.TableDataSource = MyReport.Page.Sections(2).DataSource
         ds.Table = DT
 
         Dim titlbl As NeoDataType.MyNeoReport.Label = MyReport.Page.PageHeader.Items("Label5")

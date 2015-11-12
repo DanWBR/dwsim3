@@ -4120,10 +4120,6 @@ ruf:                Application.DoEvents()
         End If
     End Sub
 
-    Private Sub BlogDeDesenvolvimentoToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BlogDeDesenvolvimentoToolStripMenuItem.Click
-        System.Diagnostics.Process.Start("http://dwsim.inforside.com.br/blog")
-    End Sub
-
     Private Sub DownloadsToolStripMenuItem_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DownloadsToolStripMenuItem.Click
         System.Diagnostics.Process.Start("http://sourceforge.net/projects/dwsim/files/")
     End Sub
@@ -4137,7 +4133,7 @@ ruf:                Application.DoEvents()
     End Sub
 
     Private Sub RastreamentoDeBugsToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RastreamentoDeBugsToolStripMenuItem.Click
-        System.Diagnostics.Process.Start("http://sourceforge.net/apps/mantisbt/dwsim/")
+        System.Diagnostics.Process.Start("https://sourceforge.net/p/dwsim/tickets/")
     End Sub
 
     Private Sub DonateToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DonateToolStripMenuItem.Click
