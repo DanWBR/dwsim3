@@ -186,6 +186,8 @@ Namespace DWSIM
                 Return GetLocalString("CompHypo")
             ElseIf comp.IsPF Then
                 Return GetLocalString("CompPseudo")
+            ElseIf comp.IsBlackOil Then
+                Return "Black Oil"
             Else
                 Return GetLocalString("CompNormal")
             End If

@@ -2614,24 +2614,26 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                                 End If
                             End If
 
+                            Dim MWM As Double = xl * Me.AUX_MMM(Vx, "L") + xl2 * Me.AUX_MMM(Vx2, "L") + xv * Me.AUX_MMM(Vy, "V") + xs * Me.AUX_MMM(Vs, "S")
+
                             Dim HM, HV, HL1, HL2, HS As Double
                            
-                            If xl <> 0 Then HL1 = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx)
-                            If xl2 <> 0 Then HL2 = Me.DW_CalcEnthalpy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2)
-                            If xv <> 0 Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy)
-                            If xs <> 0 Then HS = Me.DW_CalcSolidEnthalpy(T, Vs, constprops) * Me.AUX_MMM(Vs)
-                            HM = (xl * HL1 + xl2 * HL2 + xv * HV + xs * HS) / Me.AUX_MMM(Fase.Mixture)
+                            If xl <> 0 Then HL1 = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx, "L")
+                            If xl2 <> 0 Then HL2 = Me.DW_CalcEnthalpy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2, "L")
+                            If xv <> 0 Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy, "V")
+                            If xs <> 0 Then HS = Me.DW_CalcSolidEnthalpy(T, Vs, constprops) * Me.AUX_MMM(Vs, "S")
+                            HM = (xl * HL1 + xl2 * HL2 + xv * HV + xs * HS) / MWM
 
                             H = HM
 
                             Dim SM, SV, SL1, SL2, SS As Double
 
-                            If xl <> 0 Then SL1 = Me.DW_CalcEntropy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx)
-                            If xl2 <> 0 Then SL2 = Me.DW_CalcEntropy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2)
-                            If xv <> 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy)
-                            If xs <> 0 And T <> 298.15 Then If xs <> 0 Then SS = Me.DW_CalcSolidEnthalpy(T, Vs, constprops) / (T - 298.15) * Me.AUX_MMM(Vs)
+                            If xl <> 0 Then SL1 = Me.DW_CalcEntropy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx, "L")
+                            If xl2 <> 0 Then SL2 = Me.DW_CalcEntropy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2, "L")
+                            If xv <> 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy, "V")
+                            If xs <> 0 And T <> 298.15 Then If xs <> 0 Then SS = Me.DW_CalcSolidEnthalpy(T, Vs, constprops) / (T - 298.15) * Me.AUX_MMM(Vs, "S")
 
-                            SM = (xl * SL1 + xl2 * SL2 + xv * SV + xs * SS) / Me.AUX_MMM(Fase.Mixture)
+                            SM = (xl * SL1 + xl2 * SL2 + xv * SV + xs * SS) / MWM
 
                             S = SM
 
@@ -2664,25 +2666,34 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                             result = Me.FlashBase.Flash_TV(RET_VMOL(Fase.Mixture), T, xv, P, Me)
 
                             P = result(4)
-
                             Vx = result(2)
+                            Vx2 = result(8)
                             Vy = result(3)
+                            Vs = result(10)
+                            xl = result(0)
+                            xl2 = result(7)
+                            xs = result(9)
 
-                            xl = 1 - xv
+                            Dim HM, HV, HL1, HL2, HS As Double
 
-                            Dim HM, HV, HL As Double
+                            Dim MWM As Double = xl * Me.AUX_MMM(Vx, "L") + xl2 * Me.AUX_MMM(Vx2, "L") + xv * Me.AUX_MMM(Vy, "V") + xs * Me.AUX_MMM(Vs, "S")
 
-                            If xl <> 0 Then HL = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx)
-                            If xv <> 0 Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy)
-                            HM = (xl * HL + xv * HV) / Me.AUX_MMM(Fase.Mixture)
+                            If xl <> 0 Then HL1 = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx, "L")
+                            If xl2 <> 0 Then HL2 = Me.DW_CalcEnthalpy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2, "L")
+                            If xv <> 0 Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy, "V")
+                            If xs <> 0 Then HS = Me.DW_CalcSolidEnthalpy(T, Vs, constprops) * Me.AUX_MMM(Vs, "S")
+                            HM = (xl * HL1 + xl2 * HL2 + xv * HV + xs * HS) / MWM
 
                             H = HM
 
-                            Dim SM, SV, SL As Double
+                            Dim SM, SV, SL1, SL2, SS As Double
 
-                            If xl <> 0 Then SL = Me.DW_CalcEntropy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx)
-                            If xv <> 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy)
-                            SM = (xl * SL + xv * SV) / Me.AUX_MMM(Fase.Mixture)
+                            If xl <> 0 Then SL1 = Me.DW_CalcEntropy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx, "L")
+                            If xl2 <> 0 Then SL2 = Me.DW_CalcEntropy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2, "L")
+                            If xv <> 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy, "V")
+                            If xs <> 0 And T <> 298.15 Then If xs <> 0 Then SS = Me.DW_CalcSolidEnthalpy(T, Vs, constprops) / (T - 298.15) * Me.AUX_MMM(Vs, "S")
+
+                            SM = (xl * SL1 + xl2 * SL2 + xv * SV + xs * SS) / MWM
 
                             S = SM
 
@@ -2770,26 +2781,28 @@ redirect:                       result = Me.FlashBase.Flash_PH(RET_VMOL(Fase.Mix
                                 Vx2 = result(8)
                                 Vs = result(10)
 
-                                Dim HM, HV, HL1, HL2, HS As Double
+                                Dim MWM As Double = xl * Me.AUX_MMM(Vx, "L") + xl2 * Me.AUX_MMM(Vx2, "L") + xv * Me.AUX_MMM(Vy, "V") + xs * Me.AUX_MMM(Vs, "S")
 
-                                If xl <> 0.0# Then HL1 = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx)
-                                If xl2 <> 0.0# Then HL2 = Me.DW_CalcEnthalpy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2)
-                                If xv <> 0.0# Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy)
-                                If xs <> 0 Then HS = Me.DW_CalcSolidEnthalpy(T, Vs, constprops) * Me.AUX_MMM(Vs)
-                                HM = (xl * HL1 + xl2 * HL2 + xv * HV + xs * HS) / Me.AUX_MMM(Fase.Mixture)
+                                'Dim HM, HV, HL1, HL2, HS As Double
 
-                                H = HM
+                                'If xl <> 0 Then HL1 = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx, "L")
+                                'If xl2 <> 0 Then HL2 = Me.DW_CalcEnthalpy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2, "L")
+                                'If xv <> 0 Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy, "V")
+                                'If xs <> 0 Then HS = Me.DW_CalcSolidEnthalpy(T, Vs, constprops) * Me.AUX_MMM(Vs, "S")
+                                'HM = (xl * HL1 + xl2 * HL2 + xv * HV + xs * HS) / MWM
+
+                                'H = HM
 
                                 Dim SM, SV, SL1, SL2, SS As Double
 
-                                If xl <> 0 Then SL1 = Me.DW_CalcEntropy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx)
-                                If xl2 <> 0 Then SL2 = Me.DW_CalcEntropy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2)
-                                If xv <> 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy)
-                                If xs <> 0 And T <> 298.15 Then SS = Me.DW_CalcSolidEnthalpy(T, Vs, constprops) / (T - 298.15) * Me.AUX_MMM(Vs)
-                                
-                                SM = (xl * SL1 + xl2 * SL2 + xv * SV + xs * SS) / Me.AUX_MMM(Fase.Mixture)
-                                S = SM
+                                If xl <> 0 Then SL1 = Me.DW_CalcEntropy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx, "L")
+                                If xl2 <> 0 Then SL2 = Me.DW_CalcEntropy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2, "L")
+                                If xv <> 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy, "V")
+                                If xs <> 0 And T <> 298.15 Then If xs <> 0 Then SS = Me.DW_CalcSolidEnthalpy(T, Vs, constprops) / (T - 298.15) * Me.AUX_MMM(Vs, "S")
 
+                                SM = (xl * SL1 + xl2 * SL2 + xv * SV + xs * SS) / MWM
+
+                                S = SM
 
                             End If
 
@@ -2867,22 +2880,29 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                                 Vx2 = result(8)
                                 Vs = result(10)
 
+                                Dim MWM As Double = xl * Me.AUX_MMM(Vx, "L") + xl2 * Me.AUX_MMM(Vx2, "L") + xv * Me.AUX_MMM(Vy, "V") + xs * Me.AUX_MMM(Vs, "S")
+
                                 Dim HM, HV, HL1, HL2, HS As Double
 
-                                If xl <> 0 Then HL1 = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx)
-                                If xl2 <> 0 Then HL2 = Me.DW_CalcEnthalpy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2)
-                                If xv <> 0 Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy)
-                                If xs <> 0 Then HS = Me.DW_CalcSolidEnthalpy(T, Vs, constprops) * Me.AUX_MMM(Vs)
-                                HM = (xl * HL1 + xl2 * HL2 + xv * HV + xs * HS) / Me.AUX_MMM(Fase.Mixture)
+                                If xl <> 0 Then HL1 = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx, "L")
+                                If xl2 <> 0 Then HL2 = Me.DW_CalcEnthalpy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2, "L")
+                                If xv <> 0 Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy, "V")
+                                If xs <> 0 Then HS = Me.DW_CalcSolidEnthalpy(T, Vs, constprops) * Me.AUX_MMM(Vs, "S")
+                                HM = (xl * HL1 + xl2 * HL2 + xv * HV + xs * HS) / MWM
+
                                 H = HM
 
-                                Dim SM, SV, SL1, SL2, SS As Double
+                                'Dim SM, SV, SL1, SL2, SS As Double
 
-                                If xl <> 0 Then SL1 = Me.DW_CalcEntropy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx)
-                                If xl2 <> 0 Then SL2 = Me.DW_CalcEntropy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2)
-                                If xv <> 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy)
-                                If xs <> 0 And T <> 298.15 Then SS = Me.DW_CalcSolidEnthalpy(T, Vs, constprops) / (T - 298.15) * Me.AUX_MMM(Vs)
-                                SM = (xl * SL1 + xl2 * SL2 + xv * SV + xs * SS) / Me.AUX_MMM(Fase.Mixture)
+                                'If xl <> 0 Then SL1 = Me.DW_CalcEntropy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx, "L")
+                                'If xl2 <> 0 Then SL2 = Me.DW_CalcEntropy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2, "L")
+                                'If xv <> 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy, "V")
+                                'If xs <> 0 And T <> 298.15 Then If xs <> 0 Then SS = Me.DW_CalcSolidEnthalpy(T, Vs, constprops) / (T - 298.15) * Me.AUX_MMM(Vs, "S")
+
+                                'SM = (xl * SL1 + xl2 * SL2 + xv * SV + xs * SS) / MWM
+
+                                'S = SM
+
                             End If
 
                         Case FlashSpec.VAP
@@ -2910,26 +2930,30 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                             Vx2 = result(8)
                             Vy = result(3)
                             Vs = result(10)
-
-                            Dim HM, HV, HL1, HL2, HS As Double
                             xl = result(0)
                             xl2 = result(7)
                             xs = result(9)
 
-                            If xl > 0.0# Then HL1 = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx)
-                            If xl2 > 0.0# Then HL2 = Me.DW_CalcEnthalpy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2)
-                            If xv > 0.0# Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy)
-                            If xs <> 0.0# Then HS = Me.DW_CalcSolidEnthalpy(T, Vs, constprops) * Me.AUX_MMM(Vs)
-                            HM = (xl * HL1 + xl2 * HL2 + xv * HV + xs * HS) / Me.AUX_MMM(Fase.Mixture)
+                            Dim HM, HV, HL1, HL2, HS As Double
+
+                            Dim MWM As Double = xl * Me.AUX_MMM(Vx, "L") + xl2 * Me.AUX_MMM(Vx2, "L") + xv * Me.AUX_MMM(Vy, "V") + xs * Me.AUX_MMM(Vs, "S")
+
+                            If xl <> 0 Then HL1 = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx, "L")
+                            If xl2 <> 0 Then HL2 = Me.DW_CalcEnthalpy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2, "L")
+                            If xv <> 0 Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy, "V")
+                            If xs <> 0 Then HS = Me.DW_CalcSolidEnthalpy(T, Vs, constprops) * Me.AUX_MMM(Vs, "S")
+                            HM = (xl * HL1 + xl2 * HL2 + xv * HV + xs * HS) / MWM
 
                             H = HM
 
                             Dim SM, SV, SL1, SL2, SS As Double
-                            If xl > 0 Then SL1 = Me.DW_CalcEntropy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx)
-                            If xl2 > 0 Then SL2 = Me.DW_CalcEntropy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2)
-                            If xv > 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy)
-                            If xs <> 0 And T <> 298.15 Then SS = Me.DW_CalcSolidEnthalpy(T, Vs, constprops) / (T - 298.15) * Me.AUX_MMM(Vs)
-                            SM = (xl * SL1 + xl2 * SL2 + xv * SV + xs * SS) / Me.AUX_MMM(Fase.Mixture)
+
+                            If xl <> 0 Then SL1 = Me.DW_CalcEntropy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx, "L")
+                            If xl2 <> 0 Then SL2 = Me.DW_CalcEntropy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2, "L")
+                            If xv <> 0 Then SV = Me.DW_CalcEntropy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy, "V")
+                            If xs <> 0 And T <> 298.15 Then If xs <> 0 Then SS = Me.DW_CalcSolidEnthalpy(T, Vs, constprops) / (T - 298.15) * Me.AUX_MMM(Vs, "S")
+
+                            SM = (xl * SL1 + xl2 * SL2 + xv * SV + xs * SS) / MWM
 
                             S = SM
 
@@ -7946,7 +7970,7 @@ Final3:
             End Select
         End Function
 
-        Public Overridable Function AUX_MMM(ByVal Vz() As Double) As Double
+        Public Overridable Function AUX_MMM(ByVal Vz() As Double, Optional ByVal state As String = "") As Double
 
             Dim val As Double
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
@@ -8031,31 +8055,35 @@ Final3:
 
         Public Function AUX_IS_SINGLECOMP(ByVal Vx As Object) As Boolean
 
-            Dim i, c, n As Integer
+            Dim i, c, n As Integer, bo As Boolean
 
             n = UBound(Vx)
 
+            bo = False
             c = 0
             For i = 0 To n
                 If Vx(i) <> 0 Then c += 1
+                If Me.DW_GetConstantProperties(i).IsBlackOil Then bo = True
             Next
 
-            If c = 1 Then Return True Else Return False
+            If c = 1 And Not bo Then Return True Else Return False
 
         End Function
 
         Public Function AUX_IS_SINGLECOMP(ByVal fase As Fase) As Boolean
 
-            Dim c As Integer
+            Dim c As Integer, bo As Boolean
 
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
 
+            bo = False
             c = 0
             For Each subst In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes.Values
                 If subst.FracaoMolar.GetValueOrDefault <> 0 Then c += 1
+                If subst.ConstantProperties.IsBlackOil Then bo = True
             Next
 
-            If c = 1 Then Return True Else Return False
+            If c = 1 And Not bo Then Return True Else Return False
 
         End Function
 

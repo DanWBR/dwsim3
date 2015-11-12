@@ -356,23 +356,23 @@ out:        Return New Object() {L, V, Vx, Vy, 1, 0.0#, PP.RET_NullVector, 0.0#,
             itol = CDbl(PP.Parameters("PP_PTFILT"))
             maxit_i = CInt(PP.Parameters("PP_PTFMII"))
 
-            Dim Tmin, Tmax, epsilon(4), maxDT As Double
+            Dim Pmin, Pmax, epsilon(4), maxDP As Double
 
-            Tmax = 4000.0#
-            Tmin = 50.0#
-            maxDT = 30.0#
+            Pmax = 1.0E+20
+            Pmin = 10.0#
+            maxDP = 101325 * 100.0
 
-            epsilon(0) = 0.1
-            epsilon(1) = 0.01
-            epsilon(2) = 0.001
-            epsilon(3) = 0.0001
-            epsilon(4) = 0.00001
+            epsilon(0) = 1000
+            epsilon(1) = 5000
+            epsilon(2) = 10000
+            epsilon(3) = 50000
+            epsilon(4) = 100000
 
             Dim fx, fx2, dfdx, x1, dx As Double
 
             Dim cnt As Integer
 
-            If Pref = 0.0# Then Pref = 298.15
+            If Pref = 0.0# Then Pref = 101325
 
             For j = 0 To 4
 
@@ -389,7 +389,7 @@ out:        Return New Object() {L, V, Vx, Vy, 1, 0.0#, PP.RET_NullVector, 0.0#,
                     dfdx = (fx2 - fx) / epsilon(j)
                     dx = fx / dfdx
 
-                    If Abs(dx) > maxDT Then dx = maxDT * Sign(dx)
+                    If Abs(dx) > maxDP Then dx = maxDP * Sign(dx)
 
                     x1 = x1 - dx
 
@@ -397,15 +397,15 @@ out:        Return New Object() {L, V, Vx, Vy, 1, 0.0#, PP.RET_NullVector, 0.0#,
 
                 Loop Until cnt > maxit_e Or Double.IsNaN(x1) Or x1 < 0.0#
 
-                T = x1
+                P = x1
 
-                If Not Double.IsNaN(T) And Not Double.IsInfinity(T) And Not cnt > maxit_e Then
-                    If T > Tmin And T < Tmax Then Exit For
+                If Not Double.IsNaN(P) And Not Double.IsInfinity(P) And Not cnt > maxit_e Then
+                    If P > Pmin And P < Pmax Then Exit For
                 End If
 
             Next
 
-            If Double.IsNaN(T) Or T <= Tmin Or T >= Tmax Or cnt > maxit_e Or Abs(fx) > etol Then Throw New Exception("PV Flash [NL]: Invalid result: Temperature did not converge.")
+            If Double.IsNaN(P) Or P <= Pmin Or P >= Pmax Or cnt > maxit_e Or Abs(fx) > etol Then Throw New Exception("TV Flash [NL]: Invalid result: Pressure did not converge.")
 
             Dim tmp As Object = Flash_PT(Vz, P, T, PP)
 

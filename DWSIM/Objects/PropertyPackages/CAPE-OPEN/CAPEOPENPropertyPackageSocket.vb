@@ -1027,7 +1027,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         End Sub
 
-        Public Overrides Function AUX_MMM(Vz() As Double) As Double
+        Public Overrides Function AUX_MMM(Vz() As Double, Optional ByVal state As String = "") As Double
 
             Dim complist As Object = Nothing
             Me.GetCompoundList(complist, Nothing, Nothing, Nothing, Nothing, Nothing)

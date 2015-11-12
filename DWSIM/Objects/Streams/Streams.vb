@@ -603,9 +603,9 @@ Namespace DWSIM.SimulationObjects.Streams
                 .Add(3, New DWSIM.Outros.NodeItem(DWSIM.App.GetLocalString("Vazomolar"), "", "", 3, 1, ""))
                 .Add(4, New DWSIM.Outros.NodeItem(DWSIM.App.GetLocalString("Vazovolumtrica"), "", "", 4, 1, ""))
                 .Add(5, New DWSIM.Outros.NodeItem(DWSIM.App.GetPropertyName("PROP_MS_106"), "", "", 5, 1, ""))
-                .Add(6, New DWSIM.Outros.NodeItem(DWSIM.App.GetPropertyName("PROP_MS_146"), "", "", 5, 1, ""))
-                .Add(7, New DWSIM.Outros.NodeItem(DWSIM.App.GetLocalString("EntalpiaEspecfica"), "", "", 6, 1, ""))
-                .Add(8, New DWSIM.Outros.NodeItem(DWSIM.App.GetLocalString("EntropiaEspecfica"), "", "", 7, 1, ""))
+                .Add(6, New DWSIM.Outros.NodeItem(DWSIM.App.GetPropertyName("PROP_MS_146"), "", "", 6, 1, ""))
+                .Add(7, New DWSIM.Outros.NodeItem(DWSIM.App.GetLocalString("EntalpiaEspecfica"), "", "", 7, 1, ""))
+                .Add(8, New DWSIM.Outros.NodeItem(DWSIM.App.GetLocalString("EntropiaEspecfica"), "", "", 8, 1, ""))
 
             End With
 
@@ -930,7 +930,7 @@ Namespace DWSIM.SimulationObjects.Streams
                 valor = Format(Me.Fases(2).SPMProperties.molarfraction.GetValueOrDefault, FlowSheet.Options.NumberFormat)
                 f.Add(DWSIM.App.GetLocalString("Vapor"), valor, False, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True) 'vapour
                 Select Case Me.SpecType
-                    Case Flashspec.Pressure_and_VaporFraction
+                    Case Flashspec.Pressure_and_VaporFraction, Flashspec.Temperature_and_VaporFraction
                         f.Item(2).IsReadOnly = False
                     Case Else
                         f.Item(2).IsReadOnly = True

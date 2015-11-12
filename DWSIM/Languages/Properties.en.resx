@@ -568,10 +568,10 @@
     <value>Solid Phase Compressibility Factor</value>
   </data>
   <data name="PROP_MS_146" xml:space="preserve">
-    <value>Solid Phase Molar Fraction</value>
+    <value>Molar Fraction (Solid Phase)</value>
   </data>
   <data name="PROP_MS_147" xml:space="preserve">
-    <value>Solid Phase Mass Fraction</value>
+    <value>Mass Fraction (Solid Phase)</value>
   </data>
   <data name="PROP_MS_148" xml:space="preserve">
     <value>Solid Phase Volumetric Fraction</value>

@@ -725,6 +725,18 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         End Function
 
+        Public Overrides Function AUX_MMM(Vz() As Double, Optional state As String = "") As Double
+
+            Dim bof As BlackOilFluid = CalcBOFluid(Vz, DW_GetConstantProperties())
+
+            If state = "L" Then
+                Return bop.LiquidMolecularWeight(bof.SGO)
+            Else
+                Return bop.VaporMolecularWeight(bof.SGG)
+            End If
+
+        End Function
+
         Public Overrides Function AUX_MMM(fase As Fase) As Double
 
             Dim bof As BlackOilFluid = CalcBOFluid(RET_VMOL(fase), DW_GetConstantProperties())

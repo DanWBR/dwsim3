@@ -62,6 +62,8 @@ Partial Class FormOptions
         Me.chkEnableParallelCalcs = New System.Windows.Forms.CheckBox()
         Me.FaTabStripItem3 = New System.Windows.Forms.TabPage()
         Me.GroupBox11 = New System.Windows.Forms.GroupBox()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
         Me.cbudb = New System.Windows.Forms.CheckBox()
         Me.Button11 = New System.Windows.Forms.Button()
         Me.Button7 = New System.Windows.Forms.Button()
@@ -376,11 +378,23 @@ Partial Class FormOptions
         'GroupBox11
         '
         resources.ApplyResources(Me.GroupBox11, "GroupBox11")
+        Me.GroupBox11.Controls.Add(Me.Label14)
+        Me.GroupBox11.Controls.Add(Me.Label7)
         Me.GroupBox11.Controls.Add(Me.cbudb)
         Me.GroupBox11.Controls.Add(Me.Button11)
         Me.GroupBox11.Controls.Add(Me.Button7)
         Me.GroupBox11.Name = "GroupBox11"
         Me.GroupBox11.TabStop = False
+        '
+        'Label14
+        '
+        resources.ApplyResources(Me.Label14, "Label14")
+        Me.Label14.Name = "Label14"
+        '
+        'Label7
+        '
+        resources.ApplyResources(Me.Label7, "Label7")
+        Me.Label7.Name = "Label7"
         '
         'cbudb
         '
@@ -961,4 +975,6 @@ Partial Class FormOptions
     Friend WithEvents tbServiceBusNamespace As System.Windows.Forms.TextBox
     Friend WithEvents Label8 As System.Windows.Forms.Label
     Public WithEvents chkEnableSIMD As System.Windows.Forms.CheckBox
+    Friend WithEvents Label14 As System.Windows.Forms.Label
+    Friend WithEvents Label7 As System.Windows.Forms.Label
 End Class

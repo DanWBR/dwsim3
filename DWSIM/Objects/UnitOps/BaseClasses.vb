@@ -264,7 +264,7 @@ Imports PropertyGridEx
                     ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("EntropiaEspecfica")) Then
                         SM = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_entropy, e.ChangedItem.Value)
                         ms.Fases(0).SPMProperties.entropy = SM
-                    ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetPropertyName("PROP_MS_106")) Then
+                    ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Vapor")) Then
                         VF = e.ChangedItem.Value
                         ms.Fases(2).SPMProperties.molarfraction = VF
                     End If
