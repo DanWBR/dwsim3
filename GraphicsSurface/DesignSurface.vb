@@ -424,7 +424,7 @@ Imports System.Collections.Generic
             .PixelOffsetMode = PixelOffsetMode.None
             .CompositingQuality = CompositingQuality.HighSpeed
             .TextRenderingHint = Drawing.Text.TextRenderingHint.SingleBitPerPixel
-            .SmoothingMode = SmoothingMode.None
+            .SmoothingMode = SmoothingMode.Default
 
         End With
 
@@ -460,7 +460,7 @@ Imports System.Collections.Generic
             g.ScaleTransform(Zoom, Zoom)
 
             g.PageUnit = GraphicsUnit.Pixel
-      
+
             Dim color1, color2, color3 As Color
             color1 = Color.FromArgb(50, 170, 215, 230)
             color2 = Color.FromArgb(50, 2, 140, 140)
@@ -479,7 +479,12 @@ Imports System.Collections.Generic
         If Me.SelectedObject Is Nothing Then Me.SelectedObjects.Clear()
 
         For Each gr As GraphicObject In Me.SelectedObjects.Values
+            gr.Selected = True
             Me.drawingObjects.DrawSelectedObject(g, gr, Me.Zoom)
+        Next
+
+        For Each gr As GraphicObject In Me.drawingObjects
+            If Not Me.SelectedObjects.ContainsKey(gr.Name) Then gr.Selected = False
         Next
 
         With Me.drawingObjects
@@ -705,7 +710,7 @@ Imports System.Collections.Generic
                 justselected = False
             End If
         End If
-        
+
         If Not m_SelectedObject Is Nothing Then
             If e.Button And Windows.Forms.MouseButtons.Right Then
                 'rotating = True
@@ -838,7 +843,7 @@ Imports System.Collections.Generic
                 Dim dragPoint As Point = gscTogoc(e.X, e.Y)
 
                 Dim obj As GraphicObject = Me.drawingObjects.FindObjectAtPoint(dragPoint)
-                
+
                 If Not obj Is Nothing Then
                     If obj.TipoObjeto <> TipoObjeto.GO_TabelaRapida And obj.TipoObjeto <> TipoObjeto.GO_Texto _
                     And obj.TipoObjeto <> TipoObjeto.GO_Figura And obj.TipoObjeto <> TipoObjeto.GO_Tabela _

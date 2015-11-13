@@ -131,6 +131,8 @@ Namespace GraphicObjects
         Protected m_mixpoint As Boolean = False
         Protected m_splitpoint As Boolean = False
 
+        Public Property Selected As Boolean = False
+
         Public Shared Function ReturnInstance(typename As String) As GraphicObject
             Return Activator.CreateInstance(Type.GetType(typename))
         End Function
