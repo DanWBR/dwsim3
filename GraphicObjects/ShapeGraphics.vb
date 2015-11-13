@@ -146,7 +146,9 @@ Namespace GraphicObjects
         End Property
 
         Public Overrides Sub Draw(ByVal g As System.Drawing.Graphics)
+
             MyBase.Draw(g)
+
         End Sub
 
         Protected Function GetRoundedLine(ByVal points As PointF(), ByVal cornerRadius As Single) As GraphicsPath
@@ -1378,6 +1380,16 @@ Namespace GraphicObjects
 
             'and now, after constructing the path, draw it
             PL = PointList.ToArray(GetType(PointF))
+            'g.DrawPath(myPen, Me.GetRoundedLine(PL, 4))
+
+            Dim gpath As GraphicsPath = Me.GetRoundedLine(PL, 0)
+
+            If gpath.GetBounds.Width > 0 And gpath.GetBounds.Height > 0 Then
+                Dim gbrush As New SolidBrush(Color.White)
+                g.DrawPath(New Pen(gbrush, 6), Me.GetRoundedLine(PL, 4))
+                gbrush.Dispose()
+            End If
+
             g.DrawPath(myPen, Me.GetRoundedLine(PL, 4))
 
             g.EndContainer(gContainer)

@@ -116,7 +116,15 @@ Namespace GraphicObjects
             If Not Me.InnerList Is Nothing AndAlso Me.InnerList.Count > 0 Then
                 For i = 0 To Me.InnerList.Count - 1
                     drawObj = CType(Me.InnerList(i), GraphicObject)
-                    drawObj.Draw(g)
+                    If drawObj.TipoObjeto = TipoObjeto.Nenhum Then
+                        drawObj.Draw(g)
+                    End If
+                Next
+                For i = 0 To Me.InnerList.Count - 1
+                    drawObj = CType(Me.InnerList(i), GraphicObject)
+                    If drawObj.TipoObjeto <> TipoObjeto.Nenhum Then
+                        drawObj.Draw(g)
+                    End If
                 Next
             End If
             g.EndContainer(gCon)
