@@ -1386,10 +1386,12 @@ Namespace GraphicObjects
 
             If gpath.GetBounds.Width > 0 And gpath.GetBounds.Height > 0 Then
                 Dim gbrush As New SolidBrush(Color.White)
-                g.DrawPath(New Pen(gbrush, 6), Me.GetRoundedLine(PL, 4))
+                g.SmoothingMode = SmoothingMode.Default
+                g.DrawPath(New Pen(gbrush, 4), Me.GetRoundedLine(PL, 4))
                 gbrush.Dispose()
             End If
 
+            g.SmoothingMode = SmoothingMode.AntiAlias
             g.DrawPath(myPen, Me.GetRoundedLine(PL, 4))
 
             g.EndContainer(gContainer)

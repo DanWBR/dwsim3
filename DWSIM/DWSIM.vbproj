@@ -2160,6 +2160,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="dwsim_splash.ico" />
+    <None Include="Resources\shape_align_middle1.png" />
+    <None Include="Resources\shape_align_center1.png" />
     <None Include="Resources\shape_align_top.png" />
     <None Include="Resources\shape_align_right.png" />
     <None Include="Resources\shape_align_middle.png" />

@@ -154,8 +154,8 @@
   <data name="shape_square" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\shape_square.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="shape_square_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\shape_square_add.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="shape_align_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\shape_align_right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="help-browser2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\help-browser2.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -316,8 +316,8 @@
   <data name="document-open" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\document-open.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="sum" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\sum.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="reciclo_mini" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\reciclo_mini.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="splash" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\splash1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -352,9 +352,6 @@
   <data name="pic_pipeline" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pic_pipeline.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="disk" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\disk.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="lock" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\lock.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -366,6 +363,9 @@
   </data>
   <data name="connect" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\connect.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Straight-tube_heat_exchanger_1-pass" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Straight-tube_heat_exchanger_1-pass.PNG;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="wfplogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\wfplogo.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -550,8 +550,8 @@
   <data name="gb" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gb.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Straight-tube_heat_exchanger_1-pass" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Straight-tube_heat_exchanger_1-pass.PNG;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="turn_left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\turn_left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="report" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\report.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -571,8 +571,8 @@
   <data name="node_in copy1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\node_in copy1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="vessel copy" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\vessel copy.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="shape_align_top" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\shape_align_top.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\cs.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -580,8 +580,8 @@
   <data name="Clipboard2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Clipboard2.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="turn_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\turn_right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="shape_align_left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\shape_align_left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="de" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\de1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -592,8 +592,8 @@
   <data name="us" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\us.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="reciclo_mini" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\reciclo_mini.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="disk" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\disk.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="asterisk_orange" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\asterisk_orange.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -667,6 +667,9 @@
   <data name="dwsim_splash" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\dwsim_splash.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="shape_align_center" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\shape_align_center.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="zoom" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\zoom.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -715,9 +718,6 @@
   <data name="layout" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\layout.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="turn_left" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\turn_left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="chart_curve" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\chart_curve.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -745,6 +745,9 @@
   <data name="colan2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\colan2.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="shape_align_bottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\shape_align_bottom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="weather_cloudy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\weather_cloudy.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -759,6 +762,9 @@
   </data>
   <data name="r_conv1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\r_conv1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="shape_square_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\shape_square_add.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="application_tile_vertical" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\application_tile_vertical.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -856,6 +862,9 @@
   <data name="vessel copy1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\vessel copy1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="pic21" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pic22.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="control_pause" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\control_pause.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -874,6 +883,9 @@
   <data name="hourglass1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\hourglass1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="turn_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\turn_right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="cog" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\cog.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -882,6 +894,9 @@
   </data>
   <data name="page_copy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\page_copy.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="shape_align_center1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\shape_align_center1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="application_cascade" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\application_cascade.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -1003,6 +1018,9 @@
   <data name="information" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\information.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="disk_multiple" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\disk_multiple.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="bullet_arrow_bottom1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\bullet_arrow_bottom1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -1033,17 +1051,20 @@
   <data name="about" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\about.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="disk_multiple" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\disk_multiple.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="shape_align_middle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\shape_align_middle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="pic21" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\pic22.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="vessel copy" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vessel copy.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="green_down" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\green_down.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="disk1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\disk1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="sum" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\sum.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="shape_move_front" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\shape_move_front.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -1066,22 +1087,7 @@
   <data name="page_white_star" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\page_white_star.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="shape_align_bottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\shape_align_bottom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="shape_align_center" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\shape_align_center.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="shape_align_left" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\shape_align_left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="shape_align_middle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\shape_align_middle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="shape_align_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\shape_align_right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="shape_align_top" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\shape_align_top.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="shape_align_middle1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\shape_align_middle1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -2563,6 +2563,16 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property shape_align_center1() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("shape_align_center1", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property shape_align_left() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("shape_align_left", resourceCulture)
@@ -2576,6 +2586,16 @@ Namespace My.Resources
         Friend ReadOnly Property shape_align_middle() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("shape_align_middle", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property shape_align_middle1() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("shape_align_middle1", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

@@ -813,6 +813,37 @@ Imports DWSIM.DWSIM.Outros
         End If
 
     End Sub
+
+    Private Sub tsbAlign_Click(sender As Object, e As EventArgs) Handles tsbAlignLefts.Click, tsbAlignCenters.Click, tsbAlignRights.Click,
+                                                                        tsbAlignTops.Click, tsbAlignMiddles.Click, tsbAlignBottoms.Click,
+                                                                        tsbAlignVertical.Click, tsbAlignHorizontal.Click
+
+        Dim tsb As ToolStripButton = DirectCast(sender, ToolStripButton)
+
+        Dim direction As Microsoft.Msdn.Samples.DesignSurface.GraphicsSurface.AlignDirection
+
+        If tsb.Name.Contains("Lefts") Then
+            direction = Microsoft.Msdn.Samples.DesignSurface.GraphicsSurface.AlignDirection.Lefts
+        ElseIf tsb.Name.Contains("Centers") Then
+            direction = Microsoft.Msdn.Samples.DesignSurface.GraphicsSurface.AlignDirection.Centers
+        ElseIf tsb.Name.Contains("Rights") Then
+            direction = Microsoft.Msdn.Samples.DesignSurface.GraphicsSurface.AlignDirection.Rights
+        ElseIf tsb.Name.Contains("Tops") Then
+            direction = Microsoft.Msdn.Samples.DesignSurface.GraphicsSurface.AlignDirection.Tops
+        ElseIf tsb.Name.Contains("Middles") Then
+            direction = Microsoft.Msdn.Samples.DesignSurface.GraphicsSurface.AlignDirection.Middles
+        ElseIf tsb.Name.Contains("Bottoms") Then
+            direction = Microsoft.Msdn.Samples.DesignSurface.GraphicsSurface.AlignDirection.Bottoms
+        ElseIf tsb.Name.Contains("Vertical") Then
+            direction = Microsoft.Msdn.Samples.DesignSurface.GraphicsSurface.AlignDirection.EqualizeVertical
+        ElseIf tsb.Name.Contains("Horizontal") Then
+            direction = Microsoft.Msdn.Samples.DesignSurface.GraphicsSurface.AlignDirection.EqualizeHorizontal
+        End If
+
+        Me.FormSurface.FlowsheetDesignSurface.AlignSelectedObjects(direction)
+
+    End Sub
+
     Private Sub InserObjectTSMIClick(ByVal sender As System.Object, ByVal e As EventArgs) Handles _
     TSMIAdjust.Click, TSMIColAbs.Click, TSMIColAbsCond.Click, TSMIColAbsReb.Click, TSMIColDist.Click, _
      TSMIColShortcut.Click, TSMIComponentSeparator.Click, TSMICompressor.Click, TSMICooler.Click, _
@@ -2660,30 +2691,5 @@ Imports DWSIM.DWSIM.Outros
     End Sub
 
 #End Region
-
-    Private Sub tsbAlign_Click(sender As Object, e As EventArgs) Handles tsbAlignLefts.Click, tsbAlignCenters.Click, tsbAlignRights.Click,
-                                                                        tsbAlignTops.Click, tsbAlignMiddles.Click, tsbAlignBottoms.Click
-
-        Dim tsb As ToolStripButton = DirectCast(sender, ToolStripButton)
-
-        Dim direction As Microsoft.MSDN.Samples.DesignSurface.GraphicsSurface.AlignDirection
-
-        If tsb.Name.Contains("Lefts") Then
-            direction = Microsoft.MSDN.Samples.DesignSurface.GraphicsSurface.AlignDirection.Lefts
-        ElseIf tsb.Name.Contains("Centers") Then
-            direction = Microsoft.MSDN.Samples.DesignSurface.GraphicsSurface.AlignDirection.Centers
-        ElseIf tsb.Name.Contains("Rights") Then
-            direction = Microsoft.MSDN.Samples.DesignSurface.GraphicsSurface.AlignDirection.Rights
-        ElseIf tsb.Name.Contains("Tops") Then
-            direction = Microsoft.MSDN.Samples.DesignSurface.GraphicsSurface.AlignDirection.Tops
-        ElseIf tsb.Name.Contains("Middles") Then
-            direction = Microsoft.MSDN.Samples.DesignSurface.GraphicsSurface.AlignDirection.Middles
-        Else
-            direction = Microsoft.MSDN.Samples.DesignSurface.GraphicsSurface.AlignDirection.Bottoms
-        End If
-
-        Me.FormSurface.FlowsheetDesignSurface.AlignSelectedObjects(direction)
-
-    End Sub
 
 End Class

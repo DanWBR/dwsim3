@@ -16,6 +16,7 @@ Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.Serialization
 Imports System.Linq
+Imports System.Collections.Generic
 
 <System.Serializable()> Public Class GraphicsSurface
     Inherits System.Windows.Forms.UserControl
@@ -118,6 +119,8 @@ Imports System.Linq
         Tops
         Middles
         Bottoms
+        EqualizeHorizontal
+        EqualizeVertical
     End Enum
 
 #Region "Saving / Loading"
@@ -579,6 +582,26 @@ Imports System.Linq
                     refpos /= Me.SelectedObjects.Count
                     For Each obj As GraphicObject In Me.SelectedObjects.Values
                         obj.Y = refpos - obj.Height
+                    Next
+                Case AlignDirection.EqualizeHorizontal
+                    Dim orderedlist As List(Of GraphicObject) = Me.SelectedObjects.Values.OrderBy(Function(o) o.X).ToList
+                    Dim avgdist As Integer, i As Integer
+                    For i = 1 To orderedlist.Count - 1
+                        avgdist += (orderedlist(i).X) - (orderedlist(i - 1).X + orderedlist(i - 1).Width)
+                    Next
+                    avgdist /= (orderedlist.Count - 1)
+                    For i = 1 To orderedlist.Count - 1
+                        orderedlist(i).X = orderedlist(i - 1).X + orderedlist(i - 1).Width + avgdist
+                    Next
+                Case AlignDirection.EqualizeVertical
+                    Dim orderedlist As List(Of GraphicObject) = Me.SelectedObjects.Values.OrderBy(Function(o) o.Y).ToList
+                    Dim avgdist As Integer, i As Integer
+                    For i = 1 To orderedlist.Count - 1
+                        avgdist += (orderedlist(i).Y) - (orderedlist(i - 1).Y + orderedlist(i - 1).Height)
+                    Next
+                    avgdist /= (orderedlist.Count - 1)
+                    For i = 1 To orderedlist.Count - 1
+                        orderedlist(i).Y = orderedlist(i - 1).Y + orderedlist(i - 1).Height + avgdist
                     Next
             End Select
 
