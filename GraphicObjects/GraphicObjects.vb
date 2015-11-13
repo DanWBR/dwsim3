@@ -60,7 +60,7 @@ Namespace GraphicObjects
                 Dim myOriginalMatrix As Drawing2D.Matrix
                 myOriginalMatrix = g.Transform()
                 If selectedObject.Rotation <> 0 Then
-                    myOriginalMatrix.RotateAt(selectedObject.Rotation, New PointF(selectedObject.X + selectedObject.Width / 2, selectedObject.Y + selectedObject.Height / 2), _
+                    myOriginalMatrix.RotateAt(selectedObject.Rotation, New PointF(hoverRect.X + hoverRect.Width / 2, hoverRect.Y + hoverRect.Height / 2), _
                         Drawing2D.MatrixOrder.Append)
                     g.Transform = myOriginalMatrix
                 End If

@@ -513,10 +513,8 @@ Namespace GraphicObjects
 
         Public Overridable Sub Draw(ByVal g As Graphics)
 
-            'Calls overriden method to position connectors, since only derived classes know their places.
             PositionConnectors()
 
-            'Rotates them if needed.
             RotateConnectors()
 
         End Sub
@@ -529,31 +527,33 @@ Namespace GraphicObjects
 
         Public Sub RotateConnectors()
 
+            Dim center As Point = New Point(X + Me.Width / 2, Y + Me.Height / 2)
+
             Dim pt As Point
             Dim raio, angulo As Double
             Dim con As ConnectionPoint
             For Each con In Me.InputConnectors
                 pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
+                raio = ((pt.X - center.X) ^ 2 + (pt.Y - center.Y) ^ 2) ^ 0.5
+                angulo = Math.Atan2(pt.Y - center.Y, pt.X - center.X)
+                pt.X = center.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
+                pt.Y = center.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
                 con.Position = pt
             Next
             For Each con In Me.OutputConnectors
                 pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
+                raio = ((pt.X - center.X) ^ 2 + (pt.Y - center.Y) ^ 2) ^ 0.5
+                angulo = Math.Atan2(pt.Y - center.Y, pt.X - center.X)
+                pt.X = center.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
+                pt.Y = center.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
                 con.Position = pt
             Next
             With Me.EnergyConnector
                 pt = .Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
+                raio = ((pt.X - center.X) ^ 2 + (pt.Y - center.Y) ^ 2) ^ 0.5
+                angulo = Math.Atan2(pt.Y - center.Y, pt.X - center.X)
+                pt.X = center.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
+                pt.Y = center.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
                 .Position = pt
             End With
 

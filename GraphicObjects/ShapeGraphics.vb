@@ -476,27 +476,9 @@ Namespace GraphicObjects
 
             CreateConnectors(0, 0)
 
-            UpdateStatus(Me)
+            MyBase.Draw(g)
 
-            Dim pt As Point
-            Dim raio, angulo As Double
-            Dim con As ConnectionPoint
-            For Each con In Me.InputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            For Each con In Me.OutputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
+            UpdateStatus(Me)
 
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
@@ -551,8 +533,6 @@ Namespace GraphicObjects
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
 
             ' Create a path that consists of a single ellipse.
             Dim path As New GraphicsPath()
@@ -567,7 +547,6 @@ Namespace GraphicObjects
             Dim colors As Color() = {Me.GradientColor1}
             pthGrBrush.SurroundColors = colors
 
-
             If Me.Fill Then
                 If Me.GradientMode = False Then
                     g.FillPolygon(New SolidBrush(Me.FillColor), New PointF() {pt3, pt4, pt6, pt5})
@@ -579,6 +558,11 @@ Namespace GraphicObjects
                     g.FillEllipse(pthGrBrush, rect1)
                 End If
             End If
+
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
+            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
 
             g.EndContainer(gContainer)
 
@@ -694,35 +678,9 @@ Namespace GraphicObjects
 
             CreateConnectors(0, 0)
 
-            UpdateStatus(Me)
+            MyBase.Draw(g)
 
-            Dim pt As Point
-            Dim raio, angulo As Double
-            Dim con As ConnectionPoint
-            For Each con In Me.InputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            For Each con In Me.OutputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            With Me.EnergyConnector
-                pt = .Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                .Position = pt
-            End With
+            UpdateStatus(Me)
 
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
@@ -748,7 +706,10 @@ Namespace GraphicObjects
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
+           
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
             g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
 
             g.EndContainer(gContainer)
@@ -861,35 +822,9 @@ Namespace GraphicObjects
 
             CreateConnectors(0, 0)
 
-            UpdateStatus(Me)
+            MyBase.Draw(g)
 
-            Dim pt As Point
-            Dim raio, angulo As Double
-            Dim con As ConnectionPoint
-            For Each con In Me.InputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            For Each con In Me.OutputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            With Me.EnergyConnector
-                pt = .Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                .Position = pt
-            End With
+            UpdateStatus(Me)
 
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
@@ -918,9 +853,7 @@ Namespace GraphicObjects
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
-
+        
             Dim lgb1 As New LinearGradientBrush(rect1, Me.GradientColor1, Me.GradientColor2, LinearGradientMode.Horizontal)
             lgb1.SetBlendTriangularShape(0.5)
             Dim lgb2 As New LinearGradientBrush(rect3, Me.GradientColor1, Me.GradientColor2, LinearGradientMode.Horizontal)
@@ -937,6 +870,11 @@ Namespace GraphicObjects
                     g.FillEllipse(New SolidBrush(Me.FillColor), rect3)
                 End If
             End If
+
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
+            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
 
             g.EndContainer(gContainer)
 
@@ -1598,27 +1536,9 @@ Namespace GraphicObjects
 
             CreateConnectors(0, 0)
 
-            UpdateStatus(Me)
+            MyBase.Draw(g)
 
-            Dim pt As Point
-            Dim raio, angulo As Double
-            Dim con As ConnectionPoint
-            For Each con In Me.InputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            For Each con In Me.OutputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
+            UpdateStatus(Me)
 
             Dim gContainer As Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
@@ -1658,8 +1578,6 @@ Namespace GraphicObjects
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
 
             Dim pgb1 As New PathGradientBrush(gp)
             pgb1.CenterColor = Me.GradientColor2
@@ -1673,6 +1591,11 @@ Namespace GraphicObjects
                     g.FillPath(pgb1, gp)
                 End If
             End If
+
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
+            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
 
             g.EndContainer(gContainer)
         End Sub
@@ -1797,27 +1720,9 @@ Namespace GraphicObjects
 
             CreateConnectors(0, 0)
 
-            UpdateStatus(Me)
+            MyBase.Draw(g)
 
-            Dim pt As Point
-            Dim raio, angulo As Double
-            Dim con As ConnectionPoint
-            For Each con In Me.InputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            For Each con In Me.OutputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
+            UpdateStatus(Me)
 
             Dim gContainer As Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
@@ -1855,9 +1760,7 @@ Namespace GraphicObjects
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
-
+        
             Dim pgb1 As New PathGradientBrush(gp)
             pgb1.CenterColor = Me.GradientColor2
             'lgb1.SetBlendTriangularShape(0.5)
@@ -1870,6 +1773,11 @@ Namespace GraphicObjects
                     g.FillPath(pgb1, gp)
                 End If
             End If
+
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
+            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
 
             g.EndContainer(gContainer)
         End Sub
@@ -1986,27 +1894,9 @@ Namespace GraphicObjects
 
             CreateConnectors(0, 0)
 
-            UpdateStatus(Me)
+            MyBase.Draw(g)
 
-            Dim pt As Point
-            Dim raio, angulo As Double
-            Dim con As ConnectionPoint
-            For Each con In Me.InputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            For Each con In Me.OutputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
+            UpdateStatus(Me)
 
             Dim gContainer As Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
@@ -2046,9 +1936,7 @@ Namespace GraphicObjects
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
-
+      
             Dim pgb1 As New PathGradientBrush(gp)
             pgb1.CenterColor = Me.GradientColor2
             'lgb1.SetBlendTriangularShape(0.5)
@@ -2062,7 +1950,13 @@ Namespace GraphicObjects
                 End If
             End If
 
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
+            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
             g.EndContainer(gContainer)
+
         End Sub
 
         Protected Overrides Sub Finalize()
@@ -2246,35 +2140,9 @@ Namespace GraphicObjects
 
             CreateConnectors(0, 0)
 
-            UpdateStatus(Me)
+            MyBase.Draw(g)
 
-            Dim pt As Point
-            Dim raio, angulo As Double
-            Dim con As ConnectionPoint
-            For Each con In Me.InputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            For Each con In Me.OutputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            With Me.EnergyConnector
-                pt = .Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                .Position = pt
-            End With
+            UpdateStatus(Me)
 
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
@@ -2310,9 +2178,7 @@ Namespace GraphicObjects
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
-
+         
             Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
             Dim radius As Integer = 3
             gp.AddLine(X + radius, Y, X + Width - radius, Y)
@@ -2347,6 +2213,11 @@ Namespace GraphicObjects
                     End If
                 End If
             End If
+
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
+            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
 
             g.EndContainer(gContainer)
             gp.Dispose()
@@ -2470,35 +2341,9 @@ Namespace GraphicObjects
 
             CreateConnectors(0, 0)
 
-            UpdateStatus(Me)
+            MyBase.Draw(g)
 
-            Dim pt As Point
-            Dim raio, angulo As Double
-            Dim con As ConnectionPoint
-            For Each con In Me.InputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            For Each con In Me.OutputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            With Me.EnergyConnector
-                pt = .Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                .Position = pt
-            End With
+            UpdateStatus(Me)
 
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
@@ -2519,9 +2364,7 @@ Namespace GraphicObjects
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
-
+        
             Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
             If Me.FlippedH = False Then
                 gp.AddLine(CInt(X), CInt(Y), CInt(X + Width), CInt(Y + 0.3 * Height))
@@ -2549,6 +2392,10 @@ Namespace GraphicObjects
                 End If
             End If
 
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
+            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
 
             gp.Dispose()
             g.EndContainer(gContainer)
@@ -2672,35 +2519,9 @@ Namespace GraphicObjects
 
             CreateConnectors(0, 0)
 
-            UpdateStatus(Me)
+            MyBase.Draw(g)
 
-            Dim pt As Point
-            Dim raio, angulo As Double
-            Dim con As ConnectionPoint
-            For Each con In Me.InputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            For Each con In Me.OutputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            With Me.EnergyConnector
-                pt = .Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                .Position = pt
-            End With
+            UpdateStatus(Me)
 
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
@@ -2711,6 +2532,35 @@ Namespace GraphicObjects
                 g.Transform = myMatrix
             End If
 
+            Dim center As Point = New Point(X + Me.Width / 2, Y + Me.Height / 2)
+
+            Dim pt As Point
+            Dim raio, angulo As Double
+            Dim con As ConnectionPoint
+            For Each con In Me.InputConnectors
+                pt = con.Position
+                raio = ((pt.X - center.X) ^ 2 + (pt.Y - center.Y) ^ 2) ^ 0.5
+                angulo = Math.Atan2(pt.Y - center.Y, pt.X - center.X)
+                pt.X = center.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
+                pt.Y = center.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
+                con.Position = pt
+            Next
+            For Each con In Me.OutputConnectors
+                pt = con.Position
+                raio = ((pt.X - center.X) ^ 2 + (pt.Y - center.Y) ^ 2) ^ 0.5
+                angulo = Math.Atan2(pt.Y - center.Y, pt.X - center.X)
+                pt.X = center.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
+                pt.Y = center.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
+                con.Position = pt
+            Next
+            With Me.EnergyConnector
+                pt = .Position
+                raio = ((pt.X - center.X) ^ 2 + (pt.Y - center.Y) ^ 2) ^ 0.5
+                angulo = Math.Atan2(pt.Y - center.Y, pt.X - center.X)
+                pt.X = center.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
+                pt.Y = center.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
+                .Position = pt
+            End With
 
             Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
             Dim myPen2 As New Pen(Color.White, 0)
@@ -2732,8 +2582,7 @@ Namespace GraphicObjects
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
             'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
-
+           
             Dim pgb1 As New PathGradientBrush(gp)
             pgb1.CenterColor = Me.GradientColor2
             'lgb1.SetBlendTriangularShape(0.5)
@@ -2755,9 +2604,12 @@ Namespace GraphicObjects
             ax = Me.X + (Me.Width - size.Width) / 2
             ay = Me.Y + (Me.Height - size.Height) / 2
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
-            g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
             g.DrawString("A", fontA, Brushes.DarkOrange, ax, ay)
+
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
+            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
 
             gp.Dispose()
             g.EndContainer(gContainer)
@@ -2876,35 +2728,9 @@ Namespace GraphicObjects
 
             CreateConnectors(0, 0)
 
-            UpdateStatus(Me)
+            MyBase.Draw(g)
 
-            Dim pt As Point
-            Dim raio, angulo As Double
-            Dim con As ConnectionPoint
-            For Each con In Me.InputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            For Each con In Me.OutputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            With Me.EnergyConnector
-                pt = .Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                .Position = pt
-            End With
+            UpdateStatus(Me)
 
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
@@ -2934,9 +2760,7 @@ Namespace GraphicObjects
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
-
+         
             Dim pgb1 As New PathGradientBrush(gp)
             pgb1.CenterColor = Me.GradientColor2
             'lgb1.SetBlendTriangularShape(0.5)
@@ -2961,6 +2785,11 @@ Namespace GraphicObjects
             g.SmoothingMode = SmoothingMode.AntiAlias
             g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
             g.DrawString("R", fontA, Brushes.DarkBlue, ax, ay)
+
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
+            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
 
             gp.Dispose()
             g.EndContainer(gContainer)
@@ -3072,25 +2901,7 @@ Namespace GraphicObjects
 
             CreateConnectors(0, 0)
 
-            Dim pt As Point
-            Dim raio, angulo As Double
-            Dim con As ConnectionPoint
-            For Each con In Me.InputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            For Each con In Me.OutputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
+            MyBase.Draw(g)
 
             UpdateStatus(Me)
 
@@ -3135,14 +2946,9 @@ Namespace GraphicObjects
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height - 2)
-
 
             Dim pgb1 As New LinearGradientBrush(New PointF(X, Y + 0.25 * Height), New PointF(X, Y + 0.75 * Height), Me.GradientColor1, Me.GradientColor2)
-            'pgb1.CenterColor = Me.GradientColor1
-            'pgb1.SurroundColors = New Color() {Me.GradientColor2}
-
+       
             If Me.Fill Then
                 If Me.GradientMode = False Then
                     g.FillPath(New SolidBrush(Me.FillColor), gp)
@@ -3150,6 +2956,12 @@ Namespace GraphicObjects
                     g.FillPath(pgb1, gp)
                 End If
             End If
+
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
+            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
             gp.Dispose()
             g.EndContainer(gContainer)
 
@@ -3262,27 +3074,9 @@ Namespace GraphicObjects
 
             CreateConnectors(0, 0)
 
-            UpdateStatus(Me)
+            MyBase.Draw(g)
 
-            Dim pt As Point
-            Dim raio, angulo As Double
-            Dim con As ConnectionPoint
-            For Each con In Me.InputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            For Each con In Me.OutputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
+            UpdateStatus(Me)
 
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
@@ -3325,13 +3119,17 @@ Namespace GraphicObjects
             g.DrawPath(myPen, gp)
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height - 2)
-
+           
             If Me.Fill Then
                 g.FillPath(New SolidBrush(Me.FillColor), gp)
             End If
             gp.Dispose()
+
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
+            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
             g.EndContainer(gContainer)
 
         End Sub
@@ -3441,39 +3239,41 @@ Namespace GraphicObjects
 
         End Sub
 
+        Public Overrides Sub PositionConnectors()
+
+            MyBase.PositionConnectors()
+
+            With InputConnectors
+
+                If .Count <> 0 Then
+                    If Me.FlippedH Then
+                        .Item(0).Position = New Point(X + Width, Y + 0.5 * Height)
+                    Else
+                        .Item(0).Position = New Point(X, Y + 0.5 * Height)
+                    End If
+                End If
+
+            End With
+
+            With OutputConnectors
+
+                If .Count <> 0 Then
+                    If Me.FlippedH Then
+                        .Item(0).Position = New Point(X, Y + 0.5 * Height)
+                    Else
+                        .Item(0).Position = New Point(X + Width, Y + 0.5 * Height)
+                    End If
+                End If
+
+            End With
+
+        End Sub
+
         Public Overrides Sub Draw(ByVal g As System.Drawing.Graphics)
 
-            CreateConnectors(0, 0)
+            MyBase.Draw(g)
 
             UpdateStatus(Me)
-
-            Dim pt As Point
-            Dim raio, angulo As Double
-            Dim con As ConnectionPoint
-            For Each con In Me.InputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            For Each con In Me.OutputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            With Me.EnergyConnector
-                pt = .Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                .Position = pt
-            End With
 
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
@@ -3483,7 +3283,6 @@ Namespace GraphicObjects
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
-
 
             Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
             Dim myPen2 As New Pen(Color.White, 0)
@@ -3506,12 +3305,9 @@ Namespace GraphicObjects
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
 
             Dim pgb1 As New PathGradientBrush(gp)
             pgb1.CenterColor = Me.GradientColor1
-            'lgb1.SetBlendTriangularShape(0.5)
             pgb1.SurroundColors = New Color() {Me.GradientColor2}
 
             If Me.Fill Then
@@ -3522,6 +3318,12 @@ Namespace GraphicObjects
                 End If
             End If
             gp.Dispose()
+
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
+            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
             g.EndContainer(gContainer)
 
         End Sub
@@ -3636,35 +3438,9 @@ Namespace GraphicObjects
 
             CreateConnectors(0, 0)
 
-            UpdateStatus(Me)
+            MyBase.Draw(g)
 
-            Dim pt As Point
-            Dim raio, angulo As Double
-            Dim con As ConnectionPoint
-            For Each con In Me.InputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            For Each con In Me.OutputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            With Me.EnergyConnector
-                pt = .Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                .Position = pt
-            End With
+            UpdateStatus(Me)
 
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
@@ -3719,6 +3495,10 @@ Namespace GraphicObjects
                 End If
             End If
 
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
+            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
 
             gp.Dispose()
             g.EndContainer(gContainer)
@@ -3838,35 +3618,9 @@ Namespace GraphicObjects
 
             UpdateStatus(Me)
 
-            CreateConnectors(0, 0)
+            MyBase.Draw(g)
 
-            Dim pt As Point
-            Dim raio, angulo As Double
-            Dim con As ConnectionPoint
-            For Each con In Me.InputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            For Each con In Me.OutputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            With Me.EnergyConnector
-                pt = .Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                .Position = pt
-            End With
+            CreateConnectors(0, 0)
 
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
@@ -3896,9 +3650,7 @@ Namespace GraphicObjects
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
-
+           
             Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
             Dim radius As Integer = 3
             gp.AddLine(X + radius, Y, X + Width - radius, Y)
@@ -3926,6 +3678,11 @@ Namespace GraphicObjects
                     Me.DrawRoundRect(g, myPen, X + 0.25 * Width, Y, 0.45 * Width, Height, 3, lgb1)
                 End If
             End If
+
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
+            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
 
             g.EndContainer(gContainer)
             gp.Dispose()
@@ -4171,30 +3928,9 @@ Namespace GraphicObjects
 
         Public Overrides Sub Draw(ByVal g As Graphics)
 
-            CreateConnectors(0, 0)
+            MyBase.Draw(g)
 
             UpdateStatus(Me)
-
-
-            Dim pt As Point
-            Dim raio, angulo As Double
-            Dim con As ConnectionPoint
-            For Each con In Me.InputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            For Each con In Me.OutputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
 
             Dim gContainer As Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
@@ -4299,7 +4035,10 @@ Namespace GraphicObjects
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
+
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
             g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
 
             g.EndContainer(gContainer)
@@ -4441,29 +4180,11 @@ Namespace GraphicObjects
 
             CreateConnectors(0, 0)
 
+            MyBase.Draw(g)
+
             UpdateStatus(Me)
 
             If Not Me.Active Then Me.LineColor = Color.Yellow
-
-            Dim pt As Point
-            Dim raio, angulo As Double
-            Dim con As ConnectionPoint
-            For Each con In Me.InputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            For Each con In Me.OutputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
 
             Dim gContainer As Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
@@ -4561,7 +4282,10 @@ Namespace GraphicObjects
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
+
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
             g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
 
             g.EndContainer(gContainer)
@@ -4695,27 +4419,9 @@ Namespace GraphicObjects
 
             CreateConnectors(0, 0)
 
-            UpdateStatus(Me)
+            MyBase.Draw(g)
 
-            Dim pt As Point
-            Dim raio, angulo As Double
-            Dim con As ConnectionPoint
-            For Each con In Me.InputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            For Each con In Me.OutputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
+            UpdateStatus(Me)
 
             Dim gContainer As Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
@@ -4789,7 +4495,10 @@ Namespace GraphicObjects
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
+
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
             g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
 
             g.EndContainer(gContainer)
@@ -4904,27 +4613,9 @@ Namespace GraphicObjects
 
             CreateConnectors(0, 0)
 
-            UpdateStatus(Me)
+            MyBase.Draw(g)
 
-            Dim pt As Point
-            Dim raio, angulo As Double
-            Dim con As ConnectionPoint
-            For Each con In Me.InputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            For Each con In Me.OutputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
+            UpdateStatus(Me)
 
             Dim gContainer As Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
@@ -4998,7 +4689,10 @@ Namespace GraphicObjects
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
+
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
             g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
 
             g.EndContainer(gContainer)
@@ -5914,27 +5608,6 @@ Namespace GraphicObjects
                 g.Transform = myMatrix
             End If
 
-            'Dim rect2 As New Rectangle(X - Width * 1 / 2, Y - Height * 1 / 2, Width * 2, Height * 2)
-            'Dim rect2 As New Rectangle(X, Y, Width, Height)
-            ' Create a path that consists of a single ellipse.
-            'Dim path2 As New GraphicsPath()
-            'path2.AddEllipse(rect2)
-
-            '' Use the path to construct a brush.
-            'Dim pthGrBrush2 As New PathGradientBrush(path2)
-            '' Set the color at the center of the path to blue.
-            'If Me.Calculated Then
-            '    pthGrBrush2.CenterColor = Color.SteelBlue
-            'Else
-            '    pthGrBrush2.CenterColor = Color.Red
-            'End If
-            '' Set the color along the entire boundary 
-            '' of the path to aqua.
-            'Dim colors2 As Color() = {Color.Transparent}
-            'pthGrBrush2.SurroundColors = colors2
-            'pthGrBrush2.SetSigmaBellShape(1)
-            'g.FillEllipse(pthGrBrush2, rect2)
-
             Dim rect As New Rectangle(X, Y, Width, Height)
 
             ' Create a path that consists of a single ellipse.
@@ -5969,7 +5642,10 @@ Namespace GraphicObjects
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
+
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
             g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
 
             g.EndContainer(gContainer)
@@ -6235,7 +5911,10 @@ Namespace GraphicObjects
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
+
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
             g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
 
             g.EndContainer(gContainer)
@@ -6514,7 +6193,10 @@ Namespace GraphicObjects
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
+
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
             g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
 
             g.EndContainer(gContainer)
@@ -6763,11 +6445,12 @@ Namespace GraphicObjects
 
             End If
 
-            'Me.DrawRoundRect(g, myPen, Me.X, Me.Y, Me.Width, Me.Height, 5, New SolidBrush(Color.Transparent))
-
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
+        
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
             g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
 
             g.EndContainer(gContainer)
@@ -7016,7 +6699,10 @@ Namespace GraphicObjects
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
+
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
             g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
 
             g.EndContainer(gContainer)
@@ -7297,7 +6983,10 @@ Namespace GraphicObjects
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
+
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
             g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
 
             g.EndContainer(gContainer)
@@ -7682,6 +7371,7 @@ Namespace GraphicObjects
             UpdateStatus(Me)
 
             DrawReactor(g, "F")
+
         End Sub
 
     End Class
@@ -7794,35 +7484,9 @@ Namespace GraphicObjects
 
             CreateConnectors(0, 0)
 
-            UpdateStatus(Me)
+            MyBase.Draw(g)
 
-            Dim pt As Point
-            Dim raio, angulo As Double
-            Dim con As ConnectionPoint
-            For Each con In Me.InputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            For Each con In Me.OutputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            With Me.EnergyConnector
-                pt = .Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                .Position = pt
-            End With
+            UpdateStatus(Me)
 
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
@@ -7853,9 +7517,7 @@ Namespace GraphicObjects
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
-
+      
             Dim pgb1 As New PathGradientBrush(gp)
             pgb1.CenterColor = Me.GradientColor1
             pgb1.SurroundColors = New Color() {Me.GradientColor2}
@@ -7869,6 +7531,12 @@ Namespace GraphicObjects
                 End If
             End If
             gp.Dispose()
+
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
+            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
             g.EndContainer(gContainer)
 
         End Sub
@@ -8083,27 +7751,9 @@ Namespace GraphicObjects
 
             CreateConnectors(0, 0)
 
-            UpdateStatus(Me)
+            MyBase.Draw(g)
 
-            Dim pt As Point
-            Dim raio, angulo As Double
-            Dim con As ConnectionPoint
-            For Each con In Me.InputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            For Each con In Me.OutputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
+            UpdateStatus(Me)
 
             Dim gContainer As Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
@@ -8135,9 +7785,7 @@ Namespace GraphicObjects
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
-
+      
             Dim pgb1 As New PathGradientBrush(gp)
             pgb1.CenterColor = Me.GradientColor2
             'lgb1.SetBlendTriangularShape(0.5)
@@ -8162,6 +7810,12 @@ Namespace GraphicObjects
             g.SmoothingMode = SmoothingMode.AntiAlias
             g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
             g.DrawString("UO", fontA, Brushes.SteelBlue, ax, ay)
+
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
+            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
 
             g.EndContainer(gContainer)
 
@@ -8328,35 +7982,9 @@ Namespace GraphicObjects
 
             CreateConnectors(0, 0)
 
-            UpdateStatus(Me)
+            MyBase.Draw(g)
 
-            Dim pt As Point
-            Dim raio, angulo As Double
-            Dim con As ConnectionPoint
-            For Each con In Me.InputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            For Each con In Me.OutputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            With Me.EnergyConnector
-                pt = .Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                .Position = pt
-            End With
+            UpdateStatus(Me)
 
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
@@ -8388,9 +8016,7 @@ Namespace GraphicObjects
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
-
+        
             Dim pgb1 As New PathGradientBrush(gp)
             pgb1.CenterColor = Me.GradientColor2
             'lgb1.SetBlendTriangularShape(0.5)
@@ -8415,6 +8041,11 @@ Namespace GraphicObjects
             g.SmoothingMode = SmoothingMode.AntiAlias
             g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
             g.DrawString("E", fontA, Brushes.DarkOrange, ax, ay)
+
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
+            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
 
             gp.Dispose()
             g.EndContainer(gContainer)
@@ -8595,35 +8226,9 @@ Namespace GraphicObjects
 
             CreateConnectors(0, 0)
 
-            UpdateStatus(Me)
+            MyBase.Draw(g)
 
-            Dim pt As Point
-            Dim raio, angulo As Double
-            Dim con As ConnectionPoint
-            For Each con In Me.InputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            For Each con In Me.OutputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            With Me.EnergyConnector
-                pt = .Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                .Position = pt
-            End With
+            UpdateStatus(Me)
 
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
@@ -8655,8 +8260,6 @@ Namespace GraphicObjects
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
 
             Dim pgb1 As New PathGradientBrush(gp)
             pgb1.CenterColor = Me.GradientColor2
@@ -8682,6 +8285,11 @@ Namespace GraphicObjects
             g.SmoothingMode = SmoothingMode.AntiAlias
             g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
             g.DrawString("F", fontA, Brushes.DarkOrange, ax, ay)
+
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
+            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
 
             gp.Dispose()
             g.EndContainer(gContainer)
@@ -8791,26 +8399,6 @@ Namespace GraphicObjects
 
             UpdateStatus(Me)
 
-            Dim pt As Point
-            Dim raio, angulo As Double
-            Dim con As ConnectionPoint
-            For Each con In Me.InputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            For Each con In Me.OutputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-
             Dim gContainer As Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
@@ -8891,8 +8479,12 @@ Namespace GraphicObjects
                     Me.DrawRoundRect(g, myPen, Me.X, Me.Y, Me.Width, Me.Height, 5, New SolidBrush(Color.Transparent))
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
-                    'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
+
+                    myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+                    g.Transform = myMatrix
+
                     g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
                     g.EndContainer(gContainer)
                 Case ShapeIcon.ComponentSeparator
                     Dim rect2 As New Rectangle(X + 0.123 * Width, Y + 0.5 * Height, 0.127 * Width, 0.127 * Height)
@@ -8917,8 +8509,6 @@ Namespace GraphicObjects
                     g.DrawRectangle(myPen, rect4)
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
-                    'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
                     Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
                     Dim radius As Integer = 3
                     gp.AddLine(X + radius, Y, X + Width - radius, Y)
@@ -8978,6 +8568,12 @@ Namespace GraphicObjects
                     g.SmoothingMode = SmoothingMode.AntiAlias
                     g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
                     g.DrawString("CS", fontA, New SolidBrush(Me.LineColor), ax, ay)
+
+                    myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+                    g.Transform = myMatrix
+
+                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
                     g.EndContainer(gContainer)
                     gp.Dispose()
                 Case ShapeIcon.Compressor
@@ -8987,8 +8583,6 @@ Namespace GraphicObjects
                     g.SmoothingMode = SmoothingMode.AntiAlias
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
-                    'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
                     Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
                     If Me.FlippedH = False Then
                         gp.AddLine(CInt(X), CInt(Y), CInt(X + Width), CInt(Y + 0.3 * Height))
@@ -9012,6 +8606,12 @@ Namespace GraphicObjects
                         End If
                     End If
                     gp.Dispose()
+
+                    myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+                    g.Transform = myMatrix
+
+                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
                     g.EndContainer(gContainer)
                 Case ShapeIcon.Cooler
                     Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
@@ -9027,8 +8627,6 @@ Namespace GraphicObjects
                     g.DrawPath(myPen, gp)
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
-                    'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
                     Dim pgb1 As New PathGradientBrush(gp)
                     pgb1.CenterColor = Me.GradientColor2
                     pgb1.SurroundColors = New Color() {Me.GradientColor1}
@@ -9049,6 +8647,12 @@ Namespace GraphicObjects
                     g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
                     g.DrawString("R", fontA, Brushes.DarkBlue, ax, ay)
                     gp.Dispose()
+
+                    myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+                    g.Transform = myMatrix
+
+                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
                     g.EndContainer(gContainer)
                 Case ShapeIcon.DefaultShape
                     Dim myPenE As New Pen(Me.LineColor, Me.LineWidth)
@@ -9065,8 +8669,6 @@ Namespace GraphicObjects
                     g.SmoothingMode = SmoothingMode.AntiAlias
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Regular, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
-                    'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
                     Dim pgb1 As New PathGradientBrush(gp)
                     pgb1.CenterColor = Me.GradientColor2
                     pgb1.SurroundColors = New Color() {Me.GradientColor1}
@@ -9086,6 +8688,12 @@ Namespace GraphicObjects
                     g.SmoothingMode = SmoothingMode.AntiAlias
                     g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
                     g.DrawString("CO", fontA, Brushes.SteelBlue, ax, ay)
+
+                    myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+                    g.Transform = myMatrix
+
+                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
                     g.EndContainer(gContainer)
                 Case ShapeIcon.DistillationColumn
                     Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
@@ -9206,8 +8814,12 @@ Namespace GraphicObjects
                     Me.DrawRoundRect(g, myPen, Me.X, Me.Y, Me.Width, Me.Height, 5, New SolidBrush(Color.Transparent))
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
-                    'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
+
+                    myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+                    g.Transform = myMatrix
+
                     g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
                     g.EndContainer(gContainer)
                 Case ShapeIcon.Expander
                     Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
@@ -9216,8 +8828,6 @@ Namespace GraphicObjects
                     g.SmoothingMode = SmoothingMode.AntiAlias
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
-                    'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
                     Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
                     If Me.FlippedH = False Then
                         gp.AddLine(CInt(X), CInt(Y + 0.3 * Height), CInt(X), CInt(Y + 0.7 * Height))
@@ -9241,6 +8851,12 @@ Namespace GraphicObjects
                         End If
                     End If
                     gp.Dispose()
+
+                    myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+                    g.Transform = myMatrix
+
+                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
                     g.EndContainer(gContainer)
                 Case ShapeIcon.Heater
                     Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
@@ -9256,8 +8872,6 @@ Namespace GraphicObjects
                     g.DrawPath(myPen, gp)
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
-                    'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
                     Dim pgb1 As New PathGradientBrush(gp)
                     pgb1.CenterColor = Me.GradientColor2
                     pgb1.SurroundColors = New Color() {Me.GradientColor1}
@@ -9278,6 +8892,12 @@ Namespace GraphicObjects
                     g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
                     g.DrawString("A", fontA, Brushes.DarkOrange, ax, ay)
                     gp.Dispose()
+
+                    myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+                    g.Transform = myMatrix
+
+                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
                     g.EndContainer(gContainer)
                 Case ShapeIcon.HeatExchanger
                     Dim rect As New Rectangle(X, Y, Width, Height)
@@ -9304,8 +8924,12 @@ Namespace GraphicObjects
                     g.TextRenderingHint = Text.TextRenderingHint.SystemDefault
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
-                    'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
+
+                    myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+                    g.Transform = myMatrix
+
                     g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
                     g.EndContainer(gContainer)
                 Case ShapeIcon.NodeIn
                     Dim myPenE As New Pen(Me.LineColor, Me.LineWidth)
@@ -9331,8 +8955,6 @@ Namespace GraphicObjects
                     g.SmoothingMode = SmoothingMode.AntiAlias
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
-                    'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
                     Dim pgb1 As New PathGradientBrush(gp)
                     pgb1.CenterColor = Me.GradientColor2
                     pgb1.SurroundColors = New Color() {Me.GradientColor1}
@@ -9343,6 +8965,12 @@ Namespace GraphicObjects
                             g.FillPath(pgb1, gp)
                         End If
                     End If
+
+                    myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+                    g.Transform = myMatrix
+
+                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
                     g.EndContainer(gContainer)
                 Case ShapeIcon.NodeOut
                     Dim myPenE As New Pen(Me.LineColor, Me.LineWidth)
@@ -9367,8 +8995,6 @@ Namespace GraphicObjects
                     g.DrawPath(myPenE, Me.GetRoundedLine(gp.PathPoints, 1))
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
-                    'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
                     Dim pgb1 As New PathGradientBrush(gp)
                     pgb1.CenterColor = Me.GradientColor2
                     pgb1.SurroundColors = New Color() {Me.GradientColor1}
@@ -9379,6 +9005,12 @@ Namespace GraphicObjects
                             g.FillPath(pgb1, gp)
                         End If
                     End If
+
+                    myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+                    g.Transform = myMatrix
+
+                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
                     g.EndContainer(gContainer)
                 Case ShapeIcon.OrificePlate
                     Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
@@ -9395,7 +9027,6 @@ Namespace GraphicObjects
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
                     'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
                     Dim pgb1 As New PathGradientBrush(gp)
                     pgb1.CenterColor = Me.GradientColor1
                     pgb1.SurroundColors = New Color() {Me.GradientColor2}
@@ -9408,6 +9039,12 @@ Namespace GraphicObjects
                         End If
                     End If
                     gp.Dispose()
+
+                    myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+                    g.Transform = myMatrix
+
+                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
                     g.EndContainer(gContainer)
                 Case ShapeIcon.Pipe
                     Dim rect As New Rectangle(X, Y, Width, Height)
@@ -9425,7 +9062,12 @@ Namespace GraphicObjects
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
                     'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
+
+                    myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+                    g.Transform = myMatrix
+
                     g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
                     g.EndContainer(gContainer)
                 Case ShapeIcon.Pump
                     Dim rect1 As New RectangleF(X + 0.1 * Width, Y, 0.8 * Width, 0.8 * Height)
@@ -9460,8 +9102,6 @@ Namespace GraphicObjects
                     g.DrawPolygon(myPen, New PointF() {pt9, pt10, pt11, pt12})
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
-                    'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
                     Dim path As New GraphicsPath()
                     path.AddEllipse(rect1)
                     Dim pthGrBrush As New PathGradientBrush(path)
@@ -9479,6 +9119,12 @@ Namespace GraphicObjects
                             g.FillEllipse(pthGrBrush, rect1)
                         End If
                     End If
+
+                    myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+                    g.Transform = myMatrix
+
+                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
                     g.EndContainer(gContainer)
                 Case ShapeIcon.RCT_Conversion
                     Dim rect2 As New Rectangle(X + 0.123 * Width, Y + 0.5 * Height, 0.127 * Width, 0.127 * Height)
@@ -9503,8 +9149,6 @@ Namespace GraphicObjects
                     g.DrawRectangle(myPen, rect4)
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
-                    'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
                     Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
                     Dim radius As Integer = 3
                     gp.AddLine(X + radius, Y, X + Width - radius, Y)
@@ -9564,6 +9208,12 @@ Namespace GraphicObjects
                     g.SmoothingMode = SmoothingMode.AntiAlias
                     g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
                     g.DrawString("C", fontA, New SolidBrush(Me.LineColor), ax, ay)
+
+                    myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+                    g.Transform = myMatrix
+
+                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
                     g.EndContainer(gContainer)
                     gp.Dispose()
                 Case ShapeIcon.RCT_CSTR
@@ -9579,7 +9229,6 @@ Namespace GraphicObjects
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
                     'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
                     Dim lgb1 As New LinearGradientBrush(rect1, Me.GradientColor1, Me.GradientColor2, LinearGradientMode.Horizontal)
                     lgb1.SetBlendTriangularShape(0.5)
                     Dim lgb2 As New LinearGradientBrush(rect3, Me.GradientColor1, Me.GradientColor2, LinearGradientMode.Horizontal)
@@ -9606,6 +9255,12 @@ Namespace GraphicObjects
                     g.DrawLines(myPen, New PointF() {New PointF(X + 0.5 * Width, Y - 0.1 * Height), New PointF(X + 0.5 * Width, Y + 0.7 * Height)})
                     g.DrawEllipse(myPen, New RectangleF(X + 0.2 * Width, Y + 0.6 * Height, 0.3 * Width, 0.1 * Height))
                     g.DrawEllipse(myPen, New RectangleF(X + 0.5 * Width, Y + 0.6 * Height, 0.3 * Width, 0.1 * Height))
+
+                    myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+                    g.Transform = myMatrix
+
+                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
                     g.EndContainer(gContainer)
                 Case ShapeIcon.RCT_Equilibrium
                     Dim rect2 As New Rectangle(X + 0.123 * Width, Y + 0.5 * Height, 0.127 * Width, 0.127 * Height)
@@ -9631,7 +9286,6 @@ Namespace GraphicObjects
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
                     'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
                     Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
                     Dim radius As Integer = 3
                     gp.AddLine(X + radius, Y, X + Width - radius, Y)
@@ -9691,6 +9345,12 @@ Namespace GraphicObjects
                     g.SmoothingMode = SmoothingMode.AntiAlias
                     g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
                     g.DrawString("E", fontA, New SolidBrush(Me.LineColor), ax, ay)
+
+                    myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+                    g.Transform = myMatrix
+
+                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
                     g.EndContainer(gContainer)
                     gp.Dispose()
                 Case ShapeIcon.RCT_Gibbs
@@ -9717,7 +9377,6 @@ Namespace GraphicObjects
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
                     'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
                     Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
                     Dim radius As Integer = 3
                     gp.AddLine(X + radius, Y, X + Width - radius, Y)
@@ -9777,6 +9436,12 @@ Namespace GraphicObjects
                     g.SmoothingMode = SmoothingMode.AntiAlias
                     g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
                     g.DrawString("G", fontA, New SolidBrush(Me.LineColor), ax, ay)
+
+                    myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+                    g.Transform = myMatrix
+
+                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
                     g.EndContainer(gContainer)
                     gp.Dispose()
                 Case ShapeIcon.RCT_PFR
@@ -9795,10 +9460,15 @@ Namespace GraphicObjects
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
                     'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
                     Dim rec1 As New Rectangle(X + 0.1 * Width, Y, 0.8 * Width, Height)
                     g.FillRectangle(New HatchBrush(HatchStyle.SmallCheckerBoard, Me.LineColor, Color.Transparent), rec1)
                     g.DrawRectangle(myPen, rec1)
+
+                    myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+                    g.Transform = myMatrix
+
+                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
                     g.EndContainer(gContainer)
                 Case ShapeIcon.Tank
                     Dim rect1 As New Rectangle(X + 0.1 * Width, Y + 0.1 * Height, 0.8 * Width, 0.8 * Height)
@@ -9814,7 +9484,6 @@ Namespace GraphicObjects
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
                     'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
                     Dim lgb1 As New LinearGradientBrush(rect1, Me.GradientColor1, Me.GradientColor2, LinearGradientMode.Horizontal)
                     lgb1.SetBlendTriangularShape(0.5)
                     Dim lgb2 As New LinearGradientBrush(rect3, Me.GradientColor1, Me.GradientColor2, LinearGradientMode.Horizontal)
@@ -9830,6 +9499,12 @@ Namespace GraphicObjects
                             g.FillEllipse(New SolidBrush(Me.FillColor), rect3)
                         End If
                     End If
+
+                    myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+                    g.Transform = myMatrix
+
+                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
                     g.EndContainer(gContainer)
                 Case ShapeIcon.Valve
                     Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
@@ -9848,7 +9523,6 @@ Namespace GraphicObjects
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
                     'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
                     Dim pgb1 As New PathGradientBrush(gp)
                     pgb1.CenterColor = Me.GradientColor1
                     pgb1.SurroundColors = New Color() {Me.GradientColor2}
@@ -9859,6 +9533,12 @@ Namespace GraphicObjects
                             g.FillPath(pgb1, gp)
                         End If
                     End If
+
+                    myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+                    g.Transform = myMatrix
+
+                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
                     gp.Dispose()
                     g.EndContainer(gContainer)
                 Case ShapeIcon.Vessel
@@ -9885,7 +9565,6 @@ Namespace GraphicObjects
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
                     'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
                     Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
                     Dim radius As Integer = 3
                     gp.AddLine(X + radius, Y, X + Width - radius, Y)
@@ -9920,6 +9599,12 @@ Namespace GraphicObjects
                             End If
                         End If
                     End If
+
+                    myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+                    g.Transform = myMatrix
+
+                    g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
                     g.EndContainer(gContainer)
                     gp.Dispose()
             End Select
