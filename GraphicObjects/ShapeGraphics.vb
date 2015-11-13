@@ -151,6 +151,23 @@ Namespace GraphicObjects
 
         End Sub
 
+        Public Overridable Sub DrawTag(ByVal g As System.Drawing.Graphics)
+
+            Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
+            Dim strx As Single = (Me.Width - strdist.Width) / 2
+
+            Dim matrix As Matrix = g.Transform
+
+            matrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+
+            'g.FillRectangle(New SolidBrush(Color.White), X + strx, Y + Height + 5, strdist.Width, strdist.Height)
+
+            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
+        End Sub
+
+
+
         Protected Function GetRoundedLine(ByVal points As PointF(), ByVal cornerRadius As Single) As GraphicsPath
             Dim path As New GraphicsPath()
             Dim previousEndPoint As PointF = PointF.Empty
@@ -1384,14 +1401,14 @@ Namespace GraphicObjects
 
             Dim gpath As GraphicsPath = Me.GetRoundedLine(PL, 0)
 
-            If gpath.GetBounds.Width > 0 And gpath.GetBounds.Height > 0 Then
+            If (gpath.GetBounds.Width + gpath.GetBounds.Height) > 0 Then
                 Dim gbrush As New SolidBrush(Color.White)
-                g.SmoothingMode = SmoothingMode.Default
-                g.DrawPath(New Pen(gbrush, 4), Me.GetRoundedLine(PL, 4))
+                'g.SmoothingMode = SmoothingMode.Default
+                g.DrawPath(New Pen(gbrush, 6), Me.GetRoundedLine(PL, 4))
                 gbrush.Dispose()
             End If
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
+            'g.SmoothingMode = SmoothingMode.AntiAlias
             g.DrawPath(myPen, Me.GetRoundedLine(PL, 4))
 
             g.EndContainer(gContainer)
@@ -2953,13 +2970,9 @@ Namespace GraphicObjects
                 gp.AddLine(CInt(X + Width), CInt(Y + 0.65 * Height), CInt(X + Width), CInt(Y + 0.35 * Height))
             End If
 
-
             gp.CloseFigure()
 
             g.DrawPath(myPen, Me.GetRoundedLine(gp.PathPoints, 1))
-
-            Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
-            Dim strx As Single = (Me.Width - strdist.Width) / 2
 
             Dim pgb1 As New LinearGradientBrush(New PointF(X, Y + 0.25 * Height), New PointF(X, Y + 0.75 * Height), Me.GradientColor1, Me.GradientColor2)
        
@@ -2971,12 +2984,10 @@ Namespace GraphicObjects
                 End If
             End If
 
-            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
-            g.Transform = myMatrix
-
-            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
-
             gp.Dispose()
+
+            DrawTag(g)
+
             g.EndContainer(gContainer)
 
         End Sub

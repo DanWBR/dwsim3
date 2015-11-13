@@ -3873,17 +3873,21 @@ Public Class frmSurface
 
     Private Sub ToolStripMenuItem11_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem11.Click
         Me.FlowsheetDesignSurface.SelectedObject.Rotation = 0
+        Me.Invalidate()
     End Sub
 
     Private Sub ToolStripMenuItem12_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem12.Click
         Me.FlowsheetDesignSurface.SelectedObject.Rotation = 90
+        Me.Invalidate()
     End Sub
 
     Private Sub ToolStripMenuItem13_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem13.Click
         Me.FlowsheetDesignSurface.SelectedObject.Rotation = 180
+        Me.Invalidate()
     End Sub
 
     Private Sub ToolStripMenuItem14_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem14.Click
         Me.FlowsheetDesignSurface.SelectedObject.Rotation = 270
+        Me.Invalidate()
     End Sub
 End Class
