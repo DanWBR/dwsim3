@@ -15,7 +15,7 @@
 '    You should have received a copy of the GNU General Public License
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
-Imports Microsoft.Msdn.Samples.GraphicObjects
+Imports Microsoft.MSDN.Samples.GraphicObjects
 Imports System.Collections.Generic
 Imports System.ComponentModel
 Imports PropertyGridEx
@@ -2660,5 +2660,30 @@ Imports DWSIM.DWSIM.Outros
     End Sub
 
 #End Region
+
+    Private Sub tsbAlign_Click(sender As Object, e As EventArgs) Handles tsbAlignLefts.Click, tsbAlignCenters.Click, tsbAlignRights.Click,
+                                                                        tsbAlignTops.Click, tsbAlignMiddles.Click, tsbAlignBottoms.Click
+
+        Dim tsb As ToolStripButton = DirectCast(sender, ToolStripButton)
+
+        Dim direction As Microsoft.MSDN.Samples.DesignSurface.GraphicsSurface.AlignDirection
+
+        If tsb.Name.Contains("Lefts") Then
+            direction = Microsoft.MSDN.Samples.DesignSurface.GraphicsSurface.AlignDirection.Lefts
+        ElseIf tsb.Name.Contains("Centers") Then
+            direction = Microsoft.MSDN.Samples.DesignSurface.GraphicsSurface.AlignDirection.Centers
+        ElseIf tsb.Name.Contains("Rights") Then
+            direction = Microsoft.MSDN.Samples.DesignSurface.GraphicsSurface.AlignDirection.Rights
+        ElseIf tsb.Name.Contains("Tops") Then
+            direction = Microsoft.MSDN.Samples.DesignSurface.GraphicsSurface.AlignDirection.Tops
+        ElseIf tsb.Name.Contains("Middles") Then
+            direction = Microsoft.MSDN.Samples.DesignSurface.GraphicsSurface.AlignDirection.Middles
+        Else
+            direction = Microsoft.MSDN.Samples.DesignSurface.GraphicsSurface.AlignDirection.Bottoms
+        End If
+
+        Me.FormSurface.FlowsheetDesignSurface.AlignSelectedObjects(direction)
+
+    End Sub
 
 End Class

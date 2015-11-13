@@ -15,8 +15,7 @@ Imports Microsoft.MSDN.Samples.GraphicObjects
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.Serialization
-
-
+Imports System.Linq
 
 <System.Serializable()> Public Class GraphicsSurface
     Inherits System.Windows.Forms.UserControl
@@ -111,6 +110,15 @@ Imports System.Runtime.Serialization
     Public m_drawingObjects As New GraphicObjectCollection()
 
     Public m_SelectedObjects As New Collections.Generic.Dictionary(Of String, GraphicObject)
+
+    Public Enum AlignDirection
+        Lefts
+        Centers
+        Rights
+        Tops
+        Middles
+        Bottoms
+    End Enum
 
 #Region "Saving / Loading"
 
@@ -516,6 +524,72 @@ Imports System.Runtime.Serialization
                 Return MyBase.IsInputKey(keyData)
         End Select
     End Function
+
+    Public Sub AlignSelectedObjects(direction As AlignDirection)
+
+        If Me.SelectedObjects.Count > 0 Then
+
+            Dim refpos As Integer = 0
+
+            Select Case direction
+                Case AlignDirection.Lefts
+                    refpos = 10000000
+                    For Each obj As GraphicObject In Me.SelectedObjects.Values
+                        If obj.X < refpos Then refpos = obj.X
+                    Next
+                    For Each obj As GraphicObject In Me.SelectedObjects.Values
+                        obj.X = refpos
+                    Next
+                Case AlignDirection.Centers
+                    For Each obj As GraphicObject In Me.SelectedObjects.Values
+                        refpos += obj.X + obj.Width / 2
+                    Next
+                    refpos /= Me.SelectedObjects.Count
+                    For Each obj As GraphicObject In Me.SelectedObjects.Values
+                        obj.X = refpos - obj.Width / 2
+                    Next
+                Case AlignDirection.Rights
+                    For Each obj As GraphicObject In Me.SelectedObjects.Values
+                        refpos += obj.X + obj.Width
+                    Next
+                    refpos /= Me.SelectedObjects.Count
+                    For Each obj As GraphicObject In Me.SelectedObjects.Values
+                        obj.X = refpos - obj.Width
+                    Next
+                Case AlignDirection.Tops
+                    refpos = 10000000
+                    For Each obj As GraphicObject In Me.SelectedObjects.Values
+                        If obj.Y < refpos Then refpos = obj.Y
+                    Next
+                    For Each obj As GraphicObject In Me.SelectedObjects.Values
+                        obj.Y = refpos
+                    Next
+                Case AlignDirection.Middles
+                    For Each obj As GraphicObject In Me.SelectedObjects.Values
+                        refpos += obj.Y + obj.Height / 2
+                    Next
+                    refpos /= Me.SelectedObjects.Count
+                    For Each obj As GraphicObject In Me.SelectedObjects.Values
+                        obj.Y = refpos - obj.Height / 2
+                    Next
+                Case AlignDirection.Bottoms
+                    For Each obj As GraphicObject In Me.SelectedObjects.Values
+                        refpos += obj.Y + obj.Height
+                    Next
+                    refpos /= Me.SelectedObjects.Count
+                    For Each obj As GraphicObject In Me.SelectedObjects.Values
+                        obj.Y = refpos - obj.Height
+                    Next
+            End Select
+
+            Me.Invalidate()
+            Application.DoEvents()
+            Me.Invalidate()
+            Application.DoEvents()
+
+        End If
+
+    End Sub
 
     Private Sub DrawSelectionRectangle(ByVal g As Graphics, _
             ByVal selectionRect As Rectangle)
