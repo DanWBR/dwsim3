@@ -300,6 +300,7 @@ Imports DWSIM.DWSIM.Outros
                 Me.ToolStripComboBoxUnitSystem.SelectedItem = Me.Options.SelectedUnitSystem.nome
             Else
                 If Me.Options.SelectedUnitSystem.nome <> "" Then
+                    QuestionID = 0
                     ShowQuestionPanel(MessageBoxIcon.Question, DWSIM.App.GetLocalString("ConfirmAddUnitSystemFromSimulation"), True, DWSIM.App.GetLocalString("Sim"), True, DWSIM.App.GetLocalString("No"))
                 Else
                     Me.ToolStripComboBoxUnitSystem.SelectedIndex = 0
@@ -2619,11 +2620,16 @@ Imports DWSIM.DWSIM.Outros
         Select Case QuestionID
             Case 0 'question about adding or not a new user-defined unit from the simulation file
                 AddUnitSystem(Me.Options.SelectedUnitSystem)
+                Me.ToolStripComboBoxUnitSystem.SelectedItem = Me.Options.SelectedUnitSystem.nome
         End Select
     End Sub
 
     Private Sub QuestionBox_Button2_Click(sender As Object, e As EventArgs) Handles QuestionBox_Button2.Click
         Me.QuestionBox_Panel.Visible = False
+        Select Case QuestionID
+            Case 0 'question about adding or not a new user-defined unit from the simulation file
+                Me.ToolStripComboBoxUnitSystem.SelectedIndex = 0
+        End Select
     End Sub
 
     Sub ShowQuestionPanel(ByVal icon As MessageBoxIcon, ByVal question As String, ByVal button1visible As Boolean, ByVal button1text As String, ByVal button2visible As Boolean, ByVal button2text As String)

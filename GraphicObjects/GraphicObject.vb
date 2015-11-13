@@ -331,7 +331,7 @@ Namespace GraphicObjects
 
             gp.AddRectangle(New Rectangle(X, Y, Width, Height))
             If Me.Rotation <> 0 Then
-                myMatrix.RotateAt(Me.Rotation, New PointF(Me.X, Me.Y), _
+                myMatrix.RotateAt(Me.Rotation, New PointF(Me.X + Me.Width / 2, Me.Y + Me.Height / 2), _
                     Drawing.Drawing2D.MatrixOrder.Append)
             End If
 
@@ -346,7 +346,7 @@ Namespace GraphicObjects
 
             gp.AddRectangle(New Rectangle(X, Y, Width, Height))
             If Me.Rotation <> 0 Then
-                myMatrix.RotateAt(Me.Rotation, New PointF(Me.X, Me.Y), _
+                myMatrix.RotateAt(Me.Rotation, New PointF(Me.X + Me.Width / 2, Me.Y + Me.Height / 2), _
                     Drawing.Drawing2D.MatrixOrder.Append)
             End If
             gp.Transform(myMatrix)

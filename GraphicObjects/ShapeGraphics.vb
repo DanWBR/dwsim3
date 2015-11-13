@@ -239,6 +239,16 @@ Namespace GraphicObjects
 
         End Sub
         Public Sub DrawReactor(ByVal g As System.Drawing.Graphics, ByVal TypeName As String)
+
+            Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
+            Dim myMatrix As Drawing2D.Matrix
+            gContainer = g.BeginContainer()
+            myMatrix = g.Transform()
+            If m_Rotation <> 0 Then
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+                g.Transform = myMatrix
+            End If
+
             Dim pt As Point
             Dim raio, angulo As Double
             Dim con As ConnectionPoint
@@ -267,15 +277,6 @@ Namespace GraphicObjects
                 .Position = pt
             End With
 
-            Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
-            Dim myMatrix As Drawing2D.Matrix
-            gContainer = g.BeginContainer()
-            myMatrix = g.Transform()
-            If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
-                g.Transform = myMatrix
-            End If
-
             Dim rect2 As New Rectangle(X + (0.25 - 0.14) * Width, Y + (0.5 - 0.14 / 2) * Height, 0.14 * Width, 0.14 * Height)
             Dim rect3 As New Rectangle(X + 0.75 * Width, Y + 0.1 * Height, 0.14 * Width, 0.14 * Height)
             Dim rect4 As New Rectangle(X + 0.75 * Width, Y + (0.9 - 0.14) * Height, 0.14 * Width, 0.14 * Height)
@@ -297,11 +298,6 @@ Namespace GraphicObjects
             g.DrawRectangle(myPen, rect2)
             g.DrawRectangle(myPen, rect3)
             g.DrawRectangle(myPen, rect4)
-
-            'Draw name
-            Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
-            Dim strx As Single = (Me.Width - strdist.Width) / 2
-            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
 
             'Create brush for gradient filling
             Dim lgb1 As LinearGradientBrush
@@ -347,8 +343,17 @@ Namespace GraphicObjects
             g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
             g.DrawString(TypeName, fontA, New SolidBrush(Me.LineColor), ax, ay)
 
+            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = myMatrix
+
+            'Draw name
+            Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
+            Dim strx As Single = (Me.Width - strdist.Width) / 2
+            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
+
             'Definition finished, draw object
             g.EndContainer(gContainer)
+
         End Sub
     End Class
 
@@ -498,7 +503,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
 
@@ -724,7 +729,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), _
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), _
                     Drawing.Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
@@ -891,7 +896,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
 
@@ -1006,7 +1011,7 @@ Namespace GraphicObjects
             Dim myMatrix As New Drawing2D.Matrix()
             Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
             gp.AddLine(X, Y, X + Width, Y + Height)
-            myMatrix.RotateAt(Me.Rotation, New PointF(Me.X, Me.Y), Drawing.Drawing2D.MatrixOrder.Append)
+            myMatrix.RotateAt(Me.Rotation, New PointF(X + Width / 2, Y + Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
             gp.Transform(myMatrix)
             Return gp.IsOutlineVisible(pt, myPen)
         End Function
@@ -1091,7 +1096,7 @@ Namespace GraphicObjects
             myMatrix = g.Transform()
             gContainer = g.BeginContainer()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Width / 2, Y + Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
             g.SmoothingMode = SmoothingMode.AntiAlias
@@ -1620,7 +1625,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), _
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), _
                     Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
@@ -1819,7 +1824,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), _
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), _
                     Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
@@ -2008,7 +2013,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), _
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), _
                     Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
@@ -2276,7 +2281,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
 
@@ -2500,7 +2505,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
 
@@ -2702,7 +2707,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
 
@@ -2906,7 +2911,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
 
@@ -3065,15 +3070,6 @@ Namespace GraphicObjects
 
         Public Overrides Sub Draw(ByVal g As System.Drawing.Graphics)
 
-            Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
-            Dim myMatrix As Drawing2D.Matrix
-            myMatrix = g.Transform()
-            gContainer = g.BeginContainer()
-            If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
-                g.Transform = myMatrix
-            End If
-
             CreateConnectors(0, 0)
 
             Dim pt As Point
@@ -3097,6 +3093,15 @@ Namespace GraphicObjects
             Next
 
             UpdateStatus(Me)
+
+            Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
+            Dim myMatrix As Drawing2D.Matrix
+            gContainer = g.BeginContainer()
+            myMatrix = g.Transform()
+            If m_Rotation <> 0 Then
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+                g.Transform = myMatrix
+            End If
 
             Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
             Dim myPen2 As New Pen(Color.White, 0)
@@ -3284,7 +3289,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
 
@@ -3475,7 +3480,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
 
@@ -3666,7 +3671,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
 
@@ -3868,7 +3873,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
 
@@ -3997,7 +4002,7 @@ Namespace GraphicObjects
             Dim myMatrix As New Drawing2D.Matrix()
             Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
             gp.AddLine(X, Y, X + Width, Y + Height)
-            myMatrix.RotateAt(Me.Rotation, New PointF(Me.X, Me.Y), Drawing.Drawing2D.MatrixOrder.Append)
+            myMatrix.RotateAt(Me.Rotation, New PointF(Me.X + Me.Width / 2, Me.Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
             gp.Transform(myMatrix)
             Return gp.IsOutlineVisible(pt, myPen)
         End Function
@@ -4196,7 +4201,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), _
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), _
                     Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
@@ -4465,7 +4470,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), _
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), _
                     Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
@@ -4717,7 +4722,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), _
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), _
                     Drawing2D.MatrixOrder.Prepend)
                 g.Transform = myMatrix
             End If
@@ -4926,7 +4931,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), _
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), _
                     Drawing2D.MatrixOrder.Prepend)
                 g.Transform = myMatrix
             End If
@@ -5555,7 +5560,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
 
@@ -5764,7 +5769,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), _
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), _
                     Drawing.Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
@@ -5904,7 +5909,7 @@ Namespace GraphicObjects
 
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), _
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), _
                     Drawing2D.MatrixOrder.Prepend)
                 g.Transform = myMatrix
             End If
@@ -6090,7 +6095,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
 
@@ -6346,7 +6351,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
 
@@ -6629,7 +6634,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
 
@@ -6878,7 +6883,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
 
@@ -7128,7 +7133,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
 
@@ -7824,7 +7829,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
 
@@ -8105,7 +8110,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), _
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), _
                     Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
@@ -8358,7 +8363,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
 
@@ -8625,7 +8630,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
 
@@ -8811,7 +8816,7 @@ Namespace GraphicObjects
             gContainer = g.BeginContainer()
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
-                myMatrix.RotateAt(m_Rotation, New PointF(X, Y), _
+                myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), _
                     Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If

@@ -86,6 +86,7 @@ Imports System.Runtime.Serialization
     Private originalRotation As Single = 0
     Private selectionRect As Rectangle
     Private hoverRect As Rectangle
+    Private hoverrotation As Integer = 0
 
     Private justselected As Boolean = False
 
@@ -432,20 +433,35 @@ Imports System.Runtime.Serialization
         DrawGrid(g)
 
         If hoverdraw Then
+
             Dim myOriginalMatrix As Drawing2D.Matrix
+
+            Dim gCon1 As Drawing2D.GraphicsContainer = g.BeginContainer
+
             myOriginalMatrix = g.Transform()
-            g.PageUnit = GraphicsUnit.Pixel
+
+            If hoverrotation <> 0 Then
+                myOriginalMatrix.RotateAt(hoverrotation, New PointF((hoverRect.X + hoverRect.Width / 2) * Zoom, (hoverRect.Y + hoverRect.Height / 2) * Zoom), _
+                    Drawing2D.MatrixOrder.Append)
+                g.Transform = myOriginalMatrix
+            End If
+
             g.ScaleTransform(Zoom, Zoom)
+
+            g.PageUnit = GraphicsUnit.Pixel
+      
             Dim color1, color2, color3 As Color
             color1 = Color.FromArgb(50, 170, 215, 230)
             color2 = Color.FromArgb(50, 2, 140, 140)
             color3 = Color.FromArgb(50, 2, 140, 140)
-            'Dim roundpercent As Integer = (hoverRect.Height ^ 2 + hoverRect.Width ^ 2) ^ 0.5 * 0.1
+
             Dim gbrush As New LinearGradientBrush(hoverRect, color1, color2, LinearGradientMode.Vertical)
             DrawRoundRect(g, New Pen(color3, 1), hoverRect.X, hoverRect.Y, hoverRect.Width, hoverRect.Height, 15, gbrush)
-            g.Transform = myOriginalMatrix
-        End If
 
+            g.Transform = myOriginalMatrix
+            g.EndContainer(gCon1)
+
+        End If
 
         'draw the actual objects onto the page, on top of the grid
 
@@ -732,6 +748,7 @@ Imports System.Runtime.Serialization
                     And obj.TipoObjeto <> TipoObjeto.Nenhum And obj.TipoObjeto <> TipoObjeto.GO_SpreadsheetTable _
                     And obj.TipoObjeto <> TipoObjeto.GO_MasterTable Then
                         With Me.hoverRect
+                            hoverrotation = obj.Rotation
                             .X = obj.X - 10
                             .Y = obj.Y - 10
                             Select Case obj.TipoObjeto
