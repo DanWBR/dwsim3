@@ -155,8 +155,8 @@
   <data name="TSMIFilter.Text" xml:space="preserve">
     <value>Filtro</value>
   </data>
-  <data name="ToolStripComboBoxNumberFractionFormatting.Items7" xml:space="preserve">
-    <value>E3</value>
+  <data name="QuestionBox_Button2.Text" xml:space="preserve">
+    <value>Não</value>
   </data>
   <data name="&gt;&gt;tsbAlignTops.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -257,6 +257,9 @@
   <data name="&gt;&gt;TSMISpecification.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="ToolStripComboBoxNumberFormatting.Items6" xml:space="preserve">
+    <value>E2</value>
+  </data>
   <data name="ToolStrip4.Size" type="System.Drawing.Size, System.Drawing">
     <value>602, 25</value>
   </data>
@@ -269,8 +272,8 @@
   <data name="&gt;&gt;ToolStripButton4.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="tsbAlignTops.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 22</value>
+  <data name="TSMIEnergyRecycle.Text" xml:space="preserve">
+    <value>Reciclo de Energia</value>
   </data>
   <data name="&gt;&gt;ToolStrip4.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -458,6 +461,9 @@
   </data>
   <data name="&gt;&gt;ToolStripSeparator3.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ToolStripComboBoxNumberFractionFormatting.Items7" xml:space="preserve">
+    <value>E3</value>
   </data>
   <data name="&gt;&gt;TSMIColAbsReb.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -762,8 +768,8 @@
   <data name="ExibirListaDeItensACalcularToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>260, 22</value>
   </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="tsbAlignTops.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
   </data>
   <data name="ToolStrip1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 50</value>
@@ -965,8 +971,8 @@
   <data name="&gt;&gt;tsbAlignCenters.Name" xml:space="preserve">
     <value>tsbAlignCenters</value>
   </data>
-  <data name="&gt;&gt;PontoCríticoRealToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="ToolStripComboBoxUnitSystem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 25</value>
   </data>
   <data name="TSMIHeater.Size" type="System.Drawing.Size, System.Drawing">
     <value>237, 22</value>
@@ -1165,6 +1171,9 @@
   <data name="&gt;&gt;ToolStripLabel6.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;FlowLayoutPanel1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
   <data name="MenuStrip1.Text" xml:space="preserve">
     <value>MenuStrip1</value>
   </data>
@@ -1194,9 +1203,6 @@
   </data>
   <data name="&gt;&gt;TimerScripts1.Name" xml:space="preserve">
     <value>TimerScripts1</value>
-  </data>
-  <data name="TSMIColAbs.Text" xml:space="preserve">
-    <value>Coluna de Absorção</value>
   </data>
   <data name="TSMIOrificePlate.Size" type="System.Drawing.Size, System.Drawing">
     <value>237, 22</value>
@@ -1396,6 +1402,9 @@
   <data name="&gt;&gt;ToolStripButton8.Name" xml:space="preserve">
     <value>ToolStripButton8</value>
   </data>
+  <data name="MultivariateOptimizerToolStripMenuItem.Text" xml:space="preserve">
+    <value>Otimização Multivariável</value>
+  </data>
   <data name="&gt;&gt;ToolStripMenuItem3.Name" xml:space="preserve">
     <value>ToolStripMenuItem3</value>
   </data>
@@ -1537,9 +1546,6 @@
   <data name="&gt;&gt;TSMIFilter.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;tsbClearStates.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;IronRubyToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -1629,9 +1635,6 @@
   </data>
   <data name="&gt;&gt;ToolStrip7.ZOrder" xml:space="preserve">
     <value>1</value>
-  </data>
-  <data name="ToolStripComboBoxUnitSystem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>121, 25</value>
   </data>
   <data name="dckPanel.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 11world</value>
@@ -2126,9 +2129,6 @@
   <data name="ToolStripButton18.Text" xml:space="preserve">
     <value>Salvar como Imagem</value>
   </data>
-  <data name="QuestionBox_Button2.Text" xml:space="preserve">
-    <value>Não</value>
-  </data>
   <data name="&gt;&gt;TSMICompressor.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -2146,9 +2146,6 @@
   </data>
   <data name="&gt;&gt;ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="TSMIEnergyRecycle.Text" xml:space="preserve">
-    <value>Reciclo de Energia</value>
   </data>
   <data name="&gt;&gt;TSMIRecycle.Name" xml:space="preserve">
     <value>TSMIRecycle</value>
@@ -2201,8 +2198,8 @@
   <data name="&gt;&gt;TSMISolidsSeparator.Name" xml:space="preserve">
     <value>TSMISolidsSeparator</value>
   </data>
-  <data name="&gt;&gt;PainelDeVariáveisToolStripMenuItem.Name" xml:space="preserve">
-    <value>PainelDeVariáveisToolStripMenuItem</value>
+  <data name="&gt;&gt;tsbClearStates.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="PropriedadesDosComponentesToolStripMenuItem.Text" xml:space="preserve">
     <value>Propriedades dos Componentes Puros</value>
@@ -2383,6 +2380,9 @@
   <data name="TSMIReactorPFR.Text" xml:space="preserve">
     <value>PFR</value>
   </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;TSMISplitter.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -2449,11 +2449,11 @@
   <data name="ToolStrip6.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <data name="MultivariateOptimizerToolStripMenuItem.Text" xml:space="preserve">
-    <value>Otimização Multivariável</value>
+  <data name="&gt;&gt;PontoCríticoRealToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;FlowLayoutPanel1.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="&gt;&gt;PainelDeVariáveisToolStripMenuItem.Name" xml:space="preserve">
+    <value>PainelDeVariáveisToolStripMenuItem</value>
   </data>
   <data name="TSMICOUO.Size" type="System.Drawing.Size, System.Drawing">
     <value>237, 22</value>
@@ -2530,8 +2530,8 @@
   <data name="&gt;&gt;TSMIEnergyRecycle.Name" xml:space="preserve">
     <value>TSMIEnergyRecycle</value>
   </data>
-  <data name="ToolStripComboBoxNumberFormatting.Items6" xml:space="preserve">
-    <value>E2</value>
+  <data name="TSMIColAbs.Text" xml:space="preserve">
+    <value>Coluna de Absorção</value>
   </data>
   <data name="AnáliseDePetróleosToolStripMenuItem.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -2696,10 +2696,10 @@
     <value>2</value>
   </data>
   <metadata name="TimerScripts30.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>274, 56</value>
+    <value>149, 56</value>
   </metadata>
   <metadata name="TimerScripts15.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>142, 56</value>
+    <value>17, 56</value>
   </metadata>
   <metadata name="MenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
@@ -2708,16 +2708,16 @@
     <value>58</value>
   </metadata>
   <metadata name="TimerScripts5.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 56</value>
+    <value>1277, 17</value>
   </metadata>
   <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>en</value>
+    <value>de</value>
   </metadata>
   <metadata name="TimerScripts1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1330, 17</value>
+    <value>1152, 17</value>
   </metadata>
   <metadata name="SaveFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1193, 17</value>
+    <value>1015, 17</value>
   </metadata>
   <metadata name="BGLoadComp.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>667, 17</value>
@@ -2741,12 +2741,12 @@
     <value>239, 17</value>
   </metadata>
   <metadata name="TimerScripts60.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>406, 56</value>
+    <value>281, 56</value>
   </metadata>
   <metadata name="ToolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>346, 17</value>
   </metadata>
   <metadata name="OpenFileName.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1060, 17</value>
+    <value>882, 17</value>
   </metadata>
 </root>
