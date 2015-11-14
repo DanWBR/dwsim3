@@ -922,19 +922,18 @@ Namespace DWSIM.SimulationObjects.Streams
 
                 Dim f As New PropertyGridEx.CustomPropertyCollection()
                 valor = Format(Me.Fases(7).SPMProperties.molarfraction.GetValueOrDefault, FlowSheet.Options.NumberFormat)
-                f.Add(DWSIM.App.GetLocalString("Solid"), valor, False, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True) 'solid
+                f.Add(DWSIM.App.GetLocalString("Solid"), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True) 'solid
                 f.Item(0).IsReadOnly = True
                 valor = Format(Me.Fases(1).SPMProperties.molarfraction.GetValueOrDefault, FlowSheet.Options.NumberFormat)
-                f.Add(DWSIM.App.GetLocalString("OverallLiquid"), valor, False, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True) ' liquid
+                f.Add(DWSIM.App.GetLocalString("OverallLiquid"), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True) ' liquid
                 f.Item(1).IsReadOnly = True
                 valor = Format(Me.Fases(2).SPMProperties.molarfraction.GetValueOrDefault, FlowSheet.Options.NumberFormat)
-                f.Add(DWSIM.App.GetLocalString("Vapor"), valor, False, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True) 'vapour
-                Select Case Me.SpecType
-                    Case Flashspec.Pressure_and_VaporFraction, Flashspec.Temperature_and_VaporFraction
-                        f.Item(2).IsReadOnly = False
-                    Case Else
-                        f.Item(2).IsReadOnly = True
-                End Select
+                f.Add(DWSIM.App.GetLocalString("Vapor"), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True) 'vapour
+
+                If Not Me.GraphicObject.InputConnectors(0).IsAttached And _
+                    (Me.SpecType = Flashspec.Pressure_and_VaporFraction Or Me.SpecType = Flashspec.Temperature_and_VaporFraction) _
+                    Then f.Item(f.Count - 1).IsReadOnly = False
+
                 .Item.Add("[7] " & DWSIM.App.GetLocalString("Fraomolardafase"), f, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Fraomolardafase"), True)
                 With .Item(.Item.Count - 1)
                     .IsReadOnly = False
