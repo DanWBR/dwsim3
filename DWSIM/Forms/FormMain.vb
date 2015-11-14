@@ -4120,6 +4120,14 @@ ruf:                Application.DoEvents()
         End If
     End Sub
 
+    Private Sub ManualTécnicoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ManualTécnicoToolStripMenuItem.Click
+        Process.Start(My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "docs" & Path.DirectorySeparatorChar & "tech_manual.pdf")
+    End Sub
+
+    Private Sub GuiaDoUsuárioToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GuiaDoUsuárioToolStripMenuItem.Click
+        Process.Start(My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "docs" & Path.DirectorySeparatorChar & "user_guide.pdf")
+    End Sub
+
     Private Sub DownloadsToolStripMenuItem_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DownloadsToolStripMenuItem.Click
         System.Diagnostics.Process.Start("http://sourceforge.net/projects/dwsim/files/")
     End Sub
@@ -4349,6 +4357,5 @@ ruf:                Application.DoEvents()
     End Sub
 
 #End Region
-
 
 End Class

@@ -2195,6 +2195,7 @@
     <None Include="Resources\bgvs.png" />
     <None Include="Resources\bullet_arrow_bottom1.png" />
     <None Include="Resources\bullet_delete.png" />
+    <None Include="Resources\application_xp_terminal.png" />
     <Content Include="Resources\ch.png" />
     <None Include="Resources\clock_red.png" />
     <None Include="Resources\comp_separator.png" />
@@ -2255,6 +2256,7 @@
     <None Include="Resources\logo.gif" />
     <None Include="Resources\lightning1.png" />
     <None Include="Resources\lightbulb.png" />
+    <None Include="Resources\page_white_acrobat.png" />
     <Content Include="Resources\ru.png" />
     <None Include="Resources\zoom.png" />
     <None Include="Resources\Services.png" />
