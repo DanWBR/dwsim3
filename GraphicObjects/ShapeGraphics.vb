@@ -151,14 +151,14 @@ Namespace GraphicObjects
 
         End Sub
 
-        Public Overridable Sub DrawTag(ByVal g As System.Drawing.Graphics)
+        Public Overridable Sub DrawTag(ByVal g As System.Drawing.Graphics, matrix As Drawing2D.Matrix)
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
 
-            Dim matrix As Matrix = g.Transform
+            [matrix].RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
 
-            matrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            g.Transform = [matrix]
 
             If Not Selected Then g.FillRectangle(New SolidBrush(Color.FromArgb(200, Color.White)), X + strx, Y + Height + 5, strdist.Width, strdist.Height)
 
@@ -332,10 +332,7 @@ Namespace GraphicObjects
             g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
             g.DrawString(TypeName, fontA, New SolidBrush(Me.LineColor), ax, ay)
 
-            myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
-            g.Transform = myMatrix
-
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             'Definition finished, draw object
             g.EndContainer(gContainer)
@@ -542,7 +539,7 @@ Namespace GraphicObjects
                 End If
             End If
             
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
 
@@ -684,7 +681,7 @@ Namespace GraphicObjects
             g.SmoothingMode = SmoothingMode.AntiAlias
             g.DrawRectangle(myPen, rect)
 
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
 
@@ -845,7 +842,7 @@ Namespace GraphicObjects
                 End If
             End If
 
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
 
@@ -1571,7 +1568,7 @@ Namespace GraphicObjects
                 End If
             End If
 
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
 
@@ -1746,7 +1743,7 @@ Namespace GraphicObjects
                 End If
             End If
             
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
 
@@ -1916,7 +1913,7 @@ Namespace GraphicObjects
                 End If
             End If
 
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
 
@@ -2172,7 +2169,7 @@ Namespace GraphicObjects
                 End If
             End If
 
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
             gp.Dispose()
@@ -2343,7 +2340,7 @@ Namespace GraphicObjects
                 End If
             End If
 
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             gp.Dispose()
             g.EndContainer(gContainer)
@@ -2549,7 +2546,7 @@ Namespace GraphicObjects
 
             g.DrawString("A", fontA, Brushes.DarkOrange, ax, ay)
 
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             gp.Dispose()
             g.EndContainer(gContainer)
@@ -2722,7 +2719,7 @@ Namespace GraphicObjects
             g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
             g.DrawString("R", fontA, Brushes.DarkBlue, ax, ay)
 
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             gp.Dispose()
             g.EndContainer(gContainer)
@@ -2888,7 +2885,7 @@ Namespace GraphicObjects
 
             gp.Dispose()
 
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
 
@@ -3050,7 +3047,7 @@ Namespace GraphicObjects
             End If
             gp.Dispose()
 
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
 
@@ -3237,7 +3234,7 @@ Namespace GraphicObjects
             End If
             gp.Dispose()
 
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
 
@@ -3406,7 +3403,7 @@ Namespace GraphicObjects
                 End If
             End If
 
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             gp.Dispose()
             g.EndContainer(gContainer)
@@ -3587,7 +3584,7 @@ Namespace GraphicObjects
                 End If
             End If
             
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
             gp.Dispose()
@@ -3938,7 +3935,7 @@ Namespace GraphicObjects
             g.DrawEllipse(myPen, rect)
             g.TextRenderingHint = Text.TextRenderingHint.SystemDefault
 
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
 
@@ -4179,7 +4176,7 @@ Namespace GraphicObjects
             g.DrawEllipse(myPen, rect)
             g.TextRenderingHint = Text.TextRenderingHint.SystemDefault
 
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
         End Sub
@@ -4386,7 +4383,7 @@ Namespace GraphicObjects
             g.DrawEllipse(myPen, rect)
             g.TextRenderingHint = Text.TextRenderingHint.SystemDefault
 
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
 
@@ -4576,7 +4573,7 @@ Namespace GraphicObjects
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
            
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
 
@@ -5523,7 +5520,7 @@ Namespace GraphicObjects
 
             g.TextRenderingHint = Text.TextRenderingHint.SystemDefault
 
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
 
@@ -5783,7 +5780,7 @@ Namespace GraphicObjects
 
             End If
 
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
 
@@ -6055,7 +6052,7 @@ Namespace GraphicObjects
 
             End If
 
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
 
@@ -6303,7 +6300,7 @@ Namespace GraphicObjects
 
             End If
 
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
 
@@ -6547,7 +6544,7 @@ Namespace GraphicObjects
 
             End If
 
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
 
@@ -6823,7 +6820,7 @@ Namespace GraphicObjects
 
             End If
 
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
 
@@ -7365,7 +7362,7 @@ Namespace GraphicObjects
             End If
             gp.Dispose()
 
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
 
@@ -7637,7 +7634,7 @@ Namespace GraphicObjects
             g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
             g.DrawString("UO", fontA, Brushes.SteelBlue, ax, ay)
 
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
 
@@ -7861,7 +7858,7 @@ Namespace GraphicObjects
             g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
             g.DrawString("E", fontA, Brushes.DarkOrange, ax, ay)
 
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             gp.Dispose()
             g.EndContainer(gContainer)
@@ -8098,7 +8095,7 @@ Namespace GraphicObjects
             g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
             g.DrawString("F", fontA, Brushes.DarkOrange, ax, ay)
 
-            DrawTag(g)
+            DrawTag(g, myMatrix)
 
             gp.Dispose()
             g.EndContainer(gContainer)
