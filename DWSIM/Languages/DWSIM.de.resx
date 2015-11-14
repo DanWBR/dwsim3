@@ -5206,6 +5206,12 @@ Die erhaltenen Daten werden hauptsächlich für die Berechnung von VLE-Daten emp
     <value>[Black Oil] Oil viscosity 2</value>
   </data>
   <data name="DescBOPP" xml:space="preserve">
-    <value>A simplified Property Package for quick process calculations involving petroleum fluids characterized by simple properties like specific gravities and gas-oil ratio.</value>
+    <value>Ein einfaches Property Package zur schnellen Berechnung von Petroleum-Fluiden, welche durch einfache Eigenschaften, wie z.B. spezifische Dichte und Gas/Öl-Verhältnis, charakterisiert sind.</value>
+  </data>
+  <data name="DescSEAPP" xml:space="preserve">
+    <value>Dieses Property Package beinhaltet Routinen um die Eigenschaften von Meerwasser zu berechnen. Es werden die Berechnungsmethoden der IAPWS-08 Spezifikation verwendet ("Release on the IAPWS Formulation 2008 for the Thermodynamic Properties of Seawater").</value>
+  </data>
+  <data name="SEAPP" xml:space="preserve">
+    <value>IAPWS-08 Meerwasser</value>
   </data>
 </root>
