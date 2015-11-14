@@ -409,7 +409,7 @@ out:        d2 = Date.Now
 
         Public Function Flash_PT_NL(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
-            Dim i, n, ecount As Integer
+            Dim i, n, ecount, gcount As Integer
             Dim Pb, Pd, Pmin, Pmax, Px As Double
             Dim d1, d2 As Date, dt As TimeSpan
             Dim L, V, S, Vant As Double
@@ -447,10 +447,13 @@ out:        d2 = Date.Now
             S = 0
             L = 1
             V = 0
+
+            'do flash calculation iterations
             Do
                 GL_old = L
                 GV_old = V
                 GS_old = S
+                gcount += 1
 
                 If V < 1 Then
                     'there is some liquid or solid
@@ -586,6 +589,7 @@ out:        d2 = Date.Now
 
                 Dim convergiu As Integer = 0
                 Dim F, dF, e1, e2, e3 As Double
+                ecount = 0
 
                 Do
 
@@ -663,12 +667,9 @@ out:        d2 = Date.Now
 
                     ecount += 1
 
-                    If Double.IsNaN(V) Then
-                        Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashTPVapFracError"))
-                    End If
-                    If ecount > maxit_e Then
-                        Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
-                    End If
+                    If Double.IsNaN(V) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashTPVapFracError"))
+                    If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
+
 
                     WriteDebugInfo("PT Flash [NL-SLE]: Iteration #" & ecount & ", VF = " & V)
 
@@ -680,7 +681,9 @@ out:            'calculate global phase fractions
                 L = L * (1 - S)
                 V = V * (1 - S)
 
-out2:           If (Math.Abs(GL_old - L) < 0.0000001) And (Math.Abs(GV_old - V) < 0.0000001) And (Math.Abs(GS_old - S) < 0.0000001) Then GlobalConv = True
+                If gcount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
+
+out2:           If (Math.Abs(GL_old - L) < 0.0000005) And (Math.Abs(GV_old - V) < 0.0000005) And (Math.Abs(GS_old - S) < 0.0000005) Then GlobalConv = True
 
 
             Loop Until GlobalConv

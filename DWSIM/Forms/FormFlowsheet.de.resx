@@ -176,37 +176,37 @@
     <value>Fließbild anzeigen und drucken</value>
   </data>
   <data name="ToolStripButton16.Text" xml:space="preserve">
-    <value>Raster ausrichten</value>
+    <value>Am Raster ausrichten</value>
   </data>
   <data name="ToolStripButton17.Text" xml:space="preserve">
     <value>Schnellkupplung</value>
   </data>
   <data name="tsbAlignLefts.Text" xml:space="preserve">
-    <value>Richten Linken</value>
+    <value>Links ausrichten</value>
   </data>
   <data name="tsbAlignCenters.Text" xml:space="preserve">
-    <value>Richten Zentren</value>
+    <value>Mittig ausrichten</value>
   </data>
   <data name="tsbAlignRights.Text" xml:space="preserve">
-    <value>Richten Rechte</value>
+    <value>Rechts ausrichten</value>
   </data>
   <data name="tsbAlignTops.Text" xml:space="preserve">
-    <value>Richten Spitzen</value>
+    <value>Oben ausrichten</value>
   </data>
   <data name="tsbAlignMiddles.Text" xml:space="preserve">
-    <value>Richten Mitten</value>
+    <value>Mittig ausrichten</value>
   </data>
   <data name="tsbAlignBottoms.Text" xml:space="preserve">
-    <value>Richten Böden</value>
+    <value>Unten ausrichten</value>
   </data>
   <data name="tsbAlignVertical.Text" xml:space="preserve">
-    <value>Stellen vertikale abstand gleich</value>
+    <value>Gleiche vertikale Abstände </value>
   </data>
   <data name="tsbAlignHorizontal.Text" xml:space="preserve">
-    <value>Stellen horizontale abstand gleich</value>
+    <value>Gleiche horizontale Abstände</value>
   </data>
   <data name="ToolStrip4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>691, 25</value>
+    <value>637, 25</value>
   </data>
   <data name="ToolStrip4.Text" xml:space="preserve">
     <value>Fließbild</value>

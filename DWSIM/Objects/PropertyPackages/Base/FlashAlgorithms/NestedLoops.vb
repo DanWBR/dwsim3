@@ -385,7 +385,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     If Abs(dx) > maxDT Then dx = maxDT * Sign(dx)
 
                     x1 = x1 - dx
-
+                    maxDT *= 0.95
                     cnt += 1
 
                 Loop Until cnt > maxitEXT Or Double.IsNaN(x1) Or x1 < 0.0#
