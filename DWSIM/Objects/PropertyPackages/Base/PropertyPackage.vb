@@ -438,7 +438,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         End If
                     Case FlashMethod.NestedLoops3P, FlashMethod.NestedLoops3PV2, FlashMethod.NestedLoops3PV3
                         If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then
-                            Return New Auxiliary.FlashAlgorithms.NestedLoops3P With
+                            Return New Auxiliary.FlashAlgorithms.NestedLoops3PV3 With
                                                         {.StabSearchCompIDs = _tpcompids, .StabSearchSeverity = _tpseverity}
                         Else
                             If _nl3 Is Nothing Then _nl3 = New Auxiliary.FlashAlgorithms.NestedLoops3PV3
@@ -1768,7 +1768,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                             Else
 
-                                result = Me.FlashBase.Flash_TV(RET_VMOL(Fase.Mixture), T, xv, P, Me)
+                                result = Me.FlashBase.Flash_TV(RET_VMOL(Fase.Mixture), 0, xv, P, Me)
 
                                 P = result(4)
 
@@ -2335,7 +2335,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
                             Else
 
-                                result = Me.FlashBase.Flash_PV(RET_VMOL(Fase.Mixture), P, xv, T, Me)
+                                result = Me.FlashBase.Flash_PV(RET_VMOL(Fase.Mixture), P, xv, 0, Me)
 
                                 T = result(4)
 
@@ -3392,6 +3392,17 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
         ''' <remarks></remarks>
         Public Overridable Function DW_ReturnBinaryEnvelope(ByVal parameters As Object, Optional ByVal bw As System.ComponentModel.BackgroundWorker = Nothing) As Object
 
+            If Not My.Application.CAPEOPENMode Then
+                Try
+                    Me._tpseverity = Me.CurrentMaterialStream.Flowsheet.Options.ThreePhaseFlashStabTestSeverity
+                    Me._tpcompids = Me.CurrentMaterialStream.Flowsheet.Options.ThreePhaseFlashStabTestCompIds
+                Catch ex As Exception
+                    Me._tpseverity = 0
+                    Me._tpcompids = New String() {}
+                Finally
+                End Try
+            End If
+
             If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
 
             Dim n, i As Integer
@@ -3469,9 +3480,10 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                                 '        unstable = True
                                 '        ui.Add(px.Count - 1)
                                 '        ut.Add(Me.FlashBase.BubbleTemperature_LLE(New Double() {i * dx, 1 - i * dx}, result(2), result(6), P, y1 - 50, y2 + 20, Me))
-                                '        py1(py1.Count - 1) = ut(ut.Count - 1)
+                                '        py1(py1.Count - 1) = ut(ut.count-1)
                                 '    End If
                                 'End If
+
                             Catch ex As Exception
                             End Try
                             i = i + 1

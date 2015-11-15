@@ -413,15 +413,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Select Case searchseverity
                 Case 0
                     ReDim Y(nt, n)
-                    tol = 0.01
+                    tol = 0.0001
                     maxits = 100
                 Case 1
                     ReDim Y(nt + 1, n)
-                    tol = 0.001
+                    tol = 0.00001
                     maxits = 100
                 Case Else
                     ReDim Y(nt + 2, n)
-                    tol = 0.0001
+                    tol = 0.000001
                     maxits = 200
             End Select
 
@@ -726,7 +726,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         sum5 += Y(i, j)
                         j = j + 1
                     Loop Until j = n + 1
-                    If sum5 < 1 Then
+                    If Abs(sum5 - 1) < 0.001 Then
                         'phase is stable
                         If Not excidx.Contains(i) Then excidx.Add(i)
                     End If
