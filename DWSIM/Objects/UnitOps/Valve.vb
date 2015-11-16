@@ -134,6 +134,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Me.PropertyPackage.CurrentMaterialStream = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name)
             H2 = Hi '- Me.DeltaP.GetValueOrDefault / (rho_li * 1000)
 
+            If DebugMode Then AppendDebugLine(String.Format("Property Package: {0}", Me.PropertyPackage.ComponentName))
+            If DebugMode Then AppendDebugLine(String.Format("Flash Algorithm: {0}", Me.PropertyPackage.FlashBase.GetType.Name))
+            If DebugMode Then AppendDebugLine(String.Format("Input variables: T = {0} K, P = {1} Pa, H = {2} kJ/kg, W = {3} kg/s", Ti, Pi, Hi, Wi))
+
             If Me.CalcMode = CalculationMode.DeltaP Then
                 P2 = Pi - Me.DeltaP.GetValueOrDefault
             Else
@@ -142,11 +146,15 @@ Namespace DWSIM.SimulationObjects.UnitOps
             End If
             CheckSpec(P2, True, "outlet pressure")
 
+            If DebugMode Then AppendDebugLine(String.Format("Doing a PH flash to calculate outlet temperature... P = {0} Pa, H = {1} kJ/[kg.K]", P2, H2))
+
             Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, H2, Ti)
             T2 = tmp(2)
             CheckSpec(T2, True, "outlet temperature")
             H2c = tmp(4)
             CheckSpec(H2c, False, "outlet enthalpy")
+
+            If DebugMode Then AppendDebugLine(String.Format("Calculated outlet temperature T2 = {0} K", T2))
 
             'Dim htol As Double = Me.PropertyPackage.Parameters("PP_PHFELT")
             'Dim herr As Double = Math.Abs((H2c - H2) / H2)
@@ -156,31 +164,39 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Me.DeltaT = T2 - Ti
             Me.DeltaQ = 0
 
-            'Atribuir valores à corrente de matéria conectada à jusante
-            With form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name)
-                .Fases(0).SPMProperties.temperature = T2
-                .Fases(0).SPMProperties.pressure = P2
-                .Fases(0).SPMProperties.enthalpy = H2
-                Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
-                Dim i As Integer = 0
-                For Each comp In .Fases(0).Componentes.Values
-                    comp.FracaoMolar = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).Componentes(comp.Nome).FracaoMolar
-                    comp.FracaoMassica = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).Componentes(comp.Nome).FracaoMassica
-                    i += 1
-                Next
-                .SpecType = Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
-                .Fases(0).SPMProperties.massflow = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.massflow.GetValueOrDefault
-            End With
+            If Not DebugMode Then
 
-            'Call function to calculate flowsheet
-            With objargs
-                .Calculado = True
-                .Nome = Me.Nome
-                .Tag = Me.GraphicObject.Tag
-                .Tipo = TipoObjeto.Valve
-            End With
+                'Atribuir valores à corrente de matéria conectada à jusante
+                With form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name)
+                    .Fases(0).SPMProperties.temperature = T2
+                    .Fases(0).SPMProperties.pressure = P2
+                    .Fases(0).SPMProperties.enthalpy = H2
+                    Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
+                    Dim i As Integer = 0
+                    For Each comp In .Fases(0).Componentes.Values
+                        comp.FracaoMolar = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).Componentes(comp.Nome).FracaoMolar
+                        comp.FracaoMassica = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).Componentes(comp.Nome).FracaoMassica
+                        i += 1
+                    Next
+                    .SpecType = Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
+                    .Fases(0).SPMProperties.massflow = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.massflow.GetValueOrDefault
+                End With
 
-            form.CalculationQueue.Enqueue(objargs)
+                'Call function to calculate flowsheet
+                With objargs
+                    .Calculado = True
+                    .Nome = Me.Nome
+                    .Tag = Me.GraphicObject.Tag
+                    .Tipo = TipoObjeto.Valve
+                End With
+
+                form.CalculationQueue.Enqueue(objargs)
+
+            Else
+
+                AppendDebugLine("Calculation finished successfully.")
+
+            End If
 
         End Function
 

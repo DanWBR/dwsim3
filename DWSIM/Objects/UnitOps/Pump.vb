@@ -448,17 +448,23 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             Dim Ti, Pi, Hi, Wi, rho_li, qli, qvi, ei, ein, T2, P2, H2 As Double
 
-            qvi = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(2).SPMProperties.volumetric_flow.GetValueOrDefault.ToString
+            qvi = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(2).SPMProperties.volumetric_flow.GetValueOrDefault
             If qvi > 0 And Not Me.IgnorePhase Then Throw New Exception(DWSIM.App.GetLocalString("Existeumafasevaporna"))
 
-            Ti = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.temperature.GetValueOrDefault.ToString
-            Pi = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.pressure.GetValueOrDefault.ToString
-            rho_li = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.density.GetValueOrDefault.ToString
-            qli = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.volumetric_flow.GetValueOrDefault.ToString
-            Hi = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.enthalpy.GetValueOrDefault.ToString
-            Wi = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.massflow.GetValueOrDefault.ToString
+            Ti = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.temperature.GetValueOrDefault
+            Pi = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.pressure.GetValueOrDefault
+            rho_li = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.density.GetValueOrDefault
+            qli = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(1).SPMProperties.volumetric_flow.GetValueOrDefault
+            Hi = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.enthalpy.GetValueOrDefault
+            Wi = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.massflow.GetValueOrDefault
             ei = Hi * Wi
             ein = ei
+
+            If DebugMode Then AppendDebugLine(String.Format("Property Package: {0}", Me.PropertyPackage.ComponentName))
+            If DebugMode Then AppendDebugLine(String.Format("Flash Algorithm: {0}", Me.PropertyPackage.FlashBase.GetType.Name))
+            If DebugMode Then AppendDebugLine(String.Format("Input variables: T = {0} K, P = {1} Pa, H = {2} kJ/kg, W = {3} kg/s, Liquid Flow = {4} m3/s", Ti, Pi, Hi, Wi, qli))
+
+            If DebugMode Then AppendDebugLine("Calculation mode: " & CalcMode.ToString)
 
             Select Case Me.CalcMode
 
@@ -468,7 +474,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                     Dim cnpsh, chead, ceff, cpower, csystem As Curve
 
-                    Me.createcurves()
+                    If DebugMode Then AppendDebugLine(String.Format("Creating curves..."))
+
+                    Me.CreateCurves()
 
                     cnpsh = Me.Curves("NPSH")
                     chead = Me.Curves("HEAD")
@@ -517,6 +525,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                     Dim w() As Double
 
+                    If DebugMode Then AppendDebugLine(String.Format("Getting operating point..."))
+
                     'get operating points
                     Dim head, npshr, eff, power, syshead As Double
 
@@ -524,6 +534,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     ReDim w(xhead.Count)
                     ratinterpolation.buildfloaterhormannrationalinterpolant(xhead.ToArray(GetType(Double)), xhead.Count, 0.5, w)
                     head = polinterpolation.barycentricinterpolation(xhead.ToArray(GetType(Double)), yhead.ToArray(GetType(Double)), w, xhead.Count, qli)
+
+                    If DebugMode Then AppendDebugLine(String.Format("Head: {0} m", head))
 
                     Me.CurveHead = head
 
@@ -536,6 +548,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         npshr = 0
                     End If
 
+                    If DebugMode Then AppendDebugLine(String.Format("NPSHr: {0} m", npshr))
+
                     Me.CurveNPSHr = npshr
 
                     'efficiency
@@ -546,6 +560,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Else
                         eff = Me.Eficiencia.GetValueOrDefault / 100
                     End If
+
+                    If DebugMode Then AppendDebugLine(String.Format("Efficiency: {0} %", eff * 100))
 
                     Me.CurveEff = eff * 100
 
@@ -558,6 +574,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         syshead = head
                     End If
 
+                    If DebugMode Then AppendDebugLine(String.Format("System Head: {0} m", syshead))
+
                     Me.CurveSysHead = syshead
 
                     'we need -> head, power, eff, to calculate P2, H2, T2
@@ -566,6 +584,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     CheckSpec(P2, True, "outlet pressure")
 
                     Me.DeltaP = P2 - Pi
+
+                    If DebugMode Then AppendDebugLine(String.Format("Outlet Pressure: {0} Pa", P2))
 
                     Dim tmp As Object
 
@@ -580,14 +600,20 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         H2 = Hi + power * eff / Wi
                     End If
 
+                    If DebugMode Then AppendDebugLine(String.Format("Power: {0} kW", power))
+
                     CheckSpec(power, True, "power")
 
                     Me.CurvePower = power
 
                     Me.DeltaQ = power
 
+                    If DebugMode Then AppendDebugLine(String.Format("Doing a PH flash to calculate outlet temperature... P = {0} Pa, H = {1} kJ/[kg.K]", P2, H2))
+
                     tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, H2, Ti)
                     T2 = tmp(2)
+
+                    If DebugMode Then AppendDebugLine(String.Format("Calculated outlet temperature T2 = {0} K", T2))
 
                     CheckSpec(T2, True, "outlet temperature")
 
@@ -622,13 +648,27 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                     DeltaP = P2 - Pi
 
+                    If DebugMode Then AppendDebugLine(String.Format("Doing a PH flash to calculate outlet temperature... P = {0} Pa, H = {1} kJ/[kg.K]", P2, H2))
+
                     tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, H2, Ti)
                     T2 = tmp(2)
                     CheckSpec(T2, True, "outlet temperature")
 
+                    If DebugMode Then AppendDebugLine(String.Format("Calculated outlet temperature T2 = {0} K", T2))
+
                     Me.DeltaT = T2 - Ti
 
-                    Me.NPSH = (Pi - Me.PropertyPackage.DW_CalcPVAP_ISOL(Ti)) / (rho_li * 9.81)
+                    Dim Pbub As Double '= Me.PropertyPackage.DW_CalcPVAP_ISOL(Ti)
+
+                    If DebugMode Then AppendDebugLine(String.Format("Doing a bubble point flash to calculate NPSH... T = {0} K, VF = 0", Ti))
+
+                    Try
+                        Pbub = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.VAP, Ti, 0.0#, Pi)(3)
+                        If DebugMode Then AppendDebugLine(String.Format("Calculated bubble pressure: {0} Pa", Pbub))
+                        Me.NPSH = (Pi - Pbub) / (rho_li * 9.81)
+                    Catch ex As Exception
+                        Me.NPSH = Double.PositiveInfinity
+                    End Try
 
                 Case CalculationMode.Power
 
@@ -647,13 +687,27 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                     DeltaP = P2 - Pi
 
+                    If DebugMode Then AppendDebugLine(String.Format("Doing a PH flash to calculate outlet temperature... P = {0} Pa, H = {1} kJ/[kg.K]", P2, H2))
+
                     tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, H2, Ti)
                     T2 = tmp(2)
                     CheckSpec(T2, True, "outlet temperature")
 
+                    If DebugMode Then AppendDebugLine(String.Format("Calculated outlet temperature T2 = {0} K", T2))
+
                     Me.DeltaT = T2 - Ti
 
-                    Me.NPSH = (Pi - Me.PropertyPackage.DW_CalcPVAP_ISOL(Ti)) / (rho_li * 9.81)
+                    If DebugMode Then AppendDebugLine(String.Format("Doing a bubble point flash to calculate NPSH... P = {0} Pa, VF = 0", P2))
+
+                    Dim Pbub As Double '= Me.PropertyPackage.DW_CalcPVAP_ISOL(Ti)
+
+                    Try
+                        Pbub = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.VAP, Ti, 0.0#, Pi)(3)
+                        If DebugMode Then AppendDebugLine(String.Format("Calculated bubble pressure: {0} Pa", Pbub))
+                        Me.NPSH = (Pi - Pbub) / (rho_li * 9.81)
+                    Catch ex As Exception
+                        Me.NPSH = Double.PositiveInfinity
+                    End Try
 
                 Case CalculationMode.Delta_P
 
@@ -670,16 +724,23 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     H2 = Hi + Me.DeltaQ / Wi
                     CheckSpec(H2, False, "outlet enthalpy")
 
+                    If DebugMode Then AppendDebugLine(String.Format("Doing a PH flash to calculate outlet temperature... P = {0} Pa, H = {1} kJ/[kg.K]", P2, H2))
+
                     Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, H2, 0.0#)
                     T2 = tmp(2)
                     CheckSpec(T2, True, "outlet temperature")
+
+                    If DebugMode Then AppendDebugLine(String.Format("Calculated outlet temperature T2 = {0} K", T2))
 
                     Me.DeltaT = T2 - Ti
 
                     Dim Pbub As Double '= Me.PropertyPackage.DW_CalcPVAP_ISOL(Ti)
 
+                    If DebugMode Then AppendDebugLine(String.Format("Doing a bubble point flash to calculate NPSH... P = {0} Pa, VF = 0", P2))
+
                     Try
                         Pbub = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.VAP, Ti, 0.0#, Pi)(3)
+                        If DebugMode Then AppendDebugLine(String.Format("Calculated bubble pressure: {0} Pa", Pbub))
                         Me.NPSH = (Pi - Pbub) / (rho_li * 9.81)
                     Catch ex As Exception
                         Me.NPSH = Double.PositiveInfinity
@@ -705,16 +766,23 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     H2 = Hi + Me.DeltaQ / Wi
                     CheckSpec(H2, False, "outlet enthalpy")
 
+                    If DebugMode Then AppendDebugLine(String.Format("Doing a PH flash to calculate outlet temperature... P = {0} Pa, H = {1} kJ/[kg.K]", P2, H2))
+
                     Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, H2, Ti)
                     T2 = tmp(2)
                     CheckSpec(T2, True, "outlet temperature")
+
+                    If DebugMode Then AppendDebugLine(String.Format("Calculated outlet temperature T2 = {0} K", T2))
 
                     Me.DeltaT = T2 - Ti
 
                     Dim Pbub As Double '= Me.PropertyPackage.DW_CalcPVAP_ISOL(Ti)
 
+                    If DebugMode Then AppendDebugLine(String.Format("Doing a bubble point flash to calculate NPSH... P = {0} Pa, VF = 0", P2))
+
                     Try
                         Pbub = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.VAP, Ti, 0.0#, Pi)(3)
+                        If DebugMode Then AppendDebugLine(String.Format("Calculated bubble pressure: {0} Pa", Pbub))
                         Me.NPSH = (Pi - Pbub) / (rho_li * 9.81)
                     Catch ex As Exception
                         Me.NPSH = Double.PositiveInfinity
@@ -728,31 +796,39 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             End Select
 
-            'Atribuir valores à corrente de matéria conectada à jusante
-            With form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name)
-                .Fases(0).SPMProperties.temperature = T2
-                .Fases(0).SPMProperties.pressure = P2
-                .Fases(0).SPMProperties.enthalpy = H2
-                Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
-                Dim i As Integer = 0
-                For Each comp In .Fases(0).Componentes.Values
-                    comp.FracaoMolar = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).Componentes(comp.Nome).FracaoMolar
-                    comp.FracaoMassica = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).Componentes(comp.Nome).FracaoMassica
-                    i += 1
-                Next
-                .Fases(0).SPMProperties.massflow = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.massflow.GetValueOrDefault
-                .SpecType = Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
-            End With
+            If Not DebugMode Then
 
-            'Call function to calculate flowsheet
-            With objargs
-                .Calculado = True
-                .Nome = Me.Nome
-                .Tag = Me.GraphicObject.Tag
-                .Tipo = TipoObjeto.Pump
-            End With
+                'Atribuir valores à corrente de matéria conectada à jusante
+                With form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name)
+                    .Fases(0).SPMProperties.temperature = T2
+                    .Fases(0).SPMProperties.pressure = P2
+                    .Fases(0).SPMProperties.enthalpy = H2
+                    Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
+                    Dim i As Integer = 0
+                    For Each comp In .Fases(0).Componentes.Values
+                        comp.FracaoMolar = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).Componentes(comp.Nome).FracaoMolar
+                        comp.FracaoMassica = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).Componentes(comp.Nome).FracaoMassica
+                        i += 1
+                    Next
+                    .Fases(0).SPMProperties.massflow = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.massflow.GetValueOrDefault
+                    .SpecType = Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
+                End With
 
-            form.CalculationQueue.Enqueue(objargs)
+                'Call function to calculate flowsheet
+                With objargs
+                    .Calculado = True
+                    .Nome = Me.Nome
+                    .Tag = Me.GraphicObject.Tag
+                    .Tipo = TipoObjeto.Pump
+                End With
+
+                form.CalculationQueue.Enqueue(objargs)
+
+            Else
+
+                AppendDebugLine("Calculation finished successfully.")
+
+            End If
 
         End Function
 

@@ -179,14 +179,26 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             P2 = Pi - Me.DeltaP.GetValueOrDefault
 
+            If DebugMode Then AppendDebugLine(String.Format("Property Package: {0}", Me.PropertyPackage.ComponentName))
+            If DebugMode Then AppendDebugLine(String.Format("Flash Algorithm: {0}", Me.PropertyPackage.FlashBase.GetType.Name))
+            If DebugMode Then AppendDebugLine(String.Format("Input variables: T = {0} K, P = {1} Pa, H = {2} kJ/kg, W = {3} kg/s", Ti, Pi, Hi, Wi))
+
+            If DebugMode Then AppendDebugLine("Calculation mode: " & CalcMode.ToString)
+
             Select Case Me.CalcMode
 
                 Case CalculationMode.HeatAdded
+
                     FlashSpec = Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
                     H2 = Me.DeltaQ.GetValueOrDefault * (Me.Eficiencia.GetValueOrDefault / 100) / Wi + Hi
+
+                    If DebugMode Then AppendDebugLine(String.Format("Doing a PH flash to calculate outlet temperature... P = {0} Pa, H = {1} kJ/[kg.K]", P2, H2))
+
                     Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, H2, 0)
                     T2 = tmp(2)
                     Me.DeltaT = T2 - Ti
+
+                    If DebugMode Then AppendDebugLine(String.Format("Calculated outlet temperature T2 = {0} K", T2))
 
                     'Corrente de energia - atualizar valor da potência (kJ/s)
                     With es
@@ -195,13 +207,19 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     End With
 
                 Case CalculationMode.OutletTemperature
+
                     FlashSpec = Streams.MaterialStream.Flashspec.Temperature_and_Pressure
                     T2 = Me.OutletTemperature.GetValueOrDefault
+
+                    If DebugMode Then AppendDebugLine(String.Format("Doing a PH flash to calculate outlet temperature... P = {0} Pa, H = {1} kJ/[kg.K]", P2, H2))
+
                     Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, T2, P2, 0)
                     H2 = tmp(4)
                     CheckSpec(H2, False, "outlet enthalpy")
                     Me.DeltaT = T2 - Ti
                     Me.DeltaQ = (H2 - Hi) / (Me.Eficiencia.GetValueOrDefault / 100) * Wi
+
+                    If DebugMode Then AppendDebugLine(String.Format("Calculated outlet temperature T2 = {0} K", T2))
 
                     'Corrente de energia - atualizar valor da potência (kJ/s)
                     With es
@@ -210,18 +228,27 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     End With
 
                 Case CalculationMode.EnergyStream
+
                     FlashSpec = Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
                     Me.DeltaQ = es.Energia.GetValueOrDefault
                     H2 = Me.DeltaQ.GetValueOrDefault * (Me.Eficiencia.GetValueOrDefault / 100) / Wi + Hi
+
+                    If DebugMode Then AppendDebugLine(String.Format("Doing a PH flash to calculate outlet temperature... P = {0} Pa, H = {1} kJ/[kg.K]", P2, H2))
 
                     Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, P2, H2, Ti)
                     T2 = tmp(2)
                     CheckSpec(T2, True, "outlet temperature")
                     Me.DeltaT = T2 - Ti
 
+                    If DebugMode Then AppendDebugLine(String.Format("Calculated outlet temperature T2 = {0} K", T2))
+
                 Case CalculationMode.OutletVaporFraction
+
                     FlashSpec = Streams.MaterialStream.Flashspec.Pressure_and_VaporFraction
                     V2 = m_VFout.GetValueOrDefault
+
+                    If DebugMode Then AppendDebugLine(String.Format("Doing a PVF flash to calculate outlet temperature... P = {0} Pa, VF = {1}", P2, V2))
+
                     Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.VAP, P2, m_VFout.GetValueOrDefault, Ti)
                     H2 = tmp(4)
                     CheckSpec(H2, False, "outlet enthalpy")
@@ -229,6 +256,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     CheckSpec(T2, True, "outlet temperature")
                     Me.DeltaT = T2 - Ti
                     Me.DeltaQ = (H2 - Hi) / (Me.Eficiencia.GetValueOrDefault / 100) * Wi
+
+                    If DebugMode Then AppendDebugLine(String.Format("Calculated outlet temperature T2 = {0} K", T2))
 
                     'Corrente de energia - atualizar valor da potência (kJ/s)
                     With es
@@ -238,30 +267,38 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             End Select
 
-            'Atribuir valores à corrente de matéria conectada à jusante
-            With form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name)
-                .SpecType = FlashSpec
-                .Fases(0).SPMProperties.temperature = T2
-                .Fases(0).SPMProperties.pressure = P2
-                .Fases(0).SPMProperties.enthalpy = H2
-                .Fases(2).SPMProperties.molarfraction = V2
-                Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
-                For Each comp In .Fases(0).Componentes.Values
-                    comp.FracaoMolar = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).Componentes(comp.Nome).FracaoMolar
-                    comp.FracaoMassica = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).Componentes(comp.Nome).FracaoMassica
-                Next
-                .Fases(0).SPMProperties.massflow = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.massflow.GetValueOrDefault
-            End With
+            If Not DebugMode Then
 
-            'Call function to calculate flowsheet
-            With objargs
-                .Calculado = True
-                .Nome = Me.Nome
-                .Tag = Me.GraphicObject.Tag
-                .Tipo = TipoObjeto.Heater
-            End With
+                'Atribuir valores à corrente de matéria conectada à jusante
+                With form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name)
+                    .SpecType = FlashSpec
+                    .Fases(0).SPMProperties.temperature = T2
+                    .Fases(0).SPMProperties.pressure = P2
+                    .Fases(0).SPMProperties.enthalpy = H2
+                    .Fases(2).SPMProperties.molarfraction = V2
+                    Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
+                    For Each comp In .Fases(0).Componentes.Values
+                        comp.FracaoMolar = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).Componentes(comp.Nome).FracaoMolar
+                        comp.FracaoMassica = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).Componentes(comp.Nome).FracaoMassica
+                    Next
+                    .Fases(0).SPMProperties.massflow = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(0).SPMProperties.massflow.GetValueOrDefault
+                End With
 
-            form.CalculationQueue.Enqueue(objargs)
+                'Call function to calculate flowsheet
+                With objargs
+                    .Calculado = True
+                    .Nome = Me.Nome
+                    .Tag = Me.GraphicObject.Tag
+                    .Tipo = TipoObjeto.Heater
+                End With
+
+                form.CalculationQueue.Enqueue(objargs)
+
+            Else
+
+                AppendDebugLine("Calculation finished successfully.")
+
+            End If
 
         End Function
 
