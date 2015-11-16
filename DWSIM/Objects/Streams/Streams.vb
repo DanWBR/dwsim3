@@ -129,7 +129,7 @@ Namespace DWSIM.SimulationObjects.Streams
 
                 Dim st As New StackTrace(ex, True)
                 Dim frame As StackFrame = st.GetFrame(0)
-                Dim fileName As String = frame.GetFileName
+                Dim fileName As String = IO.Path.GetFileName(frame.GetFileName)
                 Dim methodName As String = frame.GetMethod().Name
                 Dim line As Integer = frame.GetFileLineNumber()
 

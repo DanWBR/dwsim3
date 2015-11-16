@@ -431,7 +431,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     A = Area
                     Th2 = TempHotOut
                     StInHot.PropertyPackage.CurrentMaterialStream = StInHot
-                    If DebugMode Then AppendDebugLine(String.Format("Doing a PT flash to calculate hot stream outlet enthalpy... P = {0} Pa, T = K", Ph2, Th1))
+                    If DebugMode Then AppendDebugLine(String.Format("Doing a PT flash to calculate hot stream outlet enthalpy... P = {0} Pa, T = K", Ph2, Th2))
                     Dim tmp = StInHot.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Th2, Ph2, 0)
                     Hh2 = tmp(4)
                     Q = -Wh * (Hh2 - Hh1)
@@ -453,7 +453,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     A = Area
                     Tc2 = TempColdOut
                     StInCold.PropertyPackage.CurrentMaterialStream = StInCold
-                    If DebugMode Then AppendDebugLine(String.Format("Doing a PT flash to calculate cold stream outlet enthalpy... P = {0} Pa, T = K", Pc2, Tc1))
+                    If DebugMode Then AppendDebugLine(String.Format("Doing a PT flash to calculate cold stream outlet enthalpy... P = {0} Pa, T = K", Pc2, Tc2))
                     Dim tmp = StInCold.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Tc2, Pc2, 0)
                     Hc2 = tmp(4)
                     Q = Wc * (Hc2 - Hc1)
@@ -476,7 +476,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Case SpecifiedTemperature.Cold_Fluid
                             Tc2 = TempColdOut
                             StInCold.PropertyPackage.CurrentMaterialStream = StInCold
-                            If DebugMode Then AppendDebugLine(String.Format("Doing a PT flash to calculate cold stream outlet enthalpy... P = {0} Pa, T = {1} K", Pc2, Tc1))
+                            If DebugMode Then AppendDebugLine(String.Format("Doing a PT flash to calculate cold stream outlet enthalpy... P = {0} Pa, T = {1} K", Pc2, Tc2))
                             Dim tmp = StInCold.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Tc2, Pc2, 0)
                             Hc2 = tmp(4)
                             Q = Wc * (Hc2 - Hc1)
@@ -490,7 +490,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Case SpecifiedTemperature.Hot_Fluid
                             Th2 = TempHotOut
                             StInHot.PropertyPackage.CurrentMaterialStream = StInHot
-                            If DebugMode Then AppendDebugLine(String.Format("Doing a PT flash to calculate hot stream outlet enthalpy... P = {0} Pa, T = {1} K", Ph2, Th1))
+                            If DebugMode Then AppendDebugLine(String.Format("Doing a PT flash to calculate hot stream outlet enthalpy... P = {0} Pa, T = {1} K", Ph2, Th2))
                             Dim tmp = StInHot.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Th2, Ph2, 0)
                             Hh2 = tmp(4)
                             Q = -Wh * (Hh2 - Hh1)
