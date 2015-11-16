@@ -211,15 +211,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     FlashSpec = Streams.MaterialStream.Flashspec.Temperature_and_Pressure
                     T2 = Me.OutletTemperature.GetValueOrDefault
 
-                    If DebugMode Then AppendDebugLine(String.Format("Doing a PH flash to calculate outlet temperature... P = {0} Pa, H = {1} kJ/[kg.K]", P2, H2))
+                    If DebugMode Then AppendDebugLine(String.Format("Doing a PT flash to calculate outlet enthalpy... P = {0} Pa, T = {1} K", P2, T2))
 
                     Dim tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, T2, P2, 0)
                     H2 = tmp(4)
                     CheckSpec(H2, False, "outlet enthalpy")
                     Me.DeltaT = T2 - Ti
                     Me.DeltaQ = (H2 - Hi) / (Me.Eficiencia.GetValueOrDefault / 100) * Wi
-
-                    If DebugMode Then AppendDebugLine(String.Format("Calculated outlet temperature T2 = {0} K", T2))
 
                     'Corrente de energia - atualizar valor da potência (kJ/s)
                     With es
