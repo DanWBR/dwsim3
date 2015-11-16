@@ -1087,7 +1087,7 @@ Namespace GraphicObjects
                 ElseIf StartDir = ConDir.Down Then
                     StartDir = ConDir.Left
                 ElseIf StartDir = ConDir.Right Then
-                    StartDir = ConDir.Up
+                    StartDir = ConDir.Down
                 ElseIf StartDir = ConDir.Up Then
                     StartDir = ConDir.Right
                 End If
@@ -1119,7 +1119,7 @@ Namespace GraphicObjects
                 ElseIf EndDir = ConDir.Down Then
                     EndDir = ConDir.Left
                 ElseIf EndDir = ConDir.Right Then
-                    EndDir = ConDir.Up
+                    EndDir = ConDir.Down
                 ElseIf EndDir = ConDir.Up Then
                     EndDir = ConDir.Right
                 End If
