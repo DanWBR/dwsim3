@@ -388,6 +388,12 @@
     <Compile Include="Forms\FormState.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\FormTextBox.Designer.vb">
+      <DependentUpon>FormTextBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormTextBox.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\FormWhatsNew.Designer.vb">
       <DependentUpon>FormWhatsNew.vb</DependentUpon>
     </Compile>
@@ -1327,6 +1333,9 @@
     <EmbeddedResource Include="Forms\FormTemplateSelect.es.resx">
       <DependentUpon>FormTemplateSelect.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormTextBox.resx">
+      <DependentUpon>FormTextBox.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormWhatsNew.de.resx">
       <DependentUpon>FormWhatsNew.vb</DependentUpon>
     </EmbeddedResource>
@@ -2196,6 +2205,7 @@
     <None Include="Resources\bullet_arrow_bottom1.png" />
     <None Include="Resources\bullet_delete.png" />
     <None Include="Resources\application_xp_terminal.png" />
+    <None Include="Resources\application_osx_terminal.png" />
     <Content Include="Resources\ch.png" />
     <None Include="Resources\clock_red.png" />
     <None Include="Resources\comp_separator.png" />

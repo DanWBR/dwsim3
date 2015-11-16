@@ -62,6 +62,7 @@ Imports PropertyGridEx
     Protected m_errormessage As String = ""
 
     Public Property Calculated As Boolean = False
+    Public Property DebugMode As Boolean = False
     <Xml.Serialization.XmlIgnore> Public Property CreatedWithThreadID As Integer = 0
     <Xml.Serialization.XmlIgnore> Public Property LastUpdated As New Date
 
@@ -72,6 +73,10 @@ Imports PropertyGridEx
     Public Sub New()
 
     End Sub
+
+    Public Overridable Function GetDebugReport() As String
+        Return "Error - function not implemented"
+    End Function
 
     ''' <summary>
     ''' Gets or sets the error message regarding the last calculation attempt.

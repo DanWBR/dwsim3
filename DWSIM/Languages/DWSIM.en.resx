@@ -5230,4 +5230,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="DescBOPP" xml:space="preserve">
     <value>A simplified Property Package for quick process calculations involving petroleum fluids characterized by simple properties like specific gravities and gas-oil ratio.</value>
   </data>
+  <data name="Debugging" xml:space="preserve">
+    <value>Debugging object</value>
+  </data>
 </root>

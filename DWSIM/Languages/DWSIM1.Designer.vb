@@ -3980,6 +3980,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Depurando objeto.
+        '''</summary>
+        Friend Shared ReadOnly Property Debugging() As String
+            Get
+                Return ResourceManager.GetString("Debugging", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Defina um nome para o Sistema de Unidades..
         '''</summary>
         Friend Shared ReadOnly Property DefinaumnomeparaoSis() As String

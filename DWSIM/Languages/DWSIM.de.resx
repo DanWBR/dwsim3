@@ -5214,4 +5214,7 @@ Die erhaltenen Daten werden hauptsächlich für die Berechnung von VLE-Daten emp
   <data name="SEAPP" xml:space="preserve">
     <value>IAPWS-08 Meerwasser</value>
   </data>
+  <data name="Debugging" xml:space="preserve">
+    <value>Debugging object</value>
+  </data>
 </root>

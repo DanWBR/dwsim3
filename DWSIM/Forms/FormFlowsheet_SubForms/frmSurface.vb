@@ -791,6 +791,8 @@ Public Class frmSurface
         Me.CopyFromTSMI.Visible = False
         Me.RestoreTSMI.Visible = False
 
+        DepurarObjetoToolStripMenuItem.Visible = Flowsheet.Collections.ObjectCollection.ContainsKey(Me.FlowsheetDesignSurface.SelectedObject.Name)
+
         If Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto <> TipoObjeto.GO_Figura And _
             Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto <> TipoObjeto.GO_Tabela And _
             Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto <> TipoObjeto.GO_MasterTable And _
@@ -3890,4 +3892,24 @@ Public Class frmSurface
         Me.FlowsheetDesignSurface.SelectedObject.Rotation = 270
         Me.Invalidate()
     End Sub
+
+    Private Sub DepurarObjetoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DepurarObjetoToolStripMenuItem.Click
+        If Not Me.FlowsheetDesignSurface.SelectedObject Is Nothing Then
+            If Flowsheet.Collections.ObjectCollection.ContainsKey(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name) Then
+                Dim myobj As SimulationObjects_BaseClass = Flowsheet.Collections.ObjectCollection(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
+                Dim report As String = myobj.GetDebugReport()
+                Dim frm As New FormTextBox
+                With frm
+                    .TextBox1.Text = report
+                    .TextBox1.SelectedText = ""
+                    .TextBox1.SelectionStart = 0
+                    .TextBox1.SelectionLength = 0
+                    .TextBox1.ScrollBars = ScrollBars.Vertical
+                    .Text = DWSIM.App.GetLocalString("Debugging") & " " & myobj.GraphicObject.Tag & "..."
+                End With
+                frm.Show(Me.Flowsheet)
+            End If
+        End If
+    End Sub
+
 End Class
