@@ -7,6 +7,8 @@ Imports WeifenLuo.WinFormsUI.Docking
 Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
 Imports DWSIM.DWSIM.SimulationObjects
 Imports System.Drawing.Drawing2D
+Imports System.Linq
+Imports System.Threading.Tasks
 
 Public Class frmSurface
     Inherits DockContent
@@ -3897,17 +3899,25 @@ Public Class frmSurface
         If Not Me.FlowsheetDesignSurface.SelectedObject Is Nothing Then
             If Flowsheet.Collections.ObjectCollection.ContainsKey(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name) Then
                 Dim myobj As SimulationObjects_BaseClass = Flowsheet.Collections.ObjectCollection(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
-                Dim report As String = myobj.GetDebugReport()
                 Dim frm As New FormTextBox
                 With frm
-                    .TextBox1.Text = report
-                    .TextBox1.SelectedText = ""
+                    .TextBox1.Text = "Please wait, debugging object..."
                     .TextBox1.SelectionStart = 0
                     .TextBox1.SelectionLength = 0
                     .TextBox1.ScrollBars = ScrollBars.Vertical
                     .Text = DWSIM.App.GetLocalString("Debugging") & " " & myobj.GraphicObject.Tag & "..."
+                    .StartPosition = FormStartPosition.CenterScreen
                 End With
                 frm.Show(Me.Flowsheet)
+
+                Task.Factory.StartNew(Function()
+                                          Return myobj.GetDebugReport()
+                                      End Function).ContinueWith(Sub(t)
+                                                                     frm.TextBox1.Text = t.Result
+                                                                     frm.TextBox1.SelectionStart = 0
+                                                                     frm.TextBox1.SelectionLength = 0
+                                                                 End Sub, TaskContinuationOptions.ExecuteSynchronously)
+
             End If
         End If
     End Sub

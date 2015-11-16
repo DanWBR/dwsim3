@@ -116,6 +116,35 @@ Namespace DWSIM.SimulationObjects.Streams
         Public Property ReferenceSolvent As String = ""
         Public Property InputComposition As Dictionary(Of String, Double) = New Dictionary(Of String, Double)
 
+        Public Overrides Function GetDebugReport() As String
+
+            Me.DebugMode = True
+            Me.DebugText = ""
+
+            Try
+
+                Calculate(True, True)
+
+            Catch ex As Exception
+
+                Dim st As New StackTrace(ex, True)
+                Dim frame As StackFrame = st.GetFrame(0)
+                Dim fileName As String = frame.GetFileName
+                Dim methodName As String = frame.GetMethod().Name
+                Dim line As Integer = frame.GetFileLineNumber()
+
+                AppendDebugLine(String.Format("Exception raised from file {0}, at method {1}, line {2}:", fileName, methodName, line))
+                AppendDebugLine(ex.Message.ToString)
+
+            Finally
+
+                Me.DebugMode = False
+
+            End Try
+
+            Return DebugText
+
+        End Function
         Public Sub Validate()
 
             Dim mytag As String = ""
@@ -299,12 +328,30 @@ Namespace DWSIM.SimulationObjects.Streams
             Dim Q As Nullable(Of Double) = Me.Fases(0).SPMProperties.molarflow
             Dim QV As Nullable(Of Double) = Me.Fases(0).SPMProperties.volumetric_flow
             Dim H As Double = Me.Fases(0).SPMProperties.enthalpy.GetValueOrDefault
+            Dim S As Double = Me.Fases(0).SPMProperties.entropy.GetValueOrDefault
+
+            If DebugMode Then AppendDebugLine(String.Format("Calculation spec: {0}", SpecType.ToString))
+
+            Select Case SpecType
+                Case Flashspec.Pressure_and_Enthalpy
+                    If DebugMode Then AppendDebugLine(String.Format("Input variables: P = {0} Pa, H = {1} kJ/kg", P, H))
+                Case Flashspec.Pressure_and_Entropy
+                    If DebugMode Then AppendDebugLine(String.Format("Input variables: P = {0} Pa, S = {1} kJ/kg.K", P, S))
+                Case Flashspec.Pressure_and_VaporFraction
+                    If DebugMode Then AppendDebugLine(String.Format("Input variables: P = {0} Pa, VF = {1}", P, Me.Fases(2).SPMProperties.molarfraction.GetValueOrDefault))
+                Case Flashspec.Temperature_and_Pressure
+                    If DebugMode Then AppendDebugLine(String.Format("Input variables: T = {0} K, P = {1} Pa", T, P))
+                Case Flashspec.Temperature_and_VaporFraction
+                    If DebugMode Then AppendDebugLine(String.Format("Input variables: T = {0} K, VF = {1}", T, Me.Fases(2).SPMProperties.molarfraction.GetValueOrDefault))
+            End Select
 
             Dim subs As DWSIM.ClassesBasicasTermodinamica.Substancia
             Dim comp As Double = 0
             For Each subs In Me.Fases(0).Componentes.Values
                 comp += subs.FracaoMolar.GetValueOrDefault
             Next
+
+            If DebugMode Then AppendDebugLine(String.Format("Checking mixture composition. Sum must be equal or higher than zero. Sum = {0}", comp))
 
             Dim foption As Integer
 
@@ -313,21 +360,31 @@ Namespace DWSIM.SimulationObjects.Streams
                 .CurrentMaterialStream = Me
 
                 If W.HasValue And comp >= 0 Then
+                    If DebugMode Then AppendDebugLine(String.Format("Checking flow definition. Mass flow specified, will calculate molar and volumetric flow."))
                     foption = 0
                     .DW_CalcVazaoMolar()
                 ElseIf Q.HasValue And comp >= 0 Then
+                    If DebugMode Then AppendDebugLine(String.Format("Checking flow definition. Molar flow specified, will calculate mass and volumetric flow."))
                     foption = 1
                     .DW_CalcVazaoMassica()
                 ElseIf QV.HasValue And comp >= 0 Then
+                    If DebugMode Then AppendDebugLine(String.Format("Checking flow definition. Volumetric flow specified, will calculate mass and molar flow."))
                     foption = 2
                     Me.Fases(0).SPMProperties.molarflow = 1.0#
                     Me.Fases(0).SPMProperties.massflow = 1.0#
                 End If
 
+                If DebugMode Then AppendDebugLine(String.Format("Property Package: {0}", Me.PropertyPackage.ComponentName))
+                If DebugMode Then AppendDebugLine(String.Format("Flash Algorithm: {0}", Me.PropertyPackage.FlashBase.GetType.Name))
+
                 If equilibrium Then
 
+                    If DebugMode Then AppendDebugLine(String.Format("Calculating phase equilibria..."))
+
                     If .AUX_IS_SINGLECOMP(PropertyPackages.Fase.Mixture) Or .IsElectrolytePP Then
+
                         If Me.GraphicObject.InputConnectors(0).IsAttached Then
+                            If DebugMode Then AppendDebugLine(String.Format("Stream is single-compound and attached to the outlet of an unit operation. PH flash equilibrium calculation forced."))
                             .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.H)
                         Else
                             Select Case Me.SpecType
@@ -358,14 +415,26 @@ Namespace DWSIM.SimulationObjects.Streams
                         End Select
                     End If
 
+                    If DebugMode Then AppendDebugLine(String.Format("Phase equilibria calculated succesfully."))
+
                 End If
 
                 If properties Then
 
+                    If DebugMode Then AppendDebugLine(String.Format("Calculating phase properties..."))
+
                     If foption = 2 Then
+
                         .DW_CalcOverallDensity()
+
                         Me.Fases(0).SPMProperties.massflow = QV * Me.Fases(0).SPMProperties.density.GetValueOrDefault
+
+                        If DebugMode Then AppendDebugLine(String.Format("Calculated mass flow: {0} kg/s.", Me.Fases(0).SPMProperties.massflow))
+
                         .DW_CalcVazaoMolar()
+
+                        If DebugMode Then AppendDebugLine(String.Format("Calculated molar flow: {0} mol/s.", Me.Fases(0).SPMProperties.molarflow))
+
                     End If
 
                     If doparallel Then
@@ -475,6 +544,8 @@ Namespace DWSIM.SimulationObjects.Streams
                         .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
                     End If
 
+                    If DebugMode Then AppendDebugLine(String.Format("Phase properties calculated succesfully."))
+
                     Select Case foption
                         Case 0, 1
                             .DW_CalcCompMolarFlow(-1)
@@ -494,6 +565,8 @@ Namespace DWSIM.SimulationObjects.Streams
                             .DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
                             .DW_CalcKvalue()
                     End Select
+
+                    If DebugMode Then AppendDebugLine(String.Format("Material Stream calculated succesfully."))
 
                 End If
 

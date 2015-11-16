@@ -63,6 +63,7 @@ Imports PropertyGridEx
 
     Public Property Calculated As Boolean = False
     Public Property DebugMode As Boolean = False
+    Public Property DebugText As String = ""
     <Xml.Serialization.XmlIgnore> Public Property CreatedWithThreadID As Integer = 0
     <Xml.Serialization.XmlIgnore> Public Property LastUpdated As New Date
 
@@ -77,6 +78,10 @@ Imports PropertyGridEx
     Public Overridable Function GetDebugReport() As String
         Return "Error - function not implemented"
     End Function
+
+    Public Sub AppendDebugLine(text As String)
+        DebugText += text & vbCrLf & vbCrLf
+    End Sub
 
     ''' <summary>
     ''' Gets or sets the error message regarding the last calculation attempt.
@@ -3518,6 +3523,36 @@ End Class
     End Function
 
 #Region "   DWSIM Specific"
+
+    Public Overrides Function GetDebugReport() As String
+
+        Me.DebugMode = True
+        Me.DebugText = ""
+
+        Try
+
+            Calculate(Nothing)
+
+        Catch ex As Exception
+
+            Dim st As New StackTrace(ex, True)
+            Dim frame As StackFrame = st.GetFrame(0)
+            Dim fileName As String = Path.GetFileName(frame.GetFileName)
+            Dim methodName As String = frame.GetMethod().Name
+            Dim line As Integer = frame.GetFileLineNumber()
+
+            AppendDebugLine(String.Format("ERROR: exception raised on file {0}, method {1}, line {2}:", fileName, methodName, line))
+            AppendDebugLine(ex.Message.ToString)
+
+        Finally
+
+            Me.DebugMode = False
+
+        End Try
+
+        Return DebugText
+
+    End Function
 
     Public Enum scriptlanguage
         IronPython = 2
