@@ -1768,7 +1768,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
                             Else
 
-                                result = Me.FlashBase.Flash_TV(RET_VMOL(Fase.Mixture), 0, xv, P, Me)
+                                result = Me.FlashBase.Flash_TV(RET_VMOL(Fase.Mixture), T, xv, P, Me)
 
                                 P = result(4)
 
@@ -2335,7 +2335,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
                             Else
 
-                                result = Me.FlashBase.Flash_PV(RET_VMOL(Fase.Mixture), P, xv, 0, Me)
+                                result = Me.FlashBase.Flash_PV(RET_VMOL(Fase.Mixture), P, xv, T, Me)
 
                                 T = result(4)
 
@@ -2502,24 +2502,28 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
         End Function
 
-        Public Overridable Sub DW_CalcVazaoMassica()
+        Public Sub DW_CalcVazaoMassica()
             With Me.CurrentMaterialStream
                 .Fases(0).SPMProperties.massflow = .Fases(0).SPMProperties.molarflow.GetValueOrDefault * Me.AUX_MMM(Fase.Mixture) / 1000
             End With
         End Sub
 
-        Public Overridable Sub DW_CalcVazaoMolar()
+        Public Sub DW_CalcVazaoMolar()
             With Me.CurrentMaterialStream
                 .Fases(0).SPMProperties.molarflow = .Fases(0).SPMProperties.massflow.GetValueOrDefault / Me.AUX_MMM(Fase.Mixture) * 1000
             End With
         End Sub
 
-        Public Overridable Sub DW_CalcVazaoVolumetrica()
+        Public Sub DW_CalcVazaoVolumetrica()
             With Me.CurrentMaterialStream
                 If .Fases(0).SPMProperties.density.GetValueOrDefault > 0 Then
-                    .Fases(0).SPMProperties.volumetric_flow = .Fases(0).SPMProperties.massflow.GetValueOrDefault / .Fases(0).SPMProperties.density.GetValueOrDefault
+                    If .Fases(0).SPMProperties.density.GetValueOrDefault > 0 Then
+                        .Fases(0).SPMProperties.volumetric_flow = .Fases(0).SPMProperties.massflow.GetValueOrDefault / .Fases(0).SPMProperties.density.GetValueOrDefault
+                    Else
+                        .Fases(0).SPMProperties.volumetric_flow = 0.0#
+                    End If
                 Else
-                    .Fases(0).SPMProperties.volumetric_flow = 0
+                    .Fases(0).SPMProperties.volumetric_flow = 0.0#
                 End If
             End With
         End Sub

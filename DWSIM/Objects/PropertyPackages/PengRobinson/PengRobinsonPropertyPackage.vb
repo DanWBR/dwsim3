@@ -435,24 +435,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         End Sub
 
-        Public Overrides Sub DW_CalcVazaoMassica()
-            With Me.CurrentMaterialStream
-                .Fases(0).SPMProperties.massflow = .Fases(0).SPMProperties.molarflow.GetValueOrDefault * Me.AUX_MMM(Fase.Mixture) / 1000
-            End With
-        End Sub
-
-        Public Overrides Sub DW_CalcVazaoMolar()
-            With Me.CurrentMaterialStream
-                .Fases(0).SPMProperties.molarflow = .Fases(0).SPMProperties.massflow.GetValueOrDefault / Me.AUX_MMM(Fase.Mixture) * 1000
-            End With
-        End Sub
-
-        Public Overrides Sub DW_CalcVazaoVolumetrica()
-            With Me.CurrentMaterialStream
-                .Fases(0).SPMProperties.volumetric_flow = .Fases(0).SPMProperties.massflow.GetValueOrDefault / .Fases(0).SPMProperties.density.GetValueOrDefault
-            End With
-        End Sub
-
         Public Overrides Function DW_CalcViscosidadeDinamica_ISOL(ByVal fase1 As DWSIM.SimulationObjects.PropertyPackages.Fase, ByVal T As Double, ByVal P As Double) As Double
             If fase1 = Fase.Liquid Then
                 Return Me.AUX_LIQVISCm(T)

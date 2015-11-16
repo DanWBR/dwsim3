@@ -874,24 +874,6 @@ FINAL:
 
         End Sub
 
-        Public Overrides Sub DW_CalcVazaoMassica()
-            With Me.CurrentMaterialStream
-                .Fases(0).SPMProperties.massflow = .Fases(0).SPMProperties.molarflow.GetValueOrDefault * 18 / 1000
-            End With
-        End Sub
-
-        Public Overrides Sub DW_CalcVazaoMolar()
-            With Me.CurrentMaterialStream
-                .Fases(0).SPMProperties.molarflow = .Fases(0).SPMProperties.massflow.GetValueOrDefault / 18 * 1000
-            End With
-        End Sub
-
-        Public Overrides Sub DW_CalcVazaoVolumetrica()
-            With Me.CurrentMaterialStream
-                .Fases(0).SPMProperties.volumetric_flow = .Fases(0).SPMProperties.massflow.GetValueOrDefault / .Fases(0).SPMProperties.density.GetValueOrDefault
-            End With
-        End Sub
-
         Public Overrides Function DW_CalcMassaEspecifica_ISOL(ByVal fase1 As DWSIM.SimulationObjects.PropertyPackages.Fase, ByVal T As Double, ByVal P As Double, Optional ByVal pvp As Double = 0) As Double
             If fase1 = Fase.Liquid Then
                 Return Me.m_iapws97.densW(T, P / 100000)

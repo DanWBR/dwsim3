@@ -376,16 +376,16 @@ Namespace DWSIM.SimulationObjects.UnitOps
             End If
             i = 0
             For Each comp In mix.Fases(0).Componentes.Values
-                VnL1(i) = mix.Fases(3).Componentes(comp.Nome).MolarFlow + SR * mix.Fases(7).Componentes(comp.Nome).MolarFlow
-                VmL1(i) = mix.Fases(3).Componentes(comp.Nome).MassFlow + SR * mix.Fases(7).Componentes(comp.Nome).MassFlow
-                VnL2(i) = mix.Fases(4).Componentes(comp.Nome).MolarFlow + (1 - SR) * mix.Fases(7).Componentes(comp.Nome).MolarFlow
-                VmL2(i) = mix.Fases(4).Componentes(comp.Nome).MassFlow + (1 - SR) * mix.Fases(7).Componentes(comp.Nome).MassFlow
+                VnL1(i) = mix.Fases(3).Componentes(comp.Nome).MolarFlow.GetValueOrDefault + SR * mix.Fases(7).Componentes(comp.Nome).MolarFlow.GetValueOrDefault
+                VmL1(i) = mix.Fases(3).Componentes(comp.Nome).MassFlow.GetValueOrDefault + SR * mix.Fases(7).Componentes(comp.Nome).MassFlow.GetValueOrDefault
+                VnL2(i) = mix.Fases(4).Componentes(comp.Nome).MolarFlow.GetValueOrDefault + (1 - SR) * mix.Fases(7).Componentes(comp.Nome).MolarFlow.GetValueOrDefault
+                VmL2(i) = mix.Fases(4).Componentes(comp.Nome).MassFlow.GetValueOrDefault + (1 - SR) * mix.Fases(7).Componentes(comp.Nome).MassFlow.GetValueOrDefault
                 i += 1
             Next
-            VnL1 = VnL1.NormalizeY
-            VmL1 = VmL1.NormalizeY
-            VnL2 = VnL2.NormalizeY
-            VmL2 = VmL2.NormalizeY
+            If VnL1.SumY > 0.0# Then VnL1 = VnL1.NormalizeY
+            If VmL1.SumY > 0.0# Then VmL1 = VmL1.NormalizeY
+            If VnL2.SumY > 0.0# Then VnL2 = VnL2.NormalizeY
+            If VmL2.SumY > 0.0# Then VmL2 = VmL2.NormalizeY
             WL1 = mix.Fases(3).SPMProperties.massflow.GetValueOrDefault
             WL2 = mix.Fases(4).SPMProperties.massflow.GetValueOrDefault
             WS = mix.Fases(7).SPMProperties.massflow.GetValueOrDefault
@@ -393,6 +393,17 @@ Namespace DWSIM.SimulationObjects.UnitOps
             W2 = WL2 + (1 - SR) * WS
             HL1 = (WL1 * mix.Fases(3).SPMProperties.enthalpy.GetValueOrDefault + WS * SR * mix.Fases(7).SPMProperties.enthalpy.GetValueOrDefault) / (WL1 + WS * SR)
             HL2 = (WL2 * mix.Fases(4).SPMProperties.enthalpy.GetValueOrDefault + WS * (1 - SR) * mix.Fases(7).SPMProperties.enthalpy.GetValueOrDefault) / (WL2 + WS * (1 - SR))
+
+            'Me.PropertyPackage.CurrentMaterialStream = mix
+            'If Double.IsNaN(VnL1.SumY) Then VnL1 = mix.PropertyPackage.RET_NullVector
+            'If Double.IsNaN(VmL1.SumY) Then VmL1 = mix.PropertyPackage.RET_NullVector
+            'If Double.IsNaN(VnL2.SumY) Then VnL2 = mix.PropertyPackage.RET_NullVector
+            'If Double.IsNaN(VmL2.SumY) Then VmL2 = mix.PropertyPackage.RET_NullVector
+
+            If Double.IsNaN(HL1) Then HL1 = 0.0#
+            If Double.IsNaN(HL2) Then HL2 = 0.0#
+            If Double.IsNaN(WL1) Then WL1 = 0.0#
+            If Double.IsNaN(WL2) Then WL2 = 0.0#
 
             cp = Me.GraphicObject.OutputConnectors(0) 'vapour phase
             If cp.IsAttached Then
@@ -418,7 +429,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     .ClearAllProps()
                     .Fases(0).SPMProperties.temperature = T
                     .Fases(0).SPMProperties.pressure = P
-                    .Fases(0).SPMProperties.massflow = W1
+                    If W1 > 0.0# Then .Fases(0).SPMProperties.massflow = W1 Else .Fases(0).SPMProperties.molarflow = 0.0#
                     .Fases(0).SPMProperties.enthalpy = HL1
                     Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
                     i = 0
@@ -438,7 +449,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         .ClearAllProps()
                         .Fases(0).SPMProperties.temperature = T
                         .Fases(0).SPMProperties.pressure = P
-                        .Fases(0).SPMProperties.massflow = W2
+                        If W2 > 0.0# Then .Fases(0).SPMProperties.massflow = W2 Else .Fases(0).SPMProperties.molarflow = 0.0#
                         .Fases(0).SPMProperties.enthalpy = HL2
                         Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
                         i = 0

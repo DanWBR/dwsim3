@@ -351,7 +351,7 @@ Namespace DWSIM.SimulationObjects.Streams
                 comp += subs.FracaoMolar.GetValueOrDefault
             Next
 
-            If DebugMode Then AppendDebugLine(String.Format("Checking mixture composition. Sum must be equal or higher than zero. Sum = {0}", comp))
+            If DebugMode Then AppendDebugLine(String.Format("Checking mixture composition. Sum must be higher than zero. Sum = {0}", comp))
 
             Dim foption As Integer
 
@@ -359,15 +359,15 @@ Namespace DWSIM.SimulationObjects.Streams
 
                 .CurrentMaterialStream = Me
 
-                If W.HasValue And comp >= 0 Then
+                If W.HasValue Then
                     If DebugMode Then AppendDebugLine(String.Format("Checking flow definition. Mass flow specified, will calculate molar and volumetric flow."))
                     foption = 0
                     .DW_CalcVazaoMolar()
-                ElseIf Q.HasValue And comp >= 0 Then
+                ElseIf Q.HasValue Then
                     If DebugMode Then AppendDebugLine(String.Format("Checking flow definition. Molar flow specified, will calculate mass and volumetric flow."))
                     foption = 1
                     .DW_CalcVazaoMassica()
-                ElseIf QV.HasValue And comp >= 0 Then
+                ElseIf QV.HasValue Then
                     If DebugMode Then AppendDebugLine(String.Format("Checking flow definition. Volumetric flow specified, will calculate mass and molar flow."))
                     foption = 2
                     Me.Fases(0).SPMProperties.molarflow = 1.0#
@@ -377,7 +377,7 @@ Namespace DWSIM.SimulationObjects.Streams
                 If DebugMode Then AppendDebugLine(String.Format("Property Package: {0}", Me.PropertyPackage.ComponentName))
                 If DebugMode Then AppendDebugLine(String.Format("Flash Algorithm: {0}", Me.PropertyPackage.FlashBase.GetType.Name))
 
-                If equilibrium Then
+                If equilibrium And comp > 0.0# Then
 
                     If DebugMode Then AppendDebugLine(String.Format("Calculating phase equilibria..."))
 
