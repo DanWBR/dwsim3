@@ -1081,6 +1081,70 @@ Namespace GraphicObjects
                 End If
             End If
 
+            If Me.AttachedFrom.Rotation >= 90 And Me.AttachedFrom.Rotation < 180 Then
+                If StartDir = ConDir.Left Then
+                    StartDir = ConDir.Up
+                ElseIf StartDir = ConDir.Down Then
+                    StartDir = ConDir.Left
+                ElseIf StartDir = ConDir.Right Then
+                    StartDir = ConDir.Up
+                ElseIf StartDir = ConDir.Up Then
+                    StartDir = ConDir.Right
+                End If
+            ElseIf Me.AttachedFrom.Rotation >= 180 And Me.AttachedFrom.Rotation < 270 Then
+                If StartDir = ConDir.Left Then
+                    StartDir = ConDir.Right
+                ElseIf StartDir = ConDir.Down Then
+                    StartDir = ConDir.Up
+                ElseIf StartDir = ConDir.Right Then
+                    StartDir = ConDir.Left
+                ElseIf StartDir = ConDir.Up Then
+                    StartDir = ConDir.Down
+                End If
+            ElseIf Me.AttachedFrom.Rotation >= 270 And Me.AttachedFrom.Rotation < 360 Then
+                If StartDir = ConDir.Left Then
+                    StartDir = ConDir.Down
+                ElseIf StartDir = ConDir.Down Then
+                    StartDir = ConDir.Right
+                ElseIf StartDir = ConDir.Right Then
+                    StartDir = ConDir.Up
+                ElseIf StartDir = ConDir.Up Then
+                    StartDir = ConDir.Left
+                End If
+            End If
+
+            If Me.AttachedTo.Rotation >= 90 And Me.AttachedTo.Rotation < 180 Then
+                If EndDir = ConDir.Left Then
+                    EndDir = ConDir.Up
+                ElseIf EndDir = ConDir.Down Then
+                    EndDir = ConDir.Left
+                ElseIf EndDir = ConDir.Right Then
+                    EndDir = ConDir.Up
+                ElseIf EndDir = ConDir.Up Then
+                    EndDir = ConDir.Right
+                End If
+            ElseIf Me.AttachedTo.Rotation >= 180 And Me.AttachedTo.Rotation < 270 Then
+                If EndDir = ConDir.Left Then
+                    EndDir = ConDir.Right
+                ElseIf EndDir = ConDir.Down Then
+                    EndDir = ConDir.Up
+                ElseIf EndDir = ConDir.Right Then
+                    EndDir = ConDir.Left
+                ElseIf EndDir = ConDir.Up Then
+                    EndDir = ConDir.Down
+                End If
+            ElseIf Me.AttachedTo.Rotation >= 270 And Me.AttachedTo.Rotation < 360 Then
+                If EndDir = ConDir.Left Then
+                    EndDir = ConDir.Down
+                ElseIf EndDir = ConDir.Down Then
+                    EndDir = ConDir.Right
+                ElseIf EndDir = ConDir.Right Then
+                    EndDir = ConDir.Up
+                ElseIf EndDir = ConDir.Up Then
+                    EndDir = ConDir.Left
+                End If
+            End If
+
             'Construct path of stream
             PointList.Add(New PointF(StartPos.X, StartPos.Y))
 

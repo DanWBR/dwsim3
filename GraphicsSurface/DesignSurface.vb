@@ -535,7 +535,7 @@ Imports System.Collections.Generic
 
     Public Sub AlignSelectedObjects(direction As AlignDirection)
 
-        If Me.SelectedObjects.Count > 0 Then
+        If Me.SelectedObjects.Count > 1 Then
 
             Dim refpos As Integer = 0
 
