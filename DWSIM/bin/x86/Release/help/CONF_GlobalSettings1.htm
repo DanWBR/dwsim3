@@ -1,30 +1,25 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<html><head>
+
 <script src="ContentScripts.js"></script>
-<head>
-<link rel="stylesheet" type="text/css" href="DWSIMstyle.css">
-</head>
 
-<!-- ================================================================================== -->
-<!-- ====================   Begin of content    ========================================-->
-<!-- ================================================================================== -->
-<body onload="LoadMenue()">
+<link rel="stylesheet" type="text/css" href="DWSIMstyle.css"><!-- ================================================================================== --><!-- ====================   Begin of content    ========================================--><!-- ================================================================================== --></head><body onload="LoadMenue()">
 
-<H2>Global Settings</H2>
+<h2>Global Settings</h2>
 <a href="CONF_GlobalSettings7.htm" target="_parent"><img src="pictures/arrow-up.gif"></a>
 <a href="CONF_GlobalSettings2.htm" target="_parent"><img src="pictures/arrow-down.gif"></a>
 <p><b>This tool is used to edit global settings of DWSIM</b></p>
 
 <hr>
-<H3> Solver Configuration</H3>
+<h3> Solver Configuration</h3>
 
 <table>
-<tr>
+<tbody><tr>
 <td><img src="pictures/CONF0_1.png"></td>
 
 <td>
 <h3>Solver Options</h3>
-Select calculation mode and timeout of solver. Visit this page on the wiki for more details on the solver options: <a href=http://dwsim.inforside.com.br/wiki/index.php?title=Solver_Configuration>Solver Configuration</a><br><br>
+Select calculation mode and timeout of solver. Visit this page on the wiki for more details on the solver options: <a href="http://dwsim.inforside.com.br/wiki/index.php?title=Solver_Configuration">Solver Configuration</a><br><br>
 
 
 <h3>Local Calculation Engine Settings</h3>
@@ -32,15 +27,18 @@ Select calculation mode and timeout of solver. Visit this page on the wiki for m
 
 <b>CPU Parallel Processing</b><br>
 This option enables calculations in multiple processors in parallel. Select maximum numbers of processors for calculation.<br><br>
+      <b>CPU SIMD Acceleration</b><br>
+
+This option enables vector operations through CPU SIMD features.<br>
+<br>
 
 <b>OpenCL/CUDA Processing</b><br>
 This option enables parallel calculations on Graphic Card (GPU). Select device where calculations are executed.<br><br>
 </td>
 </tr>
-</table>
+</tbody></table>
 
 <br><br>
 
 
-</BODY>
-</HTML>
+</body></html>
