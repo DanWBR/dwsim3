@@ -413,6 +413,10 @@ Imports System.Collections.Generic
         g.DrawRectangle(marginPen, margins)
     End Sub
 
+    Public Function IsRunningOnMono() As Boolean
+        Return Not Type.GetType("Mono.Runtime") Is Nothing
+    End Function
+
     Protected Overrides Sub OnPaint(ByVal e As PaintEventArgs)
 
         'Try
@@ -445,11 +449,11 @@ Imports System.Collections.Generic
 
         If hoverdraw Then
 
-            Dim myOriginalMatrix As Drawing2D.Matrix
+            Dim myOriginalMatrix As New Drawing2D.Matrix
 
             Dim gCon1 As Drawing2D.GraphicsContainer = g.BeginContainer
 
-            myOriginalMatrix = g.Transform()
+            If Not IsRunningOnMono() Then myOriginalMatrix = g.Transform()
 
             If hoverrotation <> 0 Then
                 myOriginalMatrix.RotateAt(hoverrotation, New PointF((hoverRect.X + hoverRect.Width / 2) * Zoom, (hoverRect.Y + hoverRect.Height / 2) * Zoom), _
@@ -469,7 +473,7 @@ Imports System.Collections.Generic
             Dim gbrush As New LinearGradientBrush(hoverRect, color1, color2, LinearGradientMode.Vertical)
             DrawRoundRect(g, New Pen(color3, 1), hoverRect.X, hoverRect.Y, hoverRect.Width, hoverRect.Height, 15, gbrush)
 
-            g.Transform = myOriginalMatrix
+            If Not IsRunningOnMono() Then g.Transform = myOriginalMatrix
             g.EndContainer(gCon1)
 
         End If
@@ -1132,23 +1136,27 @@ Imports System.Collections.Generic
 
     Public Sub DrawRoundRect(ByVal g As Graphics, ByVal p As Pen, ByVal x As Integer, ByVal y As Integer, ByVal width As Integer, ByVal height As Integer, ByVal radius As Integer, ByVal myBrush As Brush)
 
-        Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
+        If width > 2 * radius And height > 2 * radius Then
 
-        gp.AddLine(x + radius, y, x + width - radius, y)
-        gp.AddArc(x + width - radius, y, radius, radius, 270, 90)
-        gp.AddLine(x + width, y + radius, x + width, y + height - radius)
-        gp.AddArc(x + width - radius, y + height - radius, radius, radius, 0, 90)
-        gp.AddLine(x + width - radius, y + height, x + radius, y + height)
-        gp.AddArc(x, y + height - radius, radius, radius, 90, 90)
-        gp.AddLine(x, y + height - radius, x, y + radius)
-        gp.AddArc(x, y, radius, radius, 180, 90)
+            Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
 
-        gp.CloseFigure()
+            gp.AddLine(x + radius, y, x + width - radius, y)
+            gp.AddArc(x + width - radius, y, radius, radius, 270, 90)
+            gp.AddLine(x + width, y + radius, x + width, y + height - radius)
+            gp.AddArc(x + width - radius, y + height - radius, radius, radius, 0, 90)
+            gp.AddLine(x + width - radius, y + height, x + radius, y + height)
+            gp.AddArc(x, y + height - radius, radius, radius, 90, 90)
+            gp.AddLine(x, y + height - radius, x, y + radius)
+            gp.AddArc(x, y, radius, radius, 180, 90)
 
-        g.DrawPath(p, gp)
-        g.FillPath(myBrush, gp)
+            gp.CloseFigure()
 
-        gp.Dispose()
+            g.DrawPath(p, gp)
+            g.FillPath(myBrush, gp)
+
+            gp.Dispose()
+
+        End If
 
     End Sub
 

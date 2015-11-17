@@ -151,14 +151,18 @@ Namespace GraphicObjects
 
         End Sub
 
-        Public Overridable Sub DrawTag(ByVal g As System.Drawing.Graphics, matrix As Drawing2D.Matrix)
+        Public Overridable Sub DrawTag(ByVal g As System.Drawing.Graphics, ByVal rotationmatrix As Drawing2D.Matrix)
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
 
-            [matrix].RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+            If Not IsRunningOnMono() Then
 
-            g.Transform = [matrix]
+                rotationmatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
+
+                g.Transform = rotationmatrix
+
+            End If
 
             If Not Selected Then g.FillRectangle(New SolidBrush(Color.FromArgb(200, Color.White)), X + strx, Y + Height + 5, strdist.Width, strdist.Height)
 
@@ -234,25 +238,30 @@ Namespace GraphicObjects
                 endPoint.Y = startPoint.Y + Convert.ToSingle(dy)
             End If
         End Sub
+
         Public Sub DrawRoundRect(ByVal g As Graphics, ByVal p As Pen, ByVal x As Integer, ByVal y As Integer, ByVal width As Integer, ByVal height As Integer, ByVal radius As Integer, ByVal myBrush As Brush)
 
-            Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
+            If width > 2 * radius And height > 2 * radius Then
 
-            gp.AddLine(x + radius, y, x + width - radius, y)
-            gp.AddArc(x + width - radius, y, radius, radius, 270, 90)
-            gp.AddLine(x + width, y + radius, x + width, y + height - radius)
-            gp.AddArc(x + width - radius, y + height - radius, radius, radius, 0, 90)
-            gp.AddLine(x + width - radius, y + height, x + radius, y + height)
-            gp.AddArc(x, y + height - radius, radius, radius, 90, 90)
-            gp.AddLine(x, y + height - radius, x, y + radius)
-            gp.AddArc(x, y, radius, radius, 180, 90)
+                Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
 
-            gp.CloseFigure()
+                gp.AddLine(x + radius, y, x + width - radius, y)
+                gp.AddArc(x + width - radius, y, radius, radius, 270, 90)
+                gp.AddLine(x + width, y + radius, x + width, y + height - radius)
+                gp.AddArc(x + width - radius, y + height - radius, radius, radius, 0, 90)
+                gp.AddLine(x + width - radius, y + height, x + radius, y + height)
+                gp.AddArc(x, y + height - radius, radius, radius, 90, 90)
+                gp.AddLine(x, y + height - radius, x, y + radius)
+                gp.AddArc(x, y, radius, radius, 180, 90)
 
-            g.DrawPath(p, gp)
-            g.FillPath(myBrush, gp)
+                gp.CloseFigure()
 
-            gp.Dispose()
+                g.DrawPath(p, gp)
+                g.FillPath(myBrush, gp)
+
+                gp.Dispose()
+
+            End If
 
         End Sub
 

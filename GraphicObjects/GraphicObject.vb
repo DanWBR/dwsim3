@@ -133,6 +133,10 @@ Namespace GraphicObjects
 
         Public Property Selected As Boolean = False
 
+        Public Function IsRunningOnMono() As Boolean
+            Return Not Type.GetType("Mono.Runtime") Is Nothing
+        End Function
+
         Public Shared Function ReturnInstance(typename As String) As GraphicObject
             Return Activator.CreateInstance(Type.GetType(typename))
         End Function
@@ -502,10 +506,12 @@ Namespace GraphicObjects
         Public Overridable Property Rotation() As Single
             Get
                 Return m_Rotation
+                If IsRunningOnMono() Then Return 0
             End Get
             Set(ByVal Value As Single)
                 If System.Math.Abs(Value) <= 360 Then
                     m_Rotation = Value
+                    If IsRunningOnMono() Then m_Rotation = 0
                 Else
                     Throw New ArgumentOutOfRangeException("Rotation", _
                         "Rotation must be between -360.0 and 360.0")
