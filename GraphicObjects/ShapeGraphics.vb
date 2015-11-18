@@ -2825,7 +2825,7 @@ Namespace GraphicObjects
             ay = Me.Y + (Me.Height - size.Height) / 2
 
 
-            g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
+
             g.DrawString("R", fontA, Brushes.DarkBlue, ax, ay)
 
             DrawTag(g, myMatrix)
@@ -4039,7 +4039,7 @@ Namespace GraphicObjects
             ay = Me.Y + (Me.Height - size.Height) / 2
 
 
-            g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
+
             g.DrawString("A", fontA, Brushes.Red, ax, ay)
 
             Dim myPen As New Pen(Color.Red, 2)
@@ -4280,7 +4280,7 @@ Namespace GraphicObjects
             ay = Me.Y + (Me.Height - size.Height) / 2
 
 
-            g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
+
 
             g.DrawString("E", fontA, Brushes.Blue, ax, ay)
 
@@ -4489,7 +4489,7 @@ Namespace GraphicObjects
             ay = Me.Y + (Me.Height - size.Height) / 2
 
 
-            g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
+
             g.DrawString("R", fontA, Brushes.Green, ax, ay)
 
             Dim myPen As New Pen(Color.SteelBlue, 2)
@@ -4678,7 +4678,7 @@ Namespace GraphicObjects
             ay = Me.Y + (Me.Height - size.Height) / 2
 
 
-            g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
+
             g.DrawString("R", fontA, Brushes.YellowGreen, ax, ay)
 
             Dim myPen As New Pen(Color.YellowGreen, 2)
@@ -7755,7 +7755,7 @@ Namespace GraphicObjects
             ay = Me.Y + (Me.Height - size.Height) / 2
 
 
-            g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
+
             g.DrawString("UO", fontA, Brushes.SteelBlue, ax, ay)
 
             DrawTag(g, myMatrix)
@@ -7980,7 +7980,7 @@ Namespace GraphicObjects
             ay = Me.Y + (Me.Height - size.Height) / 2
 
 
-            g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
+
             g.DrawString("E", fontA, Brushes.DarkOrange, ax, ay)
 
             DrawTag(g, myMatrix)
@@ -8218,7 +8218,7 @@ Namespace GraphicObjects
             ay = Me.Y + (Me.Height - size.Height) / 2
 
 
-            g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
+
             g.DrawString("F", fontA, Brushes.DarkOrange, ax, ay)
 
             DrawTag(g, myMatrix)
@@ -8499,7 +8499,7 @@ Namespace GraphicObjects
                         ay = Me.Y + Me.Height - size.Height
                     End If
 
-                    g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
+
                     g.DrawString("CS", fontA, New SolidBrush(Me.LineColor), ax, ay)
 
                     myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
@@ -8577,7 +8577,7 @@ Namespace GraphicObjects
                     ax = Me.X + (Me.Width - size.Width) / 2
                     ay = Me.Y + (Me.Height - size.Height) / 2
 
-                    g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
+
                     g.DrawString("R", fontA, Brushes.DarkBlue, ax, ay)
                     gp.Dispose()
 
@@ -8619,7 +8619,7 @@ Namespace GraphicObjects
                     ax = Me.X + (Me.Width - size.Width) / 2
                     ay = Me.Y + (Me.Height - size.Height) / 2
 
-                    g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
+
                     g.DrawString("CO", fontA, Brushes.SteelBlue, ax, ay)
 
                     myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
@@ -8822,7 +8822,7 @@ Namespace GraphicObjects
                     ax = Me.X + (Me.Width - size.Width) / 2
                     ay = Me.Y + (Me.Height - size.Height) / 2
 
-                    g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
+
                     g.DrawString("A", fontA, Brushes.DarkOrange, ax, ay)
                     gp.Dispose()
 
@@ -9139,7 +9139,7 @@ Namespace GraphicObjects
                         ay = Me.Y + Me.Height - size.Height
                     End If
 
-                    g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
+
                     g.DrawString("C", fontA, New SolidBrush(Me.LineColor), ax, ay)
 
                     myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
@@ -9276,7 +9276,7 @@ Namespace GraphicObjects
                         ay = Me.Y + Me.Height - size.Height
                     End If
 
-                    g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
+
                     g.DrawString("E", fontA, New SolidBrush(Me.LineColor), ax, ay)
 
                     myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
@@ -9367,7 +9367,7 @@ Namespace GraphicObjects
                         ay = Me.Y + Me.Height - size.Height
                     End If
 
-                    g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
+
                     g.DrawString("G", fontA, New SolidBrush(Me.LineColor), ax, ay)
 
                     myMatrix.RotateAt(-m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)

@@ -426,10 +426,10 @@ Imports System.Collections.Generic
 
             If Not dragging Then
 
-                .InterpolationMode = InterpolationMode.Default
-                .PixelOffsetMode = PixelOffsetMode.Default
+                .InterpolationMode = InterpolationMode.Bilinear
+                .PixelOffsetMode = PixelOffsetMode.HighSpeed
                 .CompositingMode = CompositingMode.SourceOver
-                .CompositingQuality = CompositingQuality.Default
+                .CompositingQuality = CompositingQuality.HighSpeed
                 .TextRenderingHint = Drawing.Text.TextRenderingHint.SystemDefault
                 .SmoothingMode = SmoothingMode.AntiAlias
 
