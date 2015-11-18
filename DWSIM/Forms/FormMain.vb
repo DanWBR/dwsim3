@@ -4121,11 +4121,31 @@ ruf:                Application.DoEvents()
     End Sub
 
     Private Sub ManualTécnicoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ManualTécnicoToolStripMenuItem.Click
-        Process.Start(My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "docs" & Path.DirectorySeparatorChar & "tech_manual.pdf")
+        If DWSIM.App.IsRunningOnMono Then
+            Dim p As New Process()
+            With p
+                .StartInfo.FileName = "xdg-open"
+                .StartInfo.Arguments = My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "docs" & Path.DirectorySeparatorChar & "tech_manual.pdf"
+                .StartInfo.UseShellExecute = False
+                .Start()
+            End With
+        Else
+            Process.Start(My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "docs" & Path.DirectorySeparatorChar & "tech_manual.pdf")
+        End If
     End Sub
 
     Private Sub GuiaDoUsuárioToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GuiaDoUsuárioToolStripMenuItem.Click
-        Process.Start(My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "docs" & Path.DirectorySeparatorChar & "user_guide.pdf")
+        If DWSIM.App.IsRunningOnMono Then
+            Dim p As New Process()
+            With p
+                .StartInfo.FileName = "xdg-open"
+                .StartInfo.Arguments = My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "docs" & Path.DirectorySeparatorChar & "user_guide.pdf"
+                .StartInfo.UseShellExecute = False
+                .Start()
+            End With
+        Else
+            Process.Start(My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "docs" & Path.DirectorySeparatorChar & "user_guide.pdf")
+        End If
     End Sub
 
     Private Sub DownloadsToolStripMenuItem_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DownloadsToolStripMenuItem.Click
