@@ -2169,6 +2169,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="dwsim_splash.ico" />
+    <EmbeddedResource Include="version.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <None Include="Resources\shape_align_middle1.png" />
     <None Include="Resources\shape_align_center1.png" />
     <None Include="Resources\shape_align_top.png" />

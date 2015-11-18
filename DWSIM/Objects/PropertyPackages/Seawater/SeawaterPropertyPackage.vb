@@ -743,8 +743,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             Dim water As Substancia = (From subst As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values Select subst Where subst.ConstantProperties.CAS_Number = "7732-18-5").SingleOrDefault
 
-            Tnfp = water.ConstantProperties.TemperatureOfFusion
-            DHm = water.ConstantProperties.EnthalpyOfFusionAtTf
+            Tnfp = 273.15
+            DHm = 6.00174
 
             Dim idw As Integer = 0
             
