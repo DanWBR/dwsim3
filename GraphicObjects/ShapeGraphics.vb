@@ -75,6 +75,8 @@ Namespace GraphicObjects
                     gobj.LineColor = Color.FromArgb(alpha, Color.SteelBlue)
                 Case GraphicObjects.Status.Inactive
                     gobj.LineColor = Color.FromArgb(alpha, Color.Gray)
+                Case Else
+                    gobj.LineColor = Color.FromArgb(alpha, gobj.LineColor)
             End Select
 
         End Sub
@@ -376,7 +378,7 @@ Namespace GraphicObjects
                 ay = Me.Y + Me.Height - size.Height
             End If
 
-            g.DrawString(TypeName, fontA, New SolidBrush(Me.LineColor), ax, ay)
+            g.DrawString(TypeName, fontA, New SolidBrush(Color.FromArgb(If(SemiTransparent, 50, 255), Me.LineColor)), ax, ay)
 
             DrawTag(g, myMatrix)
 
@@ -2652,7 +2654,7 @@ Namespace GraphicObjects
             ax = Me.X + (Me.Width - size.Width) / 2
             ay = Me.Y + (Me.Height - size.Height) / 2
 
-            g.DrawString("A", fontA, Brushes.DarkOrange, ax, ay)
+            g.DrawString("H", fontA, New SolidBrush(Color.FromArgb(If(SemiTransparent, 50, 255), Color.Red)), ax, ay)
 
             DrawTag(g, myMatrix)
 
@@ -2826,7 +2828,7 @@ Namespace GraphicObjects
 
 
 
-            g.DrawString("R", fontA, Brushes.DarkBlue, ax, ay)
+            g.DrawString("C", fontA, New SolidBrush(Color.FromArgb(If(SemiTransparent, 50, 255), Color.Blue)), ax, ay)
 
             DrawTag(g, myMatrix)
 
@@ -3476,14 +3478,6 @@ Namespace GraphicObjects
             Dim myPen2 As New Pen(Color.White, 0)
             Dim rect As New Rectangle(X, Y, Width, Height)
 
-
-            'g.DrawRectangle(myPen, rect)
-
-            Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
-            Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
-
             Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
             If Me.FlippedH = False Then
                 gp.AddLine(CInt(X), CInt(Y + 0.3 * Height), CInt(X), CInt(Y + 0.7 * Height))
@@ -3942,6 +3936,11 @@ Namespace GraphicObjects
 
             MyBase.Draw(g)
 
+            Dim alpha As Integer = 255
+            If SemiTransparent Then
+                alpha = 50
+            End If
+         
             UpdateStatus(Me)
 
             Dim gContainer As Drawing2D.GraphicsContainer
@@ -3956,7 +3955,7 @@ Namespace GraphicObjects
             End If
 
             If Not Me.ConnectedToMv Is Nothing Then
-                Dim cpen As New Pen(Color.Red, 2)
+                Dim cpen As New Pen(Color.FromArgb(alpha, Color.Red), 2)
                 With cpen
                     .DashStyle = DashStyle.Dot
                     .DashCap = DashCap.Round
@@ -3966,7 +3965,7 @@ Namespace GraphicObjects
                 g.DrawLines(cpen, New Point() {New Point(Me.X + Me.Width / 2, Me.Y + Me.Height / 2), New Point(Me.m_mvPT.X, Me.Y + Me.Height / 2), Me.m_mvPT.GetPosition})
             End If
             If Not Me.ConnectedToCv Is Nothing Then
-                Dim cpen As New Pen(Color.Red, 2)
+                Dim cpen As New Pen(Color.FromArgb(alpha, Color.Red), 2)
                 With cpen
                     .DashStyle = DashStyle.Dot
                     .DashCap = DashCap.Round
@@ -3976,7 +3975,7 @@ Namespace GraphicObjects
                 g.DrawLines(cpen, New Point() {New Point(Me.X + Me.Width / 2, Me.Y + Me.Height / 2), New Point(Me.m_cvPT.X, Me.Y + Me.Height / 2), Me.m_cvPT.GetPosition})
             End If
             If Not Me.ConnectedToRv Is Nothing Then
-                Dim cpen As New Pen(Color.Red, 2)
+                Dim cpen As New Pen(Color.FromArgb(alpha, Color.Red), 2)
                 With cpen
                     .DashStyle = DashStyle.Dot
                     .DashCap = DashCap.Round
@@ -3994,9 +3993,9 @@ Namespace GraphicObjects
             Dim pthGrBrush2 As New PathGradientBrush(path2)
             ' Set the color at the center of the path to blue.
             If Me.Calculated Then
-                pthGrBrush2.CenterColor = Color.SteelBlue
+                pthGrBrush2.CenterColor = Color.FromArgb(alpha, Color.SteelBlue)
             Else
-                pthGrBrush2.CenterColor = Color.Red
+                pthGrBrush2.CenterColor = Color.FromArgb(alpha, Color.Red)
             End If
             ' Set the color along the entire boundary 
             ' of the path to aqua.
@@ -4013,11 +4012,11 @@ Namespace GraphicObjects
             ' Use the path to construct a brush.
             Dim pthGrBrush As New PathGradientBrush(path)
             ' Set the color at the center of the path to blue.
-            pthGrBrush.CenterColor = Color.White
+            pthGrBrush.CenterColor = Color.FromArgb(alpha, Color.White)
 
             ' Set the color along the entire boundary 
             ' of the path to aqua.
-            Dim colors As Color() = {Color.LightSalmon}
+            Dim colors As Color() = {Color.FromArgb(alpha, Color.LightSalmon)}
             pthGrBrush.SurroundColors = colors
 
             pthGrBrush.SetSigmaBellShape(1)
@@ -4038,14 +4037,11 @@ Namespace GraphicObjects
             ax = Me.X + (Me.Width - size.Width) / 2
             ay = Me.Y + (Me.Height - size.Height) / 2
 
+            g.DrawString("A", fontA, New SolidBrush(Color.FromArgb(alpha, Color.Red)), ax, ay)
 
-
-            g.DrawString("A", fontA, Brushes.Red, ax, ay)
-
-            Dim myPen As New Pen(Color.Red, 2)
+            Dim myPen As New Pen(Color.FromArgb(If(SemiTransparent, 50, 255), Color.Red), 2)
             g.DrawEllipse(myPen, rect)
-            g.TextRenderingHint = Text.TextRenderingHint.SystemDefault
-
+      
             DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
@@ -4189,6 +4185,9 @@ Namespace GraphicObjects
 
             MyBase.Draw(g)
 
+            Dim alpha As Integer = 255
+            If SemiTransparent Then alpha = 50
+
             UpdateStatus(Me)
 
             If Not Me.Active Then Me.LineColor = Color.Yellow
@@ -4205,7 +4204,7 @@ Namespace GraphicObjects
             End If
 
             If Not Me.ConnectedToSv Is Nothing Then
-                Dim cpen As New Pen(Color.Red, 2)
+                Dim cpen As New Pen(Color.FromArgb(alpha, Color.Red), 2)
                 With cpen
                     .DashStyle = DashStyle.Dot
                     .DashCap = DashCap.Round
@@ -4216,7 +4215,7 @@ Namespace GraphicObjects
             End If
 
             If Not Me.ConnectedToTv Is Nothing Then
-                Dim cpen As New Pen(Color.Red, 2)
+                Dim cpen As New Pen(Color.FromArgb(alpha, Color.Red), 2)
                 With cpen
                     .DashStyle = DashStyle.Dot
                     .DashCap = DashCap.Round
@@ -4234,9 +4233,9 @@ Namespace GraphicObjects
             Dim pthGrBrush2 As New PathGradientBrush(path2)
             ' Set the color at the center of the path to blue.
             If Me.Calculated Then
-                pthGrBrush2.CenterColor = Color.SteelBlue
+                pthGrBrush2.CenterColor = Color.FromArgb(alpha, Color.SteelBlue)
             Else
-                pthGrBrush2.CenterColor = Color.Red
+                pthGrBrush2.CenterColor = Color.FromArgb(alpha, Color.Red)
             End If
             If Not Me.Active Then pthGrBrush2.CenterColor = Color.DimGray
             ' Set the color along the entire boundary 
@@ -4258,7 +4257,7 @@ Namespace GraphicObjects
 
             ' Set the color along the entire boundary 
             ' of the path to aqua.
-            Dim colors As Color() = {Color.LightSteelBlue}
+            Dim colors As Color() = {Color.FromArgb(alpha, Color.LightSteelBlue)}
             pthGrBrush.SurroundColors = colors
 
             pthGrBrush.SetSigmaBellShape(1)
@@ -4279,12 +4278,9 @@ Namespace GraphicObjects
             ax = Me.X + (Me.Width - size.Width) / 2
             ay = Me.Y + (Me.Height - size.Height) / 2
 
+            g.DrawString("S", fontA, New SolidBrush(Color.FromArgb(alpha, Color.Blue)), ax, ay)
 
-
-
-            g.DrawString("E", fontA, Brushes.Blue, ax, ay)
-
-            Dim myPen As New Pen(Color.SteelBlue, 2)
+            Dim myPen As New Pen(Color.FromArgb(alpha, Color.SteelBlue), 2)
             g.DrawEllipse(myPen, rect)
             g.TextRenderingHint = Text.TextRenderingHint.SystemDefault
 
@@ -4425,6 +4421,9 @@ Namespace GraphicObjects
 
             UpdateStatus(Me)
 
+            Dim alpha As Integer = 255
+            If SemiTransparent Then alpha = 50
+
             Dim gContainer As Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
@@ -4444,9 +4443,9 @@ Namespace GraphicObjects
             Dim pthGrBrush2 As New PathGradientBrush(path2)
             ' Set the color at the center of the path to blue.
             If Me.Calculated Then
-                pthGrBrush2.CenterColor = Color.SteelBlue
+                pthGrBrush2.CenterColor = Color.FromArgb(alpha, Color.SteelBlue)
             Else
-                pthGrBrush2.CenterColor = Color.Red
+                pthGrBrush2.CenterColor = Color.FromArgb(alpha, Color.Red)
             End If
             ' Set the color along the entire boundary 
             ' of the path to aqua.
@@ -4463,11 +4462,11 @@ Namespace GraphicObjects
             ' Use the path to construct a brush.
             Dim pthGrBrush As New PathGradientBrush(path)
             ' Set the color at the center of the path to blue.
-            pthGrBrush.CenterColor = Color.White
+            pthGrBrush.CenterColor = Color.FromArgb(alpha, Color.White)
 
             ' Set the color along the entire boundary 
             ' of the path to aqua.
-            Dim colors As Color() = {Color.LightGreen}
+            Dim colors As Color() = {Color.FromArgb(alpha, Color.LightGreen)}
             pthGrBrush.SurroundColors = colors
 
             pthGrBrush.SetSigmaBellShape(1)
@@ -4488,14 +4487,11 @@ Namespace GraphicObjects
             ax = Me.X + (Me.Width - size.Width) / 2
             ay = Me.Y + (Me.Height - size.Height) / 2
 
+            g.DrawString("R", fontA, New SolidBrush(Color.FromArgb(alpha, Color.DarkGreen)), ax, ay)
 
-
-            g.DrawString("R", fontA, Brushes.Green, ax, ay)
-
-            Dim myPen As New Pen(Color.SteelBlue, 2)
+            Dim myPen As New Pen(Color.FromArgb(alpha, Color.SteelBlue), 2)
             g.DrawEllipse(myPen, rect)
-            g.TextRenderingHint = Text.TextRenderingHint.SystemDefault
-
+         
             DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
@@ -4679,7 +4675,7 @@ Namespace GraphicObjects
 
 
 
-            g.DrawString("R", fontA, Brushes.YellowGreen, ax, ay)
+            g.DrawString("R", fontA, New SolidBrush(Color.FromArgb(If(SemiTransparent, 50, 255), Color.YellowGreen)), ax, ay)
 
             Dim myPen As New Pen(Color.YellowGreen, 2)
             g.DrawEllipse(myPen, rect)
@@ -5213,6 +5209,8 @@ Namespace GraphicObjects
 
             CreateConnectors(0, 0)
 
+            MyBase.Draw(g)
+
             UpdateStatus(Me)
 
             Dim pt As Point
@@ -5263,15 +5261,9 @@ Namespace GraphicObjects
 
             Dim rect As New Rectangle(X, Y, Width, Height)
 
-
             'g.DrawRectangle(myPen2, rect)
             g.DrawEllipse(myPen, rect3)
             g.DrawRectangle(myPen, rect1)
-
-            Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
-            Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
 
             Dim lgb1 As New LinearGradientBrush(rect1, Me.GradientColor1, Me.GradientColor2, LinearGradientMode.Horizontal)
             lgb1.SetBlendTriangularShape(0.5)
@@ -5303,6 +5295,8 @@ Namespace GraphicObjects
             g.DrawLines(myPen, New PointF() {New PointF(X + 0.5 * Width, Y - 0.1 * Height), New PointF(X + 0.5 * Width, Y + 0.7 * Height)})
             g.DrawEllipse(myPen, New RectangleF(X + 0.2 * Width, Y + 0.6 * Height, 0.3 * Width, 0.1 * Height))
             g.DrawEllipse(myPen, New RectangleF(X + 0.5 * Width, Y + 0.6 * Height, 0.3 * Width, 0.1 * Height))
+
+            DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
 
@@ -5423,6 +5417,8 @@ Namespace GraphicObjects
 
             CreateConnectors(0, 0)
 
+            MyBase.Draw(g)
+
             UpdateStatus(Me)
 
             Dim pt As Point
@@ -5472,18 +5468,16 @@ Namespace GraphicObjects
                     g.FillRectangle(lgb1, rect)
                 End If
             End If
+
             Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
 
             g.DrawRectangle(myPen, rect)
 
-            Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
-            Dim strx As Single = (Me.Width - strdist.Width) / 2
-            'g.FillRectangle(Brushes.White, X + strx, Y + CSng(Height + 5), strdist.Width, strdist.Height)
-            g.DrawString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New SolidBrush(Me.LineColor), X + strx, Y + Height + 5)
-
             Dim rec1 As New Rectangle(X + 0.1 * Width, Y, 0.8 * Width, Height)
             g.FillRectangle(New HatchBrush(HatchStyle.SmallCheckerBoard, Me.LineColor, Color.Transparent), rec1)
             g.DrawRectangle(myPen, rec1)
+
+            DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
 
@@ -7756,7 +7750,7 @@ Namespace GraphicObjects
 
 
 
-            g.DrawString("UO", fontA, Brushes.SteelBlue, ax, ay)
+            g.DrawString("UO", fontA, New SolidBrush(Color.FromArgb(If(SemiTransparent, 50, 255), Color.Gray)), ax, ay)
 
             DrawTag(g, myMatrix)
 
@@ -7981,7 +7975,7 @@ Namespace GraphicObjects
 
 
 
-            g.DrawString("E", fontA, Brushes.DarkOrange, ax, ay)
+            g.DrawString("X", fontA, New SolidBrush(Color.FromArgb(If(SemiTransparent, 50, 255), Color.DarkGreen)), ax, ay)
 
             DrawTag(g, myMatrix)
 
@@ -8218,8 +8212,7 @@ Namespace GraphicObjects
             ay = Me.Y + (Me.Height - size.Height) / 2
 
 
-
-            g.DrawString("F", fontA, Brushes.DarkOrange, ax, ay)
+            g.DrawString("F", fontA, New SolidBrush(Color.FromArgb(If(SemiTransparent, 50, 255), Color.Brown)), ax, ay)
 
             DrawTag(g, myMatrix)
 

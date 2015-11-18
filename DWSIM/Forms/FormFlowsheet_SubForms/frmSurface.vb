@@ -721,6 +721,18 @@ Public Class frmSurface
 
             End If
 
+        Else
+
+            Try
+                If Me.FlowsheetDesignSurface.drawingObjects.Contains(Me.m_qt) Then
+                    Me.FlowsheetDesignSurface.drawingObjects.Remove(Me.m_qt)
+                End If
+                Me.m_qt = Nothing
+                Me.ticks = 0
+            Catch ex As Exception
+                Console.WriteLine(ex.Message)
+            End Try
+
         End If
 
         'If Not Me.m_qt Is Nothing Then Me.m_qt.SetPosition(px2)

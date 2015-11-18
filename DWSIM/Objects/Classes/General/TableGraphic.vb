@@ -540,6 +540,13 @@ Namespace DWSIM.GraphicObjects
 
         Public Overrides Sub Draw(ByVal g As System.Drawing.Graphics)
 
+            Dim iopacity As Integer
+            If SemiTransparent Then
+                iopacity = 50
+            Else
+                iopacity = Me.Opacity
+            End If
+
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
@@ -639,10 +646,10 @@ Namespace DWSIM.GraphicObjects
             maxL3 = maxL3 + 2 * Padding
             maxH = maxH + 2 * Padding
 
-            If m_BorderPen Is Nothing Then m_BorderPen = New Drawing.Pen(Color.Black)
+            If m_BorderPen Is Nothing Then m_BorderPen = New Drawing.Pen(Color.FromArgb(iopacity, Color.Black))
 
             With Me.m_BorderPen
-                .Color = Me.BorderColor
+                .Color = Color.FromArgb(iopacity, Me.BorderColor)
                 .DashStyle = Me.BorderStyle
             End With
 
@@ -651,41 +658,45 @@ Namespace DWSIM.GraphicObjects
 
             Dim rect As New Rectangle(X, Y, Width, Height)
             If Me.IsGradientBackground = False Then
-                g.FillRectangle(New SolidBrush(Color.FromArgb(Me.Opacity, Me.BackgroundColor)), rect)
+                g.FillRectangle(New SolidBrush(Color.FromArgb(iopacity, Me.BackgroundColor)), rect)
             Else
-                g.FillRectangle(New Drawing2D.LinearGradientBrush(rect, Color.FromArgb(Me.Opacity, Me.BackgroundGradientColor2), Color.FromArgb(Me.Opacity, Me.BackgroundGradientColor1), LinearGradientMode.Vertical), rect)
+                g.FillRectangle(New Drawing2D.LinearGradientBrush(rect, Color.FromArgb(iopacity, Me.BackgroundGradientColor2), Color.FromArgb(iopacity, Me.BackgroundGradientColor1), LinearGradientMode.Vertical), rect)
             End If
 
             'desenhar textos e retangulos
-            g.DrawString(Me.HeaderText, Me.HeaderFont, New SolidBrush(Me.LineColor), X + Padding, Y + Padding)
+            g.DrawString(Me.HeaderText, Me.HeaderFont, New SolidBrush(Color.FromArgb(iopacity, Me.LineColor)), X + Padding, Y + Padding)
             If Not m_items Is Nothing Then
                 If maxL2.Length > 0 Then
                     i = 0
                     If Not m_sortedlist Is Nothing Then
                         For Each s As String In m_sortedlist
+                            g.DrawLine(Me.m_BorderPen, X + maxL1 + (i + 1) * maxL2a + 2 * Me.Padding, Y + maxH, X + maxL1 + (i + 1) * maxL2a + 2 * Me.Padding, Y + Height)
                             n = 1
                             For Each ni In m_items(s)
-                                If i = 0 Then g.DrawString(DWSIM.App.GetPropertyName(ni.Text), Me.FontCol1, New SolidBrush(Me.LineColor), X + Padding, Y + n * maxH + Padding)
-                                g.DrawString(ni.Value, Me.FontCol2, New SolidBrush(Me.LineColor), X + maxL1 + (i + 1) * maxL2a, Y + n * maxH + Padding, format1)
-                                g.DrawLine(Me.m_BorderPen, X + maxL1 + (i + 1) * maxL2a + 2 * Me.Padding, Y + maxH, X + maxL1 + (i + 1) * maxL2a + 2 * Me.Padding, Y + Height)
-                                If i = m_items.Count - 1 Then g.DrawString(ni.Unit, Me.FontCol3, New SolidBrush(Me.LineColor), X + maxL1 + (i + 1) * maxL2a + 3 * Padding, Y + n * maxH + Padding)
-                                g.DrawLine(Me.m_BorderPen, X, Y + n * maxH, X + Width, Y + n * maxH)
+                                If i = 0 Then g.DrawString(DWSIM.App.GetPropertyName(ni.Text), Me.FontCol1, New SolidBrush(Color.FromArgb(iopacity, Me.LineColor)), X + Padding, Y + n * maxH + Padding)
+                                g.DrawString(ni.Value, Me.FontCol2, New SolidBrush(Color.FromArgb(iopacity, Me.LineColor)), X + maxL1 + (i + 1) * maxL2a, Y + n * maxH + Padding, format1)
+                                If i = m_items.Count - 1 Then g.DrawString(ni.Unit, Me.FontCol3, New SolidBrush(Color.FromArgb(iopacity, Me.LineColor)), X + maxL1 + (i + 1) * maxL2a + 3 * Padding, Y + n * maxH + Padding)
                                 n += 1
                             Next
                             i += 1
                         Next
+                        For n = 1 To count - 1
+                            g.DrawLine(Me.m_BorderPen, X, Y + n * maxH, X + Width, Y + n * maxH)
+                        Next
                     Else
                         For Each s As String In m_items.Keys
+                            g.DrawLine(Me.m_BorderPen, X + maxL1 + (i + 1) * maxL2a + 2 * Me.Padding, Y + maxH, X + maxL1 + (i + 1) * maxL2a + 2 * Me.Padding, Y + Height)
                             n = 1
                             For Each ni In m_items(s)
-                                If i = 0 Then g.DrawString(DWSIM.App.GetPropertyName(ni.Text), Me.FontCol1, New SolidBrush(Me.LineColor), X + Padding, Y + n * maxH + Padding)
-                                g.DrawString(ni.Value, Me.FontCol2, New SolidBrush(Me.LineColor), X + maxL1 + (i + 1) * maxL2a, Y + n * maxH + Padding, format1)
-                                g.DrawLine(Me.m_BorderPen, X + maxL1 + (i + 1) * maxL2a + 2 * Me.Padding, Y + maxH, X + maxL1 + (i + 1) * maxL2a + 2 * Me.Padding, Y + Height)
-                                If i = m_items.Count - 1 Then g.DrawString(ni.Unit, Me.FontCol3, New SolidBrush(Me.LineColor), X + maxL1 + (i + 1) * maxL2a + 3 * Padding, Y + n * maxH + Padding)
-                                g.DrawLine(Me.m_BorderPen, X, Y + n * maxH, X + Width, Y + n * maxH)
+                                If i = 0 Then g.DrawString(DWSIM.App.GetPropertyName(ni.Text), Me.FontCol1, New SolidBrush(Color.FromArgb(iopacity, Me.LineColor)), X + Padding, Y + n * maxH + Padding)
+                                g.DrawString(ni.Value, Me.FontCol2, New SolidBrush(Color.FromArgb(iopacity, Me.LineColor)), X + maxL1 + (i + 1) * maxL2a, Y + n * maxH + Padding, format1)
+                                If i = m_items.Count - 1 Then g.DrawString(ni.Unit, Me.FontCol3, New SolidBrush(Color.FromArgb(iopacity, Me.LineColor)), X + maxL1 + (i + 1) * maxL2a + 3 * Padding, Y + n * maxH + Padding)
                                 n += 1
                             Next
                             i += 1
+                        Next
+                        For n = 1 To count - 1
+                            g.DrawLine(Me.m_BorderPen, X, Y + n * maxH, X + Width, Y + n * maxH)
                         Next
                     End If
                 Else
@@ -696,7 +707,7 @@ Namespace DWSIM.GraphicObjects
             End If
 
             g.DrawRectangle(Me.m_BorderPen, New Rectangle(Me.X, Me.Y, Me.Width, Me.Height))
-            g.DrawLine(Me.m_BorderPen, X, Y + maxH, X + Width, Y + maxH)
+            'g.DrawLine(Me.m_BorderPen, X, Y + maxH, X + Width, Y + maxH)
             g.DrawLine(Me.m_BorderPen, X + maxL1, Y + maxH, X + maxL1, Y + Height)
 
             g.EndContainer(gContainer)
@@ -941,6 +952,10 @@ Namespace DWSIM.GraphicObjects
 
         Public Overrides Sub Draw(ByVal g As System.Drawing.Graphics)
 
+            Dim iopacity As Integer
+
+            If SemiTransparent Then iopacity = 50 Else iopacity = Me.Opacity
+
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
@@ -996,18 +1011,18 @@ Namespace DWSIM.GraphicObjects
             maxL3 = maxL3 + 2 * Padding
             maxH = maxH + 2 * Padding
 
-            If m_BorderPen Is Nothing Then m_BorderPen = New Drawing.Pen(Color.Black)
+            If m_BorderPen Is Nothing Then m_BorderPen = New Drawing.Pen(Color.FromArgb(iopacity, Color.Black))
 
             With Me.m_BorderPen
-                .Color = Me.BorderColor
+                .Color = Color.FromArgb(iopacity, Me.BorderColor)
                 .DashStyle = Me.BorderStyle
             End With
 
             Dim rect As New Rectangle(X, Y, Width, Height)
             If Me.IsGradientBackground = False Then
-                g.FillRectangle(New SolidBrush(Color.FromArgb(Me.Opacity, Me.BackgroundColor)), rect)
+                g.FillRectangle(New SolidBrush(Color.FromArgb(iopacity, Me.BackgroundColor)), rect)
             Else
-                g.FillRectangle(New Drawing2D.LinearGradientBrush(rect, Color.FromArgb(Me.Opacity, Me.BackgroundGradientColor2), Color.FromArgb(Me.Opacity, Me.BackgroundGradientColor1), LinearGradientMode.Vertical), rect)
+                g.FillRectangle(New Drawing2D.LinearGradientBrush(rect, Color.FromArgb(iopacity, Me.BackgroundGradientColor2), Color.FromArgb(iopacity, Me.BackgroundGradientColor1), LinearGradientMode.Vertical), rect)
             End If
 
             Dim format1 As New StringFormat(StringFormatFlags.NoClip)
@@ -1017,18 +1032,18 @@ Namespace DWSIM.GraphicObjects
             End With
 
             'desenhar textos e retangulos
-            g.DrawString(Me.HeaderText, Me.HeaderFont, New SolidBrush(Me.LineColor), X + Padding, Y + Padding)
+            g.DrawString(Me.HeaderText, Me.HeaderFont, New SolidBrush(Color.FromArgb(iopacity, Me.LineColor)), X + Padding, Y + Padding)
             Dim n As Integer = 1
             For Each ni In Me.BaseOwner.NodeTableItems.Values
                 If ni.Checked = True Then
                     If ni.Level = 0 And ni.ParentNode = "" Or ni.Level > 0 And ni.ParentNode <> "" Then
-                        g.DrawString(DWSIM.App.GetPropertyName(ni.Text), Me.FontCol1, New SolidBrush(Me.LineColor), X + Padding, Y + n * maxH + Padding)
+                        g.DrawString(DWSIM.App.GetPropertyName(ni.Text), Me.FontCol1, New SolidBrush(Color.FromArgb(iopacity, Me.LineColor)), X + Padding, Y + n * maxH + Padding)
                         If Double.TryParse(ni.Value, New Double) Then
-                            g.DrawString(Format(CDbl(ni.Value), Me.BaseOwner.FlowSheet.Options.NumberFormat), Me.FontCol2, New SolidBrush(Me.LineColor), X + maxL1 + maxL2, Y + n * maxH + Padding, format1)
+                            g.DrawString(Format(CDbl(ni.Value), Me.BaseOwner.FlowSheet.Options.NumberFormat), Me.FontCol2, New SolidBrush(Color.FromArgb(iopacity, Me.LineColor)), X + maxL1 + maxL2, Y + n * maxH + Padding, format1)
                         Else
-                            g.DrawString(ni.Value, Me.FontCol2, New SolidBrush(Me.LineColor), X + maxL1 + maxL2, Y + n * maxH + Padding, format1)
+                            g.DrawString(ni.Value, Me.FontCol2, New SolidBrush(Color.FromArgb(iopacity, Me.LineColor)), X + maxL1 + maxL2, Y + n * maxH + Padding, format1)
                         End If
-                        g.DrawString(ni.Unit, Me.FontCol3, New SolidBrush(Me.LineColor), X + maxL1 + maxL2 + Padding, Y + n * maxH + Padding)
+                        g.DrawString(ni.Unit, Me.FontCol3, New SolidBrush(Color.FromArgb(iopacity, Me.LineColor)), X + maxL1 + maxL2 + Padding, Y + n * maxH + Padding)
                         g.DrawLine(Me.m_BorderPen, X, Y + n * maxH, X + Width, Y + n * maxH)
                         n += 1
                     End If
@@ -1036,7 +1051,6 @@ Namespace DWSIM.GraphicObjects
             Next
 
             g.DrawRectangle(Me.m_BorderPen, New Rectangle(Me.X, Me.Y, Me.Width, Me.Height))
-            g.DrawLine(Me.m_BorderPen, X, Y + maxH, X + Width, Y + maxH)
             g.DrawLine(Me.m_BorderPen, X + maxL1, Y + maxH, X + maxL1, Y + Height)
             g.DrawLine(Me.m_BorderPen, X + maxL1 + maxL2, Y + maxH, X + maxL1 + maxL2, Y + Height)
 
@@ -1546,6 +1560,9 @@ Namespace DWSIM.GraphicObjects
 
         Public Overrides Sub Draw(ByVal g As System.Drawing.Graphics)
 
+            Dim iopacity As Integer
+            If SemiTransparent Then iopacity = 50 Else iopacity = Me.Opacity
+
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
@@ -1609,18 +1626,18 @@ Namespace DWSIM.GraphicObjects
                 Me.Height = (lastrow - firstrow + 1) * itemheight
                 Me.Width = maxW.Sum
 
-                If m_BorderPen Is Nothing Then m_BorderPen = New Drawing.Pen(Color.Black)
+                If m_BorderPen Is Nothing Then m_BorderPen = New Drawing.Pen(Color.FromArgb(iopacity, Color.Black))
 
                 With Me.m_BorderPen
-                    .Color = Me.BorderColor
+                    .Color = Color.FromArgb(iopacity, Me.BorderColor)
                     .DashStyle = Me.BorderStyle
                 End With
 
                 Dim rect As New Rectangle(X, Y, Width, Height)
                 If Me.IsGradientBackground = False Then
-                    g.FillRectangle(New SolidBrush(Color.FromArgb(Me.Opacity, Me.BackgroundColor)), rect)
+                    g.FillRectangle(New SolidBrush(Color.FromArgb(iopacity, Me.BackgroundColor)), rect)
                 Else
-                    g.FillRectangle(New Drawing2D.LinearGradientBrush(rect, Color.FromArgb(Me.Opacity, Me.BackgroundGradientColor2), Color.FromArgb(Me.Opacity, Me.BackgroundGradientColor1), LinearGradientMode.Vertical), rect)
+                    g.FillRectangle(New Drawing2D.LinearGradientBrush(rect, Color.FromArgb(iopacity, Me.BackgroundGradientColor2), Color.FromArgb(iopacity, Me.BackgroundGradientColor1), LinearGradientMode.Vertical), rect)
                 End If
 
                 Dim format1 As New StringFormat(StringFormatFlags.NoClip)
@@ -1636,18 +1653,18 @@ Namespace DWSIM.GraphicObjects
                     For i = firstrow To lastrow
                         If Not grid.Rows(i).Cells(j).Value Is Nothing Then
                             If Double.TryParse(grid.Rows(i).Cells(j).Value, New Double()) Then
-                                g.DrawString(Format(Double.Parse(grid.Rows(i).Cells(j).Value), nf), Me.FontCol1, New SolidBrush(Me.LineColor), X + Padding + leftmargin, Y + Padding + m * itemheight)
+                                g.DrawString(Format(Double.Parse(grid.Rows(i).Cells(j).Value), nf), Me.FontCol1, New SolidBrush(Color.FromArgb(iopacity, Me.LineColor)), X + Padding + leftmargin, Y + Padding + m * itemheight)
                             Else
-                                g.DrawString(grid.Rows(i).Cells(j).Value.ToString, Me.FontCol1, New SolidBrush(Me.LineColor), X + Padding + leftmargin, Y + Padding + m * itemheight)
+                                g.DrawString(grid.Rows(i).Cells(j).Value.ToString, Me.FontCol1, New SolidBrush(Color.FromArgb(iopacity, Me.LineColor)), X + Padding + leftmargin, Y + Padding + m * itemheight)
                             End If
                         Else
-                            g.DrawString("", Me.FontCol1, New SolidBrush(Me.LineColor), X + Padding + leftmargin, Y + Padding + m * itemheight)
+                            g.DrawString("", Me.FontCol1, New SolidBrush(Color.FromArgb(iopacity, Me.LineColor)), X + Padding + leftmargin, Y + Padding + m * itemheight)
                         End If
-                        g.DrawLine(Me.m_BorderPen, X + leftmargin, Y + (m + 1) * itemheight, X + leftmargin + maxW(n), Y + (m + 1) * itemheight)
+                        If i < lastrow Then g.DrawLine(Me.m_BorderPen, X + leftmargin, Y + (m + 1) * itemheight, X + leftmargin + maxW(n), Y + (m + 1) * itemheight)
                         m += 1
                     Next
                     leftmargin += maxW(n)
-                    g.DrawLine(Me.m_BorderPen, X + leftmargin, Y, X + leftmargin, Y + (lastrow - firstrow + 1) * itemheight)
+                    If j < lastcolumn Then g.DrawLine(Me.m_BorderPen, X + leftmargin, Y, X + leftmargin, Y + (lastrow - firstrow + 1) * itemheight)
                     n += 1
                 Next
 
@@ -1655,7 +1672,7 @@ Namespace DWSIM.GraphicObjects
 
             Else
 
-                g.DrawString("NO_DATA_TO_SHOW", Me.FontCol1, New SolidBrush(Me.LineColor), X, Y)
+                g.DrawString("NO_DATA_TO_SHOW", Me.FontCol1, New SolidBrush(Color.FromArgb(iopacity, Me.LineColor)), X, Y)
                 Dim size = g.MeasureString("NO_DATA_TO_SHOW", Me.FontCol1, New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
 
                 Me.Height = size.Height

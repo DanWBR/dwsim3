@@ -516,9 +516,9 @@ Imports System.Collections.Generic
 
         'draw selection rectangle (click and drag to select interface)
         'on top of everything else, but transparent
-        'If selectionDragging Then
-        '    DrawSelectionRectangle(g, selectionRect)
-        'End If
+        If selectionDragging Then
+            DrawSelectionRectangle(g, selectionRect)
+        End If
         'Catch ex As System.Exception
         'Debug.WriteLine(ex.ToString)
         'Throw New System.ApplicationException("Error Drawing Graphics Surface", ex)
@@ -630,7 +630,7 @@ Imports System.Collections.Generic
     Private Sub DrawSelectionRectangle(ByVal g As Graphics, _
             ByVal selectionRect As Rectangle)
 
-        Dim selectionBrush As New SolidBrush(Color.FromArgb(50, Color.LightBlue))
+        Dim selectionBrush As New SolidBrush(Color.FromArgb(25, Color.LightSalmon))
         Dim normalizedRectangle As Rectangle
 
         'make sure the rectangle's upper left point is
