@@ -1319,8 +1319,8 @@ Namespace DWSIM.GraphicObjects
                     'Me.DrawRoundRect(g, New Pen(Color.Transparent), X + 4, Y + 4, Width, Height, 10, New SolidBrush(Color.FromArgb(50, Color.DimGray)))
 
 
-                    m_Color_Gradient_1 = Drawing.Color.SteelBlue
-                    m_Color_Gradient_2 = Drawing.Color.SteelBlue 'Color.FromArgb(255, 29, 80, 132)
+                    m_Color_Gradient_1 = Color.FromArgb(235, Drawing.Color.SteelBlue)
+                    m_Color_Gradient_2 = Color.FromArgb(235, Drawing.Color.SteelBlue) 'Color.FromArgb(255, 29, 80, 132)
                     Opacity = 255
 
                     'm_Color_Gradient_1 = Drawing.Color.WhiteSmoke
@@ -1329,10 +1329,10 @@ Namespace DWSIM.GraphicObjects
                     Dim rect As New Rectangle(X, Y, Width, Height)
                     If Me.IsGradientBackground = False Then
                         'g.FillRectangle(New SolidBrush(Color.FromArgb(Me.Opacity, Me.FillColor)), rect)
-                        DrawRoundRect(g, Pens.Transparent, rect.X, rect.Y, rect.Width, rect.Height, 3, New SolidBrush(Color.FromArgb(Me.Opacity, Me.FillColor)))
+                        DrawRoundRect(g, Pens.Transparent, rect.X, rect.Y, rect.Width, rect.Height, 6, New SolidBrush(Color.FromArgb(Me.Opacity, Me.FillColor)))
                     Else
                         'g.FillRectangle(New Drawing2D.LinearGradientBrush(rect, Color.FromArgb(Me.Opacity, Me.BackgroundGradientColor1), Color.FromArgb(Me.Opacity, Me.BackgroundGradientColor2), LinearGradientMode.Vertical), rect)
-                        DrawRoundRect(g, Pens.Transparent, rect.X, rect.Y, rect.Width, rect.Height, 3, New Drawing2D.LinearGradientBrush(rect, Color.FromArgb(Me.Opacity, Me.m_Color_Gradient_1), Color.FromArgb(Me.Opacity, Me.m_Color_Gradient_2), LinearGradientMode.Vertical))
+                        DrawRoundRect(g, Pens.Transparent, rect.X, rect.Y, rect.Width, rect.Height, 6, New Drawing2D.LinearGradientBrush(rect, Me.m_Color_Gradient_1, Me.m_Color_Gradient_2, LinearGradientMode.Vertical))
                     End If
 
                     Dim format1 As New StringFormat(StringFormatFlags.NoClip)
