@@ -48,13 +48,14 @@
 
         If Not Me.ComboBox1.SelectedItem Is Nothing Then
 
+            Dim gobj As Microsoft.Msdn.Samples.GraphicObjects.GraphicObject = FormFlowsheet.SearchSurfaceObjectsByTag(Me.ComboBox1.SelectedItem, Frm.FormSurface.FlowsheetDesignSurface)
+            Me.vessel = Frm.Collections.CLCS_VesselCollection(gobj.Name)
+
             Dim msv, msl As DWSIM.SimulationObjects.Streams.MaterialStream
 
             msv = Frm.Collections.CLCS_MaterialStreamCollection(Me.vessel.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name)
             msl = Frm.Collections.CLCS_MaterialStreamCollection(Me.vessel.GraphicObject.OutputConnectors(1).AttachedConnector.AttachedTo.Name)
 
-            Dim gobj As Microsoft.MSDN.Samples.GraphicObjects.GraphicObject = FormFlowsheet.SearchSurfaceObjectsByTag(Me.ComboBox1.SelectedItem, Frm.FormSurface.FlowsheetDesignSurface)
-            Me.vessel = Frm.Collections.CLCS_VesselCollection(gobj.Name)
             Me.entmat = Frm.Collections.CLCS_MaterialStreamCollection(Me.vessel.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name)
 
             Me.rhol = msl.Fases(0).SPMProperties.density.GetValueOrDefault
@@ -220,6 +221,6 @@
     End Sub
 
     Private Sub FrmDAVP_HelpRequested(sender As System.Object, hlpevent As System.Windows.Forms.HelpEventArgs) Handles MyBase.HelpRequested
-        DWSIM.App.HelpRequested("NoHelp.htm") 'no topic yet
+        DWSIM.App.HelpRequested("UT_VesselSizing.htm") 'no topic yet
     End Sub
 End Class

@@ -92,7 +92,6 @@ Partial Class FrmDAVP
         'Button1
         '
         resources.ApplyResources(Me.Button1, "Button1")
-        Me.Button1.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Button1.Name = "Button1"
         '
         'ComboBox1
@@ -105,7 +104,6 @@ Partial Class FrmDAVP
         'Label1
         '
         resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label1.Name = "Label1"
         '
         'GroupBox7
@@ -144,13 +142,11 @@ Partial Class FrmDAVP
         'Label38
         '
         resources.ApplyResources(Me.Label38, "Label38")
-        Me.Label38.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label38.Name = "Label38"
         '
         'Label39
         '
         resources.ApplyResources(Me.Label39, "Label39")
-        Me.Label39.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label39.Name = "Label39"
         '
         'TbA
@@ -171,31 +167,26 @@ Partial Class FrmDAVP
         'Label41
         '
         resources.ApplyResources(Me.Label41, "Label41")
-        Me.Label41.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label41.Name = "Label41"
         '
         'Label42
         '
         resources.ApplyResources(Me.Label42, "Label42")
-        Me.Label42.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label42.Name = "Label42"
         '
         'Label43
         '
         resources.ApplyResources(Me.Label43, "Label43")
-        Me.Label43.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label43.Name = "Label43"
         '
         'Label44
         '
         resources.ApplyResources(Me.Label44, "Label44")
-        Me.Label44.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label44.Name = "Label44"
         '
         'Label45
         '
         resources.ApplyResources(Me.Label45, "Label45")
-        Me.Label45.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label45.Name = "Label45"
         '
         'TbBSL
@@ -222,19 +213,16 @@ Partial Class FrmDAVP
         'Label46
         '
         resources.ApplyResources(Me.Label46, "Label46")
-        Me.Label46.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label46.Name = "Label46"
         '
         'Label47
         '
         resources.ApplyResources(Me.Label47, "Label47")
-        Me.Label47.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label47.Name = "Label47"
         '
         'Label48
         '
         resources.ApplyResources(Me.Label48, "Label48")
-        Me.Label48.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label48.Name = "Label48"
         '
         'GroupBox8
@@ -252,25 +240,21 @@ Partial Class FrmDAVP
         'LblGas
         '
         resources.ApplyResources(Me.LblGas, "LblGas")
-        Me.LblGas.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.LblGas.Name = "LblGas"
         '
         'LblLiq
         '
         resources.ApplyResources(Me.LblLiq, "LblLiq")
-        Me.LblLiq.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.LblLiq.Name = "LblLiq"
         '
         'Label20
         '
         resources.ApplyResources(Me.Label20, "Label20")
-        Me.Label20.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label20.Name = "Label20"
         '
         'Label19
         '
         resources.ApplyResources(Me.Label19, "Label19")
-        Me.Label19.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label19.Name = "Label19"
         '
         'GroupBox9
@@ -315,7 +299,6 @@ Partial Class FrmDAVP
         'Label3
         '
         resources.ApplyResources(Me.Label3, "Label3")
-        Me.Label3.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label3.Name = "Label3"
         '
         'VScrollBar1
@@ -331,25 +314,21 @@ Partial Class FrmDAVP
         'Label37
         '
         resources.ApplyResources(Me.Label37, "Label37")
-        Me.Label37.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label37.Name = "Label37"
         '
         'Label31
         '
         resources.ApplyResources(Me.Label31, "Label31")
-        Me.Label31.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label31.Name = "Label31"
         '
         'Label32
         '
         resources.ApplyResources(Me.Label32, "Label32")
-        Me.Label32.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label32.Name = "Label32"
         '
         'Label33
         '
         resources.ApplyResources(Me.Label33, "Label33")
-        Me.Label33.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label33.Name = "Label33"
         '
         'tbK
@@ -370,37 +349,31 @@ Partial Class FrmDAVP
         'Label34
         '
         resources.ApplyResources(Me.Label34, "Label34")
-        Me.Label34.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label34.Name = "Label34"
         '
         'Label35
         '
         resources.ApplyResources(Me.Label35, "Label35")
-        Me.Label35.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label35.Name = "Label35"
         '
         'Label36
         '
         resources.ApplyResources(Me.Label36, "Label36")
-        Me.Label36.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label36.Name = "Label36"
         '
         'Label25
         '
         resources.ApplyResources(Me.Label25, "Label25")
-        Me.Label25.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label25.Name = "Label25"
         '
         'Label26
         '
         resources.ApplyResources(Me.Label26, "Label26")
-        Me.Label26.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label26.Name = "Label26"
         '
         'Label27
         '
         resources.ApplyResources(Me.Label27, "Label27")
-        Me.Label27.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label27.Name = "Label27"
         '
         'tbTR
@@ -421,19 +394,16 @@ Partial Class FrmDAVP
         'Label28
         '
         resources.ApplyResources(Me.Label28, "Label28")
-        Me.Label28.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label28.Name = "Label28"
         '
         'Label29
         '
         resources.ApplyResources(Me.Label29, "Label29")
-        Me.Label29.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label29.Name = "Label29"
         '
         'Label30
         '
         resources.ApplyResources(Me.Label30, "Label30")
-        Me.Label30.ImageKey = Global.DWSIM.My.Resources.DWSIM.String1
         Me.Label30.Name = "Label30"
         '
         'FrmDAVP
