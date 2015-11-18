@@ -78,7 +78,7 @@ Imports System.Collections.Generic
 
     Private selectionDragging As Boolean = False
     Private selectable As Boolean = True
-    Private dragging As Boolean = False
+    Public dragging As Boolean = False
     Private draggingfs As Boolean = False
     Private rotating As Boolean = False
     Private hoverdraw As Boolean = False
@@ -424,11 +424,25 @@ Imports System.Collections.Generic
 
         With g
 
-            .InterpolationMode = InterpolationMode.NearestNeighbor
-            .PixelOffsetMode = PixelOffsetMode.None
-            .CompositingQuality = CompositingQuality.HighSpeed
-            .TextRenderingHint = Drawing.Text.TextRenderingHint.SingleBitPerPixel
-            .SmoothingMode = SmoothingMode.Default
+            If Not dragging Then
+
+                .InterpolationMode = InterpolationMode.Default
+                .PixelOffsetMode = PixelOffsetMode.Default
+                .CompositingMode = CompositingMode.SourceOver
+                .CompositingQuality = CompositingQuality.Default
+                .TextRenderingHint = Drawing.Text.TextRenderingHint.SystemDefault
+                .SmoothingMode = SmoothingMode.AntiAlias
+
+            Else
+
+                .InterpolationMode = InterpolationMode.NearestNeighbor
+                .PixelOffsetMode = PixelOffsetMode.HighSpeed
+                .CompositingMode = CompositingMode.SourceOver
+                .CompositingQuality = CompositingQuality.HighSpeed
+                .TextRenderingHint = Drawing.Text.TextRenderingHint.SingleBitPerPixel
+                .SmoothingMode = SmoothingMode.None
+
+            End If
 
         End With
 
@@ -492,19 +506,9 @@ Imports System.Collections.Generic
         Next
 
         With Me.drawingObjects
-            'pass the graphics resolution onto the objects
-            'so that images and other objects can be sized
-            'correct taking the dpi into consideration.
             .HorizontalResolution = g.DpiX
             .VerticalResolution = g.DpiY
-            'doesn't really draw the selected object, but instead the
-            'selection indicator, a dotted outline around the selected object
-            .DrawObjects(g, Me.Zoom)
-            'If Not m_SelectedObject Is Nothing Then
-            '    If Not Me.SelectedObjects.ContainsKey(m_SelectedObject.Name) Then
-            '        .DrawSelectedObject(g, m_SelectedObject, Me.Zoom)
-            '    End If
-            'End If
+            .DrawObjects(g, Me.Zoom, dragging)
         End With
 
         'Draw dashed line margin indicators, over top of objects
@@ -512,9 +516,9 @@ Imports System.Collections.Generic
 
         'draw selection rectangle (click and drag to select interface)
         'on top of everything else, but transparent
-        If selectionDragging Then
-            DrawSelectionRectangle(g, selectionRect)
-        End If
+        'If selectionDragging Then
+        '    DrawSelectionRectangle(g, selectionRect)
+        'End If
         'Catch ex As System.Exception
         'Debug.WriteLine(ex.ToString)
         'Throw New System.ApplicationException("Error Drawing Graphics Surface", ex)
@@ -1136,27 +1140,29 @@ Imports System.Collections.Generic
 
     Public Sub DrawRoundRect(ByVal g As Graphics, ByVal p As Pen, ByVal x As Integer, ByVal y As Integer, ByVal width As Integer, ByVal height As Integer, ByVal radius As Integer, ByVal myBrush As Brush)
 
-        If width > 2 * radius And height > 2 * radius Then
-
-            Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
-
-            gp.AddLine(x + radius, y, x + width - radius, y)
-            gp.AddArc(x + width - radius, y, radius, radius, 270, 90)
-            gp.AddLine(x + width, y + radius, x + width, y + height - radius)
-            gp.AddArc(x + width - radius, y + height - radius, radius, radius, 0, 90)
-            gp.AddLine(x + width - radius, y + height, x + radius, y + height)
-            gp.AddArc(x, y + height - radius, radius, radius, 90, 90)
-            gp.AddLine(x, y + height - radius, x, y + radius)
-            gp.AddArc(x, y, radius, radius, 180, 90)
-
-            gp.CloseFigure()
-
-            g.DrawPath(p, gp)
-            g.FillPath(myBrush, gp)
-
-            gp.Dispose()
-
+        If width / 2 < radius Then
+            radius = width / 2 - 2
+        ElseIf height / 2 < radius Then
+            radius = height / 2 - 2
         End If
+
+        Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
+
+        gp.AddLine(x + radius, y, x + width - radius, y)
+        gp.AddArc(x + width - radius, y, radius, radius, 270, 90)
+        gp.AddLine(x + width, y + radius, x + width, y + height - radius)
+        gp.AddArc(x + width - radius, y + height - radius, radius, radius, 0, 90)
+        gp.AddLine(x + width - radius, y + height, x + radius, y + height)
+        gp.AddArc(x, y + height - radius, radius, radius, 90, 90)
+        gp.AddLine(x, y + height - radius, x, y + radius)
+        gp.AddArc(x, y, radius, radius, 180, 90)
+
+        gp.CloseFigure()
+
+        g.DrawPath(p, gp)
+        g.FillPath(myBrush, gp)
+
+        gp.Dispose()
 
     End Sub
 

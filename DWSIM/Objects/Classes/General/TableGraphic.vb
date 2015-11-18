@@ -543,6 +543,7 @@ Namespace DWSIM.GraphicObjects
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
@@ -943,6 +944,7 @@ Namespace DWSIM.GraphicObjects
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
@@ -1216,6 +1218,7 @@ Namespace DWSIM.GraphicObjects
                     Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
                     Dim myMatrix As Drawing2D.Matrix
                     gContainer = g.BeginContainer()
+                    SetQuality(g)
                     myMatrix = g.Transform()
                     If m_Rotation <> 0 Then
                         myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)
@@ -1546,6 +1549,7 @@ Namespace DWSIM.GraphicObjects
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X, Y), Drawing.Drawing2D.MatrixOrder.Append)

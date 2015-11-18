@@ -89,50 +89,93 @@ Namespace GraphicObjects
 
         Public Sub DrawRoundRect(ByVal g As Graphics, ByVal p As Pen, ByVal x As Integer, ByVal y As Integer, ByVal width As Integer, ByVal height As Integer, ByVal radius As Integer, ByVal myBrush As Brush)
 
-            If width > 2 * radius And height > 2 * radius Then
-
-                Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
-
-                gp.AddLine(x + radius, y, x + width - radius, y)
-                gp.AddArc(x + width - radius, y, radius, radius, 270, 90)
-                gp.AddLine(x + width, y + radius, x + width, y + height - radius)
-                gp.AddArc(x + width - radius, y + height - radius, radius, radius, 0, 90)
-                gp.AddLine(x + width - radius, y + height, x + radius, y + height)
-                gp.AddArc(x, y + height - radius, radius, radius, 90, 90)
-                gp.AddLine(x, y + height - radius, x, y + radius)
-                gp.AddArc(x, y, radius, radius, 180, 90)
-
-                gp.CloseFigure()
-
-                g.DrawPath(p, gp)
-                g.FillPath(myBrush, gp)
-
-                gp.Dispose()
-
+            If width / 2 < radius Then
+                radius = width / 2 - 2
+            ElseIf height / 2 < radius Then
+                radius = height / 2 - 2
             End If
+
+            Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
+
+            gp.AddLine(x + radius, y, x + width - radius, y)
+            gp.AddArc(x + width - radius, y, radius, radius, 270, 90)
+            gp.AddLine(x + width, y + radius, x + width, y + height - radius)
+            gp.AddArc(x + width - radius, y + height - radius, radius, radius, 0, 90)
+            gp.AddLine(x + width - radius, y + height, x + radius, y + height)
+            gp.AddArc(x, y + height - radius, radius, radius, 90, 90)
+            gp.AddLine(x, y + height - radius, x, y + radius)
+            gp.AddArc(x, y, radius, radius, 180, 90)
+
+            gp.CloseFigure()
+
+            g.DrawPath(p, gp)
+            g.FillPath(myBrush, gp)
+
+            gp.Dispose()
 
         End Sub
 
-        Public Sub DrawObjects(ByVal g As Graphics, ByVal Scale As Single)
+        Public Sub DrawObjects(ByVal g As Graphics, ByVal Scale As Single, transparent As Boolean)
             Dim drawObj As GraphicObject
             Dim i As Integer
             Dim gCon As Drawing2D.GraphicsContainer
             Dim myOriginalMatrix As Drawing2D.Matrix
             myOriginalMatrix = g.Transform()
-            gCon = g.BeginContainer
+            gCon = g.BeginContainer()
             g.PageUnit = GraphicsUnit.Pixel
             g.ScaleTransform(Scale, Scale)
+            Dim oldlinecolor, oldfillcolor, oldgradcolor1, oldgradcolor2 As Color
             If Not Me.InnerList Is Nothing AndAlso Me.InnerList.Count > 0 Then
                 For i = 0 To Me.InnerList.Count - 1
                     drawObj = CType(Me.InnerList(i), GraphicObject)
                     If drawObj.TipoObjeto = TipoObjeto.Nenhum Then
+                        If TypeOf drawObj Is ShapeGraphic And transparent And Not drawObj.Selected Then
+                            With DirectCast(drawObj, ShapeGraphic)
+                                oldlinecolor = .LineColor
+                                oldfillcolor = .FillColor
+                                oldgradcolor1 = .GradientColor1
+                                oldgradcolor2 = .GradientColor2
+                                .LineColor = Color.FromArgb(50, .LineColor)
+                                .FillColor = Color.FromArgb(50, .FillColor)
+                                .GradientColor1 = Color.FromArgb(50, .GradientColor1)
+                                .GradientColor2 = Color.FromArgb(50, .GradientColor2)
+                                .SemiTransparent = True
+                            End With
+                        End If
                         drawObj.Draw(g)
+                        If TypeOf drawObj Is ShapeGraphic And transparent And Not drawObj.Selected Then
+                            With DirectCast(drawObj, ShapeGraphic)
+                                .LineColor = oldlinecolor
+                                .FillColor = oldfillcolor
+                                .GradientColor1 = oldgradcolor1
+                                .GradientColor2 = oldgradcolor2
+                                .SemiTransparent = False
+                            End With
+                        End If
                     End If
                 Next
                 For i = 0 To Me.InnerList.Count - 1
                     drawObj = CType(Me.InnerList(i), GraphicObject)
                     If drawObj.TipoObjeto <> TipoObjeto.Nenhum Then
+                        If TypeOf drawObj Is ShapeGraphic And transparent And Not drawObj.Selected Then
+                            With DirectCast(drawObj, ShapeGraphic)
+                                oldlinecolor = .LineColor
+                                oldfillcolor = .FillColor
+                                oldgradcolor1 = .GradientColor1
+                                oldgradcolor2 = .GradientColor2
+                                .SemiTransparent = True
+                            End With
+                        End If
                         drawObj.Draw(g)
+                        If TypeOf drawObj Is ShapeGraphic And transparent And Not drawObj.Selected Then
+                            With DirectCast(drawObj, ShapeGraphic)
+                                .LineColor = oldlinecolor
+                                .FillColor = oldfillcolor
+                                .GradientColor1 = oldgradcolor1
+                                .GradientColor2 = oldgradcolor2
+                                .SemiTransparent = False
+                            End With
+                        End If
                     End If
                 Next
             End If

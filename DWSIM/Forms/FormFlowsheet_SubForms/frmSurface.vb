@@ -624,7 +624,7 @@ Public Class frmSurface
             myCTool.Width = mousePT.X
             myCTool.Height = mousePT.Y
 
-        Else
+        ElseIf Not FlowsheetDesignSurface.dragging Then
 
             Dim gobj As GraphicObject = Me.FlowsheetDesignSurface.drawingObjects.FindObjectAtPoint(px)
 
@@ -3499,7 +3499,7 @@ Public Class frmSurface
                 .VerticalResolution = g.DpiY
                 'doesn't really draw the selected object, but instead the
                 'selection indicator, a dotted outline around the selected object
-                .DrawObjects(g, scale * Me.FlowsheetDesignSurface.Zoom)
+                .DrawObjects(g, scale * Me.FlowsheetDesignSurface.Zoom, False)
                 If Not Me.FlowsheetDesignSurface.SelectedObject Is Nothing Then
                     If Not Me.FlowsheetDesignSurface.SelectedObjects.ContainsKey(Me.FlowsheetDesignSurface.SelectedObject.Name) Then
                         .DrawSelectedObject(g, Me.FlowsheetDesignSurface.SelectedObject, scale * Me.FlowsheetDesignSurface.Zoom)

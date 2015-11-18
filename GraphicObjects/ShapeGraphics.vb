@@ -28,29 +28,66 @@ Namespace GraphicObjects
         Protected m_gradientcolor1 As Color = Color.LightGray
         Protected m_gradientcolor2 As Color = Color.White
 
+        Public Property SemiTransparent As Boolean = False
+
+        Public Sub SetQuality(g As Graphics)
+
+            With g
+
+                If Not SemiTransparent Then
+
+                    .InterpolationMode = InterpolationMode.Default
+                    .PixelOffsetMode = PixelOffsetMode.Default
+                    .CompositingMode = CompositingMode.SourceOver
+                    .CompositingQuality = CompositingQuality.Default
+                    .TextRenderingHint = Drawing.Text.TextRenderingHint.SystemDefault
+                    .SmoothingMode = SmoothingMode.AntiAlias
+
+                Else
+
+                    .InterpolationMode = InterpolationMode.NearestNeighbor
+                    .PixelOffsetMode = PixelOffsetMode.HighSpeed
+                    .CompositingMode = CompositingMode.SourceOver
+                    .CompositingQuality = CompositingQuality.HighSpeed
+                    .TextRenderingHint = Drawing.Text.TextRenderingHint.SingleBitPerPixel
+                    .SmoothingMode = SmoothingMode.None
+
+                End If
+
+            End With
+
+        End Sub
+
         Public Sub UpdateStatus(ByRef gobj As ShapeGraphic)
+
+            Dim alpha As Integer = 255
+
+            If SemiTransparent Then alpha = 50
 
             Select Case gobj.Status
                 Case GraphicObjects.Status.Calculated
-                    gobj.LineColor = Color.SteelBlue
+                    gobj.LineColor = Color.FromArgb(alpha, Color.SteelBlue)
                 Case GraphicObjects.Status.Calculating
-                    gobj.LineColor = Color.YellowGreen
+                    gobj.LineColor = Color.FromArgb(alpha, Color.YellowGreen)
                 Case GraphicObjects.Status.ErrorCalculating
-                    gobj.LineColor = Color.DarkRed
+                    gobj.LineColor = Color.FromArgb(alpha, Color.DarkRed)
                 Case GraphicObjects.Status.Idle
-                    gobj.LineColor = Color.SteelBlue
+                    gobj.LineColor = Color.FromArgb(alpha, Color.SteelBlue)
                 Case GraphicObjects.Status.Inactive
-                    gobj.LineColor = Color.Gray
+                    gobj.LineColor = Color.FromArgb(alpha, Color.Gray)
             End Select
 
         End Sub
 
         Public Sub UpdateStatusC(ByRef ConnPen As Pen, ByRef Conn As ConnectorGraphic, ByRef p1 As Point, ByRef p2 As Point)
 
+            Dim alpha As Integer = 255
+            If SemiTransparent Then alpha = 50
+
             Dim color1, color2, color3 As Color
-            color1 = Color.SteelBlue
-            color2 = Color.Salmon
-            color3 = Color.YellowGreen
+            color1 = Color.FromArgb(alpha, Color.SteelBlue)
+            color2 = Color.FromArgb(alpha, Color.Salmon)
+            color3 = Color.FromArgb(alpha, Color.YellowGreen)
 
             If Conn.AttachedFrom.Status = GraphicObjects.Status.Calculated And Conn.AttachedTo.Status = GraphicObjects.Status.Calculated Then
                 ConnPen = New Pen(New LinearGradientBrush(p1, p2, color1, color1), Me.LineWidth)
@@ -241,27 +278,29 @@ Namespace GraphicObjects
 
         Public Sub DrawRoundRect(ByVal g As Graphics, ByVal p As Pen, ByVal x As Integer, ByVal y As Integer, ByVal width As Integer, ByVal height As Integer, ByVal radius As Integer, ByVal myBrush As Brush)
 
-            If width > 2 * radius And height > 2 * radius Then
-
-                Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
-
-                gp.AddLine(x + radius, y, x + width - radius, y)
-                gp.AddArc(x + width - radius, y, radius, radius, 270, 90)
-                gp.AddLine(x + width, y + radius, x + width, y + height - radius)
-                gp.AddArc(x + width - radius, y + height - radius, radius, radius, 0, 90)
-                gp.AddLine(x + width - radius, y + height, x + radius, y + height)
-                gp.AddArc(x, y + height - radius, radius, radius, 90, 90)
-                gp.AddLine(x, y + height - radius, x, y + radius)
-                gp.AddArc(x, y, radius, radius, 180, 90)
-
-                gp.CloseFigure()
-
-                g.DrawPath(p, gp)
-                g.FillPath(myBrush, gp)
-
-                gp.Dispose()
-
+            If width / 2 < radius Then
+                radius = width / 2 - 2
+            ElseIf height / 2 < radius Then
+                radius = height / 2 - 2
             End If
+
+            Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
+
+            gp.AddLine(x + radius, y, x + width - radius, y)
+            gp.AddArc(x + width - radius, y, radius, radius, 270, 90)
+            gp.AddLine(x + width, y + radius, x + width, y + height - radius)
+            gp.AddArc(x + width - radius, y + height - radius, radius, radius, 0, 90)
+            gp.AddLine(x + width - radius, y + height, x + radius, y + height)
+            gp.AddArc(x, y + height - radius, radius, radius, 90, 90)
+            gp.AddLine(x, y + height - radius, x, y + radius)
+            gp.AddArc(x, y, radius, radius, 180, 90)
+
+            gp.CloseFigure()
+
+            g.DrawPath(p, gp)
+            g.FillPath(myBrush, gp)
+
+            gp.Dispose()
 
         End Sub
 
@@ -272,6 +311,7 @@ Namespace GraphicObjects
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
@@ -288,11 +328,9 @@ Namespace GraphicObjects
             End If
 
             Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
-       
+
             Dim rect As New Rectangle(X, Y, Width, Height)
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
-        
             Me.DrawRoundRect(g, myPen, X + 0.25 * Width, Y, 0.5 * Width, Height, 10, Brushes.Transparent)
             g.DrawRectangle(myPen, rect2)
             g.DrawRectangle(myPen, rect3)
@@ -337,8 +375,7 @@ Namespace GraphicObjects
                 ax = Me.X + (Me.Width - size.Width) / 2
                 ay = Me.Y + Me.Height - size.Height
             End If
-            g.SmoothingMode = SmoothingMode.AntiAlias
-            g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
+
             g.DrawString(TypeName, fontA, New SolidBrush(Me.LineColor), ax, ay)
 
             DrawTag(g, myMatrix)
@@ -475,6 +512,7 @@ Namespace GraphicObjects
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
@@ -517,7 +555,6 @@ Namespace GraphicObjects
             Dim myPen2 As New Pen(Color.White, 0)
             Dim rect As New Rectangle(X, Y, Width, Height)
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
             'g.DrawRectangle(myPen2, rect)
             g.DrawEllipse(myPen, rect1)
             g.DrawPolygon(myPen, New PointF() {pt3, pt4, pt6, pt5})
@@ -547,7 +584,7 @@ Namespace GraphicObjects
                     g.FillEllipse(pthGrBrush, rect1)
                 End If
             End If
-            
+
             DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
@@ -671,6 +708,7 @@ Namespace GraphicObjects
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), _
@@ -687,7 +725,6 @@ Namespace GraphicObjects
                 End If
             End If
             Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
-            g.SmoothingMode = SmoothingMode.AntiAlias
             g.DrawRectangle(myPen, rect)
 
             DrawTag(g, myMatrix)
@@ -810,6 +847,7 @@ Namespace GraphicObjects
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
@@ -826,14 +864,13 @@ Namespace GraphicObjects
 
             Dim rect As New Rectangle(X, Y, Width, Height)
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
             g.DrawEllipse(myPen, rect2)
             g.DrawEllipse(myPen, rect3)
             g.DrawRectangle(myPen, rect1)
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-        
+
             Dim lgb1 As New LinearGradientBrush(rect1, Me.GradientColor1, Me.GradientColor2, LinearGradientMode.Horizontal)
             lgb1.SetBlendTriangularShape(0.5)
             Dim lgb2 As New LinearGradientBrush(rect3, Me.GradientColor1, Me.GradientColor2, LinearGradientMode.Horizontal)
@@ -1010,13 +1047,13 @@ Namespace GraphicObjects
             Dim myMatrix As Drawing2D.Matrix
             myMatrix = g.Transform()
             gContainer = g.BeginContainer()
+            SetQuality(g)
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Width / 2, Y + Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
-            g.SmoothingMode = SmoothingMode.AntiAlias
-            Me.LineColor = Color.FromArgb(255, 100, 150, 200)
-            Me.LineWidth = 1
+            'Me.LineColor = Color.FromArgb(255, 100, 150, 200)
+            'Me.LineWidth = 1
 
             'posicionar pontos nos primeiros slots livres
             Dim StartPos, EndPos As New Point
@@ -1425,12 +1462,10 @@ Namespace GraphicObjects
 
             If (gpath.GetBounds.Width + gpath.GetBounds.Height) > 0 Then
                 Dim gbrush As New SolidBrush(Color.White)
-                'g.SmoothingMode = SmoothingMode.Default
                 g.DrawPath(New Pen(gbrush, 6), Me.GetRoundedLine(PL, 4))
                 gbrush.Dispose()
             End If
 
-            'g.SmoothingMode = SmoothingMode.AntiAlias
             g.DrawPath(myPen, Me.GetRoundedLine(PL, 4))
 
             g.EndContainer(gContainer)
@@ -1596,6 +1631,7 @@ Namespace GraphicObjects
             Dim gContainer As Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), _
@@ -1624,10 +1660,7 @@ Namespace GraphicObjects
 
             gp.CloseFigure()
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
             g.DrawPath(myPenE, Me.GetRoundedLine(gp.PathPoints, 1))
-
-            g.SmoothingMode = SmoothingMode.AntiAlias
 
             Dim pgb1 As New PathGradientBrush(gp)
             pgb1.CenterColor = Me.GradientColor2
@@ -1774,6 +1807,7 @@ Namespace GraphicObjects
             Dim gContainer As Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), _
@@ -1801,9 +1835,8 @@ Namespace GraphicObjects
 
             gp.CloseFigure()
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
             g.DrawPath(myPenE, Me.GetRoundedLine(gp.PathPoints, 1))
-        
+
             Dim pgb1 As New PathGradientBrush(gp)
             pgb1.CenterColor = Me.GradientColor2
             pgb1.SurroundColors = New Color() {Me.GradientColor1}
@@ -1815,7 +1848,7 @@ Namespace GraphicObjects
                     g.FillPath(pgb1, gp)
                 End If
             End If
-            
+
             DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
@@ -1941,6 +1974,7 @@ Namespace GraphicObjects
             Dim gContainer As Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), _
@@ -1969,10 +2003,8 @@ Namespace GraphicObjects
 
             gp.CloseFigure()
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
             g.DrawPath(myPenE, gp)
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
 
             Dim pgb1 As New PathGradientBrush(gp)
             pgb1.CenterColor = Me.GradientColor2
@@ -2180,6 +2212,7 @@ Namespace GraphicObjects
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
@@ -2199,7 +2232,7 @@ Namespace GraphicObjects
 
             Dim rect As New Rectangle(X, Y, Width, Height)
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
+
             If Me.FlippedH = True Then
                 Me.DrawRoundRect(g, myPen, X + 0.4 * Width, Y, 0.45 * Width, Height, 10, Brushes.Transparent)
             Else
@@ -2210,7 +2243,7 @@ Namespace GraphicObjects
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-         
+
             Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
             Dim radius As Integer = 3
             gp.AddLine(X + radius, Y, X + Width - radius, Y)
@@ -2373,6 +2406,7 @@ Namespace GraphicObjects
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
@@ -2384,8 +2418,8 @@ Namespace GraphicObjects
             Dim myPen2 As New Pen(Color.White, 0)
             Dim rect As New Rectangle(X, Y, Width, Height)
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
-       
+
+
             Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
             If Me.FlippedH = False Then
                 gp.AddLine(CInt(X), CInt(Y), CInt(X + Width), CInt(Y + 0.3 * Height))
@@ -2544,6 +2578,7 @@ Namespace GraphicObjects
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
@@ -2594,12 +2629,12 @@ Namespace GraphicObjects
 
             gp.CloseFigure()
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
+
             g.DrawPath(myPen, gp)
 
             Dim pgb1 As New PathGradientBrush(gp)
             pgb1.CenterColor = Me.GradientColor2
-             pgb1.SurroundColors = New Color() {Me.GradientColor1}
+            pgb1.SurroundColors = New Color() {Me.GradientColor1}
 
             If Me.Fill Then
                 If Me.GradientMode = False Then
@@ -2745,6 +2780,7 @@ Namespace GraphicObjects
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
@@ -2755,7 +2791,7 @@ Namespace GraphicObjects
             Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
             Dim myPen2 As New Pen(Color.White, 0)
             Dim rect As New Rectangle(X, Y, Width, Height)
-            g.SmoothingMode = SmoothingMode.AntiAlias
+
             'g.DrawRectangle(myPen, rect)
 
             Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
@@ -2788,7 +2824,7 @@ Namespace GraphicObjects
             ax = Me.X + (Me.Width - size.Width) / 2
             ay = Me.Y + (Me.Height - size.Height) / 2
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
+
             g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
             g.DrawString("R", fontA, Brushes.DarkBlue, ax, ay)
 
@@ -2911,6 +2947,7 @@ Namespace GraphicObjects
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
@@ -2920,8 +2957,6 @@ Namespace GraphicObjects
             Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
             Dim myPen2 As New Pen(Color.White, 0)
             Dim rect As New Rectangle(X, Y, Width, Height)
-
-            g.SmoothingMode = SmoothingMode.AntiAlias
 
             Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
             If Me.FlippedH = False Then
@@ -2947,7 +2982,7 @@ Namespace GraphicObjects
             g.DrawPath(myPen, Me.GetRoundedLine(gp.PathPoints, 1))
 
             Dim pgb1 As New LinearGradientBrush(New PointF(X, Y + 0.25 * Height), New PointF(X, Y + 0.75 * Height), Me.GradientColor1, Me.GradientColor2)
-       
+
             If Me.Fill Then
                 If Me.GradientMode = False Then
                     g.FillPath(New SolidBrush(Me.FillColor), gp)
@@ -3078,6 +3113,7 @@ Namespace GraphicObjects
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
@@ -3112,9 +3148,8 @@ Namespace GraphicObjects
 
             gp.CloseFigure()
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
             g.DrawPath(myPen, gp)
-           
+
             If Me.Fill Then
                 g.FillPath(New SolidBrush(Me.FillColor), gp)
             End If
@@ -3270,6 +3305,7 @@ Namespace GraphicObjects
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
@@ -3280,8 +3316,6 @@ Namespace GraphicObjects
             Dim myPen2 As New Pen(Color.White, 0)
             Dim rect As New Rectangle(X, Y, Width, Height)
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
-       
             Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
             gp.AddLine(CInt(X), CInt(Y + 0.2 * Height), CInt(X + 0.5 * Width), CInt(Y + 0.5 * Height))
             gp.AddLine(CInt(X + 0.5 * Width), CInt(Y + 0.5 * Height), CInt(X + Width), CInt(Y + 0.2 * Height))
@@ -3430,6 +3464,7 @@ Namespace GraphicObjects
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
@@ -3441,7 +3476,7 @@ Namespace GraphicObjects
             Dim myPen2 As New Pen(Color.White, 0)
             Dim rect As New Rectangle(X, Y, Width, Height)
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
+
             'g.DrawRectangle(myPen, rect)
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
@@ -3467,7 +3502,7 @@ Namespace GraphicObjects
             g.DrawPath(myPen, Me.GetRoundedLine(gp.PathPoints, 1))
 
             Dim pgb1 As New LinearGradientBrush(New PointF(X, Y), New PointF(X, Y + Height), Me.GradientColor1, Me.GradientColor2)
-         
+
             If Me.Fill Then
                 If Me.GradientMode = False Then
                     g.FillPath(New SolidBrush(Me.FillColor), gp)
@@ -3603,6 +3638,7 @@ Namespace GraphicObjects
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
@@ -3619,7 +3655,7 @@ Namespace GraphicObjects
 
             Dim rect As New Rectangle(X, Y, Width, Height)
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
+
             'g.DrawRectangle(myPen2, rect)
             Me.DrawRoundRect(g, myPen, X + 0.25 * Width, Y, 0.45 * Width, Height, 10, Brushes.Transparent)
             g.DrawRectangle(myPen, rect2)
@@ -3628,7 +3664,7 @@ Namespace GraphicObjects
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
             Dim strx As Single = (Me.Width - strdist.Width) / 2
-           
+
             Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
             Dim radius As Integer = 3
             gp.AddLine(X + radius, Y, X + Width - radius, Y)
@@ -3656,7 +3692,7 @@ Namespace GraphicObjects
                     Me.DrawRoundRect(g, myPen, X + 0.25 * Width, Y, 0.45 * Width, Height, 3, lgb1)
                 End If
             End If
-            
+
             DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
@@ -3764,6 +3800,7 @@ Namespace GraphicObjects
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
 
             gContainer = g.BeginContainer()
+            SetQuality(g)
 
             Dim myPen As New Pen(Color.Tomato, 4)
             With myPen
@@ -3774,7 +3811,7 @@ Namespace GraphicObjects
             End With
 
             'posicionar pontos nos primeiros slots livres
-            g.SmoothingMode = SmoothingMode.AntiAlias
+
             g.DrawLines(myPen, New Point() {New Point(Me.X, Me.Y), New Point(Me.Width, Me.Height)})
 
             g.EndContainer(gContainer)
@@ -3910,6 +3947,7 @@ Namespace GraphicObjects
             Dim gContainer As Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), _
@@ -4000,7 +4038,7 @@ Namespace GraphicObjects
             ax = Me.X + (Me.Width - size.Width) / 2
             ay = Me.Y + (Me.Height - size.Height) / 2
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
+
             g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
             g.DrawString("A", fontA, Brushes.Red, ax, ay)
 
@@ -4158,6 +4196,7 @@ Namespace GraphicObjects
             Dim gContainer As Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), _
@@ -4240,7 +4279,7 @@ Namespace GraphicObjects
             ax = Me.X + (Me.Width - size.Width) / 2
             ay = Me.Y + (Me.Height - size.Height) / 2
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
+
             g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
 
             g.DrawString("E", fontA, Brushes.Blue, ax, ay)
@@ -4389,6 +4428,7 @@ Namespace GraphicObjects
             Dim gContainer As Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), _
@@ -4448,7 +4488,7 @@ Namespace GraphicObjects
             ax = Me.X + (Me.Width - size.Width) / 2
             ay = Me.Y + (Me.Height - size.Height) / 2
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
+
             g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
             g.DrawString("R", fontA, Brushes.Green, ax, ay)
 
@@ -4577,6 +4617,7 @@ Namespace GraphicObjects
             Dim gContainer As Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), _
@@ -4636,7 +4677,7 @@ Namespace GraphicObjects
             ax = Me.X + (Me.Width - size.Width) / 2
             ay = Me.Y + (Me.Height - size.Height) / 2
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
+
             g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
             g.DrawString("R", fontA, Brushes.YellowGreen, ax, ay)
 
@@ -4645,7 +4686,7 @@ Namespace GraphicObjects
             g.TextRenderingHint = Text.TextRenderingHint.SystemDefault
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
-           
+
             DrawTag(g, myMatrix)
 
             g.EndContainer(gContainer)
@@ -4783,10 +4824,10 @@ Namespace GraphicObjects
             UpdateStatus(Me)
 
             DrawReactor(g, "C")
-            
+
         End Sub
 
-        
+
     End Class
 
     <Serializable()> Public Class ReactorEquilibriumGraphic
@@ -4916,7 +4957,7 @@ Namespace GraphicObjects
             UpdateStatus(Me)
 
             DrawReactor(g, "E")
-           
+
         End Sub
 
     End Class
@@ -5017,7 +5058,7 @@ Namespace GraphicObjects
                 End If
 
             End With
-            
+
             With OutputConnectors
 
                 If .Count <> 0 Then
@@ -5032,7 +5073,7 @@ Namespace GraphicObjects
                     .Add(myOC1)
                     .Add(myOC2)
                 End If
-                
+
             End With
 
             With Me.EnergyConnector
@@ -5050,7 +5091,7 @@ Namespace GraphicObjects
             UpdateStatus(Me)
 
             DrawReactor(g, "G")
-          
+
         End Sub
 
     End Class
@@ -5205,6 +5246,7 @@ Namespace GraphicObjects
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
@@ -5221,7 +5263,7 @@ Namespace GraphicObjects
 
             Dim rect As New Rectangle(X, Y, Width, Height)
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
+
             'g.DrawRectangle(myPen2, rect)
             g.DrawEllipse(myPen, rect3)
             g.DrawRectangle(myPen, rect1)
@@ -5414,6 +5456,7 @@ Namespace GraphicObjects
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), _
@@ -5430,7 +5473,7 @@ Namespace GraphicObjects
                 End If
             End If
             Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
-            g.SmoothingMode = SmoothingMode.AntiAlias
+
             g.DrawRectangle(myPen, rect)
 
             Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
@@ -5553,6 +5596,7 @@ Namespace GraphicObjects
             Dim myMatrix As Drawing2D.Matrix
 
             gContainer = g.BeginContainer()
+            SetQuality(g)
 
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
@@ -5578,7 +5622,7 @@ Namespace GraphicObjects
             pthGrBrush.SetSigmaBellShape(1)
 
             Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
-            g.SmoothingMode = SmoothingMode.AntiAlias
+
             g.DrawEllipse(myPen, rect)
             If Me.Fill Then
                 If Me.GradientMode = False Then
@@ -5716,6 +5760,7 @@ Namespace GraphicObjects
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
@@ -5731,7 +5776,7 @@ Namespace GraphicObjects
 
             Dim rect As New Rectangle(X, Y, Width, Height)
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
+
             'g.DrawRectangle(myPen2, rect)
 
             Dim lgb1 As LinearGradientBrush
@@ -5966,6 +6011,7 @@ Namespace GraphicObjects
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
@@ -5985,12 +6031,12 @@ Namespace GraphicObjects
 
             Dim rect As New Rectangle(X, Y, Width, Height)
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
-      
+
+
             Dim lgb1 As LinearGradientBrush
             lgb1 = New LinearGradientBrush(rect, Me.GradientColor1, Me.GradientColor2, LinearGradientMode.Horizontal)
             lgb1.SetBlendTriangularShape(0.5)
-       
+
             Dim path As New GraphicsPath()
             path.AddEllipse(rect)
             Dim pthGrBrush As New PathGradientBrush(path)
@@ -6242,6 +6288,7 @@ Namespace GraphicObjects
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
@@ -6257,7 +6304,7 @@ Namespace GraphicObjects
 
             Dim rect As New Rectangle(X, Y, Width, Height)
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
+
             'g.DrawRectangle(myPen2, rect)
 
             Dim lgb1 As LinearGradientBrush
@@ -6486,6 +6533,7 @@ Namespace GraphicObjects
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
@@ -6501,7 +6549,7 @@ Namespace GraphicObjects
 
             Dim rect As New Rectangle(X, Y, Width, Height)
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
+
             'g.DrawRectangle(myPen2, rect)
 
             Dim lgb1 As LinearGradientBrush
@@ -6731,6 +6779,7 @@ Namespace GraphicObjects
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
@@ -6750,7 +6799,7 @@ Namespace GraphicObjects
 
             Dim rect As New Rectangle(X, Y, Width, Height)
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
+
             'g.DrawRectangle(myPen2, rect)
 
             Dim lgb1 As LinearGradientBrush
@@ -7150,7 +7199,7 @@ Namespace GraphicObjects
             UpdateStatus(Me)
 
             DrawReactor(g, "SS")
-            
+
         End Sub
 
     End Class
@@ -7397,6 +7446,7 @@ Namespace GraphicObjects
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
@@ -7408,7 +7458,7 @@ Namespace GraphicObjects
             Dim myPen2 As New Pen(Color.White, 0)
             Dim rect As New Rectangle(X, Y, Width, Height)
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
+
             'g.DrawRectangle(myPen2, rect)
 
             Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
@@ -7658,6 +7708,7 @@ Namespace GraphicObjects
             Dim gContainer As Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), _
@@ -7678,10 +7729,10 @@ Namespace GraphicObjects
 
             gp.CloseFigure()
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
+
             g.DrawPath(myPenE, gp)
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
+
 
             Dim pgb1 As New PathGradientBrush(gp)
             pgb1.CenterColor = Me.GradientColor2
@@ -7703,7 +7754,7 @@ Namespace GraphicObjects
             ax = Me.X + (Me.Width - size.Width) / 2
             ay = Me.Y + (Me.Height - size.Height) / 2
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
+
             g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
             g.DrawString("UO", fontA, Brushes.SteelBlue, ax, ay)
 
@@ -7881,6 +7932,7 @@ Namespace GraphicObjects
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
@@ -7903,7 +7955,7 @@ Namespace GraphicObjects
 
             gp.CloseFigure()
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
+
             g.DrawPath(myPen, gp)
 
             Dim pgb1 As New PathGradientBrush(gp)
@@ -7927,7 +7979,7 @@ Namespace GraphicObjects
             ax = Me.X + (Me.Width - size.Width) / 2
             ay = Me.Y + (Me.Height - size.Height) / 2
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
+
             g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
             g.DrawString("E", fontA, Brushes.DarkOrange, ax, ay)
 
@@ -8119,6 +8171,7 @@ Namespace GraphicObjects
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), Drawing.Drawing2D.MatrixOrder.Append)
@@ -8141,7 +8194,7 @@ Namespace GraphicObjects
 
             gp.CloseFigure()
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
+
             g.DrawPath(myPen, gp)
 
             Dim pgb1 As New PathGradientBrush(gp)
@@ -8164,7 +8217,7 @@ Namespace GraphicObjects
             ax = Me.X + (Me.Width - size.Width) / 2
             ay = Me.Y + (Me.Height - size.Height) / 2
 
-            g.SmoothingMode = SmoothingMode.AntiAlias
+
             g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
             g.DrawString("F", fontA, Brushes.DarkOrange, ax, ay)
 
@@ -8281,6 +8334,7 @@ Namespace GraphicObjects
             Dim gContainer As Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
+            SetQuality(g)
             myMatrix = g.Transform()
             If m_Rotation <> 0 Then
                 myMatrix.RotateAt(m_Rotation, New PointF(X + Me.Width / 2, Y + Me.Height / 2), _
@@ -8298,7 +8352,7 @@ Namespace GraphicObjects
                     End With
                     Dim myPen2 As New Pen(Color.White, 0)
                     Dim rect As New Rectangle(X, Y, Width, Height)
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     Dim lgb1 As LinearGradientBrush
                     lgb1 = New LinearGradientBrush(rect, Me.GradientColor1, Me.GradientColor2, LinearGradientMode.Horizontal)
                     lgb1.SetBlendTriangularShape(0.5)
@@ -8377,7 +8431,7 @@ Namespace GraphicObjects
                     Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
                     Dim myPen2 As New Pen(Color.White, 0)
                     Dim rect As New Rectangle(X, Y, Width, Height)
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     If Me.FlippedH = True Then
                         Me.DrawRoundRect(g, myPen, X + 0.4 * Width, Y, 0.45 * Width, Height, 10, Brushes.Transparent)
                     Else
@@ -8444,7 +8498,7 @@ Namespace GraphicObjects
                         ax = Me.X + (Me.Width - size.Width) / 2
                         ay = Me.Y + Me.Height - size.Height
                     End If
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
                     g.DrawString("CS", fontA, New SolidBrush(Me.LineColor), ax, ay)
 
@@ -8459,7 +8513,7 @@ Namespace GraphicObjects
                     Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
                     Dim myPen2 As New Pen(Color.White, 0)
                     Dim rect As New Rectangle(X, Y, Width, Height)
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
                     Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
@@ -8496,7 +8550,7 @@ Namespace GraphicObjects
                     Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
                     Dim myPen2 As New Pen(Color.White, 0)
                     Dim rect As New Rectangle(X, Y, Width, Height)
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
                     gp.AddLine(CInt(X), CInt(Y + 0.5 * Height), CInt(X + 0.5 * Width), CInt(Y))
                     gp.AddLine(CInt(X + 0.5 * Width), CInt(Y), CInt(X + Width), CInt(Y + 0.5 * Height))
@@ -8522,7 +8576,7 @@ Namespace GraphicObjects
                     Dim ax, ay As Integer
                     ax = Me.X + (Me.Width - size.Width) / 2
                     ay = Me.Y + (Me.Height - size.Height) / 2
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
                     g.DrawString("R", fontA, Brushes.DarkBlue, ax, ay)
                     gp.Dispose()
@@ -8543,9 +8597,9 @@ Namespace GraphicObjects
                     gp.AddLine(CInt(X + Width), CInt(Y + Height), CInt(X), CInt(Y + Height))
                     gp.AddLine(CInt(X), CInt(Y + Height), CInt(X), CInt(Y))
                     gp.CloseFigure()
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     g.DrawPath(myPenE, Me.GetRoundedLine(gp.PathPoints, 5))
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Regular, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
                     Dim pgb1 As New PathGradientBrush(gp)
@@ -8564,7 +8618,7 @@ Namespace GraphicObjects
                     Dim ax, ay As Integer
                     ax = Me.X + (Me.Width - size.Width) / 2
                     ay = Me.Y + (Me.Height - size.Height) / 2
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
                     g.DrawString("CO", fontA, Brushes.SteelBlue, ax, ay)
 
@@ -8586,7 +8640,7 @@ Namespace GraphicObjects
                         .DashStyle = DashStyle.Dot
                     End With
                     Dim rect As New Rectangle(X, Y, Width, Height)
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     Dim lgb1 As LinearGradientBrush
                     lgb1 = New LinearGradientBrush(rect, Me.GradientColor1, Me.GradientColor2, LinearGradientMode.Horizontal)
                     lgb1.SetBlendTriangularShape(0.5)
@@ -8704,7 +8758,7 @@ Namespace GraphicObjects
                     Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
                     Dim myPen2 As New Pen(Color.White, 0)
                     Dim rect As New Rectangle(X, Y, Width, Height)
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
                     Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
@@ -8747,7 +8801,7 @@ Namespace GraphicObjects
                     gp.AddLine(CInt(X + Width), CInt(Y + 0.5 * Height), CInt(X + 0.5 * Width), CInt(Y + Height))
                     gp.AddLine(CInt(X + 0.5 * Width), CInt(Y + Height), CInt(X), CInt(Y + 0.5 * Height))
                     gp.CloseFigure()
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     g.DrawPath(myPen, gp)
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
@@ -8767,7 +8821,7 @@ Namespace GraphicObjects
                     Dim ax, ay As Integer
                     ax = Me.X + (Me.Width - size.Width) / 2
                     ay = Me.Y + (Me.Height - size.Height) / 2
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
                     g.DrawString("A", fontA, Brushes.DarkOrange, ax, ay)
                     gp.Dispose()
@@ -8788,7 +8842,7 @@ Namespace GraphicObjects
                     pthGrBrush.SurroundColors = colors
                     pthGrBrush.SetSigmaBellShape(1)
                     Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     g.DrawEllipse(myPen, rect)
                     If Me.Fill Then
                         If Me.GradientMode = False Then
@@ -8829,9 +8883,9 @@ Namespace GraphicObjects
                         gp.AddLine(CInt(X + 0.5 * Width), CInt(Y + Height), CInt(X + Width), CInt(Y + 0.5 * Height))
                     End If
                     gp.CloseFigure()
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     g.DrawPath(myPenE, Me.GetRoundedLine(gp.PathPoints, 1))
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
                     Dim pgb1 As New PathGradientBrush(gp)
@@ -8870,7 +8924,7 @@ Namespace GraphicObjects
                         gp.AddLine(CInt(X + 0.5 * Width), CInt(Y + Height), CInt(X), CInt(Y + 0.5 * Height))
                     End If
                     gp.CloseFigure()
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     g.DrawPath(myPenE, Me.GetRoundedLine(gp.PathPoints, 1))
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
@@ -8895,7 +8949,7 @@ Namespace GraphicObjects
                     Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
                     Dim myPen2 As New Pen(Color.White, 0)
                     Dim rect As New Rectangle(X, Y, Width, Height)
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
                     gp.AddEllipse(rect)
                     gp.AddEllipse(CInt(X + 0.3 * Width), CInt(Y + 0.3 * Height), CInt(0.4 * Width), CInt(0.4 * Height))
@@ -8936,7 +8990,7 @@ Namespace GraphicObjects
                         End If
                     End If
                     Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     g.DrawRectangle(myPen, rect)
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
@@ -8975,7 +9029,7 @@ Namespace GraphicObjects
                     Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
                     Dim myPen2 As New Pen(Color.White, 0)
                     Dim rect As New Rectangle(X, Y, Width, Height)
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     g.DrawEllipse(myPen, rect1)
                     g.DrawPolygon(myPen, New PointF() {pt3, pt4, pt6, pt5})
                     g.DrawPolygon(myPen, New PointF() {pt9, pt10, pt11, pt12})
@@ -9017,7 +9071,7 @@ Namespace GraphicObjects
                     Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
                     Dim myPen2 As New Pen(Color.White, 0)
                     Dim rect As New Rectangle(X, Y, Width, Height)
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     If Me.FlippedH = True Then
                         Me.DrawRoundRect(g, myPen, X + 0.4 * Width, Y, 0.45 * Width, Height, 10, Brushes.Transparent)
                     Else
@@ -9084,7 +9138,7 @@ Namespace GraphicObjects
                         ax = Me.X + (Me.Width - size.Width) / 2
                         ay = Me.Y + Me.Height - size.Height
                     End If
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
                     g.DrawString("C", fontA, New SolidBrush(Me.LineColor), ax, ay)
 
@@ -9102,7 +9156,7 @@ Namespace GraphicObjects
                     Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
                     Dim myPen2 As New Pen(Color.White, 0)
                     Dim rect As New Rectangle(X, Y, Width, Height)
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     g.DrawEllipse(myPen, rect3)
                     g.DrawRectangle(myPen, rect1)
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
@@ -9153,7 +9207,7 @@ Namespace GraphicObjects
                     Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
                     Dim myPen2 As New Pen(Color.White, 0)
                     Dim rect As New Rectangle(X, Y, Width, Height)
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     If Me.FlippedH = True Then
                         Me.DrawRoundRect(g, myPen, X + 0.4 * Width, Y, 0.45 * Width, Height, 10, Brushes.Transparent)
                     Else
@@ -9221,7 +9275,7 @@ Namespace GraphicObjects
                         ax = Me.X + (Me.Width - size.Width) / 2
                         ay = Me.Y + Me.Height - size.Height
                     End If
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
                     g.DrawString("E", fontA, New SolidBrush(Me.LineColor), ax, ay)
 
@@ -9244,7 +9298,7 @@ Namespace GraphicObjects
                     Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
                     Dim myPen2 As New Pen(Color.White, 0)
                     Dim rect As New Rectangle(X, Y, Width, Height)
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     If Me.FlippedH = True Then
                         Me.DrawRoundRect(g, myPen, X + 0.4 * Width, Y, 0.45 * Width, Height, 10, Brushes.Transparent)
                     Else
@@ -9312,7 +9366,7 @@ Namespace GraphicObjects
                         ax = Me.X + (Me.Width - size.Width) / 2
                         ay = Me.Y + Me.Height - size.Height
                     End If
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     g.TextRenderingHint = Text.TextRenderingHint.AntiAlias
                     g.DrawString("G", fontA, New SolidBrush(Me.LineColor), ax, ay)
 
@@ -9334,7 +9388,7 @@ Namespace GraphicObjects
                         End If
                     End If
                     Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     g.DrawRectangle(myPen, rect)
                     Dim strdist As SizeF = g.MeasureString(Me.Tag, New Font("Arial", 10, FontStyle.Bold, GraphicsUnit.Pixel, 0, False), New PointF(0, 0), New StringFormat(StringFormatFlags.NoClip, 0))
                     Dim strx As Single = (Me.Width - strdist.Width) / 2
@@ -9356,7 +9410,7 @@ Namespace GraphicObjects
                     Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
                     Dim myPen2 As New Pen(Color.White, 0)
                     Dim rect As New Rectangle(X, Y, Width, Height)
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     g.DrawEllipse(myPen, rect2)
                     g.DrawEllipse(myPen, rect3)
                     g.DrawRectangle(myPen, rect1)
@@ -9389,7 +9443,7 @@ Namespace GraphicObjects
                     Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
                     Dim myPen2 As New Pen(Color.White, 0)
                     Dim rect As New Rectangle(X, Y, Width, Height)
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     Dim gp As Drawing2D.GraphicsPath = New Drawing2D.GraphicsPath
                     gp.AddLine(CInt(X), CInt(Y + 0.2 * Height), CInt(X + 0.5 * Width), CInt(Y + 0.5 * Height))
                     gp.AddLine(CInt(X + 0.5 * Width), CInt(Y + 0.5 * Height), CInt(X + Width), CInt(Y + 0.2 * Height))
@@ -9432,7 +9486,7 @@ Namespace GraphicObjects
                     Dim myPen As New Pen(Me.LineColor, Me.LineWidth)
                     Dim myPen2 As New Pen(Color.White, 0)
                     Dim rect As New Rectangle(X, Y, Width, Height)
-                    g.SmoothingMode = SmoothingMode.AntiAlias
+
                     If Me.FlippedH = True Then
                         Me.DrawRoundRect(g, myPen, X + 0.4 * Width, Y, 0.45 * Width, Height, 10, Brushes.Transparent)
                     Else
