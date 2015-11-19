@@ -542,10 +542,10 @@ out:        Return New Object() {L, V, Vx, Vy, 1, 0.0#, PP.RET_NullVector, 0.0#,
             _Hl = 0.0#
 
             Dim mmg, mml As Double
-            If V > 0 Then _Hv = PP.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
-            If L > 0 Then _Hl = PP.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
-            mmg = PP.AUX_MMM(Vy)
-            mml = PP.AUX_MMM(Vx)
+            If V > 0.0# Then _Hv = PP.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
+            If L > 0.0# Then _Hl = PP.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
+            mmg = PP.AUX_MMM(Vy, "V")
+            mml = PP.AUX_MMM(Vx, "L")
 
             Dim herr As Double = Hf - (mmg * V / (mmg * V + mml * L)) * _Hv - (mml * L / (mmg * V + mml * L)) * _Hl
             OBJ_FUNC_PH_FLASH = {herr, T, V, L, Vy, Vx}
@@ -583,8 +583,8 @@ out:        Return New Object() {L, V, Vx, Vy, 1, 0.0#, PP.RET_NullVector, 0.0#,
 
             If V > 0 Then _Sv = PP.DW_CalcEntropy(Vy, T, P, State.Vapor)
             If L > 0 Then _Sl = PP.DW_CalcEntropy(Vx, T, P, State.Liquid)
-            mmg = PP.AUX_MMM(Vy)
-            mml = PP.AUX_MMM(Vx)
+            mmg = PP.AUX_MMM(Vy, "V")
+            mml = PP.AUX_MMM(Vx, "L")
 
             Dim serr As Double = Sf - (mmg * V / (mmg * V + mml * L)) * _Sv - (mml * L / (mmg * V + mml * L)) * _Sl
             OBJ_FUNC_PS_FLASH = {serr, T, V, L, Vy, Vx}

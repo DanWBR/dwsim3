@@ -752,12 +752,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Case PropertyPackages.Fase.Liquid, PropertyPackages.Fase.Liquid1, PropertyPackages.Fase.Liquid2, PropertyPackages.Fase.Liquid3
                     Return bop.LiquidMolecularWeight(bof.SGO, bof.BSW)
                 Case PropertyPackages.Fase.Mixture
-                    Dim mwv, mwl, xv, xl As Double
-                    xv = Me.CurrentMaterialStream.Fases(2).SPMProperties.molarfraction.GetValueOrDefault
-                    xl = 1 - xv
-                    mwv = bop.VaporMolecularWeight(bof.SGG)
-                    mwl = bop.LiquidMolecularWeight(bof.SGO, bof.BSW)
-                    Return xv * mwv + xl * mwl
+                    Dim val As Double = 0.0#
+                    Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
+                    For Each subst In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes.Values
+                        val += subst.FracaoMolar.GetValueOrDefault * subst.ConstantProperties.Molar_Weight
+                    Next
+                    Return val
                 Case Else
                     Return 0.0#
             End Select
