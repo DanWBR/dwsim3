@@ -84,6 +84,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim bof As New BlackOilFluid
             Dim i As Integer = 0
             For Each c In constprops
+                If c.Molar_Weight = 0.0# Then
+                    c.Molar_Weight = (c.BO_GOR * c.BO_SGG) * bop.VaporMolecularWeight(c.BO_SGG) +
+                                     (c.BO_SGO * 1000 * (100 - c.BO_BSW) / 100 + 1000 * c.BO_BSW / 100) * bop.LiquidMolecularWeight(c.BO_SGO, c.BO_BSW)
+                    c.Molar_Weight /= (c.BO_GOR * c.BO_SGG) + (c.BO_SGO * 1000 * (100 - c.BO_BSW) / 100 + 1000 * c.BO_BSW / 100)
+                End If
                 With bof
                     .SGO += Vxw(i) * c.BO_SGO
                     .SGG += Vxw(i) * c.BO_SGO
