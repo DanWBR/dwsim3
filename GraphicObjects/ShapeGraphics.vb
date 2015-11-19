@@ -1463,7 +1463,7 @@ Namespace GraphicObjects
             Dim gpath As GraphicsPath = Me.GetRoundedLine(PL, 0)
 
             If (gpath.GetBounds.Width + gpath.GetBounds.Height) > 0 Then
-                Dim gbrush As New SolidBrush(Color.White)
+                Dim gbrush As New SolidBrush(Color.FromArgb(175, Color.White))
                 g.DrawPath(New Pen(gbrush, 6), Me.GetRoundedLine(PL, 4))
                 gbrush.Dispose()
             End If
