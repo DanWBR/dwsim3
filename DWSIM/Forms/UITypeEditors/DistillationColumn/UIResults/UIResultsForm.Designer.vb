@@ -22,6 +22,7 @@ Partial Class UIResultsForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(UIResultsForm))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -78,12 +79,11 @@ Partial Class UIResultsForm
         Me.DataGridView4 = New System.Windows.Forms.DataGridView()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.TSB_Print = New System.Windows.Forms.ToolStripButton()
-        Me.GroupBox13 = New System.Windows.Forms.GroupBox()
         Me.TSB_PrinterSetup = New System.Windows.Forms.ToolStripButton()
-        Me.PrintDialog1 = New System.Windows.Forms.PrintDialog()
         Me.TSB_PageSetup = New System.Windows.Forms.ToolStripButton()
         Me.TSB_Preview = New System.Windows.Forms.ToolStripButton()
         Me.TSB_Copy = New System.Windows.Forms.ToolStripButton()
+        Me.PrintDialog1 = New System.Windows.Forms.PrintDialog()
         CType(Me.Content, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Content.SuspendLayout()
         Me.FaTabStripItem1.SuspendLayout()
@@ -122,7 +122,6 @@ Partial Class UIResultsForm
         Me.GroupBox23.SuspendLayout()
         CType(Me.DataGridView4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ToolStrip1.SuspendLayout()
-        Me.GroupBox13.SuspendLayout()
         Me.SuspendLayout()
         '
         'Content
@@ -578,6 +577,7 @@ Partial Class UIResultsForm
         Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TSB_Print, Me.TSB_PrinterSetup, Me.TSB_PageSetup, Me.TSB_Preview, Me.TSB_Copy})
         resources.ApplyResources(Me.ToolStrip1, "ToolStrip1")
         Me.ToolStrip1.Name = "ToolStrip1"
+        Me.ToolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
         '
         'TSB_Print
         '
@@ -586,23 +586,12 @@ Partial Class UIResultsForm
         resources.ApplyResources(Me.TSB_Print, "TSB_Print")
         Me.TSB_Print.Name = "TSB_Print"
         '
-        'GroupBox13
-        '
-        Me.GroupBox13.Controls.Add(Me.Content)
-        resources.ApplyResources(Me.GroupBox13, "GroupBox13")
-        Me.GroupBox13.Name = "GroupBox13"
-        Me.GroupBox13.TabStop = False
-        '
         'TSB_PrinterSetup
         '
         Me.TSB_PrinterSetup.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.TSB_PrinterSetup.Image = Global.DWSIM.My.Resources.Resources.printer_add
         resources.ApplyResources(Me.TSB_PrinterSetup, "TSB_PrinterSetup")
         Me.TSB_PrinterSetup.Name = "TSB_PrinterSetup"
-        '
-        'PrintDialog1
-        '
-        Me.PrintDialog1.UseEXDialog = True
         '
         'TSB_PageSetup
         '
@@ -625,11 +614,15 @@ Partial Class UIResultsForm
         resources.ApplyResources(Me.TSB_Copy, "TSB_Copy")
         Me.TSB_Copy.Name = "TSB_Copy"
         '
+        'PrintDialog1
+        '
+        Me.PrintDialog1.UseEXDialog = True
+        '
         'UIResultsForm
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.Controls.Add(Me.GroupBox13)
+        Me.Controls.Add(Me.Content)
         Me.Controls.Add(Me.ToolStrip1)
         Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
@@ -678,7 +671,6 @@ Partial Class UIResultsForm
         CType(Me.DataGridView4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ToolStrip1.ResumeLayout(False)
         Me.ToolStrip1.PerformLayout()
-        Me.GroupBox13.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -717,7 +709,6 @@ Partial Class UIResultsForm
     Public WithEvents CheckBox4 As System.Windows.Forms.CheckBox
     Public WithEvents ToolStrip1 As System.Windows.Forms.ToolStrip
     Public WithEvents TSB_Print As System.Windows.Forms.ToolStripButton
-    Public WithEvents GroupBox13 As System.Windows.Forms.GroupBox
     Public WithEvents FaTabStripItem20 As FarsiLibrary.Win.FATabStripItem
     Public WithEvents FaTabStrip9 As FarsiLibrary.Win.FATabStrip
     Public WithEvents FaTabStripItem21 As FarsiLibrary.Win.FATabStripItem

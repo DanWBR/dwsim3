@@ -95,6 +95,7 @@ Public Class UIConnectionsEditorForm
             If str.StreamBehavior = StreamInformation.Behavior.Feed Then
                 Dim st = (From st2 As Stage In dc.Stages Select st2 Where st2.ID = str.AssociatedStage).FirstOrDefault
                 If st Is Nothing Then st = (From st2 As Stage In dc.Stages Select st2 Where st2.Name = str.AssociatedStage).FirstOrDefault
+                If st Is Nothing Then st = dc.Stages(0)
                 Me.dgv1.Rows.Add(New Object() {dgv1.Rows.Count + 1, st.Name, ReturnObjTag(str.StreamID), str.ID})
                 Me.dgv1.Rows(Me.dgv1.Rows.Count - 1).Cells(2).Tag = st.ID
             End If
@@ -104,6 +105,7 @@ Public Class UIConnectionsEditorForm
             If str.StreamBehavior = StreamInformation.Behavior.Sidedraw Then
                 Dim st = (From st2 As Stage In dc.Stages Select st2 Where st2.ID = str.AssociatedStage).FirstOrDefault
                 If st Is Nothing Then st = (From st2 As Stage In dc.Stages Select st2 Where st2.Name = str.AssociatedStage).FirstOrDefault
+                If st Is Nothing Then st = dc.Stages(0)
                 Me.dgv2.Rows.Add(New Object() {dgv2.Rows.Count + 1, st.Name, ReturnObjTag(str.StreamID), str.StreamPhase.ToString, cvt.ConverterDoSI(form.Options.SelectedUnitSystem.spmp_molarflow, str.FlowRate.Value), str.ID})
                 Me.dgv2.Rows(Me.dgv2.Rows.Count - 1).Cells(2).Tag = st.ID
             End If
@@ -330,6 +332,7 @@ Public Class UIConnectionsEditorForm
                 Me.dgv4.Rows(Me.dgv4.Rows.Count - 1).Cells(0).ReadOnly = True
             ElseIf str.StreamBehavior = StreamInformation.Behavior.InterExchanger Then
                 Dim st = (From st2 As Stage In dc.Stages Select st2 Where st2.Name = str.AssociatedStage).FirstOrDefault
+                If st Is Nothing Then st = dc.Stages(0)
                 Me.dgv4.Rows.Add(New Object() {st.Name, tag, str.ID})
                 Me.dgv4.Rows(Me.dgv4.Rows.Count - 1).Cells(0).Tag = st.ID
             End If
@@ -387,12 +390,15 @@ Public Class UIConnectionsEditorForm
         Dim id As String = dgv1.Rows(dgv1.SelectedCells(0).RowIndex).Cells(3).Value
         Dim sid As String = dc.MaterialStreams(id).StreamID
         With Me.dgv1.Rows
-            If Not id = "" Then
-                Dim idx As Integer = FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface).OutputConnectors(0).AttachedConnector.AttachedToConnectorIndex
-                form.DisconnectObject(FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface), dc.GraphicObject)
-                'dc.GraphicObject.InputConnectors.RemoveAt(idx)
-                dc.GraphicObject.InputConnectors(idx).AttachedConnector = Nothing
-                dc.GraphicObject.InputConnectors(idx).IsAttached = False
+            If Not id = "" And Not sid = "" Then
+                Dim obj = FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface)
+                If Not obj Is Nothing Then
+                    Dim idx As Integer = obj.OutputConnectors(0).AttachedConnector.AttachedToConnectorIndex
+                    form.DisconnectObject(FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface), dc.GraphicObject)
+                    'dc.GraphicObject.InputConnectors.RemoveAt(idx)
+                    dc.GraphicObject.InputConnectors(idx).AttachedConnector = Nothing
+                    dc.GraphicObject.InputConnectors(idx).IsAttached = False
+                End If
             End If
             If dc.MaterialStreams.ContainsKey(id) Then dc.MaterialStreams.Remove(id)
             .RemoveAt(dgv1.SelectedCells(0).RowIndex)
@@ -605,7 +611,10 @@ Public Class UIConnectionsEditorForm
 
                             Dim k As Integer
                             For k = 0 To .OutputConnectors.Count - 2
-                                .OutputConnectors.Item(k).AttachedConnector.AttachedFromConnectorIndex = k
+                                Try
+                                    .OutputConnectors.Item(k).AttachedConnector.AttachedFromConnectorIndex = k
+                                Catch ex As Exception
+                                End Try
                             Next
 
                             form.ConnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface), fidx, tidx)
@@ -710,7 +719,10 @@ Public Class UIConnectionsEditorForm
                             Dim k As Integer
                             For k = 0 To .OutputConnectors.Count - 2
                                 If Not .OutputConnectors.Item(k).AttachedConnector Is Nothing Then
-                                    .OutputConnectors.Item(k).AttachedConnector.AttachedFromConnectorIndex = k
+                                    Try
+                                        .OutputConnectors.Item(k).AttachedConnector.AttachedFromConnectorIndex = k
+                                    Catch ex As Exception
+                                    End Try
                                 End If
                             Next
                         End With
@@ -781,13 +793,16 @@ Public Class UIConnectionsEditorForm
                 Case Column.ColType.RefluxedAbsorber
                     idx2 = 1
             End Select
-            If dgv4.SelectedRows(0).Index >= idx2 Then
-                If Not id = "" Then
-                    Dim idx As Integer = FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface).InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex
-                    form.DisconnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface))
-                    'dc.GraphicObject.OutputConnectors.RemoveAt(idx)
-                    dc.GraphicObject.OutputConnectors(idx).AttachedConnector = Nothing
-                    dc.GraphicObject.OutputConnectors(idx).IsAttached = False
+            If dgv4.SelectedCells(0).RowIndex >= idx2 Then
+                If Not id = "" And Not sid = "" Then
+                    Dim obj = FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface)
+                    If Not obj Is Nothing Then
+                        Dim idx As Integer = obj.InputConnectors(0).AttachedConnector.AttachedFromConnectorIndex
+                        form.DisconnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface))
+                        'dc.GraphicObject.OutputConnectors.RemoveAt(idx)
+                        dc.GraphicObject.OutputConnectors(idx).AttachedConnector = Nothing
+                        dc.GraphicObject.OutputConnectors(idx).IsAttached = False
+                    End If
                 End If
                 If dc.EnergyStreams.ContainsKey(id) Then dc.EnergyStreams.Remove(id)
                 .RemoveAt(dgv4.SelectedCells(0).RowIndex)

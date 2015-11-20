@@ -166,7 +166,7 @@
     <value>8, 3</value>
   </data>
   <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>548, 45</value>
+    <value>554, 45</value>
   </data>
   <data name="GroupBox2.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -196,7 +196,7 @@
     <value>3, 17</value>
   </data>
   <data name="GraphTP.Size" type="System.Drawing.Size, System.Drawing">
-    <value>542, 369</value>
+    <value>548, 388</value>
   </data>
   <data name="GraphTP.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -217,7 +217,7 @@
     <value>8, 48</value>
   </data>
   <data name="GroupBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>548, 389</value>
+    <value>554, 408</value>
   </data>
   <data name="GroupBox1.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -238,7 +238,7 @@
     <value>1</value>
   </data>
   <data name="FaTabStripItem4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>564, 445</value>
+    <value>570, 464</value>
   </data>
   <data name="FaTabStripItem4.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -334,7 +334,7 @@
     <value>0, 0</value>
   </data>
   <data name="FaTabStrip2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>566, 466</value>
+    <value>572, 485</value>
   </data>
   <data name="FaTabStrip2.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -355,7 +355,7 @@
     <value>0</value>
   </data>
   <data name="FaTabStripItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>566, 466</value>
+    <value>572, 485</value>
   </data>
   <data name="FaTabStripItem1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1123,10 +1123,10 @@
     <value>3</value>
   </data>
   <data name="Content.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 16</value>
+    <value>0, 25</value>
   </data>
   <data name="Content.Size" type="System.Drawing.Size, System.Drawing">
-    <value>568, 487</value>
+    <value>574, 506</value>
   </data>
   <data name="Content.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1141,7 +1141,7 @@
     <value>FarsiLibrary.Win.FATabStrip, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;Content.Parent" xml:space="preserve">
-    <value>GroupBox13</value>
+    <value>$this</value>
   </data>
   <data name="&gt;&gt;Content.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -1218,30 +1218,6 @@
   <data name="&gt;&gt;ToolStrip1.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="GroupBox13.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="GroupBox13.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 25</value>
-  </data>
-  <data name="GroupBox13.Size" type="System.Drawing.Size, System.Drawing">
-    <value>574, 506</value>
-  </data>
-  <data name="GroupBox13.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;GroupBox13.Name" xml:space="preserve">
-    <value>GroupBox13</value>
-  </data>
-  <data name="&gt;&gt;GroupBox13.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;GroupBox13.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;GroupBox13.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <metadata name="PrintDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>137, 4</value>
   </metadata>
@@ -1275,12 +1251,6 @@
   <data name="&gt;&gt;TSB_PrinterSetup.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;PrintDialog1.Name" xml:space="preserve">
-    <value>PrintDialog1</value>
-  </data>
-  <data name="&gt;&gt;PrintDialog1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PrintDialog, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;TSB_PageSetup.Name" xml:space="preserve">
     <value>TSB_PageSetup</value>
   </data>
@@ -1298,6 +1268,12 @@
   </data>
   <data name="&gt;&gt;TSB_Copy.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PrintDialog1.Name" xml:space="preserve">
+    <value>PrintDialog1</value>
+  </data>
+  <data name="&gt;&gt;PrintDialog1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PrintDialog, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>UIResultsForm</value>
