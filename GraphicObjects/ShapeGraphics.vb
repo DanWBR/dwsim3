@@ -3300,6 +3300,8 @@ Namespace GraphicObjects
 
         Public Overrides Sub Draw(ByVal g As System.Drawing.Graphics)
 
+            CreateConnectors(0, 0)
+
             MyBase.Draw(g)
 
             UpdateStatus(Me)

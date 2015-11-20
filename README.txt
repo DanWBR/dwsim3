@@ -1,6 +1,6 @@
 ==================================================
 DWSIM - Open Source Process Simulator
-Version 3.4, Build 5608 - May 2015
+Version 3.5, Build 5800 - November 2015
 Copyright (c) Daniel Medeiros, Gregor Reichert, Gustavo León
 ==================================================
 
@@ -24,13 +24,13 @@ DWSIM is licensed under the GNU General Public License (GPL) Version 3.
 SOFTWARE/SYSTEM REQUIREMENTS
 ==================================================
 
-OS: 	Windows XP/2000/Vista/7/8
-Software: 	.NET Framework 4.0 / Mono 2.10 or newer
-CPU: 	1.6 GHz single-core processor (minimum)
-GPU (optional): 	CUDA 1.3+ or OpenCL 1.1-enabled device
-Memory: 	1 GB RAM
-HD space: 	200 MB for program files.
-Display: 	A 1024x768 display resolution is recommended as a minimum.
+OS:               Windows XP/2000/Vista/7/8/10, OS X or Linux
+Software:         .NET Framework 4.0 / Mono 3.0 or newer
+CPU:              1.6 GHz single-core processor (minimum)
+GPU (optional):   CUDA 2.0 or OpenCL 1.1-enabled device
+Memory:           1 GB RAM
+HD space:         200 MB for program files.
+Display:          A 1024x768 display resolution is recommended as a minimum.
 
 ==================================================
 USAGE INFO (LINUX / OS X)
@@ -100,6 +100,48 @@ VERSION HISTORY / CHANGELOG
 ==================================================
 
 The full changelog, including code changes and their authors can be viewed at https://github.com/DanWBR/dwsim3/commits/master
+
+Version 3.5 Build 5800
+
+- [NEW] IAPWS-08 Seawater Property Package
+- [NEW] Black-Oil Property Package
+- [NEW] Debug Object tool
+- [CHG] Enhanced Flowsheet Solver to increase calculation speed 
+- [CHG] Enhanced Compound Creator to handle black-oil fluids
+- [CHG] Updated flowsheet drawing code, added new alignment tools
+- [FIX] General bug fixes and optimizations
+
+Version 3.4 Build 5740
+
+- [NEW] Added Spreadsheet Cell support to Sensitivity Analysis and Optimization tools
+- [NEW] 'Power' specification added to Pump model
+- [NEW] New Heat Exchanger calculation mode
+- [NEW] Added API help link to script editors
+- [NEW] Added 'Replace' function to compounds added to the simulation
+- [NEW] Added an option to backup file when saving an existing simulation
+- [CHG] Replaced script editing component to enable code intellisense (Windows only)
+- [CHG] Reworked Electrolyte Flash algorithms
+- [FIX] Fixed Liquid Phase Enthalpy calculation in Activity Coefficient-based PPs
+- [FIX] Fixed Gibbs reactor energy balances
+- [FIX] General bug fixes and optimizations
+
+Version 3.4 Build 5644
+
+- [NEW] Added support for Heterogeneous Catalytic reactions
+- [NEW] UNIFAC Interaction Parameter Regression Tool
+- [NEW] Custom UO input and output variables
+- [NEW] Mouse double-click on flowsheet objects opens specific property editor windows
+- [NEW] Added three new sample flowsheets
+- [CHG] New Welcome Screen
+- [CHG] Human-readable error messages
+- [CHG] Flowsheet UO compound mapping
+- [CHG] Copy and Paste EOS interaction parameters
+- [CHG] Minor usability enhancements 
+- [CHG] Changed Reid Vapor Pressure calculation procedure
+- [FIX] Implemented limiter for parallel conversion reactions
+- [FIX] Spec Op general fixes
+- [FIX] Fixed conversion and equilibrium reactor expression parsing
+- [FIX] General bug fixes
 
 Version 3.4 Build 5608
 
