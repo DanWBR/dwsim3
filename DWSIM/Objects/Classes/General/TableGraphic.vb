@@ -40,7 +40,7 @@ Namespace DWSIM.GraphicObjects
         Protected m_Color_Gradient_1 As Color = Drawing.Color.LightGray
         Protected m_Color_Gradient_2 As Color = Drawing.Color.WhiteSmoke
 
-        Protected m_bgOpacity As Integer = 175
+        Protected m_bgOpacity As Integer = 255
 
         Protected m_IsGradientBg As Boolean = False
 
@@ -733,7 +733,7 @@ Namespace DWSIM.GraphicObjects
         Protected m_Color_Gradient_1 As Color = Drawing.Color.LightGray
         Protected m_Color_Gradient_2 As Color = Drawing.Color.WhiteSmoke
 
-        Protected m_bgOpacity As Integer = 175
+        Protected m_bgOpacity As Integer = 255
 
         Protected m_IsGradientBg As Boolean = False
 
@@ -1386,7 +1386,7 @@ Namespace DWSIM.GraphicObjects
         Protected m_Color_Gradient_1 As Color = Drawing.Color.LightGray
         Protected m_Color_Gradient_2 As Color = Drawing.Color.WhiteSmoke
 
-        Protected m_bgOpacity As Integer = 175
+        Protected m_bgOpacity As Integer = 255
 
         Protected m_IsGradientBg As Boolean = False
 

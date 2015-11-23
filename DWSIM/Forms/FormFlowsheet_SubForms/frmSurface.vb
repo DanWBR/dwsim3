@@ -3441,10 +3441,15 @@ Public Class frmSurface
 
                     Flowsheet.CalculationQueue.Enqueue(objargs)
 
+                    Application.DoEvents()
+
                     CalculateAll2(Flowsheet, My.Settings.SolverMode, , True)
 
                     Me.FlowsheetDesignSurface.SelectedObject = mystr.GraphicObject
-                    Me.FlowsheetDesignSurface.SelectedObjects.Add(mystr.Name, mystr.GraphicObject)
+
+                    If Not Me.FlowsheetDesignSurface.SelectedObjects.ContainsKey(mystr.Name) Then
+                        Me.FlowsheetDesignSurface.SelectedObjects.Add(mystr.Name, mystr.GraphicObject)
+                    End If
 
                     Me.Invalidate()
 
