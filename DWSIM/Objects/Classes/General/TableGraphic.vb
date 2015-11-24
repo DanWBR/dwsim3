@@ -538,6 +538,35 @@ Namespace DWSIM.GraphicObjects
 
         End Sub
 
+        Public Sub CopyToClipboard()
+
+            Dim i As Integer = 0
+            Dim j As Integer = 0
+
+            Dim data As String = ""
+
+            Dim refitem = m_items.Values.FirstOrDefault
+
+            If Not m_items Is Nothing Then
+                If Not m_sortedlist Is Nothing Then
+                    For Each s As String In m_sortedlist
+                        data += vbTab & m_items(s)(0).Value
+                    Next
+                    data += vbCrLf
+                    For j = 1 To refitem.Count - 1
+                        data += DWSIM.App.GetPropertyName(refitem(j).Text) & vbTab
+                        For Each s As String In m_sortedlist
+                            data += m_items(s)(j).Value & vbTab
+                        Next
+                        data += refitem(j).Unit & vbCrLf
+                    Next
+                End If
+            End If
+
+            Clipboard.SetText(data)
+
+        End Sub
+
         Public Overrides Sub Draw(ByVal g As System.Drawing.Graphics)
 
             Dim iopacity As Integer
@@ -947,6 +976,31 @@ Namespace DWSIM.GraphicObjects
                 .ShowCustomProperties = True
 
             End With
+
+        End Sub
+
+        Public Sub CopyToClipboard()
+
+            Dim i As Integer = 0
+            Dim j As Integer = 0
+
+            Dim data As String = Me.HeaderText & vbCrLf
+
+            For Each ni In Me.BaseOwner.NodeTableItems.Values
+                If ni.Checked = True Then
+                    If ni.Level = 0 And ni.ParentNode = "" Or ni.Level > 0 And ni.ParentNode <> "" Then
+                        data += DWSIM.App.GetPropertyName(ni.Text) + vbTab
+                        If Double.TryParse(ni.Value, New Double) Then
+                            data += Format(CDbl(ni.Value), Me.BaseOwner.FlowSheet.Options.NumberFormat) + vbTab
+                        Else
+                            data += ni.Value + vbTab
+                        End If
+                        data += ni.Unit + vbCrLf
+                    End If
+                End If
+            Next
+
+            Clipboard.SetText(data)
 
         End Sub
 
@@ -1555,6 +1609,56 @@ Namespace DWSIM.GraphicObjects
                 .ShowCustomProperties = True
 
             End With
+
+        End Sub
+
+        Public Sub CopyToClipboard()
+
+            Dim data As String = ""
+
+            Dim firstcolumn, firstrow, lastcolumn, lastrow As Integer
+       
+            'find number of rows and columns by range
+
+            If SpreadsheetCellRange <> "" And Not Spreadsheet Is Nothing Then
+
+                Dim nf As String = Spreadsheet.formc.Options.NumberFormat
+     
+                Dim firstcell, lastcell As String
+
+                firstcell = Me.SpreadsheetCellRange.Split(":")(0)
+                lastcell = Me.SpreadsheetCellRange.Split(":")(1)
+
+                firstrow = Spreadsheet.GetCellValue(firstcell).RowIndex
+                firstcolumn = Spreadsheet.GetCellValue(firstcell).ColumnIndex
+
+                lastrow = Spreadsheet.GetCellValue(lastcell).RowIndex
+                lastcolumn = Spreadsheet.GetCellValue(lastcell).ColumnIndex
+
+                Dim grid = Spreadsheet.DataGridView1
+
+                For i = firstrow To lastrow
+                    For j = firstcolumn To lastcolumn
+                        If Not grid.Rows(i).Cells(j).Value Is Nothing Then
+                            If Double.TryParse(grid.Rows(i).Cells(j).Value, New Double()) Then
+                                data += Format(Double.Parse(grid.Rows(i).Cells(j).Value), nf) & vbTab
+                            Else
+                                data += grid.Rows(i).Cells(j).Value.ToString & vbTab
+                            End If
+                        Else
+                            data += "" & vbTab
+                        End If
+                    Next
+                    data += vbCrLf
+                Next
+
+            Else
+
+                data = ""
+
+            End If
+
+            Clipboard.SetText(data)
 
         End Sub
 

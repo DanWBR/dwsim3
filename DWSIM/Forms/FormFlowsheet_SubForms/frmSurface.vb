@@ -3774,7 +3774,16 @@ Public Class frmSurface
 
         'copy all simulation properties from the selected object to clipboard
         Try
-            Flowsheet.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name).CopyDataToClipboard(Flowsheet.Options.SelectedUnitSystem, Flowsheet.Options.NumberFormat)
+            Select Case Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto
+                Case TipoObjeto.GO_MasterTable
+                    DirectCast(Me.FlowsheetDesignSurface.SelectedObject, DWSIM.GraphicObjects.MasterTableGraphic).CopyToClipboard()
+                Case TipoObjeto.GO_SpreadsheetTable
+                    DirectCast(Me.FlowsheetDesignSurface.SelectedObject, DWSIM.GraphicObjects.SpreadsheetTableGraphic).CopyToClipboard()
+                Case TipoObjeto.GO_Tabela
+                    DirectCast(Me.FlowsheetDesignSurface.SelectedObject, DWSIM.GraphicObjects.TableGraphic).CopyToClipboard()
+                Case Else
+                    Flowsheet.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name).CopyDataToClipboard(Flowsheet.Options.SelectedUnitSystem, Flowsheet.Options.NumberFormat)
+            End Select
         Catch ex As Exception
             Me.Flowsheet.WriteToLog("Error copying data to clipboard: " & ex.ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
         End Try
