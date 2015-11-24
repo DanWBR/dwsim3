@@ -190,6 +190,9 @@ Public Class FormMain
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
+        Dim theme As New VS2012LightTheme()
+        theme.Apply(Me.dckPanel)
+
         My.MyApplication.MainThreadID = Threading.Thread.CurrentThread.ManagedThreadId
 
         If My.Settings.BackupFolder = "" Then My.Settings.BackupFolder = My.Computer.FileSystem.SpecialDirectories.Temp & Path.DirectorySeparatorChar & "DWSIM"

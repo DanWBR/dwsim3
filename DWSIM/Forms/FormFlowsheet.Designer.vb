@@ -1233,7 +1233,6 @@ Partial Class FormFlowsheet
         DockPaneStripToolWindowGradient1.InactiveTabGradient = TabGradient7
         DockPaneStripSkin1.ToolWindowGradient = DockPaneStripToolWindowGradient1
         DockPanelSkin1.DockPaneStripSkin = DockPaneStripSkin1
-        Me.dckPanel.Skin = DockPanelSkin1
         '
         'FlowLayoutPanel1
         '

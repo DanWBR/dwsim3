@@ -15,7 +15,7 @@
 '    You should have received a copy of the GNU General Public License
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
-Imports Microsoft.MSDN.Samples.GraphicObjects
+Imports Microsoft.Msdn.Samples.GraphicObjects
 Imports System.Collections.Generic
 Imports System.ComponentModel
 Imports PropertyGridEx
@@ -32,6 +32,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
 Imports DWSIM.DWSIM.FormClasses
 Imports DWSIM.DWSIM.GraphicObjects
 Imports DWSIM.DWSIM.Outros
+Imports WeifenLuo.WinFormsUI.Docking
 
 <System.Serializable()> Public Class FormFlowsheet
 
@@ -118,6 +119,10 @@ Imports DWSIM.DWSIM.Outros
 
         ' Add any initialization after the InitializeComponent() call.
         ID = Guid.NewGuid().ToString
+
+        ' Add any initialization after the InitializeComponent() call.
+        Dim theme As New VS2012LightTheme()
+        theme.Apply(Me.dckPanel)
 
     End Sub
 
@@ -1970,7 +1975,7 @@ Imports DWSIM.DWSIM.Outros
                                 GoTo 100
                             Case Else
                                 Throw New Exception(DWSIM.App.GetLocalString("Correntesdeenergiasp2") & DWSIM.App.GetLocalString("TubulaesTurbinaseRes"))
-                         End Select
+                        End Select
 100:                    If gObjFrom.TipoObjeto <> TipoObjeto.CapeOpenUO And gObjFrom.TipoObjeto <> TipoObjeto.CustomUO And gObjFrom.TipoObjeto <> TipoObjeto.DistillationColumn _
                             And gObjFrom.TipoObjeto <> TipoObjeto.AbsorptionColumn And gObjFrom.TipoObjeto <> TipoObjeto.OT_EnergyRecycle _
                             And gObjFrom.TipoObjeto <> TipoObjeto.RefluxedAbsorber And gObjFrom.TipoObjeto <> TipoObjeto.ReboiledAbsorber Then
@@ -2231,7 +2236,7 @@ Imports DWSIM.DWSIM.Outros
                 With .Item(.Item.Count - 1)
                     .DefaultType = GetType(System.Drawing.Font)
                 End With
-                
+
                 .Item.Add(DWSIM.App.GetLocalString("Tratamentodotexto"), gobj2, "TextRenderStyle", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Tipodesuavizaoaplica"), True)
                 .Item.Add(DWSIM.App.GetLocalString("Estilodaborda"), gobj2, "BorderStyle", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Estilodabordatraceja"), True)
                 .Item.Add(DWSIM.App.GetLocalString("Cordaborda"), gobj2, "BorderColor", False, DWSIM.App.GetLocalString("Aparncia2"), "", True)
