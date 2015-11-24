@@ -2965,7 +2965,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
             End Select
 
-            Return New Object() {xl, xv, T, P, H, S, 1, 1, Vx, Vy, result, xl2, Vx2}
+            Return New Object() {xl, xv, T, P, H, S, 1, 1, Vx, Vy, result, xl2, Vx2, xs, Vs}
 
         End Function
 

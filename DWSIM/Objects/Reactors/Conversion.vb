@@ -445,19 +445,22 @@ Namespace DWSIM.SimulationObjects.Reactors
             Next
 
             'Copy results to upstream MS
-            Dim xl, xv, T, P, H, S, wtotalx, wtotaly As Double
+            Dim xl, xv, xs, T, P, H, S, wtotalx, wtotaly, wtotalS As Double
+            Dim nc As Integer = ims.Fases(0).Componentes.Count - 1
             tmp = pp.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, ims.Fases(0).SPMProperties.temperature.GetValueOrDefault, ims.Fases(0).SPMProperties.pressure.GetValueOrDefault, 0)
 
-            'Return New Object() {xl, xv, T, P, H, S, 1, 1, Vx, Vy}
-            Dim Vx(ims.Fases(0).Componentes.Count - 1), Vy(ims.Fases(0).Componentes.Count - 1), Vwx(ims.Fases(0).Componentes.Count - 1), Vwy(ims.Fases(0).Componentes.Count - 1) As Double
+            Dim Vx(nc), Vy(nc), Vs(nc), Vwx(nc), Vwy(nc), Vws(nc) As Double
             xl = tmp(0)
             xv = tmp(1)
+            xs = tmp(13)
             T = tmp(2)
             P = tmp(3)
             H = tmp(4)
             S = tmp(5)
             Vx = tmp(8)
             Vy = tmp(9)
+            Vs = tmp(14)
+
 
             Dim j As Integer = 0
 
@@ -471,12 +474,14 @@ Namespace DWSIM.SimulationObjects.Reactors
                 For Each comp In ms.Fases(0).Componentes.Values
                     wtotalx += Vx(i) * comp.ConstantProperties.Molar_Weight
                     wtotaly += Vy(i) * comp.ConstantProperties.Molar_Weight
+                    wtotalS += Vs(i) * comp.ConstantProperties.Molar_Weight
                     i += 1
                 Next
                 i = 0
                 For Each comp In ms.Fases(0).Componentes.Values
-                    Vwx(i) = Vx(i) * comp.ConstantProperties.Molar_Weight / wtotalx
-                    Vwy(i) = Vy(i) * comp.ConstantProperties.Molar_Weight / wtotaly
+                    If wtotalx > 0 Then Vwx(i) = Vx(i) * comp.ConstantProperties.Molar_Weight / wtotalx
+                    If wtotaly > 0 Then Vwy(i) = Vy(i) * comp.ConstantProperties.Molar_Weight / wtotaly
+                    If wtotalS > 0 Then Vws(i) = Vs(i) * comp.ConstantProperties.Molar_Weight / wtotalS
                     i += 1
                 Next
             End If
@@ -487,7 +492,6 @@ Namespace DWSIM.SimulationObjects.Reactors
                 With ms
                     .Fases(0).SPMProperties.temperature = T
                     .Fases(0).SPMProperties.pressure = P
-                    .Fases(0).SPMProperties.enthalpy = H * (wtotaly * xv / (wtotaly * xv + wtotalx * xl))
                     Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
                     j = 0
                     For Each comp In .Fases(0).Componentes.Values
@@ -495,19 +499,9 @@ Namespace DWSIM.SimulationObjects.Reactors
                         comp.FracaoMassica = Vwy(j)
                         j += 1
                     Next
-                    j = 0
-                    For Each comp In .Fases(2).Componentes.Values
-                        comp.FracaoMolar = Vy(j)
-                        comp.FracaoMassica = Vwy(j)
-                        j += 1
-                    Next
-                    .Fases(0).SPMProperties.massflow = W * (wtotaly * xv / (wtotaly * xv + wtotalx * xl))
-                    .Fases(0).SPMProperties.massfraction = (wtotaly * xv / (wtotaly * xv + wtotalx * xl))
+                    .Fases(0).SPMProperties.massflow = W * (wtotaly * xv / (wtotaly * xv + wtotalx * xl + wtotalS * xs))
+                    .Fases(0).SPMProperties.massfraction = (wtotaly * xv / (wtotaly * xv + wtotalx * xl + wtotalS * xs))
                     .Fases(0).SPMProperties.molarfraction = 1
-                    .Fases(3).SPMProperties.massfraction = 0
-                    .Fases(3).SPMProperties.molarfraction = 0
-                    .Fases(2).SPMProperties.massfraction = 1
-                    .Fases(2).SPMProperties.molarfraction = 1
                 End With
             End If
 
@@ -517,27 +511,17 @@ Namespace DWSIM.SimulationObjects.Reactors
                 With ms
                     .Fases(0).SPMProperties.temperature = T
                     .Fases(0).SPMProperties.pressure = P
-                    .Fases(0).SPMProperties.enthalpy = H * (wtotalx * xl / (wtotaly * xv + wtotalx * xl))
                     Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
                     j = 0
                     For Each comp In .Fases(0).Componentes.Values
-                        comp.FracaoMolar = Vx(j)
-                        comp.FracaoMassica = Vwx(j)
+                        comp.FracaoMolar = (Vx(j) * xl + Vs(j) * xs) / (xl + xs)
+                        comp.FracaoMassica = (Vwx(j) * wtotalx + Vws(j) * wtotalS) / (wtotalx + wtotalS)
                         j += 1
                     Next
                     j = 0
-                    For Each comp In .Fases(3).Componentes.Values
-                        comp.FracaoMolar = Vx(j)
-                        comp.FracaoMassica = Vwx(j)
-                        j += 1
-                    Next
-                    .Fases(0).SPMProperties.massflow = W * (wtotalx * xl / (wtotaly * xv + wtotalx * xl))
-                    .Fases(0).SPMProperties.massfraction = (wtotalx * xl / (wtotaly * xv + wtotalx * xl))
+                    .Fases(0).SPMProperties.massflow = W * ((wtotalx * xl + wtotalS * xs) / (wtotaly * xv + wtotalx * xl + wtotalS * xs))
+                    .Fases(0).SPMProperties.massfraction = ((wtotalx * xl + wtotalS * xs) / (wtotaly * xv + wtotalx * xl + wtotalS * xs))
                     .Fases(0).SPMProperties.molarfraction = 1
-                    .Fases(3).SPMProperties.massfraction = 1
-                    .Fases(3).SPMProperties.molarfraction = 1
-                    .Fases(2).SPMProperties.massfraction = 0
-                    .Fases(2).SPMProperties.molarfraction = 0
                 End With
             End If
 

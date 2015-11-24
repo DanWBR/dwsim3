@@ -274,7 +274,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             d1 = Date.Now
             n = UBound(Vz)
 
-            Dim Vx(n), Vs(n), MaxAct(n), MaxX(n), MaxLiquPhase(n), Tf(n), Hf(n), ActCoeff(n), VnL(n), VnS(n), Vp(n) As Double
+            Dim Vx(n), Vs(n), MaxAct(n), MaxX(n), MaxLiquPhase(n), Tf(n), Hf(n), Tc(n), ActCoeff(n), VnL(n), VnS(n), Vp(n) As Double
             Dim L, L_old, SF, SLP As Double
             Dim cpl(n), cps(n), dCp(n) As Double
             Dim Vn(n) As String
@@ -283,6 +283,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             Vx = Vz.Clone 'assuming initially only liquids exist
             Tf = PP.RET_VTF 'Fusion temperature
             Hf = PP.RET_VHF 'Enthalpy of fusion
+            Tc = PP.RET_VTC 'Critical Temperature
 
             If Vz.MaxY = 1 Then 'only a single component
                 ecount = 0
@@ -327,13 +328,14 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
 
                 ActCoeff = PP.DW_CalcFugCoeff(Vx, T, P, State.Liquid).MultiplyConstY(P).DivideY(Vp)
                 MaxX = MaxAct.DivideY(ActCoeff)
+                For i = 0 To n
+                    If T > Tc(i) Then MaxX(i) = 1 'Supercritical gases are put to liquid phase
+                Next
 
                 MaxLiquPhase = Vz.DivideY(MaxX)
                 SF = 0
                 For i = 0 To n
-                    If MaxLiquPhase(i) > 0.0001 Then
-                        SF += MaxX(i)
-                    End If
+                    If MaxLiquPhase(i) > 0.0001 Then SF += MaxX(i)
                 Next
                 If SF < 1 Then
                     'only solid remaining
@@ -582,6 +584,9 @@ out:        d2 = Date.Now
                 Vx_ant = Vx.Clone
 
                 Vy = Vz.MultiplyY(Ki).DivideY(Ki.AddConstY(-1).MultiplyConstY(V).AddConstY(1))
+                For i = 0 To n
+                    If Double.IsNaN(Vy(i)) Then Vy(i) = 0
+                Next
                 Vx = Vy.DivideY(Ki)
 
                 Vx = Vx.NormalizeY
@@ -614,6 +619,9 @@ out:        d2 = Date.Now
                     Vx_ant = Vx.Clone
 
                     Vy = Vz.MultiplyY(Ki).DivideY(Ki.AddConstY(-1).MultiplyConstY(V).AddConstY(1))
+                    For i = 0 To n
+                        If Double.IsNaN(Vy(i)) Then Vy(i) = 0
+                    Next
                     Vx = Vy.DivideY(Ki)
 
                     Vx = Vx.NormalizeY
@@ -638,19 +646,19 @@ out:        d2 = Date.Now
 
                         Vant = V
 
-                        'F = 0.0#
-                        'dF = 0.0#
-                        'i = 0
-                        'Do
-                        '    If Vz(i) > 0 Then
-                        '        F = F + Vz(i) * (Ki(i) - 1) / (1 + V * (Ki(i) - 1))
-                        '        dF = dF - Vz(i) * (Ki(i) - 1) ^ 2 / (1 + V * (Ki(i) - 1)) ^ 2
-                        '    End If
-                        '    i = i + 1
-                        'Loop Until i = n + 1
+                        F = 0.0#
+                        dF = 0.0#
+                        i = 0
+                        Do
+                            If Vz(i) > 0 Then
+                                F = F + Vz(i) * (Ki(i) - 1) / (1 + V * (Ki(i) - 1))
+                                dF = dF - Vz(i) * (Ki(i) - 1) ^ 2 / (1 + V * (Ki(i) - 1)) ^ 2
+                            End If
+                            i = i + 1
+                        Loop Until i = n + 1
 
-                        F = Vz.MultiplyY(Ki.AddConstY(-1).DivideY(Ki.AddConstY(-1).MultiplyConstY(V).AddConstY(1))).SumY
-                        dF = Vz.NegateY.MultiplyY(Ki.AddConstY(-1).MultiplyY(Ki.AddConstY(-1)).DivideY(Ki.AddConstY(-1).MultiplyConstY(V).AddConstY(1)).DivideY(Ki.AddConstY(-1).MultiplyConstY(V).AddConstY(1))).SumY
+                        'F = Vz.MultiplyY(Ki.AddConstY(-1).DivideY(Ki.AddConstY(-1).MultiplyConstY(V).AddConstY(1))).SumY
+                        'dF = Vz.NegateY.MultiplyY(Ki.AddConstY(-1).MultiplyY(Ki.AddConstY(-1)).DivideY(Ki.AddConstY(-1).MultiplyConstY(V).AddConstY(1)).DivideY(Ki.AddConstY(-1).MultiplyConstY(V).AddConstY(1))).SumY
 
                         If Abs(F) < etol / 100 Then Exit Do
 
