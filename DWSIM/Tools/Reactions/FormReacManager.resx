@@ -177,7 +177,7 @@
     <value>Heterogênea (Catalítica)</value>
   </data>
   <data name="ToolStrip2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>24, 161</value>
+    <value>24, 171</value>
   </data>
   <data name="ToolStrip1.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 16</value>
@@ -188,11 +188,14 @@
   <data name="&gt;&gt;DataGridViewTextBoxColumn3.Name" xml:space="preserve">
     <value>DataGridViewTextBoxColumn3</value>
   </data>
+  <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt</value>
+  </data>
   <data name="&gt;&gt;ToolStripButton6.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>DWSIM - Gerenciador de Reações Químicas</value>
+    <value>Gerenciador de Reações Químicas</value>
   </data>
   <data name="ToolStrip1.Text" xml:space="preserve">
     <value>ToolStrip1</value>
@@ -252,10 +255,10 @@
     <value>ToolStripButton3</value>
   </data>
   <data name="GroupBox4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>656, 205</value>
+    <value>620, 190</value>
   </data>
   <data name="GridRSets.Size" type="System.Drawing.Size, System.Drawing">
-    <value>626, 161</value>
+    <value>409, 171</value>
   </data>
   <data name="EquilíbrioToolStripMenuItem.Text" xml:space="preserve">
     <value>Equilíbrio</value>
@@ -269,10 +272,13 @@
   <data name="ToolStripDropDownButton1.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>Magenta</value>
   </data>
-  <data name="ToolStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>24, 186</value>
-  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="GroupBox2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Right</value>
+  </data>
+  <data name="ToolStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>24, 171</value>
+  </data>
   <data name="GridRSets.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -336,6 +342,9 @@
   <data name="&gt;&gt;ToolStripButton4.Name" xml:space="preserve">
     <value>ToolStripButton4</value>
   </data>
+  <data name="GroupBox4.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>
   </data>
@@ -355,7 +364,7 @@
     <value>202, 22</value>
   </data>
   <data name="GridRxns.Size" type="System.Drawing.Size, System.Drawing">
-    <value>626, 186</value>
+    <value>590, 171</value>
   </data>
   <data name="&gt;&gt;EquilíbrioToolStripMenuItem.Name" xml:space="preserve">
     <value>EquilíbrioToolStripMenuItem</value>
@@ -374,6 +383,9 @@
   </data>
   <data name="&gt;&gt;ToolStripButton1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ToolStripButton9.Name" xml:space="preserve">
+    <value>ToolStripButton9</value>
   </data>
   <data name="&gt;&gt;DataGridViewTextBoxColumn1.Name" xml:space="preserve">
     <value>DataGridViewTextBoxColumn1</value>
@@ -416,9 +428,6 @@
   </data>
   <data name="&gt;&gt;GroupBox4.Parent" xml:space="preserve">
     <value>$this</value>
-  </data>
-  <data name="GroupBox4.Text" xml:space="preserve">
-    <value>Reações Químicas</value>
   </data>
   <data name="&gt;&gt;ToolStripButton4.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -472,7 +481,7 @@
     <value>0</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>WeifenLuo.WinFormsUI.Docking.DockContent, WeifenLuo.WinFormsUI.Docking, Version=2.7.0.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481</value>
   </data>
   <data name="&gt;&gt;GroupBox2.Type" xml:space="preserve">
     <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -538,7 +547,7 @@
     <value>Magenta</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>665, 393</value>
+    <value>1074, 196</value>
   </data>
   <data name="SaveFileDialog1.Filter" xml:space="preserve">
     <value>Reação Química do DWSIM|*.dwrxs|Reação Química do DWSIM (XML)|*.dwrxm</value>
@@ -561,8 +570,8 @@
   <data name="ConversãoToolStripMenuItem.Text" xml:space="preserve">
     <value>Conversão</value>
   </data>
-  <data name="&gt;&gt;ToolStripButton9.Name" xml:space="preserve">
-    <value>ToolStripButton9</value>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Reações Químicas</value>
   </data>
   <data name="GridRxns.Location" type="System.Drawing.Point, System.Drawing">
     <value>27, 16</value>
@@ -574,13 +583,13 @@
     <value>Magenta</value>
   </data>
   <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>656, 180</value>
+    <value>439, 190</value>
   </data>
   <data name="ToolStripButton4.Size" type="System.Drawing.Size, System.Drawing">
     <value>21, 20</value>
   </data>
   <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>5, 208</value>
+    <value>631, 2</value>
   </data>
   <data name="CinéticaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>202, 22</value>
@@ -588,9 +597,6 @@
   <data name="ToolStrip2.Text" xml:space="preserve">
     <value>ToolStrip2</value>
   </data>
-  <metadata name="DataGridViewTextBoxColumn1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
   <metadata name="ColumnID.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -609,6 +615,9 @@
   <metadata name="DataGridViewTextBoxColumn2.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>en</value>
+  </metadata>
   <metadata name="SaveFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>311, 17</value>
   </metadata>
@@ -623,6 +632,9 @@
   </metadata>
   <metadata name="ToolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>555, 17</value>
+  </metadata>
+  <metadata name="DataGridViewTextBoxColumn1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
   </metadata>
   <metadata name="Column3.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

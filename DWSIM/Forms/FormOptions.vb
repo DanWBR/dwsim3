@@ -26,7 +26,7 @@ Imports System.Threading.Tasks
 
 Public Class FormOptions
 
-    Inherits System.Windows.Forms.Form
+    Inherits WeifenLuo.WinFormsUI.Docking.DockContent
 
     Private loaded As Boolean = False
 
@@ -35,6 +35,10 @@ Public Class FormOptions
     End Sub
 
     Private Sub FormOptions_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
+        Me.TabText = Me.Text
+
+        Me.DockPanel.DockLeftPortion = 370
 
         Dim i As Integer = 0
         Me.cbParallelism.Items.Clear()
@@ -96,9 +100,9 @@ Public Class FormOptions
         Me.PopulateDBGrid()
 
         'script paths
-        For Each s As String In My.Settings.ScriptPaths
-            Me.lbpaths.Items.Add(s)
-        Next
+        'For Each s As String In My.Settings.ScriptPaths
+        '    Me.lbpaths.Items.Add(s)
+        'Next
 
         Me.cbGPU.Items.Clear()
 
@@ -496,18 +500,18 @@ Public Class FormOptions
         End With
     End Sub
 
-    Private Sub btnaddpath_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnaddpath.Click
-        My.Settings.ScriptPaths.Add(Me.tbaddpath.Text)
-        Me.lbpaths.Items.Add(Me.tbaddpath.Text)
-        Me.tbaddpath.Text = ""
-    End Sub
+    'Private Sub btnaddpath_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    '    My.Settings.ScriptPaths.Add(Me.tbaddpath.Text)
+    '    Me.lbpaths.Items.Add(Me.tbaddpath.Text)
+    '    Me.tbaddpath.Text = ""
+    'End Sub
 
-    Private Sub btnrmpath_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnrmpath.Click
-        If Me.lbpaths.SelectedItems.Count > 0 Then
-            My.Settings.ScriptPaths.Remove(Me.lbpaths.SelectedItem)
-            Me.lbpaths.Items.Remove(Me.lbpaths.SelectedItem)
-        End If
-    End Sub
+    'Private Sub btnrmpath_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    '    If Me.lbpaths.SelectedItems.Count > 0 Then
+    '        My.Settings.ScriptPaths.Remove(Me.lbpaths.SelectedItem)
+    '        Me.lbpaths.Items.Remove(Me.lbpaths.SelectedItem)
+    '    End If
+    'End Sub
 
     Private Sub chkconsole_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkconsole.CheckedChanged
         My.Settings.RedirectOutput = chkconsole.Checked

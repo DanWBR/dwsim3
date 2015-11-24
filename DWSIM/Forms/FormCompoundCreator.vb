@@ -28,6 +28,8 @@ Imports Microsoft.VisualBasic.FileIO
 
 Public Class FormCompoundCreator
 
+    Inherits WeifenLuo.WinFormsUI.Docking.DockContent
+
     Public su As New DWSIM.SistemasDeUnidades.Unidades
     Public cv As New DWSIM.SistemasDeUnidades.Conversor
     Public nf As String
@@ -2961,6 +2963,9 @@ Public Class FormCompoundCreator
         If tbDBPath.Text <> "" Then btnSaveToDB.Enabled = True Else btnSaveToDB.Enabled = False
     End Sub
 
+    Private Sub FormCompoundCreator_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
+        Me.TabText = Me.Text
+    End Sub
 End Class
 
 <System.Serializable()> Public Class CompoundGeneratorCase

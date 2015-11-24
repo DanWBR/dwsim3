@@ -27,6 +27,21 @@ Partial Class FormMain
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormMain))
+        Dim DockPanelSkin1 As WeifenLuo.WinFormsUI.Docking.DockPanelSkin = New WeifenLuo.WinFormsUI.Docking.DockPanelSkin()
+        Dim AutoHideStripSkin1 As WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin = New WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin()
+        Dim DockPanelGradient1 As WeifenLuo.WinFormsUI.Docking.DockPanelGradient = New WeifenLuo.WinFormsUI.Docking.DockPanelGradient()
+        Dim TabGradient1 As WeifenLuo.WinFormsUI.Docking.TabGradient = New WeifenLuo.WinFormsUI.Docking.TabGradient()
+        Dim DockPaneStripSkin1 As WeifenLuo.WinFormsUI.Docking.DockPaneStripSkin = New WeifenLuo.WinFormsUI.Docking.DockPaneStripSkin()
+        Dim DockPaneStripGradient1 As WeifenLuo.WinFormsUI.Docking.DockPaneStripGradient = New WeifenLuo.WinFormsUI.Docking.DockPaneStripGradient()
+        Dim TabGradient2 As WeifenLuo.WinFormsUI.Docking.TabGradient = New WeifenLuo.WinFormsUI.Docking.TabGradient()
+        Dim DockPanelGradient2 As WeifenLuo.WinFormsUI.Docking.DockPanelGradient = New WeifenLuo.WinFormsUI.Docking.DockPanelGradient()
+        Dim TabGradient3 As WeifenLuo.WinFormsUI.Docking.TabGradient = New WeifenLuo.WinFormsUI.Docking.TabGradient()
+        Dim DockPaneStripToolWindowGradient1 As WeifenLuo.WinFormsUI.Docking.DockPaneStripToolWindowGradient = New WeifenLuo.WinFormsUI.Docking.DockPaneStripToolWindowGradient()
+        Dim TabGradient4 As WeifenLuo.WinFormsUI.Docking.TabGradient = New WeifenLuo.WinFormsUI.Docking.TabGradient()
+        Dim TabGradient5 As WeifenLuo.WinFormsUI.Docking.TabGradient = New WeifenLuo.WinFormsUI.Docking.TabGradient()
+        Dim DockPanelGradient3 As WeifenLuo.WinFormsUI.Docking.DockPanelGradient = New WeifenLuo.WinFormsUI.Docking.DockPanelGradient()
+        Dim TabGradient6 As WeifenLuo.WinFormsUI.Docking.TabGradient = New WeifenLuo.WinFormsUI.Docking.TabGradient()
+        Dim TabGradient7 As WeifenLuo.WinFormsUI.Docking.TabGradient = New WeifenLuo.WinFormsUI.Docking.TabGradient()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -100,6 +115,7 @@ Partial Class FormMain
         Me.SaveStudyDlg = New System.Windows.Forms.SaveFileDialog()
         Me.SaveRegStudyDlg = New System.Windows.Forms.SaveFileDialog()
         Me.SaveUnifacIPRegrDlg = New System.Windows.Forms.SaveFileDialog()
+        Me.dckPanel = New WeifenLuo.WinFormsUI.Docking.DockPanel()
         Me.MenuStrip1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
@@ -107,59 +123,59 @@ Partial Class FormMain
         '
         'MenuStrip1
         '
-        resources.ApplyResources(Me.MenuStrip1, "MenuStrip1")
         Me.MenuStrip1.AllowItemReorder = True
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.VerToolStripMenuItem, Me.WindowsMenu, Me.HelpToolStripMenuItem})
+        resources.ApplyResources(Me.MenuStrip1, "MenuStrip1")
         Me.MenuStrip1.MdiWindowListItem = Me.WindowsMenu
         Me.MenuStrip1.Name = "MenuStrip1"
         '
         'FileToolStripMenuItem
         '
-        resources.ApplyResources(Me.FileToolStripMenuItem, "FileToolStripMenuItem")
         Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripMenuItem, Me.NovoEstudoDoCriadorDeComponentesToolStripMenuItem, Me.NovoEstudoDeRegressãoDeDadosToolStripMenuItem, Me.NovoRegressaoUNIFACIPs, Me.OpenToolStripMenuItem, Me.ToolStripMenuItem1, Me.toolStripSeparator, Me.SaveToolStripMenuItem, Me.SaveAllToolStripMenuItem, Me.SaveAsToolStripMenuItem, Me.ToolStripSeparator2, Me.CloseAllToolstripMenuItem, Me.toolStripSeparator1, Me.ExitToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Overflow = System.Windows.Forms.ToolStripItemOverflow.AsNeeded
+        resources.ApplyResources(Me.FileToolStripMenuItem, "FileToolStripMenuItem")
         '
         'NewToolStripMenuItem
         '
-        resources.ApplyResources(Me.NewToolStripMenuItem, "NewToolStripMenuItem")
         Me.NewToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.page_white
+        resources.ApplyResources(Me.NewToolStripMenuItem, "NewToolStripMenuItem")
         Me.NewToolStripMenuItem.Name = "NewToolStripMenuItem"
         '
         'NovoEstudoDoCriadorDeComponentesToolStripMenuItem
         '
-        resources.ApplyResources(Me.NovoEstudoDoCriadorDeComponentesToolStripMenuItem, "NovoEstudoDoCriadorDeComponentesToolStripMenuItem")
         Me.NovoEstudoDoCriadorDeComponentesToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.wi0124_16
         Me.NovoEstudoDoCriadorDeComponentesToolStripMenuItem.Name = "NovoEstudoDoCriadorDeComponentesToolStripMenuItem"
+        resources.ApplyResources(Me.NovoEstudoDoCriadorDeComponentesToolStripMenuItem, "NovoEstudoDoCriadorDeComponentesToolStripMenuItem")
         '
         'NovoEstudoDeRegressãoDeDadosToolStripMenuItem
         '
-        resources.ApplyResources(Me.NovoEstudoDeRegressãoDeDadosToolStripMenuItem, "NovoEstudoDeRegressãoDeDadosToolStripMenuItem")
         Me.NovoEstudoDeRegressãoDeDadosToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.chart_line
         Me.NovoEstudoDeRegressãoDeDadosToolStripMenuItem.Name = "NovoEstudoDeRegressãoDeDadosToolStripMenuItem"
+        resources.ApplyResources(Me.NovoEstudoDeRegressãoDeDadosToolStripMenuItem, "NovoEstudoDeRegressãoDeDadosToolStripMenuItem")
         '
         'NovoRegressaoUNIFACIPs
         '
-        resources.ApplyResources(Me.NovoRegressaoUNIFACIPs, "NovoRegressaoUNIFACIPs")
         Me.NovoRegressaoUNIFACIPs.Image = Global.DWSIM.My.Resources.Resources.chart_line1
         Me.NovoRegressaoUNIFACIPs.Name = "NovoRegressaoUNIFACIPs"
+        resources.ApplyResources(Me.NovoRegressaoUNIFACIPs, "NovoRegressaoUNIFACIPs")
         '
         'OpenToolStripMenuItem
         '
-        resources.ApplyResources(Me.OpenToolStripMenuItem, "OpenToolStripMenuItem")
         Me.OpenToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.folder_page_white
+        resources.ApplyResources(Me.OpenToolStripMenuItem, "OpenToolStripMenuItem")
         Me.OpenToolStripMenuItem.Name = "OpenToolStripMenuItem"
         '
         'ToolStripMenuItem1
         '
-        resources.ApplyResources(Me.ToolStripMenuItem1, "ToolStripMenuItem1")
         Me.ToolStripMenuItem1.Image = Global.DWSIM.My.Resources.Resources.folder_page_white
+        resources.ApplyResources(Me.ToolStripMenuItem1, "ToolStripMenuItem1")
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
         '
         'toolStripSeparator
         '
-        resources.ApplyResources(Me.toolStripSeparator, "toolStripSeparator")
         Me.toolStripSeparator.Name = "toolStripSeparator"
+        resources.ApplyResources(Me.toolStripSeparator, "toolStripSeparator")
         '
         'SaveToolStripMenuItem
         '
@@ -181,8 +197,8 @@ Partial Class FormMain
         '
         'ToolStripSeparator2
         '
-        resources.ApplyResources(Me.ToolStripSeparator2, "ToolStripSeparator2")
         Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
+        resources.ApplyResources(Me.ToolStripSeparator2, "ToolStripSeparator2")
         '
         'CloseAllToolstripMenuItem
         '
@@ -192,115 +208,115 @@ Partial Class FormMain
         '
         'toolStripSeparator1
         '
-        resources.ApplyResources(Me.toolStripSeparator1, "toolStripSeparator1")
         Me.toolStripSeparator1.Name = "toolStripSeparator1"
+        resources.ApplyResources(Me.toolStripSeparator1, "toolStripSeparator1")
         '
         'ExitToolStripMenuItem
         '
-        resources.ApplyResources(Me.ExitToolStripMenuItem, "ExitToolStripMenuItem")
         Me.ExitToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.undo_16
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
+        resources.ApplyResources(Me.ExitToolStripMenuItem, "ExitToolStripMenuItem")
         '
         'VerToolStripMenuItem
         '
-        resources.ApplyResources(Me.VerToolStripMenuItem, "VerToolStripMenuItem")
         Me.VerToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PreferênciasDoDWSIMToolStripMenuItem, Me.DatabaseManagerToolStripMenuItem, Me.MostrarBarraDeFerramentasToolStripMenuItem})
         Me.VerToolStripMenuItem.Name = "VerToolStripMenuItem"
         Me.VerToolStripMenuItem.Overflow = System.Windows.Forms.ToolStripItemOverflow.AsNeeded
+        resources.ApplyResources(Me.VerToolStripMenuItem, "VerToolStripMenuItem")
         '
         'PreferênciasDoDWSIMToolStripMenuItem
         '
-        resources.ApplyResources(Me.PreferênciasDoDWSIMToolStripMenuItem, "PreferênciasDoDWSIMToolStripMenuItem")
         Me.PreferênciasDoDWSIMToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.application_edit
         Me.PreferênciasDoDWSIMToolStripMenuItem.Name = "PreferênciasDoDWSIMToolStripMenuItem"
+        resources.ApplyResources(Me.PreferênciasDoDWSIMToolStripMenuItem, "PreferênciasDoDWSIMToolStripMenuItem")
         '
         'DatabaseManagerToolStripMenuItem
         '
-        resources.ApplyResources(Me.DatabaseManagerToolStripMenuItem, "DatabaseManagerToolStripMenuItem")
         Me.DatabaseManagerToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.application_form_edit
         Me.DatabaseManagerToolStripMenuItem.Name = "DatabaseManagerToolStripMenuItem"
+        resources.ApplyResources(Me.DatabaseManagerToolStripMenuItem, "DatabaseManagerToolStripMenuItem")
         '
         'MostrarBarraDeFerramentasToolStripMenuItem
         '
-        resources.ApplyResources(Me.MostrarBarraDeFerramentasToolStripMenuItem, "MostrarBarraDeFerramentasToolStripMenuItem")
         Me.MostrarBarraDeFerramentasToolStripMenuItem.Checked = True
         Me.MostrarBarraDeFerramentasToolStripMenuItem.CheckOnClick = True
         Me.MostrarBarraDeFerramentasToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
         Me.MostrarBarraDeFerramentasToolStripMenuItem.Name = "MostrarBarraDeFerramentasToolStripMenuItem"
+        resources.ApplyResources(Me.MostrarBarraDeFerramentasToolStripMenuItem, "MostrarBarraDeFerramentasToolStripMenuItem")
         '
         'WindowsMenu
         '
-        resources.ApplyResources(Me.WindowsMenu, "WindowsMenu")
         Me.WindowsMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CascadeToolStripMenuItem, Me.TileVerticalToolStripMenuItem, Me.TileHorizontalToolStripMenuItem})
         Me.WindowsMenu.MergeIndex = 102
         Me.WindowsMenu.Name = "WindowsMenu"
+        resources.ApplyResources(Me.WindowsMenu, "WindowsMenu")
         '
         'CascadeToolStripMenuItem
         '
-        resources.ApplyResources(Me.CascadeToolStripMenuItem, "CascadeToolStripMenuItem")
         Me.CascadeToolStripMenuItem.AutoToolTip = True
         Me.CascadeToolStripMenuItem.CheckOnClick = True
         Me.CascadeToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.application_cascade
         Me.CascadeToolStripMenuItem.Name = "CascadeToolStripMenuItem"
+        resources.ApplyResources(Me.CascadeToolStripMenuItem, "CascadeToolStripMenuItem")
         '
         'TileVerticalToolStripMenuItem
         '
-        resources.ApplyResources(Me.TileVerticalToolStripMenuItem, "TileVerticalToolStripMenuItem")
         Me.TileVerticalToolStripMenuItem.AutoToolTip = True
         Me.TileVerticalToolStripMenuItem.CheckOnClick = True
         Me.TileVerticalToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.application_tile_horizontal
         Me.TileVerticalToolStripMenuItem.Name = "TileVerticalToolStripMenuItem"
+        resources.ApplyResources(Me.TileVerticalToolStripMenuItem, "TileVerticalToolStripMenuItem")
         '
         'TileHorizontalToolStripMenuItem
         '
-        resources.ApplyResources(Me.TileHorizontalToolStripMenuItem, "TileHorizontalToolStripMenuItem")
         Me.TileHorizontalToolStripMenuItem.AutoToolTip = True
         Me.TileHorizontalToolStripMenuItem.CheckOnClick = True
         Me.TileHorizontalToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.application_tile_vertical
         Me.TileHorizontalToolStripMenuItem.Name = "TileHorizontalToolStripMenuItem"
+        resources.ApplyResources(Me.TileHorizontalToolStripMenuItem, "TileHorizontalToolStripMenuItem")
         '
         'HelpToolStripMenuItem
         '
-        resources.ApplyResources(Me.HelpToolStripMenuItem, "HelpToolStripMenuItem")
         Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContentsToolStripMenuItem, Me.DocumentaçãoToolStripMenuItem, Me.toolStripSeparator5, Me.DWSIMNaInternetToolStripMenuItem, Me.RegistroToolStripMenuItem, Me.DonateToolStripMenuItem, Me.AboutToolStripMenuItem})
         Me.HelpToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert
         Me.HelpToolStripMenuItem.MergeIndex = 102
         Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
+        resources.ApplyResources(Me.HelpToolStripMenuItem, "HelpToolStripMenuItem")
         '
         'ContentsToolStripMenuItem
         '
-        resources.ApplyResources(Me.ContentsToolStripMenuItem, "ContentsToolStripMenuItem")
         Me.ContentsToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.help
         Me.ContentsToolStripMenuItem.Name = "ContentsToolStripMenuItem"
+        resources.ApplyResources(Me.ContentsToolStripMenuItem, "ContentsToolStripMenuItem")
         '
         'DocumentaçãoToolStripMenuItem
         '
-        resources.ApplyResources(Me.DocumentaçãoToolStripMenuItem, "DocumentaçãoToolStripMenuItem")
         Me.DocumentaçãoToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ManualTécnicoToolStripMenuItem, Me.GuiaDoUsuárioToolStripMenuItem})
         Me.DocumentaçãoToolStripMenuItem.Name = "DocumentaçãoToolStripMenuItem"
+        resources.ApplyResources(Me.DocumentaçãoToolStripMenuItem, "DocumentaçãoToolStripMenuItem")
         '
         'ManualTécnicoToolStripMenuItem
         '
-        resources.ApplyResources(Me.ManualTécnicoToolStripMenuItem, "ManualTécnicoToolStripMenuItem")
         Me.ManualTécnicoToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.page_white_acrobat
         Me.ManualTécnicoToolStripMenuItem.Name = "ManualTécnicoToolStripMenuItem"
+        resources.ApplyResources(Me.ManualTécnicoToolStripMenuItem, "ManualTécnicoToolStripMenuItem")
         '
         'GuiaDoUsuárioToolStripMenuItem
         '
-        resources.ApplyResources(Me.GuiaDoUsuárioToolStripMenuItem, "GuiaDoUsuárioToolStripMenuItem")
         Me.GuiaDoUsuárioToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.page_white_acrobat
         Me.GuiaDoUsuárioToolStripMenuItem.Name = "GuiaDoUsuárioToolStripMenuItem"
+        resources.ApplyResources(Me.GuiaDoUsuárioToolStripMenuItem, "GuiaDoUsuárioToolStripMenuItem")
         '
         'toolStripSeparator5
         '
-        resources.ApplyResources(Me.toolStripSeparator5, "toolStripSeparator5")
         Me.toolStripSeparator5.Name = "toolStripSeparator5"
+        resources.ApplyResources(Me.toolStripSeparator5, "toolStripSeparator5")
         '
         'DWSIMNaInternetToolStripMenuItem
         '
-        resources.ApplyResources(Me.DWSIMNaInternetToolStripMenuItem, "DWSIMNaInternetToolStripMenuItem")
         Me.DWSIMNaInternetToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DownloadsToolStripMenuItem, Me.WikiToolStripMenuItem, Me.FórumToolStripMenuItem, Me.RastreamentoDeBugsToolStripMenuItem})
         Me.DWSIMNaInternetToolStripMenuItem.Name = "DWSIMNaInternetToolStripMenuItem"
+        resources.ApplyResources(Me.DWSIMNaInternetToolStripMenuItem, "DWSIMNaInternetToolStripMenuItem")
         '
         'DownloadsToolStripMenuItem
         '
@@ -324,137 +340,137 @@ Partial Class FormMain
         '
         'RegistroToolStripMenuItem
         '
-        resources.ApplyResources(Me.RegistroToolStripMenuItem, "RegistroToolStripMenuItem")
         Me.RegistroToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RegistrarTiposCOMToolStripMenuItem, Me.DeToolStripMenuItem})
         Me.RegistroToolStripMenuItem.Name = "RegistroToolStripMenuItem"
+        resources.ApplyResources(Me.RegistroToolStripMenuItem, "RegistroToolStripMenuItem")
         '
         'RegistrarTiposCOMToolStripMenuItem
         '
-        resources.ApplyResources(Me.RegistrarTiposCOMToolStripMenuItem, "RegistrarTiposCOMToolStripMenuItem")
         Me.RegistrarTiposCOMToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.application_xp_terminal
         Me.RegistrarTiposCOMToolStripMenuItem.Name = "RegistrarTiposCOMToolStripMenuItem"
+        resources.ApplyResources(Me.RegistrarTiposCOMToolStripMenuItem, "RegistrarTiposCOMToolStripMenuItem")
         '
         'DeToolStripMenuItem
         '
-        resources.ApplyResources(Me.DeToolStripMenuItem, "DeToolStripMenuItem")
         Me.DeToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.application_xp_terminal
         Me.DeToolStripMenuItem.Name = "DeToolStripMenuItem"
+        resources.ApplyResources(Me.DeToolStripMenuItem, "DeToolStripMenuItem")
         '
         'DonateToolStripMenuItem
         '
-        resources.ApplyResources(Me.DonateToolStripMenuItem, "DonateToolStripMenuItem")
         Me.DonateToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.money_add
         Me.DonateToolStripMenuItem.Name = "DonateToolStripMenuItem"
+        resources.ApplyResources(Me.DonateToolStripMenuItem, "DonateToolStripMenuItem")
         '
         'AboutToolStripMenuItem
         '
-        resources.ApplyResources(Me.AboutToolStripMenuItem, "AboutToolStripMenuItem")
         Me.AboutToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.information
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
+        resources.ApplyResources(Me.AboutToolStripMenuItem, "AboutToolStripMenuItem")
         '
         'ToolStrip1
         '
-        resources.ApplyResources(Me.ToolStrip1, "ToolStrip1")
         Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripButton, Me.OpenToolStripButton, Me.SaveToolStripButton, Me.ToolStripButton1, Me.SaveAllToolStripButton, Me.ToolStripSeparator3, Me.ToolStripButton2, Me.ToolStripSeparator4, Me.ToolStripButton3, Me.ToolStripButton5, Me.ToolStripButton4, Me.ToolStripSeparator6, Me.ToolStripButton6, Me.ToolStripButton7, Me.ToolStripButton8})
+        resources.ApplyResources(Me.ToolStrip1, "ToolStrip1")
         Me.ToolStrip1.Name = "ToolStrip1"
         '
         'NewToolStripButton
         '
-        resources.ApplyResources(Me.NewToolStripButton, "NewToolStripButton")
         Me.NewToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.NewToolStripButton.Image = Global.DWSIM.My.Resources.Resources.page_white
+        resources.ApplyResources(Me.NewToolStripButton, "NewToolStripButton")
         Me.NewToolStripButton.Name = "NewToolStripButton"
         '
         'OpenToolStripButton
         '
-        resources.ApplyResources(Me.OpenToolStripButton, "OpenToolStripButton")
         Me.OpenToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.OpenToolStripButton.Image = Global.DWSIM.My.Resources.Resources.folder_page_white
+        resources.ApplyResources(Me.OpenToolStripButton, "OpenToolStripButton")
         Me.OpenToolStripButton.Name = "OpenToolStripButton"
         '
         'SaveToolStripButton
         '
-        resources.ApplyResources(Me.SaveToolStripButton, "SaveToolStripButton")
         Me.SaveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        resources.ApplyResources(Me.SaveToolStripButton, "SaveToolStripButton")
         Me.SaveToolStripButton.Image = Global.DWSIM.My.Resources.Resources.page_save
         Me.SaveToolStripButton.Name = "SaveToolStripButton"
         '
         'ToolStripButton1
         '
-        resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
         Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
         Me.ToolStripButton1.Image = Global.DWSIM.My.Resources.Resources.disk
         Me.ToolStripButton1.Name = "ToolStripButton1"
         '
         'SaveAllToolStripButton
         '
-        resources.ApplyResources(Me.SaveAllToolStripButton, "SaveAllToolStripButton")
         Me.SaveAllToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        resources.ApplyResources(Me.SaveAllToolStripButton, "SaveAllToolStripButton")
         Me.SaveAllToolStripButton.Image = Global.DWSIM.My.Resources.Resources.disk_multiple
         Me.SaveAllToolStripButton.Name = "SaveAllToolStripButton"
         '
         'ToolStripSeparator3
         '
-        resources.ApplyResources(Me.ToolStripSeparator3, "ToolStripSeparator3")
         Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
+        resources.ApplyResources(Me.ToolStripSeparator3, "ToolStripSeparator3")
         '
         'ToolStripButton2
         '
-        resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
         Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton2.Image = Global.DWSIM.My.Resources.Resources.application_edit
+        resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
         Me.ToolStripButton2.Name = "ToolStripButton2"
         '
         'ToolStripSeparator4
         '
-        resources.ApplyResources(Me.ToolStripSeparator4, "ToolStripSeparator4")
         Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
+        resources.ApplyResources(Me.ToolStripSeparator4, "ToolStripSeparator4")
         '
         'ToolStripButton3
         '
-        resources.ApplyResources(Me.ToolStripButton3, "ToolStripButton3")
         Me.ToolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton3.Image = Global.DWSIM.My.Resources.Resources.application_cascade
+        resources.ApplyResources(Me.ToolStripButton3, "ToolStripButton3")
         Me.ToolStripButton3.Name = "ToolStripButton3"
         '
         'ToolStripButton5
         '
-        resources.ApplyResources(Me.ToolStripButton5, "ToolStripButton5")
         Me.ToolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton5.Image = Global.DWSIM.My.Resources.Resources.application_tile_horizontal
+        resources.ApplyResources(Me.ToolStripButton5, "ToolStripButton5")
         Me.ToolStripButton5.Name = "ToolStripButton5"
         '
         'ToolStripButton4
         '
-        resources.ApplyResources(Me.ToolStripButton4, "ToolStripButton4")
         Me.ToolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton4.Image = Global.DWSIM.My.Resources.Resources.application_tile_vertical
+        resources.ApplyResources(Me.ToolStripButton4, "ToolStripButton4")
         Me.ToolStripButton4.Name = "ToolStripButton4"
         '
         'ToolStripSeparator6
         '
-        resources.ApplyResources(Me.ToolStripSeparator6, "ToolStripSeparator6")
         Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
+        resources.ApplyResources(Me.ToolStripSeparator6, "ToolStripSeparator6")
         '
         'ToolStripButton6
         '
-        resources.ApplyResources(Me.ToolStripButton6, "ToolStripButton6")
         Me.ToolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton6.Image = Global.DWSIM.My.Resources.Resources.help
+        resources.ApplyResources(Me.ToolStripButton6, "ToolStripButton6")
         Me.ToolStripButton6.Name = "ToolStripButton6"
         '
         'ToolStripButton7
         '
-        resources.ApplyResources(Me.ToolStripButton7, "ToolStripButton7")
         Me.ToolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton7.Image = Global.DWSIM.My.Resources.Resources.money_add
+        resources.ApplyResources(Me.ToolStripButton7, "ToolStripButton7")
         Me.ToolStripButton7.Name = "ToolStripButton7"
         '
         'ToolStripButton8
         '
-        resources.ApplyResources(Me.ToolStripButton8, "ToolStripButton8")
         Me.ToolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton8.Image = Global.DWSIM.My.Resources.Resources.information
+        resources.ApplyResources(Me.ToolStripButton8, "ToolStripButton8")
         Me.ToolStripButton8.Name = "ToolStripButton8"
         '
         'BgLoadComp
@@ -485,26 +501,26 @@ Partial Class FormMain
         '
         'StatusStrip1
         '
-        resources.ApplyResources(Me.StatusStrip1, "StatusStrip1")
         Me.StatusStrip1.GripMargin = New System.Windows.Forms.Padding(0)
         Me.StatusStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Visible
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1, Me.tslupd})
         Me.StatusStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow
+        resources.ApplyResources(Me.StatusStrip1, "StatusStrip1")
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
         '
         'ToolStripStatusLabel1
         '
-        resources.ApplyResources(Me.ToolStripStatusLabel1, "ToolStripStatusLabel1")
         Me.ToolStripStatusLabel1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
         Me.ToolStripStatusLabel1.Margin = New System.Windows.Forms.Padding(0)
         Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
+        resources.ApplyResources(Me.ToolStripStatusLabel1, "ToolStripStatusLabel1")
         Me.ToolStripStatusLabel1.Spring = True
         '
         'tslupd
         '
-        resources.ApplyResources(Me.tslupd, "tslupd")
         Me.tslupd.Image = Global.DWSIM.My.Resources.Resources.information
+        resources.ApplyResources(Me.tslupd, "tslupd")
         Me.tslupd.IsLink = True
         Me.tslupd.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
         Me.tslupd.Name = "tslupd"
@@ -540,11 +556,66 @@ Partial Class FormMain
         '
         resources.ApplyResources(Me.SaveUnifacIPRegrDlg, "SaveUnifacIPRegrDlg")
         '
+        'dckPanel
+        '
+        Me.dckPanel.AllowEndUserNestedDocking = False
+        Me.dckPanel.DefaultFloatWindowSize = New System.Drawing.Size(400, 600)
+        resources.ApplyResources(Me.dckPanel, "dckPanel")
+        Me.dckPanel.DockBackColor = System.Drawing.SystemColors.Control
+        Me.dckPanel.Name = "dckPanel"
+        DockPanelGradient1.EndColor = System.Drawing.SystemColors.ControlLight
+        DockPanelGradient1.StartColor = System.Drawing.SystemColors.ControlLight
+        AutoHideStripSkin1.DockStripGradient = DockPanelGradient1
+        TabGradient1.EndColor = System.Drawing.SystemColors.Control
+        TabGradient1.StartColor = System.Drawing.SystemColors.Control
+        TabGradient1.TextColor = System.Drawing.SystemColors.ControlDarkDark
+        AutoHideStripSkin1.TabGradient = TabGradient1
+        AutoHideStripSkin1.TextFont = New System.Drawing.Font("Tahoma", 8.25!)
+        DockPanelSkin1.AutoHideStripSkin = AutoHideStripSkin1
+        TabGradient2.EndColor = System.Drawing.SystemColors.ControlLightLight
+        TabGradient2.StartColor = System.Drawing.SystemColors.ControlLightLight
+        TabGradient2.TextColor = System.Drawing.SystemColors.ControlText
+        DockPaneStripGradient1.ActiveTabGradient = TabGradient2
+        DockPanelGradient2.EndColor = System.Drawing.SystemColors.Control
+        DockPanelGradient2.StartColor = System.Drawing.SystemColors.Control
+        DockPaneStripGradient1.DockStripGradient = DockPanelGradient2
+        TabGradient3.EndColor = System.Drawing.SystemColors.ControlLight
+        TabGradient3.StartColor = System.Drawing.SystemColors.ControlLight
+        TabGradient3.TextColor = System.Drawing.SystemColors.ControlText
+        DockPaneStripGradient1.InactiveTabGradient = TabGradient3
+        DockPaneStripSkin1.DocumentGradient = DockPaneStripGradient1
+        DockPaneStripSkin1.TextFont = New System.Drawing.Font("Tahoma", 8.25!)
+        TabGradient4.EndColor = System.Drawing.SystemColors.ActiveCaption
+        TabGradient4.LinearGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical
+        TabGradient4.StartColor = System.Drawing.SystemColors.GradientActiveCaption
+        TabGradient4.TextColor = System.Drawing.SystemColors.ActiveCaptionText
+        DockPaneStripToolWindowGradient1.ActiveCaptionGradient = TabGradient4
+        TabGradient5.EndColor = System.Drawing.SystemColors.Control
+        TabGradient5.StartColor = System.Drawing.SystemColors.Control
+        TabGradient5.TextColor = System.Drawing.SystemColors.ControlText
+        DockPaneStripToolWindowGradient1.ActiveTabGradient = TabGradient5
+        DockPanelGradient3.EndColor = System.Drawing.SystemColors.ControlLight
+        DockPanelGradient3.StartColor = System.Drawing.SystemColors.ControlLight
+        DockPaneStripToolWindowGradient1.DockStripGradient = DockPanelGradient3
+        TabGradient6.EndColor = System.Drawing.SystemColors.InactiveCaption
+        TabGradient6.LinearGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical
+        TabGradient6.StartColor = System.Drawing.SystemColors.GradientInactiveCaption
+        TabGradient6.TextColor = System.Drawing.SystemColors.InactiveCaptionText
+        DockPaneStripToolWindowGradient1.InactiveCaptionGradient = TabGradient6
+        TabGradient7.EndColor = System.Drawing.Color.Transparent
+        TabGradient7.StartColor = System.Drawing.Color.Transparent
+        TabGradient7.TextColor = System.Drawing.SystemColors.ControlDarkDark
+        DockPaneStripToolWindowGradient1.InactiveTabGradient = TabGradient7
+        DockPaneStripSkin1.ToolWindowGradient = DockPaneStripToolWindowGradient1
+        DockPanelSkin1.DockPaneStripSkin = DockPaneStripSkin1
+        Me.dckPanel.Skin = DockPanelSkin1
+        '
         'FormMain
         '
-        resources.ApplyResources(Me, "$this")
         Me.AllowDrop = True
+        resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.dckPanel)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.ToolStrip1)
         Me.Controls.Add(Me.MenuStrip1)
@@ -713,5 +784,6 @@ Partial Class FormMain
     Friend WithEvents DocumentaçãoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ManualTécnicoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents GuiaDoUsuárioToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Public WithEvents dckPanel As WeifenLuo.WinFormsUI.Docking.DockPanel
 
 End Class

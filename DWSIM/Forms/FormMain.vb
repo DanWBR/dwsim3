@@ -1587,7 +1587,7 @@ Public Class FormMain
             End If
 
             form.MdiParent = Me
-            form.Show()
+            form.Show(Me.dckPanel)
             form.MdiParent = Me
 
             My.Application.ActiveSimulation = form
@@ -2802,7 +2802,7 @@ Public Class FormMain
             My.Application.ActiveSimulation = form
 
             form.MdiParent = Me
-            form.Show()
+            form.Show(Me.dckPanel)
             form.MdiParent = Me
 
             'form.FormChild_Shown(Me, New EventArgs)
@@ -3497,7 +3497,7 @@ sim:                Dim myStream As System.IO.FileStream
 csd:                Application.DoEvents()
                     Dim NewMDIChild As New FormCompoundCreator()
                     NewMDIChild.MdiParent = Me
-                    NewMDIChild.Show()
+                    NewMDIChild.Show(Me.dckPanel)
                     Dim objStreamReader As New FileStream(Me.OpenFileDialog1.FileName, FileMode.Open)
                     Dim x As New BinaryFormatter()
                     NewMDIChild.mycase = x.Deserialize(objStreamReader)
@@ -3512,7 +3512,7 @@ csd:                Application.DoEvents()
 rsd:                Application.DoEvents()
                     Dim NewMDIChild As New FormDataRegression()
                     NewMDIChild.MdiParent = Me
-                    NewMDIChild.Show()
+                    NewMDIChild.Show(Me.dckPanel)
                     Dim objStreamReader As New FileStream(Me.OpenFileDialog1.FileName, FileMode.Open)
                     Dim x As New BinaryFormatter()
                     NewMDIChild.currcase = x.Deserialize(objStreamReader)
@@ -3527,7 +3527,7 @@ rsd:                Application.DoEvents()
 ruf:                Application.DoEvents()
                     Dim NewMDIChild As New FormUNIFACRegression()
                     NewMDIChild.MdiParent = Me
-                    NewMDIChild.Show()
+                    NewMDIChild.Show(Me.dckPanel)
                     Dim objStreamReader As New FileStream(Me.OpenFileDialog1.FileName, FileMode.Open)
                     Dim x As New BinaryFormatter()
                     NewMDIChild.mycase = x.Deserialize(objStreamReader)
@@ -3734,7 +3734,7 @@ ruf:                Application.DoEvents()
         NewMDIChild.MdiParent = Me
         'Display the new form.
         NewMDIChild.Text = "Simulation" & m_childcount
-        NewMDIChild.Show()
+        NewMDIChild.Show(Me.dckPanel)
         Application.DoEvents()
         Me.ActivateMdiChild(NewMDIChild)
         m_childcount += 1
@@ -4259,7 +4259,7 @@ ruf:                Application.DoEvents()
         'Display the new form.
         NewMDIChild.Text = "CompCreator" & m_childcount
         Me.ActivateMdiChild(NewMDIChild)
-        NewMDIChild.Show()
+        NewMDIChild.Show(Me.dckPanel)
         m_childcount += 1
     End Sub
 
@@ -4270,7 +4270,7 @@ ruf:                Application.DoEvents()
         'Display the new form.
         NewMDIChild.Text = "DataRegression" & m_childcount
         Me.ActivateMdiChild(NewMDIChild)
-        NewMDIChild.Show()
+        NewMDIChild.Show(Me.dckPanel)
         m_childcount += 1
     End Sub
 
@@ -4281,7 +4281,7 @@ ruf:                Application.DoEvents()
         'Display the new form.
         NewMDIChild.Text = "UNIFAC IP Regression" & m_childcount
         Me.ActivateMdiChild(NewMDIChild)
-        NewMDIChild.Show()
+        NewMDIChild.Show(Me.dckPanel)
         m_childcount += 1
     End Sub
     Private Sub DatabaseManagerToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles DatabaseManagerToolStripMenuItem.Click
@@ -4292,7 +4292,7 @@ ruf:                Application.DoEvents()
     End Sub
     Private Sub PreferênciasDoDWSIMToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PreferênciasDoDWSIMToolStripMenuItem.Click
         Me.FrmOptions = New FormOptions
-        Me.FrmOptions.ShowDialog(Me)
+        Me.FrmOptions.Show(Me.dckPanel)
     End Sub
 
     Private Sub FormMain_HelpRequested(sender As System.Object, hlpevent As System.Windows.Forms.HelpEventArgs) Handles MyBase.HelpRequested

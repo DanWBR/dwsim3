@@ -35,7 +35,7 @@ Imports DWSIM.DWSIM.Outros
 
 <System.Serializable()> Public Class FormFlowsheet
 
-    Inherits System.Windows.Forms.Form
+    Inherits Docking.DockContent
 
     'CAPE-OPEN PME/COSE Interfaces
     Implements CapeOpen.ICapeCOSEUtilities, CapeOpen.ICapeMaterialTemplateSystem, CapeOpen.ICapeDiagnostic,  _
@@ -1062,7 +1062,7 @@ Imports DWSIM.DWSIM.Outros
 
     Private Sub GerenciadorDeReaçõesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles GerenciadorDeReaçõesToolStripMenuItem.Click
         Dim rm As New FormReacManager
-        rm.ShowDialog()
+        rm.Show(Me.dckPanel)
     End Sub
 
     Private Sub CaracterizaçãoDePetróleosFraçõesC7ToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CaracterizaçãoDePetróleosFraçõesC7ToolStripMenuItem.Click
@@ -1185,9 +1185,9 @@ Imports DWSIM.DWSIM.Outros
     Private Sub ComponentesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ComponentesToolStripMenuItem.Click
         If DWSIM.App.IsRunningOnMono Then
             Me.FrmStSim1 = New FormSimulSettings()
-            Me.FrmStSim1.Show(Me)
+            Me.FrmStSim1.Show(Me.dckPanel)
         Else
-            Me.FrmStSim1.ShowDialog(Me)
+            Me.FrmStSim1.Show(Me.dckPanel)
         End If
     End Sub
 
@@ -2691,5 +2691,9 @@ Imports DWSIM.DWSIM.Outros
     End Sub
 
 #End Region
+
+    Private Sub FormFlowsheet_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
+        Me.TabText = Me.Text
+    End Sub
 
 End Class

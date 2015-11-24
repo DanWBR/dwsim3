@@ -25,20 +25,26 @@ Public Class AboutBoxNET
         LblCLRInfo.Text = "Microsoft .NET Framework, Runtime Version " & System.Runtime.InteropServices.RuntimeEnvironment.GetSystemVersion.ToString()
         Lblmem.Text = (GC.GetTotalMemory(False) / 1024 / 1024).ToString("#") & " MB managed, " & (My.Application.Info.WorkingSet / 1024 / 1024).ToString("#") & " MB total"
 
-        Dim scrh As New System.Management.ManagementObjectSearcher("select * from Win32_Processor")
+        Lblcpuinfo.Text = "Retrieving CPU info..."
 
-        Lblcpuinfo.Text = System.Environment.GetEnvironmentVariable("PROCESSOR_IDENTIFIER")
-
-        For Each qinfo In scrh.Get()
-            Lblcpuinfo.Text += " / " & qinfo.Properties("Name").Value.ToString
-        Next
-
-        Lblcpuinfo.Text += " (" & Yeppp.Library.GetProcessABI().Description & ")"
+        Threading.Tasks.Task.Factory.StartNew(Function()
+                                                  Dim scrh As New System.Management.ManagementObjectSearcher("select * from Win32_Processor")
+                                                  Dim text1 As String = ""
+                                                  For Each qinfo In scrh.Get()
+                                                      text1 += " / " & qinfo.Properties("Name").Value.ToString
+                                                  Next
+                                                  text1 += " (" & Yeppp.Library.GetProcessABI().Description & ")"
+                                                  Return text1
+                                              End Function).ContinueWith(Sub(t)
+                                                                             Lblcpuinfo.Text = t.Result
+                                                                         End Sub, Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext)
 
         Lblcpusimd.Text = ""
         For Each item In Library.GetCpuArchitecture.CpuSimdFeatures
             Lblcpusimd.Text += item.ToString & " "
         Next
+
+        Lblcpuinfo.Text = System.Environment.GetEnvironmentVariable("PROCESSOR_IDENTIFIER")
 
         With Me.DataGridView1.Rows
             .Clear()

@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class FormUNIFACRegression
-    Inherits System.Windows.Forms.Form
+    Inherits WeifenLuo.WinFormsUI.Docking.DockContent
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -104,16 +104,15 @@ Partial Class FormUNIFACRegression
         '
         'FaTabStrip1
         '
-        resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
         Me.FaTabStrip1.AlwaysShowClose = False
         Me.FaTabStrip1.AlwaysShowMenuGlyph = False
+        resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
         Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.TSInformation, Me.TSModel, Me.TSData, Me.TSChart})
         Me.FaTabStrip1.Name = "FaTabStrip1"
         Me.FaTabStrip1.SelectedItem = Me.TSInformation
         '
         'TSInformation
         '
-        resources.ApplyResources(Me.TSInformation, "TSInformation")
         Me.TSInformation.CanClose = False
         Me.TSInformation.Controls.Add(Me.Panel3)
         Me.TSInformation.Controls.Add(Me.tbDescription)
@@ -123,22 +122,23 @@ Partial Class FormUNIFACRegression
         Me.TSInformation.IsDrawn = True
         Me.TSInformation.Name = "TSInformation"
         Me.TSInformation.Selected = True
+        resources.ApplyResources(Me.TSInformation, "TSInformation")
         '
         'Panel3
         '
-        resources.ApplyResources(Me.Panel3, "Panel3")
         Me.Panel3.BackColor = System.Drawing.SystemColors.ControlLight
         Me.Panel3.Controls.Add(Me.BtnSelectIPDB)
         Me.Panel3.Controls.Add(Me.Label5)
         Me.Panel3.Controls.Add(Me.tbIPDBName)
         Me.Panel3.Controls.Add(Me.BtnSaveIPDB)
         Me.Panel3.Controls.Add(Me.BtnNewIPDB)
+        resources.ApplyResources(Me.Panel3, "Panel3")
         Me.Panel3.Name = "Panel3"
         '
         'BtnSelectIPDB
         '
-        resources.ApplyResources(Me.BtnSelectIPDB, "BtnSelectIPDB")
         Me.BtnSelectIPDB.Image = Global.DWSIM.My.Resources.Resources.folder_go
+        resources.ApplyResources(Me.BtnSelectIPDB, "BtnSelectIPDB")
         Me.BtnSelectIPDB.Name = "BtnSelectIPDB"
         Me.BtnSelectIPDB.UseVisualStyleBackColor = True
         '
@@ -154,15 +154,15 @@ Partial Class FormUNIFACRegression
         '
         'BtnSaveIPDB
         '
-        resources.ApplyResources(Me.BtnSaveIPDB, "BtnSaveIPDB")
         Me.BtnSaveIPDB.Image = Global.DWSIM.My.Resources.Resources.disk
+        resources.ApplyResources(Me.BtnSaveIPDB, "BtnSaveIPDB")
         Me.BtnSaveIPDB.Name = "BtnSaveIPDB"
         Me.BtnSaveIPDB.UseVisualStyleBackColor = True
         '
         'BtnNewIPDB
         '
-        resources.ApplyResources(Me.BtnNewIPDB, "BtnNewIPDB")
         Me.BtnNewIPDB.Image = Global.DWSIM.My.Resources.Resources.page_white
+        resources.ApplyResources(Me.BtnNewIPDB, "BtnNewIPDB")
         Me.BtnNewIPDB.Name = "BtnNewIPDB"
         Me.BtnNewIPDB.UseVisualStyleBackColor = True
         '
@@ -188,7 +188,6 @@ Partial Class FormUNIFACRegression
         '
         'TSModel
         '
-        resources.ApplyResources(Me.TSModel, "TSModel")
         Me.TSModel.CanClose = False
         Me.TSModel.Controls.Add(Me.Panel2)
         Me.TSModel.Controls.Add(Me.BtnShowIPGrid)
@@ -201,10 +200,10 @@ Partial Class FormUNIFACRegression
         Me.TSModel.Controls.Add(Me.cbCompound2)
         Me.TSModel.IsDrawn = True
         Me.TSModel.Name = "TSModel"
+        resources.ApplyResources(Me.TSModel, "TSModel")
         '
         'Panel2
         '
-        resources.ApplyResources(Me.Panel2, "Panel2")
         Me.Panel2.BackColor = System.Drawing.SystemColors.ControlLight
         Me.Panel2.Controls.Add(Me.TBcji)
         Me.Panel2.Controls.Add(Me.TBbji)
@@ -222,6 +221,7 @@ Partial Class FormUNIFACRegression
         Me.Panel2.Controls.Add(Me.LblMGi)
         Me.Panel2.Controls.Add(Me.Label2)
         Me.Panel2.Controls.Add(Me.Label1)
+        resources.ApplyResources(Me.Panel2, "Panel2")
         Me.Panel2.Name = "Panel2"
         '
         'TBcji
@@ -306,8 +306,8 @@ Partial Class FormUNIFACRegression
         '
         'BtnShowIPGrid
         '
-        resources.ApplyResources(Me.BtnShowIPGrid, "BtnShowIPGrid")
         Me.BtnShowIPGrid.Image = Global.DWSIM.My.Resources.Resources.table
+        resources.ApplyResources(Me.BtnShowIPGrid, "BtnShowIPGrid")
         Me.BtnShowIPGrid.Name = "BtnShowIPGrid"
         Me.BtnShowIPGrid.UseVisualStyleBackColor = True
         '
@@ -320,13 +320,13 @@ Partial Class FormUNIFACRegression
         '
         'IPGrid
         '
-        resources.ApplyResources(Me.IPGrid, "IPGrid")
         Me.IPGrid.AllowUserToAddRows = False
         Me.IPGrid.AllowUserToDeleteRows = False
         Me.IPGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.IPGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.IPGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.IPGrid.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column6})
+        resources.ApplyResources(Me.IPGrid, "IPGrid")
         Me.IPGrid.MultiSelect = False
         Me.IPGrid.Name = "IPGrid"
         Me.IPGrid.ReadOnly = True
@@ -344,10 +344,10 @@ Partial Class FormUNIFACRegression
         '
         'cbModel
         '
-        resources.ApplyResources(Me.cbModel, "cbModel")
         Me.cbModel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbModel.FormattingEnabled = True
         Me.cbModel.Items.AddRange(New Object() {resources.GetString("cbModel.Items"), resources.GetString("cbModel.Items1"), resources.GetString("cbModel.Items2")})
+        resources.ApplyResources(Me.cbModel, "cbModel")
         Me.cbModel.Name = "cbModel"
         '
         'LblC1
@@ -362,21 +362,20 @@ Partial Class FormUNIFACRegression
         '
         'cbCompound1
         '
-        resources.ApplyResources(Me.cbCompound1, "cbCompound1")
         Me.cbCompound1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbCompound1.FormattingEnabled = True
+        resources.ApplyResources(Me.cbCompound1, "cbCompound1")
         Me.cbCompound1.Name = "cbCompound1"
         '
         'cbCompound2
         '
-        resources.ApplyResources(Me.cbCompound2, "cbCompound2")
         Me.cbCompound2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbCompound2.FormattingEnabled = True
+        resources.ApplyResources(Me.cbCompound2, "cbCompound2")
         Me.cbCompound2.Name = "cbCompound2"
         '
         'TSData
         '
-        resources.ApplyResources(Me.TSData, "TSData")
         Me.TSData.CanClose = False
         Me.TSData.Controls.Add(Me.LblTUnit)
         Me.TSData.Controls.Add(Me.TbUnifacTemp)
@@ -388,6 +387,7 @@ Partial Class FormUNIFACRegression
         Me.TSData.Controls.Add(Me.GridExpData)
         Me.TSData.IsDrawn = True
         Me.TSData.Name = "TSData"
+        resources.ApplyResources(Me.TSData, "TSData")
         '
         'LblTUnit
         '
@@ -493,11 +493,11 @@ Partial Class FormUNIFACRegression
         '
         'TSChart
         '
-        resources.ApplyResources(Me.TSChart, "TSChart")
         Me.TSChart.CanClose = False
         Me.TSChart.Controls.Add(Me.graph)
         Me.TSChart.IsDrawn = True
         Me.TSChart.Name = "TSChart"
+        resources.ApplyResources(Me.TSChart, "TSChart")
         '
         'graph
         '
@@ -522,6 +522,7 @@ Partial Class FormUNIFACRegression
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.FaTabStrip1)
         Me.Name = "FormUNIFACRegression"
+        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FaTabStrip1.ResumeLayout(False)
         Me.TSInformation.ResumeLayout(False)

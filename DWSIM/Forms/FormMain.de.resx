@@ -254,13 +254,13 @@
     <value>Hilfe &amp;anzeigen</value>
   </data>
   <data name="ManualTécnicoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>197, 22</value>
+    <value>198, 22</value>
   </data>
   <data name="ManualTécnicoToolStripMenuItem.Text" xml:space="preserve">
     <value>Technisches Handbuch</value>
   </data>
   <data name="GuiaDoUsuárioToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>197, 22</value>
+    <value>198, 22</value>
   </data>
   <data name="GuiaDoUsuárioToolStripMenuItem.Text" xml:space="preserve">
     <value>Benutzerhandbuch</value>
@@ -296,7 +296,7 @@
 </value>
   </data>
   <data name="DownloadsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>350, 22</value>
+    <value>351, 22</value>
   </data>
   <data name="WikiToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -320,7 +320,7 @@
 </value>
   </data>
   <data name="WikiToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>350, 22</value>
+    <value>351, 22</value>
   </data>
   <data name="FórumToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -344,7 +344,7 @@
 </value>
   </data>
   <data name="FórumToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>350, 22</value>
+    <value>351, 22</value>
   </data>
   <data name="FórumToolStripMenuItem.Text" xml:space="preserve">
     <value>Forum</value>
@@ -371,7 +371,7 @@
 </value>
   </data>
   <data name="RastreamentoDeBugsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>350, 22</value>
+    <value>351, 22</value>
   </data>
   <data name="RastreamentoDeBugsToolStripMenuItem.Text" xml:space="preserve">
     <value>Bug Tracking / Feature und Unterstützung anfordern</value>

@@ -27,7 +27,7 @@ Imports System.Linq
 
 Public Class FormSimulSettings
 
-    Inherits System.Windows.Forms.Form
+    Inherits WeifenLuo.WinFormsUI.Docking.DockContent
 
     Private FrmChild As FormFlowsheet
     Dim loaded As Boolean = False
@@ -46,6 +46,26 @@ Public Class FormSimulSettings
 
     Private Sub FormStSim_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
+        '818; 483
+
+        Me.TabText = Me.Text
+
+        If DWSIM.App.IsRunningOnMono Then
+            Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Float
+        Else
+            Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document
+        End If
+
+        If Not Me.DockHandler Is Nothing OrElse Not Me.DockHandler.FloatPane Is Nothing Then
+            ' set the bounds of this form's FloatWindow to our desired position and size
+            If Me.DockState = WeifenLuo.WinFormsUI.Docking.DockState.Float Then
+                Dim floatWin = Me.DockHandler.FloatPane.FloatWindow
+                If Not floatWin Is Nothing Then
+                    floatWin.SetBounds(floatWin.Location.X, floatWin.Location.Y, 820, 490)
+                End If
+            End If
+        End If
+
         initialized = True
 
         If DWSIM.App.IsRunningOnMono Then
@@ -54,8 +74,9 @@ Public Class FormSimulSettings
             Me.ogc1.SelectionMode = DataGridViewSelectionMode.CellSelect
             Me.dgvpp.SelectionMode = DataGridViewSelectionMode.CellSelect
         Else
-            Me.ListViewPP.View = View.Tile
-            Me.ListViewA.View = View.Tile
+            Me.ListViewPP.View = View.Details
+            Me.ListViewA.View = View.Details
+            Me.ListViewPP.ShowGroups = True
         End If
 
         Init()
@@ -124,36 +145,43 @@ Public Class FormSimulSettings
                     Case DWSIM.SimulationObjects.PropertyPackages.PackageType.EOS
                         With Me.ListViewPP.Items.Add(pp2.ComponentName)
                             .Group = Me.ListViewPP.Groups("EOS")
+                            .SubItems.Add(pp2.ComponentDescription)
                             .ToolTipText = pp2.ComponentDescription
                         End With
                     Case DWSIM.SimulationObjects.PropertyPackages.PackageType.ActivityCoefficient
                         With Me.ListViewPP.Items.Add(pp2.ComponentName)
                             .Group = Me.ListViewPP.Groups("ACT")
+                            .SubItems.Add(pp2.ComponentDescription)
                             .ToolTipText = pp2.ComponentDescription
                         End With
                     Case DWSIM.SimulationObjects.PropertyPackages.PackageType.ChaoSeader
                         With Me.ListViewPP.Items.Add(pp2.ComponentName)
                             .Group = Me.ListViewPP.Groups("CS")
+                            .SubItems.Add(pp2.ComponentDescription)
                             .ToolTipText = pp2.ComponentDescription
                         End With
                     Case DWSIM.SimulationObjects.PropertyPackages.PackageType.VaporPressure
                         With Me.ListViewPP.Items.Add(pp2.ComponentName)
                             .Group = Me.ListViewPP.Groups("VAP")
+                            .SubItems.Add(pp2.ComponentDescription)
                             .ToolTipText = pp2.ComponentDescription
                         End With
                     Case DWSIM.SimulationObjects.PropertyPackages.PackageType.Miscelaneous
                         With Me.ListViewPP.Items.Add(pp2.ComponentName)
                             .Group = Me.ListViewPP.Groups("MISC")
+                            .SubItems.Add(pp2.ComponentDescription)
                             .ToolTipText = pp2.ComponentDescription
                         End With
                     Case DWSIM.SimulationObjects.PropertyPackages.PackageType.CorrespondingStates
                         With Me.ListViewPP.Items.Add(pp2.ComponentName)
                             .Group = Me.ListViewPP.Groups("CST")
+                            .SubItems.Add(pp2.ComponentDescription)
                             .ToolTipText = pp2.ComponentDescription
                         End With
                     Case DWSIM.SimulationObjects.PropertyPackages.PackageType.CAPEOPEN
                         With Me.ListViewPP.Items.Add(pp2.ComponentName)
                             .Group = Me.ListViewPP.Groups("CAP")
+                            .SubItems.Add(pp2.ComponentDescription)
                             .ToolTipText = pp2.ComponentDescription
                         End With
                 End Select
@@ -813,7 +841,7 @@ Public Class FormSimulSettings
 
     Private Sub KryptonButton7_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KryptonButton7.Click
         Dim rm As New FormReacManager
-        rm.ShowDialog()
+        rm.Show(Me.FrmChild.dckPanel)
     End Sub
 
     Private Sub ogc1_CellValueChanged(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles ogc1.CellValueChanged
@@ -1366,6 +1394,13 @@ Public Class FormSimulSettings
 
     Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
         TextBox1.Text = ""
+    End Sub
+
+    Private Sub ListViewPP_Resize(sender As Object, e As EventArgs) Handles ListViewPP.Resize
+        If ListViewPP.Columns.Count > 0 Then
+            ListViewPP.Columns(0).Width = 240
+            ListViewPP.Columns(1).Width = ListViewPP.Width - 244
+        End If
     End Sub
 
 End Class
