@@ -29,7 +29,7 @@ Public Class AboutBoxNET
 
         Threading.Tasks.Task.Factory.StartNew(Function()
                                                   Dim scrh As New System.Management.ManagementObjectSearcher("select * from Win32_Processor")
-                                                  Dim text1 As String = ""
+                                                  Dim text1 As String = System.Environment.GetEnvironmentVariable("PROCESSOR_IDENTIFIER")
                                                   For Each qinfo In scrh.Get()
                                                       text1 += " / " & qinfo.Properties("Name").Value.ToString
                                                   Next
@@ -39,12 +39,17 @@ Public Class AboutBoxNET
                                                                              Lblcpuinfo.Text = t.Result
                                                                          End Sub, Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext)
 
-        Lblcpusimd.Text = ""
-        For Each item In Library.GetCpuArchitecture.CpuSimdFeatures
-            Lblcpusimd.Text += item.ToString & " "
-        Next
+        Lblcpusimd.Text = "Querying CPU SIMD capabilities..."
 
-        Lblcpuinfo.Text = System.Environment.GetEnvironmentVariable("PROCESSOR_IDENTIFIER")
+        Threading.Tasks.Task.Factory.StartNew(Function()
+                                                  Dim text1 As String = ""
+                                                  For Each item In Library.GetCpuArchitecture.CpuSimdFeatures
+                                                      text1 += item.ToString & " "
+                                                  Next
+                                                  Return text1
+                                              End Function).ContinueWith(Sub(t)
+                                                                             Lblcpusimd.Text = t.Result
+                                                                         End Sub, Threading.Tasks.TaskScheduler.FromCurrentSynchronizationContext)
 
         With Me.DataGridView1.Rows
             .Clear()
@@ -75,8 +80,6 @@ Public Class AboutBoxNET
             .Add(New Object() {"Yeppp!", Yeppp.Library.GetVersion.ToString, "2014", "Marat Dukhan", "http://www.yeppp.info", "Yeppp! License", "http://www.yeppp.info/resources/yeppp-license.txt"})
         End With
         Me.DataGridView1.Sort(Me.DataGridView1.Columns(0), System.ComponentModel.ListSortDirection.Ascending)
-
-        PopulateAssemblies()
 
     End Sub
 
@@ -364,4 +367,7 @@ Public Class AboutBoxNET
         PopulateAssemblyDetails(MatchAssemblyByName(strAssemblyName), AssemblyDetailsListView)
     End Sub
 
+    Private Sub AboutBoxNET_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        PopulateAssemblies()
+    End Sub
 End Class

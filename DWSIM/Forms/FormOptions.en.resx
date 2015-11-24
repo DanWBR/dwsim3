@@ -117,55 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="FaTabStripItem1.Text" xml:space="preserve">
-    <value>Solver Configuration</value>
-  </data>
-  <data name="FaTabStripItem3.Text" xml:space="preserve">
-    <value>Component Databases</value>
-  </data>
-  <data name="FaTabStripItem2.Text" xml:space="preserve">
-    <value>Backups</value>
-  </data>
-  <data name="FaTabStripItem7.Text" xml:space="preserve">
-    <value>Other</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Solver Options</value>
-  </data>
-  <data name="GroupBoxBGThreadConfig.Text" xml:space="preserve">
-    <value>Additional Settings</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="Label10.Location" type="System.Drawing.Point, System.Drawing">
-    <value>206, 51</value>
-  </data>
-  <data name="Label10.Size" type="System.Drawing.Size, System.Drawing">
-    <value>69, 13</value>
-  </data>
-  <data name="Label10.Text" xml:space="preserve">
-    <value>x 'CPU cores'</value>
-  </data>
-  <data name="tbMaxThreadMultiplier.Location" type="System.Drawing.Point, System.Drawing">
-    <value>146, 47</value>
-  </data>
-  <data name="cbTaskScheduler.Items" xml:space="preserve">
-    <value>Default (.NET/Mono)</value>
-  </data>
-  <data name="cbTaskScheduler.Items2" xml:space="preserve">
-    <value>Limited Concurrency</value>
-  </data>
-  <data name="Label9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>79, 13</value>
-  </data>
-  <data name="Label9.Text" xml:space="preserve">
-    <value>Task Scheduler</value>
-  </data>
-  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>128, 13</value>
-  </data>
-  <data name="Label1.Text" xml:space="preserve">
-    <value>Maximum parallel threads</value>
-  </data>
   <data name="chkStorePreviousSolutions.Size" type="System.Drawing.Size, System.Drawing">
     <value>141, 17</value>
   </data>
@@ -188,7 +140,10 @@
     <value>seconds</value>
   </data>
   <data name="tbSolverTimeout.Location" type="System.Drawing.Point, System.Drawing">
-    <value>99, 49</value>
+    <value>108, 49</value>
+  </data>
+  <data name="tbSolverTimeout.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 21</value>
   </data>
   <data name="Label11.Size" type="System.Drawing.Size, System.Drawing">
     <value>76, 13</value>
@@ -208,14 +163,65 @@
   <data name="cbSolverMode.Items4" xml:space="preserve">
     <value>Network Computer</value>
   </data>
+  <data name="cbSolverMode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>108, 20</value>
+  </data>
+  <data name="cbSolverMode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>211, 21</value>
+  </data>
   <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>88, 13</value>
   </data>
   <data name="Label2.Text" xml:space="preserve">
     <value>Calculation Mode</value>
   </data>
-  <data name="GroupBoxNetworkComputerConfig.Text" xml:space="preserve">
-    <value>Network Computer connection settings</value>
+  <data name="Label10.Location" type="System.Drawing.Point, System.Drawing">
+    <value>206, 51</value>
+  </data>
+  <data name="Label10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>69, 13</value>
+  </data>
+  <data name="Label10.Text" xml:space="preserve">
+    <value>x 'CPU cores'</value>
+  </data>
+  <data name="tbMaxThreadMultiplier.Location" type="System.Drawing.Point, System.Drawing">
+    <value>146, 47</value>
+  </data>
+  <data name="cbTaskScheduler.Items" xml:space="preserve">
+    <value>Default (.NET/Mono)</value>
+  </data>
+  <data name="cbTaskScheduler.Items2" xml:space="preserve">
+    <value>Limited Concurrency</value>
+  </data>
+  <data name="cbTaskScheduler.Location" type="System.Drawing.Point, System.Drawing">
+    <value>97, 20</value>
+  </data>
+  <data name="cbTaskScheduler.Size" type="System.Drawing.Size, System.Drawing">
+    <value>211, 21</value>
+  </data>
+  <data name="Label9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>79, 13</value>
+  </data>
+  <data name="Label9.Text" xml:space="preserve">
+    <value>Task Scheduler</value>
+  </data>
+  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>128, 13</value>
+  </data>
+  <data name="Label1.Text" xml:space="preserve">
+    <value>Maximum parallel threads</value>
+  </data>
+  <data name="GroupBoxBGThreadConfig.Text" xml:space="preserve">
+    <value>Additional Settings</value>
+  </data>
+  <data name="Label8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>92, 13</value>
+  </data>
+  <data name="Label8.Text" xml:space="preserve">
+    <value>Connection String</value>
+  </data>
+  <data name="GroupBoxAzureConfig.Text" xml:space="preserve">
+    <value>Azure Service Bus Settings</value>
   </data>
   <data name="Label15.Size" type="System.Drawing.Size, System.Drawing">
     <value>89, 13</value>
@@ -229,20 +235,11 @@
   <data name="Label16.Text" xml:space="preserve">
     <value>IP Address</value>
   </data>
-  <data name="GroupBoxAzureConfig.Location" type="System.Drawing.Point, System.Drawing">
-    <value>11, 76</value>
+  <data name="GroupBoxNetworkComputerConfig.Text" xml:space="preserve">
+    <value>Network Computer connection settings</value>
   </data>
-  <data name="GroupBoxAzureConfig.Text" xml:space="preserve">
-    <value>Azure Service Bus Settings</value>
-  </data>
-  <data name="Label8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>92, 13</value>
-  </data>
-  <data name="Label8.Text" xml:space="preserve">
-    <value>Connection String</value>
-  </data>
-  <data name="GroupBox7.Text" xml:space="preserve">
-    <value>Local Calculation Engine Settings</value>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Solver Options</value>
   </data>
   <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
     <value>39, 13</value>
@@ -277,8 +274,8 @@
   <data name="chkEnableParallelCalcs.Text" xml:space="preserve">
     <value>Enable CPU Parallel Processing</value>
   </data>
-  <data name="GroupBox4.Text" xml:space="preserve">
-    <value>Component Databases</value>
+  <data name="GroupBox7.Text" xml:space="preserve">
+    <value>Local Calculation Engine Settings</value>
   </data>
   <data name="cbudb.Size" type="System.Drawing.Size, System.Drawing">
     <value>268, 17</value>
@@ -286,7 +283,7 @@
   <data name="cbudb.Text" xml:space="preserve">
     <value>Replace components when loading user databases</value>
   </data>
-  <data name="DataGridViewCellStyle4.NullValue" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="DataGridViewCellStyle1.NullValue" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         Qk32AgAAAAAAADYAAAAoAAAADgAAABAAAAABABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEgoTGw8bGw8bGw8bGw8bGw8bGw8bG
@@ -303,7 +300,7 @@
         hIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEAAA=
 </value>
   </data>
-  <data name="DataGridViewCellStyle5.NullValue" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="DataGridViewCellStyle2.NullValue" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         Qk32AgAAAAAAADYAAAAoAAAADgAAABAAAAABABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEgoTGw8bGw8bGw8bGw8bGw8bGw8bG
@@ -326,13 +323,13 @@
   <data name="Button7.Text" xml:space="preserve">
     <value>Add User Database</value>
   </data>
-  <data name="GroupBox10.Text" xml:space="preserve">
-    <value>Interaction Parameter Databases</value>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Component Datasets</value>
   </data>
   <data name="Button4.Text" xml:space="preserve">
     <value>Add user database</value>
   </data>
-  <data name="DataGridViewCellStyle6.NullValue" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="DataGridViewCellStyle3.NullValue" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         Qk32AgAAAAAAADYAAAAoAAAADgAAABAAAAABABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEgoTGw8bGw8bGw8bGw8bGw8bGw8bG
@@ -349,8 +346,11 @@
         hIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEhIKEAAA=
 </value>
   </data>
-  <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Backup Copies</value>
+  <data name="GroupBox10.Text" xml:space="preserve">
+    <value>Interaction Parameter Datasets</value>
+  </data>
+  <data name="FaTabStripItem3.Text" xml:space="preserve">
+    <value>Datasets</value>
   </data>
   <data name="chkSaveBackupFile.Size" type="System.Drawing.Size, System.Drawing">
     <value>223, 17</value>
@@ -385,14 +385,17 @@
   <data name="KryptonCheckBox6.Text" xml:space="preserve">
     <value>Enable backup copies</value>
   </data>
-  <data name="GroupBox13.Text" xml:space="preserve">
-    <value>Compatibility</value>
+  <data name="GroupBox3.Text" xml:space="preserve">
+    <value>Backup Copies</value>
+  </data>
+  <data name="FaTabStripItem2.Text" xml:space="preserve">
+    <value>Backups</value>
   </data>
   <data name="chkLoadLegacyFiles.Text" xml:space="preserve">
     <value>Load binary (*.dwsim) files using legacy settings (pre-3.0 versions)</value>
   </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>UI Language</value>
+  <data name="GroupBox13.Text" xml:space="preserve">
+    <value>Compatibility</value>
   </data>
   <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>54, 13</value>
@@ -400,8 +403,8 @@
   <data name="Label3.Text" xml:space="preserve">
     <value>Language</value>
   </data>
-  <data name="GroupBox9.Text" xml:space="preserve">
-    <value>Messages</value>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>UI Language</value>
   </data>
   <data name="chkShowWhatsNew.Size" type="System.Drawing.Size, System.Drawing">
     <value>212, 17</value>
@@ -421,8 +424,8 @@
   <data name="chkUpdates.Text" xml:space="preserve">
     <value>Check for updates on startup</value>
   </data>
-  <data name="GroupBox6.Text" xml:space="preserve">
-    <value>Debug mode</value>
+  <data name="GroupBox9.Text" xml:space="preserve">
+    <value>Messages</value>
   </data>
   <data name="cbDebugLevel.Items" xml:space="preserve">
     <value>None</value>
@@ -448,12 +451,18 @@
   <data name="chkconsole.Text" xml:space="preserve">
     <value>Redirect console output</value>
   </data>
+  <data name="GroupBox6.Text" xml:space="preserve">
+    <value>Debug mode</value>
+  </data>
+  <data name="FaTabStripItem7.Text" xml:space="preserve">
+    <value>Other</value>
+  </data>
   <data name="ImageList1.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABo
-        KgAAAk1TRnQBSQFMAgEBCgEAAYwBBgGMAQYBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        KgAAAk1TRnQBSQFMAgEBCgEAAZQBBgGUAQYBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABMAMAAQEBAAEYBgABJBIAAekCpwHpAqcB5wKlAeUCowHlAqMB5QKjAeQCogHiAqAB4QKfAd4CnAHe
         ApwB3AKaAdoCmAHaApgB2gKYAdoCmAHkAqIB4gKgAeECnwHeApwB3AGcAZoB2gKYAdoCmAHZApcB1wKV
         AdYClAHTApEB0wKRAdECjwHPAo0BzwKNAc8CjWAABvYD9APzAfIB8wHyA/ED8APuA+0D6wPpA+gB5wLm
@@ -653,6 +662,6 @@
     <value>Add User Database</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>DWSIM - General Settings</value>
+    <value>General Settings</value>
   </data>
 </root>
