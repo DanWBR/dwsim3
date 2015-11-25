@@ -364,7 +364,7 @@
     <value>TSProps</value>
   </data>
   <data name="&gt;&gt;TSProps.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
+    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.5807.20432, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;TSProps.Parent" xml:space="preserve">
     <value>FTSProps</value>
@@ -478,7 +478,7 @@
     <value>TSObj</value>
   </data>
   <data name="&gt;&gt;TSObj.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
+    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.5807.20432, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;TSObj.Parent" xml:space="preserve">
     <value>FTSProps</value>
@@ -499,7 +499,7 @@
     <value>FTSProps</value>
   </data>
   <data name="&gt;&gt;FTSProps.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStrip, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
+    <value>FarsiLibrary.Win.FATabStrip, TabStrip, Version=2.0.5807.20432, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;FTSProps.Parent" xml:space="preserve">
     <value>$this</value>
@@ -673,7 +673,7 @@
     <value>Document</value>
   </data>
   <data name="dckMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>197, 246</value>
+    <value>197, 224</value>
   </data>
   <data name="&gt;&gt;dckMenu.Name" xml:space="preserve">
     <value>dckMenu</value>
@@ -791,6 +791,6 @@
     <value>frmProps</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>WeifenLuo.WinFormsUI.Docking.DockContent, WeifenLuo.WinFormsUI.Docking, Version=2.7.0.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481</value>
+    <value>WeifenLuo.WinFormsUI.Docking.DockContent, WeifenLuo.WinFormsUI.Docking, Version=2.9.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>

@@ -1252,6 +1252,11 @@ namespace WeifenLuo.WinFormsUI.Docking
                 return Rectangle.Empty;
             }
 
+            if (!this.DockPane.ActiveContent.DockHandler.CloseButtonVisible)
+            {
+                return Rectangle.Empty;
+            }
+
             const int gap = 3;
             const int imageSize = 15;
             return new Rectangle(rectTab.X + rectTab.Width - imageSize - gap - 1, rectTab.Y + gap, imageSize, imageSize);

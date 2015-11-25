@@ -453,10 +453,10 @@ namespace WeifenLuo.WinFormsUI.Docking
 
         public static DockPanelSkin CreateVisualStudio2012Light()
         {
-            var specialBlue = Color.FromArgb(0xFF, 0x00, 0x7A, 0xCC);
+            var specialBlue = SystemColors.ActiveCaption; // Color.FromArgb(0xFF, 0x00, 0x7A, 0xCC);
             var dot = Color.FromArgb(80, 170, 220);
             var activeTab = specialBlue;
-            var mouseHoverTab = Color.FromArgb(0xFF, 28, 151, 234);
+            var mouseHoverTab = SystemColors.Highlight; //Color.FromArgb(0xFF, 28, 151, 234);
             var inactiveTab = SystemColors.Control;
             var lostFocusTab = Color.FromArgb(0xFF, 204, 206, 219);
             var skin = new DockPanelSkin();

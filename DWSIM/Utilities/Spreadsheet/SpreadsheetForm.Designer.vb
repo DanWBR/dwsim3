@@ -485,6 +485,7 @@ Partial Class SpreadsheetForm
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CloseButton = False
+        Me.CloseButtonVisible = False
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.DoubleBuffered = True
         Me.HideOnClose = True

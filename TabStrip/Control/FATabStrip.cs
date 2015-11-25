@@ -328,7 +328,7 @@ namespace FarsiLibrary.Win
                 DEF_START_POS = stripButtonRect.Right;
             }
 
-            e.Graphics.DrawRectangle(SystemPens.ControlDark, borderRc);
+            // e.Graphics.DrawRectangle(SystemPens.ControlDark, borderRc);
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
             #region Draw Pages
@@ -362,9 +362,10 @@ namespace FarsiLibrary.Win
                 else if (SelectedItem != null && SelectedItem.IsDrawn)
                 {
                     Point end = new Point((int)SelectedItem.StripRect.Left - 9, DEF_HEADER_HEIGHT);
-                    e.Graphics.DrawLine(new Pen(Color.FromArgb(0, 122, 204)), new Point(0, DEF_HEADER_HEIGHT), end);
+                   // e.Graphics.DrawLine(new Pen(Color.FromArgb(0, 122, 204)), new Point(0, DEF_HEADER_HEIGHT), end);
+                    e.Graphics.DrawLine(new Pen(SystemColors.ActiveCaption), new Point(0, DEF_HEADER_HEIGHT), end);
                     //end.X += (int)SelectedItem.StripRect.Width + 10;
-                    e.Graphics.DrawLine(new Pen(Color.FromArgb(0, 122, 204)), end, new Point(ClientRectangle.Width, DEF_HEADER_HEIGHT));
+                    e.Graphics.DrawLine(new Pen(SystemColors.ActiveCaption), end, new Point(ClientRectangle.Width, DEF_HEADER_HEIGHT));
                 }
             }
             else
@@ -601,7 +602,7 @@ namespace FarsiLibrary.Win
 
                 if (currentItem == SelectedItem)
                 {
-                    brush = new LinearGradientBrush(buttonRect, Color.FromArgb(0, 122, 204), Color.FromArgb(0, 122, 204), LinearGradientMode.Vertical);
+                    brush = new LinearGradientBrush(buttonRect, SystemColors.ActiveCaption, SystemColors.ActiveCaption, LinearGradientMode.Vertical);
                 }
                 else
                 {

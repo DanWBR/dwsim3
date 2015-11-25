@@ -182,6 +182,7 @@ Partial Class frmObjList
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CloseButton = False
+        Me.CloseButtonVisible = False
         Me.Controls.Add(Me.TableLayoutPanel4)
         Me.DoubleBuffered = True
         Me.Name = "frmObjList"

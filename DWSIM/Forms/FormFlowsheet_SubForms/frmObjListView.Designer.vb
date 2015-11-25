@@ -190,6 +190,7 @@ Partial Class frmObjListView
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CloseButton = False
+        Me.CloseButtonVisible = False
         Me.Controls.Add(Me.DataGridView1)
         Me.DockAreas = CType(((((WeifenLuo.WinFormsUI.Docking.DockAreas.Float Or WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft) _
             Or WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight) _
