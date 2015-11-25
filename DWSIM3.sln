@@ -27,6 +27,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsUI", "DockPanelSuite\WinFormsUI\WinFormsUI.csproj", "{C75532C4-765B-418E-B09B-46D36B2ABDB1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThemeVS2012Light", "DockPanelSuite\WinFormsUI\ThemeVS2012Light.csproj", "{4ED4FDB5-9FD0-49E6-876D-1635F727C755}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C75532C4-765B-418E-B09B-46D36B2ABDB1} = {C75532C4-765B-418E-B09B-46D36B2ABDB1}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TabStrip", "TabStrip\TabStrip.csproj", "{F929CA6A-87BD-42C8-8D0A-6455DB6F55DC}"
 EndProject
