@@ -352,36 +352,36 @@ namespace FarsiLibrary.Win
 
             #region Draw UnderPage Line
 
-            //if (RightToLeft == RightToLeft.No)
-            //{
-            //    if (Items.DrawnCount == 0 || Items.VisibleCount == 0)
-            //    {
-            //        e.Graphics.DrawLine(SystemPens.ControlDark, new Point(0, DEF_HEADER_HEIGHT),
-            //                            new Point(ClientRectangle.Width, DEF_HEADER_HEIGHT));
-            //    }
-            //    else if (SelectedItem != null && SelectedItem.IsDrawn)
-            //    {
-            //        Point end = new Point((int)SelectedItem.StripRect.Left - 9, DEF_HEADER_HEIGHT);
-            //        e.Graphics.DrawLine(SystemPens.ControlDark, new Point(0, DEF_HEADER_HEIGHT), end);
-            //        end.X += (int)SelectedItem.StripRect.Width + 10;
-            //        e.Graphics.DrawLine(SystemPens.ControlDark, end, new Point(ClientRectangle.Width, DEF_HEADER_HEIGHT));
-            //    }
-            //}
-            //else
-            //{
-            //    if (Items.DrawnCount == 0 || Items.VisibleCount == 0)
-            //    {
-            //        e.Graphics.DrawLine(SystemPens.ControlDark, new Point(0, DEF_HEADER_HEIGHT),
-            //                            new Point(ClientRectangle.Width, DEF_HEADER_HEIGHT));
-            //    }
-            //    else if (SelectedItem != null && SelectedItem.IsDrawn)
-            //    {
-            //        Point end = new Point((int)SelectedItem.StripRect.Left, DEF_HEADER_HEIGHT);
-            //        e.Graphics.DrawLine(SystemPens.ControlDark, new Point(0, DEF_HEADER_HEIGHT), end);
-            //        end.X += (int)SelectedItem.StripRect.Width + 20;
-            //        e.Graphics.DrawLine(SystemPens.ControlDark, end, new Point(ClientRectangle.Width, DEF_HEADER_HEIGHT));
-            //    }
-            //}
+            if (RightToLeft == RightToLeft.No)
+            {
+                if (Items.DrawnCount == 0 || Items.VisibleCount == 0)
+                {
+                    e.Graphics.DrawLine(SystemPens.ControlDark, new Point(0, DEF_HEADER_HEIGHT),
+                                        new Point(ClientRectangle.Width, DEF_HEADER_HEIGHT));
+                }
+                else if (SelectedItem != null && SelectedItem.IsDrawn)
+                {
+                    Point end = new Point((int)SelectedItem.StripRect.Left - 9, DEF_HEADER_HEIGHT);
+                    e.Graphics.DrawLine(new Pen(Color.FromArgb(0, 122, 204)), new Point(0, DEF_HEADER_HEIGHT), end);
+                    //end.X += (int)SelectedItem.StripRect.Width + 10;
+                    e.Graphics.DrawLine(new Pen(Color.FromArgb(0, 122, 204)), end, new Point(ClientRectangle.Width, DEF_HEADER_HEIGHT));
+                }
+            }
+            else
+            {
+                if (Items.DrawnCount == 0 || Items.VisibleCount == 0)
+                {
+                    e.Graphics.DrawLine(SystemPens.ControlDark, new Point(0, DEF_HEADER_HEIGHT),
+                                        new Point(ClientRectangle.Width, DEF_HEADER_HEIGHT));
+                }
+                else if (SelectedItem != null && SelectedItem.IsDrawn)
+                {
+                    Point end = new Point((int)SelectedItem.StripRect.Left, DEF_HEADER_HEIGHT);
+                    e.Graphics.DrawLine(SystemPens.ControlDark, new Point(0, DEF_HEADER_HEIGHT), end);
+                    end.X += (int)SelectedItem.StripRect.Width + 20;
+                    e.Graphics.DrawLine(SystemPens.ControlDark, end, new Point(ClientRectangle.Width, DEF_HEADER_HEIGHT));
+                }
+            }
 
             #endregion
 
@@ -548,7 +548,7 @@ namespace FarsiLibrary.Win
 
             if (RightToLeft == RightToLeft.No)
             {
-                RectangleF buttonRect = new RectangleF(DEF_START_POS - 9, 1, textSize.Width, 17);
+                RectangleF buttonRect = new RectangleF(DEF_START_POS - 9, 1, textSize.Width, 18);
                 currentItem.StripRect = buttonRect;
                 DEF_START_POS += (int) textSize.Width;
             }
@@ -609,13 +609,13 @@ namespace FarsiLibrary.Win
                 }
 
                 g.FillPath(brush, path);
-                g.DrawPath(new Pen(brush,1), path);
+                g.DrawPath(new Pen(brush, 1), path);
 
-                if (currentItem == SelectedItem)
-                {
-                    g.DrawLine(new Pen(brush), buttonRect.Left, buttonRect.Height + 2,
-                               buttonRect.Left + buttonRect.Width, buttonRect.Height + 2);
-                }
+                //if (currentItem == SelectedItem)
+                //{
+                //    g.DrawLine(new Pen(brush), buttonRect.Left, buttonRect.Height + 2,
+                //               buttonRect.Left + buttonRect.Width, buttonRect.Height + 2);
+                //}
 
                 PointF textLoc = new PointF(buttonRect.Left + buttonRect.Height - 9, buttonRect.Top + (buttonRect.Height/2) - (textSize.Height/2) - 2);
                 RectangleF textRect = buttonRect;
