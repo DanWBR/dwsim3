@@ -190,6 +190,10 @@ Public Class FormMain
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
+        ' Set DockPanel properties
+        dckPanel.ActiveAutoHideContent = Nothing
+        dckPanel.Parent = Me
+
         Dim theme As New VS2012LightTheme()
         theme.Apply(Me.dckPanel)
 
@@ -2782,6 +2786,7 @@ Public Class FormMain
                 form.FormObjList.Show(form.dckPanel)
                 form.FormProps.Show(form.dckPanel)
                 form.FormSpreadsheet.Show(form.dckPanel)
+                form.FormMatList.Show(form.dckPanel)
                 form.FormSurface.Show(form.dckPanel)
                 form.dckPanel.BringToFront()
                 form.dckPanel.UpdateDockWindowZOrder(DockStyle.Fill, True)
@@ -2858,7 +2863,7 @@ Public Class FormMain
             form.WriteToLog(DWSIM.App.GetLocalString("Arquivo") & Me.filename & DWSIM.App.GetLocalString("carregadocomsucesso"), Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
         End If
 
-        form.Text += " (" + Me.filename + ")"
+        form.UpdateFormText()
 
         Me.ResumeLayout()
         Me.ToolStripStatusLabel1.Text = ""
@@ -3042,7 +3047,7 @@ Public Class FormMain
                                            If Not My.Application.CommandLineArgs.Count > 1 Then Me.UpdateMRUList()
                                        End If
                                        form.Options.FilePath = Me.filename
-                                       form.Text = form.Options.SimNome + " (" + form.Options.FilePath + ")"
+                                       form.UpdateFormText()
                                        form.WriteToLog(DWSIM.App.GetLocalString("Arquivo") & Me.filename & DWSIM.App.GetLocalString("salvocomsucesso"), Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
                                        Me.ToolStripStatusLabel1.Text = ""
                                    End Sub))
@@ -3219,7 +3224,7 @@ Public Class FormMain
                                                   If Not My.Application.CommandLineArgs.Count > 1 Then Me.UpdateMRUList()
                                               End If
                                               form.Options.FilePath = Me.filename
-                                              form.Text = form.Options.SimNome + " (" + form.Options.FilePath + ")"
+                                              form.UpdateFormText()
                                               form.WriteToLog(DWSIM.App.GetLocalString("Arquivo") & Me.filename & DWSIM.App.GetLocalString("salvocomsucesso"), Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
                                           End If
                                       End Sub))
@@ -3628,7 +3633,7 @@ ruf:                Application.DoEvents()
 
     Private Sub OpenToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OpenToolStripButton.Click, OpenToolStripMenuItem.Click
 
-        Call Me.LoadFileDialog()
+        Me.LoadFileDialog()
 
     End Sub
 
@@ -3729,18 +3734,22 @@ ruf:                Application.DoEvents()
         End If
     End Sub
 
-    Private Sub NewToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NewToolStripButton.Click, NewToolStripMenuItem.Click
+    Public Sub NewToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NewToolStripButton.Click, NewToolStripMenuItem.Click
 
-        Dim NewMDIChild As New FormFlowsheet()
+        Dim newform As New FormFlowsheet()
 
-        'Set the Parent Form of the Child window.
-        NewMDIChild.MdiParent = Me
-        'Display the new form.
-        NewMDIChild.Text = "Simulation" & m_childcount
-        NewMDIChild.Show(Me.dckPanel)
-        Application.DoEvents()
-        Me.ActivateMdiChild(NewMDIChild)
+        With newform
+            .Text = "Simulation" & m_childcount
+            .MdiParent = Me
+            .Show(Me.dckPanel)
+            .MdiParent = Me
+            Application.DoEvents()
+        End With
+        Me.ActivateMdiChild(newform)
         m_childcount += 1
+
+        dckPanel.BringToFront()
+        dckPanel.UpdateDockWindowZOrder(DockStyle.Fill, True)
 
     End Sub
 

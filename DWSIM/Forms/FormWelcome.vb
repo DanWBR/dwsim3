@@ -59,19 +59,17 @@ Public Class FormWelcome
     End Sub
 
     Private Sub KryptonButton5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click
-        Dim NewMDIChild As New FormFlowsheet()
-        'Set the Parent Form of the Child window.
-        NewMDIChild.MdiParent = Me.Owner
-        'Display the new form.
-        NewMDIChild.Text = "sim_est_" & FormMain.m_childcount
+
         Me.Hide()
         Me.Close()
         Application.DoEvents()
         Application.DoEvents()
-        NewMDIChild.Show()
+        FormMain.NewToolStripButton_Click(sender, e)
+
     End Sub
 
     Private Sub KryptonButton4_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
+        Me.Hide()
         Me.Close()
         Application.DoEvents()
         Application.DoEvents()

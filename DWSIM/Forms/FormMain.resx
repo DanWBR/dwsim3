@@ -738,9 +738,6 @@
   <data name="dckPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
-  <data name="dckPanel.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Tahoma, 11world</value>
-  </data>
   <data name="dckPanel.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 49</value>
   </data>
@@ -754,7 +751,7 @@
     <value>dckPanel</value>
   </data>
   <data name="&gt;&gt;dckPanel.Type" xml:space="preserve">
-    <value>WeifenLuo.WinFormsUI.Docking.DockPanel, WeifenLuo.WinFormsUI.Docking, Version=2.7.0.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481</value>
+    <value>WeifenLuo.WinFormsUI.Docking.DockPanel, WeifenLuo.WinFormsUI.Docking, Version=2.9.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;dckPanel.Parent" xml:space="preserve">
     <value>$this</value>

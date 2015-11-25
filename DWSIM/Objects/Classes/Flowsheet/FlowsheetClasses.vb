@@ -303,9 +303,9 @@ Namespace DWSIM.FormClasses
         Public ValidateEquilibriumCalc As Boolean = False
         Public UsePhaseIdentificationAlgorithm As Boolean = False
 
-        Public SimNome As String = "simulation_title"
-        Public SimAutor As String = "simulation_author"
-        Public SimComentario As String = "simulation_details"
+        Public SimNome As String = "simulation"
+        Public SimAutor As String = "user"
+        Public SimComentario As String = "comments"
 
         Public FilePath As String = ""
 

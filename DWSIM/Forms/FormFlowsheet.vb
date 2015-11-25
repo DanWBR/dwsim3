@@ -108,6 +108,8 @@ Imports WeifenLuo.WinFormsUI.Docking
 
     Private QuestionID As Integer = -1
 
+    Private loaded As Boolean = False
+
 #End Region
 
 #Region "    Form Event Handlers "
@@ -124,6 +126,16 @@ Imports WeifenLuo.WinFormsUI.Docking
         Dim theme As New VS2012LightTheme()
         theme.Apply(Me.dckPanel)
 
+    End Sub
+
+    Private Sub FormFlowsheet_DockStateChanged(sender As Object, e As EventArgs) Handles Me.DockStateChanged
+        If loaded And Me.DockState <> Docking.DockState.Unknown And Me.DockState <> Docking.DockState.Hidden Then
+            FormChild_Shown(sender, e)
+        End If
+    End Sub
+
+    Private Sub FormFlowsheet_TextChanged(sender As Object, e As EventArgs) Handles Me.TextChanged
+        Me.TabText = Me.Text
     End Sub
 
     Private Sub FormChild_Activated(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Activated
@@ -186,19 +198,13 @@ Imports WeifenLuo.WinFormsUI.Docking
             dckPanel.ActiveAutoHideContent = Nothing
             dckPanel.Parent = Me
 
-            'FormStatus.Show(dckPanel)
-            FormLog.Show(dckPanel)
+           FormSpreadsheet.Show(dckPanel)
+            FormMatList.Show(dckPanel)
+            FormSurface.Show(dckPanel)
             FormObjListView.Show(dckPanel)
             FormObjList.Show(dckPanel)
             FormProps.Show(dckPanel)
-            FormMatList.Show(dckPanel)
-            FormSpreadsheet.Show(dckPanel)
-            FormSurface.Show(dckPanel)
-
-            If DWSIM.App.IsRunningOnMono Then
-                'FormLog.DockState = Docking.DockState.DockRight
-                Me.dckPanel.UpdateDockWindowZOrder(DockStyle.Fill, True)
-            End If
+            FormLog.Show(dckPanel)
 
             Try
                 FormWatch.DockState = Docking.DockState.DockRight
@@ -214,17 +220,19 @@ Imports WeifenLuo.WinFormsUI.Docking
             End Try
 
             dckPanel.BringToFront()
-
             dckPanel.UpdateDockWindowZOrder(DockStyle.Fill, True)
-
-            Me.FormSurface.FlowsheetDesignSurface.Zoom = 1
-            Me.FormSurface.FlowsheetDesignSurface.VerticalScroll.Maximum = 7000
-            Me.FormSurface.FlowsheetDesignSurface.VerticalScroll.Value = 3500
-            Me.FormSurface.FlowsheetDesignSurface.HorizontalScroll.Maximum = 10000
-            Me.FormSurface.FlowsheetDesignSurface.HorizontalScroll.Value = 5000
 
             Me.Invalidate()
             Application.DoEvents()
+
+            Me.FormSurface.FlowsheetDesignSurface.Zoom = 1
+            Me.FormSurface.FlowsheetDesignSurface.VerticalScroll.Maximum = 7000
+            Me.FormSurface.FlowsheetDesignSurface.HorizontalScroll.Maximum = 10000
+            Try
+                Me.FormSurface.FlowsheetDesignSurface.VerticalScroll.Value = 3500
+                Me.FormSurface.FlowsheetDesignSurface.HorizontalScroll.Value = 5000
+            Catch ex As Exception
+            End Try
 
         Else
 
@@ -246,6 +254,8 @@ Imports WeifenLuo.WinFormsUI.Docking
 
         End If
 
+        Me.UpdateFormText()
+
         Dim array1(FormMain.AvailableUnitSystems.Count - 1) As String
         FormMain.AvailableUnitSystems.Keys.CopyTo(array1, 0)
         Me.ToolStripComboBoxUnitSystem.Items.Clear()
@@ -263,14 +273,15 @@ Imports WeifenLuo.WinFormsUI.Docking
         'load plugins
         CreatePluginsList()
 
+        loaded = True
+
     End Sub
 
     Public Sub FormChild_Shown(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Shown
 
         If Not Me.m_IsLoadedFromFile Then
 
-            Me.WindowState = FormWindowState.Maximized
-
+            Me.Invalidate()
             Application.DoEvents()
 
             If Not DWSIM.App.IsRunningOnMono Then
@@ -294,6 +305,7 @@ Imports WeifenLuo.WinFormsUI.Docking
                     .ShowDialog(Me)
                 End With
             End If
+
         Else
 
             Dim array1(FormMain.AvailableUnitSystems.Count - 1) As String
@@ -437,6 +449,16 @@ Imports WeifenLuo.WinFormsUI.Docking
 #End Region
 
 #Region "    Functions "
+
+    Sub UpdateFormText()
+        If File.Exists(Me.Options.FilePath) Then
+            Me.Text = IO.Path.GetFileNameWithoutExtension(Me.Options.FilePath)
+            Me.ToolTipText = Me.Options.FilePath
+        Else
+            Me.Text = Me.Options.SimNome
+            Me.ToolTipText = ""
+        End If
+    End Sub
 
     Public Sub ProcessScripts(ByVal sourceevent As DWSIM.Outros.Script.EventType, ByVal sourceobj As DWSIM.Outros.Script.ObjectType, Optional ByVal sourceobjname As String = "")
 
@@ -2696,9 +2718,5 @@ Imports WeifenLuo.WinFormsUI.Docking
     End Sub
 
 #End Region
-
-    Private Sub FormFlowsheet_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
-        Me.TabText = Me.Text
-    End Sub
 
 End Class

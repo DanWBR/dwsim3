@@ -159,8 +159,8 @@ Public Class frmSurface
 
         Else
 
-            PGEx2.SelectedObject = Nothing
-            PGEx1.SelectedObject = Nothing
+            If Not PGEx2 Is Nothing Then PGEx2.SelectedObject = Nothing
+            If Not PGEx1 Is Nothing Then PGEx1.SelectedObject = Nothing
 
         End If
 
