@@ -1872,11 +1872,7 @@ Namespace DWSIM.Flowsheet
                                                              avgerr *= 100
                                                              avgerr /= rcount
 
-                                                             If form.MasterFlowsheet Is Nothing Then
-                                                                 form.WriteToLog("Recycle loop #" & (icount + 1) & ", average recycle error: " & Format(avgerr, "N") & "%", Color.Blue, FormClasses.TipoAviso.Informacao)
-                                                             Else
-                                                                 form.WriteToLog("[" & form.MasterUnitOp.GraphicObject.Tag & "] Recycle loop #" & (icount + 1) & ", average recycle error: " & Format(avgerr, "N") & "%", Color.Blue, FormClasses.TipoAviso.Informacao)
-                                                             End If
+                                                             form.WriteToLog("Recycle loop #" & (icount + 1) & ", average recycle error: " & Format(avgerr, "N") & "%", Color.Blue, FormClasses.TipoAviso.Informacao)
 
                                                          End If
 
