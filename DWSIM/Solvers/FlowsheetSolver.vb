@@ -1854,6 +1854,31 @@ Namespace DWSIM.Flowsheet
                                                              If Not converged Then Exit For
                                                          Next
 
+                                                         If Not converged Then
+
+                                                             Dim avgerr As Double = 0.0#
+                                                             Dim rcount As Integer = 0
+
+                                                             For Each r As String In recycles
+                                                                 obj = form.Collections.CLCS_RecycleCollection(r)
+                                                                 With DirectCast(obj, SpecialOps.Recycle)
+                                                                     avgerr += 0.33 * .ConvergenceHistory.TemperaturaE / .ConvergenceHistory.Temperatura
+                                                                     avgerr += 0.33 * .ConvergenceHistory.PressaoE / .ConvergenceHistory.Pressao
+                                                                     avgerr += 0.33 * .ConvergenceHistory.VazaoMassicaE / .ConvergenceHistory.VazaoMassica
+                                                                 End With
+                                                                 rcount += 1
+                                                             Next
+
+                                                             avgerr *= 100
+                                                             avgerr /= rcount
+
+                                                             If form.MasterFlowsheet Is Nothing Then
+                                                                 form.WriteToLog("Recycle loop #" & (icount + 1) & ", average recycle error: " & Format(avgerr, "N") & "%", Color.Blue, FormClasses.TipoAviso.Informacao)
+                                                             Else
+                                                                 form.WriteToLog("[" & form.MasterUnitOp.GraphicObject.Tag & "] Recycle loop #" & (icount + 1) & ", average recycle error: " & Format(avgerr, "N") & "%", Color.Blue, FormClasses.TipoAviso.Informacao)
+                                                             End If
+
+                                                         End If
 
                                                          'process the scripts associated with the recycle loop event.
 
@@ -1882,6 +1907,8 @@ Namespace DWSIM.Flowsheet
                                                                          Next
                                                                      End If
                                                                  Next
+
+
 
                                                                  DWSIM.MathEx.Broyden.broydn(totalv - 1, recvars, recerrs, recdvars, recvarsb, recerrsb, rechess, If(icount < 2, 0, 1))
 
