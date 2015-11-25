@@ -284,10 +284,6 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="TabStrip, Version=2.0.2773.39305, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\TabStrip.dll</HintPath>
-    </Reference>
     <Reference Include="TcpComm, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\TCPServer\References\TcpComm.dll</HintPath>
@@ -1547,6 +1543,10 @@
     <ProjectReference Include="..\PropertyGridEx\PropertyGridEx\PropertyGridEx.vbproj">
       <Project>{B0BB47F2-21C4-41FC-B6E6-40757ADFC4A1}</Project>
       <Name>PropertyGridEx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TabStrip\TabStrip.csproj">
+      <Project>{f929ca6a-87bd-42c8-8d0a-6455db6f55dc}</Project>
+      <Name>TabStrip</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

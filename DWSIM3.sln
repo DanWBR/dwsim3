@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsUI", "DockPanelSuit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThemeVS2012Light", "DockPanelSuite\WinFormsUI\ThemeVS2012Light.csproj", "{4ED4FDB5-9FD0-49E6-876D-1635F727C755}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TabStrip", "TabStrip\TabStrip.csproj", "{F929CA6A-87BD-42C8-8D0A-6455DB6F55DC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -161,6 +163,16 @@ Global
 		{4ED4FDB5-9FD0-49E6-876D-1635F727C755}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{4ED4FDB5-9FD0-49E6-876D-1635F727C755}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{4ED4FDB5-9FD0-49E6-876D-1635F727C755}.Release|x86.ActiveCfg = Release|Any CPU
+		{F929CA6A-87BD-42C8-8D0A-6455DB6F55DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F929CA6A-87BD-42C8-8D0A-6455DB6F55DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F929CA6A-87BD-42C8-8D0A-6455DB6F55DC}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F929CA6A-87BD-42C8-8D0A-6455DB6F55DC}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F929CA6A-87BD-42C8-8D0A-6455DB6F55DC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F929CA6A-87BD-42C8-8D0A-6455DB6F55DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F929CA6A-87BD-42C8-8D0A-6455DB6F55DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F929CA6A-87BD-42C8-8D0A-6455DB6F55DC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F929CA6A-87BD-42C8-8D0A-6455DB6F55DC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F929CA6A-87BD-42C8-8D0A-6455DB6F55DC}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
