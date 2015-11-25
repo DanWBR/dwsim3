@@ -627,11 +627,11 @@ namespace FarsiLibrary.Win
                 if (currentItem == SelectedItem)
                 {
                     //textRect.Y -= 2;
-                    g.DrawString(currentItem.Title, SystemFonts.DefaultFont, new SolidBrush(Color.White), textRect, sf);
+                    g.DrawString(currentItem.Title, SystemFonts.DefaultFont, new SolidBrush(SystemColors.ActiveCaptionText), textRect, sf);
                 }
                 else
                 {
-                    g.DrawString(currentItem.Title, SystemFonts.DefaultFont, new SolidBrush(ForeColor), textRect, sf);
+                    g.DrawString(currentItem.Title, SystemFonts.DefaultFont, new SolidBrush(SystemColors.InactiveCaptionText), textRect, sf);
                 }
             }
 

@@ -44,6 +44,18 @@ Public Class FormSimulSettings
 
     Dim vdPP, vdSR As MessageBox()
 
+    Private Sub FormSimulSettings_DockStateChanged(sender As Object, e As EventArgs) Handles Me.DockStateChanged
+        If Not Me.DockHandler Is Nothing OrElse Not Me.DockHandler.FloatPane Is Nothing Then
+            ' set the bounds of this form's FloatWindow to our desired position and size
+            If Me.DockState = WeifenLuo.WinFormsUI.Docking.DockState.Float Then
+                Dim floatWin = Me.DockHandler.FloatPane.FloatWindow
+                If Not floatWin Is Nothing Then
+                    floatWin.SetBounds(floatWin.Location.X, floatWin.Location.Y, 820, 490)
+                End If
+            End If
+        End If
+    End Sub
+
     Private Sub FormStSim_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         '818; 483
@@ -54,16 +66,6 @@ Public Class FormSimulSettings
             Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Float
         Else
             Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document
-        End If
-
-        If Not Me.DockHandler Is Nothing OrElse Not Me.DockHandler.FloatPane Is Nothing Then
-            ' set the bounds of this form's FloatWindow to our desired position and size
-            If Me.DockState = WeifenLuo.WinFormsUI.Docking.DockState.Float Then
-                Dim floatWin = Me.DockHandler.FloatPane.FloatWindow
-                If Not floatWin Is Nothing Then
-                    floatWin.SetBounds(floatWin.Location.X, floatWin.Location.Y, 820, 490)
-                End If
-            End If
         End If
 
         initialized = True
