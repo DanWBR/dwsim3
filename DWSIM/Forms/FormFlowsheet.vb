@@ -122,9 +122,10 @@ Imports WeifenLuo.WinFormsUI.Docking
         ' Add any initialization after the InitializeComponent() call.
         ID = Guid.NewGuid().ToString
 
-        ' Add any initialization after the InitializeComponent() call.
-        Dim theme As New VS2012LightTheme()
-        theme.Apply(Me.dckPanel)
+        If Not DWSIM.App.IsRunningOnMono Then
+            Dim theme As New VS2012LightTheme()
+            theme.Apply(Me.dckPanel)
+        End If
 
     End Sub
 
@@ -188,7 +189,7 @@ Imports WeifenLuo.WinFormsUI.Docking
             dckPanel.ActiveAutoHideContent = Nothing
             dckPanel.Parent = Me
 
-           FormSpreadsheet.Show(dckPanel)
+            FormSpreadsheet.Show(dckPanel)
             FormMatList.Show(dckPanel)
             FormSurface.Show(dckPanel)
             FormObjListView.Show(dckPanel)
@@ -291,11 +292,11 @@ Imports WeifenLuo.WinFormsUI.Docking
                     End If
                 End With
             Else
-                With Me.FrmStSim1
-                    .WindowState = FormWindowState.Normal
-                    .StartPosition = FormStartPosition.CenterScreen
-                    .ShowDialog(Me)
-                End With
+                'With Me.FrmStSim1
+                '    .WindowState = FormWindowState.Normal
+                '    .StartPosition = FormStartPosition.CenterScreen
+                '    .ShowDialog(Me)
+                'End With
             End If
 
         Else
