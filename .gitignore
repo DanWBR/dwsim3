@@ -173,3 +173,8 @@ DWSIM/bin/x86/Release/ScintillaNET.xml
 DWSIM/bin/x86/Release/Yeppp.CLR.Bundle.dll
 DWSIM/bin/x86/Release/Yeppp.CLR.Bundle.pdb
 DWSIM/bin/x86/Release/Yeppp.CLR.Bundle.xml
+DWSIM/bin/x86/Release/ThemeVS2012Light.dll
+DWSIM/bin/x86/Release/TabStrip.pdb
+TabStrip/bin/Release/TabStrip.pdb
+DWSIM/bin/x86/Release/ThemeVS2012Light.pdb
+TabStrip/bin/Release/TabStrip.dll
