@@ -21,15 +21,10 @@ Partial Class frmSurface
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmSurface))
-        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.FlowsheetDesignSurface = New Microsoft.Msdn.Samples.DesignSurface.GraphicsSurface()
-        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Panel2 = New System.Windows.Forms.Panel()
         Me.PictureBox3 = New System.Windows.Forms.PictureBox()
-        Me.PictureBox4 = New System.Windows.Forms.PictureBox()
         Me.LabelCalculator = New System.Windows.Forms.Label()
         Me.LabelTime = New System.Windows.Forms.Label()
-        Me.PanelSimultAdjust = New System.Windows.Forms.Panel()
         Me.LabelSimultAdjInfo = New System.Windows.Forms.Label()
         Me.PicSimultAdjust = New System.Windows.Forms.PictureBox()
         Me.LabelSimultAdjustStatus = New System.Windows.Forms.Label()
@@ -95,24 +90,14 @@ Partial Class frmSurface
         Me.DockTopAutoHideToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DockBottomAutoHideToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DocumentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.TableLayoutPanel1.SuspendLayout()
-        Me.TableLayoutPanel2.SuspendLayout()
-        Me.Panel2.SuspendLayout()
+        Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.PanelSimultAdjust.SuspendLayout()
         CType(Me.PicSimultAdjust, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.CMS_NoSel.SuspendLayout()
         Me.CMS_Sel.SuspendLayout()
         Me.dckMenu.SuspendLayout()
+        Me.FlowLayoutPanel1.SuspendLayout()
         Me.SuspendLayout()
-        '
-        'TableLayoutPanel1
-        '
-        resources.ApplyResources(Me.TableLayoutPanel1, "TableLayoutPanel1")
-        Me.TableLayoutPanel1.Controls.Add(Me.FlowsheetDesignSurface, 0, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.TableLayoutPanel2, 0, 1)
-        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         '
         'FlowsheetDesignSurface
         '
@@ -136,35 +121,12 @@ Partial Class frmSurface
         Me.FlowsheetDesignSurface.SurfaceMargins = New System.Drawing.Rectangle(0, 0, 10000, 7000)
         Me.FlowsheetDesignSurface.Zoom = 1.0!
         '
-        'TableLayoutPanel2
-        '
-        resources.ApplyResources(Me.TableLayoutPanel2, "TableLayoutPanel2")
-        Me.TableLayoutPanel2.Controls.Add(Me.Panel2, 0, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.PanelSimultAdjust, 1, 0)
-        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
-        '
-        'Panel2
-        '
-        Me.Panel2.Controls.Add(Me.PictureBox3)
-        Me.Panel2.Controls.Add(Me.PictureBox4)
-        Me.Panel2.Controls.Add(Me.LabelCalculator)
-        Me.Panel2.Controls.Add(Me.LabelTime)
-        resources.ApplyResources(Me.Panel2, "Panel2")
-        Me.Panel2.Name = "Panel2"
-        '
         'PictureBox3
         '
         Me.PictureBox3.Image = Global.DWSIM.My.Resources.Resources.tick
         resources.ApplyResources(Me.PictureBox3, "PictureBox3")
         Me.PictureBox3.Name = "PictureBox3"
         Me.PictureBox3.TabStop = False
-        '
-        'PictureBox4
-        '
-        Me.PictureBox4.Image = Global.DWSIM.My.Resources.Resources.clock
-        resources.ApplyResources(Me.PictureBox4, "PictureBox4")
-        Me.PictureBox4.Name = "PictureBox4"
-        Me.PictureBox4.TabStop = False
         '
         'LabelCalculator
         '
@@ -175,16 +137,9 @@ Partial Class frmSurface
         'LabelTime
         '
         resources.ApplyResources(Me.LabelTime, "LabelTime")
+        Me.FlowLayoutPanel1.SetFlowBreak(Me.LabelTime, True)
         Me.LabelTime.ForeColor = System.Drawing.Color.DimGray
         Me.LabelTime.Name = "LabelTime"
-        '
-        'PanelSimultAdjust
-        '
-        Me.PanelSimultAdjust.Controls.Add(Me.LabelSimultAdjInfo)
-        Me.PanelSimultAdjust.Controls.Add(Me.PicSimultAdjust)
-        Me.PanelSimultAdjust.Controls.Add(Me.LabelSimultAdjustStatus)
-        resources.ApplyResources(Me.PanelSimultAdjust, "PanelSimultAdjust")
-        Me.PanelSimultAdjust.Name = "PanelSimultAdjust"
         '
         'LabelSimultAdjInfo
         '
@@ -547,34 +502,43 @@ Partial Class frmSurface
         Me.DocumentToolStripMenuItem.Name = "DocumentToolStripMenuItem"
         resources.ApplyResources(Me.DocumentToolStripMenuItem, "DocumentToolStripMenuItem")
         '
+        'FlowLayoutPanel1
+        '
+        resources.ApplyResources(Me.FlowLayoutPanel1, "FlowLayoutPanel1")
+        Me.FlowLayoutPanel1.BackColor = System.Drawing.SystemColors.Control
+        Me.FlowLayoutPanel1.Controls.Add(Me.PictureBox3)
+        Me.FlowLayoutPanel1.Controls.Add(Me.LabelCalculator)
+        Me.FlowLayoutPanel1.Controls.Add(Me.LabelTime)
+        Me.FlowLayoutPanel1.Controls.Add(Me.PicSimultAdjust)
+        Me.FlowLayoutPanel1.Controls.Add(Me.LabelSimultAdjustStatus)
+        Me.FlowLayoutPanel1.Controls.Add(Me.LabelSimultAdjInfo)
+        Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
+        '
         'frmSurface
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CloseButton = False
         Me.CloseButtonVisible = False
-        Me.Controls.Add(Me.TableLayoutPanel1)
+        Me.Controls.Add(Me.FlowsheetDesignSurface)
+        Me.Controls.Add(Me.FlowLayoutPanel1)
         Me.DoubleBuffered = True
         Me.Name = "frmSurface"
         Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document
         Me.TabPageContextMenuStrip = Me.dckMenu
         Me.TabText = Me.Text
-        Me.TableLayoutPanel1.ResumeLayout(False)
-        Me.TableLayoutPanel2.ResumeLayout(False)
-        Me.Panel2.ResumeLayout(False)
-        Me.Panel2.PerformLayout()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.PanelSimultAdjust.ResumeLayout(False)
         CType(Me.PicSimultAdjust, System.ComponentModel.ISupportInitialize).EndInit()
         Me.CMS_NoSel.ResumeLayout(False)
         Me.CMS_Sel.ResumeLayout(False)
         Me.dckMenu.ResumeLayout(False)
+        Me.FlowLayoutPanel1.ResumeLayout(False)
+        Me.FlowLayoutPanel1.PerformLayout()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
-    Public WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
-    Public WithEvents FlowsheetDesignSurface As Microsoft.MSDN.Samples.DesignSurface.GraphicsSurface
+    Public WithEvents FlowsheetDesignSurface As Microsoft.Msdn.Samples.DesignSurface.GraphicsSurface
     Public WithEvents CMS_NoSel As System.Windows.Forms.ContextMenuStrip
     Public WithEvents ToolStripMenuItem2 As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents ToolStripMenuItem3 As System.Windows.Forms.ToolStripMenuItem
@@ -595,7 +559,6 @@ Partial Class frmSurface
     Public WithEvents setupPrint As System.Windows.Forms.PrintDialog
     Public WithEvents ToolStripSeparator1 As System.Windows.Forms.ToolStripSeparator
     Public WithEvents Timer1 As System.Windows.Forms.Timer
-    Public WithEvents TableLayoutPanel2 As System.Windows.Forms.TableLayoutPanel
     Public WithEvents ClonarToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents HorizontalmenteToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents ConectarAToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
@@ -615,12 +578,9 @@ Partial Class frmSurface
     Friend WithEvents ToolStripMenuItem4 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem8 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem10 As System.Windows.Forms.ToolStripMenuItem
-    Public WithEvents Panel2 As System.Windows.Forms.Panel
     Public WithEvents PictureBox3 As System.Windows.Forms.PictureBox
-    Public WithEvents PictureBox4 As System.Windows.Forms.PictureBox
     Public WithEvents LabelTime As System.Windows.Forms.Label
     Public WithEvents LabelCalculator As System.Windows.Forms.Label
-    Public WithEvents PanelSimultAdjust As System.Windows.Forms.Panel
     Public WithEvents PicSimultAdjust As System.Windows.Forms.PictureBox
     Public WithEvents LabelSimultAdjustStatus As System.Windows.Forms.Label
     Public WithEvents LabelSimultAdjInfo As System.Windows.Forms.Label
@@ -647,4 +607,5 @@ Partial Class frmSurface
     Friend WithEvents ToolStripMenuItem13 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem14 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents DepurarObjetoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents FlowLayoutPanel1 As System.Windows.Forms.FlowLayoutPanel
 End Class

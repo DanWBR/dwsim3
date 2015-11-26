@@ -1185,7 +1185,10 @@ Namespace DWSIM.Flowsheet
             form.FormSurface.LabelTime.Text = ""
             form.FormSurface.calcstart = Date.Now
             form.FormSurface.PictureBox3.Image = My.Resources.weather_lightning
-            form.FormSurface.PictureBox4.Visible = True
+            'form.FormSurface.PicSimultAdjust.Visible = True
+            'form.FormSurface.LabelSimultAdjInfo.Visible = True
+            'form.FormSurface.LabelSimultAdjustStatus.Visible = True
+
 
             Dim loopex As Exception = Nothing
 
@@ -1270,7 +1273,10 @@ Namespace DWSIM.Flowsheet
 
             If form.FormSurface.Timer2.Enabled = True Then form.FormSurface.Timer2.Stop()
             form.FormSurface.PictureBox3.Image = My.Resources.tick
-            form.FormSurface.PictureBox4.Visible = False
+            form.FormSurface.PicSimultAdjust.Visible = False
+            form.FormSurface.LabelSimultAdjInfo.Visible = False
+            form.FormSurface.LabelSimultAdjustStatus.Visible = False
+
             form.FormSurface.LabelTime.Text = ""
 
             If Not form.FormSurface.FlowsheetDesignSurface.SelectedObject Is Nothing Then Call form.FormSurface.UpdateSelectedObject()
@@ -2151,11 +2157,12 @@ Namespace DWSIM.Flowsheet
 
                     If form.FormSurface.Timer2.Enabled = True Then form.FormSurface.Timer2.Stop()
                     form.FormSurface.PictureBox3.Image = My.Resources.tick
-                    form.FormSurface.PictureBox4.Visible = False
                     form.FormSurface.LabelTime.Text = ""
 
                     form.FormSurface.LabelSimultAdjInfo.Text = ""
-                    form.FormSurface.PanelSimultAdjust.Visible = False
+                    form.FormSurface.PicSimultAdjust.Visible = False
+                    form.FormSurface.LabelSimultAdjInfo.Visible = False
+                    form.FormSurface.LabelSimultAdjustStatus.Visible = False
 
                     If Not form.FormSurface.FlowsheetDesignSurface.SelectedObject Is Nothing Then Call form.FormSurface.UpdateSelectedObject()
 
@@ -2339,7 +2346,10 @@ Namespace DWSIM.Flowsheet
             If form.m_simultadjustsolverenabled Then
 
                 form.FormSurface.LabelSimultAdjInfo.Text = ""
-                form.FormSurface.PanelSimultAdjust.Visible = True
+                form.FormSurface.PicSimultAdjust.Visible = True
+                form.FormSurface.LabelSimultAdjInfo.Visible = True
+                form.FormSurface.LabelSimultAdjustStatus.Visible = True
+
 
                 Try
 
@@ -2409,9 +2419,10 @@ Namespace DWSIM.Flowsheet
                     form.WriteToLog(DWSIM.App.GetLocalString("SADJGeneralError") & ": " & ex.Message.ToString, Color.Red, FormClasses.TipoAviso.Erro)
                 Finally
                     form.FormSurface.LabelSimultAdjInfo.Text = ""
-                    form.FormSurface.PanelSimultAdjust.Visible = False
+                    form.FormSurface.PicSimultAdjust.Visible = False
+                    form.FormSurface.LabelSimultAdjInfo.Visible = False
+                    form.FormSurface.LabelSimultAdjustStatus.Visible = False
                 End Try
-
 
             End If
 
@@ -2439,7 +2450,10 @@ Namespace DWSIM.Flowsheet
 
                     form.UIThread(Sub()
                                       form.FormSurface.LabelSimultAdjInfo.Text = ""
-                                      form.FormSurface.PanelSimultAdjust.Visible = True
+                                      form.FormSurface.PicSimultAdjust.Visible = True
+                                      form.FormSurface.LabelSimultAdjInfo.Visible = True
+                                      form.FormSurface.LabelSimultAdjustStatus.Visible = True
+
                                   End Sub)
 
                     n -= 1
@@ -2494,7 +2508,9 @@ Namespace DWSIM.Flowsheet
 
                     form.UIThread(Sub()
                                       form.FormSurface.LabelSimultAdjInfo.Text = ""
-                                      form.FormSurface.PanelSimultAdjust.Visible = False
+                                      form.FormSurface.PicSimultAdjust.Visible = False
+                                      form.FormSurface.LabelSimultAdjInfo.Visible = False
+                                      form.FormSurface.LabelSimultAdjustStatus.Visible = False
                                   End Sub)
 
                 End If

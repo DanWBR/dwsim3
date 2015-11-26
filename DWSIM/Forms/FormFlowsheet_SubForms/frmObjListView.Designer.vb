@@ -104,7 +104,7 @@ Partial Class frmObjListView
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.ReadOnly = True
         Me.DataGridView1.RowHeadersVisible = False
-        Me.DataGridView1.RowTemplate.Height = 40
+        Me.DataGridView1.RowTemplate.Height = 34
         Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         '
         'col0

@@ -22,16 +22,13 @@ Partial Class frmProps
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmProps))
         Me.LblStatusObj = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
         Me.LblTipoObj = New System.Windows.Forms.Label()
-        Me.Label3 = New System.Windows.Forms.Label()
         Me.FTSProps = New FarsiLibrary.Win.FATabStrip()
         Me.TSProps = New FarsiLibrary.Win.FATabStripItem()
         Me.PGEx1 = New PropertyGridEx.PropertyGridEx()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.TSObj = New FarsiLibrary.Win.FATabStripItem()
         Me.PGEx2 = New PropertyGridEx.PropertyGridEx()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.LblNomeObj = New System.Windows.Forms.Label()
         Me.sfdxml1 = New System.Windows.Forms.SaveFileDialog()
         Me.dckMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
@@ -45,11 +42,13 @@ Partial Class frmProps
         Me.DockTopAutoHideToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DockBottomAutoHideToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DocumentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
         CType(Me.FTSProps, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FTSProps.SuspendLayout()
         Me.TSProps.SuspendLayout()
         Me.TSObj.SuspendLayout()
         Me.dckMenu.SuspendLayout()
+        Me.FlowLayoutPanel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'LblStatusObj
@@ -57,20 +56,10 @@ Partial Class frmProps
         resources.ApplyResources(Me.LblStatusObj, "LblStatusObj")
         Me.LblStatusObj.Name = "LblStatusObj"
         '
-        'Label4
-        '
-        resources.ApplyResources(Me.Label4, "Label4")
-        Me.Label4.Name = "Label4"
-        '
         'LblTipoObj
         '
         resources.ApplyResources(Me.LblTipoObj, "LblTipoObj")
         Me.LblTipoObj.Name = "LblTipoObj"
-        '
-        'Label3
-        '
-        resources.ApplyResources(Me.Label3, "Label3")
-        Me.Label3.Name = "Label3"
         '
         'FTSProps
         '
@@ -211,11 +200,6 @@ Partial Class frmProps
         Me.PGEx2.ToolStrip.Text = resources.GetString("PGEx2.ToolStrip.Text")
         Me.PGEx2.ToolStrip.Visible = CType(resources.GetObject("PGEx2.ToolStrip.Visible"), Boolean)
         '
-        'Label1
-        '
-        resources.ApplyResources(Me.Label1, "Label1")
-        Me.Label1.Name = "Label1"
-        '
         'LblNomeObj
         '
         resources.ApplyResources(Me.LblNomeObj, "LblNomeObj")
@@ -283,19 +267,22 @@ Partial Class frmProps
         Me.DocumentToolStripMenuItem.Name = "DocumentToolStripMenuItem"
         resources.ApplyResources(Me.DocumentToolStripMenuItem, "DocumentToolStripMenuItem")
         '
+        'FlowLayoutPanel1
+        '
+        resources.ApplyResources(Me.FlowLayoutPanel1, "FlowLayoutPanel1")
+        Me.FlowLayoutPanel1.Controls.Add(Me.LblNomeObj)
+        Me.FlowLayoutPanel1.Controls.Add(Me.LblTipoObj)
+        Me.FlowLayoutPanel1.Controls.Add(Me.LblStatusObj)
+        Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
+        '
         'frmProps
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CloseButton = False
         Me.CloseButtonVisible = False
-        Me.Controls.Add(Me.LblTipoObj)
-        Me.Controls.Add(Me.LblStatusObj)
         Me.Controls.Add(Me.FTSProps)
-        Me.Controls.Add(Me.LblNomeObj)
-        Me.Controls.Add(Me.Label4)
-        Me.Controls.Add(Me.Label3)
-        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.FlowLayoutPanel1)
         Me.DoubleBuffered = True
         Me.Name = "frmProps"
         Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft
@@ -305,20 +292,19 @@ Partial Class frmProps
         Me.TSProps.ResumeLayout(False)
         Me.TSObj.ResumeLayout(False)
         Me.dckMenu.ResumeLayout(False)
+        Me.FlowLayoutPanel1.ResumeLayout(False)
+        Me.FlowLayoutPanel1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
     Public WithEvents LblStatusObj As System.Windows.Forms.Label
-    Public WithEvents Label4 As System.Windows.Forms.Label
     Public WithEvents LblTipoObj As System.Windows.Forms.Label
-    Public WithEvents Label3 As System.Windows.Forms.Label
     Public WithEvents FTSProps As FarsiLibrary.Win.FATabStrip
     Public WithEvents TSProps As FarsiLibrary.Win.FATabStripItem
     Public WithEvents PGEx1 As PropertyGridEx.PropertyGridEx
     Public WithEvents TSObj As FarsiLibrary.Win.FATabStripItem
     Public WithEvents PGEx2 As PropertyGridEx.PropertyGridEx
-    Public WithEvents Label1 As System.Windows.Forms.Label
     Public WithEvents LblNomeObj As System.Windows.Forms.Label
     Friend WithEvents ToolStripButton1 As System.Windows.Forms.ToolStripButton
     Public WithEvents sfdxml1 As System.Windows.Forms.SaveFileDialog
@@ -333,4 +319,5 @@ Partial Class frmProps
     Friend WithEvents DockTopAutoHideToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents DockBottomAutoHideToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents DocumentToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents FlowLayoutPanel1 As System.Windows.Forms.FlowLayoutPanel
 End Class

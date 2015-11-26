@@ -118,9 +118,9 @@ Public Class frmProps
 
         If sfdxml1.ShowDialog = Windows.Forms.DialogResult.OK Then
             Dim str As New StringBuilder
-            str.AppendLine(Label1.Text & vbTab & LblNomeObj.Text)
-            str.AppendLine(Label3.Text & vbTab & LblTipoObj.Text)
-            str.AppendLine(Label4.Text & vbTab & LblStatusObj.Text)
+            str.AppendLine(LblNomeObj.Text)
+            str.AppendLine(LblTipoObj.Text)
+            str.AppendLine(LblStatusObj.Text)
             str.AppendLine(DWSIM.App.GetLocalString("Propriedades") & ":")
             For Each item As CustomProperty In PGEx1.Item
                 If TypeOf item.Value Is CustomPropertyCollection Then

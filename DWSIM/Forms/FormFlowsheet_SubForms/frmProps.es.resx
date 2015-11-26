@@ -112,18 +112,11 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>46, 13</value>
-  </data>
-  <data name="Label4.Text" xml:space="preserve">
-    <value>Estado</value>
-  </data>
   <data name="PGEx1.SelectedObject" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAEVQcm9wZXJ0eUdyaWRFeCwgVmVyc2lvbj0xLjAuMC4wLCBDdWx0
@@ -132,6 +125,9 @@
         cy5BcnJheUxpc3QCAAAACQMAAAAEAwAAABxTeXN0ZW0uQ29sbGVjdGlvbnMuQXJyYXlMaXN0AwAAAAZf
         aXRlbXMFX3NpemUIX3ZlcnNpb24FAAAICAkEAAAAAAAAAAAAAAAQBAAAAAAAAAAL
 </value>
+  </data>
+  <data name="ToolStripButton1.Text" xml:space="preserve">
+    <value>Guardar nombres y valores de las propiedades en un archivo de texto</value>
   </data>
   <data name="TSProps.Title" xml:space="preserve">
     <value>Propiedades</value>
@@ -148,11 +144,18 @@
   <data name="TSObj.Title" xml:space="preserve">
     <value>Apariencia</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="LblNomeObj.Size" type="System.Drawing.Size, System.Drawing">
-    <value>113, 13</value>
+    <value>133, 13</value>
   </data>
   <data name="LblNomeObj.Text" xml:space="preserve">
     <value>Ninguno seleccionado</value>
+  </data>
+  <data name="sfdxml1.Filter" xml:space="preserve">
+    <value>Archivos de texto|*.txt</value>
+  </data>
+  <data name="sfdxml1.Title" xml:space="preserve">
+    <value>Guardar archivo de texto</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -175,14 +178,5 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Objeto seleccionado</value>
-  </data>
-  <data name="sfdxml1.Filter" xml:space="preserve">
-    <value>Archivos de texto|*.txt</value>
-  </data>
-  <data name="sfdxml1.Title" xml:space="preserve">
-    <value>Guardar archivo de texto</value>
-  </data>
-  <data name="ToolStripButton1.Text" xml:space="preserve">
-    <value>Guardar nombres y valores de las propiedades en un archivo de texto</value>
   </data>
 </root>

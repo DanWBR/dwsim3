@@ -13,7 +13,7 @@
         fsuo.Fsheet.FormSurface.FlowsheetDesignSurface.Center()
         fsuo.Fsheet.FormSurface.FlowsheetDesignSurface.Invalidate()
         fsuo.Fsheet.FormSurface.CMS_Sel.Enabled = False
-        fsuo.Fsheet.FormSurface.TableLayoutPanel1.RowStyles(1).Height = 0
+        fsuo.Fsheet.FormSurface.FlowLayoutPanel1.Visible = False
         fsuo.Fsheet.dckPanel.Invalidate()
         Me.Invalidate()
 

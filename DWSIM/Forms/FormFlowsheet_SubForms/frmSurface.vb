@@ -300,7 +300,7 @@ Public Class frmSurface
                 ElseIf Not Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_TabelaRapida Then
                     Dim nodes = Flowsheet.FormObjList.TreeViewObj.Nodes.Find(e.SelectedObject.Tag, True)
                     Flowsheet.FormProps.LblNomeObj.Text = e.SelectedObject.Tag
-                    Flowsheet.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString(Flowsheet.Collections.ObjectCollection.Item(e.SelectedObject.Name).Descricao)
+                    Flowsheet.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString(e.SelectedObject.Description)
                     If e.SelectedObject.Active = False Then
                         Flowsheet.FormProps.LblStatusObj.Text = DWSIM.App.GetLocalString("Inativo")
                         Flowsheet.FormProps.LblStatusObj.ForeColor = Color.DimGray
