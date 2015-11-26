@@ -133,7 +133,7 @@
     <value>0, 0</value>
   </data>
   <data name="FlowsheetDesignSurface.Size" type="System.Drawing.Size, System.Drawing">
-    <value>888, 454</value>
+    <value>1217, 609</value>
   </data>
   <data name="FlowsheetDesignSurface.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -367,13 +367,13 @@
     <value>Bottom</value>
   </data>
   <data name="FlowLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 454</value>
+    <value>0, 609</value>
   </data>
   <data name="FlowLayoutPanel1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>5, 5, 5, 5</value>
   </data>
   <data name="FlowLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>888, 50</value>
+    <value>1217, 50</value>
   </data>
   <data name="FlowLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
@@ -986,7 +986,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>888, 504</value>
+    <value>1217, 659</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt</value>
