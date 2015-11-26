@@ -190,14 +190,15 @@ Public Class FormMain
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        ' Set DockPanel properties
-        dckPanel.ActiveAutoHideContent = Nothing
-        dckPanel.Parent = Me
+        If Not DWSIM.App.IsRunningOnMono Then
+            ' Set DockPanel properties
+            dckPanel.ActiveAutoHideContent = Nothing
+            dckPanel.Parent = Me
+            Dim theme As New VS2012LightTheme()
+            theme.Apply(Me.dckPanel)
+        End If
 
-        Dim theme As New VS2012LightTheme()
-        theme.Apply(Me.dckPanel)
-
-        My.MyApplication.MainThreadID = Threading.Thread.CurrentThread.ManagedThreadId
+        My.MyApplication.MainThreadId = Threading.Thread.CurrentThread.ManagedThreadId
 
         If My.Settings.BackupFolder = "" Then My.Settings.BackupFolder = My.Computer.FileSystem.SpecialDirectories.Temp & Path.DirectorySeparatorChar & "DWSIM"
         If My.Settings.BackupActivated Then
@@ -3747,9 +3748,6 @@ ruf:                Application.DoEvents()
         End With
         Me.ActivateMdiChild(newform)
         m_childcount += 1
-
-        dckPanel.BringToFront()
-        dckPanel.UpdateDockWindowZOrder(DockStyle.Fill, True)
 
     End Sub
 

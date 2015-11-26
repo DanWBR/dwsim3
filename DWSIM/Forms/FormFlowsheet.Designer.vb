@@ -1261,7 +1261,6 @@ Partial Class FormFlowsheet
         Me.DoubleBuffered = True
         Me.Name = "FormFlowsheet"
         Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.ToolStrip4.ResumeLayout(False)
         Me.ToolStrip4.PerformLayout()
         Me.ToolStrip7.ResumeLayout(False)
