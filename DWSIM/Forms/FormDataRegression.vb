@@ -30,7 +30,7 @@ Imports System.IO
 
 Public Class FormDataRegression
 
-    Inherits WeifenLuo.WinFormsUI.Docking.DockContent
+    Inherits Form
 
     Public cv As DWSIM.SistemasDeUnidades.Conversor
     Public fmin As Double
@@ -2633,8 +2633,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
 
     Private Sub tbTitle_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tbTitle.TextChanged
         Me.Text = tbTitle.Text
-        Me.TabText = Me.Text
-    End Sub
+   End Sub
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
 

@@ -33,7 +33,7 @@ Imports System.IO
 
 Public Class FormUNIFACRegression
 
-    Inherits WeifenLuo.WinFormsUI.Docking.DockContent
+    Inherits Form
 
     Friend mycase As New UNIFACIPRegressionCase
 
@@ -49,7 +49,6 @@ Public Class FormUNIFACRegression
     Dim GN1, GN2, Comp1, Comp2 As String
 
     Private Sub FormUNIFACRegression_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Me.TabText = Me.Text
         cv = New DWSIM.SistemasDeUnidades.Conversor
         mat = New MaterialStream("", "")
         Comp1 = ""
@@ -58,7 +57,6 @@ Public Class FormUNIFACRegression
 
     Private Sub tbTitle_TextChanged(sender As Object, e As EventArgs) Handles tbTitle.TextChanged
         Me.Text = tbTitle.Text
-        Me.TabText = Me.Text
     End Sub
 
     Private Sub FillIPGrid(sender As Object, e As EventArgs) Handles BtnShowIPGrid.Click

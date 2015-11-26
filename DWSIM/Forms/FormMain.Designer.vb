@@ -100,10 +100,12 @@ Partial Class FormMain
         Me.SaveStudyDlg = New System.Windows.Forms.SaveFileDialog()
         Me.SaveRegStudyDlg = New System.Windows.Forms.SaveFileDialog()
         Me.SaveUnifacIPRegrDlg = New System.Windows.Forms.SaveFileDialog()
-        Me.dckPanel = New WeifenLuo.WinFormsUI.Docking.DockPanel()
+        Me.SettingsPanel = New System.Windows.Forms.Panel()
+        Me.ButtonClose = New System.Windows.Forms.Button()
         Me.MenuStrip1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
+        Me.SettingsPanel.SuspendLayout()
         Me.SuspendLayout()
         '
         'MenuStrip1
@@ -541,20 +543,24 @@ Partial Class FormMain
         '
         resources.ApplyResources(Me.SaveUnifacIPRegrDlg, "SaveUnifacIPRegrDlg")
         '
-        'dckPanel
+        'SettingsPanel
         '
-        Me.dckPanel.AllowEndUserNestedDocking = False
-        Me.dckPanel.DefaultFloatWindowSize = New System.Drawing.Size(400, 600)
-        resources.ApplyResources(Me.dckPanel, "dckPanel")
-        Me.dckPanel.DockBackColor = System.Drawing.SystemColors.Control
-        Me.dckPanel.Name = "dckPanel"
+        Me.SettingsPanel.Controls.Add(Me.ButtonClose)
+        resources.ApplyResources(Me.SettingsPanel, "SettingsPanel")
+        Me.SettingsPanel.Name = "SettingsPanel"
+        '
+        'ButtonClose
+        '
+        resources.ApplyResources(Me.ButtonClose, "ButtonClose")
+        Me.ButtonClose.Name = "ButtonClose"
+        Me.ButtonClose.UseVisualStyleBackColor = True
         '
         'FormMain
         '
         Me.AllowDrop = True
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.Controls.Add(Me.dckPanel)
+        Me.Controls.Add(Me.SettingsPanel)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.ToolStrip1)
         Me.Controls.Add(Me.MenuStrip1)
@@ -569,6 +575,7 @@ Partial Class FormMain
         Me.ToolStrip1.PerformLayout()
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()
+        Me.SettingsPanel.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -723,6 +730,7 @@ Partial Class FormMain
     Friend WithEvents DocumentaçãoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ManualTécnicoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents GuiaDoUsuárioToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Public WithEvents dckPanel As WeifenLuo.WinFormsUI.Docking.DockPanel
+    Friend WithEvents SettingsPanel As System.Windows.Forms.Panel
+    Friend WithEvents ButtonClose As System.Windows.Forms.Button
 
 End Class

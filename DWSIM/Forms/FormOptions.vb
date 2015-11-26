@@ -26,19 +26,11 @@ Imports System.Threading.Tasks
 
 Public Class FormOptions
 
-    Inherits WeifenLuo.WinFormsUI.Docking.DockContent
+    Inherits UserControl
 
     Private loaded As Boolean = False
 
-    Private Sub FormOptions_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
-        My.Settings.Save()
-    End Sub
-
     Private Sub FormOptions_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-
-        Me.TabText = Me.Text
-
-        Me.DockPanel.DockLeftPortion = 370
 
         Dim i As Integer = 0
         Me.cbParallelism.Items.Clear()

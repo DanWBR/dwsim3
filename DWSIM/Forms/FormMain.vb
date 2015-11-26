@@ -190,13 +190,6 @@ Public Class FormMain
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        ' Set DockPanel properties
-        dckPanel.ActiveAutoHideContent = Nothing
-        dckPanel.Parent = Me
-
-        Dim theme As New VS2012LightTheme()
-        theme.Apply(Me.dckPanel)
-
         My.MyApplication.MainThreadID = Threading.Thread.CurrentThread.ManagedThreadId
 
         If My.Settings.BackupFolder = "" Then My.Settings.BackupFolder = My.Computer.FileSystem.SpecialDirectories.Temp & Path.DirectorySeparatorChar & "DWSIM"
@@ -229,6 +222,11 @@ Public Class FormMain
         'SearchCOMOs() 'doing this only when the user hovers the mouse over the plugins toolstrip menu item
 
         If My.Settings.ScriptPaths Is Nothing Then My.Settings.ScriptPaths = New Collections.Specialized.StringCollection()
+
+        Me.FrmOptions = New FormOptions
+        Me.FrmOptions.Dock = DockStyle.Fill
+        Me.SettingsPanel.Controls.Add(Me.FrmOptions)
+        Me.ButtonClose.BringToFront()
 
     End Sub
 
@@ -1594,7 +1592,7 @@ Public Class FormMain
             End If
 
             form.MdiParent = Me
-            form.Show(Me.dckPanel)
+            form.Show()
             form.MdiParent = Me
 
             My.Application.ActiveSimulation = form
@@ -1938,7 +1936,7 @@ Public Class FormMain
         Dim ci As CultureInfo = CultureInfo.InvariantCulture
 
         'If Not forcommandline Then
-        '    fls.Show(Me)
+        '    fls.Show()
         '    fls.Label1.Text = "Restoring Simulation from XML file"
         '    fls.Label2.Text = "Loading XML document..."
         '    Application.DoEvents()
@@ -2810,7 +2808,7 @@ Public Class FormMain
             My.Application.ActiveSimulation = form
 
             form.MdiParent = Me
-            form.Show(Me.dckPanel)
+            form.Show()
             form.MdiParent = Me
 
             'form.FormChild_Shown(Me, New EventArgs)
@@ -3505,7 +3503,7 @@ sim:                Dim myStream As System.IO.FileStream
 csd:                Application.DoEvents()
                     Dim NewMDIChild As New FormCompoundCreator()
                     NewMDIChild.MdiParent = Me
-                    NewMDIChild.Show(Me.dckPanel)
+                    NewMDIChild.Show()
                     Dim objStreamReader As New FileStream(Me.OpenFileDialog1.FileName, FileMode.Open)
                     Dim x As New BinaryFormatter()
                     NewMDIChild.mycase = x.Deserialize(objStreamReader)
@@ -3520,7 +3518,7 @@ csd:                Application.DoEvents()
 rsd:                Application.DoEvents()
                     Dim NewMDIChild As New FormDataRegression()
                     NewMDIChild.MdiParent = Me
-                    NewMDIChild.Show(Me.dckPanel)
+                    NewMDIChild.Show()
                     Dim objStreamReader As New FileStream(Me.OpenFileDialog1.FileName, FileMode.Open)
                     Dim x As New BinaryFormatter()
                     NewMDIChild.currcase = x.Deserialize(objStreamReader)
@@ -3535,7 +3533,7 @@ rsd:                Application.DoEvents()
 ruf:                Application.DoEvents()
                     Dim NewMDIChild As New FormUNIFACRegression()
                     NewMDIChild.MdiParent = Me
-                    NewMDIChild.Show(Me.dckPanel)
+                    NewMDIChild.Show()
                     Dim objStreamReader As New FileStream(Me.OpenFileDialog1.FileName, FileMode.Open)
                     Dim x As New BinaryFormatter()
                     NewMDIChild.mycase = x.Deserialize(objStreamReader)
@@ -3741,15 +3739,12 @@ ruf:                Application.DoEvents()
         With newform
             .Text = "Simulation" & m_childcount
             .MdiParent = Me
-            .Show(Me.dckPanel)
+            .Show()
             .MdiParent = Me
             Application.DoEvents()
         End With
         Me.ActivateMdiChild(newform)
         m_childcount += 1
-
-        dckPanel.BringToFront()
-        dckPanel.UpdateDockWindowZOrder(DockStyle.Fill, True)
 
     End Sub
 
@@ -4271,7 +4266,7 @@ ruf:                Application.DoEvents()
         'Display the new form.
         NewMDIChild.Text = "CompCreator" & m_childcount
         Me.ActivateMdiChild(NewMDIChild)
-        NewMDIChild.Show(Me.dckPanel)
+        NewMDIChild.Show()
         m_childcount += 1
     End Sub
 
@@ -4282,7 +4277,7 @@ ruf:                Application.DoEvents()
         'Display the new form.
         NewMDIChild.Text = "DataRegression" & m_childcount
         Me.ActivateMdiChild(NewMDIChild)
-        NewMDIChild.Show(Me.dckPanel)
+        NewMDIChild.Show()
         m_childcount += 1
     End Sub
 
@@ -4293,7 +4288,7 @@ ruf:                Application.DoEvents()
         'Display the new form.
         NewMDIChild.Text = "UNIFAC IP Regression" & m_childcount
         Me.ActivateMdiChild(NewMDIChild)
-        NewMDIChild.Show(Me.dckPanel)
+        NewMDIChild.Show()
         m_childcount += 1
     End Sub
     Private Sub DatabaseManagerToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles DatabaseManagerToolStripMenuItem.Click
@@ -4303,8 +4298,7 @@ ruf:                Application.DoEvents()
         End If
     End Sub
     Private Sub PreferênciasDoDWSIMToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PreferênciasDoDWSIMToolStripMenuItem.Click
-        Me.FrmOptions = New FormOptions
-        Me.FrmOptions.Show(Me.dckPanel)
+        Me.SettingsPanel.Visible = True
     End Sub
 
     Private Sub FormMain_HelpRequested(sender As System.Object, hlpevent As System.Windows.Forms.HelpEventArgs) Handles MyBase.HelpRequested
@@ -4389,5 +4383,10 @@ ruf:                Application.DoEvents()
     End Sub
 
 #End Region
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles ButtonClose.Click
+        Me.SettingsPanel.Visible = False
+        My.Settings.Save()
+    End Sub
 
 End Class

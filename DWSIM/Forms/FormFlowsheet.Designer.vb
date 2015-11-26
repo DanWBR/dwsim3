@@ -1,6 +1,6 @@
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class FormFlowsheet
-    Inherits WeifenLuo.WinFormsUI.Docking.DockContent
+    Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -1260,8 +1260,7 @@ Partial Class FormFlowsheet
         Me.Controls.Add(Me.MenuStrip1)
         Me.DoubleBuffered = True
         Me.Name = "FormFlowsheet"
-        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document
-        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
+        Me.ShowIcon = False
         Me.ToolStrip4.ResumeLayout(False)
         Me.ToolStrip4.PerformLayout()
         Me.ToolStrip7.ResumeLayout(False)

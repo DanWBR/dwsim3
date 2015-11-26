@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class FormCompoundCreator
-    Inherits WeifenLuo.WinFormsUI.Docking.DockContent
+    Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -3166,7 +3166,6 @@ Partial Class FormCompoundCreator
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
         Me.Name = "FormCompoundCreator"
-        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)

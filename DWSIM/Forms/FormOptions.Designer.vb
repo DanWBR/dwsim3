@@ -1,6 +1,6 @@
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class FormOptions
-    Inherits WeifenLuo.WinFormsUI.Docking.DockContent
+    Inherits System.Windows.Forms.UserControl
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -743,14 +743,8 @@ Partial Class FormOptions
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.FaTabStrip1)
-        Me.DockAreas = CType(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float Or WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft) _
-            Or WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight), WeifenLuo.WinFormsUI.Docking.DockAreas)
         Me.DoubleBuffered = True
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "FormOptions"
-        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft
-        Me.ShowIcon = False
-        Me.ShowInTaskbar = False
         Me.FaTabStrip1.ResumeLayout(False)
         Me.FaTabStripItem1.ResumeLayout(False)
         Me.GroupBox2.ResumeLayout(False)

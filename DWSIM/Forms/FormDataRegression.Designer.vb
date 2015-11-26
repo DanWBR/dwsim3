@@ -1,6 +1,6 @@
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class FormDataRegression
-    Inherits WeifenLuo.WinFormsUI.Docking.DockContent
+    Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -865,7 +865,6 @@ Partial Class FormDataRegression
         Me.Controls.Add(Me.GroupBox4)
         Me.Controls.Add(Me.GroupBox2)
         Me.Name = "FormDataRegression"
-        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FaTabStrip1.ResumeLayout(False)
         Me.FaTabStripItem1.ResumeLayout(False)

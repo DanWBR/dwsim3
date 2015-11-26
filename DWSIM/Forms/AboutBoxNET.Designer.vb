@@ -104,7 +104,7 @@ Partial Class AboutBoxNET
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(735, 551)
+        Me.Button1.Location = New System.Drawing.Point(721, 550)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 23)
         Me.Button1.TabIndex = 3
@@ -195,7 +195,7 @@ Partial Class AboutBoxNET
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.ReadOnly = True
         Me.TextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.TextBox1.Size = New System.Drawing.Size(772, 171)
+        Me.TextBox1.Size = New System.Drawing.Size(773, 171)
         Me.TextBox1.TabIndex = 13
         Me.TextBox1.Text = resources.GetString("TextBox1.Text")
         '
@@ -558,7 +558,7 @@ Partial Class AboutBoxNET
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(817, 580)
+        Me.ClientSize = New System.Drawing.Size(813, 582)
         Me.ControlBox = False
         Me.Controls.Add(Me.Copyright)
         Me.Controls.Add(Me.FaTabStrip1)

@@ -36,7 +36,7 @@ Imports WeifenLuo.WinFormsUI.Docking
 
 <System.Serializable()> Public Class FormFlowsheet
 
-    Inherits Docking.DockContent
+    Inherits Form
 
     'CAPE-OPEN PME/COSE Interfaces
     Implements CapeOpen.ICapeCOSEUtilities, CapeOpen.ICapeMaterialTemplateSystem, CapeOpen.ICapeDiagnostic,  _
@@ -126,16 +126,6 @@ Imports WeifenLuo.WinFormsUI.Docking
         Dim theme As New VS2012LightTheme()
         theme.Apply(Me.dckPanel)
 
-    End Sub
-
-    Private Sub FormFlowsheet_DockStateChanged(sender As Object, e As EventArgs) Handles Me.DockStateChanged
-        If loaded And Me.DockState <> Docking.DockState.Unknown And Me.DockState <> Docking.DockState.Hidden Then
-            FormChild_Shown(sender, e)
-        End If
-    End Sub
-
-    Private Sub FormFlowsheet_TextChanged(sender As Object, e As EventArgs) Handles Me.TextChanged
-        Me.TabText = Me.Text
     End Sub
 
     Private Sub FormChild_Activated(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Activated
@@ -278,6 +268,8 @@ Imports WeifenLuo.WinFormsUI.Docking
     End Sub
 
     Public Sub FormChild_Shown(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Shown
+
+        Me.WindowState = FormWindowState.Maximized
 
         If Not Me.m_IsLoadedFromFile Then
 
@@ -452,11 +444,9 @@ Imports WeifenLuo.WinFormsUI.Docking
 
     Sub UpdateFormText()
         If File.Exists(Me.Options.FilePath) Then
-            Me.Text = IO.Path.GetFileNameWithoutExtension(Me.Options.FilePath)
-            Me.ToolTipText = Me.Options.FilePath
+            Me.Text = IO.Path.GetFileNameWithoutExtension(Me.Options.FilePath) & " (" & Me.Options.FilePath & ")"
         Else
             Me.Text = Me.Options.SimNome
-            Me.ToolTipText = ""
         End If
     End Sub
 

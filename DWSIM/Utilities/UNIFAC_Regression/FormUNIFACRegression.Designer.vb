@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class FormUNIFACRegression
-    Inherits WeifenLuo.WinFormsUI.Docking.DockContent
+    Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -522,7 +522,6 @@ Partial Class FormUNIFACRegression
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.FaTabStrip1)
         Me.Name = "FormUNIFACRegression"
-        Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FaTabStrip1.ResumeLayout(False)
         Me.TSInformation.ResumeLayout(False)
