@@ -184,9 +184,20 @@ Namespace My
 
             End If
 
-            If e.Cancel Then
-                ' Call the main routine for windowless operation.
-                Dim f1 As New FormMain
+            'copy static DLLs according to the executing platform (32 or 64-bit)
+
+            If Not DWSIM.App.IsRunningOnMono Then
+                Dim dlls As String()
+                If Environment.Is64BitProcess Then
+                    'copy 64-bit DLLs
+                    dlls = Directory.GetFiles(My.Application.Info.DirectoryPath & "\staticlibraries\win64\", "*")
+                Else
+                    'copy 32-bit DLLs
+                    dlls = Directory.GetFiles(My.Application.Info.DirectoryPath & "\staticlibraries\win32\", "*")
+                End If
+                For Each dll In dlls
+                    File.Copy(dll, My.Application.Info.DirectoryPath & "\" & Path.GetFileName(dll), True)
+                Next
             End If
 
         End Sub
