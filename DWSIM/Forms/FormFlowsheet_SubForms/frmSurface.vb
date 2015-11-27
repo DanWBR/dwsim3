@@ -116,7 +116,6 @@ Public Class frmSurface
                 Flowsheet.FormProps.LblStatusObj.Text = "-"
                 Flowsheet.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
             Else
-                Dim nodes = Flowsheet.FormObjList.TreeViewObj.Nodes.Find(Me.FlowsheetDesignSurface.SelectedObject.Tag, True)
                 Flowsheet.FormProps.LblNomeObj.Text = Me.FlowsheetDesignSurface.SelectedObject.Tag
                 Flowsheet.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString(Flowsheet.Collections.ObjectCollection.Item(Me.FlowsheetDesignSurface.SelectedObject.Name).Descricao)
                 Select Case Me.FlowsheetDesignSurface.SelectedObject.Status
@@ -298,7 +297,6 @@ Public Class frmSurface
                     Flowsheet.FormProps.LblStatusObj.Text = "-"
                     Flowsheet.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
                 ElseIf Not Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_TabelaRapida Then
-                    Dim nodes = Flowsheet.FormObjList.TreeViewObj.Nodes.Find(e.SelectedObject.Tag, True)
                     Flowsheet.FormProps.LblNomeObj.Text = e.SelectedObject.Tag
                     Flowsheet.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString(e.SelectedObject.Description)
                     If e.SelectedObject.Active = False Then

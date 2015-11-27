@@ -1536,7 +1536,7 @@ Public Class FormMain
             Me.tmpform2 = form
             form.dckPanel.SuspendLayout(True)
             form.FormLog.DockPanel = Nothing
-            form.FormObjList.DockPanel = Nothing
+            If Not DWSIM.App.IsRunningOnMono Then form.FormObjList.DockPanel = Nothing
             form.FormProps.DockPanel = Nothing
             form.FormMatList.DockPanel = Nothing
             form.FormSpreadsheet.DockPanel = Nothing
@@ -1559,7 +1559,7 @@ Public Class FormMain
             form.FormMatList.Show(form.dckPanel)
             form.FormSpreadsheet.Show(form.dckPanel)
             form.FormSurface.Show(form.dckPanel)
-            form.FormObjList.Show(form.dckPanel)
+            If Not DWSIM.App.IsRunningOnMono Then form.FormObjList.Show(form.dckPanel)
             form.FormProps.Show(form.dckPanel)
 
             form.FormOutput.Show(form.dckPanel)
@@ -2758,7 +2758,7 @@ Public Class FormMain
             Me.tmpform2 = form
             'form.dckPanel.SuspendLayout(True)
             form.FormLog.DockPanel = Nothing
-            form.FormObjList.DockPanel = Nothing
+            If Not DWSIM.App.IsRunningOnMono Then form.FormObjList.DockPanel = Nothing
             form.FormProps.DockPanel = Nothing
             form.FormMatList.DockPanel = Nothing
             form.FormSpreadsheet.DockPanel = Nothing
@@ -2781,7 +2781,7 @@ Public Class FormMain
             Try
                 form.FormLog.Show(form.dckPanel)
                 form.FormObjListView.Show(form.dckPanel)
-                form.FormObjList.Show(form.dckPanel)
+                If Not DWSIM.App.IsRunningOnMono Then form.FormObjList.Show(form.dckPanel)
                 form.FormProps.Show(form.dckPanel)
                 form.FormSpreadsheet.Show(form.dckPanel)
                 form.FormMatList.Show(form.dckPanel)

@@ -69,7 +69,13 @@ Public Class SpreadsheetForm
     Private Sub UISpreadsheetEditorForm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         formc = My.Application.ActiveSimulation
         If Me.loaded = False Then
-            Me.DataGridView1.Rows.Add(100)
+            If DWSIM.App.IsRunningOnMono Then
+                For ii As Integer = 1 To 100
+                    Me.DataGridView1.Rows.Add()
+                Next
+            Else
+                Me.DataGridView1.Rows.Add(100)
+            End If
             CopyFromDT()
         End If
         Dim row As DataGridViewRow
@@ -247,11 +253,11 @@ Public Class SpreadsheetForm
     End Sub
 
     Private Sub DataGridView1_SelectionChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles DataGridView1.SelectionChanged
-
-        Me.tbCell.Text = Me.GetCellString(Me.DataGridView1.SelectedCells(0))
-        ccparams = Me.DataGridView1.SelectedCells(0).Tag
-        If Not ccparams Is Nothing Then Me.tbValue.Text = ccparams.Expression
-
+        If Me.DataGridView1.SelectedCells.Count > 0 Then
+            Me.tbCell.Text = Me.GetCellString(Me.DataGridView1.SelectedCells(0))
+            ccparams = Me.DataGridView1.SelectedCells(0).Tag
+            If Not ccparams Is Nothing Then Me.tbValue.Text = ccparams.Expression
+        End If
     End Sub
 
     ''' <summary>

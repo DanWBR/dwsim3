@@ -58,7 +58,7 @@ Imports WeifenLuo.WinFormsUI.Docking
 
     Public FormSurface As New frmSurface
     Public FormProps As New frmProps
-    Public FormObjList As New frmObjList
+    Public FormObjList As frmObjList
     Public FormLog As New frmLog
     Public FormMatList As New frmMatList
     Public FormObjListView As New frmObjListView
@@ -140,6 +140,7 @@ Imports WeifenLuo.WinFormsUI.Docking
             Me.FlowLayoutPanel1.Height = 50
             Me.MenuStrip1.Visible = False
         Else
+            FormObjList = New frmObjList
             Me.MenuStrip1.Visible = False
         End If
 
@@ -198,7 +199,7 @@ Imports WeifenLuo.WinFormsUI.Docking
             FormSpreadsheet.Show(dckPanel)
             FormSurface.Show(dckPanel)
             FormObjListView.Show(dckPanel)
-            FormObjList.Show(dckPanel)
+            If Not DWSIM.App.IsRunningOnMono Then FormObjList.Show(dckPanel)
             FormProps.Show(dckPanel)
             FormLog.DockState = DockState.DockRight
 
@@ -297,11 +298,11 @@ Imports WeifenLuo.WinFormsUI.Docking
                     End If
                 End With
             Else
-                'With Me.FrmStSim1
-                '    .WindowState = FormWindowState.Normal
-                '    .StartPosition = FormStartPosition.CenterScreen
-                '    .ShowDialog(Me)
-                'End With
+                With Me.FrmStSim1
+                    .WindowState = FormWindowState.Normal
+                    .StartPosition = FormStartPosition.CenterScreen
+                    .ShowDialog(Me)
+                End With
             End If
 
         Else

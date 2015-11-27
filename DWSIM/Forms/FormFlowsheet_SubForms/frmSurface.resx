@@ -133,7 +133,7 @@
     <value>0, 0</value>
   </data>
   <data name="FlowsheetDesignSurface.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1217, 609</value>
+    <value>977, 551</value>
   </data>
   <data name="FlowsheetDesignSurface.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -223,9 +223,6 @@
     <value>1</value>
   </data>
   <data name="LabelTime.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="FlowLayoutPanel1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="FlowLayoutPanel1.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
@@ -367,13 +364,13 @@
     <value>Bottom</value>
   </data>
   <data name="FlowLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 609</value>
+    <value>0, 551</value>
   </data>
   <data name="FlowLayoutPanel1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>5, 5, 5, 5</value>
   </data>
   <data name="FlowLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>1217, 50</value>
+    <value>977, 50</value>
   </data>
   <data name="FlowLayoutPanel1.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
@@ -433,22 +430,22 @@
     <value>False</value>
   </data>
   <data name="ToolStripMenuItem3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>261, 22</value>
+    <value>260, 22</value>
   </data>
   <data name="ToolStripMenuItem3.Text" xml:space="preserve">
     <value>Fluxograma</value>
   </data>
   <data name="ToolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>258, 6</value>
+    <value>257, 6</value>
   </data>
   <data name="ToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>261, 22</value>
+    <value>260, 22</value>
   </data>
   <data name="ToolStripMenuItem2.Text" xml:space="preserve">
     <value>Configurar Aparência</value>
   </data>
   <data name="ToolStripMenuItem5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>261, 22</value>
+    <value>260, 22</value>
   </data>
   <data name="ToolStripMenuItem5.Text" xml:space="preserve">
     <value>Imprimir</value>
@@ -478,31 +475,31 @@
     <value>300%</value>
   </data>
   <data name="CopiarParaAÁreaDeTransferênciaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>261, 22</value>
+    <value>260, 22</value>
   </data>
   <data name="CopiarParaAÁreaDeTransferênciaToolStripMenuItem.Text" xml:space="preserve">
     <value>Copiar para a Área de Transferência</value>
   </data>
   <data name="ExibirTudoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>261, 22</value>
+    <value>260, 22</value>
   </data>
   <data name="ExibirTudoToolStripMenuItem.Text" xml:space="preserve">
     <value>Exibir tudo</value>
   </data>
   <data name="ZoomPadrão100ToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>261, 22</value>
+    <value>260, 22</value>
   </data>
   <data name="ZoomPadrão100ToolStripMenuItem.Text" xml:space="preserve">
     <value>Zoom padrão (100%)</value>
   </data>
   <data name="CentralizarToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>261, 22</value>
+    <value>260, 22</value>
   </data>
   <data name="CentralizarToolStripMenuItem.Text" xml:space="preserve">
     <value>Centralizar</value>
   </data>
   <data name="CMS_NoSel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>262, 164</value>
+    <value>261, 164</value>
   </data>
   <data name="&gt;&gt;CMS_NoSel.Name" xml:space="preserve">
     <value>CMS_NoSel</value>
@@ -517,16 +514,16 @@
     <value>False</value>
   </data>
   <data name="TSMI_Label.Size" type="System.Drawing.Size, System.Drawing">
-    <value>296, 22</value>
+    <value>295, 22</value>
   </data>
   <data name="TSMI_Label.Text" xml:space="preserve">
     <value>ToolStripMenuItem1</value>
   </data>
   <data name="ToolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>293, 6</value>
+    <value>292, 6</value>
   </data>
   <data name="RecalcularToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>296, 22</value>
+    <value>295, 22</value>
   </data>
   <data name="RecalcularToolStripMenuItem.Text" xml:space="preserve">
     <value>Recalcular</value>
@@ -535,13 +532,13 @@
     <value>False</value>
   </data>
   <data name="EditCompTSMI.Size" type="System.Drawing.Size, System.Drawing">
-    <value>296, 22</value>
+    <value>295, 22</value>
   </data>
   <data name="EditCompTSMI.Text" xml:space="preserve">
     <value>Editar Composição</value>
   </data>
   <data name="CopyFromTSMI.Size" type="System.Drawing.Size, System.Drawing">
-    <value>296, 22</value>
+    <value>295, 22</value>
   </data>
   <data name="CopyFromTSMI.Text" xml:space="preserve">
     <value>Copiar de...</value>
@@ -550,37 +547,37 @@
     <value>False</value>
   </data>
   <data name="RestoreTSMI.Size" type="System.Drawing.Size, System.Drawing">
-    <value>296, 22</value>
+    <value>295, 22</value>
   </data>
   <data name="RestoreTSMI.Text" xml:space="preserve">
     <value>Restaurar Valores-Padrão</value>
   </data>
   <data name="DepurarObjetoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>296, 22</value>
+    <value>295, 22</value>
   </data>
   <data name="DepurarObjetoToolStripMenuItem.Text" xml:space="preserve">
     <value>Depurar Objeto</value>
   </data>
   <data name="ToolStripSeparator6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>293, 6</value>
+    <value>292, 6</value>
   </data>
   <data name="ToolStripSeparator6.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="ConectarAToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>296, 22</value>
+    <value>295, 22</value>
   </data>
   <data name="ConectarAToolStripMenuItem.Text" xml:space="preserve">
     <value>Conectar a...</value>
   </data>
   <data name="DesconectarDeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>296, 22</value>
+    <value>295, 22</value>
   </data>
   <data name="DesconectarDeToolStripMenuItem.Text" xml:space="preserve">
     <value>Desconectar de...</value>
   </data>
   <data name="ToolStripSeparator4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>293, 6</value>
+    <value>292, 6</value>
   </data>
   <data name="ToolStripMenuItem6.Size" type="System.Drawing.Size, System.Drawing">
     <value>116, 22</value>
@@ -715,25 +712,25 @@
     <value>-&gt; 270 °</value>
   </data>
   <data name="TSMI_Girar.Size" type="System.Drawing.Size, System.Drawing">
-    <value>296, 22</value>
+    <value>295, 22</value>
   </data>
   <data name="TSMI_Girar.Text" xml:space="preserve">
     <value>Girar</value>
   </data>
   <data name="HorizontalmenteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>296, 22</value>
+    <value>295, 22</value>
   </data>
   <data name="HorizontalmenteToolStripMenuItem.Text" xml:space="preserve">
     <value>Inverter Horizontalmente</value>
   </data>
   <data name="ToolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>293, 6</value>
+    <value>292, 6</value>
   </data>
   <data name="ClonarToolStripMenuItem.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>White</value>
   </data>
   <data name="ClonarToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>296, 22</value>
+    <value>295, 22</value>
   </data>
   <data name="ClonarToolStripMenuItem.Text" xml:space="preserve">
     <value>Clonar</value>
@@ -742,13 +739,13 @@
     <value>Cria uma cópia exata do objeto selecionado.</value>
   </data>
   <data name="ExcluirToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>296, 22</value>
+    <value>295, 22</value>
   </data>
   <data name="ExcluirToolStripMenuItem.Text" xml:space="preserve">
     <value>Excluir</value>
   </data>
   <data name="ToolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>293, 6</value>
+    <value>292, 6</value>
   </data>
   <data name="MostrarToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>140, 22</value>
@@ -763,16 +760,16 @@
     <value>Configurar...</value>
   </data>
   <data name="TabelaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>296, 22</value>
+    <value>295, 22</value>
   </data>
   <data name="TabelaToolStripMenuItem.Text" xml:space="preserve">
     <value>Tabela</value>
   </data>
   <data name="ToolStripSeparator7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>293, 6</value>
+    <value>292, 6</value>
   </data>
   <data name="CopiarDadosParaÁreaDeTransferênciaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>296, 22</value>
+    <value>295, 22</value>
   </data>
   <data name="CopiarDadosParaÁreaDeTransferênciaToolStripMenuItem.Text" xml:space="preserve">
     <value>Copiar dados para a Área de Transferência</value>
@@ -781,7 +778,7 @@
     <value>Copia todas as propriedades com seus respectivos valores para a área de transferência.</value>
   </data>
   <data name="CMS_Sel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>297, 348</value>
+    <value>296, 348</value>
   </data>
   <data name="&gt;&gt;CMS_Sel.Name" xml:space="preserve">
     <value>CMS_Sel</value>
@@ -986,7 +983,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1217, 659</value>
+    <value>977, 601</value>
   </data>
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt</value>

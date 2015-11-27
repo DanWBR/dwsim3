@@ -295,7 +295,6 @@ Partial Class frmProps
         Me.FlowLayoutPanel1.ResumeLayout(False)
         Me.FlowLayoutPanel1.PerformLayout()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
     Public WithEvents LblStatusObj As System.Windows.Forms.Label
