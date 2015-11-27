@@ -18,9 +18,11 @@ namespace WeifenLuo.WinFormsUI.Docking
                 {
                     m_dragForm = new DragForm();
                     SetDragForm(Rectangle.Empty);
-                    DragForm.BackColor = Color.Black;
-                    DragForm.Opacity = 0.7;
-                    DragForm.Show(false);
+                    if (Type.GetType("Mono.Runtime") == null) {
+                        DragForm.BackColor = Color.Black;
+                        DragForm.Opacity = 0.7;
+                        DragForm.Show(false);
+                    }
                 }
 
                 DragForm m_dragForm;
@@ -84,6 +86,8 @@ namespace WeifenLuo.WinFormsUI.Docking
                     DragSource = null;
                     return;
                 }
+
+                if (Type.GetType("Mono.Runtime") == null) { rectSplitter = Rectangle.Empty; }
 
                 Outline = new SplitterOutline();
                 Outline.Show(rectSplitter);
