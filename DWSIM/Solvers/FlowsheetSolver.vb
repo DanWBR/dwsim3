@@ -2159,10 +2159,10 @@ Namespace DWSIM.Flowsheet
                     form.FormSurface.PictureBox3.Image = My.Resources.tick
                     form.FormSurface.LabelTime.Text = ""
 
-                    form.FormSurface.LabelSimultAdjInfo.Text = ""
-                    form.FormSurface.PicSimultAdjust.Visible = False
-                    form.FormSurface.LabelSimultAdjInfo.Visible = False
-                    form.FormSurface.LabelSimultAdjustStatus.Visible = False
+                    'form.FormSurface.LabelSimultAdjInfo.Text = ""
+                    'form.FormSurface.PicSimultAdjust.Visible = False
+                    'form.FormSurface.LabelSimultAdjInfo.Visible = False
+                    'form.FormSurface.LabelSimultAdjustStatus.Visible = False
 
                     If Not form.FormSurface.FlowsheetDesignSurface.SelectedObject Is Nothing Then Call form.FormSurface.UpdateSelectedObject()
 

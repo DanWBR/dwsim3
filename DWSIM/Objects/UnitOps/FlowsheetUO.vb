@@ -166,6 +166,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Dim form As FormFlowsheet = Nothing
 
             form = New FormFlowsheet()
+            If Not DWSIM.App.IsRunningOnMono Then form.FormObjList = New frmObjList
 
             Dim data As List(Of XElement) = xdoc.Element("DWSIM_Simulation_Data").Element("Settings").Elements.ToList
 

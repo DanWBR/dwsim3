@@ -58,7 +58,7 @@ Imports WeifenLuo.WinFormsUI.Docking
 
     Public FormSurface As New frmSurface
     Public FormProps As New frmProps
-    Public FormObjList As New frmObjList
+    Public FormObjList As frmObjList
     Public FormLog As New frmLog
     Public FormMatList As New frmMatList
     Public FormObjListView As New frmObjListView
@@ -136,12 +136,17 @@ Imports WeifenLuo.WinFormsUI.Docking
     Private Sub FormChild_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         If DWSIM.App.IsRunningOnMono Then
-            Me.FlowLayoutPanel1.AutoSize = False
-            Me.FlowLayoutPanel1.Height = 50
+            'Me.FlowLayoutPanel1.AutoSize = False
+            'Me.FlowLayoutPanel1.Height = 50
             Me.MenuStrip1.Visible = False
         Else
+            FormObjList = New frmObjList
             Me.MenuStrip1.Visible = False
         End If
+
+        showflowsheettoolstripmenuitem.Checked = My.Settings.ShowFlowsheetToolStrip
+        showsimulationtoolstripmenuitem.Checked = My.Settings.ShowSimulationToolStrip
+        showunitstoolstripmenuitem.Checked = My.Settings.ShowUnitsToolStrip
 
         Dim rand As New Random
         Dim str As String = rand.Next(10000000, 99999999)
@@ -189,13 +194,14 @@ Imports WeifenLuo.WinFormsUI.Docking
             dckPanel.ActiveAutoHideContent = Nothing
             dckPanel.Parent = Me
 
-            FormSpreadsheet.Show(dckPanel)
+            FormLog.Show(dckPanel)
             FormMatList.Show(dckPanel)
+            FormSpreadsheet.Show(dckPanel)
             FormSurface.Show(dckPanel)
             FormObjListView.Show(dckPanel)
-            FormObjList.Show(dckPanel)
+            If Not DWSIM.App.IsRunningOnMono Then FormObjList.Show(dckPanel)
             FormProps.Show(dckPanel)
-            FormLog.Show(dckPanel)
+            FormLog.DockState = DockState.DockRight
 
             Try
                 FormWatch.DockState = Docking.DockState.DockRight
@@ -292,11 +298,11 @@ Imports WeifenLuo.WinFormsUI.Docking
                     End If
                 End With
             Else
-                'With Me.FrmStSim1
-                '    .WindowState = FormWindowState.Normal
-                '    .StartPosition = FormStartPosition.CenterScreen
-                '    .ShowDialog(Me)
-                'End With
+                With Me.FrmStSim1
+                    .WindowState = FormWindowState.Normal
+                    .StartPosition = FormStartPosition.CenterScreen
+                    .ShowDialog(Me)
+                End With
             End If
 
         Else
@@ -830,6 +836,23 @@ Imports WeifenLuo.WinFormsUI.Docking
             End Select
         End If
 
+    End Sub
+
+    Private Sub showflowsheettoolstripmenuitem_Click(sender As Object, e As EventArgs) Handles showflowsheettoolstripmenuitem.Click
+        ToolStripFlowsheet.Visible = showflowsheettoolstripmenuitem.Checked
+        My.Settings.ShowFlowsheetToolStrip = showflowsheettoolstripmenuitem.Checked
+    End Sub
+
+    Private Sub showsimulationtoolstripmenuitem_Click(sender As Object, e As EventArgs) Handles showsimulationtoolstripmenuitem.Click
+        ToolStripSimulation.Visible = showsimulationtoolstripmenuitem.Checked
+        ToolStripCalculator.Visible = showsimulationtoolstripmenuitem.Checked
+        ToolStripStates.Visible = showsimulationtoolstripmenuitem.Checked
+        My.Settings.ShowSimulationToolStrip = showsimulationtoolstripmenuitem.Checked
+    End Sub
+
+    Private Sub showunitstoolstripmenuitem_Click(sender As Object, e As EventArgs) Handles showunitstoolstripmenuitem.Click
+        ToolStripUnits.Visible = showunitstoolstripmenuitem.Checked
+        My.Settings.ShowUnitsToolStrip = showunitstoolstripmenuitem.Checked
     End Sub
 
     Private Sub tsbAlign_Click(sender As Object, e As EventArgs) Handles tsbAlignLefts.Click, tsbAlignCenters.Click, tsbAlignRights.Click,

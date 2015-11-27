@@ -78,6 +78,11 @@ Public Class frmSurface
             Flowsheet = My.Application.ActiveSimulation
         End If
 
+        If DWSIM.App.IsRunningOnMono Then
+            Me.FlowLayoutPanel1.AutoSize = False
+            Me.FlowLayoutPanel1.Height = 25
+        End If
+
         PGEx1 = Me.Flowsheet.FormProps.PGEx1
         PGEx2 = Me.Flowsheet.FormProps.PGEx2
 
@@ -116,7 +121,6 @@ Public Class frmSurface
                 Flowsheet.FormProps.LblStatusObj.Text = "-"
                 Flowsheet.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
             Else
-                Dim nodes = Flowsheet.FormObjList.TreeViewObj.Nodes.Find(Me.FlowsheetDesignSurface.SelectedObject.Tag, True)
                 Flowsheet.FormProps.LblNomeObj.Text = Me.FlowsheetDesignSurface.SelectedObject.Tag
                 Flowsheet.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString(Flowsheet.Collections.ObjectCollection.Item(Me.FlowsheetDesignSurface.SelectedObject.Name).Descricao)
                 Select Case Me.FlowsheetDesignSurface.SelectedObject.Status
@@ -298,7 +302,6 @@ Public Class frmSurface
                     Flowsheet.FormProps.LblStatusObj.Text = "-"
                     Flowsheet.FormProps.LblStatusObj.ForeColor = Color.FromKnownColor(KnownColor.ControlText)
                 ElseIf Not Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_TabelaRapida Then
-                    Dim nodes = Flowsheet.FormObjList.TreeViewObj.Nodes.Find(e.SelectedObject.Tag, True)
                     Flowsheet.FormProps.LblNomeObj.Text = e.SelectedObject.Tag
                     Flowsheet.FormProps.LblTipoObj.Text = DWSIM.App.GetLocalString(e.SelectedObject.Description)
                     If e.SelectedObject.Active = False Then
@@ -3401,7 +3404,17 @@ Public Class frmSurface
 
                 Dim mystr As DWSIM.SimulationObjects.Streams.MaterialStream = Flowsheet.Collections.CLCS_MaterialStreamCollection(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
 
+                Dim editable As Boolean = False
+
                 If Not mystr.GraphicObject.InputConnectors(0).IsAttached Then
+                    editable = True
+                ElseIf mystr.GraphicObject.InputConnectors(0).IsAttached Then
+                    If mystr.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.TipoObjeto = TipoObjeto.OT_Reciclo Then
+                        editable = True
+                    End If
+                End If
+
+                If editable Then
 
                     Dim selectionControl As New CompositionEditorForm
                     selectionControl.Text = mystr.GraphicObject.Tag & DWSIM.App.GetLocalString("EditComp")

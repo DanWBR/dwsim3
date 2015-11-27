@@ -541,6 +541,42 @@ Namespace My
                 Me("UseSIMDExtensions") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property ShowSimulationToolStrip() As Boolean
+            Get
+                Return CType(Me("ShowSimulationToolStrip"),Boolean)
+            End Get
+            Set
+                Me("ShowSimulationToolStrip") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property ShowFlowsheetToolStrip() As Boolean
+            Get
+                Return CType(Me("ShowFlowsheetToolStrip"),Boolean)
+            End Get
+            Set
+                Me("ShowFlowsheetToolStrip") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property ShowUnitsToolStrip() As Boolean
+            Get
+                Return CType(Me("ShowUnitsToolStrip"),Boolean)
+            End Get
+            Set
+                Me("ShowUnitsToolStrip") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

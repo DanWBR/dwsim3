@@ -59,11 +59,13 @@ Partial Class frmProps
         'LblTipoObj
         '
         resources.ApplyResources(Me.LblTipoObj, "LblTipoObj")
+        Me.LblTipoObj.ForeColor = System.Drawing.SystemColors.GrayText
         Me.LblTipoObj.Name = "LblTipoObj"
         '
         'FTSProps
         '
         Me.FTSProps.AlwaysShowClose = False
+        Me.FTSProps.AlwaysShowMenuGlyph = False
         resources.ApplyResources(Me.FTSProps, "FTSProps")
         Me.FTSProps.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.TSProps, Me.TSObj})
         Me.FTSProps.Name = "FTSProps"
@@ -106,10 +108,12 @@ Partial Class frmProps
         Me.PGEx1.DocCommentTitle.TabIndex = CType(resources.GetObject("PGEx1.DocCommentTitle.TabIndex"), Integer)
         Me.PGEx1.DocCommentTitle.UseMnemonic = False
         resources.ApplyResources(Me.PGEx1, "PGEx1")
+        Me.PGEx1.DrawFlatToolbar = True
         Me.PGEx1.Name = "PGEx1"
         Me.PGEx1.PropertySort = System.Windows.Forms.PropertySort.Categorized
         Me.PGEx1.SelectedObject = CType(resources.GetObject("PGEx1.SelectedObject"), Object)
         Me.PGEx1.ShowCustomProperties = True
+        Me.PGEx1.ToolbarVisible = False
         '
         '
         '
@@ -125,12 +129,12 @@ Partial Class frmProps
         Me.PGEx1.ToolStrip.Location = CType(resources.GetObject("PGEx1.ToolStrip.Location"), System.Drawing.Point)
         Me.PGEx1.ToolStrip.Name = ""
         Me.PGEx1.ToolStrip.Padding = CType(resources.GetObject("PGEx1.ToolStrip.Padding"), System.Windows.Forms.Padding)
-        Me.PGEx1.ToolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
         Me.PGEx1.ToolStrip.Size = CType(resources.GetObject("PGEx1.ToolStrip.Size"), System.Drawing.Size)
         Me.PGEx1.ToolStrip.Stretch = True
         Me.PGEx1.ToolStrip.TabIndex = CType(resources.GetObject("PGEx1.ToolStrip.TabIndex"), Integer)
         Me.PGEx1.ToolStrip.TabStop = True
         Me.PGEx1.ToolStrip.Text = resources.GetString("PGEx1.ToolStrip.Text")
+        Me.PGEx1.ToolStrip.Visible = CType(resources.GetObject("PGEx1.ToolStrip.Visible"), Boolean)
         '
         'ToolStripButton1
         '
@@ -295,7 +299,6 @@ Partial Class frmProps
         Me.FlowLayoutPanel1.ResumeLayout(False)
         Me.FlowLayoutPanel1.PerformLayout()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
     Public WithEvents LblStatusObj As System.Windows.Forms.Label

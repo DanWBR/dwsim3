@@ -1273,6 +1273,7 @@ Public Class FormMain
             m_childcount += 1
 
             Dim form As FormFlowsheet = New FormFlowsheet()
+            If Not DWSIM.App.IsRunningOnMono Then form.FormObjList = New frmObjList
             My.Application.CAPEOPENMode = False
             My.Application.ActiveSimulation = form
 
@@ -1536,7 +1537,7 @@ Public Class FormMain
             Me.tmpform2 = form
             form.dckPanel.SuspendLayout(True)
             form.FormLog.DockPanel = Nothing
-            form.FormObjList.DockPanel = Nothing
+            If Not DWSIM.App.IsRunningOnMono Then form.FormObjList.DockPanel = Nothing
             form.FormProps.DockPanel = Nothing
             form.FormMatList.DockPanel = Nothing
             form.FormSpreadsheet.DockPanel = Nothing
@@ -1559,7 +1560,7 @@ Public Class FormMain
             form.FormMatList.Show(form.dckPanel)
             form.FormSpreadsheet.Show(form.dckPanel)
             form.FormSurface.Show(form.dckPanel)
-            form.FormObjList.Show(form.dckPanel)
+            If Not DWSIM.App.IsRunningOnMono Then form.FormObjList.Show(form.dckPanel)
             form.FormProps.Show(form.dckPanel)
 
             form.FormOutput.Show(form.dckPanel)
@@ -1949,6 +1950,7 @@ Public Class FormMain
         Me.SuspendLayout()
 
         Dim form As FormFlowsheet = New FormFlowsheet()
+        If Not DWSIM.App.IsRunningOnMono Then form.FormObjList = New frmObjList
         My.Application.CAPEOPENMode = False
         My.Application.ActiveSimulation = form
 
@@ -2758,7 +2760,7 @@ Public Class FormMain
             Me.tmpform2 = form
             'form.dckPanel.SuspendLayout(True)
             form.FormLog.DockPanel = Nothing
-            form.FormObjList.DockPanel = Nothing
+            If Not DWSIM.App.IsRunningOnMono Then form.FormObjList.DockPanel = Nothing
             form.FormProps.DockPanel = Nothing
             form.FormMatList.DockPanel = Nothing
             form.FormSpreadsheet.DockPanel = Nothing
@@ -2781,7 +2783,7 @@ Public Class FormMain
             Try
                 form.FormLog.Show(form.dckPanel)
                 form.FormObjListView.Show(form.dckPanel)
-                form.FormObjList.Show(form.dckPanel)
+                If Not DWSIM.App.IsRunningOnMono Then form.FormObjList.Show(form.dckPanel)
                 form.FormProps.Show(form.dckPanel)
                 form.FormSpreadsheet.Show(form.dckPanel)
                 form.FormMatList.Show(form.dckPanel)
@@ -3735,6 +3737,7 @@ ruf:                Application.DoEvents()
     Public Sub NewToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NewToolStripButton.Click, NewToolStripMenuItem.Click
 
         Dim newform As New FormFlowsheet()
+        If Not DWSIM.App.IsRunningOnMono Then newform.FormObjList = New frmObjList
 
         With newform
             .Text = "Simulation" & m_childcount
