@@ -130,6 +130,9 @@
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AeroWizard">
       <HintPath>References\AeroWizard.dll</HintPath>
@@ -226,10 +229,6 @@
     <Reference Include="LabelWithDivider, Version=1.1.0.1, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\LabelWithDivider.dll</HintPath>
-    </Reference>
-    <Reference Include="LuaInterface, Version=2.0.0.16708, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\LuaInterface.dll</HintPath>
     </Reference>
     <Reference Include="Mapack, Version=1.0.9.0, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
@@ -433,9 +432,7 @@
     <Compile Include="Forms\UITypeEditors\UIFlowsheetUOViewer\FlowsheetUOViewerForm.Designer.vb">
       <DependentUpon>FlowsheetUOViewerForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\UITypeEditors\UIFlowsheetUOViewer\FlowsheetUOViewerForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms\UITypeEditors\UIFlowsheetUOViewer\FlowsheetUOViewerForm.vb" />
     <Compile Include="Forms\UITypeEditors\UIFlowsheetUOViewer\UIFlowsheetUOViewer.vb" />
     <Compile Include="Forms\UITypeEditors\UIGibbsInitialEstimates\GibbsInitialEstimatesEditorForm.Designer.vb">
       <DependentUpon>GibbsInitialEstimatesEditorForm.vb</DependentUpon>
@@ -469,6 +466,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Objects\Classes\Databases\Databases.vb" />
+    <Compile Include="Objects\Classes\Extenders\SIMDExtenders.vb" />
     <Compile Include="Objects\Classes\MAPI\MAPI.vb" />
     <Compile Include="Objects\Classes\Math\AP.vb" />
     <Compile Include="Objects\Classes\Math\Brent.vb" />
@@ -509,39 +507,27 @@
     <Compile Include="Forms\FormFlowsheet_SubForms\frmCOReports.Designer.vb">
       <DependentUpon>frmCOReports.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormFlowsheet_SubForms\frmCOReports.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms\FormFlowsheet_SubForms\frmCOReports.vb" />
     <Compile Include="Forms\FormFlowsheet_SubForms\frmObjListView.Designer.vb">
       <DependentUpon>frmObjListView.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormFlowsheet_SubForms\frmObjListView.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms\FormFlowsheet_SubForms\frmObjListView.vb" />
     <Compile Include="Forms\FormFlowsheet_SubForms\frmOutput.Designer.vb">
       <DependentUpon>frmOutput.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormFlowsheet_SubForms\frmOutput.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms\FormFlowsheet_SubForms\frmOutput.vb" />
     <Compile Include="Forms\FormFlowsheet_SubForms\frmQueue.Designer.vb">
       <DependentUpon>frmQueue.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormFlowsheet_SubForms\frmQueue.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms\FormFlowsheet_SubForms\frmQueue.vb" />
     <Compile Include="Forms\FormFlowsheet_SubForms\frmWatch.Designer.vb">
       <DependentUpon>frmWatch.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormFlowsheet_SubForms\frmWatch.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms\FormFlowsheet_SubForms\frmWatch.vb" />
     <Compile Include="Forms\FormOptimization.Designer.vb">
       <DependentUpon>FormOptimization.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormOptimization.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms\FormOptimization.vb" />
     <Compile Include="Forms\FormReportConfig.designer.vb">
       <DependentUpon>FormReportConfig.vb</DependentUpon>
     </Compile>
@@ -551,9 +537,7 @@
     <Compile Include="Forms\FormSensAnalysis.Designer.vb">
       <DependentUpon>FormSensAnalysis.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormSensAnalysis.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms\FormSensAnalysis.vb" />
     <Compile Include="Forms\FormTemplateSelect.Designer.vb">
       <DependentUpon>FormTemplateSelect.vb</DependentUpon>
     </Compile>
@@ -569,9 +553,7 @@
     <Compile Include="Forms\FormScript.Designer.vb">
       <DependentUpon>FormScript.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormScript.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms\FormScript.vb" />
     <Compile Include="Forms\PropPack_ConfigForms\FormConfigBase.Designer.vb">
       <DependentUpon>FormConfigBase.vb</DependentUpon>
     </Compile>
@@ -706,11 +688,11 @@
     <Compile Include="Forms\UITypeEditors\UISTHXEditor\UISTHXEditor.vb" />
     <Compile Include="Forms\UITypeEditors\UIUnitConverter\UIUnitConverter.vb" />
     <Compile Include="Interfaces\IUtilityPlugin.vb" />
-    <Compile Include="Objects\Classes\Shared\ExtensionMethods.vb" />
-    <Compile Include="Objects\Classes\Shared\LimitedConcurrencyLevelTaskScheduler.vb" />
-    <Compile Include="Objects\Classes\Shared\ScintillaExtender.vb" />
-    <Compile Include="Objects\Classes\Shared\SimplexExtender.vb" />
-    <Compile Include="Objects\Classes\Shared\STATaskScheduler.vb" />
+    <Compile Include="Objects\Classes\Extenders\ExtensionMethods.vb" />
+    <Compile Include="Objects\Classes\TaskSchedulers\LimitedConcurrencyLevelTaskScheduler.vb" />
+    <Compile Include="Objects\Classes\Extenders\ScintillaExtender.vb" />
+    <Compile Include="Objects\Classes\Extenders\SimplexExtender.vb" />
+    <Compile Include="Objects\Classes\TaskSchedulers\STATaskScheduler.vb" />
     <Compile Include="Objects\PropertyPackages\Base\ActivityCoefficientBase.vb" />
     <Compile Include="Objects\PropertyPackages\Base\ActivityCoefficientPropertyPackage.vb" />
     <Compile Include="Objects\PropertyPackages\Base\Electrolyte.vb" />
@@ -804,9 +786,7 @@
     <Compile Include="Forms\FormFlowsheet_SubForms\frmMatList.Designer.vb">
       <DependentUpon>frmMatList.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormFlowsheet_SubForms\frmMatList.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms\FormFlowsheet_SubForms\frmMatList.vb" />
     <Compile Include="Forms\FormOptions.Designer.vb">
       <DependentUpon>FormOptions.vb</DependentUpon>
     </Compile>
@@ -834,9 +814,7 @@
     <Compile Include="Forms\FormSimulSettings.Designer.vb">
       <DependentUpon>FormSimulSettings.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormSimulSettings.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms\FormSimulSettings.vb" />
     <Compile Include="Objects\UnitOps\BaseClasses.vb" />
     <Compile Include="Objects\UnitOps\CapeOpenUO.vb" />
     <Compile Include="Objects\UnitOps\ComponentSeparator.vb" />
@@ -876,27 +854,19 @@
     <Compile Include="Forms\FormFlowsheet_SubForms\frmLog.Designer.vb">
       <DependentUpon>frmLog.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormFlowsheet_SubForms\frmLog.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms\FormFlowsheet_SubForms\frmLog.vb" />
     <Compile Include="Forms\FormFlowsheet_SubForms\frmObjList.Designer.vb">
       <DependentUpon>frmObjList.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormFlowsheet_SubForms\frmObjList.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms\FormFlowsheet_SubForms\frmObjList.vb" />
     <Compile Include="Forms\FormFlowsheet_SubForms\frmProps.Designer.vb">
       <DependentUpon>frmProps.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormFlowsheet_SubForms\frmProps.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms\FormFlowsheet_SubForms\frmProps.vb" />
     <Compile Include="Forms\FormFlowsheet_SubForms\frmSurface.Designer.vb">
       <DependentUpon>frmSurface.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormFlowsheet_SubForms\frmSurface.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms\FormFlowsheet_SubForms\frmSurface.vb" />
     <Compile Include="Forms\FormFlowsheet.Designer.vb">
       <DependentUpon>FormFlowsheet.vb</DependentUpon>
     </Compile>
@@ -1097,22 +1067,16 @@
     <Compile Include="Utilities\ColdProperties\FrmColdProperties.Designer.vb">
       <DependentUpon>FrmColdProperties.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\ColdProperties\FrmColdProperties.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Utilities\ColdProperties\FrmColdProperties.vb" />
     <Compile Include="Utilities\LLE_Diagram\FormLLEDiagram.Designer.vb">
       <DependentUpon>FormLLEDiagram.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\LLE_Diagram\FormLLEDiagram.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Utilities\LLE_Diagram\FormLLEDiagram.vb" />
     <Compile Include="Utilities\Spreadsheet\SpreadsheetCell.vb" />
     <Compile Include="Utilities\Spreadsheet\SpreadsheetForm.Designer.vb">
       <DependentUpon>SpreadsheetForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\Spreadsheet\SpreadsheetForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Utilities\Spreadsheet\SpreadsheetForm.vb" />
     <Compile Include="Forms\UITypeEditors\UIThermalProfileEditor\ThermalProfileEditorForm.Designer.vb">
       <DependentUpon>ThermalProfileEditorForm.vb</DependentUpon>
     </Compile>
@@ -1123,9 +1087,7 @@
     <Compile Include="Utilities\BINARY_ENVEL\FormBinEnv.Designer.vb">
       <DependentUpon>FormBinEnv.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\BINARY_ENVEL\FormBinEnv.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Utilities\BINARY_ENVEL\FormBinEnv.vb" />
     <Compile Include="Tools\PetroleumCharacterization\FormPCBulk.designer.vb">
       <DependentUpon>FormPCBulk.vb</DependentUpon>
     </Compile>
@@ -1157,9 +1119,7 @@
     <Compile Include="Utilities\HYD+\FormHYD.Designer.vb">
       <DependentUpon>FormHYD.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\HYD+\FormHYD.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Utilities\HYD+\FormHYD.vb" />
     <Compile Include="Utilities\HYD+\Helper Classes\AUX_FUNC.vb" />
     <Compile Include="Utilities\HYD+\Helper Classes\DWSIM_KS.vb" />
     <Compile Include="Utilities\HYD+\Helper Classes\HYDR_CG.vb" />
@@ -1169,9 +1129,7 @@
     <Compile Include="Utilities\PHASE_ENVEL\FormPhEnv.Designer.vb">
       <DependentUpon>FormPhEnv.vb</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\PHASE_ENVEL\FormPhEnv.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Utilities\PHASE_ENVEL\FormPhEnv.vb" />
     <Compile Include="Utilities\PureCompViewer\FormPureComp.Designer.vb">
       <DependentUpon>FormPureComp.vb</DependentUpon>
     </Compile>
@@ -1181,9 +1139,7 @@
     <Compile Include="Tools\Reactions\FormReacManager.Designer.vb">
       <DependentUpon>FormReacManager.vb</DependentUpon>
     </Compile>
-    <Compile Include="Tools\Reactions\FormReacManager.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Tools\Reactions\FormReacManager.vb" />
     <Compile Include="Tools\UnitSetCreator\FormUnitGen.Designer.vb">
       <DependentUpon>FormUnitGen.vb</DependentUpon>
     </Compile>
@@ -1461,6 +1417,95 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Cureos.Numerics.dll.config.linux" />
+    <None Include="Assets\Cureos.Numerics.dll.config.osx" />
+    <None Include="Assets\data\bd.dat" />
+    <None Include="Assets\data\biod_intparm_nrtl.dat" />
+    <None Include="Assets\data\csid.dat" />
+    <None Include="Assets\data\diel.dat" />
+    <None Include="Assets\data\gsw_data_v3_0.dat" />
+    <None Include="Assets\data\hid_chenguo.dat" />
+    <None Include="Assets\data\hid_klaudasandler.dat" />
+    <None Include="Assets\data\hid_vdwp_pp.dat" />
+    <None Include="Assets\data\inib.dat" />
+    <None Include="Assets\data\kij_pr.dat" />
+    <None Include="Assets\data\kij_srk.dat" />
+    <None Include="Assets\data\lkp_ip.dat" />
+    <None Include="Assets\data\nrtl.dat" />
+    <None Include="Assets\data\pcsaft.dat" />
+    <None Include="Assets\data\pcsaft_ip.dat" />
+    <None Include="Assets\data\prsv2.dat" />
+    <None Include="Assets\data\prsv2_ip.dat" />
+    <None Include="Assets\data\prsv2_ip_vl.dat" />
+    <None Include="Assets\data\pr_ip.dat" />
+    <None Include="Assets\data\report_en-US.mr6" />
+    <None Include="Assets\data\report_pt-BR.mr6" />
+    <None Include="Assets\data\srk_ip.dat" />
+    <None Include="Assets\data\tips.dat" />
+    <None Include="Assets\data\tips_en.dat" />
+    <None Include="Assets\data\uniquac.dat" />
+    <None Include="Assets\data\uniquacip.dat" />
+    <None Include="Assets\default.ini" />
+    <None Include="Assets\docs\cape_open_reference3.pdf" />
+    <None Include="Assets\docs\command_line_mode.pdf" />
+    <None Include="Assets\docs\excel_addin_user_guide.pdf" />
+    <None Include="Assets\docs\tech_manual.pdf" />
+    <None Include="Assets\docs\User_Guide.pdf" />
+    <None Include="Assets\DWSIM.dna" />
+    <None Include="Assets\DWSIM.exe.config.linux" />
+    <None Include="Assets\DWSIM.exe.config.osx" />
+    <None Include="Assets\DWSIM.xll" />
+    <None Include="Assets\dynamiclibraries\libfprops_ascend.dylib" />
+    <None Include="Assets\dynamiclibraries\libgfortran.3.dylib" />
+    <None Include="Assets\dynamiclibraries\libipopt_mono_dwsim_osx_10.7.3_32.zip" />
+    <None Include="Assets\dynamiclibraries\liblpsolve55.dylib" />
+    <None Include="Assets\dynamiclibraries\libPC_SAFT_PROP.dylib" />
+    <None Include="Assets\excelcompat.ini" />
+    <None Include="Assets\licenses\WindowsAzureClientLibraries_License.rtf" />
+    <None Include="Assets\reactions\Water Self-Ionization.dwrxm" />
+    <None Include="Assets\samples\1,2-Dichloroethane-N-Heptane-LKP.dwrsd" />
+    <None Include="Assets\samples\1,2-Dichloroethane-N-Heptane-SRK.dwrsd" />
+    <None Include="Assets\samples\1-Propanol-Water-NRTL.dwrsd" />
+    <None Include="Assets\samples\1-Propanol-Water-UNIQUAC.dwrsd" />
+    <None Include="Assets\samples\2,3-Dimethylbutane-Chloroform-PRSV2_VL.dwrsd" />
+    <None Include="Assets\samples\Acetone and Methanol Equilibria using TEA and COSMOTherm %28Windows only%29.dwsim" />
+    <None Include="Assets\samples\Acetonitrile-Nitromethane-PRSV2-VL.dwrsd" />
+    <None Include="Assets\samples\Benzene-Cyclopentane-PR.dwrsd" />
+    <None Include="Assets\samples\Benzene-m-Xylene-SLE.dwrsd" />
+    <None Include="Assets\samples\Benzene-p-Xylene-SLE.dwrsd" />
+    <None Include="Assets\samples\CarbonCombustion.dwxml" />
+    <None Include="Assets\samples\Cavett%27s Problem with TEA 1.0 %28Windows only%29.dwsim" />
+    <None Include="Assets\samples\Cavett%27s Problem with TEA 1.1 %28Windows only%29.dwsim" />
+    <None Include="Assets\samples\Cavett%27s Problem.dwxml" />
+    <None Include="Assets\samples\Cyclohexane-Aniline-NRTL.dwrsd" />
+    <None Include="Assets\samples\Electrolysis Cell with ExcelUO.dwxml" />
+    <None Include="Assets\samples\Electrolysis.xlsx" />
+    <None Include="Assets\samples\Ethanol-Benzene-SLE.dwrsd" />
+    <None Include="Assets\samples\Ethanol-Benzene-UNIQUAC.dwrsd" />
+    <None Include="Assets\samples\Extractive Distillation with TEA 1.0 %28Windows only%29.dwsim" />
+    <None Include="Assets\samples\Extractive Distillation.dwxml" />
+    <None Include="Assets\samples\Flowsheet Unit Operation Sample.dwxml" />
+    <None Include="Assets\samples\fstest_in.dwxml" />
+    <None Include="Assets\samples\Gibbs and Equilibrium Reactors.dwxml" />
+    <None Include="Assets\samples\Heat Exchanger Sizing and Design.dwxml" />
+    <None Include="Assets\samples\Hydrocyclone Custom Unit Operation.dwxml" />
+    <None Include="Assets\samples\Hydrogen production through Methane Catalytic Steam Reforming.dwxml" />
+    <None Include="Assets\samples\Membrane Custom Unit Operation.dwxml" />
+    <None Include="Assets\samples\Methanol-12-Dichloroethane-NRTL.dwrsd" />
+    <None Include="Assets\samples\Natural Gas Processing Unit.dwxml" />
+    <None Include="Assets\samples\Petroleum Distillation.dwxml" />
+    <None Include="Assets\samples\Simple Absorber Sample.dwxml" />
+    <None Include="Assets\samples\Simple LNG Exchanger Custom Unit Operation.dwxml" />
+    <None Include="Assets\samples\Three Phase Flash.dwxml" />
+    <None Include="Assets\samples\Three Phase Separator.dwxml" />
+    <None Include="Assets\samples\Water-Benzene-LLE-UNIQUAC.dwrsd" />
+    <None Include="Assets\sharedobjects\libfprops_ascend.so" />
+    <None Include="Assets\sharedobjects\libipopt_mono_dwsim_ubuntu_11.10_32.tar.gz" />
+    <None Include="Assets\sharedobjects\liblpsolve55.so" />
+    <None Include="Assets\sharedobjects\libPC_SAFT_PROP.so" />
+    <None Include="Assets\TemplateExcelUO.ods" />
+    <None Include="Assets\TemplateExcelUO.xls" />
+    <None Include="Assets\TemplateExcelUO.xlsx" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -2172,6 +2217,463 @@
     <None Include="Resources\disk1.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\CoolProp.dll" />
+    <Content Include="Assets\data\cosmo.txt" />
+    <Content Include="Assets\data\databases\biod_db.xml" />
+    <Content Include="Assets\data\databases\coolprop.txt" />
+    <Content Include="Assets\data\databases\dwsim.xml" />
+    <Content Include="Assets\data\databases\electrolyte.xml" />
+    <Content Include="Assets\data\DielectricConstants.txt" />
+    <Content Include="Assets\data\Elements.txt" />
+    <Content Include="Assets\data\estrutura.txt" />
+    <Content Include="Assets\data\ExUNIQUAC_RiQi.txt" />
+    <Content Include="Assets\data\ExUNIQUAC_uij.txt" />
+    <Content Include="Assets\data\Henry.txt" />
+    <Content Include="Assets\data\JobackGroups.txt" />
+    <Content Include="Assets\data\kij_srk.txt" />
+    <Content Include="Assets\data\LIQUAC2_IP.txt" />
+    <Content Include="Assets\data\LIQUAC2_RiQi.txt" />
+    <Content Include="Assets\data\modfac.txt" />
+    <Content Include="Assets\data\modfac_ip.txt" />
+    <Content Include="Assets\data\NIST-MODFAC_IP.txt" />
+    <Content Include="Assets\data\NIST-MODFAC_RiQi.txt" />
+    <Content Include="Assets\data\unifac.txt" />
+    <Content Include="Assets\data\unifac\1,2-Dimethylpiperidine.png" />
+    <Content Include="Assets\data\unifac\1-1-1-Trifluoroethane.png" />
+    <Content Include="Assets\data\unifac\1-1-Dichloroethane.png" />
+    <Content Include="Assets\data\unifac\1-1-Dimethylcyclohexane.png" />
+    <Content Include="Assets\data\unifac\1-2-Ethandiole.png" />
+    <Content Include="Assets\data\unifac\1-2-Propyleneglycol.png" />
+    <Content Include="Assets\data\unifac\1-3-5-Trioxane.png" />
+    <Content Include="Assets\data\unifac\1-3-Dioxane.png" />
+    <Content Include="Assets\data\unifac\1-Chlorobutane.png" />
+    <Content Include="Assets\data\unifac\1-Ethyl-2-Methylpiperidine.png" />
+    <Content Include="Assets\data\unifac\1-Hexene.png" />
+    <Content Include="Assets\data\unifac\1-Hexyne.png" />
+    <Content Include="Assets\data\unifac\1-Methoxy-2-Propanol.png" />
+    <Content Include="Assets\data\unifac\1-Methylcyclohexene.png" />
+    <Content Include="Assets\data\unifac\1-Nitropropane.png" />
+    <Content Include="Assets\data\unifac\1-Propanol.png" />
+    <Content Include="Assets\data\unifac\1.1.3.3-Tetramethyldisiloxane.png" />
+    <Content Include="Assets\data\unifac\1.2-Dimethylcyclohexene.png" />
+    <Content Include="Assets\data\unifac\1.2-Epoxy-2-Methylpropane.png" />
+    <Content Include="Assets\data\unifac\1.2-Propyleneoxide.png" />
+    <Content Include="Assets\data\unifac\1.3-Dimethyldisiloxane.png" />
+    <Content Include="Assets\data\unifac\2 Methylpyridine.png" />
+    <Content Include="Assets\data\unifac\2,2-Diethoxyethane.png" />
+    <Content Include="Assets\data\unifac\2,2-Diethoxymethane.png" />
+    <Content Include="Assets\data\unifac\2,2-Diethoxypropane.png" />
+    <Content Include="Assets\data\unifac\2,2-Dimethylpiperidine.png" />
+    <Content Include="Assets\data\unifac\2,3-dimethyl-2,3-butanediol.png" />
+    <Content Include="Assets\data\unifac\2,3-Dimethylpyrrole.png" />
+    <Content Include="Assets\data\unifac\2,5-Dimethylthiophene.png" />
+    <Content Include="Assets\data\unifac\2,6-Lupetidine.png" />
+    <Content Include="Assets\data\unifac\2-2-Dichloropropane.png" />
+    <Content Include="Assets\data\unifac\2-3 Dimethylpyridine.png" />
+    <Content Include="Assets\data\unifac\2-3-Butanediol.png" />
+    <Content Include="Assets\data\unifac\2-3-Dimethyl-2-Butene.png" />
+    <Content Include="Assets\data\unifac\2-3-Dimethylpyridine.png" />
+    <Content Include="Assets\data\unifac\2-6-Dimethylpyridine.png" />
+    <Content Include="Assets\data\unifac\2-chloropropane.png" />
+    <Content Include="Assets\data\unifac\2-Ethoxy-1-Propanol.png" />
+    <Content Include="Assets\data\unifac\2-Ethoxyethanol.png" />
+    <Content Include="Assets\data\unifac\2-Hexene.png" />
+    <Content Include="Assets\data\unifac\2-Hexyne.png" />
+    <Content Include="Assets\data\unifac\2-Methyl-1,2-Propanediol.png" />
+    <Content Include="Assets\data\unifac\2-methyl-1-butene.png" />
+    <Content Include="Assets\data\unifac\2-Methyl-2,3-Butanediol.png" />
+    <Content Include="Assets\data\unifac\2-methyl-2-butene.png" />
+    <Content Include="Assets\data\unifac\2-Methylnitropropane.png" />
+    <Content Include="Assets\data\unifac\2-Methylpyridine.png" />
+    <Content Include="Assets\data\unifac\2-Methylpyrrole.png" />
+    <Content Include="Assets\data\unifac\2-Methylthiophene.png" />
+    <Content Include="Assets\data\unifac\2-Nitropropane.png" />
+    <Content Include="Assets\data\unifac\2-Propanethiol.png" />
+    <Content Include="Assets\data\unifac\2-Propanoneoxime.png" />
+    <Content Include="Assets\data\unifac\2.3-Epoxy-2-Methylbutane.png" />
+    <Content Include="Assets\data\unifac\2.3-Epoxy-2.3-Dimethylbutane.png" />
+    <Content Include="Assets\data\unifac\2.3-Epoxybutane.png" />
+    <Content Include="Assets\data\unifac\2.4-Dimethylsulfolane.png" />
+    <Content Include="Assets\data\unifac\3-Pentanone.png" />
+    <Content Include="Assets\data\unifac\AC-Br Bromobenzene.png" />
+    <Content Include="Assets\data\unifac\Acetamide.png" />
+    <Content Include="Assets\data\unifac\Aceticacid.png" />
+    <Content Include="Assets\data\unifac\Aceticanhydride.png" />
+    <Content Include="Assets\data\unifac\Acetonitrile.png" />
+    <Content Include="Assets\data\unifac\Acetophenone.png" />
+    <Content Include="Assets\data\unifac\Acetylbenzoylperoxide.png" />
+    <Content Include="Assets\data\unifac\Acrylonitrile.png" />
+    <Content Include="Assets\data\unifac\Aniline.png" />
+    <Content Include="Assets\data\unifac\Benzaldehyde.png" />
+    <Content Include="Assets\data\unifac\Benzenethiol.png" />
+    <Content Include="Assets\data\unifac\Benzofuran.png" />
+    <Content Include="Assets\data\unifac\Benzoicacid.png" />
+    <Content Include="Assets\data\unifac\Benzonitrile.png" />
+    <Content Include="Assets\data\unifac\Bromoethane.png" />
+    <Content Include="Assets\data\unifac\Butane.png" />
+    <Content Include="Assets\data\unifac\Butanone.png" />
+    <Content Include="Assets\data\unifac\butylacetate.png" />
+    <Content Include="Assets\data\unifac\C2H4O2 2-Ethoxy-1-Propanol.png" />
+    <Content Include="Assets\data\unifac\C2H5O2 2-Ethoxyethanol.png" />
+    <Content Include="Assets\data\unifac\C4H2S 2.3-Dimethylthiophene.png" />
+    <Content Include="Assets\data\unifac\C4H3S 2-Methylthiophene.png" />
+    <Content Include="Assets\data\unifac\C4H4S Thiophene.png" />
+    <Content Include="Assets\data\unifac\Carbondisulfide.png" />
+    <Content Include="Assets\data\unifac\CCl3F Trichlorofluoromethane.png" />
+    <Content Include="Assets\data\unifac\CClF2 1.2-Dichlorotetrafluoroethane.png" />
+    <Content Include="Assets\data\unifac\CH2SuCH 2.4-Dimethylsulfolane.png" />
+    <Content Include="Assets\data\unifac\Chlorobenzene.png" />
+    <Content Include="Assets\data\unifac\Chlorofluoromethylene.png" />
+    <Content Include="Assets\data\unifac\Chloroform.png" />
+    <Content Include="Assets\data\unifac\Chlorotrifluoromethane.png" />
+    <Content Include="Assets\data\unifac\Cumene.png" />
+    <Content Include="Assets\data\unifac\Cyclohexane.png" />
+    <Content Include="Assets\data\unifac\Cyclohexene.png" />
+    <Content Include="Assets\data\unifac\Cyclohexylamine.png" />
+    <Content Include="Assets\data\unifac\Di-Tert-Butylperoxide.png" />
+    <Content Include="Assets\data\unifac\Dibenzofuran.png" />
+    <Content Include="Assets\data\unifac\Dichlorodifluoromethane.png" />
+    <Content Include="Assets\data\unifac\Dichloromethane.png" />
+    <Content Include="Assets\data\unifac\Diethylamine.png" />
+    <Content Include="Assets\data\unifac\Diethylcarbonate.png" />
+    <Content Include="Assets\data\unifac\Diethylether.png" />
+    <Content Include="Assets\data\unifac\Diethylperoxide.png" />
+    <Content Include="Assets\data\unifac\Diethylsilane.png" />
+    <Content Include="Assets\data\unifac\Diethylsulfide.png" />
+    <Content Include="Assets\data\unifac\Difluorochloromethane.png" />
+    <Content Include="Assets\data\unifac\Difluoromethyl.png" />
+    <Content Include="Assets\data\unifac\Diisopropylamine.png" />
+    <Content Include="Assets\data\unifac\Diisopropylether.png" />
+    <Content Include="Assets\data\unifac\Diisopropylperoxide.png" />
+    <Content Include="Assets\data\unifac\Diisopropylsulfide.png" />
+    <Content Include="Assets\data\unifac\Dimethylamine.png" />
+    <Content Include="Assets\data\unifac\Dimethylaniline.png" />
+    <Content Include="Assets\data\unifac\Dimethylcarbonate.png" />
+    <Content Include="Assets\data\unifac\Dimethylether.png" />
+    <Content Include="Assets\data\unifac\Dimethylperoxide.png" />
+    <Content Include="Assets\data\unifac\Dimethylsulfide.png" />
+    <Content Include="Assets\data\unifac\Dimethylsulfoxide.png" />
+    <Content Include="Assets\data\unifac\Diphenylcarbonate.png" />
+    <Content Include="Assets\data\unifac\Empty.png" />
+    <Content Include="Assets\data\unifac\Ethane.png" />
+    <Content Include="Assets\data\unifac\Ethanethiol.png" />
+    <Content Include="Assets\data\unifac\Ethyl-Isopropyl-Ketone.png" />
+    <Content Include="Assets\data\unifac\Ethylamine.png" />
+    <Content Include="Assets\data\unifac\Ethylbenzene.png" />
+    <Content Include="Assets\data\unifac\Ethyleneoxide.png" />
+    <Content Include="Assets\data\unifac\Ethylformate.png" />
+    <Content Include="Assets\data\unifac\Ethylisocyanate.png" />
+    <Content Include="Assets\data\unifac\Ethylmethylcarbonate.png" />
+    <Content Include="Assets\data\unifac\Ethylphenylcarbonate.png" />
+    <Content Include="Assets\data\unifac\Fluoroform.png" />
+    <Content Include="Assets\data\unifac\Fluoromethylene.png" />
+    <Content Include="Assets\data\unifac\Formaldehyde.png" />
+    <Content Include="Assets\data\unifac\Formicacid.png" />
+    <Content Include="Assets\data\unifac\Furan.png" />
+    <Content Include="Assets\data\unifac\Furfural.png" />
+    <Content Include="Assets\data\unifac\Glycerol.png" />
+    <Content Include="Assets\data\unifac\HCCl2F Dichlorofluoromethane.png" />
+    <Content Include="Assets\data\unifac\HCClF 1-Chloro-1.2.2.2-Tetrafluoroethane.png" />
+    <Content Include="Assets\data\unifac\Heptamethyltrisiloxane.png" />
+    <Content Include="Assets\data\unifac\Hexafluorobenzene.png" />
+    <Content Include="Assets\data\unifac\Hexamethyldisiloxane.png" />
+    <Content Include="Assets\data\unifac\hexane.png" />
+    <Content Include="Assets\data\unifac\Iodoethane.png" />
+    <Content Include="Assets\data\unifac\Isobutane.png" />
+    <Content Include="Assets\data\unifac\Isobutyronitrile.png" />
+    <Content Include="Assets\data\unifac\Isopropylalkohol.png" />
+    <Content Include="Assets\data\unifac\Isopropylamine.png" />
+    <Content Include="Assets\data\unifac\Isopropylisocyanate.png" />
+    <Content Include="Assets\data\unifac\Methanethiol.png" />
+    <Content Include="Assets\data\unifac\Methanol.png" />
+    <Content Include="Assets\data\unifac\Methyl Phenylsulfide.png" />
+    <Content Include="Assets\data\unifac\Methyl tert-Butylsulfide.png" />
+    <Content Include="Assets\data\unifac\Methyl-Tert-Butyl-Ketone.png" />
+    <Content Include="Assets\data\unifac\Methylacrylate.png" />
+    <Content Include="Assets\data\unifac\Methylamine.png" />
+    <Content Include="Assets\data\unifac\Methylcyclohexane.png" />
+    <Content Include="Assets\data\unifac\Methylisocyanate.png" />
+    <Content Include="Assets\data\unifac\Methylphenylsulfone.png" />
+    <Content Include="Assets\data\unifac\Methylpropionate.png" />
+    <Content Include="Assets\data\unifac\Methylsilane.png" />
+    <Content Include="Assets\data\unifac\MORPH Morpholine.png" />
+    <Content Include="Assets\data\unifac\n,n-Diethylaniline.png" />
+    <Content Include="Assets\data\unifac\n,n-Dimetylaniline.png" />
+    <Content Include="Assets\data\unifac\n-Ethyl-n-Methylaniline.png" />
+    <Content Include="Assets\data\unifac\n-Ethylacetamide.png" />
+    <Content Include="Assets\data\unifac\n-Ethylaniline.png" />
+    <Content Include="Assets\data\unifac\N-Ethylformamide.png" />
+    <Content Include="Assets\data\unifac\n-Ethylpiperidine.png" />
+    <Content Include="Assets\data\unifac\N-Ethylpyrrolidone.png" />
+    <Content Include="Assets\data\unifac\n-Isopropyl-2-Methylpiperidine.png" />
+    <Content Include="Assets\data\unifac\n-Isopropylaniline.png" />
+    <Content Include="Assets\data\unifac\n-Isopropylpiperidine.png" />
+    <Content Include="Assets\data\unifac\N-Isopropylpyrrolidone.png" />
+    <Content Include="Assets\data\unifac\n-Methylacetamide.png" />
+    <Content Include="Assets\data\unifac\n-Methylaniline.png" />
+    <Content Include="Assets\data\unifac\n-Methylaniline_.png" />
+    <Content Include="Assets\data\unifac\N-Methylformamide.png" />
+    <Content Include="Assets\data\unifac\n-Methylpiperidine.png" />
+    <Content Include="Assets\data\unifac\n-Methylpyrrolidone.png" />
+    <Content Include="Assets\data\unifac\N-Methylpyrrolidone_.png" />
+    <Content Include="Assets\data\unifac\N-N-Diethylacetamide.png" />
+    <Content Include="Assets\data\unifac\N-N-Diethylformamide.png" />
+    <Content Include="Assets\data\unifac\N-N-Dimethylformamide.png" />
+    <Content Include="Assets\data\unifac\N-N-Methylethylacetamide.png" />
+    <Content Include="Assets\data\unifac\N-Tert-Butylpyrrolidone.png" />
+    <Content Include="Assets\data\unifac\N.N-Diethylacetamid.png" />
+    <Content Include="Assets\data\unifac\N.N-Dimethylacetamide.png" />
+    <Content Include="Assets\data\unifac\N.N-Methylethylacetamidd.png" />
+    <Content Include="Assets\data\unifac\Naphthalene.png" />
+    <Content Include="Assets\data\unifac\Neopentane.png" />
+    <Content Include="Assets\data\unifac\Nitrobenzene.png" />
+    <Content Include="Assets\data\unifac\Nitromethane.png" />
+    <Content Include="Assets\data\unifac\Octamethylcyclotetrasiloxane.png" />
+    <Content Include="Assets\data\unifac\octane.png" />
+    <Content Include="Assets\data\unifac\Perfluorohexane.png" />
+    <Content Include="Assets\data\unifac\Perfluoromethylcyclohexane.png" />
+    <Content Include="Assets\data\unifac\Phenol.png" />
+    <Content Include="Assets\data\unifac\Phenyl-Tert-Pentanoate.png" />
+    <Content Include="Assets\data\unifac\Phenylacetate.png" />
+    <Content Include="Assets\data\unifac\Phenylisobutyrate.png" />
+    <Content Include="Assets\data\unifac\Phenylisocyanate.png" />
+    <Content Include="Assets\data\unifac\Phenylpropionate.png" />
+    <Content Include="Assets\data\unifac\Piperazine.png" />
+    <Content Include="Assets\data\unifac\Propanal.png" />
+    <Content Include="Assets\data\unifac\Propanaloxime.png" />
+    <Content Include="Assets\data\unifac\Propiolactam.png" />
+    <Content Include="Assets\data\unifac\Propiolactone.png" />
+    <Content Include="Assets\data\unifac\Propionitrile.png" />
+    <Content Include="Assets\data\unifac\Pyridine.png" />
+    <Content Include="Assets\data\unifac\Pyridine_.png" />
+    <Content Include="Assets\data\unifac\Pyrrole.png" />
+    <Content Include="Assets\data\unifac\Styrene.png" />
+    <Content Include="Assets\data\unifac\Sulfolane.png" />
+    <Content Include="Assets\data\unifac\Tert-Butanethiol.png" />
+    <Content Include="Assets\data\unifac\Tert-Butanol.png" />
+    <Content Include="Assets\data\unifac\Tert-Butylamine.png" />
+    <Content Include="Assets\data\unifac\Tert-Butylbenzene.png" />
+    <Content Include="Assets\data\unifac\tert-Butylnitrile.png" />
+    <Content Include="Assets\data\unifac\Tertbutylchloride.png" />
+    <Content Include="Assets\data\unifac\Tetrachloro-1.2-Difluoroethan.png" />
+    <Content Include="Assets\data\unifac\Tetrachloroethene.png" />
+    <Content Include="Assets\data\unifac\Tetrachloromethane.png" />
+    <Content Include="Assets\data\unifac\Tetrafluoromethane.png" />
+    <Content Include="Assets\data\unifac\Tetrahydrofuran.png" />
+    <Content Include="Assets\data\unifac\THF Tetrahydrofuran.png" />
+    <Content Include="Assets\data\unifac\Thiophene.png" />
+    <Content Include="Assets\data\unifac\Toluene.png" />
+    <Content Include="Assets\data\unifac\Trichloroethane.png" />
+    <Content Include="Assets\data\unifac\Trichloroethylene.png" />
+    <Content Include="Assets\data\unifac\Triethylamine.png" />
+    <Content Include="Assets\data\unifac\Trimethylamine.png" />
+    <Content Include="Assets\data\unifac\Trimethyloxirane.png" />
+    <Content Include="Assets\data\unifac\Water.png" />
+    <Content Include="Assets\data\unifac_ip.txt" />
+    <Content Include="Assets\data\unifac_ll_ip.txt" />
+    <None Include="Assets\fprops_ascend.dll" />
+    <Content Include="Assets\help\0 Welcome.htm" />
+    <Content Include="Assets\help\1 Disclaimer.htm" />
+    <Content Include="Assets\help\1 GPL_v3_License.htm" />
+    <Content Include="Assets\help\1 Introduction.htm" />
+    <Content Include="Assets\help\Component Creator 0.htm" />
+    <Content Include="Assets\help\Component Creator 1.htm" />
+    <Content Include="Assets\help\Component Creator 2.htm" />
+    <Content Include="Assets\help\Component Creator 3.htm" />
+    <Content Include="Assets\help\Component Creator 4.htm" />
+    <Content Include="Assets\help\Component Creator.htm" />
+    <Content Include="Assets\help\ComponentCreatorStart.htm" />
+    <Content Include="Assets\help\CONF_DBManager.htm" />
+    <Content Include="Assets\help\CONF_GlobalSettings1.htm" />
+    <Content Include="Assets\help\CONF_GlobalSettings2.htm" />
+    <Content Include="Assets\help\CONF_GlobalSettings3.htm" />
+    <Content Include="Assets\help\CONF_GlobalSettings5.htm" />
+    <Content Include="Assets\help\CONF_GlobalSettings6.htm" />
+    <Content Include="Assets\help\CONF_GlobalSettings7.htm" />
+    <Content Include="Assets\help\ContentScripts.js" />
+    <Content Include="Assets\help\DWSIMstyle.css" />
+    <Content Include="Assets\help\Footer.htm" />
+    <Content Include="Assets\help\Frame.htm" />
+    <Content Include="Assets\help\GO_MasterPropertyTable.htm" />
+    <Content Include="Assets\help\GO_Picture.htm" />
+    <Content Include="Assets\help\GO_SpreadsheetTable.htm" />
+    <Content Include="Assets\help\GO_Textbox.htm" />
+    <Content Include="Assets\help\Header.htm" />
+    <Content Include="Assets\help\Menue.htm" />
+    <Content Include="Assets\help\NoHelp.htm" />
+    <Content Include="Assets\help\Pictures\application_edit.png" />
+    <Content Include="Assets\help\Pictures\arrow-down.gif" />
+    <Content Include="Assets\help\Pictures\arrow-up.gif" />
+    <Content Include="Assets\help\Pictures\CompCreator1.png" />
+    <Content Include="Assets\help\Pictures\CompCreator1a.png" />
+    <Content Include="Assets\help\Pictures\CompCreator2.png" />
+    <Content Include="Assets\help\Pictures\CompCreator2a.png" />
+    <Content Include="Assets\help\Pictures\CompCreator3.png" />
+    <Content Include="Assets\help\Pictures\CompCreator4.png" />
+    <Content Include="Assets\help\Pictures\CompCreatorBO.png" />
+    <Content Include="Assets\help\Pictures\CONF0_1.png" />
+    <Content Include="Assets\help\Pictures\CONF0_2.png" />
+    <Content Include="Assets\help\Pictures\CONF0_3.png" />
+    <Content Include="Assets\help\Pictures\CONF0_5.png" />
+    <Content Include="Assets\help\Pictures\CONF0_6.png" />
+    <Content Include="Assets\help\Pictures\CONF0_7.png" />
+    <Content Include="Assets\help\Pictures\CONF_DBManager.png" />
+    <Content Include="Assets\help\Pictures\cross.png" />
+    <Content Include="Assets\help\Pictures\disconnect.png" />
+    <Content Include="Assets\help\Pictures\dwsim 3 bg.png" />
+    <Content Include="Assets\help\Pictures\GO_LinkedSpreadsheetTable0.png" />
+    <Content Include="Assets\help\Pictures\GO_LinkedSpreadsheetTable1.png" />
+    <Content Include="Assets\help\Pictures\GO_LinkedSpreadsheetTable2.png" />
+    <Content Include="Assets\help\Pictures\GO_MasterPropertyTable0.png" />
+    <Content Include="Assets\help\Pictures\GO_MasterPropertyTable1.png" />
+    <Content Include="Assets\help\Pictures\GO_MasterPropertyTable2.png" />
+    <Content Include="Assets\help\Pictures\GO_Picture.png" />
+    <Content Include="Assets\help\Pictures\GO_Textbox.png" />
+    <Content Include="Assets\help\Pictures\lock.png" />
+    <Content Include="Assets\help\Pictures\SO_Adjust1.png" />
+    <Content Include="Assets\help\Pictures\SO_Adjust2.png" />
+    <Content Include="Assets\help\Pictures\SO_Adjust3.png" />
+    <Content Include="Assets\help\Pictures\SO_CakeFilter1.png" />
+    <Content Include="Assets\help\Pictures\SO_CakeFilter2.png" />
+    <Content Include="Assets\help\Pictures\SO_CakeFilter3.png" />
+    <Content Include="Assets\help\Pictures\SO_Compressor1.png" />
+    <Content Include="Assets\help\Pictures\SO_Compressor2.png" />
+    <Content Include="Assets\help\Pictures\SO_Compressor3.png" />
+    <Content Include="Assets\help\Pictures\SO_Compressor4.png" />
+    <Content Include="Assets\help\Pictures\SO_Compressor5.png" />
+    <Content Include="Assets\help\Pictures\SO_Compressor6.png" />
+    <Content Include="Assets\help\Pictures\SO_Compressor7.png" />
+    <Content Include="Assets\help\Pictures\SO_Compressor8.png" />
+    <Content Include="Assets\help\Pictures\SO_CompSep1.png" />
+    <Content Include="Assets\help\Pictures\SO_CompSep2.png" />
+    <Content Include="Assets\help\Pictures\SO_Cooler1.png" />
+    <Content Include="Assets\help\Pictures\SO_CustomUO1.png" />
+    <Content Include="Assets\help\Pictures\SO_ExcelUO1.png" />
+    <Content Include="Assets\help\Pictures\SO_ExcelUO2.png" />
+    <Content Include="Assets\help\Pictures\SO_ExcelUO3.png" />
+    <Content Include="Assets\help\Pictures\SO_Expander1.png" />
+    <Content Include="Assets\help\Pictures\SO_Expander2.png" />
+    <Content Include="Assets\help\Pictures\SO_FlowsheetUO1.png" />
+    <Content Include="Assets\help\Pictures\SO_FlowsheetUO2.png" />
+    <Content Include="Assets\help\Pictures\SO_FlowsheetUO3.png" />
+    <Content Include="Assets\help\Pictures\SO_FlowsheetUO4.png" />
+    <Content Include="Assets\help\Pictures\SO_FlowsheetUO5.png" />
+    <Content Include="Assets\help\Pictures\SO_Heater1.png" />
+    <Content Include="Assets\help\Pictures\SO_Heatexchanger1.png" />
+    <Content Include="Assets\help\Pictures\SO_Heatexchanger2.png" />
+    <Content Include="Assets\help\Pictures\SO_Heatexchanger3.png" />
+    <Content Include="Assets\help\Pictures\SO_Mixer1.png" />
+    <Content Include="Assets\help\Pictures\SO_OrificePlate1.png" />
+    <Content Include="Assets\help\Pictures\SO_Pipe1.png" />
+    <Content Include="Assets\help\Pictures\SO_Pipe2.png" />
+    <Content Include="Assets\help\Pictures\SO_Pipe3.png" />
+    <Content Include="Assets\help\Pictures\SO_Pipe4.png" />
+    <Content Include="Assets\help\Pictures\SO_Pump1.png" />
+    <Content Include="Assets\help\Pictures\SO_Pump10.png" />
+    <Content Include="Assets\help\Pictures\SO_Pump2.png" />
+    <Content Include="Assets\help\Pictures\SO_Pump3.png" />
+    <Content Include="Assets\help\Pictures\SO_Pump4.png" />
+    <Content Include="Assets\help\Pictures\SO_Pump5.png" />
+    <Content Include="Assets\help\Pictures\SO_Pump6.png" />
+    <Content Include="Assets\help\Pictures\SO_Pump7.png" />
+    <Content Include="Assets\help\Pictures\SO_Pump8.png" />
+    <Content Include="Assets\help\Pictures\SO_Pump9.png" />
+    <Content Include="Assets\help\Pictures\SO_Reactor1.png" />
+    <Content Include="Assets\help\Pictures\SO_Reactor2.png" />
+    <Content Include="Assets\help\Pictures\SO_Recycle.png" />
+    <Content Include="Assets\help\Pictures\SO_Rigorous_Column1.png" />
+    <Content Include="Assets\help\Pictures\SO_Separator.png" />
+    <Content Include="Assets\help\Pictures\SO_ShortcutColumn1.png" />
+    <Content Include="Assets\help\Pictures\SO_SolidSeparator1.png" />
+    <Content Include="Assets\help\Pictures\SO_Specification1.png" />
+    <Content Include="Assets\help\Pictures\SO_Specification2.png" />
+    <Content Include="Assets\help\Pictures\SO_Splitter1.png" />
+    <Content Include="Assets\help\Pictures\SO_Stream1.png" />
+    <Content Include="Assets\help\Pictures\SO_Stream2.png" />
+    <Content Include="Assets\help\Pictures\SO_Stream3.png" />
+    <Content Include="Assets\help\Pictures\SO_Tank1.png" />
+    <Content Include="Assets\help\Pictures\SO_Valve.png" />
+    <Content Include="Assets\help\Pictures\StartCompCreator.png" />
+    <Content Include="Assets\help\Pictures\StartCompCreator2.png" />
+    <Content Include="Assets\help\Pictures\UR_01.png" />
+    <Content Include="Assets\help\Pictures\UR_02.png" />
+    <Content Include="Assets\help\Pictures\UR_03.png" />
+    <Content Include="Assets\help\Pictures\UR_04.png" />
+    <Content Include="Assets\help\Pictures\UR_05.png" />
+    <Content Include="Assets\help\Pictures\UT_BinaryEnvelope1.png" />
+    <Content Include="Assets\help\Pictures\UT_ColdFlowProps1.png" />
+    <Content Include="Assets\help\Pictures\UT_FlashVessel.png" />
+    <Content Include="Assets\help\Pictures\UT_HydrateDissociation1.png" />
+    <Content Include="Assets\help\Pictures\UT_HydrateDissociation2.png" />
+    <Content Include="Assets\help\Pictures\UT_PhaseEnvelope1.png" />
+    <Content Include="Assets\help\Pictures\UT_PSV.png" />
+    <Content Include="Assets\help\Pictures\UT_PureCompProps1.png" />
+    <Content Include="Assets\help\Pictures\UT_PureCompProps2.png" />
+    <Content Include="Assets\help\Pictures\UT_PureCompProps3.png" />
+    <Content Include="Assets\help\Pictures\UT_PureCompProps4.png" />
+    <Content Include="Assets\help\Pictures\UT_Triangular_LLE.png" />
+    <Content Include="Assets\help\Pictures\UT_TrueCriticalPoint1.png" />
+    <Content Include="Assets\help\Pictures\WorkInProgress.png" />
+    <Content Include="Assets\help\SO_Adjust.htm" />
+    <Content Include="Assets\help\SO_CakeFilter.htm" />
+    <Content Include="Assets\help\SO_Compressor.htm" />
+    <Content Include="Assets\help\SO_CompSep.htm" />
+    <Content Include="Assets\help\SO_Cooler.htm" />
+    <Content Include="Assets\help\SO_CustomUO.htm" />
+    <Content Include="Assets\help\SO_Energy_Stream.htm" />
+    <Content Include="Assets\help\SO_ExcelUO.htm" />
+    <Content Include="Assets\help\SO_Expander.htm" />
+    <Content Include="Assets\help\SO_FlowsheetUO.htm" />
+    <Content Include="Assets\help\SO_Heater.htm" />
+    <Content Include="Assets\help\SO_Heatexchanger.htm" />
+    <Content Include="Assets\help\SO_Material_Stream.htm" />
+    <Content Include="Assets\help\SO_Mixer.htm" />
+    <Content Include="Assets\help\SO_OrificePlate.htm" />
+    <Content Include="Assets\help\SO_Pipe_Segment.htm" />
+    <Content Include="Assets\help\SO_Pump.htm" />
+    <Content Include="Assets\help\SO_PumpCurveEditor.htm" />
+    <Content Include="Assets\help\SO_Reactor.htm" />
+    <Content Include="Assets\help\SO_Recycle.htm" />
+    <Content Include="Assets\help\SO_Rigorous_Column.htm" />
+    <Content Include="Assets\help\SO_Separator.htm" />
+    <Content Include="Assets\help\SO_Shortcut_Column.htm" />
+    <Content Include="Assets\help\SO_SolidSeparator.htm" />
+    <Content Include="Assets\help\SO_Specification.htm" />
+    <Content Include="Assets\help\SO_Splitter.htm" />
+    <Content Include="Assets\help\SO_Tank.htm" />
+    <Content Include="Assets\help\SO_Valve.htm" />
+    <Content Include="Assets\help\UR_Case_Definition_1.htm" />
+    <Content Include="Assets\help\UR_Data_Regression_3.htm" />
+    <Content Include="Assets\help\UR_Diagrams_4.htm" />
+    <Content Include="Assets\help\UR_Introduction_0.htm" />
+    <Content Include="Assets\help\UR_Model_Definition_2.htm" />
+    <Content Include="Assets\help\UT_BinaryEnvelope.htm" />
+    <Content Include="Assets\help\UT_ColdFlowProps.htm" />
+    <Content Include="Assets\help\UT_HydrateDissociation.htm" />
+    <Content Include="Assets\help\UT_PhaseEnvelope.htm" />
+    <Content Include="Assets\help\UT_PSVSizing.htm" />
+    <Content Include="Assets\help\UT_PureCompProps.htm" />
+    <Content Include="Assets\help\UT_Triangular_LLE.htm" />
+    <Content Include="Assets\help\UT_TrueCriticalPoint.htm" />
+    <Content Include="Assets\help\UT_VesselSizing.htm" />
+    <None Include="Assets\Ipopt39.dll" />
+    <None Include="Assets\IpOptFSS39.dll" />
+    <None Include="Assets\jcosmo.jar" />
+    <None Include="Assets\libhsl.dll" />
+    <Content Include="Assets\licenses\chemsep_database.txt" />
+    <Content Include="Assets\licenses\dockpanel.txt" />
+    <Content Include="Assets\licenses\epl-v1.txt" />
+    <Content Include="Assets\licenses\gpl.txt" />
+    <Content Include="Assets\licenses\lgpl-2.1.txt" />
+    <Content Include="Assets\licenses\lgpl-3.0.txt" />
+    <Content Include="Assets\licenses\licencas.txt" />
+    <Content Include="Assets\licenses\mit.txt" />
+    <Content Include="Assets\licenses\myneoreport.txt" />
+    <Content Include="Assets\licenses\perl artistic license v2.txt" />
+    <Content Include="Assets\licenses\zedgraph.txt" />
+    <None Include="Assets\lpsolve55.dll" />
+    <None Include="Assets\PC_SAFT_PROP.dll" />
+    <None Include="Assets\PetAz.dll" />
     <Content Include="dwsim_splash.ico" />
     <EmbeddedResource Include="version.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -3150,6 +3652,9 @@
   <PropertyGroup>
     <PreBuildEvent>"C:\Program Files (x86)\Git\bin\git.exe" rev-parse --short HEAD &gt; "$(ProjectDir)version.txt"
 Exit 0</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(ProjectDir)Assets" "$(TargetDir)" /E /Y /F</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

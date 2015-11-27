@@ -5,8 +5,6 @@ Imports Microsoft.Scripting.Hosting
 Imports System.Drawing.Text
 Imports System.Reflection
 Imports System.ComponentModel
-Imports LuaInterface
-
 Imports FarsiLibrary.Win
 Imports DWSIM.DWSIM.Outros
 

@@ -23,7 +23,6 @@ Imports System.IO
 Imports System.Runtime.InteropServices
 Imports CapeOpen
 Imports System.Runtime.Serialization.Formatters
-Imports LuaInterface
 Imports System.Linq
 
 Namespace DWSIM.SimulationObjects.UnitOps
@@ -187,47 +186,47 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             Select Case Language
                 Case 4
-                    Dim lscript As New Lua
-                    lscript("Flowsheet") = FlowSheet
-                    lscript("Spreadsheet") = FlowSheet.FormSpreadsheet
-                    lscript("Plugins") = My.MyApplication.UtilityPlugins
-                    Dim Solver As New DWSIM.Flowsheet.FlowsheetSolver
-                    lscript("Solver") = Solver
-                    lscript("Me") = Me
-                    For Each variable In InputVariables
-                        lscript(variable.Key) = variable.Value
-                    Next
-                    lscript("ims1") = ims1
-                    lscript("ims2") = ims2
-                    lscript("ims3") = ims3
-                    lscript("ims4") = ims4
-                    lscript("ims5") = ims5
-                    lscript("ims6") = ims6
-                    lscript("oms1") = oms1
-                    lscript("oms2") = oms2
-                    lscript("oms3") = oms3
-                    lscript("oms4") = oms4
-                    lscript("oms5") = oms5
-                    lscript("oms6") = oms6
-                    lscript("ies1") = ies1
-                    lscript("oes1") = oes1
-                    lscript("DWSIM") = GetType(DWSIM.ClassesBasicasTermodinamica.Fase).Assembly
-                    Try
-                        Dim txtcode As String = ""
-                        If Not Includes Is Nothing Then
-                            For Each fname As String In Me.Includes
-                                txtcode += File.ReadAllText(fname) + vbCrLf
-                            Next
-                        End If
-                        txtcode += Me.ScriptText
-                        lscript.DoString(txtcode)
-                        OutputVariables.Clear()
-                    Catch ex As Exception
-                        Me.ErrorMessage = ex.ToString
-                        Me.DeCalculate()
-                        lscript = Nothing
-                        Throw ex
-                    End Try
+                    'Dim lscript As New Lua
+                    'lscript("Flowsheet") = FlowSheet
+                    'lscript("Spreadsheet") = FlowSheet.FormSpreadsheet
+                    'lscript("Plugins") = My.MyApplication.UtilityPlugins
+                    'Dim Solver As New DWSIM.Flowsheet.FlowsheetSolver
+                    'lscript("Solver") = Solver
+                    'lscript("Me") = Me
+                    'For Each variable In InputVariables
+                    '    lscript(variable.Key) = variable.Value
+                    'Next
+                    'lscript("ims1") = ims1
+                    'lscript("ims2") = ims2
+                    'lscript("ims3") = ims3
+                    'lscript("ims4") = ims4
+                    'lscript("ims5") = ims5
+                    'lscript("ims6") = ims6
+                    'lscript("oms1") = oms1
+                    'lscript("oms2") = oms2
+                    'lscript("oms3") = oms3
+                    'lscript("oms4") = oms4
+                    'lscript("oms5") = oms5
+                    'lscript("oms6") = oms6
+                    'lscript("ies1") = ies1
+                    'lscript("oes1") = oes1
+                    'lscript("DWSIM") = GetType(DWSIM.ClassesBasicasTermodinamica.Fase).Assembly
+                    'Try
+                    '    Dim txtcode As String = ""
+                    '    If Not Includes Is Nothing Then
+                    '        For Each fname As String In Me.Includes
+                    '            txtcode += File.ReadAllText(fname) + vbCrLf
+                    '        Next
+                    '    End If
+                    '    txtcode += Me.ScriptText
+                    '    lscript.DoString(txtcode)
+                    '    OutputVariables.Clear()
+                    'Catch ex As Exception
+                    '    Me.ErrorMessage = ex.ToString
+                    '    Me.DeCalculate()
+                    '    lscript = Nothing
+                    '    Throw ex
+                    'End Try
                 Case 2
                     engine = IronPython.Hosting.Python.CreateEngine()
                     Dim paths(My.Settings.ScriptPaths.Count - 1) As String
@@ -763,51 +762,51 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             Select Case Language
                 Case 4
-                    Dim lscript As New Lua
-                    Try
-                        lscript("pme") = Me._simcontext
-                        lscript("dwsim") = GetType(DWSIM.ClassesBasicasTermodinamica.Fase).Assembly
-                        lscript("capeopen") = GetType(ICapeIdentification).Assembly
-                        lscript("ims1") = ims1
-                        lscript("ims2") = ims2
-                        lscript("ims3") = ims3
-                        lscript("ims4") = ims4
-                        lscript("ims5") = ims5
-                        lscript("ims6") = ims6
-                        lscript("ims7") = ims7
-                        lscript("ims8") = ims8
-                        lscript("ims9") = ims9
-                        lscript("ims10") = ims10
-                        lscript("oms1") = oms1
-                        lscript("oms2") = oms2
-                        lscript("oms3") = oms3
-                        lscript("oms4") = oms4
-                        lscript("oms5") = oms5
-                        lscript("oms6") = oms6
-                        lscript("oms7") = oms7
-                        lscript("oms8") = oms8
-                        lscript("oms9") = oms9
-                        lscript("oms10") = oms10
-                        lscript("ies1") = ies1
-                        lscript("oes1") = oes1
-                        Dim txtcode As String = ""
-                        If Not Includes Is Nothing Then
-                            For Each fname As String In Me.Includes
-                                txtcode += File.ReadAllText(fname) + vbCrLf
-                            Next
-                        End If
-                        txtcode += Me.ScriptText
-                        lscript.DoString(txtcode)
-                        _lastrun = "script executed succesfully."
-                    Catch ex As Exception
-                        Me.ErrorMessage = ex.ToString
-                        CType(Me._simcontext, ICapeDiagnostic).LogMessage(Me.ErrorMessage)
-                        Throw ex
-                    Finally
-                        Me._calclog = Me.ErrorMessage
-                        _lastrun = "error executing script: " & _calclog
-                        lscript = Nothing
-                    End Try
+                    'Dim lscript As New Lua
+                    'Try
+                    '    lscript("pme") = Me._simcontext
+                    '    lscript("dwsim") = GetType(DWSIM.ClassesBasicasTermodinamica.Fase).Assembly
+                    '    lscript("capeopen") = GetType(ICapeIdentification).Assembly
+                    '    lscript("ims1") = ims1
+                    '    lscript("ims2") = ims2
+                    '    lscript("ims3") = ims3
+                    '    lscript("ims4") = ims4
+                    '    lscript("ims5") = ims5
+                    '    lscript("ims6") = ims6
+                    '    lscript("ims7") = ims7
+                    '    lscript("ims8") = ims8
+                    '    lscript("ims9") = ims9
+                    '    lscript("ims10") = ims10
+                    '    lscript("oms1") = oms1
+                    '    lscript("oms2") = oms2
+                    '    lscript("oms3") = oms3
+                    '    lscript("oms4") = oms4
+                    '    lscript("oms5") = oms5
+                    '    lscript("oms6") = oms6
+                    '    lscript("oms7") = oms7
+                    '    lscript("oms8") = oms8
+                    '    lscript("oms9") = oms9
+                    '    lscript("oms10") = oms10
+                    '    lscript("ies1") = ies1
+                    '    lscript("oes1") = oes1
+                    '    Dim txtcode As String = ""
+                    '    If Not Includes Is Nothing Then
+                    '        For Each fname As String In Me.Includes
+                    '            txtcode += File.ReadAllText(fname) + vbCrLf
+                    '        Next
+                    '    End If
+                    '    txtcode += Me.ScriptText
+                    '    lscript.DoString(txtcode)
+                    '    _lastrun = "script executed succesfully."
+                    'Catch ex As Exception
+                    '    Me.ErrorMessage = ex.ToString
+                    '    CType(Me._simcontext, ICapeDiagnostic).LogMessage(Me.ErrorMessage)
+                    '    Throw ex
+                    'Finally
+                    '    Me._calclog = Me.ErrorMessage
+                    '    _lastrun = "error executing script: " & _calclog
+                    '    lscript = Nothing
+                    'End Try
                 Case 2
                     Dim source As Microsoft.Scripting.Hosting.ScriptSource
                     Try
