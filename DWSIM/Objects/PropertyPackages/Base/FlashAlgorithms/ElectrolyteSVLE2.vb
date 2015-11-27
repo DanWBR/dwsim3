@@ -278,7 +278,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     problem.AddOption("mu_strategy", "adaptive")
                     problem.AddOption("hessian_approximation", "limited-memory")
                     problem.AddOption("print_level", 5)
-                    problem.AddOption("linear_solver", LinearSolver)
+                    If Not Environment.Is64BitProcess Then problem.AddOption("linear_solver", LinearSolver)
                     'problem.SetIntermediateCallback(AddressOf intermediate)
                     'solve the problem 
                     status = problem.SolveProblem(initval2, obj, Nothing, Nothing, Nothing, Nothing)

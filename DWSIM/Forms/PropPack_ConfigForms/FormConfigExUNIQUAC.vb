@@ -105,6 +105,8 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(id1) Then
         Me.tbp2.Text = ppu.ElectrolyteFlash.ObjFuncChemEqWeight
         Me.tbp3.Text = ppu.ElectrolyteFlash.ObjFuncMassBalWeight
 
+        Me.cbLS.Enabled = Not Environment.Is64BitProcess
+
         Me.cbLS.SelectedItem = ppu.ElectrolyteFlash.LinearSolver
 
         Me.chkCalcChemEq.Checked = ppu.ElectrolyteFlash.CalculateChemicalEquilibria

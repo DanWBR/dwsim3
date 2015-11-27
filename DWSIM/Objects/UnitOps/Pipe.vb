@@ -231,7 +231,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Case FlowPackage.Lockhart_Martinelli
                     fpp = New DWSIM.FlowPackages.LockhartMartinelli
                 Case FlowPackage.Petalas_Aziz
-                    fpp = New DWSIM.FlowPackages.PetalasAziz
+                    If Not Environment.Is64BitProcess Then
+                        fpp = New DWSIM.FlowPackages.PetalasAziz
+                    Else
+                        FlowSheet.WriteToLog("'Petalas-Aziz' model not available in 64-bit mode. Falling back to 'Beggs & Brill'...", Color.Blue, FormClasses.TipoAviso.Aviso)
+                        fpp = New DWSIM.FlowPackages.BeggsBrill
+                    End If
                 Case Else
                     fpp = New DWSIM.FlowPackages.BeggsBrill
             End Select

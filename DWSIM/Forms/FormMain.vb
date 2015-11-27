@@ -442,10 +442,12 @@ Public Class FormMain
 
     Sub AddPropPacks()
 
-        Dim FPP As FPROPSPropertyPackage = New FPROPSPropertyPackage()
-        FPP.ComponentName = DWSIM.App.GetLocalString("FPP")
-        FPP.ComponentDescription = DWSIM.App.GetLocalString("DescFPP")
-        PropertyPackages.Add(FPP.ComponentName.ToString, FPP)
+        If Not Environment.Is64BitProcess Then
+            Dim FPP As FPROPSPropertyPackage = New FPROPSPropertyPackage()
+            FPP.ComponentName = DWSIM.App.GetLocalString("FPP")
+            FPP.ComponentDescription = DWSIM.App.GetLocalString("DescFPP")
+            PropertyPackages.Add(FPP.ComponentName.ToString, FPP)
+        End If
 
         Dim CPPP As CoolPropPropertyPackage = New CoolPropPropertyPackage()
         CPPP.ComponentName = "CoolProp"
@@ -462,10 +464,12 @@ Public Class FormMain
         SEAPP.ComponentDescription = DWSIM.App.GetLocalString("DescSEAPP")
         PropertyPackages.Add(SEAPP.ComponentName.ToString, SEAPP)
 
-        Dim PCSAFTPP As PCSAFTPropertyPackage = New PCSAFTPropertyPackage()
-        PCSAFTPP.ComponentName = "PC-SAFT"
-        PCSAFTPP.ComponentDescription = DWSIM.App.GetLocalString("DescPCSAFTPP")
-        PropertyPackages.Add(PCSAFTPP.ComponentName.ToString, PCSAFTPP)
+        If Not Environment.Is64BitProcess Then
+            Dim PCSAFTPP As PCSAFTPropertyPackage = New PCSAFTPropertyPackage()
+            PCSAFTPP.ComponentName = "PC-SAFT"
+            PCSAFTPP.ComponentDescription = DWSIM.App.GetLocalString("DescPCSAFTPP")
+            PropertyPackages.Add(PCSAFTPP.ComponentName.ToString, PCSAFTPP)
+        End If
 
         Dim PRPP As PengRobinsonPropertyPackage = New PengRobinsonPropertyPackage()
         PRPP.ComponentName = "Peng-Robinson (PR)"
