@@ -1273,6 +1273,7 @@ Public Class FormMain
             m_childcount += 1
 
             Dim form As FormFlowsheet = New FormFlowsheet()
+            If Not DWSIM.App.IsRunningOnMono Then form.FormObjList = New frmObjList
             My.Application.CAPEOPENMode = False
             My.Application.ActiveSimulation = form
 
@@ -1949,6 +1950,7 @@ Public Class FormMain
         Me.SuspendLayout()
 
         Dim form As FormFlowsheet = New FormFlowsheet()
+        If Not DWSIM.App.IsRunningOnMono Then form.FormObjList = New frmObjList
         My.Application.CAPEOPENMode = False
         My.Application.ActiveSimulation = form
 
@@ -3735,6 +3737,7 @@ ruf:                Application.DoEvents()
     Public Sub NewToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NewToolStripButton.Click, NewToolStripMenuItem.Click
 
         Dim newform As New FormFlowsheet()
+        If Not DWSIM.App.IsRunningOnMono Then newform.FormObjList = New frmObjList
 
         With newform
             .Text = "Simulation" & m_childcount
