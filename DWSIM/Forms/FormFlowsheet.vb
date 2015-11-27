@@ -136,8 +136,8 @@ Imports WeifenLuo.WinFormsUI.Docking
     Private Sub FormChild_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         If DWSIM.App.IsRunningOnMono Then
-            Me.FlowLayoutPanel1.AutoSize = False
-            Me.FlowLayoutPanel1.Height = 50
+            'Me.FlowLayoutPanel1.AutoSize = False
+            'Me.FlowLayoutPanel1.Height = 50
             Me.MenuStrip1.Visible = False
         Else
             FormObjList = New frmObjList

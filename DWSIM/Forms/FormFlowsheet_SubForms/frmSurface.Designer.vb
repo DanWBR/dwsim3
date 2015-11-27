@@ -535,6 +535,7 @@ Partial Class frmSurface
         Me.FlowLayoutPanel1.ResumeLayout(False)
         Me.FlowLayoutPanel1.PerformLayout()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
     Public WithEvents FlowsheetDesignSurface As Microsoft.Msdn.Samples.DesignSurface.GraphicsSurface

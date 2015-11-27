@@ -78,6 +78,11 @@ Public Class frmSurface
             Flowsheet = My.Application.ActiveSimulation
         End If
 
+        If DWSIM.App.IsRunningOnMono Then
+            Me.FlowLayoutPanel1.AutoSize = False
+            Me.FlowLayoutPanel1.Height = 25
+        End If
+
         PGEx1 = Me.Flowsheet.FormProps.PGEx1
         PGEx2 = Me.Flowsheet.FormProps.PGEx2
 
@@ -3399,7 +3404,17 @@ Public Class frmSurface
 
                 Dim mystr As DWSIM.SimulationObjects.Streams.MaterialStream = Flowsheet.Collections.CLCS_MaterialStreamCollection(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
 
+                Dim editable As Boolean = False
+
                 If Not mystr.GraphicObject.InputConnectors(0).IsAttached Then
+                    editable = True
+                ElseIf mystr.GraphicObject.InputConnectors(0).IsAttached Then
+                    If mystr.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.TipoObjeto = TipoObjeto.OT_Reciclo Then
+                        editable = True
+                    End If
+                End If
+
+                If editable Then
 
                     Dim selectionControl As New CompositionEditorForm
                     selectionControl.Text = mystr.GraphicObject.Tag & DWSIM.App.GetLocalString("EditComp")

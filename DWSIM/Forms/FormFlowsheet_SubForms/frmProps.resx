@@ -180,6 +180,174 @@
   <data name="FTSProps.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 8.25pt</value>
   </data>
+  <data name="&gt;&gt;PGEx1.Name" xml:space="preserve">
+    <value>PGEx1</value>
+  </data>
+  <data name="&gt;&gt;PGEx1.Type" xml:space="preserve">
+    <value>PropertyGridEx.PropertyGridEx, PropertyGridEx, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;PGEx1.Parent" xml:space="preserve">
+    <value>TSProps</value>
+  </data>
+  <data name="&gt;&gt;PGEx1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TSProps.Size" type="System.Drawing.Size, System.Drawing">
+    <value>393, 546</value>
+  </data>
+  <data name="TSProps.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="TSProps.Title" xml:space="preserve">
+    <value>Propriedades</value>
+  </data>
+  <data name="&gt;&gt;TSProps.Name" xml:space="preserve">
+    <value>TSProps</value>
+  </data>
+  <data name="&gt;&gt;TSProps.Type" xml:space="preserve">
+    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.5809.16512, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;TSProps.Parent" xml:space="preserve">
+    <value>FTSProps</value>
+  </data>
+  <data name="&gt;&gt;TSProps.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="PGEx2.DocCommentDescription.AccessibleName" xml:space="preserve">
+    <value />
+  </data>
+  <data name="PGEx2.DocCommentDescription.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="PGEx2.DocCommentDescription.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 19</value>
+  </data>
+  <data name="PGEx2.DocCommentDescription.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 52</value>
+  </data>
+  <data name="PGEx2.DocCommentDescription.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="PGEx2.DocCommentTitle.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 8.25pt, style=Bold</value>
+  </data>
+  <data name="PGEx2.DocCommentTitle.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="PGEx2.DocCommentTitle.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="PGEx2.DocCommentTitle.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="PGEx2.DocCommentTitle.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="PGEx2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="PGEx2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="PGEx2.SelectedObject" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAEVQcm9wZXJ0eUdyaWRFeCwgVmVyc2lvbj0xLjAuMC4wLCBDdWx0
+        dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPW51bGwFAQAAACdQcm9wZXJ0eUdyaWRFeC5DdXN0b21Q
+        cm9wZXJ0eUNvbGxlY3Rpb24BAAAAE0NvbGxlY3Rpb25CYXNlK2xpc3QDHFN5c3RlbS5Db2xsZWN0aW9u
+        cy5BcnJheUxpc3QCAAAACQMAAAAEAwAAABxTeXN0ZW0uQ29sbGVjdGlvbnMuQXJyYXlMaXN0AwAAAAZf
+        aXRlbXMFX3NpemUIX3ZlcnNpb24FAAAICAkEAAAAAAAAAAAAAAAQBAAAAAAAAAAL
+</value>
+  </data>
+  <data name="PGEx2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>393, 546</value>
+  </data>
+  <data name="PGEx2.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="PGEx2.ToolStrip.AccessibleName" xml:space="preserve">
+    <value>ToolBar</value>
+  </data>
+  <data name="PGEx2.ToolStrip.AutoSize" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="PGEx2.ToolStrip.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>None</value>
+  </data>
+  <data name="PGEx2.ToolStrip.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt</value>
+  </data>
+  <data name="PGEx2.ToolStrip.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 1</value>
+  </data>
+  <data name="PGEx2.ToolStrip.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 0, 1, 0</value>
+  </data>
+  <data name="PGEx2.ToolStrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>282, 25</value>
+  </data>
+  <data name="PGEx2.ToolStrip.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="PGEx2.ToolStrip.Text" xml:space="preserve">
+    <value>PropertyGridToolBar</value>
+  </data>
+  <data name="PGEx2.ToolStrip.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;PGEx2.Name" xml:space="preserve">
+    <value>PGEx2</value>
+  </data>
+  <data name="&gt;&gt;PGEx2.Type" xml:space="preserve">
+    <value>PropertyGridEx.PropertyGridEx, PropertyGridEx, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;PGEx2.Parent" xml:space="preserve">
+    <value>TSObj</value>
+  </data>
+  <data name="&gt;&gt;PGEx2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="TSObj.Size" type="System.Drawing.Size, System.Drawing">
+    <value>393, 546</value>
+  </data>
+  <data name="TSObj.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="TSObj.Title" xml:space="preserve">
+    <value>Aparência</value>
+  </data>
+  <data name="&gt;&gt;TSObj.Name" xml:space="preserve">
+    <value>TSObj</value>
+  </data>
+  <data name="&gt;&gt;TSObj.Type" xml:space="preserve">
+    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.5809.16512, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;TSObj.Parent" xml:space="preserve">
+    <value>FTSProps</value>
+  </data>
+  <data name="&gt;&gt;TSObj.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="FTSProps.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 24</value>
+  </data>
+  <data name="FTSProps.Size" type="System.Drawing.Size, System.Drawing">
+    <value>395, 567</value>
+  </data>
+  <data name="FTSProps.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;FTSProps.Name" xml:space="preserve">
+    <value>FTSProps</value>
+  </data>
+  <data name="&gt;&gt;FTSProps.Type" xml:space="preserve">
+    <value>FarsiLibrary.Win.FATabStrip, TabStrip, Version=2.0.5809.16512, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;FTSProps.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;FTSProps.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="PGEx1.DocCommentDescription.AccessibleName" xml:space="preserve">
     <value />
   </data>
@@ -267,6 +435,9 @@
   <data name="PGEx1.ToolStrip.Text" xml:space="preserve">
     <value>PropertyGridToolBar</value>
   </data>
+  <data name="PGEx1.ToolStrip.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="&gt;&gt;PGEx1.Name" xml:space="preserve">
     <value>PGEx1</value>
   </data>
@@ -278,162 +449,6 @@
   </data>
   <data name="&gt;&gt;PGEx1.ZOrder" xml:space="preserve">
     <value>0</value>
-  </data>
-  <data name="TSProps.Size" type="System.Drawing.Size, System.Drawing">
-    <value>393, 546</value>
-  </data>
-  <data name="TSProps.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="TSProps.Title" xml:space="preserve">
-    <value>Propriedades</value>
-  </data>
-  <data name="&gt;&gt;TSProps.Name" xml:space="preserve">
-    <value>TSProps</value>
-  </data>
-  <data name="&gt;&gt;TSProps.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.5808.34482, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;TSProps.Parent" xml:space="preserve">
-    <value>FTSProps</value>
-  </data>
-  <data name="&gt;&gt;TSProps.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="PGEx2.DocCommentDescription.AccessibleName" xml:space="preserve">
-    <value />
-  </data>
-  <data name="PGEx2.DocCommentDescription.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="PGEx2.DocCommentDescription.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 19</value>
-  </data>
-  <data name="PGEx2.DocCommentDescription.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 52</value>
-  </data>
-  <data name="PGEx2.DocCommentDescription.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="PGEx2.DocCommentTitle.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Tahoma, 8.25pt, style=Bold</value>
-  </data>
-  <data name="PGEx2.DocCommentTitle.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="PGEx2.DocCommentTitle.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="PGEx2.DocCommentTitle.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="PGEx2.DocCommentTitle.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="PGEx2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="PGEx2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="PGEx2.SelectedObject" mimetype="application/x-microsoft.net.object.binary.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAEVQcm9wZXJ0eUdyaWRFeCwgVmVyc2lvbj0xLjAuMC4wLCBDdWx0
-        dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPW51bGwFAQAAACdQcm9wZXJ0eUdyaWRFeC5DdXN0b21Q
-        cm9wZXJ0eUNvbGxlY3Rpb24BAAAAE0NvbGxlY3Rpb25CYXNlK2xpc3QDHFN5c3RlbS5Db2xsZWN0aW9u
-        cy5BcnJheUxpc3QCAAAACQMAAAAEAwAAABxTeXN0ZW0uQ29sbGVjdGlvbnMuQXJyYXlMaXN0AwAAAAZf
-        aXRlbXMFX3NpemUIX3ZlcnNpb24FAAAICAkEAAAAAAAAAAAAAAAQBAAAAAAAAAAL
-</value>
-  </data>
-  <data name="PGEx2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>360, 450</value>
-  </data>
-  <data name="PGEx2.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="PGEx2.ToolStrip.AccessibleName" xml:space="preserve">
-    <value>ToolBar</value>
-  </data>
-  <data name="PGEx2.ToolStrip.AutoSize" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="PGEx2.ToolStrip.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>None</value>
-  </data>
-  <data name="PGEx2.ToolStrip.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 8.25pt</value>
-  </data>
-  <data name="PGEx2.ToolStrip.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 1</value>
-  </data>
-  <data name="PGEx2.ToolStrip.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 0, 1, 0</value>
-  </data>
-  <data name="PGEx2.ToolStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>282, 25</value>
-  </data>
-  <data name="PGEx2.ToolStrip.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="PGEx2.ToolStrip.Text" xml:space="preserve">
-    <value>PropertyGridToolBar</value>
-  </data>
-  <data name="PGEx2.ToolStrip.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;PGEx2.Name" xml:space="preserve">
-    <value>PGEx2</value>
-  </data>
-  <data name="&gt;&gt;PGEx2.Type" xml:space="preserve">
-    <value>PropertyGridEx.PropertyGridEx, PropertyGridEx, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;PGEx2.Parent" xml:space="preserve">
-    <value>TSObj</value>
-  </data>
-  <data name="&gt;&gt;PGEx2.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="TSObj.Size" type="System.Drawing.Size, System.Drawing">
-    <value>360, 450</value>
-  </data>
-  <data name="TSObj.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="TSObj.Title" xml:space="preserve">
-    <value>Aparência</value>
-  </data>
-  <data name="&gt;&gt;TSObj.Name" xml:space="preserve">
-    <value>TSObj</value>
-  </data>
-  <data name="&gt;&gt;TSObj.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.5808.34482, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;TSObj.Parent" xml:space="preserve">
-    <value>FTSProps</value>
-  </data>
-  <data name="&gt;&gt;TSObj.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="FTSProps.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 24</value>
-  </data>
-  <data name="FTSProps.Size" type="System.Drawing.Size, System.Drawing">
-    <value>395, 567</value>
-  </data>
-  <data name="FTSProps.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;FTSProps.Name" xml:space="preserve">
-    <value>FTSProps</value>
-  </data>
-  <data name="&gt;&gt;FTSProps.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStrip, TabStrip, Version=2.0.5808.34482, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;FTSProps.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;FTSProps.ZOrder" xml:space="preserve">
-    <value>1</value>
   </data>
   <data name="LblNomeObj.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -480,6 +495,15 @@
   <metadata name="dckMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>325, 17</value>
   </metadata>
+  <data name="dckMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>197, 224</value>
+  </data>
+  <data name="&gt;&gt;dckMenu.Name" xml:space="preserve">
+    <value>dckMenu</value>
+  </data>
+  <data name="&gt;&gt;dckMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="FloatToolStripMenuItem.ShowShortcutKeys" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
@@ -569,15 +593,6 @@
   </data>
   <data name="DocumentToolStripMenuItem.Text" xml:space="preserve">
     <value>Document</value>
-  </data>
-  <data name="dckMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>197, 224</value>
-  </data>
-  <data name="&gt;&gt;dckMenu.Name" xml:space="preserve">
-    <value>dckMenu</value>
-  </data>
-  <data name="&gt;&gt;dckMenu.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="FlowLayoutPanel1.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
     <value>GrowAndShrink</value>
