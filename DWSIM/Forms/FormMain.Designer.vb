@@ -3,6 +3,7 @@ Imports System.Runtime.Serialization.Formatters
 Imports Infralution.Localization
 Imports System.Globalization
 Imports System.Linq
+Imports System.Runtime.Serialization.Formatters.Binary
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class FormMain
@@ -627,11 +628,21 @@ Partial Class FormMain
     Public Sub New()
 
         If DWSIM.App.IsRunningOnMono() Then
+
             'handler for unhandled exceptions (!)
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException)
             AddHandler Application.ThreadException, AddressOf MyApplication_UnhandledException
             AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf MyApplication_UnhandledException2
             My.MyApplication.UtilityPlugins = New Dictionary(Of String, Interfaces.IUtilityPlugin)
+
+            'settings workaround for Mono
+            'load settings from INI file
+            DWSIM.App.LoadSettings()
+
+            'remove user.config file
+            Dim config = System.Configuration.ConfigurationManager.OpenExeConfiguration(System.Configuration.ConfigurationUserLevel.PerUserRoaming)
+            If File.Exists(config.FilePath) Then File.Delete(config.FilePath)
+
         End If
 
         ' This call is required by the Windows Form Designer.
@@ -647,10 +658,62 @@ Partial Class FormMain
         If My.Settings.UserDatabases Is Nothing Then My.Settings.UserDatabases = New System.Collections.Specialized.StringCollection
         If My.Settings.UserInteractionsDatabases Is Nothing Then My.Settings.UserInteractionsDatabases = New System.Collections.Specialized.StringCollection
 
-        pathsep = Path.DirectorySeparatorChar
+        'load user unit systems
 
-        'Check if DWSIM is running in Mono mode, then load settings from file.
-        If DWSIM.App.IsRunningOnMono Then DWSIM.App.LoadSettings()
+        My.MyApplication.UserUnitSystems = New Dictionary(Of String, DWSIM.SistemasDeUnidades.Unidades)
+        My.MyApplication.UtilityPlugins = New Dictionary(Of String, Interfaces.IUtilityPlugin)
+
+        Dim xdoc As New XDocument()
+        Dim xel As XElement
+
+        If My.Settings.UserUnits <> "" Then
+
+            Dim myarraylist As New ArrayList
+
+            Try
+                xdoc = XDocument.Load(New StringReader(My.Settings.UserUnits))
+            Catch ex As Exception
+
+            End Try
+
+            If xdoc.Root Is Nothing Then
+
+                Dim formatter As New BinaryFormatter()
+                Dim bytearray() As Byte
+                bytearray = System.Text.Encoding.ASCII.GetBytes(My.Settings.UserUnits)
+                formatter = New BinaryFormatter()
+                Dim stream As New IO.MemoryStream(bytearray)
+
+                Try
+                    myarraylist = CType(formatter.Deserialize(stream), ArrayList)
+                Catch ex As Exception
+                Finally
+                    stream.Close()
+                End Try
+
+            Else
+
+                Dim data As List(Of XElement) = xdoc.Element("Units").Elements.ToList
+
+                For Each xel In data
+                    Try
+                        Dim su As New DWSIM.SistemasDeUnidades.UnidadesSI()
+                        su.LoadData(xel.Elements.ToList)
+                        myarraylist.Add(su)
+                    Catch ex As Exception
+
+                    End Try
+                Next
+
+            End If
+
+            For Each su As DWSIM.SistemasDeUnidades.Unidades In myarraylist
+                If Not My.MyApplication.UserUnitSystems.ContainsKey(su.nome) Then My.MyApplication.UserUnitSystems.Add(su.nome, su)
+            Next
+
+        End If
+
+        pathsep = Path.DirectorySeparatorChar
 
         If Not My.Application.CAPEOPENMode Then
             AddPropPacks()

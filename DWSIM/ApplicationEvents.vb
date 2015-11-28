@@ -65,7 +65,7 @@ Namespace My
                 End Using
             End Using
 
-            My.Settings.Save()
+            If Not DWSIM.App.IsRunningOnMono Then My.Settings.Save()
 
         End Sub
 
@@ -128,62 +128,6 @@ Namespace My
             CudafyModes.Compiler = eGPUCompiler.All
             CudafyModes.Target = My.Settings.CudafyTarget
 
-            'load user unit systems
-
-            UserUnitSystems = New Dictionary(Of String, DWSIM.SistemasDeUnidades.Unidades)
-
-            UtilityPlugins = New Dictionary(Of String, Interfaces.IUtilityPlugin)
-
-            Dim xdoc As New XDocument()
-            Dim xel As XElement
-
-            If My.Settings.UserUnits <> "" Then
-
-                Dim myarraylist As New ArrayList
-
-                Try
-                    xdoc = XDocument.Load(New StringReader(My.Settings.UserUnits))
-                Catch ex As Exception
-
-                End Try
-
-                If xdoc.Root Is Nothing Then
-
-                    Dim formatter As New BinaryFormatter()
-                    Dim bytearray() As Byte
-                    bytearray = System.Text.Encoding.ASCII.GetBytes(My.Settings.UserUnits)
-                    formatter = New BinaryFormatter()
-                    Dim stream As New IO.MemoryStream(bytearray)
-
-                    Try
-                        myarraylist = CType(formatter.Deserialize(stream), ArrayList)
-                    Catch ex As Exception
-                    Finally
-                        stream.Close()
-                    End Try
-
-                Else
-
-                    Dim data As List(Of XElement) = xdoc.Element("Units").Elements.ToList
-
-                    For Each xel In data
-                        Try
-                            Dim su As New DWSIM.SistemasDeUnidades.UnidadesSI()
-                            su.LoadData(xel.Elements.ToList)
-                            myarraylist.Add(su)
-                        Catch ex As Exception
-
-                        End Try
-                    Next
-
-                End If
-
-                For Each su As DWSIM.SistemasDeUnidades.Unidades In myarraylist
-                    If Not UserUnitSystems.ContainsKey(su.nome) Then UserUnitSystems.Add(su.nome, su)
-                Next
-
-            End If
-
             'copy static DLLs according to the executing platform (32 or 64-bit)
 
             If Not DWSIM.App.IsRunningOnMono Then
@@ -196,7 +140,10 @@ Namespace My
                     dlls = Directory.GetFiles(My.Application.Info.DirectoryPath & "\staticlibraries\win32\", "*")
                 End If
                 For Each dll In dlls
-                    File.Copy(dll, My.Application.Info.DirectoryPath & "\" & Path.GetFileName(dll), True)
+                    Try
+                        File.Copy(dll, My.Application.Info.DirectoryPath & "\" & Path.GetFileName(dll), True)
+                    Catch ex As Exception
+                    End Try
                 Next
             End If
 

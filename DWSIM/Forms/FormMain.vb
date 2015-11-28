@@ -147,8 +147,10 @@ Public Class FormMain
             If File.Exists(My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "default.ini") Or DWSIM.App.IsRunningOnMono Then
                 DWSIM.App.SaveSettings()
             End If
-            My.Application.SaveMySettingsOnExit = True
-            My.Settings.Save()
+            If Not DWSIM.App.IsRunningOnMono Then
+                My.Application.SaveMySettingsOnExit = True
+                If Not DWSIM.App.IsRunningOnMono Then My.Settings.Save()
+            End If
             'save an ini file for Excel/CAPE-OPEN compatibility purposes
             Try
                 If Not Directory.Exists(My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data") Then
@@ -4345,7 +4347,7 @@ ruf:                Application.DoEvents()
                     Me.SaveF(path, form0)
                     If Not My.Settings.BackupFiles.Contains(path) Then
                         My.Settings.BackupFiles.Add(path)
-                        My.Settings.Save()
+                        If Not DWSIM.App.IsRunningOnMono Then My.Settings.Save()
                     End If
                 End If
             Next
@@ -4393,7 +4395,7 @@ ruf:                Application.DoEvents()
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles ButtonClose.Click
         Me.SettingsPanel.Visible = False
-        My.Settings.Save()
+        If Not DWSIM.App.IsRunningOnMono Then My.Settings.Save()
     End Sub
 
 End Class

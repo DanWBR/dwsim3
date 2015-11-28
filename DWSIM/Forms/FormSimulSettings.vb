@@ -71,7 +71,7 @@ Public Class FormSimulSettings
         initialized = True
 
         If DWSIM.App.IsRunningOnMono Then
-            Me.ListViewPP.View = View.List
+            Me.ListViewPP.View = View.Details
             Me.ListViewA.View = View.List
             Me.ogc1.SelectionMode = DataGridViewSelectionMode.CellSelect
             Me.dgvpp.SelectionMode = DataGridViewSelectionMode.CellSelect

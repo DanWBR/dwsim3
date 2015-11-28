@@ -256,7 +256,7 @@ Public Class FormOptions
 
             If Not My.Settings.UserInteractionsDatabases.Contains(path) Then
                 My.Settings.UserInteractionsDatabases.Add(path)
-                My.Settings.Save()
+                If Not DWSIM.App.IsRunningOnMono Then My.Settings.Save()
                 Me.dgvIPDB.Rows.Add(New Object() {dgvIPDB.Rows.Count + 1, "User   ", path, My.Resources.disconnect})
                 Me.dgvIPDB.Rows(Me.dgvIPDB.Rows.Count - 1).Cells(3).ToolTipText = DWSIM.App.GetLocalString("Remove")
             End If
@@ -287,7 +287,7 @@ Public Class FormOptions
     Sub AddDatabase(ByVal name As String, ByVal path As String)
         If Not My.Settings.UserDatabases.Contains(path) And File.Exists(path) Then
             My.Settings.UserDatabases.Add(path)
-            My.Settings.Save()
+            If Not DWSIM.App.IsRunningOnMono Then My.Settings.Save()
             Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, name, path, My.Resources.disconnect, My.Resources.application_form_edit})
             Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(3).ReadOnly = True
             Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(3).ToolTipText = DWSIM.App.GetLocalString("Remove")
@@ -450,7 +450,7 @@ Public Class FormOptions
         If e.ColumnIndex = 3 And e.RowIndex > 3 Then
             If Me.dgvIPDB.Rows(e.RowIndex).Cells(1).Value = "User   " Then
                 My.Settings.UserInteractionsDatabases.Remove(Me.dgvIPDB.Rows(e.RowIndex).Cells(2).Value)
-                My.Settings.Save()
+                If Not DWSIM.App.IsRunningOnMono Then My.Settings.Save()
                 Me.dgvIPDB.Rows.RemoveAt(e.RowIndex)
                 MessageBox.Show(DWSIM.App.GetLocalString("UDBRemoved"), DWSIM.App.GetLocalString("Informao"), MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
@@ -643,7 +643,7 @@ Public Class FormOptions
                 Case 3
                     My.Settings.CultureInfo = "es"
             End Select
-            My.Settings.Save()
+            If Not DWSIM.App.IsRunningOnMono Then My.Settings.Save()
             My.Application.ChangeUICulture(My.Settings.CultureInfo)
             MessageBox.Show(DWSIM.App.GetLocalString("NextStartupOnly"))
         End If

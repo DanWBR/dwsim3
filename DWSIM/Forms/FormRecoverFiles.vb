@@ -35,7 +35,7 @@ Public Class FormRecoverFiles
 
     Private Sub KryptonButton2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KryptonButton2.Click
         My.Settings.BackupFiles.Clear()
-        My.Settings.Save()
+        If Not DWSIM.App.IsRunningOnMono Then My.Settings.Save()
         Me.Close()
     End Sub
 
@@ -52,7 +52,7 @@ Public Class FormRecoverFiles
             MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erroaoabrircpiadeseg"), MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             My.Settings.BackupFiles.Clear()
-            My.Settings.Save()
+            If Not DWSIM.App.IsRunningOnMono Then My.Settings.Save()
             Me.Close()
         End Try
 

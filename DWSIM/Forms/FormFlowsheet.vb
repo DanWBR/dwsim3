@@ -242,12 +242,14 @@ Imports WeifenLuo.WinFormsUI.Docking
                 Me.Collections.CLCS_RecycleCollection = New Dictionary(Of String, DWSIM.SimulationObjects.SpecialOps.Recycle)
             End If
 
-            Dim node, node2 As TreeNode
-            For Each node In Me.FormObjList.TreeViewObj.Nodes
-                For Each node2 In node.Nodes
-                    node2.ContextMenuStrip = Me.FormObjList.ContextMenuStrip1
+            If Not DWSIM.App.IsRunningOnMono Then
+                Dim node, node2 As TreeNode
+                For Each node In Me.FormObjList.TreeViewObj.Nodes
+                    For Each node2 In node.Nodes
+                        node2.ContextMenuStrip = Me.FormObjList.ContextMenuStrip1
+                    Next
                 Next
-            Next
+            End If
 
         End If
 
@@ -376,7 +378,7 @@ Imports WeifenLuo.WinFormsUI.Docking
 
         If My.Settings.BackupFiles.Contains(path) Then
             My.Settings.BackupFiles.Remove(path)
-            My.Settings.Save()
+            If Not DWSIM.App.IsRunningOnMono Then My.Settings.Save()
             Try
                 If File.Exists(path) Then File.Delete(path)
             Catch ex As Exception
@@ -1820,18 +1822,20 @@ Imports WeifenLuo.WinFormsUI.Docking
                         Dim arrays(Me.Collections.ObjectCollection.Count - 1) As String
                         Dim aNode, aNode2 As TreeNode
                         Dim i As Integer = 0
-                        For Each aNode In Me.FormObjList.TreeViewObj.Nodes
-                            For Each aNode2 In aNode.Nodes
-                                Try
-                                    arrays(i) = aNode2.Text
-                                Catch ex As Exception
-                                End Try
-                                i += 1
+                        If Not DWSIM.App.IsRunningOnMono Then
+                            For Each aNode In Me.FormObjList.TreeViewObj.Nodes
+                                For Each aNode2 In aNode.Nodes
+                                    Try
+                                        arrays(i) = aNode2.Text
+                                    Catch ex As Exception
+                                    End Try
+                                    i += 1
+                                Next
                             Next
-                        Next
-                        Me.FormObjList.ACSC.Clear()
-                        Me.FormObjList.ACSC.AddRange(arrays)
-                        Me.FormObjList.TBSearch.AutoCompleteCustomSource = Me.FormObjList.ACSC
+                            Me.FormObjList.ACSC.Clear()
+                            Me.FormObjList.ACSC.AddRange(arrays)
+                            Me.FormObjList.TBSearch.AutoCompleteCustomSource = Me.FormObjList.ACSC
+                        End If
 
                     End If
                 End If

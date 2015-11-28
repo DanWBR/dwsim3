@@ -387,7 +387,7 @@ Public Class FormConfigCAPEOPEN2
                 Case 3
                     My.Settings.CultureInfo = "de"
             End Select
-            My.Settings.Save()
+            If Not DWSIM.App.IsRunningOnMono Then My.Settings.Save()
             My.Application.ChangeUICulture(My.Settings.CultureInfo)
         End If
     End Sub
