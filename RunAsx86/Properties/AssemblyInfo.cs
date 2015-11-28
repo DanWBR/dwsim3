@@ -8,6 +8,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("DWSIM")]
 [assembly: AssemblyCopyright("Copyright © 2007-2015 Daniel Medeiros, Gregor Reichert, Gustavo León")]
 [assembly: AssemblyTrademark("DWSIM")]
-[assembly: AssemblyVersion("3.5.*")]
+[assembly: AssemblyVersion("3.6.*")]
 [assembly: NeutralResourcesLanguage("en")]
 [assembly: Guid("38d91e91-d797-4734-a85d-8f8fcb916ee4")]

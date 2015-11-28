@@ -457,43 +457,84 @@ namespace WeifenLuo.WinFormsUI.Docking
             var dot = Color.FromArgb(80, 170, 220);
             var activeTab = SystemColors.ActiveCaption;
             var mouseHoverTab = SystemColors.Highlight; //Color.FromArgb(0xFF, 28, 151, 234);
-            var inactiveTab = SystemColors.Control;
+            var inactiveTab = SystemColors.InactiveCaption;
             var lostFocusTab = Color.FromArgb(0xFF, 204, 206, 219);
             var skin = new DockPanelSkin();
 
-            skin.AutoHideStripSkin.DockStripGradient.StartColor = SystemColors.ControlLightLight;
-            skin.AutoHideStripSkin.DockStripGradient.EndColor = SystemColors.ControlLight;
-            skin.AutoHideStripSkin.TabGradient.TextColor = SystemColors.ControlDarkDark;
+            if (Type.GetType("Mono.Runtime") == null)
+            {
+                skin.AutoHideStripSkin.DockStripGradient.StartColor = SystemColors.ControlLightLight;
+                skin.AutoHideStripSkin.DockStripGradient.EndColor = SystemColors.ControlLight;
+                skin.AutoHideStripSkin.TabGradient.TextColor = SystemColors.ActiveCaptionText;
+            }
+            else {
+                skin.AutoHideStripSkin.DockStripGradient.StartColor = SystemColors.InactiveCaption;
+                skin.AutoHideStripSkin.DockStripGradient.EndColor = SystemColors.InactiveCaption;
+                skin.AutoHideStripSkin.TabGradient.TextColor = SystemColors.InactiveCaptionText;
+            }
 
             skin.DockPaneStripSkin.DocumentGradient.DockStripGradient.StartColor = SystemColors.Control;
             skin.DockPaneStripSkin.DocumentGradient.DockStripGradient.EndColor = SystemColors.Control;
             skin.DockPaneStripSkin.DocumentGradient.ActiveTabGradient.StartColor = activeTab;
             skin.DockPaneStripSkin.DocumentGradient.ActiveTabGradient.EndColor = lostFocusTab;
-            skin.DockPaneStripSkin.DocumentGradient.ActiveTabGradient.TextColor = SystemColors.ActiveCaptionText;
             skin.DockPaneStripSkin.DocumentGradient.InactiveTabGradient.StartColor = inactiveTab;
             skin.DockPaneStripSkin.DocumentGradient.InactiveTabGradient.EndColor = mouseHoverTab;
+            skin.DockPaneStripSkin.DocumentGradient.ActiveTabGradient.TextColor = SystemColors.ActiveCaptionText;
             skin.DockPaneStripSkin.DocumentGradient.InactiveTabGradient.TextColor = SystemColors.InactiveCaptionText;
+
 
             skin.DockPaneStripSkin.ToolWindowGradient.DockStripGradient.StartColor = SystemColors.Control;
             skin.DockPaneStripSkin.ToolWindowGradient.DockStripGradient.EndColor = SystemColors.Control;
 
-            skin.DockPaneStripSkin.ToolWindowGradient.ActiveTabGradient.StartColor = SystemColors.ControlLightLight;
-            skin.DockPaneStripSkin.ToolWindowGradient.ActiveTabGradient.EndColor = SystemColors.ControlLightLight;
-            skin.DockPaneStripSkin.ToolWindowGradient.ActiveTabGradient.TextColor = SystemColors.ActiveCaptionText;
+            if (Type.GetType("Mono.Runtime") == null)
+            {
+                skin.DockPaneStripSkin.ToolWindowGradient.ActiveTabGradient.StartColor = SystemColors.ControlLightLight;
+                skin.DockPaneStripSkin.ToolWindowGradient.ActiveTabGradient.EndColor = SystemColors.ControlLightLight;
+                skin.DockPaneStripSkin.ToolWindowGradient.ActiveTabGradient.TextColor = SystemColors.ActiveCaptionText;
+            }
+            else
+            {
+                skin.DockPaneStripSkin.ToolWindowGradient.ActiveTabGradient.StartColor = SystemColors.ActiveCaption;
+                skin.DockPaneStripSkin.ToolWindowGradient.ActiveTabGradient.EndColor = SystemColors.ActiveCaption;
+                skin.DockPaneStripSkin.ToolWindowGradient.ActiveTabGradient.TextColor = SystemColors.ActiveCaptionText;
+            }
 
-            skin.DockPaneStripSkin.ToolWindowGradient.InactiveTabGradient.StartColor = SystemColors.Control;
-            skin.DockPaneStripSkin.ToolWindowGradient.InactiveTabGradient.EndColor = SystemColors.Control;
-            skin.DockPaneStripSkin.ToolWindowGradient.InactiveTabGradient.TextColor = SystemColors.InactiveCaptionText;
+            if (Type.GetType("Mono.Runtime") == null)
+            {
+                skin.DockPaneStripSkin.ToolWindowGradient.InactiveTabGradient.StartColor = SystemColors.Control;
+                skin.DockPaneStripSkin.ToolWindowGradient.InactiveTabGradient.EndColor = SystemColors.Control;
+                skin.DockPaneStripSkin.ToolWindowGradient.InactiveTabGradient.TextColor = SystemColors.InactiveCaption;
+            }
+            else
+            {
+                skin.DockPaneStripSkin.ToolWindowGradient.InactiveTabGradient.StartColor = SystemColors.InactiveCaption;
+                skin.DockPaneStripSkin.ToolWindowGradient.InactiveTabGradient.EndColor = SystemColors.InactiveCaption;
+                skin.DockPaneStripSkin.ToolWindowGradient.InactiveTabGradient.TextColor = SystemColors.InactiveCaptionText;
+            }
 
             skin.DockPaneStripSkin.ToolWindowGradient.ActiveCaptionGradient.StartColor = specialBlue;
             skin.DockPaneStripSkin.ToolWindowGradient.ActiveCaptionGradient.EndColor = dot;
             skin.DockPaneStripSkin.ToolWindowGradient.ActiveCaptionGradient.LinearGradientMode = LinearGradientMode.Vertical;
-            skin.DockPaneStripSkin.ToolWindowGradient.ActiveCaptionGradient.TextColor = SystemColors.ActiveCaptionText;
 
             skin.DockPaneStripSkin.ToolWindowGradient.InactiveCaptionGradient.StartColor = SystemColors.Control;
             skin.DockPaneStripSkin.ToolWindowGradient.InactiveCaptionGradient.EndColor = SystemColors.ControlDark;
             skin.DockPaneStripSkin.ToolWindowGradient.InactiveCaptionGradient.LinearGradientMode = LinearGradientMode.Vertical;
-            skin.DockPaneStripSkin.ToolWindowGradient.InactiveCaptionGradient.TextColor = SystemColors.InactiveCaptionText;
+     
+            if (Type.GetType("Mono.Runtime") == null)
+            {
+                skin.DockPaneStripSkin.ToolWindowGradient.ActiveCaptionGradient.TextColor = SystemColors.ActiveCaptionText;
+                skin.DockPaneStripSkin.ToolWindowGradient.InactiveCaptionGradient.TextColor = SystemColors.InactiveCaptionText;
+            }
+            else
+            {
+                skin.DockPaneStripSkin.ToolWindowGradient.ActiveCaptionGradient.TextColor = SystemColors.ActiveCaption;
+                skin.DockPaneStripSkin.ToolWindowGradient.InactiveCaptionGradient.TextColor = SystemColors.InactiveCaption;
+            }
+
+            if (Type.GetType("Mono.Runtime") != null)
+            {
+                skin.DockPaneStripSkin.TextFont = SystemFonts.DefaultFont;
+            }
 
             return skin;
         }

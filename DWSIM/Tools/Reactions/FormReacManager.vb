@@ -28,6 +28,16 @@ Public Class FormReacManager
     Protected frmchild As FormFlowsheet
     Public col As DWSIM.ClassesBasicasTermodinamica.ReactionsCollection
 
+    Sub New()
+
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+        If DWSIM.App.IsRunningOnMono Then Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Float
+
+    End Sub
+
     Private Sub FormReacManager_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         frmchild = My.Application.ActiveSimulation
@@ -51,7 +61,7 @@ Public Class FormReacManager
             If Me.DockState = WeifenLuo.WinFormsUI.Docking.DockState.Float Then
                 Dim floatWin = Me.DockHandler.FloatPane.FloatWindow
                 If Not floatWin Is Nothing Then
-                    floatWin.SetBounds(floatWin.Location.X, floatWin.Location.Y, 1090, 200)
+                    floatWin.SetBounds(floatWin.Location.X, floatWin.Location.Y, 900, 200)
                 End If
             End If
         End If

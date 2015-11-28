@@ -606,7 +606,7 @@ namespace FarsiLibrary.Win
                 }
                 else
                 {
-                    brush = new LinearGradientBrush(buttonRect, SystemColors.ControlLightLight, SystemColors.ControlLight, LinearGradientMode.Vertical);
+                    brush = new LinearGradientBrush(buttonRect, SystemColors.InactiveCaption, SystemColors.InactiveCaption, LinearGradientMode.Vertical);
                 }
 
                 g.FillPath(brush, path);
@@ -631,7 +631,7 @@ namespace FarsiLibrary.Win
                 }
                 else
                 {
-                    g.DrawString(currentItem.Title, SystemFonts.DefaultFont, new SolidBrush(SystemColors.InactiveCaptionText), textRect, sf);
+                    g.DrawString(currentItem.Title, SystemFonts.DefaultFont, new SolidBrush(SystemColors.ActiveCaptionText), textRect, sf);
                 }
             }
 

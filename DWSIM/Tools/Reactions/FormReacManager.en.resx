@@ -125,7 +125,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="GridRSets.Size" type="System.Drawing.Size, System.Drawing">
-    <value>409, 144</value>
+    <value>409, 132</value>
   </data>
   <data name="ToolStripButton1.Text" xml:space="preserve">
     <value>Add New Reaction Set</value>
@@ -143,10 +143,13 @@
     <value>Remove Selected Set</value>
   </data>
   <data name="ToolStrip2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>24, 144</value>
+    <value>24, 132</value>
+  </data>
+  <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>459, 2</value>
   </data>
   <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>439, 163</value>
+    <value>439, 151</value>
   </data>
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Reaction Sets</value>
@@ -161,7 +164,7 @@
     <value>Equation</value>
   </data>
   <data name="GridRxns.Size" type="System.Drawing.Size, System.Drawing">
-    <value>590, 144</value>
+    <value>418, 132</value>
   </data>
   <data name="ConversãoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>204, 22</value>
@@ -202,14 +205,17 @@
   <data name="ToolStripButton4.Text" xml:space="preserve">
     <value>Export Selected Reactions</value>
   </data>
+  <data name="ToolStripButton9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 20</value>
+  </data>
   <data name="ToolStripButton9.Text" xml:space="preserve">
     <value>Import Reactions</value>
   </data>
   <data name="ToolStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>24, 144</value>
+    <value>24, 132</value>
   </data>
   <data name="GroupBox4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>620, 163</value>
+    <value>448, 151</value>
   </data>
   <data name="GroupBox4.Text" xml:space="preserve">
     <value>Chemical Reactions</value>
@@ -227,7 +233,7 @@
     <value>Save Simulation Reactions to a File</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1074, 169</value>
+    <value>902, 157</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Chemical Reactions Manager</value>

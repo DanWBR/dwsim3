@@ -125,6 +125,8 @@ Imports WeifenLuo.WinFormsUI.Docking
         If Not DWSIM.App.IsRunningOnMono Then
             Dim theme As New VS2012LightTheme()
             theme.Apply(Me.dckPanel)
+        Else
+            Me.dckPanel.Skin.DockPaneStripSkin.TextFont = SystemFonts.DefaultFont
         End If
 
     End Sub
@@ -194,6 +196,14 @@ Imports WeifenLuo.WinFormsUI.Docking
             dckPanel.ActiveAutoHideContent = Nothing
             dckPanel.Parent = Me
 
+            FormLog.DockPanel = Nothing
+            If Not DWSIM.App.IsRunningOnMono Then FormObjList.DockPanel = Nothing
+            FormProps.DockPanel = Nothing
+            FormMatList.DockPanel = Nothing
+            FormSpreadsheet.DockPanel = Nothing
+            FormWatch.DockPanel = Nothing
+            FormSurface.DockPanel = Nothing
+
             FormLog.Show(dckPanel)
             FormMatList.Show(dckPanel)
             FormSpreadsheet.Show(dckPanel)
@@ -202,19 +212,6 @@ Imports WeifenLuo.WinFormsUI.Docking
             If Not DWSIM.App.IsRunningOnMono Then FormObjList.Show(dckPanel)
             FormProps.Show(dckPanel)
             FormLog.DockState = DockState.DockRight
-
-            Try
-                FormWatch.DockState = Docking.DockState.DockRight
-                FormWatch.DockState = Docking.DockState.DockBottom
-                FormCOReports.DockState = Docking.DockState.DockLeft
-                FormCOReports.DockState = Docking.DockState.DockBottom
-                FormOutput.DockState = Docking.DockState.DockLeft
-                FormOutput.DockState = Docking.DockState.DockBottom
-                FormQueue.DockState = Docking.DockState.DockRight
-                FormQueue.DockState = Docking.DockState.DockBottom
-            Catch ex As Exception
-
-            End Try
 
             dckPanel.BringToFront()
             dckPanel.UpdateDockWindowZOrder(DockStyle.Fill, True)
@@ -283,6 +280,7 @@ Imports WeifenLuo.WinFormsUI.Docking
         If Not Me.m_IsLoadedFromFile Then
 
             Me.Invalidate()
+            Application.DoEvents()
             Application.DoEvents()
 
             If Not DWSIM.App.IsRunningOnMono Then
@@ -757,6 +755,7 @@ Imports WeifenLuo.WinFormsUI.Docking
 #End Region
 
 #Region "    Click Event Handlers "
+
     Private Sub FormFlowsheet_HelpRequested(sender As System.Object, hlpevent As System.Windows.Forms.HelpEventArgs) Handles MyBase.HelpRequested
 
         Dim obj As GraphicObject = Me.FormSurface.FlowsheetDesignSurface.SelectedObject
@@ -837,6 +836,19 @@ Imports WeifenLuo.WinFormsUI.Docking
                     DWSIM.App.HelpRequested("frame.htm")
             End Select
         End If
+
+    End Sub
+
+    Private Sub Restorelayout(sender As Object, e As EventArgs) Handles RestoreLayoutTSMI.Click
+
+        FormLog.DockState = DockState.DockBottom
+        FormMatList.DockState = DockState.Document
+        FormSpreadsheet.DockState = DockState.Document
+        FormSurface.DockState = DockState.Document
+        FormObjListView.DockState = DockState.DockRight
+        If Not DWSIM.App.IsRunningOnMono Then FormObjList.DockState = DockState.DockLeft
+        FormProps.DockState = DockState.DockLeft
+        FormLog.DockState = DockState.DockBottom
 
     End Sub
 

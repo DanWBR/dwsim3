@@ -2746,6 +2746,8 @@ Public Class FormMain
             End If
         Next
 
+        Me.ResumeLayout()
+
         If Not forcommandline Then
 
             'fls.Label2.Text = "Restoring Window Layout..."
@@ -2753,7 +2755,6 @@ Public Class FormMain
 
             My.Application.ActiveSimulation = form
 
-            Me.ResumeLayout()
             m_childcount += 1
 
             form.MdiParent = Me
@@ -2871,7 +2872,6 @@ Public Class FormMain
 
         form.UpdateFormText()
 
-        Me.ResumeLayout()
         Me.ToolStripStatusLabel1.Text = ""
         Application.DoEvents()
 

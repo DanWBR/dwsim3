@@ -235,6 +235,7 @@ namespace WeifenLuo.WinFormsUI.Docking
                 return;
 
             Matrix matrixIdentity = g.Transform;
+            
             if (dockState == DockState.DockLeftAutoHide || dockState == DockState.DockRightAutoHide)
             {
                 Matrix matrixRotated = new Matrix();
@@ -248,7 +249,12 @@ namespace WeifenLuo.WinFormsUI.Docking
                 foreach (TabVS2012Light tab in pane.AutoHideTabs)
                     DrawTab(g, tab);
             }
-            g.Transform = matrixIdentity;
+
+            if (Type.GetType("Mono.Runtime") == null)
+            {
+                //Set no rotate for drawing icon and text
+                g.Transform = matrixIdentity;
+            }
         }
 
         private void CalculateTabs()
@@ -339,10 +345,14 @@ namespace WeifenLuo.WinFormsUI.Docking
                     rectThickLine.Y += 0;
 
             g.FillRectangle(new SolidBrush(textColor), rectThickLine);
-
-            //Set no rotate for drawing icon and text
+       
             Matrix matrixRotate = g.Transform;
-            g.Transform = MatrixIdentity;
+       
+            if (Type.GetType("Mono.Runtime") == null)
+            {
+                //Set no rotate for drawing icon and text
+                g.Transform = MatrixIdentity;
+            }
 
             // Draw the icon
             Rectangle rectImage = rectTabOrigin;
@@ -394,8 +404,11 @@ namespace WeifenLuo.WinFormsUI.Docking
             else
                 g.DrawString(content.DockHandler.TabText, TextFont, new SolidBrush(textColor), rectText, StringFormatTabHorizontal);
 
-            // Set rotate back
-            g.Transform = matrixRotate;
+            if (Type.GetType("Mono.Runtime") == null)
+            {
+                // Set rotate back
+                g.Transform = matrixRotate;
+            }
         }
 
         private Rectangle GetLogicalTabStripRectangle(DockState dockState)
