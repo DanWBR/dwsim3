@@ -43,7 +43,6 @@ Partial Class Form1
         '
         'pg
         '
-        Me.pg.AutoSizeProperties = True
         '
         '
         '

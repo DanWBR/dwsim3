@@ -79,10 +79,6 @@
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="WeifenLuo.WinFormsUI.Docking">
-      <HintPath>..\DWSIM\References\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -146,6 +142,10 @@
     <None Include="Resources\pc_massico.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DockPanelSuite\WinFormsUI\WinFormsUI.csproj">
+      <Project>{c75532c4-765b-418e-b09b-46d36b2abdb1}</Project>
+      <Name>WinFormsUI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DWSIM\DWSIM.vbproj">
       <Project>{34BE2D2D-9B3C-4C12-8C90-732E21CD7CB1}</Project>
       <Name>DWSIM</Name>

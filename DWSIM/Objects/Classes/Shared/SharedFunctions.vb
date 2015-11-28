@@ -405,7 +405,7 @@ Namespace DWSIM
                                 With cp
                                     .Architecture = eArchitecture.sm_20
                                     .CompileMode = eCudafyCompileMode.Default
-                                    .Platform = ePlatform.Auto
+                                    .Platform = ePlatform.All
                                     .WorkingDirectory = My.Computer.FileSystem.SpecialDirectories.Temp
                                     'CUDA SDK v6.5 path
                                     .CompilerPath = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\bin\nvcc.exe"
