@@ -1118,7 +1118,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
             Dim i, n, ecount As Integer
             Dim d1, d2 As Date, dt As TimeSpan
-            Dim L, Lf, Vf, T, Tf, deltaT As Double
+            Dim L, S, Lf, Vf, T, Tf, deltaT As Double
             Dim e1 As Double
             Dim AF As Double = 1
 
@@ -1137,7 +1137,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             Lf = 1 - Vf
             Tf = T
 
-            Dim Vn(n) As String, Vx(n), Vy(n), Vx_ant(n), Vy_ant(n), Vp(n), Ki(n), fi(n) As Double
+            Dim Vn(n) As String, Vx(n), Vy(n), Vs(n), Vmix(n), Vx_ant(n), Vy_ant(n), Vp(n), Ki(n), fi(n) As Double
             Dim Vt(n), VTc(n), Tmin, Tmax, dFdT, Tsat(n) As Double
 
             Vn = PP.RET_VNAMES()
@@ -1337,7 +1337,6 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
                 ecount = 0
 
                 Do
-
                     Ki = PP.DW_CalcKvalue(Vx, Vy, T, P)
 
                     i = 0
@@ -1438,6 +1437,24 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
             End If
 
+            If L > 0 Then
+                '================================================
+                '== Do SLE flash to precipitate solids ==========
+                '================================================
+                Dim SL_Result As FlashResult
+                SL_Result = Flash_SL(Vx, P, T, PP)
+                Vx = SL_Result.Vx
+                Vs = SL_Result.Vs
+
+                '================================================
+                '== Calculate global phase fractions ============
+                '================================================
+                L = SL_Result.LF * (1 - V)
+                S = SL_Result.SF * (1 - V)
+            End If
+           
+
+
             d2 = Date.Now
 
             dt = d2 - d1
@@ -1448,7 +1465,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
             WriteDebugInfo("PV Flash [SLE]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
-            Return New Object() {L, V, Vx, Vy, T, ecount, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
+            Return New Object() {L, V, Vx, Vy, T, ecount, Ki, 0.0#, PP.RET_NullVector, S, Vs}
 
         End Function
 
