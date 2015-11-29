@@ -1116,11 +1116,12 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
         Public Overrides Function Flash_PV(ByVal Vz As Double(), ByVal P As Double, ByVal V As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
-            Dim i, n, ecount As Integer
+            Dim i, n, ecount, gcount As Integer
             Dim d1, d2 As Date, dt As TimeSpan
-            Dim L, S, Lf, Vf, T, Tf, deltaT As Double
+            Dim L, S, Lf, Vf, Vint, T, Tf, deltaT As Double
             Dim e1 As Double
             Dim AF As Double = 1
+            Dim GL_old, GS_old, GV_old As Double
 
             d1 = Date.Now
 
@@ -1136,8 +1137,12 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             L = 1 - V
             Lf = 1 - Vf
             Tf = T
+            Vint = V
+            GL_old = L
+            GV_old = V
+            GS_old = 0
 
-            Dim Vn(n) As String, Vx(n), Vy(n), Vs(n), Vmix(n), Vx_ant(n), Vy_ant(n), Vp(n), Ki(n), fi(n) As Double
+            Dim Vn(n) As String, Vx(n), Vy(n), Vs(n), Vmix(n), Vx_ant(n), Vy_ant(n), Vs_ant(n), Vp(n), Ki(n), fi(n) As Double
             Dim Vt(n), VTc(n), Tmin, Tmax, dFdT, Tsat(n) As Double
 
             Vn = PP.RET_VNAMES()
@@ -1193,7 +1198,6 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
                 If Vz(i) <> 0 Then
                     Vy(i) = Vz(i) * Ki(i) / ((Ki(i) - 1) * V + 1)
                     If Double.IsInfinity(Vy(i)) Then Vy(i) = 0.0#
-                    Vx(i) = Vy(i) / Ki(i)
                 Else
                     Vy(i) = 0
                     Vx(i) = 0
@@ -1201,8 +1205,8 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
                 i += 1
             Loop Until i = n + 1
 
-            Vx = Vx.NormalizeY()
             Vy = Vy.NormalizeY()
+            Vx = Vz.SubtractY(Vy.MultiplyConstY(V)).MultiplyConstY(1 / L)
 
             If PP.AUX_IS_SINGLECOMP(Vz) Then
                 WriteDebugInfo("PV Flash [SLE]: Converged in 1 iteration.")
@@ -1217,7 +1221,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             Dim stmp4_ant, stmp4, Tant, fval As Double
             Dim chk As Boolean = False
 
-            If V = 1.0# Or V = 0.0# Then
+            If V = 1.0# Then
 
                 ecount = 0
                 Do
@@ -1333,127 +1337,154 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
                 Loop Until Math.Abs(fval) < etol Or Double.IsNaN(T) = True Or ecount > maxit_e
 
             Else
-
-                ecount = 0
-
                 Do
-                    Ki = PP.DW_CalcKvalue(Vx, Vy, T, P)
+                    ecount = 0
 
-                    i = 0
+                    '================================================
+                    '== mix vapour and liquid phase =================
+                    '================================================
+                    Vmix = Vy.MultiplyConstY(V)
+                    Vmix = Vmix.AddY(Vx.MultiplyConstY(L))
+                    Vz = Vmix.NormalizeY
+
                     Do
-                        If Vz(i) <> 0 Then
-                            Vy_ant(i) = Vy(i)
-                            Vx_ant(i) = Vx(i)
-                            Vy(i) = Vz(i) * Ki(i) / ((Ki(i) - 1) * V + 1)
-                            Vx(i) = Vy(i) / Ki(i)
+                        Ki = PP.DW_CalcKvalue(Vx, Vy, T, P)
+
+                        i = 0
+                        Do
+                            If Vz(i) <> 0 Then
+                                Vy_ant(i) = Vy(i)
+                                Vx_ant(i) = Vx(i)
+                                Vy(i) = Vz(i) * Ki(i) / ((Ki(i) - 1) * Vint + 1)
+                                Vx(i) = Vy(i) / Ki(i)
+                            Else
+                                Vy(i) = 0
+                                Vx(i) = 0
+                            End If
+                            i += 1
+                        Loop Until i = n + 1
+
+                        Vx = Vx.NormalizeY()
+                        Vy = Vy.NormalizeY()
+
+                        If Vint <= 0.5 Then
+
+                            stmp4 = Ki.MultiplyY(Vx).SumY
+                            'i = 0
+                            'stmp4 = 0
+                            'Do
+                            '    stmp4 = stmp4 + Ki(i) * Vx(i)
+                            '    i = i + 1
+                            'Loop Until i = n + 1
+
+                            Dim K1(n), K2(n), dKdT(n) As Double
+
+                            K1 = PP.DW_CalcKvalue(Vx, Vy, T, P)
+                            K2 = PP.DW_CalcKvalue(Vx, Vy, T + 0.1, P)
+
+                            dKdT = K2.SubtractY(K1).MultiplyConstY(1 / 0.1)
+                            'For i = 0 To n
+                            '    dKdT(i) = (K2(i) - K1(i)) / (0.1)
+                            'Next
+
+                            dFdT = Vx.MultiplyY(dKdT).SumY
+                            'i = 0
+                            'dFdT = 0
+                            'Do
+                            '    dFdT = dFdT + Vx(i) * dKdT(i)
+                            '    i = i + 1
+                            'Loop Until i = n + 1
+
                         Else
-                            Vy(i) = 0
-                            Vx(i) = 0
+
+                            stmp4 = Vy.DivideY(Ki).SumY
+                            'i = 0
+                            'stmp4 = 0
+                            'Do
+                            '    stmp4 = stmp4 + Vy(i) / Ki(i)
+                            '    i = i + 1
+                            'Loop Until i = n + 1
+
+                            Dim K1(n), K2(n), dKdT(n) As Double
+
+                            K1 = PP.DW_CalcKvalue(Vx, Vy, T, P)
+                            K2 = PP.DW_CalcKvalue(Vx, Vy, T + 1, P)
+
+                            dKdT = K2.SubtractY(K1)
+                            'For i = 0 To n
+                            '    dKdT(i) = (K2(i) - K1(i)) / (1)
+                            'Next
+
+                            dFdT = -Vy.DivideY(Ki).DivideY(Ki).MultiplyY(dKdT).SumY
+                            'i = 0
+                            'dFdT = 0
+                            'Do
+                            '    dFdT = dFdT - Vy(i) / (Ki(i) ^ 2) * dKdT(i)
+                            '    i = i + 1
+                            'Loop Until i = n + 1
+
                         End If
-                        i += 1
-                    Loop Until i = n + 1
 
-                    Vx = Vx.NormalizeY()
-                    Vy = Vy.NormalizeY()
+                        ecount += 1
 
-                    If V <= 0.5 Then
+                        fval = stmp4 - 1
 
-                        stmp4 = Ki.MultiplyY(Vx).SumY
-                        'i = 0
-                        'stmp4 = 0
-                        'Do
-                        '    stmp4 = stmp4 + Ki(i) * Vx(i)
-                        '    i = i + 1
-                        'Loop Until i = n + 1
+                        Tant = T
+                        deltaT = -fval / dFdT * AF
+                        AF *= 1.01
+                        If Abs(deltaT) > 0.1 * T Then
+                            T = T + Sign(deltaT) * 0.1 * T
+                        Else
+                            T = T + deltaT
+                        End If
 
-                        Dim K1(n), K2(n), dKdT(n) As Double
+                        e1 = Vx.SubtractY(Vx_ant).AbsSumY + Vy.SubtractY(Vy_ant).AbsSumY + Math.Abs(T - Tant)
 
-                        K1 = PP.DW_CalcKvalue(Vx, Vy, T, P)
-                        K2 = PP.DW_CalcKvalue(Vx, Vy, T + 0.1, P)
+                        WriteDebugInfo("PV Flash [SLE]: Iteration #" & ecount & ", T = " & T & ", VF = " & V)
 
-                        dKdT = K2.SubtractY(K1).MultiplyConstY(1 / 0.1)
-                        'For i = 0 To n
-                        '    dKdT(i) = (K2(i) - K1(i)) / (0.1)
-                        'Next
+                        CheckCalculatorStatus()
 
-                        dFdT = Vx.MultiplyY(dKdT).SumY
-                        'i = 0
-                        'dFdT = 0
-                        'Do
-                        '    dFdT = dFdT + Vx(i) * dKdT(i)
-                        '    i = i + 1
-                        'Loop Until i = n + 1
+                    Loop Until (Math.Abs(fval) < etol And e1 < etol) Or Double.IsNaN(T) = True Or ecount > maxit_e
 
-                    Else
+                    '================================================
+                    '== mix solid and liquid phase ==================
+                    '================================================
+                    Vmix = Vs.MultiplyConstY(S)
+                    Vmix = Vmix.AddY(Vx.MultiplyConstY(L))
+                    Vz = Vmix.NormalizeY
 
-                        stmp4 = Vy.DivideY(Ki).SumY
-                        'i = 0
-                        'stmp4 = 0
-                        'Do
-                        '    stmp4 = stmp4 + Vy(i) / Ki(i)
-                        '    i = i + 1
-                        'Loop Until i = n + 1
+                    '================================================
+                    '== Do SLE flash to precipitate solids ==========
+                    '================================================
+                    Vs_ant = Vs.Clone
+                    Dim SL_Result As FlashResult
+                    SL_Result = Flash_SL(Vz, P, T, PP)
+                    Vx = SL_Result.Vx
+                    Vs = SL_Result.Vs
 
-                        Dim K1(n), K2(n), dKdT(n) As Double
+                    '================================================
+                    '== Calculate global phase fractions ============
+                    '================================================
+                    GL_old = L
+                    GS_old = S
+                    L = SL_Result.LF * (1 - V)
+                    S = SL_Result.SF * (1 - V)
 
-                        K1 = PP.DW_CalcKvalue(Vx, Vy, T, P)
-                        K2 = PP.DW_CalcKvalue(Vx, Vy, T + 1, P)
-
-                        dKdT = K2.SubtractY(K1)
-                        'For i = 0 To n
-                        '    dKdT(i) = (K2(i) - K1(i)) / (1)
-                        'Next
-
-                        dFdT = -Vy.DivideY(Ki).DivideY(Ki).MultiplyY(dKdT).SumY
-                        'i = 0
-                        'dFdT = 0
-                        'Do
-                        '    dFdT = dFdT - Vy(i) / (Ki(i) ^ 2) * dKdT(i)
-                        '    i = i + 1
-                        'Loop Until i = n + 1
-
+                    '===================================================================
+                    '== Calculate vapour fraction relative to vapour/liquid ============
+                    '===================================================================
+                    Vint = V / (1 - S)
+                    If Vint > 1 Then
+                        'no liquid left, take some solid to vapour phase
+                        Vint = 1
                     End If
 
-                    ecount += 1
-
-                    fval = stmp4 - 1
-
-                    Tant = T
-                    deltaT = -fval / dFdT * AF
-                    AF *= 1.01
-                    If Abs(deltaT) > 0.1 * T Then
-                        T = T + Sign(deltaT) * 0.1 * T
-                    Else
-                        T = T + deltaT
-                    End If
-
-                    e1 = Vx.SubtractY(Vx_ant).AbsSumY + Vy.SubtractY(Vy_ant).AbsSumY + Math.Abs(T - Tant)
-
-                    WriteDebugInfo("PV Flash [SLE]: Iteration #" & ecount & ", T = " & T & ", VF = " & V)
-
-                    CheckCalculatorStatus()
-
-                Loop Until (Math.Abs(fval) < etol And e1 < etol) Or Double.IsNaN(T) = True Or ecount > maxit_e
-
+                    e1 = 1000 * (Abs(GL_old - L) + Abs(GS_old - S))
+                    gcount += 1
+                Loop Until e1 < etol Or gcount > maxit_e
             End If
 
-            If L > 0 Then
-                '================================================
-                '== Do SLE flash to precipitate solids ==========
-                '================================================
-                Dim SL_Result As FlashResult
-                SL_Result = Flash_SL(Vx, P, T, PP)
-                Vx = SL_Result.Vx
-                Vs = SL_Result.Vs
-
-                '================================================
-                '== Calculate global phase fractions ============
-                '================================================
-                L = SL_Result.LF * (1 - V)
-                S = SL_Result.SF * (1 - V)
-            End If
            
-
 
             d2 = Date.Now
 
