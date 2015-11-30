@@ -36,6 +36,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Private m_props As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
         Public m_pr As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PengRobinson
+        Public prn As New PropertyPackages.ThermoPlugs.PR
 
         Public Sub New(ByVal comode As Boolean)
             MyBase.New(comode)
@@ -325,75 +326,184 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             If Not Me.Parameters.ContainsKey("PP_USE_EOS_VOLUME_SHIFT") Then Me.Parameters.Add("PP_USE_EOS_VOLUME_SHIFT", 0)
 
+            Dim z, dens, h, s, mw, tc, visc As Double
+
             If phaseID = 3 Or phaseID = 4 Or phaseID = 5 Or phaseID = 6 Then
 
-                If CInt(Me.Parameters("PP_USE_EOS_LIQDENS")) = 1 Then
-                    Dim val As Double
-                    val = m_pr.Z_PR(T, P, RET_VMOL(fase), RET_VKij(), RET_VTC, RET_VPC, RET_VW, "L")
-                    val = (8.314 * val * T / P)
-                    If CInt(Me.Parameters("PP_USE_EOS_VOLUME_SHIFT")) = 1 Then
-                        val -= Me.AUX_CM(fase)
-                    End If
-                    val = 1 / val * Me.AUX_MMM(dwpl) / 1000
-                    result = val
+                If My.Settings.EnableParallelProcessing Then
+
+                    Dim tasks(7) As Task
+
+                    tasks(0) = Task.Factory.StartNew(Sub() mw = Me.AUX_MMM(fase))
+                    tasks(1) = Task.Factory.StartNew(Sub() h = Me.m_pr.H_PR_MIX("L", T, P, RET_VMOL(dwpl), RET_VKij(), RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Hid(298.15, T, dwpl)))
+                    tasks(2) = Task.Factory.StartNew(Sub() s = Me.m_pr.S_PR_MIX("L", T, P, RET_VMOL(dwpl), RET_VKij(), RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Sid(298.15, T, P, dwpl)))
+                    tasks(3) = Task.Factory.StartNew(Sub()
+                                                         z = Me.m_pr.Z_PR(T, P, RET_VMOL(dwpl), RET_VKij(), RET_VTC, RET_VPC, RET_VW, "L")
+                                                         If CInt(Me.Parameters("PP_USE_EOS_VOLUME_SHIFT")) = 1 Then
+                                                             z -= Me.AUX_CM(dwpl) / 8.314 / T * P
+                                                         End If
+                                                     End Sub)
+                    tasks(4) = Task.Factory.StartNew(Sub() resultObj = Auxiliary.PROPS.CpCvR("L", T, P, RET_VMOL(dwpl), RET_VKij(), RET_VMAS(dwpl), RET_VTC(), RET_VPC(), RET_VCP(T), RET_VMM(), RET_VW(), RET_VZRa()))
+                    tasks(5) = Task.Factory.StartNew(Sub() tc = Me.AUX_CONDTL(T))
+                    tasks(6) = Task.Factory.StartNew(Sub() visc = Me.AUX_LIQVISCm(T))
+                    tasks(7) = Task.Factory.StartNew(Sub()
+                                                         If CInt(Me.Parameters("PP_USE_EOS_LIQDENS")) = 1 Then
+                                                             Dim val As Double
+                                                             val = m_pr.Z_PR(T, P, RET_VMOL(fase), RET_VKij(), RET_VTC, RET_VPC, RET_VW, "L")
+                                                             val = (8.314 * val * T / P)
+                                                             If CInt(Me.Parameters("PP_USE_EOS_VOLUME_SHIFT")) = 1 Then
+                                                                 val -= Me.AUX_CM(fase)
+                                                             End If
+                                                             val = 1 / val * Me.AUX_MMM(dwpl) / 1000
+                                                             dens = val
+                                                         Else
+                                                             dens = Me.AUX_LIQDENS(T, P, 0.0#, phaseID, False)
+                                                         End If
+                                                     End Sub)
+
+                    Task.WaitAll(tasks)
+
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight = mw
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density = dens
+
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = h
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_enthalpy = h * mw
+
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = s
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_entropy = s * mw
+
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = z
+
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = resultObj(1)
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = resultObj(2)
+
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.thermalConductivity = tc
+
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.viscosity = visc
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.kinematic_viscosity = visc / dens
+
                 Else
-                    result = Me.AUX_LIQDENS(T, P, 0.0#, phaseID, False)
-                End If
 
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density = result
+                    mw = Me.AUX_MMM(fase)
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight = mw
 
-                result = Me.m_pr.H_PR_MIX("L", T, P, RET_VMOL(dwpl), RET_VKij(), RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Hid(298.15, T, dwpl))
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = result
-                result = Me.m_pr.S_PR_MIX("L", T, P, RET_VMOL(dwpl), RET_VKij(), RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Sid(298.15, T, P, dwpl))
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = result
-                result = Me.m_pr.Z_PR(T, P, RET_VMOL(dwpl), RET_VKij(), RET_VTC, RET_VPC, RET_VW, "L")
-                If CInt(Me.Parameters("PP_USE_EOS_VOLUME_SHIFT")) = 1 Then
-                    result -= Me.AUX_CM(dwpl) / 8.314 / T * P
+                    If CInt(Me.Parameters("PP_USE_EOS_LIQDENS")) = 1 Then
+                        Dim val As Double
+                        val = m_pr.Z_PR(T, P, RET_VMOL(fase), RET_VKij(), RET_VTC, RET_VPC, RET_VW, "L")
+                        val = (8.314 * val * T / P)
+                        If CInt(Me.Parameters("PP_USE_EOS_VOLUME_SHIFT")) = 1 Then
+                            val -= Me.AUX_CM(fase)
+                        End If
+                        val = 1 / val * Me.AUX_MMM(dwpl) / 1000
+                        dens = val
+                    Else
+                        dens = Me.AUX_LIQDENS(T, P, 0.0#, phaseID, False)
+                    End If
+
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density = dens
+
+                    h = Me.m_pr.H_PR_MIX("L", T, P, RET_VMOL(dwpl), RET_VKij(), RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Hid(298.15, T, dwpl))
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = h
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_enthalpy = h * mw
+
+                    s = Me.m_pr.S_PR_MIX("L", T, P, RET_VMOL(dwpl), RET_VKij(), RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Sid(298.15, T, P, dwpl))
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = s
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_entropy = s * mw
+
+                    z = Me.m_pr.Z_PR(T, P, RET_VMOL(dwpl), RET_VKij(), RET_VTC, RET_VPC, RET_VW, "L")
+                    If CInt(Me.Parameters("PP_USE_EOS_VOLUME_SHIFT")) = 1 Then
+                        z -= Me.AUX_CM(dwpl) / 8.314 / T * P
+                    End If
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = z
+
+                    resultObj = Auxiliary.PROPS.CpCvR("L", T, P, RET_VMOL(dwpl), RET_VKij(), RET_VMAS(dwpl), RET_VTC(), RET_VPC(), RET_VCP(T), RET_VMM(), RET_VW(), RET_VZRa())
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = resultObj(1)
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = resultObj(2)
+
+                    tc = Me.AUX_CONDTL(T)
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.thermalConductivity = tc
+
+                    visc = Me.AUX_LIQVISCm(T)
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.viscosity = visc
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.kinematic_viscosity = visc / dens
+
                 End If
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = result
-                resultObj = Auxiliary.PROPS.CpCvR("L", T, P, RET_VMOL(dwpl), RET_VKij(), RET_VMAS(dwpl), RET_VTC(), RET_VPC(), RET_VCP(T), RET_VMM(), RET_VW(), RET_VZRa())
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = resultObj(1)
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = resultObj(2)
-                result = Me.AUX_MMM(fase)
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight = result
-                result = Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy.GetValueOrDefault * Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight.GetValueOrDefault
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_enthalpy = result
-                result = Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy.GetValueOrDefault * Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight.GetValueOrDefault
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_entropy = result
-                result = Me.AUX_CONDTL(T)
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.thermalConductivity = result
-                result = Me.AUX_LIQVISCm(T)
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.viscosity = result
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.kinematic_viscosity = result / Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density.GetValueOrDefault
 
             ElseIf phaseID = 2 Then
 
-                result = Me.AUX_VAPDENS(T, P)
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density = result
-                result = Me.m_pr.H_PR_MIX("V", T, P, RET_VMOL(fase.Vapor), RET_VKij(), RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Hid(298.15, T, fase.Vapor))
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = result
-                result = Me.m_pr.S_PR_MIX("V", T, P, RET_VMOL(fase.Vapor), RET_VKij(), RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Sid(298.15, T, P, fase.Vapor))
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = result
-                result = Me.m_pr.Z_PR(T, P, RET_VMOL(fase.Vapor), RET_VKij, RET_VTC, RET_VPC, RET_VW, "V")
-                If CInt(Me.Parameters("PP_USE_EOS_VOLUME_SHIFT")) = 1 Then
-                    result -= Me.AUX_CM(fase.Vapor) / 8.314 / T * P
+                If My.Settings.EnableParallelProcessing Then
+
+                    Dim tasks(7) As Task
+
+                    tasks(0) = Task.Factory.StartNew(Sub() mw = Me.AUX_MMM(fase))
+                    tasks(1) = Task.Factory.StartNew(Sub() dens = Me.AUX_VAPDENS(T, P))
+                    tasks(2) = Task.Factory.StartNew(Sub() h = Me.m_pr.H_PR_MIX("V", T, P, RET_VMOL(fase.Vapor), RET_VKij(), RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Hid(298.15, T, fase.Vapor)))
+                    tasks(3) = Task.Factory.StartNew(Sub() s = Me.m_pr.S_PR_MIX("V", T, P, RET_VMOL(fase.Vapor), RET_VKij(), RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Sid(298.15, T, P, fase.Vapor)))
+                    tasks(4) = Task.Factory.StartNew(Sub()
+                                                         z = Me.m_pr.Z_PR(T, P, RET_VMOL(fase.Vapor), RET_VKij, RET_VTC, RET_VPC, RET_VW, "V")
+                                                         If CInt(Me.Parameters("PP_USE_EOS_VOLUME_SHIFT")) = 1 Then
+                                                             z -= Me.AUX_CM(fase.Vapor) / 8.314 / T * P
+                                                         End If
+                                                     End Sub)
+                    tasks(5) = Task.Factory.StartNew(Sub() resultObj = Auxiliary.PROPS.CpCvR("V", T, P, RET_VMOL(PropertyPackages.Fase.Vapor), RET_VKij(), RET_VMAS(PropertyPackages.Fase.Vapor), RET_VTC(), RET_VPC(), RET_VCP(T), RET_VMM(), RET_VW(), RET_VZRa()))
+                    tasks(6) = Task.Factory.StartNew(Sub() tc = Me.AUX_CONDTG(T, P))
+                    tasks(7) = Task.Factory.StartNew(Sub() visc = Me.AUX_VAPVISCm(T, Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density.GetValueOrDefault, Me.AUX_MMM(fase)))
+
+                    Task.WaitAll(tasks)
+
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight = mw
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density = dens
+
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = h
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_enthalpy = h * mw
+
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = s
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_entropy = s * mw
+
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = z
+
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = resultObj(1)
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = resultObj(2)
+
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.thermalConductivity = tc
+
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.viscosity = visc
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.kinematic_viscosity = visc / dens
+
+                Else
+
+                    mw = Me.AUX_MMM(fase)
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight = mw
+
+                    dens = Me.AUX_VAPDENS(T, P)
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density = dens
+
+                    h = Me.m_pr.H_PR_MIX("V", T, P, RET_VMOL(fase.Vapor), RET_VKij(), RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Hid(298.15, T, fase.Vapor))
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = h
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_enthalpy = h * mw
+
+                    s = Me.m_pr.S_PR_MIX("V", T, P, RET_VMOL(fase.Vapor), RET_VKij(), RET_VTC(), RET_VPC(), RET_VW(), RET_VMM(), Me.RET_Sid(298.15, T, P, fase.Vapor))
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = s
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_entropy = s * mw
+
+                    z = Me.m_pr.Z_PR(T, P, RET_VMOL(fase.Vapor), RET_VKij, RET_VTC, RET_VPC, RET_VW, "V")
+                    If CInt(Me.Parameters("PP_USE_EOS_VOLUME_SHIFT")) = 1 Then
+                        z -= Me.AUX_CM(fase.Vapor) / 8.314 / T * P
+                    End If
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = z
+
+                    resultObj = Auxiliary.PROPS.CpCvR("V", T, P, RET_VMOL(PropertyPackages.Fase.Vapor), RET_VKij(), RET_VMAS(PropertyPackages.Fase.Vapor), RET_VTC(), RET_VPC(), RET_VCP(T), RET_VMM(), RET_VW(), RET_VZRa())
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = resultObj(1)
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = resultObj(2)
+
+                    tc = Me.AUX_CONDTG(T, P)
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.thermalConductivity = tc
+
+                    visc = Me.AUX_VAPVISCm(T, Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density.GetValueOrDefault, Me.AUX_MMM(fase))
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.viscosity = visc
+                    Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.kinematic_viscosity = visc / dens
+
                 End If
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = result
-                result = Me.AUX_CPm(PropertyPackages.Fase.Vapor, T)
-                resultObj = Auxiliary.PROPS.CpCvR("V", T, P, RET_VMOL(PropertyPackages.Fase.Vapor), RET_VKij(), RET_VMAS(PropertyPackages.Fase.Vapor), RET_VTC(), RET_VPC(), RET_VCP(T), RET_VMM(), RET_VW(), RET_VZRa())
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = resultObj(1)
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = resultObj(2)
-                result = Me.AUX_MMM(fase)
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight = result
-                result = Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy.GetValueOrDefault * Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight.GetValueOrDefault
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_enthalpy = result
-                result = Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy.GetValueOrDefault * Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molecularWeight.GetValueOrDefault
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.molar_entropy = result
-                result = Me.AUX_CONDTG(T, P)
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.thermalConductivity = result
-                result = Me.AUX_VAPVISCm(T, Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density.GetValueOrDefault, Me.AUX_MMM(fase))
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.viscosity = result
-                Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.kinematic_viscosity = result / Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density.GetValueOrDefault
 
             ElseIf phaseID = 1 Then
 
@@ -1849,8 +1959,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             DWSIM.App.WriteToConsole(Me.ComponentName & " fugacity coefficient calculation for phase '" & st.ToString & "' requested at T = " & T & " K and P = " & P & " Pa.", 2)
             DWSIM.App.WriteToConsole("Compounds: " & Me.RET_VNAMES.ToArrayString, 2)
             DWSIM.App.WriteToConsole("Mole fractions: " & Vx.ToArrayString(), 2)
-
-            Dim prn As New PropertyPackages.ThermoPlugs.PR
 
             Dim lnfug As Double()
 

@@ -195,7 +195,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
             Dim _zarray As ArrayList, _mingz As Object, Z As Double
             _zarray = CalcZ(T, P, Vx, VKij, VTc, VPc, Vw)
-            _mingz = ZtoMinG(_zarray.ToArray, T, P, Vx, VKij, VTc, VPc, Vw)
+            _mingz = ZtoMinG(_zarray.ToArray(Type.GetType("System.Double")), T, P, Vx, VKij, VTc, VPc, Vw)
             Z = _zarray(_mingz(0))
 
             Dim aux1 = -R / 2 * (0.45724 / T) ^ 0.5
@@ -216,13 +216,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
         End Function
 
-        Shared Function ZtoMinG(ByVal Z_ As Array, ByVal T As Double, ByVal P As Double, ByVal Vz As Array, ByVal VKij As Object, ByVal VTc As Array, ByVal VPc As Array, ByVal Vw As Array) As Object
+        Shared Function ZtoMinG(ByVal Z_ As Double(), ByVal T As Double, ByVal P As Double, ByVal Vz As Double(), ByVal VKij As Object, ByVal VTc As Double(), ByVal VPc As Double(), ByVal Vw As Double()) As Object
 
-            DWSIM.App.WriteToConsole("PR min-G root finder (Z) for T = " & T & " K, P = " & P & " Pa and Z = " & DirectCast(Z_, Object()).ToArrayString, 3)
+            DWSIM.App.WriteToConsole("PR min-G root finder (Z) for T = " & T & " K, P = " & P & " Pa and Z = " & DirectCast(Z_, Double()).ToArrayString, 3)
 
             Dim S, H, Z As Double
 
-            Dim n, R, dadT As Double
+            Dim n As Integer, R, dadT As Double
             Dim i, j, k, l As Integer
 
             n = UBound(Vz)
@@ -243,35 +243,39 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
                 i = i + 1
             Loop Until i = n + 1
 
-            i = 0
-            Do
-                alpha(i) = (1 + (0.37464 + 1.54226 * w(i) - 0.26992 * w(i) ^ 2) * (1 - (T / Tc(i)) ^ 0.5)) ^ 2
-                ai(i) = 0.45724 * alpha(i) * R ^ 2 * Tc(i) ^ 2 / Pc(i)
-                bi(i) = 0.0778 * R * Tc(i) / Pc(i)
-                ci(i) = 0.37464 + 1.54226 * w(i) - 0.26992 * w(i) ^ 2
-                i = i + 1
-            Loop Until i = n + 1
-            
+            If My.Settings.EnableParallelProcessing Then
+                Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism, .TaskScheduler = My.MyApplication.AppTaskScheduler}
+                Parallel.For(0, n + 1, poptions, Sub(ii)
+                                                     alpha(ii) = (1 + (0.37464 + 1.54226 * w(ii) - 0.26992 * w(ii) ^ 2) * (1 - (T / Tc(ii)) ^ 0.5)) ^ 2
+                                                     ai(ii) = 0.45724 * alpha(ii) * R ^ 2 * Tc(ii) ^ 2 / Pc(ii)
+                                                     bi(ii) = 0.0778 * R * Tc(ii) / Pc(ii)
+                                                     ci(ii) = 0.37464 + 1.54226 * w(ii) - 0.26992 * w(ii) ^ 2
+                                                 End Sub)
+            Else
+                i = 0
+                Do
+                    alpha(i) = (1 + (0.37464 + 1.54226 * w(i) - 0.26992 * w(i) ^ 2) * (1 - (T / Tc(i)) ^ 0.5)) ^ 2
+                    ai(i) = 0.45724 * alpha(i) * R ^ 2 * Tc(i) ^ 2 / Pc(i)
+                    bi(i) = 0.0778 * R * Tc(i) / Pc(i)
+                    ci(i) = 0.37464 + 1.54226 * w(i) - 0.26992 * w(i) ^ 2
+                    i = i + 1
+                Loop Until i = n + 1
+            End If
+
             a = Calc_SUM1(n, ai, VKij)
 
-            i = 0
-            Dim am = 0.0#
-            Do
-                j = 0
-                Do
-                    am = am + Vz(i) * Vz(j) * a(i, j)
-                    j = j + 1
-                Loop Until j = n + 1
-                i = i + 1
-            Loop Until i = n + 1
+            Dim tmpa As Object = Calc_SUM2(n, Vz, a)
 
+            Dim am As Double = tmpa(1)
 
-            i = 0
-            Dim bm = 0.0#
-            Do
-                bm = bm + Vz(i) * bi(i)
-                i = i + 1
-            Loop Until i = n + 1
+            Dim bm As Double = Vz.MultiplyY(bi).SumY
+
+            'i = 0
+            'Dim bm = 0.0#
+            'Do
+            '    bm = bm + Vz(i) * bi(i)
+            '    i = i + 1
+            'Loop Until i = n + 1
 
             Dim AG1 = am * P / (R * T) ^ 2
             Dim BG1 = bm * P / (R * T)
@@ -330,39 +334,46 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
         End Function
 
-        Private Function CalcLnFugCPU(ByVal T As Double, ByVal P As Double, ByVal Vx As Array, ByVal VKij As Object, ByVal VTc As Array, ByVal VPc As Array, ByVal Vw As Array, Optional ByVal otherargs As Object = Nothing, Optional ByVal forcephase As String = "")
+        Private Function CalcLnFugCPU(ByVal T As Double, ByVal P As Double, ByVal Vx As Double(), ByVal VKij As Double(,), ByVal Tc As Double(), ByVal Pc As Double(), ByVal w As Double(), Optional ByVal otherargs As Object = Nothing, Optional ByVal forcephase As String = "")
 
-            Dim n, R, coeff(3) As Double
+            Dim n As Integer, R, coeff(3) As Double
             Dim Vant(0, 4) As Double
             Dim criterioOK As Boolean = False
             Dim AG, BG, aml, bml As Double
-            Dim t1, t2, t3, t4, t5 As Double
 
             n = UBound(Vx)
 
             Dim ai(n), bi(n), tmp(n + 1), a(n, n), b(n, n) As Double
             Dim aml2(n), amv2(n), LN_CF(n), PHI(n) As Double
-            Dim Tc(n), Pc(n), W(n), alpha(n), m(n), Tr(n) As Double
+            Dim alpha(n), m(n), Tr(n) As Double
 
             R = 8.314
 
             Dim i As Integer
-            i = 0
-            Do
-                Tc(i) = VTc(i)
-                Tr(i) = T / Tc(i)
-                Pc(i) = VPc(i)
-                W(i) = Vw(i)
-                i = i + 1
-            Loop Until i = n + 1
 
             i = 0
             Do
-                alpha(i) = (1 + (0.37464 + 1.54226 * W(i) - 0.26992 * W(i) ^ 2) * (1 - (T / Tc(i)) ^ 0.5)) ^ 2
-                ai(i) = 0.45724 * alpha(i) * R ^ 2 * Tc(i) ^ 2 / Pc(i)
-                bi(i) = 0.0778 * R * Tc(i) / Pc(i)
+                Tr(i) = T / Tc(i)
                 i = i + 1
             Loop Until i = n + 1
+
+
+            If My.Settings.EnableParallelProcessing Then
+                Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism, .TaskScheduler = My.MyApplication.AppTaskScheduler}
+                Parallel.For(0, n + 1, poptions, Sub(ii)
+                                                     alpha(ii) = (1 + (0.37464 + 1.54226 * W(ii) - 0.26992 * W(ii) ^ 2) * (1 - (T / Tc(ii)) ^ 0.5)) ^ 2
+                                                     ai(ii) = 0.45724 * alpha(ii) * R ^ 2 * Tc(ii) ^ 2 / Pc(ii)
+                                                     bi(ii) = 0.0778 * R * Tc(ii) / Pc(ii)
+                                                 End Sub)
+            Else
+                i = 0
+                Do
+                    alpha(i) = (1 + (0.37464 + 1.54226 * W(i) - 0.26992 * W(i) ^ 2) * (1 - (T / Tc(i)) ^ 0.5)) ^ 2
+                    ai(i) = 0.45724 * alpha(i) * R ^ 2 * Tc(i) ^ 2 / Pc(i)
+                    bi(i) = 0.0778 * R * Tc(i) / Pc(i)
+                    i = i + 1
+                Loop Until i = n + 1
+            End If
 
             a = Calc_SUM1(n, ai, VKij)
 
@@ -371,19 +382,21 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             aml2 = tmpa(0)
             aml = tmpa(1)
 
-            i = 0
-            bml = 0
-            Do
-                bml = bml + Vx(i) * bi(i)
-                i = i + 1
-            Loop Until i = n + 1
+            bml = Vx.MultiplyY(bi).SumY
+
+            'i = 0
+            'bml = 0
+            'Do
+            '    bml = bml + Vx(i) * bi(i)
+            '    i = i + 1
+            'Loop Until i = n + 1
 
             AG = aml * P / (R * T) ^ 2
             BG = bml * P / (R * T)
 
             Dim _zarray As ArrayList, _mingz As Object, Z As Double
 
-            _zarray = CalcZ(T, P, Vx, VKij, VTc, VPc, Vw)
+            _zarray = CalcZ(T, P, Vx, VKij, Tc, Pc, w)
             If forcephase <> "" Then
                 If forcephase = "L" Then
                     Z = Common.Min(_zarray.ToArray())
@@ -391,26 +404,41 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
                     Z = Common.Max(_zarray.ToArray())
                 End If
             Else
-                _mingz = ZtoMinG(_zarray.ToArray, T, P, Vx, VKij, VTc, VPc, Vw)
+                _mingz = ZtoMinG(_zarray.ToArray(Type.GetType("System.Double")), T, P, Vx, VKij, Tc, Pc, w)
                 Z = _zarray(_mingz(0))
             End If
 
             Dim Pcorr As Double = P
-            Dim ZP As Double() = CheckRoot(Z, aml, bml, P, T, forcephase)
-            Z = ZP(0)
-            Pcorr = ZP(1)
+            'Dim ZP As Double() = CheckRoot(Z, aml, bml, P, T, forcephase)
+            'Z = ZP(0)
+            'Pcorr = ZP(1)
 
-            i = 0
-            Do
-                t1 = bi(i) * (Z - 1) / bml
-                t2 = -Math.Log(Z - BG)
-                t3 = AG * (2 * aml2(i) / aml - bi(i) / bml)
-                t4 = Math.Log((Z + (1 + 2 ^ 0.5) * BG) / (Z + (1 - 2 ^ 0.5) * BG))
-                t5 = 2 * 2 ^ 0.5 * BG
-                LN_CF(i) = t1 + t2 - (t3 * t4 / t5)
-                LN_CF(i) = LN_CF(i) + Math.Log(Pcorr / P)
-                i = i + 1
-            Loop Until i = n + 1
+            If My.Settings.EnableParallelProcessing Then
+                Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism, .TaskScheduler = My.MyApplication.AppTaskScheduler}
+                Parallel.For(0, n + 1, poptions, Sub(ii)
+                                                     Dim t1, t2, t3, t4, t5 As Double
+                                                     t1 = bi(ii) * (Z - 1) / bml
+                                                     t2 = -Math.Log(Z - BG)
+                                                     t3 = AG * (2 * aml2(ii) / aml - bi(ii) / bml)
+                                                     t4 = Math.Log((Z + (1 + 2 ^ 0.5) * BG) / (Z + (1 - 2 ^ 0.5) * BG))
+                                                     t5 = 2 * 2 ^ 0.5 * BG
+                                                     LN_CF(ii) = t1 + t2 - (t3 * t4 / t5)
+                                                     LN_CF(ii) = LN_CF(ii) + Math.Log(Pcorr / P)
+                                                 End Sub)
+            Else
+                Dim t1, t2, t3, t4, t5 As Double
+                i = 0
+                Do
+                    t1 = bi(i) * (Z - 1) / bml
+                    t2 = -Math.Log(Z - BG)
+                    t3 = AG * (2 * aml2(i) / aml - bi(i) / bml)
+                    t4 = Math.Log((Z + (1 + 2 ^ 0.5) * BG) / (Z + (1 - 2 ^ 0.5) * BG))
+                    t5 = 2 * 2 ^ 0.5 * BG
+                    LN_CF(i) = t1 + t2 - (t3 * t4 / t5)
+                    LN_CF(i) = LN_CF(i) + Math.Log(Pcorr / P)
+                    i = i + 1
+                Loop Until i = n + 1
+            End If
 
             Return LN_CF
 
@@ -463,7 +491,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
                     Z = Common.Max(_zarray.ToArray())
                 End If
             Else
-                _mingz = ZtoMinG(_zarray.ToArray, T, P, Vx, VKij, VTc, VPc, Vw)
+                _mingz = ZtoMinG(_zarray.ToArray(Type.GetType("System.Double")), T, P, Vx, VKij, VTc, VPc, Vw)
                 Z = _zarray(_mingz(0))
             End If
 
@@ -616,7 +644,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
         Shared Function CalcZ(ByVal T As Double, ByVal P As Double, ByVal Vx As Double(), ByVal VKij As Double(,), ByVal VTc As Double(), ByVal VPc As Double(), ByVal Vw As Double()) As ArrayList
 
-            Dim n, R, coeff(3) As Double
+            Dim n As Integer, R, coeff(3) As Double
             Dim Vant(0, 4) As Double
 
             n = UBound(Vx)
@@ -637,13 +665,22 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
                 i = i + 1
             Loop Until i = n + 1
 
-            i = 0
-            Do
-                alpha(i) = (1 + (0.37464 + 1.54226 * W(i) - 0.26992 * W(i) ^ 2) * (1 - (T / Tc(i)) ^ 0.5)) ^ 2
-                ai(i) = 0.45724 * alpha(i) * R ^ 2 * Tc(i) ^ 2 / Pc(i)
-                bi(i) = 0.0778 * R * Tc(i) / Pc(i)
-                i = i + 1
-            Loop Until i = n + 1
+            If My.Settings.EnableParallelProcessing Then
+                Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism, .TaskScheduler = My.MyApplication.AppTaskScheduler}
+                Parallel.For(0, n + 1, poptions, Sub(ii)
+                                                     alpha(ii) = (1 + (0.37464 + 1.54226 * W(ii) - 0.26992 * W(ii) ^ 2) * (1 - (T / Tc(ii)) ^ 0.5)) ^ 2
+                                                     ai(ii) = 0.45724 * alpha(ii) * R ^ 2 * Tc(ii) ^ 2 / Pc(ii)
+                                                     bi(ii) = 0.0778 * R * Tc(ii) / Pc(ii)
+                                                 End Sub)
+            Else
+                i = 0
+                Do
+                    alpha(i) = (1 + (0.37464 + 1.54226 * W(i) - 0.26992 * W(i) ^ 2) * (1 - (T / Tc(i)) ^ 0.5)) ^ 2
+                    ai(i) = 0.45724 * alpha(i) * R ^ 2 * Tc(i) ^ 2 / Pc(i)
+                    bi(i) = 0.0778 * R * Tc(i) / Pc(i)
+                    i = i + 1
+                Loop Until i = n + 1
+            End If
 
             a = Calc_SUM1(n, ai, VKij)
 
@@ -652,12 +689,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             aml2 = tmpa(0)
             aml = tmpa(1)
 
-            i = 0
-            Dim bml = 0.0#
-            Do
-                bml = bml + Vx(i) * bi(i)
-                i = i + 1
-            Loop Until i = n + 1
+            Dim bml As Double = Vx.MultiplyY(bi).SumY
+
+            'i = 0
+            'Dim bml = 0.0#
+            'Do
+            '    bml = bml + Vx(i) * bi(i)
+            '    i = i + 1
+            'Loop Until i = n + 1
 
             Dim AG = aml * P / (R * T) ^ 2
             Dim BG = bml * P / (R * T)
@@ -789,7 +828,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             Dim _zarray As ArrayList, _mingz As Object, Z As Double
 
             _zarray = CalcZ(T, P, Vx, VKij, VTc, VPc, Vw)
-            _mingz = ZtoMinG(_zarray.ToArray, T, P, Vx, VKij, VTc, VPc, Vw)
+            _mingz = ZtoMinG(_zarray.ToArray(Type.GetType("System.Double")), T, P, Vx, VKij, VTc, VPc, Vw)
             Z = _zarray(_mingz(0))
 
             beta = 1 / P * (1 - (BG * Z ^ 2 + AG * Z - 6 * BG ^ 2 * Z - 2 * BG * Z - 2 * AG * BG + 2 * BG ^ 2 + 2 * BG) / (Z * (3 * Z ^ 2 - 2 * Z + 2 * BG * Z + AG - 3 * BG ^ 2 - 2 * BG)))
