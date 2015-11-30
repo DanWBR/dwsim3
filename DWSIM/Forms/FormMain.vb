@@ -278,9 +278,9 @@ Public Class FormMain
 
         Dim pluginassemblylist As List(Of Assembly) = New List(Of Assembly)
 
-        If Directory.Exists(Path.Combine(Environment.CurrentDirectory, "plugins")) Then
+        If Directory.Exists(Path.Combine(My.Application.Info.DirectoryPath, "plugins")) Then
 
-            Dim dinfo As New DirectoryInfo(Path.Combine(Environment.CurrentDirectory, "plugins"))
+            Dim dinfo As New DirectoryInfo(Path.Combine(My.Application.Info.DirectoryPath, "plugins"))
 
             Dim files() As FileInfo = dinfo.GetFiles("*.*", SearchOption.TopDirectoryOnly)
 

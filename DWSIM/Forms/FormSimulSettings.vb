@@ -71,14 +71,9 @@ Public Class FormSimulSettings
         initialized = True
 
         If DWSIM.App.IsRunningOnMono Then
-            Me.ListViewPP.View = View.Details
             Me.ListViewA.View = View.List
             Me.ogc1.SelectionMode = DataGridViewSelectionMode.CellSelect
             Me.dgvpp.SelectionMode = DataGridViewSelectionMode.CellSelect
-        Else
-            Me.ListViewPP.View = View.Details
-            Me.ListViewA.View = View.Details
-            Me.ListViewPP.ShowGroups = True
         End If
 
         Init()
@@ -101,11 +96,6 @@ Public Class FormSimulSettings
             FrmChild.FormProps.PGEx1.Refresh()
             FrmChild.FormProps.PGEx2.Refresh()
         End If
-
-        'If DWSIM.App.IsRunningOnMono Then
-        '    e.Cancel = True
-        '    Me.Hide()
-        'End If
 
     End Sub
 
