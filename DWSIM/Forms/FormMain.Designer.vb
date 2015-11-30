@@ -660,8 +660,8 @@ Partial Class FormMain
 
         'load user unit systems
 
-        My.MyApplication.UserUnitSystems = New Dictionary(Of String, DWSIM.SistemasDeUnidades.Unidades)
-        My.MyApplication.UtilityPlugins = New Dictionary(Of String, Interfaces.IUtilityPlugin)
+        If My.MyApplication.UserUnitSystems Is Nothing Then My.MyApplication.UserUnitSystems = New Dictionary(Of String, DWSIM.SistemasDeUnidades.Unidades)
+        If My.MyApplication.UtilityPlugins Is Nothing Then My.MyApplication.UtilityPlugins = New Dictionary(Of String, Interfaces.IUtilityPlugin)
 
         Dim xdoc As New XDocument()
         Dim xel As XElement
