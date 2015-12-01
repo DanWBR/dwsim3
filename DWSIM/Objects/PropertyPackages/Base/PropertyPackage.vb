@@ -729,27 +729,23 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             If My.Settings.EnableParallelProcessing Then
                 My.MyApplication.IsRunningParallelTasks = True
-                Try
-                    Dim task1 = Task.Factory.StartNew(Sub()
-                                                          fugliq = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
-                                                      End Sub,
-                                                      My.MyApplication.TaskCancellationTokenSource.Token,
-                                                      TaskCreationOptions.None,
-                                                      My.MyApplication.AppTaskScheduler)
-                    Dim task2 = Task.Factory.StartNew(Sub()
-                                                          If type = "LV" Then
-                                                              fugvap = Me.DW_CalcFugCoeff(Vy, T, P, State.Vapor)
-                                                          Else ' LL
-                                                              fugvap = Me.DW_CalcFugCoeff(Vy, T, P, State.Liquid)
-                                                          End If
-                                                      End Sub,
-                                                      My.MyApplication.TaskCancellationTokenSource.Token,
-                                                      TaskCreationOptions.None,
-                                                      My.MyApplication.AppTaskScheduler)
-                    Task.WaitAll(task1, task2)
-                Catch ae As AggregateException
-                    Throw ae.Flatten().InnerException
-                End Try
+                Dim task1 = Task.Factory.StartNew(Sub()
+                                                      fugliq = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
+                                                  End Sub,
+                                                        My.MyApplication.TaskCancellationTokenSource.Token,
+                                                        TaskCreationOptions.None,
+                                                        My.MyApplication.AppTaskScheduler)
+                Dim task2 = Task.Factory.StartNew(Sub()
+                                                      If type = "LV" Then
+                                                          fugvap = Me.DW_CalcFugCoeff(Vy, T, P, State.Vapor)
+                                                      Else ' LL
+                                                          fugvap = Me.DW_CalcFugCoeff(Vy, T, P, State.Liquid)
+                                                      End If
+                                                  End Sub,
+                                                    My.MyApplication.TaskCancellationTokenSource.Token,
+                                                    TaskCreationOptions.None,
+                                                    My.MyApplication.AppTaskScheduler)
+                Task.WaitAll(task1, task2)
                 My.MyApplication.IsRunningParallelTasks = False
             Else
                 fugliq = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
@@ -764,46 +760,47 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim i As Integer
             Dim K(n) As Double
 
-            For i = 0 To n
-                K(i) = fugliq(i) / fugvap(i)
-            Next
+            K = fugliq.DivideY(fugvap)
 
-            i = 0
-            For Each subst As ClassesBasicasTermodinamica.Substancia In Me.CurrentMaterialStream.Fases(1).Componentes.Values
+            'For i = 0 To n
+            '    K(i) = fugliq(i) / fugvap(i)
+            'Next
+
+            Dim cprops As List(Of ConstantProperties) = Nothing
+            Dim Pc, Tc, w As Double
+
+            For i = 0 To n
                 If K(i) = 0 Or Double.IsInfinity(K(i)) Or Double.IsNaN(K(i)) Then
-                    Dim Pc, Tc, w As Double
-                    Pc = subst.ConstantProperties.Critical_Pressure
-                    Tc = subst.ConstantProperties.Critical_Temperature
-                    w = subst.ConstantProperties.Acentric_Factor
+                    If cprops Is Nothing Then cprops = DW_GetConstantProperties()
+                    Pc = cprops(i).Critical_Pressure
+                    Tc = cprops(i).Critical_Temperature
+                    w = cprops(i).Acentric_Factor
                     If type = "LV" Then
                         K(i) = Pc / P * Math.Exp(5.373 * (1 + w) * (1 - Tc / T))
                     Else
                         K(i) = 1.0#
                     End If
                 End If
-                i += 1
             Next
 
             If Me.AUX_CheckTrivial(K) Then
                 If Not Parameters.ContainsKey("PP_FLASHALGORITHMIDEALKFALLBACK") Then Parameters.Add("PP_FLASHALGORITHMIDEALKFALLBACK", 1)
                 If Parameters("PP_FLASHALGORITHMIDEALKFALLBACK") = 1 Then
-                    i = 0
-                    For Each subst As ClassesBasicasTermodinamica.Substancia In Me.CurrentMaterialStream.Fases(1).Componentes.Values
-                        Dim Pc, Tc, w As Double
-                        Pc = subst.ConstantProperties.Critical_Pressure
-                        Tc = subst.ConstantProperties.Critical_Temperature
-                        w = subst.ConstantProperties.Acentric_Factor
+                    If cprops Is Nothing Then cprops = DW_GetConstantProperties()
+                    For i = 0 To n
+                        Pc = cprops(i).Critical_Pressure
+                        Tc = cprops(i).Critical_Temperature
+                        w = cprops(i).Acentric_Factor
                         If type = "LV" Then
                             K(i) = Pc / P * Math.Exp(5.373 * (1 + w) * (1 - Tc / T))
                         Else
                             K(i) = 1.0#
                         End If
-                        i += 1
                     Next
                 End If
             End If
 
-                Return K
+            Return K
 
         End Function
 
