@@ -951,24 +951,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 If My.Settings.EnableGPUProcessing Then
                     'My.MyApplication.gpu.EnableMultithreading()
                 End If
-                Try
-                    Dim task1 As Task = New Task(Sub()
-                                                     fugliq = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
-                                                 End Sub)
-                    Dim task2 As Task = New Task(Sub()
-                                                     fugvap = Me.DW_CalcFugCoeff(Vx, T, P, State.Vapor)
-                                                 End Sub)
-                    task1.Start()
-                    task2.Start()
-                    Task.WaitAll(task1, task2)
-                Catch ae As AggregateException
-                    Throw ae.Flatten().InnerException
-                Finally
-                    'If My.Settings.EnableGPUProcessing Then
-                    '    My.MyApplication.gpu.DisableMultithreading()
-                    '    My.MyApplication.gpu.FreeAll()
-                    'End If
-                End Try
+                Dim task1 As Task = New Task(Sub()
+                                                 fugliq = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
+                                             End Sub)
+                Dim task2 As Task = New Task(Sub()
+                                                 fugvap = Me.DW_CalcFugCoeff(Vx, T, P, State.Vapor)
+                                             End Sub)
+                task1.Start()
+                task2.Start()
+                Task.WaitAll(task1, task2)
                 My.MyApplication.IsRunningParallelTasks = False
             Else
                 fugliq = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
