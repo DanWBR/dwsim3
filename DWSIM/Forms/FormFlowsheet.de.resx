@@ -325,20 +325,59 @@
   <data name="ConfiguraçõesToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Einstellungen</value>
   </data>
+  <data name="ExibirSaídaDoConsoleToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>228, 22</value>
+  </data>
   <data name="ExibirSaídaDoConsoleToolStripMenuItem.Text" xml:space="preserve">
     <value>Konsolenausgabe</value>
+  </data>
+  <data name="ExibirListaDeItensACalcularToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>228, 22</value>
   </data>
   <data name="ExibirListaDeItensACalcularToolStripMenuItem.Text" xml:space="preserve">
     <value>Berechnung Warteschlange</value>
   </data>
+  <data name="PainelDeVariáveisToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>228, 22</value>
+  </data>
   <data name="PainelDeVariáveisToolStripMenuItem.Text" xml:space="preserve">
     <value>Überwachungsfenster</value>
+  </data>
+  <data name="ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>228, 22</value>
   </data>
   <data name="ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem.Text" xml:space="preserve">
     <value>Bericht Objekte CAPE-OPEN</value>
   </data>
+  <data name="ToolStripSeparator10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>225, 6</value>
+  </data>
+  <data name="showsimulationtoolstripmenuitem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>228, 22</value>
+  </data>
+  <data name="showsimulationtoolstripmenuitem.Text" xml:space="preserve">
+    <value>Toolbar Simulation</value>
+  </data>
+  <data name="showflowsheettoolstripmenuitem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>228, 22</value>
+  </data>
+  <data name="showflowsheettoolstripmenuitem.Text" xml:space="preserve">
+    <value>Toolbar Flowsheet</value>
+  </data>
+  <data name="showunitstoolstripmenuitem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>228, 22</value>
+  </data>
+  <data name="showunitstoolstripmenuitem.Text" xml:space="preserve">
+    <value>Toolbar Einheitensystem</value>
+  </data>
+  <data name="ToolStripSeparator11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>225, 6</value>
+  </data>
+  <data name="RestoreLayoutTSMI.Size" type="System.Drawing.Size, System.Drawing">
+    <value>228, 22</value>
+  </data>
   <data name="RestoreLayoutTSMI.Text" xml:space="preserve">
-    <value>Restore Docking Panels' Layout</value>
+    <value>Panellayout wieder herstellen</value>
   </data>
   <data name="ExibirToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>55, 20</value>

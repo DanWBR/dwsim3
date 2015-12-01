@@ -377,5 +377,4 @@ Public Class AboutBoxMONO
         Dim strAssemblyName As String = Convert.ToString(AssemblyNamesComboBox.SelectedItem)
         PopulateAssemblyDetails(MatchAssemblyByName(strAssemblyName), AssemblyDetailsListView)
     End Sub
-
 End Class

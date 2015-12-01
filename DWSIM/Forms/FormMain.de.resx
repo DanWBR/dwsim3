@@ -224,22 +224,22 @@
     <value>&amp;Einstellungen</value>
   </data>
   <data name="CascadeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 22</value>
+    <value>152, 22</value>
   </data>
   <data name="CascadeToolStripMenuItem.Text" xml:space="preserve">
     <value>Über&amp;lappend</value>
   </data>
   <data name="TileVerticalToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 22</value>
+    <value>152, 22</value>
   </data>
   <data name="TileVerticalToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Untereinander</value>
+    <value>&amp;Horizontal</value>
   </data>
   <data name="TileHorizontalToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 22</value>
+    <value>152, 22</value>
   </data>
   <data name="TileHorizontalToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Nebeneinander</value>
+    <value>&amp;Vertikal</value>
   </data>
   <data name="WindowsMenu.Size" type="System.Drawing.Size, System.Drawing">
     <value>57, 20</value>
@@ -440,10 +440,10 @@
     <value>Fenster überlappen</value>
   </data>
   <data name="ToolStripButton5.Text" xml:space="preserve">
-    <value>Gruppiert Fenster untereinander</value>
+    <value>Fenster horizontal anordnen</value>
   </data>
   <data name="ToolStripButton4.Text" xml:space="preserve">
-    <value>Gruppiert Fenster übereinander</value>
+    <value>Fenster vertikal anordnen</value>
   </data>
   <data name="ToolStripButton6.Text" xml:space="preserve">
     <value>Show Context-Sensitive Help</value>
