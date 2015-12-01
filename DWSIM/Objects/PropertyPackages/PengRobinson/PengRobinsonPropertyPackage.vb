@@ -37,13 +37,18 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         Private m_props As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
         Public m_pr As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PengRobinson
         Public prn As New PropertyPackages.ThermoPlugs.PR
+        Public ip(,) As Double
+        Public ip_hash As Integer
 
         Public Sub New(ByVal comode As Boolean)
+
             MyBase.New(comode)
+
             'With Me.Parameters
             '    .Add("PP_USE_EOS_LIQDENS", 0)
             '    .Add("PP_USE_EOS_VOLUME_SHIFT", 0)
             'End With
+
         End Sub
 
         Public Sub New()
@@ -62,7 +67,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         End Sub
 
         Public Overrides Sub ConfigParameters()
+
             m_par = New System.Collections.Generic.Dictionary(Of String, Double)
+
             With Me.Parameters
                 .Clear()
                 .Add("PP_PHFILT", 0.001)
@@ -84,12 +91,26 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 .Add("PP_USE_EOS_LIQDENS", 0)
                 .Add("PP_USE_EOS_VOLUME_SHIFT", 0)
             End With
+
         End Sub
 
         Public Overrides Sub ReconfigureConfigForm()
+
             MyBase.ReconfigureConfigForm()
             Me.ConfigForm = New FormConfigPP
+
         End Sub
+
+        'Public Overrides Function Clone() As PropertyPackage
+
+        '    Return New PengRobinsonPropertyPackage() With {.ip = Me.ip,
+        '                                                   .ip_hash = Me.ip_hash,
+        '                                                   .m_pr = Me.m_pr,
+        '                                                   .m_par = Me.m_par,
+        '                                                   .ComponentName = Me.ComponentName,
+        '                                                   .ComponentDescription = Me.ComponentDescription}
+
+        'End Function
 
 #Region "    DWSIM Functions"
 
@@ -1567,11 +1588,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             If SB.Count > 1 Then SB.RemoveAt(SB.Count - 1)
             If VB.Count > 1 Then VB.RemoveAt(VB.Count - 1)
 
-            If ToWF.Count > 1 Then ToWF.RemoveAt(ToWF.Count - 1)
-            If PoWF.Count > 1 Then PoWF.RemoveAt(PoWF.Count - 1)
-            If HoWF.Count > 1 Then HoWF.RemoveAt(HoWF.Count - 1)
-            If SoWF.Count > 1 Then SoWF.RemoveAt(SoWF.Count - 1)
-            If VoWF.Count > 1 Then VoWF.RemoveAt(VoWF.Count - 1)
+            If TOWF.Count > 1 Then TOWF.RemoveAt(TOWF.Count - 1)
+            If POWF.Count > 1 Then POWF.RemoveAt(POWF.Count - 1)
+            If HOWF.Count > 1 Then HOWF.RemoveAt(HOWF.Count - 1)
+            If SOWF.Count > 1 Then SOWF.RemoveAt(SOWF.Count - 1)
+            If VOWF.Count > 1 Then VOWF.RemoveAt(VOWF.Count - 1)
 
             If TVD.Count > 1 Then TVD.RemoveAt(TVD.Count - 1)
             If PO.Count > 1 Then PO.RemoveAt(PO.Count - 1)
@@ -1590,11 +1611,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             If TI.Count > 1 Then TI.RemoveAt(TI.Count - 1)
             If PI.Count > 1 Then PI.RemoveAt(PI.Count - 1)
 
-            Return New Object() {TVB, PB, HB, SB, VB, TVD, PO, HO, SO, VO, TE, PE, TH, PHsI, PHsII, CP, TQ, PQ, TI, PI, ToWF, PoWF, HoWF, SoWF, VoWF}
+            Return New Object() {TVB, PB, HB, SB, VB, TVD, PO, HO, SO, VO, TE, PE, TH, PHsI, PHsII, CP, TQ, PQ, TI, PI, TOWF, POWF, HOWF, SOWF, VOWF}
 
         End Function
 
         Public Function RET_KIJ(ByVal id1 As String, ByVal id2 As String) As Double
+
             If Me.m_pr.InteractionParameters.ContainsKey(id1) Then
                 If Me.m_pr.InteractionParameters(id1).ContainsKey(id2) Then
                     Return m_pr.InteractionParameters(id1)(id2).kij
@@ -1612,24 +1634,38 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Else
                 Return 0
             End If
+
         End Function
 
         Public Overrides Function RET_VKij() As Double(,)
 
-            Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1, Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
-            Dim i As Integer = 0
-            Dim l As Integer = 0
+            Dim hash As Integer = m_pr.InteractionParameters.GetHashCode()
 
-            Dim vn As String() = RET_VNAMES()
-            Dim n As Integer = vn.Length - 1
+            If ip_hash <> hash Then
 
-            For i = 0 To n
-                For l = 0 To n
-                    val(i, l) = Me.RET_KIJ(vn(i), vn(l))
+                Dim val(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1, Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
+                Dim i As Integer = 0
+                Dim l As Integer = 0
+
+                Dim vn As String() = RET_VNAMES()
+                Dim n As Integer = vn.Length - 1
+
+                For i = 0 To n
+                    For l = 0 To n
+                        val(i, l) = Me.RET_KIJ(vn(i), vn(l))
+                    Next
                 Next
-            Next
 
-            Return val
+                ip = val
+                ip_hash = hash
+
+                Return val
+
+            Else
+
+                Return ip
+
+            End If
 
         End Function
 
@@ -1972,7 +2008,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim fugcoeff(n) As Double
 
             fugcoeff = lnfug.ExpY
-            
+
             DWSIM.App.WriteToConsole("Result: " & fugcoeff.ToArrayString(), 2)
 
             Return fugcoeff

@@ -126,7 +126,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
     <System.Serializable()> Public MustInherit Class PropertyPackage
 
         'CAPE-OPEN 1.0 Interfaces
-        Implements ICloneable, ICapeIdentification, ICapeThermoPropertyPackage, ICapeUtilities, ICapeThermoEquilibriumServer, ICapeThermoCalculationRoutine
+        Implements ICapeIdentification, ICapeThermoPropertyPackage, ICapeUtilities, ICapeThermoEquilibriumServer, ICapeThermoCalculationRoutine
 
         'CAPE-OPEN 1.1 Interfaces
         Implements ICapeThermoPhases, ICapeThermoPropertyRoutine, ICapeThermoCompounds, ICapeThermoUniversalConstant
@@ -577,7 +577,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
 #Region "   Cloning Support"
 
-        Public Function Clone() As Object Implements System.ICloneable.Clone
+        Public Overridable Function Clone() As PropertyPackage
 
             Return ObjectCopy(Me)
 
