@@ -349,28 +349,19 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                         If My.Settings.EnableGPUProcessing Then
                             'My.MyApplication.gpu.EnableMultithreading()
                         End If
-                        Try
-                            Dim task1 = Task.Factory.StartNew(Sub()
-                                                                  fx = Herror("PT", x1, P, Vz, PP)(0)
-                                                              End Sub,
-                                                              My.MyApplication.TaskCancellationTokenSource.Token,
-                                                              TaskCreationOptions.None,
-                                                              My.MyApplication.AppTaskScheduler)
-                            Dim task2 = Task.Factory.StartNew(Sub()
-                                                                  fx2 = Herror("PT", x1 + epsilon(j), P, Vz, PP)(0)
-                                                              End Sub,
-                                                              My.MyApplication.TaskCancellationTokenSource.Token,
-                                                              TaskCreationOptions.None,
-                                                              My.MyApplication.AppTaskScheduler)
-                            Task.WaitAll(task1, task2)
-                        Catch ae As AggregateException
-                            Throw ae.Flatten().InnerException
-                        Finally
-                            'If My.Settings.EnableGPUProcessing Then
-                            '    My.MyApplication.gpu.DisableMultithreading()
-                            '    My.MyApplication.gpu.FreeAll()
-                            'End If
-                        End Try
+                        Dim task1 = Task.Factory.StartNew(Sub()
+                                                              fx = Herror("PT", x1, P, Vz, PP)(0)
+                                                          End Sub,
+                                                            My.MyApplication.TaskCancellationTokenSource.Token,
+                                                            TaskCreationOptions.None,
+                                                            My.MyApplication.AppTaskScheduler)
+                        Dim task2 = Task.Factory.StartNew(Sub()
+                                                              fx2 = Herror("PT", x1 + epsilon(j), P, Vz, PP)(0)
+                                                          End Sub,
+                                                            My.MyApplication.TaskCancellationTokenSource.Token,
+                                                            TaskCreationOptions.None,
+                                                            My.MyApplication.AppTaskScheduler)
+                        Task.WaitAll(task1, task2)
                         My.MyApplication.IsRunningParallelTasks = False
                     Else
                         fx = Herror("PT", x1, P, Vz, PP)(0)
@@ -1623,7 +1614,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
 
         Function OBJ_FUNC_PH_FLASH(ByVal Type As String, ByVal X As Double, ByVal P As Double, ByVal Vz() As Double, ByVal PP As PropertyPackages.PropertyPackage) As Object
 
-            Dim n = UBound(Vz)
+            Dim n As Integer = UBound(Vz)
             Dim L, V, Vx(), Vy(), _Hl, _Hv, T As Double
 
             If Type = "PT" Then

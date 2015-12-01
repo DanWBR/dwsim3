@@ -18,6 +18,7 @@
 Imports FileHelpers
 Imports System.Linq
 Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.PR
+Imports System.Threading.Tasks
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
@@ -225,7 +226,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             ai = a * alpha
             bi = 0.0778 * R * Tc / Pc
 
-           Dim dadT = -a / T * (1 + c * (1 - (T / Tc) ^ 0.5)) * (c * (T / Tc) ^ 0.5)
+            Dim dadT = -a / T * (1 + c * (1 - (T / Tc) ^ 0.5)) * (c * (T / Tc) ^ 0.5)
 
             Dim AG1 As Double = ai * P / (R * T) ^ 2
             Dim BG1 As Double = bi * P / (R * T)
@@ -443,70 +444,52 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         End Function
 
-        Function H_PR_MIX_CPU(ByVal TIPO As String, ByVal T As Double, ByVal P As Double, ByVal Vz As Double(), ByVal VKij As Double(,), ByVal VTc As Double(), ByVal VPc As Double(), ByVal Vw As Double(), ByVal VMM As Double(), ByVal Hid As Double) As Double
+        Function H_PR_MIX_CPU(ByVal TIPO As String, ByVal T As Double, ByVal P As Double, ByVal Vz As Double(), ByVal VKij As Double(,), ByVal Tc As Double(), ByVal Pc As Double(), ByVal w As Double(), ByVal VMM As Double(), ByVal Hid As Double) As Double
 
-            Dim n, R, Z, dadT As Double
-            Dim i, j As Integer
+            Dim n As Integer, R, Z, dadT As Double
+            Dim i As Integer
 
             n = UBound(Vz)
 
             Dim ai(n), bi(n), ci(n), a(n, n), b(n, n) As Double
-            Dim Tc(n), Pc(n), Vc(n), Zc(n), w(n), alpha(n), m(n), Tr(n) As Double
+            Dim Vc(n), Zc(n), alpha(n), m(n), Tr(n) As Double
 
             R = 8.314
 
             i = 0
             Do
-                Tc(i) = VTc(i)
                 Tr(i) = T / Tc(i)
-                Pc(i) = VPc(i)
-                w(i) = Vw(i)
                 i = i + 1
             Loop Until i = n + 1
 
-            i = 0
-            Dim MMm = 0.0#
-            Do
-                MMm += Vz(i) * VMM(i)
-                i += 1
-            Loop Until i = n + 1
+            Dim MMm As Double = Vz.MultiplyY(VMM).SumY
 
-            i = 0
-            Do
-                alpha(i) = (1 + (0.37464 + 1.54226 * w(i) - 0.26992 * w(i) ^ 2) * (1 - (T / Tc(i)) ^ 0.5)) ^ 2
-                ai(i) = 0.45724 * alpha(i) * R ^ 2 * Tc(i) ^ 2 / Pc(i)
-                bi(i) = 0.0778 * R * Tc(i) / Pc(i)
-                ci(i) = 0.37464 + 1.54226 * w(i) - 0.26992 * w(i) ^ 2
-                i = i + 1
-            Loop Until i = n + 1
-
-            i = 0
-            Do
-                j = 0
+            If My.Settings.EnableParallelProcessing Then
+                Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism, .TaskScheduler = My.MyApplication.AppTaskScheduler}
+                Parallel.For(0, n + 1, poptions, Sub(ii)
+                                                     alpha(ii) = (1 + (0.37464 + 1.54226 * w(ii) - 0.26992 * w(ii) ^ 2) * (1 - (T / Tc(ii)) ^ 0.5)) ^ 2
+                                                     ai(ii) = 0.45724 * alpha(ii) * R ^ 2 * Tc(ii) ^ 2 / Pc(ii)
+                                                     bi(ii) = 0.0778 * R * Tc(ii) / Pc(ii)
+                                                     ci(ii) = 0.37464 + 1.54226 * w(ii) - 0.26992 * w(ii) ^ 2
+                                                 End Sub)
+            Else
+                i = 0
                 Do
-                    a(i, j) = (ai(i) * ai(j)) ^ 0.5 * (1 - VKij(i, j))
-                    j = j + 1
-                Loop Until j = n + 1
-                i = i + 1
-            Loop Until i = n + 1
+                    alpha(i) = (1 + (0.37464 + 1.54226 * w(i) - 0.26992 * w(i) ^ 2) * (1 - (T / Tc(i)) ^ 0.5)) ^ 2
+                    ai(i) = 0.45724 * alpha(i) * R ^ 2 * Tc(i) ^ 2 / Pc(i)
+                    bi(i) = 0.0778 * R * Tc(i) / Pc(i)
+                    ci(i) = 0.37464 + 1.54226 * w(i) - 0.26992 * w(i) ^ 2
+                    i = i + 1
+                Loop Until i = n + 1
+            End If
 
-            i = 0
-            Dim am = 0.0#
-            Do
-                j = 0
-                Do
-                    am = am + Vz(i) * Vz(j) * a(i, j)
-                    j = j + 1
-                Loop Until j = n + 1
-                i = i + 1
-            Loop Until i = n + 1
+            a = Calc_SUM1(n, ai, VKij)
 
-            i = 0
-            Dim bm = 0.0#
-            Do
-                bm = bm + Vz(i) * bi(i)
-                i = i + 1
-            Loop Until i = n + 1
+            Dim tmpa As Object = Calc_SUM2(n, Vz, a)
+
+            Dim am As Double = tmpa(1)
+
+            Dim bm As Double = Vz.MultiplyY(bi).SumY
 
             Dim AG1 = am * P / (R * T) ^ 2
             Dim BG1 = bm * P / (R * T)
