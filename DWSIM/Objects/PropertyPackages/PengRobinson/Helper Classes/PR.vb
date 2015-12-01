@@ -193,9 +193,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             AG = aml * P / (R * T) ^ 2
             BG = bml * P / (R * T)
 
-            Dim _zarray As ArrayList, _mingz As Object, Z As Double
+            Dim _zarray As List(Of Double), _mingz As Object, Z As Double
             _zarray = CalcZ(T, P, Vx, VKij, VTc, VPc, Vw)
-            _mingz = ZtoMinG(_zarray.ToArray(Type.GetType("System.Double")), T, P, Vx, VKij, VTc, VPc, Vw)
+            _mingz = ZtoMinG(_zarray.ToArray(), T, P, Vx, VKij, VTc, VPc, Vw)
             Z = _zarray(_mingz(0))
 
             Dim aux1 = -R / 2 * (0.45724 / T) ^ 0.5
@@ -394,7 +394,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             AG = aml * P / (R * T) ^ 2
             BG = bml * P / (R * T)
 
-            Dim _zarray As ArrayList, _mingz As Object, Z As Double
+            Dim _zarray As List(Of Double), _mingz As Object, Z As Double
 
             _zarray = CalcZ(T, P, Vx, VKij, Tc, Pc, w)
             If forcephase <> "" Then
@@ -404,7 +404,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
                     Z = Common.Max(_zarray.ToArray())
                 End If
             Else
-                _mingz = ZtoMinG(_zarray.ToArray(Type.GetType("System.Double")), T, P, Vx, VKij, Tc, Pc, w)
+                _mingz = ZtoMinG(_zarray.ToArray(), T, P, Vx, VKij, Tc, Pc, w)
                 Z = _zarray(_mingz(0))
             End If
 
@@ -481,7 +481,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             AG = aml * P / (R * T) ^ 2
             BG = bml * P / (R * T)
 
-            Dim _zarray As ArrayList, _mingz As Object, Z As Double
+            Dim _zarray As List(Of Double), _mingz As Object, Z As Double
 
             _zarray = CalcZ(T, P, Vx, VKij, VTc, VPc, Vw)
             If forcephase <> "" Then
@@ -491,7 +491,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
                     Z = Common.Max(_zarray.ToArray())
                 End If
             Else
-                _mingz = ZtoMinG(_zarray.ToArray(Type.GetType("System.Double")), T, P, Vx, VKij, VTc, VPc, Vw)
+                _mingz = ZtoMinG(_zarray.ToArray(), T, P, Vx, VKij, VTc, VPc, Vw)
                 Z = _zarray(_mingz(0))
             End If
 
@@ -642,7 +642,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
         End Sub
 
-        Shared Function CalcZ(ByVal T As Double, ByVal P As Double, ByVal Vx As Double(), ByVal VKij As Double(,), ByVal VTc As Double(), ByVal VPc As Double(), ByVal Vw As Double()) As ArrayList
+        Shared Function CalcZ(ByVal T As Double, ByVal P As Double, ByVal Vx As Double(), ByVal VKij As Double(,), ByVal VTc As Double(), ByVal VPc As Double(), ByVal Vw As Double()) As List(Of Double)
 
             Dim n As Integer, R, coeff(3) As Double
             Dim Vant(0, 4) As Double
@@ -691,13 +691,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
             Dim bml As Double = Vx.MultiplyY(bi).SumY
 
-            'i = 0
-            'Dim bml = 0.0#
-            'Do
-            '    bml = bml + Vx(i) * bi(i)
-            '    i = i + 1
-            'Loop Until i = n + 1
-
             Dim AG = aml * P / (R * T) ^ 2
             Dim BG = bml * P / (R * T)
 
@@ -710,7 +703,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             Dim tv = 0.0#
             Dim ZV, tv2 As Double
 
-            Dim result As New ArrayList
+            Dim result As New List(Of Double)
 
             If temp1(0, 0) > temp1(1, 0) Then
                 tv = temp1(1, 0)
@@ -825,10 +818,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             AG = aml * P / (R * T) ^ 2
             BG = bml * P / (R * T)
 
-            Dim _zarray As ArrayList, _mingz As Object, Z As Double
+            Dim _zarray As List(Of Double), _mingz As Object, Z As Double
 
             _zarray = CalcZ(T, P, Vx, VKij, VTc, VPc, Vw)
-            _mingz = ZtoMinG(_zarray.ToArray(Type.GetType("System.Double")), T, P, Vx, VKij, VTc, VPc, Vw)
+            _mingz = ZtoMinG(_zarray.ToArray(), T, P, Vx, VKij, VTc, VPc, Vw)
             Z = _zarray(_mingz(0))
 
             beta = 1 / P * (1 - (BG * Z ^ 2 + AG * Z - 6 * BG ^ 2 * Z - 2 * BG * Z - 2 * AG * BG + 2 * BG ^ 2 + 2 * BG) / (Z * (3 * Z ^ 2 - 2 * Z + 2 * BG * Z + AG - 3 * BG ^ 2 - 2 * BG)))

@@ -29,9 +29,9 @@ Public Module Roots
         Dim cnt As Integer = 0
         Dim r, rant, rant2, fi, fi_ant, fi_ant2, dfidr As Double
 
-        fi_ant2 = 0
-        fi_ant = 0
-        fi = 0
+        fi_ant2 = 0.0#
+        fi_ant = 0.0#
+        fi = 0.0#
 
         r = 0.01
         rant = r
@@ -43,7 +43,7 @@ Public Module Roots
             rant2 = rant
             rant = r
             r = r - fi / dfidr
-            If Math.Abs(fi - fi_ant2) = 0 Then r = rant * 1.01
+            If Math.Abs(fi - fi_ant2) = 0.0# Then r = rant * 1.01
             cnt += 1
         Loop Until Math.Abs(fi) < 0.00000001 Or cnt >= 1000
 

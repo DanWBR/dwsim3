@@ -149,19 +149,19 @@
     ''' <summary>
     ''' Multiplies vector elements.
     ''' </summary>
-    ''' <param name="vector"></param>
+    ''' <param name="vector1"></param>
     ''' <param name="vector2"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <System.Runtime.CompilerServices.Extension()> Public Function MultiplyY(vector As Double(), vector2 As Double()) As Double()
+    <System.Runtime.CompilerServices.Extension()> Public Function MultiplyY(vector1 As Double(), vector2 As Double()) As Double()
 
-        Dim vector0(vector.Length - 1) As Double
+        Dim vector0(vector1.Length - 1) As Double
 
         If My.Settings.UseSIMDExtensions Then
-            Yeppp.Core.Multiply_V64fV64f_V64f(vector, 0, vector2, 0, vector0, 0, vector.Length)
+            Yeppp.Core.Multiply_V64fV64f_V64f(vector1, 0, vector2, 0, vector0, 0, vector1.Length)
         Else
-            For i As Integer = 0 To vector.Length - 1
-                vector0(i) = vector(i) * vector2(i)
+            For i As Integer = 0 To vector1.Length - 1
+                vector0(i) = vector1(i) * vector2(i)
             Next
         End If
 

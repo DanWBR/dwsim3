@@ -1469,7 +1469,7 @@ Namespace DWSIM.Flowsheet
                 End If
                 form.UIThread(Sub()
                                   form.FormSurface.FlowsheetDesignSurface.Invalidate()
-                                  Application.DoEvents()
+                                  'Application.DoEvents()
                               End Sub)
             End If
         End Sub
@@ -1983,8 +1983,9 @@ Namespace DWSIM.Flowsheet
                                 maintask.Start(My.MyApplication.AppTaskScheduler)
                                 If form.MasterFlowsheet Is Nothing Then
                                     While Not (Date.Now - d1).TotalMilliseconds >= My.Settings.SolverTimeoutSeconds * 1000
-                                        maintask.Wait(150, ct)
+                                        maintask.Wait(500, ct)
                                         CheckCalculatorStatus()
+                                        Application.DoEvents()
                                         If maintask.Status = TaskStatus.RanToCompletion Then Exit While
                                     End While
                                     If maintask.Status = TaskStatus.Running Then Throw New TimeoutException(DWSIM.App.GetLocalString("SolverTimeout"))

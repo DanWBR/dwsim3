@@ -27,7 +27,7 @@
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
@@ -282,7 +282,8 @@
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
-    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
@@ -478,7 +479,6 @@
     <Compile Include="Objects\Classes\Math\BrentMinimize.vb" />
     <Compile Include="Objects\Classes\Math\Broyden.vb" />
     <Compile Include="Objects\Classes\Math\BS.vb" />
-    <Compile Include="Objects\Classes\Math\JenkinsTraubPolySolver.vb" />
     <Compile Include="Objects\Classes\Math\LP_Solve.vb" />
     <Compile Include="Objects\Classes\Math\cMatLib.vb" />
     <Compile Include="Objects\Classes\Math\GDEM.vb" />
