@@ -324,12 +324,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         Case Reaction.KOpt.Constant
                             'rxn.ConstantKeqValue = rxn.ConstantKeqValue
                         Case Reaction.KOpt.Expression
-                            If rxn.ExpContext Is Nothing Then
-                                rxn.ExpContext = New Ciloci.Flee.ExpressionContext
-                                With rxn.ExpContext
-                                    .Imports.AddType(GetType(System.Math))
-                                End With
-                            End If
+                            rxn.ExpContext = New Ciloci.Flee.ExpressionContext
+                            rxn.ExpContext.Imports.AddType(GetType(System.Math))
                             rxn.ExpContext.Variables.Add("T", T)
                             rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.Expression)
                             rxn.ConstantKeqValue = Exp(rxn.Expr.Evaluate)
