@@ -133,33 +133,6 @@
     <value>Interaction Parameters</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>181, 13</value>
-  </data>
-  <data name="Label5.Text" xml:space="preserve">
-    <value>Mass Balance error term weight (p3)</value>
-  </data>
-  <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>212, 13</value>
-  </data>
-  <data name="Label6.Text" xml:space="preserve">
-    <value>Chemical Equilibrium error term weight (p2)</value>
-  </data>
-  <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 13</value>
-  </data>
-  <data name="Label7.Text" xml:space="preserve">
-    <value>Gibbs Free Energy term weight (p1)</value>
-  </data>
-  <data name="GroupBox4.Text" xml:space="preserve">
-    <value>Objective Function Parameters</value>
-  </data>
-  <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>167, 13</value>
-  </data>
-  <data name="Label4.Text" xml:space="preserve">
-    <value>Numerical derivative perturbation</value>
-  </data>
   <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>119, 13</value>
   </data>

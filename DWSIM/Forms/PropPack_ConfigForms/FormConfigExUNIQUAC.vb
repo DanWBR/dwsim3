@@ -99,15 +99,6 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(id1) Then
 
         Me.tbMaxIts.Text = ppu.ElectrolyteFlash.MaximumIterations
         Me.tbTol.Text = ppu.ElectrolyteFlash.Tolerance
-        Me.tbEps.Text = ppu.ElectrolyteFlash.NumericalDerivativePerturbation
-
-        Me.tbp1.Text = ppu.ElectrolyteFlash.ObjFuncGibbsWeight
-        Me.tbp2.Text = ppu.ElectrolyteFlash.ObjFuncChemEqWeight
-        Me.tbp3.Text = ppu.ElectrolyteFlash.ObjFuncMassBalWeight
-
-        Me.cbLS.Enabled = Not Environment.Is64BitProcess
-
-        Me.cbLS.SelectedItem = ppu.ElectrolyteFlash.LinearSolver
 
         Me.chkCalcChemEq.Checked = ppu.ElectrolyteFlash.CalculateChemicalEquilibria
 
@@ -198,56 +189,4 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(id1) Then
         End If
     End Sub
 
-    Private Sub tbEps_TextChanged(sender As Object, e As EventArgs) Handles tbEps.TextChanged
-        If Loaded Then
-            Dim ppu As DWSIM.SimulationObjects.PropertyPackages.ExUNIQUACPropertyPackage = _pp
-            If Double.TryParse(tbEps.Text, New Double) Then
-                tbEps.ForeColor = Color.Blue
-                ppu.ElectrolyteFlash.NumericalDerivativePerturbation = tbEps.Text
-            Else
-                tbEps.ForeColor = Color.Red
-            End If
-        End If
-    End Sub
-
-    Private Sub tbp1_TextChanged(sender As Object, e As EventArgs) Handles tbp1.TextChanged
-        If Loaded Then
-            Dim ppu As DWSIM.SimulationObjects.PropertyPackages.ExUNIQUACPropertyPackage = _pp
-            If Double.TryParse(tbp1.Text, New Double) Then
-                tbp1.ForeColor = Color.Blue
-                ppu.ElectrolyteFlash.ObjFuncGibbsWeight = tbp1.Text
-            Else
-                tbp1.ForeColor = Color.Red
-            End If
-        End If
-    End Sub
-
-    Private Sub tbp2_TextChanged(sender As Object, e As EventArgs) Handles tbp2.TextChanged
-        If Loaded Then
-            Dim ppu As DWSIM.SimulationObjects.PropertyPackages.ExUNIQUACPropertyPackage = _pp
-            If Double.TryParse(tbp2.Text, New Double) Then
-                tbp2.ForeColor = Color.Blue
-                ppu.ElectrolyteFlash.ObjFuncChemEqWeight = tbp2.Text
-            Else
-                tbp2.ForeColor = Color.Red
-            End If
-        End If
-    End Sub
-
-    Private Sub tbp3_TextChanged(sender As Object, e As EventArgs) Handles tbp3.TextChanged
-        If Loaded Then
-            Dim ppu As DWSIM.SimulationObjects.PropertyPackages.ExUNIQUACPropertyPackage = _pp
-            If Double.TryParse(tbp3.Text, New Double) Then
-                tbp3.ForeColor = Color.Blue
-                ppu.ElectrolyteFlash.ObjFuncMassBalWeight = tbp3.Text
-            Else
-                tbp3.ForeColor = Color.Red
-            End If
-        End If
-    End Sub
-
-    Private Sub cbLS_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbLS.SelectedIndexChanged
-        Dim ppu As DWSIM.SimulationObjects.PropertyPackages.ExUNIQUACPropertyPackage = _pp
-        ppu.ElectrolyteFlash.LinearSolver = Me.cbLS.SelectedItem
-    End Sub
 End Class

@@ -1469,7 +1469,6 @@ Namespace DWSIM.Flowsheet
                 End If
                 form.UIThread(Sub()
                                   form.FormSurface.FlowsheetDesignSurface.Invalidate()
-                                  'Application.DoEvents()
                               End Sub)
             End If
         End Sub
@@ -1910,8 +1909,6 @@ Namespace DWSIM.Flowsheet
                                                                      End If
                                                                  Next
 
-
-
                                                                  DWSIM.MathEx.Broyden.broydn(totalv - 1, recvars, recerrs, recdvars, recvarsb, recerrsb, rechess, If(icount < 2, 0, 1))
 
                                                                  i = 0
@@ -1952,7 +1949,7 @@ Namespace DWSIM.Flowsheet
                             End If
                         Next
 
-                        'configure the application task scheduler
+                        'configure the task scheduler
 
                         If form.MasterFlowsheet Is Nothing Then
 
