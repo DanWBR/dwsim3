@@ -4283,6 +4283,8 @@ ruf:                Application.DoEvents()
         If My.Settings.UserDatabases.Count > 0 Then
             FormDBManager.DBPath = My.Settings.UserDatabases.Item(0)
             FormDBManager.ShowDialog()
+        Else
+            MessageBox.Show(DWSIM.App.GetLocalString("ErrorNoUserdatabase"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
     End Sub
     Private Sub PreferênciasDoDWSIMToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PreferênciasDoDWSIMToolStripMenuItem.Click

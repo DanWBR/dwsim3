@@ -33,7 +33,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Private m_props As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
         Public m_elec As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Electrolyte
-        Public Property ElectrolyteFlash As DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms.ElectrolyteSVLE2
+        Public Property ElectrolyteFlash As DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms.ElectrolyteSVLE
         Private m_id As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Ideal
 
         Public Sub New(ByVal comode As Boolean)
@@ -44,7 +44,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Me._packagetype = PropertyPackages.PackageType.ActivityCoefficient
             Me.IsElectrolytePP = True
 
-            Me.ElectrolyteFlash = New Auxiliary.FlashAlgorithms.ElectrolyteSVLE2
+            Me.ElectrolyteFlash = New Auxiliary.FlashAlgorithms.ElectrolyteSVLE
 
         End Sub
 
@@ -56,7 +56,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Me._packagetype = PropertyPackages.PackageType.ActivityCoefficient
             Me.IsElectrolytePP = True
 
-            Me.ElectrolyteFlash = New Auxiliary.FlashAlgorithms.ElectrolyteSVLE2
+            Me.ElectrolyteFlash = New Auxiliary.FlashAlgorithms.ElectrolyteSVLE
 
         End Sub
 
@@ -392,7 +392,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Next
 
             Me.m_elec = New Auxiliary.Electrolyte
-            If Me.ElectrolyteFlash Is Nothing Then Me.ElectrolyteFlash = New Auxiliary.FlashAlgorithms.ElectrolyteSVLE2
+            If Me.ElectrolyteFlash Is Nothing Then Me.ElectrolyteFlash = New Auxiliary.FlashAlgorithms.ElectrolyteSVLE
             Me.ElectrolyteFlash.CompoundProperties = constprops
             Me.ElectrolyteFlash.proppack = Me
 
@@ -588,7 +588,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Next
 
             Me.m_elec = New Auxiliary.Electrolyte
-            If Me.ElectrolyteFlash Is Nothing Then Me.ElectrolyteFlash = New Auxiliary.FlashAlgorithms.ElectrolyteSVLE2
+            If Me.ElectrolyteFlash Is Nothing Then Me.ElectrolyteFlash = New Auxiliary.FlashAlgorithms.ElectrolyteSVLE
             Me.ElectrolyteFlash.CompoundProperties = constprops
             Me.ElectrolyteFlash.proppack = Me
 
@@ -957,7 +957,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             MyBase.LoadData(data)
 
-            Me.ElectrolyteFlash = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms.ElectrolyteSVLE2
+            Me.ElectrolyteFlash = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms.ElectrolyteSVLE
 
             Dim xel0 As XElement = (From xelv As XElement In data Where xelv.Name = "ElectrolyteFlash_ReactionSetID").SingleOrDefault
             If Not xel0 Is Nothing Then Me.ElectrolyteFlash.ReactionSet = xel0.Value
@@ -971,21 +971,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim xel3 As XElement = (From xelv As XElement In data Where xelv.Name = "ElectrolyteFlash_MaximumIterations").SingleOrDefault
             If Not xel3 Is Nothing Then Me.ElectrolyteFlash.MaximumIterations = xel3.Value
 
-            xel = (From xelv As XElement In data Where xelv.Name = "ElectrolyteFlash_NumericalDerivativePerturbation").SingleOrDefault
-            If Not xel Is Nothing Then Me.ElectrolyteFlash.NumericalDerivativePerturbation = xel.Value
-
-            xel = (From xelv As XElement In data Where xelv.Name = "ElectrolyteFlash_ObjFuncGibbsWeight").SingleOrDefault
-            If Not xel Is Nothing Then Me.ElectrolyteFlash.ObjFuncGibbsWeight = xel.Value
-
-            xel = (From xelv As XElement In data Where xelv.Name = "ElectrolyteFlash_ObjFuncChemEqWeight").SingleOrDefault
-            If Not xel Is Nothing Then Me.ElectrolyteFlash.ObjFuncChemEqWeight = xel.Value
-
-            xel = (From xelv As XElement In data Where xelv.Name = "ElectrolyteFlash_ObjFuncMassBalWeight").SingleOrDefault
-            If Not xel Is Nothing Then Me.ElectrolyteFlash.ObjFuncMassBalWeight = xel.Value
-
-            xel = (From xelv As XElement In data Where xelv.Name = "ElectrolyteFlash_LinearSolver").SingleOrDefault
-            If Not xel Is Nothing Then Me.ElectrolyteFlash.LinearSolver = xel.Value
-
         End Function
 
         Public Overrides Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement)
@@ -998,11 +983,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 .Add(New XElement("ElectrolyteFlash_CalculateChemicalEquilibria", Me.ElectrolyteFlash.CalculateChemicalEquilibria))
                 .Add(New XElement("ElectrolyteFlash_Tolerance", Me.ElectrolyteFlash.Tolerance))
                 .Add(New XElement("ElectrolyteFlash_MaximumIterations", Me.ElectrolyteFlash.MaximumIterations))
-                .Add(New XElement("ElectrolyteFlash_NumericalDerivativePerturbation", Me.ElectrolyteFlash.NumericalDerivativePerturbation))
-                .Add(New XElement("ElectrolyteFlash_ObjFuncGibbsWeight", Me.ElectrolyteFlash.ObjFuncGibbsWeight))
-                .Add(New XElement("ElectrolyteFlash_ObjFuncChemEqWeight", Me.ElectrolyteFlash.ObjFuncChemEqWeight))
-                .Add(New XElement("ElectrolyteFlash_ObjFuncMassBalWeight", Me.ElectrolyteFlash.ObjFuncMassBalWeight))
-                .Add(New XElement("ElectrolyteFlash_LinearSolver", Me.ElectrolyteFlash.LinearSolver))
             End With
 
             Return elements

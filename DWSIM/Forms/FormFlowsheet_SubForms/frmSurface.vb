@@ -1048,6 +1048,10 @@ Public Class frmSurface
         newobj.Tabela = Nothing
         newobj.TabelaRapida = Nothing
 
+        Dim searchtext As String = gObj.Tag.Split("(")(0).Trim()
+
+        Dim objcount As Integer = (From go As GraphicObject In Me.FlowsheetDesignSurface.drawingObjects Select go Where go.Tag.Contains(searchtext)).Count
+
         Dim mpx = Me.FlowsheetDesignSurface.SelectedObject.X + Me.FlowsheetDesignSurface.SelectedObject.Width * 1.1
         Dim mpy = Me.FlowsheetDesignSurface.SelectedObject.Y + Me.FlowsheetDesignSurface.SelectedObject.Height * 1.1
 
@@ -1058,7 +1062,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "ADJ-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     For Each con As ConnectionPoint In .InputConnectors
@@ -1088,7 +1092,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "SPEC-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     For Each con As ConnectionPoint In .InputConnectors
@@ -1118,7 +1122,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "REC-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     For Each con As ConnectionPoint In .InputConnectors
@@ -1148,7 +1152,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "EREC-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     For Each con As ConnectionPoint In .InputConnectors
@@ -1178,7 +1182,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "MIX-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes.Add(.Name, .Tag).Name = .Name
@@ -1210,7 +1214,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "MIX-ME_-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeME").Nodes.Add(.Name, .Tag).Name = .Name
@@ -1242,7 +1246,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "SPLT-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeSP").Nodes.Add(.Name, .Tag).Name = .Name
@@ -1274,7 +1278,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "PUMP-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodePU").Nodes.Add(.Name, .Tag).Name = .Name
@@ -1306,7 +1310,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "TANK-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeTQ").Nodes.Add(.Name, .Tag).Name = .Name
@@ -1338,7 +1342,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "SEP-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeSE").Nodes.Add(.Name, .Tag).Name = .Name
@@ -1370,7 +1374,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "MSTR-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMS").Nodes.Add(.Name, .Tag).Name = .Name
@@ -1402,7 +1406,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "ESTR-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeEN").Nodes.Add(.Name, .Tag).Name = .Name
@@ -1434,7 +1438,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "COMP-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeCO").Nodes.Add(.Name, .Tag).Name = .Name
@@ -1466,7 +1470,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "EXP-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeTU").Nodes.Add(.Name, .Tag).Name = .Name
@@ -1498,7 +1502,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "COOL-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeCL").Nodes.Add(.Name, .Tag).Name = .Name
@@ -1530,7 +1534,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "HEAT-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeHT").Nodes.Add(.Name, .Tag).Name = .Name
@@ -1562,7 +1566,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "PIPE-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodePI").Nodes.Add(.Name, .Tag).Name = .Name
@@ -1594,7 +1598,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "VALV-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeVA").Nodes.Add(.Name, .Tag).Name = .Name
@@ -1626,7 +1630,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "RC-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRCONV").Nodes.Add(.Name, .Tag).Name = .Name
@@ -1658,7 +1662,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "RE-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeREQ").Nodes.Add(.Name, .Tag).Name = .Name
@@ -1690,7 +1694,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "RG-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRGIB").Nodes.Add(.Name, .Tag).Name = .Name
@@ -1722,7 +1726,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "CSTR-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRCSTR").Nodes.Add(.Name, .Tag).Name = .Name
@@ -1754,7 +1758,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "PFR-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRPFR").Nodes.Add(.Name, .Tag).Name = .Name
@@ -1786,7 +1790,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "HE-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeHE").Nodes.Add(.Name, .Tag).Name = .Name
@@ -1818,7 +1822,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "SC-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeSC").Nodes.Add(.Name, .Tag).Name = .Name
@@ -1850,7 +1854,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "DC-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeDC").Nodes.Add(.Name, .Tag).Name = .Name
@@ -1882,7 +1886,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "ABS-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeAC").Nodes.Add(.Name, .Tag).Name = .Name
@@ -1914,7 +1918,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "RBA-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRBA").Nodes.Add(.Name, .Tag).Name = .Name
@@ -1946,7 +1950,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "RFA-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRFA").Nodes.Add(.Name, .Tag).Name = .Name
@@ -1978,7 +1982,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "CS-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeCSEP").Nodes.Add(.Name, .Tag).Name = .Name
@@ -2010,7 +2014,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "SS-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeSS").Nodes.Add(.Name, .Tag).Name = .Name
@@ -2042,7 +2046,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "FT-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeFT").Nodes.Add(.Name, .Tag).Name = .Name
@@ -2074,7 +2078,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "OP-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeOPL").Nodes.Add(.Name, .Tag).Name = .Name
@@ -2106,7 +2110,7 @@ Public Class frmSurface
                 With myDWOBJ.GraphicObject
                     .Calculated = False
                     .Name = "UO-" & Guid.NewGuid.ToString
-                    .Tag = gObj.Tag & "_CLONE"
+                    .Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                     .X = mpx
                     .Y = mpy
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeUO").Nodes.Add(.Name, .Tag).Name = .Name

@@ -5177,10 +5177,10 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
     <value>Utilizar K ideal na solução trivial</value>
   </data>
   <data name="DescSEAPP" xml:space="preserve">
-    <value>Este Pacote de Propriedades contém rotinas para calcular propriedades da água do mar utilizando os procedimentos constantes na especificação IAPWS-08 ("Release on the IAPWS Formulation 2008 for the Thermodynamic Properties of Seawater").</value>
+    <value>Este Paquete de Propiedades contiene rutinas para calcular las propiedades del agua de mar utilizando los procedimientos descritos en la especificación IAPWS-08 ("Publicada en "IAPWS Formulación de 2008" para las propiedades termodinámicas del agua de mar").</value>
   </data>
   <data name="SEAPP" xml:space="preserve">
-    <value>Água do Mar (IAPWS-08)</value>
+    <value>Agua de Mar (IAPWS-08)</value>
   </data>
   <data name="Salinity" xml:space="preserve">
     <value>Salinidad (kg/kg)</value>
@@ -5192,42 +5192,45 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
     <value>[Black Oil] BSW (%)</value>
   </data>
   <data name="BlackOil_GOR" xml:space="preserve">
-    <value>[Black Oil] Razão Gás-Óleo @ SC</value>
+    <value>[Black Oil] Relación Gas-Oil @ SC</value>
   </data>
   <data name="BlackOil_PNA_A" xml:space="preserve">
-    <value>[Black Oil] Análise PNA do óleo, Aromáticos, %</value>
+    <value>[Black Oil] Análisis PNA, Aromáticos, %</value>
   </data>
   <data name="BlackOil_PNA_N" xml:space="preserve">
-    <value>[Black Oil] Análise PNA do óleo, Naftênicos, %</value>
+    <value>[Black Oil] Análisis PNA, Nafténicos, %</value>
   </data>
   <data name="BlackOil_PNA_P" xml:space="preserve">
-    <value>[Black Oil] Análise PNA do óleo, Parafínicos, %</value>
+    <value>[Black Oil] Análisis PNA, Parafínicos, %</value>
   </data>
   <data name="BlackOil_SGG" xml:space="preserve">
-    <value>[Black Oil] Densidade absoluta do gás</value>
+    <value>[Black Oil] Gravedad Específica del gas</value>
   </data>
   <data name="BlackOil_SGO" xml:space="preserve">
-    <value>[Black Oil] Densidade absoluta do óleo</value>
+    <value>[Black Oil] Gravedad Específica del petróleo</value>
   </data>
   <data name="BlackOil_T1" xml:space="preserve">
-    <value>[Black Oil] Temperatura da Viscosidade 1</value>
+    <value>[Black Oil] Temperatura de la Viscosidad 1</value>
   </data>
   <data name="BlackOil_T2" xml:space="preserve">
-    <value>[Black Oil] Temperatura da Viscosidade 2</value>
+    <value>[Black Oil] Temperatura de la Viscosidad 2</value>
   </data>
   <data name="BlackOil_V1" xml:space="preserve">
-    <value>[Black Oil] Viscosidade 1 do óleo</value>
+    <value>[Black Oil] Viscosidad 1 del petróleo</value>
   </data>
   <data name="BlackOil_V2" xml:space="preserve">
-    <value>[Black Oil] Viscosidade 2 do óleo</value>
+    <value>[Black Oil] Viscosidad 2 del petróleo</value>
   </data>
   <data name="DescBOPP" xml:space="preserve">
-    <value>Um Pacote de Propriedades simplificado para cálculos rápidos de processo envolvendo fluidos de petróleo caracterizados por propriedades simples, tais como densidades e razão gás-óleo.</value>
+    <value>Un Paquete de Propieadades simplificado para los cálculos rápidos de procesos con fluidos derivados del petróleo que se caracterizan por propiedades simples, tales como la densidad y la relación gas-aceite.</value>
   </data>
   <data name="Debugging" xml:space="preserve">
     <value>Depurando objecto</value>
   </data>
   <data name="DescEUPP" xml:space="preserve">
     <value>This model is a combination of the extended UNIQUAC model for electrolytes and the Soave–Redlich–Kwong cubic equation of state. The model has been applied to aqueous systems containing ammonia and/or carbon dioxide along with various salts. Model parameters valid in the temperature range 0–110°C, the pressure range from 0–100 bar, and the concentration range up to approximately 80 molal ammonia are given. The model parameters were evaluated on the basis of more than 7000 experimental data points.</value>
+  </data>
+  <data name="ErrorNoUserdatabase" xml:space="preserve">
+    <value>No User Database existente!</value>
   </data>
 </root>

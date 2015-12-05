@@ -149,99 +149,99 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Dim rext As Double() = Nothing
                 Dim result As Object
 
-                Do
+                'Do
 
-                    'calculate chemical equilibria between ions, salts and water. 
-                    ''SolveChemicalEquilibria' returns the equilibrium molar amounts in the liquid phase, including precipitates.
+                'calculate chemical equilibria between ions, salts and water. 
+                ''SolveChemicalEquilibria' returns the equilibrium molar amounts in the liquid phase, including precipitates.
 
-                    If CalculateChemicalEquilibria And Vp(wid) < P Then
-                        result = SolveChemicalEquilibria(Vnl, T, P, ids, rext)
-                        Vnl = result(0).clone
-                        rext = result(1)
-                    End If
+                If CalculateChemicalEquilibria And Vp(wid) < P Then
+                    result = SolveChemicalEquilibria(Vnf, T, P, ids, rext)
+                    Vnl = result(0).clone
+                    rext = result(1)
+                End If
 
+                For i = 0 To n
+                    Vxl(i) = Vnl(i) / Vnl.Sum()
+                Next
+
+                'calculate activity coefficients.
+
+                If TypeOf proppack Is ExUNIQUACPropertyPackage Then
+                    activcoeff = CType(proppack, ExUNIQUACPropertyPackage).m_uni.GAMMA_MR(T, Vxl, CompoundProperties)
+                ElseIf TypeOf proppack Is LIQUAC2PropertyPackage Then
+                    activcoeff = CType(proppack, LIQUAC2PropertyPackage).m_uni.GAMMA_MR(T, Vxl, CompoundProperties)
+                End If
+
+                If activcoeff(wid) = 0.0# Then
+                    'possibly only solids in this stream. will make arrangements so the maximum solubility is very small.
                     For i = 0 To n
-                        Vxl(i) = Vnl(i) / Vnl.Sum()
+                        activcoeff(i) = 10000000000.0
                     Next
+                End If
 
-                    'calculate activity coefficients.
+                Dim Vxlmax(n) As Double
 
-                    If TypeOf proppack Is ExUNIQUACPropertyPackage Then
-                        activcoeff = CType(proppack, ExUNIQUACPropertyPackage).m_uni.GAMMA_MR(T, Vxl, CompoundProperties)
-                    ElseIf TypeOf proppack Is LIQUAC2PropertyPackage Then
-                        activcoeff = CType(proppack, LIQUAC2PropertyPackage).m_uni.GAMMA_MR(T, Vxl, CompoundProperties)
-                    End If
+                'calculate maximum solubilities for solids/precipitates.
 
-                    If activcoeff(wid) = 0.0# Then
-                        'possibly only solids in this stream. will make arrangements so the maximum solubility is very small.
-                        For i = 0 To n
-                            activcoeff(i) = 10000000000.0
-                        Next
-                    End If
-
-                    Dim Vxlmax(n) As Double
-
-                    'calculate maximum solubilities for solids/precipitates.
-
-                    For i = 0 To n
-                        If CompoundProperties(i).TemperatureOfFusion <> 0.0# And i <> wid Then
-                            Vxlmax(i) = (1 / activcoeff(i)) * Exp(-CompoundProperties(i).EnthalpyOfFusionAtTf / (0.00831447 * T) * (1 - T / CompoundProperties(i).TemperatureOfFusion))
-                            If Vxlmax(i) > 1 Then Vxlmax(i) = 1.0#
+                For i = 0 To n
+                    If CompoundProperties(i).TemperatureOfFusion <> 0.0# And i <> wid Then
+                        Vxlmax(i) = (1 / activcoeff(i)) * Exp(-CompoundProperties(i).EnthalpyOfFusionAtTf / (0.00831447 * T) * (1 - T / CompoundProperties(i).TemperatureOfFusion))
+                        If Vxlmax(i) > 1 Then Vxlmax(i) = 1.0#
+                    Else
+                        If CompoundProperties(i).IsHydratedSalt Then
+                            Vxlmax(i) = 0.0# 'in the absence of enthalpy/temperature of fusion, I'll assume that the hydrated salt will always precipitate, if present.
                         Else
-                            If CompoundProperties(i).IsHydratedSalt Then
-                                Vxlmax(i) = 0.0# 'in the absence of enthalpy/temperature of fusion, I'll assume that the hydrated salt will always precipitate, if present.
-                            Else
-                                Vxlmax(i) = 1.0#
-                            End If
+                            Vxlmax(i) = 1.0#
                         End If
-                    Next
+                    End If
+                Next
 
-                    'mass balance.
+                'mass balance.
 
-                    For i = 0 To n
-                        Vnl_ant(i) = Vnl(i)
-                        If Vxl(i) > Vxlmax(i) Then
-                            Vxl(i) = Vxlmax(i)
-                            Vnl(i) = Vxl(i) * L
-                            Vns(i) = Vf(i) - Vnl(i)
-                        Else
-                            'Vnl(i) = Vf(i)
-                            Vns(i) = 0
-                        End If
-                    Next
+                For i = 0 To n
+                    Vnl_ant(i) = Vnl(i)
+                    If Vxl(i) > Vxlmax(i) Then
+                        Vxl(i) = Vxlmax(i)
+                        Vns(i) = Vnl(i) - Vxl(i) * L
+                        Vnl(i) = Vxl(i) * L
+                    Else
+                        'Vnl(i) = Vf(i)
+                        Vns(i) = 0
+                    End If
+                Next
 
-                    'liquid mole amounts
+                'liquid mole amounts
 
-                    L_ant = L
-                    L = Vnl.Sum()
-                    S = Vns.Sum()
-                    V = Vnv.Sum()
+                L_ant = L
+                L = Vnl.Sum()
+                S = Vns.Sum()
+                V = Vnv.Sum()
 
-                    For i = 0 To n
-                        If Sum(Vnl) <> 0.0# Then Vxl(i) = Vnl(i) / Sum(Vnl) Else Vxl(i) = 0.0#
-                        If Sum(Vns) <> 0.0# Then Vxs(i) = Vns(i) / Sum(Vns) Else Vxs(i) = 0.0#
-                        If Sum(Vnv) <> 0.0# Then Vxv(i) = Vnv(i) / Sum(Vnv) Else Vxv(i) = 0.0#
-                    Next
+                For i = 0 To n
+                    If Sum(Vnl) <> 0.0# Then Vxl(i) = Vnl(i) / Sum(Vnl) Else Vxl(i) = 0.0#
+                    If Sum(Vns) <> 0.0# Then Vxs(i) = Vns(i) / Sum(Vns) Else Vxs(i) = 0.0#
+                    If Sum(Vnv) <> 0.0# Then Vxv(i) = Vnv(i) / Sum(Vnv) Else Vxv(i) = 0.0#
+                Next
 
-                    sumN = 0
-                    For i = 0 To n
-                        'Vf(i) = Vnv(i) + Vnl(i) + Vns(i)
-                        sumN += Vnv(i) + Vnl(i) + Vns(i)
-                    Next
+                sumN = 0
+                For i = 0 To n
+                    'Vf(i) = Vnv(i) + Vnl(i) + Vns(i)
+                    sumN += Vnv(i) + Vnl(i) + Vns(i)
+                Next
 
-                    err = 0
-                    For i = 0 To n
-                        err += Abs(Vnl(i) - Vnl_ant(i)) ^ 2
-                    Next
-                    err += (L - L_ant) ^ 2
+                err = 0
+                For i = 0 To n
+                    err += Abs(Vnl(i) - Vnl_ant(i)) ^ 2
+                Next
+                err += (L - L_ant) ^ 2
 
-                    If err < Tolerance And int_count > 0 Then Exit Do
+                'If err < Tolerance And int_count > 0 Then Exit Do
 
-                    int_count += 1
+                int_count += 1
 
-                    CheckCalculatorStatus()
+                CheckCalculatorStatus()
 
-                Loop Until int_count > MaximumIterations
+                'Loop Until int_count > MaximumIterations
 
                 If int_count > MaximumIterations Then
                     Throw New Exception("Chemical Equilibrium Solver error: Reached the maximum number of external iterations without converging.")
@@ -324,12 +324,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         Case Reaction.KOpt.Constant
                             'rxn.ConstantKeqValue = rxn.ConstantKeqValue
                         Case Reaction.KOpt.Expression
-                            If rxn.ExpContext Is Nothing Then
-                                rxn.ExpContext = New Ciloci.Flee.ExpressionContext
-                                With rxn.ExpContext
-                                    .Imports.AddType(GetType(System.Math))
-                                End With
-                            End If
+                            rxn.ExpContext = New Ciloci.Flee.ExpressionContext
+                            rxn.ExpContext.Imports.AddType(GetType(System.Math))
                             rxn.ExpContext.Variables.Add("T", T)
                             rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.Expression)
                             rxn.ConstantKeqValue = Exp(rxn.Expr.Evaluate)
@@ -503,8 +499,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     tmpx = x
                     tmpdx = dx
-                    df = 1
-                    fval = brentsolver.brentoptimize(0.00001, 2.0#, 0.00000001, df)
+                    df = 1.0#
+                    'fval = brentsolver.brentoptimize(0.00001, 2.0#, 0.00000001, df)
 
                     For i = 0 To r
                         x(i) -= dx(i) * df
@@ -542,23 +538,24 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 ' return equilibrium molar amounts in the liquid phase.
 
+                Dim Vx2 As Double() = Vx.Clone
+
                 For Each s As String In N.Keys
-                    Vx(ids.IndexOf(s)) = Abs(N(s))
+                    Vx2(ids.IndexOf(s)) = Abs(N(s))
                 Next
 
                 Dim nc As Integer = Vx.Length - 1
 
                 Dim mtot As Double = 0
                 For i = 0 To nc
-                    mtot += Vx(i)
+                    mtot += Vx2(i)
                 Next
 
-                For i = 0 To nc
-                    Vx(i) = Vx(i) '/ mtot
-                Next
+                'For i = 0 To nc
+                '    Vx(i) = Vx(i) '/ mtot
+                'Next
 
-
-                Return New Object() {Vx, x}
+                Return New Object() {Vx2, x}
 
             Else
 
@@ -671,7 +668,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             For i = 0 To Me.Reactions.Count - 1
                 With proppack.CurrentMaterialStream.Flowsheet.Options.Reactions(Me.Reactions(i))
-                    f(i) = (prod(i) - .ConstantKeqValue)
+                    f(i) = Log(prod(i)) - Log(.ConstantKeqValue)
                     If Double.IsNaN(f(i)) Or Double.IsInfinity(f(i)) Or pen_val <> 0.0# Then
                         f(i) = pen_val ^ 2
                     End If
