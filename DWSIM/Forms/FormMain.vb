@@ -688,28 +688,9 @@ Public Class FormMain
     Private Function GetComponents()
 
         'try to find chemsep xml database
-        If File.Exists(My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "dwsim.ini") Or DWSIM.App.IsRunningOnMono Then
-            'PORTABLE/MONO MODE
-            If File.Exists(My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "chemsepdb" & Path.DirectorySeparatorChar & "chemsep1.xml") Then
-                My.Settings.ChemSepDatabasePath = My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "chemsepdb" & Path.DirectorySeparatorChar & "chemsep1.xml"
-            End If
-        Else
-            Try
-                Dim cspath As String = ""
-                If My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v96") IsNot Nothing Then
-                    cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v96").GetValue("")
-                ElseIf My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v95") IsNot Nothing Then
-                    cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v95").GetValue("")
-                ElseIf My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v94") IsNot Nothing Then
-                    cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v94").GetValue("")
-                ElseIf My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v93") IsNot Nothing Then
-                    cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v93").GetValue("")
-                End If
-                cspath += Path.DirectorySeparatorChar + "pcd" + Path.DirectorySeparatorChar + "chemsep1.xml"
-                If File.Exists(cspath) Then My.Settings.ChemSepDatabasePath = cspath
-            Catch ex As Exception
-                Console.WriteLine("Error: Unable to find ChemSep database: " & ex.ToString)
-            End Try
+
+        If File.Exists(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "chemsep1.xml") Then
+            If My.Settings.ChemSepDatabasePath = "" Then My.Settings.ChemSepDatabasePath = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "chemsep1.xml"
         End If
 
         Try
@@ -723,16 +704,14 @@ Public Class FormMain
         'load DWSIM XML database
         Me.LoadDWSIMDB(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "dwsim.xml")
 
-        'load Biodiesel XML database
-        Me.LoadBDDB(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "biod_db.xml")
-
+        'load CoolProp list of compounds
+        Me.LoadCPDB(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "coolprop.txt")
+    
         'load Electrolyte XML database
         Me.LoadEDB(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "electrolyte.xml")
 
-        'load CoolProp list of compounds
-        If Not DWSIM.App.IsRunningOnMono Then
-            Me.LoadCPDB(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "coolprop.txt")
-        End If
+        'load Biodiesel XML database
+        Me.LoadBDDB(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "biod_db.xml")
 
         Dim invaliddbs As New List(Of String)
 
