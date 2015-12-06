@@ -793,7 +793,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FPROPS
         '''rho: double
         '''data: PureFluid*
         '''err: FpropsError*
-        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend.dll", EntryPoint:="fprops_p")> _
+        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend", EntryPoint:="fprops_p")> _
         Public Shared Function fprops_p(ByVal T As Double, ByVal rho As Double, ByRef data As PureFluid_struct, ByRef err As FpropsError_enum) As Double
         End Function
 
@@ -802,7 +802,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FPROPS
         '''rho: double
         '''data: PureFluid*
         '''err: FpropsError*
-        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend.dll", EntryPoint:="fprops_u")> _
+        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend", EntryPoint:="fprops_u")> _
         Public Shared Function fprops_u(ByVal T As Double, ByVal rho As Double, ByRef data As PureFluid_struct, ByRef err As FpropsError_enum) As Double
         End Function
 
@@ -811,7 +811,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FPROPS
         '''rho: double
         '''data: PureFluid*
         '''err: FpropsError*
-        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend.dll", EntryPoint:="fprops_h")> _
+        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend", EntryPoint:="fprops_h")> _
         Public Shared Function fprops_h(ByVal T As Double, ByVal rho As Double, ByRef data As PureFluid_struct, ByRef err As FpropsError_enum) As Double
         End Function
 
@@ -820,7 +820,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FPROPS
         '''rho: double
         '''data: PureFluid*
         '''err: FpropsError*
-        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend.dll", EntryPoint:="fprops_s")> _
+        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend", EntryPoint:="fprops_s")> _
         Public Shared Function fprops_s(ByVal T As Double, ByVal rho As Double, ByRef data As PureFluid_struct, ByRef err As FpropsError_enum) As Double
         End Function
 
@@ -829,7 +829,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FPROPS
         '''rho: double
         '''data: PureFluid*
         '''err: FpropsError*
-        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend.dll", EntryPoint:="fprops_a")> _
+        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend", EntryPoint:="fprops_a")> _
         Public Shared Function fprops_a(ByVal T As Double, ByVal rho As Double, ByRef data As PureFluid_struct, ByRef err As FpropsError_enum) As Double
         End Function
 
@@ -838,7 +838,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FPROPS
         '''rho: double
         '''data: PureFluid*
         '''err: FpropsError*
-        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend.dll", EntryPoint:="fprops_cv")> _
+        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend", EntryPoint:="fprops_cv")> _
         Public Shared Function fprops_cv(ByVal T As Double, ByVal rho As Double, ByRef data As PureFluid_struct, ByRef err As FpropsError_enum) As Double
         End Function
 
@@ -847,7 +847,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FPROPS
         '''rho: double
         '''data: PureFluid*
         '''err: FpropsError*
-        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend.dll", EntryPoint:="fprops_cp")> _
+        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend", EntryPoint:="fprops_cp")> _
         Public Shared Function fprops_cp(ByVal T As Double, ByVal rho As Double, ByRef data As PureFluid_struct, ByRef err As FpropsError_enum) As Double
         End Function
 
@@ -856,7 +856,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FPROPS
         '''rho: double
         '''data: PureFluid*
         '''err: FpropsError*
-        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend.dll", EntryPoint:="fprops_w")> _
+        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend", EntryPoint:="fprops_w")> _
         Public Shared Function fprops_w(ByVal T As Double, ByVal rho As Double, ByRef data As PureFluid_struct, ByRef err As FpropsError_enum) As Double
         End Function
 
@@ -865,7 +865,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FPROPS
         '''rho: double
         '''data: PureFluid*
         '''err: FpropsError*
-        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend.dll", EntryPoint:="fprops_g")> _
+        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend", EntryPoint:="fprops_g")> _
         Public Shared Function fprops_g(ByVal T As Double, ByVal rho As Double, ByRef data As PureFluid_struct, ByRef err As FpropsError_enum) As Double
         End Function
 
@@ -874,7 +874,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FPROPS
         '''rho: double
         '''data: PureFluid*
         '''err: FpropsError*
-        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend.dll", EntryPoint:="fprops_alphap")> _
+        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend", EntryPoint:="fprops_alphap")> _
         Public Shared Function fprops_alphap(ByVal T As Double, ByVal rho As Double, ByRef data As PureFluid_struct, ByRef err As FpropsError_enum) As Double
         End Function
 
@@ -883,7 +883,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FPROPS
         '''rho: double
         '''data: PureFluid*
         '''err: FpropsError*
-        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend.dll", EntryPoint:="fprops_betap")> _
+        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend", EntryPoint:="fprops_betap")> _
         Public Shared Function fprops_betap(ByVal T As Double, ByVal rho As Double, ByRef data As PureFluid_struct, ByRef err As FpropsError_enum) As Double
         End Function
 
@@ -891,7 +891,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FPROPS
         '''T: double
         '''data: PureFluid*
         '''err: FpropsError*
-        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend.dll", EntryPoint:="fprops_cp0")> _
+        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend", EntryPoint:="fprops_cp0")> _
         Public Shared Function fprops_cp0(ByVal T As Double, ByRef data As PureFluid_struct, ByRef err As FpropsError_enum) As Double
         End Function
 
@@ -900,45 +900,45 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FPROPS
         '''rho: double
         '''data: PureFluid*
         '''err: FpropsError*
-        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend.dll", EntryPoint:="fprops_dpdT_rho")> _
+        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend", EntryPoint:="fprops_dpdT_rho")> _
         Public Shared Function fprops_dpdT_rho(ByVal T As Double, ByVal rho As Double, ByRef data As PureFluid_struct, ByRef err As FpropsError_enum) As Double
         End Function
 
         '''Return Type: PureFluid*
         '''E: EosData*
         '''corrtype: char*
-        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend.dll", EntryPoint:="fprops_prepare")> _
+        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend", EntryPoint:="fprops_prepare")> _
         Public Shared Function fprops_prepare(ByRef E As EosData_struct, <System.Runtime.InteropServices.InAttribute(), System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)> ByVal corrtype As String) As System.IntPtr
         End Function
 
         '''Return Type: int
         '''E: EosData*
         '''corrtype: char*
-        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend.dll", EntryPoint:="fprops_corr_avail")> _
+        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend", EntryPoint:="fprops_corr_avail")> _
         Public Shared Function fprops_corr_avail(ByRef E As EosData_struct, <System.Runtime.InteropServices.InAttribute(), System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)> ByVal corrtype As String) As Integer
         End Function
 
         '''Return Type: char*
         '''err: FpropsError->FpropsError_enum
-        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend.dll", EntryPoint:="fprops_error")> _
+        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend", EntryPoint:="fprops_error")> _
         Public Shared Function fprops_error(ByVal err As FpropsError_enum) As System.IntPtr
         End Function
 
         '''Return Type: PureFluid*
         '''name: char*
         '''corrtype: char*
-        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend.dll", EntryPoint:="fprops_fluid")> _
+        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend", EntryPoint:="fprops_fluid")> _
         Public Shared Function fprops_fluid(<System.Runtime.InteropServices.InAttribute(), System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)> ByVal name As String, <System.Runtime.InteropServices.InAttribute(), System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.LPStr)> ByVal corrtype As String) As System.IntPtr
         End Function
 
         '''Return Type: int
-        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend.dll", EntryPoint:="fprops_num_fluids")> _
+        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend", EntryPoint:="fprops_num_fluids")> _
         Public Shared Function fprops_num_fluids() As Integer
         End Function
 
         '''Return Type: PureFluid*
         '''i: int
-        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend.dll", EntryPoint:="fprops_get_fluid")> _
+        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend", EntryPoint:="fprops_get_fluid")> _
         Public Shared Function fprops_get_fluid(ByVal i As Integer) As System.IntPtr
         End Function
 
@@ -949,7 +949,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FPROPS
         '''T: double
         '''rho: double
         '''fluid: PureFluid*
-        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend.dll", EntryPoint:="fprops_deriv")> _
+        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend", EntryPoint:="fprops_deriv")> _
         Public Shared Function fprops_deriv(ByVal z As Integer, ByVal x As Integer, ByVal y As Integer, ByVal T As Double, ByVal rho As Double, ByRef fluid As PureFluid_struct) As Double
         End Function
 
@@ -958,7 +958,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FPROPS
         '''T: double
         '''rho: double
         '''fluid: PureFluid*
-        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend.dll", EntryPoint:="fprops_non_dZdv_T")> _
+        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend", EntryPoint:="fprops_non_dZdv_T")> _
         Public Shared Function fprops_non_dZdv_T(ByVal x As Integer, ByVal T As Double, ByVal rho As Double, ByRef fluid As PureFluid_struct) As Double
         End Function
 
@@ -967,33 +967,33 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FPROPS
         '''T: double
         '''rho: double
         '''fluid: PureFluid*
-        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend.dll", EntryPoint:="fprops_non_dZdT_v")> _
+        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend", EntryPoint:="fprops_non_dZdT_v")> _
         Public Shared Function fprops_non_dZdT_v(ByVal x As Integer, ByVal T As Double, ByVal rho As Double, ByRef fluid As PureFluid_struct) As Double
         End Function
 
         '''Return Type: double
         '''z: int
         '''S: StateData*
-        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend.dll", EntryPoint:="fprops_sat_dZdT_v")> _
+        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend", EntryPoint:="fprops_sat_dZdT_v")> _
         Public Shared Function fprops_sat_dZdT_v(ByVal z As Integer, ByRef S As StateData) As Double
         End Function
 
         '''Return Type: double
         '''z: int
         '''S: StateData*
-        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend.dll", EntryPoint:="fprops_sat_dZdv_T")> _
+        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend", EntryPoint:="fprops_sat_dZdv_T")> _
         Public Shared Function fprops_sat_dZdv_T(ByVal z As Integer, ByRef S As StateData) As Double
         End Function
 
         '''Return Type: double
         '''S: StateData*
-        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend.dll", EntryPoint:="fprops_drhofdT")> _
+        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend", EntryPoint:="fprops_drhofdT")> _
         Public Shared Function fprops_drhofdT(ByRef S As StateData) As Double
         End Function
 
         '''Return Type: double
         '''S: StateData*
-        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend.dll", EntryPoint:="fprops_drhogdT")> _
+        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend", EntryPoint:="fprops_drhogdT")> _
         Public Shared Function fprops_drhogdT(ByRef S As StateData) As Double
         End Function
 
@@ -1003,7 +1003,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FPROPS
         '''rho_f: double*
         '''rho_g: double*
         '''d: PureFluid*
-        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend.dll", EntryPoint:="fprops_sat_T")> _
+        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend", EntryPoint:="fprops_sat_T")> _
         Public Shared Function fprops_sat_T(ByVal T As Double, ByRef p_sat As Double, ByRef rho_f As Double, ByRef rho_g As Double, ByRef d As PureFluid_struct) As Integer
         End Function
 
@@ -1013,7 +1013,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FPROPS
         '''rho_f: double*
         '''rho_g: double*
         '''d: PureFluid*
-        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend.dll", EntryPoint:="fprops_sat_p")> _
+        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend", EntryPoint:="fprops_sat_p")> _
         Public Shared Function fprops_sat_p(ByVal p As Double, ByRef T_sat As Double, ByRef rho_f As Double, ByRef rho_g As Double, ByRef d As PureFluid_struct) As Integer
         End Function
 
@@ -1024,7 +1024,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FPROPS
         '''rho: double*
         '''use_guess: int
         '''fluid: PureFluid*
-        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend.dll", EntryPoint:="fprops_solve_ph")> _
+        <System.Runtime.InteropServices.DllImportAttribute("fprops_ascend", EntryPoint:="fprops_solve_ph")> _
         Public Shared Function fprops_solve_ph(ByVal p As Double, ByVal h As Double, ByRef T As Double, ByRef rho As Double, ByVal use_guess As Integer, ByRef fluid As PureFluid_struct) As Integer
         End Function
 

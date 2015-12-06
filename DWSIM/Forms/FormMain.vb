@@ -444,13 +444,11 @@ Public Class FormMain
 
     Sub AddPropPacks()
 
-        If Not Environment.Is64BitProcess Then
-            Dim FPP As FPROPSPropertyPackage = New FPROPSPropertyPackage()
-            FPP.ComponentName = DWSIM.App.GetLocalString("FPP")
-            FPP.ComponentDescription = DWSIM.App.GetLocalString("DescFPP")
-            PropertyPackages.Add(FPP.ComponentName.ToString, FPP)
-        End If
-
+        Dim FPP As FPROPSPropertyPackage = New FPROPSPropertyPackage()
+        FPP.ComponentName = DWSIM.App.GetLocalString("FPP")
+        FPP.ComponentDescription = DWSIM.App.GetLocalString("DescFPP")
+        PropertyPackages.Add(FPP.ComponentName.ToString, FPP)
+    
         Dim CPPP As CoolPropPropertyPackage = New CoolPropPropertyPackage()
         CPPP.ComponentName = "CoolProp"
         CPPP.ComponentDescription = DWSIM.App.GetLocalString("DescCPPP")
@@ -466,13 +464,11 @@ Public Class FormMain
         SEAPP.ComponentDescription = DWSIM.App.GetLocalString("DescSEAPP")
         PropertyPackages.Add(SEAPP.ComponentName.ToString, SEAPP)
 
-        If Not Environment.Is64BitProcess Then
-            Dim PCSAFTPP As PCSAFTPropertyPackage = New PCSAFTPropertyPackage()
-            PCSAFTPP.ComponentName = "PC-SAFT"
-            PCSAFTPP.ComponentDescription = DWSIM.App.GetLocalString("DescPCSAFTPP")
-            PropertyPackages.Add(PCSAFTPP.ComponentName.ToString, PCSAFTPP)
-        End If
-
+        Dim PCSAFTPP As PCSAFTPropertyPackage = New PCSAFTPropertyPackage()
+        PCSAFTPP.ComponentName = "PC-SAFT"
+        PCSAFTPP.ComponentDescription = DWSIM.App.GetLocalString("DescPCSAFTPP")
+        PropertyPackages.Add(PCSAFTPP.ComponentName.ToString, PCSAFTPP)
+      
         Dim PRPP As PengRobinsonPropertyPackage = New PengRobinsonPropertyPackage()
         PRPP.ComponentName = "Peng-Robinson (PR)"
         PRPP.ComponentDescription = DWSIM.App.GetLocalString("DescPengRobinsonPP")
@@ -560,17 +556,13 @@ Public Class FormMain
         PropertyPackages.Add(LKPPP.ComponentName.ToString, LKPPP)
 
         'Check if DWSIM is running in Portable/Mono mode, if not then load the COSMO-SAC Property Package.
-        If Not File.Exists(My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "default.ini") Or Not DWSIM.App.IsRunningOnMono Then
+        If Not DWSIM.App.IsRunningOnMono Then
 
             Dim CSPP As COSMOSACPropertyPackage = New COSMOSACPropertyPackage()
             CSPP.ComponentName = "COSMO-SAC (JCOSMO)"
             CSPP.ComponentDescription = DWSIM.App.GetLocalString("DescCSPP")
 
             PropertyPackages.Add(CSPP.ComponentName.ToString, CSPP)
-
-        End If
-
-        If Not DWSIM.App.IsRunningOnMono Then
 
             Dim COPP As CAPEOPENPropertyPackage = New CAPEOPENPropertyPackage()
             COPP.ComponentName = "CAPE-OPEN"

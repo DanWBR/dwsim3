@@ -460,7 +460,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 'solve using newton's method
 
-                Dim fx(r), dfdx(r, r), dfdx_ant(r, r), dx(r), x(r), df, fval As Double
+                Dim fx(r), dfdx(r, r), dfdx_ant(r, r), dx(r), x(r), df As Double
                 Dim brentsolver As New BrentOpt.BrentMinimize
                 brentsolver.DefineFuncDelegate(AddressOf MinimizeError)
 

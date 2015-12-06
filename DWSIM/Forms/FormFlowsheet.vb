@@ -275,7 +275,11 @@ Imports WeifenLuo.WinFormsUI.Docking
 
     Public Sub FormChild_Shown(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Shown
 
-        Me.WindowState = FormWindowState.Maximized
+        If Not DWSIM.App.IsRunningOnMono Then
+            Me.WindowState = FormWindowState.Maximized
+        Else
+            Me.WindowState = FormWindowState.Normal
+        End If
 
         If Not Me.m_IsLoadedFromFile Then
 
