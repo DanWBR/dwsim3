@@ -1464,8 +1464,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Cureos.Numerics.dll.config.linux" />
-    <None Include="Assets\Cureos.Numerics.dll.config.osx" />
     <None Include="Assets\data\bd.dat" />
     <None Include="Assets\data\biod_intparm_nrtl.dat" />
     <None Include="Assets\data\csid.dat" />
@@ -1499,16 +1497,20 @@
     <None Include="Assets\docs\tech_manual.pdf" />
     <None Include="Assets\docs\User_Guide.pdf" />
     <None Include="Assets\DWSIM.dna" />
-    <None Include="Assets\DWSIM.exe.config.linux" />
-    <None Include="Assets\DWSIM.exe.config.osx" />
     <None Include="Assets\DWSIM.xll" />
-    <None Include="Assets\dynamiclibraries\libfprops_ascend.dylib" />
-    <None Include="Assets\dynamiclibraries\libgfortran.3.dylib" />
-    <None Include="Assets\dynamiclibraries\libipopt_mono_dwsim_osx_10.7.3_32.zip" />
-    <None Include="Assets\dynamiclibraries\liblpsolve55.dylib" />
-    <None Include="Assets\dynamiclibraries\libPC_SAFT_PROP.dylib" />
     <None Include="Assets\excelcompat.ini" />
     <None Include="Assets\licenses\WindowsAzureClientLibraries_License.rtf" />
+    <None Include="Assets\linux\Cureos.Numerics.dll.config" />
+    <None Include="Assets\linux\DWSIM.exe.config" />
+    <None Include="Assets\linux\linux32\libfprops_ascend.so" />
+    <None Include="Assets\linux\linux32\libipopt_mono_dwsim_ubuntu_11.10_32.tar.gz" />
+    <None Include="Assets\linux\linux32\liblpsolve55.so" />
+    <None Include="Assets\linux\linux32\libPC_SAFT_PROP.so" />
+    <None Include="Assets\linux\linux64\libCoolProp.so" />
+    <None Include="Assets\linux\linux64\libfprops_ascend.so" />
+    <None Include="Assets\linux\linux64\libipopt_mono_dwsim_ubuntu_15.10_64.tar.gz" />
+    <None Include="Assets\linux\linux64\liblpsolve55.so" />
+    <None Include="Assets\linux\linux64\libPC_SAFT_PROP.so" />
     <None Include="Assets\reactions\Water Self-Ionization.dwrxm" />
     <None Include="Assets\samples\1,2-Dichloroethane-N-Heptane-LKP.dwrsd" />
     <None Include="Assets\samples\1,2-Dichloroethane-N-Heptane-SRK.dwrsd" />
@@ -1546,10 +1548,6 @@
     <None Include="Assets\samples\Three Phase Flash.dwxml" />
     <None Include="Assets\samples\Three Phase Separator.dwxml" />
     <None Include="Assets\samples\Water-Benzene-LLE-UNIQUAC.dwrsd" />
-    <None Include="Assets\sharedobjects\libfprops_ascend.so" />
-    <None Include="Assets\sharedobjects\libipopt_mono_dwsim_ubuntu_11.10_32.tar.gz" />
-    <None Include="Assets\sharedobjects\liblpsolve55.so" />
-    <None Include="Assets\sharedobjects\libPC_SAFT_PROP.so" />
     <None Include="Assets\TemplateExcelUO.ods" />
     <None Include="Assets\TemplateExcelUO.xls" />
     <None Include="Assets\TemplateExcelUO.xlsx" />
@@ -2264,9 +2262,10 @@
     <None Include="Resources\disk1.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\CoolProp.dll" />
     <Content Include="Assets\data\cosmo.txt" />
+    <Content Include="Assets\data\databases\Artistic_license_2_0.txt" />
     <Content Include="Assets\data\databases\biod_db.xml" />
+    <Content Include="Assets\data\databases\chemsep1.xml" />
     <Content Include="Assets\data\databases\coolprop.txt" />
     <Content Include="Assets\data\databases\dwsim.xml" />
     <Content Include="Assets\data\databases\electrolyte.xml" />
@@ -2518,7 +2517,6 @@
     <Content Include="Assets\data\unifac\Water.png" />
     <Content Include="Assets\data\unifac_ip.txt" />
     <Content Include="Assets\data\unifac_ll_ip.txt" />
-    <None Include="Assets\fprops_ascend.dll" />
     <Content Include="Assets\help\0 Welcome.htm" />
     <Content Include="Assets\help\1 Disclaimer.htm" />
     <Content Include="Assets\help\1 GPL_v3_License.htm" />
@@ -2703,10 +2701,7 @@
     <Content Include="Assets\help\UT_Triangular_LLE.htm" />
     <Content Include="Assets\help\UT_TrueCriticalPoint.htm" />
     <Content Include="Assets\help\UT_VesselSizing.htm" />
-    <None Include="Assets\Ipopt39.dll" />
-    <None Include="Assets\IpOptFSS39.dll" />
     <None Include="Assets\jcosmo.jar" />
-    <None Include="Assets\libhsl.dll" />
     <Content Include="Assets\licenses\chemsep_database.txt" />
     <Content Include="Assets\licenses\dockpanel.txt" />
     <Content Include="Assets\licenses\epl-v1.txt" />
@@ -2718,9 +2713,19 @@
     <Content Include="Assets\licenses\myneoreport.txt" />
     <Content Include="Assets\licenses\perl artistic license v2.txt" />
     <Content Include="Assets\licenses\zedgraph.txt" />
-    <None Include="Assets\lpsolve55.dll" />
-    <None Include="Assets\PC_SAFT_PROP.dll" />
-    <None Include="Assets\PetAz.dll" />
+    <Content Include="Assets\windows\win32\CoolProp.dll" />
+    <Content Include="Assets\windows\win32\fprops_ascend.dll" />
+    <Content Include="Assets\windows\win32\Ipopt39.dll" />
+    <Content Include="Assets\windows\win32\IpOptFSS39.dll" />
+    <Content Include="Assets\windows\win32\lpsolve55.dll" />
+    <Content Include="Assets\windows\win32\PC_SAFT_PROP.dll" />
+    <Content Include="Assets\windows\win32\PetAz.dll" />
+    <Content Include="Assets\windows\win64\CoolProp.dll" />
+    <Content Include="Assets\windows\win64\fprops_ascend.dll" />
+    <Content Include="Assets\windows\win64\Ipopt39.dll" />
+    <Content Include="Assets\windows\win64\IpOptFSS39.dll" />
+    <Content Include="Assets\windows\win64\lpsolve55.dll" />
+    <Content Include="Assets\windows\win64\PC_SAFT_PROP.dll" />
     <Content Include="dwsim_splash.ico" />
     <EmbeddedResource Include="version.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

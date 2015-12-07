@@ -134,10 +134,10 @@ Namespace My
                 Dim dlls As String()
                 If Environment.Is64BitProcess Then
                     'copy 64-bit DLLs
-                    dlls = Directory.GetFiles(My.Application.Info.DirectoryPath & "\staticlibraries\win64\", "*")
+                    dlls = Directory.GetFiles(My.Application.Info.DirectoryPath & "\windows\win64\", "*")
                 Else
                     'copy 32-bit DLLs
-                    dlls = Directory.GetFiles(My.Application.Info.DirectoryPath & "\staticlibraries\win32\", "*")
+                    dlls = Directory.GetFiles(My.Application.Info.DirectoryPath & "\windows\win32\", "*")
                 End If
                 For Each dll In dlls
                     Try
