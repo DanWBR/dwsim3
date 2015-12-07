@@ -613,6 +613,9 @@ Public Class FormMain
 
     Private Sub FormParent_Shown(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Shown
 
+        Dim frma As New FormAdditionalTasks
+        frma.ShowDialog(Me)
+
         Dim cmdLine() As String = System.Environment.GetCommandLineArgs()
         If UBound(cmdLine) = 1 And Not cmdLine(0).StartsWith("-") Then
             Try

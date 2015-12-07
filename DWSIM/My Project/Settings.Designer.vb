@@ -577,6 +577,30 @@ Namespace My
                 Me("ShowUnitsToolStrip") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property PlatformChanged() As Boolean
+            Get
+                Return CType(Me("PlatformChanged"),Boolean)
+            End Get
+            Set
+                Me("PlatformChanged") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property EnvironmentChanged() As Boolean
+            Get
+                Return CType(Me("EnvironmentChanged"),Boolean)
+            End Get
+            Set
+                Me("EnvironmentChanged") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

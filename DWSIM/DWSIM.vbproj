@@ -335,6 +335,12 @@
     <Compile Include="Forms\Controls\ScriptEditorControl.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Forms\FormAdditionalTasks.Designer.vb">
+      <DependentUpon>FormAdditionalTasks.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormAdditionalTasks.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\FormConfigWizard.Designer.vb">
       <DependentUpon>FormConfigWizard.vb</DependentUpon>
     </Compile>
@@ -1248,6 +1254,9 @@
     <EmbeddedResource Include="Forms\Controls\ScriptEditorControl.resx">
       <DependentUpon>ScriptEditorControl.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormAdditionalTasks.resx">
+      <DependentUpon>FormAdditionalTasks.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormCapeOpenUnitSelector.es.resx">
       <DependentUpon>FormCapeOpenUnitSelector.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -1551,6 +1560,7 @@
     <None Include="Assets\TemplateExcelUO.ods" />
     <None Include="Assets\TemplateExcelUO.xls" />
     <None Include="Assets\TemplateExcelUO.xlsx" />
+    <None Include="Assets\windows\DWSIM.exe.config" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
