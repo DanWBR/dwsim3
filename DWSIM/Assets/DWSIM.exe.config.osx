@@ -1,4 +1,0 @@
-<configuration>
-	<dllmap dll="PC_SAFT_PROP" target="libPC_SAFT_PROP.dylib" />
-	<dllmap dll="fprops_ascend.dll" target="libfprops_ascend.dylib" />
-</configuration>
