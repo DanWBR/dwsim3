@@ -25,19 +25,19 @@ Partial Class FormAdditionalTasks
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormAdditionalTasks))
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.lblOSPlatform = New System.Windows.Forms.Label()
-        Me.lblOSEnvironment = New System.Windows.Forms.Label()
-        Me.LabelWithDivider12 = New System.Windows.Forms.LabelWithDivider()
-        Me.cbtask1 = New System.Windows.Forms.CheckBox()
-        Me.cbtask2 = New System.Windows.Forms.CheckBox()
-        Me.cbtask3 = New System.Windows.Forms.CheckBox()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.cbtask3 = New System.Windows.Forms.CheckBox()
+        Me.cbtask2 = New System.Windows.Forms.CheckBox()
+        Me.cbtask1 = New System.Windows.Forms.CheckBox()
+        Me.LabelWithDivider12 = New System.Windows.Forms.LabelWithDivider()
+        Me.lblOSEnvironment = New System.Windows.Forms.Label()
+        Me.lblOSPlatform = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -66,49 +66,32 @@ Partial Class FormAdditionalTasks
         resources.ApplyResources(Me.Panel1, "Panel1")
         Me.Panel1.Name = "Panel1"
         '
-        'Label2
+        'Button2
         '
-        resources.ApplyResources(Me.Label2, "Label2")
-        Me.Label2.Name = "Label2"
+        resources.ApplyResources(Me.Button2, "Button2")
+        Me.Button2.Name = "Button2"
+        Me.Button2.UseVisualStyleBackColor = True
         '
-        'Label3
+        'Button1
         '
-        resources.ApplyResources(Me.Label3, "Label3")
-        Me.Label3.Name = "Label3"
+        resources.ApplyResources(Me.Button1, "Button1")
+        Me.Button1.Name = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
         '
-        'lblOSPlatform
+        'Label8
         '
-        resources.ApplyResources(Me.lblOSPlatform, "lblOSPlatform")
-        Me.lblOSPlatform.Name = "lblOSPlatform"
+        resources.ApplyResources(Me.Label8, "Label8")
+        Me.Label8.Name = "Label8"
         '
-        'lblOSEnvironment
+        'Label7
         '
-        resources.ApplyResources(Me.lblOSEnvironment, "lblOSEnvironment")
-        Me.lblOSEnvironment.Name = "lblOSEnvironment"
+        resources.ApplyResources(Me.Label7, "Label7")
+        Me.Label7.Name = "Label7"
         '
-        'LabelWithDivider12
+        'Label6
         '
-        Me.LabelWithDivider12.BackColor = System.Drawing.Color.White
-        Me.LabelWithDivider12.ForeColor = System.Drawing.Color.Black
-        Me.LabelWithDivider12.Gap = 5
-        resources.ApplyResources(Me.LabelWithDivider12, "LabelWithDivider12")
-        Me.LabelWithDivider12.Name = "LabelWithDivider12"
-        '
-        'cbtask1
-        '
-        resources.ApplyResources(Me.cbtask1, "cbtask1")
-        Me.cbtask1.Checked = True
-        Me.cbtask1.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.cbtask1.Name = "cbtask1"
-        Me.cbtask1.UseVisualStyleBackColor = True
-        '
-        'cbtask2
-        '
-        resources.ApplyResources(Me.cbtask2, "cbtask2")
-        Me.cbtask2.Checked = True
-        Me.cbtask2.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.cbtask2.Name = "cbtask2"
-        Me.cbtask2.UseVisualStyleBackColor = True
+        resources.ApplyResources(Me.Label6, "Label6")
+        Me.Label6.Name = "Label6"
         '
         'cbtask3
         '
@@ -118,32 +101,47 @@ Partial Class FormAdditionalTasks
         Me.cbtask3.Name = "cbtask3"
         Me.cbtask3.UseVisualStyleBackColor = True
         '
-        'Label6
+        'cbtask2
         '
-        resources.ApplyResources(Me.Label6, "Label6")
-        Me.Label6.Name = "Label6"
+        resources.ApplyResources(Me.cbtask2, "cbtask2")
+        Me.cbtask2.Name = "cbtask2"
+        Me.cbtask2.UseVisualStyleBackColor = True
         '
-        'Label7
+        'cbtask1
         '
-        resources.ApplyResources(Me.Label7, "Label7")
-        Me.Label7.Name = "Label7"
+        resources.ApplyResources(Me.cbtask1, "cbtask1")
+        Me.cbtask1.Checked = True
+        Me.cbtask1.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.cbtask1.Name = "cbtask1"
+        Me.cbtask1.UseVisualStyleBackColor = True
         '
-        'Label8
+        'LabelWithDivider12
         '
-        resources.ApplyResources(Me.Label8, "Label8")
-        Me.Label8.Name = "Label8"
+        Me.LabelWithDivider12.BackColor = System.Drawing.Color.White
+        Me.LabelWithDivider12.ForeColor = System.Drawing.Color.Black
+        Me.LabelWithDivider12.Gap = 5
+        resources.ApplyResources(Me.LabelWithDivider12, "LabelWithDivider12")
+        Me.LabelWithDivider12.Name = "LabelWithDivider12"
         '
-        'Button1
+        'lblOSEnvironment
         '
-        resources.ApplyResources(Me.Button1, "Button1")
-        Me.Button1.Name = "Button1"
-        Me.Button1.UseVisualStyleBackColor = True
+        resources.ApplyResources(Me.lblOSEnvironment, "lblOSEnvironment")
+        Me.lblOSEnvironment.Name = "lblOSEnvironment"
         '
-        'Button2
+        'lblOSPlatform
         '
-        resources.ApplyResources(Me.Button2, "Button2")
-        Me.Button2.Name = "Button2"
-        Me.Button2.UseVisualStyleBackColor = True
+        resources.ApplyResources(Me.lblOSPlatform, "lblOSPlatform")
+        Me.lblOSPlatform.Name = "lblOSPlatform"
+        '
+        'Label3
+        '
+        resources.ApplyResources(Me.Label3, "Label3")
+        Me.Label3.Name = "Label3"
+        '
+        'Label2
+        '
+        resources.ApplyResources(Me.Label2, "Label2")
+        Me.Label2.Name = "Label2"
         '
         'FormAdditionalTasks
         '

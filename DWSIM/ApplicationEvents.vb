@@ -128,25 +128,6 @@ Namespace My
             CudafyModes.Compiler = eGPUCompiler.All
             CudafyModes.Target = My.Settings.CudafyTarget
 
-            'copy static DLLs according to the executing platform (32 or 64-bit)
-
-            If Not DWSIM.App.IsRunningOnMono Then
-                Dim dlls As String()
-                If Environment.Is64BitProcess Then
-                    'copy 64-bit DLLs
-                    dlls = Directory.GetFiles(My.Application.Info.DirectoryPath & "\windows\win64\", "*")
-                Else
-                    'copy 32-bit DLLs
-                    dlls = Directory.GetFiles(My.Application.Info.DirectoryPath & "\windows\win32\", "*")
-                End If
-                For Each dll In dlls
-                    Try
-                        File.Copy(dll, My.Application.Info.DirectoryPath & "\" & Path.GetFileName(dll), True)
-                    Catch ex As Exception
-                    End Try
-                Next
-            End If
-
         End Sub
 
         Private Sub MyApplication_UnhandledException(ByVal sender As Object, ByVal e As Microsoft.VisualBasic.ApplicationServices.UnhandledExceptionEventArgs) Handles Me.UnhandledException

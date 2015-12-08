@@ -1254,6 +1254,12 @@
     <EmbeddedResource Include="Forms\Controls\ScriptEditorControl.resx">
       <DependentUpon>ScriptEditorControl.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormAdditionalTasks.de.resx">
+      <DependentUpon>FormAdditionalTasks.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormAdditionalTasks.en.resx">
+      <DependentUpon>FormAdditionalTasks.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormAdditionalTasks.resx">
       <DependentUpon>FormAdditionalTasks.vb</DependentUpon>
     </EmbeddedResource>
