@@ -66,8 +66,8 @@ Partial Class FormMain
         Me.RegistroToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RegistrarTiposCOMToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ConfiguraçõesAdicionaisToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DonateToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ConfiguraçõesAdicionaisToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.NewToolStripButton = New System.Windows.Forms.ToolStripButton()
@@ -345,17 +345,17 @@ Partial Class FormMain
         Me.DeToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.application_xp_terminal
         Me.DeToolStripMenuItem.Name = "DeToolStripMenuItem"
         '
-        'ConfiguraçõesAdicionaisToolStripMenuItem
-        '
-        resources.ApplyResources(Me.ConfiguraçõesAdicionaisToolStripMenuItem, "ConfiguraçõesAdicionaisToolStripMenuItem")
-        Me.ConfiguraçõesAdicionaisToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.copy
-        Me.ConfiguraçõesAdicionaisToolStripMenuItem.Name = "ConfiguraçõesAdicionaisToolStripMenuItem"
-        '
         'DonateToolStripMenuItem
         '
         resources.ApplyResources(Me.DonateToolStripMenuItem, "DonateToolStripMenuItem")
         Me.DonateToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.money_add
         Me.DonateToolStripMenuItem.Name = "DonateToolStripMenuItem"
+        '
+        'ConfiguraçõesAdicionaisToolStripMenuItem
+        '
+        resources.ApplyResources(Me.ConfiguraçõesAdicionaisToolStripMenuItem, "ConfiguraçõesAdicionaisToolStripMenuItem")
+        Me.ConfiguraçõesAdicionaisToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.copy
+        Me.ConfiguraçõesAdicionaisToolStripMenuItem.Name = "ConfiguraçõesAdicionaisToolStripMenuItem"
         '
         'AboutToolStripMenuItem
         '
