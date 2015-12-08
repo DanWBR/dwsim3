@@ -320,7 +320,7 @@ Namespace DWSIM
             My.Settings.UseSIMDExtensions = source.Configs("Misc").GetBoolean("UseSIMDExtensions", 300)
 
             My.Settings.CurrentPlatform = source.Configs("Misc").GetString("CurrentPlatform", "None")
-            My.Settings.CurrentEnvironment = source.Configs("Misc").GetBoolean("CurrentEnvironment", 0)
+            My.Settings.CurrentEnvironment = source.Configs("Misc").GetInt("CurrentEnvironment", 0)
 
         End Sub
 

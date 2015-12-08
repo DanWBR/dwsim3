@@ -53,7 +53,6 @@ Public Class FormAdditionalTasks
                 Catch ex As Exception
                 End Try
             Next
-            MessageBox.Show("Task 1 OK")
         Catch ex As Exception
             MessageBox.Show("Task 1 Error - " & ex.ToString)
         End Try
@@ -62,11 +61,18 @@ Public Class FormAdditionalTasks
 
     Sub Task2()
 
+        Dim info = New ProcessStartInfo()
+        info.FileName = "sudo"
+        info.UseShellExecute = False
+
         If Environment.Is64BitProcess Then
-            Process.Start("sh", "sudo tar -C /usr/lib -zxvf linux/linux64/libipopt_mono_dwsim_ubuntu_15.10_64.tar.gz")
+            info.Arguments = "tar -C /usr/lib -zxvf linux/linux64/libipopt_mono_dwsim_ubuntu_15.10_64.tar.gz"
         Else
-            Process.Start("sh", "sudo tar -C /usr/lib -zxvf linux/linux32/libipopt_mono_dwsim_ubuntu_11.10_32.tar.gz")
+            info.Arguments = "tar -C /usr/lib -zxvf linux/linux32/libipopt_mono_dwsim_ubuntu_11.10_32.tar.gz"
         End If
+
+        Dim p = Process.Start(info)
+        p.WaitForExit()
 
     End Sub
 
@@ -79,7 +85,6 @@ Public Class FormAdditionalTasks
                 File.Copy(My.Application.Info.DirectoryPath & "/linux/DWSIM.exe.config", My.Application.Info.DirectoryPath & "/DWSIM.exe.config", True)
                 File.Copy(My.Application.Info.DirectoryPath & "/linux/Cureos.Numerics.dll.config", My.Application.Info.DirectoryPath & "/Cureos.Numerics.dll.config", True)
             End If
-            MessageBox.Show("Task 3 OK")
         Catch ex As Exception
             MessageBox.Show("Task 3 Error - " & ex.ToString)
         End Try
@@ -93,6 +98,8 @@ Public Class FormAdditionalTasks
         If cbtask3.Checked Then Task3()
 
         If MessageBox.Show(DWSIM.App.GetLocalString("necessrioreiniciaroD"), "DWSIM", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
+            If DWSIM.App.IsRunningOnMono Then DWSIM.App.SaveSettings()
+            Me.Close()
             Application.Restart()
         Else
             Me.Close()

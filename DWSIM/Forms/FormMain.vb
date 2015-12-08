@@ -833,6 +833,43 @@ Public Class FormMain
 
 #Region "    Open/Save Files"
 
+    Sub CheckAdditionalFileTasks()
+
+        Dim plat As String, envir As Integer
+
+        If Environment.Is64BitProcess Then
+            envir = 64
+        Else
+            envir = 32
+        End If
+
+        If DWSIM.App.RunningPlatform = DWSIM.App.Platform.Windows Then
+            plat = "Windows"
+        ElseIf DWSIM.App.RunningPlatform = DWSIM.App.Platform.Linux Then
+            plat = "Linux"
+        Else
+            plat = "None"
+        End If
+
+        Dim openform As Boolean = False
+
+        If My.Settings.CurrentEnvironment <> envir Then
+            openform = True
+            My.Settings.CurrentEnvironment = envir
+        End If
+
+        If My.Settings.CurrentPlatform <> plat Then
+            openform = True
+            My.Settings.CurrentPlatform = plat
+        End If
+
+        If openform And plat <> "None" Then
+            Dim frm As New FormAdditionalTasks
+            frm.ShowDialog(Me)
+        End If
+
+    End Sub
+
     Shared Sub SaveState(ByRef flowsheet As FormFlowsheet)
 
         Dim st As New FlowsheetState()
@@ -3667,6 +3704,16 @@ ruf:                Application.DoEvents()
 
 #Region "    Click Handlers"
 
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles ButtonClose.Click
+        Me.SettingsPanel.Visible = False
+        If Not DWSIM.App.IsRunningOnMono Then My.Settings.Save()
+    End Sub
+
+    Private Sub ConfiguraçõesAdicionaisToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConfiguraçõesAdicionaisToolStripMenuItem.Click
+        Dim frma As New FormAdditionalTasks
+        frma.ShowDialog(Me)
+    End Sub
+
     Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
         Me.OpenFileDialog1.InitialDirectory = My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "samples"
         LoadFileDialog()
@@ -4367,47 +4414,5 @@ ruf:                Application.DoEvents()
     End Sub
 
 #End Region
-
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles ButtonClose.Click
-        Me.SettingsPanel.Visible = False
-        If Not DWSIM.App.IsRunningOnMono Then My.Settings.Save()
-    End Sub
-
-    Sub CheckAdditionalFileTasks()
-
-        Dim plat As String, envir As Integer
-
-        If Environment.Is64BitProcess Then
-            envir = 64
-        Else
-            envir = 32
-        End If
-
-        If DWSIM.App.RunningPlatform = DWSIM.App.Platform.Windows Then
-            plat = "Windows"
-        ElseIf DWSIM.App.RunningPlatform = DWSIM.App.Platform.Linux Then
-            plat = "Linux"
-        Else
-            plat = "None"
-        End If
-
-        Dim openform As Boolean = False
-
-        If My.Settings.CurrentEnvironment <> envir Then
-            openform = True
-            My.Settings.CurrentEnvironment = envir
-        End If
-
-        If My.Settings.CurrentPlatform <> plat Then
-            openform = True
-            My.Settings.CurrentPlatform = plat
-        End If
-
-        If openform And plat <> "None" Then
-            Dim frm As New FormAdditionalTasks
-            frm.ShowDialog(Me)
-        End If
-
-    End Sub
 
 End Class

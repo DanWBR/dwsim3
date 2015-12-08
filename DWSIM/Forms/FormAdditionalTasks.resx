@@ -199,7 +199,7 @@
     <value>NoControl</value>
   </data>
   <data name="Label8.Location" type="System.Drawing.Point, System.Drawing">
-    <value>33, 347</value>
+    <value>33, 352</value>
   </data>
   <data name="Label8.Size" type="System.Drawing.Size, System.Drawing">
     <value>641, 33</value>
@@ -226,16 +226,16 @@
     <value>NoControl</value>
   </data>
   <data name="Label7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>33, 291</value>
+    <value>33, 285</value>
   </data>
   <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>641, 33</value>
+    <value>641, 44</value>
   </data>
   <data name="Label7.TabIndex" type="System.Int32, mscorlib">
     <value>78</value>
   </data>
   <data name="Label7.Text" xml:space="preserve">
-    <value>Copia a biblioteca do IPOPT e outras bibliotecas auxiliares para o diretório padrão de bibliotecas do sistema, normalmente '/usr/lib'. Requer privilégios de administrador (sudo)</value>
+    <value>Copia a biblioteca do IPOPT e outras bibliotecas auxiliares para o diretório padrão de bibliotecas do sistema, normalmente '/usr/lib'. Requer privilégios de administrador (sudo). O comando será executado na janela do terminal usada para iniciar o DWSIM e aguardará a senha do usuário.</value>
   </data>
   <data name="&gt;&gt;Label7.Name" xml:space="preserve">
     <value>Label7</value>
@@ -253,7 +253,7 @@
     <value>NoControl</value>
   </data>
   <data name="Label6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>33, 168</value>
+    <value>33, 162</value>
   </data>
   <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>641, 99</value>
@@ -263,7 +263,7 @@
   </data>
   <data name="Label6.Text" xml:space="preserve">
     <value>Copia versões específicas de bibliotecas para a pasta raiz do DWSIM:
-lpsolve55: biblioteca com métodos paar resolver sistemas lineares
+lpsolve55: biblioteca com métodos para resolver sistemas lineares
 PC_SAFT_PROP: métodos para o Pacote de Propriedades 'PC-SAFT'
 fprops_ascend: métodos para o Pacote de Propriedades 'FPROPS'
 CoolProp: métodos para o Pacote de Propriedades 'CoolProp' (exceto Linux 32-bits)
@@ -289,7 +289,7 @@ IPOPT: solver para equações não-lineares (somente Windows)</value>
     <value>NoControl</value>
   </data>
   <data name="cbtask3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 327</value>
+    <value>15, 332</value>
   </data>
   <data name="cbtask3.Size" type="System.Drawing.Size, System.Drawing">
     <value>322, 17</value>
@@ -322,7 +322,7 @@ IPOPT: solver para equações não-lineares (somente Windows)</value>
     <value>NoControl</value>
   </data>
   <data name="cbtask2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 270</value>
+    <value>15, 264</value>
   </data>
   <data name="cbtask2.Size" type="System.Drawing.Size, System.Drawing">
     <value>298, 17</value>
@@ -349,7 +349,7 @@ IPOPT: solver para equações não-lineares (somente Windows)</value>
     <value>True</value>
   </data>
   <data name="cbtask1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 148</value>
+    <value>15, 142</value>
   </data>
   <data name="cbtask1.Size" type="System.Drawing.Size, System.Drawing">
     <value>252, 17</value>
@@ -376,7 +376,7 @@ IPOPT: solver para equações não-lineares (somente Windows)</value>
     <value>NoControl</value>
   </data>
   <data name="LabelWithDivider12.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 116</value>
+    <value>12, 111</value>
   </data>
   <data name="LabelWithDivider12.Size" type="System.Drawing.Size, System.Drawing">
     <value>662, 18</value>
