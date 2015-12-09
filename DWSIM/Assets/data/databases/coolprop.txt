@@ -22,6 +22,7 @@ EthylBenzene
 Ethylene
 Fluorine
 HFE143m
+HeavyWater
 Helium
 Hydrogen
 HydrogenSulfide
