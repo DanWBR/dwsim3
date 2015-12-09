@@ -141,6 +141,7 @@ Imports WeifenLuo.WinFormsUI.Docking
             'Me.FlowLayoutPanel1.AutoSize = False
             'Me.FlowLayoutPanel1.Height = 50
             Me.MenuStrip1.Visible = False
+            Me.CAPEOPENFlowsheetMonitoringObjectsMOsToolStripMenuItem.Visible = False
         Else
             FormObjList = New frmObjList
             Me.MenuStrip1.Visible = False
@@ -279,6 +280,8 @@ Imports WeifenLuo.WinFormsUI.Docking
             Me.WindowState = FormWindowState.Maximized
         Else
             Me.WindowState = FormWindowState.Normal
+            Me.WindowState = FormWindowState.Minimized
+            Me.WindowState = FormWindowState.Maximized
         End If
 
         If Not Me.m_IsLoadedFromFile Then
