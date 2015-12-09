@@ -46,16 +46,12 @@ Public Class FormAdditionalTasks
             End If
         End If
 
-        Try
-            For Each dll In dlls
-                Try
-                    File.Copy(dll, My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & Path.GetFileName(dll), True)
-                Catch ex As Exception
-                End Try
-            Next
-        Catch ex As Exception
-            MessageBox.Show("Task 1 Error - " & ex.ToString)
-        End Try
+        For Each dll In dlls
+            Try
+                File.Copy(dll, My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & Path.GetFileName(dll), True)
+            Catch ex As Exception
+            End Try
+        Next
 
     End Sub
 
@@ -78,16 +74,12 @@ Public Class FormAdditionalTasks
 
     Sub Task3()
 
-        Try
-            If DWSIM.App.RunningPlatform = DWSIM.App.Platform.Windows Then
-                File.Copy(My.Application.Info.DirectoryPath & "\windows\DWSIM.exe.config", My.Application.Info.DirectoryPath & "\DWSIM.exe.config", True)
-            ElseIf DWSIM.App.RunningPlatform = DWSIM.App.Platform.Linux Then
-                File.Copy(My.Application.Info.DirectoryPath & "/linux/DWSIM.exe.config", My.Application.Info.DirectoryPath & "/DWSIM.exe.config", True)
-                File.Copy(My.Application.Info.DirectoryPath & "/linux/Cureos.Numerics.dll.config", My.Application.Info.DirectoryPath & "/Cureos.Numerics.dll.config", True)
-            End If
-        Catch ex As Exception
-            MessageBox.Show("Task 3 Error - " & ex.ToString)
-        End Try
+        If DWSIM.App.RunningPlatform = DWSIM.App.Platform.Windows Then
+            File.Copy(My.Application.Info.DirectoryPath & "\windows\DWSIM.exe.config", My.Application.Info.DirectoryPath & "\DWSIM.exe.config", True)
+        ElseIf DWSIM.App.RunningPlatform = DWSIM.App.Platform.Linux Then
+            File.Copy(My.Application.Info.DirectoryPath & "/linux/DWSIM.exe.config", My.Application.Info.DirectoryPath & "/DWSIM.exe.config", True)
+            File.Copy(My.Application.Info.DirectoryPath & "/linux/Cureos.Numerics.dll.config", My.Application.Info.DirectoryPath & "/Cureos.Numerics.dll.config", True)
+        End If
 
     End Sub
 
