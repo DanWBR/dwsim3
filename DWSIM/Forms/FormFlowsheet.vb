@@ -142,9 +142,11 @@ Imports WeifenLuo.WinFormsUI.Docking
             'Me.FlowLayoutPanel1.Height = 50
             Me.MenuStrip1.Visible = False
             Me.CAPEOPENFlowsheetMonitoringObjectsMOsToolStripMenuItem.Visible = False
+            Me.WindowState = FormWindowState.Maximized
         Else
             FormObjList = New frmObjList
             Me.MenuStrip1.Visible = False
+            Me.WindowState = FormWindowState.Normal
         End If
 
         showflowsheettoolstripmenuitem.Checked = My.Settings.ShowFlowsheetToolStrip
@@ -275,14 +277,6 @@ Imports WeifenLuo.WinFormsUI.Docking
     End Sub
 
     Public Sub FormChild_Shown(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Shown
-
-        If Not DWSIM.App.IsRunningOnMono Then
-            Me.WindowState = FormWindowState.Maximized
-        Else
-            Me.WindowState = FormWindowState.Normal
-            Me.WindowState = FormWindowState.Minimized
-            Me.WindowState = FormWindowState.Maximized
-        End If
 
         If Not Me.m_IsLoadedFromFile Then
 
