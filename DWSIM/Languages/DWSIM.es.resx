@@ -2952,7 +2952,7 @@ Densidad de la Fase Líquida: conductividad térmica Rackett método de Fase Lí
     <value>4. Resultados </value>
   </data>
   <data name="TabelasdeVaporSteamT" xml:space="preserve">
-    <value>Tablas de vapor (Steam Tables) </value>
+    <value>Tablas de vapor (IAPWS-IF97)</value>
   </data>
   <data name="SlidoGeloGseHidrato" xml:space="preserve">
     <value>Sólido (hielo), Gas e Hidrato </value>
@@ -2988,7 +2988,7 @@ Densidad de la Fase Líquida: conductividad térmica Rackett método de Fase Lí
     <value>Caída de presión aplicada en el tanque. </value>
   </data>
   <data name="DescSteamTablesPP" xml:space="preserve">
-    <value>Paquete de Propiedades exclusivo para el uso con agua(H2O). </value>
+    <value>Paquete de Propiedades exclusivo para el uso con agua (IAPWS-97)</value>
   </data>
   <data name="Quedadepressoaplicad6" xml:space="preserve">
     <value>Caída de presión en el reactor. </value>
