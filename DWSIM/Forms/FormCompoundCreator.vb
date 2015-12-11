@@ -69,7 +69,7 @@ Public Class FormCompoundCreator
             .Clear()
             For i = 2 To UNIFAClines.Length - 1
                 S = picpath & UNIFAClines(i).Split(",")(7) & ".png"
-                If Not My.Computer.FileSystem.FileExists(S) Then S = picpath & "empty.png"
+                If Not My.Computer.FileSystem.FileExists(S) Then S = picpath & "Empty.png"
 
                 .Add(New Object() {" ", " ", CInt(0), Image.FromFile(S)})
                 .Item(.Count - 1).HeaderCell.Value = "ID " & UNIFAClines(i).Split(",")(1) 'SubGroup
@@ -114,7 +114,7 @@ Public Class FormCompoundCreator
                 fields = parser.ReadFields()
                 With Me.GridMODFAC.Rows
                     S = picpath & fields(6) & ".png"
-                    If Not My.Computer.FileSystem.FileExists(S) Then S = picpath & "empty.png"
+                    If Not My.Computer.FileSystem.FileExists(S) Then S = picpath & "Empty.png"
 
                     .Add(New Object() {CInt(0), CInt(0), CInt(0), Image.FromFile(S)})
                     .Item(.Count - 1).HeaderCell.Value = "ID " & fields(3)
@@ -159,7 +159,7 @@ Public Class FormCompoundCreator
                 Else
                     With Me.GridNISTMODFAC.Rows
                         S = picpath & fields(4) & ".png"
-                        If Not My.Computer.FileSystem.FileExists(S) Then S = picpath & "empty.png"
+                        If Not My.Computer.FileSystem.FileExists(S) Then S = picpath & "Empty.png"
 
                         .Add(New Object() {CInt(0), CInt(0), CInt(0), Image.FromFile(S)})
                         .Item(.Count - 1).HeaderCell.Value = "ID " & fields(0)
