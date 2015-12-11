@@ -207,14 +207,13 @@ Imports WeifenLuo.WinFormsUI.Docking
             FormWatch.DockPanel = Nothing
             FormSurface.DockPanel = Nothing
 
-            FormLog.Show(dckPanel)
-            FormMatList.Show(dckPanel)
             FormSpreadsheet.Show(dckPanel)
-            FormSurface.Show(dckPanel)
-            FormObjListView.Show(dckPanel)
+            FormMatList.Show(FormSpreadsheet.Pane, FormSpreadsheet)
+            FormSurface.Show(FormSpreadsheet.Pane, Nothing)
             If Not DWSIM.App.IsRunningOnMono Then FormObjList.Show(dckPanel)
+            FormLog.Show(FormSurface.Pane, DockAlignment.Bottom, 0.2)
             FormProps.Show(dckPanel)
-            FormLog.DockState = DockState.DockRight
+            FormObjListView.Show(dckPanel)
 
             dckPanel.BringToFront()
             dckPanel.UpdateDockWindowZOrder(DockStyle.Fill, True)
