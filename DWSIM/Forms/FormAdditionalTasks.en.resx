@@ -170,10 +170,10 @@ IPOPT: solver for nonlinear equations (Windows only)</value>
     <value>Version/Environment:</value>
   </data>
   <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>141, 13</value>
+    <value>144, 13</value>
   </data>
   <data name="Label2.Text" xml:space="preserve">
-    <value>Operational System/Platform</value>
+    <value>Operational System/Platform:</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Additional File Tasks</value>

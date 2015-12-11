@@ -48,6 +48,7 @@ Partial Class FormAdditionalTasks
         '
         'Panel1
         '
+        resources.ApplyResources(Me.Panel1, "Panel1")
         Me.Panel1.BackColor = System.Drawing.Color.White
         Me.Panel1.Controls.Add(Me.Button2)
         Me.Panel1.Controls.Add(Me.Button1)
@@ -63,7 +64,6 @@ Partial Class FormAdditionalTasks
         Me.Panel1.Controls.Add(Me.Label3)
         Me.Panel1.Controls.Add(Me.Label2)
         Me.Panel1.Controls.Add(Me.Label1)
-        resources.ApplyResources(Me.Panel1, "Panel1")
         Me.Panel1.Name = "Panel1"
         '
         'Button2
@@ -117,10 +117,10 @@ Partial Class FormAdditionalTasks
         '
         'LabelWithDivider12
         '
+        resources.ApplyResources(Me.LabelWithDivider12, "LabelWithDivider12")
         Me.LabelWithDivider12.BackColor = System.Drawing.Color.White
         Me.LabelWithDivider12.ForeColor = System.Drawing.Color.Black
         Me.LabelWithDivider12.Gap = 5
-        resources.ApplyResources(Me.LabelWithDivider12, "LabelWithDivider12")
         Me.LabelWithDivider12.Name = "LabelWithDivider12"
         '
         'lblOSEnvironment

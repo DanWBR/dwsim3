@@ -66,7 +66,7 @@ Namespace DWSIM.Editors.Generic
                     .Height = 130
                 End With
 
-                Dim pgrid As PropertyGridEx.PropertyGridEx = CType(CType(provider, Object).OwnerGrid, PropertyGridEx.PropertyGridEx)
+                Dim pgrid As PropertyGridEx.PropertyGridEx = My.Application.ActiveSimulation.FormProps.PGEx1
                 Dim idx As Integer = pgrid.Item.FindItem(context.PropertyDescriptor.DisplayName)
 
                 With pgrid.Item(idx)
