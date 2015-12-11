@@ -1166,7 +1166,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Soave-Redlich-Kwong-Paket mit Unterstützung für mehr als eine Flüssigphase.</value>
   </data>
   <data name="DescSteamTablesPP" xml:space="preserve">
-    <value>Paket ausschließlich für Wasser.</value>
+    <value>Property Package ausschließlich für Wasser (IAPWS-97)</value>
   </data>
   <data name="DescUNIQUACPP" xml:space="preserve">
     <value>In diesem Paket wird das UNIQUAC-Modell für die Berechnung der Aktivitäten in der Flüssigphase verwendet. Enthalpien werden mit dem Lee-Kesler-Model berechnet, wogegen die Dampfphasenfugazitäten und die anderen thermodynamischen Eigenschaften (beide Phasen) mit der Zustandsgleichung nach Peng-Robinson berechnet werden.</value>
@@ -3455,7 +3455,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Ergebnistabelle - Ströme</value>
   </data>
   <data name="TabelasdeVaporSteamT" xml:space="preserve">
-    <value>Stromtabellen</value>
+    <value>Dampftabellen (IAPWS-IF97)</value>
   </data>
   <data name="Tamanho3" xml:space="preserve">
     <value>3. Größe</value>

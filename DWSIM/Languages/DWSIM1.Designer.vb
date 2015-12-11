@@ -4307,7 +4307,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Pacote de Propriedades para uso exclusivo com Água (H2O)..
+        '''  Looks up a localized string similar to Pacote de Propriedades para uso exclusivo com Água (IAPWS-97).
         '''</summary>
         Friend Shared ReadOnly Property DescSteamTablesPP() As String
             Get
@@ -13514,7 +13514,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Tabelas de Vapor (Steam Tables).
+        '''  Looks up a localized string similar to Tabelas de Vapor (IAPWS-IF97).
         '''</summary>
         Friend Shared ReadOnly Property TabelasdeVaporSteamT() As String
             Get

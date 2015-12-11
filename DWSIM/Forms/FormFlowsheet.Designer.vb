@@ -1299,6 +1299,7 @@ Partial Class FormFlowsheet
         Me.Controls.Add(Me.MenuStrip1)
         Me.DoubleBuffered = True
         Me.Name = "FormFlowsheet"
+        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.ToolStripFlowsheet.ResumeLayout(False)
         Me.ToolStripFlowsheet.PerformLayout()
         Me.ToolStripCalculator.ResumeLayout(False)

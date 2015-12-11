@@ -1085,7 +1085,7 @@ Public Class FormSimulSettings
         Me.FrmChild.Options.SelectedComponents.Remove(tmpcomp.Name)
         Me.ListViewA.Items.RemoveByKey(tmpcomp.Name)
         Me.FrmChild.Options.NotSelectedComponents.Add(tmpcomp.Name, tmpcomp)
-        If Not DWSIM.App.IsRunningOnMono Then Me.AddCompToGrid(tmpcomp)
+        Me.AddCompToGrid(tmpcomp)
         Dim ms As DWSIM.SimulationObjects.Streams.MaterialStream
         Dim proplist As New ArrayList
 

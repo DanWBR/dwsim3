@@ -899,7 +899,7 @@ Viscosidade da Fase Vapor: Método Jossi-Stiel-Thodos
 Tensão Superficial da Fase Líquida: Método Brock-Bird</value>
   </data>
   <data name="DescSteamTablesPP" xml:space="preserve">
-    <value>Pacote de Propriedades para uso exclusivo com Água (H2O).</value>
+    <value>Pacote de Propriedades para uso exclusivo com Água (IAPWS-97)</value>
   </data>
   <data name="DescUPP" xml:space="preserve">
     <value>Pacote de Propriedades que utiliza o método de Contribuição de Grupos UNIFAC para a modelagem da fase líquida. As Entalpias, Entropias e Capacidades Caloríficas residuais são calculadas a partir do modelo de Lee-Kesler. A fase vapor é modelada através da EDE Peng-Robinson. Recomendado para uso com os Componentes Hipotéticos.</value>
@@ -2894,7 +2894,7 @@ Tensão Superficial da Fase Líquida: Método Brock-Bird</value>
     <value>Tabela de Resultados - Correntes</value>
   </data>
   <data name="TabelasdeVaporSteamT" xml:space="preserve">
-    <value>Tabelas de Vapor (Steam Tables)</value>
+    <value>Tabelas de Vapor (IAPWS-IF97)</value>
   </data>
   <data name="Tamanho3" xml:space="preserve">
     <value>3. Tamanho</value>
