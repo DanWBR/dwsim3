@@ -364,7 +364,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                 SF = Vx.SumY 'Sum mole fractions of components fixed by max solubility
                 L = SLP / (1 - SF)
 
-                If L = 1 Then
+                If L >= 1 Then
                     'all components are below max solubility, only liquid left
                     Vx = Vz.Clone
                     Vs = PP.RET_NullVector

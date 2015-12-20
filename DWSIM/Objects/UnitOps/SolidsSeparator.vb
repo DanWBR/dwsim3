@@ -41,7 +41,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         End Function
 
-        Public Property EnergyImb() As Double
+        'Public Property EnergyImb() As Double
 
         Public Property SeparationEfficiency() As Double = 100.0#
         Public Property LiquidSeparationEfficiency() As Double = 100.0#
@@ -122,7 +122,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     .Fases(0).SPMProperties.massflow = Wlvout
                     Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
                     For Each comp In .Fases(0).Componentes.Values
-                        comp.MassFlow = (1 - sse) * instr.Fases(7).Componentes(comp.Nome).MassFlow + lse * instr.Fases(1).Componentes(comp.Nome).MassFlow + instr.Fases(2).Componentes(comp.Nome).MassFlow
+                        comp.MassFlow = (1 - sse) * instr.Fases(7).Componentes(comp.Nome).MassFlow + instr.Fases(2).Componentes(comp.Nome).MassFlow
+                        comp.MassFlow += lse * (instr.Fases(3).Componentes(comp.Nome).MassFlow + instr.Fases(4).Componentes(comp.Nome).MassFlow)
                         comp.FracaoMassica = comp.MassFlow / Wlvout
                     Next
                     mw = 0.0#
@@ -146,7 +147,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     .Fases(0).SPMProperties.massflow = Wsout
                     Dim comp As DWSIM.ClassesBasicasTermodinamica.Substancia
                     For Each comp In .Fases(0).Componentes.Values
-                        comp.MassFlow = sse * instr.Fases(7).Componentes(comp.Nome).MassFlow + (1 - lse) * instr.Fases(1).Componentes(comp.Nome).MassFlow
+                        comp.MassFlow = sse * instr.Fases(7).Componentes(comp.Nome).MassFlow.GetValueOrDefault + (1 - lse) * (instr.Fases(3).Componentes(comp.Nome).MassFlow + instr.Fases(4).Componentes(comp.Nome).MassFlow)
                         comp.FracaoMassica = If(Wsout > 0.0#, comp.MassFlow / Wsout, 0.0#)
                     Next
                     mw = 0.0#
@@ -168,43 +169,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
             outstr1.Fases(0).SPMProperties.pressure = InStr.Fases(0).SPMProperties.pressure.GetValueOrDefault
             outstr2.Fases(0).SPMProperties.temperature = InStr.Fases(0).SPMProperties.temperature.GetValueOrDefault
             outstr2.Fases(0).SPMProperties.pressure = InStr.Fases(0).SPMProperties.pressure.GetValueOrDefault
-
-            'do a flash calculation on streams to calculate energy imbalance
-
-            Dim Hi, Ho1, Ho2, Wi, Wo1, Wo2 As Double
-
-            Hi = InStr.Fases(0).SPMProperties.enthalpy.GetValueOrDefault
-            Wi = InStr.Fases(0).SPMProperties.massflow.GetValueOrDefault
-
-            If Wlvout > 0.0# Then
-                outstr1.PropertyPackage.CurrentMaterialStream = outstr1
-                outstr1.PropertyPackage.DW_CalcEquilibrium(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P)
-                Ho1 = outstr1.Fases(0).SPMProperties.enthalpy.GetValueOrDefault
-                Wo1 = outstr1.Fases(0).SPMProperties.massflow.GetValueOrDefault
-            Else
-                Ho1 = 0.0#
-                Wo1 = 0.0#
-            End If
-            If Wsout > 0.0# Then
-                outstr2.PropertyPackage.CurrentMaterialStream = outstr2
-                outstr2.PropertyPackage.DW_CalcEquilibrium(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P)
-                Ho2 = outstr2.Fases(0).SPMProperties.enthalpy.GetValueOrDefault
-                Wo2 = outstr2.Fases(0).SPMProperties.massflow.GetValueOrDefault
-            Else
-                Ho2 = 0.0#
-                Wo2 = 0.0#
-            End If
-
-            'calculate imbalance
-
-            Me.EnergyImb = Hi * Wi - Ho1 * Wo1 - Ho2 * Wo2
-
-            'update energy stream power value
-
-            With form.Collections.CLCS_EnergyStreamCollection(Me.GraphicObject.EnergyConnector.AttachedConnector.AttachedTo.Name)
-                .Energia = Me.EnergyImb
-                .GraphicObject.Calculated = True
-            End With
 
             'call the flowsheet calculator
 
@@ -270,20 +234,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 End With
             End If
 
-            'Corrente de energia - atualizar valor da potência (kJ/s)
-            If Me.GraphicObject.EnergyConnector.IsAttached Then
-                With form.Collections.CLCS_EnergyStreamCollection(Me.GraphicObject.EnergyConnector.AttachedConnector.AttachedTo.Name)
-                    .Energia = Nothing
-                    .GraphicObject.Calculated = False
-                End With
-            End If
-
             'Call function to calculate flowsheet
             Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
             With objargs
                 .Calculado = False
                 .Nome = Me.Nome
-                .Tipo = TipoObjeto.Vessel
+                .Tipo = TipoObjeto.SolidSeparator
             End With
 
             form.CalculationQueue.Enqueue(objargs)
@@ -308,18 +264,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Me.QTFillNodeItems()
             End If
 
-            With Me.QTNodeTableItems
-
-                Me.ShowQuickTable = True
-
-                Dim valor As String
-                valor = Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.EnergyImb), nf)
-
-                .Item(0).Value = valor
-                .Item(0).Unit = su.spmp_heatflow
-
-            End With
-
         End Sub
 
         Public Overrides Sub QTFillNodeItems()
@@ -327,8 +271,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
             With Me.QTNodeTableItems
 
                 .Clear()
-
-                .Add(0, New DWSIM.Outros.NodeItem(DWSIM.App.GetLocalString("CSepEnergyImbalance"), "", "", 0, 0, ""))
 
             End With
 
@@ -369,7 +311,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 MyBase.PopulatePropertyGrid(pgrid, su)
 
-                Dim ent, saida1, saida2, en As String
+                Dim ent, saida1, saida2 As String
                 If Me.GraphicObject.InputConnectors(0).IsAttached = True Then
                     ent = Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Tag
                 Else
@@ -384,11 +326,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     saida2 = Me.GraphicObject.OutputConnectors(1).AttachedConnector.AttachedTo.Tag
                 Else
                     saida2 = ""
-                End If
-                If Me.GraphicObject.EnergyConnector.IsAttached = True Then
-                    en = Me.GraphicObject.EnergyConnector.AttachedConnector.AttachedTo.Tag
-                Else
-                    en = ""
                 End If
 
                 .Item.Add(DWSIM.App.GetLocalString("Correntedeentrada"), ent, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
@@ -409,17 +346,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     .CustomEditor = New DWSIM.Editors.Streams.UIOutputMSSelector
                 End With
 
-                .Item.Add(DWSIM.App.GetLocalString("Correntedeenergia"), en, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
-                With .Item(.Item.Count - 1)
-                    .DefaultValue = Nothing
-                    .CustomEditor = New DWSIM.Editors.Streams.UIOutputESSelector
-                End With
-
                 .Item.Add(DWSIM.App.GetLocalString("SolidSepEfficiency"), Me, "SeparationEfficiency", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("SolidSepEfficiencyDesc"), True)
                 .Item.Add(DWSIM.App.GetLocalString("LiquidSepEfficiency"), Me, "LiquidSeparationEfficiency", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("LiquidSepEfficiencyDesc"), True)
                 
-                .Item.Add(FT(DWSIM.App.GetLocalString("CSepEnergyImbalance"), su.spmp_heatflow), Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.EnergyImb), FlowSheet.Options.NumberFormat), True, DWSIM.App.GetLocalString("Resultados3"), "", True)
-
                 If Me.IsSpecAttached = True Then
                     .Item.Add(DWSIM.App.GetLocalString("ObjetoUtilizadopor"), FlowSheet.Collections.ObjectCollection(Me.AttachedSpecId).GraphicObject.Tag, True, DWSIM.App.GetLocalString("Miscelnea2"), "", True)
                     .Item.Add(DWSIM.App.GetLocalString("Utilizadocomo"), Me.SpecVarType, True, DWSIM.App.GetLocalString("Miscelnea3"), "", True)
@@ -446,8 +375,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Dim propidx As Integer = CInt(prop.Split("_")(2))
 
             Select Case propidx
-                Case 0
-                    value = cv.ConverterDoSI(su.spmp_heatflow, Me.EnergyImb)
                 Case 1
                     value = Me.SeparationEfficiency
                 Case 2
@@ -463,21 +390,21 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Dim proplist As New ArrayList
             Select Case proptype
                 Case PropertyType.RW
-                    For i = 0 To 0
-                        proplist.Add("PROP_SS_" + CStr(i))
-                    Next
+                    'For i = 0 To 0
+                    '    proplist.Add("PROP_SS_" + CStr(i))
+                    'Next
                 Case PropertyType.WR
                     For i = 1 To 2
                         proplist.Add("PROP_SS_" + CStr(i))
                     Next
                 Case PropertyType.ALL
-                    For i = 0 To 2
+                    For i = 1 To 2
                         proplist.Add("PROP_SS_" + CStr(i))
                     Next
                 Case PropertyType.RO
-                    For i = 0 To 0
-                        proplist.Add("PROP_SS_" + CStr(i))
-                    Next
+                    'For i = 0 To 0
+                    '    proplist.Add("PROP_SS_" + CStr(i))
+                    'Next
             End Select
             Return proplist.ToArray(GetType(System.String))
             proplist = Nothing
@@ -489,10 +416,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Dim propidx As Integer = CInt(prop.Split("_")(2))
 
             Select Case propidx
-                Case 0
+                Case 1
                     'PROP_SS_1	Solid Separation Efficiency
                     Me.SeparationEfficiency = propval
-                Case 1
+                Case 2
                     'PROP_SS_2	Liquid Separation Efficiency
                     Me.LiquidSeparationEfficiency = propval
             End Select
@@ -502,17 +429,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
         End Function
 
         Public Overrides Function GetPropertyUnit(ByVal prop As String, Optional ByVal su As SistemasDeUnidades.Unidades = Nothing) As Object
-            If su Is Nothing Then su = New DWSIM.SistemasDeUnidades.UnidadesSI
-            Dim cv As New DWSIM.SistemasDeUnidades.Conversor
-            Dim value As String = ""
-            Dim propidx As Integer = CInt(prop.Split("_")(2))
-
-            Select Case propidx
-                Case 0
-                    value = su.spmp_heatflow
-                Case Else
-                    value = "%"
-            End Select
+            'If su Is Nothing Then su = New DWSIM.SistemasDeUnidades.UnidadesSI
+            'Dim cv As New DWSIM.SistemasDeUnidades.Conversor
+            Dim value As String = "%"
+            'Dim propidx As Integer = CInt(prop.Split("_")(2))
 
             Return value
         End Function

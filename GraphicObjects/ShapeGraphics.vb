@@ -7181,11 +7181,6 @@ Namespace GraphicObjects
 
             End With
 
-            With Me.EnergyConnector
-                .Position = New Point(X + 0.5 * Width, Y + Height)
-                .Direction = ConDir.Down
-            End With
-
         End Sub
 
         Public Overrides Sub Draw(ByVal g As System.Drawing.Graphics)
