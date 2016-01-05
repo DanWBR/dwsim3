@@ -985,7 +985,7 @@ Public Class FormSimulSettings
                     If dgvpp.Rows(dgvpp.SelectedCells(0).RowIndex).Cells(0).Value <> Nothing Then
                         btnDeletePP.Enabled = True
                         If FrmChild.Options.PropertyPackages.ContainsKey(dgvpp.Rows(dgvpp.SelectedCells(0).RowIndex).Cells(0).Value) Then
-                            If FrmChild.Options.PropertyPackages(dgvpp.Rows(dgvpp.SelectedCells(0).RowIndex).Cells(0).Value).IsConfigurable And Not DWSIM.App.IsRunningOnMono Then btnConfigPP.Enabled = True Else btnConfigPP.Enabled = False
+                            If FrmChild.Options.PropertyPackages(dgvpp.Rows(dgvpp.SelectedCells(0).RowIndex).Cells(0).Value).IsConfigurable Then btnConfigPP.Enabled = True Else btnConfigPP.Enabled = False
                             btnCopyPP.Enabled = True
                         End If
                     End If
@@ -995,7 +995,7 @@ Public Class FormSimulSettings
             If dgvpp.SelectedRows.Count > 0 Then
                 btnDeletePP.Enabled = True
                 If FrmChild.Options.PropertyPackages.ContainsKey(dgvpp.SelectedRows(0).Cells(0).Value) Then
-                    If FrmChild.Options.PropertyPackages(dgvpp.SelectedRows(0).Cells(0).Value).IsConfigurable And Not DWSIM.App.IsRunningOnMono Then btnConfigPP.Enabled = True Else btnConfigPP.Enabled = False
+                    If FrmChild.Options.PropertyPackages(dgvpp.SelectedRows(0).Cells(0).Value).IsConfigurable Then btnConfigPP.Enabled = True Else btnConfigPP.Enabled = False
                     btnCopyPP.Enabled = True
                 End If
             End If
