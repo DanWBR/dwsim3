@@ -119,6 +119,16 @@ Namespace DWSIM.SimulationObjects.UnitOps
             End Set
         End Property
 
+        Public Overrides Function LoadData(data As List(Of XElement)) As Boolean
+            'workaround for renaming CalcBothTemp_KA calculation type to CalcBothTemp_UA
+            For Each xel In data
+                If xel.Name = "CalculationMode" Then
+                    xel.Value = xel.Value.Replace("CalcBothTemp_KA", "CalcBothTemp_UA")
+                End If
+            Next
+            Return MyBase.LoadData(data)
+        End Function
+
         Public Sub New(ByVal nome As String, ByVal descricao As String)
 
             MyBase.CreateNew()
