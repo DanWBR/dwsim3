@@ -589,7 +589,7 @@
     <value>TSTable</value>
   </data>
   <data name="&gt;&gt;TSTable.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.5821.35169, Culture=neutral, PublicKeyToken=null</value>
+    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.5813.29956, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <metadata name="ToolStripStates.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>132, 17</value>
@@ -768,45 +768,6 @@
   <data name="ToolStripComboBoxNumberFormatting.Items15" xml:space="preserve">
     <value>#0.0######</value>
   </data>
-  <data name="ToolStripComboBoxNumberFormatting.Items16" xml:space="preserve">
-    <value>#0.#</value>
-  </data>
-  <data name="ToolStripComboBoxNumberFormatting.Items17" xml:space="preserve">
-    <value>#0.##</value>
-  </data>
-  <data name="ToolStripComboBoxNumberFormatting.Items18" xml:space="preserve">
-    <value>#0.###</value>
-  </data>
-  <data name="ToolStripComboBoxNumberFormatting.Items19" xml:space="preserve">
-    <value>#0.####</value>
-  </data>
-  <data name="ToolStripComboBoxNumberFormatting.Items20" xml:space="preserve">
-    <value>#0.#####</value>
-  </data>
-  <data name="ToolStripComboBoxNumberFormatting.Items21" xml:space="preserve">
-    <value>#0.######</value>
-  </data>
-  <data name="ToolStripComboBoxNumberFormatting.Items22" xml:space="preserve">
-    <value>#.#</value>
-  </data>
-  <data name="ToolStripComboBoxNumberFormatting.Items23" xml:space="preserve">
-    <value>#.##</value>
-  </data>
-  <data name="ToolStripComboBoxNumberFormatting.Items24" xml:space="preserve">
-    <value>#.###</value>
-  </data>
-  <data name="ToolStripComboBoxNumberFormatting.Items25" xml:space="preserve">
-    <value>#.####</value>
-  </data>
-  <data name="ToolStripComboBoxNumberFormatting.Items26" xml:space="preserve">
-    <value>#.#####</value>
-  </data>
-  <data name="ToolStripComboBoxNumberFormatting.Items27" xml:space="preserve">
-    <value>#.######</value>
-  </data>
-  <data name="ToolStripComboBoxNumberFormatting.Items28" xml:space="preserve">
-    <value>#.#######</value>
-  </data>
   <data name="ToolStripComboBoxNumberFormatting.Size" type="System.Drawing.Size, System.Drawing">
     <value>121, 25</value>
   </data>
@@ -870,45 +831,6 @@
   <data name="ToolStripComboBoxNumberFractionFormatting.Items15" xml:space="preserve">
     <value>#0.0######</value>
   </data>
-  <data name="ToolStripComboBoxNumberFractionFormatting.Items16" xml:space="preserve">
-    <value>#0.#</value>
-  </data>
-  <data name="ToolStripComboBoxNumberFractionFormatting.Items17" xml:space="preserve">
-    <value>#0.##</value>
-  </data>
-  <data name="ToolStripComboBoxNumberFractionFormatting.Items18" xml:space="preserve">
-    <value>#0.###</value>
-  </data>
-  <data name="ToolStripComboBoxNumberFractionFormatting.Items19" xml:space="preserve">
-    <value>#0.####</value>
-  </data>
-  <data name="ToolStripComboBoxNumberFractionFormatting.Items20" xml:space="preserve">
-    <value>#0.#####</value>
-  </data>
-  <data name="ToolStripComboBoxNumberFractionFormatting.Items21" xml:space="preserve">
-    <value>#0.######</value>
-  </data>
-  <data name="ToolStripComboBoxNumberFractionFormatting.Items22" xml:space="preserve">
-    <value>#.#</value>
-  </data>
-  <data name="ToolStripComboBoxNumberFractionFormatting.Items23" xml:space="preserve">
-    <value>#.##</value>
-  </data>
-  <data name="ToolStripComboBoxNumberFractionFormatting.Items24" xml:space="preserve">
-    <value>#.###</value>
-  </data>
-  <data name="ToolStripComboBoxNumberFractionFormatting.Items25" xml:space="preserve">
-    <value>#.####</value>
-  </data>
-  <data name="ToolStripComboBoxNumberFractionFormatting.Items26" xml:space="preserve">
-    <value>#.#####</value>
-  </data>
-  <data name="ToolStripComboBoxNumberFractionFormatting.Items27" xml:space="preserve">
-    <value>#.######</value>
-  </data>
-  <data name="ToolStripComboBoxNumberFractionFormatting.Items28" xml:space="preserve">
-    <value>#.#######</value>
-  </data>
   <data name="ToolStripComboBoxNumberFractionFormatting.Size" type="System.Drawing.Size, System.Drawing">
     <value>121, 25</value>
   </data>
@@ -916,7 +838,7 @@
     <value>0, 50</value>
   </data>
   <data name="ToolStripUnits.Size" type="System.Drawing.Size, System.Drawing">
-    <value>810, 25</value>
+    <value>843, 25</value>
   </data>
   <data name="ToolStripUnits.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
