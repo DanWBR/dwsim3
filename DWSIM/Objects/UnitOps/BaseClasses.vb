@@ -327,23 +327,39 @@ Imports PropertyGridEx
             ElseIf sobj.TipoObjeto = TipoObjeto.NodeOut Then
 
                 Dim sp As DWSIM.SimulationObjects.UnitOps.Splitter = FlowSheet.Collections.CLCS_SplitterCollection.Item(sobj.Name)
-
+                sp.OutCount = 0
+                For Each cp In sp.GraphicObject.OutputConnectors
+                    If cp.IsAttached Then sp.OutCount += 1
+                Next
                 If e.ChangedItem.Label.Contains("[Split Ratio] ") Then
 
                     If e.ChangedItem.Value < 0.0# Or e.ChangedItem.Value > 1.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
 
-                    Dim i As Integer = 0
-                    Dim j As Integer = 0
+                    Dim i, j As Integer
+                    Dim total As Double
 
                     Dim cp As ConnectionPoint
                     For Each cp In sp.GraphicObject.OutputConnectors
                         If cp.IsAttached Then
-                            If e.ChangedItem.Label.Contains(cp.AttachedConnector.AttachedTo.Tag) Then
-                                sp.Ratios(i) = e.ChangedItem.Value
-                            End If
+                            If e.ChangedItem.Label.Contains(cp.AttachedConnector.AttachedTo.Tag) Then j = i
                         End If
                         i += 1
                     Next
+                    For i = 0 To sp.OutCount - 2
+                        If i <> j Then
+                            total += sp.Ratios(i)
+                        Else
+                            total += e.ChangedItem.Value
+                        End If
+                    Next
+                    If total <= 1 Then
+                        sp.Ratios(j) = e.ChangedItem.Value
+                        sp.Ratios(sp.OutCount - 1) = 1 - total
+                    Else
+                        Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    End If
+
+
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetPropertyName("PROP_SP_1")) Then
 

@@ -2429,7 +2429,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Im ausgewählten Strom ist kein Wasser vorhanden.</value>
   </data>
   <data name="NoexistemPacotesdePr" xml:space="preserve">
-    <value>Fügen Sie bitte ein thermodynamisches Paket hinzu, um fortzusetzen.</value>
+    <value>Fügen Sie bitte ein thermodynamisches Paket hinzu, um fortzufahren.</value>
   </data>
   <data name="Noexistemsimulaesase" xml:space="preserve">
     <value>Keine Simulation vorhanden, die gespeichert werden muß.</value>
@@ -4755,7 +4755,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Das Ergebnis der Flash-Berechnung bei den spezifizierten Bediungen ist ungültig. Bitte versuchen Sie es mit einem anderen Flash-Algorithmus. Falls der Fehler weiterhin auftritt, testen Sie ob das thermodynamische Modell geeignet  und für Ihr System korrekt konfiguriert ist.</value>
   </data>
   <data name="UnsuitableFlashAlgorithmSelected" xml:space="preserve">
-    <value>The selected Flash Algorithm is unsuitable for LLE calculations. Please select another Flash Algorithm in the Property Package configuration window or in the Advanced Thermo Settings Panel.</value>
+    <value>Der gewählte Flashalgorithmus is ungeeignet für die Berechnung von LLE Gleichgewichten. Bitte wählen Sie einen anderen Flashalgorithmus im Property Package Konfigurationsdialog.</value>
   </data>
   <data name="Personalizado5" xml:space="preserve">
     <value>Nutzer 5</value>
@@ -4809,7 +4809,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Wählen Sie den Flash-Berechnungsmodus welcher für die Berechnug der Energiebilanz im Kessel durchgeführt werden soll.</value>
   </data>
   <data name="HydrateEquilibriumCurve" xml:space="preserve">
-    <value>Hydrate Equilibrium Curve</value>
+    <value>Hydrat Gleichgewichtskurve</value>
   </data>
   <data name="PhaseIdentificationParameter" xml:space="preserve">
     <value>Phasen Identifikationsparameter = 1</value>
@@ -4959,13 +4959,13 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>Kalkulationstabelle Definitionsdatei</value>
   </data>
   <data name="LinkedInputParms" xml:space="preserve">
-    <value>3. Verknüpfte eingabeparameter</value>
+    <value>3. Verknüpfte Eingabeparameter</value>
   </data>
   <data name="LinkedOutputParms" xml:space="preserve">
-    <value>4. Verknüpfte ausgangsparameter</value>
+    <value>4. Verknüpfte Ausgangsparameter</value>
   </data>
   <data name="MassBalanceError" xml:space="preserve">
-    <value>Massenbilanz fehler (%)</value>
+    <value>Massenbilanz Fehler (%)</value>
   </data>
   <data name="FlowsheetUO" xml:space="preserve">
     <value>Flowsheet Unit Operation</value>
@@ -5065,7 +5065,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
 Die erhaltenen Daten werden hauptsächlich für die Berechnung von VLE-Daten empfohlen.</value>
   </data>
   <data name="ExpData" xml:space="preserve">
-    <value>Experimental data</value>
+    <value>Experimentelle Daten</value>
   </data>
   <data name="Dica" xml:space="preserve">
     <value>Tipp</value>
@@ -5143,22 +5143,22 @@ Die erhaltenen Daten werden hauptsächlich für die Berechnung von VLE-Daten emp
     <value>Reynolds-Zahl Rohr</value>
   </data>
   <data name="SeparatorVessel_SecondLiquidPhaseFound" xml:space="preserve">
-    <value>A second liquid phase was found, please connect another stream to the second liquid phase vessel outlet.</value>
+    <value>Eine zweite flüssige Phase wurde gefunden. Bitte verbinden Sie einen weiteren Materialstrom mit dem zweiten Flüssigkeitsaustritt des Behälters.</value>
   </data>
   <data name="Solving" xml:space="preserve">
     <value>Solving</value>
   </data>
   <data name="PartialCalcTime" xml:space="preserve">
-    <value>solving succeeded, time taken:</value>
+    <value>Lösung erfolgreich, benötigte Zeit:</value>
   </data>
   <data name="ConfirmOperation" xml:space="preserve">
     <value>Gehen sie bei der angeforderten aktion?</value>
   </data>
   <data name="CopyOnError" xml:space="preserve">
-    <value>Copy stream data on error</value>
+    <value>Kopiere Stromdaten bei Fehler</value>
   </data>
   <data name="CopyOnErrorDesc" xml:space="preserve">
-    <value>Copies data from inlet to outlet stream even if it is not valid.</value>
+    <value>Kopiere Daten vom Eingangs- zum Ausgangsstrom, selbst wenn dieser ungültig ist.</value>
   </data>
   <data name="PropPack_FlashPSFError" xml:space="preserve">
     <value>PSF Flash wird nicht unterstützt</value>
@@ -5170,7 +5170,7 @@ Die erhaltenen Daten werden hauptsächlich für die Berechnung von VLE-Daten emp
     <value>Salzgehalt (kg/kg)</value>
   </data>
   <data name="PP_IGNORE_SALINITY_LIMIT" xml:space="preserve">
-    <value>Ignorieren maximale salzgehaltsgrenze</value>
+    <value>Ignorieren maximale Salzgehaltsgrenze</value>
   </data>
   <data name="BlackOil_BSW" xml:space="preserve">
     <value>[Black Oil] BSW (%)</value>
@@ -5215,7 +5215,7 @@ Die erhaltenen Daten werden hauptsächlich für die Berechnung von VLE-Daten emp
     <value>IAPWS-08 Meerwasser</value>
   </data>
   <data name="Debugging" xml:space="preserve">
-    <value>Debugging object</value>
+    <value>Debugging Objekt</value>
   </data>
   <data name="DescEUPP" xml:space="preserve">
     <value>This model is a combination of the extended UNIQUAC model for electrolytes and the Soave–Redlich–Kwong cubic equation of state. The model has been applied to aqueous systems containing ammonia and/or carbon dioxide along with various salts. Model parameters valid in the temperature range 0–110°C, the pressure range from 0–100 bar, and the concentration range up to approximately 80 molal ammonia are given. The model parameters were evaluated on the basis of more than 7000 experimental data points.</value>

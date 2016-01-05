@@ -33,6 +33,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
         End Enum
 
         Protected m_ratios As New System.Collections.ArrayList(3)
+        Public OutCount As Integer = 0
 
         Public Property StreamFlowSpec As Double = 0.0#
         Public Property Stream2FlowSpec As Double = 0.0#
@@ -51,6 +52,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 m_ratios.Add(Double.Parse(xel.Value, ci))
             Next
 
+            OutCount = 0
+            For Each cp In GraphicObject.OutputConnectors
+                If cp.IsAttached Then OutCount += 1
+            Next
         End Function
 
         Public Overrides Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement)
@@ -75,14 +80,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
             End Get
         End Property
 
-        Public Sub New(ByVal nome As String, ByVal descricao As String)
+        Public Sub New(ByVal Name As String, ByVal Description As String)
 
             MyBase.CreateNew()
-            Me.m_ComponentName = nome
-            Me.m_ComponentDescription = descricao
-            Me.m_ratios.Add(New Double)
-            Me.m_ratios.Add(New Double)
-            Me.m_ratios.Add(New Double)
+            Me.m_ComponentName = Name
+            Me.m_ComponentDescription = Description
+            Me.m_ratios.Add(1.0#)
+            Me.m_ratios.Add(0.0#)
+            Me.m_ratios.Add(0.0#)
             Me.FillNodeItems()
             Me.QTFillNodeItems()
         End Sub
@@ -157,31 +162,32 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Case OpMode.StreamMassFlowSpec
 
                     Dim cp As ConnectionPoint
-                    Dim w1, w2 As Double, n As Integer
+                    Dim w1, w2 As Double
 
-                    n = 0
-                    For Each cp In Me.GraphicObject.OutputConnectors
-                        If cp.IsAttached Then
-                            n += 1
-                        End If
-                    Next
+                    Dim wn(OutCount) As Double
 
-                    Dim wn(n) As Double
-
-                    Select Case n
+                    Select Case OutCount
                         Case 1
                             w1 = Me.StreamFlowSpec
                             wn(0) = w1
                         Case 2
-                            w1 = Me.StreamFlowSpec
-                            wn(0) = w1
-                            wn(1) = W - w1
+                            If W >= Me.StreamFlowSpec Then
+                                w1 = Me.StreamFlowSpec
+                                wn(0) = w1
+                                wn(1) = W - w1
+                            Else
+                                Throw New Exception(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                            End If
                         Case 3
-                            w1 = Me.StreamFlowSpec
-                            w2 = Me.Stream2FlowSpec
-                            wn(0) = w1
-                            wn(1) = w2
-                            wn(2) = W - w1 - w2
+                            If W >= Me.StreamFlowSpec + Me.Stream2FlowSpec Then
+                                w1 = Me.StreamFlowSpec
+                                w2 = Me.Stream2FlowSpec
+                                wn(0) = w1
+                                wn(1) = w2
+                                wn(2) = W - w1 - w2
+                            Else
+                                Throw New Exception(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                            End If
                     End Select
 
                     i = 0
@@ -211,31 +217,33 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Case OpMode.StreamMoleFlowSpec
 
                     Dim cp As ConnectionPoint
-                    Dim m1, m2 As Double, n As Integer
+                    Dim m1, m2 As Double
 
-                    n = 0
-                    For Each cp In Me.GraphicObject.OutputConnectors
-                        If cp.IsAttached Then
-                            n += 1
-                        End If
-                    Next
+                    Dim mn(OutCount) As Double
 
-                    Dim mn(n) As Double
-
-                    Select Case n
+                    Select Case OutCount
                         Case 1
                             m1 = m1
                             mn(0) = m1
                         Case 2
-                            m1 = Me.StreamFlowSpec
-                            mn(0) = m1
-                            mn(1) = M - m1
+                            If M >= Me.StreamFlowSpec Then
+                                m1 = Me.StreamFlowSpec
+                                mn(0) = m1
+                                mn(1) = M - m1
+                            Else
+                                Throw New Exception(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                            End If
                         Case 3
-                            m1 = Me.StreamFlowSpec
-                            m2 = Me.Stream2FlowSpec
-                            mn(0) = m1
-                            mn(1) = m2
-                            mn(2) = M - m1 - m2
+                            If M >= Me.StreamFlowSpec + Me.Stream2FlowSpec Then
+                                m1 = Me.StreamFlowSpec
+                                m2 = Me.Stream2FlowSpec
+                                mn(0) = m1
+                                mn(1) = m2
+                                mn(2) = M - m1 - m2
+                            Else
+                                Throw New Exception(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                            End If
+
                     End Select
 
                     i = 0
@@ -335,33 +343,38 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 nti.Unit = GetPropertyUnit(nti.Text, FlowSheet.Options.SelectedUnitSystem)
             Next
 
-            If Me.QTNodeTableItems Is Nothing Then
-                Me.QTNodeTableItems = New System.Collections.Generic.Dictionary(Of Integer, DWSIM.Outros.NodeItem)
-                Me.QTFillNodeItems()
-            End If
+            'If Me.QTNodeTableItems Is Nothing Then
+            Me.QTNodeTableItems = Nothing
+            Me.QTNodeTableItems = New System.Collections.Generic.Dictionary(Of Integer, DWSIM.Outros.NodeItem)
+            Me.QTFillNodeItems()
+            'End If
 
             With Me.QTNodeTableItems
-
                 .Item(0).Value = Me.Ratios(0)
                 .Item(0).Unit = ""
                 .Item(1).Value = Me.Ratios(1)
                 .Item(1).Unit = ""
-                .Item(2).Value = Me.Ratios(2)
-                .Item(2).Unit = ""
-
+                If OutCount = 3 Then
+                    .Item(2).Value = Me.Ratios(2)
+                    .Item(2).Unit = ""
+                End If
             End With
 
         End Sub
 
         Public Overrides Sub QTFillNodeItems()
-
             With Me.QTNodeTableItems
 
                 .Clear()
 
                 .Add(0, New DWSIM.Outros.NodeItem("S1", "", "", 0, 0, ""))
                 .Add(1, New DWSIM.Outros.NodeItem("S2", "", "", 1, 0, ""))
-                .Add(2, New DWSIM.Outros.NodeItem("S2", "", "", 2, 0, ""))
+
+                If Not Me.GraphicObject Is Nothing Then
+                    If Me.GraphicObject.OutputConnectors(2).IsAttached Then
+                        .Add(2, New DWSIM.Outros.NodeItem("S2", "", "", 2, 0, ""))
+                    End If
+                End If
 
             End With
 
@@ -410,19 +423,23 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 .Item.Add(DWSIM.App.GetLocalString("Correntedesaida1"), saida1, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
                 With .Item(.Item.Count - 1)
-                    .DefaultValue = Nothing
+                    .DefaultValue = 1
                     .CustomEditor = New DWSIM.Editors.Streams.UIOutputMSSelector
                 End With
+
                 .Item.Add(DWSIM.App.GetLocalString("Correntedesaida2"), saida2, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
                 With .Item(.Item.Count - 1)
-                    .DefaultValue = Nothing
+                    .DefaultValue = 0
                     .CustomEditor = New DWSIM.Editors.Streams.UIOutputMSSelector
                 End With
-                .Item.Add(DWSIM.App.GetLocalString("Correntedesaida3"), saida3, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
-                With .Item(.Item.Count - 1)
-                    .DefaultValue = Nothing
-                    .CustomEditor = New DWSIM.Editors.Streams.UIOutputMSSelector
-                End With
+
+                If saida1 <> "" And saida2 <> "" Then
+                    .Item.Add(DWSIM.App.GetLocalString("Correntedesaida3"), saida3, False, DWSIM.App.GetLocalString("Conexes1"), "", True)
+                    With .Item(.Item.Count - 1)
+                        .DefaultValue = 0
+                        .CustomEditor = New DWSIM.Editors.Streams.UIOutputMSSelector
+                    End With
+                End If
 
                 .Item.Add(DWSIM.App.GetLocalString("SplitterOperationMode"), Me, "OperationMode", False, DWSIM.App.GetLocalString("Parmetros2"), "", True)
 
@@ -436,10 +453,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Select Case Me.OperationMode
                     Case OpMode.SplitRatios
                         Dim i As Integer = 0
+                        Dim RO As Boolean
                         Dim cg2 As ConnectionPoint
                         For Each cg2 In Me.GraphicObject.OutputConnectors
                             If cg2.IsAttached = True Then
-                                .Item.Add("[Split Ratio] " & cg2.AttachedConnector.AttachedTo.Tag, Me.Ratios.Item(i), False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("Digiteumvalorentre0e"), True)
+                                RO = False
+                                If i = 1 And saida3 = "" Then RO = True
+                                If i = 2 Then RO = True
+                                .Item.Add("[Split Ratio] " & cg2.AttachedConnector.AttachedTo.Tag, Me.Ratios.Item(i), RO, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("Digiteumvalorentre0e"), True)
                                 With .Item(.Item.Count - 1)
                                     .DefaultValue = GetType(System.Double)
                                 End With
@@ -511,11 +532,27 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Public Overloads Overrides Function GetProperties(ByVal proptype As SimulationObjects_BaseClass.PropertyType) As String()
             Dim proplist As New ArrayList
+
             proplist.Add("PROP_SP_1")
             proplist.Add("PROP_SP_2")
-            proplist.Add("SR1")
-            proplist.Add("SR2")
-            proplist.Add("SR3")
+
+            Select Case proptype
+                Case PropertyType.RW
+                    For i = 1 To OutCount - 1
+                        proplist.Add("SR" + CStr(i))
+                    Next
+                Case PropertyType.WR
+                    For i = 1 To OutCount - 1
+                        proplist.Add("SR" + CStr(i))
+                    Next
+                Case PropertyType.ALL
+                    For i = 1 To OutCount
+                        proplist.Add("SR" + CStr(i))
+                    Next
+                Case PropertyType.RO
+                    proplist.Add("SR" + CStr(OutCount))
+            End Select
+
             Return proplist.ToArray(GetType(System.String))
         End Function
 
@@ -536,11 +573,16 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Me.Stream2FlowSpec = cv.ConverterParaSI(su.spmp_molarflow, propval)
                     End If
                 Case "SR1"
-                    If Me.Ratios.Count > 0 Then Me.Ratios(0) = propval
+                    If propval >= 0 And propval <= 1 Then
+                        Me.Ratios(0) = propval
+                        If OutCount = 2 Then Me.Ratios(1) = 1 - propval
+                        If OutCount = 3 And Ratios(0) + Ratios(1) <= 1 Then Me.Ratios(2) = 1 - Me.Ratios(0) - Me.Ratios(1)
+                    End If
                 Case "SR2"
-                    If Me.Ratios.Count > 1 Then Me.Ratios(1) = propval
-                Case "SR3"
-                    If Me.Ratios.Count > 2 Then Me.Ratios(2) = propval
+                    If propval >= 0 And propval <= 1 And Me.Ratios(0) + Me.Ratios(1) + propval <= 1 And OutCount = 3 Then
+                        Me.Ratios(1) = propval
+                        Me.Ratios(2) = 1 - Me.Ratios(0) - Me.Ratios(1)
+                    End If
             End Select
             Return 1
         End Function
