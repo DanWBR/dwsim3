@@ -650,33 +650,43 @@ Public Class FormPureComp
             tbInChI.Text = constprop.InChI
 
 
-            'Render molecule / Calculate InChI from SMILES
-            If Not constprop.SMILES Is Nothing And Not constprop.SMILES = "" Then
+            If Not DWSIM.App.IsRunningOnMono Then
 
-                'definition available, render molecule
-                Try
-                    Dim ind As New Indigo()
-                    Dim mol As IndigoObject = ind.loadMolecule(constprop.SMILES)
-                    Dim renderer As New IndigoRenderer(ind)
+                'Render molecule / Calculate InChI from SMILES
+                If Not constprop.SMILES Is Nothing And Not constprop.SMILES = "" Then
 
-                    If constprop.InChI = "" Then
-                        Dim ii As New IndigoInchi(ind)
-                        tbInChI.Text = ii.getInchi(mol)
-                    End If
+                    'definition available, render molecule
+                    Try
+                        Dim ind As New Indigo()
+                        Dim mol As IndigoObject = ind.loadMolecule(constprop.SMILES)
+                        Dim renderer As New IndigoRenderer(ind)
 
-                    With renderer
-                        ind.setOption("render-image-size", pbRender.Width, pbRender.Height)
-                        ind.setOption("render-margins", 15, 15)
-                        ind.setOption("render-coloring", True)
-                        ind.setOption("render-background-color", Color.White)
-                    End With
+                        If constprop.InChI = "" Then
+                            Dim ii As New IndigoInchi(ind)
+                            tbInChI.Text = ii.getInchi(mol)
+                        End If
 
-                    pbRender.Image = renderer.renderToBitmap(mol)
+                        With renderer
+                            ind.setOption("render-image-size", pbRender.Width, pbRender.Height)
+                            ind.setOption("render-margins", 15, 15)
+                            ind.setOption("render-coloring", True)
+                            ind.setOption("render-background-color", Color.White)
+                        End With
 
-                Catch ex As Exception
-                    MessageBox.Show(ex.ToString, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        pbRender.Image = renderer.renderToBitmap(mol)
 
-                End Try
+                    Catch ex As Exception
+
+                        MessageBox.Show(ex.ToString, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                    End Try
+
+                Else
+
+                    'no definition available, delete old picture
+                    pbRender.Image = Nothing
+
+                End If
 
             Else
 
