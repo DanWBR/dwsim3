@@ -381,30 +381,42 @@ Public Class frmSurface
     End Sub
 
     Private Sub ToolStripMenuItem6_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripMenuItem6.Click
-        If Me.FlowsheetDesignSurface.SelectedObject.Rotation + 90 >= 360 Then
-            Me.FlowsheetDesignSurface.SelectedObject.Rotation = Math.Truncate((Me.FlowsheetDesignSurface.SelectedObject.Rotation + 90) / 360)
+        If DWSIM.App.IsRunningOnMono Then
+            MessageBox.Show(DWSIM.App.GetLocalString("Unsupported_Feature"), "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         Else
-            Me.FlowsheetDesignSurface.SelectedObject.Rotation = Me.FlowsheetDesignSurface.SelectedObject.Rotation + 90
+            If Me.FlowsheetDesignSurface.SelectedObject.Rotation + 90 >= 360 Then
+                Me.FlowsheetDesignSurface.SelectedObject.Rotation = Math.Truncate((Me.FlowsheetDesignSurface.SelectedObject.Rotation + 90) / 360)
+            Else
+                Me.FlowsheetDesignSurface.SelectedObject.Rotation = Me.FlowsheetDesignSurface.SelectedObject.Rotation + 90
+            End If
+            Me.FlowsheetDesignSurface.Invalidate()
         End If
-        Me.FlowsheetDesignSurface.Invalidate()
     End Sub
 
     Private Sub BToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BToolStripMenuItem.Click
-        If Me.FlowsheetDesignSurface.SelectedObject.Rotation + 180 >= 360 Then
-            Me.FlowsheetDesignSurface.SelectedObject.Rotation = Math.Truncate((Me.FlowsheetDesignSurface.SelectedObject.Rotation + 180) / 360)
+        If DWSIM.App.IsRunningOnMono Then
+            MessageBox.Show(DWSIM.App.GetLocalString("Unsupported_Feature"), "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         Else
-            Me.FlowsheetDesignSurface.SelectedObject.Rotation = Me.FlowsheetDesignSurface.SelectedObject.Rotation + 180
+            If Me.FlowsheetDesignSurface.SelectedObject.Rotation + 180 >= 360 Then
+                Me.FlowsheetDesignSurface.SelectedObject.Rotation = Math.Truncate((Me.FlowsheetDesignSurface.SelectedObject.Rotation + 180) / 360)
+            Else
+                Me.FlowsheetDesignSurface.SelectedObject.Rotation = Me.FlowsheetDesignSurface.SelectedObject.Rotation + 180
+            End If
+            Me.FlowsheetDesignSurface.Invalidate()
         End If
-        Me.FlowsheetDesignSurface.Invalidate()
     End Sub
 
     Private Sub ToolStripMenuItem7_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripMenuItem7.Click
-        If Me.FlowsheetDesignSurface.SelectedObject.Rotation + 270 >= 360 Then
-            Me.FlowsheetDesignSurface.SelectedObject.Rotation = Math.Truncate((Me.FlowsheetDesignSurface.SelectedObject.Rotation + 270) / 360)
+        If DWSIM.App.IsRunningOnMono Then
+            MessageBox.Show(DWSIM.App.GetLocalString("Unsupported_Feature"), "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         Else
-            Me.FlowsheetDesignSurface.SelectedObject.Rotation = Me.FlowsheetDesignSurface.SelectedObject.Rotation + 270
+            If Me.FlowsheetDesignSurface.SelectedObject.Rotation + 270 >= 360 Then
+                Me.FlowsheetDesignSurface.SelectedObject.Rotation = Math.Truncate((Me.FlowsheetDesignSurface.SelectedObject.Rotation + 270) / 360)
+            Else
+                Me.FlowsheetDesignSurface.SelectedObject.Rotation = Me.FlowsheetDesignSurface.SelectedObject.Rotation + 270
+            End If
+            Me.FlowsheetDesignSurface.Invalidate()
         End If
-        Me.FlowsheetDesignSurface.Invalidate()
     End Sub
 
     Private Sub FlowsheetDesignSurface_StatusUpdate(ByVal sender As Object, ByVal e As Microsoft.Msdn.Samples.DesignSurface.StatusUpdateEventArgs) Handles FlowsheetDesignSurface.StatusUpdate
@@ -3924,23 +3936,39 @@ Public Class frmSurface
     End Sub
 
     Private Sub ToolStripMenuItem11_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem11.Click
-        Me.FlowsheetDesignSurface.SelectedObject.Rotation = 0
-        Me.Invalidate()
+        If DWSIM.App.IsRunningOnMono Then
+            MessageBox.Show(DWSIM.App.GetLocalString("Unsupported_Feature"), "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+        Else
+            Me.FlowsheetDesignSurface.SelectedObject.Rotation = 0
+            Me.Invalidate()
+        End If
     End Sub
 
     Private Sub ToolStripMenuItem12_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem12.Click
-        Me.FlowsheetDesignSurface.SelectedObject.Rotation = 90
-        Me.Invalidate()
+        If DWSIM.App.IsRunningOnMono Then
+            MessageBox.Show(DWSIM.App.GetLocalString("Unsupported_Feature"), "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+        Else
+            Me.FlowsheetDesignSurface.SelectedObject.Rotation = 90
+            Me.Invalidate()
+        End If
     End Sub
 
     Private Sub ToolStripMenuItem13_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem13.Click
-        Me.FlowsheetDesignSurface.SelectedObject.Rotation = 180
-        Me.Invalidate()
+        If DWSIM.App.IsRunningOnMono Then
+            MessageBox.Show(DWSIM.App.GetLocalString("Unsupported_Feature"), "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+        Else
+            Me.FlowsheetDesignSurface.SelectedObject.Rotation = 180
+            Me.Invalidate()
+        End If
     End Sub
 
     Private Sub ToolStripMenuItem14_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem14.Click
-        Me.FlowsheetDesignSurface.SelectedObject.Rotation = 270
-        Me.Invalidate()
+        If DWSIM.App.IsRunningOnMono Then
+            MessageBox.Show(DWSIM.App.GetLocalString("Unsupported_Feature"), "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+        Else
+            Me.FlowsheetDesignSurface.SelectedObject.Rotation = 270
+            Me.Invalidate()
+        End If
     End Sub
 
     Private Sub DepurarObjetoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DepurarObjetoToolStripMenuItem.Click
