@@ -252,31 +252,31 @@
   <data name="ToolStripButton18.Text" xml:space="preserve">
     <value>Salvar como Imagem</value>
   </data>
-  <data name="ToolStripButton6.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+  <data name="tsbConfigPage.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>Magenta</value>
   </data>
-  <data name="ToolStripButton6.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="tsbConfigPage.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 22</value>
   </data>
-  <data name="ToolStripButton6.Text" xml:space="preserve">
+  <data name="tsbConfigPage.Text" xml:space="preserve">
     <value>Configurar Página</value>
   </data>
-  <data name="ToolStripButton11.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+  <data name="tsbConfigPrinter.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>Magenta</value>
   </data>
-  <data name="ToolStripButton11.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="tsbConfigPrinter.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 22</value>
   </data>
-  <data name="ToolStripButton11.Text" xml:space="preserve">
+  <data name="tsbConfigPrinter.Text" xml:space="preserve">
     <value>Configurar Impressora</value>
   </data>
-  <data name="ToolStripButton10.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+  <data name="tsbPrint.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
     <value>Magenta</value>
   </data>
-  <data name="ToolStripButton10.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="tsbPrint.Size" type="System.Drawing.Size, System.Drawing">
     <value>23, 22</value>
   </data>
-  <data name="ToolStripButton10.Text" xml:space="preserve">
+  <data name="tsbPrint.Text" xml:space="preserve">
     <value>Visualizar e Imprimir Fluxograma</value>
   </data>
   <data name="ToolStripSeparator4.Size" type="System.Drawing.Size, System.Drawing">
@@ -838,7 +838,7 @@
     <value>0, 50</value>
   </data>
   <data name="ToolStripUnits.Size" type="System.Drawing.Size, System.Drawing">
-    <value>843, 25</value>
+    <value>810, 25</value>
   </data>
   <data name="ToolStripUnits.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -2377,22 +2377,22 @@
   <data name="&gt;&gt;ToolStripButton18.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;ToolStripButton6.Name" xml:space="preserve">
-    <value>ToolStripButton6</value>
+  <data name="&gt;&gt;tsbConfigPage.Name" xml:space="preserve">
+    <value>tsbConfigPage</value>
   </data>
-  <data name="&gt;&gt;ToolStripButton6.Type" xml:space="preserve">
+  <data name="&gt;&gt;tsbConfigPage.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;ToolStripButton11.Name" xml:space="preserve">
-    <value>ToolStripButton11</value>
+  <data name="&gt;&gt;tsbConfigPrinter.Name" xml:space="preserve">
+    <value>tsbConfigPrinter</value>
   </data>
-  <data name="&gt;&gt;ToolStripButton11.Type" xml:space="preserve">
+  <data name="&gt;&gt;tsbConfigPrinter.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;ToolStripButton10.Name" xml:space="preserve">
-    <value>ToolStripButton10</value>
+  <data name="&gt;&gt;tsbPrint.Name" xml:space="preserve">
+    <value>tsbPrint</value>
   </data>
-  <data name="&gt;&gt;ToolStripButton10.Type" xml:space="preserve">
+  <data name="&gt;&gt;tsbPrint.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;ToolStripSeparator4.Name" xml:space="preserve">

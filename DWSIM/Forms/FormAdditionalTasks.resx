@@ -172,7 +172,7 @@
     <value>Button2</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>686, 439</value>
+    <value>686, 479</value>
   </data>
   <data name="&gt;&gt;cbtask2.Parent" xml:space="preserve">
     <value>Panel1</value>
@@ -223,7 +223,7 @@
     <value>True</value>
   </data>
   <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>641, 44</value>
+    <value>641, 87</value>
   </data>
   <data name="cbtask2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -304,7 +304,7 @@
     <value>91, 13</value>
   </data>
   <data name="Panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>686, 439</value>
+    <value>686, 479</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>
@@ -319,7 +319,9 @@
     <value>Fill</value>
   </data>
   <data name="Label7.Text" xml:space="preserve">
-    <value>Copia a biblioteca do IPOPT e outras bibliotecas auxiliares para o diretório padrão de bibliotecas do sistema, normalmente '/usr/lib'. Requer privilégios de administrador (sudo). O comando será executado na janela do terminal usada para iniciar o DWSIM e aguardará a senha do usuário.</value>
+    <value>Copia a biblioteca do IPOPT e outras bibliotecas auxiliares para o diretório padrão de bibliotecas do sistema, normalmente '/usr/lib'. Requer privilégios de administrador (sudo). O comando será executado na janela do terminal usada para iniciar o DWSIM e aguardará a senha do usuário.
+
+ATENÇÃO: Esta biblioteca do IPOPT é pré-compilada e pode não funcionar com a sua distribuição Linux. Se o IPOPT falhar, você deverá compilá-lo e instalá-lo manualmente. Mais informações em http://www.coin-or.org/Ipopt/documentation/node14.html</value>
   </data>
   <data name="&gt;&gt;Label3.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -367,7 +369,7 @@
     <value>Panel1</value>
   </data>
   <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>553, 404</value>
+    <value>553, 444</value>
   </data>
   <data name="&gt;&gt;Label1.Parent" xml:space="preserve">
     <value>Panel1</value>
@@ -478,7 +480,7 @@
     <value>121, 23</value>
   </data>
   <data name="Button2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>459, 404</value>
+    <value>459, 444</value>
   </data>
   <data name="&gt;&gt;cbtask3.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -487,7 +489,7 @@
     <value>15, 142</value>
   </data>
   <data name="Label8.Location" type="System.Drawing.Point, System.Drawing">
-    <value>33, 352</value>
+    <value>33, 397</value>
   </data>
   <data name="Button1.TabIndex" type="System.Int32, mscorlib">
     <value>80</value>
@@ -523,7 +525,7 @@
     <value>92, 13</value>
   </data>
   <data name="cbtask3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 332</value>
+    <value>15, 377</value>
   </data>
   <data name="Button1.Text" xml:space="preserve">
     <value>Executar Tarefas</value>

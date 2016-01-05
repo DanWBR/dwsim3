@@ -39,9 +39,9 @@ Partial Class FormFlowsheet
         Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripButton18 = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripButton6 = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripButton11 = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripButton10 = New System.Windows.Forms.ToolStripButton()
+        Me.tsbConfigPage = New System.Windows.Forms.ToolStripButton()
+        Me.tsbConfigPrinter = New System.Windows.Forms.ToolStripButton()
+        Me.tsbPrint = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripButton16 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton17 = New System.Windows.Forms.ToolStripButton()
@@ -208,7 +208,7 @@ Partial Class FormFlowsheet
         'ToolStripFlowsheet
         '
         resources.ApplyResources(Me.ToolStripFlowsheet, "ToolStripFlowsheet")
-        Me.ToolStripFlowsheet.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel4, Me.TSBtabela, Me.TSBTexto, Me.ToolStripButton4, Me.ToolStripButton19, Me.ToolStripButton12, Me.ToolStripSeparator5, Me.ToolStripButton1, Me.TSTBZoom, Me.ToolStripButton2, Me.ToolStripButton20, Me.ToolStripButton3, Me.ToolStripSeparator6, Me.ToolStripButton18, Me.ToolStripButton6, Me.ToolStripButton11, Me.ToolStripButton10, Me.ToolStripSeparator4, Me.ToolStripButton16, Me.ToolStripButton17, Me.ToolStripSeparator8, Me.tsbAlignLefts, Me.tsbAlignCenters, Me.tsbAlignRights, Me.tsbAlignTops, Me.tsbAlignMiddles, Me.tsbAlignBottoms, Me.ToolStripSeparator9, Me.tsbAlignVertical, Me.tsbAlignHorizontal})
+        Me.ToolStripFlowsheet.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel4, Me.TSBtabela, Me.TSBTexto, Me.ToolStripButton4, Me.ToolStripButton19, Me.ToolStripButton12, Me.ToolStripSeparator5, Me.ToolStripButton1, Me.TSTBZoom, Me.ToolStripButton2, Me.ToolStripButton20, Me.ToolStripButton3, Me.ToolStripSeparator6, Me.ToolStripButton18, Me.tsbConfigPage, Me.tsbConfigPrinter, Me.tsbPrint, Me.ToolStripSeparator4, Me.ToolStripButton16, Me.ToolStripButton17, Me.ToolStripSeparator8, Me.tsbAlignLefts, Me.tsbAlignCenters, Me.tsbAlignRights, Me.tsbAlignTops, Me.tsbAlignMiddles, Me.tsbAlignBottoms, Me.ToolStripSeparator9, Me.tsbAlignVertical, Me.tsbAlignHorizontal})
         Me.ToolStripFlowsheet.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow
         Me.ToolStripFlowsheet.Name = "ToolStripFlowsheet"
         '
@@ -305,26 +305,26 @@ Partial Class FormFlowsheet
         resources.ApplyResources(Me.ToolStripButton18, "ToolStripButton18")
         Me.ToolStripButton18.Name = "ToolStripButton18"
         '
-        'ToolStripButton6
+        'tsbConfigPage
         '
-        Me.ToolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton6.Image = Global.DWSIM.My.Resources.Resources.page_gear
-        resources.ApplyResources(Me.ToolStripButton6, "ToolStripButton6")
-        Me.ToolStripButton6.Name = "ToolStripButton6"
+        Me.tsbConfigPage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsbConfigPage.Image = Global.DWSIM.My.Resources.Resources.page_gear
+        resources.ApplyResources(Me.tsbConfigPage, "tsbConfigPage")
+        Me.tsbConfigPage.Name = "tsbConfigPage"
         '
-        'ToolStripButton11
+        'tsbConfigPrinter
         '
-        Me.ToolStripButton11.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton11.Image = Global.DWSIM.My.Resources.Resources.printer
-        resources.ApplyResources(Me.ToolStripButton11, "ToolStripButton11")
-        Me.ToolStripButton11.Name = "ToolStripButton11"
+        Me.tsbConfigPrinter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsbConfigPrinter.Image = Global.DWSIM.My.Resources.Resources.printer
+        resources.ApplyResources(Me.tsbConfigPrinter, "tsbConfigPrinter")
+        Me.tsbConfigPrinter.Name = "tsbConfigPrinter"
         '
-        'ToolStripButton10
+        'tsbPrint
         '
-        Me.ToolStripButton10.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton10.Image = Global.DWSIM.My.Resources.Resources.printer_add
-        resources.ApplyResources(Me.ToolStripButton10, "ToolStripButton10")
-        Me.ToolStripButton10.Name = "ToolStripButton10"
+        Me.tsbPrint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsbPrint.Image = Global.DWSIM.My.Resources.Resources.printer_add
+        resources.ApplyResources(Me.tsbPrint, "tsbPrint")
+        Me.tsbPrint.Name = "tsbPrint"
         '
         'ToolStripSeparator4
         '
@@ -1358,9 +1358,9 @@ Partial Class FormFlowsheet
     Public WithEvents TSTBZoom As System.Windows.Forms.ToolStripTextBox
     Public WithEvents ToolStripButton2 As System.Windows.Forms.ToolStripButton
     Public WithEvents ToolStripSeparator6 As System.Windows.Forms.ToolStripSeparator
-    Public WithEvents ToolStripButton6 As System.Windows.Forms.ToolStripButton
-    Public WithEvents ToolStripButton11 As System.Windows.Forms.ToolStripButton
-    Public WithEvents ToolStripButton10 As System.Windows.Forms.ToolStripButton
+    Public WithEvents tsbConfigPage As System.Windows.Forms.ToolStripButton
+    Public WithEvents tsbConfigPrinter As System.Windows.Forms.ToolStripButton
+    Public WithEvents tsbPrint As System.Windows.Forms.ToolStripButton
     Public WithEvents ToolStripCalculator As System.Windows.Forms.ToolStrip
     Public WithEvents tsbAtivar As System.Windows.Forms.ToolStripButton
     Public WithEvents tsbDesat As System.Windows.Forms.ToolStripButton

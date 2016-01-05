@@ -5233,4 +5233,7 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
   <data name="ErrorNoUserdatabase" xml:space="preserve">
     <value>No User Database existente!</value>
   </data>
+  <data name="Unsupported_Feature" xml:space="preserve">
+    <value>Este recurso não é suportado nesta plataforma.</value>
+  </data>
 </root>

@@ -5248,4 +5248,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="ErrorNoUserdatabase" xml:space="preserve">
     <value>Nenhum usuário de banco de dados já existente!</value>
   </data>
+  <data name="Unsupported_Feature" xml:space="preserve">
+    <value>Este recurso não é suportado nesta plataforma.</value>
+  </data>
 </root>

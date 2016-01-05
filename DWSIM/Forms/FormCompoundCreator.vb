@@ -2657,19 +2657,16 @@ Public Class FormCompoundCreator
             Dim ind As New Indigo()
             Dim mol As IndigoObject = ind.loadMolecule(TextBoxSMILES.Text)
             Dim renderer As New IndigoRenderer(ind)
-
             With renderer
                 ind.setOption("render-image-size", pbRender.Size.Width, pbRender.Size.Height)
                 ind.setOption("render-margins", 15, 15)
                 ind.setOption("render-coloring", True)
                 ind.setOption("render-background-color", Color.White)
             End With
-
             pbRender.Image = renderer.renderToBitmap(mol)
             btnRenderSMILES.Enabled = False
-
         Catch ex As Exception
-            MessageBox.Show(DWSIM.App.GetLocalString("SMILESRenderError"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show(ex.Message.ToString, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
@@ -2682,7 +2679,11 @@ Public Class FormCompoundCreator
     End Sub
 
     Private Sub btnRenderSMILES_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRenderSMILES.Click
-        RenderSMILES()
+        If DWSIM.App.IsRunningOnMono Then
+            MessageBox.Show(DWSIM.App.GetLocalString("Unsupported_Feature"), "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+        Else
+           RenderSMILES()
+        End If
     End Sub
 
     Private Sub btnSaveToDB_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSaveToDB.Click

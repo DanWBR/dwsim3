@@ -3500,6 +3500,11 @@ Public Class frmSurface
 
     Sub DrawToBitmapScaled(ByVal scale As Double)
 
+        If DWSIM.App.IsRunningOnMono Then
+            MessageBox.Show(DWSIM.App.GetLocalString("Unsupported_Feature"), "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Exit Sub
+        End If
+
         Dim rect As Rectangle = New Rectangle(0, 0, scale * (Me.FlowsheetDesignSurface.Width - 14), scale * (Me.FlowsheetDesignSurface.Height - 14))
         Dim img As Image = New Bitmap(rect.Width, rect.Height)
         Dim g As Graphics = Graphics.FromImage(img)

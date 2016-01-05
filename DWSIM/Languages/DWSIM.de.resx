@@ -5223,4 +5223,7 @@ Die erhaltenen Daten werden hauptsächlich für die Berechnung von VLE-Daten emp
   <data name="ErrorNoUserdatabase" xml:space="preserve">
     <value>Keine Anwenderdatenbank vorhanden!</value>
   </data>
+  <data name="Unsupported_Feature" xml:space="preserve">
+    <value>This feature is not supported on this platform.</value>
+  </data>
 </root>

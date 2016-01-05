@@ -374,10 +374,14 @@ Public Class FormReportConfig
                     Me.CreateAndSaveCSVFile()
                 End If
             ElseIf Me.SaveFileDialog1.FilterIndex = 3 Then
-                Me.filename = Me.SaveFileDialog1.FileName
-                If Not (Me.filename Is Nothing) Then
-                    Me.FillDataTable()
-                    Me.CreateAndSaveExcelFile()
+                If DWSIM.App.IsRunningOnMono Then
+                    MessageBox.Show(DWSIM.App.GetLocalString("Unsupported_Feature"), "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                Else
+                    Me.filename = Me.SaveFileDialog1.FileName
+                    If Not (Me.filename Is Nothing) Then
+                        Me.FillDataTable()
+                        Me.CreateAndSaveExcelFile()
+                    End If
                 End If
             End If
         End If

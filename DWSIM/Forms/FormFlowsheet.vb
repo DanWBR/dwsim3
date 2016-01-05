@@ -143,6 +143,9 @@ Imports WeifenLuo.WinFormsUI.Docking
             Me.MenuStrip1.Visible = False
             Me.CAPEOPENFlowsheetMonitoringObjectsMOsToolStripMenuItem.Visible = False
             Me.WindowState = FormWindowState.Maximized
+            tsbPrint.Visible = False
+            tsbConfigPrinter.Visible = False
+            tsbConfigPage.Visible = False
         Else
             FormObjList = New frmObjList
             Me.MenuStrip1.Visible = False
@@ -941,15 +944,15 @@ Imports WeifenLuo.WinFormsUI.Docking
 
     End Sub
 
-    Private Sub ToolStripButton6_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton6.Click
+    Private Sub ToolStripButton6_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsbConfigPage.Click
         Me.FormSurface.pageSetup.ShowDialog()
     End Sub
 
-    Private Sub ToolStripButton10_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton10.Click
+    Private Sub ToolStripButton10_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsbPrint.Click
         Me.FormSurface.PreviewDialog.ShowDialog()
     End Sub
 
-    Private Sub ToolStripButton11_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton11.Click
+    Private Sub ToolStripButton11_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsbConfigPrinter.Click
         Me.FormSurface.setupPrint.ShowDialog()
     End Sub
 
@@ -1255,7 +1258,7 @@ Imports WeifenLuo.WinFormsUI.Docking
     End Sub
 
     Private Sub GerarRelatórioToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles GerarRelatórioToolStripMenuItem.Click
-        Me.FrmReport.ShowDialog(Me)
+        Me.FrmReport.Show(Me)
     End Sub
 
 

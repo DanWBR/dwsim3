@@ -3431,7 +3431,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                  0, 0, AddressOf eval_f, AddressOf eval_g, _
                  AddressOf eval_grad_f, AddressOf eval_jac_g, AddressOf eval_h)
                     problem.AddOption("tol", currcase.tolerance)
-                    problem.AddOption("max_iter", currcase.maxits)
+                    problem.AddOption("max_iter", Convert.ToInt32(currcase.maxits))
                     problem.AddOption("mu_strategy", "adaptive")
                     problem.AddOption("hessian_approximation", "limited-memory")
                     'solve the problem 

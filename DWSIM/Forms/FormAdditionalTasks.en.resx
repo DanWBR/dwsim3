@@ -120,17 +120,32 @@
   <data name="Label1.Text" xml:space="preserve">
     <value>In order to function correctly, DWSIM needs to do some additional platform-specific file copy operations. Select the tasks you want to execute and then click on "Run Tasks".</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="Button2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>459, 422</value>
+  </data>
   <data name="Button2.Text" xml:space="preserve">
     <value>Cancel</value>
+  </data>
+  <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>553, 422</value>
   </data>
   <data name="Button1.Text" xml:space="preserve">
     <value>Run Tasks</value>
   </data>
+  <data name="Label8.Location" type="System.Drawing.Point, System.Drawing">
+    <value>33, 381</value>
+  </data>
   <data name="Label8.Text" xml:space="preserve">
     <value>Copy special configuration files to the root folder of DWSIM, with instructions on where to find platform-specific libraries.</value>
   </data>
+  <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>641, 71</value>
+  </data>
   <data name="Label7.Text" xml:space="preserve">
-    <value>Copies the IPOPT and other auxiliary libraries to the default system libraries directory, usually '/usr/lib' '. Requires administrator privileges (sudo). The command will be executed in the terminal used to open DWSIM and will wait for the user's password to proceed.</value>
+    <value>Copies the IPOPT and other auxiliary libraries to the default system libraries directory, usually '/usr/lib' '. Requires administrator privileges (sudo). The command will be executed in the terminal used to open DWSIM and will wait for the user's password to proceed.
+
+WARNING: these pre-compiled libraries may not work with your Linux distribution. If IPOPT fails to work, you'll need to compile and install it by yourself. More information available at http://www.coin-or.org/Ipopt/documentation/node14.html</value>
   </data>
   <data name="Label6.Text" xml:space="preserve">
     <value>Copies platform-specific versions of some libraries to the root folder of DWSIM:
@@ -141,7 +156,9 @@ CoolProp: methods for CoolProp Property Package (except Linux 32-bit)
 PetAz: Petalas-Aziz pipe pressure drop calculation method (Windows 32-bit only)
 IPOPT: solver for nonlinear equations (Windows only)</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="cbtask3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 361</value>
+  </data>
   <data name="cbtask3.Size" type="System.Drawing.Size, System.Drawing">
     <value>214, 17</value>
   </data>
@@ -174,6 +191,12 @@ IPOPT: solver for nonlinear equations (Windows only)</value>
   </data>
   <data name="Label2.Text" xml:space="preserve">
     <value>Operational System/Platform:</value>
+  </data>
+  <data name="Panel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>686, 459</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>686, 459</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Additional File Tasks</value>
