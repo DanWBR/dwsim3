@@ -32,7 +32,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
         CalcTempHotOut = 0
         CalcTempColdOut = 1
         CalcBothTemp = 2
-        CalcBothTemp_KA = 3
+        CalcBothTemp_UA = 3
         CalcArea = 4
         ShellandTube_Rating = 5
         ShellandTube_CalcFoulingFactor = 6
@@ -74,7 +74,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Protected m_tempdiff As Double = 0
         Protected FoulingFactor As Nullable(Of Double) = 0
         Protected Type As Integer
-        Protected CalcMode As HeatExchangerCalcMode = HeatExchangerCalcMode.CalcBothTemp_KA
+        Protected CalcMode As HeatExchangerCalcMode = HeatExchangerCalcMode.CalcBothTemp_UA
         Protected m_HotSidePressureDrop As Double = 0
         Protected m_ColdSidePressureDrop As Double = 0
         Protected m_specifiedtemperature As SpecifiedTemperature = SpecifiedTemperature.Cold_Fluid
@@ -319,7 +319,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             CPH = StInHot.Fases(0).SPMProperties.heatCapacityCp.GetValueOrDefault
 
             Select Case CalcMode
-                Case HeatExchangerCalcMode.CalcBothTemp_KA
+                Case HeatExchangerCalcMode.CalcBothTemp_UA
                     Dim Qh, Qc, Qi, Q_UA, Q_old As Double
                     Dim tmp As Object
                     Dim count As Integer
@@ -1168,7 +1168,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Dim AValue As Double
 
                 Select Case CalcMode
-                    Case HeatExchangerCalcMode.CalcArea, HeatExchangerCalcMode.CalcBothTemp, HeatExchangerCalcMode.CalcBothTemp_KA, HeatExchangerCalcMode.CalcTempColdOut, HeatExchangerCalcMode.CalcTempHotOut
+                    Case HeatExchangerCalcMode.CalcArea, HeatExchangerCalcMode.CalcBothTemp, HeatExchangerCalcMode.CalcBothTemp_UA, HeatExchangerCalcMode.CalcTempColdOut, HeatExchangerCalcMode.CalcTempHotOut
                         .Item.Add(DWSIM.App.GetLocalString("HXFlowDirection"), Me, "FlowDir", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("HXFlowDirectionDesc"), True)
                         AValue = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.HotSidePressureDrop), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("HXHotSidePressureDrop"), su.spmp_deltaP), AValue, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("HXHotSidePressureDrop"), True)
@@ -1185,7 +1185,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 End Select
 
                 Select Case CalcMode
-                    Case HeatExchangerCalcMode.CalcBothTemp_KA
+                    Case HeatExchangerCalcMode.CalcBothTemp_UA
                         AValue = Format(Conversor.ConverterDoSI(su.area, Me.Area), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("Area"), su.area), AValue, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("HeatTransferArea"), True)
                         With .Item(.Item.Count - 1)
@@ -1286,7 +1286,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     'Shows some calculated properties, such as the heat load.
 
                     Select Case CalcMode
-                        Case HeatExchangerCalcMode.CalcBothTemp_KA
+                        Case HeatExchangerCalcMode.CalcBothTemp_UA
                             AValue = Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.Q), FlowSheet.Options.NumberFormat)
                             .Item.Add(FT(DWSIM.App.GetLocalString("HeatLoad"), su.spmp_heatflow), AValue, True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("HeatLoadOfEquipment"), True)
                         Case HeatExchangerCalcMode.CalcBothTemp

@@ -342,7 +342,7 @@ Public Class frmSurface
                             End If
                             'Flowsheet.FormProps.ResumeLayout()
                         Catch ex As Exception
-                            PGEx1.SelectedObject = Nothing
+                            Flowsheet.WriteToLog("Error: " & ex.ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
                         Finally
                             Flowsheet.FormSurface.Select()
                         End Try

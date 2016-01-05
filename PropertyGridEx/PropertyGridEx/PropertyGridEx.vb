@@ -104,11 +104,7 @@ Namespace PropertyGridEx
             If bShowCustomPropertiesSet Then
                 MyBase.SelectedObjects = oCustomPropertyCollectionSet.ToArray
             End If
-            Try
-                MyBase.Refresh()
-            Catch ex As Exception
-                MsgBox(ex.Message, MsgBoxStyle.Critical, "Erro")
-            End Try
+            MyBase.Refresh()
             If bAutoSizeProperties Then AutoSizeSplitter()
         End Sub
 
