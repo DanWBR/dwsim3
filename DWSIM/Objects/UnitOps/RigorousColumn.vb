@@ -2517,7 +2517,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         End Sub
 
-        Public Overrides Sub PopulatePropertyGrid(ByRef pgrid As PropertyGridEx.PropertyGridEx, ByVal su As SistemasDeUnidades.Unidades)
+        Public Overrides Sub PopulatePropertyGrid(ByVal pgrid As PropertyGridEx.PropertyGridEx, ByVal su As SistemasDeUnidades.Unidades)
 
             Dim cv As New DWSIM.SistemasDeUnidades.Conversor
             Dim nf As String = FlowSheet.Options.NumberFormat

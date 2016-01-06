@@ -299,7 +299,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         End Sub
 
-        Public Overrides Sub PopulatePropertyGrid(ByRef pgrid As PropertyGridEx.PropertyGridEx, ByVal su As SistemasDeUnidades.Unidades)
+        Public Overrides Sub PopulatePropertyGrid(ByVal pgrid As PropertyGridEx.PropertyGridEx, ByVal su As SistemasDeUnidades.Unidades)
 
             Dim Conversor As New DWSIM.SistemasDeUnidades.Conversor
 
@@ -348,7 +348,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 .Item.Add(DWSIM.App.GetLocalString("SolidSepEfficiency"), Me, "SeparationEfficiency", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("SolidSepEfficiencyDesc"), True)
                 .Item.Add(DWSIM.App.GetLocalString("LiquidSepEfficiency"), Me, "LiquidSeparationEfficiency", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("LiquidSepEfficiencyDesc"), True)
-                
+
                 If Me.IsSpecAttached = True Then
                     .Item.Add(DWSIM.App.GetLocalString("ObjetoUtilizadopor"), FlowSheet.Collections.ObjectCollection(Me.AttachedSpecId).GraphicObject.Tag, True, DWSIM.App.GetLocalString("Miscelnea2"), "", True)
                     .Item.Add(DWSIM.App.GetLocalString("Utilizadocomo"), Me.SpecVarType, True, DWSIM.App.GetLocalString("Miscelnea3"), "", True)

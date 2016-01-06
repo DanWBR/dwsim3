@@ -1246,7 +1246,7 @@ Public Class FormDataRegression
         Catch ex As Exception
 
             itn += 1
-            Me.tbRegResults.AppendText("Iteration #" & itn & ", Exception: " & ex.Message & vbCrLf)
+            Me.tbRegResults.AppendText("Iteration #" & itn & ", Exception: " & ex.ToString & vbCrLf)
 
         End Try
 

@@ -166,7 +166,7 @@
     </Reference>
     <Reference Include="ExcelDna.Integration, Version=0.29.4165.35922, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\ExcelDna.Integration.dll</HintPath>
+      <HintPath>..\packages\ExcelDna.Integration.0.33.9\lib\ExcelDna.Integration.dll</HintPath>
     </Reference>
     <Reference Include="FileHelpers, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

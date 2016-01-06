@@ -924,7 +924,7 @@ Namespace DWSIM.SimulationObjects.Streams
 
         End Sub
 
-        Public Overrides Sub PopulatePropertyGrid(ByRef pgrid As PropertyGridEx.PropertyGridEx, ByVal su As SistemasDeUnidades.Unidades)
+        Public Overrides Sub PopulatePropertyGrid(ByVal pgrid As PropertyGridEx.PropertyGridEx, ByVal su As SistemasDeUnidades.Unidades)
 
             Dim Conversor As New DWSIM.SistemasDeUnidades.Conversor
 
@@ -934,14 +934,13 @@ Namespace DWSIM.SimulationObjects.Streams
 
                 Dim valor As Double
 
-                With pgrid
-                    Dim tag As String = Me.PropertyPackage.Tag
-                    If tag Is Nothing Then tag = ""
-                    .Item.Add(DWSIM.App.GetLocalString("UOPropertyPackage"), tag, False, DWSIM.App.GetLocalString("UOPropertyPackage0"), "", True)
-                    With .Item(.Item.Count - 1)
-                        .CustomEditor = New DWSIM.Editors.PropertyPackages.UIPPSelector
-                        .IsReadOnly = False
-                    End With
+                Dim tag As String = Me.PropertyPackage.Tag
+                If tag Is Nothing Then tag = ""
+                MsgBox(tag)
+                .Item.Add(DWSIM.App.GetLocalString("UOPropertyPackage"), tag, False, DWSIM.App.GetLocalString("UOPropertyPackage0"), "", True)
+                With .Item(.Item.Count - 1)
+                    .CustomEditor = New DWSIM.Editors.PropertyPackages.UIPPSelector
+                    .IsReadOnly = False
                 End With
 
                 If Not Me.GraphicObject.InputConnectors(0).IsAttached Then
@@ -950,151 +949,151 @@ Namespace DWSIM.SimulationObjects.Streams
                     .Item.Add("[1] " & DWSIM.App.GetLocalString("Especificao"), Me, "SpecType", False, DWSIM.App.GetLocalString("Condies1"), "")
                 End If
 
-                valor = Format(Conversor.ConverterDoSI(su.spmp_temperature, Me.Fases(0).SPMProperties.temperature.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                .Item.Add("[2] " & FT(DWSIM.App.GetLocalString("Temperatura"), su.spmp_temperature), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Temperaturadacorrent"), True)
-                With .Item(.Item.Count - 1)
-                    Select Case Me.SpecType
-                        Case Flashspec.Pressure_and_Enthalpy, Flashspec.Pressure_and_Entropy, Flashspec.Pressure_and_VaporFraction
-                            .IsReadOnly = True
-                        Case Else
-                            .IsReadOnly = False
-                            .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
-                            .Tag = New Object() {Flowsheet.Options.NumberFormat, su.spmp_temperature, "T"}
-                    End Select
-                End With
-                valor = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.Fases(0).SPMProperties.pressure.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                .Item.Add(FT("[3] " & DWSIM.App.GetLocalString("Presso"), su.spmp_pressure), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Pressodacorrente"), True)
-                With .Item(.Item.Count - 1)
-                    Select Case Me.SpecType
-                        Case Flashspec.Temperature_and_VaporFraction
-                            .IsReadOnly = True
-                        Case Else
-                            .IsReadOnly = False
-                            .Tag = New Object() {Flowsheet.Options.NumberFormat, su.spmp_pressure, "P"}
-                            .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
-                    End Select
-                End With
-                valor = Format(Conversor.ConverterDoSI(su.spmp_massflow, Me.Fases(0).SPMProperties.massflow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                .Item.Add("[4] " & FT(DWSIM.App.GetLocalString("Vazomssica"), su.spmp_massflow), valor, False, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Vazomssicadacorrente"), True)
-                With .Item(.Item.Count - 1)
-                    .Tag = New Object() {Flowsheet.Options.NumberFormat, su.spmp_massflow, "W"}
-                    .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
-                End With
-                valor = Format(Conversor.ConverterDoSI(su.spmp_molarflow, Me.Fases(0).SPMProperties.molarflow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                .Item.Add("[5] " & FT(DWSIM.App.GetLocalString("Vazomolar"), su.spmp_molarflow), valor, False, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Vazomolardacorrente"), True)
-                With .Item(.Item.Count - 1)
-                    .Tag = New Object() {Flowsheet.Options.NumberFormat, su.spmp_molarflow, "M"}
-                    .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
-                End With
-                valor = Format(Conversor.ConverterDoSI(su.spmp_volumetricFlow, Me.Fases(0).SPMProperties.volumetric_flow.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                .Item.Add("[6] " & FT(DWSIM.App.GetLocalString("Vazovolumtrica"), su.spmp_volumetricFlow), valor, False, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Vazovolumtricadacorr"), True)
-                With .Item(.Item.Count - 1)
-                    .Tag = New Object() {Flowsheet.Options.NumberFormat, su.spmp_volumetricFlow, "Q"}
-                    .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
-                End With
+            valor = Format(Conversor.ConverterDoSI(su.spmp_temperature, Me.Fases(0).SPMProperties.temperature.GetValueOrDefault), FlowSheet.Options.NumberFormat)
+            .Item.Add("[2] " & FT(DWSIM.App.GetLocalString("Temperatura"), su.spmp_temperature), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Temperaturadacorrent"), True)
+            With .Item(.Item.Count - 1)
+                Select Case Me.SpecType
+                    Case Flashspec.Pressure_and_Enthalpy, Flashspec.Pressure_and_Entropy, Flashspec.Pressure_and_VaporFraction
+                        .IsReadOnly = True
+                    Case Else
+                        .IsReadOnly = False
+                        .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
+                        .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_temperature, "T"}
+                End Select
+            End With
+            valor = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.Fases(0).SPMProperties.pressure.GetValueOrDefault), FlowSheet.Options.NumberFormat)
+            .Item.Add(FT("[3] " & DWSIM.App.GetLocalString("Presso"), su.spmp_pressure), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Pressodacorrente"), True)
+            With .Item(.Item.Count - 1)
+                Select Case Me.SpecType
+                    Case Flashspec.Temperature_and_VaporFraction
+                        .IsReadOnly = True
+                    Case Else
+                        .IsReadOnly = False
+                        .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_pressure, "P"}
+                        .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
+                End Select
+            End With
+            valor = Format(Conversor.ConverterDoSI(su.spmp_massflow, Me.Fases(0).SPMProperties.massflow.GetValueOrDefault), FlowSheet.Options.NumberFormat)
+            .Item.Add("[4] " & FT(DWSIM.App.GetLocalString("Vazomssica"), su.spmp_massflow), valor, False, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Vazomssicadacorrente"), True)
+            With .Item(.Item.Count - 1)
+                .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_massflow, "W"}
+                .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
+            End With
+            valor = Format(Conversor.ConverterDoSI(su.spmp_molarflow, Me.Fases(0).SPMProperties.molarflow.GetValueOrDefault), FlowSheet.Options.NumberFormat)
+            .Item.Add("[5] " & FT(DWSIM.App.GetLocalString("Vazomolar"), su.spmp_molarflow), valor, False, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Vazomolardacorrente"), True)
+            With .Item(.Item.Count - 1)
+                .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_molarflow, "M"}
+                .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
+            End With
+            valor = Format(Conversor.ConverterDoSI(su.spmp_volumetricFlow, Me.Fases(0).SPMProperties.volumetric_flow.GetValueOrDefault), FlowSheet.Options.NumberFormat)
+            .Item.Add("[6] " & FT(DWSIM.App.GetLocalString("Vazovolumtrica"), su.spmp_volumetricFlow), valor, False, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Vazovolumtricadacorr"), True)
+            With .Item(.Item.Count - 1)
+                .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_volumetricFlow, "Q"}
+                .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
+            End With
 
-                Dim f As New PropertyGridEx.CustomPropertyCollection()
-                valor = Format(Me.Fases(7).SPMProperties.molarfraction.GetValueOrDefault, FlowSheet.Options.NumberFormat)
-                f.Add(DWSIM.App.GetLocalString("Solid"), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True) 'solid
-                f.Item(0).IsReadOnly = True
-                valor = Format(Me.Fases(1).SPMProperties.molarfraction.GetValueOrDefault, FlowSheet.Options.NumberFormat)
-                f.Add(DWSIM.App.GetLocalString("OverallLiquid"), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True) ' liquid
-                f.Item(1).IsReadOnly = True
-                valor = Format(Me.Fases(2).SPMProperties.molarfraction.GetValueOrDefault, FlowSheet.Options.NumberFormat)
-                f.Add(DWSIM.App.GetLocalString("Vapor"), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True) 'vapour
+            Dim f As New PropertyGridEx.CustomPropertyCollection()
+            valor = Format(Me.Fases(7).SPMProperties.molarfraction.GetValueOrDefault, FlowSheet.Options.NumberFormat)
+            f.Add(DWSIM.App.GetLocalString("Solid"), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True) 'solid
+            f.Item(0).IsReadOnly = True
+            valor = Format(Me.Fases(1).SPMProperties.molarfraction.GetValueOrDefault, FlowSheet.Options.NumberFormat)
+            f.Add(DWSIM.App.GetLocalString("OverallLiquid"), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True) ' liquid
+            f.Item(1).IsReadOnly = True
+            valor = Format(Me.Fases(2).SPMProperties.molarfraction.GetValueOrDefault, FlowSheet.Options.NumberFormat)
+            f.Add(DWSIM.App.GetLocalString("Vapor"), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True) 'vapour
 
-                If Not Me.GraphicObject.InputConnectors(0).IsAttached And _
-                    (Me.SpecType = Flashspec.Pressure_and_VaporFraction Or Me.SpecType = Flashspec.Temperature_and_VaporFraction) _
-                    Then f.Item(f.Count - 1).IsReadOnly = False
+            If Not Me.GraphicObject.InputConnectors(0).IsAttached And _
+                (Me.SpecType = Flashspec.Pressure_and_VaporFraction Or Me.SpecType = Flashspec.Temperature_and_VaporFraction) _
+                Then f.Item(f.Count - 1).IsReadOnly = False
 
-                .Item.Add("[7] " & DWSIM.App.GetLocalString("Fraomolardafase"), f, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Fraomolardafase"), True)
-                With .Item(.Item.Count - 1)
-                    .IsReadOnly = False
-                    .IsBrowsable = True
-                    .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
-                    .CustomEditor = New System.Drawing.Design.UITypeEditor
-                End With
+            .Item.Add("[7] " & DWSIM.App.GetLocalString("Fraomolardafase"), f, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Fraomolardafase"), True)
+            With .Item(.Item.Count - 1)
+                .IsReadOnly = False
+                .IsBrowsable = True
+                .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
+                .CustomEditor = New System.Drawing.Design.UITypeEditor
+            End With
 
-                valor = Format(Conversor.ConverterDoSI(su.spmp_enthalpy, Me.Fases(0).SPMProperties.enthalpy.GetValueOrDefault), FlowSheet.Options.NumberFormat)
-                .Item.Add("[8] " & FlowSheet.FT(DWSIM.App.GetLocalString("EntalpiaEspecfica"), su.spmp_enthalpy), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("EntalpiaEspecficadam"), True)
-                With .Item(.Item.Count - 1)
-                    Select Case Me.SpecType
-                        Case Flashspec.Pressure_and_Enthalpy
-                            .IsReadOnly = False
-                        Case Else
-                            .IsReadOnly = True
-                    End Select
-                End With
-                valor = Format(Conversor.ConverterDoSI(su.spmp_entropy, Me.Fases(0).SPMProperties.entropy.GetValueOrDefault), Flowsheet.Options.NumberFormat)
-                .Item.Add("[9] " & Flowsheet.FT(DWSIM.App.GetLocalString("EntropiaEspecfica"), su.spmp_entropy), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("EntropiaEspecficadam"), True)
-                With .Item(.Item.Count - 1)
-                    Select Case Me.SpecType
-                        Case Flashspec.Pressure_and_Entropy
-                            .IsReadOnly = False
-                        Case Else
-                            .IsReadOnly = True
-                    End Select
-                End With
-                .Item.Add("[A] " & DWSIM.App.GetLocalString("EditordeComposies"), Me.Fases(0), "Componentes", False, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("UtilizeoEditordeComp"), True)
-                If Me.GraphicObject.InputConnectors(0).IsAttached Then
-                    If Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.TipoObjeto <> TipoObjeto.OT_Reciclo Then
-                        .Item(.Item.Count - 1).IsReadOnly = True
-                        .Item(.Item.Count - 1).DefaultType = GetType(Dictionary(Of String, DWSIM.ClassesBasicasTermodinamica.Substancia))
-                        .Item(.Item.Count - 1).Visible = False
-                    Else
-                        .Item(.Item.Count - 1).DefaultValue = Nothing
-                        .Item(.Item.Count - 1).DefaultType = GetType(Dictionary(Of String, DWSIM.ClassesBasicasTermodinamica.Substancia))
-                        .Item(.Item.Count - 1).CustomEditor = New DWSIM.Editors.Composition.UICompositionEditor
-                    End If
+            valor = Format(Conversor.ConverterDoSI(su.spmp_enthalpy, Me.Fases(0).SPMProperties.enthalpy.GetValueOrDefault), FlowSheet.Options.NumberFormat)
+            .Item.Add("[8] " & FlowSheet.FT(DWSIM.App.GetLocalString("EntalpiaEspecfica"), su.spmp_enthalpy), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("EntalpiaEspecficadam"), True)
+            With .Item(.Item.Count - 1)
+                Select Case Me.SpecType
+                    Case Flashspec.Pressure_and_Enthalpy
+                        .IsReadOnly = False
+                    Case Else
+                        .IsReadOnly = True
+                End Select
+            End With
+            valor = Format(Conversor.ConverterDoSI(su.spmp_entropy, Me.Fases(0).SPMProperties.entropy.GetValueOrDefault), FlowSheet.Options.NumberFormat)
+            .Item.Add("[9] " & FlowSheet.FT(DWSIM.App.GetLocalString("EntropiaEspecfica"), su.spmp_entropy), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("EntropiaEspecficadam"), True)
+            With .Item(.Item.Count - 1)
+                Select Case Me.SpecType
+                    Case Flashspec.Pressure_and_Entropy
+                        .IsReadOnly = False
+                    Case Else
+                        .IsReadOnly = True
+                End Select
+            End With
+            .Item.Add("[A] " & DWSIM.App.GetLocalString("EditordeComposies"), Me.Fases(0), "Componentes", False, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("UtilizeoEditordeComp"), True)
+            If Me.GraphicObject.InputConnectors(0).IsAttached Then
+                If Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.TipoObjeto <> TipoObjeto.OT_Reciclo Then
+                    .Item(.Item.Count - 1).IsReadOnly = True
+                    .Item(.Item.Count - 1).DefaultType = GetType(Dictionary(Of String, DWSIM.ClassesBasicasTermodinamica.Substancia))
+                    .Item(.Item.Count - 1).Visible = False
                 Else
                     .Item(.Item.Count - 1).DefaultValue = Nothing
                     .Item(.Item.Count - 1).DefaultType = GetType(Dictionary(Of String, DWSIM.ClassesBasicasTermodinamica.Substancia))
                     .Item(.Item.Count - 1).CustomEditor = New DWSIM.Editors.Composition.UICompositionEditor
                 End If
-                .Item.Add("[B] " & DWSIM.App.GetLocalString("Basedacomposio"), Me, "CompositionBasis", False, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Selecioneabaseparaav"), True)
+            Else
+                .Item(.Item.Count - 1).DefaultValue = Nothing
+                .Item(.Item.Count - 1).DefaultType = GetType(Dictionary(Of String, DWSIM.ClassesBasicasTermodinamica.Substancia))
+                .Item(.Item.Count - 1).CustomEditor = New DWSIM.Editors.Composition.UICompositionEditor
+            End If
+            .Item.Add("[B] " & DWSIM.App.GetLocalString("Basedacomposio"), Me, "CompositionBasis", False, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Selecioneabaseparaav"), True)
 
-                If Me.GraphicObject.InputConnectors(0).IsAttached Then
-                    If Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.TipoObjeto <> TipoObjeto.OT_Reciclo Then
-                        .Item(1).IsReadOnly = True
-                        .Item(2).IsReadOnly = True
-                        .Item(3).IsReadOnly = True
-                        .Item(4).IsReadOnly = True
-                        .Item(5).IsReadOnly = True
-                        .Item(6).IsReadOnly = True
-                        .Item(7).IsReadOnly = True
-                        .Item(8).IsReadOnly = True
-                    End If
+            If Me.GraphicObject.InputConnectors(0).IsAttached Then
+                If Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.TipoObjeto <> TipoObjeto.OT_Reciclo Then
+                    .Item(1).IsReadOnly = True
+                    .Item(2).IsReadOnly = True
+                    .Item(3).IsReadOnly = True
+                    .Item(4).IsReadOnly = True
+                    .Item(5).IsReadOnly = True
+                    .Item(6).IsReadOnly = True
+                    .Item(7).IsReadOnly = True
+                    .Item(8).IsReadOnly = True
                 End If
+            End If
 
-                If Not Me.GraphicObject Is Nothing Then
-                    .Item.Add(DWSIM.App.GetLocalString("Ativo"), Me.GraphicObject, "Active", False, DWSIM.App.GetLocalString("Miscelnea4"), "", True)
-                End If
+            If Not Me.GraphicObject Is Nothing Then
+                .Item.Add(DWSIM.App.GetLocalString("Ativo"), Me.GraphicObject, "Active", False, DWSIM.App.GetLocalString("Miscelnea4"), "", True)
+            End If
 
-                If Me.IsSpecAttached = True Then
-                    .Item.Add(DWSIM.App.GetLocalString("ObjetoUtilizadopor"), Flowsheet.Collections.ObjectCollection(Me.AttachedSpecId).GraphicObject.Tag, True, DWSIM.App.GetLocalString("Miscelnea4"), "", True)
-                    Select Case Me.SpecVarType
-                        Case SpecialOps.Helpers.Spec.TipoVar.Destino
-                            .Item.Add(DWSIM.App.GetLocalString("Utilizadocomo"), DWSIM.App.GetLocalString(Me.SpecVarType.ToString), True, DWSIM.App.GetLocalString("Miscelnea4"), "", True)
-                        Case SpecialOps.Helpers.Spec.TipoVar.Fonte
-                            .Item.Add(DWSIM.App.GetLocalString("Utilizadocomo"), DWSIM.App.GetLocalString("SpecSource"), True, DWSIM.App.GetLocalString("Miscelnea4"), "", True)
-                    End Select
-                End If
+            If Me.IsSpecAttached = True Then
+                .Item.Add(DWSIM.App.GetLocalString("ObjetoUtilizadopor"), FlowSheet.Collections.ObjectCollection(Me.AttachedSpecId).GraphicObject.Tag, True, DWSIM.App.GetLocalString("Miscelnea4"), "", True)
+                Select Case Me.SpecVarType
+                    Case SpecialOps.Helpers.Spec.TipoVar.Destino
+                        .Item.Add(DWSIM.App.GetLocalString("Utilizadocomo"), DWSIM.App.GetLocalString(Me.SpecVarType.ToString), True, DWSIM.App.GetLocalString("Miscelnea4"), "", True)
+                    Case SpecialOps.Helpers.Spec.TipoVar.Fonte
+                        .Item.Add(DWSIM.App.GetLocalString("Utilizadocomo"), DWSIM.App.GetLocalString("SpecSource"), True, DWSIM.App.GetLocalString("Miscelnea4"), "", True)
+                End Select
+            End If
 
-                Me.PropertyPackage.CurrentMaterialStream = Me
-                Me.PropertyPackage.PopulatePropertyGrid(pgrid, Flowsheet, su)
+            Me.PropertyPackage.CurrentMaterialStream = Me
+            Me.PropertyPackage.PopulatePropertyGrid(pgrid, FlowSheet, su)
 
-                If Not Me.Annotation Is Nothing Then
-                    .Item.Add(DWSIM.App.GetLocalString("Anotaes"), Me, "Annotation", False, DWSIM.App.GetLocalString("Outros"), DWSIM.App.GetLocalString("Cliquenobotocomretic"), True)
-                    With .Item(.Item.Count - 1)
-                        .IsBrowsable = False
-                        .CustomEditor = New DWSIM.Editors.Annotation.UIAnnotationEditor
-                    End With
-                End If
-                .Item.Add("ID", Me.Nome, True, DWSIM.App.GetLocalString("Outros"), "", True)
-                .Item.Add(DWSIM.App.GetLocalString("LastUpdatedOn"), Me.LastUpdated.ToString("O"), True, DWSIM.App.GetLocalString("Outros"), "", True)
+            If Not Me.Annotation Is Nothing Then
+                .Item.Add(DWSIM.App.GetLocalString("Anotaes"), Me, "Annotation", False, DWSIM.App.GetLocalString("Outros"), DWSIM.App.GetLocalString("Cliquenobotocomretic"), True)
+                With .Item(.Item.Count - 1)
+                    .IsBrowsable = False
+                    .CustomEditor = New DWSIM.Editors.Annotation.UIAnnotationEditor
+                End With
+            End If
+            .Item.Add("ID", Me.Nome, True, DWSIM.App.GetLocalString("Outros"), "", True)
+            .Item.Add(DWSIM.App.GetLocalString("LastUpdatedOn"), Me.LastUpdated.ToString("O"), True, DWSIM.App.GetLocalString("Outros"), "", True)
 
-                .PropertySort = PropertySort.Categorized
-                .ShowCustomProperties = True
+            .PropertySort = PropertySort.Categorized
+            .ShowCustomProperties = True
 
             End With
 
@@ -5447,7 +5446,7 @@ Namespace DWSIM.SimulationObjects.Streams
 
         End Sub
 
-        Public Overrides Sub PopulatePropertyGrid(ByRef pgrid As PropertyGridEx.PropertyGridEx, ByVal su As SistemasDeUnidades.Unidades)
+        Public Overrides Sub PopulatePropertyGrid(ByVal pgrid As PropertyGridEx.PropertyGridEx, ByVal su As SistemasDeUnidades.Unidades)
 
             Dim Conversor As New DWSIM.SistemasDeUnidades.Conversor
 

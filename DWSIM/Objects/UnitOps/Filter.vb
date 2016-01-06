@@ -407,7 +407,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         End Sub
 
-        Public Overrides Sub PopulatePropertyGrid(ByRef pgrid As PropertyGridEx.PropertyGridEx, ByVal su As SistemasDeUnidades.Unidades)
+        Public Overrides Sub PopulatePropertyGrid(ByVal pgrid As PropertyGridEx.PropertyGridEx, ByVal su As SistemasDeUnidades.Unidades)
 
             Dim Converter As New DWSIM.SistemasDeUnidades.Conversor
 

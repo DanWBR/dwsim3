@@ -69,7 +69,7 @@ Imports PropertyGridEx
 
     Public MustOverride Sub UpdatePropertyNodes(ByVal su As DWSIM.SistemasDeUnidades.Unidades, ByVal nf As String)
 
-    Public MustOverride Sub PopulatePropertyGrid(ByRef pgrid As PropertyGridEx.PropertyGridEx, ByVal su As DWSIM.SistemasDeUnidades.Unidades)
+    Public MustOverride Sub PopulatePropertyGrid(ByVal pgrid As PropertyGridEx.PropertyGridEx, ByVal su As DWSIM.SistemasDeUnidades.Unidades)
 
     Public Sub New()
 
@@ -3747,8 +3747,10 @@ End Class
     ''' <param name="pgrid"></param>
     ''' <param name="su"></param>
     ''' <remarks></remarks>
-    Public Overrides Sub PopulatePropertyGrid(ByRef pgrid As PropertyGridEx.PropertyGridEx, ByVal su As DWSIM.SistemasDeUnidades.Unidades)
+    Public Overrides Sub PopulatePropertyGrid(ByVal pgrid As PropertyGridEx.PropertyGridEx, ByVal su As DWSIM.SistemasDeUnidades.Unidades)
+
         With pgrid
+
             '.Item.Add(DWSIM.App.GetLocalString("UO_ScriptLanguage"), Me, "ScriptExt_Language", False, DWSIM.App.GetLocalString("UO_ScriptExtension"), "", True)
             '.Item.Add(DWSIM.App.GetLocalString("UO_ScriptText_Before"), Me, "ScriptExt_ScriptTextB", False, DWSIM.App.GetLocalString("UO_ScriptExtension"), DWSIM.App.GetLocalString("Cliquenobotocomretic"), True)
             'With .Item(.Item.Count - 1)
@@ -3760,6 +3762,8 @@ End Class
             '    .CustomEditor = New DWSIM.Editors.CustomUO.UIScriptEditor
             '    .Tag = "A"
             'End With
+
+            MsgBox(Me.PropertyPackage.Tag)
             .Item.Add(DWSIM.App.GetLocalString("UOPropertyPackage"), Me.PropertyPackage.Tag, False, DWSIM.App.GetLocalString("UOPropertyPackage0"), "", True)
             With .Item(.Item.Count - 1)
                 .CustomEditor = New DWSIM.Editors.PropertyPackages.UIPPSelector
@@ -3785,7 +3789,9 @@ End Class
             End If
             .Item.Add("ID", Me.Nome, True, DWSIM.App.GetLocalString("Outros"), "", True)
             .Item.Add(DWSIM.App.GetLocalString("LastUpdatedOn"), Me.LastUpdated.ToString("O"), True, DWSIM.App.GetLocalString("Outros"), "", True)
+
         End With
+
     End Sub
 
     Public Overrides Sub PropertyValueChanged(ByVal s As Object, ByVal e As System.Windows.Forms.PropertyValueChangedEventArgs)
