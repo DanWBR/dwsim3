@@ -276,7 +276,7 @@ Public Class FormOptions
                     Dim name, path2 As String
                     name = "ChemSep   "
                     path2 = My.Settings.ChemSepDatabasePath
-                    Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, name, path2, My.Resources.disconnect})
+                    Me.dgvdb.Rows.Add(New Object() {dgvdb.Rows.Count + 1, name, path2, My.Resources.disconnect, My.Resources.cross})
                     Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(3).ReadOnly = True
                     Me.dgvdb.Rows(Me.dgvdb.Rows.Count - 1).Cells(3).ToolTipText = DWSIM.App.GetLocalString("Remove")
                 End If
