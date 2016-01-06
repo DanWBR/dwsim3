@@ -1513,6 +1513,8 @@
     <None Include="Assets\docs\User_Guide.pdf" />
     <None Include="Assets\DWSIM.dna" />
     <None Include="Assets\DWSIM.xll" />
+    <None Include="Assets\DWSIM_64.dna" />
+    <None Include="Assets\DWSIM_64.xll" />
     <None Include="Assets\excelcompat.ini" />
     <None Include="Assets\licenses\WindowsAzureClientLibraries_License.rtf" />
     <None Include="Assets\linux\Cureos.Numerics.dll.config" />
@@ -2553,6 +2555,10 @@
     <Content Include="Assets\help\CONF_GlobalSettings7.htm" />
     <Content Include="Assets\help\ContentScripts.js" />
     <Content Include="Assets\help\DWSIMstyle.css" />
+    <Content Include="Assets\help\EX_Installation_1.htm" />
+    <Content Include="Assets\help\EX_Introduction_0.htm" />
+    <Content Include="Assets\help\EX_Overriding_IPs_3.htm" />
+    <Content Include="Assets\help\EX_Usage_2.htm" />
     <Content Include="Assets\help\Footer.htm" />
     <Content Include="Assets\help\Frame.htm" />
     <Content Include="Assets\help\GO_MasterPropertyTable.htm" />
@@ -2582,6 +2588,11 @@
     <Content Include="Assets\help\Pictures\cross.png" />
     <Content Include="Assets\help\Pictures\disconnect.png" />
     <Content Include="Assets\help\Pictures\dwsim 3 bg.png" />
+    <Content Include="Assets\help\Pictures\Excel01.png" />
+    <Content Include="Assets\help\Pictures\Excel02.png" />
+    <Content Include="Assets\help\Pictures\Excel03.png" />
+    <Content Include="Assets\help\Pictures\Excel04.png" />
+    <Content Include="Assets\help\Pictures\Excel05.png" />
     <Content Include="Assets\help\Pictures\GO_LinkedSpreadsheetTable0.png" />
     <Content Include="Assets\help\Pictures\GO_LinkedSpreadsheetTable1.png" />
     <Content Include="Assets\help\Pictures\GO_LinkedSpreadsheetTable2.png" />
