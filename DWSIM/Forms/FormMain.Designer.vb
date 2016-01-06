@@ -650,6 +650,9 @@ Partial Class FormMain
             Dim config = System.Configuration.ConfigurationManager.OpenExeConfiguration(System.Configuration.ConfigurationUserLevel.PerUserRoaming)
             If File.Exists(config.FilePath) Then File.Delete(config.FilePath)
 
+            'loads the current language
+            My.Application.ChangeUICulture(My.Settings.CultureInfo)
+
         End If
 
         ' This call is required by the Windows Form Designer.

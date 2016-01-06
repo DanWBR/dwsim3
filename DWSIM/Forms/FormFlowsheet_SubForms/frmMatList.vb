@@ -21,18 +21,35 @@ Public Class frmMatList
 
     Private Sub frmMatList_Enter(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Enter
         Me.ChildParent = My.Application.ActiveSimulation
+        ToolStripLabel1.Text = ""
         If Not ChildParent Is Nothing Then
             'TABELA DE CORRENTES
             Dim ms As DWSIM.SimulationObjects.Streams.MaterialStream
             DataGridView1.Columns.Clear()
             RowsCreated = False
+            Dim i, n As Integer
+            n = ChildParent.Collections.CLCS_MaterialStreamCollection.Values.Count
+            i = 1
             For Each ms In ChildParent.Collections.CLCS_MaterialStreamCollection.Values
+                ToolStripLabel1.Text = i & "/" & n & "..."
                 AddColumn(ms)
+                i += 1
             Next
         End If
+        ToolStripLabel1.Text = ""
     End Sub
 
+    Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
+
+        frmMatList_Enter(sender, e)
+
+    End Sub
+
+
     Private Sub frmMatList_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
+        ToolStrip1.Visible = DWSIM.App.IsRunningOnMono
+
         Me.ChildParent = My.Application.ActiveSimulation
 
     End Sub
@@ -93,6 +110,7 @@ Public Class frmMatList
         Me.DataGridView1.ResumeLayout()
         Me.ResumeLayout()
 
+        Application.DoEvents()
 
     End Sub
 
@@ -134,6 +152,5 @@ Public Class frmMatList
         End Select
 
     End Sub
-
 
 End Class
