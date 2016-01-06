@@ -90,9 +90,12 @@ Public Class FormAdditionalTasks
         If cbtask3.Checked Then Task3()
 
         If MessageBox.Show(DWSIM.App.GetLocalString("necessrioreiniciaroD"), "DWSIM", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
-            If DWSIM.App.IsRunningOnMono Then DWSIM.App.SaveSettings()
-            Me.Close()
-            Application.Restart()
+            If DWSIM.App.IsRunningOnMono Then
+                DWSIM.App.SaveSettings()
+                Application.Exit()
+            Else
+                Application.Restart()
+            End If
         Else
             Me.Close()
         End If

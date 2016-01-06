@@ -143,9 +143,6 @@ Imports WeifenLuo.WinFormsUI.Docking
             Me.MenuStrip1.Visible = False
             Me.CAPEOPENFlowsheetMonitoringObjectsMOsToolStripMenuItem.Visible = False
             Me.WindowState = FormWindowState.Maximized
-            tsbPrint.Visible = False
-            tsbConfigPrinter.Visible = False
-            tsbConfigPage.Visible = False
         Else
             FormObjList = New frmObjList
             Me.MenuStrip1.Visible = False
