@@ -10076,6 +10076,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Este recurso utiliza uma biblioteca nativa (não-.NET) da plataforma em execução, e não funciona com o modo de cálculo em paralelo na CPU ativado. por favor desative esse recurso e tente novamente..
+        '''</summary>
+        Friend Shared ReadOnly Property ParallelPInvokeError() As String
+            Get
+                Return ResourceManager.GetString("ParallelPInvokeError", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Parâmetros de Interação adicionados ao banco de dados com sucesso..
         '''</summary>
         Friend Shared ReadOnly Property ParametrosAdicionadosComSucesso() As String

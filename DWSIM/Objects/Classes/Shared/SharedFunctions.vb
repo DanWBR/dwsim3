@@ -47,6 +47,12 @@ Namespace DWSIM
 
         End Sub
 
+        Public Shared Sub CheckParallelPInvoke()
+
+            If My.Settings.EnableParallelProcessing Then Throw New InvalidOperationException(DWSIM.App.GetLocalString("ParallelPInvokeError"))
+
+        End Sub
+
         Public Shared Sub HelpRequested(topic As String)
             Dim pathsep = System.IO.Path.DirectorySeparatorChar
             Dim filename As String = My.Application.Info.DirectoryPath & pathsep & "help" & pathsep & topic

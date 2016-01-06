@@ -108,6 +108,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         End Function
 
         Public Overrides Function AUX_PVAPi(index As Integer, T As Double) As Double
+            DWSIM.App.CheckParallelPInvoke()
             Dim sub1 As String = RET_VNAMES()(index)
             Dim Tmin, Tmax, Tc, val As Double
             If IsCompoundSupported(sub1) Then
@@ -132,6 +133,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         End Function
 
         Public Overrides Function AUX_PVAPi(sub1 As String, T As Double) As Object
+            DWSIM.App.CheckParallelPInvoke()
             Dim Tmin, Tmax, Tc, val As Double
             If IsCompoundSupported(sub1) Then
                 Tmin = CoolProp.Props1SI(sub1, "TMIN")
@@ -995,6 +997,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Overrides Function DW_CalcEnthalpy(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double
 
+            DWSIM.App.CheckParallelPInvoke()
+
             Dim val As Double
             Dim i As Integer
             Dim vk(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
@@ -1095,6 +1099,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         End Function
 
         Public Overrides Function DW_CalcEntropy(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double
+
+            DWSIM.App.CheckParallelPInvoke()
 
             Dim val As Double
             Dim i As Integer
@@ -1246,6 +1252,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Overrides Sub DW_CalcPhaseProps(ByVal fase As Fase)
 
+            DWSIM.App.CheckParallelPInvoke()
+
             Dim result As Double
             Dim dwpl As Fase
 
@@ -1392,6 +1400,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         End Sub
 
         Public Overrides Sub DW_CalcProp(ByVal [property] As String, ByVal phase As Fase)
+
+            DWSIM.App.CheckParallelPInvoke()
 
             Dim result As Double = 0.0#
             Dim resultObj As Object = Nothing

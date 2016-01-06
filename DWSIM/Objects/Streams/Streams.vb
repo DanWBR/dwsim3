@@ -936,8 +936,7 @@ Namespace DWSIM.SimulationObjects.Streams
 
                 Dim tag As String = Me.PropertyPackage.Tag
                 If tag Is Nothing Then tag = ""
-                MsgBox(tag)
-                .Item.Add(DWSIM.App.GetLocalString("UOPropertyPackage"), tag, False, DWSIM.App.GetLocalString("UOPropertyPackage0"), "", True)
+                .Item.Add(DWSIM.App.GetLocalString("UOPropertyPackage"), tag, False, DWSIM.App.GetLocalString("Outros"), "", True)
                 With .Item(.Item.Count - 1)
                     .CustomEditor = New DWSIM.Editors.PropertyPackages.UIPPSelector
                     .IsReadOnly = False

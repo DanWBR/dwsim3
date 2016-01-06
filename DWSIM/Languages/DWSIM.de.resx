@@ -5226,4 +5226,7 @@ Die erhaltenen Daten werden hauptsächlich für die Berechnung von VLE-Daten emp
   <data name="Unsupported_Feature" xml:space="preserve">
     <value>This feature is not supported on this platform.</value>
   </data>
+  <data name="ParallelPInvokeError" xml:space="preserve">
+    <value>This feature uses a platform-specific, unmanaged (non-.NET) native library, which doesn't work with CPU Parallel Processing enabled. Please disable CPU Parallel Processing and try again.</value>
+  </data>
 </root>

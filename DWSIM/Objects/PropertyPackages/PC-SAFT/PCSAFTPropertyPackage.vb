@@ -143,6 +143,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Overrides Sub DW_CalcProp(ByVal [property] As String, ByVal phase As Fase)
 
+            DWSIM.App.CheckParallelPInvoke()
+
             Dim result As Double = 0.0#
             Dim resultObj As Object = Nothing
             Dim phaseID As Integer = -1
@@ -253,6 +255,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         End Sub
 
         Public Overrides Sub DW_CalcPhaseProps(ByVal fase As DWSIM.SimulationObjects.PropertyPackages.Fase)
+
+            DWSIM.App.CheckParallelPInvoke()
 
             Dim result As Double
             Dim dwpl As Fase
@@ -568,6 +572,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Overrides Function DW_CalcEnthalpy(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double
 
+            DWSIM.App.CheckParallelPInvoke()
+
             Dim H As Double
 
             If st = State.Liquid Then
@@ -581,6 +587,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         End Function
 
         Public Overrides Function DW_CalcEnthalpyDeparture(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double
+
+            DWSIM.App.CheckParallelPInvoke()
+
             Dim H As Double
 
             If st = State.Liquid Then
@@ -595,6 +604,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Overrides Function DW_CalcEntropy(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double
 
+            DWSIM.App.CheckParallelPInvoke()
+
             Dim S As Double
 
             If st = State.Liquid Then
@@ -608,6 +619,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         End Function
 
         Public Overrides Function DW_CalcEntropyDeparture(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double
+
+            DWSIM.App.CheckParallelPInvoke()
+
             Dim S As Double
 
             If st = State.Liquid Then
@@ -717,6 +731,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         End Function
 
         Public Overrides Function DW_CalcFugCoeff(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, ByVal st As State) As Double()
+
+            DWSIM.App.CheckParallelPInvoke()
 
             DWSIM.App.WriteToConsole(Me.ComponentName & " fugacity coefficient calculation for phase '" & st.ToString & "' requested at T = " & T & " K and P = " & P & " Pa.", 2)
             DWSIM.App.WriteToConsole("Compounds: " & Me.RET_VNAMES.ToArrayString, 2)

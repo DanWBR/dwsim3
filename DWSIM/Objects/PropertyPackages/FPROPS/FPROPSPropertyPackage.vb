@@ -664,6 +664,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Function GetFluidStruct(ByVal fluidnames() As String) As PureFluid_struct()
 
+            DWSIM.App.CheckParallelPInvoke()
+
             Dim mystruct(fluidnames.Length - 1) As PureFluid_struct
 
             For i As Integer = 0 To fluidnames.Length - 1
@@ -676,6 +678,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         End Function
 
         Private Function FPROPS_CalcCp(ByVal Vw As Array, ByVal T As Double, ByVal P As Double, ByVal fluidstruct() As PureFluid_struct, ByVal fluidstate As State) As Double
+
+            DWSIM.App.CheckParallelPInvoke()
 
             Dim myerr As FpropsError_enum = FpropsError_enum.FPROPS_NO_ERROR
 
@@ -693,6 +697,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Private Function FPROPS_CalcCv(ByVal Vw As Array, ByVal T As Double, ByVal P As Double, ByVal fluidstruct() As PureFluid_struct, ByVal fluidstate As State) As Double
 
+            DWSIM.App.CheckParallelPInvoke()
+
             Dim myerr As FpropsError_enum = FpropsError_enum.FPROPS_NO_ERROR
 
             Dim result As Double = 0
@@ -707,6 +713,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         End Function
 
         Private Function FPROPS_CalcH(ByVal Vw As Array, ByVal T As Double, ByVal P As Double, ByVal fluidstruct() As PureFluid_struct, ByVal fluidstate As State) As Double
+
+            DWSIM.App.CheckParallelPInvoke()
 
             Dim myerr As FpropsError_enum = FpropsError_enum.FPROPS_NO_ERROR
 
@@ -723,6 +731,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Private Function FPROPS_CalcS(ByVal Vw As Array, ByVal T As Double, ByVal P As Double, ByVal fluidstruct() As PureFluid_struct, ByVal fluidstate As State) As Double
 
+            DWSIM.App.CheckParallelPInvoke()
+
             Dim myerr As FpropsError_enum = FpropsError_enum.FPROPS_NO_ERROR
 
             Dim result As Double = 0
@@ -737,6 +747,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         End Function
 
         Private Function FPROPS_CalcZ(ByVal Vw As Array, ByVal T As Double, ByVal P As Double, ByVal fluidstruct() As PureFluid_struct, ByVal fluidstate As State) As Double
+
+            DWSIM.App.CheckParallelPInvoke()
 
             Dim myerr As FpropsError_enum = FpropsError_enum.FPROPS_NO_ERROR
 
@@ -755,6 +767,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         End Function
 
         Private Function CalcRho(ByVal T As Double, ByVal P As Double, ByVal fluidstruct As PureFluid_struct, ByVal fluidstate As State) As Double
+
+            DWSIM.App.CheckParallelPInvoke()
 
             Dim f1, f2, x1, dfdx As Double, cnt As Integer
             Dim myerr As FpropsError_enum = FpropsError_enum.FPROPS_NO_ERROR
@@ -803,6 +817,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         End Function
 
         Private Function CalcRho(ByVal Vw As Array, ByVal T As Double, ByVal P As Double, ByVal fluidstruct() As PureFluid_struct, ByVal fluidstate As State) As Double
+
+            DWSIM.App.CheckParallelPInvoke()
 
             Dim myerr As FpropsError_enum = FpropsError_enum.FPROPS_NO_ERROR
 

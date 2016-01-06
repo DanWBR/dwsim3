@@ -233,6 +233,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Case FlowPackage.Petalas_Aziz
                     If Not Environment.Is64BitProcess Then
                         fpp = New DWSIM.FlowPackages.PetalasAziz
+                        DWSIM.App.CheckParallelPInvoke()
                     Else
                         FlowSheet.WriteToLog("'Petalas-Aziz' model not available in 64-bit mode. Falling back to 'Beggs & Brill'...", Color.Blue, FormClasses.TipoAviso.Aviso)
                         fpp = New DWSIM.FlowPackages.BeggsBrill

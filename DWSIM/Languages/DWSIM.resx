@@ -5251,4 +5251,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="Unsupported_Feature" xml:space="preserve">
     <value>Este recurso não é suportado nesta plataforma.</value>
   </data>
+  <data name="ParallelPInvokeError" xml:space="preserve">
+    <value>Este recurso utiliza uma biblioteca nativa (não-.NET) da plataforma em execução, e não funciona com o modo de cálculo em paralelo na CPU ativado. por favor desative esse recurso e tente novamente.</value>
+  </data>
 </root>

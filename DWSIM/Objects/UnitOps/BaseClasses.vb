@@ -3763,8 +3763,7 @@ End Class
             '    .Tag = "A"
             'End With
 
-            MsgBox(Me.PropertyPackage.Tag)
-            .Item.Add(DWSIM.App.GetLocalString("UOPropertyPackage"), Me.PropertyPackage.Tag, False, DWSIM.App.GetLocalString("UOPropertyPackage0"), "", True)
+            .Item.Add(DWSIM.App.GetLocalString("UOPropertyPackage"), Me.PropertyPackage.Tag, False, DWSIM.App.GetLocalString("Outros"), "", True)
             With .Item(.Item.Count - 1)
                 .CustomEditor = New DWSIM.Editors.PropertyPackages.UIPPSelector
             End With

@@ -925,6 +925,8 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                     'estimate initial values by solving linear problem using lp_solve
 
+                    DWSIM.App.CheckParallelPInvoke()
+
                     Dim lp As Integer
                     Dim release, Major, Minor, build As Integer
 
