@@ -1749,7 +1749,6 @@ Namespace Interfaces
 
 #Region "Fast Functions"
 
-        <ExcelFunction("Calculates a PT Flash using the selected Property Package.")> _
         Public Shared Function PTFlash( _
                ByVal proppack As PropertyPackage, _
                ByVal flashalg As Integer, _
