@@ -112,7 +112,7 @@ Public Class FormSimulSettings
 
             Me.ListViewA.Items.Clear()
             For Each comp In Me.FrmChild.Options.SelectedComponents.Values
-                Me.ListViewA.Items.Add(comp.Name, DWSIM.App.GetComponentName(comp.Name), 0).Tag = comp.Name
+                Me.ListViewA.Items.Add(comp.Name, DWSIM.App.GetComponentName(comp.Name) & " (" & comp.OriginalDB & ")", 0).Tag = comp.Name
             Next
             For Each comp In Me.FrmChild.Options.NotSelectedComponents.Values
                 Dim idx As Integer = Me.AddCompToGrid(comp)
@@ -131,52 +131,9 @@ Public Class FormSimulSettings
             'Me.TextBox1.AutoCompleteCustomSource = ACSC1
 
             'property packages
-            Me.ListViewPP.Items.Clear()
+            Me.DataGridViewPP.Rows.Clear()
             For Each pp2 As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage In FormMain.PropertyPackages.Values
-                Select Case pp2.PackageType
-                    Case DWSIM.SimulationObjects.PropertyPackages.PackageType.EOS
-                        With Me.ListViewPP.Items.Add(pp2.ComponentName)
-                            .Group = Me.ListViewPP.Groups("EOS")
-                            .SubItems.Add(pp2.ComponentDescription)
-                            .ToolTipText = pp2.ComponentDescription
-                        End With
-                    Case DWSIM.SimulationObjects.PropertyPackages.PackageType.ActivityCoefficient
-                        With Me.ListViewPP.Items.Add(pp2.ComponentName)
-                            .Group = Me.ListViewPP.Groups("ACT")
-                            .SubItems.Add(pp2.ComponentDescription)
-                            .ToolTipText = pp2.ComponentDescription
-                        End With
-                    Case DWSIM.SimulationObjects.PropertyPackages.PackageType.ChaoSeader
-                        With Me.ListViewPP.Items.Add(pp2.ComponentName)
-                            .Group = Me.ListViewPP.Groups("CS")
-                            .SubItems.Add(pp2.ComponentDescription)
-                            .ToolTipText = pp2.ComponentDescription
-                        End With
-                    Case DWSIM.SimulationObjects.PropertyPackages.PackageType.VaporPressure
-                        With Me.ListViewPP.Items.Add(pp2.ComponentName)
-                            .Group = Me.ListViewPP.Groups("VAP")
-                            .SubItems.Add(pp2.ComponentDescription)
-                            .ToolTipText = pp2.ComponentDescription
-                        End With
-                    Case DWSIM.SimulationObjects.PropertyPackages.PackageType.Miscelaneous
-                        With Me.ListViewPP.Items.Add(pp2.ComponentName)
-                            .Group = Me.ListViewPP.Groups("MISC")
-                            .SubItems.Add(pp2.ComponentDescription)
-                            .ToolTipText = pp2.ComponentDescription
-                        End With
-                    Case DWSIM.SimulationObjects.PropertyPackages.PackageType.CorrespondingStates
-                        With Me.ListViewPP.Items.Add(pp2.ComponentName)
-                            .Group = Me.ListViewPP.Groups("CST")
-                            .SubItems.Add(pp2.ComponentDescription)
-                            .ToolTipText = pp2.ComponentDescription
-                        End With
-                    Case DWSIM.SimulationObjects.PropertyPackages.PackageType.CAPEOPEN
-                        With Me.ListViewPP.Items.Add(pp2.ComponentName)
-                            .Group = Me.ListViewPP.Groups("CAP")
-                            .SubItems.Add(pp2.ComponentDescription)
-                            .ToolTipText = pp2.ComponentDescription
-                        End With
-                End Select
+                Me.DataGridViewPP.Rows.Add(New String() {pp2.ComponentName, pp2.ComponentName, pp2.ComponentDescription})
             Next
 
         Else
@@ -1166,7 +1123,7 @@ Public Class FormSimulSettings
     Private Sub Button8_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button8.Click
 
         Dim pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage
-        pp = FormMain.PropertyPackages(ListViewPP.SelectedItems(0).Text).Clone
+        pp = FormMain.PropertyPackages(Me.DataGridViewPP.SelectedRows(0).Cells(0).Value).Clone
 
         With pp
             pp.Tag = "PP_" & CStr(Me.dgvpp.Rows.Count + 1)
@@ -1178,8 +1135,8 @@ Public Class FormSimulSettings
 
     End Sub
 
-    Private Sub ListViewPP_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ListViewPP.SelectedIndexChanged
-        If Me.ListViewPP.SelectedItems.Count > 0 Then
+    Private Sub ListViewPP_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DataGridViewPP.SelectionChanged
+        If Me.DataGridViewPP.SelectedRows.Count > 0 Then
             Me.Button8.Enabled = True
         Else
             Me.Button8.Enabled = False
@@ -1340,8 +1297,8 @@ Public Class FormSimulSettings
         End If
     End Sub
 
-    Private Sub ListViewPP_DoubleClick(sender As Object, e As EventArgs) Handles ListViewPP.DoubleClick
-        If ListViewPP.SelectedItems.Count = 1 Then
+    Private Sub ListViewPP_DoubleClick(sender As Object, e As EventArgs) Handles DataGridViewPP.DoubleClick
+        If Me.DataGridViewPP.SelectedRows.Count = 1 Then
             Button8.PerformClick()
         End If
     End Sub
@@ -1416,13 +1373,6 @@ Public Class FormSimulSettings
 
     Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
         TextBox1.Text = ""
-    End Sub
-
-    Private Sub ListViewPP_Resize(sender As Object, e As EventArgs) Handles ListViewPP.Resize
-        If ListViewPP.Columns.Count > 0 Then
-            ListViewPP.Columns(0).Width = 240
-            ListViewPP.Columns(1).Width = ListViewPP.Width - 244
-        End If
     End Sub
 
     Private Sub FloatToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FloatToolStripMenuItem.Click, DocumentToolStripMenuItem.Click,
