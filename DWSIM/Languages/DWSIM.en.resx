@@ -1478,7 +1478,7 @@ Liquid Surface Tension: Brock-Bird Method</value>
     <value>Pressure error</value>
   </data>
   <data name="Erronasecao" xml:space="preserve">
-    <value>Error in section</value>
+    <value>Error in segment</value>
   </data>
   <data name="Erronasintaxedaexpre" xml:space="preserve">
     <value>Expression error. Check syntax.</value>
@@ -1508,7 +1508,7 @@ Liquid Surface Tension: Brock-Bird Method</value>
     <value>Error in the calculation of the diagram. Check the parameters.</value>
   </data>
   <data name="ErronomduloPetalasAz" xml:space="preserve">
-    <value>Error module 'PetalasAziz.dll'.</value>
+    <value>Error in module 'PetalasAziz.dll'.</value>
   </data>
   <data name="Erronoseparadordecim" xml:space="preserve">
     <value>Error in decimal separator!</value>
@@ -5237,7 +5237,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>This model is a combination of the extended UNIQUAC model for electrolytes and the Soave–Redlich–Kwong cubic equation of state. The model has been applied to aqueous systems containing ammonia and/or carbon dioxide along with various salts. Model parameters valid in the temperature range 0–110°C, the pressure range from 0–100 bar, and the concentration range up to approximately 80 molal ammonia are given. The model parameters were evaluated on the basis of more than 7000 experimental data points.</value>
   </data>
   <data name="ErrorNoUserdatabase" xml:space="preserve">
-    <value>No User Database existing!</value>
+    <value>There is no user database.</value>
   </data>
   <data name="Unsupported_Feature" xml:space="preserve">
     <value>This feature is not supported on this platform.</value>

@@ -236,7 +236,7 @@ Imports System.Windows.Forms
             Dim l As Integer
             Dim linha_atual As String() = New String() {}
 
-            Using MyReader As New Microsoft.VisualBasic.FileIO.TextFieldParser(ThisExe.GetManifestResourceStream(ThisExeName & "." & "fittings.dat"), System.Text.Encoding.Default, True)
+            Using MyReader As New Microsoft.VisualBasic.FileIO.TextFieldParser(ThisExe.GetManifestResourceStream(ThisExeName & "." & "fittings.dat"), System.Text.Encoding.UTF8, True)
                 MyReader.TextFieldType = FileIO.FieldType.Delimited
                 MyReader.SetDelimiters(";")
                 l = 0
@@ -294,35 +294,35 @@ Imports System.Windows.Forms
 #Region "    Outros"
 
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(PipeEditor))
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Me.GroupBox16 = New System.Windows.Forms.GroupBox
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.Button4 = New System.Windows.Forms.Button
-        Me.GroupBox17 = New System.Windows.Forms.GroupBox
-        Me.Button6 = New System.Windows.Forms.Button
-        Me.Button5 = New System.Windows.Forms.Button
-        Me.Button7 = New System.Windows.Forms.Button
-        Me.Button8 = New System.Windows.Forms.Button
-        Me.GridMalha = New System.Windows.Forms.DataGridView
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Me.GroupBox16 = New System.Windows.Forms.GroupBox()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Button4 = New System.Windows.Forms.Button()
+        Me.GroupBox17 = New System.Windows.Forms.GroupBox()
+        Me.Button6 = New System.Windows.Forms.Button()
+        Me.Button5 = New System.Windows.Forms.Button()
+        Me.Button7 = New System.Windows.Forms.Button()
+        Me.Button8 = New System.Windows.Forms.Button()
+        Me.GridMalha = New System.Windows.Forms.DataGridView()
+        Me.ColBase = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.CMenu1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolStripMenuItem4 = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolStripMenuItem5 = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolStripMenuItem6 = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolStripMenuItem7 = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolStripMenuItem8 = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolStripMenuItem9 = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolStripMenuItem10 = New System.Windows.Forms.ToolStripMenuItem
-        Me.ToolStripMenuItem11 = New System.Windows.Forms.ToolStripMenuItem
-        Me.ColBase = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem4 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem5 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem6 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem7 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem8 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem9 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem10 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem11 = New System.Windows.Forms.ToolStripMenuItem()
         Me.GroupBox16.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -333,118 +333,77 @@ Imports System.Windows.Forms
         '
         'GroupBox16
         '
-        Me.GroupBox16.AccessibleDescription = Nothing
-        Me.GroupBox16.AccessibleName = Nothing
         resources.ApplyResources(Me.GroupBox16, "GroupBox16")
         Me.GroupBox16.BackColor = System.Drawing.Color.Transparent
-        Me.GroupBox16.BackgroundImage = Nothing
         Me.GroupBox16.Controls.Add(Me.GroupBox2)
         Me.GroupBox16.Controls.Add(Me.GroupBox1)
         Me.GroupBox16.Controls.Add(Me.GroupBox17)
         Me.GroupBox16.Controls.Add(Me.GridMalha)
         Me.GroupBox16.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.GroupBox16.Font = Nothing
         Me.GroupBox16.Name = "GroupBox16"
         Me.GroupBox16.TabStop = False
         '
         'GroupBox2
         '
-        Me.GroupBox2.AccessibleDescription = Nothing
-        Me.GroupBox2.AccessibleName = Nothing
         resources.ApplyResources(Me.GroupBox2, "GroupBox2")
-        Me.GroupBox2.BackgroundImage = Nothing
         Me.GroupBox2.Controls.Add(Me.Label1)
-        Me.GroupBox2.Font = Nothing
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.TabStop = False
         '
         'Label1
         '
-        Me.Label1.AccessibleDescription = Nothing
-        Me.Label1.AccessibleName = Nothing
         resources.ApplyResources(Me.Label1, "Label1")
         Me.Label1.ForeColor = System.Drawing.Color.Red
         Me.Label1.Name = "Label1"
         '
         'GroupBox1
         '
-        Me.GroupBox1.AccessibleDescription = Nothing
-        Me.GroupBox1.AccessibleName = Nothing
         resources.ApplyResources(Me.GroupBox1, "GroupBox1")
-        Me.GroupBox1.BackgroundImage = Nothing
         Me.GroupBox1.Controls.Add(Me.Button4)
-        Me.GroupBox1.Font = Nothing
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.TabStop = False
         '
         'Button4
         '
-        Me.Button4.AccessibleDescription = Nothing
-        Me.Button4.AccessibleName = Nothing
         resources.ApplyResources(Me.Button4, "Button4")
-        Me.Button4.BackgroundImage = Nothing
-        Me.Button4.Font = Nothing
         Me.Button4.Name = "Button4"
         '
         'GroupBox17
         '
-        Me.GroupBox17.AccessibleDescription = Nothing
-        Me.GroupBox17.AccessibleName = Nothing
         resources.ApplyResources(Me.GroupBox17, "GroupBox17")
-        Me.GroupBox17.BackgroundImage = Nothing
         Me.GroupBox17.Controls.Add(Me.Button6)
         Me.GroupBox17.Controls.Add(Me.Button5)
         Me.GroupBox17.Controls.Add(Me.Button7)
         Me.GroupBox17.Controls.Add(Me.Button8)
-        Me.GroupBox17.Font = Nothing
         Me.GroupBox17.Name = "GroupBox17"
         Me.GroupBox17.TabStop = False
         '
         'Button6
         '
-        Me.Button6.AccessibleDescription = Nothing
-        Me.Button6.AccessibleName = Nothing
         resources.ApplyResources(Me.Button6, "Button6")
-        Me.Button6.BackgroundImage = Nothing
-        Me.Button6.Font = Nothing
         Me.Button6.Name = "Button6"
         '
         'Button5
         '
-        Me.Button5.AccessibleDescription = Nothing
-        Me.Button5.AccessibleName = Nothing
         resources.ApplyResources(Me.Button5, "Button5")
-        Me.Button5.BackgroundImage = Nothing
-        Me.Button5.Font = Nothing
         Me.Button5.Name = "Button5"
         '
         'Button7
         '
-        Me.Button7.AccessibleDescription = Nothing
-        Me.Button7.AccessibleName = Nothing
         resources.ApplyResources(Me.Button7, "Button7")
-        Me.Button7.BackgroundImage = Nothing
-        Me.Button7.Font = Nothing
         Me.Button7.Name = "Button7"
         '
         'Button8
         '
-        Me.Button8.AccessibleDescription = Nothing
-        Me.Button8.AccessibleName = Nothing
         resources.ApplyResources(Me.Button8, "Button8")
-        Me.Button8.BackgroundImage = Nothing
-        Me.Button8.Font = Nothing
         Me.Button8.Name = "Button8"
         '
         'GridMalha
         '
-        Me.GridMalha.AccessibleDescription = Nothing
-        Me.GridMalha.AccessibleName = Nothing
+        resources.ApplyResources(Me.GridMalha, "GridMalha")
         Me.GridMalha.AllowUserToAddRows = False
         Me.GridMalha.AllowUserToOrderColumns = True
-        resources.ApplyResources(Me.GridMalha, "GridMalha")
         Me.GridMalha.BackgroundColor = System.Drawing.Color.WhiteSmoke
-        Me.GridMalha.BackgroundImage = Nothing
         Me.GridMalha.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
         Me.GridMalha.ColumnHeadersVisible = False
         Me.GridMalha.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ColBase})
@@ -453,12 +412,11 @@ Imports System.Windows.Forms
         DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
         DataGridViewCellStyle2.FormatProvider = New System.Globalization.CultureInfo("pt-BR")
-        DataGridViewCellStyle2.NullValue = DWSIM.App.GetLocalString("vazio")
+        DataGridViewCellStyle2.NullValue = "<vazio>"
         DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.GridMalha.DefaultCellStyle = DataGridViewCellStyle2
-        Me.GridMalha.Font = Nothing
         Me.GridMalha.GridColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
         Me.GridMalha.MultiSelect = False
         Me.GridMalha.Name = "GridMalha"
@@ -485,13 +443,16 @@ Imports System.Windows.Forms
         Me.GridMalha.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
         Me.GridMalha.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         '
+        'ColBase
+        '
+        DataGridViewCellStyle1.NullValue = "<empty>"
+        Me.ColBase.DefaultCellStyle = DataGridViewCellStyle1
+        resources.ApplyResources(Me.ColBase, "ColBase")
+        Me.ColBase.Name = "ColBase"
+        '
         'CMenu1
         '
-        Me.CMenu1.AccessibleDescription = Nothing
-        Me.CMenu1.AccessibleName = Nothing
         resources.ApplyResources(Me.CMenu1, "CMenu1")
-        Me.CMenu1.BackgroundImage = Nothing
-        Me.CMenu1.Font = Nothing
         Me.CMenu1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem2, Me.ToolStripMenuItem3, Me.ToolStripMenuItem4, Me.ToolStripMenuItem5, Me.ToolStripMenuItem6, Me.ToolStripMenuItem7, Me.ToolStripMenuItem8, Me.ToolStripMenuItem9, Me.ToolStripMenuItem10, Me.ToolStripMenuItem11})
         Me.CMenu1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow
         Me.CMenu1.Name = "ContextMenuStrip1"
@@ -500,109 +461,58 @@ Imports System.Windows.Forms
         '
         'ToolStripMenuItem2
         '
-        Me.ToolStripMenuItem2.AccessibleDescription = Nothing
-        Me.ToolStripMenuItem2.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripMenuItem2, "ToolStripMenuItem2")
-        Me.ToolStripMenuItem2.BackgroundImage = Nothing
         Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.ShortcutKeyDisplayString = Nothing
         '
         'ToolStripMenuItem3
         '
-        Me.ToolStripMenuItem3.AccessibleDescription = Nothing
-        Me.ToolStripMenuItem3.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripMenuItem3, "ToolStripMenuItem3")
-        Me.ToolStripMenuItem3.BackgroundImage = Nothing
         Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
-        Me.ToolStripMenuItem3.ShortcutKeyDisplayString = Nothing
         '
         'ToolStripMenuItem4
         '
-        Me.ToolStripMenuItem4.AccessibleDescription = Nothing
-        Me.ToolStripMenuItem4.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripMenuItem4, "ToolStripMenuItem4")
-        Me.ToolStripMenuItem4.BackgroundImage = Nothing
         Me.ToolStripMenuItem4.Name = "ToolStripMenuItem4"
-        Me.ToolStripMenuItem4.ShortcutKeyDisplayString = Nothing
         '
         'ToolStripMenuItem5
         '
-        Me.ToolStripMenuItem5.AccessibleDescription = Nothing
-        Me.ToolStripMenuItem5.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripMenuItem5, "ToolStripMenuItem5")
-        Me.ToolStripMenuItem5.BackgroundImage = Nothing
         Me.ToolStripMenuItem5.Name = "ToolStripMenuItem5"
-        Me.ToolStripMenuItem5.ShortcutKeyDisplayString = Nothing
         '
         'ToolStripMenuItem6
         '
-        Me.ToolStripMenuItem6.AccessibleDescription = Nothing
-        Me.ToolStripMenuItem6.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripMenuItem6, "ToolStripMenuItem6")
-        Me.ToolStripMenuItem6.BackgroundImage = Nothing
         Me.ToolStripMenuItem6.Name = "ToolStripMenuItem6"
-        Me.ToolStripMenuItem6.ShortcutKeyDisplayString = Nothing
         '
         'ToolStripMenuItem7
         '
-        Me.ToolStripMenuItem7.AccessibleDescription = Nothing
-        Me.ToolStripMenuItem7.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripMenuItem7, "ToolStripMenuItem7")
-        Me.ToolStripMenuItem7.BackgroundImage = Nothing
         Me.ToolStripMenuItem7.Name = "ToolStripMenuItem7"
-        Me.ToolStripMenuItem7.ShortcutKeyDisplayString = Nothing
         '
         'ToolStripMenuItem8
         '
-        Me.ToolStripMenuItem8.AccessibleDescription = Nothing
-        Me.ToolStripMenuItem8.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripMenuItem8, "ToolStripMenuItem8")
-        Me.ToolStripMenuItem8.BackgroundImage = Nothing
         Me.ToolStripMenuItem8.Name = "ToolStripMenuItem8"
-        Me.ToolStripMenuItem8.ShortcutKeyDisplayString = Nothing
         '
         'ToolStripMenuItem9
         '
-        Me.ToolStripMenuItem9.AccessibleDescription = Nothing
-        Me.ToolStripMenuItem9.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripMenuItem9, "ToolStripMenuItem9")
-        Me.ToolStripMenuItem9.BackgroundImage = Nothing
         Me.ToolStripMenuItem9.Name = "ToolStripMenuItem9"
-        Me.ToolStripMenuItem9.ShortcutKeyDisplayString = Nothing
         '
         'ToolStripMenuItem10
         '
-        Me.ToolStripMenuItem10.AccessibleDescription = Nothing
-        Me.ToolStripMenuItem10.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripMenuItem10, "ToolStripMenuItem10")
-        Me.ToolStripMenuItem10.BackgroundImage = Nothing
         Me.ToolStripMenuItem10.Name = "ToolStripMenuItem10"
-        Me.ToolStripMenuItem10.ShortcutKeyDisplayString = Nothing
         '
         'ToolStripMenuItem11
         '
-        Me.ToolStripMenuItem11.AccessibleDescription = Nothing
-        Me.ToolStripMenuItem11.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripMenuItem11, "ToolStripMenuItem11")
-        Me.ToolStripMenuItem11.BackgroundImage = Nothing
         Me.ToolStripMenuItem11.Name = "ToolStripMenuItem11"
-        Me.ToolStripMenuItem11.ShortcutKeyDisplayString = Nothing
-        '
-        'ColBase
-        '
-        DataGridViewCellStyle1.NullValue = "<empty>"
-        Me.ColBase.DefaultCellStyle = DataGridViewCellStyle1
-        resources.ApplyResources(Me.ColBase, "ColBase")
-        Me.ColBase.Name = "ColBase"
         '
         'PipeEditor
         '
-        Me.AccessibleDescription = Nothing
-        Me.AccessibleName = Nothing
         resources.ApplyResources(Me, "$this")
-        Me.BackgroundImage = Nothing
         Me.Controls.Add(Me.GroupBox16)
-        Me.Font = Nothing
         Me.Name = "PipeEditor"
         Me.GroupBox16.ResumeLayout(False)
         Me.GroupBox2.ResumeLayout(False)
@@ -1234,16 +1144,16 @@ Imports System.Windows.Forms
     Private Function ParseColumn(ByVal column As DataGridViewColumn)
         Try
             With (Me.GridMalha)
-                If Not .Rows(2).Cells(column.Name).Value > 0 Then
+                If Not Convert.ToDouble(.Rows(2).Cells(column.Name).Value) > 0.0# Then
                     Return DWSIM.App.GetLocalString("Erro")
                     Exit Function
                 End If
                 If .Rows(1).Cells(column.Name).Value = DWSIM.App.GetLocalString("Tubulaosimples") Then
-                    If Not .Rows(3).Cells(column.Name).Value > 0 Then
+                    If Not .Rows(3).Cells(column.Name).Value > 0.0# Then
                         Return DWSIM.App.GetLocalString("Erro")
                         Exit Function
                     End If
-                    If Not .Rows(5).Cells(column.Name).Value > 0 Or Double.IsNaN(.Rows(5).Cells(column.Name).Value) Then
+                    If Not Convert.ToDouble(.Rows(5).Cells(column.Name).Value) > 0.0# Or Double.IsNaN(.Rows(5).Cells(column.Name).Value) Then
                         Return DWSIM.App.GetLocalString("Erro")
                         Exit Function
                     End If
@@ -1251,11 +1161,11 @@ Imports System.Windows.Forms
                         Return DWSIM.App.GetLocalString("Erro")
                         Exit Function
                     End If
-                    If Not .Rows(7).Cells(column.Name).Value > 0 Or Double.IsNaN(.Rows(7).Cells(column.Name).Value) Then
+                    If Not Convert.ToDouble(.Rows(7).Cells(column.Name).Value) > 0.0# Or Double.IsNaN(.Rows(7).Cells(column.Name).Value) Then
                         Return DWSIM.App.GetLocalString("Erro")
                         Exit Function
                     End If
-                    If Not .Rows(8).Cells(column.Name).Value > 0 Or Double.IsNaN(.Rows(8).Cells(column.Name).Value) Or CDbl(.Rows(8).Cells(column.Name).Value) > CDbl(.Rows(7).Cells(column.Name).Value) Then
+                    If Not Convert.ToDouble(.Rows(8).Cells(column.Name).Value) > 0.0# Or Double.IsNaN(.Rows(8).Cells(column.Name).Value) Or CDbl(.Rows(8).Cells(column.Name).Value) > CDbl(.Rows(7).Cells(column.Name).Value) Then
                         Return DWSIM.App.GetLocalString("Erro")
                         Exit Function
                     End If
