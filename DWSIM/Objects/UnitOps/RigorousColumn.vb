@@ -2906,13 +2906,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Dim nep As Integer = _st.Count
                 Dim dif As Integer = ne - nep
                 If dif < 0 Then
-                    Me.Stages.RemoveRange(nep + dif - 1 - 1, -dif)
+                    Me.Stages.RemoveRange(nep + dif - 1, -dif)
                     With Me.InitialEstimates
-                        .LiqCompositions.RemoveRange(nep + dif - 1 - 1, -dif)
-                        .VapCompositions.RemoveRange(nep + dif - 1 - 1, -dif)
-                        .LiqMolarFlows.RemoveRange(nep + dif - 1 - 1, -dif)
-                        .VapMolarFlows.RemoveRange(nep + dif - 1 - 1, -dif)
-                        .StageTemps.RemoveRange(nep + dif - 1 - 1, -dif)
+                        .LiqCompositions.RemoveRange(nep + dif - 1, -dif)
+                        .VapCompositions.RemoveRange(nep + dif - 1, -dif)
+                        .LiqMolarFlows.RemoveRange(nep + dif - 1, -dif)
+                        .VapMolarFlows.RemoveRange(nep + dif - 1, -dif)
+                        .StageTemps.RemoveRange(nep + dif - 1, -dif)
                     End With
                 ElseIf dif > 0 Then
                     Dim i As Integer
