@@ -106,6 +106,7 @@ Public Class frmLog
         End If
 
         For Each dr As DataGridViewRow In Me.Grid1.Rows
+            If DWSIM.App.IsRunningOnMono Then dr.Height = dr.GetPreferredHeight(e.RowIndex, DataGridViewAutoSizeRowMode.AllCells, True)
             Try
                 dr.Cells(4).Style.ForeColor = dt.Rows(dr.Cells(1).Value).Item("Cor")
             Catch ex As Exception
@@ -113,6 +114,7 @@ Public Class frmLog
             End Try
         Next
 
+       
     End Sub
 
     Private Sub Grid1_RowsRemoved(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewRowsRemovedEventArgs) Handles Grid1.RowsRemoved

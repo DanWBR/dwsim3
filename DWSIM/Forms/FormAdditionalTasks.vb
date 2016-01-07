@@ -60,6 +60,7 @@ Public Class FormAdditionalTasks
         Dim info = New ProcessStartInfo()
         info.FileName = "sudo"
         info.UseShellExecute = False
+        info.CreateNoWindow = False
 
         If Environment.Is64BitProcess Then
             info.Arguments = "tar -C /usr/lib -zxvf linux/linux64/libipopt_mono_dwsim_ubuntu_15.10_64.tar.gz"

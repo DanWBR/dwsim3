@@ -870,12 +870,6 @@
     <Compile Include="Objects\Streams\Streams.vb" />
     <Compile Include="Objects\Classes\Thermo\BaseThermoClasses.vb" />
     <Compile Include="Objects\Classes\Units\SistemasDeUnidades.vb" />
-    <Compile Include="Forms\FormReadingComp1.Designer.vb">
-      <DependentUpon>FormReadingComp1.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\FormReadingComp1.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Objects\UnitOps\Tank.vb" />
     <Compile Include="Objects\UnitOps\Turbine.vb" />
     <Compile Include="Objects\UnitOps\Valve.vb" />
@@ -1279,9 +1273,6 @@
     <EmbeddedResource Include="Forms\FormCompoundCreator.es.resx">
       <DependentUpon>FormCompoundCreator.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormConfigureTable.en-US.resx">
-      <DependentUpon>FormConfigureTable.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormConfigWizard.de.resx">
       <DependentUpon>FormConfigWizard.vb</DependentUpon>
     </EmbeddedResource>
@@ -1329,9 +1320,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormPassword.es.resx">
       <DependentUpon>FormPassword.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormReadingComp1.en-US.resx">
-      <DependentUpon>FormReadingComp1.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormState.de.resx">
       <DependentUpon>FormState.vb</DependentUpon>
@@ -1390,18 +1378,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PropPack_ConfigForms\FormConfigPRSV2.es.resx">
       <DependentUpon>FormConfigPRSV2.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\UITypeEditors\Results\Pipe\FormGraph.en-US.resx">
-      <DependentUpon>FormGraph.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\UITypeEditors\SpecialOps\ADJ\UIMVSelectorForm.en-US.resx">
-      <DependentUpon>UIMVSelectorForm.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\UITypeEditors\SpecialOps\ADJ\UIRVSelectorForm.en-US.resx">
-      <DependentUpon>UIRVSelectorForm.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\UITypeEditors\SpecialOps\SPEC\UISVSelectorForm.en-US.resx">
-      <DependentUpon>UISVSelectorForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\UITypeEditors\UICSepSpecEditor\CSepSpecEditorForm.es.resx">
       <DependentUpon>CSepSpecEditorForm.vb</DependentUpon>
@@ -1740,10 +1716,6 @@
       <SubType>Designer</SubType>
       <DependentUpon>FormOptions.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormReadingComp1.en.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>FormReadingComp1.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormRecoverFiles.en.resx">
       <SubType>Designer</SubType>
       <DependentUpon>FormRecoverFiles.vb</DependentUpon>
@@ -1755,10 +1727,6 @@
     <EmbeddedResource Include="Forms\FormLoadSave.resx">
       <SubType>Designer</SubType>
       <DependentUpon>FormLoadSave.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormReadingComp1.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>FormReadingComp1.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormSimulSettings.en.resx">
       <SubType>Designer</SubType>
@@ -3046,12 +3014,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormPassword.resx">
       <DependentUpon>FormPassword.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormReadingComp1.de.resx">
-      <DependentUpon>FormReadingComp1.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FormReadingComp1.es.resx">
-      <DependentUpon>FormReadingComp1.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormRecoverFiles.de.resx">
       <DependentUpon>FormRecoverFiles.vb</DependentUpon>

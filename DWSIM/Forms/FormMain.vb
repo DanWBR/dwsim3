@@ -2735,14 +2735,17 @@ Public Class FormMain
         'End If
 
         Try
+            If DWSIM.App.IsRunningOnMono Then form.FormSpreadsheet = New SpreadsheetForm()
             Dim data1 As String = xdoc.Element("DWSIM_Simulation_Data").Element("Spreadsheet").Element("Data1").Value
             Dim data2 As String = xdoc.Element("DWSIM_Simulation_Data").Element("Spreadsheet").Element("Data2").Value
             If data1 <> "" Then form.FormSpreadsheet.CopyDT1FromString(data1)
             If data2 <> "" Then form.FormSpreadsheet.CopyDT2FromString(data2)
             form.FormSpreadsheet.UpdateColors()
+            If DWSIM.App.IsRunningOnMono Then form.FormSpreadsheet.UISpreadsheetEditorForm_Load(Me, New EventArgs)
         Catch ex As Exception
             excs.Add(New Exception("Error Loading Spreadsheet Information", ex))
         End Try
+
 
         For Each obj In form.FormSurface.FlowsheetDesignSurface.drawingObjects
             If obj.TipoObjeto = TipoObjeto.GO_SpreadsheetTable Then

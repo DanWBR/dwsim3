@@ -112,74 +112,28 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="ContextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>302, 170</value>
-  </data>
-  <data name="DataGridView1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>631, 353</value>
-  </data>
-  <data name="TableLayoutPanel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>633, 28</value>
-  </data>
-  <data name="TableLayoutPanel3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 387</value>
-  </data>
-  <data name="TableLayoutPanel3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>637, 30</value>
-  </data>
-  <data name="TableLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>637, 417</value>
-  </data>
-  <data name="CelulaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>301, 22</value>
-  </data>
   <data name="CelulaToolStripMenuItem.Text" xml:space="preserve">
     <value>Zelle</value>
-  </data>
-  <data name="ToolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>298, 6</value>
-  </data>
-  <data name="AvaliarFórmulaToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>301, 22</value>
   </data>
   <data name="AvaliarFórmulaToolStripMenuItem.Text" xml:space="preserve">
     <value>Formel berechnen</value>
   </data>
-  <data name="ImportarDadosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>301, 22</value>
-  </data>
   <data name="ImportarDadosToolStripMenuItem.Text" xml:space="preserve">
     <value>Wert aus Fließbild importieren</value>
-  </data>
-  <data name="ExportarDadosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>301, 22</value>
   </data>
   <data name="ExportarDadosToolStripMenuItem.Text" xml:space="preserve">
     <value>Wert in Simulationsobjekt exportieren</value>
   </data>
-  <data name="ToolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>298, 6</value>
-  </data>
-  <data name="LimparToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>301, 22</value>
-  </data>
   <data name="LimparToolStripMenuItem.Text" xml:space="preserve">
     <value>Löschen</value>
   </data>
-  <data name="CopiarToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>301, 22</value>
-  </data>
   <data name="CopiarToolStripMenuItem.Text" xml:space="preserve">
     <value>Kopieren</value>
-  </data>
-  <data name="ColarToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>301, 22</value>
   </data>
   <data name="ColarToolStripMenuItem.Text" xml:space="preserve">
     <value>Einfügen</value>
@@ -187,76 +141,16 @@
   <data name="Label1.Text" xml:space="preserve">
     <value>Wert</value>
   </data>
-  <data name="tbValue.Size" type="System.Drawing.Size, System.Drawing">
-    <value>449, 20</value>
-  </data>
-  <data name="Button3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>580, 3</value>
-  </data>
-  <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>608, 3</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Label2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left</value>
-  </data>
-  <data name="Label2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="Label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>279, 0</value>
-  </data>
-  <data name="Label2.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 4</value>
-  </data>
-  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>192, 30</value>
-  </data>
   <data name="Label2.Text" xml:space="preserve">
     <value>Relative Abweichung für schreibbare Variablen</value>
-  </data>
-  <data name="Label2.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleLeft</value>
-  </data>
-  <data name="chkWriteMode.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left</value>
-  </data>
-  <data name="chkWriteMode.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="chkWriteMode.Location" type="System.Drawing.Point, System.Drawing">
-    <value>156, 3</value>
-  </data>
-  <data name="chkWriteMode.Size" type="System.Drawing.Size, System.Drawing">
-    <value>117, 24</value>
   </data>
   <data name="chkWriteMode.Text" xml:space="preserve">
     <value>Schreibmodus umschalten</value>
   </data>
-  <data name="chkUpdate.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left</value>
-  </data>
-  <data name="chkUpdate.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="chkUpdate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="chkUpdate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>147, 24</value>
-  </data>
   <data name="chkUpdate.Text" xml:space="preserve">
     <value>Automatisch neu berechnen</value>
   </data>
-  <data name="tbTolerance.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left</value>
-  </data>
-  <data name="tbTolerance.Location" type="System.Drawing.Point, System.Drawing">
-    <value>477, 3</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>637, 417</value>
-  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAYAICAAAAEACACoCAAAZgAAABAQAAABAAgAaAUAAA4JAACAgAAAAQAgACgIAQB2DgAAMDAAAAEA

@@ -23,10 +23,9 @@ Partial Class SpreadsheetForm
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(SpreadsheetForm))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(SpreadsheetForm))
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.A = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.B = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -64,14 +63,12 @@ Partial Class SpreadsheetForm
         Me.LimparToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CopiarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ColarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.tbCell = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.tbValue = New System.Windows.Forms.TextBox()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
-        Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.chkWriteMode = New System.Windows.Forms.CheckBox()
         Me.chkUpdate = New System.Windows.Forms.CheckBox()
@@ -87,21 +84,10 @@ Partial Class SpreadsheetForm
         Me.DockTopAutoHideToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DockBottomAutoHideToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DocumentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
-        Me.TableLayoutPanel2.SuspendLayout()
-        Me.TableLayoutPanel3.SuspendLayout()
         Me.dckMenu.SuspendLayout()
         Me.SuspendLayout()
-        '
-        'TableLayoutPanel1
-        '
-        resources.ApplyResources(Me.TableLayoutPanel1, "TableLayoutPanel1")
-        Me.TableLayoutPanel1.Controls.Add(Me.DataGridView1, 0, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.TableLayoutPanel2, 0, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.TableLayoutPanel3, 0, 2)
-        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         '
         'DataGridView1
         '
@@ -109,7 +95,7 @@ Partial Class SpreadsheetForm
         Me.DataGridView1.AllowUserToDeleteRows = False
         DataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke
         Me.DataGridView1.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
-        Me.DataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None
+        resources.ApplyResources(Me.DataGridView1, "DataGridView1")
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
@@ -118,10 +104,8 @@ Partial Class SpreadsheetForm
         DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.DataGridView1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
-        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.A, Me.B, Me.C, Me.D, Me.E, Me.F, Me.G, Me.H, Me.I, Me.J, Me.K, Me.L, Me.M, Me.N, Me.O, Me.P, Me.Q, Me.R, Me.S, Me.T, Me.U, Me.V, Me.W, Me.X, Me.Y, Me.Z})
         Me.DataGridView1.ContextMenuStrip = Me.ContextMenuStrip1
-        resources.ApplyResources(Me.DataGridView1, "DataGridView1")
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
         Me.DataGridView1.RowTemplate.Height = 20
@@ -343,17 +327,6 @@ Partial Class SpreadsheetForm
         Me.ColarToolStripMenuItem.Name = "ColarToolStripMenuItem"
         resources.ApplyResources(Me.ColarToolStripMenuItem, "ColarToolStripMenuItem")
         '
-        'TableLayoutPanel2
-        '
-        resources.ApplyResources(Me.TableLayoutPanel2, "TableLayoutPanel2")
-        Me.TableLayoutPanel2.Controls.Add(Me.tbCell, 0, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.Label1, 2, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.tbValue, 3, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.Button3, 4, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.Button1, 5, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.Button2, 1, 0)
-        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
-        '
         'tbCell
         '
         resources.ApplyResources(Me.tbCell, "tbCell")
@@ -372,15 +345,15 @@ Partial Class SpreadsheetForm
         '
         'Button3
         '
-        Me.Button3.Image = Global.DWSIM.My.Resources.Resources.tick
         resources.ApplyResources(Me.Button3, "Button3")
+        Me.Button3.Image = Global.DWSIM.My.Resources.Resources.tick
         Me.Button3.Name = "Button3"
         Me.Button3.UseVisualStyleBackColor = True
         '
         'Button1
         '
-        Me.Button1.Image = Global.DWSIM.My.Resources.Resources.cross
         resources.ApplyResources(Me.Button1, "Button1")
+        Me.Button1.Image = Global.DWSIM.My.Resources.Resources.cross
         Me.Button1.Name = "Button1"
         Me.Button1.UseVisualStyleBackColor = True
         '
@@ -390,15 +363,6 @@ Partial Class SpreadsheetForm
         resources.ApplyResources(Me.Button2, "Button2")
         Me.Button2.Name = "Button2"
         Me.Button2.UseVisualStyleBackColor = True
-        '
-        'TableLayoutPanel3
-        '
-        resources.ApplyResources(Me.TableLayoutPanel3, "TableLayoutPanel3")
-        Me.TableLayoutPanel3.Controls.Add(Me.Label2, 0, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.chkWriteMode, 0, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.chkUpdate, 0, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.tbTolerance, 3, 0)
-        Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
         '
         'Label2
         '
@@ -486,26 +450,30 @@ Partial Class SpreadsheetForm
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CloseButton = False
         Me.CloseButtonVisible = False
-        Me.Controls.Add(Me.TableLayoutPanel1)
+        Me.Controls.Add(Me.tbTolerance)
+        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.DataGridView1)
+        Me.Controls.Add(Me.chkWriteMode)
+        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.chkUpdate)
+        Me.Controls.Add(Me.Button3)
+        Me.Controls.Add(Me.tbValue)
+        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.tbCell)
+        Me.Controls.Add(Me.Button2)
         Me.DoubleBuffered = True
         Me.HideOnClose = True
         Me.Name = "SpreadsheetForm"
         Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document
         Me.TabPageContextMenuStrip = Me.dckMenu
-        Me.TableLayoutPanel1.ResumeLayout(False)
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStrip1.ResumeLayout(False)
-        Me.TableLayoutPanel2.ResumeLayout(False)
-        Me.TableLayoutPanel2.PerformLayout()
-        Me.TableLayoutPanel3.ResumeLayout(False)
-        Me.TableLayoutPanel3.PerformLayout()
         Me.dckMenu.ResumeLayout(False)
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
-    Public WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
     Public WithEvents DataGridView1 As System.Windows.Forms.DataGridView
-    Public WithEvents TableLayoutPanel2 As System.Windows.Forms.TableLayoutPanel
     Public WithEvents tbCell As System.Windows.Forms.TextBox
     Public WithEvents Button1 As System.Windows.Forms.Button
     Public WithEvents Button2 As System.Windows.Forms.Button
@@ -522,7 +490,6 @@ Partial Class SpreadsheetForm
     Public WithEvents ToolStripSeparator1 As System.Windows.Forms.ToolStripSeparator
     Public WithEvents AvaliarFórmulaToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents ExportarDadosToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Public WithEvents TableLayoutPanel3 As System.Windows.Forms.TableLayoutPanel
     Public WithEvents chkUpdate As System.Windows.Forms.CheckBox
     Public WithEvents tbTolerance As System.Windows.Forms.TextBox
     Public WithEvents Label2 As System.Windows.Forms.Label

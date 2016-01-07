@@ -21,13 +21,8 @@ Partial Class frmLog
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmLog))
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Grid1 = New System.Windows.Forms.DataGridView()
-        Me.Imagem = New System.Windows.Forms.DataGridViewImageColumn()
-        Me.Indice = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Data = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Tipo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Mensagem = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripButton5 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
@@ -45,6 +40,11 @@ Partial Class frmLog
         Me.DockTopAutoHideToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DockBottomAutoHideToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DocumentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Imagem = New System.Windows.Forms.DataGridViewImageColumn()
+        Me.Indice = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Data = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Tipo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Mensagem = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.Grid1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ToolStrip1.SuspendLayout()
         Me.dckMenu.SuspendLayout()
@@ -52,60 +52,18 @@ Partial Class frmLog
         '
         'Grid1
         '
-        resources.ApplyResources(Me.Grid1, "Grid1")
         Me.Grid1.AllowUserToAddRows = False
         Me.Grid1.AllowUserToDeleteRows = False
         Me.Grid1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.Grid1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal
         Me.Grid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.Grid1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Imagem, Me.Indice, Me.Data, Me.Tipo, Me.Mensagem})
+        resources.ApplyResources(Me.Grid1, "Grid1")
         Me.Grid1.Name = "Grid1"
         Me.Grid1.ReadOnly = True
         Me.Grid1.RowHeadersVisible = False
         Me.Grid1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.Grid1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        '
-        'Imagem
-        '
-        Me.Imagem.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.Imagem.Description = " "
-        resources.ApplyResources(Me.Imagem, "Imagem")
-        Me.Imagem.Name = "Imagem"
-        Me.Imagem.ReadOnly = True
-        Me.Imagem.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Imagem.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        '
-        'Indice
-        '
-        resources.ApplyResources(Me.Indice, "Indice")
-        Me.Indice.Name = "Indice"
-        Me.Indice.ReadOnly = True
-        '
-        'Data
-        '
-        Me.Data.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.Data.FillWeight = 40.0!
-        resources.ApplyResources(Me.Data, "Data")
-        Me.Data.Name = "Data"
-        Me.Data.ReadOnly = True
-        '
-        'Tipo
-        '
-        Me.Tipo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.Tipo.FillWeight = 30.0!
-        resources.ApplyResources(Me.Tipo, "Tipo")
-        Me.Tipo.Name = "Tipo"
-        Me.Tipo.ReadOnly = True
-        Me.Tipo.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        '
-        'Mensagem
-        '
-        Me.Mensagem.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Mensagem.DefaultCellStyle = DataGridViewCellStyle2
-        resources.ApplyResources(Me.Mensagem, "Mensagem")
-        Me.Mensagem.Name = "Mensagem"
-        Me.Mensagem.ReadOnly = True
         '
         'ToolStrip1
         '
@@ -118,105 +76,146 @@ Partial Class frmLog
         '
         'ToolStripButton5
         '
-        resources.ApplyResources(Me.ToolStripButton5, "ToolStripButton5")
         Me.ToolStripButton5.Checked = True
         Me.ToolStripButton5.CheckOnClick = True
         Me.ToolStripButton5.CheckState = System.Windows.Forms.CheckState.Checked
         Me.ToolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton5.Image = Global.DWSIM.My.Resources.Resources.information
+        resources.ApplyResources(Me.ToolStripButton5, "ToolStripButton5")
         Me.ToolStripButton5.Margin = New System.Windows.Forms.Padding(3)
         Me.ToolStripButton5.Name = "ToolStripButton5"
         '
         'ToolStripButton3
         '
-        resources.ApplyResources(Me.ToolStripButton3, "ToolStripButton3")
         Me.ToolStripButton3.Checked = True
         Me.ToolStripButton3.CheckOnClick = True
         Me.ToolStripButton3.CheckState = System.Windows.Forms.CheckState.Checked
         Me.ToolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton3.Image = Global.DWSIM.My.Resources.Resources.exclamation
+        resources.ApplyResources(Me.ToolStripButton3, "ToolStripButton3")
         Me.ToolStripButton3.Margin = New System.Windows.Forms.Padding(3)
         Me.ToolStripButton3.Name = "ToolStripButton3"
         '
         'ToolStripButton1
         '
-        resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
         Me.ToolStripButton1.Checked = True
         Me.ToolStripButton1.CheckOnClick = True
         Me.ToolStripButton1.CheckState = System.Windows.Forms.CheckState.Checked
         Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton1.Image = Global.DWSIM.My.Resources.Resources._error
+        resources.ApplyResources(Me.ToolStripButton1, "ToolStripButton1")
         Me.ToolStripButton1.Margin = New System.Windows.Forms.Padding(3)
         Me.ToolStripButton1.Name = "ToolStripButton1"
         '
         'ToolStripSeparator1
         '
-        resources.ApplyResources(Me.ToolStripSeparator1, "ToolStripSeparator1")
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
+        resources.ApplyResources(Me.ToolStripSeparator1, "ToolStripSeparator1")
         '
         'ToolStripButton2
         '
-        resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
         Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.ToolStripButton2.Image = Global.DWSIM.My.Resources.Resources.cross
+        resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
         Me.ToolStripButton2.Margin = New System.Windows.Forms.Padding(0)
         Me.ToolStripButton2.Name = "ToolStripButton2"
         '
         'dckMenu
         '
-        resources.ApplyResources(Me.dckMenu, "dckMenu")
         Me.dckMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FloatToolStripMenuItem, Me.DockLeftToolStripMenuItem, Me.DockRightToolStripMenuItem, Me.DockTopToolStripMenuItem, Me.DockBottomToolStripMenuItem, Me.DockLeftAutoHideToolStripMenuItem, Me.DockRightAutoHideToolStripMenuItem, Me.DockTopAutoHideToolStripMenuItem, Me.DockBottomAutoHideToolStripMenuItem, Me.DocumentToolStripMenuItem})
         Me.dckMenu.Name = "dckMenu"
+        resources.ApplyResources(Me.dckMenu, "dckMenu")
         '
         'FloatToolStripMenuItem
         '
-        resources.ApplyResources(Me.FloatToolStripMenuItem, "FloatToolStripMenuItem")
         Me.FloatToolStripMenuItem.Name = "FloatToolStripMenuItem"
+        resources.ApplyResources(Me.FloatToolStripMenuItem, "FloatToolStripMenuItem")
         '
         'DockLeftToolStripMenuItem
         '
-        resources.ApplyResources(Me.DockLeftToolStripMenuItem, "DockLeftToolStripMenuItem")
         Me.DockLeftToolStripMenuItem.Name = "DockLeftToolStripMenuItem"
+        resources.ApplyResources(Me.DockLeftToolStripMenuItem, "DockLeftToolStripMenuItem")
         '
         'DockRightToolStripMenuItem
         '
-        resources.ApplyResources(Me.DockRightToolStripMenuItem, "DockRightToolStripMenuItem")
         Me.DockRightToolStripMenuItem.Name = "DockRightToolStripMenuItem"
+        resources.ApplyResources(Me.DockRightToolStripMenuItem, "DockRightToolStripMenuItem")
         '
         'DockTopToolStripMenuItem
         '
-        resources.ApplyResources(Me.DockTopToolStripMenuItem, "DockTopToolStripMenuItem")
         Me.DockTopToolStripMenuItem.Name = "DockTopToolStripMenuItem"
+        resources.ApplyResources(Me.DockTopToolStripMenuItem, "DockTopToolStripMenuItem")
         '
         'DockBottomToolStripMenuItem
         '
-        resources.ApplyResources(Me.DockBottomToolStripMenuItem, "DockBottomToolStripMenuItem")
         Me.DockBottomToolStripMenuItem.Name = "DockBottomToolStripMenuItem"
+        resources.ApplyResources(Me.DockBottomToolStripMenuItem, "DockBottomToolStripMenuItem")
         '
         'DockLeftAutoHideToolStripMenuItem
         '
-        resources.ApplyResources(Me.DockLeftAutoHideToolStripMenuItem, "DockLeftAutoHideToolStripMenuItem")
         Me.DockLeftAutoHideToolStripMenuItem.Name = "DockLeftAutoHideToolStripMenuItem"
+        resources.ApplyResources(Me.DockLeftAutoHideToolStripMenuItem, "DockLeftAutoHideToolStripMenuItem")
         '
         'DockRightAutoHideToolStripMenuItem
         '
-        resources.ApplyResources(Me.DockRightAutoHideToolStripMenuItem, "DockRightAutoHideToolStripMenuItem")
         Me.DockRightAutoHideToolStripMenuItem.Name = "DockRightAutoHideToolStripMenuItem"
+        resources.ApplyResources(Me.DockRightAutoHideToolStripMenuItem, "DockRightAutoHideToolStripMenuItem")
         '
         'DockTopAutoHideToolStripMenuItem
         '
-        resources.ApplyResources(Me.DockTopAutoHideToolStripMenuItem, "DockTopAutoHideToolStripMenuItem")
         Me.DockTopAutoHideToolStripMenuItem.Name = "DockTopAutoHideToolStripMenuItem"
+        resources.ApplyResources(Me.DockTopAutoHideToolStripMenuItem, "DockTopAutoHideToolStripMenuItem")
         '
         'DockBottomAutoHideToolStripMenuItem
         '
-        resources.ApplyResources(Me.DockBottomAutoHideToolStripMenuItem, "DockBottomAutoHideToolStripMenuItem")
         Me.DockBottomAutoHideToolStripMenuItem.Name = "DockBottomAutoHideToolStripMenuItem"
+        resources.ApplyResources(Me.DockBottomAutoHideToolStripMenuItem, "DockBottomAutoHideToolStripMenuItem")
         '
         'DocumentToolStripMenuItem
         '
-        resources.ApplyResources(Me.DocumentToolStripMenuItem, "DocumentToolStripMenuItem")
         Me.DocumentToolStripMenuItem.Name = "DocumentToolStripMenuItem"
+        resources.ApplyResources(Me.DocumentToolStripMenuItem, "DocumentToolStripMenuItem")
+        '
+        'Imagem
+        '
+        Me.Imagem.Description = " "
+        Me.Imagem.FillWeight = 84.94611!
+        resources.ApplyResources(Me.Imagem, "Imagem")
+        Me.Imagem.Name = "Imagem"
+        Me.Imagem.ReadOnly = True
+        Me.Imagem.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Imagem.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        '
+        'Indice
+        '
+        Me.Indice.FillWeight = 75.12691!
+        resources.ApplyResources(Me.Indice, "Indice")
+        Me.Indice.Name = "Indice"
+        Me.Indice.ReadOnly = True
+        '
+        'Data
+        '
+        Me.Data.FillWeight = 49.39458!
+        resources.ApplyResources(Me.Data, "Data")
+        Me.Data.Name = "Data"
+        Me.Data.ReadOnly = True
+        '
+        'Tipo
+        '
+        Me.Tipo.FillWeight = 37.04594!
+        resources.ApplyResources(Me.Tipo, "Tipo")
+        Me.Tipo.Name = "Tipo"
+        Me.Tipo.ReadOnly = True
+        Me.Tipo.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        '
+        'Mensagem
+        '
+        Me.Mensagem.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Mensagem.DefaultCellStyle = DataGridViewCellStyle1
+        resources.ApplyResources(Me.Mensagem, "Mensagem")
+        Me.Mensagem.Name = "Mensagem"
+        Me.Mensagem.ReadOnly = True
         '
         'frmLog
         '
@@ -244,11 +243,6 @@ Partial Class frmLog
     Public WithEvents ToolStripButton1 As System.Windows.Forms.ToolStripButton
     Public WithEvents ToolStripSeparator1 As System.Windows.Forms.ToolStripSeparator
     Public WithEvents ToolStripButton2 As System.Windows.Forms.ToolStripButton
-    Friend WithEvents Imagem As System.Windows.Forms.DataGridViewImageColumn
-    Friend WithEvents Indice As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Data As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Tipo As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Mensagem As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents dckMenu As System.Windows.Forms.ContextMenuStrip
     Friend WithEvents FloatToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents DockLeftToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
@@ -260,5 +254,10 @@ Partial Class frmLog
     Friend WithEvents DockTopAutoHideToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents DockBottomAutoHideToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents DocumentToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents Imagem As System.Windows.Forms.DataGridViewImageColumn
+    Friend WithEvents Indice As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Data As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Tipo As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Mensagem As System.Windows.Forms.DataGridViewTextBoxColumn
 
 End Class

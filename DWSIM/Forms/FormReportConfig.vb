@@ -331,7 +331,7 @@ Public Class FormReportConfig
         Select Case My.Settings.CultureInfo
             Case "pt-BR"
                 MyReport.LoadFrom(My.Application.Info.DirectoryPath & "\data\report_pt-BR.mr6")
-            Case "en-US"
+            Case "en"
                 MyReport.LoadFrom(My.Application.Info.DirectoryPath & "\data\report_en-US.mr6")
             Case Else
                 MyReport.LoadFrom(My.Application.Info.DirectoryPath & "\data\report_en-US.mr6")

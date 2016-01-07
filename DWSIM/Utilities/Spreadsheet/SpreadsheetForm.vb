@@ -66,33 +66,29 @@ Public Class SpreadsheetForm
         Me.Hide()
     End Sub
 
-    Private Sub UISpreadsheetEditorForm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Public Sub UISpreadsheetEditorForm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
         formc = My.Application.ActiveSimulation
+
         If Me.loaded = False Then
-            If DWSIM.App.IsRunningOnMono Then
-                For ii As Integer = 1 To 100
-                    Me.DataGridView1.Rows.Add()
-                Next
-            Else
-                Me.DataGridView1.Rows.Add(100)
-            End If
+            Me.DataGridView1.Rows.Add(100)
             CopyFromDT()
         End If
-        Dim row As DataGridViewRow
+
         Dim i As Integer = 1
-        For Each row In Me.DataGridView1.Rows
+        For Each row As DataGridViewRow In Me.DataGridView1.Rows
             row.HeaderCell.Value = i.ToString
             i = i + 1
         Next
-        If Me.ExpContext Is Nothing Then
-            Me.ExpContext = New Ciloci.Flee.ExpressionContext
-            With Me.ExpContext
-                .Imports.AddType(GetType(System.Math))
-                .Imports.AddType(GetType(System.String))
-                .Imports.AddType(GetType(Microsoft.VisualBasic.Strings))
-                .Imports.AddType(GetType(DWSIM.MathEx.Common))
-            End With
-        End If
+
+        Me.ExpContext = New Ciloci.Flee.ExpressionContext
+        With Me.ExpContext
+            .Imports.AddType(GetType(System.Math))
+            .Imports.AddType(GetType(System.String))
+            .Imports.AddType(GetType(Microsoft.VisualBasic.Strings))
+            .Imports.AddType(GetType(DWSIM.MathEx.Common))
+        End With
+
         DefineVariables()
         loaded = True
 
@@ -268,7 +264,7 @@ Public Class SpreadsheetForm
     ''' <remarks></remarks>
     Public Function GetCellString(ByVal cell As DataGridViewCell) As String
 
-        Dim str As String = Me.DataGridView1.Columns(cell.ColumnIndex).Name & CStr(cell.RowIndex + 1)
+        Dim str As String = Me.DataGridView1.Columns(cell.ColumnIndex).Name & Convert.ToString(cell.RowIndex + 1)
 
         Return str
 
@@ -303,11 +299,7 @@ Public Class SpreadsheetForm
 
         For Each r As DataGridViewRow In Me.DataGridView1.Rows
             For Each ce As DataGridViewCell In r.Cells
-                Try
-                    Me.ExpContext.Variables.DefineVariable(Me.GetCellString(ce), GetType(Double))
-                Catch ex As Exception
-                    ce.OwningColumn.Visible = False
-                End Try
+                Me.ExpContext.Variables.DefineVariable(Me.GetCellString(ce), GetType(Double))
             Next
         Next
 
@@ -589,26 +581,30 @@ Public Class SpreadsheetForm
     ''' <remarks></remarks>
     Sub UpdateColors()
 
-        For Each cell In Me.DataGridView1.Rows
+        For Each row As DataGridViewRow In Me.DataGridView1.Rows
 
-            Try
-                ccparams = cell.Tag
-                Dim expression = ccparams.Expression
-                If ccparams.CellType = VarType.Write Then
-                    cell.Style.BackColor = Color.LightBlue
-                End If
-                If expression <> "" Then
-                    If expression.Substring(0, 1) = ":" Then
-                        cell.Style.BackColor = Color.LightGreen
+            For Each cell As DataGridViewCell In row.Cells
+
+                Try
+                    ccparams = cell.Tag
+                    Dim expression = ccparams.Expression
+                    If ccparams.CellType = VarType.Write Then
+                        cell.Style.BackColor = Color.LightBlue
+                    End If
+                    If expression <> "" Then
+                        If expression.Substring(0, 1) = ":" Then
+                            cell.Style.BackColor = Color.LightGreen
+                        Else
+                            cell.Style.BackColor = cell.OwningColumn.DefaultCellStyle.BackColor
+                        End If
                     Else
                         cell.Style.BackColor = cell.OwningColumn.DefaultCellStyle.BackColor
                     End If
-                Else
+                Catch ex As Exception
                     cell.Style.BackColor = cell.OwningColumn.DefaultCellStyle.BackColor
-                End If
-            Catch ex As Exception
-                cell.Style.BackColor = cell.OwningColumn.DefaultCellStyle.BackColor
-            End Try
+                End Try
+
+            Next
 
         Next
 
