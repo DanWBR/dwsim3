@@ -25,6 +25,7 @@ Imports System.IO
 Imports System.Runtime.Serialization.Formatters.Binary
 Imports System.Math
 Imports Microsoft.VisualBasic.FileIO
+Imports System.Globalization
 
 Public Class FormCompoundCreator
 
@@ -1003,16 +1004,17 @@ Public Class FormCompoundCreator
 
             If ACL.Count > 0 Then
                 MM = jb.CalcMW(ACL)
-                If CheckBoxMW.Checked Then Me.TextBoxMW.Text = MM
-                MM = Me.TextBoxMW.Text
+                If CheckBoxMW.Checked Then Me.TextBoxMW.Text = Format(MM, "N")
+                'MM = Me.TextBoxMW.Text
             Else
                 If CheckBoxMW.Checked Then Me.TextBoxMW.Text = ""
             End If
 
             If GC > 0 And Not SpecialDefinition Then
+
                 'boiling point
                 Tb = jb.CalcTb(JGD)
-                If CheckBoxNBP.Checked Then Me.TextBoxNBP.Text = cv.ConverterDoSI(su.spmp_temperature, Tb)
+                If CheckBoxNBP.Checked Then Me.TextBoxNBP.Text = Format(cv.ConverterDoSI(su.spmp_temperature, Tb), "N")
                 If CheckValidDF(Me.TextBoxNBP.Text) Then
                     Tb = cv.ConverterParaSI(su.spmp_temperature, Me.TextBoxNBP.Text)
                 Else : Tb = -1
@@ -1021,7 +1023,7 @@ Public Class FormCompoundCreator
                 'critical temperature
                 If Tb > 0 Then
                     Tc = jb.CalcTc(Tb, JGD)
-                    If CheckBoxTc.Checked Then Me.TextBoxTc.Text = cv.ConverterDoSI(su.spmp_temperature, Tc)
+                    If CheckBoxTc.Checked Then Me.TextBoxTc.Text = Format(cv.ConverterDoSI(su.spmp_temperature, Tc), "N")
                     If CheckValidDF(Me.TextBoxTc.Text) Then
                         Tc = cv.ConverterParaSI(su.spmp_temperature, Me.TextBoxTc.Text)
                     Else : Tc = -1
@@ -1033,7 +1035,7 @@ Public Class FormCompoundCreator
 
                 'critical pressure
                 Pc = jb.CalcPc(JGD)
-                If CheckBoxPc.Checked Then Me.TextBoxPc.Text = cv.ConverterDoSI(su.spmp_pressure, Pc)
+                If CheckBoxPc.Checked Then Me.TextBoxPc.Text = Format(cv.ConverterDoSI(su.spmp_pressure, Pc), "N")
                 If CheckValidDF(Me.TextBoxPc.Text) Then
                     Pc = cv.ConverterParaSI(su.spmp_pressure, Me.TextBoxPc.Text)
                 Else : Pc = -1
@@ -1042,8 +1044,8 @@ Public Class FormCompoundCreator
                 'critical compressibility
                 If Tc > 0 And Pc > 0 Then
                     Vc = jb.CalcVc(JGD)
-                    If CheckBoxZc.Checked Then Me.TextBoxZc.Text = Pc * Vc / Tc / 8.314 / 1000
-                    If CheckBoxZRa.Checked Then Me.TextBoxZRa.Text = Pc * Vc / Tc / 8.314 / 1000
+                    If CheckBoxZc.Checked Then Me.TextBoxZc.Text = Format(Pc * Vc / Tc / 8.314 / 1000, "N")
+                    If CheckBoxZRa.Checked Then Me.TextBoxZRa.Text = Format(Pc * Vc / Tc / 8.314 / 1000, "N")
                     ZRa = Me.TextBoxZRa.Text
                 Else
                     If CheckBoxZc.Checked Then Me.TextBoxZc.Text = ""
@@ -1053,7 +1055,7 @@ Public Class FormCompoundCreator
                 'acentric factor
                 If Tb > 0 And Tc > 0 And Pc > 0 Then
                     w = (-Math.Log(Pc / 100000) - 5.92714 + 6.09648 / (Tb / Tc) + 1.28862 * Math.Log(Tb / Tc) - 0.169347 * (Tb / Tc) ^ 6) / (15.2518 - 15.6875 / (Tb / Tc) - 13.4721 * Math.Log(Tb / Tc) + 0.43577 * (Tb / Tc) ^ 6)
-                    If CheckBoxAF.Checked Then Me.TextBoxAF.Text = w
+                    If CheckBoxAF.Checked Then Me.TextBoxAF.Text = Format(w, "N")
                     If CheckValidDF(Me.TextBoxAF.Text) Then
                         w = Me.TextBoxAF.Text
                     Else
@@ -1065,8 +1067,8 @@ Public Class FormCompoundCreator
                 End If
 
 
-                If CheckBoxDHF.Checked Then Me.TextBoxDHF.Text = cv.ConverterDoSI(su.spmp_enthalpy, jb.CalcDHf(JGD) / MM)
-                If CheckBoxDGF.Checked Then Me.TextBoxDGF.Text = cv.ConverterDoSI(su.spmp_enthalpy, jb.CalcDGf(JGD) / MM)
+                If CheckBoxDHF.Checked Then Me.TextBoxDHF.Text = Format(cv.ConverterDoSI(su.spmp_enthalpy, jb.CalcDHf(JGD) / MM), "N")
+                If CheckBoxDGF.Checked Then Me.TextBoxDGF.Text = Format(cv.ConverterDoSI(su.spmp_enthalpy, jb.CalcDGf(JGD) / MM), "N")
                 If CheckBoxCSAF.Checked Then
                     If w > 0 Then
                         Me.TextBoxCSAF.Text = w
@@ -1077,16 +1079,16 @@ Public Class FormCompoundCreator
 
                 If Tc > 0 And Pc > 0 And Tb > 0 And MM > 0 And w > 0 Then
                     Hvb = methods.DHvb_Vetere(Tc, Pc, Tb) / MM
-                    If CheckBoxCSSP.Checked Then Me.TextBoxCSSP.Text = ((Hvb * MM - 8.314 * Tb) * 238.846 * DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS.liq_dens_rackett(Tb, Tc, Pc, w, MM) / MM / 1000000.0) ^ 0.5
-                    If CheckBoxCSLV.Checked Then Me.TextBoxCSLV.Text = 1 / DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS.liq_dens_rackett(Tb, Tc, Pc, w, MM) * MM / 1000 * 1000000.0
+                    If CheckBoxCSSP.Checked Then Me.TextBoxCSSP.Text = Format(((Hvb * MM - 8.314 * Tb) * 238.846 * DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS.liq_dens_rackett(Tb, Tc, Pc, w, MM) / MM / 1000000.0) ^ 0.5, "N")
+                    If CheckBoxCSLV.Checked Then Me.TextBoxCSLV.Text = Format(1 / DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS.liq_dens_rackett(Tb, Tc, Pc, w, MM) * MM / 1000 * 1000000.0, "N")
                 Else
                     If CheckBoxCSSP.Checked Then Me.TextBoxCSSP.Text = ""
                     If CheckBoxCSLV.Checked Then Me.TextBoxCSLV.Text = ""
                 End If
 
 
-                If CheckBoxMeltingTemp.Checked Then Me.TextBoxMeltingTemp.Text = cv.ConverterDoSI(su.spmp_temperature, jb.CalcTf(JGD)) 'melting temperature - temperature of fusion
-                If CheckBoxEnthOfFusion.Checked Then Me.TextBoxEnthOfFusion.Text = jb.CalcHf(JGD) 'enthalpy of fusion - KJ/mol
+                If CheckBoxMeltingTemp.Checked Then Me.TextBoxMeltingTemp.Text = Format(cv.ConverterDoSI(su.spmp_temperature, jb.CalcTf(JGD)), "N") 'melting temperature - temperature of fusion
+                If CheckBoxEnthOfFusion.Checked Then Me.TextBoxEnthOfFusion.Text = Format(jb.CalcHf(JGD), "N") 'enthalpy of fusion - KJ/mol
                 If CheckValidDF(Me.TextBoxPc.Text) Then
                     Tf = cv.ConverterParaSI(su.spmp_temperature, Me.TextBoxMeltingTemp.Text)
                 Else : Tf = -1
@@ -2682,7 +2684,7 @@ Public Class FormCompoundCreator
         If DWSIM.App.IsRunningOnMono Then
             MessageBox.Show(DWSIM.App.GetLocalString("Unsupported_Feature"), "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         Else
-           RenderSMILES()
+            RenderSMILES()
         End If
     End Sub
 
