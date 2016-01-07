@@ -903,7 +903,7 @@ Namespace Interfaces
 
 #Region "Flash Calculation Routines, v2 (accept an initial estimate)"
 
-        <ExcelFunction("Calculates a Pressure / Enthalpy Flash using the selected Property Package.")> _
+        <ExcelFunction("Calculates a Pressure / Enthalpy Flash using the selected Property Package. Accepts an initial estimate for the temperature search.")> _
         Public Shared Function PHFlash2( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
         <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
@@ -1027,7 +1027,7 @@ Namespace Interfaces
 
         End Function
 
-        <ExcelFunction("Calculates a Pressure / Entropy Flash using the selected Property Package.")> _
+        <ExcelFunction("Calculates a Pressure / Entropy Flash using the selected Property Package. Accepts an initial estimate for the temperature search.")> _
         Public Shared Function PSFlash2( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
         <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
@@ -1151,7 +1151,7 @@ Namespace Interfaces
 
         End Function
 
-        <ExcelFunction("Calculates a Pressure / Vapor Fraction Flash using the selected Property Package.")> _
+        <ExcelFunction("Calculates a Pressure / Vapor Fraction Flash using the selected Property Package. Accepts an initial estimate for the temperature search.")> _
         Public Shared Function PVFFlash2( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
         <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
@@ -1275,7 +1275,7 @@ Namespace Interfaces
 
         End Function
 
-        <ExcelFunction("Calculates a Temperature / Vapor Fraction Flash using the selected Property Package.")> _
+        <ExcelFunction("Calculates a Temperature / Vapor Fraction Flash using the selected Property Package. Accepts an initial estimate for the pressure search.")> _
         Public Shared Function TVFFlash2( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
         <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
