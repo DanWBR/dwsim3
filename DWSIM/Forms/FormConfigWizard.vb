@@ -291,7 +291,7 @@ Public Class FormConfigWizard
                     Next
                 Next
 
-                Me.ListViewA.Items.Add(tmpcomp.Name, DWSIM.App.GetComponentName(tmpcomp.Name), 0).Tag = tmpcomp.Name
+                Me.ListViewA.Items.Add(tmpcomp.Name, DWSIM.App.GetComponentName(tmpcomp.Name) & " (" & tmpcomp.OriginalDB & ")", 0).Tag = tmpcomp.Name
                 Me.ogc1.Rows.RemoveAt(index)
             End If
         End If

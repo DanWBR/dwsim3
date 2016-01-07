@@ -1094,7 +1094,7 @@ Public Class FormSimulSettings
                     Next
                 Next
 
-                Me.ListViewA.Items.Add(tmpcomp.Name, DWSIM.App.GetComponentName(tmpcomp.Name), 0).Tag = tmpcomp.Name
+                Me.ListViewA.Items.Add(tmpcomp.Name, DWSIM.App.GetComponentName(tmpcomp.Name) & " (" & tmpcomp.OriginalDB & ")", 0).Tag = tmpcomp.Name
 
                 If Not DWSIM.App.IsRunningOnMono Then Me.ogc1.Rows.RemoveAt(index)
 

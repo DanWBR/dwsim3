@@ -23,9 +23,9 @@ Partial Class FormConfigWizard
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormConfigWizard))
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.StepWizardControl1 = New AeroWizard.StepWizardControl()
         Me.WizardPage1 = New AeroWizard.WizardPage()
         Me.Button1 = New System.Windows.Forms.Button()
@@ -39,6 +39,14 @@ Partial Class FormConfigWizard
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Button10 = New System.Windows.Forms.Button()
         Me.ogc1 = New System.Windows.Forms.DataGridView()
+        Me.Column11 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.casno = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.Column10 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.Button7 = New System.Windows.Forms.Button()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.WizardPage3 = New AeroWizard.WizardPage()
@@ -48,6 +56,10 @@ Partial Class FormConfigWizard
         Me.ListViewPP = New System.Windows.Forms.ListView()
         Me.GroupBox12 = New System.Windows.Forms.GroupBox()
         Me.dgvpp = New System.Windows.Forms.DataGridView()
+        Me.Column18 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column16 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column17 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column12 = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.WizardPage4 = New AeroWizard.WizardPage()
         Me.ListBoxPP = New System.Windows.Forms.ListBox()
@@ -56,25 +68,13 @@ Partial Class FormConfigWizard
         Me.Label5 = New System.Windows.Forms.Label()
         Me.WizardPage5 = New AeroWizard.WizardPage()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
-        Me.ComboBox2 = New System.Windows.Forms.ComboBox()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.Label7 = New System.Windows.Forms.Label()
         Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column11 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.casno = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column5 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-        Me.Column10 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-        Me.Column18 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column16 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column17 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column12 = New System.Windows.Forms.DataGridViewButtonColumn()
+        Me.ComboBox2 = New System.Windows.Forms.ComboBox()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
         CType(Me.StepWizardControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.WizardPage1.SuspendLayout()
         Me.WizardPage2.SuspendLayout()
@@ -102,12 +102,12 @@ Partial Class FormConfigWizard
         '
         'WizardPage1
         '
-        resources.ApplyResources(Me.WizardPage1, "WizardPage1")
         Me.WizardPage1.AllowBack = False
         Me.WizardPage1.Controls.Add(Me.Button1)
         Me.WizardPage1.Controls.Add(Me.Label1)
         Me.WizardPage1.Name = "WizardPage1"
         Me.WizardPage1.NextPage = Me.WizardPage2
+        resources.ApplyResources(Me.WizardPage1, "WizardPage1")
         '
         'Button1
         '
@@ -122,7 +122,6 @@ Partial Class FormConfigWizard
         '
         'WizardPage2
         '
-        resources.ApplyResources(Me.WizardPage2, "WizardPage2")
         Me.WizardPage2.Controls.Add(Me.GroupBox4)
         Me.WizardPage2.Controls.Add(Me.Label2)
         Me.WizardPage2.Controls.Add(Me.Button11)
@@ -133,18 +132,19 @@ Partial Class FormConfigWizard
         Me.WizardPage2.Controls.Add(Me.TextBox1)
         Me.WizardPage2.Name = "WizardPage2"
         Me.WizardPage2.NextPage = Me.WizardPage3
+        resources.ApplyResources(Me.WizardPage2, "WizardPage2")
         '
         'GroupBox4
         '
-        resources.ApplyResources(Me.GroupBox4, "GroupBox4")
         Me.GroupBox4.Controls.Add(Me.ListViewA)
+        resources.ApplyResources(Me.GroupBox4, "GroupBox4")
         Me.GroupBox4.Name = "GroupBox4"
         Me.GroupBox4.TabStop = False
         '
         'ListViewA
         '
-        resources.ApplyResources(Me.ListViewA, "ListViewA")
         Me.ListViewA.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader3})
+        resources.ApplyResources(Me.ListViewA, "ListViewA")
         Me.ListViewA.FullRowSelect = True
         Me.ListViewA.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None
         Me.ListViewA.HideSelection = False
@@ -182,15 +182,15 @@ Partial Class FormConfigWizard
         '
         'ogc1
         '
-        resources.ApplyResources(Me.ogc1, "ogc1")
         Me.ogc1.AllowUserToAddRows = False
         Me.ogc1.AllowUserToDeleteRows = False
         Me.ogc1.AllowUserToResizeRows = False
-        DataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer))
-        Me.ogc1.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer))
+        Me.ogc1.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
         Me.ogc1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.ogc1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.ogc1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column11, Me.Column6, Me.casno, Me.Column8, Me.Column9, Me.Column7, Me.Column5, Me.Column10})
+        resources.ApplyResources(Me.ogc1, "ogc1")
         Me.ogc1.Name = "ogc1"
         Me.ogc1.ReadOnly = True
         Me.ogc1.RowHeadersVisible = False
@@ -198,204 +198,6 @@ Partial Class FormConfigWizard
         Me.ogc1.ShowCellErrors = False
         Me.ogc1.ShowEditingIcon = False
         Me.ogc1.ShowRowErrors = False
-        '
-        'Button7
-        '
-        resources.ApplyResources(Me.Button7, "Button7")
-        Me.Button7.Name = "Button7"
-        Me.Button7.UseVisualStyleBackColor = True
-        '
-        'TextBox1
-        '
-        resources.ApplyResources(Me.TextBox1, "TextBox1")
-        Me.TextBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
-        Me.TextBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
-        Me.TextBox1.Name = "TextBox1"
-        '
-        'WizardPage3
-        '
-        resources.ApplyResources(Me.WizardPage3, "WizardPage3")
-        Me.WizardPage3.Controls.Add(Me.LinkLabelPropertyMethods)
-        Me.WizardPage3.Controls.Add(Me.GroupBox6)
-        Me.WizardPage3.Controls.Add(Me.GroupBox12)
-        Me.WizardPage3.Controls.Add(Me.Label4)
-        Me.WizardPage3.Name = "WizardPage3"
-        Me.WizardPage3.NextPage = Me.WizardPage4
-        '
-        'LinkLabelPropertyMethods
-        '
-        resources.ApplyResources(Me.LinkLabelPropertyMethods, "LinkLabelPropertyMethods")
-        Me.LinkLabelPropertyMethods.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
-        Me.LinkLabelPropertyMethods.Name = "LinkLabelPropertyMethods"
-        Me.LinkLabelPropertyMethods.TabStop = True
-        '
-        'GroupBox6
-        '
-        resources.ApplyResources(Me.GroupBox6, "GroupBox6")
-        Me.GroupBox6.Controls.Add(Me.Button8)
-        Me.GroupBox6.Controls.Add(Me.ListViewPP)
-        Me.GroupBox6.Name = "GroupBox6"
-        Me.GroupBox6.TabStop = False
-        '
-        'Button8
-        '
-        resources.ApplyResources(Me.Button8, "Button8")
-        Me.Button8.Name = "Button8"
-        '
-        'ListViewPP
-        '
-        resources.ApplyResources(Me.ListViewPP, "ListViewPP")
-        Me.ListViewPP.FullRowSelect = True
-        Me.ListViewPP.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
-        Me.ListViewPP.MultiSelect = False
-        Me.ListViewPP.Name = "ListViewPP"
-        Me.ListViewPP.ShowGroups = False
-        Me.ListViewPP.ShowItemToolTips = True
-        Me.ListViewPP.TileSize = New System.Drawing.Size(312, 16)
-        Me.ListViewPP.UseCompatibleStateImageBehavior = False
-        Me.ListViewPP.View = System.Windows.Forms.View.Tile
-        '
-        'GroupBox12
-        '
-        resources.ApplyResources(Me.GroupBox12, "GroupBox12")
-        Me.GroupBox12.Controls.Add(Me.dgvpp)
-        Me.GroupBox12.Name = "GroupBox12"
-        Me.GroupBox12.TabStop = False
-        '
-        'dgvpp
-        '
-        resources.ApplyResources(Me.dgvpp, "dgvpp")
-        Me.dgvpp.AllowUserToAddRows = False
-        Me.dgvpp.AllowUserToDeleteRows = False
-        Me.dgvpp.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.dgvpp.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
-        Me.dgvpp.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None
-        Me.dgvpp.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvpp.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column18, Me.Column16, Me.Column17, Me.Column12})
-        Me.dgvpp.MultiSelect = False
-        Me.dgvpp.Name = "dgvpp"
-        Me.dgvpp.ReadOnly = True
-        Me.dgvpp.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
-        Me.dgvpp.RowHeadersVisible = False
-        Me.dgvpp.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        '
-        'Label4
-        '
-        resources.ApplyResources(Me.Label4, "Label4")
-        Me.Label4.Name = "Label4"
-        '
-        'WizardPage4
-        '
-        resources.ApplyResources(Me.WizardPage4, "WizardPage4")
-        Me.WizardPage4.Controls.Add(Me.ListBoxPP)
-        Me.WizardPage4.Controls.Add(Me.Label6)
-        Me.WizardPage4.Controls.Add(Me.LinkLabel1)
-        Me.WizardPage4.Controls.Add(Me.Label5)
-        Me.WizardPage4.Name = "WizardPage4"
-        Me.WizardPage4.NextPage = Me.WizardPage5
-        '
-        'ListBoxPP
-        '
-        resources.ApplyResources(Me.ListBoxPP, "ListBoxPP")
-        Me.ListBoxPP.FormattingEnabled = True
-        Me.ListBoxPP.Items.AddRange(New Object() {resources.GetString("ListBoxPP.Items"), resources.GetString("ListBoxPP.Items1"), resources.GetString("ListBoxPP.Items2"), resources.GetString("ListBoxPP.Items3"), resources.GetString("ListBoxPP.Items4"), resources.GetString("ListBoxPP.Items5"), resources.GetString("ListBoxPP.Items6"), resources.GetString("ListBoxPP.Items7"), resources.GetString("ListBoxPP.Items8")})
-        Me.ListBoxPP.Name = "ListBoxPP"
-        '
-        'Label6
-        '
-        resources.ApplyResources(Me.Label6, "Label6")
-        Me.Label6.Name = "Label6"
-        '
-        'LinkLabel1
-        '
-        resources.ApplyResources(Me.LinkLabel1, "LinkLabel1")
-        Me.LinkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
-        Me.LinkLabel1.Name = "LinkLabel1"
-        Me.LinkLabel1.TabStop = True
-        '
-        'Label5
-        '
-        resources.ApplyResources(Me.Label5, "Label5")
-        Me.Label5.Name = "Label5"
-        '
-        'WizardPage5
-        '
-        resources.ApplyResources(Me.WizardPage5, "WizardPage5")
-        Me.WizardPage5.AllowCancel = False
-        Me.WizardPage5.Controls.Add(Me.DataGridView1)
-        Me.WizardPage5.Controls.Add(Me.ComboBox2)
-        Me.WizardPage5.Controls.Add(Me.Label8)
-        Me.WizardPage5.Controls.Add(Me.Label7)
-        Me.WizardPage5.IsFinishPage = True
-        Me.WizardPage5.Name = "WizardPage5"
-        '
-        'DataGridView1
-        '
-        resources.ApplyResources(Me.DataGridView1, "DataGridView1")
-        Me.DataGridView1.AllowUserToAddRows = False
-        Me.DataGridView1.AllowUserToDeleteRows = False
-        Me.DataGridView1.AllowUserToResizeColumns = False
-        Me.DataGridView1.AllowUserToResizeRows = False
-        Me.DataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.DataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
-        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2, Me.Column3, Me.Column4})
-        Me.DataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter
-        Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.ReadOnly = True
-        Me.DataGridView1.RowHeadersVisible = False
-        Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        '
-        'ComboBox2
-        '
-        resources.ApplyResources(Me.ComboBox2, "ComboBox2")
-        Me.ComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ComboBox2.DropDownWidth = 205
-        Me.ComboBox2.Name = "ComboBox2"
-        '
-        'Label8
-        '
-        resources.ApplyResources(Me.Label8, "Label8")
-        Me.Label8.Name = "Label8"
-        '
-        'Label7
-        '
-        resources.ApplyResources(Me.Label7, "Label7")
-        Me.Label7.Name = "Label7"
-        '
-        'Column1
-        '
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.Gainsboro
-        Me.Column1.DefaultCellStyle = DataGridViewCellStyle5
-        resources.ApplyResources(Me.Column1, "Column1")
-        Me.Column1.Name = "Column1"
-        Me.Column1.ReadOnly = True
-        Me.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'Column2
-        '
-        resources.ApplyResources(Me.Column2, "Column2")
-        Me.Column2.Name = "Column2"
-        Me.Column2.ReadOnly = True
-        Me.Column2.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'Column3
-        '
-        DataGridViewCellStyle6.BackColor = System.Drawing.Color.Gainsboro
-        Me.Column3.DefaultCellStyle = DataGridViewCellStyle6
-        resources.ApplyResources(Me.Column3, "Column3")
-        Me.Column3.Name = "Column3"
-        Me.Column3.ReadOnly = True
-        Me.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'Column4
-        '
-        resources.ApplyResources(Me.Column4, "Column4")
-        Me.Column4.Name = "Column4"
-        Me.Column4.ReadOnly = True
-        Me.Column4.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
         'Column11
         '
@@ -461,6 +263,86 @@ Partial Class FormConfigWizard
         Me.Column10.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
         Me.Column10.TrueValue = "True"
         '
+        'Button7
+        '
+        resources.ApplyResources(Me.Button7, "Button7")
+        Me.Button7.Name = "Button7"
+        Me.Button7.UseVisualStyleBackColor = True
+        '
+        'TextBox1
+        '
+        Me.TextBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.TextBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
+        resources.ApplyResources(Me.TextBox1, "TextBox1")
+        Me.TextBox1.Name = "TextBox1"
+        '
+        'WizardPage3
+        '
+        Me.WizardPage3.Controls.Add(Me.LinkLabelPropertyMethods)
+        Me.WizardPage3.Controls.Add(Me.GroupBox6)
+        Me.WizardPage3.Controls.Add(Me.GroupBox12)
+        Me.WizardPage3.Controls.Add(Me.Label4)
+        Me.WizardPage3.Name = "WizardPage3"
+        Me.WizardPage3.NextPage = Me.WizardPage4
+        resources.ApplyResources(Me.WizardPage3, "WizardPage3")
+        '
+        'LinkLabelPropertyMethods
+        '
+        resources.ApplyResources(Me.LinkLabelPropertyMethods, "LinkLabelPropertyMethods")
+        Me.LinkLabelPropertyMethods.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
+        Me.LinkLabelPropertyMethods.Name = "LinkLabelPropertyMethods"
+        Me.LinkLabelPropertyMethods.TabStop = True
+        '
+        'GroupBox6
+        '
+        Me.GroupBox6.Controls.Add(Me.Button8)
+        Me.GroupBox6.Controls.Add(Me.ListViewPP)
+        resources.ApplyResources(Me.GroupBox6, "GroupBox6")
+        Me.GroupBox6.Name = "GroupBox6"
+        Me.GroupBox6.TabStop = False
+        '
+        'Button8
+        '
+        resources.ApplyResources(Me.Button8, "Button8")
+        Me.Button8.Name = "Button8"
+        '
+        'ListViewPP
+        '
+        resources.ApplyResources(Me.ListViewPP, "ListViewPP")
+        Me.ListViewPP.FullRowSelect = True
+        Me.ListViewPP.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
+        Me.ListViewPP.MultiSelect = False
+        Me.ListViewPP.Name = "ListViewPP"
+        Me.ListViewPP.ShowGroups = False
+        Me.ListViewPP.ShowItemToolTips = True
+        Me.ListViewPP.TileSize = New System.Drawing.Size(312, 16)
+        Me.ListViewPP.UseCompatibleStateImageBehavior = False
+        Me.ListViewPP.View = System.Windows.Forms.View.Tile
+        '
+        'GroupBox12
+        '
+        Me.GroupBox12.Controls.Add(Me.dgvpp)
+        resources.ApplyResources(Me.GroupBox12, "GroupBox12")
+        Me.GroupBox12.Name = "GroupBox12"
+        Me.GroupBox12.TabStop = False
+        '
+        'dgvpp
+        '
+        Me.dgvpp.AllowUserToAddRows = False
+        Me.dgvpp.AllowUserToDeleteRows = False
+        Me.dgvpp.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.dgvpp.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
+        Me.dgvpp.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None
+        Me.dgvpp.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvpp.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column18, Me.Column16, Me.Column17, Me.Column12})
+        resources.ApplyResources(Me.dgvpp, "dgvpp")
+        Me.dgvpp.MultiSelect = False
+        Me.dgvpp.Name = "dgvpp"
+        Me.dgvpp.ReadOnly = True
+        Me.dgvpp.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None
+        Me.dgvpp.RowHeadersVisible = False
+        Me.dgvpp.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        '
         'Column18
         '
         resources.ApplyResources(Me.Column18, "Column18")
@@ -488,6 +370,124 @@ Partial Class FormConfigWizard
         Me.Column12.Name = "Column12"
         Me.Column12.ReadOnly = True
         Me.Column12.Text = "..."
+        '
+        'Label4
+        '
+        resources.ApplyResources(Me.Label4, "Label4")
+        Me.Label4.Name = "Label4"
+        '
+        'WizardPage4
+        '
+        Me.WizardPage4.Controls.Add(Me.ListBoxPP)
+        Me.WizardPage4.Controls.Add(Me.Label6)
+        Me.WizardPage4.Controls.Add(Me.LinkLabel1)
+        Me.WizardPage4.Controls.Add(Me.Label5)
+        Me.WizardPage4.Name = "WizardPage4"
+        Me.WizardPage4.NextPage = Me.WizardPage5
+        resources.ApplyResources(Me.WizardPage4, "WizardPage4")
+        '
+        'ListBoxPP
+        '
+        Me.ListBoxPP.FormattingEnabled = True
+        resources.ApplyResources(Me.ListBoxPP, "ListBoxPP")
+        Me.ListBoxPP.Items.AddRange(New Object() {resources.GetString("ListBoxPP.Items"), resources.GetString("ListBoxPP.Items1"), resources.GetString("ListBoxPP.Items2"), resources.GetString("ListBoxPP.Items3"), resources.GetString("ListBoxPP.Items4"), resources.GetString("ListBoxPP.Items5"), resources.GetString("ListBoxPP.Items6"), resources.GetString("ListBoxPP.Items7"), resources.GetString("ListBoxPP.Items8")})
+        Me.ListBoxPP.Name = "ListBoxPP"
+        '
+        'Label6
+        '
+        resources.ApplyResources(Me.Label6, "Label6")
+        Me.Label6.Name = "Label6"
+        '
+        'LinkLabel1
+        '
+        resources.ApplyResources(Me.LinkLabel1, "LinkLabel1")
+        Me.LinkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
+        Me.LinkLabel1.Name = "LinkLabel1"
+        Me.LinkLabel1.TabStop = True
+        '
+        'Label5
+        '
+        resources.ApplyResources(Me.Label5, "Label5")
+        Me.Label5.Name = "Label5"
+        '
+        'WizardPage5
+        '
+        Me.WizardPage5.AllowCancel = False
+        Me.WizardPage5.Controls.Add(Me.DataGridView1)
+        Me.WizardPage5.Controls.Add(Me.ComboBox2)
+        Me.WizardPage5.Controls.Add(Me.Label8)
+        Me.WizardPage5.Controls.Add(Me.Label7)
+        Me.WizardPage5.IsFinishPage = True
+        Me.WizardPage5.Name = "WizardPage5"
+        resources.ApplyResources(Me.WizardPage5, "WizardPage5")
+        '
+        'DataGridView1
+        '
+        Me.DataGridView1.AllowUserToAddRows = False
+        Me.DataGridView1.AllowUserToDeleteRows = False
+        Me.DataGridView1.AllowUserToResizeColumns = False
+        Me.DataGridView1.AllowUserToResizeRows = False
+        Me.DataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.DataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
+        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2, Me.Column3, Me.Column4})
+        Me.DataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter
+        resources.ApplyResources(Me.DataGridView1, "DataGridView1")
+        Me.DataGridView1.Name = "DataGridView1"
+        Me.DataGridView1.ReadOnly = True
+        Me.DataGridView1.RowHeadersVisible = False
+        Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
+        '
+        'Column1
+        '
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.Gainsboro
+        Me.Column1.DefaultCellStyle = DataGridViewCellStyle2
+        resources.ApplyResources(Me.Column1, "Column1")
+        Me.Column1.Name = "Column1"
+        Me.Column1.ReadOnly = True
+        Me.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'Column2
+        '
+        resources.ApplyResources(Me.Column2, "Column2")
+        Me.Column2.Name = "Column2"
+        Me.Column2.ReadOnly = True
+        Me.Column2.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'Column3
+        '
+        DataGridViewCellStyle3.BackColor = System.Drawing.Color.Gainsboro
+        Me.Column3.DefaultCellStyle = DataGridViewCellStyle3
+        resources.ApplyResources(Me.Column3, "Column3")
+        Me.Column3.Name = "Column3"
+        Me.Column3.ReadOnly = True
+        Me.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'Column4
+        '
+        resources.ApplyResources(Me.Column4, "Column4")
+        Me.Column4.Name = "Column4"
+        Me.Column4.ReadOnly = True
+        Me.Column4.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'ComboBox2
+        '
+        Me.ComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBox2.DropDownWidth = 205
+        resources.ApplyResources(Me.ComboBox2, "ComboBox2")
+        Me.ComboBox2.Name = "ComboBox2"
+        '
+        'Label8
+        '
+        resources.ApplyResources(Me.Label8, "Label8")
+        Me.Label8.Name = "Label8"
+        '
+        'Label7
+        '
+        resources.ApplyResources(Me.Label7, "Label7")
+        Me.Label7.Name = "Label7"
         '
         'FormConfigWizard
         '
