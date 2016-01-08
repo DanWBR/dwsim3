@@ -6,6 +6,7 @@
 
     Private Sub PipeEditorForm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Me.Button1.Text = DWSIM.App.GetLocalString("Detalhes31")
+        Me.Height = 373
     End Sub
 
     Private Sub PipeEditor1_StatusChanged(ByVal e As System.EventArgs, ByVal statuscode As PipeEditorStatus) Handles PipeEditor1.StatusChanged
@@ -99,12 +100,12 @@
     End Sub
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
-        If Me.Height <= 360 Then
+        If Me.Height = 373 Then
             Me.Button1.Text = DWSIM.App.GetLocalString("Detalhes21")
             Me.Height = 592
         Else
             Me.Button1.Text = DWSIM.App.GetLocalString("Detalhes31")
-            Me.Height = 360
+            Me.Height = 373
         End If
     End Sub
 
