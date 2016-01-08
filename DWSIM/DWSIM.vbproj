@@ -2269,6 +2269,7 @@
     <Content Include="Assets\data\modfac_ip.txt" />
     <Content Include="Assets\data\NIST-MODFAC_IP.txt" />
     <Content Include="Assets\data\NIST-MODFAC_RiQi.txt" />
+    <Content Include="Assets\data\report_transform.xsl" />
     <Content Include="Assets\data\unifac.txt" />
     <Content Include="Assets\data\unifac\1,2-Dimethylpiperidine.png" />
     <Content Include="Assets\data\unifac\1-1-1-Trifluoroethane.png" />

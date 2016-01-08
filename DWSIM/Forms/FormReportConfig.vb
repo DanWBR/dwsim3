@@ -20,6 +20,8 @@ Imports NetOffice
 Imports Excel = NetOffice.ExcelApi
 Imports NetOffice.ExcelApi.Enums
 Imports System.Text
+Imports System.IO
+Imports System.Xml.Xsl
 
 Public Class FormReportConfig
 
@@ -45,6 +47,7 @@ Public Class FormReportConfig
         If Not DT.Columns.Contains(("Valor")) Then DT.Columns.Add(("Valor"), GetType(System.String))
         If Not DT.Columns.Contains(("Unidade")) Then DT.Columns.Add(("Unidade"), GetType(System.String))
         DT.Rows.Clear()
+
 
         Dim baseobj As SimulationObjects_BaseClass
         Dim properties() As String
@@ -365,7 +368,29 @@ Public Class FormReportConfig
                 If Not (Me.filename Is Nothing) Then
                     Me.FillDataTable()
                     Me.DT.TableName = DWSIM.App.GetLocalString("Resultados")
-                    Me.DT.WriteXml(Me.filename)
+                    Dim output As String = ""
+                    Using sri As New MemoryStream()
+                        Me.DT.WriteXml(sri)
+                        sri.Position = 0
+                        ' xslInput is a string that contains xsl
+                        Using srt As New StringReader(File.ReadAllText(My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "data" & Path.DirectorySeparatorChar & "report_transform.xsl"))
+                            ' xmlInput is a string that contains xml
+                            Using xrt As XmlReader = XmlReader.Create(srt)
+                                Using xri As XmlReader = XmlReader.Create(sri)
+                                    Dim xslt As New XslCompiledTransform()
+                                    xslt.Load(xrt)
+                                    Using sw As New StringWriter()
+                                        Using xwo As XmlWriter = XmlWriter.Create(sw, xslt.OutputSettings)
+                                            ' use OutputSettings of xsl, so it can be output as HTML
+                                            xslt.Transform(xri, xwo)
+                                            output = sw.ToString()
+                                        End Using
+                                    End Using
+                                End Using
+                            End Using
+                        End Using
+                    End Using
+                    File.WriteAllText(Me.filename, output)
                 End If
             ElseIf Me.SaveFileDialog1.FilterIndex = 2 Then
                 Me.filename = Me.SaveFileDialog1.FileName
@@ -421,7 +446,7 @@ Public Class FormReportConfig
         Catch ex As Exception
             MsgBox(ex.ToString, MsgBoxStyle.Exclamation, DWSIM.App.GetLocalString("Erro"))
         Finally
-            mybook.Close(SaveChanges:=False)
+            mybook.Close(saveChanges:=False)
             xcl.Quit()
             xcl.Dispose()
         End Try
