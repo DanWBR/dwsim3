@@ -104,7 +104,7 @@ Public Class FormReacConv
 
     End Sub
 
-    Private Sub KryptonDataGridView1_CellValidated(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles KryptonDataGridView1.CellValidated
+    Private Sub KryptonDataGridView1_CellValidated(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles KryptonDataGridView1.CellValueChanged
 
         If e.ColumnIndex = 3 Then
             For Each row As DataGridViewRow In Me.KryptonDataGridView1.Rows

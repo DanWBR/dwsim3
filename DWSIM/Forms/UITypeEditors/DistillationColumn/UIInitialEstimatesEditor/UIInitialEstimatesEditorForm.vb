@@ -56,7 +56,7 @@ Public Class UIInitialEstimatesEditorForm
         Dim count As Integer = dc.Stages.Count
         For Each st As Stage In dc.Stages
             dgvv.Rows.Add(New Object() {dc.Stages(i).Name, Format(cvt.ConverterDoSI(su.spmp_temperature, dc.InitialEstimates.StageTemps(i).Value), nf), Format(cvt.ConverterDoSI(su.spmp_molarflow, dc.InitialEstimates.VapMolarFlows(i).Value), nf), Format(cvt.ConverterDoSI(su.spmp_molarflow, dc.InitialEstimates.LiqMolarFlows(i).Value), nf)})
-            dgvv.Rows(dgvv.Rows.Count - 1).HeaderCell.Value = i
+            dgvv.Rows(dgvv.Rows.Count - 1).HeaderCell.Value = i.ToString()
             i += 1
         Next
 
@@ -86,7 +86,7 @@ Public Class UIInitialEstimatesEditorForm
                 j = j + 1
             Next
             dgvcl.Rows.Add(ob)
-            dgvcl.Rows(dgvcl.Rows.Count - 1).HeaderCell.Value = i
+            dgvcl.Rows(dgvcl.Rows.Count - 1).HeaderCell.Value = i.ToString()
             i += 1
         Next
 
@@ -99,7 +99,7 @@ Public Class UIInitialEstimatesEditorForm
                 j = j + 1
             Next
             dgvcv.Rows.Add(ob)
-            dgvcv.Rows(dgvcv.Rows.Count - 1).HeaderCell.Value = i
+            dgvcv.Rows(dgvcv.Rows.Count - 1).HeaderCell.Value = i.ToString()
             i += 1
         Next
 
