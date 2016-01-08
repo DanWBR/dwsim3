@@ -2264,6 +2264,8 @@ Namespace DWSIM.ClassesBasicasTermodinamica
         'oil aromatics percentage
         Public BO_PNA_A As Double = 0.0#
 
+        Public Comments As String = ""
+
         'the following properties are no longer used but kept for compatibility reasons
         <XmlIgnore()> Public UNIFAC_Ri As Double
         <XmlIgnore()> Public UNIFAC_Qi As Double

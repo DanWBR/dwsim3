@@ -350,6 +350,7 @@ Public Class FormCompoundCreator
 
             TextBoxID.Text = .cp.ID
             TextBoxName.Text = .cp.Name
+            TextBoxComments.Text = .cp.Comments
 
             If .cp.IsBlackOil Then
 
@@ -668,6 +669,7 @@ Public Class FormCompoundCreator
 
             .cp.ID = TextBoxID.Text
             .cp.Name = TextBoxName.Text
+            .cp.Comments = TextBoxComments.Text
 
             If RadioButton1.Checked Then
 

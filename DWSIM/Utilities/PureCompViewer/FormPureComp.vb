@@ -746,6 +746,8 @@ Public Class FormPureComp
             .Add(New Object() {DWSIM.App.GetLocalString("BlackOil_PNA_A"), Format(constprop.BO_PNA_A, nf), ""})
         End With
 
+        TextBoxComments.Text = constprop.Comments
+
         chkEnableEdit_CheckedChanged(Me, New EventArgs)
 
     End Sub

@@ -244,6 +244,12 @@
   <data name="FaTabStrip2.Size" type="System.Drawing.Size, System.Drawing">
     <value>897, 452</value>
   </data>
+  <data name="Label94.Size" type="System.Drawing.Size, System.Drawing">
+    <value>72, 13</value>
+  </data>
+  <data name="Label94.Text" xml:space="preserve">
+    <value>Bemerkungen</value>
+  </data>
   <data name="LinkLabel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>71, 18</value>
   </data>
@@ -965,6 +971,9 @@
   </data>
   <data name="DBOpenDlg.Title" xml:space="preserve">
     <value>Öffne/Erzeuge Database</value>
+  </data>
+  <data name="StatusStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 573</value>
   </data>
   <data name="StatusStrip1.Size" type="System.Drawing.Size, System.Drawing">
     <value>924, 22</value>
@@ -2415,6 +2424,9 @@
         AAAAAAAAAAAAAAAAAAD8PzV78A8AAMADAACAAcADgAGAAQAAgAEAAAAAAAAAAAAAAAAAAAAAAAAAAIAB
         AACAAYABwAOAAeAHwAP4HwAE
 </value>
+  </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>Inherit</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Komponente / Komponentenmanager</value>

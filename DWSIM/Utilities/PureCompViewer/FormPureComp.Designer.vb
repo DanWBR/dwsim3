@@ -136,6 +136,9 @@ Partial Class FormPureComp
         Me.DataGridViewTextBoxColumn20 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn21 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn22 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.FaTabStripItem2 = New FarsiLibrary.Win.FATabStripItem()
+        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.TextBoxComments = New System.Windows.Forms.TextBox()
         Me.GroupBox1.SuspendLayout()
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStrip1.SuspendLayout()
@@ -173,6 +176,8 @@ Partial Class FormPureComp
         Me.FaTabStripItemSOLIDDENS.SuspendLayout()
         Me.FaTabStripItemTabela.SuspendLayout()
         CType(Me.DataTableSolid, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.FaTabStripItem2.SuspendLayout()
+        Me.GroupBox4.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupBox1
@@ -223,7 +228,7 @@ Partial Class FormPureComp
         '
         resources.ApplyResources(Me.FaTabStrip1, "FaTabStrip1")
         Me.FaTabStrip1.AlwaysShowClose = False
-        Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem6, Me.FaTabStripItem16, Me.FaTabStripItem17, Me.FaTabStripItem18})
+        Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem6, Me.FaTabStripItem16, Me.FaTabStripItem17, Me.FaTabStripItem18, Me.FaTabStripItem2})
         Me.FaTabStrip1.Name = "FaTabStrip1"
         Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem1
         '
@@ -1057,6 +1062,27 @@ Partial Class FormPureComp
         resources.ApplyResources(Me.DataGridViewTextBoxColumn22, "DataGridViewTextBoxColumn22")
         Me.DataGridViewTextBoxColumn22.Name = "DataGridViewTextBoxColumn22"
         '
+        'FaTabStripItem2
+        '
+        resources.ApplyResources(Me.FaTabStripItem2, "FaTabStripItem2")
+        Me.FaTabStripItem2.CanClose = False
+        Me.FaTabStripItem2.Controls.Add(Me.GroupBox4)
+        Me.FaTabStripItem2.IsDrawn = True
+        Me.FaTabStripItem2.Name = "FaTabStripItem2"
+        '
+        'GroupBox4
+        '
+        resources.ApplyResources(Me.GroupBox4, "GroupBox4")
+        Me.GroupBox4.Controls.Add(Me.TextBoxComments)
+        Me.GroupBox4.Name = "GroupBox4"
+        Me.GroupBox4.TabStop = False
+        '
+        'TextBoxComments
+        '
+        resources.ApplyResources(Me.TextBoxComments, "TextBoxComments")
+        Me.TextBoxComments.Name = "TextBoxComments"
+        Me.TextBoxComments.ReadOnly = True
+        '
         'FormPureComp
         '
         resources.ApplyResources(Me, "$this")
@@ -1104,6 +1130,9 @@ Partial Class FormPureComp
         Me.FaTabStripItemSOLIDDENS.ResumeLayout(False)
         Me.FaTabStripItemTabela.ResumeLayout(False)
         CType(Me.DataTableSolid, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.FaTabStripItem2.ResumeLayout(False)
+        Me.GroupBox4.ResumeLayout(False)
+        Me.GroupBox4.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1196,4 +1225,7 @@ Partial Class FormPureComp
     Public WithEvents LblModified As System.Windows.Forms.Label
     Friend WithEvents tbMODFACNIST As System.Windows.Forms.TextBox
     Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents FaTabStripItem2 As FarsiLibrary.Win.FATabStripItem
+    Friend WithEvents GroupBox4 As System.Windows.Forms.GroupBox
+    Friend WithEvents TextBoxComments As System.Windows.Forms.TextBox
 End Class
