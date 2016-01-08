@@ -324,6 +324,13 @@ Namespace DWSIM.FormClasses
         <Xml.Serialization.XmlIgnore> Public Password As String = ""
         <Xml.Serialization.XmlIgnore> Public UsePassword As Boolean = False
 
+        Public FlowsheetSnapToGrid As Boolean = False
+        Public FlowsheetQuickConnect As Boolean = False
+        Public FlowsheetShowConsoleWindow As Boolean = False
+        Public FlowsheetShowCOReportsWindow As Boolean = False
+        Public FlowsheetShowCalculationQueue As Boolean = False
+        Public FlowsheetShowWatchWindow As Boolean = False
+
         Public Key As String = ""
 
         Sub New()

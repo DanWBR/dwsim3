@@ -170,6 +170,14 @@ Imports WeifenLuo.WinFormsUI.Docking
             Me.tsbDesat.Checked = True
         End If
 
+        Me.COObjTSMI.Checked = Me.Options.FlowsheetShowCOReportsWindow
+        Me.consoletsmi.Checked = Me.Options.FlowsheetShowConsoleWindow
+        Me.ExibirListaDeItensACalcularToolStripMenuItem.Checked = Me.Options.FlowsheetShowCalculationQueue
+        Me.varpaneltsmi.Checked = Me.Options.FlowsheetShowWatchWindow
+
+        Me.ToolStripButton16.Checked = Me.Options.FlowsheetSnapToGrid
+        Me.ToolStripButton17.Checked = Me.Options.FlowsheetQuickConnect
+
         If Me.ScriptCollection Is Nothing Then Me.ScriptCollection = New Dictionary(Of String, Script)
 
         If Not Me.m_IsLoadedFromFile Then
@@ -1178,12 +1186,13 @@ Imports WeifenLuo.WinFormsUI.Docking
         fs.Show(Me.dckPanel)
     End Sub
 
-    Private Sub ExibirSaídaDoConsoleToolStripMenuItem_CheckedChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles ExibirSaídaDoConsoleToolStripMenuItem.CheckedChanged
-        If ExibirSaídaDoConsoleToolStripMenuItem.Checked Then
+    Private Sub ExibirSaídaDoConsoleToolStripMenuItem_CheckedChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles consoletsmi.CheckedChanged
+        If consoletsmi.Checked Then
             FormOutput.Show(dckPanel)
         Else
             FormOutput.Hide()
         End If
+        Me.Options.FlowsheetShowConsoleWindow = consoletsmi.Checked
     End Sub
 
     Private Sub ExibirListaDeItensACalcularToolStripMenuItem_CheckedChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles ExibirListaDeItensACalcularToolStripMenuItem.CheckedChanged
@@ -1192,38 +1201,35 @@ Imports WeifenLuo.WinFormsUI.Docking
         Else
             FormQueue.Hide()
         End If
+        Me.Options.FlowsheetShowCalculationQueue = ExibirListaDeItensACalcularToolStripMenuItem.Checked
     End Sub
 
-    Private Sub ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem.CheckedChanged
-        If ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem.Checked Then
+    Private Sub ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles COObjTSMI.CheckedChanged
+        If COObjTSMI.Checked Then
             FormCOReports.Show(dckPanel)
         Else
             FormCOReports.Hide()
         End If
+        Me.Options.FlowsheetShowCOReportsWindow = COObjTSMI.Checked
     End Sub
 
-    Private Sub PainelDeVariáveisToolStripMenuItem_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PainelDeVariáveisToolStripMenuItem.CheckedChanged
-        If PainelDeVariáveisToolStripMenuItem.Checked Then
+    Private Sub PainelDeVariáveisToolStripMenuItem_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles varpaneltsmi.CheckedChanged
+        If varpaneltsmi.Checked Then
             FormWatch.Show(dckPanel)
         Else
             FormWatch.Hide()
         End If
+        Me.Options.FlowsheetShowWatchWindow = varpaneltsmi.Checked
     End Sub
 
     Private Sub ToolStripButton16_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton16.CheckStateChanged
-        If ToolStripButton16.Checked Then
-            Me.FormSurface.FlowsheetDesignSurface.SnapToGrid = True
-        Else
-            Me.FormSurface.FlowsheetDesignSurface.SnapToGrid = False
-        End If
+        Me.FormSurface.FlowsheetDesignSurface.SnapToGrid = ToolStripButton16.Checked
+        Me.Options.FlowsheetSnapToGrid = ToolStripButton16.Checked
     End Sub
 
-    Private Sub ToolStripButton17_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton17.Click
-        If ToolStripButton17.Checked Then
-            Me.FormSurface.FlowsheetDesignSurface.QuickConnect = True
-        Else
-            Me.FormSurface.FlowsheetDesignSurface.QuickConnect = False
-        End If
+    Private Sub ToolStripButton17_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton17.CheckStateChanged
+        Me.FormSurface.FlowsheetDesignSurface.QuickConnect = ToolStripButton17.Checked
+        Me.Options.FlowsheetQuickConnect = ToolStripButton17.Checked
     End Sub
     Private Sub ToolStripButton2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton2.Click
         Me.FormSurface.FlowsheetDesignSurface.Zoom += 0.05

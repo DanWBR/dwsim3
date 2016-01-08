@@ -92,10 +92,10 @@ Partial Class FormFlowsheet
         Me.ConfiguraçõesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ComponentesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExibirToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ExibirSaídaDoConsoleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.consoletsmi = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExibirListaDeItensACalcularToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.PainelDeVariáveisToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.varpaneltsmi = New System.Windows.Forms.ToolStripMenuItem()
+        Me.COObjTSMI = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator10 = New System.Windows.Forms.ToolStripSeparator()
         Me.showsimulationtoolstripmenuitem = New System.Windows.Forms.ToolStripMenuItem()
         Me.showflowsheettoolstripmenuitem = New System.Windows.Forms.ToolStripMenuItem()
@@ -678,17 +678,17 @@ Partial Class FormFlowsheet
         '
         'ExibirToolStripMenuItem
         '
-        Me.ExibirToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExibirSaídaDoConsoleToolStripMenuItem, Me.ExibirListaDeItensACalcularToolStripMenuItem, Me.PainelDeVariáveisToolStripMenuItem, Me.ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem, Me.ToolStripSeparator10, Me.showsimulationtoolstripmenuitem, Me.showflowsheettoolstripmenuitem, Me.showunitstoolstripmenuitem, Me.ToolStripSeparator11, Me.RestoreLayoutTSMI})
+        Me.ExibirToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.consoletsmi, Me.ExibirListaDeItensACalcularToolStripMenuItem, Me.varpaneltsmi, Me.COObjTSMI, Me.ToolStripSeparator10, Me.showsimulationtoolstripmenuitem, Me.showflowsheettoolstripmenuitem, Me.showunitstoolstripmenuitem, Me.ToolStripSeparator11, Me.RestoreLayoutTSMI})
         Me.ExibirToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert
         Me.ExibirToolStripMenuItem.MergeIndex = 3
         Me.ExibirToolStripMenuItem.Name = "ExibirToolStripMenuItem"
         resources.ApplyResources(Me.ExibirToolStripMenuItem, "ExibirToolStripMenuItem")
         '
-        'ExibirSaídaDoConsoleToolStripMenuItem
+        'consoletsmi
         '
-        Me.ExibirSaídaDoConsoleToolStripMenuItem.CheckOnClick = True
-        Me.ExibirSaídaDoConsoleToolStripMenuItem.Name = "ExibirSaídaDoConsoleToolStripMenuItem"
-        resources.ApplyResources(Me.ExibirSaídaDoConsoleToolStripMenuItem, "ExibirSaídaDoConsoleToolStripMenuItem")
+        Me.consoletsmi.CheckOnClick = True
+        Me.consoletsmi.Name = "consoletsmi"
+        resources.ApplyResources(Me.consoletsmi, "consoletsmi")
         '
         'ExibirListaDeItensACalcularToolStripMenuItem
         '
@@ -696,17 +696,17 @@ Partial Class FormFlowsheet
         Me.ExibirListaDeItensACalcularToolStripMenuItem.Name = "ExibirListaDeItensACalcularToolStripMenuItem"
         resources.ApplyResources(Me.ExibirListaDeItensACalcularToolStripMenuItem, "ExibirListaDeItensACalcularToolStripMenuItem")
         '
-        'PainelDeVariáveisToolStripMenuItem
+        'varpaneltsmi
         '
-        Me.PainelDeVariáveisToolStripMenuItem.CheckOnClick = True
-        Me.PainelDeVariáveisToolStripMenuItem.Name = "PainelDeVariáveisToolStripMenuItem"
-        resources.ApplyResources(Me.PainelDeVariáveisToolStripMenuItem, "PainelDeVariáveisToolStripMenuItem")
+        Me.varpaneltsmi.CheckOnClick = True
+        Me.varpaneltsmi.Name = "varpaneltsmi"
+        resources.ApplyResources(Me.varpaneltsmi, "varpaneltsmi")
         '
-        'ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem
+        'COObjTSMI
         '
-        Me.ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem.CheckOnClick = True
-        Me.ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem.Name = "ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem"
-        resources.ApplyResources(Me.ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem, "ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem")
+        Me.COObjTSMI.CheckOnClick = True
+        Me.COObjTSMI.Name = "COObjTSMI"
+        resources.ApplyResources(Me.COObjTSMI, "COObjTSMI")
         '
         'ToolStripSeparator10
         '
@@ -1437,11 +1437,11 @@ Partial Class FormFlowsheet
     Friend WithEvents ToolStripButton17 As System.Windows.Forms.ToolStripButton
     Friend WithEvents TSMICOUO As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents CAPEOPENFlowsheetMonitoringObjectsMOsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents ExibirSaídaDoConsoleToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents consoletsmi As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ExibirListaDeItensACalcularToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents ExibirRelatóriosDosObjetosCAPEOPENToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents COObjTSMI As System.Windows.Forms.ToolStripMenuItem
     Public WithEvents ExibirToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents PainelDeVariáveisToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents varpaneltsmi As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripButton18 As System.Windows.Forms.ToolStripButton
     Friend WithEvents SaveFileDialog1 As System.Windows.Forms.SaveFileDialog
     Friend WithEvents ToolStripButton19 As System.Windows.Forms.ToolStripButton
