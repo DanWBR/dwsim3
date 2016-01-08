@@ -329,10 +329,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                     Do
 
-                        'FlowSheet.UIThread(Sub()
-                        '                       FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": Calculating pipe segment #" & segmento.Indice & ", distance " & (j + 1) * segmento.Comprimento / segmento.Incrementos & "/" & segmento.Comprimento & "m", Color.DarkBlue, FormClasses.TipoAviso.Informacao)
-                        '                   End Sub)
-                        
                         If Text > Tin Then
                             Tout = Tin * 1.005
                         Else
@@ -425,9 +421,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                         A = Math.PI * (.DE * 0.0254) * .Comprimento / .Incrementos
                                     ElseIf Me.ThermalProfile.Tipo = Editors.PipeEditor.ThermalProfileType.Estimar_CGTC Then
                                         A = Math.PI * (.DE * 0.0254) * .Comprimento / .Incrementos
-                                        U = Me.CALCULAR_CGTC(.Material, holdup, .Comprimento / .Incrementos, _
+                                        U = CalcOverallHeatTransferCoefficient(.Material, holdup, .Comprimento / .Incrementos, _
                                                                             .DI * 0.0254, .DE * 0.0254, Me.rugosidade(.Material), Tpe, results.VapVel, results.LiqVel, _
-                                                                            results.Cpl, results.Cpv, results.Kl / 1000, results.Kv / 1000, _
+                                                                            results.Cpl, results.Cpv, results.Kl, results.Kv, _
                                                                             results.MUl, results.MUv, results.RHOl, results.RHOv, _
                                                                             Me.ThermalProfile.Incluir_cti, Me.ThermalProfile.Incluir_isolamento, _
                                                                             Me.ThermalProfile.Incluir_paredes, Me.ThermalProfile.Incluir_cte)
@@ -1096,30 +1092,30 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         End Function
 
-        Function CALCULAR_CGTC(ByVal materialparede As String, ByVal EL As Double, ByVal L As Double, _
+        Function CalcOverallHeatTransferCoefficient(ByVal materialparede As String, ByVal EL As Double, ByVal L As Double, _
                             ByVal Dint As Double, ByVal Dext As Double, ByVal rugosidade As Double, _
                             ByVal T As Double, ByVal vel_g As Double, ByVal vel_l As Double, _
                             ByVal Cpl As Double, ByVal Cpv As Double, ByVal kl As Double, ByVal kv As Double, _
                             ByVal mu_l As Double, ByVal mu_v As Double, ByVal rho_l As Double, _
                             ByVal rho_v As Double, ByVal hinterno As Boolean, ByVal isolamento As Boolean, _
-                            ByVal parede As Boolean, ByVal hexterno As Boolean)
+                            ByVal parede As Boolean, ByVal hexterno As Boolean) As Double
 
             If Double.IsNaN(rho_l) Then rho_l = 0.0#
 
-            'Calcular propriedades médias
-            Dim vel = vel_g + vel_l
-            Dim mu = EL * mu_l + (1 - EL) * mu_v
-            Dim rho = EL * rho_l + (1 - EL) * rho_v
-            Dim Cp = EL * Cpl + (1 - EL) * Cpv
-            Dim k = EL * kl + (1 - EL) * kv
+            'Calculate average properties
+            Dim vel As Double = vel_g + vel_l 'm/s
+            Dim mu As Double = EL * mu_l + (1 - EL) * mu_v 'Pa.s
+            Dim rho As Double = EL * rho_l + (1 - EL) * rho_v 'kg/m3
+            Dim Cp As Double = 1000 * (EL * Cpl + (1 - EL) * Cpv) 'J/kg.K
+            Dim k As Double = EL * kl + (1 - EL) * kv 'W/[m.K]
             Dim Cpmist = Cp
 
-            'Cálculo do coeficiente de transf. interno
+            'Internal HTC calculation
             Dim U_int As Double
 
             If hinterno Then
 
-                'Calcular numero de Reynolds interno
+                'Internal Re calc
                 Dim Re_int = NRe(rho, vel, Dint, mu)
 
                 Dim epsilon = Me.rugosidade(materialparede)
@@ -1132,18 +1128,18 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     ffint = 64 / Re_int
                 End If
 
-                'Calcular número de Prandtl interno
+                'Internal Pr calc
                 Dim Pr_int = NPr(Cp, mu, k)
 
-                'Calcular coeficiente de transferência de calor interno
+                'Internal h calc
                 Dim h_int = hint_petukhov(k, Dint, ffint, Re_int, Pr_int)
 
-                'Calcular contribuição da parte interna
+                'Internal h contribution
                 U_int = h_int
 
             End If
 
-            'Calcular contribuição da parede da tubulação
+            'Pipe wall HTC contribution
             Dim U_parede = 0.0#
 
             If parede = True Then
@@ -1153,7 +1149,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             End If
 
-            'Calcular contribuição do isolamento
+            'Insulation HTC contribution
             Dim U_isol = 0.0#
 
             Dim esp_isol = 0.0#
@@ -1164,7 +1160,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             End If
 
-            'Calcular coeficiente de transf. externo
+            'External HTC contribution
             Dim U_ext = 0.0#
 
             If hexterno = True Then
@@ -1185,55 +1181,55 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 ElseIf Me.m_thermalprofile.Meio = 0 Then
 
-                    'Calcular propriedades médias
+                    'Average air properties
                     vel = CDbl(Me.m_thermalprofile.Velocidade)
                     Dim Tamb = Me.m_thermalprofile.Temp_amb_estimar
                     Dim props = PropsAR(Tamb, 101325)
                     mu2 = props(1)
                     rho2 = props(0)
-                    cp2 = props(2)
-                    k2 = props(3) / 1000
+                    cp2 = props(2) * 1000
+                    k2 = props(3)
 
-                    'Calcular numero de Reynolds externo
+                    'External Re
                     Dim Re_ext = NRe(rho2, vel, (Dext + esp_isol), mu2)
 
-                    'Calcular número de Prandtl externo
+                    'External Pr
                     Dim Pr_ext = NPr(cp2, mu2, k2)
 
-                    'Calcular coeficiente de transferência de calor externo
+                    'External h
                     Dim h_ext = hext_holman(k2, (Dext + esp_isol), Re_ext, Pr_ext)
 
-                    'Calcular contribuição da parte externa
+                    'External HTC contribution
                     U_ext = h_ext * (Dext + esp_isol) / Dint
 
                 ElseIf Me.m_thermalprofile.Meio = 1 Then
 
-                    'Calcular propriedades médias
+                    'Average water properties
                     vel = CDbl(Me.m_thermalprofile.Velocidade)
                     Dim Tamb = Me.m_thermalprofile.Temp_amb_estimar
                     Dim props = PropsAGUA(Tamb, 101325)
                     mu2 = props(1)
                     rho2 = props(0)
-                    cp2 = props(2)
-                    k2 = props(3) / 1000
+                    cp2 = props(2) * 1000
+                    k2 = props(3)
 
-                    'Calcular numero de Reynolds externo
+                    'External Re
                     Dim Re_ext = NRe(rho2, vel, (Dext + esp_isol), mu2)
 
-                    'Calcular número de Prandtl externo
+                    'External Pr
                     Dim Pr_ext = NPr(cp2, mu2, k2)
 
-                    'Calcular coeficiente de transferência de calor externo
+                    'External h
                     Dim h_ext = hext_holman(k2, (Dext + esp_isol), Re_ext, Pr_ext)
 
-                    'Calcular contribuição da parte externa
+                    'External HTC contribution
                     U_ext = h_ext * (Dext + esp_isol) / Dint
 
                 End If
 
             End If
 
-            'Calcular coeficiente global de transferência de calor
+            'Calculate overall HTC
             Dim _U As Double
 
             If U_int <> 0 Then
@@ -1265,7 +1261,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 End If
             End If
 
-            CALCULAR_CGTC = 1 / _U
+            Return 1 / _U '[W/m².K]
 
         End Function
 
@@ -1343,7 +1339,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Dim mu = Me.m_iapws97.viscW(T, P / 100000)
 
             'capacidade calorífica
-            Dim Cp = Me.m_iapws97.cpW(T, P / 100000) * 18
+            Dim Cp = Me.m_iapws97.cpW(T, P / 100000)
 
             'condutividade térmica
             Dim k = Me.m_iapws97.thconW(T, P / 100000)
