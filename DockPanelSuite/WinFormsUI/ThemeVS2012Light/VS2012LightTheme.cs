@@ -457,7 +457,7 @@ namespace WeifenLuo.WinFormsUI.Docking
             var dot = Color.FromArgb(80, 170, 220);
             var activeTab = SystemColors.ActiveCaption;
             var mouseHoverTab = SystemColors.Highlight; //Color.FromArgb(0xFF, 28, 151, 234);
-            var inactiveTab = SystemColors.InactiveCaption;
+            var inactiveTab = SystemColors.ActiveCaption;
             var lostFocusTab = Color.FromArgb(0xFF, 204, 206, 219);
             var skin = new DockPanelSkin();
 
@@ -503,7 +503,7 @@ namespace WeifenLuo.WinFormsUI.Docking
             {
                 skin.DockPaneStripSkin.ToolWindowGradient.InactiveTabGradient.StartColor = SystemColors.Control;
                 skin.DockPaneStripSkin.ToolWindowGradient.InactiveTabGradient.EndColor = SystemColors.Control;
-                skin.DockPaneStripSkin.ToolWindowGradient.InactiveTabGradient.TextColor = SystemColors.InactiveCaption;
+                skin.DockPaneStripSkin.ToolWindowGradient.InactiveTabGradient.TextColor = SystemColors.InactiveCaptionText;
             }
             else
             {
