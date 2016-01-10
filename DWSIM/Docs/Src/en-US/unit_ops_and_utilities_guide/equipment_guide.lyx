@@ -1,0 +1,5403 @@
+#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass scrartcl
+\begin_preamble
+\usepackage{indentfirst}
+\let\@endpetrue\@endpefalse
+\reversemarginpar
+\@addtoreset{equation}{section}  \renewcommand{\theequation}{\thesection.\arabic{equation}}
+\marginparwidth 3.5cm
+\rfoot{\thepage}
+\lfoot{DWSIM - Equipment and Utilities Guide}
+\cfoot{}
+\renewcommand{\footrulewidth}{0.4pt}
+\setcounter{page}{-2}
+\end_preamble
+\use_default_options false
+\language english
+\inputencoding default
+\font_roman palatino
+\font_sans lmss
+\font_typewriter cmtl
+\font_default_family sfdefault
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\float_placement H
+\paperfontsize 10
+\spacing onehalf
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder true
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize a4paper
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\leftmargin 5cm
+\topmargin 3cm
+\rightmargin 2cm
+\bottommargin 3cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip smallskip
+\quotes_language swedish
+\papercolumns 1
+\papersides 1
+\paperpagestyle fancy
+\bullet 0 5 18 -1
+\bullet 1 0 9 -1
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\paragraph_spacing onehalf
+
+\series bold
+\size large
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\end_inset
+
+
+\begin_inset VSpace vfill
+\end_inset
+
+
+\lyxline
+DWSIM - Process Simulation, Modeling and Optimization
+\end_layout
+
+\begin_layout Standard
+\paragraph_spacing onehalf
+
+\series bold
+\size large
+Unit Operations and Utilities Guide
+\end_layout
+
+\begin_layout Standard
+
+\lyxline
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Version 3.2, Revision 0
+\end_layout
+
+\begin_layout Standard
+\paragraph_spacing onehalf
+
+\emph on
+July 2014
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Addsec*
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\end_inset
+
+License
+\end_layout
+
+\begin_layout Standard
+\noindent
+DWSIM is released under the GNU General Public License (GPL) version 3.
+\end_layout
+
+\begin_layout Addsec*
+Contact Information
+\end_layout
+
+\begin_layout Subparagraph
+DWSIM - Process Simulation, Modeling and Optimization
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+Author: Daniel Medeiros
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+Website: 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://dwsim.inforside.com.br
+\end_layout
+
+\end_inset
+
+ / 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.sourceforge.net/projects/dwsim
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+E-mail: 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+danielwag@gmail.com
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FloatList figure
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+This guide describes the calculation principles of the unit operation models
+ in DWSIM.
+ For details about the thermodynamic and property calculation models, please
+ read the 
+\series bold
+Technical Manual
+\series default
+.
+ Guidelines about software usage and interface navigation can be found in
+ DWSIM's 
+\series bold
+User Guide
+\series default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Simulation Objects
+\end_layout
+
+\begin_layout Subsection
+Streams
+\end_layout
+
+\begin_layout Subsubsection
+Material Stream
+\end_layout
+
+\begin_layout Standard
+The Material Stream is used to represent matter which enters and leaves
+ the limits of the simulation, passing through the unit operations.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../user_guide/screens30/mstream.jpg
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Material Stream properties.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Input Parameters
+\end_layout
+
+\begin_layout Itemize
+Specification:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Temperature and Pressure
+\end_layout
+
+\begin_layout Itemize
+Pressure and Enthalpy
+\end_layout
+
+\begin_layout Itemize
+Pressure and Entropy
+\end_layout
+
+\begin_layout Itemize
+Pressure and Vapor Fraction
+\end_layout
+
+\begin_layout Itemize
+Temperature and Vapor Fraction
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+The above selection dictates which variables should be defined in order
+ to DWSIM calculate the others.
+\end_layout
+
+\begin_layout Itemize
+Temperature: stream temperature;
+\end_layout
+
+\begin_layout Itemize
+Pressure: stream pressure;
+\end_layout
+
+\begin_layout Itemize
+Specific Enthalpy: stream's specific enthalpy;
+\end_layout
+
+\begin_layout Itemize
+Specific Entropy: stream's specific entropy;
+\end_layout
+
+\begin_layout Itemize
+Molar Fraction (Vapor Phase): the vapor phase mole fraction of the stream;
+\end_layout
+
+\begin_layout Itemize
+Composition: the stream composition can be entered on Mole/Mass Fraction/Flow,
+ Standard Liquid Volumetric Fraction, Molality or Molarity basis (Figure
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Editor-de-composição"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../user_guide/screens30/image0004.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Editor-de-composição"
+
+\end_inset
+
+Material Stream composition editor.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Marginal
+status collapsed
+
+\begin_layout Plain Layout
+\paragraph_spacing single
+\noindent
+\align left
+
+\family sans
+\size scriptsize
+\emph on
+If the simulation contains electrolytes and an Electrolyte Property Package
+ is associated with the current Material Stream, the equilibrium composition
+ may be different from the input composition.
+ The Input Composition column will always show Mole Fraction values only.
+\end_layout
+
+\end_inset
+
+For the mole/mass fraction basis options, the user must enter the composition
+ in such a way that the amounts sum up to 1.
+ 
+\series bold
+Regardless of the input basis option, new values are saved only when the
+ "Apply" button is pressed
+\series default
+.
+\end_layout
+
+\begin_layout Standard
+Molarity and Molality input composition options only make sense in the context
+ of an electrolyte simulation.
+ In this case, the solute amounts should be entered in 
+\series bold
+moles
+\series default
+ and the solvent amount in 
+\series bold
+L
+\series default
+ (molarity) or 
+\series bold
+kg
+\series default
+ (molality).
+ 
+\end_layout
+
+\begin_layout Itemize
+Flow: one of the three types of flow (mass, molar or volumetric) must be
+ given - the other two are calculated in the case of temperature and pressure
+ are already defined.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Framed
+position "t"
+hor_pos "c"
+has_inner_box 0
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Minisec
+
+\size footnotesize
+\emph on
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="2">
+<features>
+<column alignment="left" valignment="top" width="4text%">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\emph on
+\begin_inset Graphics
+	filename dialog-information.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="left" valignment="top" usebox="none" width="90text%">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family sans
+\size footnotesize
+\emph on
+The material stream composition can only be edited if the stream is not
+ connected to any unit op upstream, that is, if it doesn't work as an output
+ of any operation.
+ If that is the case, the stream configures itself as "read-only" and the
+ user will not be able to edit any of its properties directly.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Calculation Method
+\end_layout
+
+\begin_layout Standard
+When the four properties described above are defined, the material stream
+ is calculated and its properties are shown in the same window.
+ The calculation sequence for the material stream is the following:
+\end_layout
+
+\begin_layout Enumerate
+A flash calculation is done to know the component distribution between phases;
+\end_layout
+
+\begin_layout Enumerate
+Properties of each phase are calculated individually;
+\end_layout
+
+\begin_layout Enumerate
+Finally, the mixture properties are calculated.
+\end_layout
+
+\begin_layout Standard
+In the first step, a TP Flash is done by default, but it can be replaced
+ by a PH flash if the user defines this option in the simulation configuration
+ window.
+ When in "read-only" mode, the stream properties are calculated according
+ to parameters given by the upstream unit operation (in the majority of
+ cases, a TP flash is done as well).
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Output parameters
+\end_layout
+
+\begin_layout Standard
+Component distribution between phases and phase properties: specific enthalpy,
+ specific entropy, molecular weight, density, volumetric flow rate @ T and
+ P, phase molar and mass fraction, compressibility factor Z, constant-pressure
+ heat capacity (Cp), Cp/Cv, thermal conductivity, surface tension (liquid
+ phase only) and kinematic and dynamic viscosity.
+ Mixture properties: specific enthalpy and entropy, molecular weight, density
+ and thermal conductivity.
+ If the global setting 
+\begin_inset Quotes sld
+\end_inset
+
+Calculate bubble and dew points at stream conditions
+\begin_inset Quotes srd
+\end_inset
+
+ is activated, these are also shown in the 
+\begin_inset Quotes sld
+\end_inset
+
+Mixture
+\begin_inset Quotes srd
+\end_inset
+
+ properties section.
+\end_layout
+
+\begin_layout Subsubsection
+Energy Stream
+\end_layout
+
+\begin_layout Standard
+The energy stream is used to represent energy entering and leaving the limits
+ of the simulation, used by the unit operations, either to represent loss,
+ demand or power generation.
+ As we are dealing with steady-state simulations, one defines the energy
+ stream in terms of power (energy by unit of time) and not energy itself
+ (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:en"
+
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens/0133.JPG
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:en"
+
+\end_inset
+
+Energy Stream properties.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Input Parameters
+\end_layout
+
+\begin_layout Itemize
+Energy: Energy by unit of time (power) which is represented by the stream;
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Output Parameters
+\end_layout
+
+\begin_layout Standard
+There are no output parameters for this object.
+\end_layout
+
+\begin_layout Subsection
+Unit Operations
+\end_layout
+
+\begin_layout Subsubsection
+
+\series bold
+Mixer
+\end_layout
+
+\begin_layout Standard
+The Mixer is used to mix up to six material streams into one, while executing
+ all the mass and energy balances (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:mist"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../user_guide/screens30/mixer.jpg
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:mist"
+
+\end_inset
+
+Mixer properties.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Input Parameters
+\end_layout
+
+\begin_layout Itemize
+Downstream pressure: defines how the downstream pressure must be calculated
+ from the pressure of the streams connected to the mixer inlets.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Calculation Method
+\end_layout
+
+\begin_layout Standard
+The mixer does the mass balance in the equipment and determines the mass
+ flow and the composition of the outlet stream.
+ Pressure is calculated according to the parameter defined by the user.
+ Temperature is calculated by doing a PH Flash in the outlet stream, with
+ the enthalpy calculated from the inlet streams (energy balance).
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Output Parameters
+\end_layout
+
+\begin_layout Standard
+There are no output parameters for this object.
+\end_layout
+
+\begin_layout Subsubsection
+
+\series bold
+Splitter
+\end_layout
+
+\begin_layout Standard
+The splitter is a mass balance unit operation - divides a material stream
+ into two or three other streams (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:div"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens/0141.JPG
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:div"
+
+\end_inset
+
+Splitter properties.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Input Parameters
+\end_layout
+
+\begin_layout Itemize
+Stream fractions: this property defines the mass flow fraction to be passed
+ to each outlet stream in the splitter.
+ Each fraction must have a value between 0 and 1 and the total sum must
+ not be bigger than 1.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Output Parameters
+\end_layout
+
+\begin_layout Standard
+There are no output parameters for this object.
+\end_layout
+
+\begin_layout Subsubsection
+
+\series bold
+Separator Vessel
+\end_layout
+
+\begin_layout Standard
+The separator vessel (also known as 
+\emph on
+flash drum
+\emph default
+) (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:sep"
+
+\end_inset
+
+) is used to separate liquid phases from vapor in a mixed material stream.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens/0123.JPG
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:sep"
+
+\end_inset
+
+Separator Vessel properties.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Input Parameters
+\end_layout
+
+\begin_layout Itemize
+Override separation temperature and pressure: these properties define if
+ the flash calculation will be done with the temperature and pressure of
+ the inlet stream or the ones defined by the user.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Framed
+position "t"
+hor_pos "c"
+has_inner_box 0
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Minisec
+
+\size footnotesize
+\emph on
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="2">
+<features>
+<column alignment="left" valignment="top" width="4text%">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\emph on
+\begin_inset Graphics
+	filename dialog-warning.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="left" valignment="top" usebox="none" width="90text%">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family sans
+\size footnotesize
+\emph on
+The utilization of different temperatures and pressures from the inlet stream
+ unbalance the simulation in terms of energy.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Calculation Method
+\end_layout
+
+\begin_layout Standard
+The separator vessel just divides the inlet stream phases into two or three
+ distinct streams.
+ If the user defines values for the separation temperature and/or pressure,
+ a TP Flash is done in the new conditions before the distribution of phases
+ through the outlet streams.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Output Parameters
+\end_layout
+
+\begin_layout Standard
+There are no output parameters for this object.
+\end_layout
+
+\begin_layout Subsubsection
+
+\series bold
+Tank
+\end_layout
+
+\begin_layout Standard
+In the current version of DWSIM, the Tank works like a fixed pressure drop
+ for the process (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:tq"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens/0146.JPG
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:tq"
+
+\end_inset
+
+Tank properties.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Input Parameters
+\end_layout
+
+\begin_layout Itemize
+Pressure drop: pressure difference between the outlet and inlet streams.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Calculation Method
+\end_layout
+
+\begin_layout Standard
+The outlet stream pressure is calculated from the inlet pressure and the
+ pressure drop given.
+ The temperature remains the same.
+ A TP Flash is done to calculate the properties of the outlet stream.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Output Parameters
+\end_layout
+
+\begin_layout Standard
+There are no output parameters for this object.
+\end_layout
+
+\begin_layout Subsubsection
+
+\series bold
+Pipe Segment
+\end_layout
+
+\begin_layout Standard
+The Pipe Segment unit operation (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:tub"
+
+\end_inset
+
+) can be used to simulate fluid flow process in a pipe.
+ Two of the most used correlations for the calculation of pressure drop
+ are available in DWSIM.
+ Temperature can be rigorously calculated considering the influence of the
+ environment.
+ With the help of the Recycle Logical Operation, the user can build large
+ water distribution systems, as an example.
+\end_layout
+
+\begin_layout Standard
+The pipe segment is divided in sections, which can be straight tubes, valves,
+ curves, etc.
+ Each section is subdivided in small sections for calculation purposes,
+ as defined by the user.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens/0136.JPG
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:tub"
+
+\end_inset
+
+Pipe Segment properties.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Input Parameters
+\end_layout
+
+\begin_layout Itemize
+Hydraulic profile: clicking on the ellipsis button opens the pipe hydraulic
+ profile editor (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:tub2"
+
+\end_inset
+
+).
+ In the hydraulic profile editor, the user adds sections, define their type
+ and in how many increments it will be divided during the calculations,
+ the pipe material, length, elevation and internal and external diameters.
+ Each change can be saved by clicking in the "Apply" button.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens/0134.JPG
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:tub2"
+
+\end_inset
+
+Pipe hydraulic profile editor.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Pressure drop correlation: select the model to be used for the pressure
+ drop calculation in the pipe segment.
+\end_layout
+
+\begin_layout Itemize
+Thermal profile: clicking on the ellipsis button opens the pipe thermal
+ profile editor (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:tub3"
+
+\end_inset
+
+).
+ In the thermal profile editor it is possible to define how the temperature
+ profile in the pipe should be calculated.
+ The configurations in this window are valid for the 
+\series bold
+entire
+\series default
+ pipe segment.
+ Changes are saved automatically.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens/0135.JPG
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:tub3"
+
+\end_inset
+
+Pipe thermal profile editor.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Calculation Method
+\end_layout
+
+\begin_layout Standard
+The pipe segment is calculated based on incremental mass and energy balances.
+ The complete algorithm consists in three nested loops.
+ The external loop iterates on the sections (increments), the middle loop
+ iterates on the temperature and the internal loop calculates the pressure.
+ The pressure and temperature are calculated as follows:
+\end_layout
+
+\begin_layout Enumerate
+The inlet temperature and pressure are used to estimate the increment outlet
+ pressure and temperature.
+\end_layout
+
+\begin_layout Enumerate
+Fluid properties are calculated based in a arithmetic mean of inlet and
+ outlet conditions.
+\end_layout
+
+\begin_layout Enumerate
+The calculated properties and the inlet pressure are used to calculate the
+ pressure drop.
+ With it, the outlet pressure is calculated.
+\end_layout
+
+\begin_layout Enumerate
+The calculated and estimated pressure are compared, and if their difference
+ exceeds the tolerance, a new outlet pressure is estimated, and the steps
+ 2 and 3 are repeated.
+\end_layout
+
+\begin_layout Enumerate
+Once the internal loop has converged, the outlet temperature is calculated.
+ If the global heat transfer coefficient (U) was given, the outlet temperature
+ is calculated from the following equation:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula \begin{equation}
+Q=UA\Delta T_{ml}\end{equation}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+where: 
+\begin_inset Formula $Q$
+\end_inset
+
+ = heat transferred, 
+\begin_inset Formula $A$
+\end_inset
+
+ = heat transfer area (external surface) and 
+\begin_inset Formula $\Delta T_{ml}$
+\end_inset
+
+ = logarithmic mean temperature difference.
+\end_layout
+
+\begin_layout Enumerate
+The calculated temperature is compared to the estimated one, and if their
+ difference exceeds the specified tolerance, a new temperature is estimated
+ and new properties are calculated (return to step 2).
+\end_layout
+
+\begin_layout Enumerate
+When both pressure and temperature converges, the results are passed to
+ the next increment, where calculation restarts.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Output Parameters
+\end_layout
+
+\begin_layout Itemize
+Delta-T: temperature variation in the pipe segment.
+\end_layout
+
+\begin_layout Itemize
+Delta-P: pressure variation in the pipe segment.
+\end_layout
+
+\begin_layout Itemize
+Heat exchanged: amount of heat exchanged with the environment, or lost by
+ friction in the pipe walls.
+\end_layout
+
+\begin_layout Itemize
+Results (table): results are show section by section in a table.
+\end_layout
+
+\begin_layout Itemize
+Results (graph): a graph shows the temperature, pressure, liquid holdup,
+ velocity and heat exchanged profiles.
+\end_layout
+
+\begin_layout Subsubsection
+
+\series bold
+Valve
+\end_layout
+
+\begin_layout Standard
+The Valve works like a fixed pressure drop for the process, where the outlet
+ material stream properties are calculated beginning from the principle
+ that the expansion is an isenthalpic process (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:valv"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens/0124.JPG
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:valv"
+
+\end_inset
+
+Valve properties.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Input Parameters
+\end_layout
+
+\begin_layout Itemize
+Pressure drop: pressure difference between the outlet and inlet streams.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Calculation Method
+\end_layout
+
+\begin_layout Standard
+The outlet stream pressure is calculated from the inlet pressure and the
+ pressure drop.
+ The outlet stream temperature is found by doing a PH Flash.
+ This way, in the majority of cases, the outlet temperature will be less
+ than or equal to the inlet one.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Output Parameters
+\end_layout
+
+\begin_layout Itemize
+Delta-T: temperature drop observed in the valve expansion process.
+\end_layout
+
+\begin_layout Subsubsection
+
+\series bold
+Pump
+\end_layout
+
+\begin_layout Standard
+The pump is used to provide energy to a liquid stream in the form of pressure.
+ The process is isenthalpic, and the non-idealities are considered according
+ to the pump efficiency, which is defined by the user (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:bb"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens/0142.JPG
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:bb"
+
+\end_inset
+
+Pump properties.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Input Parameters
+\end_layout
+
+\begin_layout Itemize
+Delta-P: pressure rise in the pump.
+\end_layout
+
+\begin_layout Itemize
+Efficiency: pump adiabatic efficiency;
+\end_layout
+
+\begin_layout Itemize
+Ignore vapor in the inlet stream: defines if the calculator should ignore
+ any vapor in the inlet stream;
+\end_layout
+
+\begin_layout Itemize
+Use the provided Delta-P: defines if the pressure of the outlet stream will
+ be calculated by the user-defined Delta-P or the energy stream connected
+ to the pump.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Calculation Method
+\end_layout
+
+\begin_layout Standard
+The calculation method for the pump is different for the two cases (when
+ the provided delta-p or the potency of the energy stream is used).
+ In the first method, we have the following sequence:
+\end_layout
+
+\begin_layout Itemize
+Outlet stream enthalpy:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+H_{2}=H_{1}+\frac{\Delta P}{\rho},\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Pump discharge pressure:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+P_{2}=P_{1}+\Delta P\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Pump required power:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+Pot=\frac{W\left(H_{2}-H_{1}\right)}{\eta},\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where:
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $Pot$
+\end_inset
+
+ pump power
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $W$
+\end_inset
+
+ mass flow
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $H_{2}$
+\end_inset
+
+ outlet stream specific enthalpy
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $H_{1}$
+\end_inset
+
+ inlet stream specific enthalpy
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $\eta$
+\end_inset
+
+ pump efficiency
+\end_layout
+
+\begin_layout Itemize
+Outlet temperature: PH Flash (with P2 and H2).
+\end_layout
+
+\begin_layout Standard
+In the second case (calculated outlet pressure), we have the following sequence:
+\end_layout
+
+\begin_layout Itemize
+Outlet stream enthalpy:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+H_{2}=H_{1}+\frac{Pot\,\eta}{W},\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Delta P$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\Delta P=\rho(H_{2}-H_{1}),\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Discharge pressure:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+P_{2}=P_{1}+\Delta P\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Outlet temperature: PH Flash.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Outlet Parameters
+\end_layout
+
+\begin_layout Itemize
+Delta-T: temperature variation in the pumping process.
+\end_layout
+
+\begin_layout Itemize
+Power required: power required by the pump.
+\end_layout
+
+\begin_layout Subsubsection
+
+\series bold
+Compressor
+\end_layout
+
+\begin_layout Standard
+The compressor is used to provide energy to a vapor stream in the form of
+ pressure.
+ The ideal process is isentropic (constant entropy) and the non-idealities
+ are considered according to the compressor efficiency, which is defined
+ by the user (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:comp"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens/0130.JPG
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:comp"
+
+\end_inset
+
+Compressor properties.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Input Parameters
+\end_layout
+
+\begin_layout Itemize
+Delta-P: pressure rise in the compressor.
+\end_layout
+
+\begin_layout Itemize
+Efficiency: compressor adiabatic efficiency;
+\end_layout
+
+\begin_layout Itemize
+Ignore liquid in the inlet stream: defines if the calculator should ignore
+ any liquid in the inlet stream;
+\end_layout
+
+\begin_layout Itemize
+Use the provided Delta-P: defines if the pressure of the outlet stream will
+ be calculated by the user-defined Delta-P or the energy stream connected
+ to the compressor.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Calculation Method
+\end_layout
+
+\begin_layout Standard
+The compressor calculation is different for the two cases (when the provided
+ delta-p or the potency of the energy stream is used).
+ In the first method, we have the following sequence:
+\end_layout
+
+\begin_layout Itemize
+Outlet pressure calculation:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+P_{2}=P_{1}+\Delta P\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Outlet enthalpy: A PS Flash (Pressure-Entropy) is done to obtain the ideal
+ process enthalpy change.
+ The outlet real enthalpy is then calculated by: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+H_{2}=H_{1}+\frac{\Delta H_{id}}{\eta\, W},\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Power required by the compressor:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+Pot=\frac{W\left(H_{2_{id}}-H_{1}\right)}{\eta},\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Outlet temperature: PH Flash with 
+\begin_inset Formula $P_{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $H_{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In the second case (calculated outlet pressure), we have the following sequence:
+\end_layout
+
+\begin_layout Itemize
+Discharge pressure:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+P_{2}=P_{1}\left[1+\frac{Pot}{\eta W}\frac{k-1}{k}\frac{MM}{8.314T_{1}}\right]^{\left[k/(k-1)\right]},\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where:
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $P_{2}$
+\end_inset
+
+ outlet stream pressure
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $P_{1}$
+\end_inset
+
+ inlet stream pressure
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $Pot$
+\end_inset
+
+ compressor power
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $W$
+\end_inset
+
+ mass flow
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $\eta$
+\end_inset
+
+ compressor adiabatic efficiency
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $k$
+\end_inset
+
+ adiabatic coefficient (
+\begin_inset Formula $Cp_{gi}/Cv_{gi})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $MM$
+\end_inset
+
+ gas molecular weight
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $T_{1}$
+\end_inset
+
+ inlet stream temperature
+\end_layout
+
+\begin_layout Itemize
+Outlet enthalpy: A PS Flash (Pressure-Entropy) is done to obtain the ideal
+ process enthalpy change.
+ The outlet real enthalpy is then calculated by: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+H_{2}=H_{1}+\frac{\Delta H_{id}}{\eta\, W},\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Outlet temperature: PH Flash with 
+\begin_inset Formula $P_{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $H_{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Output Parameters
+\end_layout
+
+\begin_layout Itemize
+Delta-T: temperature change in the compression process.
+\end_layout
+
+\begin_layout Itemize
+Power required: power required by the compressor.
+\end_layout
+
+\begin_layout Subsubsection
+
+\series bold
+Expander
+\end_layout
+
+\begin_layout Standard
+The expander is used to extract energy from a high-pressure vapor stream.
+ The ideal process is isentropic (constant entropy) and the non-idealities
+ are considered according to the expander efficiency, which is defined by
+ the user(Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:turb"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens/0144.JPG
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:turb"
+
+\end_inset
+
+Expander Properties.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Input Parameters
+\end_layout
+
+\begin_layout Itemize
+Delta-P: pressure drop in the expander.
+\end_layout
+
+\begin_layout Itemize
+Efficiency: expander adiabatic efficiency;
+\end_layout
+
+\begin_layout Itemize
+Ignore liquid in the inlet stream: defines if the calculator should ignore
+ any liquid in the inlet stream;
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Calculation Method
+\end_layout
+
+\begin_layout Itemize
+Discharge pressure calculation:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+P_{2}=P_{1}-\Delta P\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Outlet enthalpy: A PS Flash (Pressure-Entropy) is done to obtain the ideal
+ process enthalpy change.
+ The outlet real enthalpy is then calculated by: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+H_{2}=H_{1}+\frac{\Delta H_{id}}{\eta\, W},\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Power generated by the expander:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $ $
+\end_inset
+
+
+\begin_inset Formula \begin{equation}
+Pot=\frac{W\left(H_{2_{id}}-H_{1}\right)}{\eta},\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Outlet temperature: PH Flash with 
+\begin_inset Formula $P_{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $H_{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Output Parameters
+\end_layout
+
+\begin_layout Itemize
+Delta-T: temperature change in the compression process.
+\end_layout
+
+\begin_layout Itemize
+Power generated: power generated by the expander.
+\end_layout
+
+\begin_layout Subsubsection
+
+\series bold
+Heater
+\end_layout
+
+\begin_layout Standard
+The heater simulates a stream heating process (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:aq"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens/0140.JPG
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:aq"
+
+\end_inset
+
+Heater properties.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Input Parameters
+\end_layout
+
+\begin_layout Itemize
+Pressure drop: pressure drop in the heater.
+\end_layout
+
+\begin_layout Itemize
+Heat added: amount of heat added in the heater.
+\end_layout
+
+\begin_layout Itemize
+Efficiency: heater efficiency.
+\end_layout
+
+\begin_layout Itemize
+Use heat provided: defines if the heat added is determined by the value
+ informed by the user or by the energy stream connected to the heater.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Calculation Method
+\end_layout
+
+\begin_layout Standard
+The outlet stream temperature is calculated by doing a PH Flash, were the
+ outlet stream enthalpy is calculated by a energy balance in the heater.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Output Parameters
+\end_layout
+
+\begin_layout Itemize
+Delta-T: temperature rise observed in the heating process.
+\end_layout
+
+\begin_layout Subsubsection
+
+\series bold
+Cooler
+\end_layout
+
+\begin_layout Standard
+The cooler simulates a stream cooling process(Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:resfr"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens/0132.JPG
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:resfr"
+
+\end_inset
+
+Cooler properties.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Input Parameters
+\end_layout
+
+\begin_layout Itemize
+Pressure drop: pressure drop in the cooler.
+\end_layout
+
+\begin_layout Itemize
+Heat removed: amount of heat removed by the cooler.
+\end_layout
+
+\begin_layout Itemize
+Efficiency: cooler efficiency.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Calculation Method
+\end_layout
+
+\begin_layout Standard
+The outlet stream temperature is calculated by doing a PH Flash, were the
+ outlet stream enthalpy is calculated by a energy balance in the cooler.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Output Parameters
+\end_layout
+
+\begin_layout Itemize
+Delta-T: temperature drop observed in the cooling process.
+\end_layout
+
+\begin_layout Subsubsection
+Shortcut Column
+\end_layout
+
+\begin_layout Standard
+The shortcut column is used to calculate the minimum reflux and distribution
+ of products in a distillation column by the method of Fenske-Underwood-Gillilan
+d 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Kister1992"
+
+\end_inset
+
+.
+ The column should have a single feed stage, two products (top and bottom),
+ condenser (partial or total) and reboiler.
+ The results are the minimum reflux, thermal loads and temperature of the
+ condenser and reboiler for a fixed reflux ratio, in addition to determining
+ the optimum feed stage and the minimum number of stages.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens17/12.png
+	width 60text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:scol"
+
+\end_inset
+
+Shortcut Column Properties..
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Input Parameters
+\end_layout
+
+\begin_layout Itemize
+Connections: feed, product, top, bottom and heat loads (condenser / reboiler).
+\end_layout
+
+\begin_layout Itemize
+Type of condenser: partial or total.
+\end_layout
+
+\begin_layout Itemize
+Reflux Ratio: ratio between the flow of liquid that returns from the condenser
+ to the column and the one that leaves the condenser as the top product.
+\end_layout
+
+\begin_layout Itemize
+Light Key: component used as a reference so that the lighter ones are present
+ only in the top product.
+\end_layout
+
+\begin_layout Itemize
+Heavy Key: component used as a reference so that the heavier ones are present
+ only in the product of fund.
+\end_layout
+
+\begin_layout Itemize
+Condenser pressure: pressure of the condenser.
+\end_layout
+
+\begin_layout Itemize
+Reboiler pressure: pressure of the reboiler.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Output Parameters
+\end_layout
+
+\begin_layout Itemize
+Minimum reflux: reflux ratio of minimum to ensure the separation specified.
+\end_layout
+
+\begin_layout Itemize
+Minimum number of stages: the minimum number of training which ensures the
+ separation specified.
+\end_layout
+
+\begin_layout Itemize
+Optimal feed stage: the feed stage that minimizes the thermal load of the
+ reboiler.
+\end_layout
+
+\begin_layout Itemize
+Liquid / Vapor flows: internal flows in sections of rectification and stripping
+ of the column.
+\end_layout
+
+\begin_layout Itemize
+Thermal loads: thermal loads of condenser and reboiler.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Rigorous Column (Distillation / Absorption)
+\end_layout
+
+\begin_layout Standard
+The rigorous column is an unit operation that represents the fractionating
+ towers, where components in a mixture are separated in various equilibrium
+ stages.
+ It is called 
+\emph on
+rigorous
+\emph default
+ because of the thermodynamic models used in the solution of the mass and
+ energy balances throughout the column.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../snaps/pic0001.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Distillation Column Properties.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In DWSIM, four types of rigorous columns are available: 
+\series bold
+Distillation Column
+\series default
+, 
+\series bold
+Absorption Column
+\series default
+, 
+\series bold
+Refluxed Absorber
+\series default
+ and 
+\series bold
+Reboiled Absorber
+\series default
+.
+ All of them share the same basic interface, with the following characteristics:
+\end_layout
+
+\begin_layout Itemize
+Supports multiple feed streams
+\end_layout
+
+\begin_layout Itemize
+Supports multiple side draws
+\end_layout
+
+\begin_layout Itemize
+Supports energy streams representing heat exchangers on each stage
+\end_layout
+
+\begin_layout Itemize
+Definition of pressure and efficiency by stage
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Solving methods
+\end_layout
+
+\begin_layout Standard
+In the current version of DWSIM, three methods are available to solve the
+ mass and energy balances in a column.
+ They are: 
+\end_layout
+
+\begin_layout Itemize
+Bubble-Point method of Wang and Henke (distillation column only) 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Seader2005"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Sum-Rates
+\emph default
+ method of Burningham and Otto (absorption column only)
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Seader2005"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Russell's 
+\emph on
+Inside-Out
+\emph default
+ method (all column types)
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Seader2005"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Simultaneous Correction method of Naphtali and Sandholm (all column types)
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Seader2005"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Configuration options
+\end_layout
+
+\begin_layout Standard
+The following table describes the configuration options for each solving
+ method.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways true
+status open
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="12" columns="5">
+<features>
+<column alignment="center" valignment="middle" width="0">
+<column alignment="center" valignment="middle" width="20text%">
+<column alignment="center" valignment="middle" width="0">
+<column alignment="center" valignment="middle" width="0">
+<column alignment="center" valignment="middle" width="40text%">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Method
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none" width="100text%">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Parameter
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Options
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Default Value
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Description
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+BP
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Stop at iteration number
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0 to 1000 (-1 to disable)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-1 (disabled)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+You can use this option to generate initial estimates for the IO and SC
+ methods.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+IO/SC
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Step for numerical derivatives
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1E-3 to 1E-12
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1E-5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Controls the value of change in variables in order to calculate the numerical
+ derivatives.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+IO/SC
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Maximum variable change factor
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+>1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Limits the changes in variables so the maximum variable change will be (newvalue
+/oldvalue) = factor.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+IO
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Adjust Sb scaling factor
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+True/False
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+False
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Use the Sb scaling factor to adjust the initial material balance estimation.
+ Helps to stabilize the algorithm when poor initial estimates are used.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+IO
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Calculate Kbj by weighted average
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+True/False
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+False
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Calculates the Kb (reference K) factor for each stage by using the weighted
+ average method as suggested by Russell.
+ If this option is set to false, the highest K-value is used for the relative
+ volatility calculation for each component on each stage.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+IO
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Use identity matrix as the first jacobian inverse
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+True/False
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+False
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+If True, tells DWSIM to use an identity matrix as the first estimate of
+ the Jacobian inverse, which by its turn is used to update each independent
+ variable.
+ If set to False, the first Jacobian is calculated using numerical derivatives.
+ 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+IO
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Use damping factor
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+True/False
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+True
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Set this option to True to use a damping factor, which helps to minimize
+ the error on each inner loop iteration.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SC/IO
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Use Newton's method to update variables
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+True/False
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+False
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+The variables are normally updated by Broyden's method, but setting this
+ option to True helps to stabilize the algorithm on hard-to-converge situations.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SC/IO
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Store and reuse jacobian matrix
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+True/False
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+True
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+This option is useful when the column must be solved multiple times without
+ significant changes in variables, i.
+ e.
+ when using recycled streams as column feeds.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SC
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Damping factor
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0 to 2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Set the damping factor which limits the changes to variables as predicted
+ by the Newton (or Broyden) step.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SC
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Maximum allowed stage temperature change
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+> 0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10 K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sets the maximum allowable stage temperature change between iterations.
+ Changes higher than this value will not be considered.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Column solving methods' configuration parameters.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Results
+\end_layout
+
+\begin_layout Standard
+After the solution of mass and energy balances for the entire column, the
+ output streams are calculated and the following results are shown in the
+ properties window of the column:
+\end_layout
+
+\begin_layout Itemize
+Heat exchanged in the condenser (where applicable)
+\end_layout
+
+\begin_layout Itemize
+Heat exchanged in the reboiler (where applicable)
+\end_layout
+
+\begin_layout Itemize
+Temperature profiles and flow of liquid / vapor entering at each stage
+\end_layout
+
+\begin_layout Itemize
+Distribution profiles of components on each stage
+\end_layout
+
+\begin_layout Subsubsection
+Heat Exchanger
+\end_layout
+
+\begin_layout Standard
+DWSIM has a model for the countercurrent, two-stream heat exchanger which
+ supports phase change and multiple phases in a stream.
+ 
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Input Parameters
+\end_layout
+
+\begin_layout Standard
+The heat exchanger in DWSIM has five calculation modes: 
+\end_layout
+
+\begin_layout Enumerate
+Calculate hot fluid outlet temperature: you must provide the cold fluid
+ outlet temperature and the exchange area to calculate the hot fluid temperature.
+\end_layout
+
+\begin_layout Enumerate
+Calculate cold fluid outlet temperature: in this mode, DWSIM needs the hot
+ fluid outlet temperature and the exchange area to calculate the cold fluid
+ temperature.
+\end_layout
+
+\begin_layout Enumerate
+Calculate both temperatures: in this mode, DWSIM needs the exchange area
+ and the heat exchanged to calculate both temperatures.
+\end_layout
+
+\begin_layout Enumerate
+Calculate area: in this mode you must provide the HTC and both temperatures
+ to calculate the exchange area.
+\end_layout
+
+\begin_layout Enumerate
+Rate a Shell and Tube exchanger: in this mode you must provide the exchanger
+ geometry and DWSIM will calculate output temperatures, pressure drop on
+ the shell and tubes, overall HTC, LMTD, and exchange area.
+ This calculation mode uses a simplified version of Tinker's method 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Tinker-1958"
+
+\end_inset
+
+ for Shell and Tube exchanger calculations.
+ 
+\end_layout
+
+\begin_layout Standard
+You can provide the pressure drop for both fluids in the exchanger for modes
+ 1 to 4 only.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens/0001.PNG
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Heat Exchanger properties.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Calculation Mode
+\end_layout
+
+\begin_layout Standard
+The heat exchanger in DWSIM is calculated using the simple convection heat
+ equation:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+Q=UA\Delta T_{ml},\end{equation}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+where: 
+\begin_inset Formula $Q$
+\end_inset
+
+ = heat transferred, 
+\begin_inset Formula $A$
+\end_inset
+
+ = heat transfer area (external surface) and 
+\begin_inset Formula $\Delta T_{ml}$
+\end_inset
+
+ = Logarithmic Mean Temperature Difference (LMTD).
+ We also remember that:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+Q=m\Delta H,\end{equation}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+where: 
+\begin_inset Formula $Q$
+\end_inset
+
+ = heat transferred from/to the fluid and 
+\begin_inset Formula $\Delta H$
+\end_inset
+
+ = outlet-inlet enthalpy difference.
+\end_layout
+
+\begin_layout Standard
+The calculation procedure depends on the mode selected:
+\end_layout
+
+\begin_layout Enumerate
+Calculate hot fluid outlet temperature: HTC (Heat Transfer Coefficient),
+ hot fluid outlet temperature, heat load and LMTD.
+\end_layout
+
+\begin_layout Enumerate
+Calculate cold fluid outlet temperature: HTC, cold fluid outlet temperature,
+ heat load and LMTD.
+\end_layout
+
+\begin_layout Enumerate
+Calculate both temperatures: HTC, cold and hot fluid outlet temperatures
+ and LMTD.
+\end_layout
+
+\begin_layout Enumerate
+Calculate area: exchange area and LMTD.
+\end_layout
+
+\begin_layout Enumerate
+Rate Shell and Tube exchanger: exchanger geometry information.
+\end_layout
+
+\begin_layout Paragraph*
+
+\series bold
+\emph on
+Results
+\end_layout
+
+\begin_layout Standard
+The results given by the heat exchanger after calculation depends on the
+ mode selected:
+\end_layout
+
+\begin_layout Enumerate
+Calculate hot fluid outlet temperature: overall HTC, hot fluid outlet temperatur
+e, heat load and LMTD.
+\end_layout
+
+\begin_layout Enumerate
+Calculate cold fluid outlet temperature: overall HTC, cold fluid outlet
+ temperature, heat load and LMTD.
+\end_layout
+
+\begin_layout Enumerate
+Calculate both temperatures: overall HTC, cold and hot fluid outlet temperatures
+ and LMTD.
+\end_layout
+
+\begin_layout Enumerate
+Calculate area: exchange area and LMTD.
+\end_layout
+
+\begin_layout Enumerate
+Rate Shell and Tube exchanger: area, LMTD, LMTD correction factor (F), overall
+ HTC, hot fluid outlet temperature, cold fluid outlet temperature, hot fluid
+ pressure drop (shell/tubes only), cold fluid pressure drop (shell/tubes
+ only).
+\end_layout
+
+\begin_layout Subsubsection
+Component Separator
+\end_layout
+
+\begin_layout Standard
+The Component Separator is a mass balance unit operation.
+ The components are separated between two streams, specified as fractions
+ or absolute flow rates.
+ The energy balance is then calculated after the separation.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Input Parameters
+\end_layout
+
+\begin_layout Itemize
+Specified stream: sets the stream to which the separation specifications
+ will be applied.
+ 
+\begin_inset Quotes sld
+\end_inset
+
+0
+\begin_inset Quotes srd
+\end_inset
+
+ corresponds to the Outlet stream 1 (overhead) and 
+\begin_inset Quotes sld
+\end_inset
+
+1
+\begin_inset Quotes srd
+\end_inset
+
+ corresponds to the Outlet stream 2 (bottoms).
+\end_layout
+
+\begin_layout Paragraph*
+
+\series bold
+\emph on
+Results
+\end_layout
+
+\begin_layout Itemize
+Energy imbalance: Difference between enthalpy of outlet and inlet streams.
+ in some cases it can be interpreted as the energy necessary to do the separatio
+n.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens17/8.png
+	width 60text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Component Separator properties.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Orifice Plate
+\end_layout
+
+\begin_layout Standard
+This model corresponds to the ISO 5167 specification for Orifice Plates,
+ and can be used to measure flow rates if used in conjunction with the Adjust
+ logical operation (change flow rates until specified pressure drop matches
+ the calculated one).
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Input Parameters
+\end_layout
+
+\begin_layout Itemize
+Pressure tappings: select the option which corresponds to the arrangement
+ of the tappings for pressure reading.
+\end_layout
+
+\begin_layout Itemize
+Orifice diameter: inner diameter of the plate.
+\end_layout
+
+\begin_layout Itemize
+Beta (d/D): ratio between plate's inner and outer diameters.
+\end_layout
+
+\begin_layout Itemize
+Correction factor: multiplier for the mass flow rate used in the calculation
+ of the pressure drop across the orifice.
+ Default is 1.
+\end_layout
+
+\begin_layout Paragraph*
+
+\series bold
+\emph on
+Results
+\end_layout
+
+\begin_layout Itemize
+Orifice pressure drop: Pressure drop across the orifice.
+ This is the value that is read through the tappings.
+\end_layout
+
+\begin_layout Itemize
+Overall pressure drop: Pressure drop after recovery.
+ This values should always be less or equal to the orifice pressure drop.
+\end_layout
+
+\begin_layout Itemize
+Delta T: temperature drop across the orifice, considering that the process
+ is an adiabatic expansion.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens17/10.png
+	width 60text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Component Separator properties.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Custom Unit Operation
+\end_layout
+
+\begin_layout Standard
+This Unit Operation lets you run scripts as the main calculation routine
+ (inside the Calculate() procedure which is called by the calculator for
+ all flowsheet simulation objects).
+ There are up to six streams available for the UO, three as input and three
+ as output.
+\end_layout
+
+\begin_layout Standard
+Supported Languages are IronPython, IronRuby, VBScript and JScript.
+ You can use some predefined reference variables inside your script, defined
+ as shortcuts to the most common objects:
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\series bold
+ims1
+\series default
+ Input Material Stream in slot 1 (MaterialStream class instance) 
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\series bold
+ims2
+\series default
+ Input Material Stream in slot 2 (MaterialStream class instance)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\series bold
+ims3
+\series default
+ Input Material Stream in slot 3 (MaterialStream class instance)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\series bold
+oms1
+\series default
+ Output Material Stream in slot 1 (MaterialStream class instance)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\series bold
+oms2
+\series default
+ Output Material Stream in slot 2 (MaterialStream class instance)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\series bold
+oms3
+\series default
+ Output Material Stream in slot 3 (MaterialStream class instance)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\series bold
+Me
+\series default
+ Reference variable to the Custom UO object instance (CustomUO UnitOperation
+ class)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\series bold
+Flowsheet
+\series default
+ Reference variable to the active flowsheet object (FormChild class)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\series bold
+Solver
+\series default
+ Flowsheet solver class instance, used to send commands to the calculator
+ (COMSolver class)
+\end_layout
+
+\begin_layout Standard
+For scripting documentation, including tutorials and samples, view the 
+\series bold
+DWSIM Scripting Documentation,
+\series default
+ 
+\series bold
+DWSIM Source Code Guide 
+\series default
+and the 
+\series bold
+DWSIM Class Documentation
+\series default
+ (separate documents).
+\end_layout
+
+\begin_layout Subsubsection
+Solids Separator
+\end_layout
+
+\begin_layout Standard
+The solids separator (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:sep-1"
+
+\end_inset
+
+) is used to separate solids from a liquid phase in a mixed material stream.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../user_guide/screens30/image0025.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:sep-1"
+
+\end_inset
+
+Solids Separator properties.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Input Parameters
+\end_layout
+
+\begin_layout Itemize
+Solids Separation Efficiency: defines the amount of solids in the liquid
+ stream.
+ 100% efficiency means no solids in the liquid stream.
+\end_layout
+
+\begin_layout Itemize
+Liquids Separation Efficiency: defines the amount of liquid in the solids
+ stream.
+ 100% efficiency means no liquid in the solids stream.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Calculation Method
+\end_layout
+
+\begin_layout Standard
+The solids separator does a mass balance and splits the inlet stream phases
+ into two distinct streams.
+\end_layout
+
+\begin_layout Subsubsection
+Continuous Cake Filter
+\end_layout
+
+\begin_layout Standard
+In a continuous filter, the feed, filtrate and cake move at steady constant
+ rates.
+ It is evident that the process consists of several steps in series - cake
+ formation, washing, drying and discharging - and that each step involves
+ progressive and continual change in conditions.
+ The pressure drop across the filter during cake formation is, however,
+ held constant.
+ 
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Calculation Method
+\end_layout
+
+\begin_layout Standard
+For a continuous cake filter, the equation that relates the filter characteristi
+cs with the rate of solids production is 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "McCabe2005"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\frac{\dot{m_{c}}}{A_{T}}=\frac{\left[2c\alpha\triangle Pfn/\mu+\left(nR_{m}\right)^{2}\right]^{0,5}-nR_{m}}{\alpha},\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+where:
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $\dot{m_{c}}$
+\end_inset
+
+ rate of solids production, 
+\begin_inset Formula $kg/s$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $A_{T}$
+\end_inset
+
+ total filter area, 
+\begin_inset Formula $m^{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $\Delta P$
+\end_inset
+
+ total pressure drop, 
+\begin_inset Formula $Pa$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $f$
+\end_inset
+
+ fraction of filter area available for cake formation
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $c$
+\end_inset
+
+ solids concentration in the solids stream
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $\alpha$
+\end_inset
+
+ specific cake resistance, 
+\begin_inset Formula $m/kg$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $R_{m}$
+\end_inset
+
+ filter medium resistance, 
+\begin_inset Formula $m^{-1}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $n$
+\end_inset
+
+ drum speed, 
+\begin_inset Formula $s^{-1}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Input and Output Parameters
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../user_guide/screens30/image0029.png
+	width 60text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:turb-1"
+
+\end_inset
+
+Continuous Cake Filter Properties.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Filter Medium Resistance: filter medium flow resistance; 
+\end_layout
+
+\begin_layout Itemize
+Specific Cake Resistance: specific cake flow resistance; 
+\end_layout
+
+\begin_layout Itemize
+Cycle Time: filter cycle time.
+\end_layout
+
+\begin_layout Itemize
+Cake Relative Humidity: filter cake moisture in % wet basis;
+\end_layout
+
+\begin_layout Itemize
+Filter Calculation Mode: Design or Simulation.
+ If 
+\series bold
+\emph on
+Design
+\series default
+\emph default
+ is selected, DWSIM will calculate the filter area given the total pressure
+ drop.
+ If 
+\series bold
+\emph on
+Simulation
+\series default
+\emph default
+ is selected, it will do the opposite;
+\end_layout
+
+\begin_layout Itemize
+Total Filter Area: filter area measured perpendicularly to the direction
+ of flow;
+\end_layout
+
+\begin_layout Itemize
+Pressure Drop: total pressure drop across the filter (cake + medium).
+\end_layout
+
+\begin_layout Subsection
+Reactors
+\end_layout
+
+\begin_layout Standard
+The reactors in DWSIM are specialized modules that solve a particular set
+ of reactions in sequence or in parallel.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../snaps/pic0016.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Conversion Reactor properties.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Input Parameters
+\end_layout
+
+\begin_layout Standard
+All reactors share the same basic interface.
+ Should be set the input and output streams, energy streams that represent
+ the heat exchanged with the environment, the reaction set to be used, the
+ mode of operation (isothermal or adiabatic) and the pressure drop through
+ the reactor.
+ For the PFR and CSTR, it is also necessary to inform the volume of the
+ reaction medium.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Output Parameters
+\end_layout
+
+\begin_layout Standard
+As results, are shown the conversions of the components involved in the
+ reactions, the variation in temperature and the heat exchanged in the reactor.
+ For the PFR are also shown the profiles of concentration of reactants and
+ products (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Perfil-de-concentração"
+
+\end_inset
+
+) along the longitudinal axis of the reactor (assuming the concentration
+ does not vary radially).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens17/pfr.png
+	width 100col%
+	rotateOrigin leftTop
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Perfil-de-concentração"
+
+\end_inset
+
+PFR concentration profile.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following points should be observed when using reactors in DWSIM:
+\end_layout
+
+\begin_layout Itemize
+Only the active and compatible reactions in the selected reaction set are
+ considered.
+\end_layout
+
+\begin_layout Itemize
+The index of each reaction defines the solving method: equal indices represent
+ reactions in parallel, while different indexes define sequential reactions.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Method of calculation
+\end_layout
+
+\begin_layout Standard
+The 
+\series bold
+Conversion Reactor
+\series default
+ is solved by simple energy and mass balances, calculating the reaction
+ heat by considering the variation in the amount of the base component.
+ The 
+\series bold
+PFR
+\series default
+ and 
+\series bold
+CSTR
+\series default
+ are solved by a numerical method for systems of ordinary differential equations
+ (ODEs).
+ 
+\series bold
+Equilibrium
+\series default
+ and 
+\series bold
+Gibbs
+\series default
+ Reactors are solved by using the procedure described by Michelsen in 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "michelsen2007"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsection
+Logical Operations
+\end_layout
+
+\begin_layout Subsubsection
+Recycle
+\end_layout
+
+\begin_layout Standard
+The Recycle operation (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:rec"
+
+\end_inset
+
+) is composed by a block in the flowsheet which does convergence verifications
+ in systems were downstream material connects somewhere upstream in the
+ diagram.
+ With this tool it is possible to build complex flowsheets, with many recycles,
+ and solve them in an efficient way by using the acceleration methods presents
+ in this logical operation.
+\end_layout
+
+\begin_layout Standard
+There are two acceleration methods available: Wegstein and Dominant Eigenvalue.
+ The Wegstein method must be used when there isn't a significant interaction
+ between convergent variables, in the contrary the other method can be used.
+ The successive substitution method is slow, but convergence is guaranteed.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens/0125.JPG
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:rec"
+
+\end_inset
+
+Recycle Properties.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The Wegstein method requires some parameters which can be edited by the
+ user.
+ The dominant eigenvalue does not require any additional parameter.
+ The user can define convergence parameters for temperature, pressure and
+ mass flow in the recycle, that is, the minimum acceptable values for the
+ difference in these values between the inlet and outlet streams, which,
+ rigorously, must be identical.
+ The smaller these values are, the more time is used by the calculator in
+ order to converge the recycle.
+\end_layout
+
+\begin_layout Standard
+As a result, the actual error values are shown, together with the necessary
+ convergence iteration steps.
+\end_layout
+
+\begin_layout Subsubsection
+Energy Recycle
+\end_layout
+
+\begin_layout Standard
+The Energy Recycle logical operation works the same way as the normal Recycle,
+ except that it is aimed at Energy Streams.
+ Here, instead of defining convergence parameters for temperature, pressure
+ and flow rate, you'll define the convergence error for the energy only.
+\end_layout
+
+\begin_layout Subsubsection
+Adjust
+\end_layout
+
+\begin_layout Standard
+The Adjust (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:aj"
+
+\end_inset
+
+) is a logical operation which changes the value of a variable in a stream
+ in order to attain a specification which can be a user-defined value or
+ the value of other variable, in other stream.
+ The adjust operation is very useful when there is a specification which
+ cannot be accomplished directly, imposing the necessity of doing a trial
+ and error calculation.
+ If this is the case, the Adjust does everything automatically.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens/0129.JPG
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:aj"
+
+\end_inset
+
+Adjust properties.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The user selects the controlled (specified) variable and the manipulated
+ one.
+ Then he defines the parameters:
+\end_layout
+
+\begin_layout Itemize
+Adjust value (or offset): desired value for the variable or the value to
+ be added or subtracted from the referenced variable.
+\end_layout
+
+\begin_layout Itemize
+Maximum iterations: maximum number of iterations to be executed by the adjust;
+\end_layout
+
+\begin_layout Standard
+In the Adjust Control Panel (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:aj2"
+
+\end_inset
+
+), the user controls the operation convergence.
+ Two convergence methods are available.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens/ajuste.jpg
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:aj2"
+
+\end_inset
+
+Adjust Control Panel.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Specification
+\end_layout
+
+\begin_layout Standard
+The Specification Logical Operation (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:espec"
+
+\end_inset
+
+) is used to make a variable assume a value which is function of other variable,
+ from other object.
+ In opposition to the Adjust Op, the Spec is calculated automatically if
+ the source variable is modified during the flowsheet calculation.
+ In order for the calculator do not make any repeated calculation in the
+ target object, one can define the "Calculate target object?" as 
+\emph on
+False
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens/0128.JPG
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:espec"
+
+\end_inset
+
+Specification properties.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In the Specification Control panel, the user can define the relation between
+ the variables by writing a function as complex as necessary (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:espec2"
+
+\end_inset
+
+).
+ The user can click on the "Evaluate Expression" to check if the expression
+ is valid.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens/0126.JPG
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:espec2"
+
+\end_inset
+
+Specification Control Panel.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Utilities
+\end_layout
+
+\begin_layout Standard
+DWSIM includes some utilities which provides the user with auxiliary information
+ about the process being simulated.
+\end_layout
+
+\begin_layout Standard
+In version 1.3 the following utilities are available: True Critical Point,
+ Hydrate Dissociation Utility, Pure Component Properties and Phase/Binary
+ Envelope.
+\end_layout
+
+\begin_layout Subsection
+True Critical Point
+\end_layout
+
+\begin_layout Standard
+In DWSIM an utility is present which calculates a stream's mixture true
+ critical point (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:pcv"
+
+\end_inset
+
+).
+ The 
+\emph on
+Peng-Robinson
+\emph default
+ and 
+\emph on
+Soave-Redlich-Kwong
+\emph default
+ EOSes are used in the calculations, depending on the Property Package which
+ is associated with the selected stream.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../user_guide/screens/snap0020.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:pcv"
+
+\end_inset
+
+True Critical Point utility.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Hydrate Dissociation Utility
+\end_layout
+
+\begin_layout Standard
+The Hydrate Dissociation Utility calculates the pressure and temperature
+ conditions where hydrate formation can occur.
+ The models implemented in DWSIM for hydrate calculations are based on the
+ thermodynamic fundamental principles and in equations of state.
+ These models can, therefore, be used in extreme operation conditions with
+ a higher safety degree than the empirical table/graph-based methods.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Framed
+position "t"
+hor_pos "c"
+has_inner_box 0
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Minisec
+
+\size footnotesize
+\emph on
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="2">
+<features>
+<column alignment="left" valignment="top" width="4text%">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\emph on
+\begin_inset Graphics
+	filename dialog-information.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="left" valignment="top" usebox="none" width="90text%">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family sans
+\size footnotesize
+\emph on
+View DWSIM`s Technical Manual for more information about the models used
+ in this utility.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The requirements for using this utility are:
+\end_layout
+
+\begin_layout Itemize
+Water must be present in the stream (even in a infinitesimal amount);
+\end_layout
+
+\begin_layout Itemize
+At least one of the hydrate formers must be present (i.e., methane, ethane,
+ propane, butane, etc.).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens/0095.JPG
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:hid1"
+
+\end_inset
+
+Hydrate calculation interface.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The composition of equilibrium phases and other information can be viewed
+ by clicking in the "Details" button (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:hid2"
+
+\end_inset
+
+):
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens/0096.JPG
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:hid2"
+
+\end_inset
+
+Hydrate equilibrium phase compositions.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Pure Component Properties
+\end_layout
+
+\begin_layout Standard
+The Pure Component Properties utility is used to view and edit pure component
+ constants, view molecular properties and general temperature dependent
+ properties like ideal gas Cp, vapor pressure, liquid viscosity and vaporization
+ enthalpy (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:props1"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../user_guide/screens30/image0021.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:props1"
+
+\end_inset
+
+Pure Component Properties utility.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../user_guide/screens30/image0022.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:props1-1"
+
+\end_inset
+
+Pure Component Properties utility (2).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../user_guide/screens30/image0023.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:props1-2"
+
+\end_inset
+
+Pure Component Properties utility (3).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../user_guide/screens30/image0024.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:props1-3"
+
+\end_inset
+
+Pure Component Properties utility (4).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Phase Envelope
+\end_layout
+
+\begin_layout Standard
+The Phase Envelope utility (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:diag1"
+
+\end_inset
+
+) allows the visualization of the existing relations between thermodynamic
+ properties of a mixture of components in a material stream.
+ The following phase envelopes can be generated in DWSIM: Pressure-Temperature,
+ Pressure-Enthalpy, Pressure-Entropy, Pressure-Volume, Temperature-Pressure,
+ Temperature-Enthalpy, Temperature-Entropy, Temperature-Volume, Volume-Pressure,
+ Volume-Temperature, Volume-Enthalpy and Volume-Entropy.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../user_guide/screens32/phasenevelope.jpg
+	height 60pheight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:diag1"
+
+\end_inset
+
+Phase Envelope utility.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It is possible to include quality and thermodynamic stability curves in
+ the TP/PT diagrams.
+ The stability limit curve refers to the limiting region where one can have
+ a superheated liquid or a subcooled vapor.
+ The stability curve can only be calculated by PR and SRK EOSes.
+\end_layout
+
+\begin_layout Standard
+Starting from DWSIM 3.2, the hydrate equilibrium curve can be calculated
+ for sI and sII-type hydrates if your mixture has water and hydrate formers.
+ If water is present, the TP and PT diagrams will also include a dry basis
+ dew point curve, to represent the points where the hydrocarbon liquid phase
+ starts to condense - the green dots will represent water dew points.
+ Also, a new 
+\begin_inset Quotes sld
+\end_inset
+
+Phase Identification Parameter Boundary
+\begin_inset Quotes srd
+\end_inset
+
+ option is available for PR and SRK EOS.
+ When this option is selected, a continuous line will be included in the
+ diagram that shows where the fluid transitions from a liquid-like to a
+ vapor-like behavior or 
+\emph on
+vice-versa
+\emph default
+, depending on the region being observed.
+\end_layout
+
+\begin_layout Subsection
+Binary Envelope
+\end_layout
+
+\begin_layout Standard
+The Binary Envelope utility is a specialized phase envelope builder for
+ viewing specific two-component diagrams (T-x-y, P-x-y, etc.).
+ For the T-x-y diagram type, different equilibrium lines can be calculated,
+ depending on Property Package and Flash Algorithm selections.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../user_guide/screens30/image0017.png
+	height 80theight%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:diag12"
+
+\end_inset
+
+Binary Envelope utility.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Petroleum Cold Flow Properties
+\end_layout
+
+\begin_layout Standard
+The utility for calculation of petroleum cold flow properties can be used
+ to predict important fluid properties for the petroleum industry, like
+ flash point, Reid vapor pressure, Cetane index, etc.
+ (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Interface-do-utilitário"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../snaps/pic0011.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\lang brazilian
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Interface-do-utilitário"
+
+\end_inset
+
+
+\lang english
+Cold Flow Properties interface.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "equipment_guide,../technical_manual/tech_manual"
+options "bibtotoc,aichej"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

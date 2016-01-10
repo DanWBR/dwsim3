@@ -1,0 +1,4817 @@
+#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass scrartcl
+\begin_preamble
+\usepackage{indentfirst}
+\let\@endpetrue\@endpefalse
+\reversemarginpar
+\@addtoreset{equation}{section}  \renewcommand{\theequation}{\thesection.\arabic{equation}}
+\marginparwidth 3.5cm
+\rfoot{\thepage}
+\lfoot{DWSIM - User Guide}
+\cfoot{}
+\renewcommand{\footrulewidth}{0.4pt}
+\setcounter{page}{-2}
+\end_preamble
+\use_default_options false
+\language english
+\inputencoding default
+\font_roman palatino
+\font_sans lmss
+\font_typewriter cmtl
+\font_default_family sfdefault
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\float_placement H
+\paperfontsize 10
+\spacing onehalf
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder true
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize a4paper
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\cite_engine natbib_numerical
+\use_bibtopic false
+\paperorientation portrait
+\leftmargin 5cm
+\topmargin 3cm
+\rightmargin 2cm
+\bottommargin 3cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip smallskip
+\quotes_language swedish
+\papercolumns 1
+\papersides 1
+\paperpagestyle fancy
+\bullet 0 5 18 -1
+\bullet 1 0 9 -1
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\paragraph_spacing onehalf
+
+\series bold
+\size large
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\end_inset
+
+
+\begin_inset VSpace vfill
+\end_inset
+
+
+\lyxline
+DWSIM - Process Simulation, Modeling and Optimization
+\end_layout
+
+\begin_layout Standard
+\paragraph_spacing onehalf
+
+\series bold
+\size large
+User Guide
+\end_layout
+
+\begin_layout Standard
+
+\lyxline
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Version 3.6, Revision 0
+\end_layout
+
+\begin_layout Standard
+\paragraph_spacing onehalf
+
+\emph on
+January 2016
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Addsec*
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\end_inset
+
+License
+\end_layout
+
+\begin_layout Standard
+\noindent
+DWSIM is released under the GNU General Public License (GPL) version 3.
+\end_layout
+
+\begin_layout Addsec*
+Contact Information
+\end_layout
+
+\begin_layout Subparagraph
+DWSIM - Process Simulation, Modeling and Optimization
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+Author: Daniel Medeiros
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+Website: 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+http://dwsim.inforside.com.br
+\end_layout
+
+\end_inset
+
+ / 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+http://www.sourceforge.net/projects/dwsim
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+E-mail: 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+danielwag@gmail.com
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FloatList figure
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+This document gives a detailed description about how to setup, run, modify
+ and view results of a basic process simulation in DWSIM.
+ The document is organized according to the sequence of execution of a simulatio
+n.
+ Each step/task is explained with the help of images and descriptions of
+ the associated windows.
+\end_layout
+
+\begin_layout Standard
+For details about the models used for calculation of thermodynamic, transport
+ and thermal properties, please read the 
+\series bold
+Technical Manual
+\series default
+.
+ Detailed Unit Operations and Utilities' descriptions can be found in the
+ context-sensitive help available inside the application by through the
+ 'F1' key.
+\end_layout
+
+\begin_layout Standard
+Visit 
+\begin_inset CommandInset href
+LatexCommand href
+name "DWSIM's Wiki"
+target "http://dwsim.inforside.com.br"
+
+\end_inset
+
+ for more up-to-date information about DWSIM, including general usage tips
+ and tricks.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Welcome screen
+\end_layout
+
+\begin_layout Standard
+When DWSIM is opened, the welcome screen is shown (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-boasvindas"
+
+\end_inset
+
+):
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename screens35/snap001_.png
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-boasvindas"
+
+\end_inset
+
+DWSIM's welcome screen.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The welcome screen provides the user with shortcuts to open existing simulations
+, create new ones, create new compound creator and data regression cases
+ and open the samples folder.
+ The "Close Window" button closes the window and shows the main DWSIM interface.
+\end_layout
+
+\begin_layout Standard
+In the main DWSIM window, the following items can be seen:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Menu bar
+\series default
+\emph default
+, with buttons to open/save/create simulations, component creator and data
+ regression cases, configure the active simulation, general preferences,
+ launch tools, configure the child windows view mode, etc.;
+\begin_inset Box Framed
+position "t"
+hor_pos "c"
+has_inner_box 0
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Minisec
+
+\size footnotesize
+\emph on
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="2">
+<features>
+<column alignment="left" valignment="top" width="4text%">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\emph on
+\begin_inset Graphics
+	filename dialog-information.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="left" valignment="top" usebox="none" width="90text%">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family sans
+\size footnotesize
+\emph on
+The menu bar is filled with other items if a simulation file is opened in
+ DWSIM
+\family default
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Button strip,
+\series default
+\emph default
+ to open, save and create new steady-state simulations, component creator
+ and data regression cases.
+\end_layout
+
+\begin_layout Standard
+There are various ways to access the most commonly operations with simulation
+ files and component creator/data regression cases - open, save and create.
+ In the next sections you will be guided through some necessary steps to
+ create and configure a steady-state simulation, a compound creator and/or
+ a data regression case.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Simulation
+\end_layout
+
+\begin_layout Subsection
+User Interface
+\end_layout
+
+\begin_layout Standard
+The "Create a new steady-state simulation" button in the welcome window
+ can be used to create a new simulation.
+ After the simulation is created, the 
+\series bold
+configuration window
+\series default
+ (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-config"
+
+\end_inset
+
+) is shown.
+ The simulation configuration interface consists in a tabbed window:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Compounds
+\series default
+ -
+\emph default
+ Add or remove compounds to/from the simulation and petroleum fractions
+ (pseudocompounents) utilities.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Basis
+\series default
+ -
+\emph default
+ Property Package configuration and management of chemical reactions.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Advanced Thermo 
+\series default
+- 
+\emph default
+Phase equilibrium flash algorithm selection and other advanced thermodynamic
+ model settings.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Units System
+\series default
+ - 
+\emph default
+Units system management.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Miscelaneous
+\series default
+ - 
+\emph default
+Simulation info (title, author and description), number formatting and password
+ settings.
+\end_layout
+
+\begin_layout Subsection
+Configuration
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename screens34/0002.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-config-1"
+
+\end_inset
+
+Simulation Configuration Wizard.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Starting from DWSIM 3.3, a new Simulation Configuration Wizard (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-config-1"
+
+\end_inset
+
+) is opened as soon as a new simulation is created, and will display the
+ interfaces described in the following sections in a more streamlined way.
+ The older simulation configuration window can be accessed anytime during
+ the simulation or through a button located in the first page of the config
+ wizard.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename screens31/image0032.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-config"
+
+\end_inset
+
+Simulation configuration window.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The simulation configuration window (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-config"
+
+\end_inset
+
+) is the interface where all the functions for configuration and personalization
+ of a simulation in DWSIM can be found.
+ In this window, the user can manage the simulation components, the property
+ package (thermodynamic model), units system and number format, among other
+ options.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Framed
+position "t"
+hor_pos "c"
+has_inner_box 0
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Minisec
+
+\size footnotesize
+\emph on
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="2">
+<features>
+<column alignment="left" valignment="top" width="4text%">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\emph on
+\begin_inset Graphics
+	filename dialog-information.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="left" valignment="top" usebox="none" width="90text%">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family sans
+\size footnotesize
+\emph on
+The simulation configuration window can be accessed anytime when a simulation
+ is opened in DWSIM.
+ The changes made through it have immediate effect on the simulation.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Components/Compounds
+\end_layout
+
+\begin_layout Standard
+There are two essential information required by DWSIM in order to correctly
+ start a simulation.
+ The first refers to the available 
+\series bold
+\emph on
+components
+\series default
+\emph default
+ (or 
+\series bold
+\emph on
+compounds
+\series default
+\emph default
+).
+ There are three types of components which can be managed in DWSIM - the
+ first type are the components present in the database.
+ The second, 
+\series bold
+\emph on
+hypotheticals
+\emph default
+,
+\series default
+ and the third, 
+\series bold
+\emph on
+pseudocomponents
+\series default
+\size large
+,
+\size default
+\emph default
+ are components which can be added by the user through the 
+\series bold
+Compound Creator 
+\series default
+or the 
+\series bold
+Petroleum Characterization 
+\series default
+utilities
+\series bold
+.
+ 
+\series default
+These user-created components will be available in the end of the component
+ list inside the "Components" tab for inclusion or removal from the simulation
+ as necessary.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Framed
+position "t"
+hor_pos "c"
+has_inner_box 0
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Minisec
+
+\size footnotesize
+\emph on
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="2">
+<features>
+<column alignment="left" valignment="top" width="4text%">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\emph on
+\begin_inset Graphics
+	filename dialog-information.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="left" valignment="top" usebox="none" width="90text%">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family sans
+\size footnotesize
+\emph on
+View the section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Componentes-hipotéticos-e"
+
+\end_inset
+
+ for information about the compound creation utilities.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Basis
+\end_layout
+
+\begin_layout Standard
+The Property Package consists in a set of methods and models for the calculation
+ of physical and chemical properties of material streams in the simulation.
+ It is composed of a thermodynamic model - an equation of state or a hybrid
+ model - and methods for property calculation, like the surface tension
+ of the liquid phase.
+ The figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-PP"
+
+\end_inset
+
+ shows the interface for configuration of the property package.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename screens36/snap018_.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-PP"
+
+\end_inset
+
+Property Package configuration interface.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Advanced Thermo
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename screens35/snap004_.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-PP-1"
+
+\end_inset
+
+Property Package configuration interface.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+You can define some parameters which will be used throughout all Property
+ Packages, in all simulation objects.
+ They are:
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Flash Algorithm
+\end_layout
+
+\begin_layout Standard
+Defines the flash algorithm to be used by all Property Packages which have
+ its Flash Algorithm option set to 
+\begin_inset Quotes sld
+\end_inset
+
+Global
+\begin_inset Quotes srd
+\end_inset
+
+ (default).
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Nested
+\begin_inset space ~
+\end_inset
+
+Loops
+\begin_inset space ~
+\end_inset
+
+(VLE):
+\series default
+ recommended for the vast majority of VLE systems;
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Nested
+\begin_inset space ~
+\end_inset
+
+Loops
+\begin_inset space ~
+\end_inset
+
+(VLLE):
+\series default
+ recommended for systems where the liquid phase may be unstable (will split
+ in two liquid phases with different compositions);
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Inside-Out
+\begin_inset space ~
+\end_inset
+
+(VLE/VLLE):
+\series default
+ recommended for petroleum simulations with many pseudocomponents.
+ The 3-phase option must be used when a second liquid phase is expected
+ (i.e.
+ free water);
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Gibbs
+\begin_inset space ~
+\end_inset
+
+Minimization
+\begin_inset space ~
+\end_inset
+
+(VLE/VLLE):
+\series default
+ recommended for difficult chemical systems;
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Nested
+\begin_inset space ~
+\end_inset
+
+Loops
+\begin_inset space ~
+\end_inset
+
+for
+\begin_inset space ~
+\end_inset
+
+Eutectic
+\begin_inset space ~
+\end_inset
+
+Solid
+\begin_inset space ~
+\end_inset
+
+Systems (SLE-E):
+\series default
+ Calculates Solid-Liquid Equilibria for eutectic systems considering the
+ solid phase as being ideal.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Nested
+\begin_inset space ~
+\end_inset
+
+Loops
+\begin_inset space ~
+\end_inset
+
+for
+\begin_inset space ~
+\end_inset
+
+Solid
+\begin_inset space ~
+\end_inset
+
+Solution
+\begin_inset space ~
+\end_inset
+
+Systems (SLE-SS):
+\series default
+ Calculates Solid-Liquid Equilibria for solid solution systems considering
+ the solid phase as being ideal.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Nested
+\begin_inset space ~
+\end_inset
+
+Loops
+\begin_inset space ~
+\end_inset
+
+(3-phase
+\begin_inset space ~
+\end_inset
+
+immiscible
+\begin_inset space ~
+\end_inset
+
+VLLE):
+\series default
+ For systems with an immiscible second liquid phase (VLLE).
+ The first compound selected in the key compound list will be the immiscible
+ one.
+\end_layout
+
+\begin_layout Standard
+The "Fast Mode" switch enables some optimizations in the IO code in order
+ to improve calculation times.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Force Pressure-Enthalpy (PH) Flash calculations
+\end_layout
+
+\begin_layout Standard
+If enabled, all requests by unit operations for PT Flashes will be replaced
+ by PH ones.
+ This option must be activated if you are working with only one component
+ (steam simulation, for example), otherwise you won't have partial vaporization/
+liquefaction in valves, compressors and expanders, if that is the case.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Calculate Bubble and Dew points at stream conditions
+\end_layout
+
+\begin_layout Standard
+Check this box if you want the DWSIM to calculate bubble and dew points
+ at conditions specified on each material stream.
+ The calculated values will be shown only if the stream is at VLE equilibrium.
+ The calculations are not exactly fast, so use this option with caution
+ and only if needed.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Validate Equilibrium Flash Calculation Results
+\end_layout
+
+\begin_layout Standard
+If enabled, DWSIM will check the mixture Gibbs energy before and after the
+ equilibrium flash calculation.
+ If the gibbs energy 
+\emph on
+increases
+\emph default
+ after the calculation (it should always 
+\emph on
+decrease
+\emph default
+ when there is a phase split), an error message will be shown and the flowsheet
+ calculation will be aborted.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Apply a Phase Identification Algorithm after Equilibrium Calculations
+\end_layout
+
+\begin_layout Standard
+Check this to apply an identification algorithm to each phase after the
+ equilibrium calculation is finished.
+ This can be useful for supercritical compounds which behave as liquid at
+ high pressures and temperatures, or special mixtures which exhibit LLE
+ behavior at low temperatures, incorrectly identified as VLE by the flash
+ algorithms.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+This procedure is enabled by default and will override the flash result
+ regarding phase identification
+\series default
+.
+ For instance, the result of a flash calculation may give an all-vapor solution
+ and, after the phase identification algorithm is applied, the phase may,
+ in fact, behave as liquid.
+ In this case, DWSIM will show this phase as liquid in the Material Stream
+ property window.
+ 
+\end_layout
+
+\begin_layout Standard
+Visit DWSIM's wiki for more information about the phase identification algorithm.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Stability Test
+\end_layout
+
+\begin_layout Standard
+When a flash algorithm with a three-phase capability is selected, DWSIM
+ needs to know which components are most likely to be present in a second
+ liquid phase.
+ You can do that by selecting the ones you think that will be in a higher
+ amount - that is, the key components for the second liquid phase.
+ That doesn't necessarily imposes that the other, unselected components
+ cannot be present in the second liquid phase - only the equilibrium calculation
+ will tell you that.
+\end_layout
+
+\begin_layout Standard
+The search severity setting controls how much effort DWSIM should put into
+ searching for a second liquid phase.
+ In the 
+\emph on
+Low
+\emph default
+ setting, only one trial phase is created with a mixture of the key components
+ and the convergence tolerance is somewhat high.
+ In the 
+\emph on
+High
+\emph default
+ setting, DWSIM will include additional trial phases, one for each key component
+ and do additional checks using incipient phases' gibbs energy, with the
+ smallest convergence tolerance value (1E-06).
+ 
+\end_layout
+
+\begin_layout Paragraph
+Multiple Property Packages
+\end_layout
+
+\begin_layout Standard
+Since DWSIM 1.5, the user can add multiple Property Packages to a single
+ simulation, which can be associated to each unit operation and material
+ stream on a individual basis.
+ Each property package has its own settings, even if two or more packages
+ are of the same type.
+\end_layout
+
+\begin_layout Paragraph
+Property Package configuration
+\end_layout
+
+\begin_layout Standard
+If the selected property package has any editable property, the "Configure"
+ button becomes clickable and the user can click on it to show the property
+ package configuration window.
+ For instance, with the SRK property package the editable parameters are
+ the binary interaction parameters (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-PP3"
+
+\end_inset
+
+) and some convergence/tolerance values for flash calculations (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-PP2-1"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../snaps/pic0007.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-PP3"
+
+\end_inset
+
+Property package configuration window (1).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Enable Flash Algorithm Fast Mode
+\end_layout
+
+\begin_layout Standard
+Use this setting to define the calculation scheme for the current flash
+ algorithm.
+ Fast mode (setting equal to 1) is the default mode which has been used
+ up to DWSIM 3.3.
+ Try disabling this setting (set to 0) if your simulation is having trouble
+ converging compressors, expanders and valves in extreme conditions (near
+ to the critical point).
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Use Ideal Mixing Rule for Liquid Phase Density
+\end_layout
+
+\begin_layout Standard
+If the liquid phase has small amounts of supercritical components, the default
+ calculation method may fail.
+ If that is the case, change this option to 1 to force an ideal mixing rule
+ for the liquid density (use a molar weighted average of individual component
+ liquid densities).
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Flash Algorithm
+\end_layout
+
+\begin_layout Standard
+Use this option to override the global setting for the Flash Algorithm.
+ Default is 2 (use the global setting).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens17/11.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-PP2-1"
+
+\end_inset
+
+Property package configuration window for EOS-based models.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Additional Property Package configuration options
+\end_layout
+
+\begin_layout Standard
+Some Property Packages have extra configuration options in order to allow
+ a deeper control of the thermodynamic calculations for the user.
+ They are:
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Use EOS for Liquid Density
+\end_layout
+
+\begin_layout Standard
+This option forces the calculation of the liquid densities based on the
+ compressibility factor given by the EOS.
+ When disabled, DWSIM will use the Rackett correlation to calculate the
+ liquid density.
+ Please note that this also affects the calculation of partial molar volumes,
+ and, consequently, component liquid volumetric fractions and flow rates.
+\end_layout
+
+\begin_layout Standard
+Use 0 to disable, 1 to enable this option.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Use Peneloux Volume Translation correction
+\end_layout
+
+\begin_layout Standard
+This option is available for PR and SRK Property Packages.
+ It enables correction of EOS-calculated densities by the inclusion of a
+ correction factor named 
+\emph on
+volume translation coefficient
+\emph default
+.
+ This option will be effective only if the 
+\emph on
+Use EOS for Liquid Density
+\emph default
+ option is enabled.
+\end_layout
+
+\begin_layout Standard
+Use 0 to disable, 1 to enable this option.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Use Experimental Liquid Density Data
+\end_layout
+
+\begin_layout Standard
+This option affects ChemSep database compounds only.
+ It forces usage of experimental coefficients present in the database to
+ calculate liquid phase densities.
+\end_layout
+
+\begin_layout Standard
+Use 0 to disable, 1 to enable this option.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Use Experimental Liquid Thermal Conductivity Data
+\end_layout
+
+\begin_layout Standard
+This option affects ChemSep database compounds only.
+ It forces usage of experimental coefficients present in the database to
+ calculate liquid thermal conductivities.
+\end_layout
+
+\begin_layout Standard
+Use 0 to disable, 1 to enable this option.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Enthalpy/Entropy/Cp calculation method (Activity Coefficient Property Packages
+ only)
+\end_layout
+
+\begin_layout Standard
+Defines the Enthalpy, Entropy and Heat Capacity calculation model (0 = Lee-Kesle
+r, 1 = Ideal, 2 = Excess).
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Ignore maximum salinity limit (IAPWS-08 Seawater Property Package only)
+\end_layout
+
+\begin_layout Standard
+Ignores the maximum supported salinity value (0.12 kg/kg) for calculations
+ and doesn't display any warnings.
+ Use 0 to disable, 1 to enable this option.
+ If enabled, the calculated salinity will be send directly to the property
+ calculation routines without further check.
+ If disabled, the maximum value of 0.12 will be used if the calculated salinity
+ is higher, and a warning message will be displayed in the flowsheet log
+ window.
+\end_layout
+
+\begin_layout Subsubsection
+Units systems
+\end_layout
+
+\begin_layout Standard
+Three basic units systems are present in DWSIM: 
+\series bold
+\emph on
+SI System
+\series default
+\emph default
+ (selected by default), 
+\series bold
+\emph on
+CGS System
+\series default
+\emph default
+ and 
+\series bold
+\emph on
+English System
+\series default
+\emph default
+.
+ The simulation's units system can be viewed/modified in the "Units System"
+ section of the "Options" tab in the simulation configuration window (Figure
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-SU"
+
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename screens35/snap006_.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-SU"
+
+\end_inset
+
+Units system configuration interface.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+There are buttons available on this interface to create custom units systems
+ and save/load them.
+ It is worth remembering that the units systems can also be modified at
+ any time during the simulation - the changes are applied immediately.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Miscelaneous
+\end_layout
+
+\begin_layout Standard
+In the "Misc" section it is possible to define the number formatting in
+ the simulation (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-NF"
+
+\end_inset
+
+).
+ In the "Description" group box it is possible to edit some information
+ about the active simulation (title, author and description).
+ You can also define a password to prevent the simulation of being opened
+ by anyone, but this feature only works with the binary simulation file
+ format (*.dwsim).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename screens35/snap005_.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-NF"
+
+\end_inset
+
+Misc settings interface.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Process modeling (Flowsheeting)
+\end_layout
+
+\begin_layout Standard
+After configuring the simulation, the user is taken to the main simulation
+ window (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-JanelaSImulacao"
+
+\end_inset
+
+).
+ In this window we can highlight the following areas:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename screens31/image0036.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-JanelaSImulacao"
+
+\end_inset
+
+Simulation interface.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Menu bars
+\series default
+\emph default
+ (left-right / up-down): simulation configuration, results viewer, image
+ ant text insertion, zoom controls and flowsheet printing; unit ops and
+ streams insertion buttons;
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Object Palette
+\series default
+\emph default
+ window: shows objects which can be added by dragging them into the PFD;
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Selected Object
+\series default
+\emph default
+ window: show information about the selected object in the flowsheet;
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Material Streams
+\series default
+\emph default
+ window: lists the material streams in the flowsheet and their calculated
+ properties;
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Flowsheet
+\series default
+\emph default
+ window: process flowsheet building and editing area;
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Information
+\series default
+\emph default
+ window: general information about the active simulation;
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Object List
+\series default
+\emph default
+ window: information tree about the objects in flowsheet according to their
+ type - can be used to find and center objects in large flowsheets;
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Spreadsheet
+\series default
+\emph default
+ window: shows the spreadsheet, a utility to do math operations with data
+ provided by the objects in the current simulation;
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Help
+\series default
+\emph default
+ window: shows useful tips during a simulation.
+\end_layout
+
+\begin_layout Standard
+When running DWSIM on a Windows platform, the simulation windows can be
+ freely repositioned, with the arrangement information being saved together
+ with the rest of simulation data.
+ To reposition a window, the user should click with the left mouse button
+ in the window's top bar and drag it to the desired place.
+ A preview of how the window will be is shown in blue (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-posicaojanelas"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imagens/0064.JPG
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-posicaojanelas"
+
+\end_inset
+
+Window repositioning.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+When running DWSIM on Mono, use the context menus (right-click with the
+ mouse on the window caption bar) on each window to reposition/dock its
+ contents.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Objects
+\end_layout
+
+\begin_layout Standard
+The elements of a simulation (objects) which can be added to the flowsheet
+ are:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Material Stream
+\series default
+\emph default
+: used to represent matter which enters and leaves the limits of the simulation
+ and passes through the unit operations.
+ The user should define their conditions and composition in order for DWSIM
+ to calculate their properties accordingly;
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Energy Stream
+\series default
+\emph default
+: used to represent energy which enters and leaves the limits of the simulation
+ and passes through the unit operations;
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Mixer
+\series default
+\emph default
+: used to mix up to three material streams into one, while executing all
+ the mass and energy balances;
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Splitter
+\series default
+\emph default
+: mass balance unit operation - divides a material stream into two or three
+ other streams; 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Valve
+\series default
+\emph default
+: works like a fixed pressure drop for the process, where the outlet material
+ stream properties are calculated beginning from the principle that the
+ expansion is an isenthalpic process; 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Pipe
+\series default
+\emph default
+: simulates a fluid flow process (mono or two-phase).
+ The pipe implementation in DWSIM provides the user with various configuration
+ options, including heat transfer to environment or even to the soil in
+ buried pipes.
+ Two correlations for pressure drop calculations are available: Beggs &
+ Brill and Lockhart & martinelli.
+ Both reduces to Darcy equation in the case of single-phase flow;
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Pump
+\series default
+\emph default
+: used to provide energy to a liquid stream in the form of pressure.
+ The process is isenthalpic, and the non-idealities are considered according
+ to the pump efficiency, which is defined by the user; 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Tank
+\series default
+\emph default
+: in the current version of DWSIM, the tank works like a fixed pressure
+ drop for the process;
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Separator Vessel
+\series default
+\emph default
+: used to separate the vapor and liquid phases of a stream into two other
+ distinct streams;
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Compressor
+\series default
+\emph default
+: used to provide energy to a vapor stream in the form of pressure.
+ The ideal process is isentropic (constant entropy) and the non-idealities
+ are considered according to the compressor efficiency, which is defined
+ by the user; 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Expander
+\series default
+\emph default
+: the expander is used to extract energy from a high-pressure vapor stream.
+ The ideal process is isentropic (constant entropy) and the non-idealities
+ are considered according to the expander efficiency, which is defined by
+ the user; 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Heater
+\series default
+\emph default
+: simulates a stream heating process;
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Cooler
+\series default
+\emph default
+: simulates a stream cooling process;
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Conversion Reactor
+\series default
+\emph default
+: simulates a reactor where conversion reactions occur;
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Equilibrium Reactor
+\series default
+\emph default
+: simulates a reactor where equilibrium reactions occur;
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+PFR
+\series default
+\emph default
+: simulates a Plug Flow Reactor (PFR);
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+CSTR
+\series default
+\emph default
+: simulates a Continuous-Stirred Tank Reactor (CSTR);
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Shortcut Column
+\series default
+\emph default
+: simulates a simple distillation column with approximate results using
+ shorcut calculations;
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Distillation Column
+\series default
+\emph default
+: simulates a distillation column using rigorous thermodynamic models;
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Absorption Column
+\series default
+\emph default
+: simulates an absorption column using rigorous thermodynamic models;
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Refluxed Absorber
+\series default
+\emph default
+: simulates a refluxed absorber column using rigorous thermodynamic models;
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Reboiled Absorber
+\series default
+\emph default
+: simulates a reboiled absorber column using rigorous thermodynamic models.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Heat Exchanger:
+\series default
+\emph default
+ simulates a countercurrent heat exchanger using rigorous thermodynamic
+ models.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Orifice Plate:
+\series default
+\emph default
+ model to simulate an orifice plate, used for flow metering.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Component Separator:
+\series default
+\emph default
+ model to simulate a generic process for component separation.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Custom Unit Operation:
+\series default
+\emph default
+ an user-defined model based on IronPython/IronRuby scripts.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+CAPE-OPEN Unit Operation:
+\series default
+\emph default
+ External CAPE-OPEN Unit Operation socket for adding CO Unit Operations
+ in DWSIM.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Spreadsheet Unit Operation:
+\series default
+\emph default
+ Unit Operation where the model is defined and calculated in Spreadsheet
+ (XLS/XLSX/ODS) files.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Solids Separator:
+\series default
+\emph default
+ model to simulate a generic process for solid compound separation.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Continuous Cake Filter:
+\series default
+\emph default
+ continuous cake filter model for solids separation.
+\end_layout
+
+\begin_layout Standard
+Additionally, the following logical operations are available in DWSIM:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Adjust
+\series default
+\emph default
+: used to make a variable to be equal to a user-defined value by changing
+ the value of other (independent) variable;
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Specification
+\series default
+\emph default
+: used to make a variable to be equal to a value that is a function of other
+ variable, from other stream;
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Recycle
+\series default
+\emph default
+: used to mix downstream material with upstream material in a flowsheet,
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Energy Recycle
+\series default
+\emph default
+: used to mix downstream energy with upstream energy in a flowsheet.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Adding objects to the flowsheet
+\end_layout
+
+\begin_layout Standard
+Objects can be inserted into the flowsheet by dragging and droping items
+ from the 
+\series bold
+Object Palette
+\series default
+ or by using the corresponding toolstrip menu items (
+\series bold
+Insert 
+\series default
+menu item).
+\end_layout
+
+\begin_layout Standard
+To insert objects into the flowsheet by using the toolstrip menu items:
+\end_layout
+
+\begin_layout Enumerate
+With the left mouse button, click in the desired object menu item.
+\end_layout
+
+\begin_layout Enumerate
+With the left mouse button, click in the flowsheet area, at the point were
+ you want to position the object.
+\end_layout
+
+\begin_layout Standard
+To insert objects from the Object Palette, drag and drop the items into
+ the PFD (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Dragging-items-from"
+
+\end_inset
+
+):
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename ../snaps/pic0017.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Dragging-items-from"
+
+\end_inset
+
+Dragging items from the Object palette window.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-matno fluxog"
+
+\end_inset
+
+ shows a material stream added to the flowsheet by one of the method described
+ above.
+ It can be observed that the stream is selected and that the "Selected Object"
+ window is filled with the object's information.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename imagens/0018.JPG
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-matno fluxog"
+
+\end_inset
+
+A material stream in the flowsheet.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Connecting objects
+\end_layout
+
+\begin_layout Standard
+The material streams represent mass flowing between unit operations.
+ There are two different ways in which a material stream can be connected
+ to a unit operation (or 
+\emph on
+vice-versa
+\emph default
+):
+\end_layout
+
+\begin_layout Itemize
+Through the context menu activated with a right mouse button click over
+ the object (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-contextmenu"
+
+\end_inset
+
+);
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename screens30/image0016.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-contextmenu"
+
+\end_inset
+
+Selected object context menu.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Through the unit operation property window - inlet/outlet/energy streams.
+ It is possible to inform the name of a stream that doesn't exist (so it
+ will be created and connected to the unit automatically) or select a existing
+ stream by using the menu activated with a mouse click in the button on
+ the right of the property description line:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename screens34/0003.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-contextmenu2"
+
+\end_inset
+
+Stream selection menu.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A compression system with its connections is shown on Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-conexaorapida3"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens/0101.JPG
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-conexaorapida3"
+
+\end_inset
+
+Compressor with all connections correctly configured.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Disconnecting objects
+\end_layout
+
+\begin_layout Standard
+Functions to disconnect objects can be found in the same place as the connecting
+ ones.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Removing objects from the flowsheet
+\end_layout
+
+\begin_layout Standard
+The selected object can be removed from the flowsheet by pressing the DEL
+ keyboard button or by using the context menu - "Delete" item (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-contextmenu"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Subsubsection
+Process data management
+\end_layout
+
+\begin_layout Paragraph*
+Entering process data
+\end_layout
+
+\begin_layout Standard
+The objects' process data (temperature, pressure, flow, composition and/or
+ other parameters) can be entered in the "Selected Object" window (Figure
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-visual1"
+
+\end_inset
+
+).
+ Properties that cannot be edited (read-only) are grayed-out.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens/0024.JPG
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-visual1"
+
+\end_inset
+
+Viewing object properties in the "Selected Object" window.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Some properties can be edited directly in the area to the right of their
+ identification, like a stream temperature (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-editando1"
+
+\end_inset
+
+).
+ Other properties require an auxiliary window, like a stream composition
+ (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-editando2"
+
+\end_inset
+
+), and others can be selected by using a 
+\emph on
+drop-down
+\emph default
+ menu (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-editando3"
+
+\end_inset
+
+).
+ When it is necessary to open another window to edit a property, a button
+ with "..." will be shown to the right of the property line - clicking on it
+ shows the property editing window.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens/0102.JPG
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-editando1"
+
+\end_inset
+
+Direct editing of a property.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens/0103.JPG
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-editando2"
+
+\end_inset
+
+Using an auxiliary window to edit a property value.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens/0104.JPG
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-editando3"
+
+\end_inset
+
+Selecting a value for the property in a drop-down menu.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If all object properties were correctly defined, it will be calculated by
+ DWSIM and its flowsheet representation will have a blue border instead
+ of a red one, indicating that the object was calculated successfully (Figure
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-objcalc"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename screens30/pic1.jpg
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-objcalc"
+
+\end_inset
+
+Calculated objects.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Simulation
+\end_layout
+
+\begin_layout Standard
+DWSIM is a sequential modular process simulator, that is, all calculations
+ are made in a per-module basis, according to the connections between the
+ objects.
+ The calculator checks if an object has all of its properties defined and,
+ if yes, passes the data for the downstream object and calculates it, repeating
+ the process in a loop until it reaches an object that doesn't have any
+ of its dowstream connections attached to any object.
+ This way, the entire flowsheet can be calculated as many times as necessary
+ without having to "tell" DWSIM which object must be calculated.
+ In fact, this is done indirectly if the user define all the properties
+ and make all connections between objects correctly.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+DWSIM's calculation starts when the user edits a property which defines
+ an object.
+ 
+\series default
+For example, editing a stream mass flow when its temperature, pressure and
+ composition are already well-defined activates DWSIM`s calculator.
+\end_layout
+
+\begin_layout Standard
+It is possible to control DWSIM's calculator by using its button bar (Figure
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-calculador"
+
+\end_inset
+
+).
+ Clicking on the 
+\begin_inset Graphics
+	filename imagens/0107.JPG
+
+\end_inset
+
+ button, the calculator is disabled.
+ The 
+\begin_inset Graphics
+	filename imagens/0106.JPG
+
+\end_inset
+
+ button enables it.
+ DWSIM's calculator is enabled by default - if it is disabled, modifying
+ of a property is accepted, but 
+\series bold
+does not
+\series default
+ recalculate the object nor the ones that are downstream in the flowsheet.
+\end_layout
+
+\begin_layout Standard
+From later 1.5 builds and up, DWSIM now includes three more buttons in the
+ calculator control bar.
+ The 
+\begin_inset Graphics
+	filename imagens16/0016-1.png
+
+\end_inset
+
+ button forces the recalculation of the entire flowsheet, while the 
+\begin_inset Graphics
+	filename imagens16/0016-2.png
+
+\end_inset
+
+ button stops the any ongoing calculation.
+ The 
+\begin_inset Graphics
+	filename imagens16/0016-3.png
+
+\end_inset
+
+button removes all items which may still be present in the calculator queue,
+ waiting to be processed.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens16/0016.PNG
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-calculador"
+
+\end_inset
+
+DWSIM's calculator control bar.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As DWSIM's calculator does its job, messages are added to the "Information"
+ window.
+ These messages tell the user if the object was calculated successfully
+ or if there was an error while calculating it, among others (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-mensagem"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens/0025.JPG
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-mensagem"
+
+\end_inset
+
+A DWSIM's calculator message.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Framed
+position "t"
+hor_pos "c"
+has_inner_box 0
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Minisec
+
+\size footnotesize
+\emph on
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="2">
+<features>
+<column alignment="left" valignment="top" width="4text%">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\emph on
+\begin_inset Graphics
+	filename dialog-information.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="left" valignment="top" usebox="none" width="90text%">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family sans
+\size footnotesize
+\emph on
+Remember that is possible to edit the simulation configuration options at
+ any time by clicking in the 
+\begin_inset Graphics
+	filename imagens/0108.JPG
+
+\end_inset
+
+ button or in the "Configurations" menu > "Configure simulation", in the
+ DWSIM`s button bar.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Results
+\end_layout
+
+\begin_layout Standard
+Results can be viewed in reports, generated (Figures 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-relat"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-relat2"
+
+\end_inset
+
+) for printing.
+ Report data can also be saved to a XLS or Text file, or exported to XML.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens16/0002.PNG
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-relat"
+
+\end_inset
+
+Results report configuration.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens/0048.JPG
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-relat2"
+
+\end_inset
+
+Results report.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Sensitivity Analysis
+\end_layout
+
+\begin_layout Standard
+You can use the Sensitivity Analysis Utility in order to study the influence
+ of up to 2 variables into other dependent flowsheet variables.
+ The changes in variables are defined by a value range and a number of equally
+ spaced points within this range.
+ For example, you can analyze the influence of temperature and pressure
+ in the enthalpy of a mixture, from 200 to 400 K and from 100 to 1000 kPa,
+ nine points for temperature and 5 points for pressure, totaling 45 points
+ on which the enthalpy will be calculated at different temperatures and
+ pressures.
+ This also means that the flowsheet will be recalculated 45 times (!), so
+ be careful with the number of points you choose as the calculation time
+ can be prohibitive.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename screens30/image0020.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-SA1"
+
+\end_inset
+
+Sensitivity Analysis Utility (1).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The sensitivity analysis utility is based on case studies.
+ In a single simulation one can define a number of cases, each one with
+ its own variables, ranges and results.
+ These cases will be saved together with the simulation, and cannot be exported
+ to other ones.
+ The results are shown in a table, so the data can be copied and pasted
+ into another specialized data analysis software or sent directly to the
+ data regression plugin.
+\end_layout
+
+\begin_layout Subsection
+Flowsheet Optimization
+\end_layout
+
+\begin_layout Standard
+The new Optimizer in DWSIM handles single and multivariate optimization
+ problems with or without bound constraints.
+ The objective function can be either a variable in the flowsheet or an
+ expression as a function of as many variables as you need.
+\end_layout
+
+\begin_layout Standard
+The interface is very similar to Sensitivity Analysis's one.
+ One can define a number of cases, each one with its own variables, ranges
+ and results.
+ These cases will be saved together with the current simulation, and cannot
+ be exported to other simulations.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens16/0009.PNG
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-MO-1"
+
+\end_inset
+
+Multivariate Optimization Utility (1).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+There are some options to choose from in DWSIM's Multivariate Optimizer.
+ It is possible to select the type of the optimization (minimization or
+ maximization of the objective function), choose if the indendent variables
+ will have lower and/or upper bounds and if the objective function will
+ be a flowsheet variable or an expression based on flowsheet variables.
+ One can also define a maximum number for the iterations and a tolerance
+ for the variation of the calculated value for the objective function -
+ if the variation is less than the defined value, the flowsheet is considered
+ optimized and the process stops.
+ There is also an option to choose if the flowsheet will be returned to
+ its original state after optimization, so the results will be shown only
+ in the current window, and the flowsheet initial configuration will remain
+ intact.
+\end_layout
+
+\begin_layout Standard
+In order to define variables to be used in the optimization process, a variable
+ can be added by clicking on the "+" button.
+ With the variable row added to the list, one chooses an object, then the
+ desired property and the type of variable (IND for independent, AUX for
+ auxiliary or DEP for dependent variables).
+ If necessary, one can define a lower and/or upper limit for the IND variables,
+ according to the current unit system.
+ The variable name is the one which will be used in the expression.
+ 
+\end_layout
+
+\begin_layout Standard
+DWSIM only considers bounds for independent variables.
+ Also, if the objective function is a DEP variable, and you defined multiple
+ DEP variables, only the first will be used.
+ AUX variables are used in the context of an expression only.
+ To remove a variable, a row must be selected by clicking at the row header
+ before pressing the "-" button.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens16/0010.PNG
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-MO-2"
+
+\end_inset
+
+Multivariate Optimization Utility (2).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+With all the variables defined and the case configured, the optimization
+ can be carried out by clicking on the appropriate button - the button will
+ become disabled.
+ After some time, if the optimization converges, the button will become
+ active again, indicating that the the optimization process is over.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens16/0011.PNG
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-MO-3"
+
+\end_inset
+
+Multivariate Optimization Utility (3).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Utilities
+\end_layout
+
+\begin_layout Standard
+DWSIM includes some utilities which provides the user with more information
+ about the process being simulated.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+True Critical Point
+\series default
+\emph default
+ - utility to calculate the true critical point of a mixture (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-utPCV"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename screens/snap0020.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-utPCV"
+
+\end_inset
+
+Utilities - True Critical Point.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Hydrate Equilibrium/Dissociation Utility
+\series default
+\emph default
+ - calculation of the equilibrium conditions for natural gas hydrates (Figure
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-utH"
+
+\end_inset
+
+);
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename imagens/0057.JPG
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-utH"
+
+\end_inset
+
+Utilities - Hydrate Calculations.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Pure Component Properties
+\series default
+\emph default
+ - pure component property viewing and editing (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-utP"
+
+\end_inset
+
+);
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename screens36/snap020_.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-utP"
+
+\end_inset
+
+Utilities - Pure Component Properties.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Phase Envelope
+\series default
+\emph default
+ - Material stream phase equilibria envelope calculation (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-utDF"
+
+\end_inset
+
+);
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename screens34/0004.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-utDF"
+
+\end_inset
+
+Utilities - Phase Envelope.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Binary Envelope
+\series default
+\emph default
+ - special envelopes for binary mixtures (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-utDB"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename screens36/snap019_.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-utDB"
+
+\end_inset
+
+Utilities - Binary Envelope.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\emph on
+Petroleum Cold Flow Properties
+\series default
+\emph default
+ - special properties of petroleum fractions, like cetane index, flash point,
+ refraction index, etc.
+ (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-utDB-1"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../snaps/pic0011.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-utDB-1"
+
+\end_inset
+
+Utilities - Petroleum Cold Flow Properties.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Utilities calculate their properties for one object only, which is selected
+ inside their own windows.
+ In the majority of cases, this object must be calculated in order to be
+ available for selection in the utility window.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Framed
+position "t"
+hor_pos "c"
+has_inner_box 0
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Minisec
+
+\size footnotesize
+\emph on
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="2">
+<features>
+<column alignment="left" valignment="top" width="4text%">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\emph on
+\begin_inset Graphics
+	filename dialog-information.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="left" valignment="top" usebox="none" width="90text%">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family sans
+\size footnotesize
+\emph on
+Please view DWSIM's Technical Manual for more details about the models and
+ methods used by the Utilities.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Chemical Reactions
+\end_layout
+
+\begin_layout Standard
+DWSIM classifies chemical reactions in three different types: Conversion,
+ where the conversion of a reagent can be specified as a function of temperature
+; Equilibrium, where the reaction is characterized by an equilibrium constant
+ K, and Kinetic, where the reaction is led by a velocity expression which
+ is a function of concentration of reagents and/or products.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Framed
+position "t"
+hor_pos "c"
+has_inner_box 0
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Minisec
+
+\size footnotesize
+\emph on
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="2">
+<features>
+<column alignment="left" valignment="top" width="4text%">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\emph on
+\begin_inset Graphics
+	filename dialog-information.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="left" valignment="top" usebox="none" width="90text%">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family sans
+\size footnotesize
+\emph on
+Please view DWSIM's Technical Manual and Equipment and Utilities Guide for
+ more details about chemical reactions and reactors, respectively.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Chemical reactions in DWSIM are managed through the 
+\series bold
+Chemical Reactions Manager
+\series default
+ (Simulation Settings > Thermodynamic and Reactions) (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Chemical-Reactions-Manager."
+
+\end_inset
+
+):
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename screens36/snap021_.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Chemical-Reactions-Manager."
+
+\end_inset
+
+Chemical Reactions Manager.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The user can define various reactions which are grouped in 
+\emph on
+Reaction Sets
+\emph default
+.
+ These reaction sets list all chemical reactions, and the user must activate
+ only those he wants to become available for one or more reactors (since
+ the reactor's parameter is the 
+\series bold
+reaction set
+\series default
+ and not the chemical reactions themselves).
+ In the reaction set configuration window it is also possible to define
+ the reaction ordering.
+ Equal indexes define parallel reactions (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Reaction-Set-editor."
+
+\end_inset
+
+):
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../snaps/pic0015.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Reaction-Set-editor."
+
+\end_inset
+
+Reaction Set editor.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+When the reactions and their respective reaction sets are correctly defined,
+ the last will be available for selection in the property window of a reactor
+ in the simulation.
+ The reactor will then look for active reactions inside the selected set
+ (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Reaction-Set-editor.-1"
+
+\end_inset
+
+):
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../snaps/pic0016.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Reaction-Set-editor.-1"
+
+\end_inset
+
+Reaction set in a reactor's property window.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Componentes-hipotéticos-e"
+
+\end_inset
+
+Characterization of Petroleum Fractions
+\end_layout
+
+\begin_layout Standard
+DWSIM provides two tools for characterization of petroleum fractions ("Simulatio
+n Settings" > "Tools" > "Petroleum Characterization").
+ One of them characterizes C7+ fractions from bulk properties (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-ps1"
+
+\end_inset
+
+).
+ The other characterizes the oil from an ASTM or TBP distillation curve
+ (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Characterizing-petroleum-from"
+
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Standard
+In both tools, the characterization is done through the creation of various
+ components with different boiling points (pseudocomponents) which together
+ represent the assay as a whole.
+\end_layout
+
+\begin_layout Subparagraph*
+
+\series bold
+\emph on
+- Characterization from bulk properties
+\end_layout
+
+\begin_layout Standard
+The method itself requires a minimum of information to generate the pseudocompon
+ents, though the more data the user provides, the better will be the results
+ (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-ps1"
+
+\end_inset
+
+).
+ It is recommended that the user provides the specific gravity of the C7+
+ fraction at least.
+ Viscosity data is also very important.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../snaps/pic0009.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-ps1"
+
+\end_inset
+
+C7+ petroleum fraction characterization utility.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph*
+
+\series bold
+\emph on
+- Characterization from distillation curves
+\end_layout
+
+\begin_layout Standard
+This tool gets data from an ASTM or TBP distillation curve to generate pseudocom
+ponents.
+ It is also possible to include viscosity, molecular weight and specific
+ gravity curves to enhance the characterization.
+ 
+\end_layout
+
+\begin_layout Standard
+The interface has a wizard-like style, with various customization options
+ (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Characterizing-petroleum-from"
+
+\end_inset
+
+):
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ../snaps/pf5.jpg
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Characterizing-petroleum-from"
+
+\end_inset
+
+Characterizing petroleum from distillation curves.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+After the pseudocomponents are created, a material stream with a defined
+ composition is also created, which represents the characterized petroleum
+ fraction.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Framed
+position "t"
+hor_pos "c"
+has_inner_box 0
+inner_pos "t"
+use_parbox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Minisec
+
+\size footnotesize
+\emph on
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="2">
+<features>
+<column alignment="left" valignment="top" width="4text%">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\emph on
+\begin_inset Graphics
+	filename dialog-warning.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="left" valignment="top" usebox="none" width="90text%">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family sans
+\size footnotesize
+\emph on
+The hypo and pseudocomponents are available for use only in the simulation
+ in which they were generated, even if there is more than one opened simulation
+ in DWSIM.
+ Nevertheless, the user can export these components to a file and import
+ them into another simulation.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Compound Creator
+\end_layout
+
+\begin_layout Subsection
+Component Databases
+\end_layout
+
+\begin_layout Subsubsection
+Databases
+\end_layout
+
+\begin_layout Standard
+The components available for use in simulations are grouped in 
+\emph on
+databases
+\emph default
+.
+ DWSIM comes with one database with the most common compounds used in the
+ petroleum industry plus some alcohols and inert gases.
+ It is also possible to load the database from 
+\emph on
+ChemSep™ LITE.
+ 
+\emph default
+If you installed ChemSep, DWSIM will try to load its database automatically.
+\emph on
+
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Databases in DWSIM can be managed through a window which can be opened from
+ the Main Menu > Settings > General Settings (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Database-manager."
+
+\end_inset
+
+):
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename screens35/snap008_.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Database-manager."
+
+\end_inset
+
+Database manager.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+On this window the user can add and/or remove modified databases (created
+ from the 
+\series bold
+Components 
+\series default
+tab in the 
+\series bold
+Simulation Settings
+\series default
+ window) and add the ChemSep
+\emph on
+™
+\emph default
+ database, if it has not been loaded automatically.
+ The DWSIM database cannot be modified nor deleted.
+\end_layout
+
+\begin_layout Standard
+User databases can be created and managed through the 
+\series bold
+Compound Creator Utility
+\series default
+, which unifies the Quick Component Creator and Hypothetical Component utilities
+ into a single, easy-to-use tool.
+\end_layout
+
+\begin_layout Subsection
+About the Compound Creator Utility
+\end_layout
+
+\begin_layout Standard
+The Compound Creator puts together the features found in the Hypothetical
+ and Quick Compound Creator, allowing the user to save his compounds into
+ a database that can be loaded later globally in DWSIM, that is, your compounds
+ can be used in all simulations, not only in the one that they were created.
+ The Compound Creator also allows you to save and load your compound creation
+ study/case for later use.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename screens36/snap022_.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Database-manager.-1"
+
+\end_inset
+
+Compound Creator Utility.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Data Regression
+\end_layout
+
+\begin_layout Standard
+DWSIM can regress experimental binary VLE/LLE/SLE data in order to calculate
+ interaction parameters for a variety of thermodynamic models.
+ This way you can calculate interaction parameters for compounds in DWSIM
+ and ChemSep databases that do not have them or calculate parameters between
+ known compounds and one that you just created using the Compound Creator
+ utility.
+\end_layout
+
+\begin_layout Subsection
+About the Data Regression Utility
+\end_layout
+
+\begin_layout Standard
+The Data Regression Utility supports regression of experimental binary data
+ for determination of interaction parameters for the following models:
+\end_layout
+
+\begin_layout Itemize
+PC-SAFT
+\end_layout
+
+\begin_layout Itemize
+Peng-Robinson
+\end_layout
+
+\begin_layout Itemize
+Peng-Robinson-Stryjek-Vera 2
+\end_layout
+
+\begin_layout Itemize
+Soave-Redlich-Kwong
+\end_layout
+
+\begin_layout Itemize
+UNIQUAC
+\end_layout
+
+\begin_layout Itemize
+NRTL
+\end_layout
+
+\begin_layout Itemize
+Lee-Kesler-Plöcker
+\end_layout
+
+\begin_layout Standard
+The following data sets are supported:
+\end_layout
+
+\begin_layout Itemize
+VLE Temperature and molar fractions (Txy)
+\end_layout
+
+\begin_layout Itemize
+VLE Pressure and molar fractions (Pxy)
+\end_layout
+
+\begin_layout Itemize
+VLE Temperature, Pressure and molar fractions (TPxy)
+\end_layout
+
+\begin_layout Itemize
+LLE Temperature and molar fractions (Txx)
+\end_layout
+
+\begin_layout Itemize
+LLE Pressure and molar fractions (Pxx)
+\end_layout
+
+\begin_layout Itemize
+LLE Temperature, Pressure and molar fractions (TPxx)
+\end_layout
+
+\begin_layout Itemize
+SLE Temperatures and mole fractions (TTx)
+\end_layout
+
+\begin_layout Standard
+The Data Regression Utility also possesses some handy aditional features
+ like:
+\end_layout
+
+\begin_layout Itemize
+Calculation of initial values for the binaries using UNIFAC/MODFAC structure
+ information
+\end_layout
+
+\begin_layout Itemize
+Calculation of missing experimental data using known models/binaries for
+ determination of parameters for other models
+\end_layout
+
+\begin_layout Itemize
+Optimization method selection
+\end_layout
+
+\begin_layout Itemize
+Objective Function selection (Least Squares of temperature/pressure plus
+ vapor fractions)
+\end_layout
+
+\begin_layout Standard
+The Data Regression Utility also supports loading and saving of a regression
+ study/case for later use.
+ 
+\end_layout
+
+\begin_layout Standard
+Currently, there is no way to export the generated binaries for a simulation
+ or a database - you'll have to do this manually.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename screens21/snap0003.png
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Database-manager.-1-1"
+
+\end_inset
+
+Data Regression Utility.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

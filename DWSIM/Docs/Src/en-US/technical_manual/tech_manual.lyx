@@ -1,0 +1,7434 @@
+#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass scrartcl
+\begin_preamble
+\usepackage{indentfirst}
+\let\@endpetrue\@endpefalse
+\reversemarginpar
+\@addtoreset{equation}{section}  \renewcommand{\theequation}{\thesection.\arabic{equation}}
+\marginparwidth 3.5cm
+\rfoot{\thepage}
+\lfoot{DWSIM - Technical Manual}
+\cfoot{}
+\renewcommand{\footrulewidth}{0.4pt}
+\setcounter{page}{-2}
+\end_preamble
+\use_default_options false
+\language english
+\inputencoding default
+\font_roman palatino
+\font_sans lmss
+\font_typewriter cmtl
+\font_default_family sfdefault
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\float_placement H
+\paperfontsize 10
+\spacing onehalf
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder true
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize a4paper
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\leftmargin 5cm
+\topmargin 3cm
+\rightmargin 2cm
+\bottommargin 3cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip smallskip
+\quotes_language swedish
+\papercolumns 1
+\papersides 1
+\paperpagestyle fancy
+\bullet 0 5 18 -1
+\bullet 1 0 9 -1
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\paragraph_spacing onehalf
+
+\series bold
+\size large
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\end_inset
+
+
+\begin_inset VSpace vfill
+\end_inset
+
+
+\lyxline
+DWSIM - Process Simulation, Modeling and Optimization
+\end_layout
+
+\begin_layout Standard
+\paragraph_spacing onehalf
+
+\series bold
+\size large
+Technical Manual
+\end_layout
+
+\begin_layout Standard
+
+\lyxline
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Version 3.6, Revision 0
+\end_layout
+
+\begin_layout Standard
+\paragraph_spacing onehalf
+
+\emph on
+January 2016
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace vfill
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Addsec*
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\end_inset
+
+License
+\end_layout
+
+\begin_layout Standard
+\noindent
+DWSIM is released under the GNU General Public License (GPL) version 3.
+\end_layout
+
+\begin_layout Addsec*
+Contact Information
+\end_layout
+
+\begin_layout Subparagraph
+DWSIM - Process Simulation, Modeling and Optimization
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+Author: Daniel Medeiros
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+Website: 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://dwsim.inforside.com.br
+\end_layout
+
+\end_inset
+
+ / 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.sourceforge.net/projects/dwsim
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+Contact: 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+danielwag@gmail.com
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+The thermodynamic calculations are the basis of the simulations in DWSIM.
+ It is important for a process simulator to cover a variety of systems,
+ which can go from simple water handling processes to complex, more elaborated
+ cases, such as simulations of processes in the petroleum/chemical industry.
+\end_layout
+
+\begin_layout Standard
+Regarding phase equilibria, DWSIM is able to model equilibrium between solids,
+ vapor and up to two liquid phases where possible.
+ External CAPE-OPEN Property Packages may have different equilibrium capabilitie
+s.
+\end_layout
+
+\begin_layout Standard
+The following sections describe the calculation methods used in DWSIM for
+ the physical and chemical description of the elements of a simulation.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Thermodynamic Properties
+\end_layout
+
+\begin_layout Subsection
+Phase Equilibria Calculation
+\end_layout
+
+\begin_layout Standard
+In a mixture which finds itself in a vapor-liquid equilibria state (VLE),
+ the component fugacities are the same in all phases, that is 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "smith1996"
+
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+f_{i}^{L}=f_{i}^{V}\label{eq:elv1}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The fugacity of a component in a mixture depends on temperature, pressure
+ and composition.
+ in order to relate 
+\begin_inset Formula $f_{i}^{V}$
+\end_inset
+
+ with temperature, pressure and molar fraction, we define the fugacity coefficie
+nt,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\phi_{i}=\frac{f_{i}^{V}}{y_{i}P},\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+which can be calculated from PVT data, commonly obtained from an equation
+ of state.
+ For a mixture of ideal gases, 
+\begin_inset Formula $\phi_{i}=1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The fugacity of the 
+\begin_inset Formula $i$
+\end_inset
+
+ component in the liquid phase is related to the composition of that phase
+ by the activity coefficient 
+\begin_inset Formula $\gamma_{i}$
+\end_inset
+
+, which by itself is related to 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ and standard-state fugacity 
+\begin_inset Formula $f_{i}^{0}$
+\end_inset
+
+ by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\gamma_{i}=\frac{f_{i}^{L}}{x_{i}f_{i}^{0}}.\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The standard state fugacity 
+\begin_inset Formula $f_{i}^{0}$
+\end_inset
+
+ is the fugacity of the 
+\begin_inset Formula $i$
+\end_inset
+
+-th component in the system temperature, i.e.
+ mixture, and in an arbitrary pressure and composition.
+ in DWSIM, the standard-state fugacity of each component is considered to
+ be equal to pure liquid 
+\begin_inset Formula $i$
+\end_inset
+
+ at the system temperature and pressure.
+\end_layout
+
+\begin_layout Standard
+If an Equation of State is used to calculate equilibria, fugacity of the
+ 
+\begin_inset Formula $i$
+\end_inset
+
+-th component in the liquid phase is calculated by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\phi_{i}=\frac{f_{i}^{L}}{x_{i}P},\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+with the fugacity coefficient 
+\begin_inset Formula $\phi_{i}$
+\end_inset
+
+ calculated by the EOS, just like it is for the same component in the vapor
+ phase.
+\end_layout
+
+\begin_layout Standard
+The fugacity coefficient of the 
+\begin_inset Formula $i$
+\end_inset
+
+-th component either in the liquid or in the vapor phase is obtained from
+ the same Equation of State through the following expressions
+\begin_inset Formula \begin{eqnarray}
+RT\ln\phi_{i}^{L} & = & \intop_{V^{L}}^{\infty}\left[\left(\frac{\partial P}{\partial n_{i}}\right)_{T,V,n_{j}}-\frac{RT}{V}\right]dV-RT\ln Z^{L},\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+\begin_inset Formula \begin{equation}
+RT\ln\phi_{i}^{V}=\intop_{V^{V}}^{\infty}\left[\left(\frac{\partial P}{\partial n_{i}}\right)_{T,V,n_{j}}-\frac{RT}{V}\right]dV-RT\ln Z^{V},\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+where the compressibility factor 
+\begin_inset Formula $Z$
+\end_inset
+
+ is given by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+Z^{L}=\frac{PV^{L}}{RT}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+\begin_inset Formula \begin{equation}
+Z^{V}=\frac{PV^{V}}{RT}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Fugacity Coefficient calculation models
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Peng-Robinson Equation of State
+\end_layout
+
+\begin_layout Standard
+The Peng-Robinson equation 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "PengDing-Yu_i160057a011"
+
+\end_inset
+
+ is an cubic Equation of State (characteristic related to the exponent of
+ the molar volume) which relates temperature, pressure and molar volume
+ of a pure component or a mixture of components at equilibrium.
+ The cubic equations are, in fact, the simplest equations capable of representin
+g the behavior of liquid and vapor phases simultaneously.
+ The Peng-Robinson EOS is written in the following form
+\begin_inset Formula \begin{equation}
+P=\frac{RT}{(V-b)}-\frac{a(T)}{V(V+b)+b(V-b)}\label{eq:PR}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+where 
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $P$
+\end_inset
+
+ pressure
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $R$
+\end_inset
+
+ ideal gas universal constant
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $v$
+\end_inset
+
+ molar volume
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $b$
+\end_inset
+
+ parameter related to hard-sphere volume
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $a$
+\end_inset
+
+ parameter related to intermolecular forces
+\end_layout
+
+\begin_layout Standard
+For pure substances, the 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $b$
+\end_inset
+
+ parameters are given by:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+a(T)=[1+(0.37464+1.54226\omega-0.26992\omega^{2})(1-T_{r}^{(1/2)})]^{2}0.45724(R^{2}T_{c}^{2})/P_{c}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+b=0.07780(RT_{c})/P_{c}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+where 
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $\omega$
+\end_inset
+
+ acentric factor
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $T_{c}$
+\end_inset
+
+ critical temperature 
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $P_{c}$
+\end_inset
+
+ critical pressure
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $T_{r}$
+\end_inset
+
+ reduced temperature, 
+\begin_inset Formula $T/Tc$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For mixtures, equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:PR"
+
+\end_inset
+
+ can be used, replacing 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $b$
+\end_inset
+
+ by mixture-representative values.
+ 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $b$
+\end_inset
+
+ mixture values are normally given by the basic mixing rule,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+a_{m}=\sum_{i}\sum_{j}x_{i}x_{j}\sqrt{(a_{i}a_{j})}(1-k_{ij})\label{eq:mixrule1}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+b_{m}=\sum_{i}x_{i}b_{i}\label{eq:mixrule2}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+where 
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $x_{i,j}$
+\end_inset
+
+ molar fraction of the 
+\begin_inset Formula $i$
+\end_inset
+
+ or 
+\begin_inset Formula $j$
+\end_inset
+
+ component in the phase (liquid or vapor)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $a_{i,j}$
+\end_inset
+
+ 
+\begin_inset Formula $i$
+\end_inset
+
+ or 
+\begin_inset Formula $j$
+\end_inset
+
+ component 
+\begin_inset Formula $a$
+\end_inset
+
+ constant 
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $b_{i,j}$
+\end_inset
+
+ 
+\begin_inset Formula $i$
+\end_inset
+
+ or 
+\begin_inset Formula $j$
+\end_inset
+
+ component 
+\begin_inset Formula $b$
+\end_inset
+
+ constant 
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $k_{ij}$
+\end_inset
+
+ binary interaction parameter which characterizes the i-j pair
+\end_layout
+
+\begin_layout Standard
+\begin_inset Marginal
+status open
+
+\begin_layout Plain Layout
+\paragraph_spacing single
+\noindent
+\align left
+
+\family sans
+\size scriptsize
+\emph on
+The binary interaction parameters used by DWSIM are loaded from the databank
+ and can be modified in the Property Package configuration window.
+\end_layout
+
+\end_inset
+
+The fugacity coefficient obtained with the Peng-Robinson EOS in given by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\ln\dfrac{f_{i}}{x_{i}P}=\frac{b_{i}}{b_{m}}\left(Z-1\right)-\ln\left(Z-B\right)-\frac{A}{2\sqrt{2}B}\left(\frac{\sum_{k}x_{k}a_{ki}}{a_{m}}-\frac{b_{i}}{b_{m}}\right)\ln\left(\frac{Z+2,414B}{Z-0,414B}\right),\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+where 
+\begin_inset Formula $Z$
+\end_inset
+
+ in the phase compressibility factor (liquid or vapor) and can be obtained
+ from the equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:PR"
+
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+Z^{3}-(1-B)Z^{2}+(A-3B^{2}-2B)Z-(AB-B^{2}-2B)=0,\label{eq:PR_Z}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\begin_inset Formula \begin{equation}
+A=\frac{a_{m}P}{R^{2}T^{2}}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+B=\frac{b_{m}P}{RT}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+Z=\frac{PV}{RT}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Soave-Redlich-Kwong Equation of State
+\end_layout
+
+\begin_layout Standard
+The Soave-Redlich-Kwong Equation 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Soave-1972"
+
+\end_inset
+
+ is also a cubic equation of state in volume,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+P=\frac{RT}{(V-b)}-\frac{a(T)}{V(V+b)},\label{eq:SRK}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+The 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $b$
+\end_inset
+
+ parameters are given by:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+a(T)=[1+(0.48+1.574\omega-0.176\omega^{2})(1-T_{r}^{(1/2)})]^{2}0.42747(R^{2}T_{c}^{2})/P_{c}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+b=0.08664(RT_{c})/P_{c}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The equations 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:mixrule1"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:mixrule2"
+
+\end_inset
+
+ are used to calculate mixture parameters.
+ Fugacity is calculated by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\ln\dfrac{f_{i}}{x_{i}P}=\frac{b_{i}}{b_{m}}\left(Z-1\right)-\ln\left(Z-B\right)-\frac{A}{B}\left(\frac{\sum_{k}x_{k}a_{ki}}{a_{m}}-\frac{b_{i}}{b_{m}}\right)\ln\left(\frac{Z+B}{Z}\right)\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+The phase compressibility factor 
+\begin_inset Formula $Z$
+\end_inset
+
+ is obtained from the equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:SRK"
+
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+Z^{3}-Z^{2}+(A-B-B^{2})Z-AB=0,\label{eq:SRK_Z}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\begin_inset Formula \begin{equation}
+A=\frac{a_{m}P}{R^{2}T^{2}}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+B=\frac{b_{m}P}{RT}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+Z=\frac{PV}{RT}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The equations 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:PR_Z"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:SRK_Z"
+
+\end_inset
+
+, in low temperature and pressure conditions, can provide three roots for
+ 
+\begin_inset Formula $Z$
+\end_inset
+
+.
+ In this case, if liquid properties are being calculated, the smallest root
+ is used.
+ If the phase is vapor, the largest root is used.
+ The remaining root has no physical meaning; at high temperatures and pressures
+ (conditions above the pseudocritical point), the equations 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:PR_Z"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:SRK_Z"
+
+\end_inset
+
+ provides only one real root.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Peng-Robinson with Volume Translation
+\end_layout
+
+\begin_layout Standard
+Volume translation solves the main problem with two-constant EOS's, poor
+ liquid volumetric predictions.
+ A simple correction term is applied to the EOS-calculated molar volume,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+v=v^{EOS}-c,\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $v=$
+\end_inset
+
+corrected molar volume, 
+\begin_inset Formula $v^{EOS}=$
+\end_inset
+
+EOS-calculated volume, and 
+\begin_inset Formula $c=$
+\end_inset
+
+component-specific constant.
+ The shift in volume is actually equivalent to adding a third constant to
+ the EOS but is special because equilibrium conditions are unaltered.
+ 
+\end_layout
+
+\begin_layout Standard
+It is also shown that multicomponent VLE is unaltered by introducing the
+ volume-shift term 
+\emph on
+c 
+\emph default
+as a mole-fraction average,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+v_{L}=v_{L}^{EOS}-\sum x_{i}c_{i}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Volume translation can be applied to any two-constant cubic equation, thereby
+ eliminating the volumetric defficiency suffered by all two-constant equations
+ 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Whitson2000"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Peng-Robinson-Stryjek-Vera
+\end_layout
+
+\begin_layout Description
+PRSV1
+\end_layout
+
+\begin_layout Standard
+A modification to the attraction term in the Peng-Robinson equation of state
+ published by Stryjek and Vera in 1986 (PRSV) significantly improved the
+ model's accuracy by introducing an adjustable pure component parameter
+ and by modifying the polynomial fit of the acentric factor.
+\end_layout
+
+\begin_layout Standard
+The modification is:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\kappa=\kappa_{0}+\kappa_{1}\left(1+T_{r}^{0.5}\right)\left(0.7-T_{r}\right)\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\kappa_{0}=0.378893+1.4897153\,\omega-0.17131848\,\omega^{2}+0.0196554\,\omega^{3}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\kappa_{1}$
+\end_inset
+
+ is an adjustable pure component parameter.
+ Stryjek and Vera published pure component parameters for many compounds
+ of industrial interest in their original journal article.
+ 
+\end_layout
+
+\begin_layout Description
+PRSV2
+\end_layout
+
+\begin_layout Standard
+A subsequent modification published in 1986 (PRSV2) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "PRSV2-1986"
+
+\end_inset
+
+ further improved the model's accuracy by introducing two additional pure
+ component parameters to the previous attraction term modification.
+\end_layout
+
+\begin_layout Standard
+The modification is:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\kappa=\kappa_{0}+\left[\kappa_{1}+\kappa_{2}\left(\kappa_{3}-T_{r}\right)\left(1-T_{r}^{0}.5\right)\right]\left(1+T_{r}^{0.5}\right)\left(0.7-T_{r}\right)\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\kappa_{0}=0.378893+1.4897153\,\omega-0.17131848\,\omega^{2}+0.0196554\,\omega^{3}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\kappa_{1}$
+\end_inset
+
+, 
+\begin_inset Formula $\kappa_{2}$
+\end_inset
+
+, and 
+\begin_inset Formula $\kappa_{3}$
+\end_inset
+
+ are adjustable pure component parameters.
+\end_layout
+
+\begin_layout Standard
+PRSV2 is particularly advantageous for VLE calculations.
+ While PRSV1 does offer an advantage over the Peng-Robinson model for describing
+ thermodynamic behavior, it is still not accurate enough, in general, for
+ phase equilibrium calculations.
+ The highly non-linear behavior of phase-equilibrium calculation methods
+ tends to amplify what would otherwise be acceptably small errors.
+ It is therefore recommended that PRSV2 be used for equilibrium calculations
+ when applying these models to a design.
+ However, once the equilibrium state has been determined, the phase specific
+ thermodynamic values at equilibrium may be determined by one of several
+ simpler models with a reasonable degree of accuracy.
+\end_layout
+
+\begin_layout Subsubsection
+Chao-Seader and Grayson-Streed models
+\end_layout
+
+\begin_layout Standard
+Chao-Seader (
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Chao1961"
+
+\end_inset
+
+) and Grayson-Streed (
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Grayson1963"
+
+\end_inset
+
+) are older, semi-empirical models.
+ The Grayson-Streed correlation is an extension of the Chao-Seader method
+ with special applicability to hydrogen.
+ In DWSIM, only the equilibrium values produced by these correlations are
+ used in the calculations.
+ The Lee-Kesler method is used to determine the enthalpy and entropy of
+ liquid and vapor phases.
+\end_layout
+
+\begin_layout Subparagraph*
+
+\emph on
+Chao Seader
+\end_layout
+
+\begin_layout Standard
+Use this method for heavy hydrocarbons, where the pressure is less than
+ 10 342 kPa (1 500 psia) and the temperature is between the range -17.78
+ ºC and 260 ºC.
+\end_layout
+
+\begin_layout Subparagraph*
+
+\emph on
+Grayson Streed
+\end_layout
+
+\begin_layout Standard
+Recommended for simulating heavy hydrocarbon systems with a high hydrogen
+ content.
+\end_layout
+
+\begin_layout Subsubsection
+Calculation models for the liquid phase activity coefficient
+\end_layout
+
+\begin_layout Standard
+The activity coefficient 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ is a factor used in thermodynamics to account for deviations from ideal
+ behaviour in a mixture of chemical substances.
+ In an ideal mixture, the interactions between each pair of chemical species
+ are the same (or more formally, the enthalpy of mixing is zero) and, as
+ a result, properties of the mixtures can be expressed directly in terms
+ of simple concentrations or partial pressures of the substances present.
+ Deviations from ideality are accommodated by modifying the concentration
+ by an activity coefficient.
+ .
+ The activity coefficient is defined as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\gamma_{i}=[\frac{\partial(nG^{E}/RT)}{\partial n{}_{i}}]_{P,T,n_{j\neq i}}\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $G^{E}$
+\end_inset
+
+ represents the excess Gibbs energy of the liquid solution, which is a measure
+ of how far the solution is from ideal behavior.
+ For an ideal solution, 
+\begin_inset Formula $\gamma_{i}$
+\end_inset
+
+ = 1.
+ Expressions for 
+\begin_inset Formula $G^{E}/RT$
+\end_inset
+
+ provide values for the activity coefficients.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+UNIQUAC and UNIFAC models
+\end_layout
+
+\begin_layout Standard
+The UNIQUAC equation considers 
+\begin_inset Formula $g\equiv G^{E}/RT$
+\end_inset
+
+ formed by two additive parts, one combinatorial term 
+\begin_inset Formula $g^{C}$
+\end_inset
+
+ to take into account the size of the molecules, and one residual term 
+\begin_inset Formula $g^{R}$
+\end_inset
+
+, which take into account the interactions between molecules:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+g\equiv g^{C}+g^{R}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Formula $g^{C}$
+\end_inset
+
+ function contains only pure species parameters, while the 
+\begin_inset Formula $g^{R}$
+\end_inset
+
+ function incorporates two binary parameters for each pair of molecules.
+ For a multicomponent system, 
+\begin_inset Formula \begin{equation}
+g^{C}=\sum_{i}x_{i}\ln\phi_{i}/x_{i}+5\sum_{i}q_{i}x_{i}\ln\theta_{i}/\phi_{i}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+and
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+g^{R}=-\sum_{i}q_{i}x_{i}\ln(\sum_{j}\theta_{j}\tau_{j}i)\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+where 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\phi_{i}\equiv(x_{i}r_{i})/(\sum_{j}x_{j}r_{j})\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+and
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\theta_{i}\equiv(x_{i}q_{i})/(\sum_{j}x_{j}q_{j})\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Formula $i$
+\end_inset
+
+ subscript indicates the species, and 
+\begin_inset Formula $j$
+\end_inset
+
+ is an index that represents all the species, 
+\begin_inset Formula $i$
+\end_inset
+
+ included.
+ All sums are over all the species.
+ Note that 
+\begin_inset Formula $\tau_{ij}\neq\tau_{ji}$
+\end_inset
+
+.
+ When 
+\begin_inset Formula $i=j$
+\end_inset
+
+, 
+\begin_inset Formula $\tau_{ii}=\tau_{jj}=1$
+\end_inset
+
+.
+ In these equations, 
+\begin_inset Formula $r_{i}$
+\end_inset
+
+ (a relative molecular volume) and 
+\begin_inset Formula $q_{i}$
+\end_inset
+
+ (a relative molecular surface area) are pure species parameters.
+ The influence of temperature in 
+\begin_inset Formula $g$
+\end_inset
+
+ enters by means of the 
+\begin_inset Formula $\tau_{ij}$
+\end_inset
+
+ parameters, which are temperature-dependent:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\tau_{ij}=\exp(u_{ij}-u_{jj})/RT\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+This way, the UNIQUAC parameters are values of 
+\begin_inset Formula $(u_{ij}-u_{jj})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+An expression for 
+\begin_inset Formula $\gamma_{i}$
+\end_inset
+
+ is found through the application of the following relation:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\ln\gamma_{i}=\left[\partial(nG^{E}/RT)/\partial n_{i}\right]{}_{(P,T,n_{j\neq i})}\label{eq:gamaiuniquac}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The result is represented by the following equations:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\ln\gamma_{i}=\ln\gamma_{i}^{C}+\ln\gamma_{i}^{R}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\ln\gamma_{i}^{C}=1-J_{i}+\ln J_{i}-5q_{i}(1-J_{i}/L_{i}+\ln J_{i}/L_{i})\label{eq:gic}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\ln\gamma_{i}^{R}=q_{i}(1-\ln s_{i}-\sum_{j}\theta_{j}\tau_{ij}/s_{j})\label{eq:ric}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+where
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+J_{i}=r_{i}/(\sum_{j}r_{j}x_{j})\label{eq:ji}\\
+L=q_{i}/(\sum_{j}q_{j}x_{j})\label{eq:li}\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+s_{i}=\sum_{l}\theta_{l}\tau_{li}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Again the 
+\begin_inset Formula $i$
+\end_inset
+
+ subscript identify the species, 
+\begin_inset Formula $j$
+\end_inset
+
+ and 
+\begin_inset Formula $l$
+\end_inset
+
+ are indexes which represent all the species, including 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ all sums are over all the species, and 
+\begin_inset Formula $\tau_{ij}=1$
+\end_inset
+
+ for 
+\begin_inset Formula $i=j$
+\end_inset
+
+.
+ The parameters values 
+\begin_inset Formula $(u_{ij}-u_{jj})$
+\end_inset
+
+ are found by regression of binary VLE/LLE data.
+\end_layout
+
+\begin_layout Standard
+The UNIFAC method for the estimation of activity coefficients depends on
+ the concept of that a liquid mixture can be considered a solution of its
+ own molecules.
+ These structural units are called subgroups.
+ The greatest advantage of this method is that a relatively small number
+ of subgroups can be combined to form a very large number of molecules.
+\end_layout
+
+\begin_layout Standard
+The activity coefficients do not only depend on the subgroup properties,
+ but also on the interactions between these groups.
+ Similar subgroups are related to a main group, like “CH2”, “OH”, “ACH”
+ etc.; the identification of the main groups are only descriptive.
+ All the subgroups that belongs to the same main group are considered identical
+ with respect to the interaction between groups.
+ Consequently, the parameters which characterize the interactions between
+ the groups are identified by pairs of the main groups.
+\end_layout
+
+\begin_layout Standard
+The UNIFAC method is based on the UNIQUAC equation, where the activity coefficie
+nts are given by the equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:gamaiuniquac"
+
+\end_inset
+
+.
+ When applied to a solution of groups, the equations 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:gic"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ric"
+
+\end_inset
+
+ are written in the form:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\ln\gamma_{i}^{C}=1-J_{i}+\ln J_{i}-5q_{i}(1-J_{i}/L_{i}+\ln J_{i}/L_{i})\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\ln\gamma_{i}^{R}=q_{i}(1-\sum_{k}(\theta_{k}\beta_{ik}/s_{k})-e_{ki}ln\beta_{ik}/s_{k})\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The parameters 
+\begin_inset Formula $J_{i}$
+\end_inset
+
+ e 
+\begin_inset Formula $L_{i}$
+\end_inset
+
+ are still given by eqs.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ji2"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:li2"
+
+\end_inset
+
+.
+ Furthermore, the following definitions apply: 
+\begin_inset Formula \begin{equation}
+r_{i}=\sum_{k}\nu_{k}^{(i)}R_{k}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+q_{i}=\sum_{k}\nu_{k}^{(i)}Q_{k}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+e_{ki}=(\nu_{k}^{(i)}Q_{k})/q_{i}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\beta_{ik}=\sum_{m}e_{mk}\tau_{mk}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\theta_{k}=(\sum_{i}x_{i}q_{i}e_{ki})/(\sum_{i}x_{j}q_{j})\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+s_{k}=\sum_{m}\theta_{m}\tau_{mk}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+s_{i}=\sum_{l}\theta_{l}\tau_{li}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\tau_{mk}=\exp(-a_{mk})/T\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+The 
+\begin_inset Formula $i$
+\end_inset
+
+ subscript identify the species, and 
+\begin_inset Formula $j$
+\end_inset
+
+ is an index that goes through all the species.
+ The 
+\begin_inset Formula $k$
+\end_inset
+
+ subscript identify the subgroups, and 
+\begin_inset Formula $m$
+\end_inset
+
+ is an index that goes through all the subgroups.
+ The parameter 
+\begin_inset Formula $\nu_{k}^{(i)}$
+\end_inset
+
+ is the number of the 
+\begin_inset Formula $k$
+\end_inset
+
+ subgroup in a molecule of the 
+\begin_inset Formula $i$
+\end_inset
+
+ species.
+ The subgroup parameter values 
+\begin_inset Formula $R_{k}$
+\end_inset
+
+ and 
+\begin_inset Formula $Q_{k}$
+\end_inset
+
+ and the interaction parameters 
+\begin_inset Formula $-a_{mk}$
+\end_inset
+
+ are obtained in the literature.
+ 
+\end_layout
+
+\begin_layout Paragraph*
+
+\series bold
+\emph on
+Modified UNIFAC (Dortmund) model
+\end_layout
+
+\begin_layout Standard
+The UNIFAC model, despite being widely used in various applications, has
+ some limitations which are, in some way, inherent to the model.
+ Some of these limitations are:
+\end_layout
+
+\begin_layout Enumerate
+UNIFAC is unable to distinguish between some types of isomers.
+ 
+\end_layout
+
+\begin_layout Enumerate
+The 
+\begin_inset Formula $\gamma-\phi$
+\end_inset
+
+ approach limits the use of UNIFAC for applications under the pressure range
+ of 10-15 atm.
+ 
+\end_layout
+
+\begin_layout Enumerate
+The temperature is limited within the range of approximately 275-425 K.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Non-condensable gases and supercritical components are not included.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Proximity effects are not taken into account.
+ 
+\end_layout
+
+\begin_layout Enumerate
+The parameters of liquid-liquid equilibrium are different from those of
+ vapor-liquid equilibrium.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Polymers are not included.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Electrolytes are not included.
+\end_layout
+
+\begin_layout Standard
+Some of these limitations can be overcome.
+ The insensitivity of some types of isomers can be eliminated through a
+ careful choice of the groups used to represent the molecules.
+ The fact that the parameters for the liquid-liquid equilibrium are different
+ from those for the vapor-liquid equilibrium seems not to have a theoretical
+ solution at this time.
+ One solution is to use both data from both equiibria to determine the parameter
+s as a modified UNIFAC model.
+ The limitations on the pressure and temperature can be overcome if the
+ UNIFAC model is used with equations of state, which carry with them the
+ dependencies of pressure and temperature.
+\end_layout
+
+\begin_layout Standard
+These limitations of the original UNIFAC model have led several authors
+ to propose changes in both combinatorial and the residual parts.
+ To modify the combinatorial part, the basis is the suggestion given by
+ Kikic et al.
+ (1980) in the sense that the Staverman-Guggenheim correction on the original
+ term of Flory-Huggins is very small and can, in most cases, be neglected.
+ As a result, this correction was empirically removed from the UNIFAC model.
+ Among these modifications, the proposed by Gmehling and coworkers [Weidlich
+ and Gmehling, 1986; Weidlich and Gmehling, 1987; Gmehling et al., 1993],
+ known as the model UNIFAC-Dortmund, is one of the most promising.
+ In this model, the combinatorial part of the original UNIFAC is replaced
+ by:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\ln\gamma_{i}^{C}=1-J_{i}+\ln J_{i}-5q_{i}(1-J_{i}/L_{i}+\ln J_{i}/L_{i})\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+J_{i}=r_{i}^{3/4}/(\sum_{j}r_{j}^{3/4}x_{j})\label{eq:ji2}\end{eqnarray}
+
+\end_inset
+
+where the remaining quantities is defined the same way as in the original
+ UNIFAC.
+ Thus, the correction in-Staverman Guggenheim is empirically taken from
+ the template.
+ It is important to note that the in the UNIFAC-Dortmund model, the quantities
+ 
+\begin_inset Formula $R_{k}$
+\end_inset
+
+ and 
+\begin_inset Formula $Q_{k}$
+\end_inset
+
+ are no longer calculated on the volume and surface area of Van der Waals
+ forces, as proposed by Bondi (1968), but are additional adjustable parameters
+ of the model.
+\end_layout
+
+\begin_layout Standard
+The residual part is still given by the solution for groups, just as in
+ the original UNIFAC, but now the parameters of group interaction are considered
+ temperature dependent, according to:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\tau_{mk}=\exp(-a_{mk}^{(0)}+a_{mk}^{(1)}T+a_{mk}^{(2)}T^{2})/T\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+These parameters must be estimated from experimental phase equilibrium data.
+ Gmehling et al.
+ (1993) presented an array of parameters for 45 major groups, adjusted using
+ data from the vapor-liquid equilibrium, excess enthalpies, activity coefficient
+s at infinite dilution and liquid-liquid equilibrium.
+ enthalpy and entropy of liquid and vapor.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Modified UNIFAC (NIST) model
+\end_layout
+
+\begin_layout Standard
+This model 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Kang2015128"
+
+\end_inset
+
+ is similar to the Modified UNIFAC (Dortmund), with new modified UNIFAC
+ parameters reported for 89 main groups and 984 group–group interactions
+ using critically evaluated phase equilibrium data including vapor–liquid
+ equilibrium (VLE), liquid–liquid equilibrium (LLE), solid–liquid equilibrium
+ (SLE), excess enthalpy (HE), infinite dilution activity coefficient (AINF)
+ and excess heat capacity (CPE) data.
+ A new algorithmic framework for quality assessment of phase equilibrium
+ data was applied for qualifying the consistency of data and screening out
+ possible erroneous data.
+ Substantial improvement over previous versions of UNIFAC is observed due
+ to inclusion of experimental data from recent publications and proper weighting
+ based on a quality assessment procedure.
+ The systems requiring further verification of phase equilibrium data were
+ identified where insufficient number of experimental data points is available
+ or where existing data are conflicting.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+NRTL model
+\end_layout
+
+\begin_layout Standard
+Wilson (1964) presented a model relating 
+\begin_inset Formula $g^{E}$
+\end_inset
+
+ to the molar fraction, based mainly on molecular considerations, using
+ the concept of local composition.
+ Basically, the concept of local composition states that the composition
+ of the system in the vicinity of a given molecule is not equal to the overall
+ composition of the system, because of intermolecular forces.
+\end_layout
+
+\begin_layout Standard
+Wilson's equation provides a good representation of the Gibbs' excess free
+ energy for a variety of mixtures, and is particularly useful in solutions
+ of polar compounds or with a tendency to association in apolar solvents,
+ where Van Laar's equation or Margules' one are not sufficient.
+ Wilson's equation has the advantage of being easily extended to multicomponent
+ solutions but has two disadvantages: first, the less important, is that
+ the equations are not applicable to systems where the logarithms of activity
+ coefficients, when plotted as a function of 
+\emph on
+x
+\emph default
+, show a maximum or a minimum.
+ However, these systems are not common.
+ The second, a little more serious, is that the model of Wilson is not able
+ to predict limited miscibility, that is, it is not useful for LLE calculations.
+\end_layout
+
+\begin_layout Standard
+Renon and Prausnitz 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Renon1968"
+
+\end_inset
+
+ developed the 
+\emph on
+NRTL
+\emph default
+ equation 
+\emph on
+(Non-Random, Two-Liquid)
+\emph default
+ based on the concept of local composition but, unlike Wilson's model, the
+ NRTL model is applicable to systems of partial miscibility.
+ The model equation is:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\ln\gamma_{i}=\frac{\underset{j=1}{\overset{n}{\sum}}\tau_{ji}x_{j}G_{ji}}{\underset{k=1}{\overset{n}{\sum}}x_{k}G_{ki}}+\underset{j=1}{\overset{n}{\sum}}\frac{x_{j}G_{ij}}{\underset{k=1}{\overset{n}{\sum}}x_{k}G_{kj}}\left(\tau_{ij}-\frac{\underset{m=1}{\overset{n}{\sum}}\tau_{mj}x_{m}G_{mj}}{\underset{k=1}{\overset{n}{\sum}}x_{k}G_{kj}}\right),\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+G_{ij}=exp(-\tau_{ij}\alpha_{ij}),\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\tau_{ij}=a_{ij}/RT,\end{equation}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+where
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $\gamma_{i}$
+\end_inset
+
+ Activity coefficient of component 
+\emph on
+i
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ Molar fraction of component 
+\emph on
+i
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $a_{ij}$
+\end_inset
+
+ Interaction parameter between 
+\emph on
+i-j
+\emph default
+ 
+\begin_inset Formula $(a_{ij}\neq a_{ji})$
+\end_inset
+
+ (cal/mol)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $T$
+\end_inset
+
+ Temperature (K)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $\alpha_{ij}$
+\end_inset
+
+ non-randomness parameter for the 
+\emph on
+i-j 
+\emph default
+pair 
+\begin_inset Formula $(\alpha_{ij}=\alpha_{ji})$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+The significance of 
+\begin_inset Formula $G_{ij}$
+\end_inset
+
+ is similar to 
+\begin_inset Formula $\Lambda_{ij}$
+\end_inset
+
+ from Wilson's equation, that is, they are characteristic energy parameters
+ of the 
+\emph on
+ij
+\emph default
+ interaction.
+ The parameter is related to the non-randomness of the mixture, i.e.
+ that the components in the mixture are not randomly distributed but follow
+ a pattern dictated by the local composition.
+ When it is zero, the mixture is completely random, and the equation is
+ reduced to the two-suffix Margules equation.
+\end_layout
+
+\begin_layout Standard
+For ideal or moderately ideal systems, the NRTL model does not offer much
+ advantage over Van Laar and three-suffix Margules, but for strongly non-ideal
+ systems, this equation can provide a good representation of experimental
+ data, although good quality data is necessary to estimate the three required
+ parameters.
+\end_layout
+
+\begin_layout Subsubsection
+Models for Aqueous Electrolyte Systems
+\end_layout
+
+\begin_layout Paragraph
+
+\emph on
+Revised LIQUAC model (LIQUAC*)
+\end_layout
+
+\begin_layout Standard
+In electrolyte systems, different properties, such as mean activity coefficients
+, osmotic coefficients, boiling point elevations, freezing point depressions
+ and salt solubilities can be calculated using the new electrolyte models
+ like LIQUAC and LIFAC.
+\end_layout
+
+\begin_layout Standard
+Common usage scenarios: 
+\end_layout
+
+\begin_layout Itemize
+desalination processes 
+\end_layout
+
+\begin_layout Itemize
+crystallization processes 
+\end_layout
+
+\begin_layout Itemize
+waste water treatment
+\end_layout
+
+\begin_layout Standard
+In the LIQUAC* model 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Mohs2013311"
+
+\end_inset
+
+, the activity coefficient is calculated by three different terms: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\ln\gamma_{i}=\ln\text{\gamma}_{i}^{LR}+\ln\text{\gamma}_{i}^{MR}+\ln\gamma_{i}^{SR}\end{equation}
+
+\end_inset
+
+These three terms, the long range term (LR), the middle range term (MR)
+ and the short range term (SR), consider the different kinds of interactions
+ in electrolyte solutions.
+ The long range term is taken into account by the Debye–Hückel theory as
+ modified by Fowler and Guggenheim to consider different solvents and solvent
+ mixtures.
+ This term takes into account direct charge effects like attraction and
+ repulsion between ions and the formation of a solvate shell in solution
+ and is calculated differently for ions and solvents.
+ The middle range term was developed from the semiempirical Pitzer model
+ and takes into account the indirect charge effects such as interactions
+ between dipoles–dipoles and dipoles–indirect dipoles.
+ The short range term was developed from the corresponding local composition
+ model and takes into account direct neighborhood effects of the compounds
+ in solution.
+ For the calculation of the short range term the part consists of a combinatoria
+l (C) and a residual (R) part.
+ While the combinatorial part takes into account the entropic interactions,
+ i.e.
+ the size and the form of the molecules the residual part considers the
+ enthalpic interactions.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Extended UNIQUAC
+\emph default
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Thomsen1997"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Sander et al.
+ presented in 1986 an extension of the UNIQUAC model by adding a Debye-Hückel
+ term allowing this Extended UNIQUAC model to be used for electrolyte solutions.
+ The model has since been modified and it has proven itself applicable for
+ calculations of vapor-liquid-liquid-solid equilibria and of thermal properties
+ in aqueous solutions containing electrolytes and non-electrolytes.
+ The model is shown in its current form here as it is presented by Thomsen
+ (1997).
+ The extended UNIQUAC model consists of three terms: a combinatorial or
+ entropic term, a residual or enthalpic term and an electrostatic term
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+G^{ex}=G_{Combinatorial}^{ex}+G_{Residual}^{ex}+G_{Extended\, Debye-Hückel}^{ex}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The combinatorial and the residual terms are identical to the terms used
+ in the traditional UNIQUAC equation.
+ The electrostatic term corresponds to the extended Debye-Hückel law.
+ The combinatorial, entropic term is independent of temperature and only
+ depends on the relative sizes of the species:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\frac{G_{Combinatorial}^{ex}}{RT}=\underset{i}{\sum}x_{i}\ln\left(\frac{\phi_{i}}{x_{i}}\right)-\frac{z}{2}\underset{i}{\sum}q_{i}x_{i}\ln\left(\frac{\phi_{i}}{\theta_{i}}\right)\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The two model parameters ri and qi are the volume and surface area parameters
+ for component i.
+ In the classical application of the UNIQUAC model, these parameters are
+ calculated from the properties of non electrolyte molecules.
+ In the Extended UNIQUAC application to multi component electrolyte solutions,
+ this approach gave unsatisfactory results.
+ The volume and surface area parameters were instead considered to be adjustable
+ parameters.
+ The values of these two parameters are determined by fitting to experimental
+ data.
+ Especially thermal property data such as heat of dilution and heat capacity
+ data are efficient for determining the value of the surface area parameter
+ q, because the UNIQUAC contribution to the excess enthalpy and excess heat
+ capacity is proportional to the parameter q.
+ The residual, enthalpic term is dependent on temperature through the parameter
+ 
+\begin_inset Formula $\psi_{ji}$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\frac{G_{Residual}^{ex}}{RT}=-\underset{i}{\sum}\left[x_{i}q_{i}\ln\left(\underset{j}{\sum}\theta_{j}\psi_{ji}\right)\right]\end{equation}
+
+\end_inset
+
+the parameter 
+\begin_inset Formula $\psi_{ji}$
+\end_inset
+
+ is given by:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\psi_{ji}=\exp\left(-\frac{u_{ji}-u_{ii}}{T}\right)\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula $u_{ji}$
+\end_inset
+
+and 
+\begin_inset Formula $u_{ii}$
+\end_inset
+
+ are interaction energy parameters.
+ The interaction energy parameters are considered symmetrical and temperature
+ dependent in this model 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+u_{ji}=u_{ij}=u_{ij}^{0}+u_{ij}^{T}\left(T-298.15\right)\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The values of the interaction energy parameters and are determined by fitting
+ to experimental data.
+ 
+\end_layout
+
+\begin_layout Standard
+The combinatorial and the residual terms of the UNIQUAC excess Gibbs energy
+ function are based on the rational, symmetrical activity coefficient convention.
+ The Debye-Hückel electrostatic term however is expressed in terms of the
+ rational, symmetrical convention for water, and the rational, unsymmetrical
+ convention for ions.
+\end_layout
+
+\begin_layout Standard
+The electrostatic contributions to the water activity coefficients and the
+ ionic activity coefficients are obtained by partial molar differentiation
+ of the extended Debye-Hückel law excess Gibbs energy term.
+ The term used for water is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\ln\gamma_{w}^{DH}=\frac{2}{3}M_{w}AI^{3/2}\sigma\left(bI^{1/2}\right)\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\sigma\left(x\right)=\frac{3}{x^{3}}\left\{ 1+x-\frac{1}{1+x}-2\ln\left(1+x\right)\right\} \end{equation}
+
+\end_inset
+
+In this expression, b = 1.5 (kg/mol)½.
+ The term used for ions is: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\ln\left(\gamma_{i}^{*DH}\right)=-Z_{i}^{2}\frac{A\sqrt{I}}{1+b\sqrt{I}}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Based on table values of the density of pure water, and the relative permittivit
+y of water, 
+\begin_inset Formula $\varepsilon_{r}$
+\end_inset
+
+, the Debye-Hückel parameter 
+\begin_inset Formula $A$
+\end_inset
+
+ can be approximated in the temperature range 273.15 K < T < 383.15 K by:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+A=\left[1.131+1.335E-3\left(T-273.15\right)+1.164E-5\left(T-273.15\right)^{2}\right]\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The activity coefficient for water is calculated in the Extended UNIQUAC
+ model by summation of the three terms:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\ln\gamma_{w}=\ln\gamma_{w}^{C}+\ln\gamma_{w}^{R}+\ln\gamma_{w}^{DH}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The activity coefficient for ion i is obtained as the rational, unsymmetrical
+ activity coefficient according to the definition of rational unsymmetrical
+ activity coefficients by adding the three contributions:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\ln\gamma_{i}^{*}=\ln\frac{\gamma_{i}^{C}}{\gamma_{i}^{C\infty}}+\ln\frac{\gamma_{i}^{R}}{\gamma_{i}^{R\infty}}+\ln\gamma_{i}^{*DH}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The rational, unsymmetrical activity coefficient for ions calculated with
+ the Extended UNIQUAC model can be converted to a molal activity coefficient.
+ This is relevant for comparison with experimental data.
+\end_layout
+
+\begin_layout Standard
+The temperature dependency of the activity coefficients in the Extended
+ UNIQUAC model is built into the model equations as outlined above.
+ The temperature dependency of the equilibrium constants used in the Extended
+ UNIQUAC model is calculated from the temperature dependency of the Gibbs
+ energies of formation of the species Parameters for water and for the following
+ ions can be found in
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Thomsen1997"
+
+\end_inset
+
+ H+, Na+, K+, NH4+, Cl-, SO42-, HSO4-, NO3-, OH-, CO32-, HCO3-, S2O82-.
+\end_layout
+
+\begin_layout Standard
+A significant advantage of the Extended UNIQUAC model compared to models
+ like the Bromley model or the Pitzer model is that temperature dependence
+ is built into the model.
+ This enables the model to also describe thermodynamic properties that are
+ temperature derivatives of the excess Gibbs function, such as heat of mixing
+ and heat capacity.
+ 
+\end_layout
+
+\begin_layout Subsection
+Enthalpy, Entropy and Heat Capacities
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Peng-Robinson, Soave-Redlich-Kwong
+\end_layout
+
+\begin_layout Standard
+\begin_inset Marginal
+status open
+
+\begin_layout Plain Layout
+\paragraph_spacing single
+\noindent
+\align left
+
+\family sans
+\size scriptsize
+\emph on
+\begin_inset Formula $H^{id}$
+\end_inset
+
+ values are calculated from the ideal gas heat capacity.
+ For mixtures, a molar average is used.
+ The value calculated by the EOS is for the phase, independently of the
+ number of components present in the mixture.
+\end_layout
+
+\end_inset
+
+For the cubic equations of state, enthalpy, entropy and heat capacities
+ are calculated by the 
+\emph on
+departure functions
+\emph default
+, which relates the phase properties in the conditions of the mixture with
+ the same mixture property in the ideal gas state.This way, the following
+ departure functions are defined 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "reid1987"
+
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\frac{H-H^{id}}{RT}=X;\:\frac{S-S^{id}}{R}=Y\end{equation}
+
+\end_inset
+
+values for 
+\begin_inset Formula $X$
+\end_inset
+
+ and 
+\begin_inset Formula $Y$
+\end_inset
+
+ are calculated by the PR and SRK EOS, according to the table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Entalpia/Entropia-por-equações"
+
+\end_inset
+
+:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Float table
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Entalpia/Entropia-por-equações"
+
+\end_inset
+
+Enthalpy/Entropy calculation with an EOS
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="3">
+<features booktabs="true" islongtable="true">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row topspace="4pt" bottomspace="4pt" interlinespace="default">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none" special="dassad">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+\begin_inset Formula $\frac{H-H^{id}}{RT}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{S-S^{id}}{R}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topspace="4pt" bottomspace="4pt">
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PR
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $Z-1-\frac{1}{2^{1,5}bRT}\left[a-T\frac{da}{dT}\right]\times$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ln(Z-B)-\ln\frac{P}{P^{0}}-\frac{A}{2^{1,5}bRT}\left[\frac{T}{a}\frac{da}{dT}\right]\times$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topspace="4pt" bottomspace="4pt">
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+\begin_inset Formula $\times\ln\left[\frac{V+2,414b}{V+0,414b}\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\times\ln\left[\frac{V+2,414b}{V+0,414b}\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topspace="4pt" bottomspace="4pt">
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SRK
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $Z-1-\frac{1}{bRT}\left[a-T\frac{da}{dT}\right]\times$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ln(Z-B)-\ln\frac{P}{P^{0}}-\frac{A}{B}\left[\frac{T}{a}\frac{da}{dT}\right]\times$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topspace="4pt" bottomspace="4pt">
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\times\ln\left[1+\frac{b}{V}\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\times\ln\left[1+\frac{B}{Z}\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Marginal
+status open
+
+\begin_layout Plain Layout
+\paragraph_spacing single
+\noindent
+\align left
+
+\family sans
+\size scriptsize
+\emph on
+In DWSIM, 
+\begin_inset Formula $P_{o}$
+\end_inset
+
+= 1 atm.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Heat capacities are obtained directly from the EOS, by using the following
+ thermodynamic relations:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+C_{p}-C_{p}^{id}=T\intop_{\infty}^{V}\left(\frac{\partial^{2}P}{\partial T^{2}}\right)dV-\frac{T(\partial P/\partial T)_{V}^{2}}{(\partial P/\partial V)_{T}}-R\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+C_{p}-C_{v}=-T\frac{\left(\frac{\partial P}{\partial T}\right)_{V}^{2}}{\left(\frac{\partial P}{\partial V}\right)_{T}}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Lee-Kesler
+\end_layout
+
+\begin_layout Standard
+Enthalpies, entropies and heat capacities are calculated by the Lee-Kesler
+ model 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "ByungIkLee-1975"
+
+\end_inset
+
+ through the following equations:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\frac{H-H^{id}}{RT_{c}}=T_{r}\left(Z-1-\frac{b_{2}+2b_{3}/T_{r}+3b_{4}/T_{r}^{2}}{T_{r}V_{r}}-\frac{c_{2}-3c_{3}/T_{r}^{2}}{2T_{r}V_{r}^{2}}+\frac{d_{2}}{5T_{r}V_{r}^{2}}+3E\right)\label{eq:LKH}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\frac{S-S^{id}}{R}+\ln\left(\frac{P}{P_{0}}\right)=\ln Z-\frac{b_{2}+b_{3}/T_{r}^{2}+2b_{4}/T_{r}^{3}}{V_{r}}-\frac{c_{1}-2c_{3}/T_{r}^{3}}{2V_{r}^{2}}+\frac{d_{1}}{5V_{r}^{5}}+2E\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\frac{C_{v}-C_{v}^{id}}{R}=\frac{2\left(b_{3}+3b_{4}/T_{r}\right)}{T_{r}^{2}V_{r}}-\frac{3c_{3}}{T_{r}^{3}V_{r}^{2}}-6E\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\frac{C_{p}-C_{p}^{id}}{R}=\frac{C_{v}-C_{v}^{id}}{R}-1-T_{r}\frac{\left(\frac{\partial P_{r}}{\partial T_{r}^{}}\right)_{V_{r}}^{2}}{\left(\frac{\partial P_{r}}{\partial V_{r}}\right)_{T_{r}}}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+E=\frac{c_{4}}{2T_{r}^{3}\gamma}\left[\beta+1-\left(\beta+1+\frac{\gamma}{V_{r}^{2}}\right)\exp\left(-\frac{\gamma}{V_{r}^{2}}\right)\right]\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Marginal
+status open
+
+\begin_layout Plain Layout
+\paragraph_spacing single
+\noindent
+\align left
+
+\family sans
+\size scriptsize
+\emph on
+An iterative method is required to calculate 
+\begin_inset Formula $V_{r}$
+\end_inset
+
+.
+ The user should always watch the values generated by DWSIM in order to
+ detect any issues in the compressibility factors generated by the Lee-Kesler
+ model.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula \begin{equation}
+Z=\frac{P_{r}V_{r}}{T_{r}}=1+\frac{B}{V_{r}}+\frac{C}{V_{r}^{2}}+\frac{D}{V_{r}^{5}}+\frac{c_{4}}{T_{r}^{3}V_{r}^{2}}\left(\beta+\frac{\gamma}{V_{r}^{2}}\right)\exp\left(-\frac{\gamma}{V_{r}^{2}}\right)\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+B=b_{1}-b_{2}/T_{r}-b_{3}/T_{r}^{2}-b_{4}/T_{r}^{3}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+C=c_{1}-c_{2}/T_{r}+c_{3}/T_{r}^{3}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+D=d_{1}+d_{2}/T_{r}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Each property must be calculated based in two fluids apart from the main
+ one, one simple and other for reference.
+ For example, for the compressibility factor,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+Z=Z^{(0)}+\frac{\omega}{\omega^{(r)}}\left(Z^{(r)}-Z^{(0)}\right),\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+where the 
+\begin_inset Formula $(0)$
+\end_inset
+
+ superscript refers to the simple fluid while the 
+\begin_inset Formula $(r)$
+\end_inset
+
+ superscript refers to the reference fluid.
+ This way, property calculation by the Lee-Kesler model should follow the
+ sequence below (enthalpy calculation example):
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $V_{r}$
+\end_inset
+
+ and 
+\begin_inset Formula $Z^{(0)}$
+\end_inset
+
+ are calculated for the simple fluid at the fluid 
+\begin_inset Formula $T_{r}$
+\end_inset
+
+ and 
+\begin_inset Formula $P_{r}$
+\end_inset
+
+.
+ using the equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:LKH"
+
+\end_inset
+
+, and with the constants for the simple fluid, as shown in the table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Constantes-para-o"
+
+\end_inset
+
+, 
+\begin_inset Formula $(H-H^{0})/RT_{c}$
+\end_inset
+
+ is calculated.
+ This term is 
+\begin_inset Formula $\left[(H-H^{0})/RT_{c}\right]^{(0)}$
+\end_inset
+
+.
+ in this calculation, 
+\begin_inset Formula $Z$
+\end_inset
+
+ in the equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:LKH"
+
+\end_inset
+
+ is 
+\begin_inset Formula $Z^{(0)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+The step 1 is repeated, using the same 
+\begin_inset Formula $T_{r}$
+\end_inset
+
+ and 
+\begin_inset Formula $P_{r}$
+\end_inset
+
+, but using the constants for the reference fluid as shown in table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Constantes-para-o"
+
+\end_inset
+
+.
+ With these values, the equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:LKH"
+
+\end_inset
+
+ allows the calculation of 
+\begin_inset Formula $\left[(H-H^{0})/RT_{c}\right]^{(r)}$
+\end_inset
+
+.
+ In this step, 
+\begin_inset Formula $Z$
+\end_inset
+
+ in the equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:LKH"
+
+\end_inset
+
+ is 
+\begin_inset Formula $Z^{(r)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Finally, one determines the residual enthalpy for the fluid of interest
+ by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+\left[(H-H^{0})/RT_{c}\right] & = & \left[(H-H^{0})/RT_{c}\right]^{(0)}+\nonumber \\
+ &  & \frac{\omega}{\omega^{(r)}}\left(\left[(H-H^{0})/RT_{c}\right]^{(r)}-\left[(H-H^{0})/RT_{c}\right]^{(0)}\right),\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+where 
+\begin_inset Formula $\omega^{(r)}=0,3978$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Float table
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Constantes-para-o"
+
+\end_inset
+
+Constants for the Lee-Kesler model
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="13" columns="3">
+<features>
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Constant
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Simple Fluid
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Reference Fluid
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $b_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.1181193
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.2026579
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $b_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.265728
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.331511
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $b_{3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.154790
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.027655
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $b_{4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.030323
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.203488
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $c_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0236744
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0313385
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $c_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0186984
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0503618
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $c_{3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.016901
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $c_{4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.042724
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.041577
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $d_{1}\times10^{4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0155488
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.48736
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $d_{2}\times10^{4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.623689
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0740336
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\beta$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.65392
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.226
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\gamma$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.060167
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.03754
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Aqueous Electrolyte Solutions
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Section
+Transport Properties
+\end_layout
+
+\begin_layout Subsection
+Density
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Liquid Phase
+\end_layout
+
+\begin_layout Standard
+Liquid phase density is calculated with the Rackett equation 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "reid1987"
+
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+V_{s}=\frac{RT_{C}}{P_{C}}Z_{RA}^{\left[1+\left(1-T_{r}\right)^{2/7}\right]},\label{eq:liqdens}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+where:
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $V_{s}$
+\end_inset
+
+ Saturated molar volume (m³/mol)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $T_{c}$
+\end_inset
+
+ Critical temperature (K)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $P_{c}$
+\end_inset
+
+ Critical pressure (Pa)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $T_{r}$
+\end_inset
+
+ Reduced temperature
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $Z_{RA}$
+\end_inset
+
+ Rackett constant of the component (or the mixture)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $R$
+\end_inset
+
+ Ideal Gas constant (8,314 J/[mol.K])
+\end_layout
+
+\begin_layout Standard
+\begin_inset Marginal
+status open
+
+\begin_layout Plain Layout
+\paragraph_spacing single
+\noindent
+\align left
+
+\family sans
+\size scriptsize
+\emph on
+If 
+\begin_inset Formula $T\geqslant T_{cm},$
+\end_inset
+
+ the Rackett method does not provide a value for 
+\begin_inset Formula $V_{s}$
+\end_inset
+
+ and, in this case, DWSIM uses the EOS-generated compressibility factor
+ to calculate the density of the liquid phase.
+\end_layout
+
+\end_inset
+
+For mixtures, the equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:liqdens"
+
+\end_inset
+
+ becomes
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+V_{s}=R\left(\sum\frac{x_{i}T_{c_{i}}}{P_{c_{i}}}\right)Z_{RA}^{\left[1+\left(1-T_{r}\right)^{2/7}\right]},\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+with 
+\begin_inset Formula $\:$
+\end_inset
+
+
+\begin_inset Formula $T_{r}=T/T_{cm}$
+\end_inset
+
+, and
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+T_{c_{m}}=\sum\sum\phi_{i}\phi_{j}T_{c_{ij}},\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\phi_{i}=\frac{x_{i}V_{c_{i}}}{\sum x_{i}V_{c_{i}}},\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+T_{c_{ij}}=\left[\frac{8\left(V_{c_{i}}V_{c_{j}}\right)^{1/2}}{\left(V_{c_{i}}^{1/3}+V_{c_{j}}^{1/3}\right)^{3}}\right]\left(T_{c_{i}}T_{c_{j}}\right)^{1/2},\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+where:
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ Molar fraction
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $V_{c_{i}}$
+\end_inset
+
+ Critical volume (m³/mol)
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $Z_{RA}$
+\end_inset
+
+ isn't available, it is calculated from the component acentric factor,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+Z_{RA}=0.2956-0.08775\omega,\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If the component (or mixture) isn't saturated, a correction is applied in
+ order to account for the effect of pressure in the volume,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+V=V_{s}\left[1-\left(0.0861488+0.0344483\omega\right)\ln\frac{\beta+P}{\beta+P_{vp}}\right],\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+with
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+\frac{\beta}{P} & = & -1-9.070217\left(1-T_{r}\right)^{1/3}+62.45326\left(1-T_{r}\right)^{2/3}-135.1102\left(1-T_{r}\right)+\nonumber \\
+ &  & +\exp\left(4.79594+0.250047\omega+1.14188\omega^{2}\right)\left(1-T_{r}\right)^{4/3},\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+where:
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $V$
+\end_inset
+
+ Compressed liquid volume (m³/mol)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $P$
+\end_inset
+
+ Pressure (Pa)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $P_{vp}$
+\end_inset
+
+ Vapor pressure / Bubble point pressure (Pa)
+\end_layout
+
+\begin_layout Standard
+Finally, density is calculated from the molar volume by the following relation:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\rho=\frac{MM}{1000V},\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+where:
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $\rho$
+\end_inset
+
+ Density (kg/m³)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $V$
+\end_inset
+
+ Specific volume of the fluid (m³/mol)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $MM$
+\end_inset
+
+ Liquid phase molecular volume (kg/kmol)
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Vapor Phase
+\end_layout
+
+\begin_layout Standard
+\begin_inset Marginal
+status open
+
+\begin_layout Plain Layout
+\paragraph_spacing single
+\noindent
+\align left
+
+\family sans
+\size scriptsize
+\emph on
+For the 
+\emph default
+Ideal Gas
+\emph on
+ Property Package, the compressibility factor is considered to be equal
+ to 1.
+\end_layout
+
+\end_inset
+
+Vapor phase density is calculated from the compressiblity factor generated
+ by the EOS, according with the following equation:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\rho=\frac{MM\, P}{1000ZRT},\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+where:
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $\rho$
+\end_inset
+
+ Density (kg/m³)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $MM$
+\end_inset
+
+ Molecular weight of the vapor phase (kg/kmol)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $P$
+\end_inset
+
+ Pressure (Pa)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $Z$
+\end_inset
+
+ Vapor phase compressibility factor
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $R$
+\end_inset
+
+ Ideal Gas constant (8,314 J/[mol.K])
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $T$
+\end_inset
+
+ Temperature (K)
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Mixture
+\end_layout
+
+\begin_layout Standard
+If there are two phases at system temperature and pressure, the density
+ of the mixture is calculated by the following expression:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\rho_{m}=f_{l}\rho_{l}+f_{v}\rho_{v},\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+where:
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $\rho_{m,l,v}$
+\end_inset
+
+ Density of the mixture / liquid phase / vapor phase (kg/m³)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $f_{l,v}$
+\end_inset
+
+ Volumetric fraction of the liquid phase / vapor phase (kg/kmol)
+\end_layout
+
+\begin_layout Subsection
+Viscosity
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Liquid Phase
+\end_layout
+
+\begin_layout Standard
+When experimental data is not available, liquid phase viscosity is calculated
+ from
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\eta_{L}=\exp\left(\sum_{i}x_{i}\ln\eta_{i}\right),\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+where 
+\begin_inset Formula $\eta_{i}$
+\end_inset
+
+ is the viscosity of each component in the phase, which depends on the temperatu
+re and is calculated from experimental data.
+ Dependence of viscosity with the temperature is described in the equation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\eta=\exp\left(A+B/T+C\ln T+DT^{E}\right),\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+where 
+\emph on
+A, B, C, D 
+\emph default
+and
+\emph on
+ E
+\emph default
+ are experimental coefficients (or generated by DWSIM in the case of pseudocompo
+nents or hypotheticals).
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Vapor Phase
+\end_layout
+
+\begin_layout Standard
+Vapor phase viscosity is calculated in two steps.
+ First, when experimental data is not available, the temperature dependence
+ is given by the 
+\emph on
+Lucas
+\emph default
+ equation 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "reid1987"
+
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\eta\xi=\left[0,.807T_{r}^{0,618}-0.357\exp(-0.449T_{r})+0.34\exp(-4.058T_{r})+0.018\right]\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\xi=0,176\left(\frac{T_{c}}{MM^{3}P_{c}^{4}}\right)^{1/6},\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+where
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $\eta$
+\end_inset
+
+ Viscosity (
+\begin_inset Formula $\mu P$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $T_{c},P_{c}$
+\end_inset
+
+ Component (or mixture) critical properties 
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $T_{r}$
+\end_inset
+
+ Reduced temperature, 
+\begin_inset Formula $T/T_{c}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $MM$
+\end_inset
+
+ Molecular weight (kg/kmol)
+\end_layout
+
+\begin_layout Standard
+In the second step, the experimental or calculated viscosity with the Lucas
+ method is corrected to take into account the effect of pressure, by the
+ 
+\emph on
+Jossi-Stiel-Thodos
+\emph default
+ method 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "reid1987"
+
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+\left[\left(\eta-\eta_{0}\right)\left(\frac{T_{c}}{MM^{3}P_{c}^{4}}\right)^{1/6}+1\right]^{1/4} & = & 1.023+0.23364\rho_{r}+\nonumber \\
+ & + & 0.58533\rho_{r}^{2}-0.40758\rho_{r}^{3}+0.093324\rho_{r}^{4},\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+where
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $\eta,\eta_{0}$
+\end_inset
+
+ Corrected viscosity / Lucas method calculated viscosity (
+\begin_inset Formula $\mu P$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $T_{c},P_{c}$
+\end_inset
+
+ Component critical properties
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $\rho_{r}$
+\end_inset
+
+ Reduced density, 
+\begin_inset Formula $\rho/\rho_{c}=V/V_{c}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $MM$
+\end_inset
+
+ Molecular weight (kg/kmol)
+\end_layout
+
+\begin_layout Standard
+If the vapor phase contains more than a component, the viscosity is calculated
+ by the same procedure, but with the required properties calculated by a
+ molar average.
+\end_layout
+
+\begin_layout Subsection
+Surface Tension
+\end_layout
+
+\begin_layout Standard
+When experimental data is not available, the liquid phase surface tension
+ is calculated by doing a molar average of the individual component tensions,
+ which are calculated with the 
+\emph on
+Brock
+\emph default
+-
+\emph on
+Bird
+\emph default
+ equation 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "reid1987"
+
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\frac{\sigma}{P_{c}^{2/3}T_{c}^{1/3}}=\left(0.132\alpha_{c}-0.279\right)\left(1-T_{r}\right)^{11/9}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\alpha_{c}=0.9076\left[1+\frac{T_{br}\ln(P_{c}/1.01325)}{1-T_{br}}\right],\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+where
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $\sigma$
+\end_inset
+
+ Surface tension (N/m)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $T_{c}$
+\end_inset
+
+ Critical temperature (K)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $P_{c}$
+\end_inset
+
+ Critical pressure (Pa)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $T_{br}$
+\end_inset
+
+ Reduced normal boiling point, 
+\begin_inset Formula $T_{b}/T_{c}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Thermal Properties
+\end_layout
+
+\begin_layout Subsection
+Thermal Conductivity
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Liquid Phase
+\end_layout
+
+\begin_layout Standard
+When experimental data is not available, the contribution of each component
+ for the thermal conductivity of the liquid phase is calculated by the 
+\emph on
+Latini 
+\emph default
+method 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "reid1987"
+
+\end_inset
+
+
+\emph on
+,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+\lambda_{i} & = & \frac{A(1-T_{r})^{0.38}}{T_{r}^{1/6}}\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+A & = & \frac{A^{*}T_{b}^{0.38}}{MM^{\beta}T_{c}^{\gamma}},\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+where 
+\begin_inset Formula $A^{*},\:\alpha,\:\beta$
+\end_inset
+
+ and 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ depend on the nature of the liquid (Saturated Hydrocarbon, Aromatic, Water,
+ etc).
+ The liquid phase thermal conductivity is calculated from the individual
+ values by the 
+\emph on
+Li
+\emph default
+ method 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "reid1987"
+
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+\lambda_{L} & =\sum\sum\phi_{i}\phi_{j}\lambda_{ij}\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+\lambda_{ij} & = & 2(\lambda_{i}^{-1}+\lambda_{j}^{-1})^{-1}\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\phi_{i}=\frac{x_{i}V_{c_{i}}}{\sum x_{i}V_{c_{i}}},\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+where
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+\begin_inset Formula $\lambda_{L}$
+\end_inset
+
+ liquid phase thermal conductivity (W/[m.K])
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Vapor Phase
+\end_layout
+
+\begin_layout Standard
+When experimental data is not available, vapor phase thermal conductivity
+ is calculated by the 
+\emph on
+Ely and Hanley
+\emph default
+ method 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "reid1987"
+
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\lambda_{V}=\lambda^{*}+\frac{1000\eta^{*}}{MM}1.32\left(C_{v}-\frac{3R}{2}\right),\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+where
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+\begin_inset Formula $\lambda_{V}$
+\end_inset
+
+ vapor phase thermal conductivity (W/[m.K])
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+\begin_inset Formula $C_{v}$
+\end_inset
+
+ constant volume heat capacity (J/[mol.K])
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\lambda^{*}$
+\end_inset
+
+and 
+\begin_inset Formula $\eta^{*}$
+\end_inset
+
+ are defined by:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\lambda^{*}=\lambda_{0}H\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+H=\left(\frac{16.04E-3}{MM/1000}\right)^{1/2}f^{1/2}/h^{2/3}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\lambda_{0}=1944\eta_{0}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+f=\frac{T_{0}\theta}{190.4}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+h=\frac{V_{c}}{99.2}\phi\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\theta=1+(\omega-0.011)(0.56553-0.86276\ln T^{+}-0.69852/T^{+}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\phi=\left[1+(\omega-0.011)(0.38650-1.1617\ln T^{+})\right]0.288/Z_{c}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+If 
+\begin_inset Formula $T_{r}\leqslant2,\: T^{+}=T_{r}$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $T_{r}>2,\: T^{+}=2$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+h=\frac{V_{c}}{99.2}\phi\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\eta^{*}=\eta_{0}H\frac{MM/1000}{16.04E-3}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\eta_{0}=10^{-7}\sum_{n=1}^{9}C_{n}T_{0}^{(n-4)/3}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+T_{0}=T/f\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Aqueous Solution Properties
+\end_layout
+
+\begin_layout Subsection
+Mean salt activity coefficient 
+\end_layout
+
+\begin_layout Standard
+The mean salt activity coefficient is calculated from the activity coefficients
+ of the ions,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\ln\left(\gamma_{\pm}^{*,m}\right)=\frac{\nu_{+}}{\nu}\ln\left(\gamma_{+}^{*,m}\right)+\frac{\nu_{-}}{\nu}\ln\left(\gamma_{-}^{*,m}\right)\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this equation 
+\begin_inset Formula $\nu_{+}$
+\end_inset
+
+ and 
+\begin_inset Formula $v_{−}$
+\end_inset
+
+ are the stoichiometric coefficients of the cations and anions of the salt,
+ while 
+\begin_inset Formula $\nu$
+\end_inset
+
+ stands for the sum of these stoichiometric coefficients.
+ With the mean salt activity coefficient the real behavior of a salt can
+ be calculated and it can, e.g.
+ be used for the calculation of electromotoric forces EMF.
+\end_layout
+
+\begin_layout Subsection
+Osmotic coefficient 
+\end_layout
+
+\begin_layout Standard
+The osmotic coefficient represents the reality of the solvent in electrolyte
+ systems.
+ It is calculated by the logarithmic ratio of the activity and mole fraction
+ of the solvent:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\Phi=-\frac{\ln a_{i}}{M_{s}\sum_{ion}m_{ion}}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Freezing point depression 
+\end_layout
+
+\begin_layout Standard
+The Schröder and van Laar equation is used:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\frac{\ln a_{i}}{\left(1-\left(T_{m,i}/T\right)\right)}=\frac{\triangle_{m}h_{i}}{RT_{m,i}}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+On the right hand side of the equation a constant factor is achieved, while
+ on the left hand side the activity depends on temperature and composition.
+ For a given composition the freezing point of the system can be calculated
+ iteratively by varying the system temperature.
+ The best way to do this is by starting at the freezing point of the pure
+ solvent.
+ This equation also allows calculating the freezing point of mixed solvent
+ electrolyte systems.
+\end_layout
+
+\begin_layout Section
+Specialized Models / Property Packages
+\end_layout
+
+\begin_layout Subsection
+IAPWS-IF97 Steam Tables
+\end_layout
+
+\begin_layout Standard
+Water is used as cooling medium or heat transfer fluid and it plays an important
+ role for air-condition.
+ For conservation or for reaching desired properties, water must be removed
+ from substances (drying).
+ In other cases water must be added (humidification).
+ Also, many chemical reactions take place in hydrous solutions.
+ That's why a good deal of work has been spent on the investigation and
+ measurement of water properties over the years.
+ Thermodynamic, transport and other properties of water are known better
+ than of any other substance.
+ Accurate data are especially needed for the design of equipment in steam
+ power plants (boilers, turbines, condensers).
+ In this field it's also important that all parties involved, e.g., companies
+ bidding for equipment in a new steam power plant, base their calculations
+ on the same property data values because small differences may produce
+ appreciable differences.
+\end_layout
+
+\begin_layout Standard
+A standard for the thermodynamic properties of water over a wide range of
+ temperature and pressure was developed in the 1960's, the 1967 IFC Formulation
+ for Industrial Use (IFC-67).
+ Since 1967 IFC-67 has been used for "official" calculations such as performance
+ guarantee calculations of power cycles.
+\end_layout
+
+\begin_layout Standard
+In 1997, IFC-67 has been replaced by a new formulation, the IAPWS Industrial
+ Formulation 1997 for the Thermodynamic Properties of Water and Steam or
+\series bold
+ IAPWS-IF97 
+\series default
+for short.
+ IAPWS-IF97 was developed in an international research project coordinated
+ by the International Association for the Properties of Water and Steam
+ (IAPWS).
+ The formulation is described in a paper by W.
+ Wagner et al., "The IAPWS Industrial Formulation 1997 for the Thermodynamic
+ Properties of Water and Steam," ASME J.
+ Eng.
+ Gas Turbines and Power, Vol.
+ 122 (2000), pp.
+ 150-182 and several steam table books, among others ASME Steam Tables and
+ Properties of Water and Steam by W.
+ Wagner, Springer 1998.
+\end_layout
+
+\begin_layout Standard
+The IAPWS-IF97 divides the thermodynamic surface into five regions:
+\end_layout
+
+\begin_layout Itemize
+Region 1 for the liquid state from low to high pressures, 
+\end_layout
+
+\begin_layout Itemize
+Region 2 for the vapor and ideal gas state, 
+\end_layout
+
+\begin_layout Itemize
+Region 3 for the thermodynamic state around the critical point, 
+\end_layout
+
+\begin_layout Itemize
+Region 4 for the saturation curve (vapor-liquid equilibrium), 
+\end_layout
+
+\begin_layout Itemize
+Region 5 for high temperatures above 1073.15 K (800 °C) and pressures up
+ to 10 MPa (100 bar).
+\end_layout
+
+\begin_layout Standard
+For regions 1, 2, 3 and 5 the authors of IAPWS-IF97 have developed fundamental
+ equations of very high accuracy.
+ Regions 1, 2 and 5 are covered by fundamental equations for the Gibbs free
+ energy g(T,p), region 3 by a fundamental equation for the Helmholtz free
+ energy f(T,v).
+ All thermodynamic properties can then be calculated from these fundamental
+ equations by using the appropriate thermodynamic relations.
+ For region 4 a saturation-pressure equation has been developed.
+\end_layout
+
+\begin_layout Standard
+In chemical engineering applications mainly regions 1, 2, 4, and to some
+ extent also region 3 are of interest.
+ The range of validity of these regions, the equations for calculating the
+ thermodynamic properties, and references are summarized in Attachment 1.
+ The equations of the high-temperature region 5 should be looked up in the
+ references.
+ For regions 1 and 2 the thermodynamic properties are given as a function
+ of temperature and pressure, for region 3 as a function of temperature
+ and density.
+ For other independent variables an iterative calculation is usually required.
+ So-called backward equations are provided in IAPWS-IF97 which allow direct
+ calculation of properties as a function of some other sets of variables
+ (see references).
+\end_layout
+
+\begin_layout Standard
+Accuracy of the equations and consistency along the region boundaries are
+ more than sufficient for engineering applications.
+\end_layout
+
+\begin_layout Standard
+More information about the IAPWS-IF97 Steam Tables formulation can be found
+ at 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.thermo.ruhr-uni-bochum.de/en/prof-w-wagner/software/iapws-if97.html?id=17
+2
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+IAPWS-08 Seawater
+\end_layout
+
+\begin_layout Standard
+The IAPWS-08 Seawater Property Package is based on the 
+\series bold
+Seawater-Ice-Air (SIA)
+\series default
+ library.
+ The Seawater-Ice-Air (SIA) library contains the
+\series bold
+ TEOS-10
+\series default
+ subroutines for evaluating a wide range of thermodynamic properties of
+ pure water (using IAPWS-95), seawater (using IAPWS-08 for the saline part),
+ ice Ih (using IAPWS-06) and for moist air (using Feistel et al.
+ (2010a), IAPWS (2010)).
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+TEOS-10
+\series default
+ is based on a Gibbs function formulation from which all thermodynamic propertie
+s of seawater (density, enthalpy, entropy sound speed, etc.) can be derived
+ in a thermodynamically consistent manner.
+ TEOS-10 was adopted by the Intergovernmental Oceanographic Commission at
+ its 25th Assembly in June 2009 to replace EOS-80 as the official description
+ of seawater and ice properties in marine science.
+\end_layout
+
+\begin_layout Standard
+A significant change compared with past practice is that TEOS-10 uses Absolute
+ Salinity SA (mass fraction of salt in seawater) as opposed to Practical
+ Salinity SP (which is essentially a measure of the conductivity of seawater)
+ to describe the salt content of seawater.
+ Ocean salinities now have units of g/kg.
+\end_layout
+
+\begin_layout Standard
+Absolute Salinity (g/kg) is an SI unit of concentration.
+ The thermodynamic properties of seawater, such as density and enthalpy,
+ are now correctly expressed as functions of Absolute Salinity rather than
+ being functions of the conductivity of seawater.
+ Spatial variations of the composition of seawater mean that Absolute Salinity
+ is not simply proportional to Practical Salinity; TEOS-10 contains procedures
+ to correct for these effects.
+\end_layout
+
+\begin_layout Standard
+More information about the SIA library can be found at 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.teos-10.org/software.htm
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Black-Oil
+\end_layout
+
+\begin_layout Standard
+When fluids flow from a petroleum reservoir to the surface, pressure and
+ temperature decrease.
+ This affects the gas/liquid equilibrium and the properties of the gas and
+ liquid phases.
+ The black-oil model enables estimation of these, from a minimum of input
+ data.
+\end_layout
+
+\begin_layout Standard
+The black-oil model employs 2 pseudo components:
+\end_layout
+
+\begin_layout Enumerate
+Oil which is usually defined as the produced oil, at stock tank conditions.
+\end_layout
+
+\begin_layout Enumerate
+Gas which then is defined as the produced gas at atmospheric standard conditions.
+\end_layout
+
+\begin_layout Standard
+The basic modeling assumption is that the gas may dissolve in the liquid
+ hydrocarbon phase, but no oil will dissolve in the gaseous phase.
+ This implies that the composition of the gaseous phase is assumed the same
+ at all pressure and temperatures.
+\end_layout
+
+\begin_layout Standard
+The black-oil model assumption is reasonable for mixtures of heavy and light
+ components, like many reservoir oils.
+ The assumption gets worse for mixtures containing much of intermediate
+ components (propane, butane), and is directly misleading for mixtures of
+ light and intermediate components typically found in condensate reservoirs.
+\end_layout
+
+\begin_layout Standard
+In DWSIM, a set of models calculates properties for a black oil fluid so
+ it can be used in a process simulation.
+ Black-oil fluids are defined in DWSIM through a minimum set of properties:
+\end_layout
+
+\begin_layout Itemize
+Oil specific gravity (SGo) at standard conditions
+\end_layout
+
+\begin_layout Itemize
+Gas specific gravity (SGg) at standard conditions
+\end_layout
+
+\begin_layout Itemize
+Gas-to-oil ratio (GOR) at standard conditions
+\end_layout
+
+\begin_layout Itemize
+Basic Sediments and Water (%)
+\end_layout
+
+\begin_layout Standard
+Black oil fluids are defined and created through the 
+\series bold
+Compound Creator
+\series default
+ tool.
+ If multiple black-oil fluids are added to a simulation, a single fluid
+ is calculated (based on averaged black-oil properties) and used to calculate
+ stream equilibrium conditions and phase properties.
+ 
+\end_layout
+
+\begin_layout Standard
+The Black-Oil Property Package is a simplified package for quick process
+ calculations involving the black-oil fluids described above.
+ All properties required by the unit operations are calculated based on
+ the set of four basic properties (SGo, SGg, GOR and BSW), so the results
+ of the calculations cannot be considered precise in any way.
+ They can exhibit errors of several orders of magnitude when compared to
+ real-world data.
+ 
+\end_layout
+
+\begin_layout Standard
+For more accurate petroleum fluid simulations, use the petroleum characterizatio
+n tools available in DWSIM together with an Equation of State model like
+ Peng-Robinson or Soave-Redlich-Kwong.
+\end_layout
+
+\begin_layout Subsection
+FPROPS
+\end_layout
+
+\begin_layout Standard
+FPROPS is a free open-source C-based library for high-accuracy evaluation
+ of thermodynamic properties for a number of pure substances.
+ It makes use of published data for the Helmholtz fundamental equation for
+ those substances.
+ It has been developed by John Pye and others, can function as standalone
+ code, but is also provided with external library code for ASCEND so that
+ it can be used to access these accurate property correlations from within
+ a MODEL.
+ Currently FPROPS supports calculation of the properties of various substances.
+ The properties that can be calculated are internal energy u, entropy s,
+ pressure p, enthalpy h and Helmholtz energy a, as well as various partial
+ derivatives of these with respect to temperature and density.
+ FPROPS reproduces a limited subset of the functionality of commercial programs
+ such as REFPROP, PROPATH, EES, FLUIDCAL, freesteam, SteamTab, and others,
+ but is free open-source software, licensed under the GPL.
+\end_layout
+
+\begin_layout Standard
+More information about the FPROPS Property Package can be found in DWSIM's
+ wiki: 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://dwsim.inforside.com.br/wiki/index.php?title=FPROPS_Property_Package
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Subsection
+CoolProp
+\end_layout
+
+\begin_layout Standard
+CoolProp 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "doi:10.1021/ie4033999"
+
+\end_inset
+
+ is a C++ library that implements pure and pseudo-pure fluid equations of
+ state and transport properties for 114 components.
+\end_layout
+
+\begin_layout Standard
+The CoolProp library currently provides thermophysical data for 114 pure
+ and pseudo-pure working fluids.
+ The literature sources for the thermodynamic and transport properties of
+ each fluid are summarized in a table in the Supporting Information available
+ in the above reference.
+\end_layout
+
+\begin_layout Standard
+For the CoolProp Property Package, DWSIM implements simple mixing rules
+ based on mass fraction averages in order to calculate mixture enthalpy,
+ entropy, heat capacities, density (and compressibility factor as a consequence).
+ For equilibrium calculations, DWSIM requires values of fugacity coefficients
+ at system's temperature and pressure.
+ In the CoolProp Property Package, the vapor and liquid phases are considered
+ to be ideal.
+\end_layout
+
+\begin_layout Standard
+More information about CoolProp can be found at 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.coolprop.org
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Reactions
+\end_layout
+
+\begin_layout Standard
+DWSIM includes support for chemical reactions through the Chemical Reactions
+ Manager.
+ Three types of reactions are available to the user:
+\end_layout
+
+\begin_layout Description
+Conversion, where you must specify the conversion (%) of the limiting reagent
+ as a function of temperature
+\end_layout
+
+\begin_layout Description
+Equilibrium, where you must specify the equilibrium constant (K) as a function
+ of temperature, a constant value or calculated from the Gibbs free energy
+ of reaction (
+\begin_inset Formula $\Delta G/R$
+\end_inset
+
+).
+ The orders of reaction of the components are obtained from the stoichiometric
+ coefficients.
+\end_layout
+
+\begin_layout Description
+Kinetic, where you should specify the frequency factor (A) and activation
+ energy (E) for the direct reaction (optionally for the reverse reaction),
+ including the orders of reaction (direct and inverse) of each component.
+\end_layout
+
+\begin_layout Standard
+For each chemical reaction is necessary to specify the stoichiometric coefficien
+ts of the compounds and a base compound, which must be a reactant.
+ This base component is used as reference for calculating the heat of reaction.
+\end_layout
+
+\begin_layout Subsection
+Conversion Reaction
+\end_layout
+
+\begin_layout Standard
+In the conversion reaction it is assumed that the user has information regarding
+ the conversion of one of the reactants as a function of temperature.
+ By knowing the conversion and the stoichiometric coefficients, the quantities
+ of the other components in the reaction can be calculated.
+\end_layout
+
+\begin_layout Standard
+Considering the following chemical reaction:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+aA+bB\rightarrow cC,\end{equation}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+where 
+\emph on
+a
+\emph default
+, 
+\emph on
+b 
+\emph default
+and 
+\emph on
+c
+\emph default
+ are the stoichiometric coefficients of reactants and product, respectively.
+ 
+\emph on
+A
+\emph default
+ is the limiting reactant and 
+\emph on
+B
+\emph default
+ is in excess.
+ The amount of each component at the end of the reaction can then be calculated
+ from the following stoichiometric relationships:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+N_{A} & = & N_{A_{0}}-N_{A_{0}}X_{A}\\
+N_{B} & = & N_{B_{0}}-\frac{b}{a}N_{A_{0}}X_{A}\\
+N_{C} & = & N_{C_{0}}+\frac{c}{a}(N_{A_{0}}X_{A})\end{eqnarray}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+where 
+\begin_inset Formula $N_{A,B,C}$
+\end_inset
+
+ are the molar amounts of the components at the end of the reaction, 
+\begin_inset Formula $N_{A_{0},B_{0},C_{0}}$
+\end_inset
+
+ are the molar amount of the components at the start of the reaction and
+ 
+\begin_inset Formula $X_{A}$
+\end_inset
+
+ is the conversion of the base-reactant 
+\emph on
+A
+\emph default
+.
+\end_layout
+
+\begin_layout Subsection
+Equilibrium Reaction
+\end_layout
+
+\begin_layout Standard
+In the equilibrium reaction, the quantity of each component at the equilibrium
+ is related to equilibrium constant by the following relationship: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+K=\underset{j=1}{\overset{n}{\prod}}(q_{j})^{\nu_{j}},\end{equation}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+where 
+\emph on
+K
+\emph default
+ is the equilibrium constant, 
+\emph on
+q
+\emph default
+ is the basis of components (partial pressure in the vapor phase or activity
+ in the liquid phase) 
+\begin_inset Formula $\nu$
+\end_inset
+
+ is the stoichiometric coefficient of component 
+\emph on
+j
+\emph default
+ and 
+\emph on
+n
+\emph default
+ is the number of components in the reaction.
+\end_layout
+
+\begin_layout Standard
+The equilibrium constant can be obtained by three different means.
+ One is to consider it a constant, another is considering it as a function
+ of temperature, and finally calculate it automatically from the Gibbs free
+ energy at the temperature of the reaction.
+ The first two methods require user input.
+\end_layout
+
+\begin_layout Subsubsection
+Solution method
+\end_layout
+
+\begin_layout Standard
+For each reaction that is occurring in parallel in the system, we can define
+ 
+\begin_inset Formula $\xi$
+\end_inset
+
+ as the 
+\emph on
+reaction extent
+\emph default
+, so that the molar amount of each component in the equilibrium is obtained
+ by the following relationship:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+N_{j}=N_{j_{0}}+\underset{i}{\sum}\nu_{ij}\xi_{i},\end{equation}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+where
+\begin_inset Formula $\xi_{i}$
+\end_inset
+
+ is the coordinate of the reaction 
+\emph on
+i
+\emph default
+ and 
+\begin_inset Formula $\nu_{ij}$
+\end_inset
+
+ is the stoichiometric coefficient of the 
+\emph on
+j
+\emph default
+ component at reaction
+\emph on
+ i
+\emph default
+.
+ Defining the molar fraction of the component 
+\emph on
+i
+\emph default
+ as 
+\begin_inset Formula $x_{j}=n_{j}/n_{t}$
+\end_inset
+
+, where 
+\begin_inset Formula $n_{t}$
+\end_inset
+
+ is the total number of mols, including inerts, whe have the following expressio
+n for each reaction 
+\emph on
+i
+\emph default
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+f_{i}(\xi)=\underset{i}{\sum}\ln(x_{i})-\ln(K_{i})=0,\end{equation}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+where the system of equations F can be easily solved by Newton-Raphson's
+ method 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "michelsen2007"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Kinetic Reaction
+\end_layout
+
+\begin_layout Standard
+The kinetic reaction is defined by the parameters of the equation of Arrhenius
+ (frequency factor and activation energy) for both the direct order and
+ for the reverse order.
+ Suppose we have the following kinetic reaction:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+aA+bB\rightarrow cC+dD\end{equation}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+The reaction rate for the 
+\emph on
+A
+\emph default
+ component can be defined as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+r_{A}=k[A][B]-k'[C][D]\end{equation}
+
+\end_inset
+
+where
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+k & = & A\exp\left(-E/RT\right)\\
+k' & = & A'\exp\left(-E'/RT\right)\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The kinetic reactions are used in Plug-Flow Reactors (PFRs) and in Continuous-St
+irred Tank Reactors (CSTRs).
+ In them, the relationship between molar concentration and the rate of reaction
+ is given by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+F_{A}=F_{A_{0}}+\intop^{V}r_{A}dV,\end{equation}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+where 
+\begin_inset Formula $F_{A}$
+\end_inset
+
+ is the molar flow of the 
+\emph on
+A 
+\emph default
+component and 
+\emph on
+V
+\emph default
+ is the reactor volume.
+\end_layout
+
+\begin_layout Section
+Property Estimation Methods
+\end_layout
+
+\begin_layout Subsection
+Petroleum Fractions
+\end_layout
+
+\begin_layout Subsubsection
+Molecular weight
+\end_layout
+
+\begin_layout Paragraph*
+Riazi and Al Sahhaf method 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Riazi-2004"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+MM=\left[\frac{1}{0.01964}(6.97996-\ln(1080-T_{b})\right]^{3/2},\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+where
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $MM$
+\end_inset
+
+ Molecular weight (kg/kmol)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $T_{b}$
+\end_inset
+
+ Boiling point at 1 atm (K)
+\end_layout
+
+\begin_layout Standard
+If the specific gravity (
+\begin_inset Formula $SG$
+\end_inset
+
+) is available, the molecular weight is calculated by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+MM & = & 42.965[\exp(2.097\times10^{-4}T_{b}-7.78712SG+\nonumber \\
+ &  & +2.08476\times10^{-3}T_{b}SG)]T_{b}^{1.26007}SG^{4.98308}\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+Winn 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Riazi2005"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+MM=0.00005805PEMe^{2.3776}/d15^{0.9371},\end{equation}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+where
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $PEMe$
+\end_inset
+
+ Mean Boiling Point (K)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $d15$
+\end_inset
+
+ Specific Gravity @ 60 °F
+\end_layout
+
+\begin_layout Paragraph*
+Riazi
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Riazi2005"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+MM & = & 42.965\exp(0.0002097PEMe-7.78d15+0.00208476\times PEMe\times d15)\times\nonumber \\
+ &  & \times PEMe^{1.26007}d15^{4.98308}\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+Lee-Kesler
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Riazi2005"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+t_{1} & = & -12272.6+9486.4d15+(8.3741-5.9917d15)PEMe\\
+t_{2} & = & (1-0.77084d15-0.02058d15^{2})\times\nonumber \\
+ &  & \times(0.7465-222.466/PEMe)\times10^{7}/PEMe\\
+t_{3} & = & (1-0.80882d15-0.02226d15^{2})\times\nonumber \\
+ &  & \times(0.3228-17.335/PEMe)\times10^{12}/PEMe^{3}\\
+MM & = & t_{1}+t_{2}+t_{3}\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+Farah
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+MM & = & \exp(6.8117+1.3372A-3.6283B)\\
+MM & = & \exp(4.0397+0.1362A-0.3406B-0.9988d15+0.0039PEMe),\end{eqnarray}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+where
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $A,B$
+\end_inset
+
+ 
+\emph on
+Walther-ASTM
+\emph default
+ equation parameters for viscosity calculation
+\end_layout
+
+\begin_layout Subsubsection
+Specific Gravity
+\end_layout
+
+\begin_layout Paragraph*
+Riazi e Al Sahhaf 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Riazi-2004"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+SG=1.07-\exp(3.56073-2.93886MM^{0.1}),\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+where
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $SG$
+\end_inset
+
+ Specific Gravity
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $MM$
+\end_inset
+
+ Molecular weight (kg/kmol)
+\end_layout
+
+\begin_layout Subsubsection
+Critical Properties
+\end_layout
+
+\begin_layout Paragraph*
+Lee-Kesler 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Riazi-2004"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+T_{c}=189.8+450.6SG+(0.4244+0.1174SG)T_{b}+(0.1441-1.0069SG)10^{5}/T_{b}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+\ln P_{c} & = & 5.689-0.0566/SG-(0.43639+4.1216/SG+0.21343/SG^{2})\times\nonumber \\
+ &  & \times10^{-3}T_{b}+(0.47579+1.182/SG+0.15302/SG^{2})\times10^{-6}\times T_{b}^{2}-\nonumber \\
+ &  & -(2.4505+9.9099/SG^{2})\times10^{-10}\times T_{b}^{3},\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+where
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $T_{b}$
+\end_inset
+
+ NBP (K)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $T_{c}$
+\end_inset
+
+ Critical temperature (K)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $P_{c}$
+\end_inset
+
+ Critical pressure (bar)
+\end_layout
+
+\begin_layout Paragraph*
+Farah
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+T_{c} & = & 731.968+291.952A-704.998B\\
+T_{c} & = & 104.0061+38.75A-41.6097B+0.7831PEMe\\
+T_{c} & = & 196.793+90.205A-221.051B+309.534d15+0.524PEMe\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+P_{c} & = & \exp(20.0056-9.8758\ln(A)+12.2326\ln(B))\\
+P_{c} & = & \exp(11.2037-0.5484A+1.9242B+510.1272/PEMe)\\
+P_{c} & = & \exp(28.7605+0.7158\ln(A)-0.2796\ln(B)+2.3129\ln(d15)-2.4027\ln(PEMe))\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+Riazi-Daubert
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Riazi2005"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+T_{c} & = & 9.5233\exp(-0.0009314PEMe-0.544442d15+0.00064791\times PEMe\times d15)\times\nonumber \\
+ &  & \times PEMe^{0.81067}d15^{0.53691}\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+P_{c} & = & 31958000000\exp(-0.008505PEMe-4.8014d15+0.005749\times PEMe\times d15)\times\nonumber \\
+ &  & \times PEMe^{-0.4844}d15^{4.0846}\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+Riazi
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Riazi2005"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+T_{c} & = & 35.9413\exp(-0.00069PEMe-1.4442d15+0.000491\times PEMe\times d15)\times\nonumber \\
+ &  & \times PEMe^{0.7293}d15^{1.2771}\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Acentric Factor
+\end_layout
+
+\begin_layout Paragraph*
+Lee-Kesler method 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Riazi-2004"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\omega=\frac{-\ln\frac{P_{c}}{1.10325}-5.92714+6.09648/T_{br}+1.28862\ln T_{br}-0.169347T_{br}^{6}}{15.2518-15.6875/T_{br}-13.472\ln T_{br}+0.43577T_{br}^{6}}\label{eq:W LK}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+Korsten
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Riazi2005"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\omega=0.5899\times((PEMV/T_{c})^{1.3})/(1-(PEMV/T_{c})^{1.3})\times\log(P_{c}/101325)-1\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Vapor Pressure
+\end_layout
+
+\begin_layout Paragraph*
+Lee-Kesler method
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Riazi-2004"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+\ln P_{r}^{pv} & = & 5.92714-6.09648/T_{br}-1.28862\ln T_{br}+0.169347T_{br}^{6}+\label{eq:PVAP LK}\\
+ &  & +\omega(15.2518-15.6875/T_{br}-13.4721\ln T_{br}+0.43577T_{br}^{6}),\nonumber \end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+where
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $P_{r}^{pv}$
+\end_inset
+
+ Reduced vapor pressure, 
+\begin_inset Formula $P^{pv}/P_{c}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $T_{br}$
+\end_inset
+
+ Reduced NBP, 
+\begin_inset Formula $T_{b}/T_{c}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $\omega$
+\end_inset
+
+ Acentric factor
+\end_layout
+
+\begin_layout Subsubsection
+Viscosity
+\end_layout
+
+\begin_layout Paragraph*
+Letsou-Stiel 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "reid1987"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+\eta & = & \frac{\xi_{0}+\xi_{1}}{\xi}\\
+\xi_{0} & = & 2.648-3.725T_{r}+1.309T_{r}^{2}\\
+\xi_{1} & = & 7.425-13.39T_{r}+5.933T_{r}^{2}\\
+\xi & = & 176\left(\frac{T_{c}}{MM^{3}{P}_{c}^{4}}\right)^{1/6}\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+where
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $\eta$
+\end_inset
+
+ Viscosity (Pa.s)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $P_{c}$
+\end_inset
+
+ Critical pressure (bar)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $T_{r}$
+\end_inset
+
+ Reduced temperature, 
+\begin_inset Formula $T/T_{c}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $MM$
+\end_inset
+
+ Molecular weight (kg/kmol)
+\end_layout
+
+\begin_layout Paragraph*
+Abbott
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Riazi2005"
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+t_{1} & = & 4.39371-1.94733Kw+0.12769Kw^{2}+0.00032629API^{2}-0.0118246KwAPI+\nonumber \\
+ &  & +(0.171617Kw^{2}+10.9943API+0.0950663API^{2}-0.869218KwAPI\\
+\log v_{100} & = & \frac{t_{1}}{API+50.3642-4.78231Kw},\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+t_{2} & = & -0.463634-0.166532API+0.000513447API^{2}-0.00848995APIKw+\nonumber \\
+ &  & +(0.080325Kw+1.24899API+0.19768API^{2}\\
+\log v_{210} & = & \frac{t_{2}}{API+26.786-2.6296Kw},\end{eqnarray}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+where
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $v_{100}$
+\end_inset
+
+ Viscosity at 100 °F (cSt)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $v_{210}$
+\end_inset
+
+ Viscosity at 210 °F (cSt)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $K_{w}$
+\end_inset
+
+ Watson characterization factor
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $API$
+\end_inset
+
+ Oil API degree
+\end_layout
+
+\begin_layout Subsection
+Hypothetical Components
+\end_layout
+
+\begin_layout Standard
+The majority of properties of the hypothetical components is calculated,
+ when necessary, using the group contribution methods, with the UNIFAC structure
+ of the hypo as the basis of calculation.
+ The table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Métodos-de-cálculo"
+
+\end_inset
+
+ lists the properties and their calculation methods.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Métodos-de-cálculo"
+
+\end_inset
+
+Hypo calculation methods.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="10" columns="3">
+<features>
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row topspace="default" bottomspace="default">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Property
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Symbol
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Method
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topspace="default" bottomspace="default">
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Critical temperature
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $T_{c}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Joback 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "reid1987"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topspace="default" bottomspace="default">
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Critical pressure
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $P_{c}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Joback 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "reid1987"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topspace="default" bottomspace="default">
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Critical volume
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $V_{c}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Joback 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "reid1987"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topspace="default" bottomspace="default">
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Normal boiling point
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $T_{b}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Joback 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "reid1987"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topspace="default" bottomspace="default">
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Vapor pressure
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $P^{pv}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Lee-Kesler (Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:PVAP LK"
+
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topspace="default" bottomspace="default">
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Acentric factor
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\omega$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Lee-Kesler (Eq.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:W LK"
+
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topspace="default" bottomspace="default">
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Vaporization enthalpy
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\Delta H_{vap}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Vetere 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "reid1987"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topspace="default" bottomspace="default">
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ideal gas heat capacity
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $C_{p}^{gi}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Harrison-Seaton 
+\begin_inset CommandInset citation
+LatexCommand Citep
+key "HarrisonB.Keith_ie00080a031"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row topspace="default" bottomspace="default">
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ideal gas enthalpy of formation
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\Delta H_{f}^{298}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Marrero-Gani 
+\begin_inset CommandInset citation
+LatexCommand Citep
+key "Marrero-2001"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Other Properties
+\end_layout
+
+\begin_layout Subsection
+True Critical Point
+\end_layout
+
+\begin_layout Standard
+The Gibbs criteria for the true critical point of a mixture of 
+\begin_inset Formula $n$
+\end_inset
+
+ components may be expressed of various forms, but the most convenient when
+ using a pressure explicit cubic equation of state is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+L=\left|\begin{array}{cccc}
+A_{11} & A_{12} & \ldots & A_{1n}\\
+A_{21} & A_{22}\\
+\vdots\\
+A_{n1} & \ldots & \ldots & A_{nn}\end{array}\right|=0\label{eq:PC1}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+M=\left|\begin{array}{cccc}
+A_{11} & A_{12} & \ldots & A_{1n}\\
+A_{21} & A_{22}\\
+\vdots\\
+A_{n-1,1} & \ldots & \ldots & A_{n-1,n}\\
+\frac{\partial L}{\partial n_{1}} & \ldots & \ldots & \frac{\partial L}{\partial n_{n}}\end{array}\right|=0,\label{eq:PC2}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+where
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+A_{12}=\left(\frac{\partial^{2}A}{\partial n_{1}\partial n_{2}}\right)_{T,V}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+All the 
+\begin_inset Formula $A$
+\end_inset
+
+ terms in the equations 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:PC1"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:PC2"
+
+\end_inset
+
+ are the second derivatives of the total Helmholtz energy 
+\begin_inset Formula $\underline{A}$
+\end_inset
+
+ with respect to mols and constant 
+\begin_inset Formula $T$
+\end_inset
+
+ and 
+\begin_inset Formula $V$
+\end_inset
+
+.
+ The determinants expressed by 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:PC1"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:PC2"
+
+\end_inset
+
+ are simultaneously solved for the critical volume and temperature.
+ The critical pressure is then found by using the original EOS.
+\end_layout
+
+\begin_layout Standard
+DWSIM utilizes the method described by Heidemann and Khalil 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Robert"
+
+\end_inset
+
+ for the true critical point calculation using the 
+\emph on
+Peng-Robinson
+\emph default
+ and 
+\emph on
+Soave-Redlich-Kwong
+\emph default
+ equations of state.
+\end_layout
+
+\begin_layout Subsection
+Natural Gas Hydrates
+\end_layout
+
+\begin_layout Standard
+The models for natural gas hydrates equilibrium calculations are mostly
+ based in statistical thermodynamics to predict in which temperature and
+ pressure conditions there will be formation or dissociation of hydrates.
+ In these conditions,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+f_{w}^{i}=f_{w}^{H},\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+that is, the fugacity of water in hydrate is the same as in the water in
+ any other phase present at equilibria.
+\end_layout
+
+\begin_layout Standard
+The difference in the models present in DWSIM is mainly in the way that
+ water fugacity in the hydrate phase is calculated.
+ In the modified van der Waals and Platteeuw model, the isofugacity criteria
+ is used indirectly through chemical potentials, which must also be equal
+ in the equilibria:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\mu_{w}^{i}=\mu_{w}^{H}\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+remembering that
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+f_{i}=x_{i}P\exp((\mu_{i}-\mu_{i}^{gi})/RT).\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Modified van der Waals and Platteeuw (Parrish and Prausnitz) method 
+\end_layout
+
+\begin_layout Standard
+The classic model for determination of equilibrium pressures and temperatures
+ was developed by van der Waals and Platteeuw.
+ This model was later extended by Parrish and Prausnitz 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ParrishW.R._i260041a006"
+
+\end_inset
+
+ to take into account multiple "guests" in the hydrate structures.
+ The condition of equilibrium used in the 
+\emph on
+vdwP
+\emph default
+ model is the equality of the chemical potential of water in the hydrate
+ phase and in the other phases, which can be liquid, solid or both.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Chemical potential of water in the hydrate phase
+\end_layout
+
+\begin_layout Standard
+In the modified var der Waals method, the chemical potential of water in
+ the hydrate phase is calculated by:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\mu_{w}^{H}=\mu_{w}^{\beta}+RT\sum_{m}\nu_{m}\ln(1-\sum_{j}\theta_{mj}),\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\mu_{w}^{\beta}$
+\end_inset
+
+ is the chemical potential of water in the empty hydrate lattice (something
+ like an "ideal" chemical potential) and 
+\begin_inset Formula $\nu_{m}$
+\end_inset
+
+ is the number of 
+\emph on
+m
+\emph default
+ cavities by water molecule in the lattice.
+ The fraction of cavities 
+\emph on
+m-type
+\emph default
+ cavities occupied by the gaseous component 
+\emph on
+l
+\emph default
+ is 
+\begin_inset Formula \begin{equation}
+\theta_{ml}=(C_{ml}f_{i})/((1+\sum_{j}C_{mj}f_{j})),\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $C_{mj}$
+\end_inset
+
+ is the Langmuir constant and 
+\begin_inset Formula $fi$
+\end_inset
+
+ is the fugacity of the gaseous component 
+\emph on
+l
+\emph default
+.
+ The Langmuir constant takes into account the interactions between the gas
+ and the molecules of water in the cavities.
+ Using the Lennard-Jones-Devonshire cell theory, van der Waals e Platteeuw
+ showed that the Langmuir constant can be given by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+C(T)=4\pi/kT\int_{0}^{\infty}\exp[(-w(r))/kT]r^{2}dr,\end{equation}
+
+\end_inset
+
+where T is the absolute temperature, k is the Boltzmann constant and 
+\emph on
+w(r)
+\emph default
+ is the spherically symmetric potential which is a function of the cell
+ radius, the coordination number and the nature of the gas-water interaction.
+ In this method, the Kihara potential with a spherical core is used,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+w(r)=2ze[\sigma^{12}/(R^{11}r)(\delta^{10}+a/R\delta^{11})-\sigma^{6}/(R^{5}r)(\delta^{4}+a/R\delta^{5})],\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\delta^{N}=[(1-r/R-a/R)^{-N})-(1+r/R-a/R)^{-N})]/N,\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\emph on
+N
+\emph default
+ is equal to 4, 5, 10 or 11; 
+\emph on
+z
+\emph default
+ and 
+\emph on
+R
+\emph default
+ are, respectively, the coordination number and the cavity cell radius.
+\end_layout
+
+\begin_layout Paragraph
+
+\emph on
+Supported hydrate formers
+\end_layout
+
+\begin_layout Standard
+CH4, C2H6, C3H8, iC4H10, H2S, N2 and CO2.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Model applicability range
+\end_layout
+
+\begin_layout Standard
+Temperature: 211 to 303 K; Pressure: 1 to 600 atm.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Klauda and Sandler
+\end_layout
+
+\begin_layout Standard
+The model proposed by Klauda and Sandler 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "KlaudaJ.B._ie000322b"
+
+\end_inset
+
+ uses spherically symmetric Kihara potentials determined from viscosity
+ data and the second virial coefficient, in opposition to the traditional
+ models which adjust these parameters to experimental hydrate data.
+ In general, this method predicts hydrate formation data more precisely
+ than the other models.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Fugacity of water in the hydrate phase
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+f_{w}^{H} & = & \exp(A_{g}^{\beta}\ln T+(B_{g}^{\beta})/T+2,7789+D_{g}^{\beta}T)\times\nonumber \\
+ &  & \exp{V_{w}^{\beta}[P-\exp(A_{g}^{\beta}\ln T+(B_{g}^{\beta})/T+2,7789+D_{g}^{\beta}T)]/RT}\times\nonumber \\
+ &  & \exp[\sum_{m}\nu_{m}\ln(1-\sum_{j}(C_{ml}f_{l})/(1+\sum C_{mj}f_{j}))]\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The 
+\emph on
+A
+\emph default
+, 
+\emph on
+B
+\emph default
+ and 
+\emph on
+D
+\emph default
+ constants are specific for each hydrate former and represent the vapor
+ pressure of the component in the empty hydrate lattice.
+ 
+\begin_inset Formula $V_{w}^{\beta}$
+\end_inset
+
+ represents the basic hydrate molar volume (without the presence of guests)
+ and the Langmuir constant (
+\emph on
+C
+\emph default
+) is calculated by the following equation:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+C(T)=4\pi/kT\int_{0}^{R-a}\exp[(-w(r))/kT]r^{2}dr\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In the Klauda e Sandler method the spherically symmetric Kihara potential
+ is also used, 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+w(r)=2ze[\sigma^{12}/(R^{11}r)(\delta^{10}+a/R\delta^{11})-\sigma^{6}/(R^{5}r)(\delta^{4}+a/R\delta^{5})]\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\delta^{N}=[(1-r/R-a/R)^{-N})-(1+r/R-a/R)^{-N})]/N\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+with a modifications in the potential to include the effects of the second
+ and third cell layers,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+w(r)=w(r){}^{[1]})+w(r){}^{[2]})+w(r)^{[3]}).\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Supported hydrate formers
+\end_layout
+
+\begin_layout Standard
+CH4, C2H6, C3H8, iC4H10, H2S, N2 and CO2.
+ 
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Model applicability range
+\end_layout
+
+\begin_layout Standard
+Temperature: 150 to 320 K; Pressure: 1 to 7000 atm 
+\end_layout
+
+\begin_layout Subsubsection
+Chen and Guo 
+\end_layout
+
+\begin_layout Standard
+Chen and Guo 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Chen-1998"
+
+\end_inset
+
+ developed a model based in a formation mechanism based in two steps, the
+ first being a quasi-chemical reaction to form the "basic hydrate" and the
+ second as being a small gas absorption process in the linking cages of
+ the basic hydrate.
+ The results showed that this model is capable of predict hydrate formation
+ conditions for pure gases and mixtures.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Fugacity of water in the hydrate phase
+\end_layout
+
+\begin_layout Standard
+In the Chen and Guo model, a different approximation is used for the equilibrium
+ condition.
+ Here the equilibrium is verified by means of an isofugacity criteria of
+ the hydrate formers in the hydrate and vapor phase.
+ The fugacity of the component in the vapor phase is calculated by:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+f_{i}^{H}=f_{i}^{0}(1-\theta_{i})^{\alpha},\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ depends on the structure of the hydrate formed, and
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+f_{i}^{0}=f^{0}(P)f^{0}(T)f^{0}(x_{w}\gamma_{w}),\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+f^{0}(P)=exp(\beta P/T),\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+f^{0}(T)=A^{'}exp(B^{'}/(T-C^{'})),\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+f^{0}(x_{w}\gamma_{w})=(x_{w}\gamma_{w})^{(-1/\lambda_{2})},\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\beta$
+\end_inset
+
+ and 
+\begin_inset Formula $\lambda_{2}$
+\end_inset
+
+ depend on the structure of the hydrate formed and 
+\emph on
+A’
+\emph default
+, 
+\emph on
+B’
+\emph default
+ and 
+\emph on
+C’
+\emph default
+ depends on the hydrate former.
+ 
+\begin_inset Formula $x_{w}$
+\end_inset
+
+ and 
+\begin_inset Formula $\gamma_{m}$
+\end_inset
+
+ are, respectively, the water molar fraction and activity coefficient in
+ the liquid phase.
+\end_layout
+
+\begin_layout Standard
+In the Chen and Guo model, the Langmuir constants are calculated with an
+ Antoine-type equation with parameters obtained from experimental data,
+ for a limited range of temperature:
+\end_layout
+
+\begin_layout Paragraph*
+\begin_inset Formula \begin{equation}
+C(T)=X\exp(Y/(T-Z))\end{equation}
+
+\end_inset
+
+
+\emph on
+Supported hydrate formers
+\end_layout
+
+\begin_layout Standard
+CH4, C2H6, C3H8, iC4H10, H2S, N2, CO2 and nC4H10.
+ 
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Model applicability range
+\end_layout
+
+\begin_layout Standard
+Temperature: 259 to 304 K, Pressure: 1 to 700 atm.
+ 
+\end_layout
+
+\begin_layout Subsection
+Petroleum Cold Flow Properties
+\end_layout
+
+\begin_layout Subsubsection
+Refraction Index
+\end_layout
+
+\begin_layout Paragraph*
+API Procedure 2B5.1
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+I & = & 0.02266\exp(0.0003905\times(1.8MeABP)+2.468SG-0.0005704(1.8MeABP)\times SG)\times\nonumber \\
+ &  & \times(1.8MeABP)^{0.0572}SG^{-0.72}\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+r=\left(\frac{1+2I}{1-I}\right)^{1/2}\end{equation}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+where
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $r$
+\end_inset
+
+ Refraction Index
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $SG$
+\end_inset
+
+ Specific Gravity
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $MeABP$
+\end_inset
+
+ Mean Averaged Boiling Point (K)
+\end_layout
+
+\begin_layout Subsubsection
+Flash Point
+\end_layout
+
+\begin_layout Paragraph*
+API Procedure 2B7.1
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+PF=\left\{ \left[0.69\times((t_{10ASTM}-273.15)\times9/5+32)-118.2\right]-32\right\} \times5/9+273.15\end{equation}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+where
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $PF$
+\end_inset
+
+ Flash Point (K)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $t_{10ASTM}$
+\end_inset
+
+ ASTM D93 10% vaporized temperature (K)
+\end_layout
+
+\begin_layout Subsubsection
+Pour Point
+\end_layout
+
+\begin_layout Paragraph*
+API Procedure 2B8.1
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+PFL=\left[753+136(1-\exp(-0.15v_{100}))-572SG+0.0512v_{100}+0.139(1.8MeABP)\right]/1.8\end{equation}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+where
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $PFL$
+\end_inset
+
+ Pour Point (K)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $v_{100}$
+\end_inset
+
+ Viscosity @ 100 °F (cSt)
+\end_layout
+
+\begin_layout Subsubsection
+Freezing Point
+\end_layout
+
+\begin_layout Paragraph*
+API Procedure 2B11.1
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+PC=-2390.42+1826SG+122.49K-0.135\times1.8\times MeABP\end{equation}
+
+\end_inset
+
+where
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $PC$
+\end_inset
+
+ Freezing Point (K)
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $K$
+\end_inset
+
+ API characterization factor (API)
+\end_layout
+
+\begin_layout Subsubsection
+Cloud Point
+\end_layout
+
+\begin_layout Paragraph*
+API Procedure 2B12.1
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+PN=\left[10^{(-7.41+5.49\log(1.8MeABP)-0.712\times(1.8MeABP)^{0.315}-0.133SG)}\right]/1.8\end{equation}
+
+\end_inset
+
+where
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $PN$
+\end_inset
+
+ Cloud Point (K)
+\end_layout
+
+\begin_layout Subsubsection
+Cetane Index
+\end_layout
+
+\begin_layout Paragraph*
+API Procedure 2B13.1
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{eqnarray}
+IC & = & 415.26-7.673API+0.186\times(1.8MeABP-458.67)+3.503API\times\nonumber \\
+ &  & \times\log(1.8MeABP-458.67)-193.816\times\log(1.8MeABP-458.67)\end{eqnarray}
+
+\end_inset
+
+where
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $IC$
+\end_inset
+
+ Cetane Index
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $API$
+\end_inset
+
+ API degree of the oil
+\end_layout
+
+\begin_layout Subsection
+Chao-Seader Parameters
+\end_layout
+
+\begin_layout Standard
+The Chao-Seader parameters needed by the CS/GS models are the Modified Acentric
+ Factor, Solubility Parameter and Liquid Molar Volume.
+ When absent, the Modified Acentric Factor is taken as the normal acentric
+ factor, either read from the databases or calculated by using the methods
+ described before in this document.
+ The Solubility Parameter is given by
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \begin{equation}
+\delta=\left(\frac{\Delta H_{v}-RT}{V_{L}}\right)^{1/2}\end{equation}
+
+\end_inset
+
+where
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $\Delta H_{v}$
+\end_inset
+
+ Molar Heat of Vaporization
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Formula $V_{L}$
+\end_inset
+
+ Liquid Molar Volume at 20 °C
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "tech_manual"
+options "bibtotoc,aichej"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
