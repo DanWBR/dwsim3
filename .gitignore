@@ -178,3 +178,5 @@ TabStrip/bin/Debug/*
 AzureServer/bin/Debug/*
 CoolPropInterface/bin/Debug/*
 TCPServer/bin/Debug/*
+/TCPServer/bin/Debug
+/TabStrip/bin/Debug
