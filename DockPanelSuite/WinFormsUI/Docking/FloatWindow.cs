@@ -30,8 +30,12 @@ namespace WeifenLuo.WinFormsUI.Docking
 
             m_nestedPanes = new NestedPaneCollection(this);
 
-            FormBorderStyle = FormBorderStyle.SizableToolWindow;
+            FormBorderStyle = FormBorderStyle.Sizable;
+            MaximizeBox = false;
+            MinimizeBox = false;
             ShowInTaskbar = false;
+            ShowIcon = false;
+            TopMost = true;
             if (dockPanel.RightToLeft != RightToLeft)
                 RightToLeft = dockPanel.RightToLeft;
             if (RightToLeftLayout != dockPanel.RightToLeftLayout)
@@ -54,7 +58,7 @@ namespace WeifenLuo.WinFormsUI.Docking
             DockPanel.AddFloatWindow(this);
             if (pane != null)
                 pane.FloatWindow = this;
-
+       
             ResumeLayout();
         }
 

@@ -237,7 +237,7 @@ namespace WeifenLuo.WinFormsUI.Docking
             set { m_autoHideTabs = value; }
         }
 
-        private object TabPageContextMenu
+        public object TabPageContextMenu
         {
             get
             {
