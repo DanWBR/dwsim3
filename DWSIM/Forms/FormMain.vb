@@ -4182,7 +4182,7 @@ ruf:                Application.DoEvents()
             Dim p As New Process()
             With p
                 .StartInfo.FileName = "xdg-open"
-                .StartInfo.Arguments = My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "docs" & Path.DirectorySeparatorChar & "user_guide.pdf"
+                .StartInfo.Arguments = My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "docs" & Path.DirectorySeparatorChar & "User_Guide.pdf"
                 .StartInfo.UseShellExecute = False
                 .Start()
             End With

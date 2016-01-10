@@ -94,7 +94,6 @@
     <Compile Include="Docking\DockPanel.DockDragHandler.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Docking\Helpers\DockHelper.cs" />
     <Compile Include="Docking\NestedPaneCollection.cs" />
     <Compile Include="Docking\DockOutlineBase.cs" />
     <Compile Include="Docking\DockPane.cs">
@@ -148,10 +147,7 @@
     <Compile Include="Docking\SplitterBase.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Docking\Helpers\DrawHelper.cs" />
     <Compile Include="Docking\Localization.cs" />
-    <Compile Include="Docking\Helpers\ResourceHelper.cs" />
-    <Compile Include="Docking\Helpers\Win32Helper.cs" />
     <Compile Include="Docking\VS2005Theme.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -117,15 +117,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="GridRSets.Size" type="System.Drawing.Size, System.Drawing">
+    <value>409, 184</value>
+  </data>
+  <data name="ToolStrip2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>24, 184</value>
+  </data>
+  <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>557, 2</value>
+  </data>
+  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>439, 203</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Reaction Sets</value>
+  </data>
   <data name="Column1.HeaderText" xml:space="preserve">
     <value>Name</value>
   </data>
   <data name="Column3.HeaderText" xml:space="preserve">
     <value>Description</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="GridRSets.Size" type="System.Drawing.Size, System.Drawing">
-    <value>409, 132</value>
   </data>
   <data name="ToolStripButton1.Text" xml:space="preserve">
     <value>Add New Reaction Set</value>
@@ -142,18 +154,6 @@
   <data name="ToolStripButton2.Text" xml:space="preserve">
     <value>Remove Selected Set</value>
   </data>
-  <data name="ToolStrip2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>24, 132</value>
-  </data>
-  <data name="GroupBox2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>459, 2</value>
-  </data>
-  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>439, 151</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Reaction Sets</value>
-  </data>
   <data name="DataGridViewTextBoxColumn1.HeaderText" xml:space="preserve">
     <value>Name</value>
   </data>
@@ -163,8 +163,38 @@
   <data name="DataGridViewTextBoxColumn3.HeaderText" xml:space="preserve">
     <value>Equation</value>
   </data>
+  <data name="GridRxns.Location" type="System.Drawing.Point, System.Drawing">
+    <value>35, 16</value>
+  </data>
   <data name="GridRxns.Size" type="System.Drawing.Size, System.Drawing">
-    <value>418, 132</value>
+    <value>508, 184</value>
+  </data>
+  <data name="ToolStripDropDownButton1.Text" xml:space="preserve">
+    <value>Add Reaction</value>
+  </data>
+  <data name="ToolStripButton6.Text" xml:space="preserve">
+    <value>Edit Selected Reaction</value>
+  </data>
+  <data name="ToolStripButton7.Text" xml:space="preserve">
+    <value>Copy Selected Reaction</value>
+  </data>
+  <data name="ToolStripButton8.Text" xml:space="preserve">
+    <value>Remove Selected Reaction</value>
+  </data>
+  <data name="ToolStripButton4.Text" xml:space="preserve">
+    <value>Export Selected Reactions</value>
+  </data>
+  <data name="ToolStripButton9.Text" xml:space="preserve">
+    <value>Import Reactions</value>
+  </data>
+  <data name="ToolStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>32, 184</value>
+  </data>
+  <data name="GroupBox4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>546, 203</value>
+  </data>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Chemical Reactions</value>
   </data>
   <data name="ConversãoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>204, 22</value>
@@ -190,36 +220,6 @@
   <data name="HeterogêneaCatalíticaToolStripMenuItem.Text" xml:space="preserve">
     <value>Heterogeneous Catalytic</value>
   </data>
-  <data name="ToolStripDropDownButton1.Text" xml:space="preserve">
-    <value>Add Reaction</value>
-  </data>
-  <data name="ToolStripButton6.Text" xml:space="preserve">
-    <value>Edit Selected Reaction</value>
-  </data>
-  <data name="ToolStripButton7.Text" xml:space="preserve">
-    <value>Copy Selected Reaction</value>
-  </data>
-  <data name="ToolStripButton8.Text" xml:space="preserve">
-    <value>Remove Selected Reaction</value>
-  </data>
-  <data name="ToolStripButton4.Text" xml:space="preserve">
-    <value>Export Selected Reactions</value>
-  </data>
-  <data name="ToolStripButton9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 20</value>
-  </data>
-  <data name="ToolStripButton9.Text" xml:space="preserve">
-    <value>Import Reactions</value>
-  </data>
-  <data name="ToolStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>24, 132</value>
-  </data>
-  <data name="GroupBox4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>448, 151</value>
-  </data>
-  <data name="GroupBox4.Text" xml:space="preserve">
-    <value>Chemical Reactions</value>
-  </data>
   <data name="OpenFileDialog1.Filter" xml:space="preserve">
     <value>DWSIM Chemical Reactions File|*.dwrxs;*.dwrxm</value>
   </data>
@@ -232,8 +232,72 @@
   <data name="SaveFileDialog1.Title" xml:space="preserve">
     <value>Save Simulation Reactions to a File</value>
   </data>
+  <data name="dckMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>197, 224</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="FloatToolStripMenuItem.ShowShortcutKeys" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="FloatToolStripMenuItem.Text" xml:space="preserve">
+    <value>Float</value>
+  </data>
+  <data name="DockLeftToolStripMenuItem.ShowShortcutKeys" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="DockLeftToolStripMenuItem.Text" xml:space="preserve">
+    <value>Dock Left</value>
+  </data>
+  <data name="DockRightToolStripMenuItem.ShowShortcutKeys" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="DockRightToolStripMenuItem.Text" xml:space="preserve">
+    <value>Dock Right</value>
+  </data>
+  <data name="DockTopToolStripMenuItem.ShowShortcutKeys" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="DockTopToolStripMenuItem.Text" xml:space="preserve">
+    <value>Dock Top</value>
+  </data>
+  <data name="DockBottomToolStripMenuItem.ShowShortcutKeys" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="DockBottomToolStripMenuItem.Text" xml:space="preserve">
+    <value>Dock Bottom</value>
+  </data>
+  <data name="DockLeftAutoHideToolStripMenuItem.ShowShortcutKeys" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="DockLeftAutoHideToolStripMenuItem.Text" xml:space="preserve">
+    <value>Dock Left Auto-Hide</value>
+  </data>
+  <data name="DockRightAutoHideToolStripMenuItem.ShowShortcutKeys" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="DockRightAutoHideToolStripMenuItem.Text" xml:space="preserve">
+    <value>Dock Right Auto-Hide</value>
+  </data>
+  <data name="DockTopAutoHideToolStripMenuItem.ShowShortcutKeys" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="DockTopAutoHideToolStripMenuItem.Text" xml:space="preserve">
+    <value>Dock Top Auto-Hide</value>
+  </data>
+  <data name="DockBottomAutoHideToolStripMenuItem.ShowShortcutKeys" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="DockBottomAutoHideToolStripMenuItem.Text" xml:space="preserve">
+    <value>Dock Bottom Auto-Hide</value>
+  </data>
+  <data name="DocumentToolStripMenuItem.ShowShortcutKeys" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="DocumentToolStripMenuItem.Text" xml:space="preserve">
+    <value>Document</value>
+  </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>902, 157</value>
+    <value>1000, 209</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Chemical Reactions Manager</value>

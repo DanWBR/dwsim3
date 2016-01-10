@@ -61,7 +61,7 @@ Public Class FormReacManager
             If Me.DockState = WeifenLuo.WinFormsUI.Docking.DockState.Float Then
                 Dim floatWin = Me.DockHandler.FloatPane.FloatWindow
                 If Not floatWin Is Nothing Then
-                    floatWin.SetBounds(floatWin.Location.X, floatWin.Location.Y, 900, 200)
+                    floatWin.SetBounds(floatWin.Location.X, floatWin.Location.Y, 1000, 250)
                 End If
             End If
         End If
@@ -267,7 +267,8 @@ Public Class FormReacManager
     Private Sub KryptonButton9_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton8.Click
         If Not Me.GridRxns.SelectedRows.Count = 0 Then
             frmchild.Options.Reactions.Remove(Me.GridRxns.SelectedRows(0).Cells(3).Value)
-            Me.GridRxns.Rows.Remove(Me.GridRxns.SelectedRows(0))
+            Dim dgr As DataGridViewRow = Me.GridRxns.SelectedRows(0)
+            Me.GridRxns.Rows.Remove(dgr)
             UpdateRxnSets()
         End If
     End Sub
@@ -410,4 +411,44 @@ Public Class FormReacManager
     Private Sub GridRSets_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles GridRSets.CellDoubleClick
         KryptonButton6_Click(sender, e)
     End Sub
+
+    Private Sub FloatToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FloatToolStripMenuItem.Click, DocumentToolStripMenuItem.Click,
+                                                           DockLeftToolStripMenuItem.Click, DockLeftAutoHideToolStripMenuItem.Click,
+                                                           DockRightAutoHideToolStripMenuItem.Click, DockRightToolStripMenuItem.Click,
+                                                           DockTopAutoHideToolStripMenuItem.Click, DockTopToolStripMenuItem.Click,
+                                                           DockBottomAutoHideToolStripMenuItem.Click, DockBottomToolStripMenuItem.Click
+
+        For Each ts As ToolStripMenuItem In dckMenu.Items
+            ts.Checked = False
+        Next
+
+        sender.Checked = True
+
+        Select Case sender.Name
+            Case "FloatToolStripMenuItem"
+                Me.DockState = WeifenLuo.WinFormsUI.Docking.DockState.Float
+            Case "DocumentToolStripMenuItem"
+                Me.DockState = WeifenLuo.WinFormsUI.Docking.DockState.Document
+            Case "DockLeftToolStripMenuItem"
+                Me.DockState = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft
+            Case "DockLeftAutoHideToolStripMenuItem"
+                Me.DockState = WeifenLuo.WinFormsUI.Docking.DockState.DockLeftAutoHide
+            Case "DockRightAutoHideToolStripMenuItem"
+                Me.DockState = WeifenLuo.WinFormsUI.Docking.DockState.DockRightAutoHide
+            Case "DockRightToolStripMenuItem"
+                Me.DockState = WeifenLuo.WinFormsUI.Docking.DockState.DockRight
+            Case "DockBottomAutoHideToolStripMenuItem"
+                Me.DockState = WeifenLuo.WinFormsUI.Docking.DockState.DockBottomAutoHide
+            Case "DockBottomToolStripMenuItem"
+                Me.DockState = WeifenLuo.WinFormsUI.Docking.DockState.DockBottom
+            Case "DockTopAutoHideToolStripMenuItem"
+                Me.DockState = WeifenLuo.WinFormsUI.Docking.DockState.DockTopAutoHide
+            Case "DockTopToolStripMenuItem"
+                Me.DockState = WeifenLuo.WinFormsUI.Docking.DockState.DockTop
+            Case "HiddenToolStripMenuItem"
+                Me.DockState = WeifenLuo.WinFormsUI.Docking.DockState.Hidden
+        End Select
+
+    End Sub
+
 End Class
