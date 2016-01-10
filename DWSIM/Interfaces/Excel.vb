@@ -32,7 +32,7 @@ Namespace Interfaces
 
 #Region "Information Procedures"
 
-        <ExcelFunction("Returns a list of compound constants and their values from the corresponding loaded database.")> _
+        <ExcelFunction(description:="Returns a list of compound constants and their values from the corresponding loaded database.", HelpTopic:="ExcelAddInHelp.chm!1")> _
         Public Shared Function GetCompoundConstants(<ExcelArgument("Compound name.")> ByVal compound As String) As Object(,)
 
             Try
@@ -77,7 +77,7 @@ Namespace Interfaces
             End Try
         End Function
 
-        <ExcelFunction("Returns a single property value for a compound. For a constant property, set T = 0 and P = 0. For a T-dep property, set P = 0. For a P-dep property, set T = 0.")> _
+        <ExcelFunction(description:="Returns a single property value for a compound. For a constant property, set T = 0 and P = 0. For a T-dep property, set P = 0. For a P-dep property, set T = 0.", HelpTopic:="ExcelAddInHelp.chm!2")> _
         Public Shared Function GetCompoundProp( _
             <ExcelArgument("Compound name.")> ByVal compound As String, _
             <ExcelArgument("Property identifier.")> ByVal prop As String, _
@@ -130,7 +130,7 @@ Namespace Interfaces
             End Try
         End Function
 
-        <ExcelFunction("Returns a list of the available single compound properties.")> _
+        <ExcelFunction(description:="Returns a list of the available single compound properties.", HelpTopic:="ExcelAddInHelp.chm!3")> _
         Public Shared Function GetCompoundPropList() As Object(,)
 
             Dim inifile As String = My.Computer.FileSystem.SpecialDirectories.MyDocuments & Path.DirectorySeparatorChar & "DWSIM Application Data" & Path.DirectorySeparatorChar & "config.ini"
@@ -160,7 +160,7 @@ Namespace Interfaces
 
         End Function
 
-        <ExcelFunction("Returns a list of the available Property Packages.")> _
+        <ExcelFunction(description:="Returns a list of the available Property Packages.", HelpTopic:="ExcelAddInHelp.chm!4")> _
         Public Shared Function GetPropPackList() As Object(,)
 
             Dim ppm As New CAPEOPENPropertyPackageManager()
@@ -181,7 +181,7 @@ Namespace Interfaces
 
         End Function
 
-        <ExcelFunction("Returns a list of the thermodynamic models.")> _
+        <ExcelFunction(description:="Returns a list of the thermodynamic models.", HelpTopic:="ExcelAddInHelp.chm!5")> _
         Public Shared Function GetModelList() As Object(,)
 
             Dim modellist As New ArrayList
@@ -205,7 +205,7 @@ Namespace Interfaces
 
         End Function
 
-        <ExcelFunction("Returns the interaction parameters stored in DWSIM's database for a given binary/model combination.")> _
+        <ExcelFunction(description:="Returns the interaction parameters stored in DWSIM's database for a given binary/model combination.", HelpTopic:="ExcelAddInHelp.chm!6")> _
         Public Shared Function GetInteractionParameterSet(
             <ExcelArgument("Thermodynamic Model (use 'GetModelList' to get a list of available models).")> ByVal Model As String,
             <ExcelArgument("The name of the first compound.")> ByVal Compound1 As String,
@@ -427,7 +427,7 @@ Namespace Interfaces
 
         End Function
 
-        <ExcelFunction("Returns the interaction parameters stored in user databases for a given binary/model combination.")> _
+        <ExcelFunction(description:="Returns the interaction parameters stored in user databases for a given binary/model combination.", HelpTopic:="ExcelAddInHelp.chm!7")> _
         Public Shared Function GetUserInteractionParameterSet(
             <ExcelArgument("Thermodynamic Model (use 'GetModelList' to get a list of available models).")> ByVal Model As String,
             <ExcelArgument("The name of the first compound.")> ByVal Compound1 As String,
@@ -485,7 +485,7 @@ Namespace Interfaces
 
         End Function
 
-        <ExcelFunction("Returns a list of the available properties.")> _
+        <ExcelFunction(description:="Returns a list of the available properties.", HelpTopic:="ExcelAddInHelp.chm!8")> _
         Public Shared Function GetPropList( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String) As Object(,)
 
@@ -512,7 +512,7 @@ Namespace Interfaces
 
         End Function
 
-        <ExcelFunction("Returns a list of the available phases.")> _
+        <ExcelFunction(description:="Returns a list of the available phases.", HelpTopic:="ExcelAddInHelp.chm!9")> _
         Public Shared Function GetPhaseList( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String) As Object(,)
 
@@ -539,7 +539,7 @@ Namespace Interfaces
 
         End Function
 
-        <ExcelFunction("Returns a list of the available compounds.")> _
+        <ExcelFunction(description:="Returns a list of the available compounds.", HelpTopic:="ExcelAddInHelp.chm!10")> _
         Public Shared Function GetCompoundList( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String) As Object(,)
 
@@ -579,7 +579,7 @@ Namespace Interfaces
 
 #Region "Property Calculation Function"
 
-        <ExcelFunction("Calculates properties using the selected Property Package.")> _
+        <ExcelFunction(description:="Calculates properties using the selected Property Package.", HelpTopic:="ExcelAddInHelp.chm!11")> _
         Public Shared Function CalcProp( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
         <ExcelArgument("The property to calculate.")> ByVal prop As String, _
@@ -696,7 +696,7 @@ Namespace Interfaces
 
 #Region "Flash Calculation Routines, v1"
 
-        <ExcelFunction("Calculates a Pressure / Temperature Flash using the selected Property Package.")> _
+        <ExcelFunction(description:="Calculates a Pressure / Temperature Flash using the selected Property Package.", HelpTopic:="ExcelAddInHelp.chm!12")> _
         Public Shared Function PTFlash( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
         <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
@@ -815,7 +815,7 @@ Namespace Interfaces
 
         End Function
 
-        <ExcelFunction("Calculates a Pressure / Enthalpy Flash using the selected Property Package.")> _
+        <ExcelFunction(description:="Calculates a Pressure / Enthalpy Flash using the selected Property Package.", HelpTopic:="ExcelAddInHelp.chm!13")> _
         Public Shared Function PHFlash( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
         <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
@@ -836,7 +836,7 @@ Namespace Interfaces
 
         End Function
 
-        <ExcelFunction("Calculates a Pressure / Entropy Flash using the selected Property Package.")> _
+        <ExcelFunction(description:="Calculates a Pressure / Entropy Flash using the selected Property Package.", HelpTopic:="ExcelAddInHelp.chm!14")> _
         Public Shared Function PSFlash( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
         <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
@@ -857,7 +857,7 @@ Namespace Interfaces
 
         End Function
 
-        <ExcelFunction("Calculates a Pressure / Vapor Fraction Flash using the selected Property Package.")> _
+        <ExcelFunction(description:="Calculates a Pressure / Vapor Fraction Flash using the selected Property Package.", HelpTopic:="ExcelAddInHelp.chm!15")> _
         Public Shared Function PVFFlash( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
         <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
@@ -878,7 +878,7 @@ Namespace Interfaces
 
         End Function
 
-        <ExcelFunction("Calculates a Temperature / Vapor Fraction Flash using the selected Property Package.")> _
+        <ExcelFunction(description:="Calculates a Temperature / Vapor Fraction Flash using the selected Property Package.", HelpTopic:="ExcelAddInHelp.chm!16")> _
         Public Shared Function TVFFlash( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
         <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
@@ -903,7 +903,7 @@ Namespace Interfaces
 
 #Region "Flash Calculation Routines, v2 (accept an initial estimate)"
 
-        <ExcelFunction("Calculates a Pressure / Enthalpy Flash using the selected Property Package. Accepts an initial estimate for the temperature search.")> _
+        <ExcelFunction(description:="Calculates a Pressure / Enthalpy Flash using the selected Property Package. Accepts an initial estimate for the temperature search.", HelpTopic:="ExcelAddInHelp.chm!17")> _
         Public Shared Function PHFlash2( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
         <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
@@ -1027,7 +1027,7 @@ Namespace Interfaces
 
         End Function
 
-        <ExcelFunction("Calculates a Pressure / Entropy Flash using the selected Property Package. Accepts an initial estimate for the temperature search.")> _
+        <ExcelFunction(description:="Calculates a Pressure / Entropy Flash using the selected Property Package. Accepts an initial estimate for the temperature search.", HelpTopic:="ExcelAddInHelp.chm!18")> _
         Public Shared Function PSFlash2( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
         <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
@@ -1151,7 +1151,7 @@ Namespace Interfaces
 
         End Function
 
-        <ExcelFunction("Calculates a Pressure / Vapor Fraction Flash using the selected Property Package. Accepts an initial estimate for the temperature search.")> _
+        <ExcelFunction(description:="Calculates a Pressure / Vapor Fraction Flash using the selected Property Package. Accepts an initial estimate for the temperature search.", HelpTopic:="ExcelAddInHelp.chm!19")> _
         Public Shared Function PVFFlash2( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
         <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
@@ -1275,7 +1275,7 @@ Namespace Interfaces
 
         End Function
 
-        <ExcelFunction("Calculates a Temperature / Vapor Fraction Flash using the selected Property Package. Accepts an initial estimate for the pressure search.")> _
+        <ExcelFunction(description:="Calculates a Temperature / Vapor Fraction Flash using the selected Property Package. Accepts an initial estimate for the pressure search.", HelpTopic:="ExcelAddInHelp.chm!20")> _
         Public Shared Function TVFFlash2( _
         <ExcelArgument("The name of the Property Package to use.")> ByVal proppack As String, _
         <ExcelArgument("Flash Algorithm (0 or 2 = Nested Loops VLE, 1 = Inside-Out VLE, 3 = Inside-Out VLLE, 4 = Gibbs VLE, 5 = Gibbs VLLE, 6 = Nested-Loops VLLE, 7 = Nested-Loops SLE, 8 = Nested-Loops Immisc., 9 = Simple LLE)")> ByVal flashalg As Integer, _
