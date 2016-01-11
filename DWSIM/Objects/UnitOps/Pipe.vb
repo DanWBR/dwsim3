@@ -508,43 +508,40 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                             Loop Until Math.Abs(fT) < Me.TolT
 
-                            With Me.PropertyPackage
+                            If IncludeJTEffect Then
 
-                                If IncludeJTEffect Then
+                                Cp_m = (w_l * Cp_l + w_v * Cp_v) / w
 
-                                    Cp_m = (w_l * Cp_l + w_v * Cp_v) / w
-
-                                    If oms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                        oms.Fases(0).SPMProperties.temperature = Tin - 2
-                                        .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                                        z2 = oms.Fases(2).SPMProperties.compressibilityFactor.GetValueOrDefault
-                                        dzdT = (z2 - z) / -2
-                                    Else
-                                        dzdT = 0.0#
-                                    End If
-
-                                    If w_l <> 0.0# Then
-                                        eta = 1 / (Cp_m * w) * (w_v / rho_v * (-Tin / z * dzdT) + w_l / rho_l)
-                                    Else
-                                        eta = 1 / (Cp_m * w) * (w_v / rho_v * (-Tin / z * dzdT))
-                                    End If
-
-                                    Dim dh As Double = Cp_m * (Tout - Tin) - eta * Cp_m * (Pout - Pin)
-                                    houts = hins + dh / w
-
-                                    Toutj = Tout + eta * (Pin - Pout) / 1000
-
-                                    Tout_ant = Tout
-                                    Tout = Toutj
-
+                                If oms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                    oms.Fases(0).SPMProperties.temperature = Tin - 2
+                                    oms.PropertyPackage.CurrentMaterialStream = oms
+                                    oms.PropertyPackage.DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                                    z2 = oms.Fases(2).SPMProperties.compressibilityFactor.GetValueOrDefault
+                                    dzdT = (z2 - z) / -2
+                                Else
+                                    dzdT = 0.0#
                                 End If
 
-                                oms.Fases(0).SPMProperties.temperature = Tout
-                                oms.Fases(0).SPMProperties.pressure = Pout
+                                If w_l <> 0.0# Then
+                                    eta = 1 / (Cp_m * w) * (w_v / rho_v * (-Tin / z * dzdT) + w_l / rho_l)
+                                Else
+                                    eta = 1 / (Cp_m * w) * (w_v / rho_v * (-Tin / z * dzdT))
+                                End If
 
-                                oms.Calculate(True, True)
+                                Dim dh As Double = Cp_m * (Tout - Tin) - eta * Cp_m * (Pout - Pin)
+                                houts = hins + dh / w
 
-                            End With
+                                Toutj = Tout + eta * (Pin - Pout) / 1000
+
+                                Tout_ant = Tout
+                                Tout = Toutj
+
+                            End If
+
+                            oms.Fases(0).SPMProperties.temperature = Tout
+                            oms.Fases(0).SPMProperties.pressure = Pout
+
+                            oms.Calculate(True, True)
 
                             With oms
 
