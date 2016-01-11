@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Label1.Text" xml:space="preserve">
-    <value>In order to function correctly, DWSIM needs to do some additional platform-specific file copy operations. Select the tasks you want to execute and then click on "Run Tasks".</value>
+    <value>To run properly, DWSIM needs to do some additional platform-specific file copy operations. Select the tasks you want to execute and then click on "Run Tasks".</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Button2.Location" type="System.Drawing.Point, System.Drawing">

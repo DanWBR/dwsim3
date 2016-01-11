@@ -194,13 +194,13 @@
                 If Me.ThermalProfile.Tipo = DWSIM.Editors.PipeEditor.ThermalProfileType.Estimar_CGTC Then Me.RadioButton7.Checked = True
                 Me.ComboBoxMAMB.SelectedIndex = .Meio
                 Me.ComboBoxMAT.SelectedIndex = .Material
-                Me.TextBoxCGTC.Text = cv.ConverterDoSI(su.heat_transf_coeff, .CGTC_Definido)
-                Me.TextBoxCT.Text = cv.ConverterDoSI(su.spmp_heatflow, .Calor_trocado)
-                Me.TextBoxCTERM.Text = cv.ConverterDoSI(su.spmp_thermalConductivity, .Condtermica)
-                Me.TextBoxESP.Text = cv.ConverterDoSI(su.thickness, .Espessura)
-                Me.TextBoxTA.Text = cv.ConverterDoSI(su.spmp_temperature, .Temp_amb_definir)
-                Me.TextBoxTA2.Text = cv.ConverterDoSI(su.spmp_temperature, .Temp_amb_estimar)
-                Me.TextBoxVEL.Text = .Velocidade
+                Me.TextBoxCGTC.Text = cv.ConverterDoSI(su.heat_transf_coeff, .CGTC_Definido).ToString()
+                Me.TextBoxCT.Text = cv.ConverterDoSI(su.spmp_heatflow, .Calor_trocado).ToString()
+                Me.TextBoxCTERM.Text = cv.ConverterDoSI(su.spmp_thermalConductivity, .Condtermica).ToString()
+                Me.TextBoxESP.Text = cv.ConverterDoSI(su.thickness, .Espessura).ToString()
+                Me.TextBoxTA.Text = cv.ConverterDoSI(su.spmp_temperature, .Temp_amb_definir).ToString()
+                Me.TextBoxTA2.Text = cv.ConverterDoSI(su.spmp_temperature, .Temp_amb_estimar).ToString()
+                Me.TextBoxVEL.Text = .Velocidade.ToString()
                 Me.CheckBoxICTE.Checked = .Incluir_cte
                 Me.CheckBoxICTI.Checked = .Incluir_cti
                 Me.CheckBoxII.Checked = .Incluir_isolamento
@@ -222,7 +222,7 @@
 
     Private Sub TextBoxCGTC_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxCGTC.TextChanged
         Try
-            Me.ThermalProfile.CGTC_Definido = cv.ConverterParaSI(su.heat_transf_coeff, CDbl(Me.TextBoxCGTC.Text))
+            Me.ThermalProfile.CGTC_Definido = cv.ConverterParaSI(su.heat_transf_coeff, Double.Parse(Me.TextBoxCGTC.Text))
             Me.TextBoxCGTC.ForeColor = Color.Blue
         Catch ex As Exception
             Me.TextBoxCGTC.ForeColor = Color.Red
@@ -231,7 +231,7 @@
 
     Private Sub TextBoxTA_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxTA.TextChanged
         Try
-            Me.ThermalProfile.Temp_amb_definir = cv.ConverterParaSI(su.spmp_temperature, CDbl(Me.TextBoxTA.Text))
+            Me.ThermalProfile.Temp_amb_definir = cv.ConverterParaSI(su.spmp_temperature, Double.Parse(Me.TextBoxTA.Text))
             Me.TextBoxTA.ForeColor = Color.Blue
         Catch ex As Exception
             Me.TextBoxTA.ForeColor = Color.Red
@@ -240,7 +240,7 @@
 
     Private Sub TextBoxCT_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxCT.TextChanged
         Try
-            Me.ThermalProfile.Calor_trocado = cv.ConverterParaSI(su.spmp_heatflow, Me.TextBoxCT.Text)
+            Me.ThermalProfile.Calor_trocado = cv.ConverterParaSI(su.spmp_heatflow, Double.Parse(Me.TextBoxCT.Text))
             Me.TextBoxCT.ForeColor = Color.Blue
         Catch ex As Exception
             Me.TextBoxCT.ForeColor = Color.Red
@@ -249,7 +249,7 @@
 
     Private Sub TextBoxTA2_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxTA2.TextChanged
         Try
-            Me.ThermalProfile.Temp_amb_estimar = cv.ConverterParaSI(su.spmp_temperature, CDbl(Me.TextBoxTA2.Text))
+            Me.ThermalProfile.Temp_amb_estimar = cv.ConverterParaSI(su.spmp_temperature, Double.Parse(Me.TextBoxTA2.Text))
             Me.TextBoxTA2.ForeColor = Color.Blue
         Catch ex As Exception
             Me.TextBoxTA2.ForeColor = Color.Red
@@ -258,25 +258,28 @@
 
     Private Sub TextBoxCTERM_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxCTERM.TextChanged
         Try
-            Me.ThermalProfile.Condtermica = cv.ConverterParaSI(su.spmp_thermalConductivity, Me.TextBoxCTERM.Text)
+            Me.ThermalProfile.Condtermica = cv.ConverterParaSI(su.spmp_thermalConductivity, Double.Parse(Me.TextBoxCTERM.Text))
+            Me.TextBoxCTERM.ForeColor = Color.Blue
         Catch ex As Exception
-
+            Me.TextBoxCTERM.ForeColor = Color.Red
         End Try
     End Sub
 
     Private Sub TextBoxESP_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxESP.TextChanged
         Try
-            Me.ThermalProfile.Espessura = cv.ConverterParaSI(su.thickness, Me.TextBoxESP.Text)
+            Me.ThermalProfile.Espessura = cv.ConverterParaSI(su.thickness, Double.Parse(Me.TextBoxESP.Text))
+            Me.TextBoxESP.ForeColor = Color.Blue
         Catch ex As Exception
-
+            Me.TextBoxESP.ForeColor = Color.Red
         End Try
     End Sub
 
     Private Sub TextBoxVEL_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxVEL.TextChanged
         Try
-            Me.ThermalProfile.Velocidade = Me.TextBoxVEL.Text
+            Me.ThermalProfile.Velocidade = Double.Parse(Me.TextBoxVEL.Text)
+            Me.TextBoxVEL.ForeColor = Color.Blue
         Catch ex As Exception
-
+            Me.TextBoxVEL.ForeColor = Color.Red
         End Try
     End Sub
 

@@ -136,17 +136,13 @@
   <data name="&gt;&gt;lblOSPlatform.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="cbtask3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>322, 17</value>
-  </data>
   <data name="&gt;&gt;cbtask3.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="Label7.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="cbtask3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="cbtask3.TabIndex" type="System.Int32, mscorlib">
     <value>76</value>
   </data>
@@ -165,14 +161,12 @@
   <data name="&gt;&gt;Label7.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Button2.Size" type="System.Drawing.Size, System.Drawing">
     <value>88, 23</value>
   </data>
   <data name="&gt;&gt;Button2.Name" xml:space="preserve">
     <value>Button2</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>686, 479</value>
   </data>
   <data name="&gt;&gt;cbtask2.Parent" xml:space="preserve">
     <value>Panel1</value>
@@ -180,8 +174,8 @@
   <data name="Label3.Text" xml:space="preserve">
     <value>Versão/Ambiente:</value>
   </data>
-  <data name="&gt;&gt;Panel1.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="Label8.TabIndex" type="System.Int32, mscorlib">
+    <value>79</value>
   </data>
   <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 18</value>
@@ -200,6 +194,9 @@
   </data>
   <data name="Label8.Size" type="System.Drawing.Size, System.Drawing">
     <value>641, 33</value>
+  </data>
+  <data name="&gt;&gt;cbtask3.Parent" xml:space="preserve">
+    <value>Panel1</value>
   </data>
   <data name="cbtask2.TabIndex" type="System.Int32, mscorlib">
     <value>75</value>
@@ -237,14 +234,14 @@
   <data name="lblOSEnvironment.Location" type="System.Drawing.Point, System.Drawing">
     <value>186, 82</value>
   </data>
-  <data name="Label8.TabIndex" type="System.Int32, mscorlib">
-    <value>79</value>
-  </data>
   <data name="&gt;&gt;Button1.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;Button2.Parent" xml:space="preserve">
     <value>Panel1</value>
+  </data>
+  <data name="cbtask3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="lblOSEnvironment.Text" xml:space="preserve">
     <value>lblOSEnvironment</value>
@@ -276,8 +273,8 @@
   <data name="&gt;&gt;Label3.Name" xml:space="preserve">
     <value>Label3</value>
   </data>
-  <data name="Label1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="LabelWithDivider12.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="&gt;&gt;Label2.Parent" xml:space="preserve">
     <value>Panel1</value>
@@ -287,9 +284,6 @@
   </data>
   <data name="Label2.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
-  </data>
-  <data name="&gt;&gt;LabelWithDivider12.ZOrder" xml:space="preserve">
-    <value>8</value>
   </data>
   <data name="Label6.TabIndex" type="System.Int32, mscorlib">
     <value>77</value>
@@ -306,8 +300,14 @@
   <data name="Panel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>686, 479</value>
   </data>
+  <data name="cbtask1.TabIndex" type="System.Int32, mscorlib">
+    <value>74</value>
+  </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>
+  </data>
+  <data name="Label6.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="cbtask1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -395,11 +395,14 @@ ATENÇÃO: Esta biblioteca do IPOPT é pré-compilada e pode não funcionar com 
   <data name="&gt;&gt;Label3.ZOrder" xml:space="preserve">
     <value>11</value>
   </data>
+  <data name="&gt;&gt;Label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="lblOSEnvironment.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="cbtask3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="Label6.Location" type="System.Drawing.Point, System.Drawing">
+    <value>33, 162</value>
   </data>
   <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>662, 35</value>
@@ -409,6 +412,9 @@ ATENÇÃO: Esta biblioteca do IPOPT é pré-compilada e pode não funcionar com 
   </data>
   <data name="&gt;&gt;cbtask1.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Label1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="&gt;&gt;Label6.Name" xml:space="preserve">
     <value>Label6</value>
@@ -431,9 +437,6 @@ ATENÇÃO: Esta biblioteca do IPOPT é pré-compilada e pode não funcionar com 
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;cbtask3.Parent" xml:space="preserve">
-    <value>Panel1</value>
-  </data>
   <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>641, 99</value>
   </data>
@@ -443,20 +446,17 @@ ATENÇÃO: Esta biblioteca do IPOPT é pré-compilada e pode não funcionar com 
   <data name="lblOSEnvironment.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="LabelWithDivider12.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="&gt;&gt;Label8.Name" xml:space="preserve">
-    <value>Label8</value>
+  <data name="&gt;&gt;Panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <data name="&gt;&gt;cbtask2.Type" xml:space="preserve">
     <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="Label6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>33, 162</value>
+  <data name="&gt;&gt;Label8.Name" xml:space="preserve">
+    <value>Label8</value>
   </data>
-  <data name="&gt;&gt;Label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;LabelWithDivider12.ZOrder" xml:space="preserve">
+    <value>8</value>
   </data>
   <data name="Panel1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -464,7 +464,7 @@ ATENÇÃO: Esta biblioteca do IPOPT é pré-compilada e pode não funcionar com 
   <data name="cbtask2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="Label6.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="Label7.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="&gt;&gt;Label2.Type" xml:space="preserve">
@@ -503,8 +503,8 @@ ATENÇÃO: Esta biblioteca do IPOPT é pré-compilada e pode não funcionar com 
   <data name="&gt;&gt;Panel1.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="cbtask3.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>686, 479</value>
   </data>
   <data name="Label2.Text" xml:space="preserve">
     <value>Sistema Operacional/Plataforma:</value>
@@ -530,8 +530,8 @@ ATENÇÃO: Esta biblioteca do IPOPT é pré-compilada e pode não funcionar com 
   <data name="Button1.Text" xml:space="preserve">
     <value>Executar Tarefas</value>
   </data>
-  <data name="cbtask1.TabIndex" type="System.Int32, mscorlib">
-    <value>74</value>
+  <data name="cbtask3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>322, 17</value>
   </data>
   <data name="&gt;&gt;cbtask1.Name" xml:space="preserve">
     <value>cbtask1</value>

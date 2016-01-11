@@ -112,12 +112,12 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="RadioButton7.Size" type="System.Drawing.Size, System.Drawing">
     <value>260, 19</value>
   </data>
@@ -129,12 +129,6 @@
   </data>
   <data name="Label26.Text" xml:space="preserve">
     <value>Ambient Temperature</value>
-  </data>
-  <data name="Label28.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 13</value>
-  </data>
-  <data name="Label28.Text" xml:space="preserve">
-    <value>m / s [m]</value>
   </data>
   <data name="Label29.Size" type="System.Drawing.Size, System.Drawing">
     <value>111, 13</value>
@@ -160,17 +154,35 @@
   <data name="ComboBoxMAMB.Items5" xml:space="preserve">
     <value>Moist soil</value>
   </data>
+  <data name="Label30.Location" type="System.Drawing.Point, System.Drawing">
+    <value>25, 194</value>
+  </data>
   <data name="Label30.Size" type="System.Drawing.Size, System.Drawing">
     <value>66, 13</value>
   </data>
   <data name="Label30.Text" xml:space="preserve">
     <value>Environment</value>
   </data>
+  <data name="Label31.Location" type="System.Drawing.Point, System.Drawing">
+    <value>374, 144</value>
+  </data>
+  <data name="TextBoxESP.Location" type="System.Drawing.Point, System.Drawing">
+    <value>312, 142</value>
+  </data>
+  <data name="Label33.Location" type="System.Drawing.Point, System.Drawing">
+    <value>265, 145</value>
+  </data>
   <data name="Label33.Size" type="System.Drawing.Size, System.Drawing">
     <value>44, 13</value>
   </data>
   <data name="Label33.Text" xml:space="preserve">
     <value>W / mK</value>
+  </data>
+  <data name="TextBoxCTERM.Location" type="System.Drawing.Point, System.Drawing">
+    <value>195, 142</value>
+  </data>
+  <data name="Label34.Location" type="System.Drawing.Point, System.Drawing">
+    <value>24, 144</value>
   </data>
   <data name="Label34.Size" type="System.Drawing.Size, System.Drawing">
     <value>165, 13</value>
@@ -202,11 +214,20 @@
   <data name="ComboBoxMAT.Items7" xml:space="preserve">
     <value>User Defined</value>
   </data>
+  <data name="ComboBoxMAT.Location" type="System.Drawing.Point, System.Drawing">
+    <value>195, 112</value>
+  </data>
+  <data name="Label35.Location" type="System.Drawing.Point, System.Drawing">
+    <value>25, 116</value>
+  </data>
   <data name="Label35.Size" type="System.Drawing.Size, System.Drawing">
     <value>91, 13</value>
   </data>
   <data name="Label35.Text" xml:space="preserve">
     <value>Insulation material</value>
+  </data>
+  <data name="CheckBoxICTE.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 169</value>
   </data>
   <data name="CheckBoxICTE.Size" type="System.Drawing.Size, System.Drawing">
     <value>127, 19</value>
@@ -254,7 +275,7 @@
     <value>298.15</value>
   </data>
   <data name="Label51.Location" type="System.Drawing.Point, System.Drawing">
-    <value>303, 17</value>
+    <value>303, 19</value>
   </data>
   <data name="Label51.Size" type="System.Drawing.Size, System.Drawing">
     <value>78, 13</value>
