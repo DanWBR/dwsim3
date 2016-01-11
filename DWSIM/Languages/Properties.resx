@@ -1221,15 +1221,15 @@
     <comment>1</comment>
   </data>
   <data name="PROP_PS_3" xml:space="preserve">
-    <value>Pressão na Saída</value>
+    <value>Pressão na Saída (Especif.)</value>
   </data>
   <data name="PROP_PS_4" xml:space="preserve">
-    <value>Temperatura na Saída</value>
+    <value>Temperatura na Saída (Especif.)</value>
   </data>
   <data name="PROP_PS_5" xml:space="preserve">
-    <value>Coeficiente Global de Troca Térmica</value>
+    <value>Coeficiente Global de Troca Térmica (Especif.)</value>
   </data>
   <data name="PROP_PS_6" xml:space="preserve">
-    <value>Temperatura Ambiente</value>
+    <value>Temperatura Ambiente (Especif.)</value>
   </data>
 </root>

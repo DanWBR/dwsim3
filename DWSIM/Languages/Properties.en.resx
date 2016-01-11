@@ -1005,16 +1005,16 @@
     <comment>0</comment>
   </data>
   <data name="PROP_PS_3" xml:space="preserve">
-    <value>Outlet Pressure</value>
+    <value>Outlet Pressure (Spec)</value>
   </data>
   <data name="PROP_PS_4" xml:space="preserve">
-    <value>Outlet Temperature</value>
+    <value>Outlet Temperature (Spec)</value>
   </data>
   <data name="PROP_PS_5" xml:space="preserve">
-    <value>Overall HTC</value>
+    <value>Overall HTC (Spec)</value>
   </data>
   <data name="PROP_PS_6" xml:space="preserve">
-    <value>External Temperature</value>
+    <value>External Temperature (Spec)</value>
   </data>
   <data name="PROP_PU_0" xml:space="preserve">
     <value>Pressure Increase (Head)</value>

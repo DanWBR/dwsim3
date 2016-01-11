@@ -1201,15 +1201,15 @@
     <comment>1</comment>
   </data>
   <data name="PROP_PS_3" xml:space="preserve">
-    <value>Presión de salida</value>
+    <value>Presión de salida (Especif.)</value>
   </data>
   <data name="PROP_PS_4" xml:space="preserve">
-    <value>Temperatura de salida</value>
+    <value>Temperatura de salida (Especif.)</value>
   </data>
   <data name="PROP_PS_5" xml:space="preserve">
-    <value>Coeficiente global de transferencia de calor</value>
+    <value>Coeficiente global de transferencia de calor (Especif.)</value>
   </data>
   <data name="PROP_PS_6" xml:space="preserve">
-    <value>Temperatura ambiente</value>
+    <value>Temperatura ambiente (Especif.)</value>
   </data>
 </root>
