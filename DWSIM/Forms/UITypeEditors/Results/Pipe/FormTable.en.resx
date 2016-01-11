@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Column1.HeaderText" xml:space="preserve">
     <value>Length (m)</value>
@@ -123,23 +123,72 @@
   <data name="Column2.HeaderText" xml:space="preserve">
     <value>Pressure (kPa)</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Column2.Width" type="System.Int32, mscorlib">
+    <value>74</value>
+  </data>
   <data name="Column3.HeaderText" xml:space="preserve">
     <value>Temperature (°C)</value>
   </data>
   <data name="Column4.HeaderText" xml:space="preserve">
     <value>Liquid Velocity (m/s)</value>
   </data>
+  <data name="Column4.Width" type="System.Int32, mscorlib">
+    <value>97</value>
+  </data>
   <data name="Column5.HeaderText" xml:space="preserve">
     <value>Vapor Velocity (m/s)</value>
+  </data>
+  <data name="Column5.Width" type="System.Int32, mscorlib">
+    <value>97</value>
   </data>
   <data name="Column6.HeaderText" xml:space="preserve">
     <value>Heat (kW)</value>
   </data>
+  <data name="Column6.Width" type="System.Int32, mscorlib">
+    <value>56</value>
+  </data>
   <data name="Column7.HeaderText" xml:space="preserve">
     <value>Liquid Holdup</value>
   </data>
+  <data name="Column7.Width" type="System.Int32, mscorlib">
+    <value>70</value>
+  </data>
   <data name="Column8.HeaderText" xml:space="preserve">
     <value>Flow Regime</value>
+  </data>
+  <data name="Column8.Width" type="System.Int32, mscorlib">
+    <value>67</value>
+  </data>
+  <data name="Column9.HeaderText" xml:space="preserve">
+    <value>Overall HTC</value>
+  </data>
+  <data name="Column9.Width" type="System.Int32, mscorlib">
+    <value>64</value>
+  </data>
+  <data name="Column10.HeaderText" xml:space="preserve">
+    <value>h (Internal)</value>
+  </data>
+  <data name="Column10.Width" type="System.Int32, mscorlib">
+    <value>57</value>
+  </data>
+  <data name="Column11.HeaderText" xml:space="preserve">
+    <value>k/L (Wall)</value>
+  </data>
+  <data name="Column11.Width" type="System.Int32, mscorlib">
+    <value>54</value>
+  </data>
+  <data name="Column12.HeaderText" xml:space="preserve">
+    <value>k/L (Insulation)</value>
+  </data>
+  <data name="Column12.Width" type="System.Int32, mscorlib">
+    <value>76</value>
+  </data>
+  <data name="Column13.HeaderText" xml:space="preserve">
+    <value>h (External)</value>
+  </data>
+  <data name="Column13.Width" type="System.Int32, mscorlib">
+    <value>59</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Results - Property Profiles</value>

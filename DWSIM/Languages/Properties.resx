@@ -1220,4 +1220,16 @@
     <value>Temperatura da Saída</value>
     <comment>1</comment>
   </data>
+  <data name="PROP_PS_3" xml:space="preserve">
+    <value>Pressão na Saída</value>
+  </data>
+  <data name="PROP_PS_4" xml:space="preserve">
+    <value>Temperatura na Saída</value>
+  </data>
+  <data name="PROP_PS_5" xml:space="preserve">
+    <value>Coeficiente Global de Troca Térmica</value>
+  </data>
+  <data name="PROP_PS_6" xml:space="preserve">
+    <value>Temperatura Ambiente</value>
+  </data>
 </root>

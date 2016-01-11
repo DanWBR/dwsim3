@@ -29,6 +29,11 @@ Public Class FormTable
             .Item(3).HeaderText = Replace(.Item(3).HeaderText, "(m/s)", "(" & su.velocity & ")")
             .Item(4).HeaderText = Replace(.Item(4).HeaderText, "(m/s)", "(" & su.velocity & ")")
             .Item(5).HeaderText = Replace(.Item(5).HeaderText, "(kW)", "(" & su.spmp_heatflow & ")")
+            .Item(8).HeaderText += " (" & su.heat_transf_coeff & ")"
+            .Item(9).HeaderText += " (" & su.heat_transf_coeff & ")"
+            .Item(10).HeaderText += " (" & su.heat_transf_coeff & ")"
+            .Item(11).HeaderText += " (" & su.heat_transf_coeff & ")"
+            .Item(12).HeaderText += " (" & su.heat_transf_coeff & ")"
         End With
 
         With Me.Profile
@@ -39,7 +44,7 @@ Public Class FormTable
             For Each ps In .Sections.Values
                 If ps.Tipo = "Tubulaosimples" Then
                     For Each res In ps.Resultados
-                        Me.DataGridView1.Rows.Add(New Object() {cv.ConverterDoSI(su.distance, comp_ant), cv.ConverterDoSI(su.spmp_pressure, res.PressaoInicial.GetValueOrDefault), cv.ConverterDoSI(su.spmp_temperature, res.TemperaturaInicial.GetValueOrDefault), cv.ConverterDoSI(su.velocity, res.LiqVel), cv.ConverterDoSI(su.velocity, res.VapVel), cv.ConverterDoSI(su.spmp_heatflow, res.CalorTransferido), res.HoldupDeLiquido, DWSIM.App.GetLocalString(res.TipoFluxo)})
+                        Me.DataGridView1.Rows.Add(New Object() {cv.ConverterDoSI(su.distance, comp_ant), cv.ConverterDoSI(su.spmp_pressure, res.PressaoInicial.GetValueOrDefault), cv.ConverterDoSI(su.spmp_temperature, res.TemperaturaInicial.GetValueOrDefault), cv.ConverterDoSI(su.velocity, res.LiqVel), cv.ConverterDoSI(su.velocity, res.VapVel), cv.ConverterDoSI(su.spmp_heatflow, res.CalorTransferido), res.HoldupDeLiquido, DWSIM.App.GetLocalString(res.TipoFluxo), cv.ConverterDoSI(su.heat_transf_coeff, res.HTC), cv.ConverterDoSI(su.heat_transf_coeff, res.HTC_internal), cv.ConverterDoSI(su.heat_transf_coeff, res.HTC_pipewall), cv.ConverterDoSI(su.heat_transf_coeff, res.HTC_insulation), cv.ConverterDoSI(su.heat_transf_coeff, res.HTC_external)})
                         comp_ant += ps.Comprimento / ps.Incrementos
                     Next
                 Else

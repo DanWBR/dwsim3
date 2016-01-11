@@ -5254,4 +5254,13 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="ParallelPInvokeError" xml:space="preserve">
     <value>Este recurso utiliza uma biblioteca nativa (não-.NET) da plataforma em execução, e não funciona com o modo de cálculo em paralelo na CPU ativado. por favor desative esse recurso e tente novamente.</value>
   </data>
+  <data name="PipeSpecMode" xml:space="preserve">
+    <value>Especificação de Cálculo</value>
+  </data>
+  <data name="PipeSpecModeDesc" xml:space="preserve">
+    <value>Length = Especifica-se o comprimento dos segmentos, calculam-se temperatura e pressão; OutletPressure = Especificam-se a pressão e comprimento dos segmentos e calculam-se a temperatura e comprimento do primeiro e único segmento como tubulação simples; OutletTemperature = Especificam-se a temperatura e o comprimento dos segmentos e calculam-se a pressão e o calor trocado.</value>
+  </data>
+  <data name="PipeOutletPressureRestriction" xml:space="preserve">
+    <value>No modo de cálculo de pressão na saída, a tubulação deve possuir apenas um segmento e este deve ser do tipo "Tubulação Simples".</value>
+  </data>
 </root>

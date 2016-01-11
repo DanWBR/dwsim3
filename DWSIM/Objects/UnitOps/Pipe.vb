@@ -50,6 +50,16 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Protected m_includejteffect As Boolean = False
 
+        Public Enum specmode
+            Length = 0
+            OutletPressure = 1
+            OutletTemperature = 2
+        End Enum
+
+        Public Property Specification As specmode = specmode.Length
+        Public Property OutletPressure As Double = 101325
+        Public Property OutletTemperature As Double = 298.15
+
         Public Property IncludeJTEffect() As Boolean
             Get
                 Return m_includejteffect
@@ -225,6 +235,16 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Throw New Exception(DWSIM.App.GetLocalString("Verifiqueasconexesdo"))
             End If
 
+            If Me.Specification = specmode.OutletPressure Then
+                If Me.Profile.Sections.Count > 1 Then
+                    Throw New Exception(DWSIM.App.GetLocalString("PipeOutletPressureRestriction"))
+                ElseIf Me.Profile.Sections.Count = 1 Then
+                    If Me.Profile.Sections(1).Tipo <> "Tubulaosimples" Then
+                        Throw New Exception(DWSIM.App.GetLocalString("PipeOutletPressureRestriction"))
+                    End If
+                End If
+            End If
+
             Dim fpp As DWSIM.FlowPackages.FPBaseClass
 
             Select Case Me.SelectedFlowPackage
@@ -242,16 +262,17 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     fpp = New DWSIM.FlowPackages.BeggsBrill
             End Select
 
-            Dim oms As DWSIM.SimulationObjects.Streams.MaterialStream = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Clone
-            oms.SetFlowsheet(Me.FlowSheet)
-            Me.PropertyPackage.CurrentMaterialStream = oms
-
-            oms.Validate()
+            Dim oms As DWSIM.SimulationObjects.Streams.MaterialStream
 
             Dim Tin, Pin, Tout, Pout, Tout_ant, Pout_ant, Tout_ant2, Pout_ant2, Toutj, Text, Win, Qin, Qvin, Qlin, TinP, PinP, _
                 rho_l, rho_v, Cp_l, Cp_v, Cp_m, K_l, K_v, eta_l, eta_v, tens, Hin, Hout, HinP, _
                 fT, fT_ant, fT_ant2, fP, fP_ant, fP_ant2, w_v, w_l, w, z, z2, dzdT, hins, houts As Double
             Dim cntP, cntT As Integer
+
+            If Me.Specification = specmode.OutletTemperature Then
+                Me.ThermalProfile.Tipo = Editors.PipeEditor.ThermalProfileType.Definir_Q
+                Me.ThermalProfile.Calor_trocado = 0.0#
+            End If
 
             If Me.ThermalProfile.Tipo = Editors.PipeEditor.ThermalProfileType.Definir_CGTC Then
                 Text = Me.ThermalProfile.Temp_amb_definir
@@ -259,302 +280,65 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Text = Me.ThermalProfile.Temp_amb_estimar
             End If
 
-            'Iteração para cada segmento
-            Dim count As Integer = 0
-
             'Calcular DP
-            Dim Tpe, Ppe As Double
+            Dim Tpe, Ppe, Tspec, Pspec As Double
             Dim resv As Object
             Dim equilibrio As Object = Nothing
             Dim tmp As Object = Nothing
             Dim tipofluxo As String
             Dim first As Boolean = True
-            Dim holdup, dpf, dph, dpt, DQ, U, A, eta As Double
+            Dim holdup, dpf, dph, dpt, DQ, U, A, eta, fx, fx0, x, x0, fx00, x00, p0, t0 As Double
             Dim nseg As Double
             Dim segmento As New PipeSection
             Dim results As New PipeResults
-            Dim j As Integer = 0
 
-            With oms
+            Tspec = Me.OutletTemperature
+            Pspec = Me.OutletPressure
 
-                Tin = .Fases(0).SPMProperties.temperature.GetValueOrDefault
-                Pin = .Fases(0).SPMProperties.pressure.GetValueOrDefault
-                Win = .Fases(0).SPMProperties.massflow.GetValueOrDefault
-                Qin = .Fases(0).SPMProperties.volumetric_flow.GetValueOrDefault
-                Hin = .Fases(0).SPMProperties.enthalpy.GetValueOrDefault
-                Hout = Hin
-                Tout = Tin
-                Pout = Pin
-                TinP = Tin
-                PinP = Pin
-                HinP = Hin
+            Dim countext As Integer = 0
 
-            End With
+            Do
 
-            Dim tseg As Integer = 0
-            For Each segmento In Me.Profile.Sections.Values
-                tseg += segmento.Incrementos
-            Next
+                oms = form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Clone()
+                oms.SetFlowsheet(Me.FlowSheet)
+                Me.PropertyPackage.CurrentMaterialStream = oms
 
-            For Each segmento In Me.Profile.Sections.Values
+                oms.Validate()
 
-                segmento.Resultados.Clear()
+                'Iteração para cada segmento
+                Dim count As Integer = 0
 
-                If segmento.Tipo = "Tubulaosimples" Then
-                    j = 0
-                    nseg = segmento.Incrementos
+                Dim j As Integer = 0
 
-                    With oms
+                With oms
 
-                        w = .Fases(0).SPMProperties.massflow.GetValueOrDefault
-                        hins = .Fases(0).SPMProperties.enthalpy.GetValueOrDefault
+                    Tin = .Fases(0).SPMProperties.temperature.GetValueOrDefault
+                    Pin = .Fases(0).SPMProperties.pressure.GetValueOrDefault
+                    Win = .Fases(0).SPMProperties.massflow.GetValueOrDefault
+                    Qin = .Fases(0).SPMProperties.volumetric_flow.GetValueOrDefault
+                    Hin = .Fases(0).SPMProperties.enthalpy.GetValueOrDefault
+                    Hout = Hin
+                    Tout = Tin
+                    Pout = Pin
+                    TinP = Tin
+                    PinP = Pin
+                    HinP = Hin
 
-                        Qlin = .Fases(3).SPMProperties.volumetric_flow.GetValueOrDefault + .Fases(4).SPMProperties.volumetric_flow.GetValueOrDefault + .Fases(5).SPMProperties.volumetric_flow.GetValueOrDefault + .Fases(6).SPMProperties.volumetric_flow.GetValueOrDefault
-                        rho_l = .Fases(1).SPMProperties.density.GetValueOrDefault
-                        eta_l = .Fases(1).SPMProperties.viscosity.GetValueOrDefault
-                        K_l = .Fases(1).SPMProperties.thermalConductivity.GetValueOrDefault
-                        Cp_l = .Fases(1).SPMProperties.heatCapacityCp.GetValueOrDefault
-                        tens = .Fases(0).TPMProperties.surfaceTension.GetValueOrDefault
-                        w_l = .Fases(1).SPMProperties.massflow.GetValueOrDefault
+                End With
 
-                        Qvin = .Fases(2).SPMProperties.volumetric_flow.GetValueOrDefault
-                        rho_v = .Fases(2).SPMProperties.density.GetValueOrDefault
-                        eta_v = .Fases(2).SPMProperties.viscosity.GetValueOrDefault
-                        K_v = .Fases(2).SPMProperties.thermalConductivity.GetValueOrDefault
-                        Cp_v = .Fases(2).SPMProperties.heatCapacityCp.GetValueOrDefault
-                        w_v = .Fases(2).SPMProperties.massflow.GetValueOrDefault
-                        z = .Fases(2).SPMProperties.compressibilityFactor.GetValueOrDefault
+                Dim tseg As Integer = 0
+                For Each segmento In Me.Profile.Sections.Values
+                    tseg += segmento.Incrementos
+                Next
 
-                    End With
+                For Each segmento In Me.Profile.Sections.Values
 
-                    Do
+                    segmento.Resultados.Clear()
 
-                        If Text > Tin Then
-                            Tout = Tin * 1.005
-                        Else
-                            Tout = Tin / 1.005
-                        End If
+                    If segmento.Tipo = "Tubulaosimples" Then
 
-                        If Tin < Text And Tout > Text Then Tout = Text * 0.98
-                        If Tin > Text And Tout < Text Then Tout = Text * 1.02
-
-                        cntT = 0
-                        'Loop externo (convergência do Delta T)
-                        Do
-
-                            cntP = 0
-                            'Loop interno (convergência do Delta P)
-                            Do
-
-                                With segmento
-                                    count = 0
-                                    With results
-
-                                        .TemperaturaInicial = Tin
-                                        .PressaoInicial = Pin
-                                        .Energia_Inicial = Hin
-                                        .Cpl = Cp_l
-                                        .Cpv = Cp_v
-                                        .Kl = K_l
-                                        .Kv = K_v
-                                        .RHOl = rho_l
-                                        .RHOv = rho_v
-                                        .Ql = Qlin
-                                        .Qv = Qvin
-                                        .MUl = eta_l
-                                        .MUv = eta_v
-                                        .Surft = tens
-                                        .LiqRe = 4 / Math.PI * .RHOl * .Ql / (.MUl * segmento.DI * 0.0254)
-                                        .VapRe = 4 / Math.PI * .RHOv * .Qv / (.MUv * segmento.DI * 0.0254)
-                                        .LiqVel = .Ql / (Math.PI * (segmento.DI * 0.0254) ^ 2 / 4)
-                                        .VapVel = .Qv / (Math.PI * (segmento.DI * 0.0254) ^ 2 / 4)
-
-                                    End With
-
-                                    resv = fpp.CalculateDeltaP(.DI * 0.0254, .Comprimento / .Incrementos, .Elevacao / .Incrementos, Me.rugosidade(.Material), Qvin * 24 * 3600, Qlin * 24 * 3600, eta_v * 1000, eta_l * 1000, rho_v, rho_l, tens)
-
-                                    tipofluxo = resv(0)
-                                    holdup = resv(1)
-                                    dpf = resv(2)
-                                    dph = resv(3)
-                                    dpt = resv(4)
-
-                                End With
-
-                                Pout_ant2 = Pout_ant
-                                Pout_ant = Pout
-                                Pout = Pin - dpt
-
-                                fP_ant2 = fP_ant
-                                fP_ant = fP
-                                fP = Pout - Pout_ant
-
-                                'T = T - fi * (T - Tant2) / (fi - fi_ant2)
-
-                                If cntP > 3 Then
-                                    Pout = Pout - fP * (Pout - Pout_ant2) / (fP - fP_ant2)
-                                End If
-
-                                cntP += 1
-
-                                If Pout <= 0 Then
-                                    Throw New Exception(DWSIM.App.GetLocalString("Pressonegativadentro"))
-                                End If
-
-                                If Double.IsNaN(Pout) Then Throw New Exception(DWSIM.App.GetLocalString("Erronoclculodapresso"))
-
-                                If cntP > Me.MaxPressureIterations Then Throw New Exception(DWSIM.App.GetLocalString("Ocalculadorexcedeuon"))
-
-                                CheckCalculatorStatus()
-
-                            Loop Until Math.Abs(fP) < Me.TolP
-
-                            With segmento
-
-                                Cp_m = holdup * Cp_l + (1 - holdup) * Cp_v
-                                Tout_ant2 = Tout_ant
-                                Tout_ant = Tout
-
-                                If Not Me.ThermalProfile.Tipo = Editors.PipeEditor.ThermalProfileType.Definir_Q Then
-                                    If Me.ThermalProfile.Tipo = Editors.PipeEditor.ThermalProfileType.Definir_CGTC Then
-                                        U = Me.ThermalProfile.CGTC_Definido
-                                        A = Math.PI * (.DE * 0.0254) * .Comprimento / .Incrementos
-                                    ElseIf Me.ThermalProfile.Tipo = Editors.PipeEditor.ThermalProfileType.Estimar_CGTC Then
-                                        A = Math.PI * (.DE * 0.0254) * .Comprimento / .Incrementos
-                                        U = CalcOverallHeatTransferCoefficient(.Material, holdup, .Comprimento / .Incrementos, _
-                                                                            .DI * 0.0254, .DE * 0.0254, Me.rugosidade(.Material), Tpe, results.VapVel, results.LiqVel, _
-                                                                            results.Cpl, results.Cpv, results.Kl, results.Kv, _
-                                                                            results.MUl, results.MUv, results.RHOl, results.RHOv, _
-                                                                            Me.ThermalProfile.Incluir_cti, Me.ThermalProfile.Incluir_isolamento, _
-                                                                            Me.ThermalProfile.Incluir_paredes, Me.ThermalProfile.Incluir_cte)
-                                        U = U
-                                    End If
-                                    If U <> 0 Then
-                                        DQ = (Tout - Tin) / Math.Log((Text - Tin) / (Text - Tout)) * U / 1000 * A
-                                        If Double.IsNaN(DQ) Then
-                                            DQ = 0
-                                            'Tout = Text
-                                        Else
-                                            Tout = DQ / (Win * Cp_m) + Tin
-                                        End If
-                                        If Not Double.TryParse(Tout, New Double) Or Double.IsNaN(Tout) Or Tout < 100 Or Tout > 1000 Then
-                                            Throw New Exception(DWSIM.App.GetLocalString("Erroaocalculartemper"))
-                                        End If
-                                    Else
-                                        Tout = Tin
-                                    End If
-                                Else
-                                    DQ = Me.ThermalProfile.Calor_trocado / tseg '/ 3600
-                                    Tout = DQ / (Win * Cp_m) + Tin
-                                    A = Math.PI * (.DE * 0.0254) * .Comprimento / .Incrementos
-                                    U = DQ / (A * (Tout - Tin)) * 1000
-                                End If
-                            End With
-
-                            fT_ant2 = fT_ant
-                            fT_ant = fT
-                            fT = Tout - Tout_ant
-
-                            'T = T - fi * (T - Tant2) / (fi - fi_ant2)
-
-                            If cntT > 3 Then
-                                Tout = Tout - fT * (Tout - Tout_ant2) / (fT - fT_ant2)
-                            End If
-
-                            cntT += 1
-
-                            If Tout <= 0 Or Double.IsNaN(Tout) Then
-                                Throw New Exception(DWSIM.App.GetLocalString("Erronoclculodatemper"))
-                            End If
-
-                            If cntT > Me.MaxPressureIterations Then Throw New Exception(DWSIM.App.GetLocalString("Ocalculadorexcedeuon"))
-
-                            CheckCalculatorStatus()
-
-                        Loop Until Math.Abs(fT) < Me.TolT
-
-                        With Me.PropertyPackage
-
-                            If IncludeJTEffect Then
-
-                                Cp_m = (w_l * Cp_l + w_v * Cp_v) / w
-
-                                If oms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                    oms.Fases(0).SPMProperties.temperature = Tin - 2
-                                    .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                                    z2 = oms.Fases(2).SPMProperties.compressibilityFactor.GetValueOrDefault
-                                    dzdT = (z2 - z) / -2
-                                Else
-                                    dzdT = 0.0#
-                                End If
-
-                                If w_l <> 0.0# Then
-                                    eta = 1 / (Cp_m * w) * (w_v / rho_v * (-Tin / z * dzdT) + w_l / rho_l)
-                                Else
-                                    eta = 1 / (Cp_m * w) * (w_v / rho_v * (-Tin / z * dzdT))
-                                End If
-
-                                Dim dh As Double = Cp_m * (Tout - Tin) - eta * Cp_m * (Pout - Pin)
-                                houts = hins + dh / w
-
-                                'Dim tmpr As Object = .DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pout, houts, Tout)
-                                'Toutj = tmpr(2)
-
-                                Toutj = Tout + eta * (Pin - Pout) / 1000
-
-                                Tout = Toutj
-
-                            End If
-
-                            oms.Fases(0).SPMProperties.temperature = Tout
-                            oms.Fases(0).SPMProperties.pressure = Pout
-
-                            'Calcular corrente de matéria com Tpe e Ppe
-                            .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
-                            If oms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
-                            Else
-                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
-                            End If
-                            If oms.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
-                            Else
-                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
-                            End If
-                            If oms.Fases(5).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
-                            Else
-                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid3)
-                            End If
-                            If oms.Fases(6).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
-                            Else
-                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Aqueous)
-                            End If
-                            If oms.Fases(7).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
-                            Else
-                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Solid)
-                            End If
-                            If oms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                            Else
-                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                            End If
-                            If oms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault >= 0 And oms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault < 1 Then
-                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
-                            Else
-                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
-                            End If
-                            .DW_CalcCompMolarFlow(-1)
-                            .DW_CalcCompMassFlow(-1)
-                            .DW_CalcCompVolFlow(-1)
-                            .DW_CalcOverallProps()
-                            .DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                            .DW_CalcVazaoVolumetrica()
-                            .DW_CalcKvalue()
-
-                        End With
+                        j = 0
+                        nseg = segmento.Incrementos
 
                         With oms
 
@@ -579,151 +363,390 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                         End With
 
-                        With results
+                        Do
 
-                            .CalorTransferido = DQ
-                            .DpPorFriccao = dpf
-                            .DpPorHidrostatico = dph
-                            .HoldupDeLiquido = holdup
-                            .TipoFluxo = tipofluxo
-
-                            segmento.Resultados.Add(New PipeResults(.PressaoInicial, .TemperaturaInicial, .MUv, .MUl, .RHOv, .RHOl, .Cpv, .Cpl, .Kv, .Kl, .Qv, .Ql, .Surft, .DpPorFriccao, .DpPorHidrostatico, .HoldupDeLiquido, .TipoFluxo, .LiqRe, .VapRe, .LiqVel, .VapVel, .CalorTransferido, .Energia_Inicial, U))
-
-                        End With
-
-                        Hout = Hin + DQ / Win
-
-                        Hin = Hout
-                        Tin = Tout
-                        Pin = Pout
-
-                        j += 1
-
-                    Loop Until j = nseg
-
-                Else
-
-                    'CALCULAR DP PARA VALVULAS
-                    count = 0
-
-                    If segmento.Indice = 1 Then
-
-                        With Me.PropertyPackage
-
-                            Tpe = Tin + (Tout - Tin) / 2
-                            Tpe = Tin + (Tout - Tin) / 2
-                            Ppe = Pin + (Pout - Pin) / 2
-
-                            oms.Fases(0).SPMProperties.temperature = Tpe
-                            oms.Fases(0).SPMProperties.pressure = Ppe
-
-                            'Calcular corrente de matéria com Tpe e Ppe
-                            .DW_CalcVazaoMolar()
-                            .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
-                            If oms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                            If Text > Tin Then
+                                Tout = Tin * 1.005
                             Else
-                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
+                                Tout = Tin / 1.005
                             End If
-                            If oms.Fases(4).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+
+                            If Tin < Text And Tout > Text Then Tout = Text * 0.98
+                            If Tin > Text And Tout < Text Then Tout = Text * 1.02
+
+                            cntT = 0
+                            'Loop externo (convergência do Delta T)
+                            Do
+
+                                cntP = 0
+                                'Loop interno (convergência do Delta P)
+                                Do
+
+                                    With segmento
+                                        count = 0
+                                        With results
+
+                                            .TemperaturaInicial = Tin
+                                            .PressaoInicial = Pin
+                                            .Energia_Inicial = Hin
+                                            .Cpl = Cp_l
+                                            .Cpv = Cp_v
+                                            .Kl = K_l
+                                            .Kv = K_v
+                                            .RHOl = rho_l
+                                            .RHOv = rho_v
+                                            .Ql = Qlin
+                                            .Qv = Qvin
+                                            .MUl = eta_l
+                                            .MUv = eta_v
+                                            .Surft = tens
+                                            .LiqRe = 4 / Math.PI * .RHOl * .Ql / (.MUl * segmento.DI * 0.0254)
+                                            .VapRe = 4 / Math.PI * .RHOv * .Qv / (.MUv * segmento.DI * 0.0254)
+                                            .LiqVel = .Ql / (Math.PI * (segmento.DI * 0.0254) ^ 2 / 4)
+                                            .VapVel = .Qv / (Math.PI * (segmento.DI * 0.0254) ^ 2 / 4)
+
+                                        End With
+
+                                        resv = fpp.CalculateDeltaP(.DI * 0.0254, .Comprimento / .Incrementos, .Elevacao / .Incrementos, Me.rugosidade(.Material), Qvin * 24 * 3600, Qlin * 24 * 3600, eta_v * 1000, eta_l * 1000, rho_v, rho_l, tens)
+
+                                        tipofluxo = resv(0)
+                                        holdup = resv(1)
+                                        dpf = resv(2)
+                                        dph = resv(3)
+                                        dpt = resv(4)
+
+                                    End With
+
+                                    Pout_ant2 = Pout_ant
+                                    Pout_ant = Pout
+                                    Pout = Pin - dpt
+
+                                    fP_ant2 = fP_ant
+                                    fP_ant = fP
+                                    fP = Pout - Pout_ant
+
+                                    If cntP > 3 Then
+                                        Pout = Pout - fP * (Pout - Pout_ant2) / (fP - fP_ant2)
+                                    End If
+
+                                    cntP += 1
+
+                                    If Pout <= 0 Then Throw New Exception(DWSIM.App.GetLocalString("Pressonegativadentro"))
+
+                                    If Double.IsNaN(Pout) Then Throw New Exception(DWSIM.App.GetLocalString("Erronoclculodapresso"))
+
+                                    If cntP > Me.MaxPressureIterations Then Throw New Exception(DWSIM.App.GetLocalString("Ocalculadorexcedeuon"))
+
+                                    CheckCalculatorStatus()
+
+                                Loop Until Math.Abs(fP) < Me.TolP
+
+                                With segmento
+
+                                    Cp_m = holdup * Cp_l + (1 - holdup) * Cp_v
+                                    Tout_ant2 = Tout_ant
+                                    Tout_ant = Tout
+
+                                    If Not Me.ThermalProfile.Tipo = Editors.PipeEditor.ThermalProfileType.Definir_Q Then
+                                        If Me.ThermalProfile.Tipo = Editors.PipeEditor.ThermalProfileType.Definir_CGTC Then
+                                            U = Me.ThermalProfile.CGTC_Definido
+                                            A = Math.PI * (.DE * 0.0254) * .Comprimento / .Incrementos
+                                        ElseIf Me.ThermalProfile.Tipo = Editors.PipeEditor.ThermalProfileType.Estimar_CGTC Then
+                                            A = Math.PI * (.DE * 0.0254) * .Comprimento / .Incrementos
+                                            Dim resultU As Double() = CalcOverallHeatTransferCoefficient(.Material, holdup, .Comprimento / .Incrementos, _
+                                                                                .DI * 0.0254, .DE * 0.0254, Me.rugosidade(.Material), Tpe, results.VapVel, results.LiqVel, _
+                                                                                results.Cpl, results.Cpv, results.Kl, results.Kv, _
+                                                                                results.MUl, results.MUv, results.RHOl, results.RHOv, _
+                                                                                Me.ThermalProfile.Incluir_cti, Me.ThermalProfile.Incluir_isolamento, _
+                                                                                Me.ThermalProfile.Incluir_paredes, Me.ThermalProfile.Incluir_cte)
+                                            U = resultU(0)
+                                            With results
+                                                .HTC_internal = resultU(1)
+                                                .HTC_pipewall = resultU(2)
+                                                .HTC_insulation = resultU(3)
+                                                .HTC_external = resultU(4)
+                                            End With
+                                        End If
+                                        If U <> 0 Then
+                                            DQ = (Tout - Tin) / Math.Log((Text - Tin) / (Text - Tout)) * U / 1000 * A
+                                            If Double.IsNaN(DQ) Then
+                                                DQ = 0.0#
+                                            Else
+                                                Tout = DQ / (Win * Cp_m) + Tin
+                                            End If
+                                            If Not Double.TryParse(Tout, New Double) Or Double.IsNaN(Tout) Or Tout < 100 Or Tout > 1000 Then
+                                                Throw New Exception(DWSIM.App.GetLocalString("Erroaocalculartemper"))
+                                            End If
+                                        Else
+                                            Tout = Tin
+                                        End If
+                                    Else
+                                        DQ = Me.ThermalProfile.Calor_trocado / tseg
+                                        Tout = DQ / (Win * Cp_m) + Tin
+                                        A = Math.PI * (.DE * 0.0254) * .Comprimento / .Incrementos
+                                        U = DQ / (A * (Tout - Tin)) * 1000
+                                    End If
+                                End With
+
+                                fT_ant2 = fT_ant
+                                fT_ant = fT
+                                fT = Tout - Tout_ant
+
+                                If cntT > 3 Then
+                                    Tout = Tout - fT * (Tout - Tout_ant2) / (fT - fT_ant2)
+                                End If
+
+                                cntT += 1
+
+                                If Tout <= 0 Or Double.IsNaN(Tout) Then
+                                    Throw New Exception(DWSIM.App.GetLocalString("Erronoclculodatemper"))
+                                End If
+
+                                If cntT > Me.MaxPressureIterations Then Throw New Exception(DWSIM.App.GetLocalString("Ocalculadorexcedeuon"))
+
+                                CheckCalculatorStatus()
+
+                            Loop Until Math.Abs(fT) < Me.TolT
+
+                            With Me.PropertyPackage
+
+                                If IncludeJTEffect Then
+
+                                    Cp_m = (w_l * Cp_l + w_v * Cp_v) / w
+
+                                    If oms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
+                                        oms.Fases(0).SPMProperties.temperature = Tin - 2
+                                        .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
+                                        z2 = oms.Fases(2).SPMProperties.compressibilityFactor.GetValueOrDefault
+                                        dzdT = (z2 - z) / -2
+                                    Else
+                                        dzdT = 0.0#
+                                    End If
+
+                                    If w_l <> 0.0# Then
+                                        eta = 1 / (Cp_m * w) * (w_v / rho_v * (-Tin / z * dzdT) + w_l / rho_l)
+                                    Else
+                                        eta = 1 / (Cp_m * w) * (w_v / rho_v * (-Tin / z * dzdT))
+                                    End If
+
+                                    Dim dh As Double = Cp_m * (Tout - Tin) - eta * Cp_m * (Pout - Pin)
+                                    houts = hins + dh / w
+
+                                    Toutj = Tout + eta * (Pin - Pout) / 1000
+
+                                    Tout_ant = Tout
+                                    Tout = Toutj
+
+                                End If
+
+                                oms.Fases(0).SPMProperties.temperature = Tout
+                                oms.Fases(0).SPMProperties.pressure = Pout
+
+                                oms.Calculate(True, True)
+
+                            End With
+
+                            With oms
+
+                                w = .Fases(0).SPMProperties.massflow.GetValueOrDefault
+                                hins = .Fases(0).SPMProperties.enthalpy.GetValueOrDefault
+
+                                Qlin = .Fases(3).SPMProperties.volumetric_flow.GetValueOrDefault + .Fases(4).SPMProperties.volumetric_flow.GetValueOrDefault + .Fases(5).SPMProperties.volumetric_flow.GetValueOrDefault + .Fases(6).SPMProperties.volumetric_flow.GetValueOrDefault
+                                rho_l = .Fases(1).SPMProperties.density.GetValueOrDefault
+                                eta_l = .Fases(1).SPMProperties.viscosity.GetValueOrDefault
+                                K_l = .Fases(1).SPMProperties.thermalConductivity.GetValueOrDefault
+                                Cp_l = .Fases(1).SPMProperties.heatCapacityCp.GetValueOrDefault
+                                tens = .Fases(0).TPMProperties.surfaceTension.GetValueOrDefault
+                                w_l = .Fases(1).SPMProperties.massflow.GetValueOrDefault
+
+                                Qvin = .Fases(2).SPMProperties.volumetric_flow.GetValueOrDefault
+                                rho_v = .Fases(2).SPMProperties.density.GetValueOrDefault
+                                eta_v = .Fases(2).SPMProperties.viscosity.GetValueOrDefault
+                                K_v = .Fases(2).SPMProperties.thermalConductivity.GetValueOrDefault
+                                Cp_v = .Fases(2).SPMProperties.heatCapacityCp.GetValueOrDefault
+                                w_v = .Fases(2).SPMProperties.massflow.GetValueOrDefault
+                                z = .Fases(2).SPMProperties.compressibilityFactor.GetValueOrDefault
+
+                            End With
+
+                            With results
+
+                                .CalorTransferido = DQ
+                                .DpPorFriccao = dpf
+                                .DpPorHidrostatico = dph
+                                .HoldupDeLiquido = holdup
+                                .TipoFluxo = tipofluxo
+
+                                segmento.Resultados.Add(New PipeResults(.PressaoInicial, .TemperaturaInicial, .MUv, .MUl, .RHOv, .RHOl,
+                                                                        .Cpv, .Cpl, .Kv, .Kl, .Qv, .Ql, .Surft, .DpPorFriccao, .DpPorHidrostatico,
+                                                                        .HoldupDeLiquido, .TipoFluxo, .LiqRe, .VapRe, .LiqVel, .VapVel, .CalorTransferido,
+                                                                        .Energia_Inicial, U) With {.HTC_external = results.HTC_external,
+                                                                                                   .HTC_internal = results.HTC_internal,
+                                                                                                   .HTC_insulation = results.HTC_insulation,
+                                                                                                   .HTC_pipewall = results.HTC_pipewall})
+
+                            End With
+
+                            Hout = Hin + DQ / Win
+
+                            Hin = Hout
+                            Tin = Tout
+                            Pin = Pout
+
+                            j += 1
+
+                        Loop Until j = nseg
+
+                    Else
+
+                        'CALCULAR DP PARA VALVULAS
+                        count = 0
+
+                        If segmento.Indice = 1 Then
+
+                            With Me.PropertyPackage
+
+                                Tpe = Tin + (Tout - Tin) / 2
+                                Tpe = Tin + (Tout - Tin) / 2
+                                Ppe = Pin + (Pout - Pin) / 2
+
+                                oms.Fases(0).SPMProperties.temperature = Tpe
+                                oms.Fases(0).SPMProperties.pressure = Ppe
+
+                                oms.Calculate(True, True)
+
+                            End With
+
+                            With oms
+
+                                Qlin = .Fases(3).SPMProperties.volumetric_flow.GetValueOrDefault + .Fases(4).SPMProperties.volumetric_flow.GetValueOrDefault + .Fases(5).SPMProperties.volumetric_flow.GetValueOrDefault + .Fases(6).SPMProperties.volumetric_flow.GetValueOrDefault
+                                rho_l = .Fases(1).SPMProperties.density.GetValueOrDefault
+                                eta_l = .Fases(1).SPMProperties.viscosity.GetValueOrDefault
+                                K_l = .Fases(1).SPMProperties.thermalConductivity.GetValueOrDefault
+                                Cp_l = .Fases(1).SPMProperties.heatCapacityCp.GetValueOrDefault
+                                tens = .Fases(0).TPMProperties.surfaceTension.GetValueOrDefault
+
+                                Qvin = .Fases(2).SPMProperties.volumetric_flow.GetValueOrDefault
+                                rho_v = .Fases(2).SPMProperties.density.GetValueOrDefault
+                                eta_v = .Fases(2).SPMProperties.viscosity.GetValueOrDefault
+                                K_v = .Fases(2).SPMProperties.thermalConductivity.GetValueOrDefault
+                                Cp_v = .Fases(2).SPMProperties.heatCapacityCp.GetValueOrDefault
+
+                            End With
+
+                        End If
+
+                        With segmento
+
+                            count = 0
+
+                            With results
+
+                                .TemperaturaInicial = Tin
+                                .PressaoInicial = Pin
+                                .Energia_Inicial = Hin
+                                .Cpl = Cp_l
+                                .Cpv = Cp_v
+                                .Kl = K_l
+                                .Kv = K_v
+                                .RHOl = rho_l
+                                .RHOv = rho_v
+                                .Ql = Qlin
+                                .Qv = Qvin
+                                .MUl = eta_l
+                                .MUv = eta_v
+                                .Surft = tens
+                                .LiqRe = 4 / Math.PI * .RHOl * .Ql / (.MUl * segmento.DI * 0.0254)
+                                .VapRe = 4 / Math.PI * .RHOv * .Qv / (.MUv * segmento.DI * 0.0254)
+                                .LiqVel = .Ql / (Math.PI * (segmento.DI * 0.0254) ^ 2 / 4)
+                                .VapVel = .Qv / (Math.PI * (segmento.DI * 0.0254) ^ 2 / 4)
+
+                            End With
+
+                            results.TipoFluxo = ""
+                            resv = Me.Kfit(segmento.Tipo)
+                            If resv(1) Then
+                                dph = 0
+                                dpf = resv(0) * (0.0101 * (.DI * 0.0254) ^ -0.2232) * (Qlin / (Qvin + Qlin) * rho_l + Qvin / (Qvin + Qlin) * rho_v) * (results.LiqVel.GetValueOrDefault + results.VapVel.GetValueOrDefault) ^ 2 / 2
                             Else
-                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid2)
+                                dph = 0
+                                dpf = resv(0) * (Qlin / (Qvin + Qlin) * rho_l + Qvin / (Qvin + Qlin) * rho_v) * (results.LiqVel.GetValueOrDefault + results.VapVel.GetValueOrDefault) ^ 2 / 2
                             End If
-                            If oms.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                                .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                            Else
-                                .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                            End If
-                            .DW_CalcLiqMixtureProps()
-                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Mixture)
-                            .DW_CalcOverallProps()
-                            .DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                            .DW_CalcVazaoVolumetrica()
+                            dpt = dpf
 
-                        End With
+                            Pout = Pin - dpt
+                            Tout = Tin
+                            DQ = 0
 
-                        With oms
+                            With results
+                                .CalorTransferido = DQ
+                                .DpPorFriccao = dpf
+                                .DpPorHidrostatico = dph
+                                .HoldupDeLiquido = holdup
+                                .TipoFluxo = DWSIM.App.GetLocalString("Turbulento")
+                                .TipoFluxoDescricao = ""
 
-                            Qlin = .Fases(3).SPMProperties.volumetric_flow.GetValueOrDefault + .Fases(4).SPMProperties.volumetric_flow.GetValueOrDefault + .Fases(5).SPMProperties.volumetric_flow.GetValueOrDefault + .Fases(6).SPMProperties.volumetric_flow.GetValueOrDefault
-                            rho_l = .Fases(1).SPMProperties.density.GetValueOrDefault
-                            eta_l = .Fases(1).SPMProperties.viscosity.GetValueOrDefault
-                            K_l = .Fases(1).SPMProperties.thermalConductivity.GetValueOrDefault
-                            Cp_l = .Fases(1).SPMProperties.heatCapacityCp.GetValueOrDefault
-                            tens = .Fases(0).TPMProperties.surfaceTension.GetValueOrDefault
+                                segmento.Resultados.Add(New PipeResults(.PressaoInicial, .TemperaturaInicial, .MUv, .MUl, .RHOv, .RHOl,
+                                                                        .Cpv, .Cpl, .Kv, .Kl, .Qv, .Ql, .Surft, .DpPorFriccao, .DpPorHidrostatico,
+                                                                        .HoldupDeLiquido, .TipoFluxo, .LiqRe, .VapRe, .LiqVel,
+                                                                        .VapVel, .CalorTransferido, .Energia_Inicial, U))
 
-                            Qvin = .Fases(2).SPMProperties.volumetric_flow.GetValueOrDefault
-                            rho_v = .Fases(2).SPMProperties.density.GetValueOrDefault
-                            eta_v = .Fases(2).SPMProperties.viscosity.GetValueOrDefault
-                            K_v = .Fases(2).SPMProperties.thermalConductivity.GetValueOrDefault
-                            Cp_v = .Fases(2).SPMProperties.heatCapacityCp.GetValueOrDefault
+                            End With
 
                         End With
 
                     End If
 
-                    With segmento
-                        count = 0
-                        With results
-                            .TemperaturaInicial = Tin
-                            .PressaoInicial = Pin
-                            .Energia_Inicial = Hin
-                            .Cpl = Cp_l
-                            .Cpv = Cp_v
-                            .Kl = K_l
-                            .Kv = K_v
-                            .RHOl = rho_l
-                            .RHOv = rho_v
-                            .Ql = Qlin
-                            .Qv = Qvin
-                            .MUl = eta_l
-                            .MUv = eta_v
-                            .Surft = tens
-                            .LiqRe = 4 / Math.PI * .RHOl * .Ql / (.MUl * segmento.DI * 0.0254)
-                            .VapRe = 4 / Math.PI * .RHOv * .Qv / (.MUv * segmento.DI * 0.0254)
-                            .LiqVel = .Ql / (Math.PI * (segmento.DI * 0.0254) ^ 2 / 4)
-                            .VapVel = .Qv / (Math.PI * (segmento.DI * 0.0254) ^ 2 / 4)
+                Next
 
-                        End With
-
-                        results.TipoFluxo = ""
-                        resv = Me.Kfit(segmento.Tipo)
-                        If resv(1) Then
-                            dph = 0
-                            dpf = resv(0) * (0.0101 * (.DI * 0.0254) ^ -0.2232) * (Qlin / (Qvin + Qlin) * rho_l + Qvin / (Qvin + Qlin) * rho_v) * (results.LiqVel.GetValueOrDefault + results.VapVel.GetValueOrDefault) ^ 2 / 2
+                If Me.Specification = specmode.OutletTemperature Then
+                    If Math.Abs(Tout - OutletTemperature) < 0.01 Then
+                        Exit Do
+                    Else
+                        x00 = x0
+                        x0 = x
+                        x = Me.ThermalProfile.Calor_trocado
+                        fx00 = fx0
+                        fx0 = t0 - OutletTemperature
+                        fx = Tout - OutletTemperature
+                        If countext > 2 Then
+                            x = x - fx * (x - x00) / (fx - fx00)
+                            If Double.IsNaN(x) Or Double.IsInfinity(x) Then Throw New Exception("Erroaocalculartemper")
+                            Me.ThermalProfile.Calor_trocado = x
                         Else
-                            dph = 0
-                            dpf = resv(0) * (Qlin / (Qvin + Qlin) * rho_l + Qvin / (Qvin + Qlin) * rho_v) * (results.LiqVel.GetValueOrDefault + results.VapVel.GetValueOrDefault) ^ 2 / 2
+                            Me.ThermalProfile.Calor_trocado += 0.1
                         End If
-                        dpt = dpf
-
-                        'If Not tmp Is Nothing Then
-                        '    tmp_ant = tmp
-                        'Else
-                        '    tmp_ant = New Object() {form.Collections.CLCS_MaterialStreamCollection(Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.Name).Fases(1).SPMProperties.molarfraction.GetValueOrDefault, 0}
-                        'End If
-                        'tmp = form.Options.SelectedPropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pin - dpt, Hout, T2)
-                        Pout = Pin - dpt
-                        Tout = Tin
-                        DQ = 0
-
-                        With results
-                            .CalorTransferido = DQ
-                            .DpPorFriccao = dpf
-                            .DpPorHidrostatico = dph
-                            .HoldupDeLiquido = holdup
-                            .TipoFluxo = DWSIM.App.GetLocalString("Turbulento")
-                            .TipoFluxoDescricao = ""
-
-                            segmento.Resultados.Add(New PipeResults(.PressaoInicial, .TemperaturaInicial, .MUv, .MUl, .RHOv, .RHOl, .Cpv, .Cpl, .Kv, .Kl, .Qv, .Ql, .Surft, .DpPorFriccao, .DpPorHidrostatico, .HoldupDeLiquido, .TipoFluxo, .LiqRe, .VapRe, .LiqVel, .VapVel, .CalorTransferido, .Energia_Inicial, U))
-
-                        End With
-
-                    End With
-
+                    End If
+                ElseIf Me.Specification = specmode.OutletPressure Then
+                    If Math.Abs(Pout - OutletPressure) < 10 Then
+                        Exit Do
+                    Else
+                        x00 = x0
+                        x0 = x
+                        x = Me.Profile.Sections(1).Comprimento
+                        fx00 = fx0
+                        fx0 = p0 - OutletPressure
+                        fx = Pout - OutletPressure
+                        If countext > 2 Then
+                            x = x - fx * (x - x00) / (fx - fx00)
+                            If Double.IsNaN(x) Or Double.IsInfinity(x) Then Throw New Exception("Erronoclculodapresso")
+                            Me.Profile.Sections(1).Comprimento = x
+                        Else
+                            Me.Profile.Sections(1).Comprimento *= 1.05
+                        End If
+                    End If
+                Else
+                    Exit Do
                 End If
 
-            Next
+                p0 = Pout
+                t0 = Tout
+
+                countext += 1
+
+                If countext > 50 Then Throw New Exception("Nmeromximodeiteraesa3")
+
+            Loop
 
             CheckSpec(Tout, True, "outlet temperature")
             CheckSpec(Pout, True, "outlet pressure")
@@ -1098,7 +1121,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             ByVal Cpl As Double, ByVal Cpv As Double, ByVal kl As Double, ByVal kv As Double, _
                             ByVal mu_l As Double, ByVal mu_v As Double, ByVal rho_l As Double, _
                             ByVal rho_v As Double, ByVal hinterno As Boolean, ByVal isolamento As Boolean, _
-                            ByVal parede As Boolean, ByVal hexterno As Boolean) As Double
+                            ByVal parede As Boolean, ByVal hexterno As Boolean) As Double()
 
             If Double.IsNaN(rho_l) Then rho_l = 0.0#
 
@@ -1232,28 +1255,28 @@ Namespace DWSIM.SimulationObjects.UnitOps
             'Calculate overall HTC
             Dim _U As Double
 
-            If U_int <> 0 Then
+            If U_int <> 0.0# Then
                 _U = _U + 1 / U_int
             Else
                 If hinterno = True Then
                     _U = _U + 1.0E+30
                 End If
             End If
-            If U_parede <> 0 Then
+            If U_parede <> 0.0# Then
                 _U = _U + 1 / U_parede
             Else
                 If parede = True Then
                     _U = _U + 1.0E+30
                 End If
             End If
-            If U_isol <> 0 Then
+            If U_isol <> 0.0# Then
                 _U = _U + 1 / U_isol
             Else
                 If isolamento = True Then
                     _U = _U + 1.0E+30
                 End If
             End If
-            If U_ext <> 0 Then
+            If U_ext <> 0.0# Then
                 _U = _U + 1 / U_ext
             Else
                 If hexterno = True Then
@@ -1261,7 +1284,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 End If
             End If
 
-            Return 1 / _U '[W/m².K]
+            Return New Double() {1 / _U, U_int, U_parede, U_isol, U_ext} '[W/m².K]
 
         End Function
 
@@ -1545,6 +1568,7 @@ Final3:     T = bbb
                 .Add(2, New DWSIM.Outros.NodeItem("Q", "", "", 2, 0, ""))
 
             End With
+
         End Sub
 
         Public Overrides Sub PopulatePropertyGrid(ByVal pgrid As PropertyGridEx.PropertyGridEx, ByVal su As SistemasDeUnidades.Unidades)
@@ -1610,6 +1634,28 @@ Final3:     T = bbb
                     .CustomTypeConverter = New DWSIM.Editors.PipeEditor.ThermalProfileEditorConverter
                 End With
 
+                .Item.Add(DWSIM.App.GetLocalString("PipeSpecMode"), Me, "Specification", False, DWSIM.App.GetLocalString("Parmetros3"), DWSIM.App.GetLocalString("PipeSpecModeDesc"), True)
+
+                Dim valor As Double
+
+                Select Case Me.Specification
+                    Case specmode.Length
+                    Case specmode.OutletPressure
+                        valor = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.OutletPressure), FlowSheet.Options.NumberFormat)
+                        .Item.Add(FT(DWSIM.App.GetLocalString("ValveOutletPressure"), su.spmp_pressure), valor, False, DWSIM.App.GetLocalString("Parmetros3"), "", True)
+                        With .Item(.Item.Count - 1)
+                            .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_pressure, "P"}
+                            .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
+                        End With
+                    Case specmode.OutletTemperature
+                        valor = Format(Conversor.ConverterDoSI(su.spmp_temperature, Me.OutletTemperature), FlowSheet.Options.NumberFormat)
+                        .Item.Add(FT(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature"), su.spmp_temperature), valor, False, DWSIM.App.GetLocalString("Parmetros3"), "", True)
+                        With .Item(.Item.Count - 1)
+                            .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_temperature, "T"}
+                            .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
+                        End With
+                End Select
+
                 .Item.Add(DWSIM.App.GetLocalString("MximodeIteraesemP"), Me, "MaxPressureIterations", False, DWSIM.App.GetLocalString("Parmetros3"), "", True)
                 .Item.Add(DWSIM.App.GetLocalString("MximodeIteraesemT"), Me, "MaxTemperatureIterations", False, DWSIM.App.GetLocalString("Parmetros3"), "", True)
                 .Item.Add(DWSIM.App.GetLocalString("IncludeJTEffect"), Me, "IncludeJTEffect", False, DWSIM.App.GetLocalString("Parmetros3"), "", True)
@@ -1667,43 +1713,56 @@ Final3:     T = bbb
             Dim propidx As Integer = CInt(prop.Split("_")(2))
 
             Select Case propidx
-
                 Case 0
-                    'PROP_PS_0	Pressure Drop
                     value = cv.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault)
                 Case 1
-                    'PROP_PS_1	Temperature Drop
                     value = cv.ConverterDoSI(su.spmp_deltaT, Me.DeltaT.GetValueOrDefault)
                 Case 2
-                    'PROP_PS_2	Heat Exchanged
                     value = cv.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ.GetValueOrDefault)
+                Case 3
+                    value = cv.ConverterDoSI(su.spmp_pressure, Me.OutletPressure)
+                Case 4
+                    value = cv.ConverterDoSI(su.spmp_temperature, Me.OutletTemperature)
+                Case 5
+                    value = cv.ConverterDoSI(su.heat_transf_coeff, Me.ThermalProfile.CGTC_Definido)
+                Case 6
+                    value = cv.ConverterDoSI(su.spmp_temperature, Me.ThermalProfile.Temp_amb_definir)
             End Select
 
             Return value
 
         End Function
 
-
         Public Overloads Overrides Function GetProperties(ByVal proptype As SimulationObjects_BaseClass.PropertyType) As String()
             Dim i As Integer = 0
             Dim proplist As New ArrayList
-            Select Case proptype
-                Case PropertyType.RO
-                    For i = 0 To 2
-                        proplist.Add("PROP_PS_" + CStr(i))
-                    Next
-                Case PropertyType.WR
-                Case PropertyType.ALL
-                    For i = 0 To 2
-                        proplist.Add("PROP_PS_" + CStr(i))
-                    Next
-            End Select
+            For i = 0 To 6
+                proplist.Add("PROP_PS_" + CStr(i))
+            Next
             Return proplist.ToArray(GetType(System.String))
             proplist = Nothing
         End Function
 
         Public Overrides Function SetPropertyValue(ByVal prop As String, ByVal propval As Object, Optional ByVal su As DWSIM.SistemasDeUnidades.Unidades = Nothing) As Object
-            Return 0
+            If su Is Nothing Then su = New DWSIM.SistemasDeUnidades.UnidadesSI
+            Dim cv As New DWSIM.SistemasDeUnidades.Conversor
+            Dim propidx As Integer = CInt(prop.Split("_")(2))
+
+            Select Case propidx
+                Case 2
+                    Me.ThermalProfile.Calor_trocado = cv.ConverterParaSI(su.spmp_heatflow, propval)
+                Case 3
+                    Me.OutletPressure = cv.ConverterParaSI(su.spmp_pressure, propval)
+                Case 4
+                    Me.OutletTemperature = cv.ConverterParaSI(su.spmp_temperature, propval)
+                Case 5
+                    Me.ThermalProfile.CGTC_Definido = cv.ConverterParaSI(su.heat_transf_coeff, propval)
+                Case 6
+                    Me.ThermalProfile.Temp_amb_definir = cv.ConverterParaSI(su.spmp_temperature, propval)
+            End Select
+
+            Return 1
+
         End Function
 
         Public Overrides Function GetPropertyUnit(ByVal prop As String, Optional ByVal su As SistemasDeUnidades.Unidades = Nothing) As Object
@@ -1712,20 +1771,24 @@ Final3:     T = bbb
             Dim propidx As Integer = CInt(prop.Split("_")(2))
 
             Select Case propidx
-
                 Case 0
-                    'PROP_PS_0	Pressure Drop
                     value = su.spmp_deltaP
                 Case 1
-                    'PROP_PS_1	Temperature Drop
                     value = su.spmp_deltaT
                 Case 2
-                    'PROP_PS_2	Heat Exchanged
                     value = su.spmp_heatflow
-
+                Case 3
+                    value = su.spmp_pressure
+                Case 4
+                    value = su.spmp_temperature
+                Case 5
+                    value = su.heat_transf_coeff
+                Case 6
+                    value = su.spmp_temperature
             End Select
 
             Return value
+
         End Function
     End Class
 

@@ -274,7 +274,7 @@ End Class
 
     Protected m_HTC As Nullable(Of Double)
 
-#Region "Construtors"
+#Region "Constructors"
 
     Sub New()
 
@@ -542,6 +542,11 @@ End Class
             m_HTC = value
         End Set
     End Property
+
+    Public Property HTC_internal As Double = 0.0#
+    Public Property HTC_pipewall As Double = 0.0#
+    Public Property HTC_insulation As Double = 0.0#
+    Public Property HTC_external As Double = 0.0#
 
     Public Function LoadData(data As System.Collections.Generic.List(Of System.Xml.Linq.XElement)) As Boolean Implements XMLSerializer.Interfaces.ICustomXMLSerialization.LoadData
 

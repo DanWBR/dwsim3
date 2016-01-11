@@ -580,6 +580,16 @@ Imports PropertyGridEx
 
                 Dim bb As DWSIM.SimulationObjects.UnitOps.Pipe = FlowSheet.Collections.CLCS_PipeCollection.Item(sobj.Name)
 
+                If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature")) Then
+
+                    bb.OutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+
+                ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("ValveOutletPressure")) Then
+
+                    bb.OutletPressure = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
+
+                End If
+
                 If FlowSheet.Options.CalculatorActivated Then
 
                     'Call function to calculate flowsheet

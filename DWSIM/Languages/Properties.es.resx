@@ -1200,4 +1200,16 @@
     <value>Temperatura de Salida</value>
     <comment>1</comment>
   </data>
+  <data name="PROP_PS_3" xml:space="preserve">
+    <value>Presión de salida</value>
+  </data>
+  <data name="PROP_PS_4" xml:space="preserve">
+    <value>Temperatura de salida</value>
+  </data>
+  <data name="PROP_PS_5" xml:space="preserve">
+    <value>Coeficiente global de transferencia de calor</value>
+  </data>
+  <data name="PROP_PS_6" xml:space="preserve">
+    <value>Temperatura ambiente</value>
+  </data>
 </root>

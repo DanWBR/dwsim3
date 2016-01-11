@@ -1496,7 +1496,7 @@ Liquid Surface Tension: Brock-Bird Method</value>
     <value>Error calculating equilibrium composition.</value>
   </data>
   <data name="Erronoclculodapresso" xml:space="preserve">
-    <value>Error in the calculation of pressure.</value>
+    <value>Error calculating pressure.</value>
   </data>
   <data name="Erronoclculodareadoo" xml:space="preserve">
     <value>Error in the calculation of the orifice area.</value>
@@ -2357,10 +2357,10 @@ Liquid Surface Tension: Brock-Bird Method</value>
     <value>Maximum iterations reached.</value>
   </data>
   <data name="MximodeIteraesemP" xml:space="preserve">
-    <value>Maximum Iterations in P</value>
+    <value>Maximum Pressure Iterations</value>
   </data>
   <data name="MximodeIteraesemT" xml:space="preserve">
-    <value>Maximum Iterations T</value>
+    <value>Maximum Temperature Iterations</value>
   </data>
   <data name="N" xml:space="preserve">
     <value>N</value>
@@ -2405,13 +2405,13 @@ Liquid Surface Tension: Brock-Bird Method</value>
     <value>Maximum Number of Iterations</value>
   </data>
   <data name="Nmeromximodeiteraesa" xml:space="preserve">
-    <value>Maximum number of iterations to be used by Adjustment.</value>
+    <value>Maximum number of iterations to be used by Adjust Operation</value>
   </data>
   <data name="Nmeromximodeiteraesa2" xml:space="preserve">
     <value>  -- Maximum number of iterations reached</value>
   </data>
   <data name="Nmeromximodeiteraesa3" xml:space="preserve">
-    <value>Maximum number of iterations reached</value>
+    <value>Maximum number of iterations reached.</value>
   </data>
   <data name="Nmeromximodeiteraesd" xml:space="preserve">
     <value>Maximum number of iterations of recycle.</value>
@@ -5244,5 +5244,14 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   </data>
   <data name="ParallelPInvokeError" xml:space="preserve">
     <value>This feature uses a platform-specific, unmanaged (non-.NET) native library, which doesn't work with CPU Parallel Processing enabled. Please disable CPU Parallel Processing and try again.</value>
+  </data>
+  <data name="PipeSpecMode" xml:space="preserve">
+    <value>Pipe Specification</value>
+  </data>
+  <data name="PipeSpecModeDesc" xml:space="preserve">
+    <value>Length = specify segments' length to calculate outlet pressure and temperature; OutletPressure = specify outlet pressure to calculate temperature and resulting length for a single, straight pipe segment; OutletTemperature = specify outlet temperature and segments' length to calculate outlet pressure and heat exchanged (thermal profile option automatically switches to 'Heat Exchanged' in this mode).</value>
+  </data>
+  <data name="PipeOutletPressureRestriction" xml:space="preserve">
+    <value>When in "Outlet Pressure" calculation mode, the pipe must have a single segment only, and it must of "Straight Tube" type.</value>
   </data>
 </root>

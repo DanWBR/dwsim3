@@ -10544,6 +10544,33 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to No modo de cálculo de pressão na saída, a tubulação deve possuir apenas um segmento e este deve ser do tipo &quot;Tubulação Simples&quot;..
+        '''</summary>
+        Friend Shared ReadOnly Property PipeOutletPressureRestriction() As String
+            Get
+                Return ResourceManager.GetString("PipeOutletPressureRestriction", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Especificação de Cálculo.
+        '''</summary>
+        Friend Shared ReadOnly Property PipeSpecMode() As String
+            Get
+                Return ResourceManager.GetString("PipeSpecMode", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Length = Especifica-se o comprimento dos segmentos, calculam-se temperatura e pressão; OutletPressure = Especificam-se a pressão e comprimento dos segmentos e calculam-se a temperatura e comprimento do primeiro e único segmento como tubulação simples; OutletTemperature = Especificam-se a temperatura e o comprimento dos segmentos e calculam-se a pressão e o calor trocado..
+        '''</summary>
+        Friend Shared ReadOnly Property PipeSpecModeDesc() As String
+            Get
+                Return ResourceManager.GetString("PipeSpecModeDesc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Plástico.
         '''</summary>
         Friend Shared ReadOnly Property Plstico() As String
