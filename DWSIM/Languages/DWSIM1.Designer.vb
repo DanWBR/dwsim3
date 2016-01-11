@@ -4144,7 +4144,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Pacote de Propriedades que utiliza o método de Contribuição de Grupos UNIFAC Modificado (Dortmund) para a modelagem da fase líquida. As Entalpias, Entropias e Capacidades Caloríficas residuais são calculadas a partir do modelo de Lee-Kesler. A fase vapor é modelada através da EDE Peng-Robinson..
+        '''  Looks up a localized string similar to Pacote de Propriedades que utiliza o método de Contribuição de Grupos UNIFAC Modificado (Dortmund) para a modelagem da fase líquida. As Entalpias, Entropias e Capacidades Caloríficas residuais são calculadas a partir do modelo de Lee-Kesler..
         '''</summary>
         Friend Shared ReadOnly Property DescMUPP() As String
             Get
@@ -4153,7 +4153,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Neste Pacote de Propriedades, o coeficiente de atividade da fase líquida é calculado através do modelo NRTL (Non-Random Two-Liquid). A fugacidade da fase vapor é calculada através da EDE Peng-Robinson. As entalpias de ambas as fases são calculadas pela equação Lee-Kesler. Outras propriedades termodinâmicas são calculadas pela EDE Peng-Robinson. .
+        '''  Looks up a localized string similar to Neste Pacote de Propriedades, o coeficiente de atividade da fase líquida é calculado através do modelo NRTL (Non-Random Two-Liquid). Opcionalmente, a fugacidade da fase vapor é calculada através da EDE Peng-Robinson. As entalpias de ambas as fases são calculadas pela equação Lee-Kesler. Outras propriedades termodinâmicas são calculadas pela EDE Peng-Robinson. .
         '''</summary>
         Friend Shared ReadOnly Property DescNRTLPP() As String
             Get
@@ -4200,13 +4200,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Pacote de Propriedades que utiliza a EE Peng-Robinson. Indicado para uso com hidrocarbonetos e não-condensáveis.
-        '''As propriedades são calculadas diretamente através da equação de estado e/ou de dados experimentais, exceto:
-        '''Massa Específica da Fase Líquida: Método de Rackett
-        '''Condutividade Térmica da Fase Líquida: Método de Latini et al
-        '''Condutividade Térmica da Fase Vapor: Método de Ely e Hanley
-        '''Viscosidade da Fase Vapor: Método Jossi-Stiel-Thodos
-        '''Tensão Superficial da Fase Líquida: Método Brock-Bird.
+        '''  Looks up a localized string similar to Pacote de Propriedades que utiliza a EE Peng-Robinson. Indicado para uso com hidrocarbonetos e não-condensáveis..
         '''</summary>
         Friend Shared ReadOnly Property DescPengRobinsonPP() As String
             Get
@@ -4316,7 +4310,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Neste Pacote de Propriedades, o coeficiente de atividade da fase líquida é calculado através do modelo UNIQUAC. A fugacidade da fase vapor é calculada através da EDE Peng-Robinson. As entalpias de ambas as fases são calculadas pela equação Lee-Kesler. Outras propriedades termodinâmicas são calculadas pela EDE Peng-Robinson..
+        '''  Looks up a localized string similar to Neste Pacote de Propriedades, o coeficiente de atividade da fase líquida é calculado através do modelo UNIQUAC. Opcionalmente, a fugacidade da fase vapor é calculada através da EDE Peng-Robinson. As entalpias de ambas as fases são calculadas pela equação Lee-Kesler. Outras propriedades termodinâmicas são calculadas pela EDE Peng-Robinson..
         '''</summary>
         Friend Shared ReadOnly Property DescUNIQUACPP() As String
             Get

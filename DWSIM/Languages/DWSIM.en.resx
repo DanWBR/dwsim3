@@ -1120,27 +1120,22 @@
     <value>Uses the empirical model of Chao and Seader for the calculation of VLE K-values. All other thermodynamic properties are calculated by the Lee-Kesler model.</value>
   </data>
   <data name="DescGSLKPP" xml:space="preserve">
-    <value>Uses the empirical model of Grayson and Streed for the calculation of VLE K-values. All other thermodynamic properties are calculated by the Lee-Kesler model.</value>
+    <value>Uses the empirical model of Grayson and Streed for the calculation of VLE K-values. All remaining thermodynamic properties are calculated by the Lee-Kesler model.</value>
   </data>
   <data name="DescMUPP" xml:space="preserve">
-    <value>Liquid phase Activity Coefficients are calculated by the Modified UNIFAC (Dortmund) method. Enthalpies, Entropies and Heat Capacities (both phases) are calculated by the Lee-Kesler method. The remaining properties, including vapor phase Fugacity Coefficients, are calculated using the Peng-Robinson EOS.</value>
+    <value>Liquid phase Activity Coefficients are calculated by the Modified UNIFAC (Dortmund) method. Enthalpies, Entropies and Heat Capacities (both phases) are calculated by the Lee-Kesler method. The remaining properties, including vapor phase Fugacity Coefficients (optionally), are calculated using the Peng-Robinson EOS.</value>
   </data>
   <data name="DescNRTLPP" xml:space="preserve">
-    <value>In this Property Package, the NRTL (Non-Random Two-Liquid) model is used to calculate liquid-phase activity coefficients. Enthalpies are calculated by the Lee-Kesler model, while vapor-phase fugacities and other thermodynamic properties (both phases) are calculated by the Peng-Robinson EOS.</value>
+    <value>In this Property Package, the NRTL (Non-Random Two-Liquid) model is used to calculate liquid-phase activity coefficients. Enthalpies are calculated by the Lee-Kesler model, while vapor-phase fugacities (optionally) and other thermodynamic properties (both phases) are calculated by the Peng-Robinson EOS.</value>
   </data>
   <data name="DescPengRobinsonIWVTPP" xml:space="preserve">
-    <value>This Property Package uses the Peng-Robinson EOS considering water as an immiscible component. Also takes into account the volume translation coefficient for a better prediction of liquid volume densities, when applicable. Recommended only for water-hydrocarbon systems.</value>
+    <value>This Property Package uses the Peng-Robinson EOS taking water as an immiscible component. Also takes into account the volume translation coefficient for a better prediction of liquid volume densities, when applicable. Recommended only for water-hydrocarbon systems.</value>
   </data>
   <data name="DescPengRobinsonMP" xml:space="preserve">
     <value>Peng-Robinson Property Package with support for more than one liquid phase.</value>
   </data>
   <data name="DescPengRobinsonPP" xml:space="preserve">
-    <value>Property Package that uses the Peng-Robinson EOS. Recommended for use with hydrocarbons and non-condensables.
-The properties are calculated directly from the EOS and/or experimental data, except:
-Liquid Density: Rackett Method
-Liquid Thermal Conductivity: Latini et al Method
-Vapor Thermal Conductivity: Ely-Hanley Method
-Liquid Surface Tension: Brock-Bird Method</value>
+    <value>Property Package that uses the Peng-Robinson Cubic Equation of State. Recommended for use with hydrocarbons and non-condensables.</value>
   </data>
   <data name="DescPRLK" xml:space="preserve">
     <value>In this Property Package, Enthalpies, Entropies and Heat Capacities are calculated from the Lee-Kesler model.</value>
@@ -1155,12 +1150,7 @@ Liquid Surface Tension: Brock-Bird Method</value>
     <value>Reference Property Package (Ideal Gas/Solution).</value>
   </data>
   <data name="DescSoaveRedlichKwongSRK" xml:space="preserve">
-    <value>Property Package that uses the SRK EOS. Recommended for use with hydrocarbons and non-condensables.
-The properties are calculated directly from the EOS and/or experimental data, except:
-Liquid Density: Rackett Method
-Liquid Thermal Conductivity: Latini et al Method
-Vapor Thermal Conductivity: Ely-Hanley Method
-Liquid Surface Tension: Brock-Bird Method</value>
+    <value>Property Package that uses the Soave-Redlich-Kwong Cubic Equation of State. Recommended for use with hydrocarbons and non-condensables.</value>
   </data>
   <data name="DescSRKMP" xml:space="preserve">
     <value>Soave-Redlich-Kwong Property Package with support for more than one liquid phase.</value>
@@ -1169,7 +1159,7 @@ Liquid Surface Tension: Brock-Bird Method</value>
     <value>Property Package for Water using IAPWS-97 property tables.</value>
   </data>
   <data name="DescUNIQUACPP" xml:space="preserve">
-    <value>In this Property Package, the UNIQUAC model is used to calculate liquid-phase activity coefficients. Enthalpies are calculated by the Lee-Kesler model, while vapor-phase fugacities and other thermodynamic properties (both phases) are calculated by the Peng-Robinson EOS.</value>
+    <value>In this Property Package, the UNIQUAC model is used to calculate liquid-phase activity coefficients. Enthalpies are calculated by the Lee-Kesler model, while vapor-phase fugacities (optionally) and other thermodynamic properties (both phases) are calculated by the Peng-Robinson EOS.</value>
   </data>
   <data name="DescUPP" xml:space="preserve">
     <value>Property Package that uses the UNIFAC Group Contribution Method for equilibrium calculations. Recommended for use with Hypotheticals.</value>
@@ -4421,7 +4411,7 @@ Liquid Surface Tension: Brock-Bird Method</value>
     <value>Script</value>
   </data>
   <data name="DescCSPP" xml:space="preserve">
-    <value>Liquid Phase Activity Coefficients are predicted by the COSMO-SAC JCOSMO implementation of Rafael Soares and Renan Gerber. Enthalpies, Entropies and Heat Capacities (both phases) are calculated by the Lee-Kesler method. The remaining properties, including vapor phase Fugacity Coefficients, are calculated using the Peng-Robinson EOS.</value>
+    <value>Liquid Phase Activity Coefficients are predicted by the COSMO-SAC JCOSMO implementation of Rafael Soares and Renan Gerber. Enthalpies, Entropies and Heat Capacities (both phases) are calculated by the Lee-Kesler method. The remaining properties, including vapor phase Fugacity Coefficients (optionally), are calculated using the Peng-Robinson EOS.</value>
   </data>
   <data name="CorrentedeenergiaE" xml:space="preserve">
     <value>Energy Stream (In)</value>
