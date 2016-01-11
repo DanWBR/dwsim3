@@ -283,7 +283,7 @@
     <value>DWSIM</value>
   </data>
   <data name="WikiToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>409, 22</value>
+    <value>408, 22</value>
   </data>
   <data name="&gt;&gt;toolStripSeparator1.Name" xml:space="preserve">
     <value>toolStripSeparator1</value>
@@ -352,7 +352,7 @@
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="ManualTécnicoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>159, 22</value>
+    <value>158, 22</value>
   </data>
   <data name="&gt;&gt;ToolStripButton5.Name" xml:space="preserve">
     <value>ToolStripButton5</value>
@@ -412,7 +412,7 @@
     <value>&amp;Janelas</value>
   </data>
   <data name="GuiaDoUsuárioToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>159, 22</value>
+    <value>158, 22</value>
   </data>
   <data name="&gt;&gt;BgLoadComp.Name" xml:space="preserve">
     <value>BgLoadComp</value>
@@ -472,7 +472,7 @@
     <value>ToolStripButton7</value>
   </data>
   <data name="FórumToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>409, 22</value>
+    <value>408, 22</value>
   </data>
   <data name="&gt;&gt;StatusStrip1.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -989,7 +989,7 @@
     <value>ContentsToolStripMenuItem</value>
   </data>
   <data name="RastreamentoDeBugsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>409, 22</value>
+    <value>408, 22</value>
   </data>
   <data name="OpenToolStripButton.Text" xml:space="preserve">
     <value>&amp;Abrir Simulação</value>
@@ -1214,7 +1214,7 @@
     <value>2</value>
   </data>
   <data name="DownloadsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>409, 22</value>
+    <value>408, 22</value>
   </data>
   <data name="&gt;&gt;SettingsPanel.ZOrder" xml:space="preserve">
     <value>0</value>
@@ -1380,6 +1380,9 @@
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>108</value>
+  </metadata>
+  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>en</value>
   </metadata>
   <metadata name="SaveFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>480, 17</value>
