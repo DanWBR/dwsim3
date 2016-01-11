@@ -30,6 +30,11 @@ Partial Class FormTable
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -136,6 +141,9 @@ Partial Class FormTable
         '
         'Column9
         '
+        DataGridViewCellStyle8.Format = "N4"
+        DataGridViewCellStyle8.NullValue = Nothing
+        Me.Column9.DefaultCellStyle = DataGridViewCellStyle8
         resources.ApplyResources(Me.Column9, "Column9")
         Me.Column9.Name = "Column9"
         Me.Column9.ReadOnly = True
@@ -143,6 +151,8 @@ Partial Class FormTable
         '
         'Column10
         '
+        DataGridViewCellStyle9.Format = "N4"
+        Me.Column10.DefaultCellStyle = DataGridViewCellStyle9
         resources.ApplyResources(Me.Column10, "Column10")
         Me.Column10.Name = "Column10"
         Me.Column10.ReadOnly = True
@@ -150,6 +160,8 @@ Partial Class FormTable
         '
         'Column11
         '
+        DataGridViewCellStyle10.Format = "N4"
+        Me.Column11.DefaultCellStyle = DataGridViewCellStyle10
         resources.ApplyResources(Me.Column11, "Column11")
         Me.Column11.Name = "Column11"
         Me.Column11.ReadOnly = True
@@ -157,6 +169,8 @@ Partial Class FormTable
         '
         'Column12
         '
+        DataGridViewCellStyle11.Format = "N4"
+        Me.Column12.DefaultCellStyle = DataGridViewCellStyle11
         resources.ApplyResources(Me.Column12, "Column12")
         Me.Column12.Name = "Column12"
         Me.Column12.ReadOnly = True
@@ -164,6 +178,8 @@ Partial Class FormTable
         '
         'Column13
         '
+        DataGridViewCellStyle12.Format = "N4"
+        Me.Column13.DefaultCellStyle = DataGridViewCellStyle12
         resources.ApplyResources(Me.Column13, "Column13")
         Me.Column13.Name = "Column13"
         Me.Column13.ReadOnly = True
