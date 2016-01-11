@@ -110,7 +110,7 @@ Profile editor, DWSIM calculates the Overall HTC by using the following
 relation, based on the theory of resistance to heat transfer between pipe's internal and external media:<br>
 <br><div style="text-align: center;">
 `1/U=1/h_("int")+l_("wall")/k_("wall")+l_("ins")/k_("ins")+1/h_("ext")`, where<br></div>
-<br>`h_("int")` = internal convective heat transfer coefficient<br>`l_("wall")` = pipe wall thickness<br>`k_("wall")` = pipe wall conductive heat transfer coefficient (thermal conductivity)<br>`l_("ins")` = pipe insulation thickness<br>`k_("ins")` = pipe insulation conductive heat transfer coefficient (thermal conductivity)<br>`h_("ext")` = external convective heat transfer coefficient<br><br>Internal HTC is calculated using the Petukhov correlation:<br>&nbsp;<br><div style="text-align: center;">`h = k / D *&nbsp;f / 8 *&nbsp;Re * "Pr" / (1.07 + 12.7 * (f / 8) ^ 0.5 * (Pr ^ (2 / 3) - 1))`<br></div><br>External HTC is calculated using the Holman correlation:<br><br><div style="text-align: center;">`h = 0.25 * k / d_(ext) *&nbsp;&nbsp;Re ^ 0.6 *&nbsp;Pr ^ 0.38`</div><br>Each
+<br>`h_("int")` = internal convective heat transfer coefficient<br>`l_("wall")` = pipe wall thickness<br>`k_("wall")` = pipe wall conductive heat transfer coefficient (thermal conductivity)<br>`l_("ins")` = pipe insulation thickness<br>`k_("ins")` = pipe insulation conductive heat transfer coefficient (thermal conductivity)<br>`h_("ext")` = external convective heat transfer coefficient<br><br>Internal HTC is calculated using the Petukhov correlation:<br>&nbsp;<br><div style="text-align: center;">`h = k / d_("int") *&nbsp;f / 8 *&nbsp;Re * "Pr" / (1.07 + 12.7 * (f / 8) ^ 0.5 * (Pr ^ (2 / 3) - 1))`<br></div><br>External HTC is calculated using the Holman correlation:<br><br><div style="text-align: center;">`h = 0.25 * k / d_(ext) *&nbsp;&nbsp;Re ^ 0.6 *&nbsp;Pr ^ 0.38`</div><br>Each
 term in the Overall HTC&nbsp;expression is added to the sum if it is
 checked to be included in the calculation through the Thermal Profile
 Editor.<br><br><span style="font-weight: bold;">Joule-Thomson cooling effect</span><br><br>The Joule-Thomson effect on the temperature drop is calculated by the following relation:<br><br><div style="text-align: center;">`eta = (dP) / (dT) = 1 / (Cp_m * w) * [w_v / rho_v * (-T_("in") / z * dz / (dT)) + w_l / rho_l]`<br><br>`T_(out) = T_(out0) + eta * (P_("in") - P_(out))`<br></div><br>In
@@ -118,8 +118,7 @@ the above expressions, the Joule-Thomson expansion coefficient is
 calculated using properties of the vapor and liquid phases. The heat
 balance-calculated outlet temperature is then corrected to include the
 JT effect by using the calculated expansion coefficient multiplied by
-the pressure drop in the current segment.<br><h3>Output Parameters</h3>
-<b>Delta-T: </b>temperature drop in the pipe segment.<br>
+the pressure drop in the current segment.<br><h3>Output Parameters</h3><b><br>Delta-T: </b>temperature drop in the pipe segment.<br>
 <br>
 <b>Delta-P: </b>pressure drop in the pipe segment.<br>
 <br>
