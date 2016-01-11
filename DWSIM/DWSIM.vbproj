@@ -1491,6 +1491,7 @@
     <None Include="Assets\DWSIM.xll" />
     <None Include="Assets\DWSIM_64.dna" />
     <None Include="Assets\DWSIM_64.xll" />
+    <None Include="Assets\ExcelAddInHelp.chm" />
     <None Include="Assets\excelcompat.ini" />
     <None Include="Assets\licenses\WindowsAzureClientLibraries_License.rtf" />
     <None Include="Assets\linux\Cureos.Numerics.dll.config" />
