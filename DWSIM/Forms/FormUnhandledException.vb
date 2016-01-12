@@ -60,6 +60,7 @@ Public Class FormUnhandledException
     End Sub
 
     Private Sub FormUnhandledException_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        If DWSIM.App.IsRunningOnMono Then Console.WriteLine(ex.ToString)
         Me.Button1.Text = DWSIM.App.GetLocalString("Detalhes3")
     End Sub
 

@@ -199,11 +199,12 @@ Partial Class frmWatch
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.CloseButton = False
+        Me.CloseButtonVisible = False
         Me.Controls.Add(Me.dgv)
         Me.Controls.Add(Me.ToolStrip1)
         Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
-        Me.HideOnClose = True
         Me.Name = "frmWatch"
         Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight
         Me.ShowIcon = False

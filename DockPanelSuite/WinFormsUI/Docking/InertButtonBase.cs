@@ -101,7 +101,8 @@ namespace WeifenLuo.WinFormsUI.Docking
             if (IsDisposed)
                 return;
 
-            bool mouseOver = ClientRectangle.Contains(PointToClient(Control.MousePosition));
+            bool mouseOver = ClientRectangle.Contains(PointToClient(Cursor.Position));
+            
             if (mouseOver != IsMouseOver)
                 IsMouseOver = mouseOver;
 

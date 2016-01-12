@@ -194,7 +194,17 @@ namespace WeifenLuo.WinFormsUI.Docking
 
         public Font TextFont
         {
-            get { return DockPane.DockPanel.Skin.DockPaneStripSkin.TextFont; }
+            get
+            {
+                if (DockPane.DockPanel != null)
+                {
+                    return DockPane.DockPanel.Skin.DockPaneStripSkin.TextFont;
+                }
+                else
+                {
+                    return SystemFonts.CaptionFont;
+                }
+            }
         }
 
         private static int TextGapBottom

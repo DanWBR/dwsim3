@@ -125,14 +125,11 @@ Partial Class frmOutput
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.CloseButton = False
+        Me.CloseButtonVisible = False
         Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.ToolStrip1)
-        Me.DockAreas = CType(((((WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft Or WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight) _
-            Or WeifenLuo.WinFormsUI.Docking.DockAreas.DockTop) _
-            Or WeifenLuo.WinFormsUI.Docking.DockAreas.DockBottom) _
-            Or WeifenLuo.WinFormsUI.Docking.DockAreas.Document), WeifenLuo.WinFormsUI.Docking.DockAreas)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
-        Me.HideOnClose = True
+        Me.DoubleBuffered = True
         Me.Name = "frmOutput"
         Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockBottom
         Me.ShowInTaskbar = False

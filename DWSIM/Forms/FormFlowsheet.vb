@@ -153,6 +153,11 @@ Imports WeifenLuo.WinFormsUI.Docking
         showsimulationtoolstripmenuitem.Checked = My.Settings.ShowSimulationToolStrip
         showunitstoolstripmenuitem.Checked = My.Settings.ShowUnitsToolStrip
 
+        Me.COObjTSMI.Checked = Me.Options.FlowsheetShowCOReportsWindow
+        Me.consoletsmi.Checked = Me.Options.FlowsheetShowConsoleWindow
+        Me.ExibirListaDeItensACalcularToolStripMenuItem.Checked = Me.Options.FlowsheetShowCalculationQueue
+        Me.varpaneltsmi.Checked = Me.Options.FlowsheetShowWatchWindow
+
         Dim rand As New Random
         Dim str As String = rand.Next(10000000, 99999999)
 
@@ -169,11 +174,6 @@ Imports WeifenLuo.WinFormsUI.Docking
             Me.tsbAtivar.Checked = False
             Me.tsbDesat.Checked = True
         End If
-
-        Me.COObjTSMI.Checked = Me.Options.FlowsheetShowCOReportsWindow
-        Me.consoletsmi.Checked = Me.Options.FlowsheetShowConsoleWindow
-        Me.ExibirListaDeItensACalcularToolStripMenuItem.Checked = Me.Options.FlowsheetShowCalculationQueue
-        Me.varpaneltsmi.Checked = Me.Options.FlowsheetShowWatchWindow
 
         Me.ToolStripButton16.Checked = Me.Options.FlowsheetSnapToGrid
         Me.ToolStripButton17.Checked = Me.Options.FlowsheetQuickConnect
