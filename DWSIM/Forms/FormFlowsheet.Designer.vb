@@ -680,7 +680,7 @@ Partial Class FormFlowsheet
         '
         resources.ApplyResources(Me.ExibirToolStripMenuItem, "ExibirToolStripMenuItem")
         Me.ExibirToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.consoletsmi, Me.ExibirListaDeItensACalcularToolStripMenuItem, Me.varpaneltsmi, Me.COObjTSMI, Me.ToolStripSeparator10, Me.showsimulationtoolstripmenuitem, Me.showflowsheettoolstripmenuitem, Me.showunitstoolstripmenuitem, Me.ToolStripSeparator11, Me.RestoreLayoutTSMI})
-        Me.ExibirToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert
+        Me.ExibirToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.MatchOnly
         Me.ExibirToolStripMenuItem.MergeIndex = 3
         Me.ExibirToolStripMenuItem.Name = "ExibirToolStripMenuItem"
         '

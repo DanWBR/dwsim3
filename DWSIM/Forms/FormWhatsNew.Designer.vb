@@ -28,9 +28,9 @@ Partial Class FormWhatsNew
         '
         'WebBrowser1
         '
-        resources.ApplyResources(Me.WebBrowser1, "WebBrowser1")
         Me.WebBrowser1.AllowNavigation = False
         Me.WebBrowser1.AllowWebBrowserDrop = False
+        resources.ApplyResources(Me.WebBrowser1, "WebBrowser1")
         Me.WebBrowser1.Name = "WebBrowser1"
         Me.WebBrowser1.ScriptErrorsSuppressed = True
         '
@@ -39,8 +39,9 @@ Partial Class FormWhatsNew
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.WebBrowser1)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "FormWhatsNew"
+        Me.ShowIcon = False
+        Me.TopMost = True
         Me.ResumeLayout(False)
 
     End Sub

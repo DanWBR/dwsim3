@@ -361,7 +361,7 @@ Imports WeifenLuo.WinFormsUI.Docking
         If My.Settings.ShowWhatsNew Then
             If Not DWSIM.App.IsRunningOnMono Then
                 Dim fwn As New FormWhatsNew
-                fwn.ShowDialog(Me)
+                fwn.Show()
             End If
         End If
 
@@ -854,7 +854,10 @@ Imports WeifenLuo.WinFormsUI.Docking
         FormSpreadsheet.DockState = DockState.Document
         FormSurface.DockState = DockState.Document
         FormObjListView.DockState = DockState.DockRight
-        If Not DWSIM.App.IsRunningOnMono Then FormObjList.DockState = DockState.DockLeft
+        Try
+            If Not DWSIM.App.IsRunningOnMono Then FormObjList.DockState = DockState.DockLeft
+        Catch ex As Exception
+        End Try
         FormProps.DockState = DockState.DockLeft
         FormLog.DockState = DockState.DockBottom
 

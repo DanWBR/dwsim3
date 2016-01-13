@@ -2054,6 +2054,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to substância não encontrada no banco de dados..
+        '''</summary>
+        Friend Shared ReadOnly Property CompoundNotFound() As String
+            Get
+                Return ResourceManager.GetString("CompoundNotFound", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Pseudo-Componente.
         '''</summary>
         Friend Shared ReadOnly Property CompPseudo() As String

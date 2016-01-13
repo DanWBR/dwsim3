@@ -5257,4 +5257,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="PipeOutletPressureRestriction" xml:space="preserve">
     <value>No modo de cálculo de pressão na saída, a tubulação deve possuir apenas um segmento e este deve ser do tipo "Tubulação Simples".</value>
   </data>
+  <data name="CompoundNotFound" xml:space="preserve">
+    <value>substância não encontrada no banco de dados.</value>
+  </data>
 </root>

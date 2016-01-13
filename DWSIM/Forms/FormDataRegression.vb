@@ -170,8 +170,8 @@ Public Class FormDataRegression
     Sub LoadCase(ByVal mycase As RegressionCase, ByVal first As Boolean)
 
         With mycase
-            Me.cbCompound1.SelectedItem = .comp1
-            Me.cbCompound2.SelectedItem = .comp2
+            If Me.cbCompound1.Items.Contains(.comp1) Then Me.cbCompound1.SelectedItem = .comp1 Else MessageBox.Show(.comp1 & ": " & DWSIM.App.GetLocalString("CompoundNotFound"))
+            If Me.cbCompound2.Items.Contains(.comp2) Then Me.cbCompound2.SelectedItem = .comp2 Else MessageBox.Show(.comp2 & ": " & DWSIM.App.GetLocalString("CompoundNotFound"))
             If .model.ToLower = "PRSV2" Then .model = "PRSV2-M"
             Me.cbModel.SelectedItem = .model
             Select Case cbModel.SelectedItem.ToString()

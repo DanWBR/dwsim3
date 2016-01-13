@@ -5244,4 +5244,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="PipeOutletPressureRestriction" xml:space="preserve">
     <value>When in "Outlet Pressure" calculation mode, the pipe must have a single segment only, and it must of "Straight Tube" type.</value>
   </data>
+  <data name="CompoundNotFound" xml:space="preserve">
+    <value>compound not found on any of the loaded databases.</value>
+  </data>
 </root>

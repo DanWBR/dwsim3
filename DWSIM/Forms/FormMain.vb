@@ -1962,15 +1962,7 @@ Public Class FormMain
 
     Sub LoadXML(ByVal path As String, Optional ByVal simulationfilename As String = "", Optional ByVal forcommandline As Boolean = False)
 
-        'Dim fls As New FormLS
         Dim ci As CultureInfo = CultureInfo.InvariantCulture
-
-        'If Not forcommandline Then
-        '    fls.Show()
-        '    fls.Label1.Text = "Restoring Simulation from XML file"
-        '    fls.Label2.Text = "Loading XML document..."
-        '    Application.DoEvents()
-        'End If
 
         Dim excs As New Concurrent.ConcurrentBag(Of Exception)
 
@@ -1983,10 +1975,7 @@ Public Class FormMain
         My.Application.CAPEOPENMode = False
         My.Application.ActiveSimulation = form
 
-        'If Not forcommandline Then
-        '    fls.Label2.Text = "Loading Flowsheet Settings..."
         Application.DoEvents()
-        'End If
 
         Dim data As List(Of XElement) = xdoc.Element("DWSIM_Simulation_Data").Element("Settings").Elements.ToList
 
@@ -1999,11 +1988,6 @@ Public Class FormMain
         If simulationfilename <> "" Then Me.filename = simulationfilename Else Me.filename = path
 
         form.Options.FilePath = Me.filename
-
-        'If Not forcommandline Then
-        '    fls.Label2.Text = "Loading Flowsheet Graphic Objects..."
-        '    Application.DoEvents()
-        'End If
 
         data = xdoc.Element("DWSIM_Simulation_Data").Element("GraphicObjects").Elements.ToList
 
@@ -2277,11 +2261,6 @@ Public Class FormMain
             End Try
         Next
 
-        'If Not forcommandline Then
-        '    fls.Label2.Text = "Loading Compounds..."
-        '    Application.DoEvents()
-        'End If
-
         data = xdoc.Element("DWSIM_Simulation_Data").Element("Compounds").Elements.ToList
 
         Dim complist As New Concurrent.ConcurrentBag(Of ConstantProperties)
@@ -2341,11 +2320,6 @@ Public Class FormMain
         Next
 
         My.Application.ActiveSimulation = form
-
-        'If Not forcommandline Then
-        '    fls.Label2.Text = "Loading Flowsheet Unit Operations and Streams..."
-        '    Application.DoEvents()
-        'End If
 
         data = xdoc.Element("DWSIM_Simulation_Data").Element("SimulationObjects").Elements.ToList
 
@@ -2563,6 +2537,7 @@ Public Class FormMain
         Next
 
         If Not forcommandline Then
+
             If Not DWSIM.App.IsRunningOnMono Then
                 Dim arrays As New ArrayList
                 Dim aNode, aNode2 As TreeNode
@@ -2597,9 +2572,6 @@ Public Class FormMain
                 End Try
             Next
 
-            'fls.Label2.Text = "Loading Reaction Sets..."
-            'Application.DoEvents()
-
         End If
 
         data = xdoc.Element("DWSIM_Simulation_Data").Element("ReactionSets").Elements.ToList
@@ -2628,11 +2600,6 @@ Public Class FormMain
             End Try
         Next
 
-        'If Not forcommandline Then
-        '    fls.Label2.Text = "Loading Optimization Cases..."
-        '    Application.DoEvents()
-        'End If
-
         data = xdoc.Element("DWSIM_Simulation_Data").Element("OptimizationCases").Elements.ToList
 
         For Each xel As XElement In data
@@ -2644,11 +2611,6 @@ Public Class FormMain
                 excs.Add(New Exception("Error Loading Optimization Case Information", ex))
             End Try
         Next
-
-        'If Not forcommandline Then
-        '    fls.Label2.Text = "Loading Sensitivity Analysis Cases..."
-        '    Application.DoEvents()
-        'End If
 
         data = xdoc.Element("DWSIM_Simulation_Data").Element("SensitivityAnalysis").Elements.ToList
 
@@ -2662,11 +2624,6 @@ Public Class FormMain
             End Try
         Next
 
-        'If Not forcommandline Then
-        '    fls.Label2.Text = "Loading Petroleum Assays..."
-        '    Application.DoEvents()
-        'End If
-
         data = xdoc.Element("DWSIM_Simulation_Data").Element("PetroleumAssays").Elements.ToList
 
         For Each xel As XElement In data
@@ -2678,11 +2635,6 @@ Public Class FormMain
                 excs.Add(New Exception("Error Loading Petroleum Assay Information", ex))
             End Try
         Next
-
-        'If Not forcommandline Then
-        '    fls.Label2.Text = "Loading Watch Items..."
-        '    Application.DoEvents()
-        'End If
 
         If xdoc.Element("DWSIM_Simulation_Data").Element("WatchItems") IsNot Nothing Then
 
@@ -2704,11 +2656,6 @@ Public Class FormMain
 
         End If
 
-        'If Not forcommandline Then
-        '    fls.Label2.Text = "Loading Script Items..."
-        '    Application.DoEvents()
-        'End If
-
         form.ScriptCollection = New Dictionary(Of String, Script)
 
         If xdoc.Element("DWSIM_Simulation_Data").Element("ScriptItems") IsNot Nothing Then
@@ -2728,11 +2675,6 @@ Public Class FormMain
             Next
 
         End If
-
-        'If Not forcommandline Then
-        '    fls.Label2.Text = "Loading Spreadsheet Data..."
-        '    Application.DoEvents()
-        'End If
 
         Try
             If DWSIM.App.IsRunningOnMono Then form.FormSpreadsheet = New SpreadsheetForm()
@@ -2775,9 +2717,6 @@ Public Class FormMain
         Me.ResumeLayout()
 
         If Not forcommandline Then
-
-            'fls.Label2.Text = "Restoring Window Layout..."
-            'Application.DoEvents()
 
             My.Application.ActiveSimulation = form
 
@@ -2827,9 +2766,6 @@ Public Class FormMain
                 excs.Add(New Exception("Error Restoring Window Layout", ex))
             End Try
 
-            'fls.Label2.Text = "Done!"
-            'Application.DoEvents()
-
             Me.Invalidate()
             Application.DoEvents()
 
@@ -2845,8 +2781,6 @@ Public Class FormMain
             form.MdiParent = Me
             form.Show()
             form.MdiParent = Me
-
-            'form.FormChild_Shown(Me, New EventArgs)
 
             form.Invalidate()
 

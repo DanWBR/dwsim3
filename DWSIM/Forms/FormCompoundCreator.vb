@@ -1425,7 +1425,11 @@ Public Class FormCompoundCreator
         mycase.DataPVAP.Clear()
         For Each row As DataGridViewRow In Me.GridExpDataPVAP.Rows
             If row.Index < Me.GridExpDataPVAP.Rows.Count - 1 Then
-                mycase.DataPVAP.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_pressure, row.Cells(1).Value)})
+                Try
+                    mycase.DataPVAP.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_pressure, row.Cells(1).Value)})
+                Catch ex As Exception
+
+                End Try
             End If
         Next
 
@@ -1552,7 +1556,10 @@ Public Class FormCompoundCreator
         loaded = False
         mycase.DataCPIG.Clear()
         For Each row As DataGridViewRow In Me.GridExpDataCPIG.Rows
-            If row.Index < Me.GridExpDataCPIG.Rows.Count - 1 Then mycase.DataCPIG.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_heatCapacityCp, row.Cells(1).Value) * MW})
+            Try
+                If row.Index < Me.GridExpDataCPIG.Rows.Count - 1 Then mycase.DataCPIG.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_heatCapacityCp, row.Cells(1).Value) * MW})
+            Catch ex As Exception
+            End Try
         Next
 
         Dim result As Object = RegressData(1, False)
@@ -1591,7 +1598,10 @@ Public Class FormCompoundCreator
         loaded = False
         mycase.DataLDENS.Clear()
         For Each row As DataGridViewRow In Me.GridExpDataLIQDENS.Rows
-            If row.Index < Me.GridExpDataLIQDENS.Rows.Count - 1 Then mycase.DataLDENS.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_density, row.Cells(1).Value)})
+            Try
+                If row.Index < Me.GridExpDataLIQDENS.Rows.Count - 1 Then mycase.DataLDENS.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_density, row.Cells(1).Value)})
+            Catch ex As Exception
+            End Try
         Next
 
         Dim result As Object = RegressData(3, False)
@@ -2835,7 +2845,10 @@ Public Class FormCompoundCreator
         loaded = False
         mycase.DataCPLiquid.Clear()
         For Each row As DataGridViewRow In Me.GridExpDataCPLiquid.Rows
-            If row.Index < Me.GridExpDataCPLiquid.Rows.Count - 1 Then mycase.DataCPLiquid.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_heatCapacityCp, row.Cells(1).Value) * MW})
+            Try
+                If row.Index < Me.GridExpDataCPLiquid.Rows.Count - 1 Then mycase.DataCPLiquid.Add(New Double() {cv.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), cv.ConverterParaSI(su.spmp_heatCapacityCp, row.Cells(1).Value) * MW})
+            Catch ex As Exception
+            End Try
         Next
 
         Dim result As Object = RegressData(6, False)
