@@ -1,16 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head>
+
 <script src="ContentScripts.js"></script>
 <link rel="stylesheet" type="text/css" href="DWSIMstyle.css">
 <script type="text/javascript" async="" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
-</script><!-- ================================================================================== --><!-- ==================== Begin of content ==============================================--><!-- ================================================================================== -->
-</head>
-
-
-
-
-
-<body onload="LoadMenue()">
+</script><!-- ================================================================================== --><!-- ==================== Begin of content ==============================================--><!-- ================================================================================== --></head><body onload="LoadMenue()">
 <h2>Pipe Segment</h2>
 <a href="SO_Tank.htm" target="_parent"><img src="pictures/arrow-up.gif"></a>
 <a href="SO_Valve.htm" target="_parent"><img src="pictures/arrow-down.gif"></a>
@@ -27,7 +21,7 @@ tubes, valves, curves, etc. Each segment is subdivided in small
 sections for calculation convergence purposes, as defined by the user.<span style="font-weight: bold;"></span></p><h3><span style="font-weight: bold;"></span>Input Parameters</h3>
 
 
-<b><br>Specification Mode: </b>selects the specification for the pipe calculation procedure. Options are: <span style="font-weight: bold;">Length</span>, <span style="font-weight: bold;">Outlet Pressure</span> and <span style="font-weight: bold;">Outlet Temperature</span>.<b><br></b><ul><li><span style="font-weight: bold;">Length</span>:&nbsp;specify segments' length to calculate outlet pressure and temperature; </li><li><span style="font-weight: bold;">Outlet Pressure</span>:&nbsp;specify outlet pressure to calculate temperature and resulting length for a single, straight pipe segment; </li><li><span style="font-weight: bold;">Outlet Temperature</span>:
+<b><br>Pipe Specification: </b>selects the specification for the pipe calculation procedure. Options are: <span style="font-weight: bold;">Length</span>, <span style="font-weight: bold;">Outlet Pressure</span> and <span style="font-weight: bold;">Outlet Temperature</span>.<b><br></b><ul><li><span style="font-weight: bold;">Length</span>:&nbsp;specify segments' length to calculate outlet pressure and temperature; </li><li><span style="font-weight: bold;">Outlet Pressure</span>:&nbsp;specify outlet pressure to calculate temperature and resulting length for a single, straight pipe segment; </li><li><span style="font-weight: bold;">Outlet Temperature</span>:
 specify outlet temperature and segments' length to calculate outlet
 pressure and heat exchanged. Heat balance calculation setting
 automatically switches to 'Heat Exchanged' in this mode.</li></ul><b>Pressure drop correlation: </b>select the model
@@ -80,10 +74,10 @@ heat transfer coefficient (U) was given, the outlet temperature is
 calculated from the following
 equation:<br>
 <br>
-<center><b>`Q=U*A*&#916;T_(ml)`</b></center>
+<center><b>`Q=U*A*&#916;T_(LMTD)`</b></center>
 <br>
 where: Q = heat transferred, U = overall heat transfer coefficient, A = heat transfer area (external surface)
-and &#916;T<sub>ml</sub> =
+and &#916;T<sub>LMTD</sub> =
 logarithmic mean temperature difference.<br>
 <br>
 </li>
@@ -100,7 +94,10 @@ When both pressure and temperature converges, the results are passed to
 the next increment,
 where calculation restarts.<br>
 </li>
-</ol>If<span style="font-style: italic;"> Outlet Pressure</span> or <span style="font-style: italic;">Outlet Temperature</span> specification mode is selected, an additional loop is added outside the above procedure, which does one of the following:<br><ul><li>In <span style="font-style: italic;">Outlet Pressure</span> mode, the length of the first segment, which must be a straight tube, is changed&nbsp;until the calculated&nbsp;outlet pressure matches the specified one. </li><li>In <span style="font-style: italic;">Outlet Temperature</span>
+</ol>If<span style="font-style: italic;"> Outlet Pressure</span> or <span style="font-style: italic;">Outlet Temperature</span> specification mode is selected, an additional loop is added outside the above procedure, which does one of the following:<br><ul><li>In <span style="font-style: italic;">Outlet Pressure</span>
+mode, the length of the first segment, which must be a straight tube,
+is changed&nbsp;until the calculated&nbsp;outlet pressure matches the
+specified one. </li><li>In <span style="font-style: italic;">Outlet Temperature</span>
 mode, the overall heat exchanged value is changed until the calculated
 outlet temperature matches the specified one. Heat balance calculation
 setting automatically switches to 'Heat Exchanged' in this mode.</li></ul><h4>
