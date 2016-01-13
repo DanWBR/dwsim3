@@ -8513,6 +8513,24 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Troca térmica máxima (teórica).
+        '''</summary>
+        Friend Shared ReadOnly Property MaximumHeatExchange() As String
+            Get
+                Return ResourceManager.GetString("MaximumHeatExchange", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Valor máximo possível para a troca térmica considerando fluxo em contra-corrente..
+        '''</summary>
+        Friend Shared ReadOnly Property MaximumHeatExchangeDesc() As String
+            Get
+                Return ResourceManager.GetString("MaximumHeatExchangeDesc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to MaximumIterations.
         '''</summary>
         Friend Shared ReadOnly Property MaximumIterations() As String
@@ -13801,6 +13819,24 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Textoaserexibidonaca() As String
             Get
                 Return ResourceManager.GetString("Textoaserexibidonaca", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Eficiência térmica.
+        '''</summary>
+        Friend Shared ReadOnly Property ThermalEfficiency() As String
+            Get
+                Return ResourceManager.GetString("ThermalEfficiency", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Quantidade de calor trocado em relação à máxima possível..
+        '''</summary>
+        Friend Shared ReadOnly Property ThermalEfficiencyDesc() As String
+            Get
+                Return ResourceManager.GetString("ThermalEfficiencyDesc", resourceCulture)
             End Get
         End Property
         

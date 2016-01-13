@@ -36,6 +36,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
         CalcArea = 4
         ShellandTube_Rating = 5
         ShellandTube_CalcFoulingFactor = 6
+
     End Enum
 
     Public Enum SpecifiedTemperature
@@ -118,6 +119,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 m_specifiedtemperature = value
             End Set
         End Property
+
+        Public Property ThermalEfficiency As Double = 0.0#
+        Public Property MaxHeatExchange As Double = 0.0#
 
         Public Overrides Function LoadData(data As List(Of XElement)) As Boolean
             'workaround for renaming CalcBothTemp_KA calculation type to CalcBothTemp_UA
@@ -315,15 +319,36 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 StOutHot = StOut0
             End If
 
+            Pc2 = Pc1 - ColdSidePressureDrop
+            Ph2 = Ph1 - HotSidePressureDrop
+
             If DebugMode Then AppendDebugLine(StInCold.GraphicObject.Tag & " is the cold stream.")
             If DebugMode Then AppendDebugLine(StInHot.GraphicObject.Tag & " is the hot stream.")
+
+            'calculate maximum heat exchange
+
+            Dim tmpstr As MaterialStream = StOutHot.Clone
+
+            tmpstr.PropertyPackage = StOutHot.PropertyPackage
+            tmpstr.SetFlowsheet(StOutHot.FlowSheet)
+            tmpstr.PropertyPackage.CurrentMaterialStream = tmpstr
+            tmpstr.Fases("0").SPMProperties.temperature = Tc1
+            tmpstr.Fases("0").SPMProperties.pressure = Ph2
+            tmpstr.PropertyPackage.DW_CalcEquilibrium(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P)
+            tmpstr.Calculate(False, True)
+
+            Dim HHx = tmpstr.Fases(0).SPMProperties.enthalpy.GetValueOrDefault
+
+            MaxHeatExchange = Wh * (Hh1 - HHx) 'kW
+
+            tmpstr.Dispose()
+            tmpstr = Nothing
+
+            If DebugMode Then AppendDebugLine("Maximum possible heat exchange is " & MaxHeatExchange.ToString & " kW.")
 
             'Copy properties from the input streams.
             StOut0.Assign(StIn0)
             StOut1.Assign(StIn1)
-
-            Pc2 = Pc1 - ColdSidePressureDrop
-            Ph2 = Ph1 - HotSidePressureDrop
 
             CPC = StInCold.Fases(0).SPMProperties.heatCapacityCp.GetValueOrDefault
             CPH = StInHot.Fases(0).SPMProperties.heatCapacityCp.GetValueOrDefault
@@ -365,6 +390,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     'estimate Q as minimum value
                     Qi = Min(Qc, Qh)
 
+                    If Qi > MaxHeatExchange Then Qi = MaxHeatExchange
+
                     If DebugMode Then AppendDebugLine(String.Format("Initial estimate for heat exchanged is {0} kW", Qi))
 
                     Do
@@ -403,6 +430,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                         Q_old = Qi
                         Qi = Qi - (Qi - Q_UA) * 0.2
+
+                        If Qi > MaxHeatExchange Then Qi = MaxHeatExchange
 
                         If DebugMode Then AppendDebugLine(String.Format("Current estimated heat exchange is {0} kW", Qi))
 
@@ -983,6 +1012,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
             CheckSpec(Ph2, True, "hot stream outlet pressure")
             CheckSpec(Pc2, True, "cold stream outlet pressure")
 
+            ThermalEfficiency = Q / MaxHeatExchange * 100
+
             If Not DebugMode Then
 
                 Me.ColdSideOutletTemperature = Tc2
@@ -1366,6 +1397,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             AValue = Format(Me.LMTD_F, FlowSheet.Options.NumberFormat)
                             .Item.Add("F", AValue, True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("HXLMTDCorr"), True)
                     End Select
+
+                    .Item.Add(FT(DWSIM.App.GetLocalString("MaximumHeatExchange"), su.spmp_heatflow), Format(Me.MaxHeatExchange, FlowSheet.Options.NumberFormat), True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("MaximumHeatExchangeDesc"), True)
+                    .Item.Add(FT(DWSIM.App.GetLocalString("ThermalEfficiency"), "%"), Format(Me.ThermalEfficiency, FlowSheet.Options.NumberFormat), True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("ThermalEfficiencyDesc"), True)
 
                     AValue = Format(Conversor.ConverterDoSI(su.spmp_deltaT, Me.LMTD), FlowSheet.Options.NumberFormat)
                     .Item.Add(FT(DWSIM.App.GetLocalString("HXLMTD"), su.spmp_deltaT), AValue, True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("HXLMTDDesc"), True)

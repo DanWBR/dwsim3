@@ -389,27 +389,25 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
 
             Next
 
-            If Double.IsNaN(T) Or T <= Tmin Or T >= Tmax Or cnt > maxitEXT Or Abs(fx) > tolEXT Then Throw New Exception("PH Flash [NL]: Invalid result: Temperature did not converge.")
-
-            Dim tmp As Object = Flash_PT(Vz, P, T, PP)
-
-            L = tmp(0)
-            V = tmp(1)
-            Vx = tmp(2)
-            Vy = tmp(3)
-            ecount = tmp(4)
-
-            For i = 0 To n
-                Ki(i) = Vy(i) / Vx(i)
-            Next
-
-            d2 = Date.Now
-
-            dt = d2 - d1
-
-            WriteDebugInfo("PH Flash [NL]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
-
-            Return New Object() {L, V, Vx, Vy, T, ecount, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
+            If Double.IsNaN(T) Or T <= Tmin Or T >= Tmax Or cnt > maxitEXT Or Abs(fx) > tolEXT Then
+                'switch to mode 2 if it doesn't converge here.
+                WriteDebugInfo("PH Flash [NL]: Didn't converge in fast mode. Switching to rigorous...")
+                Return Flash_PH_2(Vz, P, H, Tref, PP, ReuseKI, PrevKi)
+            Else
+                Dim tmp As Object = Flash_PT(Vz, P, T, PP)
+                L = tmp(0)
+                V = tmp(1)
+                Vx = tmp(2)
+                Vy = tmp(3)
+                ecount = tmp(4)
+                For i = 0 To n
+                    Ki(i) = Vy(i) / Vx(i)
+                Next
+                d2 = Date.Now
+                dt = d2 - d1
+                WriteDebugInfo("PH Flash [NL]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
+                Return New Object() {L, V, Vx, Vy, T, ecount, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
+            End If
 
         End Function
 

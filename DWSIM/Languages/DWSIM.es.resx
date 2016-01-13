@@ -5251,4 +5251,16 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
   <data name="CompoundNotFound" xml:space="preserve">
     <value>substância não encontrada no banco de dados.</value>
   </data>
+  <data name="MaximumHeatExchange" xml:space="preserve">
+    <value>Troca térmica máxima (teórica)</value>
+  </data>
+  <data name="MaximumHeatExchangeDesc" xml:space="preserve">
+    <value>Valor máximo possível para a troca térmica considerando fluxo em contra-corrente.</value>
+  </data>
+  <data name="ThermalEfficiency" xml:space="preserve">
+    <value>Eficiência térmica</value>
+  </data>
+  <data name="ThermalEfficiencyDesc" xml:space="preserve">
+    <value>Quantidade de calor trocado em relação à máxima possível.</value>
+  </data>
 </root>

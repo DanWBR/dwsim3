@@ -5247,4 +5247,16 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
   <data name="CompoundNotFound" xml:space="preserve">
     <value>compound not found on any of the loaded databases.</value>
   </data>
+  <data name="MaximumHeatExchange" xml:space="preserve">
+    <value>Maximum heat exchange</value>
+  </data>
+  <data name="MaximumHeatExchangeDesc" xml:space="preserve">
+    <value>Theoretical limit for the heat exchange considering counter-current flow.</value>
+  </data>
+  <data name="ThermalEfficiency" xml:space="preserve">
+    <value>Thermal efficiency</value>
+  </data>
+  <data name="ThermalEfficiencyDesc" xml:space="preserve">
+    <value>Heat exchanged divided by the maximum theoretical possible value.</value>
+  </data>
 </root>
