@@ -677,13 +677,13 @@ final:      FlowSheet.CalculationQueue.Enqueue(objargs)
                 End With
                 .Item.Add(DWSIM.App.GetLocalString("SCHeavyKeyMF"), Me, "m_heavykeymolarfrac", False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("SCHeavyKeyMF"), True)
                 Dim valor = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.m_condenserpressure), FlowSheet.Options.NumberFormat)
-                .Item.Add(FT(DWSIM.App.GetLocalString("SCCondenserPressure"), su.spmp_pressure), valor, False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("SCCondenserPressure"), True)
+                .Item.Add(FT(DWSIM.App.GetLocalString("SCCondenserPressure"), su.spmp_pressure), Double.Parse(valor), False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("SCCondenserPressure"), True)
                 With .Item(.Item.Count - 1)
                     .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_pressure, "P"}
                     .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                 End With
                 valor = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.m_boilerpressure), FlowSheet.Options.NumberFormat)
-                .Item.Add(FT(DWSIM.App.GetLocalString("SCReboilerPressure"), su.spmp_pressure), valor, False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("SCReboilerPressure"), True)
+                .Item.Add(FT(DWSIM.App.GetLocalString("SCReboilerPressure"), su.spmp_pressure), Double.Parse(valor), False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("SCReboilerPressure"), True)
                 With .Item(.Item.Count - 1)
                     .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_pressure, "P"}
                     .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
