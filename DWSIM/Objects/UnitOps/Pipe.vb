@@ -708,7 +708,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         fx = Tout - OutletTemperature
                         If countext > 2 Then
                             x = x - fx * (x - x00) / (fx - fx00)
-                            If Double.IsNaN(x) Or Double.IsInfinity(x) Then Throw New Exception("Erroaocalculartemper")
+                            If Double.IsNaN(x) Or Double.IsInfinity(x) Then Throw New Exception(DWSIM.App.GetLocalString("Erroaocalculartemper"))
                             Me.ThermalProfile.Calor_trocado = x
                         Else
                             Me.ThermalProfile.Calor_trocado += 0.1
@@ -726,7 +726,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         fx = Pout - OutletPressure
                         If countext > 2 Then
                             x = x - fx * (x - x00) / (fx - fx00)
-                            If Double.IsNaN(x) Or Double.IsInfinity(x) Then Throw New Exception("Erronoclculodapresso")
+                            If Double.IsNaN(x) Or Double.IsInfinity(x) Then Throw New Exception(DWSIM.App.GetLocalString("Erronoclculodapresso"))
                             Me.Profile.Sections(1).Comprimento = x
                         Else
                             Me.Profile.Sections(1).Comprimento *= 1.05
