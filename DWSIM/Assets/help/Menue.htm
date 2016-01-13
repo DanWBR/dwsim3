@@ -19,11 +19,13 @@ div.heading1
 
   background-color:#228B22;
 
-  width:180px;
+  width:185px;
 
   text-align:left;
 
   text-decoration:none;
+  text-shadow: 2px 2px #000000;
+
 
   font:15px arial,sans-serif;
   margin:0px;
@@ -43,16 +45,42 @@ div.heading2
 
   background-color:#98bf21;
 
-  width:175px;
+  width:180px;
 
   text-align:left;
 
   text-decoration:none;
+  text-shadow: 2px 2px #a0a0a0;
 
   font:15px arial,sans-serif;
   margin:0px;
 
   padding-left:10px;
+}
+div.heading3
+{
+  display:block;
+
+  border:1px white;
+  border-top-style:solid;
+
+  font-weight:bold;
+
+  color:#FFFFFF;
+
+  background-color:#808080;
+
+  width:175px;
+
+  text-align:left;
+
+  text-decoration:none;
+  text-shadow: 2px 2px #000000;
+
+  font:15px arial,sans-serif;
+  margin:0px;
+
+  padding-left:15px;
 }
 
 
@@ -78,7 +106,7 @@ a:link,a:visited
   font:12px arial,sans-serif;
   margin:0px;
 
-  padding-left:15px;
+  padding-left:20px;
   padding-top:2px;
   padding-bottom:2px;
 }
@@ -278,6 +306,36 @@ function BGCol(ID)
     <a id="EX1" onclick="BGCol('EX1')" href="EX_Installation_1.htm" target="content">Installation</a>
     <a id="EX2" onclick="BGCol('EX2')" href="EX_Usage_2.htm" target="content">Usage</a>
     <a id="EX3" onclick="BGCol('EX3')" href="EX_Overriding_IPs_3.htm" target="content">Overriding Interaction Parameters</a>
+
+    <div class="heading3" onclick="ToggleSubfolder('Excelfunctions1')">Information functions</div>
+    <div id='Excelfunctions1' style="display:none;">
+      <a id="EXF0" onclick="BGCol('EXF0')" href="ExcelAddInHelp/GetCompoundConstants.htm" target="content">GetCompoundConstants</a>
+      <a id="EXF1" onclick="BGCol('EXF1')" href="ExcelAddInHelp/GetCompoundProp.htm" target="content">GetCompoundProp</a>
+      <a id="EXF2" onclick="BGCol('EXF2')" href="ExcelAddInHelp/GetCompoundPropList.htm" target="content">GetCompoundPropList</a>
+      <a id="EXF3" onclick="BGCol('EXF3')" href="ExcelAddInHelp/GetPropPackList.htm" target="content">GetPropPackList</a>
+      <a id="EXF4" onclick="BGCol('EXF4')" href="ExcelAddInHelp/GetModelList.htm" target="content">GetModelList</a>
+      <a id="EXF5" onclick="BGCol('EXF5')" href="ExcelAddInHelp/GetInteractionParameterSet.htm" target="content">GetInteractionParameterSet</a>
+      <a id="EXF6" onclick="BGCol('EXF6')" href="ExcelAddInHelp/GetUserInteractionParameterSet.htm" target="content">GetUserInteractionParameterSet</a>  
+      <a id="EXF7" onclick="BGCol('EXF7')" href="ExcelAddInHelp/GetPropList.htm" target="content">GetPropList</a>
+      <a id="EXF8" onclick="BGCol('EXF8')" href="ExcelAddInHelp/GetPhaseList.htm" target="content">GetPhaseList</a>
+      <a id="EXF9" onclick="BGCol('EXF9')" href="ExcelAddInHelp/GetCompoundList.htm" target="content">GetCompoundList</a>
+    </div>
+    <div class="heading3" onclick="ToggleSubfolder('Excelfunctions2')">Property calculation</div>
+    <div id='Excelfunctions2' style="display:none;">
+      <a id="EXF10" onclick="BGCol('EXF10')" href="ExcelAddInHelp/CalcProp.htm" target="content">CalcProp</a>
+    </div>
+    <div class="heading3" onclick="ToggleSubfolder('Excelfunctions3')">Flash functions</div>
+    <div id='Excelfunctions3' style="display:none;">
+      <a id="EXF11" onclick="BGCol('EXF11')" href="ExcelAddInHelp/PHFlash.htm" target="content">PHFlash</a>
+      <a id="EXF12" onclick="BGCol('EXF12')" href="ExcelAddInHelp/PHFlash2.htm" target="content">PHFlash2</a>
+      <a id="EXF13" onclick="BGCol('EXF13')" href="ExcelAddInHelp/PSFlash.htm" target="content">PSFlash</a>
+      <a id="EXF14" onclick="BGCol('EXF14')" href="ExcelAddInHelp/PSFlash2.htm" target="content">PSFlash2</a>
+      <a id="EXF15" onclick="BGCol('EXF15')" href="ExcelAddInHelp/PTFlash.htm" target="content">PTFlash</a>
+      <a id="EXF16" onclick="BGCol('EXF16')" href="ExcelAddInHelp/PVFFlash.htm" target="content">PVFFlash</a>
+      <a id="EXF17" onclick="BGCol('EXF17')" href="ExcelAddInHelp/PVFFlash2.htm" target="content">PVFFlash2</a>
+      <a id="EXF18" onclick="BGCol('EXF18')" href="ExcelAddInHelp/TVFFlash.htm" target="content">TVFFlash</a>
+      <a id="EXF19" onclick="BGCol('EXF19')" href="ExcelAddInHelp/TVFFlash2.htm" target="content">TVFFlash2</a>
+    </div>
   </div>
 </div>
 
