@@ -2784,18 +2784,26 @@ Public Class FormMain
 
             form.Invalidate()
 
+            Application.DoEvents()
+
             If xdoc.Element("DWSIM_Simulation_Data").Element("FlowsheetView") IsNot Nothing Then
                 Try
                     Dim flsconfig As String = xdoc.Element("DWSIM_Simulation_Data").Element("FlowsheetView").Value
                     If flsconfig <> "" Then
                         form.FormSurface.FlowsheetDesignSurface.Zoom = Single.Parse(flsconfig.Split(";")(0), ci)
-                        form.FormSurface.FlowsheetDesignSurface.VerticalScroll.Value = Integer.Parse(flsconfig.Split(";")(1))
-                        form.FormSurface.FlowsheetDesignSurface.HorizontalScroll.Value = Integer.Parse(flsconfig.Split(";")(2))
                         form.TSTBZoom.Text = Format(form.FormSurface.FlowsheetDesignSurface.Zoom, "#%")
+                        form.FormSurface.FlowsheetDesignSurface.Invalidate()
+                        Dim vsval, hsval, vsmax, hsmax As Integer
+                        vsval = Integer.Parse(flsconfig.Split(";")(1))
+                        hsval = Integer.Parse(flsconfig.Split(";")(2))
+                        vsmax = form.FormSurface.FlowsheetDesignSurface.VerticalScroll.Maximum
+                        hsmax = form.FormSurface.FlowsheetDesignSurface.HorizontalScroll.Maximum
+                        If vsval < vsmax Then form.FormSurface.FlowsheetDesignSurface.VerticalScroll.Value = vsval
+                        If hsval < hsmax Then form.FormSurface.FlowsheetDesignSurface.HorizontalScroll.Value = hsval
                     End If
                 Catch ex As Exception
-                    excs.Add(New Exception("Error Restoring Flowsheet Zoom Information", ex))
-                End Try
+                excs.Add(New Exception("Error Restoring Flowsheet Zoom Information", ex))
+            End Try
             End If
 
             Application.DoEvents()

@@ -1212,4 +1212,10 @@
   <data name="PROP_PS_6" xml:space="preserve">
     <value>Temperatura ambiente (Especif.)</value>
   </data>
+  <data name="PROP_HX_25" xml:space="preserve">
+    <value>Eficiência Térmica</value>
+  </data>
+  <data name="PROP_HX_26" xml:space="preserve">
+    <value>Valor máximo de troca térmica</value>
+  </data>
 </root>

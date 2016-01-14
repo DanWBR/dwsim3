@@ -325,7 +325,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             If DebugMode Then AppendDebugLine(StInCold.GraphicObject.Tag & " is the cold stream.")
             If DebugMode Then AppendDebugLine(StInHot.GraphicObject.Tag & " is the hot stream.")
 
-            'calculate maximum heat exchange
+            'calculate maximum theoretical heat exchange
 
             Dim tmpstr As MaterialStream = StOutHot.Clone
 
@@ -388,6 +388,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Qh = -Wh * (Hh2 - Hh1)
 
                     'estimate Q as minimum value
+
                     Qi = Min(Qc, Qh)
 
                     If Qi > MaxHeatExchange Then Qi = MaxHeatExchange
@@ -401,6 +402,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         If DebugMode Then AppendDebugLine(String.Format("Loop number {0}/100", count))
 
                         'calculate exit temperatures from energy balance
+
                         Hc2 = Qi / Wc + Hc1
                         Hh2 = Hh1 - Qi / Wh
                         If DebugMode Then AppendDebugLine(String.Format("Doing a PH flash to calculate cold stream outlet temperature... P = {0} Pa, H = {1} kJ/[kg.K]", Pc2, Hc2))
@@ -443,37 +445,51 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     End If
 
                 Case HeatExchangerCalcMode.CalcBothTemp
+
+                    If Q > MaxHeatExchange Then Throw New Exception("Defined heat exchange is invalid (higher than the theoretical maximum).")
+
                     A = Area
                     DeltaHc = Q / Wc
                     DeltaHh = -Q / Wh
                     Hc2 = Hc1 + DeltaHc
                     Hh2 = Hh1 + DeltaHh
+
                     StInCold.PropertyPackage.CurrentMaterialStream = StInCold
+
                     If DebugMode Then AppendDebugLine(String.Format("Doing a PH flash to calculate cold stream outlet temperature... P = {0} Pa, H = {1} kJ/[kg.K]", Pc2, Hc2))
                     Dim tmp = StInCold.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pc2, Hc2, Tc1)
                     Tc2 = tmp(2)
                     Hh2 = Hh1 + DeltaHh
                     StInHot.PropertyPackage.CurrentMaterialStream = StInHot
+
                     If DebugMode Then AppendDebugLine(String.Format("Calculated cold stream outlet temperature T2 = {0} K", Tc2))
                     If DebugMode Then AppendDebugLine(String.Format("Doing a PH flash to calculate hot stream outlet temperature... P = {0} Pa, H = {1} kJ/[kg.K]", Ph2, Hh2))
+
                     tmp = StInHot.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Ph2, Hh2, Th1)
                     Th2 = tmp(2)
+
                     If DebugMode Then AppendDebugLine(String.Format("Calculated hot stream outlet temperature T2 = {0} K", Th2))
+
                     Select Case Me.FlowDir
                         Case FlowDirection.CoCurrent
                             LMTD = ((Th1 - Tc1) - (Th2 - Tc2)) / Math.Log((Th1 - Tc1) / (Th2 - Tc2))
                         Case FlowDirection.CounterCurrent
                             LMTD = ((Th1 - Tc2) - (Th2 - Tc1)) / Math.Log((Th1 - Tc2) / (Th2 - Tc1))
                     End Select
+
                     U = Q / (A * LMTD) * 1000
+
                 Case HeatExchangerCalcMode.CalcTempColdOut
+
                     A = Area
                     Th2 = TempHotOut
+
                     StInHot.PropertyPackage.CurrentMaterialStream = StInHot
                     If DebugMode Then AppendDebugLine(String.Format("Doing a PT flash to calculate hot stream outlet enthalpy... P = {0} Pa, T = K", Ph2, Th2))
                     Dim tmp = StInHot.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Th2, Ph2, 0)
                     Hh2 = tmp(4)
                     Q = -Wh * (Hh2 - Hh1)
+
                     DeltaHc = Q / Wc
                     Hc2 = Hc1 + DeltaHc
                     StInCold.PropertyPackage.CurrentMaterialStream = StInCold
@@ -488,7 +504,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             LMTD = ((Th1 - Tc2) - (Th2 - Tc1)) / Math.Log((Th1 - Tc2) / (Th2 - Tc1))
                     End Select
                     U = Q / (A * LMTD) * 1000
+
                 Case HeatExchangerCalcMode.CalcTempHotOut
+
                     A = Area
                     Tc2 = TempColdOut
                     StInCold.PropertyPackage.CurrentMaterialStream = StInCold
@@ -503,14 +521,18 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     tmp = StInHot.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Ph2, Hh2, Th1)
                     Th2 = tmp(2)
                     If DebugMode Then AppendDebugLine(String.Format("Calculated hot stream outlet temperature T2 = {0} K", Th2))
+
                     Select Case Me.FlowDir
                         Case FlowDirection.CoCurrent
                             LMTD = ((Th1 - Tc1) - (Th2 - Tc2)) / Math.Log((Th1 - Tc1) / (Th2 - Tc2))
                         Case FlowDirection.CounterCurrent
                             LMTD = ((Th1 - Tc2) - (Th2 - Tc1)) / Math.Log((Th1 - Tc2) / (Th2 - Tc1))
                     End Select
+
                     U = Q / (A * LMTD) * 1000
+
                 Case HeatExchangerCalcMode.CalcArea
+
                     Select Case Me.DefinedTemperature
                         Case SpecifiedTemperature.Cold_Fluid
                             Tc2 = TempColdOut
@@ -549,8 +571,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     End Select
                     U = Me.OverallCoefficient
                     A = Q / (LMTD * U) * 1000
+
                 Case HeatExchangerCalcMode.ShellandTube_Rating, HeatExchangerCalcMode.ShellandTube_CalcFoulingFactor
+
                     'Shell and Tube HX calculation using Tinker's method.
+
                     Dim Tc2_ant, Th2_ant As Double
                     Dim Ud, Ur, U_ant, Rf, fx, Fant, F As Double
                     Dim DTm, Tcm, Thm, R, Sf, P As Double
@@ -1488,6 +1513,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     value = cv.ConverterDoSI("", Me.STProperties.ReS)
                 Case 24
                     value = cv.ConverterDoSI("", Me.STProperties.ReT)
+                Case 25
+                    value = ThermalEfficiency
+                Case 26
+                    value = cv.ConverterDoSI(su.spmp_heatflow, MaxHeatExchange)
             End Select
 
             Return value
@@ -1501,11 +1530,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     For i = 2 To 4
                         proplist.Add("PROP_HX_" + CStr(i))
                     Next
+                    proplist.Add("PROP_HX_25")
+                    proplist.Add("PROP_HX_26")
                     For i = 17 To 24
                         proplist.Add("PROP_HX_" + CStr(i))
                     Next
                 Case PropertyType.RW
-                    For i = 0 To 24
+                    For i = 0 To 26
                         proplist.Add("PROP_HX_" + CStr(i))
                     Next
                 Case PropertyType.WR
@@ -1513,7 +1544,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         proplist.Add("PROP_HX_" + CStr(i))
                     Next
                 Case PropertyType.ALL
-                    For i = 0 To 24
+                    For i = 0 To 26
                         proplist.Add("PROP_HX_" + CStr(i))
                     Next
             End Select
@@ -1628,6 +1659,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     value = su.foulingfactor
                 Case 23, 24
                     value = ""
+                Case 25
+                    value = "%"
+                Case 26
+                    value = su.spmp_heatflow
             End Select
 
             Return value

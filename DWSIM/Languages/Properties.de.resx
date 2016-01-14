@@ -350,6 +350,12 @@
   <data name="PROP_HX_24" xml:space="preserve">
     <value>[Rohrbündel WT] Reynolds-Zahl Rohre</value>
   </data>
+  <data name="PROP_HX_25" xml:space="preserve">
+    <value>Thermal Efficiency</value>
+  </data>
+  <data name="PROP_HX_26" xml:space="preserve">
+    <value>Maximum Theoretical Heat Exchange</value>
+  </data>
   <data name="PROP_HX_3" xml:space="preserve">
     <value>Austrittstemperatur des kalten Mediums</value>
   </data>
