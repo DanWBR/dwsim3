@@ -16,19 +16,31 @@
 <a href="EX_Overriding_IPs_3.htm" ><img src="pictures/arrow-down.gif"></a>
 <hr>
 <H3>Usage</H3>
+The functionality of that Add-In is realised by offering special functions which are used for doing calculations 
+for process simulation via an Excel interface. This interface allows access to the original DWSIM thermodynamics engine and 
+component databases.<br><br>
+You start by add a new function to do your calculations by pressing the marked Symbor "<b>fx</b>" left of the edit field:<br>
+<img src="pictures/Excel03b.png"><br><br>
 
-Functions exposed by this AddIn will be grouped in a category named “DWSIM”:<br><br>
-
+Now the following dialog appears. Functions exposed by this AddIn will be grouped in a category named “DWSIM”. You may click 
+the marked link in this dialog to get further help on that function.<br>
 <img src="pictures/Excel03.png"><br><br>
 
-All DWSIM functions are one ore two dimensional <b><i>Matrix formulas</i></b> which may recognised by curly brackets: <b>{}</b>.<br><br>
+After selecting the required function and pressing OK the following dialog appears:<br>
+<img src="pictures/Excel03a.png"><br>
+Be aware, that some functions need a lot of parameters which will not fit into this dialog. The picture shows an example of 
+the PTFlash function where the parameters already were defined. You will find the marked slider at the right side which will
+allow you to scroll down to edit the other parameters.<br><br><br><br>
 
+<hr>
+
+All DWSIM functions are one ore two dimensional <b><i>Matrix formulas</i></b> which may be recognised by their curly brackets: <b>{}</b>.<br>
 This kind of formulas is entered in Excel in three steps as depicted in the following picture:<br>
 <ol>
- <li>Enter formula into the first top left cell of the result range (A2). The formula doesn't contain the brackets now.</li>
+ <li>Enter a formula into the first top left cell of the result range (A2). The formula doesn't contain the brackets now.</li>
  <li>Select the required result range (A2:A16) with top left cell highlighted.</li>
- <li>The formula needs to be modified into a matrix formula now. This is accomplished by editing the formula and finish editing 
-by using <b><i>Ctrl+Shift+Enter</i></b></li>
+ <li>The formula needs to be modified into a matrix formula now. This is accomplished by editing the formula and finishin editing 
+by using <b><i>Ctrl+Shift+Enter</i></b> keys.</li>
 </ol>
 
 
