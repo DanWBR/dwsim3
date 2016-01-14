@@ -118,115 +118,115 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="_12Propanodiol" xml:space="preserve">
-    <value>1,2-Propanediol (C3H8O2)</value>
+    <value>1,2-Propanediol</value>
   </data>
   <data name="_1Decanol" xml:space="preserve">
-    <value>1-Decanol (C10H21OH)</value>
+    <value>1-Decanol</value>
   </data>
   <data name="_1Heptanol" xml:space="preserve">
-    <value>1-Heptanol (C7H15OH)</value>
+    <value>1-Heptanol</value>
   </data>
   <data name="_1Hexanol" xml:space="preserve">
-    <value>1-Hexanol (C6H13OH)</value>
+    <value>1-Hexanol</value>
   </data>
   <data name="_1Octanol" xml:space="preserve">
-    <value>1-Octanol (C8H17OH)</value>
+    <value>1-Octanol</value>
   </data>
   <data name="_1Pentanol" xml:space="preserve">
-    <value>1-Pentanol (C5H11OH)</value>
+    <value>1-Pentanol</value>
   </data>
   <data name="_3Metil1Butanol" xml:space="preserve">
-    <value>3-Methyl-1-Butanol (C5H11OH)</value>
+    <value>3-Methyl-1-Butanol</value>
   </data>
   <data name="_Agua" xml:space="preserve">
-    <value>Water (H2O)</value>
+    <value>Water</value>
   </data>
   <data name="_Benzeno" xml:space="preserve">
-    <value>Benzene (C6H6)</value>
+    <value>Benzene</value>
   </data>
   <data name="_DioxidoDeCarbono" xml:space="preserve">
-    <value>Carbon Dioxide (CO2)</value>
+    <value>Carbon Dioxide</value>
   </data>
   <data name="_Etano" xml:space="preserve">
-    <value>Ethane (C2)</value>
+    <value>Ethane</value>
   </data>
   <data name="_Etanol" xml:space="preserve">
-    <value>Ethanol (C2H5OH)</value>
+    <value>Ethanol</value>
   </data>
   <data name="_Etilbenzeno" xml:space="preserve">
-    <value>Ethylbenzene (C8H10)</value>
+    <value>Ethylbenzene</value>
   </data>
   <data name="_Fenol" xml:space="preserve">
-    <value>Phenol (C6H6O)</value>
+    <value>Phenol</value>
   </data>
   <data name="_Glicerol" xml:space="preserve">
-    <value>Glycerol (C3H8O3)</value>
+    <value>Glycerol</value>
   </data>
   <data name="_Hidrogenio" xml:space="preserve">
-    <value>Hydrogen (H2)</value>
+    <value>Hydrogen</value>
   </data>
   <data name="_iButano" xml:space="preserve">
-    <value>Isobutane (iC4)</value>
+    <value>Isobutane</value>
   </data>
   <data name="_iPentano" xml:space="preserve">
-    <value>Isopentane (iC5)</value>
+    <value>Isopentane</value>
   </data>
   <data name="_Isopropanol" xml:space="preserve">
-    <value>Isopropanol (C3H7OH)</value>
+    <value>Isopropanol</value>
   </data>
   <data name="_Metano" xml:space="preserve">
-    <value>Methane (C1)</value>
+    <value>Methane</value>
   </data>
   <data name="_Metanol" xml:space="preserve">
-    <value>Methanol (CH3OH)</value>
+    <value>Methanol</value>
   </data>
   <data name="_MetilEtilCetona" xml:space="preserve">
-    <value>Methyl-Ethyl-Ketone (C3H8CO)</value>
+    <value>Methyl-Ethyl-Ketone</value>
   </data>
   <data name="_Mxileno" xml:space="preserve">
-    <value>m-Xylene (C8H10)</value>
+    <value>m-Xylene</value>
   </data>
   <data name="_nButano" xml:space="preserve">
-    <value>n-Butane (nC4)</value>
+    <value>n-Butane</value>
   </data>
   <data name="_nDecano" xml:space="preserve">
-    <value>n-Decane (nC10)</value>
+    <value>n-Decane</value>
   </data>
   <data name="_nHeptano" xml:space="preserve">
-    <value>n-Heptane (nC7)</value>
+    <value>n-Heptane</value>
   </data>
   <data name="_nHexano" xml:space="preserve">
-    <value>n-Hexane (nC6)</value>
+    <value>n-Hexane</value>
   </data>
   <data name="_Nitrogenio" xml:space="preserve">
-    <value>Nitrogen (N2)</value>
+    <value>Nitrogen</value>
   </data>
   <data name="_nNonano" xml:space="preserve">
-    <value>n-Nonane (nC9)</value>
+    <value>n-Nonane</value>
   </data>
   <data name="_nOctano" xml:space="preserve">
-    <value>n-Octane (nC8)</value>
+    <value>n-Octane</value>
   </data>
   <data name="_nPentano" xml:space="preserve">
-    <value>n-Pentane (nC5)</value>
+    <value>n-Pentane</value>
   </data>
   <data name="_Oxigenio" xml:space="preserve">
-    <value>Oxygen (O2)</value>
+    <value>Oxygen</value>
   </data>
   <data name="_Oxileno" xml:space="preserve">
-    <value>o-Xylene (C8H10)</value>
+    <value>o-Xylene</value>
   </data>
   <data name="_Propano" xml:space="preserve">
-    <value>Propane (C3)</value>
+    <value>Propane</value>
   </data>
   <data name="_Pxileno" xml:space="preserve">
-    <value>p-Xylene (C8H10)</value>
+    <value>p-Xylene</value>
   </data>
   <data name="_SulfetoDeHidrogenio" xml:space="preserve">
-    <value>Hydrogen Sulfide (H2S)</value>
+    <value>Hydrogen Sulfide</value>
   </data>
   <data name="_Tolueno" xml:space="preserve">
-    <value>Toluene (C7H8)</value>
+    <value>Toluene</value>
   </data>
   <data name="a" xml:space="preserve">
     <value>The</value>
@@ -283,7 +283,7 @@
     <value>Adjust</value>
   </data>
   <data name="Ajustecanceladopelou" xml:space="preserve">
-    <value>Adjust process cancelled by the user.</value>
+    <value>Adjustment process cancelled by the user.</value>
   </data>
   <data name="Altereasconfiguraesd" xml:space="preserve">
     <value>Change the number format settings and try again.</value>
@@ -325,7 +325,7 @@
     <value>Heating/Cooling</value>
   </data>
   <data name="AquecResfr" xml:space="preserve">
-    <value>Aquec./Resfr.</value>
+    <value>Heating/Cooling</value>
   </data>
   <data name="Aqueous" xml:space="preserve">
     <value>Aqueous</value>
@@ -373,7 +373,7 @@
     <value>Acceleration Delay</value>
   </data>
   <data name="Autodimensionar" xml:space="preserve">
-    <value>Auto-scale?</value>
+    <value>Auto-scale</value>
   </data>
   <data name="AutoSize" xml:space="preserve">
     <value>AutoSize</value>
@@ -418,7 +418,7 @@
     <value>Border color</value>
   </data>
   <data name="BothPhasesNotAllowed" xml:space="preserve">
-    <value>The existence of both liquid and vapor phases is not allowed.</value>
+    <value>Coexistence between liquid and vapor phases is not allowed.</value>
   </data>
   <data name="Bottomo3" xml:space="preserve">
     <value>3. Bottom</value>
@@ -862,7 +862,7 @@
     <value>Outlet Stream 3</value>
   </data>
   <data name="Correntesdeenergiasp" xml:space="preserve">
-    <value>Energy streams can only connect to ( 'energy stream' -&gt; 'object'):</value>
+    <value>Energy streams can only connect to ('energy stream' -&gt; 'object'):</value>
   </data>
   <data name="Correntesdeenergiasp2" xml:space="preserve">
     <value>Energy streams can only connect from ('object' -&gt; 'energy stream'):</value>
@@ -4291,7 +4291,7 @@
     <value>Rigorous model for an absorption column.</value>
   </data>
   <data name="Ajuste_Desc" xml:space="preserve">
-    <value>Logic operation for adjustment of a property as a function of a property of another object.</value>
+    <value>Logic operation for setting a property as a function of a property of another object.</value>
   </data>
   <data name="Aquecedor_Desc" xml:space="preserve">
     <value>Unit operation to model heating processes.</value>
@@ -4309,7 +4309,7 @@
     <value>Represents energy flows in and out of unit operations.</value>
   </data>
   <data name="CorrentedeMatria_Desc" xml:space="preserve">
-    <value>Represents matter flows in and out of unit operations.</value>
+    <value>Represents flow of matter in and out of unit operations.</value>
   </data>
   <data name="DistillationColumn_Desc" xml:space="preserve">
     <value>Rigorous model for industrial distillation columns.</value>
@@ -4870,7 +4870,7 @@ FPROPS is Copyright (C) 2011 - Carnegie Mellon University</value>
     <value>No Database defined!</value>
   </data>
   <data name="AddUnitSystemFromSimulation" xml:space="preserve">
-    <value>Add User (Simulation) Units System</value>
+    <value>Add User (Simulation) System of Units</value>
   </data>
   <data name="ConfirmAddUnitSystemFromSimulation" xml:space="preserve">
     <value>The loaded simulation contains a new user units system definition. Do you want to add this units system to your list?</value>
