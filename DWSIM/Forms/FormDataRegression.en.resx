@@ -298,8 +298,14 @@
   <data name="GroupBox2.Text" xml:space="preserve">
     <value>Regression Information</value>
   </data>
+  <data name="BtnSelectIPDB.Location" type="System.Drawing.Point, System.Drawing">
+    <value>233, 51</value>
+  </data>
   <data name="BtnSelectIPDB.Text" xml:space="preserve">
     <value>Search</value>
+  </data>
+  <data name="BtnSaveIPDB.Location" type="System.Drawing.Point, System.Drawing">
+    <value>152, 51</value>
   </data>
   <data name="BtnSaveIPDB.Text" xml:space="preserve">
     <value>Save</value>
@@ -310,8 +316,20 @@
   <data name="Label12.Text" xml:space="preserve">
     <value>Database</value>
   </data>
+  <data name="tbIPDBName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>314, 53</value>
+  </data>
+  <data name="tbIPDBName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>851, 20</value>
+  </data>
+  <data name="BtnNewIPDB.Location" type="System.Drawing.Point, System.Drawing">
+    <value>71, 51</value>
+  </data>
   <data name="BtnNewIPDB.Text" xml:space="preserve">
     <value>New</value>
+  </data>
+  <data name="LabelWithDivider4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 44</value>
   </data>
   <data name="Label11.Size" type="System.Drawing.Size, System.Drawing">
     <value>60, 13</value>
