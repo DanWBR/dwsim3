@@ -1521,6 +1521,7 @@
     <None Include="Assets\samples\Cavett%27s Problem with TEA 1.1 %28Windows only%29.dwsim" />
     <None Include="Assets\samples\Cavett%27s Problem.dwxml" />
     <None Include="Assets\samples\Cyclohexane-Aniline-NRTL.dwrsd" />
+    <None Include="Assets\samples\DWSIM Add-In Sample.xlsx" />
     <None Include="Assets\samples\Electrolysis Cell with ExcelUO.dwxml" />
     <None Include="Assets\samples\Electrolysis.xlsx" />
     <None Include="Assets\samples\Ethanol-Benzene-SLE.dwrsd" />
