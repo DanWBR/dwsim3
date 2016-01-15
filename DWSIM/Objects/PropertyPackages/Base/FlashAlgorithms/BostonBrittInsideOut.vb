@@ -736,46 +736,57 @@ restart:    Do
 
                 CheckCalculatorStatus()
 
-            Loop Until SumSqr(fx) < etol
+            Loop Until Sum(fx) < etol
 
             If Abs(fr) > itol Then
-                If V <= 0.01 Then
-                    'single phase solution found (liquid only). Obtain T using single phase calculation.
-                    Dim x1, fx2, dfdx2 As Double
-                    ecount = 0
-                    If Tref = 0 Then Tref = 298.15
-                    x1 = Tref
-                    Do
-                        fx2 = EnergyBalanceSPL(x1, Nothing)
-                        If Math.Abs(fx2) < etol Then Exit Do
-                        dfdx2 = (EnergyBalanceSPL(x1 + 1, Nothing) - fx2)
-                        x1 = x1 - fx2 / dfdx2
-                        ecount += 1
-                    Loop Until ecount > maxit_e Or Double.IsNaN(x1)
-                    T = x1
+
+                Dim Tl, Tv As Double
+
+                'single phase solution found (liquid only). Obtain T using single phase calculation.
+                Dim x1, fx2, dfdx2 As Double
+
+                ecount = 0
+                If Tref = 0 Then Tref = 298.15
+                x1 = Tref
+                Do
+                    fx2 = EnergyBalanceSPL(x1, Nothing)
+                    If Math.Abs(fx2) < etol Then Exit Do
+                    dfdx2 = (EnergyBalanceSPL(x1 + 1, Nothing) - fx2)
+                    x1 = x1 - fx2 / dfdx2
+                    ecount += 1
+                Loop Until ecount > maxit_e Or Double.IsNaN(x1)
+                Tl = x1
+                Vx = Vz
+
+                'single phase solution found (vapor only). Obtain T using single phase calculation.
+                ecount = 0
+                If Tref = 0 Then Tref = 298.15
+                x1 = Tref
+                Do
+                    fx2 = EnergyBalanceSPV(x1, Nothing)
+                    If Math.Abs(fx2) < etol Then Exit Do
+                    dfdx2 = (EnergyBalanceSPV(x1 + 1, Nothing) - fx2)
+                    x1 = x1 - fx2 / dfdx2
+                    ecount += 1
+                Loop Until ecount > maxit_e Or Double.IsNaN(x1)
+                Tv = x1
+                Vy = Vz
+
+                If Tl < Tv Then
+                    T = Tl
                     Vx = Vz
                 Else
-                    'single phase solution found (vapor only). Obtain T using single phase calculation.
-                    Dim x1, fx2, dfdx2 As Double
-                    ecount = 0
-                    If Tref = 0 Then Tref = 298.15
-                    x1 = Tref
-                    Do
-                        fx2 = EnergyBalanceSPV(x1, Nothing)
-                        If Math.Abs(fx2) < etol Then Exit Do
-                        dfdx2 = (EnergyBalanceSPV(x1 + 1, Nothing) - fx2)
-                        x1 = x1 - fx2 / dfdx2
-                        ecount += 1
-                    Loop Until ecount > maxit_e Or Double.IsNaN(x1)
-                    T = x1
+                    T = Tv
                     Vy = Vz
                 End If
+
                 'confirm single-phase solution with a PT Flash.
                 Dim res As Object = Me.Flash_PT(Vz, P, T, PP, False, Nothing)
                 If Abs(L - res(0)) > 0.0001 And Abs(V - res(1)) > 0.0001 Then
                     'NOT SP solution. go back to 2-phase loop.
                     GoTo restart
                 End If
+
             End If
 
             d2 = Date.Now
