@@ -4301,6 +4301,17 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to The Sour Water Property Package is based on the SWEQ model described in the USEPA Report EPA-600/2-80-067: &apos;A new correlation of NH3, CO2, and H2S volatility data from aqueous sour water systems&apos;, by Wilson, Grant M., available online at http://nepis.epa.gov/Exe/ZyPDF.cgi?Dockey=9101B309.PDF  
+        '''
+        '''In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour water systems including the effects of release by caustic (NaOH) addition are considered. The original model is applicable for temperatur [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property DescSourWaterPP() As String
+            Get
+                Return ResourceManager.GetString("DescSourWaterPP", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Pacote de Propriedades com suporte a flash multifásico utilizando a EDE SRK..
         '''</summary>
         Friend Shared ReadOnly Property DescSRKMP() As String
@@ -13369,6 +13380,15 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Solving() As String
             Get
                 Return ResourceManager.GetString("Solving", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Águas Ácidas.
+        '''</summary>
+        Friend Shared ReadOnly Property SourWaterPP() As String
+            Get
+                Return ResourceManager.GetString("SourWaterPP", resourceCulture)
             End Get
         End Property
         

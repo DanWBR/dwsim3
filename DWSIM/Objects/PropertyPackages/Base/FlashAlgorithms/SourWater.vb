@@ -1,5 +1,5 @@
-﻿'    DWSIM Nested Loops Flash Algorithms for Solid-Liquid Equilibria (SLE)
-'    Copyright 2015 Daniel Wagner O. de Medeiros
+﻿'    Flash Algorithms for Sour Water simulations
+'    Copyright 2016 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -27,7 +27,7 @@ Imports System.Linq
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
-    <System.Serializable()> Public Class Seawater
+    <System.Serializable()> Public Class SourWater
 
         Inherits FlashAlgorithm
 
@@ -42,12 +42,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         Public Overrides Function Flash_PT(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
-            Return Flash_PT_Internal(True, Vz, P, T, PP, ReuseKI, PrevKi)
+            Return Flash_PT_Internal(Vz, P, T, PP)
 
         End Function
 
-
-        Public Function Flash_PT_Internal(ByVal include_vapor As Boolean, ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
+        Public Function Flash_PT_Internal(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage) As Object
 
             Dim d1, d2 As Date, dt As TimeSpan
 
@@ -58,13 +57,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             itol = CDbl(PP.Parameters("PP_PTFILT"))
             maxit_i = CInt(PP.Parameters("PP_PTFMII"))
 
-            'This flash algorithm is for Electrolye/Salt systems with Water as the single solvent.
-            'The vapor and solid phases are considered to be ideal.
-            'Chemical equilibria is calculated using the reactions enabled in the default reaction set.
-
             Dim n As Integer = CompoundProperties.Count - 1
-            Dim activcoeff(n) As Double
-            Dim i As Integer
+            Dim activcoeff(n), errfunc As Double
+            Dim i, ecount As Integer
 
             'Vnf = feed molar amounts (considering 1 mol of feed)
             'Vnl = liquid phase molar amounts
@@ -80,119 +75,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Vnf = Vz.Clone
 
             Dim wid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.CAS_Number = "7732-18-5").SingleOrDefault)
-
-            'calculate SLE.
-
-            Dim ids As New List(Of String)
-            For i = 0 To n
-                ids.Add(CompoundProperties(i).Name)
-                Vp(i) = PP.AUX_PVAPi(i, T)
-            Next
-
-            Vxl = Vz.Clone
-
-            'initial estimates for L and S.
-
-            L = 0.0#
-
-            'calculate liquid phase activity coefficients.
-
-            Dim ecount As Integer = 0
-            Dim errfunc As Double = 0.0#
-
-            'maximum salt solubility on water in kg/kg
-
-            Dim maxsol As Double = 0.0000025676 * T ^ 2 - 0.001321 * T + 0.52555
-
-            'temperature of fusion
-
-            Dim Tfus As Double = DirectCast(PP, SeawaterPropertyPackage).TemperatureOfFusion(Vxl, T)
-
-            Do
-
-                Vp(wid) = DirectCast(PP, SeawaterPropertyPackage).VaporPressure(Vxl, T)
-
-                activcoeff = PP.DW_CalcFugCoeff(Vxl, T, P, State.Liquid)
-
-                For i = 0 To n
-                    If Not CompoundProperties(i).IsSalt Then activcoeff(i) = activcoeff(i) * P / PP.AUX_PVAPi(ids(i), T)
-                Next
-
-                Dim Vxlmax(n) As Double
-
-                'calculate maximum solubilities for solids/precipitates.
-
-                For i = 0 To n
-                    If CompoundProperties(i).Name = "Salt" Then
-                        Vxlmax(i) = maxsol / 58.44 * 18 * Vxl(wid)
-                    Else
-                        If T >= Tfus Then
-                            Vxlmax(i) = 1.0#
-                        Else
-                            Vxlmax(i) = 0.0#
-                        End If
-                    End If
-                Next
-
-                'mass balance.
-
-                Dim hassolids As Boolean = False
-
-                S = 0.0#
-                For i = 0 To n
-                    If Vnf(i) > Vxlmax(i) Then
-                        hassolids = True
-                        Vxl(i) = Vxlmax(i)
-                        S += Vnf(i) - Vxl(i) * L
-                    End If
-                Next
-
-                'check for vapors
-
-                If include_vapor Then
-
-                    V = 0.0#
-                    For i = 0 To n
-                        If P < Vp(i) Then
-                            V += Vnf(i)
-                            Vxl(i) = 0.0000000001
-                            Vnv(i) = Vnf(i)
-                        End If
-                    Next
-
-                Else
-
-                    V = 0.0#
-                    Vnv = PP.RET_NullVector
-
-                End If
-
-                L_ant = L
-                If hassolids Then L = 1 - S - V Else L = 1 - V
-
-                For i = 0 To n
-                    Vns(i) = Vnf(i) - Vxl(i) * L - Vnv(i)
-                    Vnl(i) = Vxl(i) * L
-                Next
-
-                For i = 0 To n
-                    If Sum(Vnl) <> 0.0# Then Vxl(i) = Vnl(i) / Sum(Vnl) Else Vxl(i) = 0.0000000001
-                    If Sum(Vns) <> 0.0# Then Vxs(i) = Vns(i) / Sum(Vns) Else Vxs(i) = 0.0000000001
-                    If Sum(Vnv) <> 0.0# Then Vxv(i) = Vnv(i) / Sum(Vnv) Else Vxv(i) = 0.0000000001
-                Next
-
-                errfunc = Abs(L - L_ant)
-
-                If errfunc <= 0.0000000001 Then Exit Do
-
-                If Double.IsNaN(S) Then Throw New Exception(DWSIM.App.GetLocalString("PP_FlashTPSolidFracError"))
-                If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PP_FlashMaxIt2"))
-
-                ecount += 1
-
-                CheckCalculatorStatus()
-
-            Loop
 
             'return flash calculation results.
 
@@ -583,31 +465,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             xv = V
             xl = 1 - V
 
-            P = PP.AUX_PVAPi(wid, T)
-
-            Dim tmp As Object() = Nothing
-
-            If xv < Vz(wid) Then
-                Vz(wid) -= xv
-                Vz = Vz.NormalizeY()
-                tmp = Flash_PT_Internal(False, Vz, P, T, PP)
-            Else
-                Throw New InvalidOperationException("Vapor fraction higher than water mole fraction in the mixture.")
-            End If
-            L = (tmp(0) + tmp(1)) * xl
-            If L < 0.000001 Then L = 0.0#
-            V = xv
-            S = tmp(7) * xl
-            If S < 0.000001 Then S = 0.0#
-            For i = 0 To n
-                Vx(i) = (tmp(2)(i) * tmp(0) + tmp(3)(i) * tmp(1)) / L
-            Next
-            Vx = Vx.NormalizeY()
-            Vy = PP.RET_NullVector()
-            Vy(wid) = 1.0#
-            Vs = tmp(8)
-
-            ecount = tmp(4)
+       
 
             d2 = Date.Now
 
@@ -641,31 +499,6 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             xv = V
             xl = 1 - V
 
-            T = PP.AUX_TSATi(P, wid)
-
-            Dim tmp As Object() = Nothing
-
-            If xv < Vz(wid) Then
-                Vz(wid) -= xv
-                Vz = Vz.NormalizeY()
-                tmp = Flash_PT_Internal(False, Vz, P, T, PP)
-            Else
-                Throw New InvalidOperationException("Vapor fraction higher than water mole fraction in the mixture.")
-            End If
-            L = (tmp(0) + tmp(1)) * xl
-            If L < 0.000001 Then L = 0.0#
-            V = xv
-            S = tmp(7) * xl
-            If S < 0.000001 Then S = 0.0#
-            For i = 0 To n
-                Vx(i) = (tmp(2)(i) * tmp(0) + tmp(3)(i) * tmp(1)) / L
-            Next
-            Vx = Vx.NormalizeY()
-            Vy = PP.RET_NullVector()
-            Vy(wid) = 1.0#
-            Vs = tmp(8)
-
-            ecount = tmp(4)
 
             d2 = Date.Now
 

@@ -459,6 +459,11 @@ Public Class FormMain
         CPPP.ComponentDescription = DWSIM.App.GetLocalString("DescCPPP")
         PropertyPackages.Add(CPPP.ComponentName.ToString, CPPP)
 
+        Dim SWPP As New SourWaterPropertyPackage()
+        SWPP.ComponentName = DWSIM.App.GetLocalString("SourWaterPP")
+        SWPP.ComponentDescription = DWSIM.App.GetLocalString("DescSourWaterPP")
+        PropertyPackages.Add(SWPP.ComponentName.ToString, SWPP)
+
         Dim STPP As SteamTablesPropertyPackage = New SteamTablesPropertyPackage()
         STPP.ComponentName = DWSIM.App.GetLocalString("TabelasdeVaporSteamT")
         STPP.ComponentDescription = DWSIM.App.GetLocalString("DescSteamTablesPP")

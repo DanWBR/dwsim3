@@ -5241,4 +5241,12 @@ Die erhaltenen Daten werden hauptsächlich für die Berechnung von VLE-Daten emp
   <data name="CompoundNotFound" xml:space="preserve">
     <value>compound not found on any of the loaded databases.</value>
   </data>
+  <data name="DescSourWaterPP" xml:space="preserve">
+    <value>The Sour Water Property Package is based on the SWEQ model described in the USEPA Report EPA-600/2-80-067: 'A new correlation of NH3, CO2, and H2S volatility data from aqueous sour water systems', by Wilson, Grant M., available online at http://nepis.epa.gov/Exe/ZyPDF.cgi?Dockey=9101B309.PDF  
+
+In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour water systems including the effects of release by caustic (NaOH) addition are considered. The original model is applicable for temperatures between 20°C (68°F) and 140°C (285°F), and pressures up to 50 psi. in DWSIM, use of the PR EOS to correct vapour phase non-idealities extends this range but, due to lack of experimental data, exact ranges cannot be specified.</value>
+  </data>
+  <data name="SourWaterPP" xml:space="preserve">
+    <value>Sour Water</value>
+  </data>
 </root>
