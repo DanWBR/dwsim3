@@ -30,17 +30,17 @@ Partial Class FormReacSetEditor
         Me.KryptonTextBox1 = New System.Windows.Forms.TextBox()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.KryptonDataGridView1 = New System.Windows.Forms.DataGridView()
-        Me.ToolStrip2 = New System.Windows.Forms.ToolStrip()
-        Me.tsddAdd = New System.Windows.Forms.ToolStripDropDownButton()
-        Me.tsbRemove = New System.Windows.Forms.ToolStripButton()
-        Me.KryptonButton2 = New System.Windows.Forms.Button()
-        Me.KryptonButton3 = New System.Windows.Forms.Button()
         Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column2 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ToolStrip2 = New System.Windows.Forms.ToolStrip()
+        Me.tsddAdd = New System.Windows.Forms.ToolStripDropDownButton()
+        Me.tsbRemove = New System.Windows.Forms.ToolStripButton()
+        Me.KryptonButton2 = New System.Windows.Forms.Button()
+        Me.KryptonButton3 = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         CType(Me.KryptonDataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -49,11 +49,11 @@ Partial Class FormReacSetEditor
         '
         'GroupBox1
         '
-        resources.ApplyResources(Me.GroupBox1, "GroupBox1")
         Me.GroupBox1.Controls.Add(Me.KryptonLabel2)
         Me.GroupBox1.Controls.Add(Me.KryptonLabel1)
         Me.GroupBox1.Controls.Add(Me.tbName)
         Me.GroupBox1.Controls.Add(Me.KryptonTextBox1)
+        resources.ApplyResources(Me.GroupBox1, "GroupBox1")
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.TabStop = False
         '
@@ -79,59 +79,27 @@ Partial Class FormReacSetEditor
         '
         'GroupBox2
         '
-        resources.ApplyResources(Me.GroupBox2, "GroupBox2")
         Me.GroupBox2.Controls.Add(Me.KryptonDataGridView1)
         Me.GroupBox2.Controls.Add(Me.ToolStrip2)
+        resources.ApplyResources(Me.GroupBox2, "GroupBox2")
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.TabStop = False
         '
         'KryptonDataGridView1
         '
-        resources.ApplyResources(Me.KryptonDataGridView1, "KryptonDataGridView1")
         Me.KryptonDataGridView1.AllowUserToAddRows = False
         Me.KryptonDataGridView1.AllowUserToDeleteRows = False
         Me.KryptonDataGridView1.AllowUserToResizeRows = False
         Me.KryptonDataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.KryptonDataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.KryptonDataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column6, Me.Column4, Me.Column2, Me.Column3, Me.Column5})
+        resources.ApplyResources(Me.KryptonDataGridView1, "KryptonDataGridView1")
         Me.KryptonDataGridView1.MultiSelect = False
         Me.KryptonDataGridView1.Name = "KryptonDataGridView1"
         Me.KryptonDataGridView1.RowHeadersVisible = False
         Me.KryptonDataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.KryptonDataGridView1.ShowCellErrors = False
         Me.KryptonDataGridView1.ShowEditingIcon = False
-        '
-        'ToolStrip2
-        '
-        resources.ApplyResources(Me.ToolStrip2, "ToolStrip2")
-        Me.ToolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.ToolStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsddAdd, Me.tsbRemove})
-        Me.ToolStrip2.Name = "ToolStrip2"
-        '
-        'tsddAdd
-        '
-        resources.ApplyResources(Me.tsddAdd, "tsddAdd")
-        Me.tsddAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.tsddAdd.Image = Global.DWSIM.My.Resources.Resources.add
-        Me.tsddAdd.Name = "tsddAdd"
-        Me.tsddAdd.ShowDropDownArrow = False
-        '
-        'tsbRemove
-        '
-        resources.ApplyResources(Me.tsbRemove, "tsbRemove")
-        Me.tsbRemove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.tsbRemove.Image = Global.DWSIM.My.Resources.Resources.delete1
-        Me.tsbRemove.Name = "tsbRemove"
-        '
-        'KryptonButton2
-        '
-        resources.ApplyResources(Me.KryptonButton2, "KryptonButton2")
-        Me.KryptonButton2.Name = "KryptonButton2"
-        '
-        'KryptonButton3
-        '
-        resources.ApplyResources(Me.KryptonButton3, "KryptonButton3")
-        Me.KryptonButton3.Name = "KryptonButton3"
         '
         'Column1
         '
@@ -175,6 +143,38 @@ Partial Class FormReacSetEditor
         Me.Column5.Name = "Column5"
         Me.Column5.ReadOnly = True
         '
+        'ToolStrip2
+        '
+        resources.ApplyResources(Me.ToolStrip2, "ToolStrip2")
+        Me.ToolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+        Me.ToolStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsddAdd, Me.tsbRemove})
+        Me.ToolStrip2.Name = "ToolStrip2"
+        '
+        'tsddAdd
+        '
+        Me.tsddAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsddAdd.Image = Global.DWSIM.My.Resources.Resources.add
+        resources.ApplyResources(Me.tsddAdd, "tsddAdd")
+        Me.tsddAdd.Name = "tsddAdd"
+        Me.tsddAdd.ShowDropDownArrow = False
+        '
+        'tsbRemove
+        '
+        Me.tsbRemove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsbRemove.Image = Global.DWSIM.My.Resources.Resources.delete1
+        resources.ApplyResources(Me.tsbRemove, "tsbRemove")
+        Me.tsbRemove.Name = "tsbRemove"
+        '
+        'KryptonButton2
+        '
+        resources.ApplyResources(Me.KryptonButton2, "KryptonButton2")
+        Me.KryptonButton2.Name = "KryptonButton2"
+        '
+        'KryptonButton3
+        '
+        resources.ApplyResources(Me.KryptonButton3, "KryptonButton3")
+        Me.KryptonButton3.Name = "KryptonButton3"
+        '
         'FormReacSetEditor
         '
         resources.ApplyResources(Me, "$this")
@@ -187,6 +187,7 @@ Partial Class FormReacSetEditor
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "FormReacSetEditor"
         Me.ShowInTaskbar = False
+        Me.TopMost = True
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
@@ -196,7 +197,7 @@ Partial Class FormReacSetEditor
         Me.ToolStrip2.PerformLayout()
         Me.ResumeLayout(False)
 
-End Sub
+    End Sub
     Public WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     Public WithEvents GroupBox2 As System.Windows.Forms.GroupBox
     Public WithEvents KryptonTextBox1 As System.Windows.Forms.TextBox

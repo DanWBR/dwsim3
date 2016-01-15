@@ -44,7 +44,7 @@
   <DenS_g_mL>1.777</DenS_g_mL>
 </compound>
 <compound>
-  <Name>Ammonium___1</Name>
+  <Name>Ammonium (1)</Name>
   <Formula>(NH4)2SO4.2NH4NO3</Formula>
   <MW>292.23</MW>
   <Ion>False</Ion>
@@ -65,7 +65,7 @@
   <DenS_g_mL>0</DenS_g_mL>
 </compound>
 <compound>
-  <Name>Ammonium___2</Name>
+  <Name>Ammonium (2)</Name>
   <Formula>(NH4)2SO4.3NH4NO3</Formula>
   <MW>372.27</MW>
   <Ion>False</Ion>
@@ -86,7 +86,7 @@
   <DenS_g_mL>0</DenS_g_mL>
 </compound>
 <compound>
-  <Name>Sodium Nitrate___1</Name>
+  <Name>Sodium Nitrate (1)</Name>
   <Formula>(NaNO3)2.NH4NO3</Formula>
   <MW>250.03</MW>
   <Ion>False</Ion>
@@ -107,7 +107,7 @@
   <DenS_g_mL>0</DenS_g_mL>
 </compound>
 <compound>
-  <Name>Potassium Nitrate___1</Name>
+  <Name>Potassium Nitrate (1)</Name>
   <Formula>(KNO3)3.NH4NO3</Formula>
   <MW>383.35</MW>
   <Ion>False</Ion>
@@ -398,7 +398,7 @@
   <CpAq_c>-16316</CpAq_c>
 </compound>
 <compound>
-  <Name>Potassium Carbonate___1</Name>
+  <Name>Potassium Carbonate (1)</Name>
   <Formula>K2CO3.11/2H2O</Formula>
   <MW>174.22</MW>
   <Ion>False</Ion>
@@ -420,7 +420,7 @@
   <DenS_g_mL>0</DenS_g_mL>
 </compound>
 <compound>
-  <Name>Potassium Carbonate___2</Name>
+  <Name>Potassium Carbonate (2)</Name>
   <Formula>K2CO3.2KHCO3.11/2H2O</Formula>
   <MW>392.47</MW>
   <Ion>False</Ion>
@@ -442,7 +442,7 @@
   <DenS_g_mL>0</DenS_g_mL>
 </compound>
 <compound>
-  <Name>Potassium Carbonate___3</Name>
+  <Name>Potassium Carbonate (3)</Name>
   <Formula>K2CO3.Na2CO3</Formula>
   <MW>244.19</MW>
   <Ion>False</Ion>
@@ -463,7 +463,7 @@
   <DenS_g_mL>0</DenS_g_mL>
 </compound>
 <compound>
-  <Name>Potassium Carbonate___4</Name>
+  <Name>Potassium Carbonate (4)</Name>
   <Formula>K2CO3.NaHCO3.2H2O</Formula>
   <MW>258.24</MW>
   <Ion>False</Ion>
@@ -962,7 +962,7 @@
   <CpAq_c>-23232</CpAq_c>
 </compound>
 <compound>
-  <Name>Sodium Carbonate___1</Name>
+  <Name>Sodium Carbonate (1)</Name>
   <Formula>Na2CO3.2Na2SO4</Formula>
   <MW>390.07</MW>
   <Ion>False</Ion>
@@ -983,7 +983,7 @@
   <DenS_g_mL>0</DenS_g_mL>
 </compound>
 <compound>
-  <Name>Sodium Carbonate___2</Name>
+  <Name>Sodium Carbonate (2)</Name>
   <Formula>Na2CO3.3NaHCO3</Formula>
   <MW>358.01</MW>
   <Ion>False</Ion>
@@ -1004,7 +1004,7 @@
   <DenS_g_mL>0</DenS_g_mL>
 </compound>
 <compound>
-  <Name>Sodium Carbonate___3</Name>
+  <Name>Sodium Carbonate (3)</Name>
   <Formula>Na2CO3.NaHCO3.2H2O</Formula>
   <MW>226.03</MW>
   <Ion>False</Ion>
@@ -1090,7 +1090,7 @@
   <DenS_g_mL>1.46</DenS_g_mL>
 </compound>
 <compound>
-  <Name>Sodium Sulfate___1</Name>
+  <Name>Sodium Sulfate (1)</Name>
   <Formula>Na2SO4.(NH4)2SO4.4H2O</Formula>
   <MW>346.24</MW>
   <Ion>False</Ion>
@@ -1304,7 +1304,7 @@
   <DenS_g_mL>2.261</DenS_g_mL>
 </compound>
 <compound>
-  <Name>Sodium Nitrate___1</Name>
+  <Name>Sodium Nitrate (1)</Name>
   <Formula>NaNO3.Na2SO4.H2O</Formula>
   <MW>245.05</MW>
   <Ion>False</Ion>
@@ -1570,5 +1570,71 @@
   <Hfus_at_Tf_kJ_mol>28.16</Hfus_at_Tf_kJ_mol>
   <DenS_T_C>25</DenS_T_C>
   <DenS_g_mL>2.17</DenS_g_mL>
+</compound>
+<compound>
+  <Name>Bisulfide (ion)</Name>
+  <Formula>HS-</Formula>
+  <MW>33.07</MW>
+  <Ion>True</Ion>
+  <Salt>False</Salt>
+  <HydratedSalt>False</HydratedSalt>
+  <Charge>-1</Charge>
+</compound>
+<compound>
+  <Name>Bicarbonate (ion)</Name>
+  <Formula>HCO3-</Formula>
+  <MW>61.0168</MW>
+  <Ion>True</Ion>
+  <Salt>False</Salt>
+  <HydratedSalt>False</HydratedSalt>
+  <Charge>-1</Charge>
+</compound>
+<compound>
+  <Name>Carbamate (ion)</Name>
+  <Formula>H2NCOO-</Formula>
+  <MW>60.0321</MW>
+  <Ion>True</Ion>
+  <Salt>False</Salt>
+  <HydratedSalt>False</HydratedSalt>
+  <Charge>-1</Charge>
+</compound>
+<compound>
+  <Name>Carbonate (ion)</Name>
+  <Formula>CO3-2</Formula>
+  <MW>60.0089</MW>
+  <Ion>True</Ion>
+  <Salt>False</Salt>
+  <HydratedSalt>False</HydratedSalt>
+  <Charge>-2</Charge>
+</compound>
+<compound>
+  <Name>Sulfide (ion)</Name>
+  <Formula>S-2-</Formula>
+  <MW>32.06</MW>
+  <Ion>True</Ion>
+  <Salt>False</Salt>
+  <HydratedSalt>False</HydratedSalt>
+  <Charge>-2</Charge>
+</compound>
+<compound>
+  <Name>Sodium Hydroxide</Name>
+  <Formula>NaOH</Formula>
+  <MW>58.44</MW>
+  <Ion>False</Ion>
+  <Salt>False</Salt>
+  <HydratedSalt>False</HydratedSalt>
+  <PositiveIon>Na+</PositiveIon>
+  <NegativeIon>OH-</NegativeIon>
+  <PositiveIonStoichCoeff>1</PositiveIonStoichCoeff>
+  <NegativeIonStoichCoeff>1</NegativeIonStoichCoeff>
+  <StoichSum>2</StoichSum>
+  <Charge>0</Charge>
+  <DelGF_kJ_mol>-380.17</DelGF_kJ_mol>
+  <DelHf_kJ_mol>-427</DelHf_kJ_mol>
+  <Cp_J_mol_K>59.66</Cp_J_mol_K>
+  <Tf_C>318</Tf_C>
+  <Hfus_at_Tf_kJ_mol>8.14</Hfus_at_Tf_kJ_mol>
+  <DenS_T_C>25</DenS_T_C>
+  <DenS_g_mL>2.13</DenS_g_mL>
 </compound>
 </compounds>
