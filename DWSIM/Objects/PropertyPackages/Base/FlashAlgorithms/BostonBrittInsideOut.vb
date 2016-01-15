@@ -234,9 +234,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Rant = R
                 fr = bo2.brentoptimize(0.0#, 1.0#, 0.00000001, R)
 
-                If ecount > 0 Then
-                    If Rant = 0.0# And R = 1.0# Then R = 0.0#
-                    If Rant = 1.0# And R = 0.0# Then R = 1.0#
+                If R > 0.999999 Or R < 0.000001 Then
+                    Dim gr0, gr1 As Double
+                    gr0 = PP.DW_CalcGibbsEnergy(Vz, T, P, "V")
+                    gr1 = PP.DW_CalcGibbsEnergy(Vz, T, P, "L")
+                    If gr0 < gr1 Then
+                        R = 1.0#
+                    ElseIf gr0 > gr1 Then
+                        R = 0.0#
+                    End If
                 End If
 
                 Me.TPErrorFunc(R)
@@ -258,7 +264,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         Vx(i) = pi(i) / sumpi
                         Vy(i) = Exp(ui(i)) * pi(i) / sumeuipi
                     Next
-                    Exit Do
                 End If
 
                 If R >= 1 Then
@@ -278,7 +283,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         Vx(i) = pi(i) / sumpi
                         Vy(i) = Exp(ui(i)) * pi(i) / sumeuipi
                     Next
-                    Exit Do
                 End If
 
 
@@ -572,9 +576,15 @@ restart:    Do
                 bo2.DefineFuncDelegate(AddressOf EnergyBalanceAbs)
                 fr = bo2.brentoptimize(0.0#, 1.0#, 0.00000001, R)
 
-                If ecount > 0 Then
-                    If Rant = 0.0# And R = 1.0# Then R = 0.0#
-                    If Rant = 1.0# And R = 0.0# Then R = 1.0#
+                If R > 0.999999 Or R < 0.000001 Then
+                    Dim gr0, gr1 As Double
+                    gr0 = PP.DW_CalcGibbsEnergy(Vz, T, P, "V")
+                    gr1 = PP.DW_CalcGibbsEnergy(Vz, T, P, "L")
+                    If gr0 < gr1 Then
+                        R = 1.0#
+                    ElseIf gr0 > gr1 Then
+                        R = 0.0#
+                    End If
                 End If
 
                 Me.EnergyBalance(R)

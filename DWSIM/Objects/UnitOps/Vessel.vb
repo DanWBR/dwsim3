@@ -410,6 +410,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 ms = form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name)
                 With ms
                     .ClearAllProps()
+                    .SpecType = Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
                     .Fases(0).SPMProperties.temperature = T
                     .Fases(0).SPMProperties.pressure = P
                     .Fases(0).SPMProperties.enthalpy = mix.Fases(2).SPMProperties.enthalpy
@@ -427,6 +428,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 ms = form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name)
                 With ms
                     .ClearAllProps()
+                    .SpecType = Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
                     .Fases(0).SPMProperties.temperature = T
                     .Fases(0).SPMProperties.pressure = P
                     If W1 > 0.0# Then .Fases(0).SPMProperties.massflow = W1 Else .Fases(0).SPMProperties.molarflow = 0.0#
@@ -447,6 +449,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     ms = form.Collections.CLCS_MaterialStreamCollection(cp.AttachedConnector.AttachedTo.Name)
                     With ms
                         .ClearAllProps()
+                        .SpecType = Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
                         .Fases(0).SPMProperties.temperature = T
                         .Fases(0).SPMProperties.pressure = P
                         If W2 > 0.0# Then .Fases(0).SPMProperties.massflow = W2 Else .Fases(0).SPMProperties.molarflow = 0.0#

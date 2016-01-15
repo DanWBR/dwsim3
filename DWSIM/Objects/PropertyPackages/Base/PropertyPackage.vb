@@ -941,16 +941,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         End Sub
 
-        Public Function DW_CalcGibbsEnergy(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double) As Double
+        Public Function DW_CalcGibbsEnergy(ByVal Vx As System.Array, ByVal T As Double, ByVal P As Double, Optional ByVal forcephase As String = "") As Double
 
             Dim fugvap As Object = Nothing
             Dim fugliq As Object = Nothing
 
             If My.Settings.EnableParallelProcessing Then
                 My.MyApplication.IsRunningParallelTasks = True
-                If My.Settings.EnableGPUProcessing Then
-                    'My.MyApplication.gpu.EnableMultithreading()
-                End If
                 Dim task1 As Task = New Task(Sub()
                                                  fugliq = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
                                              End Sub)
@@ -973,10 +970,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             gid = 0.0#
 
-            'If MathEx.Common.Sum(Vx) <> 0.0# Then
-            '    gid = RET_Gid(298.15, T, P, Vx) * AUX_MMM(Vx) 'kJ/kmol
-            'End If
-
             gexv = 0.0#
             gexl = 0.0#
             For i = 0 To n
@@ -984,7 +977,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 If Vx(i) <> 0.0# Then gexl += Vx(i) * Log(fugliq(i)) * 8.314 * T
             Next
 
-            If gexv < gexl Then g = gid + gexv Else g = gid + gexl
+            If forcephase = "L" Then
+                g = gid + gexl
+            ElseIf forcephase = "V" Then
+                g = gid + gexv
+            Else
+                If gexv < gexl Then g = gid + gexv Else g = gid + gexl
+            End If
 
             Return g 'kJ/kmol
 
