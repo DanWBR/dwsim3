@@ -1087,7 +1087,7 @@ alt:
 
             P = result(4)
 
-            If result(0) > 0 Then
+            If result(0) > 0 And Not ForceTwoPhaseOnly Then
 
                 Dim nt As Integer = Me.StabSearchCompIDs.Length - 1
                 Dim nc As Integer = UBound(Vz)
@@ -1208,7 +1208,7 @@ alt:
 
             T = result(4)
 
-            If result(0) > 0 Then
+            If result(0) > 0 And Not ForceTwoPhaseOnly Then
 
                 Dim nt As Integer = Me.StabSearchCompIDs.Length - 1
                 Dim nc As Integer = UBound(Vz)
