@@ -5,8 +5,8 @@
     <StoichBalance>0</StoichBalance>
     <ReactionHeatCO>0</ReactionHeatCO>
     <ReactionHeat>-177870.348392</ReactionHeat>
-    <Equation>NaOH &lt;--&gt; Na+ + OH- </Equation>
-    <Name>8</Name>
+    <Equation>NaOH &lt;--&gt; OH- + Na+ </Equation>
+    <Name>Sodium Hydroxide dissociation</Name>
     <ID>168d2dd9-9294-4dca-8f4a-0a25efc4f329</ID>
     <Description>Sour Water Reaction #8</Description>
     <BaseReactant>Sodium Hydroxide</BaseReactant>
@@ -31,9 +31,9 @@
     <RateEquationNumerator></RateEquationNumerator>
     <RateEquationDenominator></RateEquationDenominator>
     <Compounds>
-      <Compound Name="Sodium (ion)" StoichCoeff="1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="false" />
       <Compound Name="Hydroxide" StoichCoeff="1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="false" />
       <Compound Name="Sodium Hydroxide" StoichCoeff="-1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="true" />
+      <Compound Name="Sodium (ion)" StoichCoeff="1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="false" />
     </Compounds>
   </Reaction>
   <Reaction>
@@ -41,8 +41,8 @@
     <StoichBalance>0</StoichBalance>
     <ReactionHeatCO>0</ReactionHeatCO>
     <ReactionHeat>11820</ReactionHeat>
-    <Equation>HOH &lt;--&gt; H+ + OH- </Equation>
-    <Name>7</Name>
+    <Equation>HOH &lt;--&gt; OH- + H+ </Equation>
+    <Name>Water self-ionization</Name>
     <ID>0c14d480-556a-4c41-9689-49cf923cade8</ID>
     <Description>Sour Water Reaction #7</Description>
     <BaseReactant>Water</BaseReactant>
@@ -67,8 +67,8 @@
     <RateEquationNumerator></RateEquationNumerator>
     <RateEquationDenominator></RateEquationDenominator>
     <Compounds>
-      <Compound Name="Hydron" StoichCoeff="1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="false" />
       <Compound Name="Hydroxide" StoichCoeff="1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="false" />
+      <Compound Name="Hydron" StoichCoeff="1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="false" />
       <Compound Name="Water" StoichCoeff="-1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="true" />
     </Compounds>
   </Reaction>
@@ -77,8 +77,8 @@
     <StoichBalance>0</StoichBalance>
     <ReactionHeatCO>0</ReactionHeatCO>
     <ReactionHeat>0</ReactionHeat>
-    <Equation>HS- &lt;--&gt; H+ + S-2 </Equation>
-    <Name>6</Name>
+    <Equation>HS- &lt;--&gt; S-2 + H+ </Equation>
+    <Name>Sulfide production</Name>
     <ID>f04d9ebb-7d20-47fc-826f-5c84e0083e16</ID>
     <Description>Sour Water Reaction #6</Description>
     <BaseReactant>Bisulfide (ion)</BaseReactant>
@@ -103,9 +103,9 @@
     <RateEquationNumerator></RateEquationNumerator>
     <RateEquationDenominator></RateEquationDenominator>
     <Compounds>
-      <Compound Name="Hydron" StoichCoeff="1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="false" />
       <Compound Name="Bisulfide (ion)" StoichCoeff="-1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="true" />
       <Compound Name="Sulfide (ion)" StoichCoeff="1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="false" />
+      <Compound Name="Hydron" StoichCoeff="1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="false" />
     </Compounds>
   </Reaction>
   <Reaction>
@@ -113,8 +113,8 @@
     <StoichBalance>0</StoichBalance>
     <ReactionHeatCO>0</ReactionHeatCO>
     <ReactionHeat>20630</ReactionHeat>
-    <Equation>HSH &lt;--&gt; H+ + HS- </Equation>
-    <Name>5</Name>
+    <Equation>HSH &lt;--&gt; HS- + H+ </Equation>
+    <Name>H2S ionization</Name>
     <ID>c65101da-ccdf-451f-9f30-7129faab973d</ID>
     <Description>Sour Water Reaction #5</Description>
     <BaseReactant>Hydrogen sulfide</BaseReactant>
@@ -139,8 +139,8 @@
     <RateEquationNumerator></RateEquationNumerator>
     <RateEquationDenominator></RateEquationDenominator>
     <Compounds>
-      <Compound Name="Hydron" StoichCoeff="1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="false" />
       <Compound Name="Bisulfide (ion)" StoichCoeff="1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="false" />
+      <Compound Name="Hydron" StoichCoeff="1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="false" />
       <Compound Name="Hydrogen sulfide" StoichCoeff="-1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="true" />
     </Compounds>
   </Reaction>
@@ -150,7 +150,7 @@
     <ReactionHeatCO>0</ReactionHeatCO>
     <ReactionHeat>-195916</ReactionHeat>
     <Equation>HCO3- + NH3 &lt;--&gt; H2NCOO- + HOH </Equation>
-    <Name>4</Name>
+    <Name>Carbamate production</Name>
     <ID>0a511e54-03ef-4e79-ac88-112aa06505a8</ID>
     <Description>Sour Water Reaction #4</Description>
     <BaseReactant>Ammonia</BaseReactant>
@@ -175,8 +175,8 @@
     <RateEquationNumerator></RateEquationNumerator>
     <RateEquationDenominator></RateEquationDenominator>
     <Compounds>
-      <Compound Name="Bicarbonate (ion)" StoichCoeff="-1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="false" />
       <Compound Name="Carbamate (ion)" StoichCoeff="1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="false" />
+      <Compound Name="Bicarbonate (ion)" StoichCoeff="-1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="false" />
       <Compound Name="Ammonia" StoichCoeff="-1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="true" />
       <Compound Name="Water" StoichCoeff="1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="false" />
     </Compounds>
@@ -187,7 +187,7 @@
     <ReactionHeatCO>0</ReactionHeatCO>
     <ReactionHeat>-86612</ReactionHeat>
     <Equation>H+ + NH3 &lt;--&gt; NH4+ </Equation>
-    <Name>3</Name>
+    <Name>Ammonia ionization</Name>
     <ID>1d3ad64c-3864-46be-9510-af16d56e520d</ID>
     <Description>Sour Water Reaction #3</Description>
     <BaseReactant>Ammonia</BaseReactant>
@@ -212,8 +212,8 @@
     <RateEquationNumerator></RateEquationNumerator>
     <RateEquationDenominator></RateEquationDenominator>
     <Compounds>
-      <Compound Name="Hydron" StoichCoeff="-1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="false" />
       <Compound Name="Ammonium (ion)" StoichCoeff="1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="false" />
+      <Compound Name="Hydron" StoichCoeff="-1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="false" />
       <Compound Name="Ammonia" StoichCoeff="-1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="true" />
     </Compounds>
   </Reaction>
@@ -222,8 +222,8 @@
     <StoichBalance>0</StoichBalance>
     <ReactionHeatCO>0</ReactionHeatCO>
     <ReactionHeat>0</ReactionHeat>
-    <Equation>HCO3- &lt;--&gt; H+ + CO3-2 </Equation>
-    <Name>2</Name>
+    <Equation>HCO3- &lt;--&gt; CO3-2 + H+ </Equation>
+    <Name>Carbonate production</Name>
     <ID>cbe8429e-f72f-4951-be52-c24af880d537</ID>
     <Description>Sour Water Reaction #2</Description>
     <BaseReactant>Bicarbonate (ion)</BaseReactant>
@@ -248,9 +248,9 @@
     <RateEquationNumerator></RateEquationNumerator>
     <RateEquationDenominator></RateEquationDenominator>
     <Compounds>
+      <Compound Name="Carbonate (ion)" StoichCoeff="1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="false" />
       <Compound Name="Hydron" StoichCoeff="1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="false" />
       <Compound Name="Bicarbonate (ion)" StoichCoeff="-1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="true" />
-      <Compound Name="Carbonate (ion)" StoichCoeff="1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="false" />
     </Compounds>
   </Reaction>
   <Reaction>
@@ -259,7 +259,7 @@
     <ReactionHeatCO>0</ReactionHeatCO>
     <ReactionHeat>635324</ReactionHeat>
     <Equation>OCO + HOH &lt;--&gt; H+ + HCO3- </Equation>
-    <Name>1</Name>
+    <Name>CO2 ionization</Name>
     <ID>2c8ec596-9a56-44ae-ac64-cc18f0d19b93</ID>
     <Description>Sour Water Reaction #1</Description>
     <BaseReactant>Carbon dioxide</BaseReactant>
@@ -284,9 +284,9 @@
     <RateEquationNumerator></RateEquationNumerator>
     <RateEquationDenominator></RateEquationDenominator>
     <Compounds>
+      <Compound Name="Carbon dioxide" StoichCoeff="-1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="true" />
       <Compound Name="Hydron" StoichCoeff="1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="false" />
       <Compound Name="Bicarbonate (ion)" StoichCoeff="1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="false" />
-      <Compound Name="Carbon dioxide" StoichCoeff="-1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="true" />
       <Compound Name="Water" StoichCoeff="-1" DirectOrder="0" ReverseOrder="0" IsBaseReactant="false" />
     </Compounds>
   </Reaction>
