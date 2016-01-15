@@ -1510,6 +1510,7 @@
     <None Include="Assets\linux\linux64\libipopt_mono_dwsim_ubuntu_15.10_64.tar.gz" />
     <None Include="Assets\linux\linux64\liblpsolve55.so" />
     <None Include="Assets\linux\linux64\libPC_SAFT_PROP.so" />
+    <None Include="Assets\reactions\Sour Water Reaction Set.dwrxm" />
     <None Include="Assets\reactions\Water Self-Ionization.dwrxm" />
     <None Include="Assets\samples\1,2-Dichloroethane-N-Heptane-LKP.dwrsd" />
     <None Include="Assets\samples\1,2-Dichloroethane-N-Heptane-SRK.dwrsd" />

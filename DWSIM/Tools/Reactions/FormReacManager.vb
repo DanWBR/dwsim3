@@ -143,8 +143,10 @@ Public Class FormReacManager
                             Dim xel As XElement
                             xdoc.Add(New XElement("DWSIM_Reaction_Data"))
                             xel = xdoc.Element("DWSIM_Reaction_Data")
+                            For Each row As DataGridViewRow In GridRxns.SelectedRows
+                                xel.Add(New XElement("Reaction", {frmchild.Options.Reactions(row.Cells(3).Value).SaveData().ToArray()}))
+                            Next
                             For Each pp As KeyValuePair(Of String, Reaction) In frmchild.Options.Reactions
-                                If GridRxns.SelectedRows(0).Cells(3).Value = pp.Value.ID Then xel.Add(New XElement("Reaction", {pp.Value.SaveData().ToArray()}))
                             Next
                             xdoc.Save(myStream)
                         Catch ex As Exception

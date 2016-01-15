@@ -168,7 +168,6 @@ Partial Class FormReacManager
         Me.GridRxns.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.GridRxns.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.GridRxns.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.ColumnID})
-        Me.GridRxns.MultiSelect = False
         Me.GridRxns.Name = "GridRxns"
         Me.GridRxns.ReadOnly = True
         Me.GridRxns.RowHeadersVisible = False
