@@ -153,6 +153,13 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
             r.Cells(2).Value = cb.Items(0)
         Next
 
+        If DWSIM.App.IsRunningOnMono Then
+            Button1.Enabled = False
+            Button2.Enabled = False
+            Button5.Enabled = False
+            Button6.Enabled = False
+        End If
+
         Loaded = True
 
     End Sub
