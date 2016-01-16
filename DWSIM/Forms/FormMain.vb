@@ -108,6 +108,7 @@ Public Class FormMain
                             My.Settings.MostRecentFiles.Add(MyFiles(i))
                             Me.UpdateMRUList()
                         End If
+                        NewMDIChild.Activate()
                     Case ".dwrsd"
                         Dim NewMDIChild As New FormDataRegression()
                         NewMDIChild.MdiParent = Me
@@ -121,6 +122,7 @@ Public Class FormMain
                             My.Settings.MostRecentFiles.Add(MyFiles(i))
                             Me.UpdateMRUList()
                         End If
+                        NewMDIChild.Activate()
                 End Select
             Next
         End If
@@ -1973,8 +1975,6 @@ Public Class FormMain
 
         Dim xdoc As XDocument = XDocument.Load(path)
 
-        Me.SuspendLayout()
-
         Dim form As FormFlowsheet = New FormFlowsheet()
         If Not DWSIM.App.IsRunningOnMono Then form.FormObjList = New frmObjList
         My.Application.CAPEOPENMode = False
@@ -2719,15 +2719,12 @@ Public Class FormMain
             End If
         Next
 
-        Me.ResumeLayout()
-
         If Not forcommandline Then
 
             My.Application.ActiveSimulation = form
 
             m_childcount += 1
 
-            form.MdiParent = Me
             form.m_IsLoadedFromFile = True
 
             ' Set DockPanel properties
@@ -2785,11 +2782,7 @@ Public Class FormMain
 
             form.MdiParent = Me
             form.Show()
-            form.MdiParent = Me
-
-            form.Invalidate()
-
-            Application.DoEvents()
+            form.Activate()
 
             If xdoc.Element("DWSIM_Simulation_Data").Element("FlowsheetView") IsNot Nothing Then
                 Try
@@ -2807,11 +2800,9 @@ Public Class FormMain
                         If hsval < hsmax Then form.FormSurface.FlowsheetDesignSurface.HorizontalScroll.Value = hsval
                     End If
                 Catch ex As Exception
-                excs.Add(New Exception("Error Restoring Flowsheet Zoom Information", ex))
-            End Try
+                    excs.Add(New Exception("Error Restoring Flowsheet Zoom Information", ex))
+                End Try
             End If
-
-            Application.DoEvents()
 
         End If
 
@@ -2846,6 +2837,7 @@ Public Class FormMain
         form.UpdateFormText()
 
         Me.ToolStripStatusLabel1.Text = ""
+
         Application.DoEvents()
 
     End Sub
@@ -3486,6 +3478,7 @@ csd:                Application.DoEvents()
                         My.Settings.MostRecentFiles.Add(Me.OpenFileDialog1.FileName)
                         Me.UpdateMRUList()
                     End If
+                    NewMDIChild.Activate()
                 Case 5
 rsd:                Application.DoEvents()
                     Dim NewMDIChild As New FormDataRegression()
@@ -3501,6 +3494,7 @@ rsd:                Application.DoEvents()
                         My.Settings.MostRecentFiles.Add(Me.OpenFileDialog1.FileName)
                         Me.UpdateMRUList()
                     End If
+                    NewMDIChild.Activate()
                 Case 6
 ruf:                Application.DoEvents()
                     Dim NewMDIChild As New FormUNIFACRegression()
@@ -3516,6 +3510,7 @@ ruf:                Application.DoEvents()
                         My.Settings.MostRecentFiles.Add(Me.OpenFileDialog1.FileName)
                         Me.UpdateMRUList()
                     End If
+                    NewMDIChild.Activate()
                 Case 7
                     Select Case Path.GetExtension(Me.OpenFileDialog1.FileName).ToLower()
                         Case ".dwxml"
@@ -3690,11 +3685,12 @@ ruf:                Application.DoEvents()
                         Dim NewMDIChild As New FormCompoundCreator()
                         NewMDIChild.MdiParent = Me
                         NewMDIChild.Show()
-                        Dim objStreamReader As New FileStream(Me.filename, FileMode.Open)
+                         Dim objStreamReader As New FileStream(Me.filename, FileMode.Open)
                         Dim x As New BinaryFormatter()
                         NewMDIChild.mycase = x.Deserialize(objStreamReader)
                         objStreamReader.Close()
                         NewMDIChild.WriteData()
+                        NewMDIChild.Activate()
                     Case ".dwrsd"
                         Dim NewMDIChild As New FormDataRegression()
                         NewMDIChild.MdiParent = Me
@@ -3704,6 +3700,7 @@ ruf:                Application.DoEvents()
                         NewMDIChild.currcase = x.Deserialize(objStreamReader)
                         objStreamReader.Close()
                         NewMDIChild.LoadCase(NewMDIChild.currcase, False)
+                        NewMDIChild.Activate()
                 End Select
             Catch ex As Exception
                 MessageBox.Show("Erro ao carregar arquivo: " & ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)

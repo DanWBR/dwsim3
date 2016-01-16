@@ -109,10 +109,10 @@ Public Class FormWelcome
                     NewMDIChild.mycase = x.Deserialize(objStreamReader)
                     NewMDIChild.mycase.Filename = Me.lvlatest.SelectedItems(0).Tag
                     objStreamReader.Close()
-                    NewMDIChild.WriteData()
+                    NewMDIChild.Activate()
                 Case ".dwrsd"
                     Dim NewMDIChild As New FormDataRegression()
-                    NewMDIChild.MdiParent = FormMain
+                    NewMDIChild.MdiParent = Me.Owner
                     NewMDIChild.Show()
                     Dim objStreamReader As New FileStream(Me.lvlatest.SelectedItems(0).Tag, FileMode.Open)
                     Dim x As New BinaryFormatter()
@@ -120,9 +120,10 @@ Public Class FormWelcome
                     NewMDIChild.currcase.filename = Me.lvlatest.SelectedItems(0).Tag
                     objStreamReader.Close()
                     NewMDIChild.LoadCase(NewMDIChild.currcase, False)
+                    NewMDIChild.Activate()
                 Case ".dwruf"
                     Dim NewMDIChild As New FormUNIFACRegression()
-                    NewMDIChild.MdiParent = FormMain
+                    NewMDIChild.MdiParent = Me.Owner
                     NewMDIChild.Show()
                     Dim objStreamReader As New FileStream(Me.lvlatest.SelectedItems(0).Tag, FileMode.Open)
                     Dim x As New BinaryFormatter()
@@ -130,6 +131,7 @@ Public Class FormWelcome
                     NewMDIChild.mycase.Filename = Me.lvlatest.SelectedItems(0).Tag
                     objStreamReader.Close()
                     NewMDIChild.LoadCase(NewMDIChild.mycase, False)
+                    NewMDIChild.Activate()
             End Select
 
             Me.Close()
@@ -171,6 +173,7 @@ Public Class FormWelcome
         Application.DoEvents()
         Application.DoEvents()
         NewMDIChild.Show()
+        NewMDIChild.MdiParent = Me.Owner
     End Sub
 
     Private Sub Button5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button5.Click
@@ -184,6 +187,7 @@ Public Class FormWelcome
         Application.DoEvents()
         Application.DoEvents()
         NewMDIChild.Show()
+        NewMDIChild.MdiParent = Me.Owner
     End Sub
 
     Private Sub Button6_Click(sender As System.Object, e As System.EventArgs) Handles Button6.Click

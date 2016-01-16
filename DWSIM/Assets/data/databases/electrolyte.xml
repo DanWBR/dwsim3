@@ -1609,7 +1609,7 @@
 </compound>
 <compound>
   <Name>Sulfide (ion)</Name>
-  <Formula>S-2-</Formula>
+  <Formula>S-2</Formula>
   <MW>32.06</MW>
   <Ion>True</Ion>
   <Salt>False</Salt>
