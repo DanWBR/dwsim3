@@ -24,6 +24,7 @@ Imports ZedGraph
 Imports DotNumerics
 Imports Cureos.Numerics
 Imports DWSIM.DWSIM.Optimization.DatRegression
+Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
 Imports System.Threading.Tasks
 Imports System.Linq
 Imports System.IO
@@ -2651,6 +2652,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                         Me.gridInEst.Rows(2).Cells(1).Value = estimates(2)
                     Catch ex As Exception
                         MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Finally
+                        Cursor = Cursors.Default
                     End Try
                 Else
                     Try
@@ -2660,6 +2663,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                         Me.gridInEst.Rows(2).Cells(1).Value = estimates(2)
                     Catch ex As Exception
                         MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Finally
+                        Cursor = Cursors.Default
                     End Try
                 End If
             Case "UNIQUAC"
@@ -2669,7 +2674,9 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                         Me.gridInEst.Rows(0).Cells(1).Value = estimates(0)
                         Me.gridInEst.Rows(1).Cells(1).Value = estimates(1)
                     Catch ex As Exception
-                        MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                         MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Finally
+                        Cursor = Cursors.Default
                     End Try
                 Else
                     Try
@@ -2677,7 +2684,9 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                         Me.gridInEst.Rows(0).Cells(1).Value = estimates(0)
                         Me.gridInEst.Rows(1).Cells(1).Value = estimates(1)
                     Catch ex As Exception
-                        MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                         MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Finally
+                        Cursor = Cursors.Default
                     End Try
                 End If
         End Select
@@ -2807,23 +2816,6 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
 
         ms = New DWSIM.SimulationObjects.Streams.MaterialStream("", "")
 
-        Dim ppuf, unifac As Object
-
-        Select Case model
-            Case "UNIFAC"
-                ppuf = New DWSIM.SimulationObjects.PropertyPackages.UNIFACPropertyPackage(True)
-                unifac = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac
-            Case "UNIFAC-LL"
-                ppuf = New DWSIM.SimulationObjects.PropertyPackages.UNIFACLLPropertyPackage(True)
-                unifac = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UnifacLL
-            Case "MODFAC"
-                ppuf = New DWSIM.SimulationObjects.PropertyPackages.MODFACPropertyPackage(True)
-                unifac = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Modfac
-            Case Else
-                ppuf = New DWSIM.SimulationObjects.PropertyPackages.NISTMFACPropertyPackage(True)
-                unifac = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NISTMFAC
-        End Select
-
         Dim comp1, comp2 As ConstantProperties
         comp1 = FormMain.AvailableComponents(id1)
         comp2 = FormMain.AvailableComponents(id2)
@@ -2840,7 +2832,34 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
         End With
 
         ppu.CurrentMaterialStream = ms
-        ppuf.CurrentMaterialStream = ms
+
+        Dim ppuf As UNIFACPropertyPackage = Nothing
+        Dim ppufll As UNIFACLLPropertyPackage = Nothing
+        Dim ppmu As MODFACPropertyPackage = Nothing
+        Dim ppmun As NISTMFACPropertyPackage = Nothing
+        Dim unif As Auxiliary.Unifac = Nothing
+        Dim unifll As Auxiliary.UnifacLL = Nothing
+        Dim modf As Auxiliary.Modfac = Nothing
+        Dim nmodf As Auxiliary.NISTMFAC = Nothing
+
+        Select Case model
+            Case "UNIFAC"
+                ppuf = New DWSIM.SimulationObjects.PropertyPackages.UNIFACPropertyPackage(True)
+                ppuf.CurrentMaterialStream = ms
+                unif = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac
+            Case "UNIFAC-LL"
+                ppufll = New DWSIM.SimulationObjects.PropertyPackages.UNIFACLLPropertyPackage(True)
+                ppufll.CurrentMaterialStream = ms
+                unifll = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UnifacLL
+            Case "MODFAC"
+                ppmu = New DWSIM.SimulationObjects.PropertyPackages.MODFACPropertyPackage(True)
+                ppmu.CurrentMaterialStream = ms
+                modf = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Modfac
+            Case Else
+                ppmun = New DWSIM.SimulationObjects.PropertyPackages.NISTMFACPropertyPackage(True)
+                ppmun.CurrentMaterialStream = ms
+                nmodf = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NISTMFAC
+        End Select
 
         Dim T1 = 298.15
 
@@ -2853,13 +2872,40 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             If My.Settings.EnableGPUProcessing Then My.MyApplication.gpu.EnableMultithreading()
             Try
                 Dim task1 As Task = New Task(Sub()
-                                                 a1 = unifac.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI)
+                                                 Select Case model
+                                                     Case "UNIFAC"
+                                                         a1 = unif.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppuf.RET_VQ, ppuf.RET_VR, ppuf.RET_VEKI)
+                                                     Case "UNIFAC-LL"
+                                                         a1 = unifll.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppufll.RET_VQ, ppufll.RET_VR, ppufll.RET_VEKI)
+                                                     Case "MODFAC"
+                                                         a1 = modf.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppmu.RET_VQ, ppmu.RET_VR, ppmu.RET_VEKI)
+                                                     Case Else
+                                                         a1 = nmodf.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppmun.RET_VQ, ppmun.RET_VR, ppmun.RET_VEKI)
+                                                 End Select
                                              End Sub)
                 Dim task2 As Task = New Task(Sub()
-                                                 a2 = unifac.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI)
+                                                 Select Case model
+                                                     Case "UNIFAC"
+                                                         a2 = unif.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppuf.RET_VQ, ppuf.RET_VR, ppuf.RET_VEKI)
+                                                     Case "UNIFAC-LL"
+                                                         a2 = unifll.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppufll.RET_VQ, ppufll.RET_VR, ppufll.RET_VEKI)
+                                                     Case "MODFAC"
+                                                         a2 = modf.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppmu.RET_VQ, ppmu.RET_VR, ppmu.RET_VEKI)
+                                                     Case Else
+                                                         a2 = nmodf.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppmun.RET_VQ, ppmun.RET_VR, ppmun.RET_VEKI)
+                                                 End Select
                                              End Sub)
                 Dim task3 As Task = New Task(Sub()
-                                                 a3 = unifac.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI)
+                                                 Select Case model
+                                                     Case "UNIFAC"
+                                                         a3 = unif.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppuf.RET_VQ, ppuf.RET_VR, ppuf.RET_VEKI)
+                                                     Case "UNIFAC-LL"
+                                                         a3 = unifll.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppufll.RET_VQ, ppufll.RET_VR, ppufll.RET_VEKI)
+                                                     Case "MODFAC"
+                                                         a3 = modf.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppmu.RET_VQ, ppmu.RET_VR, ppmu.RET_VEKI)
+                                                     Case Else
+                                                         a3 = nmodf.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppmun.RET_VQ, ppmun.RET_VR, ppmun.RET_VEKI)
+                                                 End Select
                                              End Sub)
                 task1.Start()
                 task2.Start()
@@ -2875,9 +2921,24 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             End Try
             My.MyApplication.IsRunningParallelTasks = False
         Else
-            a1 = unifac.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI)
-            a2 = unifac.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI)
-            a3 = unifac.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI)
+            Select Case model
+                Case "UNIFAC"
+                    a1 = unif.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppuf.RET_VQ, ppuf.RET_VR, ppuf.RET_VEKI)
+                    a2 = unif.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppuf.RET_VQ, ppuf.RET_VR, ppuf.RET_VEKI)
+                    a3 = unif.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppuf.RET_VQ, ppuf.RET_VR, ppuf.RET_VEKI)
+                Case "UNIFAC-LL"
+                    a1 = unifll.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppufll.RET_VQ, ppufll.RET_VR, ppufll.RET_VEKI)
+                    a2 = unifll.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppufll.RET_VQ, ppufll.RET_VR, ppufll.RET_VEKI)
+                    a3 = unifll.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppufll.RET_VQ, ppufll.RET_VR, ppufll.RET_VEKI)
+                Case "MODFAC"
+                    a1 = modf.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppmu.RET_VQ, ppmu.RET_VR, ppmu.RET_VEKI)
+                    a2 = modf.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppmu.RET_VQ, ppmu.RET_VR, ppmu.RET_VEKI)
+                    a3 = modf.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppmu.RET_VQ, ppmu.RET_VR, ppmu.RET_VEKI)
+                Case Else
+                    a1 = nmodf.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppmun.RET_VQ, ppmun.RET_VR, ppmun.RET_VEKI)
+                    a2 = nmodf.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppmun.RET_VQ, ppmun.RET_VR, ppmun.RET_VEKI)
+                    a3 = nmodf.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppmun.RET_VQ, ppmun.RET_VR, ppmun.RET_VEKI)
+            End Select
         End If
 
         actu(0) = a1(0)
@@ -2904,11 +2965,17 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
         solver.MaxFunEvaluations = 1000
         finalval2 = solver.ComputeMin(AddressOf FunctionValueUNIQUAC, variables)
 
-        ppuf.Dispose()
         ppuf = Nothing
+        ppufll = Nothing
+        ppmu = Nothing
+        ppmun = Nothing
         ppu.Dispose()
         ppu = Nothing
         uniquac = Nothing
+        unif = Nothing
+        unifll = Nothing
+        modf = Nothing
+        nmodf = Nothing
         ms.Dispose()
         ms = Nothing
 
@@ -2929,23 +2996,6 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
 
         ms = New DWSIM.SimulationObjects.Streams.MaterialStream("", "")
 
-        Dim ppuf, unifac As Object
-
-        Select Case model
-            Case "UNIFAC"
-                ppuf = New DWSIM.SimulationObjects.PropertyPackages.UNIFACPropertyPackage(True)
-                unifac = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac
-            Case "UNIFAC-LL"
-                ppuf = New DWSIM.SimulationObjects.PropertyPackages.UNIFACLLPropertyPackage(True)
-                unifac = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UnifacLL
-            Case "MODFAC"
-                ppuf = New DWSIM.SimulationObjects.PropertyPackages.MODFACPropertyPackage(True)
-                unifac = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Modfac
-            Case Else
-                ppuf = New DWSIM.SimulationObjects.PropertyPackages.NISTMFACPropertyPackage(True)
-                unifac = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NISTMFAC
-        End Select
-
         Dim comp1, comp2 As ConstantProperties
         comp1 = FormMain.AvailableComponents(id1)
         comp2 = FormMain.AvailableComponents(id2)
@@ -2962,7 +3012,34 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
         End With
 
         ppn.CurrentMaterialStream = ms
-        ppuf.CurrentMaterialStream = ms
+
+        Dim ppuf As UNIFACPropertyPackage = Nothing
+        Dim ppufll As UNIFACLLPropertyPackage = Nothing
+        Dim ppmu As MODFACPropertyPackage = Nothing
+        Dim ppmun As NISTMFACPropertyPackage = Nothing
+        Dim unif As Auxiliary.Unifac = Nothing
+        Dim unifll As Auxiliary.UnifacLL = Nothing
+        Dim modf As Auxiliary.Modfac = Nothing
+        Dim nmodf As Auxiliary.NISTMFAC = Nothing
+
+        Select Case model
+            Case "UNIFAC"
+                ppuf = New DWSIM.SimulationObjects.PropertyPackages.UNIFACPropertyPackage(True)
+                ppuf.CurrentMaterialStream = ms
+                unif = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Unifac
+            Case "UNIFAC-LL"
+                ppufll = New DWSIM.SimulationObjects.PropertyPackages.UNIFACLLPropertyPackage(True)
+                ppufll.CurrentMaterialStream = ms
+                unifll = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.UnifacLL
+            Case "MODFAC"
+                ppmu = New DWSIM.SimulationObjects.PropertyPackages.MODFACPropertyPackage(True)
+                ppmu.CurrentMaterialStream = ms
+                modf = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.Modfac
+            Case Else
+                ppmun = New DWSIM.SimulationObjects.PropertyPackages.NISTMFACPropertyPackage(True)
+                ppmun.CurrentMaterialStream = ms
+                nmodf = New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.NISTMFAC
+        End Select
 
         Dim T1 = 298.15
 
@@ -2975,13 +3052,40 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             If My.Settings.EnableGPUProcessing Then My.MyApplication.gpu.EnableMultithreading()
             Try
                 Dim task1 As Task = New Task(Sub()
-                                                 a1 = unifac.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI)
+                                                 Select Case model
+                                                     Case "UNIFAC"
+                                                         a1 = unif.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppuf.RET_VQ, ppuf.RET_VR, ppuf.RET_VEKI)
+                                                     Case "UNIFAC-LL"
+                                                         a1 = unifll.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppufll.RET_VQ, ppufll.RET_VR, ppufll.RET_VEKI)
+                                                     Case "MODFAC"
+                                                         a1 = modf.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppmu.RET_VQ, ppmu.RET_VR, ppmu.RET_VEKI)
+                                                     Case Else
+                                                         a1 = nmodf.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppmun.RET_VQ, ppmun.RET_VR, ppmun.RET_VEKI)
+                                                 End Select
                                              End Sub)
                 Dim task2 As Task = New Task(Sub()
-                                                 a2 = unifac.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI)
+                                                 Select Case model
+                                                     Case "UNIFAC"
+                                                         a2 = unif.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppuf.RET_VQ, ppuf.RET_VR, ppuf.RET_VEKI)
+                                                     Case "UNIFAC-LL"
+                                                         a2 = unifll.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppufll.RET_VQ, ppufll.RET_VR, ppufll.RET_VEKI)
+                                                     Case "MODFAC"
+                                                         a2 = modf.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppmu.RET_VQ, ppmu.RET_VR, ppmu.RET_VEKI)
+                                                     Case Else
+                                                         a2 = nmodf.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppmun.RET_VQ, ppmun.RET_VR, ppmun.RET_VEKI)
+                                                 End Select
                                              End Sub)
                 Dim task3 As Task = New Task(Sub()
-                                                 a3 = unifac.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI)
+                                                 Select Case model
+                                                     Case "UNIFAC"
+                                                         a3 = unif.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppuf.RET_VQ, ppuf.RET_VR, ppuf.RET_VEKI)
+                                                     Case "UNIFAC-LL"
+                                                         a3 = unifll.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppufll.RET_VQ, ppufll.RET_VR, ppufll.RET_VEKI)
+                                                     Case "MODFAC"
+                                                         a3 = modf.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppmu.RET_VQ, ppmu.RET_VR, ppmu.RET_VEKI)
+                                                     Case Else
+                                                         a3 = nmodf.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppmun.RET_VQ, ppmun.RET_VR, ppmun.RET_VEKI)
+                                                 End Select
                                              End Sub)
                 task1.Start()
                 task2.Start()
@@ -2997,9 +3101,24 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             End Try
             My.MyApplication.IsRunningParallelTasks = False
         Else
-            a1 = unifac.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI)
-            a2 = unifac.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI)
-            a3 = unifac.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppuf.RET_VQ(), ppuf.RET_VR, ppuf.RET_VEKI)
+            Select Case model
+                Case "UNIFAC"
+                    a1 = unif.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppuf.RET_VQ, ppuf.RET_VR, ppuf.RET_VEKI)
+                    a2 = unif.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppuf.RET_VQ, ppuf.RET_VR, ppuf.RET_VEKI)
+                    a3 = unif.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppuf.RET_VQ, ppuf.RET_VR, ppuf.RET_VEKI)
+                Case "UNIFAC-LL"
+                    a1 = unifll.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppufll.RET_VQ, ppufll.RET_VR, ppufll.RET_VEKI)
+                    a2 = unifll.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppufll.RET_VQ, ppufll.RET_VR, ppufll.RET_VEKI)
+                    a3 = unifll.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppufll.RET_VQ, ppufll.RET_VR, ppufll.RET_VEKI)
+                Case "MODFAC"
+                    a1 = modf.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppmu.RET_VQ, ppmu.RET_VR, ppmu.RET_VEKI)
+                    a2 = modf.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppmu.RET_VQ, ppmu.RET_VR, ppmu.RET_VEKI)
+                    a3 = modf.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppmu.RET_VQ, ppmu.RET_VR, ppmu.RET_VEKI)
+                Case Else
+                    a1 = nmodf.GAMMA_MR(T1, New Double() {0.25, 0.75}, ppmun.RET_VQ, ppmun.RET_VR, ppmun.RET_VEKI)
+                    a2 = nmodf.GAMMA_MR(T1, New Double() {0.5, 0.5}, ppmun.RET_VQ, ppmun.RET_VR, ppmun.RET_VEKI)
+                    a3 = nmodf.GAMMA_MR(T1, New Double() {0.75, 0.25}, ppmun.RET_VQ, ppmun.RET_VR, ppmun.RET_VEKI)
+            End Select
         End If
 
         actu(0) = a1(0)
@@ -3026,11 +3145,17 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
         solver.MaxFunEvaluations = 1000
         finalval2 = solver.ComputeMin(AddressOf FunctionValueNRTL, variables)
 
-        ppuf.Dispose()
         ppuf = Nothing
+        ppufll = Nothing
+        ppmu = Nothing
+        ppmun = Nothing
         ppn.Dispose()
         ppn = Nothing
         nrtl = Nothing
+        unif = Nothing
+        unifll = Nothing
+        modf = Nothing
+        nmodf = Nothing
         ms.Dispose()
         ms = Nothing
 
@@ -3051,6 +3176,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                     Me.gridInEst.Rows(2).Cells(1).Value = estimates(2)
                 Catch ex As Exception
                     MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Finally
+                    Cursor = Cursors.Default
                 End Try
             Case "UNIQUAC"
                 Try
@@ -3059,6 +3186,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                     Me.gridInEst.Rows(1).Cells(1).Value = estimates(1)
                 Catch ex As Exception
                     MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Finally
+                    Cursor = Cursors.Default
                 End Try
         End Select
 
@@ -3507,6 +3636,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                     Me.gridInEst.Rows(2).Cells(1).Value = estimates(2)
                 Catch ex As Exception
                     MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Finally
+                    Cursor = Cursors.Default
                 End Try
             Case "UNIQUAC"
                 Try
@@ -3515,6 +3646,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                     Me.gridInEst.Rows(1).Cells(1).Value = estimates(1)
                 Catch ex As Exception
                     MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Finally
+                    Cursor = Cursors.Default
                 End Try
         End Select
     End Sub

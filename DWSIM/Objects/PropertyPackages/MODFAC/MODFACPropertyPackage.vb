@@ -65,13 +65,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
 #Region "    Auxiliary Functions"
 
-        Function RET_VN(ByVal subst As DWSIM.ClassesBasicasTermodinamica.Substancia) As Object
+        Public Function RET_VN(ByVal subst As DWSIM.ClassesBasicasTermodinamica.Substancia) As Object
 
             Return Me.m_uni.RET_VN(subst.ConstantProperties)
 
         End Function
 
-        Function RET_VQ() As Object
+        Public Function RET_VQ() As Object
 
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
             Dim VQ(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
@@ -87,7 +87,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         End Function
 
-        Function RET_VR() As Object
+        Public Function RET_VR() As Object
 
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
             Dim VR(Me.CurrentMaterialStream.Fases(0).Componentes.Count - 1) As Double
@@ -103,7 +103,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         End Function
 
-        Function RET_VEKI() As List(Of Dictionary(Of Integer, Double))
+        Public Function RET_VEKI() As List(Of Dictionary(Of Integer, Double))
 
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
             Dim VEKI As New List(Of Dictionary(Of Integer, Double))

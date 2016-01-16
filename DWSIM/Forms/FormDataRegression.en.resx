@@ -259,6 +259,10 @@
   <data name="Label4.Text" xml:space="preserve">
     <value>Model</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="GridExpData.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
+    <value>Vertical</value>
+  </data>
   <data name="cbDataType.Items" xml:space="preserve">
     <value>Txy (VLE)</value>
   </data>
