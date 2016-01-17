@@ -320,7 +320,7 @@
     <value>228, 22</value>
   </data>
   <data name="consoletsmi.Text" xml:space="preserve">
-    <value>Console Output</value>
+    <value>Konsolenausgabe</value>
   </data>
   <data name="ExibirListaDeItensACalcularToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>228, 22</value>
@@ -332,7 +332,7 @@
     <value>228, 22</value>
   </data>
   <data name="varpaneltsmi.Text" xml:space="preserve">
-    <value>Watch Panel</value>
+    <value>Überwachungsfenster</value>
   </data>
   <data name="COObjTSMI.Size" type="System.Drawing.Size, System.Drawing">
     <value>228, 22</value>

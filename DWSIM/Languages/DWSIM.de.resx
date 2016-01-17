@@ -1958,10 +1958,10 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Wärmetauscher</value>
   </data>
   <data name="HeatLoad" xml:space="preserve">
-    <value>Wärmezufuhr</value>
+    <value>Wärmeaustausch</value>
   </data>
   <data name="HeatLoadOfEquipment" xml:space="preserve">
-    <value>Wärmezufuhr der Ausrüstung</value>
+    <value>Wärmeaustausch des Apparats</value>
   </data>
   <data name="HeatTransferArea" xml:space="preserve">
     <value>Wärmeübertragungsfläche</value>
@@ -5248,5 +5248,17 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   </data>
   <data name="SourWaterPP" xml:space="preserve">
     <value>Sour Water</value>
+  </data>
+  <data name="MaximumHeatExchange" xml:space="preserve">
+    <value>Max. Wärmeaustausch (theoretisch)</value>
+  </data>
+  <data name="MaximumHeatExchangeDesc" xml:space="preserve">
+    <value>Theoretisches Limit für den Wärmetausch bei Gegenstrom.</value>
+  </data>
+  <data name="ThermalEfficiency" xml:space="preserve">
+    <value>Thermischer Wirkungsgrad</value>
+  </data>
+  <data name="ThermalEfficiencyDesc" xml:space="preserve">
+    <value>Ausgetauschte Wärme dividiert durch den theoretisch möglichen Wert.</value>
   </data>
 </root>
