@@ -458,6 +458,46 @@ Namespace DWSIM.ClassesBasicasTermodinamica
             End Set
         End Property
 
+        Public Function EvaluateK(ByVal T As Double, ByVal pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage) As Double
+
+            'equilibrium constant calculation
+
+            Select Case KExprType
+                Case Reaction.KOpt.Constant
+
+                    Return ConstantKeqValue
+
+                Case Reaction.KOpt.Expression
+
+                    ExpContext = New Ciloci.Flee.ExpressionContext
+                    ExpContext.Imports.AddType(GetType(System.Math))
+                    ExpContext.Variables.Add("T", T)
+                    Expr = ExpContext.CompileGeneric(Of Double)(Expression)
+                    Expr.Context.ParserOptions.DecimalSeparator = "."
+
+                    Return Math.Exp(Expr.Evaluate)
+
+                Case Reaction.KOpt.Gibbs
+
+                    Dim id(Components.Count - 1) As String
+                    Dim stcoef(Components.Count - 1) As Double
+                    Dim bcidx As Integer = 0
+                    Dim j As Integer = 0
+                    For Each sb As ReactionStoichBase In Components.Values
+                        id(j) = sb.CompName
+                        stcoef(j) = sb.StoichCoeff
+                        If sb.IsBaseReactant Then bcidx = j
+                        j += 1
+                    Next
+
+                    Dim DelG_RT = pp.AUX_DELGig_RT(298.15, T, id, stcoef, bcidx)
+
+                    Return Math.Exp(-DelG_RT)
+
+            End Select
+
+        End Function
+
         'Equilibrium
 
         Enum KOpt

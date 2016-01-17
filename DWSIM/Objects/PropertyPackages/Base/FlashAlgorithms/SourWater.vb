@@ -24,6 +24,7 @@ Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
 Imports System.Threading.Tasks
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports System.Linq
+Imports System.IO
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
@@ -39,6 +40,35 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Dim Sv0, Svid, Slid, Sf, Sv, Sl, Ss As Double
 
         Public Property CompoundProperties As List(Of ConstantProperties)
+
+        Public Property Reactions As List(Of Reaction)
+
+        Sub New()
+
+            Reactions = New List(Of Reaction)
+
+            Dim rfile As String = My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "reactions" & Path.DirectorySeparatorChar & "Sour Water Reaction Set.dwrxm"
+
+            Dim xdoc As XDocument = XDocument.Load(rfile)
+            Dim data As List(Of XElement) = xdoc.Element("DWSIM_Reaction_Data").Elements.ToList
+            For Each xel As XElement In data
+                Dim obj As New Reaction()
+                obj.LoadData(xel.Elements.ToList)
+                Reactions.Add(obj)
+            Next
+
+            '   i   Name                            Equation
+            '
+            '   1   CO2 ionization	                OCO + HOH <--> H+ + HCO3- 
+            '   2   Carbonate production	        HCO3- <--> CO3-2 + H+ 
+            '   3   Ammonia ionization	            H+ + NH3 <--> NH4+ 
+            '   4   Carbamate production	        HCO3- + NH3 <--> H2NCOO- + HOH 
+            '   5   H2S ionization	                HSH <--> HS- + H+ 
+            '   6   Sulfide production	            HS- <--> S-2 + H+ 
+            '   7   Water self-ionization	        HOH <--> OH- + H+ 
+            '   8   Sodium Hydroxide dissociation   NaOH <--> OH- + Na+ 
+
+        End Sub
 
         Public Overrides Function Flash_PT(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
