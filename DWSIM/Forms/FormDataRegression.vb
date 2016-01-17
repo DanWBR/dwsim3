@@ -2472,6 +2472,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
     End Sub
 
     Public Sub PasteData(ByRef dgv As DataGridView)
+
         Dim tArr() As String
         Dim arT() As String
         Dim i, ii As Integer
@@ -2488,7 +2489,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
         End If
         For i = 0 To tArr.Length - 1
             If tArr(i) <> "" Then
-                arT = tArr(i).Split(vbTab)
+                arT = tArr(i).Split(Char.ConvertFromUtf32(9))
                 For ii = 0 To arT.Length - 1
                     If r > dgv.Rows.Count - 1 Then
                         dgv.Rows.Add()
@@ -2558,6 +2559,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             For Each c As DataGridViewCell In Me.GridExpData.SelectedCells
                 If c.ColumnIndex <> 0 Then c.Value = "" Else c.Value = False
             Next
+        ElseIf e.KeyCode = Keys.C And e.Modifiers = Keys.Control Then
+            Clipboard.SetDataObject(GridExpData.GetClipboardContent())
         End If
 
     End Sub

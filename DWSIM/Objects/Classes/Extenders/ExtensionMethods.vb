@@ -115,12 +115,10 @@ Module Extensions
         End If
         For i = 0 To tArr.Length - 1
             If tArr(i) <> "" Then
-                arT = tArr(i).Split(vbTab)
+                arT = tArr(i).Split(Char.ConvertFromUtf32(9))
                 For ii = 0 To arT.Length - 1
                     If r > dgv.Rows.Count - 1 Then
-                        'dgv.Rows.Add()
-                        'dgv.Rows(0).Cells(0).Value = True
-                        'dgv.Rows(0).Cells(1).Selected = True
+                        dgv.Rows.Add()
                     End If
                 Next
                 r = r + 1
@@ -150,6 +148,7 @@ Module Extensions
         Next
 
     End Sub
+
     Function GetNextVisibleCol(dgv As DataGridView, stidx As Integer) As Integer
 
         Dim i As Integer

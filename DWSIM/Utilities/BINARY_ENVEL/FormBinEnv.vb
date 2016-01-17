@@ -1077,6 +1077,8 @@ Public Class FormBinEnv
             For Each c As DataGridViewCell In Me.GridExpData.SelectedCells
                 If c.ColumnIndex <> 0 Then c.Value = "" Else c.Value = False
             Next
+        ElseIf e.KeyCode = Keys.C And e.Modifiers = Keys.Control Then
+            Clipboard.SetDataObject(GridExpData.GetClipboardContent())
         End If
 
     End Sub
@@ -1100,7 +1102,7 @@ Public Class FormBinEnv
 
         For i = 0 To tArr.Length - 1
             If tArr(i) <> "" Then
-                arT = tArr(i).Split(vbTab)
+                arT = tArr(i).Split(Char.ConvertFromUtf32(9))
                 For ii = 0 To arT.Length - 1
                     If r > dgv.Rows.Count - 1 Then
                         dgv.Rows.Add(New Object() {"True"})

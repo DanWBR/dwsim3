@@ -269,9 +269,13 @@ Public Class FormReacManager
     Private Sub KryptonButton9_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton8.Click
         If Not Me.GridRxns.SelectedRows.Count = 0 Then
             frmchild.Options.Reactions.Remove(Me.GridRxns.SelectedRows(0).Cells(3).Value)
-            Dim dgr As DataGridViewRow = Me.GridRxns.SelectedRows(0)
-            Me.GridRxns.Rows.Remove(dgr)
             UpdateRxnSets()
+            With Me.GridRxns.Rows
+                .Clear()
+                For Each rxn1 As Reaction In frmchild.Options.Reactions.Values
+                    .Add(New Object() {rxn1.Name, rxn1.ReactionType, rxn1.Equation, rxn1.ID})
+                Next
+            End With
         End If
     End Sub
 
