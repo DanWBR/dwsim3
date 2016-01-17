@@ -2509,7 +2509,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
         End If
         For i = 0 To tArr.Length - 1
             If tArr(i) <> "" Then
-                arT = tArr(i).Split(vbTab)
+                arT = tArr(i).Split(Char.ConvertFromUtf32(9))
                 cc = c
                 For ii = 0 To arT.Length - 1
                     cc = GetNextVisibleCol(dgv, cc)

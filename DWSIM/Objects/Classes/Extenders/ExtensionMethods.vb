@@ -133,7 +133,7 @@ Module Extensions
         End If
         For i = 0 To tArr.Length - 1
             If tArr(i) <> "" Then
-                arT = tArr(i).Split(vbTab)
+                arT = tArr(i).Split(Char.ConvertFromUtf32(9))
                 cc = c
                 If r <= dgv.Rows.Count - 1 Then
                     For ii = 0 To arT.Length - 1
