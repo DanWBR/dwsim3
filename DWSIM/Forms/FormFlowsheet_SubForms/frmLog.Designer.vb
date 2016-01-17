@@ -178,6 +178,7 @@ Partial Class frmLog
         '
         'Imagem
         '
+        Me.Imagem.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCellsExceptHeader
         Me.Imagem.Description = " "
         Me.Imagem.FillWeight = 84.94611!
         resources.ApplyResources(Me.Imagem, "Imagem")
@@ -188,6 +189,7 @@ Partial Class frmLog
         '
         'Indice
         '
+        Me.Indice.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCellsExceptHeader
         Me.Indice.FillWeight = 75.12691!
         resources.ApplyResources(Me.Indice, "Indice")
         Me.Indice.Name = "Indice"
