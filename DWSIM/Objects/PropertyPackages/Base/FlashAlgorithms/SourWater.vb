@@ -253,15 +253,23 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 If id("NaOH") > -1 Then conc("NaOH") = Vnl(id("NaOH")) / totalkg
                 If id("Na+") > -1 Then conc("Na+") = Vnl(id("Na+")) / totalkg
 
-                'adjust NaOH concentration, if any
-                If conc("NaOH") > 0.0# Then
-                    conc("OH-") = conc("NaOH")
-                    conc("NaOH") = 1.0E-50
-                End If
-
                 'assume an initial concentration of bicarbonate.
 
-                If conc("HCO3-") = 0.0# Then conc("HCO3-") = 0.0#
+                If conc("HCO3-") = 0.0# Then conc("HCO3-") = 1.0E-40
+
+                conc0("HCO3-") = conc("HCO3-")
+                conc0("CO3-2") = conc("CO3-2")
+                conc0("NH4+") = conc("NH4+")
+                conc0("H2NCOO-") = conc("H2NCOO-")
+                conc0("HS-") = conc("HS-")
+                conc0("S-2") = conc("S-2")
+                conc0("OH-") = conc("OH-")
+                conc0("Na+") = conc("Na+")
+                conc0("H2O") = conc("H2O")
+                conc0("CO2") = conc("CO2")
+                conc0("H2S") = conc("H2S")
+                conc0("NH3") = conc("NH3")
+                conc0("NaOH") = conc("NaOH")
 
                 'loop 2: bicarbonate conc. convergence
 
@@ -287,7 +295,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         '   1   CO2 ionization	                CO2 + H2O <--> H+ + HCO3- 
 
                         conc0("HCO3-") = conc("HCO3-")
-                        conc("HCO3-") = kr(0) * conc("CO2") * conc("H2O") / conc("H+")
+                        conc("HCO3-") = kr(0) * conc("CO2") / conc("H+")
                         deltaconc("HCO3-") = conc("HCO3-") - conc0("HCO3-")
 
                         '   2   Carbonate production	        HCO3- <--> CO3-2 + H+ 
@@ -305,7 +313,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         '   4   Carbamate production	        HCO3- + NH3 <--> H2NCOO- + H2O 
 
                         conc0("H2NCOO-") = conc("H2NCOO-")
-                        conc("H2NCOO-") = kr(3) * conc("HCO3-") * conc("NH3") / conc("H2O")
+                        conc("H2NCOO-") = kr(3) * conc("HCO3-") * conc("NH3")
                         deltaconc("H2NCOO-") = conc("H2NCOO-") - conc0("H2NCOO-")
 
                         '   5   H2S ionization	                H2S <--> HS- + H+ 
@@ -323,7 +331,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         '   7   Water self-ionization	        H2O <--> OH- + H+ 
 
                         conc0("OH-") = conc("OH-")
-                        conc("OH-") = kr(6) * conc("H2O") / conc("H+")
+                        conc("OH-") = kr(6) / conc("H+")
                         deltaconc("OH-") = conc("OH-") - conc0("OH-")
 
                         '   8   Sodium Hydroxide dissociation   NaOH <--> OH- + Na+ 
@@ -335,7 +343,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         'neutrality check
 
                         pch = conc("H+") + conc("NH4+") + conc("Na+")
-                        nch = conc("OH-") + conc("HCO3-") + conc("H2NCOO-") + conc("HS-") + 2 * conc("S-2")
+                        nch = conc("OH-") + conc("HCO3-") + conc("H2NCOO-") + conc("HS-") + 2 * conc("S-2") + 2 * conc("CO3-2")
 
                         If Abs((pch - nch) / pch) < etol Then Exit Do
 
@@ -394,11 +402,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     If Abs(nco2 - nco2_old) < etol Then Exit Do
 
+                    conc0("HCO3-") = conc("HCO3-")
                     If icount < 1 Then
                         conc("HCO3-") *= 1.1
                     Else
                         conc("HCO3-") *= nco2 / nco2_old
                     End If
+                    deltaconc("HCO3-") = conc("HCO3-") - conc0("HCO3-")
+
                     icount += 1
 
                 Loop
