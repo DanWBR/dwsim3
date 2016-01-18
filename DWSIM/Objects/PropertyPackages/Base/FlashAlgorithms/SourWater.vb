@@ -70,7 +70,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         End Sub
 
-        Sub Setup(conc As Dictionary(Of String, Double), id As Dictionary(Of String, Integer))
+        Sub Setup(conc As Dictionary(Of String, Double), conc0 As Dictionary(Of String, Double), deltaconc As Dictionary(Of String, Double), id As Dictionary(Of String, Integer))
 
             conc.Clear()
 
@@ -89,6 +89,40 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             conc.Add("NaOH", 0.0#)
             conc.Add("Na+", 0.0#)
 
+            deltaconc.Clear()
+
+            deltaconc.Add("H2O", 0.0#)
+            deltaconc.Add("H+", 0.0#)
+            deltaconc.Add("OH-", 0.0#)
+            deltaconc.Add("NH3", 0.0#)
+            deltaconc.Add("NH4+", 0.0#)
+            deltaconc.Add("CO2", 0.0#)
+            deltaconc.Add("HCO3-", 0.0#)
+            deltaconc.Add("CO3-2", 0.0#)
+            deltaconc.Add("H2NCOO-", 0.0#)
+            deltaconc.Add("H2S", 0.0#)
+            deltaconc.Add("HS-", 0.0#)
+            deltaconc.Add("S-2", 0.0#)
+            deltaconc.Add("NaOH", 0.0#)
+            deltaconc.Add("Na+", 0.0#)
+
+            conc0.Clear()
+
+            conc0.Add("H2O", 0.0#)
+            conc0.Add("H+", 0.0#)
+            conc0.Add("OH-", 0.0#)
+            conc0.Add("NH3", 0.0#)
+            conc0.Add("NH4+", 0.0#)
+            conc0.Add("CO2", 0.0#)
+            conc0.Add("HCO3-", 0.0#)
+            conc0.Add("CO3-2", 0.0#)
+            conc0.Add("H2NCOO-", 0.0#)
+            conc0.Add("H2S", 0.0#)
+            conc0.Add("HS-", 0.0#)
+            conc0.Add("S-2", 0.0#)
+            conc0.Add("NaOH", 0.0#)
+            conc0.Add("Na+", 0.0#)
+
             Dim wid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.CAS_Number = "7732-18-5").FirstOrDefault)
             Dim co2id As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Name = "Carbon dioxide").FirstOrDefault)
             Dim nh3id As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Name = "Ammonia").FirstOrDefault)
@@ -106,20 +140,20 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             id.Clear()
 
-            Id.Add("H2O", wid)
-            Id.Add("H+", hid)
-            Id.Add("OH-", ohid)
-            Id.Add("NH3", nh3id)
-            Id.Add("NH4+", nh4id)
-            Id.Add("CO2", co2id)
-            Id.Add("HCO3-", hcoid)
-            Id.Add("CO3-2", co3id)
-            Id.Add("H2NCOO-", h2nid)
-            Id.Add("H2S", h2sid)
-            Id.Add("HS-", hsid)
-            Id.Add("S-2", s2id)
-            Id.Add("NaOH", naohid)
-            Id.Add("Na+", naid)
+            id.Add("H2O", wid)
+            id.Add("H+", hid)
+            id.Add("OH-", ohid)
+            id.Add("NH3", nh3id)
+            id.Add("NH4+", nh4id)
+            id.Add("CO2", co2id)
+            id.Add("HCO3-", hcoid)
+            id.Add("CO3-2", co3id)
+            id.Add("H2NCOO-", h2nid)
+            id.Add("H2S", h2sid)
+            id.Add("HS-", hsid)
+            id.Add("S-2", s2id)
+            id.Add("NaOH", naohid)
+            id.Add("Na+", naid)
 
 
         End Sub
@@ -142,8 +176,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             maxit_i = CInt(PP.Parameters("PP_PTFMII"))
 
             Dim n As Integer = CompoundProperties.Count - 1
-            Dim activcoeff(n), errfunc As Double
-            Dim ecount As Integer
+            Dim activcoeff(n), errfunc, nch, pch, nco2, nco2_old, pH, pH_old, pH_old0 As Double
+            Dim icount, icount2, ecount As Integer
 
             'Vnf = feed molar amounts (considering 1 mol of feed)
             'Vnl = liquid phase molar amounts
@@ -152,46 +186,226 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             'Vxv = vapor phase molar fractions
             'V, L = phase molar amounts (F = 1 = V + L)
 
-            Dim Vnf(n), Vnl(n), Vxl(n), Vxl_ant(n), Vns(n), Vnv(n), Vxv(n), V, L, Vp(n) As Double
+            Dim Vnf(n), Vnl(n), Vxl(n), Vxl_ant(n), Vns(n), Vnv(n), Vxv(n), V, L, L_old, Vp(n), Ki(n), fx, fx_old, fx_old0 As Double
             Dim sumN As Double = 0
 
             Vnf = Vz.Clone
 
             'set up concentrations & ids
 
-            Dim conc As New Dictionary(Of String, Double)
+            Dim conc, conc0, deltaconc As New Dictionary(Of String, Double)
             Dim id As New Dictionary(Of String, Integer)
 
-            Setup(conc, id)
+            Setup(conc, conc0, deltaconc, id)
 
             'calculate initial solution amounts
 
             Dim totalkg As Double = PP.AUX_MMM(Vz) / 1000 'kg solution
 
-            'calculate concentrations
-
-            If id("H2O") > -1 Then conc("H2O") = Vz(id("H2O")) / totalkg
-            If id("H+") > -1 Then conc("H+") = Vz(id("H+")) / totalkg
-            If id("OH-") > -1 Then conc("OH-") = Vz(id("OH-")) / totalkg
-            If id("CO2") > -1 Then conc("CO2") = Vz(id("CO2")) / totalkg
-            If id("HCO3-") > -1 Then conc("HCO3-") = Vz(id("HCO3-")) / totalkg
-            If id("CO3-2") > -1 Then conc("CO3-2") = Vz(id("CO3-2")) / totalkg
-            If id("H2NCOO-") > -1 Then conc("H2NCOO-") = Vz(id("H2NCOO-")) / totalkg
-            If id("NH3") > -1 Then conc("NH3") = Vz(id("NH3")) / totalkg
-            If id("NH4+") > -1 Then conc("NH4+") = Vz(id("NH4+")) / totalkg
-            If id("H2S") > -1 Then conc("H2S") = Vz(id("H2S")) / totalkg
-            If id("HS-") > -1 Then conc("HS-") = Vz(id("HS-")) / totalkg
-            If id("S-2") > -1 Then conc("S-2") = Vz(id("S-2")) / totalkg
-            If id("NaOH") > -1 Then conc("NaOH") = Vz(id("NaOH")) / totalkg
-            If id("Na+") > -1 Then conc("Na+") = Vz(id("Na+")) / totalkg
-
             'calculate equilibrium constants (f(T))
 
-            Dim k As New List(Of Double)
+            Dim kr As New List(Of Double)
 
             For Each r In Reactions
-                k.Add(r.EvaluateK(T, PP))
+                kr.Add(r.EvaluateK(T, PP))
             Next
+
+            'calculate NH3-H2S-CO2-H2O VLE
+
+            Dim nl As New DWSIMDefault()
+
+            'loop 1: VLE
+
+            ecount = 0
+            L = 0.0#
+
+            Do
+
+                L_old = L
+
+                Dim flashresult = nl.CalculateEquilibrium(FlashSpec.P, FlashSpec.T, P, T, PP, Vnf, Nothing, 0.0#)
+
+                With flashresult
+                    L = .GetLiquidPhase1MoleFraction
+                    V = .GetVaporPhaseMoleFraction
+                    Vxl = .GetLiquidPhase1MoleFractions
+                    Vxv = .GetVaporPhaseMoleFractions
+                    Vnl = Vxl.MultiplyConstY(L)
+                    Vnv = Vxv.MultiplyConstY(V)
+                End With
+
+                If Abs(L - L_old) < etol Then Exit Do
+
+                'calculate concentrations
+
+                If id("H2O") > -1 Then conc("H2O") = Vnl(id("H2O")) / totalkg
+                If id("H+") > -1 Then conc("H+") = Vnl(id("H+")) / totalkg
+                If id("OH-") > -1 Then conc("OH-") = Vnl(id("OH-")) / totalkg
+                If id("CO2") > -1 Then conc("CO2") = Vnl(id("CO2")) / totalkg
+                If id("HCO3-") > -1 Then conc("HCO3-") = Vnl(id("HCO3-")) / totalkg
+                If id("CO3-2") > -1 Then conc("CO3-2") = Vnl(id("CO3-2")) / totalkg
+                If id("H2NCOO-") > -1 Then conc("H2NCOO-") = Vnl(id("H2NCOO-")) / totalkg
+                If id("NH3") > -1 Then conc("NH3") = Vnl(id("NH3")) / totalkg
+                If id("NH4+") > -1 Then conc("NH4+") = Vnl(id("NH4+")) / totalkg
+                If id("H2S") > -1 Then conc("H2S") = Vnl(id("H2S")) / totalkg
+                If id("HS-") > -1 Then conc("HS-") = Vnl(id("HS-")) / totalkg
+                If id("S-2") > -1 Then conc("S-2") = Vnl(id("S-2")) / totalkg
+                If id("NaOH") > -1 Then conc("NaOH") = Vnl(id("NaOH")) / totalkg
+                If id("Na+") > -1 Then conc("Na+") = Vnl(id("Na+")) / totalkg
+
+                'adjust NaOH concentration, if any
+                If conc("NaOH") > 0.0# Then
+                    conc("OH-") = conc("NaOH")
+                    conc("NaOH") = 1.0E-50
+                End If
+
+                'assume an initial concentration of bicarbonate.
+
+                If conc("HCO3-") = 0.0# Then conc("HCO3-") = 0.0#
+
+                'loop 2: bicarbonate conc. convergence
+
+                icount = 0
+
+                Do
+
+                    'loop 3: pH convergence
+
+                    If conc("H+") > 0.0# Then
+                        pH = -Log10(conc("H+"))
+                    Else
+                        pH = 7.0#
+                        conc("H+") = 10 ^ (-pH)
+                    End If
+
+                    icount2 = 0
+
+                    Do
+
+                        'calculate liquid phase chemical equilibrium
+
+                        '   1   CO2 ionization	                CO2 + H2O <--> H+ + HCO3- 
+
+                        conc0("HCO3-") = conc("HCO3-")
+                        conc("HCO3-") = kr(0) * conc("CO2") * conc("H2O") / conc("H+")
+                        deltaconc("HCO3-") = conc("HCO3-") - conc0("HCO3-")
+
+                        '   2   Carbonate production	        HCO3- <--> CO3-2 + H+ 
+
+                        conc0("CO3-2") = conc("CO3-2")
+                        conc("CO3-2") = kr(1) * conc("HCO3-") / conc("H+")
+                        deltaconc("CO3-2") = conc("CO3-2") - conc0("CO3-2")
+
+                        '   3   Ammonia ionization	            H+ + NH3 <--> NH4+ 
+
+                        conc0("NH4+") = conc("NH4+")
+                        conc("NH4+") = kr(2) * conc("NH3") * conc("H+")
+                        deltaconc("NH4+") = conc("NH4+") - conc0("NH4+")
+
+                        '   4   Carbamate production	        HCO3- + NH3 <--> H2NCOO- + H2O 
+
+                        conc0("H2NCOO-") = conc("H2NCOO-")
+                        conc("H2NCOO-") = kr(3) * conc("HCO3-") * conc("NH3") / conc("H2O")
+                        deltaconc("H2NCOO-") = conc("H2NCOO-") - conc0("H2NCOO-")
+
+                        '   5   H2S ionization	                H2S <--> HS- + H+ 
+
+                        conc0("HS-") = conc("HS-")
+                        conc("HS-") = kr(4) * conc("H2S") / conc("H+")
+                        deltaconc("HS-") = conc("HS-") - conc0("HS-")
+
+                        '   6   Sulfide production	            HS- <--> S-2 + H+ 
+
+                        conc0("S-2") = conc("S-2")
+                        conc("S-2") = kr(5) * conc("HS-") / conc("H+")
+                        deltaconc("S-2") = conc("S-2") - conc0("S-2")
+
+                        '   7   Water self-ionization	        H2O <--> OH- + H+ 
+
+                        conc0("OH-") = conc("OH-")
+                        conc("OH-") = kr(6) * conc("H2O") / conc("H+")
+                        deltaconc("OH-") = conc("OH-") - conc0("OH-")
+
+                        '   8   Sodium Hydroxide dissociation   NaOH <--> OH- + Na+ 
+
+                        conc0("Na+") = conc("Na+")
+                        conc("Na+") = kr(7) * conc("NaOH") / conc("OH-")
+                        deltaconc("Na+") = conc("Na+") - conc0("Na+")
+
+                        'neutrality check
+
+                        pch = conc("H+") + conc("NH4+") + conc("Na+")
+                        nch = conc("OH-") + conc("HCO3-") + conc("H2NCOO-") + conc("HS-") + 2 * conc("S-2")
+
+                        If Abs((pch - nch) / pch) < etol Then Exit Do
+
+                        'mass balance
+
+                        conc0("H2O") = conc("H2O")
+                        conc("H2O") -= deltaconc("OH-")
+                        deltaconc("H2O") = conc("H2O") - conc0("H2O")
+
+                        conc0("CO2") = conc("CO2")
+                        conc("CO2") -= deltaconc("HCO3-")
+                        If conc("CO2") < 0.0# Then conc("CO2") = 0.0#
+                        deltaconc("CO2") = conc("CO2") - conc0("CO2")
+
+                        conc0("H2S") = conc("H2S")
+                        conc("H2S") -= deltaconc("HS-")
+                        If conc("H2S") < 0.0# Then conc("H2S") = 0.0#
+                        deltaconc("H2S") = conc("H2S") - conc0("H2S")
+
+                        conc0("NH3") = conc("NH3")
+                        conc("NH3") -= deltaconc("NH4+")
+                        If conc("NH3") < 0.0# Then conc("NH3") = 0.0#
+                        deltaconc("NH3") = conc("NH3") - conc0("NH3")
+
+                        conc0("NaOH") = conc("NaOH")
+                        conc("NaOH") -= deltaconc("Na+")
+                        If conc("NaOH") < 0.0# Then conc("NaOH") = 0.0#
+                        deltaconc("NaOH") = conc("NaOH") - conc0("NaOH")
+
+                        fx_old0 = fx_old
+                        fx_old = fx
+                        fx = pch - nch
+
+                        If Abs(fx - fx_old) < itol Then Exit Do
+
+                        pH_old0 = pH_old
+                        pH_old = pH
+
+                        If icount2 <= 2 Then
+                            pH += 0.1
+                        Else
+                            pH = pH - 0.1 * fx * (pH - pH_old0) / (fx - fx_old0)
+                            If pH < 2.0# Then pH = 2.0#
+                            If pH > 14.0# Then pH = 14.0#
+                        End If
+
+                        conc("H+") = 10 ^ (-pH)
+
+                        icount2 += 1
+
+                    Loop
+
+                    nco2_old = nco2
+
+                    nco2 = conc("CO2") + conc("HCO3-") + conc("CO3-2") + conc("H2NCOO-")
+
+                    If Abs(nco2 - nco2_old) < etol Then Exit Do
+
+                    If icount < 1 Then
+                        conc("HCO3-") *= 1.1
+                    Else
+                        conc("HCO3-") *= nco2 / nco2_old
+                    End If
+                    icount += 1
+
+                Loop
+
+                ecount += 1
+
+            Loop
 
             'return flash calculation results.
 

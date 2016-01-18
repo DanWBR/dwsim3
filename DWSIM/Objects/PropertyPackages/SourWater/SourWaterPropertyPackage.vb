@@ -75,6 +75,37 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             End Get
         End Property
 
+        Public Overrides Function DW_CalcKvalue(Vx As Array, Vy As Array, T As Double, P As Double, Optional type As String = "LV") As Double()
+
+            Dim val0 As Double() = MyBase.DW_CalcKvalue(Vx, Vy, T, P, type)
+
+            Dim cprops = Me.DW_GetConstantProperties
+
+            Dim i As Integer = 0
+            For Each cp In cprops
+                If cp.IsIon Then val0(i) = 1.0E-40
+                If cp.Name = "Sodium Hydroxide" Then val0(i) = 1.0E-40
+                i += 1
+            Next
+
+            Return val0
+
+        End Function
+
+        Public Overrides Function AUX_PVAPi(index As Integer, T As Double) As Double
+
+            Dim cprops = Me.DW_GetConstantProperties
+
+            If cprops(index).IsIon Then
+                Return 1.0E-20
+            ElseIf cprops(index).Name = "Sodium Hydroxide" Then
+                Return 1.0E-20
+            Else
+                Return MyBase.AUX_PVAPi(index, T)
+            End If
+
+        End Function
+
     End Class
 
 End Namespace

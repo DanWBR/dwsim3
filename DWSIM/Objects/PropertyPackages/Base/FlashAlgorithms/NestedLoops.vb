@@ -70,17 +70,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             'Calculate Ki`s
 
             If Not ReuseKI Then
-                If VPc.Sum > 0 Then
-                    For i = 0 To n
+                For i = 0 To n
+                    If VPc(i) > 0.0# Then
                         Vp(i) = VPc(i) * Exp(5.37 * (1 + Vw(i)) * (1 - VTc(i) / T))
-                        Ki(i) = Vp(i) / P
-                    Next
-                Else
-                    For i = 0 To n
+                    Else
                         Vp(i) = PP.AUX_PVAPi(i, T)
-                        Ki(i) = Vp(i) / P
-                    Next
-                End If
+                    End If
+                Next
+                Ki = Vp.MultiplyConstY(1 / P)
             Else
                 For i = 0 To n
                     Vp(i) = PP.AUX_PVAPi(i, T)

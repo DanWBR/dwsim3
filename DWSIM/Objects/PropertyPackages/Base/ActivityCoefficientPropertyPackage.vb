@@ -270,6 +270,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             If TypeOf Me Is NRTLPropertyPackage Then
                 Return DirectCast(Me, NRTLPropertyPackage).RET_VNAMES
+            ElseIf TypeOf Me Is SourWaterPropertyPackage Then
+                Return DirectCast(Me, SourWaterPropertyPackage).RET_VNAMES
             ElseIf TypeOf Me Is UNIQUACPropertyPackage Then
                 Return New Object() {DirectCast(Me, UNIQUACPropertyPackage).RET_VNAMES, DirectCast(Me, UNIQUACPropertyPackage).RET_VQ, DirectCast(Me, UNIQUACPropertyPackage).RET_VR}
             ElseIf TypeOf Me Is COSMOSACPropertyPackage Then
