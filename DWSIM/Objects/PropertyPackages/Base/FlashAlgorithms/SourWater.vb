@@ -155,7 +155,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             id.Add("NaOH", naohid)
             id.Add("Na+", naid)
 
-
         End Sub
 
         Public Overrides Function Flash_PT(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
@@ -176,8 +175,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             maxit_i = CInt(PP.Parameters("PP_PTFMII"))
 
             Dim n As Integer = CompoundProperties.Count - 1
-            Dim activcoeff(n), errfunc, nch, pch, nco2, nco2_old, pH, pH_old, pH_old0 As Double
-            Dim icount, icount2, ecount As Integer
+            Dim activcoeff(n), errfunc, nch, pch, pH, pH_old, pH_old0 As Double
+            Dim icount, ecount As Integer
 
             'Vnf = feed molar amounts (considering 1 mol of feed)
             'Vnl = liquid phase molar amounts
@@ -271,148 +270,142 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 conc0("NH3") = conc("NH3")
                 conc0("NaOH") = conc("NaOH")
 
-                'loop 2: bicarbonate conc. convergence
+                'loop 3: pH convergence
+
+                If conc("H+") > 0.0# Then
+                    pH = -Log10(conc("H+"))
+                Else
+                    pH = 7.0#
+                    conc("H+") = 10 ^ (-pH)
+                End If
 
                 icount = 0
 
                 Do
 
-                    'loop 3: pH convergence
+                    'calculate liquid phase chemical equilibrium
 
-                    If conc("H+") > 0.0# Then
-                        pH = -Log10(conc("H+"))
-                    Else
-                        pH = 7.0#
-                        conc("H+") = 10 ^ (-pH)
-                    End If
-
-                    icount2 = 0
-
-                    Do
-
-                        'calculate liquid phase chemical equilibrium
-
-                        '   1   CO2 ionization	                CO2 + H2O <--> H+ + HCO3- 
-
-                        conc0("HCO3-") = conc("HCO3-")
-                        conc("HCO3-") = kr(0) * conc("CO2") / conc("H+")
-                        deltaconc("HCO3-") = conc("HCO3-") - conc0("HCO3-")
-
-                        '   2   Carbonate production	        HCO3- <--> CO3-2 + H+ 
-
-                        conc0("CO3-2") = conc("CO3-2")
-                        conc("CO3-2") = kr(1) * conc("HCO3-") / conc("H+")
-                        deltaconc("CO3-2") = conc("CO3-2") - conc0("CO3-2")
-
-                        '   3   Ammonia ionization	            H+ + NH3 <--> NH4+ 
-
-                        conc0("NH4+") = conc("NH4+")
-                        conc("NH4+") = kr(2) * conc("NH3") * conc("H+")
-                        deltaconc("NH4+") = conc("NH4+") - conc0("NH4+")
-
-                        '   4   Carbamate production	        HCO3- + NH3 <--> H2NCOO- + H2O 
-
-                        conc0("H2NCOO-") = conc("H2NCOO-")
-                        conc("H2NCOO-") = kr(3) * conc("HCO3-") * conc("NH3")
-                        deltaconc("H2NCOO-") = conc("H2NCOO-") - conc0("H2NCOO-")
-
-                        '   5   H2S ionization	                H2S <--> HS- + H+ 
-
-                        conc0("HS-") = conc("HS-")
-                        conc("HS-") = kr(4) * conc("H2S") / conc("H+")
-                        deltaconc("HS-") = conc("HS-") - conc0("HS-")
-
-                        '   6   Sulfide production	            HS- <--> S-2 + H+ 
-
-                        conc0("S-2") = conc("S-2")
-                        conc("S-2") = kr(5) * conc("HS-") / conc("H+")
-                        deltaconc("S-2") = conc("S-2") - conc0("S-2")
-
-                        '   7   Water self-ionization	        H2O <--> OH- + H+ 
-
-                        conc0("OH-") = conc("OH-")
-                        conc("OH-") = kr(6) / conc("H+")
-                        deltaconc("OH-") = conc("OH-") - conc0("OH-")
-
-                        '   8   Sodium Hydroxide dissociation   NaOH <--> OH- + Na+ 
-
-                        conc0("Na+") = conc("Na+")
-                        conc("Na+") = kr(7) * conc("NaOH") / conc("OH-")
-                        deltaconc("Na+") = conc("Na+") - conc0("Na+")
-
-                        'neutrality check
-
-                        pch = conc("H+") + conc("NH4+") + conc("Na+")
-                        nch = conc("OH-") + conc("HCO3-") + conc("H2NCOO-") + conc("HS-") + 2 * conc("S-2") + 2 * conc("CO3-2")
-
-                        If Abs((pch - nch) / pch) < etol Then Exit Do
-
-                        'mass balance
-
-                        conc0("H2O") = conc("H2O")
-                        conc("H2O") -= deltaconc("OH-")
-                        deltaconc("H2O") = conc("H2O") - conc0("H2O")
-
-                        conc0("CO2") = conc("CO2")
-                        conc("CO2") -= deltaconc("HCO3-")
-                        If conc("CO2") < 0.0# Then conc("CO2") = 0.0#
-                        deltaconc("CO2") = conc("CO2") - conc0("CO2")
-
-                        conc0("H2S") = conc("H2S")
-                        conc("H2S") -= deltaconc("HS-")
-                        If conc("H2S") < 0.0# Then conc("H2S") = 0.0#
-                        deltaconc("H2S") = conc("H2S") - conc0("H2S")
-
-                        conc0("NH3") = conc("NH3")
-                        conc("NH3") -= deltaconc("NH4+")
-                        If conc("NH3") < 0.0# Then conc("NH3") = 0.0#
-                        deltaconc("NH3") = conc("NH3") - conc0("NH3")
-
-                        conc0("NaOH") = conc("NaOH")
-                        conc("NaOH") -= deltaconc("Na+")
-                        If conc("NaOH") < 0.0# Then conc("NaOH") = 0.0#
-                        deltaconc("NaOH") = conc("NaOH") - conc0("NaOH")
-
-                        fx_old0 = fx_old
-                        fx_old = fx
-                        fx = pch - nch
-
-                        If Abs(fx - fx_old) < itol Then Exit Do
-
-                        pH_old0 = pH_old
-                        pH_old = pH
-
-                        If icount2 <= 2 Then
-                            pH += 0.1
-                        Else
-                            pH = pH - 0.1 * fx * (pH - pH_old0) / (fx - fx_old0)
-                            If pH < 2.0# Then pH = 2.0#
-                            If pH > 14.0# Then pH = 14.0#
-                        End If
-
-                        conc("H+") = 10 ^ (-pH)
-
-                        icount2 += 1
-
-                    Loop
-
-                    nco2_old = nco2
-
-                    nco2 = conc("CO2") + conc("HCO3-") + conc("CO3-2") + conc("H2NCOO-")
-
-                    If Abs(nco2 - nco2_old) < etol Then Exit Do
+                    '   1   CO2 ionization	                CO2 + H2O <--> H+ + HCO3- 
 
                     conc0("HCO3-") = conc("HCO3-")
-                    If icount < 1 Then
-                        conc("HCO3-") *= 1.1
-                    Else
-                        conc("HCO3-") *= nco2 / nco2_old
-                    End If
+                    conc("HCO3-") = kr(0) * conc("CO2") / conc("H+")
                     deltaconc("HCO3-") = conc("HCO3-") - conc0("HCO3-")
+
+                    '   2   Carbonate production	        HCO3- <--> CO3-2 + H+ 
+
+                    conc0("CO3-2") = conc("CO3-2")
+                    conc("CO3-2") = kr(1) * conc("HCO3-") / conc("H+")
+                    deltaconc("CO3-2") = conc("CO3-2") - conc0("CO3-2")
+
+                    '   3   Ammonia ionization	            H+ + NH3 <--> NH4+ 
+
+                    conc0("NH4+") = conc("NH4+")
+                    conc("NH4+") = kr(2) * conc("NH3") * conc("H+")
+                    deltaconc("NH4+") = conc("NH4+") - conc0("NH4+")
+
+                    '   4   Carbamate production	        HCO3- + NH3 <--> H2NCOO- + H2O 
+
+                    conc0("H2NCOO-") = conc("H2NCOO-")
+                    conc("H2NCOO-") = kr(3) * conc("HCO3-") * conc("NH3")
+                    deltaconc("H2NCOO-") = conc("H2NCOO-") - conc0("H2NCOO-")
+
+                    '   5   H2S ionization	                H2S <--> HS- + H+ 
+
+                    conc0("HS-") = conc("HS-")
+                    conc("HS-") = kr(4) * conc("H2S") / conc("H+")
+                    deltaconc("HS-") = conc("HS-") - conc0("HS-")
+
+                    '   6   Sulfide production	            HS- <--> S-2 + H+ 
+
+                    conc0("S-2") = conc("S-2")
+                    conc("S-2") = kr(5) * conc("HS-") / conc("H+")
+                    deltaconc("S-2") = conc("S-2") - conc0("S-2")
+
+                    '   7   Water self-ionization	        H2O <--> OH- + H+ 
+
+                    conc0("OH-") = conc("OH-")
+                    conc("OH-") = kr(6) / conc("H+")
+                    deltaconc("OH-") = conc("OH-") - conc0("OH-")
+
+                    '   8   Sodium Hydroxide dissociation   NaOH <--> OH- + Na+ 
+
+                    conc0("Na+") = conc("Na+")
+                    conc("Na+") = kr(7) * conc("NaOH") / conc("OH-")
+                    deltaconc("Na+") = conc("Na+") - conc0("Na+")
+
+                    'neutrality check
+
+                    pch = conc("H+") + conc("NH4+") + conc("Na+")
+                    nch = conc("OH-") + conc("HCO3-") + conc("H2NCOO-") + conc("HS-") + 2 * conc("S-2") + 2 * conc("CO3-2")
+
+                    If Abs((pch - nch) / pch) < etol Then Exit Do
+
+                    'mass balance
+
+                    'conc0("H2O") = conc("H2O")
+                    'conc("H2O") -= deltaconc("OH-")
+                    'deltaconc("H2O") = conc("H2O") - conc0("H2O")
+
+                    'conc0("CO2") = conc("CO2")
+                    'conc("CO2") -= deltaconc("HCO3-")
+                    'If conc("CO2") < 0.0# Then conc("CO2") = 0.0#
+                    'deltaconc("CO2") = conc("CO2") - conc0("CO2")
+
+                    'conc0("H2S") = conc("H2S")
+                    'conc("H2S") -= deltaconc("HS-")
+                    'If conc("H2S") < 0.0# Then conc("H2S") = 0.0#
+                    'deltaconc("H2S") = conc("H2S") - conc0("H2S")
+
+                    'conc0("NH3") = conc("NH3")
+                    'conc("NH3") -= deltaconc("NH4+")
+                    'If conc("NH3") < 0.0# Then conc("NH3") = 0.0#
+                    'deltaconc("NH3") = conc("NH3") - conc0("NH3")
+
+                    'conc0("NaOH") = conc("NaOH")
+                    'conc("NaOH") -= deltaconc("Na+")
+                    'If conc("NaOH") < 0.0# Then conc("NaOH") = 0.0#
+                    'deltaconc("NaOH") = conc("NaOH") - conc0("NaOH")
+
+                    fx_old0 = fx_old
+                    fx_old = fx
+                    fx = pch - nch
+
+                    If Abs(fx - fx_old) < itol Then Exit Do
+
+                    pH_old0 = pH_old
+                    pH_old = pH
+
+                    If icount <= 2 Then
+                        pH += 0.1
+                    Else
+                        pH = pH - fx * (pH - pH_old0) / (fx - fx_old0)
+                        If pH < 2.0# Then pH = 2.0#
+                        If pH > 14.0# Then pH = 14.0#
+                    End If
+
+                    conc("H+") = 10 ^ (-pH)
 
                     icount += 1
 
                 Loop
+
+                'mass balance
+
+                If id("H+") > -1 Then Vnl("H+") = conc(id("H+")) * totalkg
+                If id("OH-") > -1 Then Vnl("OH-") = conc(id("OH-")) * totalkg
+                If id("CO2") > -1 Then Vnl("CO2") = conc(id("CO2")) * totalkg
+                If id("HCO3-") > -1 Then Vnl("HCO3-") = conc(id("HCO3-")) * totalkg
+                If id("CO3-2") > -1 Then Vnl("CO3-2") = conc(id("CO3-2")) * totalkg
+                If id("H2NCOO-") > -1 Then Vnl("H2NCOO-") = conc(id("H2NCOO-")) * totalkg
+                If id("NH4+") > -1 Then Vnl("NH4+") = conc(id("NH4+")) * totalkg
+                If id("HS-") > -1 Then Vnl("HS-") = conc(id("HS-")) * totalkg
+                If id("S-2") > -1 Then Vnl("S-2") = conc(id("S-2")) * totalkg
+                If id("Na+") > -1 Then Vnl("Na+") = conc(id("Na+")) * totalkg
+
+                If id("H2O") > -1 Then Vnl(id("H2O")) -= Vnl(id("H2O"))
+                If id("NaOH") > -1 Then Vnl("NaOH") = conc(id("NaOH")) * totalkg
+                If id("NH3") > -1 Then Vnl("NH3") = conc(id("NH3")) * totalkg
+                If id("H2S") > -1 Then Vnl("H2S") = conc(id("H2S")) * totalkg
 
                 ecount += 1
 
