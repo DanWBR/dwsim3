@@ -59,14 +59,68 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             '   i   Name                            Equation
             '
-            '   1   CO2 ionization	                OCO + HOH <--> H+ + HCO3- 
+            '   1   CO2 ionization	                CO2 + H2O <--> H+ + HCO3- 
             '   2   Carbonate production	        HCO3- <--> CO3-2 + H+ 
             '   3   Ammonia ionization	            H+ + NH3 <--> NH4+ 
-            '   4   Carbamate production	        HCO3- + NH3 <--> H2NCOO- + HOH 
-            '   5   H2S ionization	                HSH <--> HS- + H+ 
+            '   4   Carbamate production	        HCO3- + NH3 <--> H2NCOO- + H2O 
+            '   5   H2S ionization	                H2S <--> HS- + H+ 
             '   6   Sulfide production	            HS- <--> S-2 + H+ 
-            '   7   Water self-ionization	        HOH <--> OH- + H+ 
+            '   7   Water self-ionization	        H2O <--> OH- + H+ 
             '   8   Sodium Hydroxide dissociation   NaOH <--> OH- + Na+ 
+
+        End Sub
+
+        Sub Setup(conc As Dictionary(Of String, Double), id As Dictionary(Of String, Integer))
+
+            conc.Clear()
+
+            conc.Add("H2O", 0.0#)
+            conc.Add("H+", 0.0#)
+            conc.Add("OH-", 0.0#)
+            conc.Add("NH3", 0.0#)
+            conc.Add("NH4+", 0.0#)
+            conc.Add("CO2", 0.0#)
+            conc.Add("HCO3-", 0.0#)
+            conc.Add("CO3-2", 0.0#)
+            conc.Add("H2NCOO-", 0.0#)
+            conc.Add("H2S", 0.0#)
+            conc.Add("HS-", 0.0#)
+            conc.Add("S-2", 0.0#)
+            conc.Add("NaOH", 0.0#)
+            conc.Add("Na+", 0.0#)
+
+            Dim wid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.CAS_Number = "7732-18-5").FirstOrDefault)
+            Dim co2id As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Name = "Carbon dioxide").FirstOrDefault)
+            Dim nh3id As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Name = "Ammonia").FirstOrDefault)
+            Dim h2sid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Name = "Hydrogen sulfide").FirstOrDefault)
+            Dim naohid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Formula = "NaOH").FirstOrDefault)
+            Dim naid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Formula = "Na+").FirstOrDefault)
+            Dim ohid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Formula = "OH-").FirstOrDefault)
+            Dim hid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Formula = "H+").FirstOrDefault)
+            Dim nh4id As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Formula = "NH4+").FirstOrDefault)
+            Dim hcoid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Formula = "HCO3-").FirstOrDefault)
+            Dim co3id As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Formula = "CO3-2").FirstOrDefault)
+            Dim h2nid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Formula = "H2NCOO-").FirstOrDefault)
+            Dim hsid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Formula = "HS-").FirstOrDefault)
+            Dim s2id As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Formula = "S-2").FirstOrDefault)
+
+            id.Clear()
+
+            Id.Add("H2O", wid)
+            Id.Add("H+", hid)
+            Id.Add("OH-", ohid)
+            Id.Add("NH3", nh3id)
+            Id.Add("NH4+", nh4id)
+            Id.Add("CO2", co2id)
+            Id.Add("HCO3-", hcoid)
+            Id.Add("CO3-2", co3id)
+            Id.Add("H2NCOO-", h2nid)
+            Id.Add("H2S", h2sid)
+            Id.Add("HS-", hsid)
+            Id.Add("S-2", s2id)
+            Id.Add("NaOH", naohid)
+            Id.Add("Na+", naid)
+
 
         End Sub
 
@@ -94,17 +148,50 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             'Vnf = feed molar amounts (considering 1 mol of feed)
             'Vnl = liquid phase molar amounts
             'Vnv = vapor phase molar amounts
-            'Vns = solid phase molar amounts
             'Vxl = liquid phase molar fractions
             'Vxv = vapor phase molar fractions
-            'Vxs = solid phase molar fractions
-            'V, S, L = phase molar amounts (F = 1 = V + S + L)
-            Dim Vnf(n), Vnl(n), Vxl(n), Vxl_ant(n), Vns(n), Vxs(n), Vnv(n), Vxv(n), V, S, L, Vp(n) As Double
+            'V, L = phase molar amounts (F = 1 = V + L)
+
+            Dim Vnf(n), Vnl(n), Vxl(n), Vxl_ant(n), Vns(n), Vnv(n), Vxv(n), V, L, Vp(n) As Double
             Dim sumN As Double = 0
 
             Vnf = Vz.Clone
 
-            Dim wid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.CAS_Number = "7732-18-5").SingleOrDefault)
+            'set up concentrations & ids
+
+            Dim conc As New Dictionary(Of String, Double)
+            Dim id As New Dictionary(Of String, Integer)
+
+            Setup(conc, id)
+
+            'calculate initial solution amounts
+
+            Dim totalkg As Double = PP.AUX_MMM(Vz) / 1000 'kg solution
+
+            'calculate concentrations
+
+            If id("H2O") > -1 Then conc("H2O") = Vz(id("H2O")) / totalkg
+            If id("H+") > -1 Then conc("H+") = Vz(id("H+")) / totalkg
+            If id("OH-") > -1 Then conc("OH-") = Vz(id("OH-")) / totalkg
+            If id("CO2") > -1 Then conc("CO2") = Vz(id("CO2")) / totalkg
+            If id("HCO3-") > -1 Then conc("HCO3-") = Vz(id("HCO3-")) / totalkg
+            If id("CO3-2") > -1 Then conc("CO3-2") = Vz(id("CO3-2")) / totalkg
+            If id("H2NCOO-") > -1 Then conc("H2NCOO-") = Vz(id("H2NCOO-")) / totalkg
+            If id("NH3") > -1 Then conc("NH3") = Vz(id("NH3")) / totalkg
+            If id("NH4+") > -1 Then conc("NH4+") = Vz(id("NH4+")) / totalkg
+            If id("H2S") > -1 Then conc("H2S") = Vz(id("H2S")) / totalkg
+            If id("HS-") > -1 Then conc("HS-") = Vz(id("HS-")) / totalkg
+            If id("S-2") > -1 Then conc("S-2") = Vz(id("S-2")) / totalkg
+            If id("NaOH") > -1 Then conc("NaOH") = Vz(id("NaOH")) / totalkg
+            If id("Na+") > -1 Then conc("Na+") = Vz(id("Na+")) / totalkg
+
+            'calculate equilibrium constants (f(T))
+
+            Dim k As New List(Of Double)
+
+            For Each r In Reactions
+                k.Add(r.EvaluateK(T, PP))
+            Next
 
             'return flash calculation results.
 
@@ -114,7 +201,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             WriteDebugInfo("PT Flash [Seawater]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Error function value: " & errfunc)
 
-out:        Return New Object() {L, V, Vxl, Vxv, ecount, 0.0#, PP.RET_NullVector, S, Vxs}
+out:        Return New Object() {L, V, Vxl, Vxv, ecount, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector()}
 
         End Function
 
@@ -495,7 +582,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             xv = V
             xl = 1 - V
 
-       
+
 
             d2 = Date.Now
 
