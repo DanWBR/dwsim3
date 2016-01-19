@@ -175,7 +175,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             maxit_i = CInt(PP.Parameters("PP_PTFMII"))
 
             Dim n As Integer = CompoundProperties.Count - 1
-            Dim activcoeff(n), errfunc, nch, pch, pH, pH_old, pH_old0 As Double
+            Dim activcoeff(n), nch, pch, pH, pH_old, pH_old0 As Double
             Dim icount, ecount As Integer
 
             'Vnf = feed molar amounts (considering 1 mol of feed)
@@ -361,9 +361,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     fx_old = fx
                     fx = pch - nch
 
-                    If Abs(fx) < etol Then Exit Do
+                    If Double.IsNaN(fx) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
 
-                    'If Abs(fx - fx_old) < 0.0000000001 Then Exit Do
+                    If Abs(fx) < etol Then Exit Do
 
                     pH_old0 = pH_old
                     pH_old = pH
@@ -372,6 +372,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         pH += 0.01
                     Else
                         pH = pH - 0.3 * fx * (pH - pH_old0) / (fx - fx_old0)
+                        If Double.IsNaN(pH) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
                         If pH < 2.0# Then pH = 7.0#
                         If pH > 14.0# Then pH = 7.0#
                     End If
@@ -379,6 +380,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     conc("H+") = 10 ^ (-pH)
 
                     icount += 1
+
+                    If icount > maxit_i Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
 
                 Loop
 
@@ -407,9 +410,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 F = Vnf.SumY()
 
+                If Double.IsNaN(F) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
+
                 Vxf = Vnf.NormalizeY()
 
                 ecount += 1
+
+                If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
 
             Loop
 
@@ -419,7 +426,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             dt = d2 - d1
 
-            WriteDebugInfo("PT Flash [Sour Water]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Error function value: " & errfunc)
+            WriteDebugInfo("PT Flash [Sour Water]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Calculated pH = " & pH)
 
 out:        Return New Object() {L / F, V / F, Vxl, Vxv, ecount, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector()}
 
