@@ -83,8 +83,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             Dim i As Integer = 0
             For Each cp In cprops
-                If cp.IsIon Then val0(i) = 1.0E-40
-                If cp.Name = "Sodium Hydroxide" Then val0(i) = 1.0E-40
+                If cp.IsIon Then val0(i) = 1.0E-60
+                If cp.Name = "Sodium Hydroxide" Then val0(i) = 1.0E-60
                 i += 1
             Next
 

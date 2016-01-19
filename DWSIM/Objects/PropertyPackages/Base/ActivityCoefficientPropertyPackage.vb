@@ -39,7 +39,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Inherits PropertyPackage
 
-        Friend m_props As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PROPS
         Friend m_pr As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.PengRobinson
         Friend m_lk As New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.LeeKesler
 
@@ -688,10 +687,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density = result
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.enthalpy = Me.DW_CalcEnthalpy(RET_VMOL(dwpl), T, P, State.Vapor)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.entropy = Me.DW_CalcEntropy(RET_VMOL(dwpl), T, P, State.Vapor)
-                result = Me.m_lk.Z_LK("V", T / Me.AUX_TCM(PropertyPackages.Fase.Vapor), P / Me.AUX_PCM(PropertyPackages.Fase.Vapor), Me.AUX_WM(PropertyPackages.Fase.Vapor))(0)
+                result = m_pr.Z_PR(T, P, RET_VMOL(fase.Vapor), RET_VKij, RET_VTC, RET_VPC, RET_VW, "V")
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.compressibilityFactor = result
                 result = Me.AUX_CPm(PropertyPackages.Fase.Vapor, T)
-                resultObj = Me.m_lk.CpCvR_LK("V", T, P, RET_VMOL(PropertyPackages.Fase.Vapor), RET_VKij(), RET_VMAS(PropertyPackages.Fase.Vapor), RET_VTC(), RET_VPC(), RET_VCP(T), RET_VMM(), RET_VW(), RET_VZRa())
+                resultObj = Auxiliary.PROPS.CpCvR("V", T, P, RET_VMOL(PropertyPackages.Fase.Vapor), RET_VKij(), RET_VMAS(PropertyPackages.Fase.Vapor), RET_VTC(), RET_VPC(), RET_VCP(T), RET_VMM(), RET_VW(), RET_VZRa())
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCp = resultObj(1)
                 Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.heatCapacityCv = resultObj(2)
                 result = Me.AUX_MMM(fase)

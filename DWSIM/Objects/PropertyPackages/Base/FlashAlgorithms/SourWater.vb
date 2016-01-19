@@ -208,11 +208,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 kr.Add(r.EvaluateK(T, PP))
             Next
 
-            'calculate NH3-H2S-CO2-H2O VLE
-
             Dim nl As New DWSIMDefault()
-
-            'loop 1: VLE
 
             'calculate the amount of undissociated species from dissociated ones
 
@@ -231,6 +227,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             If id("S-2") > -1 Then Vxf(id("S-2")) = 0.0#
             If id("Na+") > -1 Then Vxf(id("Na+")) = 0.0#
 
+            'calculate NH3-H2S-CO2-H2O VLE
+
             Dim flashresult = nl.CalculateEquilibrium(FlashSpec.P, FlashSpec.T, P, T, PP, Vxf, Nothing, 0.0#)
 
             With flashresult
@@ -241,6 +239,22 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Vnl = Vxl.MultiplyConstY(L)
                 Vnv = Vxv.MultiplyConstY(V)
             End With
+
+            If id("H+") > -1 Then Vxv(id("H+")) = 0.0#
+            If id("OH-") > -1 Then Vxv(id("OH-")) = 0.0#
+            If id("HCO3-") > -1 Then Vxv(id("HCO3-")) = 0.0#
+            If id("CO3-2") > -1 Then Vxv(id("CO3-2")) = 0.0#
+            If id("H2NCOO-") > -1 Then Vxv(id("H2NCOO-")) = 0.0#
+            If id("NH4+") > -1 Then Vxv(id("NH4+")) = 0.0#
+            If id("HS-") > -1 Then Vxv(id("HS-")) = 0.0#
+            If id("S-2") > -1 Then Vxv(id("S-2")) = 0.0#
+            If id("Na+") > -1 Then Vxv(id("Na+")) = 0.0#
+
+            ' loop 1: Water amount in liquid phase
+
+            'ecount = 0
+
+            'Do
 
             'calculate solution amounts
 
@@ -389,7 +403,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             If id("S-2") > -1 Then Vnl(id("S-2")) = conc(("S-2")) * totalkg
             If id("Na+") > -1 Then Vnl(id("Na+")) = conc(("Na+")) * totalkg
 
-            If id("H2O") > -1 Then Vnl(id("H2O")) -= conc("H+") * totalkg
             If id("NaOH") > -1 Then Vnl(id("NaOH")) -= conc("Na+") * totalkg
             If Vnl(id("NaOH")) < 0.0# Then Vnl(id("NaOH")) = 0.0#
             If id("NH3") > -1 Then Vnl(id("NH3")) -= (conc("NH4+") + conc("H2NCOO-")) * totalkg
@@ -399,16 +412,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             If id("CO2") > -1 Then Vnl(id("CO2")) -= (conc("HCO3-") + conc("CO3-2") + conc("H2NCOO-")) * totalkg
             If Vnl(id("CO2")) < 0.0# Then Vnl(id("CO2")) = 0.0#
 
+            'werr = Vnl(id("H2O"))
+            Vnl(id("H2O")) = Vnf(id("H2O")) - Vnv(id("H2O")) - (Vnl.SumY - Vnl(id("H2O")))
+            'werr -= Vnl(id("H2O"))
+
             Vxl = Vnl.NormalizeY()
 
             L = Vnl.SumY
-            V = 1 - L
-
-            For i = 0 To n
-                Vnf(i) = Vnl(i) + Vnv(i)
-            Next
-
-            F = Vnf.SumY()
+            F = V + L
 
             If Double.IsNaN(F) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
 
@@ -420,7 +431,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             If merr > 5.0# Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
 
-            Vxf = Vnf.NormalizeY()
+            '    If Abs(werr) < etol Then Exit Do
+
+            '    ecount += 1
+
+            '    If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
+
+            'Loop
 
             'return flash calculation results.
 
