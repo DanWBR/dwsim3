@@ -250,12 +250,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             If id("S-2") > -1 Then Vxv(id("S-2")) = 0.0#
             If id("Na+") > -1 Then Vxv(id("Na+")) = 0.0#
 
-            ' loop 1: Water amount in liquid phase
-
-            'ecount = 0
-
-            'Do
-
             'calculate solution amounts
 
             totalkg = PP.AUX_MMM(Vxl) / 1000 'kg solution
@@ -274,7 +268,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             conc0("NH3") = conc("NH3")
             conc0("NaOH") = conc("NaOH")
 
-            'loop 3: pH convergence
+            'loop: pH convergence
 
             If conc("H+") > 0.0# Then
                 pH = -Log10(conc("H+"))
@@ -302,28 +296,24 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 k1 = Exp(Log(kr(0)) - 0.278 * conc("H2S") + (-1.32 + 1558.8 / (T * 1.8)) * Istr ^ 0.4)
 
-                'conc0("HCO3-") = conc("HCO3-")
                 conc("HCO3-") = k1 * conc("CO2") / conc("H+")
                 conc("HCO3-") = Math.Min(conc("HCO3-"), conc("CO2"))
                 deltaconc("HCO3-") = conc("HCO3-") - conc0("HCO3-")
 
                 '   2   Carbonate production	        HCO3- <--> CO3-2 + H+ 
 
-                'conc0("CO3-2") = conc("CO3-2")
                 conc("CO3-2") = kr(1) * conc("HCO3-") / conc("H+")
                 conc("CO3-2") = Math.Min(conc("CO3-2"), conc("HCO3-"))
                 deltaconc("CO3-2") = conc("CO3-2") - conc0("CO3-2")
 
                 '   3   Ammonia ionization	            H+ + NH3 <--> NH4+ 
 
-                'conc0("NH4+") = conc("NH4+")
                 conc("NH4+") = kr(2) * conc("NH3") * conc("H+")
                 conc("NH4+") = Math.Min(conc("NH4+"), conc("NH3"))
                 deltaconc("NH4+") = conc("NH4+") - conc0("NH4+")
 
                 '   4   Carbamate production	        HCO3- + NH3 <--> H2NCOO- + H2O 
 
-                'conc0("H2NCOO-") = conc("H2NCOO-")
                 conc("H2NCOO-") = kr(3) * conc("HCO3-") * conc("NH3")
                 conc("H2NCOO-") = Math.Min(Math.Min(conc("H2NCOO-"), conc("HCO3-")), conc("NH3"))
                 deltaconc("H2NCOO-") = conc("H2NCOO-") - conc0("H2NCOO-")
@@ -334,14 +324,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 k5 = Exp(Log(kr(4)) + 0.427 * conc("CO2"))
 
-                'conc0("HS-") = conc("HS-")
                 conc("HS-") = k5 * conc("H2S") / conc("H+")
                 conc("HS-") = Math.Min(conc("HS-"), conc("H2S"))
                 deltaconc("HS-") = conc("HS-") - conc0("HS-")
 
                 '   6   Sulfide production	            HS- <--> S-2 + H+ 
 
-                'conc0("S-2") = conc("S-2")
                 conc("S-2") = kr(5) * conc("HS-") / conc("H+")
                 conc("S-2") = Math.Min(conc("HS-"), conc("S-2"))
                 deltaconc("S-2") = conc("S-2") - conc0("S-2")
@@ -349,8 +337,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 '   7   Water self-ionization	        H2O <--> OH- + H+ 
                 '   8   Sodium Hydroxide dissociation   NaOH <--> OH- + Na+ 
 
-                'conc0("OH-") = conc("OH-")
-                'conc0("Na+") = conc("Na+")
                 conc("OH-") = kr(6) / conc("H+") + conc("NaOH")
                 conc("Na+") = conc("NaOH")
                 conc("Na+") = Math.Max(conc("Na+"), 0.0#)
@@ -412,9 +398,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             If id("CO2") > -1 Then Vnl(id("CO2")) -= (conc("HCO3-") + conc("CO3-2") + conc("H2NCOO-")) * totalkg
             If Vnl(id("CO2")) < 0.0# Then Vnl(id("CO2")) = 0.0#
 
-            'werr = Vnl(id("H2O"))
             Vnl(id("H2O")) = Vnf(id("H2O")) - Vnv(id("H2O")) - (Vnl.SumY - Vnl(id("H2O")))
-            'werr -= Vnl(id("H2O"))
 
             Vxl = Vnl.NormalizeY()
 
@@ -430,14 +414,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             merr = (totalkg - totalkg1) / totalkg * 100
 
             If merr > 5.0# Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
-
-            '    If Abs(werr) < etol Then Exit Do
-
-            '    ecount += 1
-
-            '    If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
-
-            'Loop
 
             'return flash calculation results.
 
