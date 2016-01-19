@@ -354,7 +354,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 If Double.IsNaN(fx) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
 
-                If Abs(fx) < etol Then Exit Do
+                If Abs(fx) * 1000 < etol Or Abs(fx - fx_old) * 1000 < etol Then Exit Do
 
                 pH_old0 = pH_old
                 pH_old = pH
