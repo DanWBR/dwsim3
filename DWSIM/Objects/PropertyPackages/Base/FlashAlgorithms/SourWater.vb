@@ -175,7 +175,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             maxit_i = CInt(PP.Parameters("PP_PTFMII"))
 
             Dim n As Integer = CompoundProperties.Count - 1
-            Dim activcoeff(n), errfunc, nch, pch, pH, pH_old, pH_old0, minc As Double
+            Dim activcoeff(n), errfunc, nch, pch, pH, pH_old, pH_old0 As Double
             Dim icount, ecount As Integer
 
             'Vnf = feed molar amounts (considering 1 mol of feed)
@@ -185,7 +185,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             'Vxv = vapor phase molar fractions
             'V, L = phase molar amounts (F = 1 = V + L)
 
-            Dim Vnf(n), Vnl(n), Vxf(n), Vxl(n), Vxl_ant(n), Vns(n), Vnv(n), Vxv(n), F, V, L, L_old, Vp(n), Ki(n), fx, fx_old, fx_old0 As Double
+            Dim Vnf(n), Vnl(n), Vxf(n), Vxl(n), Vxl_ant(n), Vns(n), Vnv(n), Vxv(n), F, V, L, L_old, Vp(n), Ki(n), fx, fx_old, fx_old0, Istr, k1, k5 As Double
             Dim sumN As Double = 0
 
             Vnf = Vz.Clone
@@ -255,10 +255,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 If id("NaOH") > -1 Then conc("NaOH") = Vnl(id("NaOH")) / totalkg
                 If id("Na+") > -1 Then conc("Na+") = Vnl(id("Na+")) / totalkg
 
-                'assume an initial concentration of bicarbonate.
-
-                If conc("HCO3-") = 0.0# Then conc("HCO3-") = 1.0E-40
-
                 conc0("HCO3-") = conc("HCO3-")
                 conc0("CO3-2") = conc("CO3-2")
                 conc0("NH4+") = conc("NH4+")
@@ -282,6 +278,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     conc("H+") = 10 ^ (-pH)
                 End If
 
+                'calculate ionic strength
+
+                Istr = 0.0#
+                For i = 0 To n
+                    Istr += CompoundProperties(i).Charge ^ 2 * Vnl(i) / totalkg / 2
+                Next
+
                 icount = 0
 
                 Do
@@ -290,8 +293,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     '   1   CO2 ionization	                CO2 + H2O <--> H+ + HCO3- 
 
+                    ' equilibrium constant ionic strength correction
+
+                    k1 = Exp(Log(kr(0)) - 0.278 * conc("H2S") + (-1.32 + 1558.8 / (T * 1.8)) * Istr ^ 0.4)
+
                     'conc0("HCO3-") = conc("HCO3-")
-                    conc("HCO3-") = kr(0) * conc("CO2") / conc("H+")
+                    conc("HCO3-") = k1 * conc("CO2") / conc("H+")
                     conc("HCO3-") = Math.Min(conc("HCO3-"), conc("CO2"))
                     deltaconc("HCO3-") = conc("HCO3-") - conc0("HCO3-")
 
@@ -318,8 +325,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     '   5   H2S ionization	                H2S <--> HS- + H+ 
 
+                    ' equilibrium constant ionic strength correction
+
+                    k5 = Exp(Log(kr(4)) + 0.427 * conc("CO2"))
+
                     'conc0("HS-") = conc("HS-")
-                    conc("HS-") = kr(4) * conc("H2S") / conc("H+")
+                    conc("HS-") = k5 * conc("H2S") / conc("H+")
                     conc("HS-") = Math.Min(conc("HS-"), conc("H2S"))
                     deltaconc("HS-") = conc("HS-") - conc0("HS-")
 
@@ -337,6 +348,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     'conc0("Na+") = conc("Na+")
                     conc("OH-") = kr(6) / conc("H+") + conc("NaOH")
                     conc("Na+") = conc("NaOH")
+                    conc("Na+") = Math.Max(conc("Na+"), 0.0#)
                     deltaconc("OH-") = conc("OH-") - conc0("OH-")
                     deltaconc("Na+") = conc("Na+") - conc0("Na+")
 
@@ -351,7 +363,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     If Abs(fx) < etol Then Exit Do
 
-                    If Abs(fx - fx_old) < 0.0000000001 Then Exit Do
+                    'If Abs(fx - fx_old) < 0.0000000001 Then Exit Do
 
                     pH_old0 = pH_old
                     pH_old = pH
@@ -359,7 +371,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     If icount <= 2 Then
                         pH += 0.01
                     Else
-                        pH = pH - fx * (pH - pH_old0) / (fx - fx_old0)
+                        pH = pH - 0.3 * fx * (pH - pH_old0) / (fx - fx_old0)
                         If pH < 2.0# Then pH = 7.0#
                         If pH > 14.0# Then pH = 7.0#
                     End If
@@ -385,6 +397,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 If id("H2O") > -1 Then Vnl(id("H2O")) -= conc("H+") * totalkg
                 If id("NaOH") > -1 Then Vnl(id("NaOH")) -= conc("Na+") * totalkg
+                If Vnl(id("NaOH")) < 0.0# Then Vnl(id("NaOH")) = 0.0#
                 If id("NH3") > -1 Then Vnl(id("NH3")) -= (conc("NH4+") + conc("H2NCOO-")) * totalkg
                 If id("H2S") > -1 Then Vnl(id("H2S")) -= (conc("HS-") + conc("S-2")) * totalkg
 
@@ -708,14 +721,14 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             Vy = tmp(3)
             Vs = tmp(8)
 
-            _Hv = 0
-            _Hl = 0
-            _Hs = 0
+            _Hv = 0.0#
+            _Hl = 0.0#
+            _Hs = 0.0#
 
             Dim mmg, mml, mms As Double
-            If V > 0 Then _Hv = pp.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
-            If L > 0 Then _Hl = pp.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
-            If S > 0 Then _Hs = pp.DW_CalcSolidEnthalpy(T, Vs, CompoundProperties)
+            If V > 0.0# Then _Hv = pp.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
+            If L > 0.0# Then _Hl = pp.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
+            If S > 0.0# Then _Hs = pp.DW_CalcSolidEnthalpy(T, Vs, CompoundProperties)
             mmg = pp.AUX_MMM(Vy)
             mml = pp.AUX_MMM(Vx)
             mms = pp.AUX_MMM(Vs)
@@ -742,14 +755,14 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             Vy = tmp(3)
             Vs = tmp(8)
 
-            _Sv = 0
-            _Sl = 0
-            _Ss = 0
+            _Sv = 0.0#
+            _Sl = 0.0#
+            _Ss = 0.0#
             Dim mmg, mml, mms As Double
 
-            If V > 0 Then _Sv = pp.DW_CalcEntropy(Vy, T, P, State.Vapor)
-            If L > 0 Then _Sl = pp.DW_CalcEntropy(Vx, T, P, State.Liquid)
-            If Ssf > 0 Then _Ss = pp.DW_CalcSolidEnthalpy(T, Vs, CompoundProperties) / (T - 298.15)
+            If V > 0.0# Then _Sv = pp.DW_CalcEntropy(Vy, T, P, State.Vapor)
+            If L > 0.0# Then _Sl = pp.DW_CalcEntropy(Vx, T, P, State.Liquid)
+            If Ssf > 0.0# Then _Ss = pp.DW_CalcSolidEnthalpy(T, Vs, CompoundProperties) / (T - 298.15)
             mmg = pp.AUX_MMM(Vy)
             mml = pp.AUX_MMM(Vx)
             mms = pp.AUX_MMM(Vs)
