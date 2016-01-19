@@ -175,7 +175,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             maxit_i = CInt(PP.Parameters("PP_PTFMII"))
 
             Dim n As Integer = CompoundProperties.Count - 1
-            Dim activcoeff(n), errfunc, nch, pch, pH, pH_old, pH_old0 As Double
+            Dim activcoeff(n), errfunc, nch, pch, pH, pH_old, pH_old0, minc As Double
             Dim icount, ecount As Integer
 
             'Vnf = feed molar amounts (considering 1 mol of feed)
@@ -185,10 +185,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             'Vxv = vapor phase molar fractions
             'V, L = phase molar amounts (F = 1 = V + L)
 
-            Dim Vnf(n), Vnl(n), Vxl(n), Vxl_ant(n), Vns(n), Vnv(n), Vxv(n), V, L, L_old, Vp(n), Ki(n), fx, fx_old, fx_old0 As Double
+            Dim Vnf(n), Vnl(n), Vxf(n), Vxl(n), Vxl_ant(n), Vns(n), Vnv(n), Vxv(n), F, V, L, L_old, Vp(n), Ki(n), fx, fx_old, fx_old0 As Double
             Dim sumN As Double = 0
 
             Vnf = Vz.Clone
+            Vxf = Vz.Clone
+
+            F = 1.0#
 
             'set up concentrations & ids
 
@@ -222,11 +225,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 L_old = L
 
-                Dim flashresult = nl.CalculateEquilibrium(FlashSpec.P, FlashSpec.T, P, T, PP, Vnf, Nothing, 0.0#)
+                Dim flashresult = nl.CalculateEquilibrium(FlashSpec.P, FlashSpec.T, P, T, PP, Vxf, Nothing, 0.0#)
 
                 With flashresult
-                    L = .GetLiquidPhase1MoleFraction
-                    V = .GetVaporPhaseMoleFraction
+                    L = .GetLiquidPhase1MoleFraction * F
+                    V = .GetVaporPhaseMoleFraction * F
                     Vxl = .GetLiquidPhase1MoleFractions
                     Vxv = .GetVaporPhaseMoleFractions
                     Vnl = Vxl.MultiplyConstY(L)
@@ -287,50 +290,54 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     '   1   CO2 ionization	                CO2 + H2O <--> H+ + HCO3- 
 
-                    conc0("HCO3-") = conc("HCO3-")
+                    'conc0("HCO3-") = conc("HCO3-")
                     conc("HCO3-") = kr(0) * conc("CO2") / conc("H+")
+                    conc("HCO3-") = Math.Min(conc("HCO3-"), conc("CO2"))
                     deltaconc("HCO3-") = conc("HCO3-") - conc0("HCO3-")
 
                     '   2   Carbonate production	        HCO3- <--> CO3-2 + H+ 
 
-                    conc0("CO3-2") = conc("CO3-2")
+                    'conc0("CO3-2") = conc("CO3-2")
                     conc("CO3-2") = kr(1) * conc("HCO3-") / conc("H+")
+                    conc("CO3-2") = Math.Min(conc("CO3-2"), conc("HCO3-"))
                     deltaconc("CO3-2") = conc("CO3-2") - conc0("CO3-2")
 
                     '   3   Ammonia ionization	            H+ + NH3 <--> NH4+ 
 
-                    conc0("NH4+") = conc("NH4+")
+                    'conc0("NH4+") = conc("NH4+")
                     conc("NH4+") = kr(2) * conc("NH3") * conc("H+")
+                    conc("NH4+") = Math.Min(conc("NH4+"), conc("NH3"))
                     deltaconc("NH4+") = conc("NH4+") - conc0("NH4+")
 
                     '   4   Carbamate production	        HCO3- + NH3 <--> H2NCOO- + H2O 
 
-                    conc0("H2NCOO-") = conc("H2NCOO-")
+                    'conc0("H2NCOO-") = conc("H2NCOO-")
                     conc("H2NCOO-") = kr(3) * conc("HCO3-") * conc("NH3")
+                    conc("H2NCOO-") = Math.Min(Math.Min(conc("H2NCOO-"), conc("HCO3-")), conc("NH3"))
                     deltaconc("H2NCOO-") = conc("H2NCOO-") - conc0("H2NCOO-")
 
                     '   5   H2S ionization	                H2S <--> HS- + H+ 
 
-                    conc0("HS-") = conc("HS-")
+                    'conc0("HS-") = conc("HS-")
                     conc("HS-") = kr(4) * conc("H2S") / conc("H+")
+                    conc("HS-") = Math.Min(conc("HS-"), conc("H2S"))
                     deltaconc("HS-") = conc("HS-") - conc0("HS-")
 
                     '   6   Sulfide production	            HS- <--> S-2 + H+ 
 
-                    conc0("S-2") = conc("S-2")
+                    'conc0("S-2") = conc("S-2")
                     conc("S-2") = kr(5) * conc("HS-") / conc("H+")
+                    conc("S-2") = Math.Min(conc("HS-"), conc("S-2"))
                     deltaconc("S-2") = conc("S-2") - conc0("S-2")
 
                     '   7   Water self-ionization	        H2O <--> OH- + H+ 
-
-                    conc0("OH-") = conc("OH-")
-                    conc("OH-") = kr(6) / conc("H+")
-                    deltaconc("OH-") = conc("OH-") - conc0("OH-")
-
                     '   8   Sodium Hydroxide dissociation   NaOH <--> OH- + Na+ 
 
-                    conc0("Na+") = conc("Na+")
-                    conc("Na+") = kr(7) * conc("NaOH") / conc("OH-")
+                    'conc0("OH-") = conc("OH-")
+                    'conc0("Na+") = conc("Na+")
+                    conc("OH-") = kr(6) / conc("H+") + conc("NaOH")
+                    conc("Na+") = conc("NaOH")
+                    deltaconc("OH-") = conc("OH-") - conc0("OH-")
                     deltaconc("Na+") = conc("Na+") - conc0("Na+")
 
                     'neutrality check
@@ -338,49 +345,23 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     pch = conc("H+") + conc("NH4+") + conc("Na+")
                     nch = conc("OH-") + conc("HCO3-") + conc("H2NCOO-") + conc("HS-") + 2 * conc("S-2") + 2 * conc("CO3-2")
 
-                    If Abs((pch - nch) / pch) < etol Then Exit Do
-
-                    'mass balance
-
-                    'conc0("H2O") = conc("H2O")
-                    'conc("H2O") -= deltaconc("OH-")
-                    'deltaconc("H2O") = conc("H2O") - conc0("H2O")
-
-                    'conc0("CO2") = conc("CO2")
-                    'conc("CO2") -= deltaconc("HCO3-")
-                    'If conc("CO2") < 0.0# Then conc("CO2") = 0.0#
-                    'deltaconc("CO2") = conc("CO2") - conc0("CO2")
-
-                    'conc0("H2S") = conc("H2S")
-                    'conc("H2S") -= deltaconc("HS-")
-                    'If conc("H2S") < 0.0# Then conc("H2S") = 0.0#
-                    'deltaconc("H2S") = conc("H2S") - conc0("H2S")
-
-                    'conc0("NH3") = conc("NH3")
-                    'conc("NH3") -= deltaconc("NH4+")
-                    'If conc("NH3") < 0.0# Then conc("NH3") = 0.0#
-                    'deltaconc("NH3") = conc("NH3") - conc0("NH3")
-
-                    'conc0("NaOH") = conc("NaOH")
-                    'conc("NaOH") -= deltaconc("Na+")
-                    'If conc("NaOH") < 0.0# Then conc("NaOH") = 0.0#
-                    'deltaconc("NaOH") = conc("NaOH") - conc0("NaOH")
-
                     fx_old0 = fx_old
                     fx_old = fx
                     fx = pch - nch
 
-                    If Abs(fx - fx_old) < itol Then Exit Do
+                    If Abs(fx) < etol Then Exit Do
+
+                    If Abs(fx - fx_old) < 0.0000000001 Then Exit Do
 
                     pH_old0 = pH_old
                     pH_old = pH
 
                     If icount <= 2 Then
-                        pH += 0.1
+                        pH += 0.01
                     Else
                         pH = pH - fx * (pH - pH_old0) / (fx - fx_old0)
-                        If pH < 2.0# Then pH = 2.0#
-                        If pH > 14.0# Then pH = 14.0#
+                        If pH < 2.0# Then pH = 7.0#
+                        If pH > 14.0# Then pH = 7.0#
                     End If
 
                     conc("H+") = 10 ^ (-pH)
@@ -391,21 +372,29 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 'mass balance
 
-                If id("H+") > -1 Then Vnl("H+") = conc(id("H+")) * totalkg
-                If id("OH-") > -1 Then Vnl("OH-") = conc(id("OH-")) * totalkg
-                If id("CO2") > -1 Then Vnl("CO2") = conc(id("CO2")) * totalkg
-                If id("HCO3-") > -1 Then Vnl("HCO3-") = conc(id("HCO3-")) * totalkg
-                If id("CO3-2") > -1 Then Vnl("CO3-2") = conc(id("CO3-2")) * totalkg
-                If id("H2NCOO-") > -1 Then Vnl("H2NCOO-") = conc(id("H2NCOO-")) * totalkg
-                If id("NH4+") > -1 Then Vnl("NH4+") = conc(id("NH4+")) * totalkg
-                If id("HS-") > -1 Then Vnl("HS-") = conc(id("HS-")) * totalkg
-                If id("S-2") > -1 Then Vnl("S-2") = conc(id("S-2")) * totalkg
-                If id("Na+") > -1 Then Vnl("Na+") = conc(id("Na+")) * totalkg
+                If id("H+") > -1 Then Vnl(id("H+")) = conc(("H+")) * totalkg
+                If id("OH-") > -1 Then Vnl(id("OH-")) = conc(("OH-")) * totalkg
+                If id("CO2") > -1 Then Vnl(id("CO2")) = conc(("CO2")) * totalkg
+                If id("HCO3-") > -1 Then Vnl(id("HCO3-")) = conc(("HCO3-")) * totalkg
+                If id("CO3-2") > -1 Then Vnl(id("CO3-2")) = conc(("CO3-2")) * totalkg
+                If id("H2NCOO-") > -1 Then Vnl(id("H2NCOO-")) = conc(("H2NCOO-")) * totalkg
+                If id("NH4+") > -1 Then Vnl(id("NH4+")) = conc(("NH4+")) * totalkg
+                If id("HS-") > -1 Then Vnl(id("HS-")) = conc(("HS-")) * totalkg
+                If id("S-2") > -1 Then Vnl(id("S-2")) = conc(("S-2")) * totalkg
+                If id("Na+") > -1 Then Vnl(id("Na+")) = conc(("Na+")) * totalkg
 
-                If id("H2O") > -1 Then Vnl(id("H2O")) -= Vnl(id("H2O"))
-                If id("NaOH") > -1 Then Vnl("NaOH") = conc(id("NaOH")) * totalkg
-                If id("NH3") > -1 Then Vnl("NH3") = conc(id("NH3")) * totalkg
-                If id("H2S") > -1 Then Vnl("H2S") = conc(id("H2S")) * totalkg
+                If id("H2O") > -1 Then Vnl(id("H2O")) -= conc("H+") * totalkg
+                If id("NaOH") > -1 Then Vnl(id("NaOH")) -= conc("Na+") * totalkg
+                If id("NH3") > -1 Then Vnl(id("NH3")) -= (conc("NH4+") + conc("H2NCOO-")) * totalkg
+                If id("H2S") > -1 Then Vnl(id("H2S")) -= (conc("HS-") + conc("S-2")) * totalkg
+
+                For i = 0 To n
+                    Vnf(i) = Vnl(i) + Vnv(i)
+                Next
+
+                F = Vnf.SumY()
+
+                Vxf = Vnf.NormalizeY()
 
                 ecount += 1
 
@@ -417,9 +406,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             dt = d2 - d1
 
-            WriteDebugInfo("PT Flash [Seawater]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Error function value: " & errfunc)
+            WriteDebugInfo("PT Flash [Sour Water]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms. Error function value: " & errfunc)
 
-out:        Return New Object() {L, V, Vxl, Vxv, ecount, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector()}
+out:        Return New Object() {L / F, V / F, Vxl, Vxv, ecount, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector()}
 
         End Function
 
@@ -554,7 +543,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 100, tolEXT, maxitEXT, {P, Vz, PP})
 
             dt = d2 - d1
 
-            WriteDebugInfo("PH Flash [Seawater]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
+            WriteDebugInfo("PH Flash [Sour Water]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             Return New Object() {L, V, Vx, Vy, T, ecount, Ki, 0.0#, PP.RET_NullVector, S, Vs}
 
@@ -698,7 +687,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
             dt = d2 - d1
 
-            WriteDebugInfo("PS Flash [Seawater]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
+            WriteDebugInfo("PS Flash [Sour Water]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             Return New Object() {L, V, Vx, Vy, T, ecount, Ki, 0.0#, PP.RET_NullVector, Ss, Vs}
 
@@ -734,7 +723,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             Dim herr As Double = Hf - (mmg * V / (mmg * V + mml * L + mms * S)) * _Hv - (mml * L / (mmg * V + mml * L + mms * S)) * _Hl - (mms * S / (mmg * V + mml * L + mms * S)) * _Hs
             OBJ_FUNC_PH_FLASH = herr
 
-            WriteDebugInfo("PH Flash [Seawater]: Current T = " & T & ", Current H Error = " & herr)
+            WriteDebugInfo("PH Flash [Sour Water]: Current T = " & T & ", Current H Error = " & herr)
 
         End Function
 
@@ -768,7 +757,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             Dim serr As Double = Sf - (mmg * V / (mmg * V + mml * L + mms * Ssf)) * _Sv - (mml * L / (mmg * V + mml * L + mms * Ssf)) * _Sl - (mms * Ssf / (mmg * V + mml * L + mms * Ssf)) * _Ss
             OBJ_FUNC_PS_FLASH = serr
 
-            WriteDebugInfo("PS Flash [Seawater]: Current T = " & T & ", Current S Error = " & serr)
+            WriteDebugInfo("PS Flash [Sour Water]: Current T = " & T & ", Current S Error = " & serr)
 
         End Function
 
@@ -808,7 +797,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
             If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
 
-            WriteDebugInfo("TV Flash [Seawater]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
+            WriteDebugInfo("TV Flash [Sour Water]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             Return New Object() {L, V, Vx, Vy, P, ecount, Vy.DivideY(Vx), 0.0#, PP.RET_NullVector, S, Vs}
 
@@ -841,7 +830,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
             If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
 
-            WriteDebugInfo("PV Flash [Seawater]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
+            WriteDebugInfo("PV Flash [Sour Water]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             Return New Object() {L, V, Vx, Vy, T, ecount, Vy.DivideY(Vx), 0.0#, PP.RET_NullVector, S, Vs}
 

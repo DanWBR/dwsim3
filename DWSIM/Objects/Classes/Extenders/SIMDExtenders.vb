@@ -286,7 +286,7 @@
     End Function
 
     ''' <summary>
-    ''' Multiplies vector elements by a constant.
+    ''' Normalizes a vector (sum = 1).
     ''' </summary>
     ''' <param name="vector"></param>
     ''' <returns></returns>
