@@ -247,7 +247,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     Vnv = Vxv.MultiplyConstY(V)
                 End With
 
-                If Abs(L - Lold) < etol And ecount > 1 Then Exit Do
                 If L = 0.0# Or Vnl(id("H2O")) < 0.6 Then Exit Do
 
                 If id("H+") > -1 Then Vxv(id("H+")) = 0.0#
@@ -419,6 +418,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 F = Vnf.SumY
 
                 If Double.IsNaN(F) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
+
+                If Abs(L - Lold) < etol And ecount > 1 Then Exit Do
 
                 'check mass conservation
 
