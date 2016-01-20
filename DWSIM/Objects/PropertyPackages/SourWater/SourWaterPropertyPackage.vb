@@ -27,6 +27,7 @@ Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
 Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 Imports DWSIM.DWSIM.MathEx
 Imports System.Linq
+Imports System.Math
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 
 Namespace DWSIM.SimulationObjects.PropertyPackages
@@ -80,11 +81,32 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim val0 As Double() = MyBase.DW_CalcKvalue(Vx, Vy, T, P, type)
 
             Dim cprops = Me.DW_GetConstantProperties
+            Dim conc As New Dictionary(Of String, Double)
+            Dim totalkg As Double = AUX_MMM(Vx) / 1000 'kg solution
+            Dim CAS, CC, CS As Double
+
+            Setup(conc, Vx, cprops)
+
+            CAS = conc("NH3")
+            CC = conc("CO2") + conc("HCO3-") + conc("CO3-2") + conc("H2NCOO-")
+            CS = conc("H2S") + conc("HS-") + conc("S-2")
 
             Dim i As Integer = 0
             For Each cp In cprops
                 If cp.IsIon Then val0(i) = 1.0E-60
                 If cp.Name = "Sodium Hydroxide" Then val0(i) = 1.0E-60
+                If cp.Name = "Ammonia" Then
+                    val0(i) = Exp(178.339 - 15517.91 / (T * 1.8) - 25.6767 * Log(T * 1.8) + 0.01966 * (T * 1.8) + (131.4 / (T * 1.8) - 0.1682) * CAS) 'psia/[mol/kg]
+                    val0(i) = (val0(i) * conc("NH3") / 0.000145038) / P / Vx(i)
+                End If
+                If cp.Name = "Carbon dioxide" Then
+                    val0(i) = Exp(18.33 - 24895.1 / (T * 1.8) + 22399600.0 / (T * 1.8) ^ 2 - 9091800000.0 / (T * 1.8) ^ 3 + 1260100000000.0 / (T * 1.8) ^ 4) 'psia/[mol/kg]
+                    val0(i) = (val0(i) * conc("CO2") / 0.000145038) / P / Vx(i)
+                End If
+                If cp.Name = "Hydrogen sulfide" Then
+                    val0(i) = Exp(100.684 - 246254 / (T * 1.8) + 239029000.0 / (T * 1.8) ^ 2 - 101898000000.0 / (T * 1.8) ^ 3 + 15973400000000.0 / (T * 1.8) ^ 4 - 0.05 * CAS + (0.965 - 486 / (T * 1.8)) * CC) 'psia/[mol/kg]
+                    val0(i) = (val0(i) * conc("H2S") / 0.000145038) / P / Vx(i)
+                End If
                 i += 1
             Next
 
@@ -105,6 +127,47 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             End If
 
         End Function
+
+        Sub Setup(conc As Dictionary(Of String, Double), Vx As Double(), CompoundProperties As List(Of ConstantProperties))
+
+            Dim wid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.CAS_Number = "7732-18-5").FirstOrDefault)
+            Dim co2id As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Name = "Carbon dioxide").FirstOrDefault)
+            Dim nh3id As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Name = "Ammonia").FirstOrDefault)
+            Dim h2sid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Name = "Hydrogen sulfide").FirstOrDefault)
+            Dim naohid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Formula = "NaOH").FirstOrDefault)
+            Dim naid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Formula = "Na+").FirstOrDefault)
+            Dim ohid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Formula = "OH-").FirstOrDefault)
+            Dim hid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Formula = "H+").FirstOrDefault)
+            Dim nh4id As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Formula = "NH4+").FirstOrDefault)
+            Dim hcoid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Formula = "HCO3-").FirstOrDefault)
+            Dim co3id As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Formula = "CO3-2").FirstOrDefault)
+            Dim h2nid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Formula = "H2NCOO-").FirstOrDefault)
+            Dim hsid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Formula = "HS-").FirstOrDefault)
+            Dim s2id As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Formula = "S-2").FirstOrDefault)
+
+            'calculate solution amounts
+
+            Dim totalkg As Double = AUX_MMM(Vx) / 1000 'kg solution
+
+            conc.Clear()
+
+            If wid > -1 Then conc.Add("H2O", Vx(wid) / totalkg) Else conc.Add("H2O", 0.0#)
+            If hid > -1 Then conc.Add("H+", Vx(hid) / totalkg) Else conc.Add("H+", 0.0#)
+            If ohid > -1 Then conc.Add("OH-", Vx(ohid) / totalkg) Else conc.Add("OH-", 0.0#)
+            If nh3id > -1 Then conc.Add("NH3", Vx(nh3id) / totalkg) Else conc.Add("NH3", 0.0#)
+            If nh4id > -1 Then conc.Add("NH4+", Vx(nh4id) / totalkg) Else conc.Add("NH4+", 0.0#)
+            If co2id > -1 Then conc.Add("CO2", Vx(co2id) / totalkg) Else conc.Add("CO2", 0.0#)
+            If hcoid > -1 Then conc.Add("HCO3-", Vx(hcoid) / totalkg) Else conc.Add("HCO3-", 0.0#)
+            If co3id > -1 Then conc.Add("CO3-2", Vx(co3id) / totalkg) Else conc.Add("CO3-2", 0.0#)
+            If h2nid > -1 Then conc.Add("H2NCOO-", Vx(h2nid) / totalkg) Else conc.Add("H2NCOO-", 0.0#)
+            If h2sid > -1 Then conc.Add("H2S", Vx(h2sid) / totalkg) Else conc.Add("H2S", 0.0#)
+            If hsid > -1 Then conc.Add("HS-", Vx(hsid) / totalkg) Else conc.Add("HS-", 0.0#)
+            If s2id > -1 Then conc.Add("S-2", Vx(s2id) / totalkg) Else conc.Add("S-2", 0.0#)
+            If naohid > -1 Then conc.Add("NaOH", Vx(naohid) / totalkg) Else conc.Add("NaOH", 0.0#)
+            If naid > -1 Then conc.Add("Na+", Vx(naid) / totalkg) Else conc.Add("Na+", 0.0#)
+
+        End Sub
+
 
     End Class
 
