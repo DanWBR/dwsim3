@@ -248,6 +248,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 End With
 
                 If Abs(L - Lold) < etol And ecount > 1 Then Exit Do
+                If L = 0.0# Or Vnl(id("H2O")) < 0.6 Then Exit Do
 
                 If id("H+") > -1 Then Vxv(id("H+")) = 0.0#
                 If id("OH-") > -1 Then Vxv(id("OH-")) = 0.0#

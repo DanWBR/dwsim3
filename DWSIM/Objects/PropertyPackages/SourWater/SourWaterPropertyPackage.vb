@@ -93,9 +93,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             Dim i As Integer = 0
             For Each cp In cprops
-                If cp.IsIon Then val0(i) = 1.0E-60
-                If cp.Name = "Sodium Hydroxide" Then val0(i) = 1.0E-60
-                If cp.Name = "Ammonia" Then
+                If cp.IsIon Then val0(i) = 1.0E-30
+                If cp.Name = "Sodium Hydroxide" Then val0(i) = 1.0E-30
+                If cp.Name = "Ammonia" And Vx(i) < 0.2 Then
                     val0(i) = Exp(178.339 - 15517.91 / (T * 1.8) - 25.6767 * Log(T * 1.8) + 0.01966 * (T * 1.8) + (131.4 / (T * 1.8) - 0.1682) * CAS) 'psia/[mol/kg]
                     val0(i) = (val0(i) * conc("NH3") / 0.000145038) / P / Vx(i)
                 End If

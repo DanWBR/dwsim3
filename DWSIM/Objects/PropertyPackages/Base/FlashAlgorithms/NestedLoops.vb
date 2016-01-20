@@ -233,8 +233,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 End If
 
-                If V < 0.0# Then V = 0.0#
-                If V > 1.0# Then V = 1.0#
+                If V < 0.0# Then
+                    V = 0.0#
+                    Exit Do
+                End If
+                If V > 1.0# Then
+                    V = 1.0#
+                    Exit Do
+                End If
 
                 L = 1 - V
 
@@ -257,11 +263,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 V = 0.0#
                 L = 1.0#
                 Vx = Vz
+                Vy = Ki.MultiplyY(Vx)
             End If
             If V >= 1.0# Then
                 V = 1.0#
                 L = 0.0#
                 Vy = Vz
+                Vx = Vy.DivideY(Ki)
             End If
 
             d2 = Date.Now
