@@ -372,7 +372,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 icount += 1
 
-                If icount > maxit_i Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
+                If icount > maxit_i * 10 Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
 
             Loop
 
@@ -798,13 +798,55 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
             n = UBound(Vz)
 
-            Dim Vx(n), Vy(n), Vs(n), xv, xl, L, S, P As Double
-            Dim wid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.CAS_Number = "7732-18-5").SingleOrDefault)
+            Dim Vx(n), Vy(n), Vp(n), L, Vcalc, Vspec, P, x, x0, x00, fx, fx0, fx00, Pmin, Pmax As Double
+            Dim result As Object
 
-            xv = V
-            xl = 1 - V
+            Dim nl As New DWSIMDefault
+            Dim flashresult = nl.CalculateEquilibrium(FlashSpec.T, FlashSpec.VAP, T, 0.0#, PP, Vz, Nothing, Pref)
+            Pmax = flashresult.CalculatedPressure
+            flashresult = nl.CalculateEquilibrium(FlashSpec.T, FlashSpec.VAP, T, 1.0#, PP, Vz, Nothing, Pref)
+            Pmin = flashresult.CalculatedPressure
 
+            P = Pmin + (1 - V) * (Pmax - Pmin)
 
+            ecount = 0
+            Vspec = V
+            x = P
+
+            Do
+
+                result = Flash_PT(Vz, x, T, PP)
+
+                Vcalc = result(1)
+
+                fx00 = fx0
+                fx0 = fx
+
+                fx = Vspec - Vcalc
+
+                If Abs(fx) < etol Then Exit Do
+
+                x00 = x0
+                x0 = x
+
+                If ecount <= 1 Then
+                    x *= 0.99
+                Else
+                    x = x - fx * (x - x00) / (fx - fx00)
+                    If Double.IsNaN(x) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
+                End If
+
+                ecount += 1
+
+                If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
+
+            Loop
+
+            P = x
+
+            L = 1 - V
+            Vx = result(2)
+            Vy = result(3)
 
             d2 = Date.Now
 
@@ -814,7 +856,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
             WriteDebugInfo("TV Flash [Sour Water]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
-            Return New Object() {L, V, Vx, Vy, P, ecount, Vy.DivideY(Vx), 0.0#, PP.RET_NullVector, S, Vs}
+            Return New Object() {L, V, Vx, Vy, P, ecount, Vy.DivideY(Vx), 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
 
         End Function
 
@@ -832,12 +874,57 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
             n = UBound(Vz)
 
-            Dim Vx(n), Vy(n), Vs(n), xv, xl, L, S, T As Double
-            Dim wid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.CAS_Number = "7732-18-5").SingleOrDefault)
+            Dim Vx(n), Vy(n), Vp(n), L, Vcalc, Vspec, T, x, x0, x00, fx, fx0, fx00, Tmin, Tmax As Double
+            Dim result As Object
 
-            xv = V
-            xl = 1 - V
+            Dim nl As New DWSIMDefault
+            Dim flashresult = nl.CalculateEquilibrium(FlashSpec.P, FlashSpec.VAP, P, 0.0#, PP, Vz, Nothing, Tref)
+            Tmin = flashresult.CalculatedTemperature
+            flashresult = nl.CalculateEquilibrium(FlashSpec.P, FlashSpec.VAP, P, 1.0#, PP, Vz, Nothing, Tref)
+            Tmax = flashresult.CalculatedTemperature
 
+            If Tmin < 273.15 Then Tmin = 273.15
+
+            T = Tmin + V * (Tmax - Tmin)
+
+            ecount = 0
+            Vspec = V
+            x = T
+
+            Do
+
+                result = Flash_PT(Vz, P, x, PP)
+
+                Vcalc = result(1)
+
+                fx00 = fx0
+                fx0 = fx
+
+                fx = Vspec - Vcalc
+
+                If Abs(fx) < etol Then Exit Do
+
+                x00 = x0
+                x0 = x
+
+                If ecount <= 1 Then
+                    x += 1.0#
+                Else
+                    x = x - fx * (x - x00) / (fx - fx00)
+                    If Double.IsNaN(x) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
+                End If
+
+                ecount += 1
+
+                If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
+
+            Loop
+
+            T = x
+
+            L = 1 - V
+            Vx = result(2)
+            Vy = result(3)
 
             d2 = Date.Now
 
@@ -847,7 +934,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
             WriteDebugInfo("PV Flash [Sour Water]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
-            Return New Object() {L, V, Vx, Vy, T, ecount, Vy.DivideY(Vx), 0.0#, PP.RET_NullVector, S, Vs}
+            Return New Object() {L, V, Vx, Vy, T, ecount, Vy.DivideY(Vx), 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
 
         End Function
 
