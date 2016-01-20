@@ -19,6 +19,7 @@
 Imports DWSIM.DWSIM.MathEx
 Imports System.Threading.Tasks
 Imports System.Linq
+Imports DWSIM.DWSIM.MathEx.PolySolve
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 

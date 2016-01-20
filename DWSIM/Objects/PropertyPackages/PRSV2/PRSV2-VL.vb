@@ -18,6 +18,7 @@
 
 Imports FileHelpers
 Imports DWSIM.DWSIM.MathEx
+Imports DWSIM.DWSIM.MathEx.PolySolve
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 

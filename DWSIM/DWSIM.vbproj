@@ -1017,8 +1017,7 @@
     <Compile Include="Forms\PropPack_ConfigForms\FormConfigPP.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Objects\PropertyPackages\Base\MATRIX.vb" />
-    <Compile Include="Objects\PropertyPackages\Base\MATRIX2.vb" />
+    <Compile Include="Objects\Classes\Math\MATRIX2.vb" />
     <Compile Include="Objects\PropertyPackages\PengRobinson\Helper Classes\PENGROB.vb" />
     <Compile Include="Objects\PropertyPackages\Base\PROPS.vb" />
     <Compile Include="Objects\PropertyPackages\PengRobinson\PengRobinsonPropertyPackage.vb" />

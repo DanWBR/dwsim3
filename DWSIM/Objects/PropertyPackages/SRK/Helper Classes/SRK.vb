@@ -17,6 +17,7 @@
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 Imports FileHelpers
 Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.SRK
+Imports DWSIM.DWSIM.MathEx.PolySolve
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 

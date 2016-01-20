@@ -23,6 +23,7 @@ Imports Cudafy.Host
 Imports System.Math
 Imports System.Threading.Tasks
 Imports System.Linq
+Imports DWSIM.DWSIM.MathEx.PolySolve
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
