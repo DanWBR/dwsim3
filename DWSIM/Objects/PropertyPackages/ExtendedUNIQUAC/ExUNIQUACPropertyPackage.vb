@@ -547,6 +547,23 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         End Function
 
+        Public Overrides Function DW_CalcKvalue(Vx As Array, Vy As Array, T As Double, P As Double, Optional type As String = "LV") As Double()
+
+            Dim val0 As Double() = MyBase.DW_CalcKvalue(Vx, Vy, T, P, type)
+
+            Dim cprops = Me.DW_GetConstantProperties
+  
+            Dim i As Integer = 0
+            For Each cp In cprops
+                If cp.IsIon Or cp.IsSalt Or cp.IsHydratedSalt Then val0(i) = 1.0E-30
+                i += 1
+            Next
+
+            Return val0
+
+        End Function
+
+
 #End Region
 
     End Class
