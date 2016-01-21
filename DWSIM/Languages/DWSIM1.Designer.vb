@@ -1352,6 +1352,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Calculando o objeto &apos;{0}&apos; com o pacote de propriedades {1}....
+        '''</summary>
+        Friend Shared ReadOnly Property CalculatingWith() As String
+            Get
+                Return ResourceManager.GetString("CalculatingWith", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Calculador interrompido a pedido do usuário..
         '''</summary>
         Friend Shared ReadOnly Property CalculationAborted() As String

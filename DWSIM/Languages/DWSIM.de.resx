@@ -5261,4 +5261,7 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   <data name="ThermalEfficiencyDesc" xml:space="preserve">
     <value>Ausgetauschte Wärme dividiert durch den theoretisch möglichen Wert.</value>
   </data>
+  <data name="CalculatingWith" xml:space="preserve">
+    <value>Berechne objekt '{0}' mit Paket {1}...</value>
+  </data>
 </root>

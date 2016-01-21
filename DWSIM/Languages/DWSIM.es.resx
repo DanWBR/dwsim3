@@ -5271,4 +5271,7 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   <data name="SourWaterPP" xml:space="preserve">
     <value>Águas Ácidas</value>
   </data>
+  <data name="CalculatingWith" xml:space="preserve">
+    <value>Calculando objecto '{0}' com el Paquete de Propiedades {1}...</value>
+  </data>
 </root>

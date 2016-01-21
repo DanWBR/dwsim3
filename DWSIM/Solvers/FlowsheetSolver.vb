@@ -80,7 +80,7 @@ Namespace DWSIM.Flowsheet
                                         gobj = myUnitOp.GraphicObject
                                         gobj.Calculated = True
                                         preLab = form.FormSurface.LabelCalculator.Text
-                                        form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & gobj.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])")
+                                        form.UpdateStatusLabel(String.Format(DWSIM.App.GetLocalString("CalculatingWith"), gobj.Tag, "'" & myObj.PropertyPackage.Tag & "' (" & myObj.PropertyPackage.ComponentName & ")"))
                                         myUnitOp.Solve()
                                         gobj.Status = Status.Calculated
                                         If myUnitOp.IsSpecAttached = True And myUnitOp.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(myUnitOp.AttachedSpecId).Calculate()
@@ -107,7 +107,7 @@ Namespace DWSIM.Flowsheet
                                 If objArgs.Calculado = True Then
                                     preLab = form.FormSurface.LabelCalculator.Text
                                     myUnitOp.GraphicObject.Calculated = False
-                                    form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & gobj.Tag & "... (PP: " & myUnitOp.PropertyPackage.Tag & " [" & myUnitOp.PropertyPackage.ComponentName & "])")
+                                    form.UpdateStatusLabel(String.Format(DWSIM.App.GetLocalString("CalculatingWith"), gobj.Tag, "'" & myUnitOp.PropertyPackage.Tag & "' (" & myUnitOp.PropertyPackage.ComponentName & ")"))
                                     myUnitOp.Solve()
                                     myUnitOp.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
                                     form.WriteToLog(gobj.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
@@ -129,7 +129,7 @@ Namespace DWSIM.Flowsheet
                         If objArgs.Emissor = "PropertyGrid" Or objArgs.Emissor = "Adjust" Or objArgs.Emissor = "FlowsheetSolver" Then
                             Dim myObj As SimulationObjects_UnitOpBaseClass = form.Collections.ObjectCollection(objArgs.Nome)
                             myObj.GraphicObject.Calculated = False
-                            form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & myObj.GraphicObject.Tag & "... (PP: " & myObj.PropertyPackage.Tag & " [" & myObj.PropertyPackage.ComponentName & "])")
+                            form.UpdateStatusLabel(String.Format(DWSIM.App.GetLocalString("CalculatingWith"), myObj.GraphicObject.Tag, "'" & myObj.PropertyPackage.Tag & "' (" & myObj.PropertyPackage.ComponentName & ")"))
                             myObj.Solve()
                             form.WriteToLog(objArgs.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
                             myObj.GraphicObject.Calculated = True
@@ -146,7 +146,7 @@ Namespace DWSIM.Flowsheet
                                         If TypeOf obj Is Streams.MaterialStream Then
                                             Dim ms As Streams.MaterialStream = CType(obj, Streams.MaterialStream)
                                             ms.GraphicObject.Calculated = False
-                                            form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & ms.GraphicObject.Tag & "... (PP: " & ms.PropertyPackage.Tag & " [" & ms.PropertyPackage.ComponentName & "])")
+                                            form.UpdateStatusLabel(String.Format(DWSIM.App.GetLocalString("CalculatingWith"), ms.GraphicObject.Tag, "'" & myObj.PropertyPackage.Tag & "' (" & ms.PropertyPackage.ComponentName & ")"))
                                             CalculateMaterialStream(form, ms)
                                             ms.GraphicObject.Calculated = True
                                         End If
@@ -239,9 +239,8 @@ Namespace DWSIM.Flowsheet
                 Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
 
                 Dim preLab As String = form.FormSurface.LabelCalculator.Text
-
                 Try
-                    form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & ms.GraphicObject.Tag & "... (PP: " & ms.PropertyPackage.Tag & " [" & ms.PropertyPackage.ComponentName & "])")
+                    form.UpdateStatusLabel(String.Format(DWSIM.App.GetLocalString("CalculatingWith"), ms.GraphicObject.Tag, "'" & ms.PropertyPackage.Tag & "' (" & ms.PropertyPackage.ComponentName & ")"))
                 Catch ex As Exception
                     form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & "...")
                 End Try
