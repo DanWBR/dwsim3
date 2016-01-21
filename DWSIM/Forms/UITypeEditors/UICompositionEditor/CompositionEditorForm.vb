@@ -24,7 +24,7 @@ Public Class CompositionEditorForm
         For Each comp In Me.Componentes.Values
             If Not InitialComposition.ContainsKey(comp.Nome) Then InitialComposition.Add(comp.Nome, comp.FracaoMolar)
             GridComp.Rows.Add(New Object() {comp.FracaoMolar, InitialComposition(comp.Nome)})
-            GridComp.Rows(GridComp.Rows.Count - 1).HeaderCell.Value = DWSIM.App.GetComponentName(comp.Nome)
+            GridComp.Rows(GridComp.Rows.Count - 1).HeaderCell.Value = DWSIM.App.GetComponentName(comp.Nome) & " (" & comp.ConstantProperties.OriginalDB & ")"
             GridComp.Rows(GridComp.Rows.Count - 1).HeaderCell.Tag = comp.Nome
             ComboBox1.Items.Add(DWSIM.App.GetComponentName(comp.Nome))
         Next
