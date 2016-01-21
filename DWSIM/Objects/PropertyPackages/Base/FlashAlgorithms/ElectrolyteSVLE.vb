@@ -1,5 +1,5 @@
 '    Flash Algorithm for Electrolyte solutions
-'    Copyright 2013-2014 Daniel Wagner O. de Medeiros
+'    Copyright 2013-2016 Daniel Wagner O. de Medeiros
 '
 '    This file is part of DWSIM.
 '
@@ -884,170 +884,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Return OBJ_FUNC_PH_FLASH(X, P, Vz)
         End Function
 
-        Public Function Flash_PH0(ByVal Vz As Array, ByVal P As Double, ByVal H As Double, ByVal Tref As Double) As Dictionary(Of String, Object)
-
-            Dim n As Integer
-            Dim d1, d2 As Date, dt As TimeSpan
-            Dim L, V, T, S, Pf, sumN As Double
-
-            d1 = Date.Now
-
-            n = UBound(Vz)
-
-            Hf = H
-            Pf = P
-
-            Dim Vx(n), Vx2(n), Vy(n), Vs(n), Vz0(n) As Double
-
-            Dim maxitINT As Integer = Me.MaximumIterations
-            Dim maxitEXT As Integer = Me.MaximumIterations
-            Dim tolINT As Double = 0.0001
-            Dim tolEXT As Double = 0.0001
-
-            Dim hl, hv, Tsat, Tsat_ant, Psat, xv, xv_ant, xl, wac, wx, deltaT, sumnw As Double
-
-            Dim wid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Name = "Water").SingleOrDefault)
-
-            Dim tmp As Dictionary(Of String, Object) = Nothing
-
-            'calculate water saturation temperature.
-
-            Tsat = proppack.AUX_TSATi(P, wid)
-
-            'calculate activity coefficient
-
-            deltaT = 1
-
-            If Vz(wid) <> 0.0# Then
-                'Do
-                '    Tsat = Tsat - deltaT
-                '    Try
-                '        tmp = Flash_PT(Vz, Tsat, P)
-                '        wac = tmp("LiquidPhaseActivityCoefficients")(wid)
-                '        wx = tmp("LiquidPhaseMolarComposition")(wid)
-                '    Catch ex As Exception
-                '        wx = 0.0#
-                '    End Try
-                'Loop Until wx > 0.0#
-
-                Psat = P '/ (wx * wac)
-                Tsat = 300 'proppack.AUX_TSATi(Psat, wid)
-            End If
-
-            Dim icount As Integer = 0
-
-            Do
-
-                hl = proppack.DW_CalcEnthalpy(Vz, Tsat, P, State.Liquid)
-                hv = proppack.DW_CalcEnthalpy(Vz, Tsat, P, State.Vapor)
-
-                xv_ant = xv
-
-                If H <= hl Then
-                    xv = 0
-                    LoopVarState = State.Liquid
-                ElseIf H >= hv Then
-                    xv = 1
-                    LoopVarState = State.Vapor
-                Else
-                    xv = (H - hl) / (hv - hl)
-                End If
-                xl = 1 - xv
-
-                If xv <> 0.0# And xv <> 1.0# Then
-                    T = Tsat
-                Else
-                    LoopVarF = H
-                    LoopVarX = P
-                    LoopVarVz = Vz
-                    Dim x0, x, fx, dfdx As Double, k As Integer
-                    x = Tsat - 5
-                    k = 0
-                    Do
-                        fx = EnthalpyTx(x, Nothing)
-                        If Abs(fx) < 0.0001 Then Exit Do
-                        dfdx = (EnthalpyTx(x + 0.1, Nothing) - EnthalpyTx(x, Nothing)) / 0.1
-                        x0 = x
-                        x -= fx / dfdx
-                        k += 1
-                    Loop Until k >= 100 Or Double.IsNaN(x)
-                    If Double.IsNaN(x) Then Throw New Exception("Temperature loop did not converge. Calculation aborted.")
-                    T = x
-                End If
-
-                Vz0 = Vz.Clone
-
-                V = Vz0(wid) * xv
-                Vz(wid) = Vz0(wid) * (1 - xv)
-                sumnw = 0.0#
-                For i = 0 To n
-                    If i <> wid Then
-                        sumnw += Vz0(i)
-                    End If
-                Next
-                For i = 0 To n
-                    If i <> wid Then
-                        Vz(i) = Vz0(i) / sumnw * (1 - Vz(wid))
-                    End If
-                Next
-
-                tmp = Flash_PT(Vz, T, P)
-
-                L = tmp("LiquidPhaseMoleFraction") * (1 - V)
-                S = tmp("SolidPhaseMoleFraction") * (1 - V)
-                Vx = tmp("LiquidPhaseMolarComposition")
-                Vy = proppack.RET_NullVector()
-                Vy(wid) = 1.0#
-                Vs = tmp("SolidPhaseMolarComposition")
-                sumN = tmp("MoleSum")
-                Vz = Vz0
-
-                If Vz(wid) <> 0.0# And xv <> 0.0# And xv <> 1.0# Then
-                    wac = tmp("LiquidPhaseActivityCoefficients")(wid)
-                    wx = tmp("LiquidPhaseMolarComposition")(wid)
-                    'If wx < 0.6 Then Throw New Exception("Water mole fraction in liquid phase is less than 0.6. Calculation aborted.")
-                    Psat = P / (wx * wac)
-                    Tsat_ant = Tsat
-                    Tsat = proppack.AUX_TSATi(Psat, wid)
-                End If
-
-                'If wx < 0.6 Then Throw New Exception("Water mole fraction in liquid phase is less than 0.6. Calculation aborted.")
-
-                If Double.IsNaN(Tsat) Then Throw New Exception("Temperature loop did not converge. Calculation aborted.")
-
-                'If Tsat < 273.15 Then Throw New Exception("Temperature loop did not converge. Calculation aborted.")
-
-                If icount > maxitINT Then Throw New Exception("Temperature loop did not converge. Maximum iterations reached.")
-
-                icount += 1
-
-            Loop Until Abs(xv - xv_ant) < 0.001
-
-            d2 = Date.Now
-
-            dt = d2 - d1
-
-            WriteDebugInfo("PH Flash [Electrolyte]: Converged successfully. Time taken: " & dt.TotalMilliseconds & " ms.")
-
-            'return flash calculation results.
-
-            Dim results As New Dictionary(Of String, Object)
-
-            results.Add("MixtureMoleFlows", Vz)
-            results.Add("VaporPhaseMoleFraction", V)
-            results.Add("LiquidPhaseMoleFraction", L)
-            results.Add("SolidPhaseMoleFraction", S)
-            results.Add("VaporPhaseMolarComposition", Vy)
-            results.Add("LiquidPhaseMolarComposition", Vx)
-            results.Add("SolidPhaseMolarComposition", Vs)
-            results.Add("MoleSum", sumN)
-            results.Add("Temperature", T)
-            results.Add("LiquidPhaseActivityCoefficients", tmp("LiquidPhaseActivityCoefficients"))
-
-            Return results
-
-        End Function
-
         Function OBJ_FUNC_PH_FLASH(ByVal T As Double, ByVal P As Double, ByVal Vz As Object) As Double
 
             Dim tmp As Dictionary(Of String, Object) = Flash_PT(Vz, T, P)
@@ -1091,129 +927,170 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         End Function
 
-        Public Function Flash_PV(ByVal Vz As Array, ByVal P As Double, ByVal V As Double, ByVal Tref As Double) As Dictionary(Of String, Object)
+        Public Function Flash_TV(ByVal Vz As Double(), ByVal T As Double, ByVal V As Double, ByVal Pref As Double) As Object
 
-            Dim n As Integer
+            Dim n, ecount As Integer
             Dim d1, d2 As Date, dt As TimeSpan
-            Dim L, T, S, Pf, sumN As Double
 
             d1 = Date.Now
 
+            Dim maxitINT As Integer = CInt(proppack.Parameters("PP_PHFMII"))
+            Dim maxitEXT As Integer = CInt(proppack.Parameters("PP_PHFMEI"))
+            Dim tolINT As Double = CDbl(proppack.Parameters("PP_PHFILT"))
+            Dim tolEXT As Double = CDbl(proppack.Parameters("PP_PHFELT"))
+
             n = UBound(Vz)
 
-            Pf = P
+            Dim Vx(n), Vy(n), Vp(n), Vcalc, Vspec, P, x, x0, x00, fx, fx0, fx00, Pmin, Pmax As Double
+         
+            Dim nl As New DWSIMDefault
+            Dim flashresult = nl.CalculateEquilibrium(FlashSpec.T, FlashSpec.VAP, T, 0.0#, proppack, Vz, Nothing, Pref)
+            Pmax = flashresult.CalculatedPressure
+            flashresult = nl.CalculateEquilibrium(FlashSpec.T, FlashSpec.VAP, T, 1.0#, proppack, Vz, Nothing, Pref)
+            Pmin = flashresult.CalculatedPressure
 
-            Dim Vx(n), Vx2(n), Vy(n), Vs(n), Vz0(n) As Double
+            P = Pmin + (1 - V) * (Pmax - Pmin)
 
-            Dim maxitINT As Integer = Me.MaximumIterations
-            Dim maxitEXT As Integer = Me.MaximumIterations
-            Dim tolINT As Double = 0.0001
-            Dim tolEXT As Double = 0.0001
+            ecount = 0
+            Vspec = V
+            x = P
 
-            Dim brentsolverT As New BrentOpt.Brent
-            brentsolverT.DefineFuncDelegate(AddressOf EnthalpyTx)
-
-            Dim Tsat, Tsat_ant, Psat, xv, xl, wac, wx, deltaT, sumnw As Double
-
-            Dim wid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.Name = "Water").SingleOrDefault)
-
-            Dim tmp As Dictionary(Of String, Object) = Nothing
-
-            'calculate water saturation temperature.
-
-            Tsat = proppack.AUX_TSATi(P, wid)
-
-            'calculate activity coefficient
-
-            deltaT = 1
-
-            xv = V / Vz0(wid)
-            xl = 1 - xv
-
-            Dim icount As Integer = 0
-
-            If Vz(wid) <> 0.0# Then
-                Do
-                    Tsat = Tsat - deltaT
-                    tmp = Flash_PT(Vz, Tsat, P)
-                    wac = tmp("LiquidPhaseActivityCoefficients")(wid)
-                    wx = tmp("LiquidPhaseMolarComposition")(wid)
-                Loop Until wx > 0.0#
-
-                Psat = P / (wx * wac)
-                Tsat = proppack.AUX_TSATi(Psat, wid)
-            End If
+            Dim tmp As Dictionary(Of String, Object)
 
             Do
 
-                T = Tsat
+                tmp = Flash_PT(Vz, T, x)
 
-                Vz0 = Vz.Clone
+                Vcalc = tmp("VaporPhaseMoleFraction")
 
-                Vz(wid) = Vz0(wid) * (1 - xv)
-                sumnw = 0.0#
-                For i = 0 To n
-                    If i <> wid Then
-                        sumnw += Vz0(i)
-                    End If
-                Next
-                For i = 0 To n
-                    If i <> wid Then
-                        Vz(i) = Vz0(i) / sumnw * (1 - Vz(wid))
-                    End If
-                Next
+                fx00 = fx0
+                fx0 = fx
 
-                tmp = Flash_PT(Vz, T, P)
+                fx = Vspec - Vcalc
 
-                L = tmp("LiquidPhaseMoleFraction") * (1 - V)
-                S = tmp("SolidPhaseMoleFraction") * (1 - V)
-                Vx = tmp("LiquidPhaseMolarComposition")
-                Vy = proppack.RET_NullVector()
-                Vy(wid) = 1.0#
-                Vs = tmp("SolidPhaseMolarComposition")
-                sumN = tmp("MoleSum")
-                Vz = Vz0
+                If Abs(fx) < tolEXT Then Exit Do
 
-                If Vz(wid) <> 0.0# And xv <> 0.0# And xv <> 1.0# Then
+                x00 = x0
+                x0 = x
 
-                    wac = tmp("LiquidPhaseActivityCoefficients")(wid)
-                    wx = tmp("LiquidPhaseMolarComposition")(wid)
-
-                    If wx < 0.6 Then Throw New Exception("Water mole fraction in liquid phase is less than 0.6. Calculation aborted.")
-
-                    Psat = P / (wx * wac)
-                    Tsat_ant = Tsat
-                    Tsat = proppack.AUX_TSATi(Psat, wid)
-
+                If ecount <= 1 Then
+                    x *= 0.99
+                Else
+                    x = x - fx * (x - x00) / (fx - fx00)
+                    If Double.IsNaN(x) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
                 End If
 
-                If wx < 0.6 Then Throw New Exception("Water mole fraction in liquid phase is less than 0.6. Calculation aborted.")
+                ecount += 1
 
-                If Double.IsNaN(Tsat) Then Throw New Exception("Temperature loop did not converge. Calculation aborted.")
+                If ecount > maxitEXT Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
 
-                If Tsat < 273.15 Then Throw New Exception("Temperature loop did not converge. Calculation aborted.")
+            Loop
 
-            Loop Until Abs(Tsat - Tsat_ant) < 0.01
+            P = x
 
             d2 = Date.Now
 
             dt = d2 - d1
 
-            WriteDebugInfo("PH Flash [Electrolyte]: Converged successfully. Time taken: " & dt.TotalMilliseconds & " ms.")
-
-            'return flash calculation results.
+            WriteDebugInfo("TV Flash [Sour Water]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
             Dim results As New Dictionary(Of String, Object)
 
-            results.Add("MixtureMoleFlows", Vz)
-            results.Add("VaporPhaseMoleFraction", V)
-            results.Add("LiquidPhaseMoleFraction", L)
-            results.Add("SolidPhaseMoleFraction", S)
-            results.Add("VaporPhaseMolarComposition", Vy)
-            results.Add("LiquidPhaseMolarComposition", Vx)
-            results.Add("SolidPhaseMolarComposition", Vs)
-            results.Add("MoleSum", sumN)
-            results.Add("Temperature", T)
+            results.Add("MixtureMoleFlows", tmp("MixtureMoleFlows"))
+            results.Add("VaporPhaseMoleFraction", tmp("VaporPhaseMoleFraction"))
+            results.Add("LiquidPhaseMoleFraction", tmp("LiquidPhaseMoleFraction"))
+            results.Add("SolidPhaseMoleFraction", tmp("SolidPhaseMoleFraction"))
+            results.Add("VaporPhaseMolarComposition", tmp("VaporPhaseMolarComposition"))
+            results.Add("LiquidPhaseMolarComposition", tmp("LiquidPhaseMolarComposition"))
+            results.Add("SolidPhaseMolarComposition", tmp("SolidPhaseMolarComposition"))
+            results.Add("MoleSum", tmp("MoleSum"))
+            results.Add("Pressure", P)
+            results.Add("LiquidPhaseActivityCoefficients", tmp("LiquidPhaseActivityCoefficients"))
+
+            Return results
+
+        End Function
+
+        Public Function Flash_PV(ByVal Vz As Double(), ByVal P As Double, ByVal V As Double, ByVal Tref As Double) As Object
+
+            Dim n, ecount As Integer
+            Dim d1, d2 As Date, dt As TimeSpan
+
+            d1 = Date.Now
+
+            Dim maxitINT As Integer = CInt(proppack.Parameters("PP_PHFMII"))
+            Dim maxitEXT As Integer = CInt(proppack.Parameters("PP_PHFMEI"))
+            Dim tolINT As Double = CDbl(proppack.Parameters("PP_PHFILT"))
+            Dim tolEXT As Double = CDbl(proppack.Parameters("PP_PHFELT"))
+
+            n = UBound(Vz)
+
+            Dim Vx(n), Vy(n), Vp(n), Vcalc, Vspec, T, x, x0, x00, fx, fx0, fx00, Tmin, Tmax As Double
+      
+            Dim nl As New DWSIMDefault
+            Dim flashresult = nl.CalculateEquilibrium(FlashSpec.P, FlashSpec.VAP, P, 0.0#, proppack, Vz, Nothing, Tref)
+            Tmin = flashresult.CalculatedTemperature
+            flashresult = nl.CalculateEquilibrium(FlashSpec.P, FlashSpec.VAP, P, 1.0#, proppack, Vz, Nothing, Tref)
+            Tmax = flashresult.CalculatedTemperature
+
+            If Tmin < 273.15 Then Tmin = 273.15
+
+            T = Tmin + V * (Tmax - Tmin)
+
+            ecount = 0
+            Vspec = V
+            x = T
+
+            Dim tmp As Dictionary(Of String, Object)
+
+            Do
+
+                tmp = Flash_PT(Vz, x, P)
+
+                Vcalc = tmp("VaporPhaseMoleFraction")
+
+                fx00 = fx0
+                fx0 = fx
+
+                fx = Vspec - Vcalc
+
+                If Abs(fx) < tolEXT Then Exit Do
+
+                x00 = x0
+                x0 = x
+
+                If ecount <= 1 Then
+                    x += 1.0#
+                Else
+                    x = x - fx * (x - x00) / (fx - fx00)
+                    If Double.IsNaN(x) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
+                End If
+
+                ecount += 1
+
+                If ecount > maxitEXT Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
+
+            Loop
+
+            T = x
+
+            d2 = Date.Now
+
+            dt = d2 - d1
+
+            WriteDebugInfo("PV Flash [Sour Water]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
+
+            Dim results As New Dictionary(Of String, Object)
+
+            results.Add("MixtureMoleFlows", tmp("MixtureMoleFlows"))
+            results.Add("VaporPhaseMoleFraction", tmp("VaporPhaseMoleFraction"))
+            results.Add("LiquidPhaseMoleFraction", tmp("LiquidPhaseMoleFraction"))
+            results.Add("SolidPhaseMoleFraction", tmp("SolidPhaseMoleFraction"))
+            results.Add("VaporPhaseMolarComposition", tmp("VaporPhaseMolarComposition"))
+            results.Add("LiquidPhaseMolarComposition", tmp("LiquidPhaseMolarComposition"))
+            results.Add("SolidPhaseMolarComposition", tmp("SolidPhaseMolarComposition"))
+            results.Add("MoleSum", tmp("MoleSum"))
+            results.Add("Pressure", P)
             results.Add("LiquidPhaseActivityCoefficients", tmp("LiquidPhaseActivityCoefficients"))
 
             Return results
