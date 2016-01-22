@@ -426,6 +426,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Sub RestorePorts()
             If Not _couo Is Nothing Then
+                Dim cnobj As Object = Nothing
                 Dim myuo As ICapeUnit = _couo
                 Dim myports As ICapeCollection = myuo.ports
                 Dim i As Integer = 0
@@ -436,10 +437,20 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Dim myport As ICapeUnitPort = myports.Item(i)
                         For Each p As UnitPort In _ports
                             If id.ComponentName = p.ComponentName Then
-                                If p.connectedObject IsNot Nothing Then
+                                Try
+                                    cnobj = p.connectedObject
+                                Catch ex As Exception
+                                    cnobj = Nothing
+                                End Try
+                                If cnobj IsNot Nothing Then
                                     If Not Me.FlowSheet Is Nothing Then
-                                        Dim mystr As SimulationObjects_BaseClass = Me.FlowSheet.Collections.ObjectCollection(CType(p.connectedObject, ICapeIdentification).ComponentDescription)
-                                        If Not myport.connectedObject Is Nothing Then myport.Disconnect()
+                                        Dim mystr As SimulationObjects_BaseClass = Me.FlowSheet.Collections.ObjectCollection(CType(cnobj, ICapeIdentification).ComponentDescription)
+                                        Try
+                                            cnobj = myport.connectedObject
+                                        Catch ex As Exception
+                                            cnobj = Nothing
+                                        End Try
+                                        If Not cnobj Is Nothing Then myport.Disconnect()
                                         myport.Connect(mystr)
                                     End If
                                 End If
@@ -562,6 +573,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Me.GraphicObject.OutputConnectors = New List(Of ConnectionPoint)
 
             If Not _couo Is Nothing Then
+                Dim cnobj As Object = Nothing
                 Dim myuo As CapeOpen.ICapeUnit = _couo
                 Dim myports As ICapeCollection = myuo.ports
                 Dim nip As Integer = 1
@@ -596,8 +608,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                     .Position = New Point(Me.GraphicObject.X, Me.GraphicObject.Y + (Me.GraphicObject.InputConnectors.Count) / (nip - 1) * Me.GraphicObject.Height / 2)
                                     .ConnectorName = id.ComponentName
                                 End With
-                                If myport.connectedObject IsNot Nothing Then
-                                    objid = CType(myport.connectedObject, ICapeIdentification).ComponentDescription
+                                Try
+                                    cnobj = myport.connectedObject
+                                Catch ex As Exception
+                                    cnobj = Nothing
+                                End Try
+                                If cnobj IsNot Nothing Then
+                                    objid = CType(cnobj, ICapeIdentification).ComponentDescription
                                     myport.Disconnect()
                                     Dim gobj As GraphicObject = FormFlowsheet.SearchSurfaceObjectsByName(objid, Me.FlowSheet.FormSurface.FlowsheetDesignSurface)
                                     Select Case myport.portType
@@ -620,8 +637,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                     .Position = New Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + (Me.GraphicObject.OutputConnectors.Count) / (nop - 1) * Me.GraphicObject.Height / 2)
                                     .ConnectorName = id.ComponentName
                                 End With
-                                If myport.connectedObject IsNot Nothing Then
-                                    objid = CType(myport.connectedObject, ICapeIdentification).ComponentDescription
+                                Try
+                                    cnobj = myport.connectedObject
+                                Catch ex As Exception
+                                    cnobj = Nothing
+                                End Try
+                                If cnobj IsNot Nothing Then
+                                    objid = CType(cnobj, ICapeIdentification).ComponentDescription
                                     myport.Disconnect()
                                     Dim gobj As GraphicObject = FormFlowsheet.SearchSurfaceObjectsByName(objid, Me.FlowSheet.FormSurface.FlowsheetDesignSurface)
                                     Select Case myport.portType
@@ -723,6 +745,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Sub UpdatePorts()
             If Not _couo Is Nothing Then
+                Dim cnobj As Object = Nothing
                 Dim myuo As CapeOpen.ICapeUnit = _couo
                 Dim myports As ICapeCollection = myuo.ports
                 Dim i As Integer = 0
@@ -734,8 +757,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Dim myport As ICapeUnitPort = myports.Item(i)
                         _ports.Add(New UnitPort(id.ComponentName, id.ComponentDescription, myport.direction, myport.portType))
                         Try
-                            If Not myport.connectedObject Is Nothing Then
-                                _ports(_ports.Count - 1).Connect(Me.FlowSheet.Collections.ObjectCollection(CType(myport.connectedObject, ICapeIdentification).ComponentDescription))
+                            cnobj = myport.connectedObject
+                        Catch ex As Exception
+                            cnobj = Nothing
+                        End Try
+                        Try
+                            If Not cnobj Is Nothing Then
+                                _ports(_ports.Count - 1).Connect(Me.FlowSheet.Collections.ObjectCollection(CType(cnobj, ICapeIdentification).ComponentDescription))
                             End If
                         Catch ex As Exception
                             Dim ecu As CapeOpen.ECapeUser = myuo
@@ -748,12 +776,18 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Sub UpdatePortsFromConnectors()
 
+            Dim cnobj As Object = Nothing
             For Each c As ConnectionPoint In Me.GraphicObject.InputConnectors
                 For Each p As UnitPort In _ports
+                    Try
+                        cnobj = p.connectedObject
+                    Catch ex As Exception
+                        cnobj = Nothing
+                    End Try
                     If c.ConnectorName = p.ComponentName Then
                         If Not c.IsAttached Then
                             p.Disconnect()
-                        ElseIf c.IsAttached And p.connectedObject Is Nothing Then
+                        ElseIf c.IsAttached And cnobj Is Nothing Then
                             p.Connect(Me.FlowSheet.Collections.ObjectCollection(c.AttachedConnector.AttachedFrom.Name))
                         End If
                     End If
@@ -762,10 +796,15 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             For Each c As ConnectionPoint In Me.GraphicObject.OutputConnectors
                 For Each p As UnitPort In _ports
+                    Try
+                        cnobj = p.connectedObject
+                    Catch ex As Exception
+                        cnobj = Nothing
+                    End Try
                     If c.ConnectorName = p.ComponentName Then
                         If Not c.IsAttached Then
                             p.Disconnect()
-                        ElseIf c.IsAttached And p.connectedObject Is Nothing Then
+                        ElseIf c.IsAttached And cnobj Is Nothing Then
                             p.Connect(Me.FlowSheet.Collections.ObjectCollection(c.AttachedConnector.AttachedTo.Name))
                         End If
                     End If
@@ -1150,11 +1189,18 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 .Item.Add("Editing Form", "click to show ->", False, "2. Editing Form", "", True)
                 .Item(.Item.Count - 1).OnClick = AddressOf Me.Edit
 
+                Dim cnobj As Object = Nothing
+
                 'populate ports
                 For Each p As UnitPort In _ports
                     If p.portType = CapePortType.CAPE_MATERIAL Then
                         Dim tag As String = ""
-                        Dim conobj As DWSIM.SimulationObjects.Streams.MaterialStream = p.connectedObject
+                        Try
+                            cnobj = p.connectedObject
+                        Catch ex As Exception
+                            cnobj = Nothing
+                        End Try
+                        Dim conobj As DWSIM.SimulationObjects.Streams.MaterialStream = cnobj
                         If Not conobj Is Nothing Then tag = conobj.GraphicObject.Tag
                         .Item.Add(p.ComponentName + " [" + p.direction.ToString + ", " + p.portType.ToString() + "]", tag, False, "3. Ports", p.ComponentDescription, True)
                         With .Item(.Item.Count - 1)
@@ -1167,7 +1213,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         End With
                     ElseIf p.portType = CapePortType.CAPE_ENERGY Then
                         Dim tag As String = ""
-                        Dim conobj As DWSIM.SimulationObjects.Streams.EnergyStream = p.connectedObject
+                        Try
+                            cnobj = p.connectedObject
+                        Catch ex As Exception
+                            cnobj = Nothing
+                        End Try
+                        Dim conobj As DWSIM.SimulationObjects.Streams.EnergyStream = cnobj
                         If Not conobj Is Nothing Then tag = conobj.GraphicObject.Tag
                         .Item.Add(p.ComponentName + " [" + p.direction.ToString + ", " + p.portType.ToString() + "]", tag, False, "3. Ports", p.ComponentDescription, True)
                         With .Item(.Item.Count - 1)
