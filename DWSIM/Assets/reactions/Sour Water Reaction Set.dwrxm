@@ -273,8 +273,8 @@
     <Tmax>2000</Tmax>
     <Tmin>0</Tmin>
     <Approach>0</Approach>
-    <Expression>0</Expression>
-    <KExprType>Gibbs</KExprType>
+    <Expression>15.72</Expression>
+    <KExprType>Expression</KExprType>
     <Rate>0</Rate>
     <VelUnit>mol/[m3.s]</VelUnit>
     <ConcUnit>mol/m3</ConcUnit>

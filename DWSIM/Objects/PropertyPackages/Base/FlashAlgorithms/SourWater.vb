@@ -217,10 +217,22 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 'calculate the amount of undissociated species from dissociated ones
 
-                If id("NaOH") > -1 Then Vxf(id("NaOH")) += Vxf(id("Na+"))
-                If id("NH3") > -1 Then Vxf(id("NH3")) += Vxf(id("NH4+")) + Vxf(id("H2NCOO-"))
-                If id("H2S") > -1 Then Vxf(id("H2S")) += Vxf(id("HS-")) + Vxf(id("S-2"))
-                If id("CO2") > -1 Then Vxf(id("CO2")) += Vxf(id("HCO3-")) + Vxf(id("CO3-2")) + Vxf(id("H2NCOO-"))
+                If id("NaOH") > -1 Then
+                    If id("Na+") > -1 Then Vxf(id("NaOH")) += Vxf(id("Na+"))
+                End If
+                If id("NH3") > -1 Then
+                    If id("NH4+") > -1 Then Vxf(id("NH3")) += Vxf(id("NH4+"))
+                    If id("H2NCOO-") > -1 Then Vxf(id("NH3")) += Vxf(id("H2NCOO-"))
+                End If
+                If id("H2S") > -1 Then
+                    If id("HS-") > -1 Then Vxf(id("H2S")) += Vxf(id("HS-"))
+                    If id("S-2") > -1 Then Vxf(id("H2S")) += Vxf(id("S-2"))
+                End If
+                If id("CO2") > -1 Then
+                    If id("HCO3-") > -1 Then Vxf(id("CO2")) += Vxf(id("HCO3-"))
+                    If id("CO3-2") > -1 Then Vxf(id("CO2")) += Vxf(id("CO3-2"))
+                    If id("H2NCOO-") > -1 Then Vxf(id("CO2")) += Vxf(id("H2NCOO-"))
+                End If
 
                 If id("H+") > -1 Then Vxf(id("H+")) = 0.0#
                 If id("OH-") > -1 Then Vxf(id("OH-")) = 0.0#
@@ -398,16 +410,26 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 If id("S-2") > -1 Then Vnl(id("S-2")) = conc(("S-2")) * totalkg
                 If id("Na+") > -1 Then Vnl(id("Na+")) = conc(("Na+")) * totalkg
 
-                If id("NaOH") > -1 Then Vnl(id("NaOH")) -= conc("Na+") * totalkg
-                If Vnl(id("NaOH")) < 0.0# Then Vnl(id("NaOH")) = 0.0#
-                If id("NH3") > -1 Then Vnl(id("NH3")) -= (conc("NH4+") + conc("H2NCOO-")) * totalkg
-                If Vnl(id("NH3")) < 0.0# Then Vnl(id("NH3")) = 0.0#
-                If id("H2S") > -1 Then Vnl(id("H2S")) -= (conc("HS-") + conc("S-2")) * totalkg
-                If Vnl(id("H2S")) < 0.0# Then Vnl(id("H2S")) = 0.0#
-                If id("CO2") > -1 Then Vnl(id("CO2")) -= (conc("HCO3-") + conc("CO3-2") + conc("H2NCOO-")) * totalkg
-                If Vnl(id("CO2")) < 0.0# Then Vnl(id("CO2")) = 0.0#
-
-                'Vnl(id("H2O")) = Vnf(id("H2O")) - Vnv(id("H2O"))
+                If id("NaOH") > -1 Then
+                    If id("Na+") > -1 Then Vnl(id("NaOH")) -= conc("Na+") * totalkg
+                    If Vnl(id("NaOH")) < 0.0# Then Vnl(id("NaOH")) = 0.0#
+                End If
+                If id("NH3") > -1 Then
+                    If id("NH4+") > -1 Then Vnl(id("NH3")) -= conc("NH4+") * totalkg
+                    If id("H2NCOO-") > -1 Then Vnl(id("NH3")) -= conc("H2NCOO-") * totalkg
+                    If Vnl(id("NH3")) < 0.0# Then Vnl(id("NH3")) = 0.0#
+                End If
+                If id("H2S") > -1 Then
+                    If id("HS-") > -1 Then Vnl(id("H2S")) -= conc("HS-") * totalkg
+                    If id("S-2") > -1 Then Vnl(id("H2S")) -= conc("S-2") * totalkg
+                    If Vnl(id("H2S")) < 0.0# Then Vnl(id("H2S")) = 0.0#
+                End If
+                If id("CO2") > -1 Then
+                    If id("HCO3-") > -1 Then Vnl(id("CO2")) -= conc("HCO3-") * totalkg
+                    If id("CO3-2") > -1 Then Vnl(id("CO2")) -= conc("CO3-2") * totalkg
+                    If id("H2NCOO-") > -1 Then Vnl(id("CO2")) -= conc("H2NCOO-") * totalkg
+                    If Vnl(id("CO2")) < 0.0# Then Vnl(id("CO2")) = 0.0#
+                End If
 
                 Vxl = Vnl.NormalizeY()
 
