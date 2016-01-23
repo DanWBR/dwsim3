@@ -235,11 +235,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 If V < 0.0# Then
                     V = 0.0#
-                    Exit Do
                 End If
                 If V > 1.0# Then
                     V = 1.0#
-                    Exit Do
                 End If
 
                 L = 1 - V
