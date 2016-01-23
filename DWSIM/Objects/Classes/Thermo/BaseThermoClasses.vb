@@ -472,8 +472,8 @@ Namespace DWSIM.ClassesBasicasTermodinamica
                     ExpContext = New Ciloci.Flee.ExpressionContext
                     ExpContext.Imports.AddType(GetType(System.Math))
                     ExpContext.Variables.Add("T", T)
-                    Expr = ExpContext.CompileGeneric(Of Double)(Expression)
                     Expr.Context.ParserOptions.DecimalSeparator = "."
+                    Expr = ExpContext.CompileGeneric(Of Double)(Expression)
 
                     Return Math.Exp(Expr.Evaluate)
 

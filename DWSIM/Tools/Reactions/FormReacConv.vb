@@ -199,6 +199,7 @@ Public Class FormReacConv
                 '// Create a generic expression that evaluates to a double
                 'IGenericExpression<double> eGeneric = ExpressionFactory.CreateGeneric<double>("sqrt(a) + 1", context);
                 Try
+                    .ExpContext.ParserOptions.DecimalSeparator = "."
                     .Expr = .ExpContext.CompileGeneric(Of Double)(Me.tbExp.Text)
                     .Expression = Me.tbExp.Text
                 Catch ex As ExpressionCompileException
