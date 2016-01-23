@@ -220,7 +220,7 @@ Public Class FormReacEq
                 With rc
                     .ExpContext.Variables.Add("T", CDbl(300))
                     Try
-                        .ExpContext.ParserOptions.DecimalSeparator = "."
+                        .ExpContext.Options.ParseCulture = Globalization.CultureInfo.InvariantCulture
                         .Expr = .ExpContext.CompileGeneric(Of Double)(Me.tbExp.Text)
                         .Expression = Me.tbExp.Text
                     Catch ex As ExpressionCompileException
