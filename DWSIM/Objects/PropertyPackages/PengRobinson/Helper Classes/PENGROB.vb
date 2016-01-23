@@ -135,9 +135,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             i = 0
             Do
-                alpha(i) = (1 + (0.37464 + 1.54226 * W(i) - 0.26992 * W(i) ^ 2) * (1 - (T / Tc(i)) ^ 0.5)) ^ 2
-                ai(i) = 0.45724 * alpha(i) * R ^ 2 * Tc(i) ^ 2 / Pc(i)
-                bi(i) = 0.0778 * R * Tc(i) / Pc(i)
+                If Tc(i) > 0.0# Then
+                    alpha(i) = (1 + (0.37464 + 1.54226 * W(i) - 0.26992 * W(i) ^ 2) * (1 - (T / Tc(i)) ^ 0.5)) ^ 2
+                    ai(i) = 0.45724 * alpha(i) * R ^ 2 * Tc(i) ^ 2 / Pc(i)
+                    bi(i) = 0.0778 * R * Tc(i) / Pc(i)
+                End If
                 i = i + 1
             Loop Until i = n + 1
 

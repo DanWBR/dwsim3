@@ -464,7 +464,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
         Shared Function Vc(ByVal Tc As Double, ByVal Pc As Double, ByVal w As Double) As Double
 
-            Vc = 8.314 * (0.291 - 0.08 * w) * Tc / Pc * 1000 'm3/kmol
+            If Pc > 0.0# Then Vc = 8.314 * (0.291 - 0.08 * w) * Tc / Pc * 1000 Else Vc = 0.0# 'm3/kmol
 
         End Function
 
@@ -591,10 +591,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             i = 0
             Do
-                alpha(i) = (1 + (0.37464 + 1.54226 * w(i) - 0.26992 * w(i) ^ 2) * (1 - (T / Tc(i)) ^ 0.5)) ^ 2
-                ai(i) = 0.45724 * alpha(i) * R ^ 2 * Tc(i) ^ 2 / Pc(i)
-                bi(i) = 0.0778 * R * Tc(i) / Pc(i)
-                ci(i) = 0.37464 + 1.54226 * w(i) - 0.26992 * w(i) ^ 2
+                If Tc(i) > 0 Then
+                    alpha(i) = (1 + (0.37464 + 1.54226 * w(i) - 0.26992 * w(i) ^ 2) * (1 - (T / Tc(i)) ^ 0.5)) ^ 2
+                    ai(i) = 0.45724 * alpha(i) * R ^ 2 * Tc(i) ^ 2 / Pc(i)
+                    bi(i) = 0.0778 * R * Tc(i) / Pc(i)
+                    ci(i) = 0.37464 + 1.54226 * w(i) - 0.26992 * w(i) ^ 2
+                End If
                 i = i + 1
             Loop Until i = n + 1
 
@@ -712,7 +714,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Do
                 j = 0
                 Do
-                    aux2 += Vz(i) * Vz(j) * (1 - VKij(i, j)) * (ci(j) * (ai(i) * Tc(j) / Pc(j)) ^ 0.5 + ci(i) * (ai(j) * Tc(i) / Pc(i)) ^ 0.5)
+                    If Vz(i) > 0.0# And Vz(j) > 0 Then aux2 += Vz(i) * Vz(j) * (1 - VKij(i, j)) * (ci(j) * (ai(i) * Tc(j) / Pc(j)) ^ 0.5 + ci(i) * (ai(j) * Tc(i) / Pc(i)) ^ 0.5)
                     j = j + 1
                 Loop Until j = n + 1
                 i = i + 1

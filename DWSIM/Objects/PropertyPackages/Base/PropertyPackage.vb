@@ -6619,8 +6619,6 @@ Final3:
 
         Public Overridable Function AUX_VAPVISCm(ByVal T As Double, ByVal RHO As Double, ByVal MM As Double) As Double
 
-
-
             Dim val As Double = 0.0#
 
             For Each subst As Substancia In Me.CurrentMaterialStream.Fases(2).Componentes.Values
@@ -6642,7 +6640,7 @@ Final3:
             ElseIf cprop.IsIon Or cprop.IsSalt Then
                 val = 0.0#
             Else
-                val = Auxiliary.PROPS.viscg_lucas(T, cprop.Critical_Temperature, cprop.Critical_Pressure, cprop.Acentric_Factor, cprop.Molar_Weight)
+                If cprop.Critical_Temperature > 0.0# Then val = Auxiliary.PROPS.viscg_lucas(T, cprop.Critical_Temperature, cprop.Critical_Pressure, cprop.Acentric_Factor, cprop.Molar_Weight) Else val = 0.0#
             End If
 
             Return val
