@@ -45,6 +45,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             Me.m_act = New Auxiliary.NRTL
 
+            'Dim dict2 As New Dictionary(Of String, NRTL_IPData)
+            'dict2.Add("Water", New NRTL_IPData() With {.ID1 = "Ammonia", .ID2 = "Water", .A12 = 393.5414, .A21 = -1116.9454, .alpha12 = 0.2})
+
+            'DirectCast(m_act, Auxiliary.NRTL).InteractionParameters("Water").Add("Ammonia", New NRTL_IPData() With {.ID1 = "Water", .ID2 = "Ammonia", .A12 = -1116.9454, .A21 = 393.5414, .alpha12 = 0.2})
+            'DirectCast(m_act, Auxiliary.NRTL).InteractionParameters.Add("Ammonia", dict2)
+
         End Sub
 
         Public Sub New()
@@ -53,8 +59,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             Me.m_act = New Auxiliary.NRTL
 
-            Me.IsConfigurable = True
-            Me.ConfigForm = New FormConfigNRTL
+            'Dim dict2 As New Dictionary(Of String, NRTL_IPData)
+            'dict2.Add("Water", New NRTL_IPData() With {.ID1 = "Ammonia", .ID2 = "Water", .A12 = 393.5414, .A21 = -1116.9454, .alpha12 = 0.2})
+
+            'DirectCast(m_act, Auxiliary.NRTL).InteractionParameters("Water").Add("Ammonia", New NRTL_IPData() With {.ID1 = "Water", .ID2 = "Ammonia", .A12 = -1116.9454, .A21 = 393.5414, .alpha12 = 0.2})
+            'DirectCast(m_act, Auxiliary.NRTL).InteractionParameters.Add("Ammonia", dict2)
+
+            Me.IsConfigurable = False
+            Me.ConfigForm = Nothing
             Me._packagetype = PropertyPackages.PackageType.ActivityCoefficient
 
         End Sub
@@ -62,7 +74,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         Public Overrides Sub ReconfigureConfigForm()
 
             MyBase.ReconfigureConfigForm()
-            Me.ConfigForm = New FormConfigNRTL
+            Me.ConfigForm = Nothing
 
         End Sub
 

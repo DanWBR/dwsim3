@@ -99,12 +99,19 @@ Module Extensions
     <System.Runtime.CompilerServices.Extension()> _
     Public Sub PasteData(dgv As DataGridView)
 
+        PasteData2(dgv, Clipboard.GetText())
+
+    End Sub
+
+    <System.Runtime.CompilerServices.Extension()> _
+    Public Sub PasteData2(dgv As DataGridView, data As String)
+
         Dim tArr() As String
         Dim arT() As String
         Dim i, ii As Integer
         Dim c, cc, r As Integer
 
-        tArr = Clipboard.GetText().Split(New Char() {vbLf, vbCr, vbCrLf})
+        tArr = data.Split(New Char() {vbLf, vbCr, vbCrLf})
 
         If dgv.SelectedCells.Count > 0 Then
             r = dgv.SelectedCells(0).RowIndex

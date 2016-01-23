@@ -38,6 +38,11 @@ Public Class FormBinEnv
 
     Dim P, T As Double
 
+    Private Sub FormBinEnv_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+        Me.GridExpData.SelectAll()
+        Frm.Options.BinaryEnvelopeExpData = Me.GridExpData.GetClipboardContent.GetText
+    End Sub
+
     Private Sub FormBinEnv_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         Me.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Float
@@ -94,6 +99,12 @@ Public Class FormBinEnv
             Me.GridExpData.Columns(2).HeaderText = "y1 (" & DWSIM.App.GetLocalString("FraoMolar1") & ")"
             Me.GridExpData.Columns(3).HeaderText = "T (" & su.spmp_temperature & ")"
             Me.GridExpData.Columns(4).HeaderText = "P (" & su.spmp_pressure & ")"
+
+            Try
+                If Frm.Options.BinaryEnvelopeExpData <> "" Then Me.GridExpData.PasteData2(Frm.Options.BinaryEnvelopeExpData)
+            Catch ex As Exception
+
+            End Try
 
             Frm.WriteToLog(DWSIM.App.GetLocalTipString("BENV001"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
             Frm.WriteToLog(DWSIM.App.GetLocalTipString("BENV002"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
@@ -264,12 +275,15 @@ Public Class FormBinEnv
         Dim vxexp, vyexp, vtexp, vpexp As New ArrayList
 
         For Each r As DataGridViewRow In Me.GridExpData.Rows
-            If r.Cells("check").Value Then
-                If Double.TryParse(r.Cells("colx1").Value, New Double) Then vxexp.Add(Double.Parse(r.Cells("colx1").Value, ci)) Else vxexp.Add(0.0#)
-                If Double.TryParse(r.Cells("coly1").Value, New Double) Then vyexp.Add(Double.Parse(r.Cells("coly1").Value, ci)) Else vyexp.Add(0.0#)
-                If Double.TryParse(r.Cells("colt").Value, New Double) Then vtexp.Add(Double.Parse(r.Cells("colt").Value, ci)) Else vtexp.Add(0.0#)
-                If Double.TryParse(r.Cells("colp").Value, New Double) Then vpexp.Add(Double.Parse(r.Cells("colp").Value, ci)) Else vpexp.Add(0.0#)
-            End If
+            Try
+                If r.Cells("check").Value Then
+                    If Double.TryParse(r.Cells("colx1").Value, New Double) Then vxexp.Add(Double.Parse(r.Cells("colx1").Value, ci)) Else vxexp.Add(0.0#)
+                    If Double.TryParse(r.Cells("coly1").Value, New Double) Then vyexp.Add(Double.Parse(r.Cells("coly1").Value, ci)) Else vyexp.Add(0.0#)
+                    If Double.TryParse(r.Cells("colt").Value, New Double) Then vtexp.Add(Double.Parse(r.Cells("colt").Value, ci)) Else vtexp.Add(0.0#)
+                    If Double.TryParse(r.Cells("colp").Value, New Double) Then vpexp.Add(Double.Parse(r.Cells("colp").Value, ci)) Else vpexp.Add(0.0#)
+                End If
+            Catch ex As Exception
+            End Try
         Next
 
         If Me.RadioButton1.Checked Then

@@ -331,6 +331,8 @@ Namespace DWSIM.FormClasses
         Public FlowsheetShowCalculationQueue As Boolean = False
         Public FlowsheetShowWatchWindow As Boolean = False
 
+        Public BinaryEnvelopeExpData As String = ""
+
         Public Key As String = ""
 
         Sub New()
