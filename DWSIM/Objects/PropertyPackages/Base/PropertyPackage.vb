@@ -4992,6 +4992,14 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
                     End If
 
+                    If TypeOf Me Is SourWaterPropertyPackage Then
+
+                        refval = Me.CurrentMaterialStream.Fases(3).SPMProperties.pH.GetValueOrDefault
+                        If refval.HasValue = True Then val = Format(refval, Flowsheet.Options.NumberFormat)
+                        pl.Add(DWSIM.App.GetLocalString("pH"), val, True, DWSIM.App.GetLocalString("Lquido"), DWSIM.App.GetLocalString("pH"), True)
+
+                    End If
+
                     If Me.IsElectrolytePP Then
 
                         'Liquid Phase Activity Coefficients
