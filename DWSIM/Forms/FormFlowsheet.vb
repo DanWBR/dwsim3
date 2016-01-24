@@ -2427,52 +2427,16 @@ Imports WeifenLuo.WinFormsUI.Docking
                 .Item.Clear()
 
                 .Item.Add(DWSIM.App.GetLocalString("Nome"), gobj, "Tag", False, DWSIM.App.GetLocalString("Descrio1"), DWSIM.App.GetLocalString("Nomedoobjeto"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Boolean)
-                End With
-
                 .Item.Add(DWSIM.App.GetLocalString("Gradiente2"), gobj, "GradientMode", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("SelecioLiquidrueparaapl"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Boolean)
-                End With
                 .Item.Add("Gradiente_Cor1", gobj, "GradientColor1", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Cor1dogradienteseapl"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Drawing.Color)
-                End With
                 .Item.Add("Gradiente_Cor2", gobj, "GradientColor2", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Cor2dogradienteseapl"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Drawing.Color)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Cor"), gobj, "FillColor", False, DWSIM.App.GetLocalString("Aparncia2"), "Cor de fundo, caso o modo de gradiente não esteja ativado", True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Drawing.Color)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("EspessuradaBorda"), gobj, "LineWidth", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Espessuradabordadoob"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Int32)
-                End With
-
                 .Item.Add(DWSIM.App.GetLocalString("Comprimento"), gobj, "Width", False, DWSIM.App.GetLocalString("Tamanho3"), DWSIM.App.GetLocalString("Comprimentodoobjetoe"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Int32)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Altura"), gobj, "Height", False, DWSIM.App.GetLocalString("Tamanho3"), DWSIM.App.GetLocalString("Alturadoobjetoempixe"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Int32)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Rotao"), gobj, "Rotation", False, DWSIM.App.GetLocalString("Tamanho3"), DWSIM.App.GetLocalString("Rotaodoobjetode0a360"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Int32)
-                End With
-
                 .Item.Add("X", gobj, "X", False, DWSIM.App.GetLocalString("Coordenadas4"), DWSIM.App.GetLocalString("Coordenadahorizontal"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Int32)
-                End With
                 .Item.Add("Y", gobj, "Y", False, DWSIM.App.GetLocalString("Coordenadas4"), DWSIM.App.GetLocalString("Coordenadaverticaldo"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Int32)
-                End With
 
             End With
 
