@@ -260,7 +260,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     Vnv = Vxv.MultiplyConstY(V)
                 End With
 
-                If L = 0.0# Or Vnl(id("H2O")) < 0.6 Then Exit Do
+                If L = 0.0# Or Vxl(id("H2O")) < 0.6 Then Exit Do
 
                 If id("H+") > -1 Then Vxv(id("H+")) = 0.0#
                 If id("OH-") > -1 Then Vxv(id("OH-")) = 0.0#
@@ -317,6 +317,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     'calculate liquid phase chemical equilibrium
 
+                    conc("H+") = 10 ^ (-pH)
+
                     '   1   CO2 ionization	                CO2 + H2O <--> H+ + HCO3- 
 
                     ' equilibrium constant ionic strength correction
@@ -324,25 +326,25 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     k1 = Exp(Log(kr(0)) - 0.278 * conc("H2S") + (-1.32 + 1558.8 / (T * 1.8)) * Istr ^ 0.4)
 
                     conc("HCO3-") = k1 * conc("CO2") / conc("H+")
-                    conc("HCO3-") = Math.Min(conc("HCO3-"), conc("CO2"))
+                    'conc("HCO3-") = Math.Min(conc("HCO3-"), conc("CO2"))
                     deltaconc("HCO3-") = conc("HCO3-") - conc0("HCO3-")
 
                     '   2   Carbonate production	        HCO3- <--> CO3-2 + H+ 
 
                     conc("CO3-2") = kr(1) * conc("HCO3-") / conc("H+")
-                    conc("CO3-2") = Math.Min(conc("CO3-2"), conc("HCO3-"))
+                    'conc("CO3-2") = Math.Min(conc("CO3-2"), conc("HCO3-"))
                     deltaconc("CO3-2") = conc("CO3-2") - conc0("CO3-2")
 
                     '   3   Ammonia ionization	            H+ + NH3 <--> NH4+ 
 
                     conc("NH4+") = kr(2) * conc("NH3") * conc("H+")
-                    conc("NH4+") = Math.Min(conc("NH4+"), conc("NH3"))
+                    'conc("NH4+") = Math.Min(conc("NH4+"), conc("NH3"))
                     deltaconc("NH4+") = conc("NH4+") - conc0("NH4+")
 
                     '   4   Carbamate production	        HCO3- + NH3 <--> H2NCOO- + H2O 
 
                     conc("H2NCOO-") = kr(3) * conc("HCO3-") * conc("NH3")
-                    conc("H2NCOO-") = Math.Min(Math.Min(conc("H2NCOO-"), conc("HCO3-")), conc("NH3"))
+                    'conc("H2NCOO-") = Math.Min(Math.Min(conc("H2NCOO-"), conc("HCO3-")), conc("NH3"))
                     deltaconc("H2NCOO-") = conc("H2NCOO-") - conc0("H2NCOO-")
 
                     '   5   H2S ionization	                H2S <--> HS- + H+ 
@@ -352,13 +354,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     k5 = Exp(Log(kr(4)) + 0.427 * conc("CO2"))
 
                     conc("HS-") = k5 * conc("H2S") / conc("H+")
-                    conc("HS-") = Math.Min(conc("HS-"), conc("H2S"))
+                    'conc("HS-") = Math.Min(conc("HS-"), conc("H2S"))
                     deltaconc("HS-") = conc("HS-") - conc0("HS-")
 
                     '   6   Sulfide production	            HS- <--> S-2 + H+ 
 
                     conc("S-2") = kr(5) * conc("HS-") / conc("H+")
-                    conc("S-2") = Math.Min(conc("HS-"), conc("S-2"))
+                    'conc("S-2") = Math.Min(conc("HS-"), conc("S-2"))
                     deltaconc("S-2") = conc("S-2") - conc0("S-2")
 
                     '   7   Water self-ionization	        H2O <--> OH- + H+ 
@@ -366,9 +368,20 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     conc("OH-") = kr(6) / conc("H+") + conc("NaOH")
                     conc("Na+") = conc("NaOH")
-                    conc("Na+") = Math.Max(conc("Na+"), 0.0#)
+                    'conc("Na+") = Math.Max(conc("Na+"), 0.0#)
                     deltaconc("OH-") = conc("OH-") - conc0("OH-")
                     deltaconc("Na+") = conc("Na+") - conc0("Na+")
+
+                    'mass balance
+
+                    conc("CO2") = conc0("CO2") - conc("HCO3-") - 2 * conc("CO3-2") - conc("H2NCOO-")
+                    If conc("CO2") < 0.0# Then conc("CO2") = 0.0#
+                    conc("H2S") = conc0("H2S") - conc("HS-") - 2 * conc("S-2")
+                    If conc("H2S") < 0.0# Then conc("H2S") = 0.0#
+                    conc("NH3") = conc0("NH3") - conc("NH4+") - conc("H2NCOO-")
+                    If conc("NH3") < 0.0# Then conc("NH3") = 0.0#
+                    conc("NaOH") = conc0("NaOH") - conc("Na+")
+                    If conc("NaOH") < 0.0# Then conc("NaOH") = 0.0#
 
                     'neutrality check
 
@@ -394,8 +407,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         If pH < 2.0# Then pH = 2.0#
                         If pH > 14.0# Then pH = 14.0#
                     End If
-
-                    conc("H+") = 10 ^ (-pH)
 
                     icount += 1
 
