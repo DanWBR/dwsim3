@@ -371,7 +371,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                     'calculate maximum possible exchanged heat for both sides.
 
-                    
                     If DebugMode Then AppendDebugLine(String.Format("Doing a PT flash to calculate cold stream outlet enthalpy... P = {0} Pa, T = {1} K", Pc2, Tc1))
 
                     StInCold.PropertyPackage.CurrentMaterialStream = StInCold
@@ -429,6 +428,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 End If
                         End Select
 
+                        If Double.IsNaN(LMTD) Or Double.IsInfinity(LMTD) Then Throw New Exception(DWSIM.App.GetLocalString("HXCalcError"))
+
                         Q_UA = U / 1000 * A * LMTD 'calculate Q due to temperature difference
 
                         Q_old = Qi
@@ -478,6 +479,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             LMTD = ((Th1 - Tc2) - (Th2 - Tc1)) / Math.Log((Th1 - Tc2) / (Th2 - Tc1))
                     End Select
 
+                    If Double.IsNaN(LMTD) Or Double.IsInfinity(LMTD) Then Throw New Exception(DWSIM.App.GetLocalString("HXCalcError"))
+
                     U = Q / (A * LMTD) * 1000
 
                 Case HeatExchangerCalcMode.CalcTempColdOut
@@ -504,6 +507,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Case FlowDirection.CounterCurrent
                             LMTD = ((Th1 - Tc2) - (Th2 - Tc1)) / Math.Log((Th1 - Tc2) / (Th2 - Tc1))
                     End Select
+
+                    If Double.IsNaN(LMTD) Or Double.IsInfinity(LMTD) Then Throw New Exception(DWSIM.App.GetLocalString("HXCalcError"))
+
                     U = Q / (A * LMTD) * 1000
 
                 Case HeatExchangerCalcMode.CalcTempHotOut
@@ -529,6 +535,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Case FlowDirection.CounterCurrent
                             LMTD = ((Th1 - Tc2) - (Th2 - Tc1)) / Math.Log((Th1 - Tc2) / (Th2 - Tc1))
                     End Select
+
+                    If Double.IsNaN(LMTD) Or Double.IsInfinity(LMTD) Then Throw New Exception(DWSIM.App.GetLocalString("HXCalcError"))
 
                     U = Q / (A * LMTD) * 1000
 
@@ -570,7 +578,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Case FlowDirection.CounterCurrent
                             LMTD = ((Th1 - Tc2) - (Th2 - Tc1)) / Math.Log((Th1 - Tc2) / (Th2 - Tc1))
                     End Select
+
+                    If Double.IsNaN(LMTD) Or Double.IsInfinity(LMTD) Then Throw New Exception(DWSIM.App.GetLocalString("HXCalcError"))
+
                     U = Me.OverallCoefficient
+
                     A = Q / (LMTD * U) * 1000
 
                 Case HeatExchangerCalcMode.ShellandTube_Rating, HeatExchangerCalcMode.ShellandTube_CalcFoulingFactor
@@ -605,6 +617,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             Case FlowDirection.CounterCurrent
                                 LMTD = ((Th1 - Tc2) - (Th2 - Tc1)) / Math.Log((Th1 - Tc2) / (Th2 - Tc1))
                         End Select
+
+                        If Double.IsNaN(LMTD) Or Double.IsInfinity(LMTD) Then Throw New Exception(DWSIM.App.GetLocalString("HXCalcError"))
+
                         Dim rhoc, muc, kc, rhoh, muh, kh, rs, rt, Atc, Nc, di, de, pitch, L, n, hi, nt, vt, Ret, Prt As Double
                         If STProperties.Tube_Fluid = 0 Then
                             'cold

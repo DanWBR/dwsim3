@@ -4060,7 +4060,7 @@
     <value>Molar Entropy</value>
   </data>
   <data name="HXCalcError" xml:space="preserve">
-    <value>Error calculating the exchanger: the parameters generated a physically inconsistent solution.</value>
+    <value>Error calculating the exchanger: input parameters generated a physically inconsistent solution.</value>
   </data>
   <data name="TKResTime" xml:space="preserve">
     <value>Tank fluid residence time</value>
