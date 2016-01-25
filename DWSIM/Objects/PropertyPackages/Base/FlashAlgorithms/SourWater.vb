@@ -295,7 +295,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 If conc("H+") > 0.0# Then
                     pH = -Log10(conc("H+"))
                 Else
-                    pH = 7.0#
+                    pH = 8.5
                     conc("H+") = 10 ^ (-pH)
                 End If
 
@@ -402,7 +402,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     If icount <= 2 Then
                         pH += 0.01
                     Else
-                        pH = pH - fx * (pH - pH_old0) / (fx - fx_old0)
+                        pH = pH - 0.05 * fx * (pH - pH_old0) / (fx - fx_old0)
                         If Double.IsNaN(pH) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
                         If pH < 2.0# Then pH = 2.0#
                         If pH > 14.0# Then pH = 14.0#
@@ -427,26 +427,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 If id("S-2") > -1 Then Vnl(id("S-2")) = conc(("S-2")) * totalkg
                 If id("Na+") > -1 Then Vnl(id("Na+")) = conc(("Na+")) * totalkg
 
-                If id("NaOH") > -1 Then
-                    If id("Na+") > -1 Then Vnl(id("NaOH")) -= conc("Na+") * totalkg
-                    If Vnl(id("NaOH")) < 0.0# Then Vnl(id("NaOH")) = 0.0#
-                End If
-                If id("NH3") > -1 Then
-                    If id("NH4+") > -1 Then Vnl(id("NH3")) -= conc("NH4+") * totalkg
-                    If id("H2NCOO-") > -1 Then Vnl(id("NH3")) -= conc("H2NCOO-") * totalkg
-                    If Vnl(id("NH3")) < 0.0# Then Vnl(id("NH3")) = 0.0#
-                End If
-                If id("H2S") > -1 Then
-                    If id("HS-") > -1 Then Vnl(id("H2S")) -= conc("HS-") * totalkg
-                    If id("S-2") > -1 Then Vnl(id("H2S")) -= conc("S-2") * totalkg
-                    If Vnl(id("H2S")) < 0.0# Then Vnl(id("H2S")) = 0.0#
-                End If
-                If id("CO2") > -1 Then
-                    If id("HCO3-") > -1 Then Vnl(id("CO2")) -= conc("HCO3-") * totalkg
-                    If id("CO3-2") > -1 Then Vnl(id("CO2")) -= conc("CO3-2") * totalkg
-                    If id("H2NCOO-") > -1 Then Vnl(id("CO2")) -= conc("H2NCOO-") * totalkg
-                    If Vnl(id("CO2")) < 0.0# Then Vnl(id("CO2")) = 0.0#
-                End If
+                If id("NaOH") > -1 Then Vnl(id("NaOH")) = conc(("NaOH")) * totalkg
+                If id("NH3") > -1 Then Vnl(id("NH3")) = conc(("NH3")) * totalkg
+                If id("H2S") > -1 Then Vnl(id("H2S")) = conc(("H2S")) * totalkg
+                If id("CO2") > -1 Then Vnl(id("CO2")) = conc(("CO2")) * totalkg
 
                 Vxl = Vnl.NormalizeY()
 
