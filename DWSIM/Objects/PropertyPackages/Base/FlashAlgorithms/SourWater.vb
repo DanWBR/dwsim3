@@ -336,7 +336,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     '   3   Ammonia ionization	            H+ + NH3 <--> NH4+ 
 
                     conc("NH4+") = kr(2) * conc("NH3") * conc("H+")
-                    conc("NH4+") = Math.Min(Math.Min(conc("NH4+"), conc("NH3")), conc("H+"))
+                    conc("NH4+") = Math.Min(conc("NH4+"), conc("NH3"))
                     deltaconc("NH4+") = conc("NH4+") - conc0("NH4+")
 
                     '   4   Carbamate production	        HCO3- + NH3 <--> H2NCOO- + H2O 

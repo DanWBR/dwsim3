@@ -1026,6 +1026,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             Dim total As Double = collection.ToArray.SumY
 
+            If total = 0.0# Then total = 1.0#
+
             Dim molefracs As New List(Of Double)
 
             For Each value As Double In collection
@@ -1041,6 +1043,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Dim collection As List(Of Double) = LiquidPhase1MoleAmounts
 
             Dim total As Double = collection.ToArray.SumY
+
+            If total = 0.0# Then total = 1.0#
 
             Dim molefracs As New List(Of Double)
 
@@ -1058,6 +1062,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             Dim total As Double = collection.ToArray.SumY
 
+            If total = 0.0# Then total = 1.0#
+
             Dim molefracs As New List(Of Double)
 
             For Each value As Double In collection
@@ -1073,6 +1079,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Dim collection As List(Of Double) = SolidPhaseMoleAmounts
 
             Dim total As Double = collection.ToArray.SumY
+
+            If total = 0.0# Then total = 1.0#
 
             Dim molefracs As New List(Of Double)
 
@@ -1149,6 +1157,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 mol_x_mm += Vz(i) * sub1.Molar_Weight
                 i += 1
             Next
+
+            If mol_x_mm = 0.0# Then mol_x_mm = 1.0#
 
             i = 0
             For Each sub1 As ConstantProperties In CompoundProperties
