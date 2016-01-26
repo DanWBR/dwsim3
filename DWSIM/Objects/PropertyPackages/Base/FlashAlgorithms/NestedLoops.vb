@@ -156,11 +156,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             If n = 0 Then
                 If Vp(0) <= P Then
-                    L = 1
-                    V = 0
+                    L = 1.0#
+                    V = 0.0#
                 Else
-                    L = 0
-                    V = 1
+                    L = 0.0#
+                    V = 1.0#
                 End If
             End If
 
@@ -199,11 +199,18 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Vy_ant = Vy.Clone
                 Vx_ant = Vx.Clone
 
-                Vy = Vz.MultiplyY(Ki).DivideY(Ki.AddConstY(-1).MultiplyConstY(V).AddConstY(1))
-                Vx = Vy.DivideY(Ki)
-
-                Vx = Vx.NormalizeY
-                Vy = Vy.NormalizeY
+                If V = 1.0# Then
+                    Vy = Vz
+                    Vx = Vy.DivideY(Ki)
+                ElseIf V = 0.0# Then
+                    Vx = Vz
+                    Vy = Vx.MultiplyY(Ki)
+                Else
+                    Vy = Vz.MultiplyY(Ki).DivideY(Ki.AddConstY(-1).MultiplyConstY(V).AddConstY(1))
+                    Vx = Vy.DivideY(Ki)
+                    Vx = Vx.NormalizeY
+                    Vy = Vy.NormalizeY
+                End If
 
                 e1 = Vx.SubtractY(Vx_ant).AbsSumY
                 e2 = Vy.SubtractY(Vy_ant).AbsSumY
@@ -231,13 +238,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     V = -F / dF + Vant
 
-                End If
-
-                If V < 0.0# Then
-                    V = 0.0#
-                End If
-                If V > 1.0# Then
-                    V = 1.0#
                 End If
 
                 L = 1 - V
