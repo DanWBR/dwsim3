@@ -175,8 +175,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             maxit_i = CInt(PP.Parameters("PP_PTFMII"))
 
             Dim n As Integer = CompoundProperties.Count - 1
-            Dim nch, pch, pH, pH_old, pH_old0, totalkg, totalkg1, merr As Double
-            Dim icount, ecount As Integer
+            Dim nch, pch, pH, pH_old, pH_old0, totalkg, totalkg1, merr, errCN, totalCN, totalCN0, oldCN As Double
+            Dim icount, icount0, ecount As Integer
 
             'Vnf = feed molar amounts (considering 1 mol of feed)
             'Vnl = liquid phase molar amounts
@@ -290,127 +290,133 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 conc0("NH3") = conc("NH3")
                 conc0("NaOH") = conc("NaOH")
 
-                'loop: pH convergence
+                'loop: assume a concentration of H2NCOO- 
 
-                If conc("H+") > 0.0# Then
-                    pH = -Log10(conc("H+"))
-                Else
-                    pH = 7.0#
-                    conc("H+") = 10 ^ (-pH)
-                End If
+                icount0 = 0.0#
 
-                'calculate ionic strength
+                conc("H2NCOO-") = Math.Min(conc0("CO2") / 1.0E+20, conc0("NH3") / 1.0E+20)
 
-                Istr = 1 ^ 2 * conc("H+") / 2
-                Istr += 1 ^ 2 * conc("OH-") / 2
-                Istr += 1 ^ 2 * conc("HCO3-") / 2
-                Istr += 2 ^ 2 * conc("CO3-2") / 2
-                Istr += 1 ^ 2 * conc("H2NCOO-") / 2
-                Istr += 1 ^ 2 * conc("NH4+") / 2
-                Istr += 1 ^ 2 * conc("HS-") / 2
-                Istr += 2 ^ 2 * conc("S-2") / 2
-                Istr += 1 ^ 2 * conc("Na+") / 2
-
-                icount = 0
+                totalCN = conc("CO2") + conc("NH3")
 
                 Do
 
-                    'calculate liquid phase chemical equilibrium
+                    'loop: pH convergence
 
-                    conc("H+") = 10 ^ (-pH)
-
-                    '   1   CO2 ionization	                CO2 + H2O <--> H+ + HCO3- 
-
-                    ' equilibrium constant ionic strength correction
-
-                    k1 = Exp(Log(kr(0)) - 0.278 * conc("H2S") + (-1.32 + 1558.8 / (T * 1.8)) * Istr ^ 0.4)
-
-                    conc("HCO3-") = k1 * conc("CO2") / conc("H+")
-                    'conc("HCO3-") = Math.Min(conc("HCO3-"), conc("CO2"))
-                    deltaconc("HCO3-") = conc("HCO3-") - conc0("HCO3-")
-
-                    '   2   Carbonate production	        HCO3- <--> CO3-2 + H+ 
-
-                    conc("CO3-2") = kr(1) * conc("HCO3-") / conc("H+")
-                    'conc("CO3-2") = Math.Min(conc("CO3-2"), conc("HCO3-"))
-                    deltaconc("CO3-2") = conc("CO3-2") - conc0("CO3-2")
-
-                    '   3   Ammonia ionization	            H+ + NH3 <--> NH4+ 
-
-                    conc("NH4+") = kr(2) * conc("NH3") * conc("H+")
-                    'conc("NH4+") = Math.Min(conc("NH4+"), conc("NH3"))
-                    deltaconc("NH4+") = conc("NH4+") - conc0("NH4+")
-
-                    '   4   Carbamate production	        HCO3- + NH3 <--> H2NCOO- + H2O 
-
-                    conc("H2NCOO-") = kr(3) * conc("HCO3-") * conc("NH3")
-                    'conc("H2NCOO-") = Math.Min(Math.Min(conc("H2NCOO-"), conc("HCO3-")), conc("NH3"))
-                    deltaconc("H2NCOO-") = conc("H2NCOO-") - conc0("H2NCOO-")
-
-                    '   5   H2S ionization	                H2S <--> HS- + H+ 
-
-                    ' equilibrium constant ionic strength correction
-
-                    k5 = Exp(Log(kr(4)) + 0.427 * conc("CO2"))
-
-                    conc("HS-") = k5 * conc("H2S") / conc("H+")
-                    'conc("HS-") = Math.Min(conc("HS-"), conc("H2S"))
-                    deltaconc("HS-") = conc("HS-") - conc0("HS-")
-
-                    '   6   Sulfide production	            HS- <--> S-2 + H+ 
-
-                    conc("S-2") = kr(5) * conc("HS-") / conc("H+")
-                    'conc("S-2") = Math.Min(conc("HS-"), conc("S-2"))
-                    deltaconc("S-2") = conc("S-2") - conc0("S-2")
-
-                    '   7   Water self-ionization	        H2O <--> OH- + H+ 
-                    '   8   Sodium Hydroxide dissociation   NaOH <--> OH- + Na+ 
-
-                    conc("OH-") = kr(6) / conc("H+") + conc("NaOH")
-                    conc("Na+") = conc("NaOH")
-                    'conc("Na+") = Math.Max(conc("Na+"), 0.0#)
-                    deltaconc("OH-") = conc("OH-") - conc0("OH-")
-                    deltaconc("Na+") = conc("Na+") - conc0("Na+")
-
-                    'mass balance
-
-                    conc("CO2") = conc0("CO2") - conc("HCO3-") - 2 * conc("CO3-2") - conc("H2NCOO-")
-                    If conc("CO2") < 0.0# Then conc("CO2") = 0.0#
-                    conc("H2S") = conc0("H2S") - conc("HS-") - 2 * conc("S-2")
-                    If conc("H2S") < 0.0# Then conc("H2S") = 0.0#
-                    conc("NH3") = conc0("NH3") - conc("NH4+") - conc("H2NCOO-")
-                    If conc("NH3") < 0.0# Then conc("NH3") = 0.0#
-                    conc("NaOH") = conc0("NaOH") - conc("Na+")
-                    If conc("NaOH") < 0.0# Then conc("NaOH") = 0.0#
-
-                    'neutrality check
-
-                    pch = conc("H+") + conc("NH4+") + conc("Na+")
-                    nch = conc("OH-") + conc("HCO3-") + conc("H2NCOO-") + conc("HS-") + 2 * conc("S-2") + 2 * conc("CO3-2")
-
-                    fx_old0 = fx_old
-                    fx_old = fx
-                    fx = pch - nch
-
-                    If Double.IsNaN(fx) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
-
-                    If Abs(fx) * 1000 < itol Then Exit Do
-
-                    pH_old0 = pH_old
-                    pH_old = pH
-
-                    If icount <= 2 Then
-                        pH += 0.01
+                    If conc("H+") > 0.0# Then
+                        pH = -Log10(conc("H+"))
                     Else
-                        pH = pH - fx * (pH - pH_old0) / (fx - fx_old0)
-                        If Double.IsNaN(pH) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
-                        If pH < 2.0# Then pH = 2.0#
-                        If pH > 14.0# Then pH = 14.0#
+                        pH = 7.0#
+                        conc("H+") = 10 ^ (-pH)
                     End If
 
-                    icount += 1
+                    'calculate ionic strength
 
-                    If icount > maxit_i * 10 Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
+                    Istr = 1 ^ 2 * conc("H+") / 2
+                    Istr += 1 ^ 2 * conc("OH-") / 2
+                    Istr += 1 ^ 2 * conc("HCO3-") / 2
+                    Istr += 2 ^ 2 * conc("CO3-2") / 2
+                    Istr += 1 ^ 2 * conc("H2NCOO-") / 2
+                    Istr += 1 ^ 2 * conc("NH4+") / 2
+                    Istr += 1 ^ 2 * conc("HS-") / 2
+                    Istr += 2 ^ 2 * conc("S-2") / 2
+                    Istr += 1 ^ 2 * conc("Na+") / 2
+
+                    icount = 0
+
+                    Do
+
+                        'calculate liquid phase chemical equilibrium
+
+                        conc("H+") = 10 ^ (-pH)
+
+                        '   1   CO2 ionization	                CO2 + H2O <--> H+ + HCO3- 
+                        '   2   Carbonate production	        HCO3- <--> CO3-2 + H+ 
+
+                        ' equilibrium constant ionic strength correction
+
+                        k1 = Exp(Log(kr(0)) - 0.278 * conc("H2S") + (-1.32 + 1558.8 / (T * 1.8)) * Istr ^ 0.4)
+
+                        conc("HCO3-") = k1 * (conc0("CO2") - conc("H2NCOO-")) / (conc("H+") + k1 + 2 * k1 * kr(1) / conc("H+"))
+                        deltaconc("HCO3-") = conc("HCO3-") - conc0("HCO3-")
+
+                        conc("CO3-2") = kr(1) * conc("HCO3-") / conc("H+")
+                        deltaconc("CO3-2") = conc("CO3-2") - conc0("CO3-2")
+
+                        '   3   Ammonia ionization	            H+ + NH3 <--> NH4+ 
+                        '   4   Carbamate production	        HCO3- + NH3 <--> H2NCOO- + H2O 
+
+                        conc("NH4+") = kr(2) * (conc("H+") * conc0("NH3") - conc("H2NCOO-")) / (1 + kr(2) * conc("H+"))
+                        deltaconc("NH4+") = conc("NH4+") - conc0("NH4+")
+
+                        '   5   H2S ionization	                H2S <--> HS- + H+ 
+                        '   6   Sulfide production	            HS- <--> S-2 + H+ 
+
+                        ' equilibrium constant ionic strength correction
+
+                        k5 = Exp(Log(kr(4)) + 0.427 * conc("CO2"))
+
+                        conc("HS-") = k5 * conc0("H2S") / (conc("H+") + k5 + 2 * k5 * kr(5) / conc("H+"))
+                        deltaconc("HS-") = conc("HS-") - conc0("HS-")
+
+                        conc("S-2") = kr(5) * conc("HS-") / conc("H+")
+                        deltaconc("S-2") = conc("S-2") - conc0("S-2")
+
+                        '   7   Water self-ionization	        H2O <--> OH- + H+ 
+                        '   8   Sodium Hydroxide dissociation   NaOH <--> OH- + Na+ 
+
+                        conc("OH-") = kr(6) / conc("H+") + conc("NaOH")
+                        conc("Na+") = conc("NaOH")
+
+                        deltaconc("OH-") = conc("OH-") - conc0("OH-")
+                        deltaconc("Na+") = conc("Na+") - conc0("Na+")
+
+                        'neutrality check
+
+                        pch = conc("H+") + conc("NH4+") + conc("Na+")
+                        nch = conc("OH-") + conc("HCO3-") + conc("H2NCOO-") + conc("HS-") + 2 * conc("S-2") + 2 * conc("CO3-2")
+
+                        fx_old0 = fx_old
+                        fx_old = fx
+                        fx = pch - nch
+
+                        If Double.IsNaN(fx) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
+
+                        If Abs(fx) * 1000 < itol Then Exit Do
+
+                        pH_old0 = pH_old
+                        pH_old = pH
+
+                        If icount <= 2 Then
+                            pH += 0.01
+                        Else
+                            pH = pH - 0.3 * fx * (pH - pH_old0) / (fx - fx_old0)
+                            If Double.IsNaN(pH) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
+                            If pH < 2.0# Then pH = 2.0#
+                            If pH > 14.0# Then pH = 14.0#
+                        End If
+
+                        icount += 1
+
+                        If icount > maxit_i * 10 Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
+
+                    Loop
+
+                    If totalCN = 0.0# Then Exit Do
+
+                    oldCN = conc("H2NCOO-")
+
+                    totalCN0 = totalCN
+                    totalCN = conc("NH4+") + conc("NH3") + conc("CO2") + conc("HCO3-") + conc("CO3-2") + conc("H2NCOO-")
+
+                    errCN = totalCN - totalCN0
+
+                    If Math.Abs(errCN) < itol Then Exit Do
+
+                    conc("H2NCOO-") *= totalCN / totalCN0
+
+                    icount0 += 1
+
+                    If icount0 > maxit_i * 10 Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
 
                 Loop
 
