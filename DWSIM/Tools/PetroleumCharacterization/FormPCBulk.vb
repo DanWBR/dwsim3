@@ -59,17 +59,17 @@ Public Class FormPCBulk
 
         Dim i As Integer
 
-        If tb_mw.Text <> "" Then MW = Double.Parse(tb_mw.Text, Globalization.NumberStyles.AllowDecimalPoint)
-        If tb_sg.Text <> "" Then SG = Double.Parse(tb_sg.Text, Globalization.NumberStyles.AllowDecimalPoint)
-        If tb_wk.Text <> "" Then TB = Double.Parse(tb_wk.Text, Globalization.NumberStyles.AllowDecimalPoint)
-        If tb_v1.Text <> "" Then V1 = Double.Parse(tb_v1.Text, Globalization.NumberStyles.AllowDecimalPoint) * 0.000001 Else V1 = 0
-        If tb_v2.Text <> "" Then V2 = Double.Parse(tb_v2.Text, Globalization.NumberStyles.AllowDecimalPoint) * 0.000001 Else V2 = 0
-        If tb_t1.Text <> "" Then T1 = Double.Parse(tb_t1.Text, Globalization.NumberStyles.AllowDecimalPoint) + 273.15
-        If tb_t2.Text <> "" Then T2 = Double.Parse(tb_t2.Text, Globalization.NumberStyles.AllowDecimalPoint) + 273.15
+        If tb_mw.Text <> "" Then MW = Double.Parse(tb_mw.Text)
+        If tb_sg.Text <> "" Then SG = Double.Parse(tb_sg.Text)
+        If tb_wk.Text <> "" Then TB = cv.ConverterParaSI(su.spmp_temperature, Double.Parse(tb_wk.Text))
+        If tb_v1.Text <> "" Then V1 = cv.ConverterParaSI(su.spmp_cinematic_viscosity, Double.Parse(tb_v1.Text)) Else V1 = 0.0#
+        If tb_v2.Text <> "" Then V2 = cv.ConverterParaSI(su.spmp_cinematic_viscosity, Double.Parse(tb_v2.Text)) Else V2 = 0.0#
+        If tb_t1.Text <> "" Then T1 = cv.ConverterParaSI(su.spmp_temperature, Double.Parse(tb_t1.Text))
+        If tb_t2.Text <> "" Then T2 = cv.ConverterParaSI(su.spmp_temperature, Double.Parse(tb_t2.Text))
 
-        MW0 = Double.Parse(Me.TextBoxMW0.Text, Globalization.NumberStyles.AllowDecimalPoint)
-        SG0 = Double.Parse(Me.TextBoxSG0.Text, Globalization.NumberStyles.AllowDecimalPoint)
-        TB0 = Double.Parse(Me.TextBoxTB0.Text, Globalization.NumberStyles.AllowDecimalPoint)
+        MW0 = Double.Parse(Me.TextBoxMW0.Text)
+        SG0 = Double.Parse(Me.TextBoxSG0.Text)
+        TB0 = cv.ConverterParaSI(su.spmp_temperature, Double.Parse(Me.TextBoxTB0.Text))
 
         'Dim dMF(n), dMW(n), dSG(n), dTB(n), dMW_(n), dSG_(n), dTB_(n), dVA(n), dVB(n), dV1(n), dV2(n), dV1_(n), dV2_(n), q(n) As Double()
         Array.Resize(dMF, n + 1)
@@ -692,9 +692,20 @@ Public Class FormPCBulk
         Me.ComboBoxTC.SelectedIndex = 0
         Me.ComboBoxPC.SelectedIndex = 0
 
-        Me.TextBoxSG0.Text = Format(0.7, nf)
-        Me.TextBoxMW0.Text = Format(80, nf)
-        Me.TextBoxTB0.Text = Format(333, nf)
+        Me.LabelTemp1.Text = su.spmp_temperature
+        Me.LabelTemp2.Text = su.spmp_temperature
+        Me.LabelTemp3.Text = su.spmp_temperature
+        Me.LabelTemp4.Text = su.spmp_temperature
+
+        Me.LabelVisc1.Text = su.spmp_cinematic_viscosity
+        Me.LabelVisc2.Text = su.spmp_cinematic_viscosity
+
+        Me.tb_t1.Text = cv.ConverterDoSI(su.spmp_temperature, 37.78 + 273.15).ToString(nf)
+        Me.tb_t2.Text = cv.ConverterDoSI(su.spmp_temperature, 98.89 + 273.15).ToString(nf)
+
+        Me.TextBoxSG0.Text = (0.7).ToString(nf)
+        Me.TextBoxMW0.Text = 80
+        Me.TextBoxTB0.Text = cv.ConverterDoSI(su.spmp_temperature, 333).ToString(nf)
 
         With Me.DataGridView2.Columns
             .Item(2).HeaderText += " (" & su.spmp_temperature & ")"
