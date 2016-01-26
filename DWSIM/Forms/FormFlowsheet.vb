@@ -2149,61 +2149,20 @@ Imports WeifenLuo.WinFormsUI.Docking
                 .Item.Clear()
 
                 .Item.Add(DWSIM.App.GetLocalString("Cor"), gobj2, "LineColor", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Cordotextodatabela"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Drawing.Color)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Cabealho"), gobj2, "HeaderFont", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Fontedotextodocabeal"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Drawing.Font)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Coluna1Fonte"), gobj2, "FontCol1", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Fontedotextodacoluna"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Drawing.Font)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Coluna2Fonte"), gobj2, "FontCol2", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Fontedotextodacoluna2"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Drawing.Font)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Coluna3Fonte"), gobj2, "FontCol3", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Fontedotextodacoluna3"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Drawing.Font)
-                End With
-
                 .Item.Add(DWSIM.App.GetLocalString("Tratamentodotexto"), gobj2, "TextRenderStyle", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Tipodesuavizaoaplica"), True)
                 .Item.Add(DWSIM.App.GetLocalString("Estilodaborda"), gobj2, "BorderStyle", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Estilodabordatraceja"), True)
                 .Item.Add(DWSIM.App.GetLocalString("Cordaborda"), gobj2, "BorderColor", False, DWSIM.App.GetLocalString("Aparncia2"), "", True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Drawing.Color)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Espaamento"), gobj2, "Padding", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Espaamentoentreotext"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(Integer)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Rotao"), gobj2, "Rotation", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Inclinaodatabelaemre"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Int32)
-                End With
-
                 .Item.Add(DWSIM.App.GetLocalString("Gradiente2"), gobj2, "IsGradientBackground", False, DWSIM.App.GetLocalString("Fundo"), "Selecione se deve ser utilizado um gradiente no fundo da tabela", True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(Boolean)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Corsemgradiente"), gobj2, "FillColor", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Corsemgradiente"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Drawing.Color)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Cor1gradiente"), gobj2, "BackgroundGradientColor1", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Cor1dogradientecasoa"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Drawing.Color)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Cor2gradiente"), gobj2, "BackgroundGradientColor2", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Cor2dogradientecasoa"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Drawing.Color)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Opacidade0255"), gobj2, "Opacity", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Nveldetransparnciada"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(Integer)
-                End With
 
             End With
 
@@ -2221,62 +2180,21 @@ Imports WeifenLuo.WinFormsUI.Docking
                 .Item.Clear()
 
                 .Item.Add(DWSIM.App.GetLocalString("Cor"), gobj2, "LineColor", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Cordotextodatabela"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Drawing.Color)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Cabealho"), gobj2, "HeaderFont", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Fontedotextodocabeal"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Drawing.Font)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Coluna1Fonte"), gobj2, "FontCol1", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Fontedotextodacoluna"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Drawing.Font)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Coluna2Fonte"), gobj2, "FontCol2", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Fontedotextodacoluna2"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Drawing.Font)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Coluna3Fonte"), gobj2, "FontCol3", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Fontedotextodacoluna3"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Drawing.Font)
-                End With
-
                 .Item.Add(DWSIM.App.GetLocalString("HeaderText"), gobj2, "HeaderText", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString(""), True)
                 .Item.Add(DWSIM.App.GetLocalString("Tratamentodotexto"), gobj2, "TextRenderStyle", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Tipodesuavizaoaplica"), True)
                 .Item.Add(DWSIM.App.GetLocalString("Estilodaborda"), gobj2, "BorderStyle", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Estilodabordatraceja"), True)
                 .Item.Add(DWSIM.App.GetLocalString("Cordaborda"), gobj2, "BorderColor", False, DWSIM.App.GetLocalString("Aparncia2"), "", True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Drawing.Color)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Espaamento"), gobj2, "Padding", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Espaamentoentreotext"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(Integer)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Rotao"), gobj2, "Rotation", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Inclinaodatabelaemre"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Int32)
-                End With
-
                 .Item.Add(DWSIM.App.GetLocalString("Gradiente2"), gobj2, "IsGradientBackground", False, DWSIM.App.GetLocalString("Fundo"), "Selecione se deve ser utilizado um gradiente no fundo da tabela", True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(Boolean)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Corsemgradiente"), gobj2, "FillColor", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Corsemgradiente"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Drawing.Color)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Cor1gradiente"), gobj2, "BackgroundGradientColor1", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Cor1dogradientecasoa"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Drawing.Color)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Cor2gradiente"), gobj2, "BackgroundGradientColor2", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Cor2dogradientecasoa"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Drawing.Color)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Opacidade0255"), gobj2, "Opacity", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Nveldetransparnciada"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(Integer)
-                End With
 
             End With
 
@@ -2294,49 +2212,17 @@ Imports WeifenLuo.WinFormsUI.Docking
                 .Item.Clear()
 
                 .Item.Add(DWSIM.App.GetLocalString("Cor"), gobj2, "LineColor", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Cordotextodatabela"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Drawing.Color)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Coluna1Fonte"), gobj2, "FontCol1", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Fontedotextodacoluna"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Drawing.Font)
-                End With
-
                 .Item.Add(DWSIM.App.GetLocalString("Tratamentodotexto"), gobj2, "TextRenderStyle", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Tipodesuavizaoaplica"), True)
                 .Item.Add(DWSIM.App.GetLocalString("Estilodaborda"), gobj2, "BorderStyle", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Estilodabordatraceja"), True)
                 .Item.Add(DWSIM.App.GetLocalString("Cordaborda"), gobj2, "BorderColor", False, DWSIM.App.GetLocalString("Aparncia2"), "", True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Drawing.Color)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Espaamento"), gobj2, "Padding", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Espaamentoentreotext"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(Integer)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Rotao"), gobj2, "Rotation", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Inclinaodatabelaemre"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Int32)
-                End With
-
                 .Item.Add(DWSIM.App.GetLocalString("Gradiente2"), gobj2, "IsGradientBackground", False, DWSIM.App.GetLocalString("Fundo"), "Selecione se deve ser utilizado um gradiente no fundo da tabela", True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(Boolean)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Corsemgradiente"), gobj2, "FillColor", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Corsemgradiente"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Drawing.Color)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Cor1gradiente"), gobj2, "BackgroundGradientColor1", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Cor1dogradientecasoa"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Drawing.Color)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Cor2gradiente"), gobj2, "BackgroundGradientColor2", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Cor2dogradientecasoa"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Drawing.Color)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Opacidade0255"), gobj2, "Opacity", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Nveldetransparnciada"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(Integer)
-                End With
 
             End With
 
@@ -2354,24 +2240,11 @@ Imports WeifenLuo.WinFormsUI.Docking
                 .Item.Clear()
 
                 .Item.Add(DWSIM.App.GetLocalString("Nome"), gobj.Tag, False, DWSIM.App.GetLocalString("Descrio1"), DWSIM.App.GetLocalString("Nomedoobjeto"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Boolean)
-                End With
-
                 .Item.Add(DWSIM.App.GetLocalString("Texto"), gobj2, "Text", False, "", DWSIM.App.GetLocalString("Textoaserexibidonaca"), True)
-                With .Item(.Item.Count - 1)
-                    .CustomEditor = New System.ComponentModel.Design.MultilineStringEditor
-                    .DefaultType = GetType(String)
-                End With
+                .Item(.Item.Count - 1).CustomEditor = New System.ComponentModel.Design.MultilineStringEditor
                 .Item.Add(DWSIM.App.GetLocalString("Tratamentodotexto"), gobj2, "TextRenderStyle", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Tipodesuavizaoaplica"), True)
                 .Item.Add(DWSIM.App.GetLocalString("Cor"), gobj2, "Color", False, "", DWSIM.App.GetLocalString("Cordotexto"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Drawing.Color)
-                End With
                 .Item.Add(DWSIM.App.GetLocalString("Fonte"), gobj2, "Font", False, "", DWSIM.App.GetLocalString("Fontedotexto"), True)
-                With .Item(.Item.Count - 1)
-                    .DefaultType = GetType(System.Drawing.Font)
-                End With
 
             End With
 

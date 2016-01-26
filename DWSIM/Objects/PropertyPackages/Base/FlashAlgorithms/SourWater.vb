@@ -220,28 +220,31 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 If id("NaOH") > -1 Then
                     If id("Na+") > -1 Then Vxf(id("NaOH")) += Vxf(id("Na+"))
                 End If
-                If id("NH3") > -1 Then
-                    If id("NH4+") > -1 Then Vxf(id("NH3")) += Vxf(id("NH4+"))
-                    If id("H2NCOO-") > -1 Then Vxf(id("NH3")) += Vxf(id("H2NCOO-"))
-                End If
-                If id("H2S") > -1 Then
-                    If id("HS-") > -1 Then Vxf(id("H2S")) += Vxf(id("HS-"))
-                    If id("S-2") > -1 Then Vxf(id("H2S")) += Vxf(id("S-2"))
-                End If
-                If id("CO2") > -1 Then
-                    If id("HCO3-") > -1 Then Vxf(id("CO2")) += Vxf(id("HCO3-"))
-                    If id("CO3-2") > -1 Then Vxf(id("CO2")) += Vxf(id("CO3-2"))
-                    If id("H2NCOO-") > -1 Then Vxf(id("CO2")) += Vxf(id("H2NCOO-"))
-                End If
 
-                If id("H+") > -1 Then Vxf(id("H+")) = 0.0#
-                If id("OH-") > -1 Then Vxf(id("OH-")) = 0.0#
-                If id("HCO3-") > -1 Then Vxf(id("HCO3-")) = 0.0#
-                If id("CO3-2") > -1 Then Vxf(id("CO3-2")) = 0.0#
-                If id("H2NCOO-") > -1 Then Vxf(id("H2NCOO-")) = 0.0#
-                If id("NH4+") > -1 Then Vxf(id("NH4+")) = 0.0#
-                If id("HS-") > -1 Then Vxf(id("HS-")) = 0.0#
-                If id("S-2") > -1 Then Vxf(id("S-2")) = 0.0#
+                'If id("NH3") > -1 Then
+                '    If id("NH4+") > -1 Then Vxf(id("NH3")) += Vxf(id("NH4+"))
+                '    If id("H2NCOO-") > -1 Then Vxf(id("NH3")) += Vxf(id("H2NCOO-"))
+                'End If
+
+                'If id("H2S") > -1 Then
+                '    If id("HS-") > -1 Then Vxf(id("H2S")) += Vxf(id("HS-"))
+                '    If id("S-2") > -1 Then Vxf(id("H2S")) += Vxf(id("S-2"))
+                'End If
+
+                'If id("CO2") > -1 Then
+                '    If id("HCO3-") > -1 Then Vxf(id("CO2")) += Vxf(id("HCO3-"))
+                '    If id("CO3-2") > -1 Then Vxf(id("CO2")) += Vxf(id("CO3-2"))
+                '    If id("H2NCOO-") > -1 Then Vxf(id("CO2")) += Vxf(id("H2NCOO-"))
+                'End If
+
+                'If id("H+") > -1 Then Vxf(id("H+")) = 0.0#
+                'If id("OH-") > -1 Then Vxf(id("OH-")) = 0.0#
+                'If id("HCO3-") > -1 Then Vxf(id("HCO3-")) = 0.0#
+                'If id("CO3-2") > -1 Then Vxf(id("CO3-2")) = 0.0#
+                'If id("H2NCOO-") > -1 Then Vxf(id("H2NCOO-")) = 0.0#
+                'If id("NH4+") > -1 Then Vxf(id("NH4+")) = 0.0#
+                'If id("HS-") > -1 Then Vxf(id("HS-")) = 0.0#
+                'If id("S-2") > -1 Then Vxf(id("S-2")) = 0.0#
                 If id("Na+") > -1 Then Vxf(id("Na+")) = 0.0#
 
                 'calculate NH3-H2S-CO2-H2O VLE
@@ -305,7 +308,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     If conc("H+") > 0.0# Then
                         pH = -Log10(conc("H+"))
                     Else
-                        pH = 7.0#
+                        If (conc("NaOH") + conc("Na+")) > 0.0# Then pH = 12.0# Else pH = 7.0#
                         conc("H+") = 10 ^ (-pH)
                     End If
 
@@ -364,7 +367,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         '   7   Water self-ionization	        H2O <--> OH- + H+ 
                         '   8   Sodium Hydroxide dissociation   NaOH <--> OH- + Na+ 
 
-                        conc("OH-") = kr(6) / conc("H+") + conc("NaOH")
+                        conc("OH-") = kr(6) / conc("H+") - conc("NaOH")
+
+                        'assume full NaOH dissociation
+
                         conc("Na+") = conc("NaOH")
 
                         deltaconc("OH-") = conc("OH-") - conc0("OH-")
@@ -391,8 +397,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         Else
                             pH = pH - 0.3 * fx * (pH - pH_old0) / (fx - fx_old0)
                             If Double.IsNaN(pH) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
-                            If pH < 2.0# Then pH = 2.0#
-                            If pH > 14.0# Then pH = 14.0#
                         End If
 
                         icount += 1
@@ -472,7 +476,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 merr = (totalkg - totalkg1) / totalkg * 100
 
-                If merr > 5.0# Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
+                'If merr > 5.0# Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
 
                 ecount += 1
 
