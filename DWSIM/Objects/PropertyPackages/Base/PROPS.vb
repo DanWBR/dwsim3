@@ -714,7 +714,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Do
                 j = 0
                 Do
-                    If Vz(i) > 0.0# And Vz(j) > 0 Then aux2 += Vz(i) * Vz(j) * (1 - VKij(i, j)) * (ci(j) * (ai(i) * Tc(j) / Pc(j)) ^ 0.5 + ci(i) * (ai(j) * Tc(i) / Pc(i)) ^ 0.5)
+                    If Vz(i) > 0.0# And Vz(j) > 0 And Tc(i) > 0.0# And Tc(j) > 0.0# Then aux2 += Vz(i) * Vz(j) * (1 - VKij(i, j)) * (ci(j) * (ai(i) * Tc(j) / Pc(j)) ^ 0.5 + ci(i) * (ai(j) * Tc(i) / Pc(i)) ^ 0.5)
                     j = j + 1
                 Loop Until j = n + 1
                 i = i + 1
