@@ -45,6 +45,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             Me.m_act = New Auxiliary.NRTL
 
+            DirectCast(m_act, NRTL).InteractionParameters("Water").Add("Ammonia", New NRTL_IPData() With {.A21 = 42.2711, .A12 = -820.0819, .alpha12 = 0.3})
+
         End Sub
 
         Public Sub New()
@@ -52,6 +54,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             MyBase.New(False)
 
             Me.m_act = New Auxiliary.NRTL
+
+            DirectCast(m_act, NRTL).InteractionParameters("Water").Add("Ammonia", New NRTL_IPData() With {.A21 = 42.2711, .A12 = -820.0819, .alpha12 = 0.3})
 
             Me.IsConfigurable = False
             Me.ConfigForm = Nothing
@@ -78,6 +82,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
         Public Overrides Function DW_CalcKvalue(Vx As Array, Vy As Array, T As Double, P As Double, Optional type As String = "LV") As Double()
 
+            Me.Parameters("PP_IDEAL_VAPOR_PHASE_FUG") = 0
+         
             Dim val0 As Double() = MyBase.DW_CalcKvalue(Vx, Vy, T, P, type)
 
             Dim cprops = Me.DW_GetConstantProperties
@@ -95,7 +101,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             For Each cp In cprops
                 If cp.IsIon Then val0(i) = 1.0E-30
                 If cp.Name = "Sodium Hydroxide" Then val0(i) = 1.0E-30
-                If cp.Name = "Ammonia" And Vx(i) > 0.0# Then
+                If cp.Name = "Ammonia" And Vx(i) > 0.0# And Vx(i) < 0.05# Then
                     val0(i) = Exp(178.339 - 15517.91 / (T * 1.8) - 25.6767 * Log(T * 1.8) + 0.01966 * (T * 1.8) + (131.4 / (T * 1.8) - 0.1682) * CAS) 'psia/[mol/kg]
                     val0(i) = (val0(i) * conc("NH3") / 0.000145038) / P / Vx(i)
                 End If

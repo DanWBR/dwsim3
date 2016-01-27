@@ -1714,6 +1714,8 @@ Namespace DWSIM.SimulationObjects.Streams
                         Else
                             value = "Mixed"
                         End If
+                    Case 153
+                        value = Me.Fases(3).SPMProperties.pH
                 End Select
 
                 Return value
@@ -1778,6 +1780,7 @@ Namespace DWSIM.SimulationObjects.Streams
                     For i = 126 To 130
                         proplist.Add("PROP_MS_" + CStr(i))
                     Next
+                    proplist.Add("PROP_MS_153")
                 Case PropertyType.WR
                     For i = 0 To 4
                         proplist.Add("PROP_MS_" + CStr(i))
@@ -1830,6 +1833,7 @@ Namespace DWSIM.SimulationObjects.Streams
                     For i = 126 To 130
                         proplist.Add("PROP_MS_" + CStr(i))
                     Next
+                    proplist.Add("PROP_MS_153")
             End Select
             Return proplist.ToArray(GetType(System.String))
             proplist = Nothing
@@ -2296,6 +2300,8 @@ Namespace DWSIM.SimulationObjects.Streams
                     Case 128, 129
                         value = su.spmp_temperature
                     Case 130
+                        value = ""
+                    Case Else
                         value = ""
                 End Select
 

@@ -1238,4 +1238,7 @@
   <data name="PROP_HX_26" xml:space="preserve">
     <value>Valor máximo de troca térmica</value>
   </data>
+  <data name="PROP_MS_153" xml:space="preserve">
+    <value>pH da Fase Líquida 1</value>
+  </data>
 </root>

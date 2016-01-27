@@ -599,6 +599,9 @@
   <data name="PROP_MS_152" xml:space="preserve">
     <value>Massenstrom Feststoff</value>
   </data>
+  <data name="PROP_MS_153" xml:space="preserve">
+    <value>Liquid Phase 1 pH</value>
+  </data>
   <data name="PROP_MS_16" xml:space="preserve">
     <value>Molare Enthalpie Dampfphase</value>
     <comment>0</comment>

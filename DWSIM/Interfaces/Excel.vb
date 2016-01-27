@@ -1435,6 +1435,7 @@ Namespace Interfaces
                     End With
                 Case "Peng-Robinson (PR)"
                     With CType(pp, PengRobinsonPropertyPackage).m_pr.InteractionParameters
+                        CType(pp, PengRobinsonPropertyPackage).ip_hash = New Random().Next()
                         If Not TypeOf ip1 Is ExcelMissing And Not ip1 Is Nothing Then
                             .Clear()
                             i = 0
@@ -1494,7 +1495,7 @@ Namespace Interfaces
                     End With
                 Case "Soave-Redlich-Kwong (SRK)"
                     With CType(pp, SRKPropertyPackage).m_pr.InteractionParameters
-                        If Not TypeOf ip1 Is ExcelMissing And Not ip1 Is Nothing Then
+                         If Not TypeOf ip1 Is ExcelMissing And Not ip1 Is Nothing Then
                             .Clear()
                             i = 0
                             For Each c1 As String In compounds
