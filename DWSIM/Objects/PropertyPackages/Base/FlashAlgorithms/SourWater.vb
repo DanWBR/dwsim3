@@ -473,14 +473,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 Vnf = Vz.AddY(deltaVnf)
 
-                Vnf(id("H2O")) = Vz(id("H2O")) / F
+                Vnf(id("H2O")) = Vz(id("H2O")) - deltaVnf.SumY
                 Vxf = Vnf.NormalizeY
 
                 F = Vnf.SumY
 
                 If Double.IsNaN(F) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
 
-                If Abs(L - Lold) < etol And ecount > 1 Then Exit Do
+                If Abs(L - Lold) < etol * 100 And ecount > 1 Then Exit Do
 
                 'check mass conservation
 
