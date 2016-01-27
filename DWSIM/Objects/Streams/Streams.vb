@@ -5445,7 +5445,7 @@ Namespace DWSIM.SimulationObjects.Streams
 
                 .Clear()
 
-                .Add(0, New DWSIM.Outros.NodeItem(DWSIM.App.GetLocalString("Energia"), "", "", 0, 1, ""))
+                .Add(0, New DWSIM.Outros.NodeItem(DWSIM.App.GetPropertyName("PROP_ES_0"), "", "", 0, 1, ""))
 
             End With
 
@@ -5484,7 +5484,7 @@ Namespace DWSIM.SimulationObjects.Streams
                 End With
 
                 Dim valor = Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.Energia.GetValueOrDefault), FlowSheet.Options.NumberFormat)
-                .Item.Add(FT(DWSIM.App.GetLocalString("Energia"), su.spmp_heatflow), valor, False, DWSIM.App.GetLocalString("Propriedades2"), DWSIM.App.GetLocalString("Quantidadedeenergiap"), True)
+                .Item.Add(FT(DWSIM.App.GetPropertyName("PROP_ES_0"), su.spmp_heatflow), valor, False, DWSIM.App.GetLocalString("Propriedades2"), DWSIM.App.GetLocalString("Quantidadedeenergiap"), True)
                 With .Item(.Item.Count - 1)
                     .DefaultValue = Nothing
                     .DefaultType = GetType(Nullable(Of Double))
