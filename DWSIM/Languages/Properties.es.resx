@@ -226,7 +226,7 @@
     <comment>0</comment>
   </data>
   <data name="PROP_ES_0" xml:space="preserve">
-    <value>Energía por unidad de tiempo</value>
+    <value>Flujo de Energia</value>
     <comment>1</comment>
   </data>
   <data name="PROP_FT_0" xml:space="preserve">

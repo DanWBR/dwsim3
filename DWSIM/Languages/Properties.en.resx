@@ -238,7 +238,7 @@
     <comment>0</comment>
   </data>
   <data name="PROP_ES_0" xml:space="preserve">
-    <value>Power</value>
+    <value>Energy Flow</value>
     <comment>1</comment>
   </data>
   <data name="PROP_FT_0" xml:space="preserve">

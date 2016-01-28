@@ -165,7 +165,7 @@ Public Class FormMain
 
             'release yeppp! resources
             Try
-                Yeppp.Library.Release()
+                If My.Settings.UseSIMDExtensions Then Yeppp.Library.Release()
             Catch ex As Exception
 
             End Try

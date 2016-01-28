@@ -185,7 +185,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             'Vxv = vapor phase molar fractions
             'V, L = phase molar amounts (F = 1 = V + L)
 
-            Dim Vnf(n), Vnl(n), Vxf(n), Vxl(n), Vxl_ant(n), Vns(n), Vnv(n), Vxv(n), F, V, L, Lold, Vp(n), Ki(n), fx, fx_old, fx_old0, Istr, k1, k5 As Double
+            Dim Vnf(n), deltaVnf(n), Vnl(n), Vxf(n), Vxl(n), Vxl_ant(n), Vns(n), Vnv(n), Vxv(n), F, V, L, Lold, Vp(n), Ki(n), fx, fx_old, fx_old0, Istr, k1, k5 As Double
             Dim sumN As Double = 0
 
             Vnf = Vz.Clone
@@ -263,7 +263,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     Vnv = Vxv.MultiplyConstY(V)
                 End With
 
-                If L = 0.0# Or Vxl(id("H2O")) < 0.6 Then Exit Do
+                If L = 0.0# Then Exit Do
 
                 If id("H+") > -1 Then Vxv(id("H+")) = 0.0#
                 If id("OH-") > -1 Then Vxv(id("OH-")) = 0.0#
@@ -277,20 +277,24 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 'calculate solution amounts
 
-                totalkg = PP.AUX_MMM(Vxl) / 1000 'kg solution
+                totalkg = L * PP.AUX_MMM(Vxl) / 1000 'kg solution
 
                 'calculate concentrations
 
-                If id("H2O") > -1 Then conc("H2O") = Vnl(id("H2O")) / totalkg
-                If id("CO2") > -1 Then conc("CO2") = Vnl(id("CO2")) / totalkg
-                If id("NH3") > -1 Then conc("NH3") = Vnl(id("NH3")) / totalkg
-                If id("H2S") > -1 Then conc("H2S") = Vnl(id("H2S")) / totalkg
-                If id("NaOH") > -1 Then conc("NaOH") = Vnl(id("NaOH")) / totalkg
+                If ecount = 0 Then
+
+                    If id("H2O") > -1 Then conc("H2O") = Vnl(id("H2O")) / totalkg
+                    If id("CO2") > -1 Then conc("CO2") = Vnl(id("CO2")) / totalkg
+                    If id("NH3") > -1 Then conc("NH3") = Vnl(id("NH3")) / totalkg
+                    If id("H2S") > -1 Then conc("H2S") = Vnl(id("H2S")) / totalkg
+                    If id("NaOH") > -1 Then conc("NaOH") = Vnl(id("NaOH")) / totalkg
+
+                End If
 
                 conc0("H2O") = conc("H2O")
-                conc0("CO2") = conc("CO2")
-                conc0("H2S") = conc("H2S")
-                conc0("NH3") = conc("NH3")
+                conc0("CO2") = conc("CO2") + conc("HCO3-") + 2 * conc("CO3-2") + conc("H2NCOO-")
+                conc0("H2S") = conc("H2S") + conc("HS-") + 2 * conc("S-2")
+                conc0("NH3") = conc("NH3") + conc("NH4+") + conc("H2NCOO-")
                 conc0("NaOH") = conc("NaOH")
 
                 'loop: assume a concentration of H2NCOO- 
@@ -376,6 +380,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         deltaconc("OH-") = conc("OH-") - conc0("OH-")
                         deltaconc("Na+") = conc("Na+") - conc0("Na+")
 
+                        conc("CO2") = conc0("CO2") - conc("HCO3-") - 2 * conc("CO3-2") - conc("H2NCOO-")
+                        conc("H2S") = conc0("H2S") - conc("HS-") - 2 * conc("S-2")
+                        conc("NH3") = conc0("NH3") - conc("NH4+") - conc("H2NCOO-")
+
+                        deltaconc("CO2") = -conc0("CO2") + conc("CO2")
+                        deltaconc("H2S") = -conc0("H2S") + conc("H2S")
+                        deltaconc("NH3") = -conc0("NH3") + conc("NH3")
+
                         'neutrality check
 
                         pch = conc("H+") + conc("NH4+") + conc("Na+")
@@ -437,42 +449,42 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 If id("S-2") > -1 Then Vnl(id("S-2")) = conc(("S-2")) * totalkg
                 If id("Na+") > -1 Then Vnl(id("Na+")) = conc(("Na+")) * totalkg
 
-                If id("NaOH") > -1 Then
-                    If id("Na+") > -1 Then Vnl(id("NaOH")) -= conc("Na+") * totalkg
-                    If Vnl(id("NaOH")) < 0.0# Then Vnl(id("NaOH")) = 0.0#
-                End If
-                If id("NH3") > -1 Then
-                    If id("NH4+") > -1 Then Vnl(id("NH3")) -= conc("NH4+") * totalkg
-                    If id("H2NCOO-") > -1 Then Vnl(id("NH3")) -= conc("H2NCOO-") * totalkg
-                    If Vnl(id("NH3")) < 0.0# Then Vnl(id("NH3")) = 0.0#
-                End If
-                If id("H2S") > -1 Then
-                    If id("HS-") > -1 Then Vnl(id("H2S")) -= conc("HS-") * totalkg
-                    If id("S-2") > -1 Then Vnl(id("H2S")) -= conc("S-2") * totalkg
-                    If Vnl(id("H2S")) < 0.0# Then Vnl(id("H2S")) = 0.0#
-                End If
-                If id("CO2") > -1 Then
-                    If id("HCO3-") > -1 Then Vnl(id("CO2")) -= conc("HCO3-") * totalkg
-                    If id("CO3-2") > -1 Then Vnl(id("CO2")) -= conc("CO3-2") * totalkg
-                    If id("H2NCOO-") > -1 Then Vnl(id("CO2")) -= conc("H2NCOO-") * totalkg
-                    If Vnl(id("CO2")) < 0.0# Then Vnl(id("CO2")) = 0.0#
-                End If
+                If id("NaOH") > -1 Then Vnl(id("NaOH")) = conc("NaOH") * totalkg
+                If id("NH3") > -1 Then Vnl(id("NH3")) = conc("NH3") * totalkg
+                If id("H2S") > -1 Then Vnl(id("H2S")) = conc("H2S") * totalkg
+                If id("CO2") > -1 Then Vnl(id("CO2")) = conc("CO2") * totalkg
 
                 Vxl = Vnl.NormalizeY()
 
-                Vnf = Vnl.AddY(Vnv)
-                Vnf(id("H2O")) = Vz(id("H2O"))
+                If id("H+") > -1 Then deltaVnf(id("H+")) = deltaconc("H+") * totalkg
+                If id("OH-") > -1 Then deltaVnf(id("OH-")) = deltaconc("OH-") * totalkg
+                If id("CO2") > -1 Then deltaVnf(id("CO2")) = deltaconc("CO2") * totalkg
+                If id("HCO3-") > -1 Then deltaVnf(id("HCO3-")) = deltaconc("HCO3-") * totalkg
+                If id("CO3-2") > -1 Then deltaVnf(id("CO3-2")) = deltaconc("CO3-2") * totalkg
+                If id("H2NCOO-") > -1 Then deltaVnf(id("H2NCOO-")) = deltaconc("H2NCOO-") * totalkg
+                If id("NH4+") > -1 Then deltaVnf(id("NH4+")) = deltaconc("NH4+") * totalkg
+                If id("HS-") > -1 Then deltaVnf(id("HS-")) = deltaconc("HS-") * totalkg
+                If id("S-2") > -1 Then deltaVnf(id("S-2")) = deltaconc("S-2") * totalkg
+                If id("Na+") > -1 Then deltaVnf(id("Na+")) = deltaconc("Na+") * totalkg
+                If id("NaOH") > -1 Then deltaVnf(id("NaOH")) = deltaconc("NaOH") * totalkg
+                If id("NH3") > -1 Then deltaVnf(id("NH3")) = deltaconc("NH3") * totalkg
+                If id("H2S") > -1 Then deltaVnf(id("H2S")) = deltaconc("H2S") * totalkg
+                If id("CO2") > -1 Then deltaVnf(id("CO2")) = deltaconc("CO2") * totalkg
+
+                Vnf = Vz.AddY(deltaVnf)
+
+                Vnf(id("H2O")) = Vz(id("H2O")) - deltaVnf.SumY
                 Vxf = Vnf.NormalizeY
 
                 F = Vnf.SumY
 
                 If Double.IsNaN(F) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
 
-                If Abs(L - Lold) < etol And ecount > 1 Then Exit Do
+                If Abs(L - Lold) < etol * 100 And ecount > 1 Then Exit Do
 
                 'check mass conservation
 
-                totalkg1 = PP.AUX_MMM(Vxl) / 1000 'kg solution
+                totalkg1 = L * PP.AUX_MMM(Vxl) / 1000 'kg solution
 
                 merr = (totalkg - totalkg1) / totalkg * 100
 
