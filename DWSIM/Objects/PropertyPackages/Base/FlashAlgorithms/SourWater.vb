@@ -221,30 +221,30 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     If id("Na+") > -1 Then Vxf(id("NaOH")) += Vxf(id("Na+"))
                 End If
 
-                If id("NH3") > -1 Then
-                    If id("NH4+") > -1 Then Vxf(id("NH3")) += Vxf(id("NH4+"))
-                    If id("H2NCOO-") > -1 Then Vxf(id("NH3")) += Vxf(id("H2NCOO-"))
-                End If
+                'If id("NH3") > -1 Then
+                '    If id("NH4+") > -1 Then Vxf(id("NH3")) += Vxf(id("NH4+"))
+                '    If id("H2NCOO-") > -1 Then Vxf(id("NH3")) += Vxf(id("H2NCOO-"))
+                'End If
 
-                If id("H2S") > -1 Then
-                    If id("HS-") > -1 Then Vxf(id("H2S")) += Vxf(id("HS-"))
-                    If id("S-2") > -1 Then Vxf(id("H2S")) += Vxf(id("S-2"))
-                End If
+                'If id("H2S") > -1 Then
+                '    If id("HS-") > -1 Then Vxf(id("H2S")) += Vxf(id("HS-"))
+                '    If id("S-2") > -1 Then Vxf(id("H2S")) += Vxf(id("S-2"))
+                'End If
 
-                If id("CO2") > -1 Then
-                    If id("HCO3-") > -1 Then Vxf(id("CO2")) += Vxf(id("HCO3-"))
-                    If id("CO3-2") > -1 Then Vxf(id("CO2")) += Vxf(id("CO3-2"))
-                    If id("H2NCOO-") > -1 Then Vxf(id("CO2")) += Vxf(id("H2NCOO-"))
-                End If
+                'If id("CO2") > -1 Then
+                '    If id("HCO3-") > -1 Then Vxf(id("CO2")) += Vxf(id("HCO3-"))
+                '    If id("CO3-2") > -1 Then Vxf(id("CO2")) += Vxf(id("CO3-2"))
+                '    If id("H2NCOO-") > -1 Then Vxf(id("CO2")) += Vxf(id("H2NCOO-"))
+                'End If
 
-                If id("H+") > -1 Then Vxf(id("H+")) = 0.0#
-                If id("OH-") > -1 Then Vxf(id("OH-")) = 0.0#
-                If id("HCO3-") > -1 Then Vxf(id("HCO3-")) = 0.0#
-                If id("CO3-2") > -1 Then Vxf(id("CO3-2")) = 0.0#
-                If id("H2NCOO-") > -1 Then Vxf(id("H2NCOO-")) = 0.0#
-                If id("NH4+") > -1 Then Vxf(id("NH4+")) = 0.0#
-                If id("HS-") > -1 Then Vxf(id("HS-")) = 0.0#
-                If id("S-2") > -1 Then Vxf(id("S-2")) = 0.0#
+                'If id("H+") > -1 Then Vxf(id("H+")) = 0.0#
+                'If id("OH-") > -1 Then Vxf(id("OH-")) = 0.0#
+                'If id("HCO3-") > -1 Then Vxf(id("HCO3-")) = 0.0#
+                'If id("CO3-2") > -1 Then Vxf(id("CO3-2")) = 0.0#
+                'If id("H2NCOO-") > -1 Then Vxf(id("H2NCOO-")) = 0.0#
+                'If id("NH4+") > -1 Then Vxf(id("NH4+")) = 0.0#
+                'If id("HS-") > -1 Then Vxf(id("HS-")) = 0.0#
+                'If id("S-2") > -1 Then Vxf(id("S-2")) = 0.0#
                 If id("Na+") > -1 Then Vxf(id("Na+")) = 0.0#
 
                 'calculate NH3-H2S-CO2-H2O VLE
@@ -292,8 +292,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 End If
 
                 conc0("H2O") = conc("H2O")
-                conc0("CO2") = conc("CO2") + conc("HCO3-") + 2 * conc("CO3-2") + conc("H2NCOO-")
-                conc0("H2S") = conc("H2S") + conc("HS-") + 2 * conc("S-2")
+                conc0("CO2") = conc("CO2") + conc("HCO3-") + conc("CO3-2") + conc("H2NCOO-")
+                conc0("H2S") = conc("H2S") + conc("HS-") + conc("S-2")
                 conc0("NH3") = conc("NH3") + conc("NH4+") + conc("H2NCOO-")
                 conc0("NaOH") = conc("NaOH")
 
@@ -301,7 +301,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 icount0 = 0.0#
 
-                conc("H2NCOO-") = Math.Min(conc0("CO2") / 1.0E+20, conc0("NH3") / 1.0E+20)
+                conc("H2NCOO-") = Math.Min(conc0("CO2") / 100, conc0("NH3") / 100)
 
                 totalCN = conc0("CO2") + conc0("NH3")
 
@@ -380,8 +380,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         deltaconc("OH-") = conc("OH-") - conc0("OH-")
                         deltaconc("Na+") = conc("Na+") - conc0("Na+")
 
-                        conc("CO2") = conc0("CO2") - conc("HCO3-") - 2 * conc("CO3-2") - conc("H2NCOO-")
-                        conc("H2S") = conc0("H2S") - conc("HS-") - 2 * conc("S-2")
+                        conc("CO2") = conc0("CO2") - conc("HCO3-") - conc("CO3-2") - conc("H2NCOO-")
+                        conc("H2S") = conc0("H2S") - conc("HS-") - conc("S-2")
                         conc("NH3") = conc0("NH3") - conc("NH4+") - conc("H2NCOO-")
 
                         deltaconc("CO2") = -conc0("CO2") + conc("CO2")
@@ -473,7 +473,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 Vnf = Vz.AddY(deltaVnf)
 
-                Vnf(id("H2O")) = Vz(id("H2O")) - deltaVnf.SumY
+                Vnf(id("H2O")) = Vz(id("H2O")) - deltaconc.Values.Sum * totalkg
                 Vxf = Vnf.NormalizeY
 
                 F = Vnf.SumY
@@ -495,6 +495,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
 
             Loop
+
+            If id("NaOH") > -1 Then Vxl(id("NaOH")) = conc0("NaOH") * totalkg / L
+            If id("NH3") > -1 Then Vxl(id("NH3")) = conc0("NH3") * totalkg / L
+            If id("H2S") > -1 Then Vxl(id("H2S")) = conc0("H2S") * totalkg / L
+            If id("CO2") > -1 Then Vxl(id("CO2")) = conc0("CO2") * totalkg / L
 
             'return flash calculation results.
 
