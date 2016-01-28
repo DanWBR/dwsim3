@@ -45,7 +45,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             Me.m_act = New Auxiliary.NRTL
 
-            DirectCast(m_act, NRTL).InteractionParameters("Water").Add("Ammonia", New NRTL_IPData() With {.A21 = 42.2711, .A12 = -820.0819, .alpha12 = 0.3})
+            DirectCast(m_act, NRTL).InteractionParameters("Water").Add("Ammonia", New NRTL_IPData() With {.A21 = 1453.9636, .A12 = -1712.3278, .alpha12 = 0.2})
 
         End Sub
 
@@ -55,7 +55,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             Me.m_act = New Auxiliary.NRTL
 
-            DirectCast(m_act, NRTL).InteractionParameters("Water").Add("Ammonia", New NRTL_IPData() With {.A21 = 42.2711, .A12 = -820.0819, .alpha12 = 0.3})
+            DirectCast(m_act, NRTL).InteractionParameters("Water").Add("Ammonia", New NRTL_IPData() With {.A21 = 1453.9636, .A12 = -1712.3278, .alpha12 = 0.2})
 
             Me.IsConfigurable = False
             Me.ConfigForm = Nothing

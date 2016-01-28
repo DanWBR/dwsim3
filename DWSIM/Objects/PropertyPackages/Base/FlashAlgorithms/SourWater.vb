@@ -407,7 +407,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         If icount <= 2 Then
                             pH += 0.01
                         Else
-                            pH = pH - 0.3 * fx * (pH - pH_old0) / (fx - fx_old0)
+                            pH = pH - 0.2 * fx * (pH - pH_old0) / (fx - fx_old0)
                             If Double.IsNaN(pH) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
                         End If
 
