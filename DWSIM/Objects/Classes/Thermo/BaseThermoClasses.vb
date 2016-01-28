@@ -469,9 +469,7 @@ Namespace DWSIM.ClassesBasicasTermodinamica
 
                 Case Reaction.KOpt.Expression
 
-                    ExpContext = New Ciloci.Flee.ExpressionContext
-                    ExpContext.Imports.AddType(GetType(System.Math))
-                    ExpContext.Variables.Add("T", T)
+                    ExpContext.Variables("T") = T
                     ExpContext.Options.ParseCulture = Globalization.CultureInfo.InvariantCulture
                     Expr = ExpContext.CompileGeneric(Of Double)(Expression)
 
@@ -687,6 +685,9 @@ Namespace DWSIM.ClassesBasicasTermodinamica
 
         Public Sub New()
             Me.m_Components_and_stoichcoeffs = New Dictionary(Of String, ReactionStoichBase)
+            ExpContext = New Ciloci.Flee.ExpressionContext
+            ExpContext.Imports.AddType(GetType(System.Math))
+            ExpContext.Variables.Add("T", 0.0#)
         End Sub
 
         Public Sub New(ByVal Name As String, ByVal Id As String)

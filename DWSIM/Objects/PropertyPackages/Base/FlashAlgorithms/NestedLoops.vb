@@ -1004,7 +1004,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
 
                 i = 0
                 Do
-                    Vp(i) = PP.AUX_PVAPi(Vn(i), T)
+                    Vp(i) = PP.AUX_PVAPi(i, T)
                     i += 1
                 Loop Until i = n + 1
 
@@ -1027,20 +1027,20 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             If Not ReuseKI Then
                 i = 0
                 Do
-                    Vp(i) = PP.AUX_PVAPi(Vn(i), T)
+                    Vp(i) = PP.AUX_PVAPi(i, T)
                     Ki(i) = Vp(i) / P
                     i += 1
                 Loop Until i = n + 1
             Else
                 If Not PP.AUX_CheckTrivial(PrevKi) Then
                     For i = 0 To n
-                        Vp(i) = PP.AUX_PVAPi(Vn(i), T)
+                        Vp(i) = PP.AUX_PVAPi(i, T)
                         Ki(i) = PrevKi(i)
                     Next
                 Else
                     i = 0
                     Do
-                        Vp(i) = PP.AUX_PVAPi(Vn(i), T)
+                        Vp(i) = PP.AUX_PVAPi(i, T)
                         Ki(i) = Vp(i) / P
                         i += 1
                     Loop Until i = n + 1
@@ -1388,20 +1388,20 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             If Not ReuseKI Then
                 i = 0
                 Do
-                    Vp(i) = PP.AUX_PVAPi(Vn(i), T)
+                    Vp(i) = PP.AUX_PVAPi(i, T)
                     Ki(i) = Vp(i) / P
                     i += 1
                 Loop Until i = n + 1
             Else
                 If Not PP.AUX_CheckTrivial(PrevKi) And Not Double.IsNaN(PrevKi(0)) Then
                     For i = 0 To n
-                        Vp(i) = PP.AUX_PVAPi(Vn(i), T)
+                        Vp(i) = PP.AUX_PVAPi(i, T)
                         Ki(i) = PrevKi(i)
                     Next
                 Else
                     i = 0
                     Do
-                        Vp(i) = PP.AUX_PVAPi(Vn(i), T)
+                        Vp(i) = PP.AUX_PVAPi(i, T)
                         Ki(i) = Vp(i) / P
                         i += 1
                     Loop Until i = n + 1

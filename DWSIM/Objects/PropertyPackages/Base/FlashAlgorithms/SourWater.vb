@@ -221,30 +221,30 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     If id("Na+") > -1 Then Vxf(id("NaOH")) += Vxf(id("Na+"))
                 End If
 
-                'If id("NH3") > -1 Then
-                '    If id("NH4+") > -1 Then Vxf(id("NH3")) += Vxf(id("NH4+"))
-                '    If id("H2NCOO-") > -1 Then Vxf(id("NH3")) += Vxf(id("H2NCOO-"))
-                'End If
+                If id("NH3") > -1 Then
+                    If id("NH4+") > -1 Then Vxf(id("NH3")) += Vxf(id("NH4+"))
+                    If id("H2NCOO-") > -1 Then Vxf(id("NH3")) += Vxf(id("H2NCOO-"))
+                End If
 
-                'If id("H2S") > -1 Then
-                '    If id("HS-") > -1 Then Vxf(id("H2S")) += Vxf(id("HS-"))
-                '    If id("S-2") > -1 Then Vxf(id("H2S")) += Vxf(id("S-2"))
-                'End If
+                If id("H2S") > -1 Then
+                    If id("HS-") > -1 Then Vxf(id("H2S")) += Vxf(id("HS-"))
+                    If id("S-2") > -1 Then Vxf(id("H2S")) += Vxf(id("S-2"))
+                End If
 
-                'If id("CO2") > -1 Then
-                '    If id("HCO3-") > -1 Then Vxf(id("CO2")) += Vxf(id("HCO3-"))
-                '    If id("CO3-2") > -1 Then Vxf(id("CO2")) += Vxf(id("CO3-2"))
-                '    If id("H2NCOO-") > -1 Then Vxf(id("CO2")) += Vxf(id("H2NCOO-"))
-                'End If
+                If id("CO2") > -1 Then
+                    If id("HCO3-") > -1 Then Vxf(id("CO2")) += Vxf(id("HCO3-"))
+                    If id("CO3-2") > -1 Then Vxf(id("CO2")) += Vxf(id("CO3-2"))
+                    If id("H2NCOO-") > -1 Then Vxf(id("CO2")) += Vxf(id("H2NCOO-"))
+                End If
 
-                'If id("H+") > -1 Then Vxf(id("H+")) = 0.0#
-                'If id("OH-") > -1 Then Vxf(id("OH-")) = 0.0#
-                'If id("HCO3-") > -1 Then Vxf(id("HCO3-")) = 0.0#
-                'If id("CO3-2") > -1 Then Vxf(id("CO3-2")) = 0.0#
-                'If id("H2NCOO-") > -1 Then Vxf(id("H2NCOO-")) = 0.0#
-                'If id("NH4+") > -1 Then Vxf(id("NH4+")) = 0.0#
-                'If id("HS-") > -1 Then Vxf(id("HS-")) = 0.0#
-                'If id("S-2") > -1 Then Vxf(id("S-2")) = 0.0#
+                If id("H+") > -1 Then Vxf(id("H+")) = 0.0#
+                If id("OH-") > -1 Then Vxf(id("OH-")) = 0.0#
+                If id("HCO3-") > -1 Then Vxf(id("HCO3-")) = 0.0#
+                If id("CO3-2") > -1 Then Vxf(id("CO3-2")) = 0.0#
+                If id("H2NCOO-") > -1 Then Vxf(id("H2NCOO-")) = 0.0#
+                If id("NH4+") > -1 Then Vxf(id("NH4+")) = 0.0#
+                If id("HS-") > -1 Then Vxf(id("HS-")) = 0.0#
+                If id("S-2") > -1 Then Vxf(id("S-2")) = 0.0#
                 If id("Na+") > -1 Then Vxf(id("Na+")) = 0.0#
 
                 'calculate NH3-H2S-CO2-H2O VLE
@@ -303,7 +303,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 conc("H2NCOO-") = Math.Min(conc0("CO2") / 1.0E+20, conc0("NH3") / 1.0E+20)
 
-                totalCN = conc("CO2") + conc("NH3")
+                totalCN = conc0("CO2") + conc0("NH3")
 
                 Do
 
@@ -312,7 +312,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     If conc("H+") > 0.0# Then
                         pH = -Log10(conc("H+"))
                     Else
-                        If (conc("NaOH") + conc("Na+")) > 0.0# Then pH = 12.0# Else pH = 7.0#
+                        If (conc("NaOH") + conc("Na+") + conc("NH3")) > 0.0# Then pH = 12.0# Else pH = 7.0#
                         conc("H+") = 10 ^ (-pH)
                     End If
 
@@ -510,10 +510,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         Public Overrides Function Flash_PH(ByVal Vz As Double(), ByVal P As Double, ByVal H As Double, ByVal Tref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
-            Dim Vn(1) As String, Vx(1), Vy(1), Vx_ant(1), Vy_ant(1), Vp(1), Ki(1), Ki_ant(1), fi(1), Vs(1) As Double
-            Dim i, n, ecount As Integer
+            Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
+
+            Dim i, j, n, ecount As Integer
             Dim d1, d2 As Date, dt As TimeSpan
-            Dim L, V, T, S, Pf As Double
+            Dim L, V, T, Pf As Double
 
             d1 = Date.Now
 
@@ -523,7 +524,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Hf = H
             Pf = P
 
-            ReDim Vn(n), Vx(n), Vy(n), Vx_ant(n), Vy_ant(n), Vp(n), Ki(n), fi(n), Vs(n)
+            Dim Vn(n) As String, Vx(n), Vy(n), Vx_ant(n), Vy_ant(n), Vp(n), Ki(n), Ki_ant(n), fi(n) As Double
 
             Vn = PP.RET_VNAMES()
             fi = Vz.Clone
@@ -533,115 +534,91 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Dim tolINT As Double = CDbl(PP.Parameters("PP_PHFILT"))
             Dim tolEXT As Double = CDbl(PP.Parameters("PP_PHFELT"))
 
-            Dim Tsup, Tinf
+            Dim Tmin, Tmax, epsilon(4), maxDT As Double
 
-            Tinf = 100
-            Tsup = 2000
+            Tmax = 4000.0#
+            Tmin = 50.0#
+            maxDT = 30.0#
 
-            Dim bo As New BrentOpt.Brent
-            bo.DefineFuncDelegate(AddressOf Herror)
-            WriteDebugInfo("PH Flash: Starting calculation for " & Tinf & " <= T <= " & Tsup)
+            epsilon(0) = 0.1
+            epsilon(1) = 0.01
+            epsilon(2) = 0.001
+            epsilon(3) = 0.0001
+            epsilon(4) = 0.00001
 
-            Dim fx, fx2, dfdx, x1 As Double
+            Dim fx, fx2, dfdx, x1, dx As Double
 
-            Dim cnt As Integer = 0
+            Dim cnt As Integer
 
-            Tref = 300.0#
-            x1 = Tref
-            Do
-                fx = Herror(x1, {P, Vz, PP})
-                fx2 = Herror(x1 + 1, {P, Vz, PP})
-                If Abs(fx) < etol Then Exit Do
-                dfdx = (fx2 - fx)
-                x1 = x1 - fx / dfdx
-                If x1 < 0 Then GoTo alt
-                cnt += 1
-            Loop Until cnt > 100 Or Double.IsNaN(x1)
-            If Double.IsNaN(x1) Then
-alt:            T = bo.BrentOpt(Tinf, Tsup, 100, tolEXT, maxitEXT, {P, Vz, PP})
-            Else
+            If Tref = 0.0# Then Tref = 298.15
+
+            ' New solver 2016 Jan. 11 by Keita. K.
+            ' https://sourceforge.net/p/dwsim/discussion/844528/thread/b45e6021
+
+            For j = 0 To 4
+
+                cnt = 0
+                x1 = Tref
+
+                Do
+
+                    If My.Settings.EnableParallelProcessing Then
+                        My.MyApplication.IsRunningParallelTasks = True
+                        Dim task1 = Task.Factory.StartNew(Sub()
+                                                              fx = Herror("PT", x1, P, Vz, PP)(0)
+                                                          End Sub,
+                                                            My.MyApplication.TaskCancellationTokenSource.Token,
+                                                            TaskCreationOptions.None,
+                                                            My.MyApplication.AppTaskScheduler)
+                        Dim task2 = Task.Factory.StartNew(Sub()
+                                                              fx2 = Herror("PT", x1 + epsilon(j), P, Vz, PP)(0)
+                                                          End Sub,
+                                                            My.MyApplication.TaskCancellationTokenSource.Token,
+                                                            TaskCreationOptions.None,
+                                                            My.MyApplication.AppTaskScheduler)
+                        Task.WaitAll(task1, task2)
+                        My.MyApplication.IsRunningParallelTasks = False
+                    Else
+                        fx = Herror("PT", x1, P, Vz, PP)(0)
+                        fx2 = Herror("PT", x1 + epsilon(j), P, Vz, PP)(0)
+                    End If
+
+                    If Abs(fx) <= tolEXT Then Exit Do
+
+                    dfdx = (fx2 - fx) / epsilon(j)
+                    dx = fx / dfdx
+
+                    If Abs(dx) > maxDT Then dx = maxDT * Sign(dx)
+
+                    x1 = x1 - dx
+                    maxDT *= 0.95
+                    cnt += 1
+
+                Loop Until cnt > maxitEXT Or Double.IsNaN(x1) Or x1 < 0.0#
+
                 T = x1
-            End If
 
-            Dim Hs, Hl, Hv, xl, xv, xs As Double
+                If Not Double.IsNaN(T) And Not Double.IsInfinity(T) And Not cnt > maxitEXT Then
+                    If T > Tmin And T < Tmax Then Exit For
+                End If
 
-            Dim wid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.CAS_Number = "7732-18-5").SingleOrDefault)
+            Next
 
-            Hs = PP.DW_CalcSolidEnthalpy(T, Vz, CompoundProperties)
-            Hl = PP.DW_CalcEnthalpy(Vz, T, P, State.Liquid)
-            Hv = PP.DW_CalcEnthalpy(Vz, T, P, State.Vapor)
+            If Double.IsNaN(T) Or T <= Tmin Or T >= Tmax Or cnt > maxitEXT Or Abs(fx) > tolEXT Then Throw New Exception("PH Flash [Sour Water]: Invalid result: Temperature did not converge.")
 
-            Dim Tsat As Double = PP.AUX_TSATi(P, wid)
-
-            Dim tmp As Object() = Nothing
-
-            If T > Tsat Then
-                'vapor only
-                tmp = Flash_PT(Vz, P, T, PP)
-                L = tmp(0)
-                V = tmp(1)
-                S = tmp(7)
-                Vx = tmp(2)
-                Vy = tmp(3)
-                Vs = tmp(8)
-            ElseIf H <= Hs Then
-                'solids only.
-                tmp = Flash_PT(Vz, P, T, PP)
-                L = 0.0#
-                V = 0.0#
-                S = 1.0#
-                Vx = PP.RET_NullVector()
-                Vy = PP.RET_NullVector()
-                Vs = Vz
-            ElseIf H > Hs And H <= Hl Then
-                'partial liquefaction.
-                xl = (H - Hs) / (Hl - Hs)
-                xs = 1 - xl
-                tmp = Flash_PT(Vz, P, T, PP)
-                L = xl
-                V = 0.0#
-                S = xs
-                Vx = Vz
-                Vy = PP.RET_NullVector()
-                Vs = Vz
-            ElseIf H > Hl And H <= Hv Then
-                'partial vaporization.
-                xv = (H - Hl) / (Hv - Hl)
-                xl = 1 - xv
-                Vz(wid) -= xv
-                Vz = Vz.NormalizeY()
-                tmp = Flash_PT(Vz, P, T, PP)
-                L = tmp(0) * xl
-                V = xv
-                S = tmp(7) * xl
-                Vx = tmp(2)
-                Vy = PP.RET_NullVector()
-                Vy(wid) = 1.0#
-                Vs = tmp(8)
-            Else
-                'vapor only.
-                tmp = Flash_PT(Vz, P, T, PP)
-                L = tmp(0)
-                V = tmp(1)
-                S = tmp(7)
-                Vx = tmp(2)
-                Vy = tmp(3)
-                Vs = tmp(8)
-            End If
-
+            Dim tmp As Object = Flash_PT(Vz, P, T, PP)
+            L = tmp(0)
+            V = tmp(1)
+            Vx = tmp(2)
+            Vy = tmp(3)
             ecount = tmp(4)
-
             For i = 0 To n
                 Ki(i) = Vy(i) / Vx(i)
             Next
-
             d2 = Date.Now
-
             dt = d2 - d1
-
-            WriteDebugInfo("PH Flash [Sour Water]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
-
-            Return New Object() {L, V, Vx, Vy, T, ecount, Ki, 0.0#, PP.RET_NullVector, S, Vs}
+            WriteDebugInfo("PH Flash [NL]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
+            Return New Object() {L, V, Vx, Vy, T, ecount, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
 
         End Function
 
@@ -649,10 +626,10 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 100, tolEXT, maxitEXT, {P, Vz, PP})
 
             Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
 
-            Dim Vn(1) As String, Vx(1), Vy(1), Vx_ant(1), Vy_ant(1), Vp(1), Ki(1), Ki_ant(1), fi(1), Vs(1) As Double
-            Dim i, n, ecount As Integer
+            Dim Vn(1) As String, Vx(1), Vy(1), Vx_ant(1), Vy_ant(1), Vp(1), Ki(1), Ki_ant(1), fi(1) As Double
+            Dim i, j, n, ecount As Integer
             Dim d1, d2 As Date, dt As TimeSpan
-            Dim L, V, Ss, T, Pf As Double
+            Dim L, V, T, Pf As Double
 
             d1 = Date.Now
 
@@ -662,7 +639,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 100, tolEXT, maxitEXT, {P, Vz, PP})
             Sf = S
             Pf = P
 
-            ReDim Vn(n), Vx(n), Vy(n), Vx_ant(n), Vy_ant(n), Vp(n), Ki(n), fi(n), Vs(n)
+            ReDim Vn(n), Vx(n), Vy(n), Vx_ant(n), Vy_ant(n), Vp(n), Ki(n), fi(n)
 
             Vn = PP.RET_VNAMES()
             fi = Vz.Clone
@@ -672,107 +649,90 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 100, tolEXT, maxitEXT, {P, Vz, PP})
             Dim tolINT As Double = CDbl(PP.Parameters("PP_PSFILT"))
             Dim tolEXT As Double = CDbl(PP.Parameters("PP_PSFELT"))
 
-            Dim Tsup, Tinf ', Ssup, Sinf
+            Dim Tmin, Tmax, epsilon(4) As Double
 
-            If Tref <> 0 Then
-                Tinf = Tref - 200
-                Tsup = Tref + 200
-            Else
-                Tinf = 100
-                Tsup = 2000
-            End If
-            If Tinf < 100 Then Tinf = 100
-            Dim bo As New BrentOpt.Brent
-            bo.DefineFuncDelegate(AddressOf Serror)
-            WriteDebugInfo("PS Flash: Starting calculation for " & Tinf & " <= T <= " & Tsup)
+            Tmax = 2000.0#
+            Tmin = 50.0#
 
-            Dim fx, fx2, dfdx, x1 As Double
+            epsilon(0) = 0.001
+            epsilon(1) = 0.01
+            epsilon(2) = 0.1
+            epsilon(3) = 1
+            epsilon(4) = 10
 
-            Dim cnt As Integer = 0
+            Dim fx, fx2, dfdx, x1, dx As Double
+
+            Dim cnt As Integer
 
             If Tref = 0 Then Tref = 298.15
-            x1 = Tref
-            Do
-                fx = Serror(x1, {P, Vz, PP})
-                fx2 = Serror(x1 + 1, {P, Vz, PP})
-                If Abs(fx) < etol Then Exit Do
-                dfdx = (fx2 - fx)
-                x1 = x1 - fx / dfdx
-                If x1 < 0 Then GoTo alt
-                cnt += 1
-            Loop Until cnt > 50 Or Double.IsNaN(x1)
-            If Double.IsNaN(x1) Then
-alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
-            Else
+
+            For j = 0 To 4
+
+                cnt = 0
+                x1 = Tref
+
+                Do
+
+                    If My.Settings.EnableParallelProcessing Then
+                        My.MyApplication.IsRunningParallelTasks = True
+                        If My.Settings.EnableGPUProcessing Then
+                            'My.MyApplication.gpu.EnableMultithreading()
+                        End If
+                        Try
+                            Dim task1 = Task.Factory.StartNew(Sub()
+                                                                  fx = Serror("PT", x1, P, Vz, PP)(0)
+                                                              End Sub,
+                                                              My.MyApplication.TaskCancellationTokenSource.Token,
+                                                              TaskCreationOptions.None,
+                                                              My.MyApplication.AppTaskScheduler)
+                            Dim task2 = Task.Factory.StartNew(Sub()
+                                                                  fx2 = Serror("PT", x1 + epsilon(j), P, Vz, PP)(0)
+                                                              End Sub,
+                                                              My.MyApplication.TaskCancellationTokenSource.Token,
+                                                              TaskCreationOptions.None,
+                                                              My.MyApplication.AppTaskScheduler)
+                            Task.WaitAll(task1, task2)
+                        Catch ae As AggregateException
+                            Throw ae.Flatten().InnerException
+                        Finally
+                            'If My.Settings.EnableGPUProcessing Then
+                            '    My.MyApplication.gpu.DisableMultithreading()
+                            '    My.MyApplication.gpu.FreeAll()
+                            'End If
+                        End Try
+                        My.MyApplication.IsRunningParallelTasks = False
+                    Else
+                        fx = Serror("PT", x1, P, Vz, PP)(0)
+                        fx2 = Serror("PT", x1 + epsilon(j), P, Vz, PP)(0)
+                    End If
+
+                    If Abs(fx) < tolEXT Then Exit Do
+
+                    dfdx = (fx2 - fx) / epsilon(j)
+                    dx = fx / dfdx
+
+                    x1 = x1 - dx
+
+                    cnt += 1
+
+                Loop Until cnt > maxitEXT Or Double.IsNaN(x1)
+
                 T = x1
-            End If
 
-            Dim Ss1, Sl, Sv, xl, xv, xs As Double
+                If Not Double.IsNaN(T) And Not Double.IsInfinity(T) And Not cnt > maxitEXT Then
+                    If T > Tmin And T < Tmax Then Exit For
+                End If
 
-            Dim wid As Integer = CompoundProperties.IndexOf((From c As ConstantProperties In CompoundProperties Select c Where c.CAS_Number = "7732-18-5").SingleOrDefault)
+            Next
 
-            Ss1 = PP.DW_CalcSolidEnthalpy(T, Vz, CompoundProperties) / T
-            Sl = PP.DW_CalcEntropy(Vz, T, P, State.Liquid)
-            Sv = PP.DW_CalcEntropy(Vz, T, P, State.Vapor)
+            If Double.IsNaN(T) Or T <= Tmin Or T >= Tmax Then Throw New Exception("PS Flash [Sour Water]: Invalid result: Temperature did not converge.")
 
-            Dim Tsat As Double = PP.AUX_TSATi(P, wid)
+            Dim tmp As Object = Flash_PT(Vz, P, T, PP)
 
-            Dim tmp As Object() = Nothing
-
-            If T > Tsat Then
-                'vapor only
-                tmp = Flash_PT(Vz, P, T, PP)
-                L = tmp(0)
-                V = tmp(1)
-                Ss = tmp(7)
-                Vx = tmp(2)
-                Vy = tmp(3)
-                Vs = tmp(8)
-            ElseIf S <= Ss1 Then
-                'solids only.
-                tmp = Flash_PT(Vz, P, T, PP)
-                L = 0.0#
-                V = 0.0#
-                Ss = 1.0#
-                Vx = PP.RET_NullVector()
-                Vy = PP.RET_NullVector()
-                Vs = Vz
-            ElseIf S > Ss1 And S <= Sl Then
-                'partial liquefaction.
-                xl = (S - Ss) / (Sl - Ss1)
-                xs = 1 - xl
-                tmp = Flash_PT(Vz, P, T, PP)
-                L = xl
-                V = 0.0#
-                Ss = xs
-                Vx = Vz
-                Vy = PP.RET_NullVector()
-                Vs = Vz
-            ElseIf S > Sl And S <= Sv Then
-                'partial vaporization.
-                xv = (S - Sl) / (Sv - Sl)
-                xl = 1 - xv
-                Vz(wid) -= xv
-                Vz = Vz.NormalizeY()
-                tmp = Flash_PT(Vz, P, T, PP)
-                L = tmp(0) * xl
-                V = xv
-                Ss = tmp(7) * xl
-                Vx = tmp(2)
-                Vy = PP.RET_NullVector()
-                Vy(wid) = 1.0#
-                Vs = tmp(8)
-            Else
-                'vapor only.
-                tmp = Flash_PT(Vz, P, T, PP)
-                L = tmp(0)
-                V = tmp(1)
-                Ss = tmp(7)
-                Vx = tmp(2)
-                Vy = tmp(3)
-                Vs = tmp(8)
-            End If
-
+            L = tmp(0)
+            V = tmp(1)
+            Vx = tmp(2)
+            Vy = tmp(3)
             ecount = tmp(4)
 
             For i = 0 To n
@@ -783,86 +743,97 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
             dt = d2 - d1
 
-            WriteDebugInfo("PS Flash [Sour Water]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
+            WriteDebugInfo("PS Flash [NL]: Converged in " & ecount & " iterations. Time taken: " & dt.TotalMilliseconds & " ms.")
 
-            Return New Object() {L, V, Vx, Vy, T, ecount, Ki, 0.0#, PP.RET_NullVector, Ss, Vs}
+            Return New Object() {L, V, Vx, Vy, T, ecount, Ki, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
 
         End Function
 
-        Function OBJ_FUNC_PH_FLASH(ByVal T As Double, ByVal H As Double, ByVal P As Double, ByVal Vz As Object, ByVal pp As PropertyPackage) As Object
+        Function OBJ_FUNC_PH_FLASH(ByVal Type As String, ByVal X As Double, ByVal P As Double, ByVal Vz() As Double, ByVal PP As PropertyPackages.PropertyPackage) As Object
 
-            Dim tmp As Object
-            tmp = Me.Flash_PT(Vz, P, T, pp)
-            Dim L, V, S, Vx(), Vy(), Vs(), _Hv, _Hl, _Hs As Double
+            Dim n As Integer = UBound(Vz)
+            Dim L, V, Vx(), Vy(), _Hl, _Hv, T As Double
 
-            Dim n = UBound(Vz)
-
-            L = tmp(0)
-            V = tmp(1)
-            S = tmp(7)
-            Vx = tmp(2)
-            Vy = tmp(3)
-            Vs = tmp(8)
+            If Type = "PT" Then
+                Dim tmp = Me.Flash_PT(Vz, P, X, PP)
+                L = tmp(0)
+                V = tmp(1)
+                Vx = tmp(2)
+                Vy = tmp(3)
+                T = X
+            Else
+                Dim tmp = Me.Flash_PV(Vz, P, X, 0.0#, PP)
+                L = tmp(0)
+                V = tmp(1)
+                Vx = tmp(2)
+                Vy = tmp(3)
+                T = tmp(4)
+            End If
 
             _Hv = 0.0#
             _Hl = 0.0#
-            _Hs = 0.0#
 
-            Dim mmg, mml, mms As Double
-            If V > 0.0# Then _Hv = pp.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
-            If L > 0.0# Then _Hl = pp.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
-            If S > 0.0# Then _Hs = pp.DW_CalcSolidEnthalpy(T, Vs, CompoundProperties)
-            mmg = pp.AUX_MMM(Vy)
-            mml = pp.AUX_MMM(Vx)
-            mms = pp.AUX_MMM(Vs)
+            Dim mmg, mml As Double
+            If V > 0 Then _Hv = PP.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
+            If L > 0 Then _Hl = PP.DW_CalcEnthalpy(Vx, T, P, State.Liquid)
+            mmg = PP.AUX_MMM(Vy)
+            mml = PP.AUX_MMM(Vx)
 
-            Dim herr As Double = Hf - (mmg * V / (mmg * V + mml * L + mms * S)) * _Hv - (mml * L / (mmg * V + mml * L + mms * S)) * _Hl - (mms * S / (mmg * V + mml * L + mms * S)) * _Hs
-            OBJ_FUNC_PH_FLASH = herr
+            Dim herr As Double = Hf - (mmg * V / (mmg * V + mml * L)) * _Hv - (mml * L / (mmg * V + mml * L)) * _Hl
+            OBJ_FUNC_PH_FLASH = {herr, T, V, L, Vy, Vx}
 
             WriteDebugInfo("PH Flash [Sour Water]: Current T = " & T & ", Current H Error = " & herr)
 
+            CheckCalculatorStatus()
+
         End Function
 
-        Function OBJ_FUNC_PS_FLASH(ByVal T As Double, ByVal S As Double, ByVal P As Double, ByVal Vz As Object, ByVal pp As PropertyPackage) As Object
-
-            Dim tmp As Object
-            tmp = Me.Flash_PT(Vz, P, T, pp)
-            Dim L, V, Ssf, Vx(), Vy(), Vs(), _Sv, _Sl, _Ss As Double
+        Function OBJ_FUNC_PS_FLASH(ByVal Type As String, ByVal X As Double, ByVal P As Double, ByVal Vz() As Double, ByVal PP As PropertyPackages.PropertyPackage) As Object
 
             Dim n = UBound(Vz)
+            Dim L, V, Vx(), Vy(), _Sl, _Sv, T As Double
 
-            L = tmp(0)
-            V = tmp(1)
-            Ssf = tmp(7)
-            Vx = tmp(2)
-            Vy = tmp(3)
-            Vs = tmp(8)
+            If Type = "PT" Then
+                Dim tmp = Me.Flash_PT(Vz, P, X, PP)
+                L = tmp(0)
+                V = tmp(1)
+                Vx = tmp(2)
+                Vy = tmp(3)
+                T = X
+            Else
+                Dim tmp = Me.Flash_PV(Vz, P, X, 0.0#, PP)
+                L = tmp(0)
+                V = tmp(1)
+                Vx = tmp(2)
+                Vy = tmp(3)
+                T = tmp(4)
+            End If
 
             _Sv = 0.0#
             _Sl = 0.0#
-            _Ss = 0.0#
-            Dim mmg, mml, mms As Double
+            Dim mmg, mml As Double
 
-            If V > 0.0# Then _Sv = pp.DW_CalcEntropy(Vy, T, P, State.Vapor)
-            If L > 0.0# Then _Sl = pp.DW_CalcEntropy(Vx, T, P, State.Liquid)
-            If Ssf > 0.0# Then _Ss = pp.DW_CalcSolidEnthalpy(T, Vs, CompoundProperties) / (T - 298.15)
-            mmg = pp.AUX_MMM(Vy)
-            mml = pp.AUX_MMM(Vx)
-            mms = pp.AUX_MMM(Vs)
+            If V > 0 Then _Sv = PP.DW_CalcEntropy(Vy, T, P, State.Vapor)
+            If L > 0 Then _Sl = PP.DW_CalcEntropy(Vx, T, P, State.Liquid)
+            mmg = PP.AUX_MMM(Vy)
+            mml = PP.AUX_MMM(Vx)
 
-            Dim serr As Double = Sf - (mmg * V / (mmg * V + mml * L + mms * Ssf)) * _Sv - (mml * L / (mmg * V + mml * L + mms * Ssf)) * _Sl - (mms * Ssf / (mmg * V + mml * L + mms * Ssf)) * _Ss
-            OBJ_FUNC_PS_FLASH = serr
+            Dim serr As Double = Sf - (mmg * V / (mmg * V + mml * L)) * _Sv - (mml * L / (mmg * V + mml * L)) * _Sl
+            OBJ_FUNC_PS_FLASH = {serr, T, V, L, Vy, Vx}
 
             WriteDebugInfo("PS Flash [Sour Water]: Current T = " & T & ", Current S Error = " & serr)
 
+            CheckCalculatorStatus()
+
         End Function
 
-        Function Herror(ByVal Tt As Double, ByVal otherargs As Object) As Double
-            Return OBJ_FUNC_PH_FLASH(Tt, Hf, otherargs(0), otherargs(1), otherargs(2))
+
+        Function Herror(ByVal type As String, ByVal X As Double, ByVal P As Double, ByVal Vz() As Double, ByVal PP As PropertyPackages.PropertyPackage) As Object
+            Return OBJ_FUNC_PH_FLASH(type, X, P, Vz, PP)
         End Function
 
-        Function Serror(ByVal Tt As Double, ByVal otherargs As Object) As Double
-            Return OBJ_FUNC_PS_FLASH(Tt, Sf, otherargs(0), otherargs(1), otherargs(2))
+        Function Serror(ByVal type As String, ByVal X As Double, ByVal P As Double, ByVal Vz() As Double, ByVal PP As PropertyPackages.PropertyPackage) As Object
+            Return OBJ_FUNC_PS_FLASH(type, X, P, Vz, PP)
         End Function
 
         Public Overrides Function Flash_TV(ByVal Vz As Double(), ByVal T As Double, ByVal V As Double, ByVal Pref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
@@ -992,7 +963,8 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             T = Tmin + V * (Tmax - Tmin)
 
             ecount = 0
-            Vspec = V
+            If Vspec = 0.0# Then Vspec = 0.001
+            If Vspec = 1.0# Then Vspec = 0.999
             x = T
 
             Do
