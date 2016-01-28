@@ -855,7 +855,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
         Public Overrides Function Flash_TV(ByVal Vz As Double(), ByVal T As Double, ByVal V As Double, ByVal Pref As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
-            Dim n, ecount As Integer
+            Dim n, ecount, i As Integer
             Dim d1, d2 As Date, dt As TimeSpan
 
             d1 = Date.Now
@@ -872,9 +872,23 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
 
             Dim nl As New DWSIMDefault
             Dim flashresult = nl.CalculateEquilibrium(FlashSpec.T, FlashSpec.VAP, T, 0.0#, PP, Vz, Nothing, Pref)
-            Pmax = flashresult.CalculatedPressure
+            If flashresult.ResultException IsNot Nothing Then
+                Pmax = 0.0#
+                For i = 0 To n
+                    Pmax += Vz(i) * PP.AUX_PVAPi(i, T)
+                Next
+            Else
+                Pmax = flashresult.CalculatedPressure
+            End If
             flashresult = nl.CalculateEquilibrium(FlashSpec.T, FlashSpec.VAP, T, 1.0#, PP, Vz, Nothing, Pref)
-            Pmin = flashresult.CalculatedPressure
+            If flashresult.ResultException IsNot Nothing Then
+                Pmin = 0.0#
+                For i = 0 To n
+                    Pmin += Vz(i) * PP.AUX_PVAPi(i, T)
+                Next
+            Else
+                Pmin = flashresult.CalculatedPressure
+            End If
 
             P = Pmin + (1 - V) * (Pmax - Pmin)
 
@@ -885,6 +899,11 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             Do
 
                 result = Flash_PT(Vz, x, T, PP)
+
+                If Pmax = Pmin Then
+                    x = P
+                    Exit Do
+                End If
 
                 Vcalc = result(1)
 

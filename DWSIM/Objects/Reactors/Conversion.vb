@@ -251,15 +251,14 @@ Namespace DWSIM.SimulationObjects.Reactors
                     rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.Expression)
                     X = rxn.Expr.Evaluate / 100.0#
 
-                    If X < 0 Or X > 1 Then
+                    If X < 0.0# Or X > 1.0# Then
 
                         Throw New ArgumentOutOfRangeException("Conversion Expression", "The conversion expression for reaction " & rxn.Name & " results in a value that is out of the valid range (0 to 100%).")
 
                     Else
 
-                        X /= ConversionLimiter.Values.Max
+                        If ConversionLimiter.Values.Max > 1.0# Then X /= ConversionLimiter.Values.Max
 
-                        ''
                         If Not Me.Conversions.ContainsKey(rxn.ID) Then
                             Me.Conversions.Add(rxn.ID, X)
                         Else
