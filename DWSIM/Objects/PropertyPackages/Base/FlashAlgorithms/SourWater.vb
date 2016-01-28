@@ -217,9 +217,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 'calculate the amount of undissociated species from dissociated ones
 
-                If id("NaOH") > -1 Then
-                    If id("Na+") > -1 Then Vxf(id("NaOH")) += Vxf(id("Na+"))
-                End If
+                'If id("NaOH") > -1 Then
+                '    If id("Na+") > -1 Then Vxf(id("NaOH")) += Vxf(id("Na+"))
+                'End If
 
                 'If id("NH3") > -1 Then
                 '    If id("NH4+") > -1 Then Vxf(id("NH3")) += Vxf(id("NH4+"))
@@ -295,7 +295,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 conc0("CO2") = conc("CO2") + conc("HCO3-") + conc("CO3-2") + conc("H2NCOO-")
                 conc0("H2S") = conc("H2S") + conc("HS-") + conc("S-2")
                 conc0("NH3") = conc("NH3") + conc("NH4+") + conc("H2NCOO-")
-                conc0("NaOH") = conc("NaOH")
+                conc0("NaOH") = conc("NaOH") + conc("Na+")
 
                 'loop: assume a concentration of H2NCOO- 
 
@@ -371,11 +371,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         '   7   Water self-ionization	        H2O <--> OH- + H+ 
                         '   8   Sodium Hydroxide dissociation   NaOH <--> OH- + Na+ 
 
-                        conc("OH-") = kr(6) / conc("H+") - conc("NaOH")
-
                         'assume full NaOH dissociation
 
                         conc("Na+") = conc("NaOH")
+
+                        conc("OH-") = kr(6) / conc("H+") - conc("Na+")
 
                         deltaconc("OH-") = conc("OH-") - conc0("OH-")
                         deltaconc("Na+") = conc("Na+") - conc0("Na+")
@@ -383,10 +383,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         conc("CO2") = conc0("CO2") - conc("HCO3-") - conc("CO3-2") - conc("H2NCOO-")
                         conc("H2S") = conc0("H2S") - conc("HS-") - conc("S-2")
                         conc("NH3") = conc0("NH3") - conc("NH4+") - conc("H2NCOO-")
+                        conc("NaOH") = conc0("NaOH") - conc("Na+")
 
                         deltaconc("CO2") = -conc0("CO2") + conc("CO2")
                         deltaconc("H2S") = -conc0("H2S") + conc("H2S")
                         deltaconc("NH3") = -conc0("NH3") + conc("NH3")
+                        deltaconc("NaOH") = -conc0("NaOH") + conc("NaOH")
 
                         'neutrality check
 
