@@ -118,11 +118,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     L = 1
                     V = 0
                     Vx = Vz
+                    Vy = Vx.MultiplyY(Ki)
                     GoTo out
                 Else
                     L = 0
                     V = 1
                     Vy = Vz
+                    Vx = Vy.DivideY(Ki)
                     GoTo out
                 End If
             End If

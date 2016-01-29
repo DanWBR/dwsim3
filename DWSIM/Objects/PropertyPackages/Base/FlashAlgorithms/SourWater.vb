@@ -245,7 +245,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 'If id("NH4+") > -1 Then Vxf(id("NH4+")) = 0.0#
                 'If id("HS-") > -1 Then Vxf(id("HS-")) = 0.0#
                 'If id("S-2") > -1 Then Vxf(id("S-2")) = 0.0#
-                If id("Na+") > -1 Then Vxf(id("Na+")) = 0.0#
+                'If id("Na+") > -1 Then Vxf(id("Na+")) = 0.0#
 
                 'calculate NH3-H2S-CO2-H2O VLE
 
@@ -373,7 +373,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                         'assume full NaOH dissociation
 
-                        conc("Na+") = conc("NaOH")
+                        conc("Na+") = conc0("NaOH")
 
                         conc("OH-") = kr(6) / conc("H+") - conc("Na+")
 
@@ -498,10 +498,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             Loop
 
-            If id("NaOH") > -1 Then Vxl(id("NaOH")) = conc0("NaOH") * totalkg / L
-            If id("NH3") > -1 Then Vxl(id("NH3")) = conc0("NH3") * totalkg / L
-            If id("H2S") > -1 Then Vxl(id("H2S")) = conc0("H2S") * totalkg / L
-            If id("CO2") > -1 Then Vxl(id("CO2")) = conc0("CO2") * totalkg / L
+            Dim divider As Double
+
+            If L > 0.0# Then divider = L Else divider = 1.0#
+
+            If id("NaOH") > -1 Then Vxl(id("NaOH")) = conc0("NaOH") * totalkg / divider
+            If id("NH3") > -1 Then Vxl(id("NH3")) = conc0("NH3") * totalkg / divider
+            If id("H2S") > -1 Then Vxl(id("H2S")) = conc0("H2S") * totalkg / divider
+            If id("CO2") > -1 Then Vxl(id("CO2")) = conc0("CO2") * totalkg / divider
 
             'return flash calculation results.
 
@@ -558,9 +562,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Dim cnt As Integer
 
             If Tref = 0.0# Then Tref = 298.15
-
-            ' New solver 2016 Jan. 11 by Keita. K.
-            ' https://sourceforge.net/p/dwsim/discussion/844528/thread/b45e6021
 
             For j = 0 To 4
 
