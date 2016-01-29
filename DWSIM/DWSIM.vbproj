@@ -1539,6 +1539,7 @@
     <None Include="Assets\samples\fstest_in.dwxml" />
     <None Include="Assets\samples\Gibbs and Equilibrium Reactors.dwxml" />
     <None Include="Assets\samples\Heat Exchanger Sizing and Design.dwxml" />
+    <None Include="Assets\samples\Humid Air.dwxml" />
     <None Include="Assets\samples\Hydrocyclone Custom Unit Operation.dwxml" />
     <None Include="Assets\samples\Hydrogen production through Methane Catalytic Steam Reforming.dwxml" />
     <None Include="Assets\samples\Membrane Custom Unit Operation.dwxml" />
@@ -1547,6 +1548,7 @@
     <None Include="Assets\samples\Petroleum Distillation.dwxml" />
     <None Include="Assets\samples\Simple Absorber Sample.dwxml" />
     <None Include="Assets\samples\Simple LNG Exchanger Custom Unit Operation.dwxml" />
+    <None Include="Assets\samples\Sour Water Stripping.dwxml" />
     <None Include="Assets\samples\Three Phase Flash.dwxml" />
     <None Include="Assets\samples\Three Phase Separator.dwxml" />
     <None Include="Assets\samples\Water-Benzene-LLE-UNIQUAC.dwrsd" />

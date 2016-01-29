@@ -325,10 +325,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             'calculate maximum theoretical heat exchange
 
-            Dim tmpstr As MaterialStream = StOutHot.Clone
+            Dim tmpstr As MaterialStream = StInHot.Clone
 
-            tmpstr.PropertyPackage = StOutHot.PropertyPackage.Clone
-            tmpstr.SetFlowsheet(StOutHot.FlowSheet)
+            tmpstr.PropertyPackage = StInHot.PropertyPackage.Clone
+            tmpstr.SetFlowsheet(StInHot.FlowSheet)
             tmpstr.PropertyPackage.CurrentMaterialStream = tmpstr
             tmpstr.Fases("0").SPMProperties.temperature = Tc1
             tmpstr.Fases("0").SPMProperties.pressure = Ph2
