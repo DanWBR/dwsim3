@@ -41,6 +41,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Dim Hv0, Hvid, Hlid, Hf, Hv, Hl As Double
         Dim Sv0, Svid, Slid, Sf, Sv, Sl As Double
 
+        Public Property LimitVaporFraction As Boolean = True
+
         Public Overrides Function Flash_PT(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
             Dim i, n, ecount As Integer
@@ -240,6 +242,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     V = -F / dF + Vant
 
+                End If
+
+                If LimitVaporFraction Then
+                    If V < 0.0# Then V = 0.0#
+                    If V > 1.0# Then V = 1.0#
                 End If
 
                 L = 1 - V

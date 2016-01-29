@@ -209,7 +209,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 kr.Add(r.EvaluateK(T, PP))
             Next
 
-            Dim nl As New DWSIMDefault()
+            Dim nl As New DWSIMDefault() With {.LimitVaporFraction = False}
 
             ecount = 0
 
@@ -861,7 +861,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Dim Vx(n), Vy(n), Vp(n), L, Vcalc, Vspec, P, x, x0, x00, fx, fx0, fx00, Pmin, Pmax As Double
             Dim result As Object
 
-            Dim nl As New DWSIMDefault
+            Dim nl As New DWSIMDefault With {.LimitVaporFraction = False}
             Dim flashresult = nl.CalculateEquilibrium(FlashSpec.T, FlashSpec.VAP, T, 0.0#, PP, Vz, Nothing, Pref)
             If flashresult.ResultException IsNot Nothing Then
                 Pmax = 0.0#
@@ -954,7 +954,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Dim Vx(n), Vy(n), Vp(n), L, Vcalc, Vspec, T, x, x0, x00, fx, fx0, fx00, Tmin, Tmax As Double
             Dim result As Object
 
-            Dim nl As New DWSIMDefault
+            Dim nl As New DWSIMDefault With {.LimitVaporFraction = False}
             Dim flashresult = nl.CalculateEquilibrium(FlashSpec.P, FlashSpec.VAP, P, 0.0#, PP, Vz, Nothing, 0.0#)
             If flashresult.ResultException IsNot Nothing Then
                 Tmin = 230
