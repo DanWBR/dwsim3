@@ -312,7 +312,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     If conc("H+") > 0.0# Then
                         pH = -Log10(conc("H+"))
                     Else
-                        If (conc("NaOH") + conc("Na+") + conc("NH3")) > 0.0# Then pH = 12.0# Else pH = 7.0#
+                        If (conc("NaOH") + conc("Na+") + conc("NH3")) > 0.0# Then pH = 12.0# Else pH = 5.0#
                         conc("H+") = 10 ^ (-pH)
                     End If
 
@@ -409,7 +409,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         If icount <= 2 Then
                             pH += 0.01
                         Else
-                            pH = pH - 0.2 * fx * (pH - pH_old0) / (fx - fx_old0)
+                            pH = pH - 0.1 * fx * (pH - pH_old0) / (fx - fx_old0)
                             If Double.IsNaN(pH) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
                         End If
 
