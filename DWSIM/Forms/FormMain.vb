@@ -782,6 +782,7 @@ Public Class FormMain
             dwdb.Load(filename)
             cpa = dwdb.Transfer()
             For Each cp As DWSIM.ClassesBasicasTermodinamica.ConstantProperties In cpa
+                cp.IsFPROPSSupported = FPROPSPropertyPackage.SupportsCompound(cp.Name)
                 If Not Me.AvailableComponents.ContainsKey(cp.Name) Then Me.AvailableComponents.Add(cp.Name, cp)
             Next
         End If

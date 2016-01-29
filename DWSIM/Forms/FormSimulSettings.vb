@@ -891,14 +891,17 @@ Public Class FormSimulSettings
                     If r.Cells(1).Value.ToString.ToLower.Equals(Me.TextBox1.Text.ToLower) Or
                                        r.Cells(2).Value.ToString.ToLower.Equals(Me.TextBox1.Text.ToLower) Or
                                        r.Cells(4).Value.ToString.ToLower.Equals(Me.TextBox1.Text.ToLower) Then
-                        r.Selected = True
+                        'r.Selected = True
                     End If
                 Else
-                    r.Selected = False
+                    'r.Selected = False
                     r.Visible = False
                 End If
             End If
         Next
+        If ogc1.Rows.GetFirstRow(DataGridViewElementStates.Visible) >= 0 Then
+            ogc1.Rows(ogc1.Rows.GetFirstRow(DataGridViewElementStates.Visible)).Selected = True
+        End If
         If TextBox1.Text = "" Then
             ogc1.FirstDisplayedScrollingRowIndex = 0
             For Each r As DataGridViewRow In ogc1.Rows
