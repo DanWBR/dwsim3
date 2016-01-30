@@ -2254,7 +2254,7 @@ restart:            fx = Me.FunctionValue(xvar)
 
                 For i = 0 To ns
                     For j = 0 To nc - 1
-                        If sumx(i) > 0.0# Then xc(i)(j) = lc(i)(j) / sumx(i) Else xc(i)(j) = 0.0#
+                        If sumx(i) > 0.0# Then xc(i)(j) = lc(i)(j) / sumx(i) Else xc(i)(j) = yc(i)(j) / K(i)(j)
                     Next
                 Next
 
@@ -2264,7 +2264,7 @@ restart:            fx = Me.FunctionValue(xvar)
                         lc(i)(j) = xt(j)(i)
                         Lj(i) += lc(i)(j)
                     Next
-                    If Lj(i) < 0 Then Lj(i) = 0.001
+                    If Lj(i) < 0.0# Then Lj(i) = 0.001
                 Next
 
                 Dim tmp As Object
@@ -2283,6 +2283,7 @@ restart:            fx = Me.FunctionValue(xvar)
                                                                      Dim tmpvar As Object = pp.DW_CalcBubT(xc(ipar), P(ipar), Tj(ipar), K(ipar), True)
                                                                      Tj(ipar) = tmpvar(4)
                                                                      K(ipar) = tmpvar(6)
+                                                                     If Tj(ipar) < 0 Or Double.IsNaN(Tj(ipar)) Then Tj(ipar) = Tj_ant(ipar)
                                                                  End Sub),
                                                       My.MyApplication.TaskCancellationTokenSource.Token,
                                                       TaskCreationOptions.None,
@@ -2298,11 +2299,14 @@ restart:            fx = Me.FunctionValue(xvar)
                         tmp = pp.DW_CalcBubT(xc(i), P(i), Tj(i), K(i), True)
                         Tj(i) = tmp(4)
                         K(i) = tmp(6)
-                        If Tj(i) < 0 Then Tj(i) = Tj_ant(i)
+                        If Tj(i) < 0 Or Double.IsNaN(Tj(i)) Then Tj(i) = Tj_ant(i)
                     Next
                 End If
 
                 For i = 0 To ns
+                    For j = 0 To nc - 1
+                        If Double.IsNaN(K(i)(j)) Then K(i)(j) = pp.AUX_PVAPi(j, Tj(i)) / P(i)
+                    Next
                     If Double.IsNaN(Tj(i)) Or Double.IsInfinity(Tj(i)) Then Tj(i) = Tj_ant(i)
                 Next
 
