@@ -5102,6 +5102,145 @@ http://www.coolprop.org
 .
 \end_layout
 
+\begin_layout Subsection
+Sour Water
+\end_layout
+
+\begin_layout Standard
+The Sour Water Property Package is based on the SWEQ model described in
+ the USEPA Report EPA-600/2-80-067: 
+\begin_inset Quotes sld
+\end_inset
+
+A new correlation of NH3, CO2, and H2S volatility data from aqueous sour
+ water systems
+\begin_inset Quotes srd
+\end_inset
+
+, by Wilson, Grant M., available online at 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://nepis.epa.gov/Exe/ZyPDF.cgi?Dockey=9101B309.PDF
+\end_layout
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+In this model, chemical and physical equilibria of NH3, CO2, and H2S in
+ sour water systems including the effects of release by caustic (NaOH) addition
+ are considered.
+ The original model is applicable for temperatures between 20 °C (68 °F)
+ and 140 °C (285 °F), and pressures up to 50 psi.
+ In DWSIM, use of the PR EOS to correct vapour phase non-idealities extends
+ this range but, due to lack of experimental data, exact ranges cannot be
+ specified.
+\end_layout
+
+\begin_layout Standard
+The Sour Water Property Package supports calculation of liquid phase chemical
+ equilibria between the following compounds:
+\end_layout
+
+\begin_layout Itemize
+Water (H2O, ChemSep database)
+\end_layout
+
+\begin_layout Itemize
+Ammonia (NH3, ChemSep database)
+\end_layout
+
+\begin_layout Itemize
+Hydrogen sulfide (H2S, ChemSep database)
+\end_layout
+
+\begin_layout Itemize
+Carbon dioxide (CO2, ChemSep database)
+\end_layout
+
+\begin_layout Itemize
+Hydron (H+, Electrolytes database)
+\end_layout
+
+\begin_layout Itemize
+Bicarbonate (HCO3-, Electrolytes database)
+\end_layout
+
+\begin_layout Itemize
+Carbonate (CO3-2, Electrolytes database)
+\end_layout
+
+\begin_layout Itemize
+Ammonium (NH4+, Electrolytes database)
+\end_layout
+
+\begin_layout Itemize
+Carbamate (H2NCOO-, Electrolytes database)
+\end_layout
+
+\begin_layout Itemize
+Bisulfide (S-2, Electrolytes database)
+\end_layout
+
+\begin_layout Itemize
+Sulfide (HS-, Electrolytes database)
+\end_layout
+
+\begin_layout Itemize
+Hydroxide (OH-, Electrolytes database)
+\end_layout
+
+\begin_layout Itemize
+Sodium Hydroxide (NaOH, Electrolytes database)
+\end_layout
+
+\begin_layout Itemize
+Sodium (Na+, Electrolytes database)
+\end_layout
+
+\begin_layout Standard
+The following reactions in the liquid (aqueous) phase are taken into account
+ by the SWEQ model:
+\end_layout
+
+\begin_layout Itemize
+CO2 ionization, CO2 + H2O <--> H+ + HCO3-
+\end_layout
+
+\begin_layout Itemize
+Carbonate production, HCO3- <--> CO3-2 + H+
+\end_layout
+
+\begin_layout Itemize
+Ammonia ionization, H+ + NH3 <--> NH4+
+\end_layout
+
+\begin_layout Itemize
+Carbamate production, HCO3- + NH3 <--> H2NCOO- + H2O
+\end_layout
+
+\begin_layout Itemize
+H2S ionization, H2S <--> HS- + H+
+\end_layout
+
+\begin_layout Itemize
+Sulfide production, HS- <--> S-2 + H+
+\end_layout
+
+\begin_layout Itemize
+Water self-ionization, H2O <--> OH- + H+
+\end_layout
+
+\begin_layout Itemize
+Sodium Hydroxide dissociation, NaOH <--> OH- + Na+ 
+\end_layout
+
 \begin_layout Section
 Reactions
 \end_layout
