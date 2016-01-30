@@ -2222,7 +2222,6 @@ restart:            fx = Me.FunctionValue(xvar)
                 'tomich
                 If doparallel Then
                     My.MyApplication.IsRunningParallelTasks = True
-                    'If My.Settings.EnableGPUProcessing Then My.MyApplication.gpu.EnableMultithreading()
                     Try
                         Dim t1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, nc, poptions,
                                                                  Sub(ipar)
@@ -2234,11 +2233,6 @@ restart:            fx = Me.FunctionValue(xvar)
                         t1.Wait()
                     Catch ae As AggregateException
                         Throw ae.Flatten().InnerException
-                    Finally
-                        'If My.Settings.EnableGPUProcessing Then
-                        '    My.MyApplication.gpu.DisableMultithreading()
-                        '    My.MyApplication.gpu.FreeAll()
-                        'End If
                     End Try
                     My.MyApplication.IsRunningParallelTasks = False
                 Else
@@ -2253,14 +2247,14 @@ restart:            fx = Me.FunctionValue(xvar)
                     sumx(i) = 0
                     For j = 0 To nc - 1
                         lc(i)(j) = xt(j)(i)
-                        If lc(i)(j) < 0 Then lc(i)(j) = 0.0000001
+                        If lc(i)(j) < 0.0# Then lc(i)(j) = 0.0000001
                         sumx(i) += lc(i)(j)
                     Next
                 Next
 
                 For i = 0 To ns
                     For j = 0 To nc - 1
-                        xc(i)(j) = lc(i)(j) / sumx(i)
+                        If sumx(i) > 0.0# Then xc(i)(j) = lc(i)(j) / sumx(i) Else xc(i)(j) = 0.0#
                     Next
                 Next
 
@@ -2329,9 +2323,6 @@ restart:            fx = Me.FunctionValue(xvar)
 
                 For i = 0 To ns
                     yc(i) = yc(i).MultiplyConstY(1 / sumy(i))
-                    'For j = 0 To nc - 1
-                    'yc(i)(j) = yc(i)(j) / sumy(i)
-                    'Next
                 Next
 
                 If doparallel Then
@@ -2371,7 +2362,6 @@ restart:            fx = Me.FunctionValue(xvar)
                         rr = spval1
                     Case ColumnSpec.SpecType.Heat_Duty
                         Q(0) = spval1
-                        'Q(0) = (Vj(1) * Hv(1) + F(0) * Hfj(0) - (Lj(0) + LSSj(0)) * Hl(0) - (Vj(0) + VSSj(0)) * Hv(0))
                         LSSj(0) = -Lj(0) - (Q(0) - Vj(1) * Hv(1) - F(0) * Hfj(0) + (Vj(0) + VSSj(0)) * Hv(0)) / Hl(0)
                         rr = (Lj(0) + LSSj(0)) / LSSj(0)
                 End Select

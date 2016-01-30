@@ -8071,7 +8071,7 @@ Final3:
             bo = False
             c = 0
             For i = 0 To n
-                If Vx(i) <> 0 Then c += 1
+                If Vx(i) <> 0.0# Then c += 1
                 If Me.DW_GetConstantProperties(i).IsBlackOil Then bo = True
             Next
 

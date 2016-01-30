@@ -968,12 +968,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             If V = 0.0# Then
 
-                Vx = Vz.Clone
-                Vnl = Vx.Clone
-
-                Pspec = P
-                Pcalc = P
-
                 'set up concentrations & ids
 
                 Dim conc, conc0, deltaconc As New Dictionary(Of String, Double)
@@ -981,93 +975,107 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 Setup(conc, conc0, deltaconc, id)
 
-                'calculate solution amounts
+                If (Vz(id("H2O")) + Vz(id("NH3"))) > 0.7 And T > 273.15 Then
 
-                totalkg = PP.AUX_MMM(Vz) / 1000 'kg solution
+                    Vx = Vz.Clone
+                    Vnl = Vx.Clone
 
-                'estimate K-values
+                    Pspec = P
+                    Pcalc = P
 
-                Ki = PP.DW_CalcKvalue(Vz, T, P)
 
-                Do
+                    'calculate solution amounts
+
+                    totalkg = PP.AUX_MMM(Vz) / 1000 'kg solution
 
                     'estimate K-values
 
-                    Vy = Ki.MultiplyY(Vx)
-                    Vy = Vy.NormalizeY
+                    Ki = PP.DW_CalcKvalue(Vz, T, P)
 
-                    'calculate concentrations
+                    Do
 
-                    If ecount = 0 Then
+                        'estimate K-values
 
-                        If id("H2O") > -1 Then conc("H2O") = Vz(id("H2O")) / totalkg
-                        If id("CO2") > -1 Then conc("CO2") = Vz(id("CO2")) / totalkg
-                        If id("NH3") > -1 Then conc("NH3") = Vz(id("NH3")) / totalkg
-                        If id("H2S") > -1 Then conc("H2S") = Vz(id("H2S")) / totalkg
-                        If id("NaOH") > -1 Then conc("NaOH") = Vz(id("NaOH")) / totalkg
+                        Vy = Ki.MultiplyY(Vx)
+                        Vy = Vy.NormalizeY
 
-                    End If
+                        'calculate concentrations
 
-                    conc0("H2O") = conc("H2O")
-                    conc0("CO2") = conc("CO2") + conc("HCO3-") + conc("CO3-2") + conc("H2NCOO-")
-                    conc0("H2S") = conc("H2S") + conc("HS-") + conc("S-2")
-                    conc0("NH3") = conc("NH3") + conc("NH4+") + conc("H2NCOO-")
-                    conc0("NaOH") = conc("NaOH") + conc("Na+")
+                        If ecount = 0 Then
 
-                    'equilibrium concentrations
+                            If id("H2O") > -1 Then conc("H2O") = Vz(id("H2O")) / totalkg
+                            If id("CO2") > -1 Then conc("CO2") = Vz(id("CO2")) / totalkg
+                            If id("NH3") > -1 Then conc("NH3") = Vz(id("NH3")) / totalkg
+                            If id("H2S") > -1 Then conc("H2S") = Vz(id("H2S")) / totalkg
+                            If id("NaOH") > -1 Then conc("NaOH") = Vz(id("NaOH")) / totalkg
 
-                    If (Vz(id("H2O")) + Vz(id("NH3"))) > 0.6 Then
+                        End If
+
+                        conc0("H2O") = conc("H2O")
+                        conc0("CO2") = conc("CO2") + conc("HCO3-") + conc("CO3-2") + conc("H2NCOO-")
+                        conc0("H2S") = conc("H2S") + conc("HS-") + conc("S-2")
+                        conc0("NH3") = conc("NH3") + conc("NH4+") + conc("H2NCOO-")
+                        conc0("NaOH") = conc("NaOH") + conc("Na+")
+
+                        'equilibrium concentrations
+
                         CalculateEquilibriumConcentrations(T, PP, conc, conc0, deltaconc, id)
-                    End If
 
-                    'mass balance
+                        'mass balance
 
-                    If id("H+") > -1 Then Vnl(id("H+")) = conc(("H+")) * totalkg
-                    If id("OH-") > -1 Then Vnl(id("OH-")) = conc(("OH-")) * totalkg
-                    If id("CO2") > -1 Then Vnl(id("CO2")) = conc(("CO2")) * totalkg
-                    If id("HCO3-") > -1 Then Vnl(id("HCO3-")) = conc(("HCO3-")) * totalkg
-                    If id("CO3-2") > -1 Then Vnl(id("CO3-2")) = conc(("CO3-2")) * totalkg
-                    If id("H2NCOO-") > -1 Then Vnl(id("H2NCOO-")) = conc(("H2NCOO-")) * totalkg
-                    If id("NH4+") > -1 Then Vnl(id("NH4+")) = conc(("NH4+")) * totalkg
-                    If id("HS-") > -1 Then Vnl(id("HS-")) = conc(("HS-")) * totalkg
-                    If id("S-2") > -1 Then Vnl(id("S-2")) = conc(("S-2")) * totalkg
-                    If id("Na+") > -1 Then Vnl(id("Na+")) = conc(("Na+")) * totalkg
+                        If id("H+") > -1 Then Vnl(id("H+")) = conc(("H+")) * totalkg
+                        If id("OH-") > -1 Then Vnl(id("OH-")) = conc(("OH-")) * totalkg
+                        If id("CO2") > -1 Then Vnl(id("CO2")) = conc(("CO2")) * totalkg
+                        If id("HCO3-") > -1 Then Vnl(id("HCO3-")) = conc(("HCO3-")) * totalkg
+                        If id("CO3-2") > -1 Then Vnl(id("CO3-2")) = conc(("CO3-2")) * totalkg
+                        If id("H2NCOO-") > -1 Then Vnl(id("H2NCOO-")) = conc(("H2NCOO-")) * totalkg
+                        If id("NH4+") > -1 Then Vnl(id("NH4+")) = conc(("NH4+")) * totalkg
+                        If id("HS-") > -1 Then Vnl(id("HS-")) = conc(("HS-")) * totalkg
+                        If id("S-2") > -1 Then Vnl(id("S-2")) = conc(("S-2")) * totalkg
+                        If id("Na+") > -1 Then Vnl(id("Na+")) = conc(("Na+")) * totalkg
 
-                    If id("NaOH") > -1 Then Vnl(id("NaOH")) = conc("NaOH") * totalkg
-                    If id("NH3") > -1 Then Vnl(id("NH3")) = conc("NH3") * totalkg
-                    If id("H2S") > -1 Then Vnl(id("H2S")) = conc("H2S") * totalkg
-                    If id("CO2") > -1 Then Vnl(id("CO2")) = conc("CO2") * totalkg
+                        If id("NaOH") > -1 Then Vnl(id("NaOH")) = conc("NaOH") * totalkg
+                        If id("NH3") > -1 Then Vnl(id("NH3")) = conc("NH3") * totalkg
+                        If id("H2S") > -1 Then Vnl(id("H2S")) = conc("H2S") * totalkg
+                        If id("CO2") > -1 Then Vnl(id("CO2")) = conc("CO2") * totalkg
 
-                    Vx = Vnl.NormalizeY()
+                        Vx = Vnl.NormalizeY()
 
-                    'calculate equilibrium pressure
+                        'calculate equilibrium pressure
 
-                    Ki = PP.DW_CalcKvalue(Vx, Vy, T, P)
+                        Ki = PP.DW_CalcKvalue(Vx, Vy, T, P)
 
-                    Pcalc = 0.0#
-                    For i = 0 To n
-                        Pcalc += Vx(i) * Ki(i) * P
-                    Next
+                        Pcalc = 0.0#
+                        For i = 0 To n
+                            Pcalc += Vx(i) * Ki(i) * P
+                        Next
 
-                    fx = Pspec - Pcalc
+                        fx = Pspec - Pcalc
 
-                    If Abs(fx) < etol * 100 Then Exit Do
+                        If Abs(fx) < etol * 100 Then Exit Do
 
-                    T = 1 / (1 / T - Log(Pspec / Pcalc) / 4500)
-                    'If T < Tmin Then T = Tmin
-                    'If T > Tmax Then T = Tmax
+                        T = 1 / (1 / T - Log(Pspec / Pcalc) / 4500)
+                        'If T < Tmin Then T = Tmin
+                        'If T > Tmax Then T = Tmax
 
-                    If Double.IsNaN(T) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
+                        If Double.IsNaN(T) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
 
-                    ecount += 1
+                        ecount += 1
 
-                    If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
+                        If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
 
-                Loop
+                    Loop
+
+                Else
+
+                    Return nl.Flash_PV(Vz, P, V, 0.0#, PP, ReuseKI, PrevKi)
+
+                End If
+
 
             ElseIf V = 1.0# Then
 
-                Return nl.Flash_PV(Vz, P, V, Tmax, PP)
+                Return nl.Flash_PV(Vz, P, V, Tmax, PP, ReuseKI, PrevKi)
 
             Else
 
