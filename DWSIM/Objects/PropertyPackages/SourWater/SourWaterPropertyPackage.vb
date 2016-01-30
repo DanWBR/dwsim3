@@ -82,10 +82,59 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             End Get
         End Property
 
+        Public Function CalcHenryConstants(Vx As Array, Vy As Array, T As Double, P As Double, Optional type As String = "LV") As Double()
+
+            Me.Parameters("PP_IDEAL_VAPOR_PHASE_FUG") = 0
+
+            Dim val0 As Double() = MyBase.DW_CalcKvalue(Vx, Vy, T, P, type)
+
+            Dim cprops = Me.DW_GetConstantProperties
+            Dim conc As New Dictionary(Of String, Double)
+            If LiquidPhaseMoleAmount = 0.0# Then LiquidPhaseMoleAmount = 1.0#
+            Dim totalkg As Double = LiquidPhaseMoleAmount * AUX_MMM(Vx) / 1000 'kg solution
+            Dim CAS, CA, CC, CS, vnh3, fnh3 As Double
+
+            Setup(conc, Vx, cprops)
+
+            CAS = conc("NH3")
+            CA = conc("NH3") + conc("NH4+") + conc("H2NCOO-")
+            CC = conc("CO2") + conc("HCO3-") + conc("CO3-2") + conc("H2NCOO-")
+            CS = conc("H2S") + conc("HS-") + conc("S-2")
+
+            Dim i As Integer = 0
+            For Each cp In cprops
+                If cp.IsIon Then val0(i) = 1.0E-30
+                If cp.Name = "Sodium Hydroxide" Then val0(i) = 1.0E-30
+                If cp.Name = "Ammonia" And Vx(i) > 0.0# Then
+                    If Vx(i) < 0.2 Then
+                        val0(i) = Exp(178.339 - 15517.91 / (T * 1.8) - 25.6767 * Log(T * 1.8) + 0.01966 * (T * 1.8) + (131.4 / (T * 1.8) - 0.1682) * CAS) + 0.06 * (2 * CC + CS) 'psia/[mol/kg]
+                        val0(i) = (val0(i) / 0.000145038)
+                    ElseIf Vx(i) >= 0.2 And Vx(i) < 0.4# Then
+                        vnh3 = Exp(178.339 - 15517.91 / (T * 1.8) - 25.6767 * Log(T * 1.8) + 0.01966 * (T * 1.8) + (131.4 / (T * 1.8) - 0.1682) * CAS) 'psia/[mol/kg]
+                        vnh3 = (val0(i) / 0.000145038)
+                        fnh3 = (Vx(i) - 0.2) / (0.2)
+                        val0(i) = val0(i) + fnh3 * (vnh3 - val0(i))
+                    End If
+                End If
+                If cp.Name = "Carbon dioxide" And Vx(i) > 0.0# Then
+                    val0(i) = Exp(18.33 - 24895.1 / (T * 1.8) + 22399600.0 / (T * 1.8) ^ 2 - 9091800000.0 / (T * 1.8) ^ 3 + 1260100000000.0 / (T * 1.8) ^ 4) 'psia/[mol/kg]
+                    val0(i) = (val0(i) / 0.000145038)
+                End If
+                If cp.Name = "Hydrogen sulfide" And Vx(i) > 0.0# Then
+                    val0(i) = Exp(100.684 - 246254 / (T * 1.8) + 239029000.0 / (T * 1.8) ^ 2 - 101898000000.0 / (T * 1.8) ^ 3 + 15973400000000.0 / (T * 1.8) ^ 4 - 0.05 * CAS + (0.965 - 486 / (T * 1.8)) * CC) 'psia/[mol/kg]
+                    val0(i) = (val0(i) / 0.000145038)
+                End If
+                i += 1
+            Next
+
+            Return val0
+
+        End Function
+
         Public Overrides Function DW_CalcKvalue(Vx As Array, Vy As Array, T As Double, P As Double, Optional type As String = "LV") As Double()
 
             Me.Parameters("PP_IDEAL_VAPOR_PHASE_FUG") = 0
-         
+
             Dim val0 As Double() = MyBase.DW_CalcKvalue(Vx, Vy, T, P, type)
 
             Dim cprops = Me.DW_GetConstantProperties

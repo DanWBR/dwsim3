@@ -370,7 +370,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 If conc("H+") > 0.0# Then
                     pH = -Log10(conc("H+"))
                 Else
-                    If (conc("NaOH") + conc("Na+") + conc("NH3")) > 0.0# Then pH = 12.0# Else pH = 5.0#
+                    If (conc("NaOH") + conc("Na+") + conc("NH3")) > 0.0# Then pH = 12.0# Else pH = 7.0#
                     conc("H+") = 10 ^ (-pH)
                 End If
 
@@ -467,8 +467,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     If icount <= 2 Then
                         pH += 0.01
                     Else
-                        pH = pH - 0.1 * fx * (pH - pH_old0) / (fx - fx_old0)
-                        If Double.IsNaN(pH) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
+                        pH = pH - 0.3 * fx * (pH - pH_old0) / (fx - fx_old0)
+                        If pH < 2.0# Then pH = 2.0# + icount / 100
+                        If pH > 14.0# Then pH = 14.0# - icount / 100
+                        If Double.IsNaN(pH) Then
+                            Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
+                        End If
                     End If
 
                     icount += 1
@@ -930,7 +934,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             n = UBound(Vz)
 
-            Dim Vx(n), Vnl(n), Vy(n), Vp(n), Ki(n), L, Vcalc, Vspec, T, x, x0, x00, fx, fx0, fx00, Tmin, Tmax, totalkg, Pcalc, Pspec As Double
+            Dim Vx(n), Vnl(n), Vy(n), Vp(n), Ki(n), Hi(n), L, Vcalc, Vspec, T, T0, x, x0, x00, fx, fx0, fx00, Tmin, Tmax, totalkg, Pcalc, Pspec As Double
 
             Dim result As Object
 
@@ -938,15 +942,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             If Tref = 0.0# Then
 
-                Dim flashresult = nl.CalculateEquilibrium(FlashSpec.P, FlashSpec.VAP, P, 0.0#, PP, Vz, Nothing, 0.0#)
+                Tmin = 273.15
 
-                If flashresult.ResultException IsNot Nothing Then
-                    Tmin = 273.15
-                Else
-                    Tmin = flashresult.CalculatedTemperature
-                End If
-
-                flashresult = nl.CalculateEquilibrium(FlashSpec.P, FlashSpec.VAP, P, 1.0#, PP, Vz, Nothing, 0.0#)
+                Dim flashresult = nl.CalculateEquilibrium(FlashSpec.P, FlashSpec.VAP, P, 1.0#, PP, Vz, Nothing, 0.0#)
 
                 If flashresult.ResultException IsNot Nothing Then
                     Tmax = PP.AUX_TSATi(P, "Water") + 50
@@ -975,7 +973,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 Setup(conc, conc0, deltaconc, id)
 
-                If (Vz(id("H2O")) + Vz(id("NH3"))) > 0.7 And T > 273.15 Then
+                If (Vz(id("H2O")) + Vz(id("NH3"))) > 0.7 Then
 
                     Vx = Vz.Clone
                     Vnl = Vx.Clone
@@ -1019,7 +1017,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                         'equilibrium concentrations
 
-                        CalculateEquilibriumConcentrations(T, PP, conc, conc0, deltaconc, id)
+                        If T > 273.15 Then CalculateEquilibriumConcentrations(T, PP, conc, conc0, deltaconc, id)
 
                         'mass balance
 
@@ -1045,26 +1043,43 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                         Ki = PP.DW_CalcKvalue(Vx, Vy, T, P)
 
+                        Hi = DirectCast(PP, SourWaterPropertyPackage).CalcHenryConstants(Vx, Vy, T, P)
+
                         Pcalc = 0.0#
                         For i = 0 To n
-                            Pcalc += Vx(i) * Ki(i) * P
+                            If Not id.Values.Contains(i) Then Pcalc += Vx(i) * Ki(i) * P
                         Next
+                        If id("NH3") > -1 Then Pcalc += Hi(id("NH3")) * conc("NH3")
+                        If id("H2S") > -1 Then Pcalc += Hi(id("H2S")) * conc("H2S")
+                        If id("CO2") > -1 Then Pcalc += Hi(id("CO2")) * conc("CO2")
+                        If id("H2O") > -1 Then Pcalc += Ki(id("H2O")) * Vx(id("H2O")) * P
 
+                        fx0 = fx
                         fx = Pspec - Pcalc
 
+                        If Abs(fx - fx0) < etol * 100 Then Exit Do
                         If Abs(fx) < etol * 100 Then Exit Do
 
+                        T0 = T
                         T = 1 / (1 / T - Log(Pspec / Pcalc) / 4500)
-                        'If T < Tmin Then T = Tmin
-                        'If T > Tmax Then T = Tmax
+                        If T < Tmin Then
+                            T = Tmin
+                            Exit Do
+                        End If
 
-                        If Double.IsNaN(T) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
+                        If Double.IsNaN(T) Then
+                            Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
+                        End If
 
                         ecount += 1
 
-                        If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
+                        If ecount > maxit_e * 10 Then
+                            Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
+                        End If
 
                     Loop
+
+                    Vx = Vz.Clone
 
                 Else
 
