@@ -217,8 +217,16 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 With flashresult
                     L = .GetLiquidPhase1MoleFraction * F
                     V = .GetVaporPhaseMoleFraction * F
-                    Vxl = .GetLiquidPhase1MoleFractions
-                    Vxv = .GetVaporPhaseMoleFractions
+                    If L = 0.0# Then
+                        Vxv = .GetVaporPhaseMoleFractions
+                        Vxl = Vxv.DivideY(.Kvalues.ToArray)
+                    ElseIf V = 0.0# Then
+                        Vxl = .GetLiquidPhase1MoleFractions
+                        Vxv = .Kvalues.ToArray.MultiplyY(Vxl)
+                    Else
+                        Vxl = .GetLiquidPhase1MoleFractions
+                        Vxv = .GetVaporPhaseMoleFractions
+                    End If
                     Vnl = Vxl.MultiplyConstY(L)
                     Vnv = Vxv.MultiplyConstY(V)
                 End With
@@ -457,7 +465,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     fx_old = fx
                     fx = pch - nch
 
-                    If Double.IsNaN(fx) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
+                    If Double.IsNaN(fx) Then
+                        Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
+                    End If
 
                     If Abs(fx) * 1000 < itol Then Exit Do
 
@@ -957,8 +967,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Else
 
                 T = Tref
-                Tmin = T - 50
-                Tmax = T + 50
+                Tmin = 273.15
+                Tmax = T + 100
 
             End If
 
@@ -973,14 +983,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 Setup(conc, conc0, deltaconc, id)
 
-                If (Vz(id("H2O")) + Vz(id("NH3"))) > 0.7 Then
+                If (Vz(id("H2O")) + Vz(id("NH3"))) > 0.6 Then
 
                     Vx = Vz.Clone
                     Vnl = Vx.Clone
 
                     Pspec = P
                     Pcalc = P
-
 
                     'calculate solution amounts
 
@@ -1062,13 +1071,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                         T0 = T
                         T = 1 / (1 / T - Log(Pspec / Pcalc) / 4500)
-                        If T < Tmin Then
-                            T = Tmin
-                            Exit Do
-                        End If
 
                         If Double.IsNaN(T) Then
-                            Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
+                            T = Tref
+                            GoTo fallback
                         End If
 
                         ecount += 1
@@ -1083,7 +1089,40 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 Else
 
-                    Return nl.Flash_PV(Vz, P, V, 0.0#, PP, ReuseKI, PrevKi)
+fallback:           Vx = Vz.Clone
+
+                    Pspec = P
+                    Pcalc = P
+
+                    Do
+
+                        Pcalc = 0.0#
+                        For i = 0 To n
+                            Pcalc += Vx(i) * PP.AUX_PVAPi(i, T)
+                            Vy(i) = PP.AUX_PVAPi(i, T) / P
+                        Next
+                        Vy = Vy.NormalizeY
+
+                        fx0 = fx
+                        fx = Pspec - Pcalc
+
+                        If Abs(fx - fx0) < etol * 100 Then Exit Do
+                        If Abs(fx) < etol * 100 Then Exit Do
+
+                        T0 = T
+                        T = 1 / (1 / T - Log(Pspec / Pcalc) / 4500)
+
+                        If Double.IsNaN(T) Then
+                            Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
+                        End If
+
+                        ecount += 1
+
+                        If ecount > maxit_e * 10 Then
+                            Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
+                        End If
+
+                    Loop
 
                 End If
 
@@ -1135,6 +1174,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Vy = result(3)
 
             End If
+
+            L = 1 - V
 
             d2 = Date.Now
 

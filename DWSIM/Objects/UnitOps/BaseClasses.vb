@@ -3559,6 +3559,8 @@ End Class
 
             Calculate(Nothing)
 
+            Me.DebugText += vbCrLf & vbCrLf & "Calculated OK."
+
         Catch ex As Exception
 
             Dim st As New StackTrace(ex, True)

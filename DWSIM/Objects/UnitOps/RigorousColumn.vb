@@ -1188,11 +1188,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Dim cv As New DWSIM.SistemasDeUnidades.Conversor
             Dim value As Double = 0
             Dim propidx As Integer = -1
-            Try
-                propidx = CInt(prop.Split("_")(2))
-            Catch ex As Exception
-            End Try
-
+            Integer.TryParse(prop.Split("_")(2), propidx)
+            
             Select Case propidx
 
                 Case 0
@@ -1248,10 +1245,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Dim cv As New DWSIM.SistemasDeUnidades.Conversor
             Dim value As String = ""
             Dim propidx As Integer = -1
-            Try
-                propidx = CInt(prop.Split("_")(2))
-            Catch ex As Exception
-            End Try
+            Integer.TryParse(prop.Split("_")(2), propidx)
 
             Select Case propidx
 
@@ -1294,10 +1288,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             If su Is Nothing Then su = New DWSIM.SistemasDeUnidades.UnidadesSI
             Dim cv As New DWSIM.SistemasDeUnidades.Conversor
             Dim propidx As Integer = -1
-            Try
-                propidx = CInt(prop.Split("_")(2))
-            Catch ex As Exception
-            End Try
+            Integer.TryParse(prop.Split("_")(2), propidx)
 
             Select Case propidx
 
@@ -1881,6 +1872,53 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 _rss.Collection.Add(xel.@ID, var)
             Next
 
+            Dim ci As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
+
+            Dim elm As XElement = (From xel2 As XElement In data Select xel2 Where xel2.Name = "Results").SingleOrDefault
+
+            If Not elm Is Nothing Then
+
+                compids = XMLSerializer.XMLSerializer.StringToArray(elm.Element("compids").Value, ci)
+
+                T0 = elm.Element("T0").Value.ToDoubleArray(ci)
+                Tf = elm.Element("Tf").Value.ToDoubleArray(ci)
+                V0 = elm.Element("V0").Value.ToDoubleArray(ci)
+                Vf = elm.Element("Vf").Value.ToDoubleArray(ci)
+                L0 = elm.Element("L0").Value.ToDoubleArray(ci)
+                Lf = elm.Element("Lf").Value.ToDoubleArray(ci)
+                VSS0 = elm.Element("VSS0").Value.ToDoubleArray(ci)
+                VSSf = elm.Element("VSSf").Value.ToDoubleArray(ci)
+                LSS0 = elm.Element("LSS0").Value.ToDoubleArray(ci)
+                LSSf = elm.Element("LSSf").Value.ToDoubleArray(ci)
+                P0 = elm.Element("P0").Value.ToDoubleArray(ci)
+
+                x0 = New ArrayList()
+                For Each xel In elm.Element("x0").Elements
+                    x0.Add(xel.Value.ToDoubleArray(ci))
+                Next
+                xf = New ArrayList()
+                For Each xel In elm.Element("xf").Elements
+                    xf.Add(xel.Value.ToDoubleArray(ci))
+                Next
+                y0 = New ArrayList()
+                For Each xel In elm.Element("y0").Elements
+                    y0.Add(xel.Value.ToDoubleArray(ci))
+                Next
+                yf = New ArrayList()
+                For Each xel In elm.Element("yf").Elements
+                    yf.Add(xel.Value.ToDoubleArray(ci))
+                Next
+                K0 = New ArrayList()
+                For Each xel In elm.Element("K0").Elements
+                    K0.Add(xel.Value.ToDoubleArray(ci))
+                Next
+                Kf = New ArrayList()
+                For Each xel In elm.Element("Kf").Elements
+                    Kf.Add(xel.Value.ToDoubleArray(ci))
+                Next
+
+            End If
+
         End Function
 
         Public Overrides Function SaveData() As System.Collections.Generic.List(Of System.Xml.Linq.XElement)
@@ -1920,6 +1958,47 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 .Add(New XElement("ReboiledSideStrippers"))
                 For Each kvp As KeyValuePair(Of String, Auxiliary.SepOps.ReboiledSideStripper) In _rss.Collection
                     .Item(.Count - 1).Add(New XElement("ReboiledSideStripper", New XAttribute("ID", kvp.Key), kvp.Value.SaveData.ToArray))
+                Next
+
+                .Add(New XElement("Results"))
+
+                .Item(.Count - 1).Add(New XElement("compids", XMLSerializer.XMLSerializer.ArrayToString(compids, ci)))
+
+                .Item(.Count - 1).Add(New XElement("T0", T0.ToArrayString(ci)))
+                .Item(.Count - 1).Add(New XElement("Tf", Tf.ToArrayString(ci)))
+                .Item(.Count - 1).Add(New XElement("V0", V0.ToArrayString(ci)))
+                .Item(.Count - 1).Add(New XElement("Vf", Vf.ToArrayString(ci)))
+                .Item(.Count - 1).Add(New XElement("L0", L0.ToArrayString(ci)))
+                .Item(.Count - 1).Add(New XElement("Lf", Lf.ToArrayString(ci)))
+                .Item(.Count - 1).Add(New XElement("VSS0", VSS0.ToArrayString(ci)))
+                .Item(.Count - 1).Add(New XElement("VSSf", VSSf.ToArrayString(ci)))
+                .Item(.Count - 1).Add(New XElement("LSS0", LSS0.ToArrayString(ci)))
+                .Item(.Count - 1).Add(New XElement("LSSf", LSSf.ToArrayString(ci)))
+                .Item(.Count - 1).Add(New XElement("P0", P0.ToArrayString(ci)))
+
+                .Item(.Count - 1).Add(New XElement("x0"))
+                For Each d As Double() In x0
+                    .Item(.Count - 1).Element("x0").Add(New XElement("data", d.ToArrayString(ci)))
+                Next
+                .Item(.Count - 1).Add(New XElement("xf"))
+                For Each d As Double() In xf
+                    .Item(.Count - 1).Element("xf").Add(New XElement("data", d.ToArrayString(ci)))
+                Next
+                .Item(.Count - 1).Add(New XElement("y0"))
+                For Each d As Double() In y0
+                    .Item(.Count - 1).Element("y0").Add(New XElement("data", d.ToArrayString(ci)))
+                Next
+                .Item(.Count - 1).Add(New XElement("yf"))
+                For Each d As Double() In yf
+                    .Item(.Count - 1).Element("yf").Add(New XElement("data", d.ToArrayString(ci)))
+                Next
+                .Item(.Count - 1).Add(New XElement("K0"))
+                For Each d As Double() In K0
+                    .Item(.Count - 1).Element("K0").Add(New XElement("data", d.ToArrayString(ci)))
+                Next
+                .Item(.Count - 1).Add(New XElement("Kf"))
+                For Each d As Double() In Kf
+                    .Item(.Count - 1).Element("Kf").Add(New XElement("data", d.ToArrayString(ci)))
                 Next
 
             End With

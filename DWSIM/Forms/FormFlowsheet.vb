@@ -2144,9 +2144,7 @@ Imports WeifenLuo.WinFormsUI.Docking
 
             With Me.FormProps.PGEx2
 
-                .PropertySort = PropertySort.Categorized
-                .ShowCustomProperties = True
-                .Item.Clear()
+                 .Item.Clear()
 
                 .Item.Add(DWSIM.App.GetLocalString("Cor"), gobj2, "LineColor", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Cordotextodatabela"), True)
                 .Item.Add(DWSIM.App.GetLocalString("Cabealho"), gobj2, "HeaderFont", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Fontedotextodocabeal"), True)
@@ -2164,6 +2162,9 @@ Imports WeifenLuo.WinFormsUI.Docking
                 .Item.Add(DWSIM.App.GetLocalString("Cor2gradiente"), gobj2, "BackgroundGradientColor2", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Cor2dogradientecasoa"), True)
                 .Item.Add(DWSIM.App.GetLocalString("Opacidade0255"), gobj2, "Opacity", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Nveldetransparnciada"), True)
 
+                .PropertySort = PropertySort.Categorized
+                .ShowCustomProperties = True
+
             End With
 
             gobj2 = Nothing
@@ -2175,8 +2176,6 @@ Imports WeifenLuo.WinFormsUI.Docking
 
             With Me.FormProps.PGEx2
 
-                .PropertySort = PropertySort.Categorized
-                .ShowCustomProperties = True
                 .Item.Clear()
 
                 .Item.Add(DWSIM.App.GetLocalString("Cor"), gobj2, "LineColor", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Cordotextodatabela"), True)
@@ -2196,6 +2195,9 @@ Imports WeifenLuo.WinFormsUI.Docking
                 .Item.Add(DWSIM.App.GetLocalString("Cor2gradiente"), gobj2, "BackgroundGradientColor2", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Cor2dogradientecasoa"), True)
                 .Item.Add(DWSIM.App.GetLocalString("Opacidade0255"), gobj2, "Opacity", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Nveldetransparnciada"), True)
 
+                .PropertySort = PropertySort.Categorized
+                .ShowCustomProperties = True
+
             End With
 
             gobj2 = Nothing
@@ -2207,8 +2209,6 @@ Imports WeifenLuo.WinFormsUI.Docking
 
             With Me.FormProps.PGEx2
 
-                .PropertySort = PropertySort.Categorized
-                .ShowCustomProperties = True
                 .Item.Clear()
 
                 .Item.Add(DWSIM.App.GetLocalString("Cor"), gobj2, "LineColor", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Cordotextodatabela"), True)
@@ -2224,6 +2224,9 @@ Imports WeifenLuo.WinFormsUI.Docking
                 .Item.Add(DWSIM.App.GetLocalString("Cor2gradiente"), gobj2, "BackgroundGradientColor2", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Cor2dogradientecasoa"), True)
                 .Item.Add(DWSIM.App.GetLocalString("Opacidade0255"), gobj2, "Opacity", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Nveldetransparnciada"), True)
 
+                .PropertySort = PropertySort.Categorized
+                .ShowCustomProperties = True
+
             End With
 
             gobj2 = Nothing
@@ -2235,8 +2238,6 @@ Imports WeifenLuo.WinFormsUI.Docking
 
             With Me.FormProps.PGEx2
 
-                .PropertySort = PropertySort.Categorized
-                .ShowCustomProperties = True
                 .Item.Clear()
 
                 .Item.Add(DWSIM.App.GetLocalString("Nome"), gobj.Tag, False, DWSIM.App.GetLocalString("Descrio1"), DWSIM.App.GetLocalString("Nomedoobjeto"), True)
@@ -2245,6 +2246,9 @@ Imports WeifenLuo.WinFormsUI.Docking
                 .Item.Add(DWSIM.App.GetLocalString("Tratamentodotexto"), gobj2, "TextRenderStyle", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Tipodesuavizaoaplica"), True)
                 .Item.Add(DWSIM.App.GetLocalString("Cor"), gobj2, "Color", False, "", DWSIM.App.GetLocalString("Cordotexto"), True)
                 .Item.Add(DWSIM.App.GetLocalString("Fonte"), gobj2, "Font", False, "", DWSIM.App.GetLocalString("Fontedotexto"), True)
+
+                .PropertySort = PropertySort.Categorized
+                .ShowCustomProperties = True
 
             End With
 
@@ -2257,14 +2261,15 @@ Imports WeifenLuo.WinFormsUI.Docking
 
             With Me.FormProps.PGEx2
 
-                .PropertySort = PropertySort.Categorized
-                .ShowCustomProperties = True
-                .Item.Clear()
+               .Item.Clear()
 
                 .Item.Add(DWSIM.App.GetLocalString("Autodimensionar"), gobj2, "AutoSize", False, "", DWSIM.App.GetLocalString("SelecioLiquidrueparaque"), True)
                 .Item.Add(DWSIM.App.GetLocalString("Altura"), gobj2, "Height", False, "", DWSIM.App.GetLocalString("Alturadafiguraempixe"), True)
                 .Item.Add(DWSIM.App.GetLocalString("Largura"), gobj2, "Width", False, "", DWSIM.App.GetLocalString("Larguradafiguraempix"), True)
                 .Item.Add(DWSIM.App.GetLocalString("Rotao"), gobj2, "Rotation", False, "", DWSIM.App.GetLocalString("Rotaodafigurade0a360"), True)
+
+                .PropertySort = PropertySort.Categorized
+                .ShowCustomProperties = True
 
             End With
 
@@ -2277,14 +2282,15 @@ Imports WeifenLuo.WinFormsUI.Docking
 
             With Me.FormProps.PGEx2
 
-                .PropertySort = PropertySort.Categorized
-                .ShowCustomProperties = True
                 .Item.Clear()
 
                 .Item.Add(DWSIM.App.GetLocalString("Autodimensionar"), gobj2, DWSIM.App.GetLocalString("AutoSize"), False, "", DWSIM.App.GetLocalString("SelecioLiquidrueparaque"), True)
                 .Item.Add(DWSIM.App.GetLocalString("Altura"), gobj2, "Height", False, "", DWSIM.App.GetLocalString("Alturadafiguraempixe"), True)
                 .Item.Add(DWSIM.App.GetLocalString("Largura"), gobj2, "Width", False, "", DWSIM.App.GetLocalString("Larguradafiguraempix"), True)
                 .Item.Add(DWSIM.App.GetLocalString("Rotao"), gobj2, "Rotation", False, "", DWSIM.App.GetLocalString("Rotaodafigurade0a360"), True)
+
+                .PropertySort = PropertySort.Categorized
+                .ShowCustomProperties = True
 
             End With
 
@@ -2295,8 +2301,6 @@ Imports WeifenLuo.WinFormsUI.Docking
 
             With Me.FormProps.PGEx2
 
-                .PropertySort = PropertySort.Categorized
-                .ShowCustomProperties = True
                 .Item.Clear()
 
                 .Item.Add(DWSIM.App.GetLocalString("Nome"), gobj, "Tag", False, DWSIM.App.GetLocalString("Descrio1"), DWSIM.App.GetLocalString("Nomedoobjeto"), True)
@@ -2310,6 +2314,9 @@ Imports WeifenLuo.WinFormsUI.Docking
                 .Item.Add(DWSIM.App.GetLocalString("Rotao"), gobj, "Rotation", False, DWSIM.App.GetLocalString("Tamanho3"), DWSIM.App.GetLocalString("Rotaodoobjetode0a360"), True)
                 .Item.Add("X", gobj, "X", False, DWSIM.App.GetLocalString("Coordenadas4"), DWSIM.App.GetLocalString("Coordenadahorizontal"), True)
                 .Item.Add("Y", gobj, "Y", False, DWSIM.App.GetLocalString("Coordenadas4"), DWSIM.App.GetLocalString("Coordenadaverticaldo"), True)
+
+                .PropertySort = PropertySort.Categorized
+                .ShowCustomProperties = True
 
             End With
 

@@ -54,6 +54,47 @@ Module Extensions
 
     End Function
 
+    <System.Runtime.CompilerServices.Extension()>
+    Public Function ToArrayString(vector As Double(), ByVal ci As System.Globalization.CultureInfo) As String
+
+        If vector.Length > 1 Then
+
+            Dim retstr As String = "{"
+            For Each d As Double In vector
+                retstr += d.ToString(ci) + "; "
+            Next
+            retstr = retstr.TrimEnd(New Char() {";"c, " "c})
+            retstr += "}"
+
+            Return retstr
+
+        ElseIf vector.Length > 0 Then
+
+            Return vector(0).ToString(ci)
+
+        Else
+
+            Return ""
+
+        End If
+
+    End Function
+
+    <System.Runtime.CompilerServices.Extension()>
+    Public Function ToDoubleArray(text As String, ByVal ci As System.Globalization.CultureInfo) As Double()
+
+        Dim numbers As String() = text.Trim(New Char() {"{"c, "}"c}).Split(";"c)
+
+        Dim doubles As New List(Of Double)
+
+        For Each n As String In numbers
+            doubles.Add(Convert.ToDouble(n, ci))
+        Next
+
+        Return doubles.ToArray
+
+    End Function
+
     <System.Runtime.CompilerServices.Extension()> _
     Public Function ToArrayString(vector As String()) As String
 

@@ -238,7 +238,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     F = Vz.MultiplyY(Ki.AddConstY(-1).DivideY(Ki.AddConstY(-1).MultiplyConstY(V).AddConstY(1))).SumY
                     dF = Vz.NegateY.MultiplyY(Ki.AddConstY(-1).MultiplyY(Ki.AddConstY(-1)).DivideY(Ki.AddConstY(-1).MultiplyConstY(V).AddConstY(1)).DivideY(Ki.AddConstY(-1).MultiplyConstY(V).AddConstY(1))).SumY
 
-                    If Abs(F) < etol / 100 Then Exit Do
+                    If Abs(F) < etol / 100 And ecount > 3 Then Exit Do
 
                     V = -F / dF + Vant
 
@@ -270,13 +270,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 V = 0.0#
                 L = 1.0#
                 Vx = Vz
-                Vy = Ki.MultiplyY(Vx)
+                Vy = Ki.MultiplyY(Vx).NormalizeY
             End If
             If V >= 1.0# Then
                 V = 1.0#
                 L = 0.0#
                 Vy = Vz
-                Vx = Vy.DivideY(Ki)
+                Vx = Vy.DivideY(Ki).NormalizeY
             End If
 
             d2 = Date.Now

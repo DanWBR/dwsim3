@@ -46,7 +46,9 @@ Public Class UIResultsForm
 
         SelTab = 0
     End Sub
+
     Private Sub FillTables()
+
         Dim ns As Integer = dc.NumberOfStages - 1
         Dim nc As Integer = UBound(dc.x0(0))
         Dim i, j, k As Integer

@@ -2443,6 +2443,7 @@ restart:            fx = Me.FunctionValue(xvar)
                 'Ljs
                 For i = 0 To ns
                     If i < ns Then Lj(i) = Vj(i + 1) + sum1(i) - Vj(0) Else Lj(i) = sum1(i) - Vj(0)
+                    If Lj(i) < 0.0# Then Lj(i) = -Lj(i)
                 Next
 
                 'reboiler and condenser heat duties
