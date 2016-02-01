@@ -47,7 +47,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             Me.m_act = New Auxiliary.NRTL
 
-            DirectCast(m_act, NRTL).InteractionParameters("Water").Add("Ammonia", New NRTL_IPData() With {.A21 = 1453.9636, .A12 = -1712.3278, .alpha12 = 0.2})
+            'DirectCast(m_act, NRTL).InteractionParameters("Water").Add("Ammonia", New NRTL_IPData() With {.A21 = 1453.9636, .A12 = -1712.3278, .alpha12 = 0.2})
 
         End Sub
 
@@ -57,7 +57,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             Me.m_act = New Auxiliary.NRTL
 
-            DirectCast(m_act, NRTL).InteractionParameters("Water").Add("Ammonia", New NRTL_IPData() With {.A21 = 1453.9636, .A12 = -1712.3278, .alpha12 = 0.2})
+            'DirectCast(m_act, NRTL).InteractionParameters("Water").Add("Ammonia", New NRTL_IPData() With {.A21 = 1453.9636, .A12 = -1712.3278, .alpha12 = 0.2})
 
             Me.IsConfigurable = False
             Me.ConfigForm = Nothing
@@ -141,7 +141,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim conc As New Dictionary(Of String, Double)
             If LiquidPhaseMoleAmount = 0.0# Then LiquidPhaseMoleAmount = 1.0#
             Dim totalkg As Double = LiquidPhaseMoleAmount * AUX_MMM(Vx) / 1000 'kg solution
-            Dim CAS, CA, CC, CS, vnh3, fnh3 As Double
+            Dim CAS, CA, CC, CS As Double
 
             Setup(conc, Vx, cprops)
 
@@ -155,15 +155,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 If cp.IsIon Then val0(i) = 1.0E-30
                 If cp.Name = "Sodium Hydroxide" Then val0(i) = 1.0E-30
                 If cp.Name = "Ammonia" And Vx(i) > 0.0# Then
-                    If Vx(i) < 0.2 Then
-                        val0(i) = Exp(178.339 - 15517.91 / (T * 1.8) - 25.6767 * Log(T * 1.8) + 0.01966 * (T * 1.8) + (131.4 / (T * 1.8) - 0.1682) * CAS) + 0.06 * (2 * CC + CS) 'psia/[mol/kg]
-                        val0(i) = (val0(i) * conc("NH3") / 0.000145038) / P / Vx(i)
-                    ElseIf Vx(i) >= 0.2 And Vx(i) < 0.4# Then
-                        vnh3 = Exp(178.339 - 15517.91 / (T * 1.8) - 25.6767 * Log(T * 1.8) + 0.01966 * (T * 1.8) + (131.4 / (T * 1.8) - 0.1682) * CAS) 'psia/[mol/kg]
-                        vnh3 = (val0(i) * conc("NH3") / 0.000145038) / P / Vx(i)
-                        fnh3 = (Vx(i) - 0.2) / (0.2)
-                        val0(i) = val0(i) + fnh3 * (vnh3 - val0(i))
-                    End If
+                    'If Vx(i) < 0.2 Then
+                    val0(i) = Exp(178.339 - 15517.91 / (T * 1.8) - 25.6767 * Log(T * 1.8) + 0.01966 * (T * 1.8) + (131.4 / (T * 1.8) - 0.1682) * CAS) + 0.06 * (2 * CC + CS) 'psia/[mol/kg]
+                    val0(i) = (val0(i) * conc("NH3") / 0.000145038) / P / Vx(i)
+                    'ElseIf Vx(i) >= 0.2 And Vx(i) < 0.4# Then
+                    '    vnh3 = Exp(178.339 - 15517.91 / (T * 1.8) - 25.6767 * Log(T * 1.8) + 0.01966 * (T * 1.8) + (131.4 / (T * 1.8) - 0.1682) * CAS) 'psia/[mol/kg]
+                    '    vnh3 = (val0(i) * conc("NH3") / 0.000145038) / P / Vx(i)
+                    '    fnh3 = (Vx(i) - 0.2) / (0.2)
+                    '    val0(i) = val0(i) + fnh3 * (vnh3 - val0(i))
+                    'End If
                 End If
                 If cp.Name = "Carbon dioxide" And Vx(i) > 0.0# Then
                     val0(i) = Exp(18.33 - 24895.1 / (T * 1.8) + 22399600.0 / (T * 1.8) ^ 2 - 9091800000.0 / (T * 1.8) ^ 3 + 1260100000000.0 / (T * 1.8) ^ 4) 'psia/[mol/kg]

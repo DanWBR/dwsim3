@@ -112,23 +112,13 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 13</value>
-  </data>
   <data name="Label1.Text" xml:space="preserve">
     <value>DWSIM hat einen Fehler verursacht</value>
-  </data>
-  <data name="Label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 42</value>
-  </data>
-  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>523, 85</value>
   </data>
   <data name="Label2.Text" xml:space="preserve">
     <value>
@@ -136,60 +126,25 @@ In den meisten Fällen können Sie DWSIM normal weiter ausführen. Falls Sie das
 
 Falls der Fehler nicht zurück verfolgbar ist, wählen Sie "Abbrechen". Ein Speichern der offenen Simulationen ist nicht möglich. In diesem Fall aktivieren Sie "DWSIM neu starten", um das Programm neu zu starten.</value>
   </data>
-  <data name="KryptonButton1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>408, 137</value>
-  </data>
   <data name="KryptonButton1.Text" xml:space="preserve">
     <value>Speichern/Beenden</value>
-  </data>
-  <data name="KryptonButton2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>286, 137</value>
   </data>
   <data name="KryptonButton2.Text" xml:space="preserve">
     <value>Fortsetzen</value>
   </data>
-  <data name="LabelWithDivider1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>-10, 128</value>
-  </data>
-  <data name="TextBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 219</value>
-  </data>
-  <data name="Panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>533, 133</value>
-  </data>
-  <data name="KryptonButton4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 137</value>
-  </data>
   <data name="KryptonButton4.Text" xml:space="preserve">
     <value>Schließen</value>
-  </data>
-  <data name="KryptonCheckBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 177</value>
-  </data>
-  <data name="KryptonCheckBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 19</value>
   </data>
   <data name="KryptonCheckBox1.Text" xml:space="preserve">
     <value>DWSIM neu starten</value>
   </data>
-  <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>404, 171</value>
-  </data>
-  <data name="Button1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>118, 25</value>
-  </data>
   <data name="Button1.Text" xml:space="preserve">
     <value>Details</value>
-  </data>
-  <data name="Button2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>113, 137</value>
   </data>
   <data name="Button2.Text" xml:space="preserve">
     <value>Eine Rückmeldung</value>
   </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>533, 203</value>
-  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAEAMDAAAAEAGACoHAAAFgAAACgAAAAwAAAAYAAAAAEAGAAAAAAAAAAAAEgAAABIAAAAAAAAAAAA

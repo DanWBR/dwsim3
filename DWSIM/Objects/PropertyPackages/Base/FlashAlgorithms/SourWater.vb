@@ -159,7 +159,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         Public Overrides Function Flash_PT(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
-            Return Flash_PT_Internal(Vz, P, T, PP, False)
+            Return Flash_PT_Internal(Vz, P, T, PP, True)
 
         End Function
 
@@ -485,6 +485,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         End If
                     End If
 
+                    CheckCalculatorStatus()
+
                     icount += 1
 
                     If icount > maxit_i * 10 Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
@@ -594,6 +596,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     x1 = x1 - dx
                     maxDT *= 0.95
                     cnt += 1
+
+                    CheckCalculatorStatus()
 
                 Loop Until cnt > maxitEXT Or Double.IsNaN(x1) Or x1 < 0.0#
 
@@ -715,6 +719,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     x1 = x1 - dx
 
                     cnt += 1
+
+                    CheckCalculatorStatus()
 
                 Loop Until cnt > maxitEXT Or Double.IsNaN(x1)
 
@@ -912,6 +918,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
 
+                CheckCalculatorStatus()
+
             Loop
 
             P = x
@@ -1083,6 +1091,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                             Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
                         End If
 
+                        CheckCalculatorStatus()
+
                     Loop
 
                     Vx = Vz.Clone
@@ -1121,6 +1131,8 @@ fallback:           Vx = Vz.Clone
                         If ecount > maxit_e * 10 Then
                             Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
                         End If
+
+                        CheckCalculatorStatus()
 
                     Loop
 
@@ -1164,6 +1176,8 @@ fallback:           Vx = Vz.Clone
                     ecount += 1
 
                     If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
+
+                    CheckCalculatorStatus()
 
                 Loop
 

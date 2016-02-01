@@ -88,9 +88,9 @@ Module Extensions
         Dim doubles As New List(Of Double)
 
         For Each n As String In numbers
-            doubles.Add(Convert.ToDouble(n, ci))
+            If n <> "" Then doubles.Add(Convert.ToDouble(n, ci))
         Next
-
+        
         Return doubles.ToArray
 
     End Function

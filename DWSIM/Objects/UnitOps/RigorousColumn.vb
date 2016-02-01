@@ -3172,7 +3172,17 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         End Sub
 
-        Public T0, Tf, V0, Vf, L0, Lf, LSS0, LSSf, VSS0, VSSf, P0 As Double()
+        Public T0 As Double() = New Double() {}
+        Public Tf As Double() = New Double() {}
+        Public V0 As Double() = New Double() {}
+        Public Vf As Double() = New Double() {}
+        Public L0 As Double() = New Double() {}
+        Public Lf As Double() = New Double() {}
+        Public LSS0 As Double() = New Double() {}
+        Public LSSf As Double() = New Double() {}
+        Public VSS0 As Double() = New Double() {}
+        Public VSSf As Double() = New Double() {}
+        Public P0 As Double() = New Double() {}
         Public x0, xf, y0, yf, K0, Kf As New ArrayList
         Public ic, ec As Integer
         Public compids As New ArrayList

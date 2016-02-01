@@ -238,15 +238,21 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     F = Vz.MultiplyY(Ki.AddConstY(-1).DivideY(Ki.AddConstY(-1).MultiplyConstY(V).AddConstY(1))).SumY
                     dF = Vz.NegateY.MultiplyY(Ki.AddConstY(-1).MultiplyY(Ki.AddConstY(-1)).DivideY(Ki.AddConstY(-1).MultiplyConstY(V).AddConstY(1)).DivideY(Ki.AddConstY(-1).MultiplyConstY(V).AddConstY(1))).SumY
 
-                    If Abs(F) < etol / 100 And ecount > 3 Then Exit Do
+                    If Abs(F) < etol / 100 Then Exit Do
 
                     V = -F / dF + Vant
 
                 End If
 
                 If LimitVaporFraction Then
-                    If V < 0.0# Then V = 0.0#
-                    If V > 1.0# Then V = 1.0#
+                    If V < 0.0# Then
+                        V = 0.0#
+                        Exit Do
+                    End If
+                    If V > 1.0# Then
+                        V = 1.0#
+                        Exit Do
+                    End If
                 End If
 
                 L = 1 - V

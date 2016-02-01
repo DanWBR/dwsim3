@@ -2017,8 +2017,8 @@ restart:            fx = Me.FunctionValue(xvar)
 
             Dim ic As Integer
             Dim t_error, t_error_ant As Double
-            Dim Tj(ns), Tj_ant(ns) As Double
-            Dim Fj(ns), Lj(ns), Vj(ns), Vj_ant(ns), xc(ns)(), fcj(ns)(), yc(ns)(), lc(ns)(), vc(ns)(), zc(ns)(), K(ns)() As Double
+            Dim Tj(ns), Tj_ant(ns), dTj(ns) As Double
+            Dim Fj(ns), Lj(ns), Vj(ns), Vj_ant(ns), dVj(ns), xc(ns)(), fcj(ns)(), yc(ns)(), lc(ns)(), vc(ns)(), zc(ns)(), K(ns)() As Double
             Dim Hfj(ns), Hv(ns), Hl(ns) As Double
             Dim VSSj(ns), LSSj(ns) As Double
 
@@ -2153,9 +2153,15 @@ restart:            fx = Me.FunctionValue(xvar)
                     Next
                     B = -(val1 - (sum4 - Vj(0) * Hv(0))) / Hl(ns)
             End Select
-            D2 = sumF - B - sumLSS - sumVSS - Vj(0)
 
-            LSSj(0) = D2
+            If condt = Column.condtype.Full_Reflux Then
+                Vj(0) = sumF - B - sumLSS - sumVSS
+                LSSj(0) = 0.0#
+            Else
+                D2 = sumF - B - sumLSS - sumVSS - Vj(0)
+                LSSj(0) = D2
+            End If
+
 
             'step3
 
@@ -2304,6 +2310,11 @@ restart:            fx = Me.FunctionValue(xvar)
                 End If
 
                 For i = 0 To ns
+                    dTj(i) = Tj(i) - Tj_ant(i)
+                    If Abs(dTj(i)) > 10 Then Tj(i) = Math.Sign(dTj(i)) * 10 + Tj_ant(i)
+                Next
+
+                For i = 0 To ns
                     For j = 0 To nc - 1
                         If Double.IsNaN(K(i)(j)) Then K(i)(j) = pp.AUX_PVAPi(j, Tj(i)) / P(i)
                     Next
@@ -2334,9 +2345,9 @@ restart:            fx = Me.FunctionValue(xvar)
                     Try
                         Dim t1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                                                      Sub(ipar)
-                                                                                         Hl(ipar) = pp.DW_CalcEnthalpy(xc(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Liquid) * pp.AUX_MMM(xc(ipar)) / 1000
-                                                                                         Hv(ipar) = pp.DW_CalcEnthalpy(yc(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Vapor) * pp.AUX_MMM(yc(ipar)) / 1000
-                                                                                     End Sub),
+                                                                                             Hl(ipar) = pp.DW_CalcEnthalpy(xc(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Liquid) * pp.AUX_MMM(xc(ipar)) / 1000
+                                                                                             Hv(ipar) = pp.DW_CalcEnthalpy(yc(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Vapor) * pp.AUX_MMM(yc(ipar)) / 1000
+                                                                                         End Sub),
                                                       My.MyApplication.TaskCancellationTokenSource.Token,
                                                       TaskCreationOptions.None,
                                                       My.MyApplication.AppTaskScheduler)
@@ -2402,7 +2413,11 @@ restart:            fx = Me.FunctionValue(xvar)
                     sumVSS += VSS(i)
                 Next
 
-                LSSj(0) = sumF - B - sumLSS - sumVSS - Vj(0)
+                If condt = Column.condtype.Full_Reflux Then
+                    Vj(0) = sumF - B - sumLSS - sumVSS
+                Else
+                    LSSj(0) = sumF - B - sumLSS - sumVSS - Vj(0)
+                End If
 
                 'reboiler and condenser heat duties
 
@@ -2433,17 +2448,22 @@ restart:            fx = Me.FunctionValue(xvar)
                     Vj_ant(i) = Vj(i)
                 Next
 
-                Vj(0) = V(0)
+                If Not condt = Column.condtype.Full_Reflux Then Vj(0) = V(0)
                 Vj(1) = (rr + 1) * LSSj(0) - Fj(0) + Vj(0)
                 For i = 2 To ns
                     Vj(i) = (gamma(i - 1) - alpha(i - 1) * Vj(i - 1)) / beta(i - 1)
                     If Vj(i) < 0 Then Vj(i) = 0.000001
                 Next
 
+                For i = 0 To ns
+                    dVj(i) = Vj(i) - Vj_ant(i)
+                    If Abs(dVj(i)) > 0.1 * Vj_ant(i) Then Vj(i) = Vj_ant(i) * (1 + Math.Sign(dVj(i)) * 0.1)
+                Next
+
                 'Ljs
                 For i = 0 To ns
                     If i < ns Then Lj(i) = Vj(i + 1) + sum1(i) - Vj(0) Else Lj(i) = sum1(i) - Vj(0)
-                    If Lj(i) < 0.0# Then Lj(i) = -Lj(i)
+                    If Lj(i) < 0.0# Then Lj(i) = 0.0001 * Fj.SumY
                 Next
 
                 'reboiler and condenser heat duties
@@ -2918,16 +2938,16 @@ restart:            fx = Me.FunctionValue(xvar)
                     sumvkj(i) += vc(i)(j)
                     sumlkj(i) += lc(i)(j)
                 Next
-                Vj(i) = sumvkj(i)
+                If i > 0 Then Vj(i) = sumvkj(i)
                 Lj(i) = sumlkj(i)
             Next
 
             For i = 0 To ns
                 For j = 0 To nc - 1
-                    xc(i)(j) = lc(i)(j) / sumlkj(i)
+                    yc(i)(j) = vc(i)(j) / sumvkj(i)
                 Next
                 For j = 0 To nc - 1
-                    yc(i)(j) = vc(i)(j) / sumvkj(i)
+                    If sumlkj(i) > 0 Then xc(i)(j) = lc(i)(j) / sumlkj(i) Else xc(i)(j) = yc(i)(j) / (_pp.AUX_PVAPi(j, Tj(i)) / P(i))
                 Next
             Next
 
@@ -2946,7 +2966,12 @@ restart:            fx = Me.FunctionValue(xvar)
             For i = 1 To ns
                 sumLSS += LSSj(i)
             Next
-            LSSj(0) = 1 - Lj(ns) - sumLSS - sumVSS - Vj(0)
+            If _condtype = Column.condtype.Full_Reflux Then
+                Vj(0) = 1 - Lj(ns) - sumLSS - sumVSS
+                LSSj(0) = 0.0#
+            Else
+                LSSj(0) = 1 - Lj(ns) - sumLSS - sumVSS - Vj(0)
+            End If
 
             For i = 0 To ns
                 If Vj(i) <> 0 Then Sv(i) = VSSj(i) / Vj(i) Else Sv(i) = 0
@@ -3147,7 +3172,11 @@ restart:            fx = Me.FunctionValue(xvar)
                     H_ant(i) = H(i)
                     If i = 0 Then
                         M(i, j) = lc(i)(j) * (1 + Sl(i)) + vc(i)(j) * (1 + Sv(i)) - vc(i + 1)(j) - fc(i)(j)
-                        E(i, j) = eff(i) * Kval(i)(j) * lc(i)(j) * sumvkj(i) / sumlkj(i) - vc(i)(j) + (1 - eff(i)) * vc(i + 1)(j) * sumvkj(i) / sumvkj(i + 1)
+                        If _condtype = Column.condtype.Full_Reflux Then
+                            E(i, j) = -vc(i)(j) + (1 - eff(i)) * vc(i + 1)(j) * sumvkj(i) / sumvkj(i + 1)
+                        Else
+                            E(i, j) = eff(i) * Kval(i)(j) * lc(i)(j) * sumvkj(i) / sumlkj(i) - vc(i)(j) + (1 - eff(i)) * vc(i + 1)(j) * sumvkj(i) / sumvkj(i + 1)
+                        End If
                     ElseIf i = ns Then
                         M(i, j) = lc(i)(j) * (1 + Sl(i)) + vc(i)(j) * (1 + Sv(i)) - lc(i - 1)(j) - fc(i)(j)
                         E(i, j) = eff(i) * Kval(i)(j) * lc(i)(j) * sumvkj(i) / sumlkj(i) - vc(i)(j)
@@ -3166,7 +3195,7 @@ restart:            fx = Me.FunctionValue(xvar)
                 H(i) /= (Hv(i) - Hl(i))
                 Select Case coltype
                     Case Column.ColType.DistillationColumn
-                        H(0) = spfval1
+                        If _condtype <> Column.condtype.Full_Reflux Then H(0) = spfval1
                         H(ns) = spfval2
                     Case Column.ColType.AbsorptionColumn
                         'do nothing

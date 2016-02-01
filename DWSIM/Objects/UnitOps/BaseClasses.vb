@@ -333,7 +333,7 @@ Imports PropertyGridEx
                 Next
                 If e.ChangedItem.Label.Contains("[Split Ratio] ") Then
 
-                    If e.ChangedItem.Value < 0.0# Or e.ChangedItem.Value > 1.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Or Convert.ToDouble(e.ChangedItem.Value) > 1.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
 
                     Dim i, j As Integer
                     Dim total As Double
@@ -358,8 +358,6 @@ Imports PropertyGridEx
                     Else
                         Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     End If
-
-
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetPropertyName("PROP_SP_1")) Then
 
@@ -408,17 +406,17 @@ Imports PropertyGridEx
 
                 If e.ChangedItem.Label.Contains("Delta P") Then
 
-                    If e.ChangedItem.Value < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Pressoajusante")) Then
 
-                    If e.ChangedItem.Value < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     bb.Pout = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Eficincia")) Then
 
-                    If e.ChangedItem.Value <= 20 Or e.ChangedItem.Value > 100 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    If Convert.ToDouble(e.ChangedItem.Value) <= 20.0# Or Convert.ToDouble(e.ChangedItem.Value) > 100.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
 
                 End If
 
@@ -447,7 +445,7 @@ Imports PropertyGridEx
 
                     bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
 
-                    'If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    'If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("ValveOutletPressure")) Then
 
@@ -511,15 +509,15 @@ Imports PropertyGridEx
 
                 If e.ChangedItem.Label.Contains("Delta P") Then
 
-                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Presso")) Then
-                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     bb.POut = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Eficincia")) Then
-                    If e.ChangedItem.Value <= 20 Or e.ChangedItem.Value > 100 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    If Convert.ToDouble(e.ChangedItem.Value) <= 20.0# Or Convert.ToDouble(e.ChangedItem.Value) > 100.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
 
                 End If
 
@@ -546,16 +544,16 @@ Imports PropertyGridEx
 
                 If e.ChangedItem.Label.Contains("Delta P") Then
 
-                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Presso")) Then
-                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     bb.POut = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Eficincia")) Then
 
-                    If e.ChangedItem.Value <= 20 Or e.ChangedItem.Value > 100 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    If Convert.ToDouble(e.ChangedItem.Value) <= 20.0# Or Convert.ToDouble(e.ChangedItem.Value) > 100.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
 
                 End If
 
@@ -613,7 +611,7 @@ Imports PropertyGridEx
 
                 If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Eficincia")) Then
 
-                    If e.ChangedItem.Value <= 20 Or e.ChangedItem.Value > 100 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    If Convert.ToDouble(e.ChangedItem.Value) <= 20.0# Or Convert.ToDouble(e.ChangedItem.Value) > 100.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Calor")) Then
 
@@ -621,7 +619,7 @@ Imports PropertyGridEx
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
 
-                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature")) Then
@@ -657,7 +655,7 @@ Imports PropertyGridEx
 
                 If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Eficincia")) Then
 
-                    If e.ChangedItem.Value <= 20 Or e.ChangedItem.Value > 100 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    If Convert.ToDouble(e.ChangedItem.Value) <= 20.0# Or Convert.ToDouble(e.ChangedItem.Value) > 100.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Calor")) Then
 
@@ -665,7 +663,7 @@ Imports PropertyGridEx
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
 
-                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature")) Then
@@ -701,7 +699,7 @@ Imports PropertyGridEx
 
                 If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
 
-                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("AquecimentoResfriame")) Then
@@ -710,7 +708,7 @@ Imports PropertyGridEx
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("TKVol")) Then
 
-                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     bb.Volume = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.volume, e.ChangedItem.Value)
 
                 End If
@@ -837,7 +835,7 @@ Imports PropertyGridEx
 
                 If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
 
-                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature")) Then
@@ -869,7 +867,7 @@ Imports PropertyGridEx
 
                 If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
 
-                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature")) Then
@@ -901,7 +899,7 @@ Imports PropertyGridEx
 
                 If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
 
-                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature")) Then
@@ -941,17 +939,17 @@ Imports PropertyGridEx
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
 
-                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("CSTRCatalystAmount")) Then
 
-                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     bb.CatalystAmount = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.mass, e.ChangedItem.Value)
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("RCSTRPGridItem1")) Then
 
-                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     bb.Volume = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.volume, e.ChangedItem.Value)
 
                 End If
@@ -979,7 +977,7 @@ Imports PropertyGridEx
 
                 If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
 
-                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature")) Then
@@ -988,22 +986,22 @@ Imports PropertyGridEx
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("RCSTRPGridItem1")) Then
 
-                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     bb.Volume = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.volume, e.ChangedItem.Value)
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("PFRLength")) Then
 
-                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     bb.Length = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.distance, e.ChangedItem.Value)
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("PFRCatalystLoading")) Then
 
-                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     bb.CatalystLoading = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_density, e.ChangedItem.Value)
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("PFRCatalystParticleDiameter")) Then
 
-                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     bb.CatalystParticleDiameter = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.diameter, e.ChangedItem.Value)
 
                 End If
@@ -1031,7 +1029,7 @@ Imports PropertyGridEx
 
                 If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("OverallHeatTranferCoefficient")) Then
 
-                    If e.ChangedItem.Value < 0 Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
+                    If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     bb.OverallCoefficient = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.heat_transf_coeff, e.ChangedItem.Value)
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Area")) Then

@@ -112,80 +112,101 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>216, 13</value>
+    <value>242, 13</value>
   </data>
   <data name="Label1.Text" xml:space="preserve">
-    <value>DWSIM generated an unhandled exception.</value>
-  </data>
-  <data name="Label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 42</value>
-  </data>
-  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>510, 85</value>
-  </data>
-  <data name="Label2.Text" xml:space="preserve">
-    <value>
-In most cases, you can continue to execute DWSIM normally. If you choose to close the application, you still can save the opened simulations.
-
-If the error is unrecoverable, click the 'Close' button. It will not be possible to save the opened simulations. In this case, check the 'Restart DWSIM' box to restart the program.</value>
-  </data>
-  <data name="KryptonButton1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>408, 137</value>
-  </data>
-  <data name="KryptonButton1.Text" xml:space="preserve">
-    <value>Save and Quit</value>
-  </data>
-  <data name="KryptonButton2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>286, 137</value>
+    <value>DWSIM generated an unhandled error/exception.</value>
   </data>
   <data name="KryptonButton2.Text" xml:space="preserve">
     <value>Continue</value>
   </data>
-  <data name="LabelWithDivider1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>-10, 128</value>
-  </data>
-  <data name="TextBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 219</value>
-  </data>
-  <data name="Panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>530, 133</value>
-  </data>
-  <data name="KryptonButton4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 137</value>
-  </data>
   <data name="KryptonButton4.Text" xml:space="preserve">
     <value>Close</value>
   </data>
-  <data name="KryptonCheckBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 177</value>
+  <data name="Button2.Text" xml:space="preserve">
+    <value>Send email</value>
   </data>
-  <data name="KryptonCheckBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 19</value>
+  <data name="TabPage1.Text" xml:space="preserve">
+    <value>Error Message</value>
   </data>
-  <data name="KryptonCheckBox1.Text" xml:space="preserve">
-    <value>Restart DWSIM</value>
+  <data name="TabPage2.Text" xml:space="preserve">
+    <value>Details</value>
   </data>
-  <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>404, 171</value>
-  </data>
-  <data name="Button1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>118, 25</value>
+  <data name="LabelWithDivider2.Text" xml:space="preserve">
+    <value>Actions</value>
   </data>
   <data name="Button1.Text" xml:space="preserve">
-    <value>View Details</value>
+    <value>Restart</value>
   </data>
-  <data name="Button2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>113, 137</value>
+  <data name="Button3.Text" xml:space="preserve">
+    <value>Check for Updates</value>
   </data>
-  <data name="Button2.Text" xml:space="preserve">
-    <value>Send Error Info</value>
+  <data name="Button4.Text" xml:space="preserve">
+    <value>View code @ GitHub</value>
+  </data>
+  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>94, 13</value>
+  </data>
+  <data name="Label2.Text" xml:space="preserve">
+    <value>Close this window.</value>
+  </data>
+  <data name="Button5.Text" xml:space="preserve">
+    <value>Search Forums</value>
+  </data>
+  <data name="LabelWithDivider3.Text" xml:space="preserve">
+    <value>Additional Support</value>
+  </data>
+  <data name="Button6.Text" xml:space="preserve">
+    <value>Search Wiki</value>
+  </data>
+  <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>284, 13</value>
+  </data>
+  <data name="Label3.Text" xml:space="preserve">
+    <value>Kill current DWSIM process. Unsaved changes will be lost.</value>
+  </data>
+  <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>85, 13</value>
+  </data>
+  <data name="Label4.Text" xml:space="preserve">
+    <value>Restart DWSIM.</value>
+  </data>
+  <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>194, 13</value>
+  </data>
+  <data name="Label5.Text" xml:space="preserve">
+    <value>Check for DWSIM updates on the web.</value>
+  </data>
+  <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>299, 13</value>
+  </data>
+  <data name="Label6.Text" xml:space="preserve">
+    <value>Search DWSIM Forums for information about the current error.</value>
+  </data>
+  <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>286, 13</value>
+  </data>
+  <data name="Label7.Text" xml:space="preserve">
+    <value>Search DWSIM Wiki for information about the current error.</value>
+  </data>
+  <data name="Label8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>507, 13</value>
+  </data>
+  <data name="Label8.Text" xml:space="preserve">
+    <value>Send an email to developers with information about this error. Please add more info on how to reproduce it.</value>
+  </data>
+  <data name="Label9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>395, 13</value>
+  </data>
+  <data name="Label9.Text" xml:space="preserve">
+    <value>View the code line where this error was raised/generated on the GitHub repository.</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -315,6 +336,6 @@ If the error is unrecoverable, click the 'Close' button. It will not be possible
 </value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Error</value>
+    <value>An unhandled error was raised</value>
   </data>
 </root>
