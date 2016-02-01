@@ -25,6 +25,7 @@ Public Class FormUnhandledException
     Inherits System.Windows.Forms.Form
 
     Dim Loaded As Boolean = False
+    Dim githublink As String = ""
     Public ex As Exception
 
     Private Sub KryptonButton2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KryptonButton2.Click
@@ -42,9 +43,24 @@ Public Class FormUnhandledException
     End Sub
 
     Private Sub FormUnhandledException_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
         If DWSIM.App.IsRunningOnMono Then Console.WriteLine(ex.ToString)
         Me.TextBox1.Text = ex.Message.ToString
         Me.TextBox2.Text = ex.ToString
+        Button4.Enabled = False
+        Try
+            Dim baseaddress As String = "https://github.com/DanWBR/dwsim3/blob/master/"
+            Dim st As New StackTrace(ex, True)
+            Dim frame As StackFrame = st.GetFrame(0)
+            Dim path As String = frame.GetFileName.Replace("C:\Users\danie\Documents\Visual Studio 2013\Projects\DWSIM3\", baseaddress)
+            Dim line As Integer = frame.GetFileLineNumber()
+            If path.Contains(baseaddress) Then
+                githublink = path & "#L" & line
+                Button4.Enabled = True
+            End If
+        Catch ex As Exception
+        End Try
+
     End Sub
 
     Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click
@@ -57,20 +73,7 @@ Public Class FormUnhandledException
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
 
-        Try
-            Dim baseaddress As String = "https://github.com/DanWBR/dwsim3/blob/master/"
-            Dim st As New StackTrace(ex, True)
-            Dim frame As StackFrame = st.GetFrame(0)
-            Dim path As String = frame.GetFileName.Replace("C:\Users\danie\Documents\Visual Studio 2013\Projects\DWSIM3\", baseaddress)
-            Dim line As Integer = frame.GetFileLineNumber()
-            If path.Contains(baseaddress) Then
-                Process.Start(path & "#L" & line)
-            Else
-                Process.Start("https://github.com/DanWBR/dwsim3")
-            End If
-        Catch ex As Exception
-            Process.Start("https://github.com/DanWBR/dwsim3")
-        End Try
+        If githublink <> "" Then Process.Start(githublink)
 
     End Sub
 
