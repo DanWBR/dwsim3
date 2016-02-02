@@ -492,11 +492,15 @@ Public Class FormConfigWizard
             Dim ppid As String = ""
             ppid = dgvpp.SelectedRows(0).Cells(0).Value
             Dim pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage = FrmChild.Options.PropertyPackages(ppid)
-            pp.ReconfigureConfigForm()
-            pp.ConfigForm._pp = pp
-            pp.ConfigForm._comps = FrmChild.Options.SelectedComponents
-            pp.ConfigForm._form = FrmChild
-            pp.ShowConfigForm(FrmChild)
+            If pp.IsConfigurable Then
+                pp.ReconfigureConfigForm()
+                pp.ConfigForm._pp = pp
+                pp.ConfigForm._comps = FrmChild.Options.SelectedComponents
+                pp.ConfigForm._form = FrmChild
+                pp.ShowConfigForm(FrmChild)
+            Else
+                MessageBox.Show(DWSIM.App.GetLocalString("NonConfigurablePP"), "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            End If
         End If
     End Sub
 End Class

@@ -49,6 +49,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             'DirectCast(m_act, NRTL).InteractionParameters("Water").Add("Ammonia", New NRTL_IPData() With {.A21 = 1453.9636, .A12 = -1712.3278, .alpha12 = 0.2})
 
+            Me.IsConfigurable = False
+            Me.ConfigForm = Nothing
+            Me._packagetype = PropertyPackages.PackageType.ActivityCoefficient
+
         End Sub
 
         Public Sub New()

@@ -9577,6 +9577,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Este pacote de propriedades não possui opções de configuração..
+        '''</summary>
+        Friend Shared ReadOnly Property NonConfigurablePP() As String
+            Get
+                Return ResourceManager.GetString("NonConfigurablePP", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Não é possível excluir tabelas.
         '''</summary>
         Friend Shared ReadOnly Property Nopossvelexcluirtabe() As String
@@ -13497,6 +13506,15 @@ Namespace My.Resources
         Friend Shared ReadOnly Property STHXPropertiesDesc() As String
             Get
                 Return ResourceManager.GetString("STHXPropertiesDesc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to .
+        '''</summary>
+        Friend Shared ReadOnly Property String1() As String
+            Get
+                Return ResourceManager.GetString("String1", resourceCulture)
             End Get
         End Property
         

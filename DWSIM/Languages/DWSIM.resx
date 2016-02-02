@@ -5283,4 +5283,7 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   <data name="CalculatingWith" xml:space="preserve">
     <value>Calculando o objeto '{0}' com o pacote de propriedades {1}...</value>
   </data>
+  <data name="NonConfigurablePP" xml:space="preserve">
+    <value>Este pacote de propriedades não possui opções de configuração.</value>
+  </data>
 </root>
