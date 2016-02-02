@@ -470,9 +470,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Dim i As Integer = 0
                     For i = 1 To paramcount
                         Dim myparam As ICapeParameterSpec = myparms.Item(i)
-                        Dim ip As ICapeParameter = CType(myparam, ICapeParameter)
+                        Dim ip As ICapeParameter = DirectCast(myparam, ICapeParameter)
                         Try
-                            ip.value = _params(i - 1).value
+                            If Not ip.Mode = CapeParamMode.CAPE_OUTPUT Then ip.value = _params(i - 1).value
                         Catch ex As Exception
                             'Console.WriteLine(ex.ToString)
                             'Dim ecu As CapeOpen.ECapeUser = myuo

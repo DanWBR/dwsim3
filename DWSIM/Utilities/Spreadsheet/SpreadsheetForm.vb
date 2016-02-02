@@ -524,6 +524,9 @@ Public Class SpreadsheetForm
                 End If
                 If expression <> "" Then
                     If expression.Substring(0, 1) = "=" Then
+                        Me.ExpContext.Options.ParseCulture = System.Globalization.CultureInfo.InvariantCulture
+                        Me.ExpContext.ParserOptions.DecimalSeparator = "."
+                        Me.ExpContext.ParserOptions.FunctionArgumentSeparator = ";"
                         Me.Expr = Me.ExpContext.CompileGeneric(Of Object)(expression.Substring(1))
                         cell.Value = Expr.Evaluate
                         If Not ccparams.CellType = VarType.Write Then cell.Style.BackColor = Color.LightYellow
