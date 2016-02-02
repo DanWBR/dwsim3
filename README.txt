@@ -1,6 +1,6 @@
 ==================================================
 DWSIM - Open Source Process Simulator
-Version 3.5, Build 5800 - November 2015
+Version 3.6, Build 5876 - February 2016
 Copyright (c) Daniel Medeiros, Gregor Reichert, Gustavo León
 ==================================================
 
@@ -24,19 +24,17 @@ DWSIM is licensed under the GNU General Public License (GPL) Version 3.
 SOFTWARE/SYSTEM REQUIREMENTS
 ==================================================
 
-OS:               Windows XP/2000/Vista/7/8/10, OS X or Linux
-Software:         .NET Framework 4.0 / Mono 3.0 or newer
-CPU:              1.6 GHz single-core processor (minimum)
+OS:               Windows Vista/7/8/10 or Linux
+Software:         .NET Framework 4.5 / Mono 4.0 or newer
+CPU:              1.0 GHz dual-core processor (minimum)
 GPU (optional):   CUDA 2.0 or OpenCL 1.1-enabled device
 Memory:           1 GB RAM
-HD space:         200 MB for program files.
+HD space:         220 MB for program files.
 Display:          A 1024x768 display resolution is recommended as a minimum.
 
 ==================================================
-USAGE INFO (LINUX / OS X)
+USAGE INFO (LINUX)
 ==================================================
-
-** Linux
 
 To run DWSIM on Linux, open a terminal (console) window, point it to the folder which contains the DWSIM executable and execute the following command:
 
@@ -46,45 +44,7 @@ To run in debug mode, include the '--debug' switch (when you encounter an unhand
 
 mono --debug DWSIM.exe
 
-In order to use the PC-SAFT Property Package, the Gibbs Reactor and the IPOPT solver, you'll need to copy the corresponding native libraries to your 'lib' folder (you'll need to do this only once) and rename 2 files in the DWSIM directory:
-
-sudo cp sharedobjects\liblpsolve55.so /usr/lib/
-sudo cp sharedobjects\libPC_SAFT_PROP.so /usr/lib/
-sudo cp sharedobjects\libfprops_ascend.so /usr/lib/
-sudo tar -C /usr/lib -zxvf sharedobjects\libipopt_mono_dwsim_ubuntu_11.10_32.tar.gz
-
-mv DWSIM.exe.config.linux DWSIM.exe.config
-mv Cureos.Numerics.dll.config.linux Cureos.Numerics.dll.config
-
-On Linux machines, Mono can locate these libraries on the DWSIM folder, so you don't need to copy them.
-
-** OS X
-
-Important: Mono requires the X11 package installed on OS X in order to run Windows Forms applications, including DWSIM. Be sure to have it installed before doing the steps below.
-
-Due to a bug in the libgdiplus library in OS X, DWSIM will work only with a specific Mono 2.10 build, which can be found here => https://bugzilla.xamarin.com/show_bug.cgi?id=2474
-
-To run DWSIM on OS X, open a terminal (console) window (Go > Utilities > Terminal), point it to the folder which contains the DWSIM executable and execute the following commands:
-
-export MONO_MWF_MAC_FORCE_X11=1
-mono DWSIM.exe
-
-To run in debug mode, include the '--debug' switch (when you encounter an unhandled exception, debug mode will include information about the source code file and line number where the exception was raised - helps to track bugs):
-
-mono --debug DWSIM.exe
-
-In order to use the PC-SAFT Property Package, the Gibbs Reactor and the IPOPT solver, you'll need to copy the corresponding native libraries to your 'lib' folder (you'll need to do this only once) and rename 2 files in the DWSIM directory:
-
-sudo cp dynamiclibraries\liblpsolve55.dylib /usr/lib/
-sudo cp dynamiclibraries\libgfortran.3.dylib /usr/lib/
-sudo cp dynamiclibraries\libPC_SAFT_PROP.dylib /usr/lib/
-sudo cp dynamiclibraries\libfprops_ascend.dylib /usr/lib/
-sudo unzip dynamiclibraries\libipopt_mono_dwsim_osx_10.7.3_32.zip -d /usr/lib
-
-mv DWSIM.exe.config.osx DWSIM.exe.config
-mv Cureos.Numerics.dll.config.osx Cureos.Numerics.dll.config
-
-Finally, if you didn't do this already, copy the file "default.ini" and rename the copied file to "dwsim.ini" to have your settings saved between sessions. 
+If you installed DWSIM through the Debian package, run DWSIM by typing "dwsim" on the terminal. To run it in debug mode, type "dwsim-debug".
 
 ==================================================
 KNOWN ISSUES
@@ -94,12 +54,28 @@ Known limitations of DWSIM when running on Mono:
 
 - Report Tool doesn't work. When the user clicks on the button to generate a report preview, a blank page appears;
 - DataGrids don't display tooltips, this is a Mono limitation, not DWSIM's.
+- The first row of a data grid view cannot be removed, an exception will be thrown.
+- Floating windows don't display the docking toolstrip menu.
+- Copy image to clipboard functions don't work.
+- Flowsheet object rotation is disabled when running DWSIM on Mono.
+- Some of the flowsheet toolstrips might become invisible when resizing the window.
+- After closing a simulation, residual menu items will remain visible on the main DWSIM window.
 
 ==================================================
 VERSION HISTORY / CHANGELOG
 ==================================================
 
 The full changelog, including code changes and their authors can be viewed at https://github.com/DanWBR/dwsim3/commits/master
+
+Version 3.6 Build 5876
+
+- [NEW] DWSIM now runs in 64-bit mode on 64-bit operating systems. To run in 32-bit mode, start "DWSIM_32.bat"
+- [NEW] New Pipe calculation modes: Specify Outlet Pressure / Outlet Temperature
+- [NEW] Sour Water Property Package
+- [CHG] Updated User Interface 
+- [CHG] Enabled CoolProp Property Package for 64-bit Linux
+- [CHG] Changed XML report style
+- [FIX] Various stability enhancements and bug fixes when running in Mono mode
 
 Version 3.5 Build 5800
 
