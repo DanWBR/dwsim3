@@ -245,14 +245,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 End If
 
                 If LimitVaporFraction Then
-                    If V < 0.0# Then
-                        V = 0.0#
-                        Exit Do
-                    End If
-                    If V > 1.0# Then
-                        V = 1.0#
-                        Exit Do
-                    End If
+                    If V < 0.0# Then V = 0.0#
+                    If V > 1.0# Then V = 1.0#
                 End If
 
                 L = 1 - V
