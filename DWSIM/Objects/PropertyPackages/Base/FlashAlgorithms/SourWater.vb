@@ -220,9 +220,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     If L = 0.0# Then
                         Vxv = .GetVaporPhaseMoleFractions
                         Vxl = Vxv.DivideY(.Kvalues.ToArray)
+                        For i = 0 To n
+                            If Double.IsNaN(Vxl(i)) Then Vxl(i) = 0.0#
+                        Next
                     ElseIf V = 0.0# Then
                         Vxl = .GetLiquidPhase1MoleFractions
                         Vxv = .Kvalues.ToArray.MultiplyY(Vxl)
+                        For i = 0 To n
+                            If Double.IsNaN(Vxv(i)) Then Vxv(i) = 0.0#
+                        Next
                     Else
                         Vxl = .GetLiquidPhase1MoleFractions
                         Vxv = .GetVaporPhaseMoleFractions
