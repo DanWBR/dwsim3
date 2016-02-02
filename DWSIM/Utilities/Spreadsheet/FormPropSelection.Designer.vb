@@ -23,15 +23,16 @@ Partial Class FormPropSelection
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormPropSelection))
-        Me.KryptonButton2 = New System.Windows.Forms.Button
-        Me.KryptonButton1 = New System.Windows.Forms.Button
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox
-        Me.TreeView3 = New System.Windows.Forms.TreeView
-        Me.TreeView2 = New System.Windows.Forms.TreeView
-        Me.TreeView1 = New System.Windows.Forms.TreeView
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.Label1 = New System.Windows.Forms.Label
+        Me.KryptonButton2 = New System.Windows.Forms.Button()
+        Me.KryptonButton1 = New System.Windows.Forms.Button()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.TreeView3 = New System.Windows.Forms.TreeView()
+        Me.TreeView2 = New System.Windows.Forms.TreeView()
+        Me.TreeView1 = New System.Windows.Forms.TreeView()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -47,21 +48,21 @@ Partial Class FormPropSelection
         '
         'GroupBox1
         '
+        resources.ApplyResources(Me.GroupBox1, "GroupBox1")
         Me.GroupBox1.Controls.Add(Me.TreeView3)
         Me.GroupBox1.Controls.Add(Me.TreeView2)
         Me.GroupBox1.Controls.Add(Me.TreeView1)
         Me.GroupBox1.Controls.Add(Me.Label3)
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Controls.Add(Me.Label1)
-        resources.ApplyResources(Me.GroupBox1, "GroupBox1")
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.TabStop = False
         '
         'TreeView3
         '
+        resources.ApplyResources(Me.TreeView3, "TreeView3")
         Me.TreeView3.FullRowSelect = True
         Me.TreeView3.HideSelection = False
-        resources.ApplyResources(Me.TreeView3, "TreeView3")
         Me.TreeView3.Name = "TreeView3"
         Me.TreeView3.ShowLines = False
         Me.TreeView3.ShowPlusMinus = False
@@ -69,9 +70,9 @@ Partial Class FormPropSelection
         '
         'TreeView2
         '
+        resources.ApplyResources(Me.TreeView2, "TreeView2")
         Me.TreeView2.FullRowSelect = True
         Me.TreeView2.HideSelection = False
-        resources.ApplyResources(Me.TreeView2, "TreeView2")
         Me.TreeView2.Name = "TreeView2"
         Me.TreeView2.ShowLines = False
         Me.TreeView2.ShowPlusMinus = False
@@ -79,9 +80,9 @@ Partial Class FormPropSelection
         '
         'TreeView1
         '
+        resources.ApplyResources(Me.TreeView1, "TreeView1")
         Me.TreeView1.FullRowSelect = True
         Me.TreeView1.HideSelection = False
-        resources.ApplyResources(Me.TreeView1, "TreeView1")
         Me.TreeView1.Name = "TreeView1"
         Me.TreeView1.ShowLines = False
         Me.TreeView1.ShowPlusMinus = False
@@ -102,10 +103,16 @@ Partial Class FormPropSelection
         resources.ApplyResources(Me.Label1, "Label1")
         Me.Label1.Name = "Label1"
         '
+        'Label4
+        '
+        resources.ApplyResources(Me.Label4, "Label4")
+        Me.Label4.Name = "Label4"
+        '
         'FormPropSelection
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.KryptonButton2)
         Me.Controls.Add(Me.KryptonButton1)
         Me.Controls.Add(Me.GroupBox1)
@@ -116,6 +123,7 @@ Partial Class FormPropSelection
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
     Public WithEvents KryptonButton2 As System.Windows.Forms.Button
@@ -127,4 +135,5 @@ Partial Class FormPropSelection
     Public WithEvents TreeView3 As System.Windows.Forms.TreeView
     Public WithEvents TreeView2 As System.Windows.Forms.TreeView
     Public WithEvents TreeView1 As System.Windows.Forms.TreeView
+    Friend WithEvents Label4 As System.Windows.Forms.Label
 End Class

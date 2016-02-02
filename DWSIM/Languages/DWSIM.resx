@@ -5286,4 +5286,10 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   <data name="NonConfigurablePP" xml:space="preserve">
     <value>Este pacote de propriedades não possui opções de configuração.</value>
   </data>
+  <data name="HXIgnoreLMTDError" xml:space="preserve">
+    <value>Ignorar erro no cálculo da MLDT</value>
+  </data>
+  <data name="HXIgnoreLMTDErrorDesc" xml:space="preserve">
+    <value>Se verdadeiro, um erro no cálculo da MLDT não resulta em interrupção do cálculo. Útil para simulações com reciclos.</value>
+  </data>
 </root>

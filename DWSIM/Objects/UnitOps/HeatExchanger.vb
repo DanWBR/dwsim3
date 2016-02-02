@@ -83,6 +83,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
         Protected m_stprops As New STHXProperties
         Protected m_f As Double = 1.0#
 
+        Public Property IgnoreLMTDError As Boolean = True
+
         Public Property STProperties() As STHXProperties
             Get
                 If m_stprops Is Nothing Then m_stprops = New STHXProperties
@@ -428,7 +430,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 End If
                         End Select
 
-                        If Double.IsNaN(LMTD) Or Double.IsInfinity(LMTD) Then Throw New Exception(DWSIM.App.GetLocalString("HXCalcError"))
+                        If Not IgnoreLMTDError Then If Double.IsNaN(LMTD) Or Double.IsInfinity(LMTD) Then Throw New Exception(DWSIM.App.GetLocalString("HXCalcError"))
 
                         Q_UA = U / 1000 * A * LMTD 'calculate Q due to temperature difference
 
@@ -479,7 +481,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             LMTD = ((Th1 - Tc2) - (Th2 - Tc1)) / Math.Log((Th1 - Tc2) / (Th2 - Tc1))
                     End Select
 
-                    If Double.IsNaN(LMTD) Or Double.IsInfinity(LMTD) Then Throw New Exception(DWSIM.App.GetLocalString("HXCalcError"))
+                    If Not IgnoreLMTDError Then If Double.IsNaN(LMTD) Or Double.IsInfinity(LMTD) Then Throw New Exception(DWSIM.App.GetLocalString("HXCalcError"))
 
                     U = Q / (A * LMTD) * 1000
 
@@ -508,7 +510,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             LMTD = ((Th1 - Tc2) - (Th2 - Tc1)) / Math.Log((Th1 - Tc2) / (Th2 - Tc1))
                     End Select
 
-                    If Double.IsNaN(LMTD) Or Double.IsInfinity(LMTD) Then Throw New Exception(DWSIM.App.GetLocalString("HXCalcError"))
+                    If Not IgnoreLMTDError Then If Double.IsNaN(LMTD) Or Double.IsInfinity(LMTD) Then Throw New Exception(DWSIM.App.GetLocalString("HXCalcError"))
 
                     U = Q / (A * LMTD) * 1000
 
@@ -536,7 +538,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             LMTD = ((Th1 - Tc2) - (Th2 - Tc1)) / Math.Log((Th1 - Tc2) / (Th2 - Tc1))
                     End Select
 
-                    If Double.IsNaN(LMTD) Or Double.IsInfinity(LMTD) Then Throw New Exception(DWSIM.App.GetLocalString("HXCalcError"))
+                    If Not IgnoreLMTDError Then If Double.IsNaN(LMTD) Or Double.IsInfinity(LMTD) Then Throw New Exception(DWSIM.App.GetLocalString("HXCalcError"))
 
                     U = Q / (A * LMTD) * 1000
 
@@ -579,7 +581,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             LMTD = ((Th1 - Tc2) - (Th2 - Tc1)) / Math.Log((Th1 - Tc2) / (Th2 - Tc1))
                     End Select
 
-                    If Double.IsNaN(LMTD) Or Double.IsInfinity(LMTD) Then Throw New Exception(DWSIM.App.GetLocalString("HXCalcError"))
+                    If Not IgnoreLMTDError Then If Double.IsNaN(LMTD) Or Double.IsInfinity(LMTD) Then Throw New Exception(DWSIM.App.GetLocalString("HXCalcError"))
 
                     U = Me.OverallCoefficient
 
@@ -618,7 +620,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 LMTD = ((Th1 - Tc2) - (Th2 - Tc1)) / Math.Log((Th1 - Tc2) / (Th2 - Tc1))
                         End Select
 
-                        If Double.IsNaN(LMTD) Or Double.IsInfinity(LMTD) Then Throw New Exception(DWSIM.App.GetLocalString("HXCalcError"))
+                        If Not IgnoreLMTDError Then If Double.IsNaN(LMTD) Or Double.IsInfinity(LMTD) Then Throw New Exception(DWSIM.App.GetLocalString("HXCalcError"))
 
                         Dim rhoc, muc, kc, rhoh, muh, kh, rs, rt, Atc, Nc, di, de, pitch, L, n, hi, nt, vt, Ret, Prt As Double
                         If STProperties.Tube_Fluid = 0 Then
@@ -1246,6 +1248,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 End With
 
                 .Item.Add(DWSIM.App.GetLocalString("HXCalculationMode"), Me, "CalculationMode", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("HXCalculationModeDesc"), True)
+                .Item.Add(DWSIM.App.GetLocalString("HXIgnoreLMTDError"), Me, "IgnoreLMTDError", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("HXIgnoreLMTDErrorDesc"), True)
 
                 Dim AValue As Double
 
