@@ -31,6 +31,7 @@ Partial Class FormConfigWizard
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.WizardPage2 = New AeroWizard.WizardPage()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
         Me.ListViewA = New System.Windows.Forms.ListView()
         Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -48,7 +49,6 @@ Partial Class FormConfigWizard
         Me.Column5 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.Column10 = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.Button7 = New System.Windows.Forms.Button()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.WizardPage3 = New AeroWizard.WizardPage()
         Me.LinkLabelPropertyMethods = New System.Windows.Forms.LinkLabel()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
@@ -123,6 +123,7 @@ Partial Class FormConfigWizard
         'WizardPage2
         '
         resources.ApplyResources(Me.WizardPage2, "WizardPage2")
+        Me.WizardPage2.Controls.Add(Me.TextBox1)
         Me.WizardPage2.Controls.Add(Me.GroupBox4)
         Me.WizardPage2.Controls.Add(Me.Label2)
         Me.WizardPage2.Controls.Add(Me.Button11)
@@ -130,9 +131,15 @@ Partial Class FormConfigWizard
         Me.WizardPage2.Controls.Add(Me.Button10)
         Me.WizardPage2.Controls.Add(Me.ogc1)
         Me.WizardPage2.Controls.Add(Me.Button7)
-        Me.WizardPage2.Controls.Add(Me.TextBox1)
         Me.WizardPage2.Name = "WizardPage2"
         Me.WizardPage2.NextPage = Me.WizardPage3
+        '
+        'TextBox1
+        '
+        resources.ApplyResources(Me.TextBox1, "TextBox1")
+        Me.TextBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.TextBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
+        Me.TextBox1.Name = "TextBox1"
         '
         'GroupBox4
         '
@@ -268,13 +275,6 @@ Partial Class FormConfigWizard
         resources.ApplyResources(Me.Button7, "Button7")
         Me.Button7.Name = "Button7"
         Me.Button7.UseVisualStyleBackColor = True
-        '
-        'TextBox1
-        '
-        resources.ApplyResources(Me.TextBox1, "TextBox1")
-        Me.TextBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
-        Me.TextBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
-        Me.TextBox1.Name = "TextBox1"
         '
         'WizardPage3
         '

@@ -136,12 +136,13 @@ Haga clic en "Siguiente" para continuar.</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 3</value>
+    <value>4, 4</value>
+  </data>
+  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>703, 35</value>
   </data>
   <data name="Label2.Text" xml:space="preserve">
-    <value>Seleccione los componentes que desea agregar a la Simulación. Utilice el cuadro de texto para buscar y seleccionar un componente en la lista.
-
-Haga clic en "Siguiente" para continuar.</value>
+    <value>Seleccione los componentes que desea agregar a la Simulación. Utilice el cuadro de texto para buscar y seleccionar un componente en la lista. Haga clic en "Siguiente" para continuar.</value>
   </data>
   <data name="Button11.Text" xml:space="preserve">
     <value>Limpiar Lista</value>
@@ -158,6 +159,12 @@ Haga clic en "Siguiente" para continuar.</value>
   <data name="Column7.HeaderText" xml:space="preserve">
     <value>Origen</value>
   </data>
+  <data name="Column5.ToolTipText" xml:space="preserve">
+    <value>Soportado por el Paquete de Propiedades CoolProp</value>
+  </data>
+  <data name="Column10.ToolTipText" xml:space="preserve">
+    <value>Soportado por el Paquete de Propiedades FPROPS</value>
+  </data>
   <data name="Button7.Text" xml:space="preserve">
     <value>Agregar &gt;</value>
   </data>
@@ -167,19 +174,23 @@ Haga clic en "Siguiente" para continuar.</value>
   <data name="LinkLabelPropertyMethods.Text" xml:space="preserve">
     <value>Haga clic aquí para conocer los métodos y las ecuaciones utilizadas por los paquetes para calcular las propiedades de los fluidos.</value>
   </data>
+  <data name="Button8.Text" xml:space="preserve">
+    <value>Agregar</value>
+  </data>
   <data name="GroupBox6.Text" xml:space="preserve">
     <value>Paquetes Disponibles</value>
+  </data>
+  <data name="Column16.HeaderText" xml:space="preserve">
+    <value>Nombre</value>
   </data>
   <data name="GroupBox12.Text" xml:space="preserve">
     <value>Paquetes Agregados</value>
   </data>
   <data name="Label4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 4</value>
+    <value>4, 3</value>
   </data>
   <data name="Label4.Text" xml:space="preserve">
-    <value>Seleccionar y añada los paquetes de propiedades que desea utilizar en la simulación. El primero en la lista está seleccionado de forma predeterminada para todos los objetos del diagrama de flujo.
-
-Haga clic en"Siguiente" para continuar.</value>
+    <value>Seleccionar y añada los paquetes de propiedades que desea utilizar en la simulación. El primero en la lista está seleccionado de forma predeterminada para todos los objetos del diagrama de flujo. Haga clic en"Siguiente" para continuar.</value>
   </data>
   <data name="ListBoxPP.Items" xml:space="preserve">
     <value>Bucles Anidados (Equilibrio Líquido-Vapor)</value>
@@ -218,6 +229,27 @@ Haga clic en"Siguiente" para continuar.</value>
     <value>Seleccione un algoritmo de flash adecuado para su simulación. Si su sistema exhibe inestabilidades en la fase líquida (sistemas inmiscibles), seleccione un algoritmo capaz de predecir el equilibrio entre tres fases (VLLE). Para calcular el equilibrio que incluye una fase sólida, seleccione el algoritmo correspondiente. Para sistemas complejos, utilice el algoritmo de minimización de Gibbs más apropiado (dos o tres fases).
 
 Haha clic en"Siguiente" para continuar.</value>
+  </data>
+  <data name="Column1.HeaderText" xml:space="preserve">
+    <value>Propriedad</value>
+  </data>
+  <data name="Column2.HeaderText" xml:space="preserve">
+    <value>Unidad</value>
+  </data>
+  <data name="Column3.HeaderText" xml:space="preserve">
+    <value>Propriedad</value>
+  </data>
+  <data name="Column4.HeaderText" xml:space="preserve">
+    <value>Unidad</value>
+  </data>
+  <data name="ComboBox2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>125, 59</value>
+  </data>
+  <data name="Label8.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 62</value>
+  </data>
+  <data name="Label7.Text" xml:space="preserve">
+    <value>Seleccione el sistema de unidades que desee para la simulación. Usted puede cambiar las unidades del sistema existentes, incluir nuevos sistemas y realizar otras operaciones en la ventana de configuración de la simulación en cualquier momento después de terminar este asistente. Haga Clic en "Finalizar" para salir e iniciar la simulación.</value>
   </data>
   <data name="WizardPage3.Text" xml:space="preserve">
     <value>Paquete de Propiedades</value>
@@ -354,34 +386,5 @@ Haha clic en"Siguiente" para continuar.</value>
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
 </value>
-  </data>
-  <data name="Button8.Text" xml:space="preserve">
-    <value>Agregar</value>
-  </data>
-  <data name="Label7.Text" xml:space="preserve">
-    <value>Seleccione el sistema de unidades que desee para la simulación. Usted puede cambiar las unidades del sistema existentes, incluir nuevos sistemas y realizar otras operaciones en la ventana de configuración de la simulación en cualquier momento después de terminar este asistente.
-
- Haga Clic en "Finalizar" para salir e iniciar la simulación.</value>
-  </data>
-  <data name="Column1.HeaderText" xml:space="preserve">
-    <value>Propriedad</value>
-  </data>
-  <data name="Column2.HeaderText" xml:space="preserve">
-    <value>Unidad</value>
-  </data>
-  <data name="Column3.HeaderText" xml:space="preserve">
-    <value>Propriedad</value>
-  </data>
-  <data name="Column4.HeaderText" xml:space="preserve">
-    <value>Unidad</value>
-  </data>
-  <data name="Column16.HeaderText" xml:space="preserve">
-    <value>Nombre</value>
-  </data>
-  <data name="Column10.ToolTipText" xml:space="preserve">
-    <value>Soportado por el Paquete de Propiedades FPROPS</value>
-  </data>
-  <data name="Column5.ToolTipText" xml:space="preserve">
-    <value>Soportado por el Paquete de Propiedades CoolProp</value>
   </data>
 </root>

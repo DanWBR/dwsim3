@@ -145,12 +145,13 @@ Klicken Sie "Weiter" um fortzufahren.</value>
     <value>Auswahl</value>
   </data>
   <data name="Label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 5</value>
+    <value>4, 4</value>
+  </data>
+  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>708, 35</value>
   </data>
   <data name="Label2.Text" xml:space="preserve">
-    <value>Wählen Sie die Komponenten, welche Sie der Simulation hinzufügen möchten. Verwenden Sie das Textfeld, um in der Liste zu suchen, und wählen Sie eine Komponente.
-
-Klicken Sie "Weiter" um fortzufahren.</value>
+    <value>Wählen Sie die Komponenten, welche Sie der Simulation hinzufügen möchten. Verwenden Sie das Textfeld, um in der Liste zu suchen, und wählen Sie eine Komponente. Klicken Sie "Weiter" um fortzufahren.</value>
   </data>
   <data name="Button11.Text" xml:space="preserve">
     <value>Liste leeren</value>
@@ -201,15 +202,13 @@ Klicken Sie "Weiter" um fortzufahren.</value>
     <value>Gewählte PropertyPackages</value>
   </data>
   <data name="Label4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 4</value>
+    <value>4, 5</value>
   </data>
   <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>679, 67</value>
+    <value>703, 34</value>
   </data>
   <data name="Label4.Text" xml:space="preserve">
-    <value>Wählen Sie die PropertyPackages die Sie für die Berechnung der Eigenschaften verwenden möchten. Das erste in der Liste wird standardmäßig für die Berechnung der Objekte verwendet.
-
-Klicken Sie "Weiter" um fortzufahren.</value>
+    <value>Wählen Sie die PropertyPackages die Sie für die Berechnung der Eigenschaften verwenden möchten. Das erste in der Liste wird standardmäßig für die Berechnung der Objekte verwendet. Klicken Sie "Weiter" um fortzufahren.</value>
   </data>
   <data name="ListBoxPP.Items" xml:space="preserve">
     <value>Nested Loops (VLE)</value>
@@ -237,6 +236,12 @@ Klicken Sie "Weiter" um fortzufahren.</value>
   </data>
   <data name="ListBoxPP.Items8" xml:space="preserve">
     <value>Nested Loops (VLLE - Immiscible Liquids)</value>
+  </data>
+  <data name="ListBoxPP.Location" type="System.Drawing.Point, System.Drawing">
+    <value>112, 114</value>
+  </data>
+  <data name="ListBoxPP.Size" type="System.Drawing.Size, System.Drawing">
+    <value>594, 244</value>
   </data>
   <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>103, 15</value>
@@ -429,14 +434,13 @@ Klicken Sie "Weiter" um fortzufahren.</value>
     <value>Einheitensystem</value>
   </data>
   <data name="Label7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>18, 9</value>
+    <value>3, 3</value>
   </data>
   <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>679, 78</value>
+    <value>709, 52</value>
   </data>
   <data name="Label7.Text" xml:space="preserve">
     <value>Wählen Sie die gewünschten Systemeinheiten für Ihre Simulation. Sie können die Einheiten der bestehenden Systeme ändern, neue Systeme einfügen und andere Operationen im Konfigurationsfenster nach Beendigung dieses Assistenten durchführen.
-
 Klicken Sie "Beenden" um fortzufahren und die Simulation zu starten.</value>
   </data>
   <data name="$this.Text" xml:space="preserve">

@@ -223,7 +223,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 If Double.IsNaN(e1 + e2) Then
 
-                    Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
+                    Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError") & String.Format(" (T = {0} K, P = {1} Pa, MoleFracs = {2})", T.ToString("N2"), P.ToString("N2"), Vz.ToArrayString()))
 
                 ElseIf Math.Abs(e3) < 0.0000000001 And ecount > 0 Then
 
@@ -260,10 +260,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 ecount += 1
 
                 If Double.IsNaN(V) Then
-                    Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashTPVapFracError"))
+                    Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashTPVapFracError") & String.Format(" (T = {0} K, P = {1} Pa, MoleFracs = {2})", T.ToString("N2"), P.ToString("N2"), Vz.ToArrayString()))
                 End If
                 If ecount > maxit_e Then
-                    Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
+                    Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2") & String.Format(" (T = {0} K, P = {1} Pa, MoleFracs = {2})", T.ToString("N2"), P.ToString("N2"), Vz.ToArrayString()))
                 End If
 
                 WriteDebugInfo("PT Flash [NL]: Iteration #" & ecount & ", VF = " & V)
@@ -361,7 +361,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             Dim cnt2 As Integer
             Dim fx01 As Double, fx02 As Double, fx03 As Double
             Dim deltaT As Double
-        
+
             deltaT = Tref / 3 ' This is an adjustable parameter.
 
             x1 = Tref
@@ -623,7 +623,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     Ki(i) = 1
                 Next
 
-                If T <= Tmin Or T >= Tmax Or ecount > maxitEXT Then Throw New Exception("PH Flash [NL3PV3]: Invalid result: Temperature did not converge.")
+                If T <= Tmin Or T >= Tmax Or ecount > maxitEXT Then Throw New Exception("PH Flash [NL3PV3]: Invalid result: Temperature did not converge." & String.Format(" (T = {0} K, P = {1} Pa, MoleFracs = {2})", T.ToString("N2"), P.ToString("N2"), Vz.ToArrayString()))
             Else
 
                 'specified enthalpy requires pure liquid 
@@ -652,7 +652,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     Ki(i) = Vy(i) / Vx(i)
                 Next
 
-                If T <= Tmin Or T >= Tmax Or ecount > maxitEXT Then Throw New Exception("PH Flash [NL]: Invalid result: Temperature did not converge.")
+                If T <= Tmin Or T >= Tmax Or ecount > maxitEXT Then Throw New Exception("PH Flash [NL]: Invalid result: Temperature did not converge." & String.Format(" (T = {0} K, P = {1} Pa, MoleFracs = {2})", T.ToString("N2"), P.ToString("N2"), Vz.ToArrayString()))
             End If
 
             d2 = Date.Now
@@ -768,7 +768,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
 
             Next
 
-            If Double.IsNaN(T) Or T <= Tmin Or T >= Tmax Then Throw New Exception("PS Flash [NL]: Invalid result: Temperature did not converge.")
+            If Double.IsNaN(T) Or T <= Tmin Or T >= Tmax Then Throw New Exception("PS Flash [NL]: Invalid result: Temperature did not converge." & String.Format(" (T = {0} K, P = {1} Pa, MoleFracs = {2})", T.ToString("N2"), P.ToString("N2"), Vz.ToArrayString()))
 
             Dim tmp As Object = Flash_PT(Vz, P, T, PP)
 
@@ -942,7 +942,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     Ki(i) = 1
                 Next
 
-                If T <= Tmin Or T >= Tmax Then Throw New Exception("PS Flash [NL]: Invalid result: Temperature did not converge.")
+                If T <= Tmin Or T >= Tmax Then Throw New Exception("PS Flash [NL]: Invalid result: Temperature did not converge." & String.Format(" (T = {0} K, P = {1} Pa, MoleFracs = {2})", T.ToString("N2"), P.ToString("N2"), Vz.ToArrayString()))
 
             Else
 
@@ -971,7 +971,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     Ki(i) = Vy(i) / Vx(i)
                 Next
 
-                If T <= Tmin Or T >= Tmax Then Throw New Exception("PS Flash [NL]: Invalid result: Temperature did not converge.")
+                If T <= Tmin Or T >= Tmax Then Throw New Exception("PS Flash [NL]: Invalid result: Temperature did not converge." & String.Format(" (T = {0} K, P = {1} Pa, MoleFracs = {2})", T.ToString("N2"), P.ToString("N2"), Vz.ToArrayString()))
             End If
 
             d2 = Date.Now
@@ -1339,7 +1339,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
 
             dt = d2 - d1
 
-            If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
+            If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2") & String.Format(" (T = {0} K, P = {1} Pa, MoleFracs = {2})", T.ToString("N2"), P.ToString("N2"), Vz.ToArrayString()))
 
             If PP.AUX_CheckTrivial(Ki) Then Throw New Exception("TV Flash [NL]: Invalid result: converged to the trivial solution (P = " & P & " ).")
 
@@ -1677,7 +1677,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
 
             dt = d2 - d1
 
-            If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
+            If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2") & String.Format(" (T = {0} K, P = {1} Pa, MoleFracs = {2})", T.ToString("N2"), P.ToString("N2"), Vz.ToArrayString()))
 
             If PP.AUX_CheckTrivial(Ki) Then Throw New Exception("PV Flash [NL]: Invalid result: converged to the trivial solution (T = " & T & " ).")
 
