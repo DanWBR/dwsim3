@@ -3145,9 +3145,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             End If
                         Case StreamInformation.Behavior.InterExchanger
                             If Me.GraphicObject.FlippedH Then
-                                Me.GraphicObject.InputConnectors(idx).Position = New Point(Me.GraphicObject.X, Me.GraphicObject.Y + Me.StageIndex(strinfo.AssociatedStage) / Me.NumberOfStages * Me.GraphicObject.Height)
+                                Me.GraphicObject.OutputConnectors(idx).Position = New Point(Me.GraphicObject.X, Me.GraphicObject.Y + Me.StageIndex(strinfo.AssociatedStage) / Me.NumberOfStages * Me.GraphicObject.Height)
                             Else
-                                Me.GraphicObject.InputConnectors(idx).Position = New Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + Me.StageIndex(strinfo.AssociatedStage) / Me.NumberOfStages * Me.GraphicObject.Height)
+                                Me.GraphicObject.OutputConnectors(idx).Position = New Point(Me.GraphicObject.X + Me.GraphicObject.Width, Me.GraphicObject.Y + Me.StageIndex(strinfo.AssociatedStage) / Me.NumberOfStages * Me.GraphicObject.Height)
                             End If
                     End Select
                 Catch ex As Exception
@@ -3268,6 +3268,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Else
                             VSS(StageIndex(ms.AssociatedStage)) = ms.FlowRate.Value
                         End If
+                    Case StreamInformation.Behavior.InterExchanger
+                        Q(StageIndex(ms.AssociatedStage)) = -FlowSheet.Collections.CLCS_EnergyStreamCollection(ms.StreamID).Energia.GetValueOrDefault
+                End Select
+                i += 1
+            Next
+
+            For Each ms As StreamInformation In Me.EnergyStreams.Values
+                Select Case ms.StreamBehavior
                     Case StreamInformation.Behavior.InterExchanger
                         Q(StageIndex(ms.AssociatedStage)) = -FlowSheet.Collections.CLCS_EnergyStreamCollection(ms.StreamID).Energia.GetValueOrDefault
                 End Select
@@ -3941,9 +3949,7 @@ final:      FlowSheet.CalculationQueue.Enqueue(objargs)
                 Else
                     Select Case sinf.StreamBehavior
                         Case StreamInformation.Behavior.InterExchanger
-                            If Not FlowSheet.Collections.CLCS_EnergyStreamCollection(sinf.StreamID).GraphicObject.Calculated Then
-                                Throw New Exception(DWSIM.App.GetLocalString("DCStreamNotCalculatedException"))
-                            End If
+
                         Case StreamInformation.Behavior.Distillate
                             ceok = True
                         Case StreamInformation.Behavior.BottomsLiquid

@@ -5491,7 +5491,12 @@ Namespace DWSIM.SimulationObjects.Streams
                 End With
 
                 If Me.GraphicObject.InputConnectors(0).IsAttached Then
-                    .Item(2).IsReadOnly = True
+                    If Not Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.TipoObjeto = TipoObjeto.AbsorptionColumn And
+                        Not Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.TipoObjeto = TipoObjeto.DistillationColumn And
+                        Not Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.TipoObjeto = TipoObjeto.ReboiledAbsorber And
+                        Not Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.TipoObjeto = TipoObjeto.RefluxedAbsorber Then
+                        .Item(2).IsReadOnly = True
+                    End If
                 Else
                     .Item(2).IsReadOnly = False
                 End If

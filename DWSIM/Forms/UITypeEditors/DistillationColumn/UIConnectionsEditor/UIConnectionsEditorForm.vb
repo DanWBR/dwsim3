@@ -331,7 +331,7 @@ Public Class UIConnectionsEditorForm
                 Me.dgv4.Rows.Add(New Object() {dc.Stages(dc.Stages.Count - 1).Name, tag, str.ID})
                 Me.dgv4.Rows(Me.dgv4.Rows.Count - 1).Cells(0).ReadOnly = True
             ElseIf str.StreamBehavior = StreamInformation.Behavior.InterExchanger Then
-                Dim st = (From st2 As Stage In dc.Stages Select st2 Where st2.Name = str.AssociatedStage).FirstOrDefault
+                Dim st = (From st2 As Stage In dc.Stages Select st2 Where st2.ID = str.AssociatedStage).FirstOrDefault
                 If st Is Nothing Then st = dc.Stages(0)
                 Me.dgv4.Rows.Add(New Object() {st.Name, tag, str.ID})
                 Me.dgv4.Rows(Me.dgv4.Rows.Count - 1).Cells(0).Tag = st.ID
@@ -698,17 +698,17 @@ Public Class UIConnectionsEditorForm
                                         Exit Sub
                                     End Try
                                 Case StreamInformation.Behavior.InterExchanger
-                                    .InputConnectors.Add(New ConnectionPoint())
-                                    .InputConnectors(.InputConnectors.Count - 1).Type = ConType.ConEn
-                                    fidx = 0
-                                    tidx = .InputConnectors.Count - 1
+                                    .OutputConnectors.Add(New ConnectionPoint())
+                                    .OutputConnectors(.OutputConnectors.Count - 1).Type = ConType.ConEn
+                                    fidx = .OutputConnectors.Count - 1
+                                    tidx = 0
                                     If dc.GraphicObject.FlippedH Then
-                                        .InputConnectors(.InputConnectors.Count - 1).Position = New Point(dc.GraphicObject.X, dc.GraphicObject.Y + dc.StageIndex(dc.EnergyStreams(id).AssociatedStage) / dc.NumberOfStages * dc.GraphicObject.Height)
+                                        .OutputConnectors(.OutputConnectors.Count - 1).Position = New Point(dc.GraphicObject.X, dc.GraphicObject.Y + dc.StageIndex(dc.EnergyStreams(id).AssociatedStage) / dc.NumberOfStages * dc.GraphicObject.Height)
                                     Else
-                                        .InputConnectors(.InputConnectors.Count - 1).Position = New Point(dc.GraphicObject.X + dc.GraphicObject.Width, dc.GraphicObject.Y + dc.StageIndex(dc.EnergyStreams(id).AssociatedStage) / dc.NumberOfStages * dc.GraphicObject.Height)
+                                        .OutputConnectors(.OutputConnectors.Count - 1).Position = New Point(dc.GraphicObject.X + dc.GraphicObject.Width, dc.GraphicObject.Y + dc.StageIndex(dc.EnergyStreams(id).AssociatedStage) / dc.NumberOfStages * dc.GraphicObject.Height)
                                     End If
                                     Try
-                                        form.ConnectObject(FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface), dc.GraphicObject, fidx, tidx)
+                                        form.ConnectObject(dc.GraphicObject, FormFlowsheet.SearchSurfaceObjectsByName(sid, form.FormSurface.FlowsheetDesignSurface), fidx, tidx)
                                     Catch ex As Exception
                                         form.WriteToLog(ex.Message.ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
                                         dgv4.Rows(e.RowIndex).Cells(e.ColumnIndex).Value = ""
