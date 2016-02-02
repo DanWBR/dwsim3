@@ -246,6 +246,8 @@ Public Class SpreadsheetForm
 
         If chkUpdate.Checked Then EvaluateAll()
 
+        Cell = Nothing
+
     End Sub
 
     Private Sub DataGridView1_SelectionChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles DataGridView1.SelectionChanged
@@ -690,10 +692,10 @@ Public Class SpreadsheetForm
     ''' <remarks></remarks>
     Public Sub EvaluateAll()
 
-        Application.DoEvents()
-
         Try
+
             If Not formc Is Nothing Then
+
                 If formc.Options.CalculatorActivated Then
 
                     StopWriting = True
