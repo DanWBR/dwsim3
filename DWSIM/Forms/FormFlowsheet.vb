@@ -651,8 +651,6 @@ Imports WeifenLuo.WinFormsUI.Docking
                                                              frlog.Grid1.Rows.Add(New Object() {img, frlog.GridDT.Rows.Count, Date.Now, strtipo, texto})
                                                          End If
 
-                                                         frlog.Grid1.Sort(frlog.Grid1.Columns(1), ListSortDirection.Descending)
-
                                                      Else
 
                                                          If Not frsht.FormCL Is Nothing Then

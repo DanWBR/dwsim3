@@ -73,6 +73,7 @@ Public Class frmLog
             .AutoIncrementStep = 1
             .Unique = True
         End With
+        Grid1.Sort(Grid1.Columns(1), System.ComponentModel.ListSortDirection.Descending)
     End Sub
 
     Private Sub Grid1_RowsAdded(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewRowsAddedEventArgs) Handles Grid1.RowsAdded
@@ -105,16 +106,14 @@ Public Class frmLog
             End Try
         End If
 
-        For Each dr As DataGridViewRow In Me.Grid1.Rows
-            If DWSIM.App.IsRunningOnMono Then dr.Height = dr.GetPreferredHeight(e.RowIndex, DataGridViewAutoSizeRowMode.AllCells, True)
-            Try
-                dr.Cells(4).Style.ForeColor = dt.Rows(dr.Cells(1).Value).Item("Cor")
-            Catch ex As Exception
+        Dim currentrow As DataGridViewRow = Grid1.Rows(e.RowIndex)
 
-            End Try
-        Next
+        If DWSIM.App.IsRunningOnMono Then currentrow.Height = currentrow.GetPreferredHeight(e.RowIndex, DataGridViewAutoSizeRowMode.AllCells, True)
+        Try
+            currentrow.Cells(4).Style.ForeColor = dt.Rows(currentrow.Cells(1).Value).Item("Cor")
+        Catch ex As Exception
+        End Try
 
-       
     End Sub
 
     Private Sub Grid1_RowsRemoved(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewRowsRemovedEventArgs) Handles Grid1.RowsRemoved
@@ -142,13 +141,13 @@ Public Class frmLog
             Me.Grid1.FirstDisplayedScrollingRowIndex = 0
         End If
 
-        For Each dr As DataGridViewRow In Me.Grid1.Rows
-            Try
-                Dim obj = dt.Rows.Find(dr.Cells(1).Value).Item("Cor")
-                dr.Cells(4).Style.ForeColor = obj
-            Catch ex As Exception
-            End Try
-        Next
+        Dim currentrow As DataGridViewRow = Grid1.Rows(e.RowIndex)
+
+        Try
+            currentrow.Cells(4).Style.ForeColor = dt.Rows.Find(currentrow.Cells(1).Value).Item("Cor")
+        Catch ex As Exception
+
+        End Try
 
     End Sub
 
