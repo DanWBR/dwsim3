@@ -44,6 +44,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Dim Pb, Pd, Pmin, Pmax, Px, soma_x, soma_y, Tmin, Tmax As Double
         Dim proppack As PropertyPackages.PropertyPackage
         Dim tmpdx, refx, currx As Object
+        Dim fastmode As Integer
 
         Public Overrides Function Flash_PT(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
@@ -52,10 +53,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             d1 = Date.Now
 
-            etol = CDbl(PP.Parameters("PP_PTFELT"))
-            maxit_e = CInt(PP.Parameters("PP_PTFMEI"))
-            itol = CDbl(PP.Parameters("PP_PTFILT"))
-            maxit_i = CInt(PP.Parameters("PP_PTFMII"))
+            etol = Convert.ToDouble(PP.Parameters("PP_PTFELT"))
+            maxit_e = Convert.ToInt32(PP.Parameters("PP_PTFMEI"))
+            itol = Convert.ToDouble(PP.Parameters("PP_PTFILT"))
+            maxit_i = Convert.ToInt32(PP.Parameters("PP_PTFMII"))
+            fastmode = Convert.ToInt32(PP.Parameters("PP_FLASHALGORITHMFASTMODE"))
 
             n = UBound(Vz)
 
@@ -232,7 +234,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Dim fr As Double
                 bo2.DefineFuncDelegate(AddressOf TPErrorFunc)
                 Rant = R
-                fr = bo2.brentoptimize(0.0#, 1.0#, 0.00000001, R)
+                fr = bo2.brentoptimize(0.0#, 1.0#, 1.0E-20, R)
 
                 If R > 0.999999 Or R < 0.000001 Then
                     Dim gr0, gr1 As Double
@@ -247,7 +249,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 Me.TPErrorFunc(R)
 
-                If R <= 0 Then
+                If R <= 0.0000001 Then
                     R = 0
                     L = 1
                     V = 0
@@ -266,7 +268,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     Next
                 End If
 
-                If R >= 1 Then
+                If R >= 0.999999 Then
                     R = 1
                     L = 0
                     V = 1
@@ -300,7 +302,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Next
 
                 '-------------------------------------------
-                ' STEP 10 - Update variables using Broyden
+                ' STEP 10 - Update variables using Broyden, or not
                 '-------------------------------------------
 
                 For i = 0 To n
@@ -308,20 +310,30 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     x(i) = ui(i)
                 Next
 
-                If ecount = 0 Then
-                    For i = 0 To n
-                        For j = 0 To n
-                            If i = j Then dfdx(i, j) = 1 Else dfdx(i, j) = 0
-                        Next
-                    Next
-                    Broyden.broydn(n, x, fx, dx, xbr, fbr, dfdx, 0)
-                Else
-                    Broyden.broydn(n, x, fx, dx, xbr, fbr, dfdx, 1)
-                End If
+                If fastmode = 1 Then
 
-                For i = 0 To n
-                    ui(i) = ui(i) + dx(i)
-                Next
+                    If ecount = 0 Then
+                        For i = 0 To n
+                            For j = 0 To n
+                                If i = j Then dfdx(i, j) = 1 Else dfdx(i, j) = 0
+                            Next
+                        Next
+                        Broyden.broydn(n, x, fx, dx, xbr, fbr, dfdx, 0)
+                    Else
+                        Broyden.broydn(n, x, fx, dx, xbr, fbr, dfdx, 1)
+                    End If
+
+                    For i = 0 To n
+                        ui(i) = ui(i) + dx(i)
+                    Next
+
+                Else
+
+                    For i = 0 To n
+                        ui(i) = uic(i)
+                    Next
+
+                End If
 
                 ecount += 1
 
@@ -332,7 +344,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 CheckCalculatorStatus()
 
-            Loop Until AbsSum(fx) < etol
+            Loop Until AbsSqrSumY(fx) < etol
 
             d2 = Date.Now
 
@@ -658,19 +670,21 @@ restart:    Do
                 End If
 
                 '-------------------------------------------
-                ' STEP 10 - Update variables using Broyden
+                ' STEP 10 - Update variables using Broyden, or not
                 '-------------------------------------------
 
                 For i = 0 To n
                     fx(i) = (ui(i) - uic(i))
                     x(i) = ui(i)
                 Next
+
                 fx(n + 1) = (A - Ac)
                 fx(n + 2) = (B - Bc)
                 fx(n + 3) = (C - Cc)
                 fx(n + 4) = (D - Dc)
                 fx(n + 5) = (E - Ec)
                 fx(n + 6) = (F - Fc)
+
                 x(n + 1) = A
                 x(n + 2) = B
                 x(n + 3) = C
@@ -678,49 +692,44 @@ restart:    Do
                 x(n + 5) = E
                 x(n + 6) = F
 
-                If ecount = 0 Then
-                    For i = 0 To n + 6
-                        For j = 0 To n + 6
-                            If i = j Then dfdx(i, j) = 1 Else dfdx(i, j) = 0
-                        Next
+                If PP.Parameters("PP_FLASHALGORITHMFASTMODE") = 0 Then
+
+                    For i = 0 To n
+                        ui(i) = uic(i)
                     Next
-                    Broyden.broydn(n + 6, x, fx, dx, xbr, fbr, dfdx, 0)
+
+                    A = Ac
+                    B = Bc
+                    C = Cc
+                    D = Dc
+                    E = Ec
+                    F = Fc
+
                 Else
-                    Broyden.broydn(n + 6, x, fx, dx, xbr, fbr, dfdx, 1)
+
+                    If ecount = 0 Then
+                        For i = 0 To n + 6
+                            For j = 0 To n + 6
+                                If i = j Then dfdx(i, j) = 1 Else dfdx(i, j) = 0
+                            Next
+                        Next
+                        Broyden.broydn(n + 6, x, fx, dx, xbr, fbr, dfdx, 0)
+                    Else
+                        Broyden.broydn(n + 6, x, fx, dx, xbr, fbr, dfdx, 1)
+                    End If
+
+                    For i = 0 To n
+                        ui(i) = ui(i) + dx(i)
+                    Next
+
+                    A += dx(n + 1)
+                    B += dx(n + 2)
+                    C += dx(n + 3)
+                    D += dx(n + 4)
+                    E += dx(n + 5)
+                    F += dx(n + 6)
+
                 End If
-
-                Dim bo3 As New BrentOpt.BrentMinimize
-                bo3.DefineFuncDelegate(AddressOf MinimizeError)
-                Dim alpha As Double = 1.0#, err As Double
-
-                tmpdx = dx.Clone
-                currx = x.Clone
-
-                ReDim refx(n + 6)
-
-                For i = 0 To n
-                    refx(i) = uic(i)
-                Next
-                refx(n + 1) = Ac
-                refx(n + 2) = Bc
-                refx(n + 3) = Cc
-                refx(n + 4) = Dc
-                refx(n + 5) = Ec
-                refx(n + 6) = Fc
-
-                err = 0
-
-                If PP.Parameters("PP_FLASHALGORITHMFASTMODE") = 0 Then err = bo3.brentoptimize(0, 2, 0.0001, alpha)
-
-                For i = 0 To n
-                    ui(i) = ui(i) + alpha * dx(i)
-                Next
-                A += alpha * dx(n + 1)
-                B += alpha * dx(n + 2)
-                C += alpha * dx(n + 3)
-                D += alpha * dx(n + 4)
-                E += alpha * dx(n + 5)
-                F += alpha * dx(n + 6)
 
                 ecount += 1
 
@@ -732,11 +741,10 @@ restart:    Do
                 WriteDebugInfo("PH Flash [IO]: Iteration #" & ecount & ", T = " & T)
                 WriteDebugInfo("PH Flash [IO]: Iteration #" & ecount & ", VF = " & V)
                 WriteDebugInfo("PH Flash [IO]: Iteration #" & ecount & ", H error = " & fr)
-                WriteDebugInfo("PH Flash [IO]: Iteration #" & ecount & ", Damping Factor = " & alpha)
 
                 CheckCalculatorStatus()
 
-            Loop Until Sum(fx) < etol
+            Loop Until AbsSqrSumY(fx) < etol
 
             If Abs(fr) > itol Then
 
