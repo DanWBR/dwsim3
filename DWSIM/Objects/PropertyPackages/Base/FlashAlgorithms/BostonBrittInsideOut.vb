@@ -74,11 +74,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             VTc = PP.RET_VTC()
             Vw = PP.RET_VW()
 
-            '--------------------------------------
-            ' STEP 1 - Assume u, A, B, C, D, E, F 
-            '--------------------------------------
-
-
             '----------------------------------------
             ' STEP 1.1 - Estimate K, Vx, Vy, V and L 
             '----------------------------------------
@@ -236,23 +231,12 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Rant = R
                 fr = bo2.brentoptimize(0.0#, 1.0#, 1.0E-20, R)
 
-                If R > 0.999999 Or R < 0.000001 Then
-                    Dim gr0, gr1 As Double
-                    gr0 = PP.DW_CalcGibbsEnergy(Vz, T, P, "V")
-                    gr1 = PP.DW_CalcGibbsEnergy(Vz, T, P, "L")
-                    If gr0 < gr1 Then
-                        R = 1.0#
-                    ElseIf gr0 > gr1 Then
-                        R = 0.0#
-                    End If
-                End If
-
                 Me.TPErrorFunc(R)
 
-                If R <= 0.0000001 Then
+                If V < 0.0000001 Then
                     R = 0
-                    L = 1
-                    V = 0
+                    L = 1.0#
+                    V = 0.0#
                     For i = 0 To n
                         pi(i) = fi(i) / (1 - R + Kb0 * R * Exp(ui(i)))
                     Next
@@ -266,12 +250,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         Vx(i) = pi(i) / sumpi
                         Vy(i) = Exp(ui(i)) * pi(i) / sumeuipi
                     Next
-                End If
-
-                If R >= 0.999999 Then
+                    Exit Do
+                ElseIf V > 0.999999 Then
                     R = 1
-                    L = 0
-                    V = 1
+                    L = 0.0#
+                    V = 1.0#
                     For i = 0 To n
                         pi(i) = fi(i) / (1 - R + Kb0 * R * Exp(ui(i)))
                     Next
@@ -285,8 +268,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         Vx(i) = pi(i) / sumpi
                         Vy(i) = Exp(ui(i)) * pi(i) / sumeuipi
                     Next
+                    Exit Do
                 End If
-
 
                 'At this point, we have converged R for the simplified model. Proceed to step 9.
 
@@ -586,20 +569,45 @@ restart:    Do
                 Rant = R
 
                 bo2.DefineFuncDelegate(AddressOf EnergyBalanceAbs)
-                fr = bo2.brentoptimize(0.0#, 1.0#, 0.00000001, R)
-
-                If R > 0.999999 Or R < 0.000001 Then
-                    Dim gr0, gr1 As Double
-                    gr0 = PP.DW_CalcGibbsEnergy(Vz, T, P, "V")
-                    gr1 = PP.DW_CalcGibbsEnergy(Vz, T, P, "L")
-                    If gr0 < gr1 Then
-                        R = 1.0#
-                    ElseIf gr0 > gr1 Then
-                        R = 0.0#
-                    End If
-                End If
+                fr = bo2.brentoptimize(0.0#, 1.0#, 1.0E-20, R)
 
                 Me.EnergyBalance(R)
+
+                If V < 0.0000001 Then
+                    R = 0
+                    L = 1.0#
+                    V = 0.0#
+                    For i = 0 To n
+                        pi(i) = fi(i) / (1 - R + Kb0 * R * Exp(ui(i)))
+                    Next
+                    Dim sumpi As Double = 0
+                    Dim sumeuipi As Double = 0
+                    For i = 0 To n
+                        sumpi += pi(i)
+                        sumeuipi += Exp(ui(i)) * pi(i)
+                    Next
+                    For i = 0 To n
+                        Vx(i) = pi(i) / sumpi
+                        Vy(i) = Exp(ui(i)) * pi(i) / sumeuipi
+                    Next
+                ElseIf V > 0.999999 Then
+                    R = 1
+                    L = 0.0#
+                    V = 1.0#
+                    For i = 0 To n
+                        pi(i) = fi(i) / (1 - R + Kb0 * R * Exp(ui(i)))
+                    Next
+                    Dim sumpi As Double = 0
+                    Dim sumeuipi As Double = 0
+                    For i = 0 To n
+                        sumpi += pi(i)
+                        sumeuipi += Exp(ui(i)) * pi(i)
+                    Next
+                    For i = 0 To n
+                        Vx(i) = pi(i) / sumpi
+                        Vy(i) = Exp(ui(i)) * pi(i) / sumeuipi
+                    Next
+                End If
 
                 'At this point, we have converged T and R for the simplified model. Proceed to step 9.
 
@@ -608,16 +616,6 @@ restart:    Do
                 '----------------------------------------------------------
 
                 Ki = PP.DW_CalcKvalue(Vx, Vy, T, P)
-
-                If Abs(R - Rant) > 0.01 And Abs(T - Tant) > 0.01 Then
-                    For i = 0 To n
-                        If Ki(i) <> 0 Then
-                            uic(i) = Log(Ki(i) / Kb)
-                        Else
-                            uic(i) = ui(i)
-                        End If
-                    Next
-                End If
 
                 Bc = Log(Kb_ / Kb) / (1 / T_ - 1 / T)
                 Ac = Log(Kb) - Bc * (1 / T - 1 / T_)
@@ -733,10 +731,7 @@ restart:    Do
 
                 ecount += 1
 
-                If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt"))
-                If Double.IsNaN(AbsSum(fx)) Then
-                    Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
-                End If
+                If Double.IsNaN(AbsSum(fx)) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
 
                 WriteDebugInfo("PH Flash [IO]: Iteration #" & ecount & ", T = " & T)
                 WriteDebugInfo("PH Flash [IO]: Iteration #" & ecount & ", VF = " & V)
@@ -744,11 +739,13 @@ restart:    Do
 
                 CheckCalculatorStatus()
 
-            Loop Until AbsSqrSumY(fx) < etol
+            Loop Until AbsSqrSumY(fx) < etol Or ecount > maxit_e
 
             If Abs(fr) > itol Then
 
-                Dim Tl, Tv As Double
+                Dim Tl, Tv, Te As Double
+
+                Te = PP.AUX_TCM(Fase.Mixture) * 0.8
 
                 'single phase solution found (liquid only). Obtain T using single phase calculation.
                 Dim x1, fx2, dfdx2 As Double
@@ -781,11 +778,21 @@ restart:    Do
                 Vy = Vz
 
                 If Tl < Tv Then
-                    T = Tl
-                    Vx = Vz
+                    If Tl < Te Then
+                        T = Tl
+                        Vx = Vz
+                    Else
+                        T = Tv
+                        Vy = Vz
+                    End If
                 Else
-                    T = Tv
-                    Vy = Vz
+                    If Tv < Te Then
+                        T = Tl
+                        Vx = Vz
+                    Else
+                        T = Tv
+                        Vy = Vz
+                    End If
                 End If
 
                 'confirm single-phase solution with a PT Flash.
@@ -794,6 +801,10 @@ restart:    Do
                     'NOT SP solution. go back to 2-phase loop.
                     GoTo restart
                 End If
+
+            Else
+
+                If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt"))
 
             End If
 
@@ -1030,9 +1041,45 @@ restart:    Do
                 Rant = R
 
                 bo2.DefineFuncDelegate(AddressOf EntropyBalanceAbs)
-                fr = bo2.brentoptimize(0.0#, 1.0#, 0.0001, R)
+                fr = bo2.brentoptimize(0.0#, 1.0#, 1.0E-20, R)
 
                 Me.EntropyBalance(R)
+
+                If V < 0.0000001 Then
+                    R = 0
+                    L = 1.0#
+                    V = 0.0#
+                    For i = 0 To n
+                        pi(i) = fi(i) / (1 - R + Kb0 * R * Exp(ui(i)))
+                    Next
+                    Dim sumpi As Double = 0
+                    Dim sumeuipi As Double = 0
+                    For i = 0 To n
+                        sumpi += pi(i)
+                        sumeuipi += Exp(ui(i)) * pi(i)
+                    Next
+                    For i = 0 To n
+                        Vx(i) = pi(i) / sumpi
+                        Vy(i) = Exp(ui(i)) * pi(i) / sumeuipi
+                    Next
+                ElseIf V > 0.999999 Then
+                    R = 1
+                    L = 0.0#
+                    V = 1.0#
+                    For i = 0 To n
+                        pi(i) = fi(i) / (1 - R + Kb0 * R * Exp(ui(i)))
+                    Next
+                    Dim sumpi As Double = 0
+                    Dim sumeuipi As Double = 0
+                    For i = 0 To n
+                        sumpi += pi(i)
+                        sumeuipi += Exp(ui(i)) * pi(i)
+                    Next
+                    For i = 0 To n
+                        Vx(i) = pi(i) / sumpi
+                        Vy(i) = Exp(ui(i)) * pi(i) / sumeuipi
+                    Next
+                End If
 
                 'At this point, we have converged T and R for the simplified model. Proceed to step 9.
 
@@ -1098,16 +1145,18 @@ restart:    Do
                 ' STEP 10 - Update variables using Broyden
                 '-------------------------------------------
 
-                For i = 0 To n
+                   For i = 0 To n
                     fx(i) = (ui(i) - uic(i))
                     x(i) = ui(i)
                 Next
+
                 fx(n + 1) = (A - Ac)
                 fx(n + 2) = (B - Bc)
                 fx(n + 3) = (C - Cc)
                 fx(n + 4) = (D - Dc)
                 fx(n + 5) = (E - Ec)
                 fx(n + 6) = (F - Fc)
+
                 x(n + 1) = A
                 x(n + 2) = B
                 x(n + 3) = C
@@ -1115,48 +1164,44 @@ restart:    Do
                 x(n + 5) = E
                 x(n + 6) = F
 
-                If ecount = 0 Then
-                    For i = 0 To n + 6
-                        For j = 0 To n + 6
-                            If i = j Then dfdx(i, j) = 1 Else dfdx(i, j) = 0
-                        Next
+                If PP.Parameters("PP_FLASHALGORITHMFASTMODE") = 0 Then
+
+                    For i = 0 To n
+                        ui(i) = uic(i)
                     Next
-                    Broyden.broydn(n + 6, x, fx, dx, xbr, fbr, dfdx, 0)
+
+                    A = Ac
+                    B = Bc
+                    C = Cc
+                    D = Dc
+                    E = Ec
+                    F = Fc
+
                 Else
-                    Broyden.broydn(n + 6, x, fx, dx, xbr, fbr, dfdx, 1)
+
+                    If ecount = 0 Then
+                        For i = 0 To n + 6
+                            For j = 0 To n + 6
+                                If i = j Then dfdx(i, j) = 1 Else dfdx(i, j) = 0
+                            Next
+                        Next
+                        Broyden.broydn(n + 6, x, fx, dx, xbr, fbr, dfdx, 0)
+                    Else
+                        Broyden.broydn(n + 6, x, fx, dx, xbr, fbr, dfdx, 1)
+                    End If
+
+                    For i = 0 To n
+                        ui(i) = ui(i) + dx(i)
+                    Next
+
+                    A += dx(n + 1)
+                    B += dx(n + 2)
+                    C += dx(n + 3)
+                    D += dx(n + 4)
+                    E += dx(n + 5)
+                    F += dx(n + 6)
+
                 End If
-
-                Dim bo3 As New BrentOpt.BrentMinimize
-                bo3.DefineFuncDelegate(AddressOf MinimizeError)
-                Dim alpha As Double = 1.0#, err As Double
-
-                tmpdx = dx.Clone
-                currx = x.Clone
-
-                ReDim refx(n + 6)
-
-                For i = 0 To n
-                    refx(i) = uic(i)
-                Next
-                refx(n + 1) = Ac
-                refx(n + 2) = Bc
-                refx(n + 3) = Cc
-                refx(n + 4) = Dc
-                refx(n + 5) = Ec
-                refx(n + 6) = Fc
-
-                err = 0
-                If PP.Parameters("PP_FLASHALGORITHMFASTMODE") = 0 Then err = bo3.brentoptimize(0, 2, 0.0001, alpha)
-
-                For i = 0 To n
-                    ui(i) = ui(i) + alpha * dx(i)
-                Next
-                A += alpha * dx(n + 1)
-                B += alpha * dx(n + 2)
-                C += alpha * dx(n + 3)
-                D += alpha * dx(n + 4)
-                E += alpha * dx(n + 5)
-                F += alpha * dx(n + 6)
 
                 ecount += 1
 
@@ -1166,50 +1211,65 @@ restart:    Do
                 WriteDebugInfo("PS Flash [IO]: Iteration #" & ecount & ", T = " & T)
                 WriteDebugInfo("PS Flash [IO]: Iteration #" & ecount & ", VF = " & V)
                 WriteDebugInfo("PS Flash [IO]: Iteration #" & ecount & ", H error = " & fr)
-                WriteDebugInfo("PS Flash [IO]: Iteration #" & ecount & ", Damping Factor = " & alpha)
 
                 CheckCalculatorStatus()
 
             Loop Until AbsSum(fx) < etol
 
             If Abs(fr) > itol Then
-                If V <= 0.01 Then
-                    'single phase solution found (liquid only). Obtain T using single phase calculation.
-                    Dim x1, fx2, dfdx2 As Double
-                    ecount = 0
-                    If Tref = 0 Then Tref = 298.15
-                    x1 = Tref
-                    Do
-                        fx2 = EntropyBalanceSPL(x1, Nothing)
-                        If Math.Abs(fx2) < etol Then Exit Do
-                        dfdx2 = (EntropyBalanceSPL(x1 + 1, Nothing) - fx2)
-                        x1 = x1 - fx2 / dfdx2
-                        ecount += 1
-                    Loop Until ecount > maxit_e Or Double.IsNaN(x1)
-                    T = x1
-                    Vx = Vz
+
+                Dim Tl, Tv, Te As Double
+
+                Te = PP.AUX_TCM(Fase.Mixture) * 0.8
+
+                'single phase solution found (liquid only). Obtain T using single phase calculation.
+                Dim x1, fx2, dfdx2 As Double
+
+                ecount = 0
+                If Tref = 0 Then Tref = 298.15
+                x1 = Tref
+                Do
+                    fx2 = EntropyBalanceSPL(x1, Nothing)
+                    If Math.Abs(fx2) < etol Then Exit Do
+                    dfdx2 = (EntropyBalanceSPL(x1 + 1, Nothing) - fx2)
+                    x1 = x1 - fx2 / dfdx2
+                    ecount += 1
+                Loop Until ecount > maxit_e Or Double.IsNaN(x1)
+                Tl = x1
+                Vx = Vz
+
+                'single phase solution found (vapor only). Obtain T using single phase calculation.
+                ecount = 0
+                If Tref = 0 Then Tref = 298.15
+                x1 = Tref
+                Do
+                    fx2 = EntropyBalanceSPV(x1, Nothing)
+                    If Math.Abs(fx2) < etol Then Exit Do
+                    dfdx2 = (EntropyBalanceSPV(x1 + 1, Nothing) - fx2)
+                    x1 = x1 - fx2 / dfdx2
+                    ecount += 1
+                Loop Until ecount > maxit_e Or Double.IsNaN(x1)
+                Tv = x1
+                Vy = Vz
+
+                If Tl < Tv Then
+                    If Tl < Te Then
+                        T = Tl
+                        Vx = Vz
+                    Else
+                        T = Tv
+                        Vy = Vz
+                    End If
                 Else
-                    'single phase solution found (vapor only). Obtain T using single phase calculation.
-                    Dim x1, fx2, dfdx2 As Double
-                    ecount = 0
-                    If Tref = 0 Then Tref = 298.15
-                    x1 = Tref
-                    Do
-                        fx2 = EntropyBalanceSPV(x1, Nothing)
-                        If Math.Abs(fx2) < etol Then Exit Do
-                        dfdx2 = (EntropyBalanceSPV(x1 + 1, Nothing) - fx2)
-                        x1 = x1 - fx2 / dfdx2
-                        ecount += 1
-                    Loop Until ecount > maxit_e Or Double.IsNaN(x1)
-                    T = x1
-                    Vy = Vz
+                    If Tv < Te Then
+                        T = Tl
+                        Vx = Vz
+                    Else
+                        T = Tv
+                        Vy = Vz
+                    End If
                 End If
-                'confirm single-phase solution with a PT Flash.
-                Dim res As Object = Me.Flash_PT(Vz, P, T, PP, False, Nothing)
-                If Abs(L - res(0)) > 0.0001 And Abs(V - res(1)) > 0.0001 Then
-                    'NOT single-phase solution. go back to 2-phase loop.
-                    GoTo restart
-                End If
+
             End If
 
             d2 = Date.Now
@@ -1938,9 +1998,6 @@ final:      d2 = Date.Now
             T = 1 / T_ + (Log(Kb) - A) / B
             T = 1 / T
 
-            'If T < Tmin Then T = Tmin
-            'If T > Tmax Then T = Tmax
-
             For i = 0 To n
                 Vx(i) = pi(i) / sumpi
                 Vy(i) = Exp(ui(i)) * pi(i) / sumeuipi
@@ -2069,9 +2126,6 @@ final:      d2 = Date.Now
             T = 1 / T_ + (Log(Kb) - A) / B
             T = 1 / T
 
-            'If T < Tmin Then T = Tmin
-            'If T > Tmax Then T = Tmax
-
             For i = 0 To n
                 Vx(i) = pi(i) / sumpi
                 Vy(i) = Exp(ui(i)) * pi(i) / sumeuipi
@@ -2089,7 +2143,7 @@ final:      d2 = Date.Now
             Dim eberror As Double = Sf - L * (DSl + Slid) - V * (DSv + Svid)
             CheckCalculatorStatus()
 
-            Return Abs(eberror)
+            Return eberror ^ 2
 
         End Function
 
