@@ -1223,6 +1223,32 @@ Namespace GraphicObjects
                 PointList.Add(New PointF(EndPos.X, EndPos.Y))
             End If
 
+            If StartDir = ConDir.Up And EndDir = ConDir.Right Then
+                If (EndPos.X - DeltaX) > StartPos.X Then
+                    If EndPos.Y <= StartPos.Y - DeltaY Then
+                        PointList.Add(New PointF(StartPos.X, EndPos.Y))
+                    Else
+                        PointList.Add(New PointF(StartPos.X, StartPos.Y - DeltaY))
+
+                        XM = (RightBottom1.X + LeftTop2.X) / 2
+                        If XM < RightBottom1.X + DeltaX Then XM = LeftTop1.X - DeltaX
+                        PointList.Add(New PointF(XM, StartPos.Y - DeltaY))
+                        PointList.Add(New PointF(XM, EndPos.Y))
+                    End If
+                Else
+                    XM = EndPos.X - DeltaX
+                    If XM > LeftTop1.X - DeltaX And EndPos.Y < StartPos.Y + DeltaY Then XM = LeftTop1.X - DeltaX
+                    YM = (StartPos.Y + EndPos.Y) / 2
+                    If YM > LeftTop2.Y - DeltaY And YM < RightBottom2.Y + DeltaY Then YM = LeftTop2.Y - DeltaY
+                    If YM > StartPos.Y - DeltaY Then YM = StartPos.Y - DeltaY
+
+                    PointList.Add(New PointF(StartPos.X, YM))
+                    PointList.Add(New PointF(XM, YM))
+                    PointList.Add(New PointF(XM, EndPos.Y))
+                End If
+                PointList.Add(New PointF(EndPos.X, EndPos.Y))
+            End If
+
             If StartDir = ConDir.Right And EndDir = ConDir.Right Then
                 If (EndPos.X - DeltaX) >= (StartPos.X + DeltaX) Then
                     PointList.Add(New PointF((StartPos.X + EndPos.X) / 2, StartPos.Y))
@@ -1328,6 +1354,57 @@ Namespace GraphicObjects
                 End If
             End If
 
+            If StartDir = ConDir.Up And EndDir = ConDir.Down Then
+                YM = StartPos.Y - DeltaY
+                If YM < EndPos.Y - DeltaY Then
+                    XM = EndPos.X
+                    If XM > LeftTop1.X - DeltaX And XM < RightBottom1.X + DeltaX Then
+                        XM = RightBottom1.X + DeltaX
+                        PointList.Add(New PointF(StartPos.X, YM))
+                        PointList.Add(New PointF(XM, YM))
+                        YM = (RightBottom1.Y + EndPos.Y) / 2
+                        PointList.Add(New PointF(XM, YM))
+                        PointList.Add(New PointF(EndPos.X, YM))
+                    Else
+                        PointList.Add(New PointF(StartPos.X, YM))
+                        PointList.Add(New PointF(EndPos.X, YM))
+                    End If
+                Else
+                    YM = EndPos.Y - DeltaY
+                    If StartPos.X > LeftTop2.X - DeltaX And StartPos.X < RightBottom2.X + DeltaX Then
+                        XM = RightBottom2.X + DeltaX
+                        YM = (RightBottom2.Y + StartPos.Y) / 2
+                        PointList.Add(New PointF(StartPos.X, YM))
+                        PointList.Add(New PointF(XM, YM))
+                        YM = EndPos.Y - DeltaY
+                        PointList.Add(New PointF(XM, YM))
+                        PointList.Add(New PointF(EndPos.X, YM))
+                    Else
+                        PointList.Add(New PointF(StartPos.X, YM))
+                        PointList.Add(New PointF(EndPos.X, YM))
+                    End If
+                End If
+            End If
+
+            If StartDir = ConDir.Down And EndDir = ConDir.Down Then
+                YM = (StartPos.Y + EndPos.Y) / 2
+                If YM < StartPos.Y + DeltaY Then
+                    XM = (RightBottom1.X + LeftTop2.X) / 2
+                    If XM > LeftTop1.X - DeltaX And XM < RightBottom1.X + DeltaX Then
+                        XM = RightBottom1.X + DeltaX
+                        If XM > LeftTop2.X - DeltaX And XM < RightBottom2.X + DeltaX Then XM = RightBottom2.X + DeltaX
+                    End If
+                    PointList.Add(New PointF(StartPos.X, StartPos.Y + DeltaY))
+                    PointList.Add(New PointF(XM, StartPos.Y + DeltaY))
+                    YM = EndPos.Y - DeltaY
+                    PointList.Add(New PointF(XM, YM))
+                    PointList.Add(New PointF(EndPos.X, YM))
+                Else
+                    PointList.Add(New PointF(StartPos.X, YM))
+                    PointList.Add(New PointF(EndPos.X, YM))
+                End If
+            End If
+
             '================== EndDir Left =======================
             If StartDir = ConDir.Right And EndDir = ConDir.Left Then
                 If (EndPos.X + DeltaX) > (StartPos.X + DeltaX) Then
@@ -1363,6 +1440,21 @@ Namespace GraphicObjects
                 End If
             End If
 
+            If StartDir = ConDir.Left And EndDir = ConDir.Left Then
+                If (EndPos.X + DeltaX) > (StartPos.X - DeltaX) Then
+                    YM = (StartPos.Y + EndPos.Y) / 2
+                    If YM < RightBottom1.Y + DeltaY And YM > LeftTop1.Y - DeltaY Then YM = LeftTop1.Y - DeltaY
+                    If YM < RightBottom2.Y + DeltaY And YM > LeftTop2.Y - DeltaY Then YM = LeftTop2.Y - DeltaY
+                    PointList.Add(New PointF(StartPos.X - DeltaX, StartPos.Y))
+                    PointList.Add(New PointF(StartPos.X - DeltaX, YM))
+                    PointList.Add(New PointF(EndPos.X + DeltaX, YM))
+                    PointList.Add(New PointF(EndPos.X + DeltaX, EndPos.Y))
+                Else
+                    PointList.Add(New PointF((StartPos.X + EndPos.X) / 2, StartPos.Y))
+                    PointList.Add(New PointF((StartPos.X + EndPos.X) / 2, EndPos.Y))
+                End If
+            End If
+
             If StartDir = ConDir.Down And EndDir = ConDir.Left Then
                 If (EndPos.X + DeltaX) < StartPos.X Then
                     If EndPos.Y >= StartPos.Y + DeltaY Then
@@ -1388,19 +1480,30 @@ Namespace GraphicObjects
                 PointList.Add(New PointF(EndPos.X, EndPos.Y))
             End If
 
-            If StartDir = ConDir.Left And EndDir = ConDir.Left Then
-                If (EndPos.X + DeltaX) > (StartPos.X - DeltaX) Then
-                    YM = (StartPos.Y + EndPos.Y) / 2
-                    If YM < RightBottom1.Y + DeltaY And YM > LeftTop1.Y - DeltaY Then YM = LeftTop1.Y - DeltaY
-                    If YM < RightBottom2.Y + DeltaY And YM > LeftTop2.Y - DeltaY Then YM = LeftTop2.Y - DeltaY
-                    PointList.Add(New PointF(StartPos.X - DeltaX, StartPos.Y))
-                    PointList.Add(New PointF(StartPos.X - DeltaX, YM))
-                    PointList.Add(New PointF(EndPos.X + DeltaX, YM))
-                    PointList.Add(New PointF(EndPos.X + DeltaX, EndPos.Y))
+            If StartDir = ConDir.Up And EndDir = ConDir.Left Then
+                If (EndPos.X + DeltaX) < StartPos.X Then
+                    If EndPos.Y <= StartPos.Y - DeltaY Then
+                        PointList.Add(New PointF(StartPos.X, EndPos.Y))
+                    Else
+                        PointList.Add(New PointF(StartPos.X, StartPos.Y - DeltaY))
+
+                        XM = (LeftTop1.X + RightBottom2.X) / 2
+                        If XM > LeftTop1.X - DeltaX Then XM = RightBottom1.X + DeltaX
+                        PointList.Add(New PointF(XM, StartPos.Y - DeltaY))
+                        PointList.Add(New PointF(XM, EndPos.Y))
+                    End If
                 Else
-                    PointList.Add(New PointF((StartPos.X + EndPos.X) / 2, StartPos.Y))
-                    PointList.Add(New PointF((StartPos.X + EndPos.X) / 2, EndPos.Y))
+                    XM = EndPos.X + DeltaX
+                    If XM < RightBottom1.X + DeltaX And EndPos.Y > StartPos.Y - DeltaY Then XM = RightBottom1.X + DeltaX
+                    YM = (StartPos.Y + EndPos.Y) / 2
+                    If YM > LeftTop2.Y - DeltaY And YM < RightBottom2.Y + DeltaY Then YM = LeftTop2.Y - DeltaY
+                    If YM > StartPos.Y - DeltaY Then YM = StartPos.Y - DeltaY
+
+                    PointList.Add(New PointF(StartPos.X, YM))
+                    PointList.Add(New PointF(XM, YM))
+                    PointList.Add(New PointF(XM, EndPos.Y))
                 End If
+                PointList.Add(New PointF(EndPos.X, EndPos.Y))
             End If
 
             '================== EndDir Up =======================
@@ -1453,12 +1556,62 @@ Namespace GraphicObjects
                 End If
             End If
 
+            If StartDir = ConDir.Up And EndDir = ConDir.Up Then
+                If EndPos.Y + DeltaY < StartPos.Y - DeltaY Then
+                    YM = (StartPos.Y + EndPos.Y) / 2
+                    PointList.Add(New PointF(StartPos.X, YM))
+                    PointList.Add(New PointF(EndPos.X, YM))
+                Else
+                    XM = (StartPos.X + EndPos.X) / 2
+                    If XM > LeftTop1.X - DeltaX And XM < RightBottom1.X + DeltaX Then XM = RightBottom1.X + DeltaX
+                    If XM > LeftTop2.X - DeltaX And XM < RightBottom2.X + DeltaX Then
+                        XM = RightBottom2.X + DeltaX
+                        If XM > LeftTop1.X - DeltaX And XM < RightBottom1.X + DeltaX Then XM = RightBottom1.X + DeltaX
+                    End If
+                    PointList.Add(New PointF(StartPos.X, StartPos.Y - DeltaY))
+                    PointList.Add(New PointF(XM, StartPos.Y - DeltaY))
+                    PointList.Add(New PointF(XM, EndPos.Y + DeltaY))
+                    PointList.Add(New PointF(EndPos.X, EndPos.Y + DeltaY))
+                End If
+            End If
+
+            If StartDir = ConDir.Down And EndDir = ConDir.Up Then
+                YM = StartPos.Y + DeltaY
+                XM = EndPos.X
+                If YM > EndPos.Y + DeltaY Then
+                    If XM > LeftTop1.X - DeltaX And XM < RightBottom1.X + DeltaX Then
+                        XM = RightBottom1.X + DeltaX
+                        PointList.Add(New PointF(StartPos.X, YM))
+                        PointList.Add(New PointF(XM, YM))
+                        YM = (LeftTop1.Y + EndPos.Y) / 2
+                        PointList.Add(New PointF(XM, YM))
+                        PointList.Add(New PointF(EndPos.X, YM))
+                    Else
+                        PointList.Add(New PointF(StartPos.X, YM))
+                        PointList.Add(New PointF(EndPos.X, YM))
+                    End If
+                Else
+                    YM = EndPos.Y + DeltaY
+                    If StartPos.X > LeftTop2.X - DeltaX And StartPos.X < RightBottom2.X + DeltaX Then
+                        XM = RightBottom2.X + DeltaX
+                        YM = (LeftTop1.Y + EndPos.Y) / 2
+                        PointList.Add(New PointF(StartPos.X, YM))
+                        PointList.Add(New PointF(XM, YM))
+                        YM = EndPos.Y + DeltaY
+                        PointList.Add(New PointF(XM, YM))
+                        PointList.Add(New PointF(EndPos.X, YM))
+                    Else
+                        PointList.Add(New PointF(StartPos.X, YM))
+                        PointList.Add(New PointF(EndPos.X, YM))
+                    End If
+                End If
+            End If
+
             'finish path
             PointList.Add(New PointF(EndPos.X, EndPos.Y))
 
             'and now, after constructing the path, draw it
             PL = PointList.ToArray(GetType(PointF))
-            'g.DrawPath(myPen, Me.GetRoundedLine(PL, 4))
 
             Dim gpath As GraphicsPath = Me.GetRoundedLine(PL, 0)
 
