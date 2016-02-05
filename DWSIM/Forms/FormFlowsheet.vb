@@ -467,22 +467,24 @@ Imports WeifenLuo.WinFormsUI.Docking
 
     Public Sub ProcessScripts(ByVal sourceevent As DWSIM.Outros.Script.EventType, ByVal sourceobj As DWSIM.Outros.Script.ObjectType, Optional ByVal sourceobjname As String = "")
 
-        For Each scr As Script In Me.ScriptCollection.Values
-            If scr.Linked And scr.LinkedEventType = sourceevent And scr.LinkedObjectType = sourceobj And scr.LinkedObjectName = sourceobjname Then
-                If My.MyApplication.CommandLineMode Then
-                    Console.WriteLine()
-                    Console.WriteLine("Running script '" & scr.Title & "' for event '" & scr.LinkedEventType.ToString & "', linked to '" & Me.Collections.ObjectCollection(scr.LinkedObjectName).GraphicObject.Tag & "'...")
-                    Console.WriteLine()
-                Else
-                    If scr.LinkedObjectName <> "" Then
-                        Me.WriteToLog("Running script '" & scr.Title & "' for event '" & scr.LinkedEventType.ToString & "', linked to '" & Me.Collections.ObjectCollection(scr.LinkedObjectName).GraphicObject.Tag & "'...", Color.Blue, TipoAviso.Informacao)
-                    Else
-                        Me.WriteToLog("Running script '" & scr.Title & "' for event '" & scr.LinkedEventType.ToString & "'", Color.Blue, TipoAviso.Informacao)
-                    End If
-                End If
-                FormScript.RunScript(scr.ScriptText, Me)
-            End If
-        Next
+        Me.UIThread(Sub()
+                        For Each scr As Script In Me.ScriptCollection.Values
+                            If scr.Linked And scr.LinkedEventType = sourceevent And scr.LinkedObjectType = sourceobj And scr.LinkedObjectName = sourceobjname Then
+                                If My.MyApplication.CommandLineMode Then
+                                    Console.WriteLine()
+                                    Console.WriteLine("Running script '" & scr.Title & "' for event '" & scr.LinkedEventType.ToString & "', linked to '" & Me.Collections.ObjectCollection(scr.LinkedObjectName).GraphicObject.Tag & "'...")
+                                    Console.WriteLine()
+                                Else
+                                    If scr.LinkedObjectName <> "" Then
+                                        Me.WriteToLog("Running script '" & scr.Title & "' for event '" & scr.LinkedEventType.ToString & "', linked to '" & Me.Collections.ObjectCollection(scr.LinkedObjectName).GraphicObject.Tag & "'...", Color.Blue, TipoAviso.Informacao)
+                                    Else
+                                        Me.WriteToLog("Running script '" & scr.Title & "' for event '" & scr.LinkedEventType.ToString & "'", Color.Blue, TipoAviso.Informacao)
+                                    End If
+                                End If
+                                FormScript.RunScript(scr.ScriptText, Me)
+                            End If
+                        Next
+                    End Sub)
 
     End Sub
 

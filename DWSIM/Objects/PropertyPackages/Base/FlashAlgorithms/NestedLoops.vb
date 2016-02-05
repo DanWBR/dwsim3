@@ -348,117 +348,56 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             Dim cnt As Integer
 
             If Tref = 0.0# Then Tref = 298.15
-
-            ' New solver 2016 Jan. 11 by Keita. K.
-            ' https://sourceforge.net/p/dwsim/discussion/844528/thread/b45e6021
-
-            Dim cnt2 As Integer
-            Dim fx01 As Double, fx02 As Double, fx03 As Double
-            Dim deltaT As Double
-
-            deltaT = Tref / 3 ' This is an adjustable parameter.
-
-            x1 = Tref
-
-            cnt2 = 0
-            Do
-
-                If My.Settings.EnableParallelProcessing Then
-                    My.MyApplication.IsRunningParallelTasks = True
-                    Dim task1 = Task.Factory.StartNew(Sub()
-                                                          fx01 = Abs(Herror("PT", x1, P, Vz, PP)(0))
-                                                      End Sub,
-                                                        My.MyApplication.TaskCancellationTokenSource.Token,
-                                                        TaskCreationOptions.None,
-                                                        My.MyApplication.AppTaskScheduler)
-                    Dim task2 = Task.Factory.StartNew(Sub()
-                                                          fx02 = Abs(Herror("PT", x1 - deltaT, P, Vz, PP)(0))
-                                                      End Sub,
-                                                        My.MyApplication.TaskCancellationTokenSource.Token,
-                                                        TaskCreationOptions.None,
-                                                        My.MyApplication.AppTaskScheduler)
-                    Dim task3 = Task.Factory.StartNew(Sub()
-                                                          fx03 = Abs(Herror("PT", x1 + deltaT, P, Vz, PP)(0))
-                                                      End Sub,
-                                                        My.MyApplication.TaskCancellationTokenSource.Token,
-                                                        TaskCreationOptions.None,
-                                                        My.MyApplication.AppTaskScheduler)
-                    Task.WaitAll(task1, task2, task3)
-                    My.MyApplication.IsRunningParallelTasks = False
-                Else
-                    fx01 = Abs(Herror("PT", x1, P, Vz, PP)(0))
-                    fx02 = Abs(Herror("PT", x1 - deltaT, P, Vz, PP)(0))
-                    fx03 = Abs(Herror("PT", x1 + deltaT, P, Vz, PP)(0))
-                End If
-
-                If fx02 < fx01 Then
-                    x1 = x1 - deltaT
-                ElseIf fx03 < fx01 Then
-                    x1 = x1 + deltaT
-                Else
-                    deltaT = deltaT / 5 'This is an adjustable parameter.
-                End If
-
-                If Abs(fx01) <= tolEXT Then Exit Do
-
-                cnt2 += 1
-
-            Loop Until cnt2 > maxitINT
-
             T = x1
 
-            If Double.IsNaN(T) Or Double.IsInfinity(T) Or cnt2 > maxitINT And T > Tmin And T < Tmax Then
+            For j = 0 To 4
 
-                For j = 0 To 4
+                cnt = 0
+                x1 = Tref
 
-                    cnt = 0
-                    x1 = Tref
+                Do
 
-                    Do
-
-                        If My.Settings.EnableParallelProcessing Then
-                            My.MyApplication.IsRunningParallelTasks = True
-                            Dim task1 = Task.Factory.StartNew(Sub()
-                                                                  fx = Herror("PT", x1, P, Vz, PP)(0)
-                                                              End Sub,
-                                                                My.MyApplication.TaskCancellationTokenSource.Token,
-                                                                TaskCreationOptions.None,
-                                                                My.MyApplication.AppTaskScheduler)
-                            Dim task2 = Task.Factory.StartNew(Sub()
-                                                                  fx2 = Herror("PT", x1 + epsilon(j), P, Vz, PP)(0)
-                                                              End Sub,
-                                                                My.MyApplication.TaskCancellationTokenSource.Token,
-                                                                TaskCreationOptions.None,
-                                                                My.MyApplication.AppTaskScheduler)
-                            Task.WaitAll(task1, task2)
-                            My.MyApplication.IsRunningParallelTasks = False
-                        Else
-                            fx = Herror("PT", x1, P, Vz, PP)(0)
-                            fx2 = Herror("PT", x1 + epsilon(j), P, Vz, PP)(0)
-                        End If
-
-                        If Abs(fx) <= tolEXT Then Exit Do
-
-                        dfdx = (fx2 - fx) / epsilon(j)
-                        dx = fx / dfdx
-
-                        If Abs(dx) > maxDT Then dx = maxDT * Sign(dx)
-
-                        x1 = x1 - dx
-                        maxDT *= 0.95
-                        cnt += 1
-
-                    Loop Until cnt > maxitEXT Or Double.IsNaN(x1) Or x1 < 0.0#
-
-                    T = x1
-
-                    If Not Double.IsNaN(T) And Not Double.IsInfinity(T) And Not cnt > maxitEXT Then
-                        If T > Tmin And T < Tmax Then Exit For
+                    If My.Settings.EnableParallelProcessing Then
+                        My.MyApplication.IsRunningParallelTasks = True
+                        Dim task1 = Task.Factory.StartNew(Sub()
+                                                              fx = Herror("PT", x1, P, Vz, PP)(0)
+                                                          End Sub,
+                                                            My.MyApplication.TaskCancellationTokenSource.Token,
+                                                            TaskCreationOptions.None,
+                                                            My.MyApplication.AppTaskScheduler)
+                        Dim task2 = Task.Factory.StartNew(Sub()
+                                                              fx2 = Herror("PT", x1 + epsilon(j), P, Vz, PP)(0)
+                                                          End Sub,
+                                                            My.MyApplication.TaskCancellationTokenSource.Token,
+                                                            TaskCreationOptions.None,
+                                                            My.MyApplication.AppTaskScheduler)
+                        Task.WaitAll(task1, task2)
+                        My.MyApplication.IsRunningParallelTasks = False
+                    Else
+                        fx = Herror("PT", x1, P, Vz, PP)(0)
+                        fx2 = Herror("PT", x1 + epsilon(j), P, Vz, PP)(0)
                     End If
 
-                Next
+                    If Abs(fx) <= tolEXT Then Exit Do
 
-            End If
+                    dfdx = (fx2 - fx) / epsilon(j)
+                    dx = fx / dfdx
+
+                    If Abs(dx) > maxDT Then dx = maxDT * Sign(dx)
+
+                    x1 = x1 - dx
+                    maxDT *= 0.95
+                    cnt += 1
+
+                Loop Until cnt > maxitEXT Or Double.IsNaN(x1) Or x1 < 0.0#
+
+                T = x1
+
+                If Not Double.IsNaN(T) And Not Double.IsInfinity(T) And Not cnt > maxitEXT Then
+                    If T > Tmin And T < Tmax Then Exit For
+                End If
+
+            Next
 
             If Double.IsNaN(T) Or T <= Tmin Or T >= Tmax Or cnt > maxitEXT Or Abs(fx) > tolEXT Then
                 'switch to mode 2 if it doesn't converge here.
