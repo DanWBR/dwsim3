@@ -192,7 +192,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Vy = Vy.NormalizeY
 
             ecount = 0
-            Dim convergiu As Integer = 0
+            Dim converged As Integer = 0
             Dim F, dF, e1, e2, e3 As Double
 
             Do
@@ -227,7 +227,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 ElseIf Math.Abs(e3) < 0.0000000001 And ecount > 0 Then
 
-                    convergiu = 1
+                    converged = 1
 
                     Exit Do
 
@@ -264,7 +264,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                 CheckCalculatorStatus()
 
-            Loop Until convergiu = 1
+            Loop Until converged = 1
 
             If V <= 0.0# Then
                 V = 0.0#
@@ -337,56 +337,66 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             Tmin = 50.0#
             maxDT = 30.0#
 
-            epsilon(0) = 0.1
-            epsilon(1) = 0.01
-            epsilon(2) = 0.001
-            epsilon(3) = 0.0001
-            epsilon(4) = 0.00001
+            epsilon(0) = 1
+            epsilon(1) = 0.1
+            epsilon(2) = 0.01
 
-            Dim fx, fx2, dfdx, x1, dx As Double
+            Dim fx, fx2, dfdx, x1, x0, dx As Double
 
             Dim cnt As Integer
 
             If Tref = 0.0# Then Tref = 298.15
             T = x1
 
-            For j = 0 To 4
+            For j = 0 To 2
 
                 cnt = 0
                 x1 = Tref
 
                 Do
 
-                    If My.Settings.EnableParallelProcessing Then
-                        My.MyApplication.IsRunningParallelTasks = True
-                        Dim task1 = Task.Factory.StartNew(Sub()
-                                                              fx = Herror("PT", x1, P, Vz, PP)(0)
-                                                          End Sub,
-                                                            My.MyApplication.TaskCancellationTokenSource.Token,
-                                                            TaskCreationOptions.None,
-                                                            My.MyApplication.AppTaskScheduler)
-                        Dim task2 = Task.Factory.StartNew(Sub()
-                                                              fx2 = Herror("PT", x1 + epsilon(j), P, Vz, PP)(0)
-                                                          End Sub,
-                                                            My.MyApplication.TaskCancellationTokenSource.Token,
-                                                            TaskCreationOptions.None,
-                                                            My.MyApplication.AppTaskScheduler)
-                        Task.WaitAll(task1, task2)
-                        My.MyApplication.IsRunningParallelTasks = False
+                    If cnt < 2 Then
+
+                        If My.Settings.EnableParallelProcessing Then
+                            My.MyApplication.IsRunningParallelTasks = True
+                            Dim task1 = Task.Factory.StartNew(Sub()
+                                                                  fx = Herror("PT", x1, P, Vz, PP)(0)
+                                                              End Sub,
+                                                                My.MyApplication.TaskCancellationTokenSource.Token,
+                                                                TaskCreationOptions.None,
+                                                                My.MyApplication.AppTaskScheduler)
+                            Dim task2 = Task.Factory.StartNew(Sub()
+                                                                  fx2 = Herror("PT", x1 + epsilon(j), P, Vz, PP)(0)
+                                                              End Sub,
+                                                                My.MyApplication.TaskCancellationTokenSource.Token,
+                                                                TaskCreationOptions.None,
+                                                                My.MyApplication.AppTaskScheduler)
+                            Task.WaitAll(task1, task2)
+                            My.MyApplication.IsRunningParallelTasks = False
+                        Else
+                            fx = Herror("PT", x1, P, Vz, PP)(0)
+                            fx2 = Herror("PT", x1 + epsilon(j), P, Vz, PP)(0)
+                        End If
+
+                        dfdx = (fx2 - fx) / epsilon(j)
+
                     Else
+
+                        fx2 = fx
                         fx = Herror("PT", x1, P, Vz, PP)(0)
-                        fx2 = Herror("PT", x1 + epsilon(j), P, Vz, PP)(0)
+
+                        dfdx = (fx - fx2) / (x1 - x0)
+
                     End If
 
                     If Abs(fx) <= tolEXT Then Exit Do
 
-                    dfdx = (fx2 - fx) / epsilon(j)
                     dx = fx / dfdx
 
                     If Abs(dx) > maxDT Then dx = maxDT * Sign(dx)
 
+                    x0 = x1
                     x1 = x1 - dx
-                    maxDT *= 0.95
                     cnt += 1
 
                 Loop Until cnt > maxitEXT Or Double.IsNaN(x1) Or x1 < 0.0#
@@ -400,7 +410,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             Next
 
             If Double.IsNaN(T) Or T <= Tmin Or T >= Tmax Or cnt > maxitEXT Or Abs(fx) > tolEXT Then
-                'switch to mode 2 if it doesn't converge here.
+                'switch to mode 2 if it doesn't converge using fast mode.
                 WriteDebugInfo("PH Flash [NL]: Didn't converge in fast mode. Switching to rigorous...")
                 Return Flash_PH_2(Vz, P, H, Tref, PP, ReuseKI, PrevKi)
             Else
@@ -463,27 +473,23 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
 
             If My.Settings.EnableParallelProcessing Then
                 My.MyApplication.IsRunningParallelTasks = True
-                Try
-                    Dim task1 = Task.Factory.StartNew(Sub()
-                                                          Dim ErrRes1 = Herror("PV", 0, P, Vz, PP)
-                                                          Hb = ErrRes1(0)
-                                                          Tb = ErrRes1(1)
-                                                      End Sub,
+                Dim task1 = Task.Factory.StartNew(Sub()
+                                                      Dim ErrRes1 = Herror("PV", 0, P, Vz, PP)
+                                                      Hb = ErrRes1(0)
+                                                      Tb = ErrRes1(1)
+                                                  End Sub,
                                                       My.MyApplication.TaskCancellationTokenSource.Token,
                                                       TaskCreationOptions.None,
                                                       My.MyApplication.AppTaskScheduler)
-                    Dim task2 = Task.Factory.StartNew(Sub()
-                                                          Dim ErrRes2 = Herror("PV", 1, P, Vz, PP)
-                                                          Hd = ErrRes2(0)
-                                                          Td = ErrRes2(1)
-                                                      End Sub,
-                                                      My.MyApplication.TaskCancellationTokenSource.Token,
-                                                      TaskCreationOptions.None,
-                                                      My.MyApplication.AppTaskScheduler)
-                    Task.WaitAll(task1, task2)
-                Catch ae As AggregateException
-                    Throw ae.Flatten().InnerException
-                End Try
+                Dim task2 = Task.Factory.StartNew(Sub()
+                                                      Dim ErrRes2 = Herror("PV", 1, P, Vz, PP)
+                                                      Hd = ErrRes2(0)
+                                                      Td = ErrRes2(1)
+                                                  End Sub,
+                                                  My.MyApplication.TaskCancellationTokenSource.Token,
+                                                  TaskCreationOptions.None,
+                                                  My.MyApplication.AppTaskScheduler)
+                Task.WaitAll(task1, task2)
                 My.MyApplication.IsRunningParallelTasks = False
             Else
                 ErrRes = Herror("PV", 0, P, Vz, PP)
@@ -557,6 +563,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                 Next
 
                 If T <= Tmin Or T >= Tmax Or ecount > maxitEXT Then Throw New Exception("PH Flash [NL3PV3]: Invalid result: Temperature did not converge." & String.Format(" (T = {0} K, P = {1} Pa, MoleFracs = {2})", T.ToString("N2"), P.ToString("N2"), Vz.ToArrayString()))
+
             Else
 
                 'specified enthalpy requires pure liquid 
@@ -630,37 +637,33 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             Tmax = 2000.0#
             Tmin = 50.0#
 
-            epsilon(0) = 0.001
-            epsilon(1) = 0.01
-            epsilon(2) = 0.1
-            epsilon(3) = 1
-            epsilon(4) = 10
+            epsilon(0) = 1
+            epsilon(1) = 0.1
+            epsilon(2) = 0.01
 
-            Dim fx, fx2, dfdx, x1, dx As Double
+            Dim fx, fx2, dfdx, x1, x0, dx As Double
 
             Dim cnt As Integer
 
             If Tref = 0 Then Tref = 298.15
 
-            For j = 0 To 4
+            For j = 0 To 2
 
                 cnt = 0
                 x1 = Tref
 
                 Do
 
-                    If My.Settings.EnableParallelProcessing Then
-                        My.MyApplication.IsRunningParallelTasks = True
-                        If My.Settings.EnableGPUProcessing Then
-                            'My.MyApplication.gpu.EnableMultithreading()
-                        End If
-                        Try
+                    If cnt < 2 Then
+
+                        If My.Settings.EnableParallelProcessing Then
+                            My.MyApplication.IsRunningParallelTasks = True
                             Dim task1 = Task.Factory.StartNew(Sub()
                                                                   fx = Serror("PT", x1, P, Vz, PP)(0)
                                                               End Sub,
-                                                              My.MyApplication.TaskCancellationTokenSource.Token,
-                                                              TaskCreationOptions.None,
-                                                              My.MyApplication.AppTaskScheduler)
+                                                                  My.MyApplication.TaskCancellationTokenSource.Token,
+                                                                  TaskCreationOptions.None,
+                                                                  My.MyApplication.AppTaskScheduler)
                             Dim task2 = Task.Factory.StartNew(Sub()
                                                                   fx2 = Serror("PT", x1 + epsilon(j), P, Vz, PP)(0)
                                                               End Sub,
@@ -668,25 +671,28 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                                                               TaskCreationOptions.None,
                                                               My.MyApplication.AppTaskScheduler)
                             Task.WaitAll(task1, task2)
-                        Catch ae As AggregateException
-                            Throw ae.Flatten().InnerException
-                        Finally
-                            'If My.Settings.EnableGPUProcessing Then
-                            '    My.MyApplication.gpu.DisableMultithreading()
-                            '    My.MyApplication.gpu.FreeAll()
-                            'End If
-                        End Try
-                        My.MyApplication.IsRunningParallelTasks = False
+                            My.MyApplication.IsRunningParallelTasks = False
+                        Else
+                            fx = Serror("PT", x1, P, Vz, PP)(0)
+                            fx2 = Serror("PT", x1 + epsilon(j), P, Vz, PP)(0)
+                        End If
+
+                        dfdx = (fx2 - fx) / epsilon(j)
+
                     Else
+
+                        fx2 = fx
                         fx = Serror("PT", x1, P, Vz, PP)(0)
-                        fx2 = Serror("PT", x1 + epsilon(j), P, Vz, PP)(0)
+
+                        dfdx = (fx - fx2) / (x1 - x0)
+
                     End If
 
                     If Abs(fx) < tolEXT Then Exit Do
 
-                    dfdx = (fx2 - fx) / epsilon(j)
                     dx = fx / dfdx
 
+                    x0 = x1
                     x1 = x1 - dx
 
                     cnt += 1
@@ -769,41 +775,23 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
 
             If My.Settings.EnableParallelProcessing Then
                 My.MyApplication.IsRunningParallelTasks = True
-                If My.Settings.EnableGPUProcessing Then
-                    'If Not My.MyApplication.gpu.IsMultithreadingEnabled Then
-                    '    My.MyApplication.gpu.EnableMultithreading()
-                    'Else
-                    '    alreadymt = True
-                    'End If
-                End If
-                Try
-                    Dim task1 = Task.Factory.StartNew(Sub()
-                                                          Dim ErrRes1 = Serror("PV", 0, P, Vz, PP)
-                                                          Sb = ErrRes1(0)
-                                                          Tb = ErrRes1(1)
-                                                      End Sub,
+                Dim task1 = Task.Factory.StartNew(Sub()
+                                                      Dim ErrRes1 = Serror("PV", 0, P, Vz, PP)
+                                                      Sb = ErrRes1(0)
+                                                      Tb = ErrRes1(1)
+                                                  End Sub,
                                                       My.MyApplication.TaskCancellationTokenSource.Token,
                                                       TaskCreationOptions.None,
                                                       My.MyApplication.AppTaskScheduler)
-                    Dim task2 = Task.Factory.StartNew(Sub()
-                                                          Dim ErrRes2 = Serror("PV", 1, P, Vz, PP)
-                                                          Sd = ErrRes2(0)
-                                                          Td = ErrRes2(1)
-                                                      End Sub,
-                                                      My.MyApplication.TaskCancellationTokenSource.Token,
-                                                      TaskCreationOptions.None,
-                                                      My.MyApplication.AppTaskScheduler)
-                    Task.WaitAll(task1, task2)
-                Catch ae As AggregateException
-                    Throw ae.Flatten().InnerException
-                Finally
-                    'If My.Settings.EnableGPUProcessing Then
-                    '    If Not alreadymt Then
-                    '        My.MyApplication.gpu.DisableMultithreading()
-                    '        My.MyApplication.gpu.FreeAll()
-                    '    End If
-                    'End If
-                End Try
+                Dim task2 = Task.Factory.StartNew(Sub()
+                                                      Dim ErrRes2 = Serror("PV", 1, P, Vz, PP)
+                                                      Sd = ErrRes2(0)
+                                                      Td = ErrRes2(1)
+                                                  End Sub,
+                                                  My.MyApplication.TaskCancellationTokenSource.Token,
+                                                  TaskCreationOptions.None,
+                                                  My.MyApplication.AppTaskScheduler)
+                Task.WaitAll(task1, task2)
                 My.MyApplication.IsRunningParallelTasks = False
             Else
                 ErrRes = Serror("PV", 0, P, Vz, PP)
@@ -1288,7 +1276,6 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
             Dim d1, d2 As Date, dt As TimeSpan
             Dim L, Lf, Vf, T, Tf, deltaT As Double
             Dim e1 As Double
-            Dim AF As Double = 1
 
             d1 = Date.Now
 
@@ -1405,40 +1392,16 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
 
                         If V = 0 Then
                             stmp4 = Ki.MultiplyY(Vx).SumY
-                            'i = 0
-                            'stmp4 = 0
-                            'Do
-                            '    stmp4 = stmp4 + Ki(i) * Vx(i)
-                            '    i = i + 1
-                            'Loop Until i = n + 1
                         Else
                             stmp4 = Vy.DivideY(Ki).SumY
-                            'i = 0
-                            'stmp4 = 0
-                            'Do
-                            '    stmp4 = stmp4 + Vy(i) / Ki(i)
-                            '    i = i + 1
-                            'Loop Until i = n + 1
                         End If
 
                         If V = 0 Then
                             Vy_ant = Vy.Clone
                             Vy = Ki.MultiplyY(Vx).MultiplyConstY(1 / stmp4)
-                            'i = 0
-                            'Do
-                            '    Vy_ant(i) = Vy(i)
-                            '    Vy(i) = Ki(i) * Vx(i) / stmp4
-                            '    i = i + 1
-                            'Loop Until i = n + 1
                         Else
                             Vx_ant = Vx.Clone
                             Vx = Vy.DivideY(Ki).MultiplyConstY(1 / stmp4)
-                            'i = 0
-                            'Do
-                            '    Vx_ant(i) = Vx(i)
-                            '    Vx(i) = (Vy(i) / Ki(i)) / stmp4
-                            '    i = i + 1
-                            'Loop Until i = n + 1
                         End If
 
                         marcador2 = 0
@@ -1464,9 +1427,6 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     K2 = PP.DW_CalcKvalue(Vx, Vy, T + 0.01, P)
 
                     dKdT = K2.SubtractY(K1).MultiplyConstY(1 / 0.01)
-                    'For i = 0 To n
-                    '    dKdT(i) = (K2(i) - K1(i)) / 0.01
-                    'Next
 
                     fval = stmp4 - 1
 
@@ -1477,10 +1437,8 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     Do
                         If V = 0 Then
                             dFdT = Vx.MultiplyY(dKdT).SumY
-                            'dFdT = dFdT + Vx(i) * dKdT(i)
                         Else
                             dFdT = -Vy.DivideY(Ki).DivideY(Ki).MultiplyY(dKdT).SumY
-                            'dFdT = dFdT - Vy(i) / (Ki(i) ^ 2) * dKdT(i)
                         End If
                         i = i + 1
                     Loop Until i = n + 1
@@ -1528,12 +1486,6 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     If V <= 0.5 Then
 
                         stmp4 = Ki.MultiplyY(Vx).SumY
-                        'i = 0
-                        'stmp4 = 0
-                        'Do
-                        '    stmp4 = stmp4 + Ki(i) * Vx(i)
-                        '    i = i + 1
-                        'Loop Until i = n + 1
 
                         Dim K1(n), K2(n), dKdT(n) As Double
 
@@ -1541,27 +1493,12 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                         K2 = PP.DW_CalcKvalue(Vx, Vy, T + 0.01, P)
 
                         dKdT = K2.SubtractY(K1).MultiplyConstY(1 / 0.01)
-                        'For i = 0 To n
-                        '    dKdT(i) = (K2(i) - K1(i)) / (0.1)
-                        'Next
 
                         dFdT = Vx.MultiplyY(dKdT).SumY
-                        'i = 0
-                        'dFdT = 0
-                        'Do
-                        '    dFdT = dFdT + Vx(i) * dKdT(i)
-                        '    i = i + 1
-                        'Loop Until i = n + 1
 
                     Else
 
                         stmp4 = Vy.DivideY(Ki).SumY
-                        'i = 0
-                        'stmp4 = 0
-                        'Do
-                        '    stmp4 = stmp4 + Vy(i) / Ki(i)
-                        '    i = i + 1
-                        'Loop Until i = n + 1
 
                         Dim K1(n), K2(n), dKdT(n) As Double
 
@@ -1569,17 +1506,8 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                         K2 = PP.DW_CalcKvalue(Vx, Vy, T + 0.01, P)
 
                         dKdT = K2.SubtractY(K1).MultiplyConstY(1 / 0.01)
-                        'For i = 0 To n
-                        '    dKdT(i) = (K2(i) - K1(i)) / (1)
-                        'Next
-
+                   
                         dFdT = -Vy.DivideY(Ki).DivideY(Ki).MultiplyY(dKdT).SumY
-                        'i = 0
-                        'dFdT = 0
-                        'Do
-                        '    dFdT = dFdT - Vy(i) / (Ki(i) ^ 2) * dKdT(i)
-                        '    i = i + 1
-                        'Loop Until i = n + 1
 
                     End If
 
@@ -1588,8 +1516,7 @@ out:        Return New Object() {L, V, Vx, Vy, ecount, 0.0#, PP.RET_NullVector, 
                     fval = stmp4 - 1
 
                     Tant = T
-                    deltaT = -fval / dFdT * AF
-                    AF *= 1.01
+                    deltaT = -fval / dFdT
                     If Abs(deltaT) > 0.1 * T Then
                         T = T + Sign(deltaT) * 0.1 * T
                     Else
