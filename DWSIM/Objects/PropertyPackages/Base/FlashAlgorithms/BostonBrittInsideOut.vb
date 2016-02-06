@@ -617,6 +617,14 @@ restart:    Do
 
                 Ki = PP.DW_CalcKvalue(Vx, Vy, T, P)
 
+                For i = 0 To n
+                    If Ki(i) <> 0 Then
+                        uic(i) = Log(Ki(i) / Kb)
+                    Else
+                        uic(i) = ui(i)
+                    End If
+                Next
+
                 Bc = Log(Kb_ / Kb) / (1 / T_ - 1 / T)
                 Ac = Log(Kb) - Bc * (1 / T - 1 / T_)
 
@@ -1089,12 +1097,14 @@ restart:    Do
 
                 Ki = PP.DW_CalcKvalue(Vx, Vy, T, P)
 
-                If Abs(R - Rant) > 0.00001 And Abs(T - Tant) > 0.01 Then
-                    For i = 0 To n
+                For i = 0 To n
+                    If Ki(i) <> 0 Then
                         uic(i) = Log(Ki(i) / Kb)
-                    Next
-                End If
-
+                    Else
+                        uic(i) = ui(i)
+                    End If
+                Next
+               
                 Bc = Log(Kb_ / Kb) / (1 / T_ - 1 / T)
                 Ac = Log(Kb) - Bc * (1 / T - 1 / T_)
 
@@ -1145,7 +1155,7 @@ restart:    Do
                 ' STEP 10 - Update variables using Broyden
                 '-------------------------------------------
 
-                   For i = 0 To n
+                For i = 0 To n
                     fx(i) = (ui(i) - uic(i))
                     x(i) = ui(i)
                 Next
@@ -1949,9 +1959,6 @@ final:      d2 = Date.Now
 
             T = 1 / T_ + (Log(Kb) - A) / B
             T = 1 / T
-
-            'If T < Tmin Then T = Tmin
-            'If T > Tmax Then T = Tmax
 
             For i = 0 To n
                 Vx(i) = pi(i) / sumpi
