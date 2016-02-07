@@ -250,7 +250,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
         Public Overrides Function Calculate(Optional ByVal args As Object = Nothing) As Integer
 
-            'Dim form As Global.DWSIM.FormChild = Me.Flowsheet
             Dim Ti1, Ti2, w1, w2, A, Tc1, Th1, Wc, Wh, P1, P2, Th2, Tc2, U As Double
             Dim Pc1, Ph1, Pc2, Ph2, DeltaHc, DeltaHh, H1, H2, Hc1, Hh1, Hc2, Hh2, CPC, CPH As Double
             Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
@@ -326,9 +325,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
             If DebugMode Then AppendDebugLine(StInHot.GraphicObject.Tag & " is the hot stream.")
 
             'calculate maximum theoretical heat exchange
-
+            If DebugMode Then AppendDebugLine(String.Format("Doing a PT flash to calculate hot stream outlet enthalpy... P = {0} Pa, T = {1} K", Ph2, Tc1))
+            Dim HHx As Double
             Dim tmpstr As MaterialStream = StInHot.Clone
-
             tmpstr.PropertyPackage = StInHot.PropertyPackage.Clone
             tmpstr.SetFlowsheet(StInHot.FlowSheet)
             tmpstr.PropertyPackage.CurrentMaterialStream = tmpstr
@@ -336,10 +335,22 @@ Namespace DWSIM.SimulationObjects.UnitOps
             tmpstr.Fases("0").SPMProperties.pressure = Ph2
             tmpstr.PropertyPackage.DW_CalcEquilibrium(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P)
             tmpstr.Calculate(False, True)
+            HHx = tmpstr.Fases(0).SPMProperties.enthalpy.GetValueOrDefault
+            DeltaHh = Wh * (Hh1 - HHx) 'kW
 
-            Dim HHx = tmpstr.Fases(0).SPMProperties.enthalpy.GetValueOrDefault
+            If DebugMode Then AppendDebugLine(String.Format("Doing a PT flash to calculate cold stream outlet enthalpy... P = {0} Pa, T = {1} K", Pc2, Th1))
+            tmpstr = StInCold.Clone
+            tmpstr.PropertyPackage = StInCold.PropertyPackage.Clone
+            tmpstr.SetFlowsheet(StInHot.FlowSheet)
+            tmpstr.PropertyPackage.CurrentMaterialStream = tmpstr
+            tmpstr.Fases("0").SPMProperties.temperature = Th1
+            tmpstr.Fases("0").SPMProperties.pressure = Pc2
+            tmpstr.PropertyPackage.DW_CalcEquilibrium(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P)
+            tmpstr.Calculate(False, True)
+            HHx = tmpstr.Fases(0).SPMProperties.enthalpy.GetValueOrDefault
+            DeltaHc = Wc * (HHx - Hc1) 'kW
 
-            MaxHeatExchange = Wh * (Hh1 - HHx) 'kW
+            MaxHeatExchange = Min(DeltaHc, DeltaHh) 'kW
 
             tmpstr.PropertyPackage = Nothing
             tmpstr.Dispose()
@@ -355,73 +366,71 @@ Namespace DWSIM.SimulationObjects.UnitOps
             CPH = StInHot.Fases(0).SPMProperties.heatCapacityCp.GetValueOrDefault
 
             Select Case CalcMode
+
                 Case HeatExchangerCalcMode.CalcBothTemp_UA
-                    Dim Qh, Qc, Qi, Q_UA, Q_old As Double
+                    Dim Qi, Q_old, PIc1, PIc2, PIh1, PIh2 As Double
+                    Dim NTUh, NTUc, WWh, WWc, RRh, RRc, PPh, PPc As Double
                     Dim tmp As Object
                     Dim count As Integer
                     A = Area
                     U = OverallCoefficient
+                    Qi = MaxHeatExchange
 
-                    Select Case Me.FlowDir
-                        Case FlowDirection.CoCurrent
-                            Tc2 = Tc1 + (Th1 - Tc1) * 0.49
-                            Th2 = Th1 - (Th1 - Tc1) * 0.49
-                        Case FlowDirection.CounterCurrent
-                            Tc2 = Th1 - (Th1 - Tc1) / 10
-                            Th2 = Tc1 + (Th1 - Tc1) / 10
-                    End Select
-
-                    'calculate maximum possible exchanged heat for both sides.
-
-                    If DebugMode Then AppendDebugLine(String.Format("Doing a PT flash to calculate cold stream outlet enthalpy... P = {0} Pa, T = {1} K", Pc2, Tc1))
-
-                    StInCold.PropertyPackage.CurrentMaterialStream = StInCold
-                    tmp = StInCold.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Tc2, Pc2, Tc1)
-                    Hc2 = tmp(4)
-                    Qc = Wc * (Hc2 - Hc1)
-
-                    If DebugMode Then AppendDebugLine(String.Format("Doing a PT flash to calculate hot stream outlet enthalpy... P = {0} Pa, T = {1} K", Ph2, Th1))
-
-                    StInHot.PropertyPackage.CurrentMaterialStream = StInHot
-                    tmp = StInCold.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, Th2, Ph2, Th1)
-                    Hh2 = tmp(4)
-                    Qh = -Wh * (Hh2 - Hh1)
-
-                    'estimate Q as minimum value
-
-                    Qi = Min(Qc, Qh)
-
-                    If Qi > MaxHeatExchange Then Qi = MaxHeatExchange
-
-                    If DebugMode Then AppendDebugLine(String.Format("Initial estimate for heat exchanged is {0} kW", Qi))
+                    If DebugMode Then AppendDebugLine(String.Format("Start with Max Heat Exchange Q = {0} KW", Qi))
 
                     Do
-
-                        count += 1
-
-                        If DebugMode Then AppendDebugLine(String.Format("Loop number {0}/100", count))
-
-                        'calculate exit temperatures from energy balance
+                        If DebugMode Then AppendDebugLine(String.Format("======================================================"))
+                        If DebugMode Then AppendDebugLine(String.Format("Iteration loop: {0}", count))
 
                         Hc2 = Qi / Wc + Hc1
                         Hh2 = Hh1 - Qi / Wh
-                        If DebugMode Then AppendDebugLine(String.Format("Doing a PH flash to calculate cold stream outlet temperature... P = {0} Pa, H = {1} kJ/[kg.K]", Pc2, Hc2))
                         StInCold.PropertyPackage.CurrentMaterialStream = StInCold
                         tmp = StInCold.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pc2, Hc2, Tc2)
                         Tc2 = tmp(2)
-                        If DebugMode Then AppendDebugLine(String.Format("Calculated cold stream outlet temperature T2 = {0} K", Tc2))
-                        If DebugMode Then AppendDebugLine(String.Format("Doing a PH flash to calculate hot stream outlet temperature... P = {0} Pa, H = {1} kJ/[kg.K]", Ph2, Hh2))
+                        PIc2 = (1 + tmp(0)) * (1 + tmp(1) * (1 + tmp(13))) 'phase indicator cold stream
+                        If DebugMode Then AppendDebugLine(String.Format("Doing a PH flash to calculate cold stream outlet temperature... P = {0} Pa, H = {1} kJ/[kg.K]  ===> Tc2 = {2} K", Pc2, Hc2, Tc2))
+
                         StInHot.PropertyPackage.CurrentMaterialStream = StInHot
                         tmp = StInHot.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Ph2, Hh2, Th2)
                         Th2 = tmp(2)
-                        If DebugMode Then AppendDebugLine(String.Format("Calculated hot stream outlet temperature T2 = {0} K", Th2))
+                        PIh2 = (1 + tmp(0)) * (1 + tmp(1) * (1 + tmp(13))) 'phase indicator hot stream
+                        If DebugMode Then AppendDebugLine(String.Format("Doing a PH flash to calculate hot stream outlet temperature... P = {0} Pa, H = {1} kJ/[kg.K]  ===> Th2 = {2} K", Ph2, Hh2, Th2))
+
+                        WWc = Wc * (Hc2 - Hc1) / (Tc2 - Tc1) * 1000 'Heat Capacity Rate cold side
+                        WWh = Wh * (Hh2 - Hh1) / (Th2 - Th1) * 1000 'Heat Capacity Rate hot side
+                        NTUc = U * A / WWc 'Numbers of transfer units - cold side
+                        NTUh = U * A / WWh 'Numbers of transfer units - hot side
+                        RRc = WWc / WWh 'Heat capacity ratio cold side
+                        RRh = WWh / WWc 'Heat capacity ratio hot side
+
+                        If DebugMode Then AppendDebugLine(String.Format("Calculating heat exchanger"))
+                        If DebugMode Then AppendDebugLine(String.Format("Number of Transfer Units - NTU_cold :{0}  NTU_hot: {1}", NTUc, NTUh))
+                        If DebugMode Then AppendDebugLine(String.Format("Heat Capacity Rates - W_cold :{0}  W_hot: {1}", WWc, WWh))
+                        If DebugMode Then AppendDebugLine(String.Format("Heat Capacity Ratios - R_cold :{0}  R_hot: {1}", RRc, RRh))
+
+                        Select Case Me.FlowDir
+                            Case FlowDirection.CoCurrent
+                                PPc = (1 - Exp(-NTUc * (1 + RRc))) / (1 + RRc)
+                                PPh = (1 - Exp(-NTUh * (1 + RRh))) / (1 + RRh)
+                            Case FlowDirection.CounterCurrent
+                                PPc = (1 - Exp((RRc - 1) * NTUc)) / (1 - RRc * Exp((RRc - 1) * NTUc))
+                                PPh = (1 - Exp((RRh - 1) * NTUh)) / (1 - RRh * Exp((RRh - 1) * NTUh))
+                        End Select
+                        If DebugMode Then AppendDebugLine(String.Format("Dimensionless Temp Change - P_cold :{0}  P_hot: {1}", PPc, PPh))
+
+                        If Double.IsNaN(PPc) Then PPc = 0
+                        If Double.IsNaN(PPh) Then PPh = 0
+                        Tc2 = Tc1 + PPc * (Th1 - Tc1)
+                        Th2 = Th1 - PPh * (Th1 - Tc1)
+                        If DebugMode Then AppendDebugLine(String.Format("Outlet Temperatures - Tc2 :{0} K  Th2: {1} K", Tc2, Th2))
 
                         Select Case Me.FlowDir
                             Case FlowDirection.CoCurrent
                                 If (Th1 - Tc1) / (Th2 - Tc2) = 1 Then
                                     LMTD = ((Th1 - Tc1) + (Th2 - Tc2)) / 2
+                                Else
+                                    LMTD = ((Th1 - Tc1) - (Th2 - Tc2)) / Math.Log((Th1 - Tc1) / (Th2 - Tc2))
                                 End If
-                                LMTD = ((Th1 - Tc1) - (Th2 - Tc2)) / Math.Log((Th1 - Tc1) / (Th2 - Tc2))
                             Case FlowDirection.CounterCurrent
                                 If (Th1 - Tc2) / (Th2 - Tc1) = 1 Then
                                     LMTD = ((Th1 - Tc2) + (Th2 - Tc1)) / 2
@@ -429,24 +438,29 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                     LMTD = ((Th1 - Tc2) - (Th2 - Tc1)) / Math.Log((Th1 - Tc2) / (Th2 - Tc1))
                                 End If
                         End Select
-
-                        If Not IgnoreLMTDError Then If Double.IsNaN(LMTD) Or Double.IsInfinity(LMTD) Then Throw New Exception(DWSIM.App.GetLocalString("HXCalcError"))
-
-                        Q_UA = U / 1000 * A * LMTD 'calculate Q due to temperature difference
-
                         Q_old = Qi
-                        Qi = Qi - (Qi - Q_UA) * 0.2
+                        If LMTD > 0 Then
+                            Qi = U * A * LMTD / 1000
+                        Else
+                            Qi = Wh * (Hh1 - Hh2)
+                            LMTD = Qi / U / A * 1000
+                        End If
 
-                        If Qi > MaxHeatExchange Then Qi = MaxHeatExchange
+                        If DebugMode Then
+                            AppendDebugLine(String.Format("Logarithmic Temperature Difference :{0} K", LMTD))
+                            AppendDebugLine(String.Format("Heat Exchange Q = {0} KW", Qi))
+                        End If
 
-                        If DebugMode Then AppendDebugLine(String.Format("Current estimated heat exchange is {0} kW", Qi))
+                        count += 1
 
-                    Loop Until Abs(Qi - Q_old) < 0.01 Or count > 100
+                    Loop Until Abs((Qi - Q_old) / Q_old) < 0.001 Or count > 100
                     Q = Qi
-
-                    If count > 100 Then
-                        FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": Iteration loop did not converge.", Color.DarkOrange, FormClasses.TipoAviso.Aviso)
-                    End If
+                    If count > 100 Then FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": Reached maximum number of iterations! Final Q change: " & Qi - Q_old & " KW ; " & Abs((Qi - Q_old) / Q_old * 100) & " % ", Color.DarkOrange, FormClasses.TipoAviso.Aviso)
+                    PIc1 = (1 + StInCold.Fases("1").SPMProperties.molarfraction.GetValueOrDefault) * (1 + StInCold.Fases("2").SPMProperties.molarfraction.GetValueOrDefault) * (1 + StInCold.Fases("7").SPMProperties.molarfraction.GetValueOrDefault)
+                    PIh1 = (1 + StInHot.Fases("1").SPMProperties.molarfraction.GetValueOrDefault) * (1 + StInHot.Fases("2").SPMProperties.molarfraction.GetValueOrDefault) * (1 + StInHot.Fases("7").SPMProperties.molarfraction.GetValueOrDefault)
+                  
+                    If (PIc1 = 2 And PIc2 > 2) Or (PIc1 > 2 And PIc2 = 2) Then FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": Phase change in cold stream detected! Heat exchange result is an aproximation.", Color.DarkOrange, FormClasses.TipoAviso.Aviso)
+                    If (PIh1 = 2 And PIh2 > 2) Or (PIh1 > 2 And PIh2 = 2) Then FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": Phase change in hot stream detected! Heat exchange result is an aproximation.", Color.DarkOrange, FormClasses.TipoAviso.Aviso)
 
                 Case HeatExchangerCalcMode.CalcBothTemp
 
@@ -1050,48 +1064,48 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Loop Until fx < 0.01 Or icnt > 100
             End Select
 
-            CheckSpec(Tc2, True, "cold stream outlet temperature")
-            CheckSpec(Th2, True, "hot stream outlet temperature")
-            CheckSpec(Ph2, True, "hot stream outlet pressure")
-            CheckSpec(Pc2, True, "cold stream outlet pressure")
+                    CheckSpec(Tc2, True, "cold stream outlet temperature")
+                    CheckSpec(Th2, True, "hot stream outlet temperature")
+                    CheckSpec(Ph2, True, "hot stream outlet pressure")
+                    CheckSpec(Pc2, True, "cold stream outlet pressure")
 
-            ThermalEfficiency = Q / MaxHeatExchange * 100
+                    ThermalEfficiency = Q / MaxHeatExchange * 100
 
-            If Not DebugMode Then
+                    If Not DebugMode Then
 
-                Me.ColdSideOutletTemperature = Tc2
-                Me.HotSideOutletTemperature = Th2
-                Me.ColdSidePressureDrop = Pc1 - Pc2
-                Me.HotSidePressureDrop = Ph1 - Ph2
-                Me.OverallCoefficient = U
-                Me.Area = A
+                        Me.ColdSideOutletTemperature = Tc2
+                        Me.HotSideOutletTemperature = Th2
+                        Me.ColdSidePressureDrop = Pc1 - Pc2
+                        Me.HotSidePressureDrop = Ph1 - Ph2
+                        Me.OverallCoefficient = U
+                        Me.Area = A
 
-                'Define new calculated properties.
-                StOutHot.Fases(0).SPMProperties.temperature = Th2
-                StOutCold.Fases(0).SPMProperties.temperature = Tc2
-                StOutHot.Fases(0).SPMProperties.pressure = Ph2
-                StOutCold.Fases(0).SPMProperties.pressure = Pc2
-                StOutHot.Fases(0).SPMProperties.enthalpy = Hh2
-                StOutCold.Fases(0).SPMProperties.enthalpy = Hc2
+                        'Define new calculated properties.
+                        StOutHot.Fases(0).SPMProperties.temperature = Th2
+                        StOutCold.Fases(0).SPMProperties.temperature = Tc2
+                        StOutHot.Fases(0).SPMProperties.pressure = Ph2
+                        StOutCold.Fases(0).SPMProperties.pressure = Pc2
+                        StOutHot.Fases(0).SPMProperties.enthalpy = Hh2
+                        StOutCold.Fases(0).SPMProperties.enthalpy = Hc2
 
-                If Th2 < Tc1 Or Tc2 > Th1 Then
-                    FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": Temperature Cross", Color.DarkOrange, FormClasses.TipoAviso.Aviso)
-                End If
+                        If Th2 < Tc1 Or Tc2 > Th1 Then
+                            FlowSheet.WriteToLog(Me.GraphicObject.Tag & ": Temperature Cross", Color.DarkOrange, FormClasses.TipoAviso.Aviso)
+                        End If
 
-                'Call the flowsheet calculation routine
-                With objargs
-                    .Calculado = True
-                    .Nome = Me.Nome
-                    .Tipo = Me.ObjectType
-                End With
+                        'Call the flowsheet calculation routine
+                        With objargs
+                            .Calculado = True
+                            .Nome = Me.Nome
+                            .Tipo = Me.ObjectType
+                        End With
 
-                FlowSheet.CalculationQueue.Enqueue(objargs)
+                        FlowSheet.CalculationQueue.Enqueue(objargs)
 
-            Else
+                    Else
 
-                AppendDebugLine("Calculation finished successfully.")
+                        AppendDebugLine("Calculation finished successfully.")
 
-            End If
+                    End If
 
         End Function
 
