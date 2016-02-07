@@ -385,13 +385,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
             bml = Vx.MultiplyY(bi).SumY
 
-            'i = 0
-            'bml = 0
-            'Do
-            '    bml = bml + Vx(i) * bi(i)
-            '    i = i + 1
-            'Loop Until i = n + 1
-
             AG = aml * P / (R * T) ^ 2
             BG = bml * P / (R * T)
 
@@ -410,9 +403,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             End If
 
             Dim Pcorr As Double = P
-            'Dim ZP As Double() = CheckRoot(Z, aml, bml, P, T, forcephase)
-            'Z = ZP(0)
-            'Pcorr = ZP(1)
 
             If My.Settings.EnableParallelProcessing Then
                 Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism, .TaskScheduler = My.MyApplication.AppTaskScheduler}
@@ -484,7 +474,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
             Dim _zarray As List(Of Double), _mingz As Object, Z As Double
 
-            _zarray = CalcZ(T, P, Vx, VKij, VTc, VPc, Vw)
+            _zarray = CalcZ2(AG, BG)
             If forcephase <> "" Then
                 If forcephase = "L" Then
                     Z = Common.Min(_zarray.ToArray())
@@ -694,6 +684,63 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
             Dim AG = aml * P / (R * T) ^ 2
             Dim BG = bml * P / (R * T)
+
+            coeff(0) = -AG * BG + BG ^ 2 + BG ^ 3
+            coeff(1) = AG - 3 * BG ^ 2 - 2 * BG
+            coeff(2) = BG - 1
+            coeff(3) = 1
+
+            Dim temp1 = Poly_Roots(coeff)
+            Dim tv = 0.0#
+            Dim ZV, tv2 As Double
+
+            Dim result As New List(Of Double)
+
+            If temp1(0, 0) > temp1(1, 0) Then
+                tv = temp1(1, 0)
+                temp1(1, 0) = temp1(0, 0)
+                temp1(0, 0) = tv
+                tv2 = temp1(1, 1)
+                temp1(1, 1) = temp1(0, 1)
+                temp1(0, 1) = tv2
+            End If
+            If temp1(0, 0) > temp1(2, 0) Then
+                tv = temp1(2, 0)
+                temp1(2, 0) = temp1(0, 0)
+                temp1(0, 0) = tv
+                tv2 = temp1(2, 1)
+                temp1(2, 1) = temp1(0, 1)
+                temp1(0, 1) = tv2
+            End If
+            If temp1(1, 0) > temp1(2, 0) Then
+                tv = temp1(2, 0)
+                temp1(2, 0) = temp1(1, 0)
+                temp1(1, 0) = tv
+                tv2 = temp1(2, 1)
+                temp1(2, 1) = temp1(1, 1)
+                temp1(1, 1) = tv2
+            End If
+
+            ZV = temp1(2, 0)
+            If temp1(2, 1) <> 0 Then
+                ZV = temp1(1, 0)
+                If temp1(1, 1) <> 0 Then
+                    ZV = temp1(0, 0)
+                End If
+            End If
+
+            If temp1(0, 1) = 0.0# And temp1(0, 0) > 0.0# Then result.Add(temp1(0, 0))
+            If temp1(1, 1) = 0.0# And temp1(1, 0) > 0.0# Then result.Add(temp1(1, 0))
+            If temp1(2, 1) = 0.0# And temp1(2, 0) > 0.0# Then result.Add(temp1(2, 0))
+
+            Return result
+
+        End Function
+
+        Shared Function CalcZ2(AG As Double, BG As Double) As List(Of Double)
+
+            Dim coeff(3) As Double
+            Dim Vant(0, 4) As Double
 
             coeff(0) = -AG * BG + BG ^ 2 + BG ^ 3
             coeff(1) = AG - 3 * BG ^ 2 - 2 * BG
