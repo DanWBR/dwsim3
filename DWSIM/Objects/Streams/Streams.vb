@@ -43,7 +43,7 @@ Namespace DWSIM.SimulationObjects.Streams
         Private _ppid As String = ""
 
         Protected m_compositionbasis As CompBasis = CompBasis.Molar_Fractions
-        Protected m_Phases As New Dictionary(Of String, DWSIM.ClassesBasicasTermodinamica.Fase)
+        Protected m_Phases As New Dictionary(Of Integer, DWSIM.ClassesBasicasTermodinamica.Fase)
 
         Private _inequilibrium As Boolean = False
 
@@ -82,7 +82,7 @@ Namespace DWSIM.SimulationObjects.Streams
                 End If
                 .Add(New XElement("PropertyPackage", ppid))
                 .Add(New XElement("Phases"))
-                For Each kvp As KeyValuePair(Of String, DWSIM.ClassesBasicasTermodinamica.Fase) In m_Phases
+                For Each kvp As KeyValuePair(Of Integer, DWSIM.ClassesBasicasTermodinamica.Fase) In m_Phases
                     .Item(.Count - 1).Add(New XElement("Phase", {New XElement("ID", kvp.Key), kvp.Value.SaveData().ToArray()}))
                 Next
             End With
@@ -283,17 +283,16 @@ Namespace DWSIM.SimulationObjects.Streams
             Me.m_ComponentName = nome
             Me.m_ComponentDescription = descricao
 
-            Me.Fases.Add("0", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Mistura"), ""))
-            Me.Fases.Add("1", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("OverallLiquid"), ""))
-            Me.Fases.Add("2", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Vapor"), ""))
-            Me.Fases.Add("3", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Liquid1"), ""))
-            Me.Fases.Add("4", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Liquid2"), ""))
-            Me.Fases.Add("5", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Liquid3"), ""))
-            Me.Fases.Add("6", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Aqueous"), ""))
-            Me.Fases.Add("7", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Solid"), ""))
+            Me.Fases.Add(0, New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Mistura"), ""))
+            Me.Fases.Add(1, New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("OverallLiquid"), ""))
+            Me.Fases.Add(2, New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Vapor"), ""))
+            Me.Fases.Add(3, New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Liquid1"), ""))
+            Me.Fases.Add(4, New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Liquid2"), ""))
+            Me.Fases.Add(5, New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Liquid3"), ""))
+            Me.Fases.Add(6, New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Aqueous"), ""))
+            Me.Fases.Add(7, New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Solid"), ""))
 
             If Not My.Application.CAPEOPENMode And Not Me.FlowSheet Is Nothing Then
-                'Me.PropertyPackage = FlowSheet.Options.PropertyPackages(0)
                 Me.FillNodeItems()
                 Me.QTFillNodeItems()
             End If
@@ -306,11 +305,40 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property Fases() As Dictionary(Of String, DWSIM.ClassesBasicasTermodinamica.Fase)
+        Public ReadOnly Property Fases() As Dictionary(Of Integer, DWSIM.ClassesBasicasTermodinamica.Fase)
             Get
                 Return m_Phases
             End Get
         End Property
+
+        Public ReadOnly Property Phases() As Dictionary(Of Integer, DWSIM.ClassesBasicasTermodinamica.Fase)
+            Get
+                Return m_Phases
+            End Get
+        End Property
+
+        Public Function GetPhase(phasename As String) As DWSIM.ClassesBasicasTermodinamica.Fase
+            Select Case phasename
+                Case "Vapor"
+                    Return Phases(2)
+                Case "LiquidMixture"
+                    Return Phases(1)
+                Case "Liquid1"
+                    Return Phases(3)
+                Case "Liquid2"
+                    Return Phases(4)
+                Case "Liquid3"
+                    Return Phases(5)
+                Case "Aqueous"
+                    Return Phases(6)
+                Case "Solid"
+                    Return Phases(7)
+                Case "Mixture"
+                    Return Phases(0)
+                Case Else
+                    Throw New ArgumentException("Unknown phase name")
+            End Select
+        End Function
 
         ''' <summary>
         ''' Calculates equilibrium and/or properties for this stream.

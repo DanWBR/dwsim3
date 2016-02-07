@@ -137,7 +137,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             If ZRa = 0.0# Then ZRa = 0.29056 - 0.08775 * w
 
-            Dim tmp = R * Tc / Pc * ZRa ^ (1 + (1 - Tr) ^ (2 / 7))
+            Dim tmp As Double = R * Tc / Pc * ZRa ^ (1 + (1 - Tr) ^ (2 / 7))
 
             If Pvp <> 0.0# And T < Tc Then
 

@@ -215,7 +215,7 @@ Namespace DWSIM.ClassesBasicasTermodinamica
         Protected m_ComponentDescription As String
         Protected m_ComponentName As String
 
-        Public Property Descricao() As String
+        Public Property Description() As String
             Get
                 Return m_ComponentDescription
             End Get
@@ -224,7 +224,7 @@ Namespace DWSIM.ClassesBasicasTermodinamica
             End Set
         End Property
 
-        Public Property Nome() As String
+        Public Property Name() As String
             Get
                 Return m_ComponentName
             End Get
@@ -237,6 +237,24 @@ Namespace DWSIM.ClassesBasicasTermodinamica
 
         Public SPMProperties As New SinglePhaseMixtureProperties
         Public TPMProperties As New TwoPhaseMixtureProperties
+
+        Public ReadOnly Property PhaseProperties As SinglePhaseMixtureProperties
+            Get
+                Return SPMProperties
+            End Get
+        End Property
+
+        Public ReadOnly Property PhaseProperties2 As TwoPhaseMixtureProperties
+            Get
+                Return TPMProperties
+            End Get
+        End Property
+
+        Public ReadOnly Property Compounds As Dictionary(Of String, Substancia)
+            Get
+                Return Componentes
+            End Get
+        End Property
 
         Public Sub New(ByVal nome As String, ByVal descricao As String)
 

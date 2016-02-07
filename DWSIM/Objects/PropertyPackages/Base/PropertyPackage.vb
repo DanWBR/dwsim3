@@ -762,28 +762,43 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             K = fugliq.DivideY(fugvap)
 
-            'For i = 0 To n
-            '    K(i) = fugliq(i) / fugvap(i)
-            'Next
-
             Dim cprops As List(Of ConstantProperties) = Nothing
-            Dim Pc, Tc, w As Double
+     
+            If cprops Is Nothing Then cprops = DW_GetConstantProperties()
 
-            For i = 0 To n
-                If K(i) = 0 Or Double.IsInfinity(K(i)) Or Double.IsNaN(K(i)) Then
-                    If cprops Is Nothing Then cprops = DW_GetConstantProperties()
-                    Pc = cprops(i).Critical_Pressure
-                    Tc = cprops(i).Critical_Temperature
-                    w = cprops(i).Acentric_Factor
-                    If type = "LV" Then
-                        K(i) = Pc / P * Math.Exp(5.373 * (1 + w) * (1 - Tc / T))
-                    Else
-                        K(i) = 1.0#
+            If My.Settings.EnableParallelProcessing Then
+                Parallel.For(0, n + 1, Sub(ii)
+                                           Dim Pc, Tc, w As Double
+                                           If K(ii) = 0.0# Or Double.IsInfinity(K(ii)) Or Double.IsNaN(K(ii)) Then
+                                               Pc = cprops(ii).Critical_Pressure
+                                               Tc = cprops(ii).Critical_Temperature
+                                               w = cprops(ii).Acentric_Factor
+                                               If type = "LV" Then
+                                                   K(ii) = Pc / P * Math.Exp(5.373 * (1 + w) * (1 - Tc / T))
+                                               Else
+                                                   K(ii) = 1.0#
+                                               End If
+                                           End If
+                                       End Sub)
+            Else
+                Dim Pc, Tc, w As Double
+                For i = 0 To n
+                    If K(i) = 0.0# Or Double.IsInfinity(K(i)) Or Double.IsNaN(K(i)) Then
+                        Pc = cprops(i).Critical_Pressure
+                        Tc = cprops(i).Critical_Temperature
+                        w = cprops(i).Acentric_Factor
+                        If type = "LV" Then
+                            K(i) = Pc / P * Math.Exp(5.373 * (1 + w) * (1 - Tc / T))
+                        Else
+                            K(i) = 1.0#
+                        End If
                     End If
-                End If
-            Next
+                Next
+            End If
+
 
             If Me.AUX_CheckTrivial(K) Then
+                Dim Pc, Tc, w As Double
                 If Not Parameters.ContainsKey("PP_FLASHALGORITHMIDEALKFALLBACK") Then Parameters.Add("PP_FLASHALGORITHMIDEALKFALLBACK", 1)
                 If Parameters("PP_FLASHALGORITHMIDEALKFALLBACK") = 1 Then
                     If cprops Is Nothing Then cprops = DW_GetConstantProperties()
@@ -7116,10 +7131,20 @@ Final3:
             Dim integral, Ti As Double
 
             Ti = T1 + deltaT / 2
-            For i = 0 To 9
-                integral += Me.AUX_CPi(subst, Ti) * deltaT
-                Ti += deltaT
-            Next
+
+            If My.Settings.EnableParallelProcessing Then
+                Dim values As New Concurrent.ConcurrentBag(Of Double)
+                Parallel.For(0, 10, Sub(ii)
+                                        values.Add(Me.AUX_CPi(subst, Ti + deltaT * ii) * deltaT)
+                                    End Sub)
+                integral = values.Sum
+            Else
+                integral = 0.0#
+                For i = 0 To 9
+                    integral += Me.AUX_CPi(subst, Ti) * deltaT
+                    Ti += deltaT
+                Next
+            End If
 
             Return integral
 
@@ -7155,10 +7180,21 @@ Final3:
             Dim integral, Ti As Double
 
             Ti = T1 + deltaT / 2
-            For i = 0 To 9
-                integral += Me.AUX_CPi(subst, Ti) * deltaT / (Ti - deltaT)
-                Ti += deltaT
-            Next
+
+            If My.Settings.EnableParallelProcessing Then
+                Dim values As New Concurrent.ConcurrentBag(Of Double)
+                Parallel.For(0, 10, Sub(ii)
+                                        values.Add(Me.AUX_CPi(subst, Ti + deltaT * ii) * deltaT / (Ti + deltaT * (ii - 1)))
+                                    End Sub)
+                integral = values.Sum
+            Else
+                integral = 0.0#
+                For i = 0 To 9
+                    integral += Me.AUX_CPi(subst, Ti) * deltaT / (Ti - deltaT)
+                    Ti += deltaT
+                Next
+            End If
+
             Return integral 'KJ/Kg
 
         End Function
@@ -8101,6 +8137,8 @@ Final3:
             Dim val As Double
             Dim i As Integer = 0
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
+
+            val = 0.0#
             For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
                 val += Vw(i) * Me.AUX_INT_CPDTi(T1, T2, subst.Nome)
                 i += 1
@@ -8181,62 +8219,6 @@ Final3:
             Next
 
             Return Vw
-
-        End Function
-
-        Public Function AUX_CalculateSumSquares(ByVal Vz As Double()) As Double
-
-            Dim n, i As Integer
-            n = UBound(Vz)
-            Dim sum As Double = 0.0#
-
-            For i = 0 To n
-                sum += Vz(i) ^ 2
-            Next
-
-            Return sum
-
-        End Function
-
-        Public Function AUX_CalculateAbsSumSquares(ByVal Vz As Double()) As Double
-
-            Dim n, i As Integer
-            n = UBound(Vz)
-            Dim sum As Double = 0.0#
-
-            For i = 0 To n
-                sum += Abs(Vz(i)) ^ 2
-            Next
-
-            Return sum
-
-        End Function
-
-        Public Function AUX_CalculateSum(ByVal Vz As Double()) As Double
-
-            Dim n, i As Integer
-            n = UBound(Vz)
-            Dim sum As Double = 0.0#
-
-            For i = 0 To n
-                sum += Vz(i)
-            Next
-
-            Return sum
-
-        End Function
-
-        Public Function AUX_CalculateAbsSum(ByVal Vz As Double()) As Double
-
-            Dim n, i As Integer
-            n = UBound(Vz)
-            Dim sum As Double = 0.0#
-
-            For i = 0 To n
-                sum += Abs(Vz(i))
-            Next
-
-            Return sum
 
         End Function
 
