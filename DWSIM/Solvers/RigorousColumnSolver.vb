@@ -2093,8 +2093,7 @@ restart:            fx = Me.FunctionValue(xvar)
 
             If doparallel Then
                 My.MyApplication.IsRunningParallelTasks = True
-                Try
-                    Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
+                Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                          Sub(ipar)
                                                              Hl(ipar) = pp.DW_CalcEnthalpy(x(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Liquid) * pp.AUX_MMM(x(ipar)) / 1000
                                                              Hv(ipar) = pp.DW_CalcEnthalpy(y(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Vapor) * pp.AUX_MMM(y(ipar)) / 1000
@@ -2102,10 +2101,7 @@ restart:            fx = Me.FunctionValue(xvar)
                                                       My.MyApplication.TaskCancellationTokenSource.Token,
                                                       TaskCreationOptions.None,
                                                       My.MyApplication.AppTaskScheduler)
-                    task1.Wait()
-                Catch ae As AggregateException
-                    Throw ae.Flatten().InnerException
-                End Try
+                task1.Wait()
                 My.MyApplication.IsRunningParallelTasks = False
             Else
                 For i = 0 To ns
@@ -2228,18 +2224,14 @@ restart:            fx = Me.FunctionValue(xvar)
                 'tomich
                 If doparallel Then
                     My.MyApplication.IsRunningParallelTasks = True
-                    Try
-                        Dim t1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, nc, poptions,
+                    Dim t1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, nc, poptions,
                                                                  Sub(ipar)
                                                                      xt(ipar) = Tomich.TDMASolve(at(ipar), bt(ipar), ct(ipar), dt(ipar))
                                                                  End Sub),
                                                       My.MyApplication.TaskCancellationTokenSource.Token,
                                                       TaskCreationOptions.None,
                                                       My.MyApplication.AppTaskScheduler)
-                        t1.Wait()
-                    Catch ae As AggregateException
-                        Throw ae.Flatten().InnerException
-                    End Try
+                    t1.Wait()
                     My.MyApplication.IsRunningParallelTasks = False
                 Else
                     For i = 0 To nc - 1
@@ -2283,8 +2275,7 @@ restart:            fx = Me.FunctionValue(xvar)
 
                 If doparallel Then
                     My.MyApplication.IsRunningParallelTasks = True
-                    Try
-                        Dim t1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
+                    Dim t1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                                  Sub(ipar)
                                                                      Dim tmpvar As Object = pp.DW_CalcBubT(xc(ipar), P(ipar), Tj(ipar), K(ipar), True)
                                                                      Tj(ipar) = tmpvar(4)
@@ -2294,10 +2285,7 @@ restart:            fx = Me.FunctionValue(xvar)
                                                       My.MyApplication.TaskCancellationTokenSource.Token,
                                                       TaskCreationOptions.None,
                                                       My.MyApplication.AppTaskScheduler)
-                        t1.Wait()
-                    Catch ae As AggregateException
-                        Throw ae.Flatten().InnerException
-                    End Try
+                    t1.Wait()
                     My.MyApplication.IsRunningParallelTasks = False
                 Else
                     For i = 0 To ns
@@ -2342,19 +2330,15 @@ restart:            fx = Me.FunctionValue(xvar)
 
                 If doparallel Then
                     My.MyApplication.IsRunningParallelTasks = True
-                    Try
-                        Dim t1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
+                    Dim t1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                                                      Sub(ipar)
-                                                                                             Hl(ipar) = pp.DW_CalcEnthalpy(xc(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Liquid) * pp.AUX_MMM(xc(ipar)) / 1000
-                                                                                             Hv(ipar) = pp.DW_CalcEnthalpy(yc(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Vapor) * pp.AUX_MMM(yc(ipar)) / 1000
-                                                                                         End Sub),
+                                                                                         Hl(ipar) = pp.DW_CalcEnthalpy(xc(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Liquid) * pp.AUX_MMM(xc(ipar)) / 1000
+                                                                                         Hv(ipar) = pp.DW_CalcEnthalpy(yc(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Vapor) * pp.AUX_MMM(yc(ipar)) / 1000
+                                                                                     End Sub),
                                                       My.MyApplication.TaskCancellationTokenSource.Token,
                                                       TaskCreationOptions.None,
                                                       My.MyApplication.AppTaskScheduler)
-                        t1.Wait()
-                    Catch ae As AggregateException
-                        Throw ae.Flatten().InnerException
-                    End Try
+                    t1.Wait()
                     My.MyApplication.IsRunningParallelTasks = False
                 Else
                     For i = 0 To ns

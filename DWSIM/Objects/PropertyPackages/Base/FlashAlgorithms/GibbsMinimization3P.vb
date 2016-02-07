@@ -576,26 +576,21 @@ out:        Return result
 
             If My.Settings.EnableParallelProcessing Then
                 My.MyApplication.IsRunningParallelTasks = True
-                Try
-                    Dim task1 As Task = New Task(Sub()
-                                                     Dim ErrRes1 = Herror("PV", 0, P, Vz, PP)
-                                                     Span(0).X = 0
-                                                     Span(0).Y = ErrRes1(0)
-                                                     Tb = ErrRes1(1)
-                                                 End Sub)
-                    Dim task2 As Task = New Task(Sub()
-                                                     Dim ErrRes2 = Herror("PV", 1, P, Vz, PP)
-                                                     Span(1).X = 1
-                                                     Span(1).Y = ErrRes2(0)
-                                                     Td = ErrRes2(1)
-                                                 End Sub)
-                    task1.Start()
-                    task2.Start()
-                    Task.WaitAll(task1, task2)
-                Catch ae As AggregateException
-                    Throw ae.Flatten().InnerException
-                Finally
-                End Try
+                Dim task1 As Task = New Task(Sub()
+                                                 Dim ErrRes1 = Herror("PV", 0, P, Vz, PP)
+                                                 Span(0).X = 0
+                                                 Span(0).Y = ErrRes1(0)
+                                                 Tb = ErrRes1(1)
+                                             End Sub)
+                Dim task2 As Task = New Task(Sub()
+                                                 Dim ErrRes2 = Herror("PV", 1, P, Vz, PP)
+                                                 Span(1).X = 1
+                                                 Span(1).Y = ErrRes2(0)
+                                                 Td = ErrRes2(1)
+                                             End Sub)
+                task1.Start()
+                task2.Start()
+                Task.WaitAll(task1, task2)
                 My.MyApplication.IsRunningParallelTasks = False
             Else
                 ErrRes = Herror("PV", 0, P, Vz, PP)
@@ -779,27 +774,15 @@ out:        Return result
 
                     If My.Settings.EnableParallelProcessing Then
                         My.MyApplication.IsRunningParallelTasks = True
-                        If My.Settings.EnableGPUProcessing Then
-                            'My.MyApplication.gpu.EnableMultithreading()
-                        End If
-                        Try
-                            Dim task1 As Task = New Task(Sub()
-                                                             fx = Serror(x1, {P, Vz, PP})
-                                                         End Sub)
+                        Dim task1 As Task = New Task(Sub()
+                                                         fx = Serror(x1, {P, Vz, PP})
+                                                     End Sub)
                             Dim task2 As Task = New Task(Sub()
                                                              fx2 = Serror(x1 + epsilon(j), {P, Vz, PP})
                                                          End Sub)
                             task1.Start()
                             task2.Start()
                             Task.WaitAll(task1, task2)
-                        Catch ae As AggregateException
-                            Throw ae.Flatten().InnerException
-                        Finally
-                            'If My.Settings.EnableGPUProcessing Then
-                            '    My.MyApplication.gpu.DisableMultithreading()
-                            '    My.MyApplication.gpu.FreeAll()
-                            'End If
-                        End Try
                         My.MyApplication.IsRunningParallelTasks = False
                     Else
                         fx = Serror(x1, {P, Vz, PP})
@@ -905,30 +888,19 @@ alt:
                     '    alreadymt = True
                     'End If
                 End If
-                Try
-                    Dim task1 As Task = New Task(Sub()
-                                                     If V > 0 Then _Hv = proppack.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
-                                                 End Sub)
-                    Dim task2 As Task = New Task(Sub()
-                                                     If L1 > 0 Then _Hl1 = proppack.DW_CalcEnthalpy(Vx1, T, P, State.Liquid)
-                                                 End Sub)
-                    Dim task3 As Task = New Task(Sub()
-                                                     If L2 > 0 Then _Hl2 = proppack.DW_CalcEnthalpy(Vx2, T, P, State.Liquid)
-                                                 End Sub)
-                    task1.Start()
-                    task2.Start()
-                    task3.Start()
-                    Task.WaitAll(task1, task2, task3)
-                Catch ae As AggregateException
-                    Throw ae.Flatten().InnerException
-                Finally
-                    'If My.Settings.EnableGPUProcessing Then
-                    '    If Not alreadymt Then
-                    '        My.MyApplication.gpu.DisableMultithreading()
-                    '        My.MyApplication.gpu.FreeAll()
-                    '    End If
-                    'End If
-                End Try
+                Dim task1 As Task = New Task(Sub()
+                                                 If V > 0 Then _Hv = proppack.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
+                                             End Sub)
+                Dim task2 As Task = New Task(Sub()
+                                                 If L1 > 0 Then _Hl1 = proppack.DW_CalcEnthalpy(Vx1, T, P, State.Liquid)
+                                             End Sub)
+                Dim task3 As Task = New Task(Sub()
+                                                 If L2 > 0 Then _Hl2 = proppack.DW_CalcEnthalpy(Vx2, T, P, State.Liquid)
+                                             End Sub)
+                task1.Start()
+                task2.Start()
+                task3.Start()
+                Task.WaitAll(task1, task2, task3)
                 My.MyApplication.IsRunningParallelTasks = False
             Else
                 If V > 0 Then _Hv = proppack.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
@@ -1893,27 +1865,15 @@ out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, 
 
                         If My.Settings.EnableParallelProcessing Then
                             My.MyApplication.IsRunningParallelTasks = True
-                            If My.Settings.EnableGPUProcessing Then
-                                'My.MyApplication.gpu.EnableMultithreading()
-                            End If
-                            Try
-                                Dim task1 As Task = New Task(Sub()
-                                                                 fcv = proppack.DW_CalcFugCoeff(Vy, Tf, Pf, State.Vapor)
-                                                             End Sub)
+                            Dim task1 As Task = New Task(Sub()
+                                                             fcv = proppack.DW_CalcFugCoeff(Vy, Tf, Pf, State.Vapor)
+                                                         End Sub)
                                 Dim task2 As Task = New Task(Sub()
                                                                  fcl = proppack.DW_CalcFugCoeff(Vx1, Tf, Pf, State.Liquid)
                                                              End Sub)
                                 task1.Start()
                                 task2.Start()
                                 Task.WaitAll(task1, task2)
-                            Catch ae As AggregateException
-                                Throw ae.Flatten().InnerException
-                            Finally
-                                'If My.Settings.EnableGPUProcessing Then
-                                '    My.MyApplication.gpu.DisableMultithreading()
-                                '    My.MyApplication.gpu.FreeAll()
-                                'End If
-                            End Try
                             My.MyApplication.IsRunningParallelTasks = False
                         Else
                             fcv = proppack.DW_CalcFugCoeff(Vy, Tf, Pf, State.Vapor)
@@ -1969,28 +1929,19 @@ out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, 
                             If My.Settings.EnableGPUProcessing Then
                                 'My.MyApplication.gpu.EnableMultithreading()
                             End If
-                            Try
-                                Dim task1 As Task = New Task(Sub()
-                                                                 fcv = proppack.DW_CalcFugCoeff(Vy, Tf, Pf, State.Vapor)
-                                                             End Sub)
-                                Dim task2 As Task = New Task(Sub()
-                                                                 fcl = proppack.DW_CalcFugCoeff(Vx1, Tf, Pf, State.Liquid)
-                                                             End Sub)
-                                Dim task3 As Task = New Task(Sub()
-                                                                 fcl2 = proppack.DW_CalcFugCoeff(Vx2, Tf, Pf, State.Liquid)
-                                                             End Sub)
-                                task1.Start()
-                                task2.Start()
-                                task3.Start()
-                                Task.WaitAll(task1, task2, task3)
-                            Catch ae As AggregateException
-                                Throw ae.Flatten().InnerException
-                            Finally
-                                ' If My.Settings.EnableGPUProcessing Then
-                                'My.MyApplication.gpu.DisableMultithreading()
-                                '  My.MyApplication.gpu.FreeAll()
-                                ' End If
-                            End Try
+                            Dim task1 As Task = New Task(Sub()
+                                                             fcv = proppack.DW_CalcFugCoeff(Vy, Tf, Pf, State.Vapor)
+                                                         End Sub)
+                            Dim task2 As Task = New Task(Sub()
+                                                             fcl = proppack.DW_CalcFugCoeff(Vx1, Tf, Pf, State.Liquid)
+                                                         End Sub)
+                            Dim task3 As Task = New Task(Sub()
+                                                             fcl2 = proppack.DW_CalcFugCoeff(Vx2, Tf, Pf, State.Liquid)
+                                                         End Sub)
+                            task1.Start()
+                            task2.Start()
+                            task3.Start()
+                            Task.WaitAll(task1, task2, task3)
                             My.MyApplication.IsRunningParallelTasks = False
                         Else
                             fcv = proppack.DW_CalcFugCoeff(Vy, Tf, Pf, State.Vapor)
@@ -2068,28 +2019,19 @@ out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, 
                         If My.Settings.EnableGPUProcessing Then
                             'My.MyApplication.gpu.EnableMultithreading()
                         End If
-                        Try
-                            Dim task1 As Task = New Task(Sub()
-                                                             fcv = proppack.DW_CalcFugCoeff(Vy, Tf, Pf, State.Vapor)
-                                                         End Sub)
-                            Dim task2 As Task = New Task(Sub()
-                                                             fcl = proppack.DW_CalcFugCoeff(Vx1, Tf, Pf, State.Liquid)
-                                                         End Sub)
-                            Dim task3 As Task = New Task(Sub()
-                                                             fcl2 = proppack.DW_CalcFugCoeff(Vx2, Tf, Pf, State.Liquid)
-                                                         End Sub)
-                            task1.Start()
-                            task2.Start()
-                            task3.Start()
-                            Task.WaitAll(task1, task2, task3)
-                        Catch ae As AggregateException
-                            Throw ae.Flatten().InnerException
-                        Finally
-                            'If My.Settings.EnableGPUProcessing Then
-                            '    My.MyApplication.gpu.DisableMultithreading()
-                            '    My.MyApplication.gpu.FreeAll()
-                            'End If
-                        End Try
+                        Dim task1 As Task = New Task(Sub()
+                                                         fcv = proppack.DW_CalcFugCoeff(Vy, Tf, Pf, State.Vapor)
+                                                     End Sub)
+                        Dim task2 As Task = New Task(Sub()
+                                                         fcl = proppack.DW_CalcFugCoeff(Vx1, Tf, Pf, State.Liquid)
+                                                     End Sub)
+                        Dim task3 As Task = New Task(Sub()
+                                                         fcl2 = proppack.DW_CalcFugCoeff(Vx2, Tf, Pf, State.Liquid)
+                                                     End Sub)
+                        task1.Start()
+                        task2.Start()
+                        task3.Start()
+                        Task.WaitAll(task1, task2, task3)
                         My.MyApplication.IsRunningParallelTasks = False
                     Else
                         fcv = proppack.DW_CalcFugCoeff(Vy, Tf, Pf, State.Vapor)
@@ -2142,27 +2084,15 @@ out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, 
 
                         If My.Settings.EnableParallelProcessing Then
                             My.MyApplication.IsRunningParallelTasks = True
-                            If My.Settings.EnableGPUProcessing Then
-                                ' My.MyApplication.gpu.EnableMultithreading()
-                            End If
-                            Try
-                                Dim task1 As Task = New Task(Sub()
-                                                                 fcv = proppack.DW_CalcFugCoeff(Vy, Tf, Pf, State.Vapor)
-                                                             End Sub)
-                                Dim task2 As Task = New Task(Sub()
-                                                                 fcl = proppack.DW_CalcFugCoeff(Vx1, Tf, Pf, State.Liquid)
-                                                             End Sub)
-                                task1.Start()
-                                task2.Start()
-                                Task.WaitAll(task1, task2)
-                            Catch ae As AggregateException
-                                Throw ae.Flatten().InnerException
-                            Finally
-                                'If My.Settings.EnableGPUProcessing Then
-                                '    My.MyApplication.gpu.DisableMultithreading()
-                                '    My.MyApplication.gpu.FreeAll()
-                                'End If
-                            End Try
+                            Dim task1 As Task = New Task(Sub()
+                                                             fcv = proppack.DW_CalcFugCoeff(Vy, Tf, Pf, State.Vapor)
+                                                         End Sub)
+                            Dim task2 As Task = New Task(Sub()
+                                                             fcl = proppack.DW_CalcFugCoeff(Vx1, Tf, Pf, State.Liquid)
+                                                         End Sub)
+                            task1.Start()
+                            task2.Start()
+                            Task.WaitAll(task1, task2)
                             My.MyApplication.IsRunningParallelTasks = False
                         Else
                             fcv = proppack.DW_CalcFugCoeff(Vy, Tf, Pf, State.Vapor)
@@ -2207,31 +2137,19 @@ out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, 
 
                         If My.Settings.EnableParallelProcessing Then
                             My.MyApplication.IsRunningParallelTasks = True
-                            If My.Settings.EnableGPUProcessing Then
-                                'My.MyApplication.gpu.EnableMultithreading()
-                            End If
-                            Try
-                                Dim task1 As Task = New Task(Sub()
-                                                                 fcv = proppack.DW_CalcFugCoeff(Vy, Tf, Pf, State.Vapor)
-                                                             End Sub)
-                                Dim task2 As Task = New Task(Sub()
-                                                                 fcl = proppack.DW_CalcFugCoeff(Vx1, Tf, Pf, State.Liquid)
-                                                             End Sub)
-                                Dim task3 As Task = New Task(Sub()
-                                                                 fcl2 = proppack.DW_CalcFugCoeff(Vx2, Tf, Pf, State.Liquid)
-                                                             End Sub)
-                                task1.Start()
-                                task2.Start()
-                                task3.Start()
-                                Task.WaitAll(task1, task2, task3)
-                            Catch ae As AggregateException
-                                Throw ae.Flatten().InnerException
-                            Finally
-                                'If My.Settings.EnableGPUProcessing Then
-                                '    My.MyApplication.gpu.DisableMultithreading()
-                                '    My.MyApplication.gpu.FreeAll()
-                                'End If
-                            End Try
+                            Dim task1 As Task = New Task(Sub()
+                                                             fcv = proppack.DW_CalcFugCoeff(Vy, Tf, Pf, State.Vapor)
+                                                         End Sub)
+                            Dim task2 As Task = New Task(Sub()
+                                                             fcl = proppack.DW_CalcFugCoeff(Vx1, Tf, Pf, State.Liquid)
+                                                         End Sub)
+                            Dim task3 As Task = New Task(Sub()
+                                                             fcl2 = proppack.DW_CalcFugCoeff(Vx2, Tf, Pf, State.Liquid)
+                                                         End Sub)
+                            task1.Start()
+                            task2.Start()
+                            task3.Start()
+                            Task.WaitAll(task1, task2, task3)
                             My.MyApplication.IsRunningParallelTasks = False
                         Else
                             fcv = proppack.DW_CalcFugCoeff(Vy, Tf, Pf, State.Vapor)
@@ -2301,28 +2219,19 @@ out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, 
                         If My.Settings.EnableGPUProcessing Then
                             'My.MyApplication.gpu.EnableMultithreading()
                         End If
-                        Try
-                            Dim task1 As Task = New Task(Sub()
-                                                             fcv = proppack.DW_CalcFugCoeff(Vy, Tf, Pf, State.Vapor)
-                                                         End Sub)
-                            Dim task2 As Task = New Task(Sub()
-                                                             fcl = proppack.DW_CalcFugCoeff(Vx1, Tf, Pf, State.Liquid)
-                                                         End Sub)
-                            Dim task3 As Task = New Task(Sub()
-                                                             fcl2 = proppack.DW_CalcFugCoeff(Vx2, Tf, Pf, State.Liquid)
-                                                         End Sub)
-                            task1.Start()
-                            task2.Start()
-                            task3.Start()
-                            Task.WaitAll(task1, task2, task3)
-                        Catch ae As AggregateException
-                            Throw ae.Flatten().InnerException
-                        Finally
-                            'If My.Settings.EnableGPUProcessing Then
-                            '    My.MyApplication.gpu.DisableMultithreading()
-                            '    My.MyApplication.gpu.FreeAll()
-                            'End If
-                        End Try
+                        Dim task1 As Task = New Task(Sub()
+                                                         fcv = proppack.DW_CalcFugCoeff(Vy, Tf, Pf, State.Vapor)
+                                                     End Sub)
+                        Dim task2 As Task = New Task(Sub()
+                                                         fcl = proppack.DW_CalcFugCoeff(Vx1, Tf, Pf, State.Liquid)
+                                                     End Sub)
+                        Dim task3 As Task = New Task(Sub()
+                                                         fcl2 = proppack.DW_CalcFugCoeff(Vx2, Tf, Pf, State.Liquid)
+                                                     End Sub)
+                        task1.Start()
+                        task2.Start()
+                        task3.Start()
+                        Task.WaitAll(task1, task2, task3)
                         My.MyApplication.IsRunningParallelTasks = False
                     Else
                         fcv = proppack.DW_CalcFugCoeff(Vy, Tf, Pf, State.Vapor)
@@ -2375,27 +2284,15 @@ out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, 
                 Next
                 If My.Settings.EnableParallelProcessing Then
                     My.MyApplication.IsRunningParallelTasks = True
-                    If My.Settings.EnableGPUProcessing Then
-                        ' My.MyApplication.gpu.EnableMultithreading()
-                    End If
-                    Try
-                        Dim task1 As Task = New Task(Sub()
-                                                         f2 = FunctionGradient(x2)
-                                                     End Sub)
-                        Dim task2 As Task = New Task(Sub()
-                                                         f3 = FunctionGradient(x3)
-                                                     End Sub)
-                        task1.Start()
-                        task2.Start()
-                        Task.WaitAll(task1, task2)
-                    Catch ae As AggregateException
-                        Throw ae.Flatten().InnerException
-                    Finally
-                        'If My.Settings.EnableGPUProcessing Then
-                        '    My.MyApplication.gpu.DisableMultithreading()
-                        '    My.MyApplication.gpu.FreeAll()
-                        'End If
-                    End Try
+                    Dim task1 As Task = New Task(Sub()
+                                                     f2 = FunctionGradient(x2)
+                                                 End Sub)
+                    Dim task2 As Task = New Task(Sub()
+                                                     f3 = FunctionGradient(x3)
+                                                 End Sub)
+                    task1.Start()
+                    task2.Start()
+                    Task.WaitAll(task1, task2)
                     My.MyApplication.IsRunningParallelTasks = False
                 Else
                     f2 = FunctionGradient(x2)

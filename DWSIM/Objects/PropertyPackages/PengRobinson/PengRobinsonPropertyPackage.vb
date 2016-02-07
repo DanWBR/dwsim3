@@ -1571,11 +1571,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                  End If
                                              End Sub)
 
-            Try
-                Task.WaitAll(New Task() {tasks(1), tasks(2), tasks(3), tasks(4), tasks(5), tasks(6)})
-            Catch ae As AggregateException
-                Throw ae.Flatten().InnerException
-            End Try
+            Task.WaitAll(New Task() {tasks(1), tasks(2), tasks(3), tasks(4), tasks(5), tasks(6)})
 
             If TVB.Count > 1 Then TVB.RemoveAt(TVB.Count - 1)
             If PB.Count > 1 Then PB.RemoveAt(PB.Count - 1)

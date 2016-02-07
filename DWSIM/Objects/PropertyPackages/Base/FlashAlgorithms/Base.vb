@@ -453,31 +453,19 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             If My.Settings.EnableParallelProcessing Then
                 My.MyApplication.IsRunningParallelTasks = True
-                If My.Settings.EnableGPUProcessing Then
-                    'My.MyApplication.gpu.EnableMultithreading()
-                End If
-                Try
-                    Dim task1 = Task.Factory.StartNew(Sub()
-                                                          fcv = pp.DW_CalcFugCoeff(Vz, T, P, State.Vapor)
-                                                      End Sub,
+                Dim task1 = Task.Factory.StartNew(Sub()
+                                                      fcv = pp.DW_CalcFugCoeff(Vz, T, P, State.Vapor)
+                                                  End Sub,
                                                       My.MyApplication.TaskCancellationTokenSource.Token,
                                                       TaskCreationOptions.None,
                                                       My.MyApplication.AppTaskScheduler)
-                    Dim task2 = Task.Factory.StartNew(Sub()
-                                                          fcl = pp.DW_CalcFugCoeff(Vz, T, P, State.Liquid)
-                                                      End Sub,
-                                                      My.MyApplication.TaskCancellationTokenSource.Token,
-                                                      TaskCreationOptions.None,
-                                                      My.MyApplication.AppTaskScheduler)
-                    Task.WaitAll(task1, task2)
-                Catch ae As AggregateException
-                    Throw ae.Flatten().InnerException
-                Finally
-                    'If My.Settings.EnableGPUProcessing Then
-                    '    My.MyApplication.gpu.DisableMultithreading()
-                    '    My.MyApplication.gpu.FreeAll()
-                    'End If
-                End Try
+                Dim task2 = Task.Factory.StartNew(Sub()
+                                                      fcl = pp.DW_CalcFugCoeff(Vz, T, P, State.Liquid)
+                                                  End Sub,
+                                                  My.MyApplication.TaskCancellationTokenSource.Token,
+                                                  TaskCreationOptions.None,
+                                                  My.MyApplication.AppTaskScheduler)
+                Task.WaitAll(task1, task2)
                 My.MyApplication.IsRunningParallelTasks = False
             Else
                 fcv = pp.DW_CalcFugCoeff(Vz, T, P, State.Vapor)
@@ -592,23 +580,19 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                         If My.Settings.EnableParallelProcessing Then
                             My.MyApplication.IsRunningParallelTasks = True
-                            Try
-                                Dim task1 = Task.Factory.StartNew(Sub()
-                                                                      fcv = pp.DW_CalcFugCoeff(currcomp, T, P, State.Vapor)
-                                                                  End Sub,
+                            Dim task1 = Task.Factory.StartNew(Sub()
+                                                                  fcv = pp.DW_CalcFugCoeff(currcomp, T, P, State.Vapor)
+                                                              End Sub,
                                                                   My.MyApplication.TaskCancellationTokenSource.Token,
                                                                   TaskCreationOptions.None,
                                                                   My.MyApplication.AppTaskScheduler)
-                                Dim task2 = Task.Factory.StartNew(Sub()
-                                                                      fcl = pp.DW_CalcFugCoeff(currcomp, T, P, State.Liquid)
-                                                                  End Sub,
-                                                                  My.MyApplication.TaskCancellationTokenSource.Token,
-                                                                  TaskCreationOptions.None,
-                                                                  My.MyApplication.AppTaskScheduler)
-                                Task.WaitAll(task1, task2)
-                            Catch ae As AggregateException
-                                Throw ae.Flatten().InnerException
-                            End Try
+                            Dim task2 = Task.Factory.StartNew(Sub()
+                                                                  fcl = pp.DW_CalcFugCoeff(currcomp, T, P, State.Liquid)
+                                                              End Sub,
+                                                              My.MyApplication.TaskCancellationTokenSource.Token,
+                                                              TaskCreationOptions.None,
+                                                              My.MyApplication.AppTaskScheduler)
+                            Task.WaitAll(task1, task2)
                             My.MyApplication.IsRunningParallelTasks = False
                         Else
                             fcv = pp.DW_CalcFugCoeff(currcomp, T, P, State.Vapor)
@@ -862,19 +846,15 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Do
                     If My.Settings.EnableParallelProcessing Then
                         My.MyApplication.IsRunningParallelTasks = True
-                        Try
-                            Dim task1 As Task = New Task(Sub()
-                                                             fx = 1 - CalcPIP(Vx, P, Tinv, pp, eos)(0)
-                                                         End Sub)
-                            Dim task2 As Task = New Task(Sub()
-                                                             fx2 = 1 - CalcPIP(Vx, P, Tinv - 1, pp, eos)(0)
-                                                         End Sub)
-                            task1.Start()
-                            task2.Start()
-                            Task.WaitAll(task1, task2)
-                        Catch ae As AggregateException
-                            Throw ae.Flatten().InnerException
-                        End Try
+                        Dim task1 As Task = New Task(Sub()
+                                                         fx = 1 - CalcPIP(Vx, P, Tinv, pp, eos)(0)
+                                                     End Sub)
+                        Dim task2 As Task = New Task(Sub()
+                                                         fx2 = 1 - CalcPIP(Vx, P, Tinv - 1, pp, eos)(0)
+                                                     End Sub)
+                        task1.Start()
+                        task2.Start()
+                        Task.WaitAll(task1, task2)
                         My.MyApplication.IsRunningParallelTasks = False
                     Else
                         fx = 1 - CalcPIP(Vx, P, Tinv, pp, eos)(0)
