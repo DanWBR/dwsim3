@@ -159,7 +159,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         Public Overrides Function Flash_PT(ByVal Vz As Double(), ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackages.PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi As Double() = Nothing) As Object
 
-            Return Flash_PT_Internal(Vz, P, T, PP, True)
+            Return Flash_PT_Internal(Vz, P, T, PP, False)
 
         End Function
 
