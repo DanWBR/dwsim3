@@ -255,14 +255,14 @@ Namespace DWSIM.SimulationObjects.Streams
             Me.m_ComponentName = nome
             Me.m_ComponentDescription = descricao
 
-            Me.Fases.Add("0", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Mistura"), ""))
-            Me.Fases.Add("1", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("OverallLiquid"), ""))
-            Me.Fases.Add("2", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Vapor"), ""))
-            Me.Fases.Add("3", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Liquid1"), ""))
-            Me.Fases.Add("4", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Liquid2"), ""))
-            Me.Fases.Add("5", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Liquid3"), ""))
-            Me.Fases.Add("6", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Aqueous"), ""))
-            Me.Fases.Add("7", New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Solid"), ""))
+            Me.Fases.Add(0, New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Mistura"), ""))
+            Me.Fases.Add(1, New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("OverallLiquid"), ""))
+            Me.Fases.Add(2, New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Vapor"), ""))
+            Me.Fases.Add(3, New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Liquid1"), ""))
+            Me.Fases.Add(4, New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Liquid2"), ""))
+            Me.Fases.Add(5, New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Liquid3"), ""))
+            Me.Fases.Add(6, New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Aqueous"), ""))
+            Me.Fases.Add(7, New DWSIM.ClassesBasicasTermodinamica.Fase(DWSIM.App.GetLocalString("Solid"), ""))
 
             'Me.PropertyPackage = FlowSheet.Options.PropertyPackages(0)
 
@@ -311,30 +311,24 @@ Namespace DWSIM.SimulationObjects.Streams
             End Get
         End Property
 
-        Public ReadOnly Property Phases() As Dictionary(Of Integer, DWSIM.ClassesBasicasTermodinamica.Fase)
-            Get
-                Return m_Phases
-            End Get
-        End Property
-
         Public Function GetPhase(phasename As String) As DWSIM.ClassesBasicasTermodinamica.Fase
             Select Case phasename
                 Case "Vapor"
-                    Return Phases(2)
+                    Return Fases(2)
                 Case "LiquidMixture"
-                    Return Phases(1)
+                    Return Fases(1)
                 Case "Liquid1"
-                    Return Phases(3)
+                    Return Fases(3)
                 Case "Liquid2"
-                    Return Phases(4)
+                    Return Fases(4)
                 Case "Liquid3"
-                    Return Phases(5)
+                    Return Fases(5)
                 Case "Aqueous"
-                    Return Phases(6)
+                    Return Fases(6)
                 Case "Solid"
-                    Return Phases(7)
+                    Return Fases(7)
                 Case "Mixture"
-                    Return Phases(0)
+                    Return Fases(0)
                 Case Else
                     Throw New ArgumentException("Unknown phase name")
             End Select

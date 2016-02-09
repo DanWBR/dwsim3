@@ -167,12 +167,21 @@ Namespace DWSIM.ClassesBasicasTermodinamica
             End Set
         End Property
 
-        Public Property Descricao() As String
+        Public Property ComponentDescription() As String
             Get
                 Return m_ComponentDescription
             End Get
             Set(ByVal value As String)
                 m_ComponentDescription = value
+            End Set
+        End Property
+
+        Public Property ComponentName() As String
+            Get
+                Return m_ComponentName
+            End Get
+            Set(ByVal value As String)
+                m_ComponentName = value
             End Set
         End Property
 
@@ -212,24 +221,15 @@ Namespace DWSIM.ClassesBasicasTermodinamica
 
         Implements XMLSerializer.Interfaces.ICustomXMLSerialization
 
-        Protected m_ComponentDescription As String
-        Protected m_ComponentName As String
+        Public Property ComponentDescription As String = ""
+        Public Property ComponentName As String = ""
 
-        Public Property Description() As String
+        Public Property Nome() As String
             Get
-                Return m_ComponentDescription
+                Return ComponentName
             End Get
-            Set(ByVal value As String)
-                m_ComponentDescription = value
-            End Set
-        End Property
-
-        Public Property Name() As String
-            Get
-                Return m_ComponentName
-            End Get
-            Set(ByVal value As String)
-                m_ComponentName = value
+            Set(value As String)
+                ComponentName = Nome
             End Set
         End Property
 
@@ -258,16 +258,16 @@ Namespace DWSIM.ClassesBasicasTermodinamica
 
         Public Sub New(ByVal nome As String, ByVal descricao As String)
 
-            Me.m_ComponentName = nome
-            Me.m_ComponentDescription = descricao
+            Me.ComponentName = nome
+            Me.ComponentDescription = descricao
             Me.Componentes = New Dictionary(Of String, Substancia)
 
         End Sub
 
         Public Sub New(ByVal nome As String, ByVal descricao As String, ByVal substancias As Dictionary(Of String, Substancia))
 
-            Me.m_ComponentName = nome
-            Me.m_ComponentDescription = descricao
+            Me.ComponentName = nome
+            Me.ComponentDescription = descricao
             Me.Componentes = substancias
 
         End Sub
