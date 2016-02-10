@@ -602,6 +602,9 @@
   <data name="PROP_MS_153" xml:space="preserve">
     <value>Liquid Phase 1 pH</value>
   </data>
+  <data name="PROP_MS_154" xml:space="preserve">
+    <value>Leistung</value>
+  </data>
   <data name="PROP_MS_16" xml:space="preserve">
     <value>Molare Enthalpie Dampfphase</value>
     <comment>0</comment>

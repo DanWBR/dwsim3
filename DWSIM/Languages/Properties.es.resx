@@ -1221,4 +1221,7 @@
   <data name="PROP_MS_153" xml:space="preserve">
     <value>pH da Fase Líquida 1</value>
   </data>
+  <data name="PROP_MS_154" xml:space="preserve">
+    <value>Flujo de Energia</value>
+  </data>
 </root>

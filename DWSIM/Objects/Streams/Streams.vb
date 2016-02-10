@@ -682,6 +682,14 @@ Namespace DWSIM.SimulationObjects.Streams
                 .Item(8).Value = valor
                 .Item(8).Unit = su.molar_entropy
 
+                If Me.Fases(0).SPMProperties.enthalpy.HasValue Then
+                    valor = Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.Fases(0).SPMProperties.enthalpy.GetValueOrDefault * Me.Fases(0).SPMProperties.massflow.GetValueOrDefault), nf)
+                Else
+                    valor = DWSIM.App.GetLocalString("NC")
+                End If
+                .Item(9).Value = valor
+                .Item(9).Unit = su.spmp_heatflow
+
             End With
 
         End Sub
@@ -699,8 +707,9 @@ Namespace DWSIM.SimulationObjects.Streams
                 .Add(4, New DWSIM.Outros.NodeItem(DWSIM.App.GetLocalString("Vazovolumtrica"), "", "", 4, 1, ""))
                 .Add(5, New DWSIM.Outros.NodeItem(DWSIM.App.GetPropertyName("PROP_MS_106"), "", "", 5, 1, ""))
                 .Add(6, New DWSIM.Outros.NodeItem(DWSIM.App.GetPropertyName("PROP_MS_146"), "", "", 6, 1, ""))
-                .Add(7, New DWSIM.Outros.NodeItem(DWSIM.App.GetLocalString("EntalpiaEspecfica"), "", "", 7, 1, ""))
-                .Add(8, New DWSIM.Outros.NodeItem(DWSIM.App.GetLocalString("EntropiaEspecfica"), "", "", 8, 1, ""))
+                .Add(7, New DWSIM.Outros.NodeItem(DWSIM.App.GetLocalString("MolarEnthalpy"), "", "", 7, 1, ""))
+                .Add(8, New DWSIM.Outros.NodeItem(DWSIM.App.GetLocalString("MolarEntropy"), "", "", 8, 1, ""))
+                .Add(9, New DWSIM.Outros.NodeItem(DWSIM.App.GetPropertyName("PROP_MS_154"), "", "", 9, 1, ""))
 
             End With
 
@@ -1738,6 +1747,9 @@ Namespace DWSIM.SimulationObjects.Streams
                         End If
                     Case 153
                         value = Me.Fases(3).SPMProperties.pH
+                    Case 154
+                        'total energy flow
+                        value = cv.ConverterDoSI(su.spmp_heatflow, Fases(0).SPMProperties.enthalpy.GetValueOrDefault * Fases(0).SPMProperties.massflow.GetValueOrDefault)
                 End Select
 
                 Return value
@@ -1803,6 +1815,7 @@ Namespace DWSIM.SimulationObjects.Streams
                         proplist.Add("PROP_MS_" + CStr(i))
                     Next
                     proplist.Add("PROP_MS_153")
+                    proplist.Add("PROP_MS_154")
                 Case PropertyType.WR
                     For i = 0 To 4
                         proplist.Add("PROP_MS_" + CStr(i))
@@ -1856,6 +1869,7 @@ Namespace DWSIM.SimulationObjects.Streams
                         proplist.Add("PROP_MS_" + CStr(i))
                     Next
                     proplist.Add("PROP_MS_153")
+                    proplist.Add("PROP_MS_154")
             End Select
             Return proplist.ToArray(GetType(System.String))
             proplist = Nothing
@@ -2321,8 +2335,8 @@ Namespace DWSIM.SimulationObjects.Streams
                         value = su.spmp_pressure
                     Case 128, 129
                         value = su.spmp_temperature
-                    Case 130
-                        value = ""
+                    Case 154
+                        value = su.spmp_heatflow
                     Case Else
                         value = ""
                 End Select
