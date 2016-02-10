@@ -106,13 +106,15 @@ Public Class frmLog
             End Try
         End If
 
-        Dim currentrow As DataGridViewRow = Grid1.Rows(e.RowIndex)
-
-        If DWSIM.App.IsRunningOnMono Then currentrow.Height = currentrow.GetPreferredHeight(e.RowIndex, DataGridViewAutoSizeRowMode.AllCells, True)
+     
         Try
+            Dim currentrow As DataGridViewRow = Grid1.Rows(e.RowIndex)
+            If DWSIM.App.IsRunningOnMono Then currentrow.Height = currentrow.GetPreferredHeight(e.RowIndex, DataGridViewAutoSizeRowMode.AllCells, True)
             currentrow.Cells(4).Style.ForeColor = dt.Rows(currentrow.Cells(1).Value).Item("Cor")
         Catch ex As Exception
         End Try
+
+        If DWSIM.App.IsRunningOnMono Then Grid1.Sort(Grid1.Columns(1), System.ComponentModel.ListSortDirection.Descending)
 
     End Sub
 
@@ -141,9 +143,8 @@ Public Class frmLog
             Me.Grid1.FirstDisplayedScrollingRowIndex = 0
         End If
 
-        Dim currentrow As DataGridViewRow = Grid1.Rows(e.RowIndex)
-
         Try
+            Dim currentrow As DataGridViewRow = Grid1.Rows(e.RowIndex)
             currentrow.Cells(4).Style.ForeColor = dt.Rows.Find(currentrow.Cells(1).Value).Item("Cor")
         Catch ex As Exception
 
