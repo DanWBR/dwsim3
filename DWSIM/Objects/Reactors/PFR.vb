@@ -51,7 +51,7 @@ Namespace DWSIM.SimulationObjects.Reactors
         <System.NonSerialized()> Dim pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage
         <System.NonSerialized()> Dim ppr As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage()
 
-        Public Length As Double = 1.0#
+        Public Property Length As Double = 1.0#
 
         Public Property Volume() As Double
             Get
@@ -960,6 +960,16 @@ Namespace DWSIM.SimulationObjects.Reactors
 
             Dim Conversor As New DWSIM.SistemasDeUnidades.Conversor
 
+            If Me.NodeTableItems Is Nothing Then
+                Me.NodeTableItems = New System.Collections.Generic.Dictionary(Of Integer, DWSIM.Outros.NodeItem)
+                Me.FillNodeItems()
+            End If
+
+            For Each nti As Outros.NodeItem In Me.NodeTableItems.Values
+                nti.Value = GetPropertyValue(nti.Text, FlowSheet.Options.SelectedUnitSystem)
+                nti.Unit = GetPropertyUnit(nti.Text, FlowSheet.Options.SelectedUnitSystem)
+            Next
+
             If Me.QTNodeTableItems Is Nothing Then
                 Me.QTNodeTableItems = New System.Collections.Generic.Dictionary(Of Integer, DWSIM.Outros.NodeItem)
                 Me.QTFillNodeItems()
@@ -970,7 +980,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                 Dim valor As String
 
                 If Me.DeltaP.HasValue Then
-                    valor = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP), nf)
+                    valor = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault), nf)
                 Else
                     valor = DWSIM.App.GetLocalString("NC")
                 End If
@@ -978,7 +988,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                 .Item(0).Unit = su.spmp_deltaP
 
                 If Me.DeltaT.HasValue Then
-                    valor = Format(Conversor.ConverterDoSI(su.spmp_deltaT, Me.DeltaT), nf)
+                    valor = Format(Conversor.ConverterDoSI(su.spmp_deltaT, Me.DeltaT.GetValueOrDefault), nf)
                 Else
                     valor = DWSIM.App.GetLocalString("NC")
                 End If
@@ -986,7 +996,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                 .Item(1).Unit = su.spmp_deltaT
 
                 If Me.DeltaQ.HasValue Then
-                    valor = Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ), nf)
+                    valor = Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ.GetValueOrDefault), nf)
                 Else
                     valor = DWSIM.App.GetLocalString("NC")
                 End If
