@@ -5368,34 +5368,6 @@ Namespace GraphicObjects
 
             UpdateStatus(Me)
 
-            Dim pt As Point
-            Dim raio, angulo As Double
-            Dim con As ConnectionPoint
-            For Each con In Me.InputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            For Each con In Me.OutputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            With Me.EnergyConnector
-                pt = .Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                .Position = pt
-            End With
-
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
@@ -5521,6 +5493,7 @@ Namespace GraphicObjects
 #End Region
 
         Public Overrides Sub CreateConnectors(InCount As Integer, OutCount As Integer)
+
             Dim myIC1 As New ConnectionPoint
             myIC1.Position = New Point(X, Y + 0.5 * Height)
             myIC1.Type = ConType.ConIn
@@ -5576,34 +5549,6 @@ Namespace GraphicObjects
 
             UpdateStatus(Me)
 
-            Dim pt As Point
-            Dim raio, angulo As Double
-            Dim con As ConnectionPoint
-            For Each con In Me.InputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            For Each con In Me.OutputConnectors
-                pt = con.Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                con.Position = pt
-            Next
-            With Me.EnergyConnector
-                pt = .Position
-                raio = ((pt.X - Me.X) ^ 2 + (pt.Y - Me.Y) ^ 2) ^ 0.5
-                angulo = Math.Atan2(pt.Y - Me.Y, pt.X - Me.X)
-                pt.X = Me.X + raio * Math.Cos(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                pt.Y = Me.Y + raio * Math.Sin(angulo + Me.Rotation / 360 * 2 * Math.PI)
-                .Position = pt
-            End With
-
             Dim gContainer As System.Drawing.Drawing2D.GraphicsContainer
             Dim myMatrix As Drawing2D.Matrix
             gContainer = g.BeginContainer()
@@ -5614,8 +5559,11 @@ Namespace GraphicObjects
                     Drawing.Drawing2D.MatrixOrder.Append)
                 g.Transform = myMatrix
             End If
+
             Dim rect As New Rectangle(X, Y, Width, Height)
+
             Dim lgb1 As New LinearGradientBrush(rect, Me.GradientColor1, Me.GradientColor2, LinearGradientMode.Vertical)
+
             If Me.Fill Then
                 If Me.GradientMode = False Then
                     g.FillRectangle(New SolidBrush(Me.FillColor), rect)
