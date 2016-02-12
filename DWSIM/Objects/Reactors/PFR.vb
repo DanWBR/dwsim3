@@ -1098,7 +1098,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                 valor = Format(Conversor.ConverterDoSI(su.diameter, Me.CatalystParticleDiameter), FlowSheet.Options.NumberFormat)
                 .Item.Add(FT(DWSIM.App.GetLocalString("PFRCatalystParticleDiameter"), su.diameter), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("PFRCatalystParticleDiameterDesc"), True)
 
-                .Item.Add(FT(DWSIM.App.GetLocalString("PFRCatalystVoidFraction"), su.diameter), Me, "CatalystVoidFraction", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("PFRCatalystVoidFractionDesc"), True)
+                .Item.Add(DWSIM.App.GetLocalString("PFRCatalystVoidFraction"), Me, "CatalystVoidFraction", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("PFRCatalystVoidFractionDesc"), True)
 
                 If Me.GraphicObject.Calculated Then
 
