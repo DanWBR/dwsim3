@@ -877,6 +877,8 @@ out:
                         Span(0).X = Vn
                         Span(0).Y = Hn
                     End If
+                    If Abs(Span(0).X - Span(1).X) < itol Then Exit Do
+                    If Abs(Span(0).Y - Span(1).Y) < itol Then Exit Do
                 Loop Until ecount > maxitEXT
 
                 T = ErrRes(1)
