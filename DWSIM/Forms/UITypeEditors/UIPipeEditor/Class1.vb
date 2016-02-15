@@ -22,7 +22,7 @@ Imports System.Windows.Forms
 
     Inherits System.Windows.Forms.UserControl
 
-#Region "    Declara��es de vari�veis"
+#Region "    Variable declarations"
 
     Public Event StatusChanged(ByVal e As EventArgs, ByVal statuscode As PipeEditorStatus)
 
@@ -52,7 +52,9 @@ Imports System.Windows.Forms
 
     Dim l As Integer
     Dim linha_atual As String() = New String() {}
+
     Public Shared ACD(27, 2) As String
+    Dim DNom(218, 6) As String
 
     Dim ThisExe As Reflection.Assembly = Reflection.Assembly.GetExecutingAssembly
     Dim ThisExeName As String = ThisExe.GetName.Name
@@ -529,6 +531,24 @@ Imports System.Windows.Forms
 
         Me.InitializeComponent()
 
+        Dim l, j As Integer
+        Dim linha_atual As String() = New String() {}
+
+        Using MyReader2 As New Microsoft.VisualBasic.FileIO.TextFieldParser(ThisExe.GetManifestResourceStream(ThisExeName & "." & "pipes.dat"))
+            MyReader2.TextFieldType = FileIO.FieldType.Delimited
+            MyReader2.SetDelimiters(";")
+            l = 0
+            While Not MyReader2.EndOfData
+                linha_atual = MyReader2.ReadFields()
+                j = 0
+                Do
+                    DNom(l, j) = linha_atual(j)
+                    j = j + 1
+                Loop Until j = 7
+                l = l + 1
+            End While
+        End Using
+
         Dim r, aux, linha_inicial, linha_final As Integer
 
         linha_inicial = 25
@@ -688,8 +708,7 @@ Imports System.Windows.Forms
         CBTemplate = New DataGridViewComboBoxCell()
         CBMat = New DataGridViewComboBoxCell()
 
-        Dim l As Integer
-        Dim linha_atual As String() = New String() {}
+        linha_atual = New String() {}
 
         Using MyReader As New Microsoft.VisualBasic.FileIO.TextFieldParser(ThisExe.GetManifestResourceStream(ThisExeName & "." & "fittings.dat"), System.Text.Encoding.Default, True)
             MyReader.TextFieldType = FileIO.FieldType.Delimited
@@ -745,30 +764,7 @@ Imports System.Windows.Forms
 
     Public Function DN(ByVal i As Integer, ByVal k As Integer) As String
 
-        Dim DNom(218, 6) As String
-        Dim l, j As Integer
-        Dim linha_atual As String() = New String() {}
-
-        Using MyReader2 As New Microsoft.VisualBasic.FileIO.TextFieldParser(ThisExe.GetManifestResourceStream(ThisExeName & "." & "pipes.dat"))
-            MyReader2.TextFieldType = FileIO.FieldType.Delimited
-            MyReader2.SetDelimiters(";")
-            l = 0
-            While Not MyReader2.EndOfData
-                linha_atual = MyReader2.ReadFields()
-                j = 0
-                Do
-                    If Double.TryParse(linha_atual(j), New Double) Then
-                        DNom(l, j) = linha_atual(j).Replace(",", ".")
-                    Else
-                        DNom(l, j) = linha_atual(j)
-                    End If
-                    j = j + 1
-                Loop Until j = 7
-                l = l + 1
-            End While
-        End Using
-
-        DN = DNom(i, k)
+        Return DNom(i, k)
 
     End Function
 
@@ -1038,8 +1034,8 @@ Imports System.Windows.Forms
         Dim cv As New DWSIM.SistemasDeUnidades.Conversor
 
         Dim r = idx + 86 - 4
-        GridMalha.CurrentCell.Value = Format(cv.Convert("in", SystemOfUnits.diameter, DN(r, 1)), NumberFormat)
-        GridMalha.Rows(GridMalha.CurrentRow.Index + 1).Cells(GridMalha.CurrentCell.ColumnIndex).Value = Format(cv.Convert("in", SystemOfUnits.diameter, DN(r, 6)), NumberFormat)
+        GridMalha.CurrentCell.Value = Format(cv.Convert("in", SystemOfUnits.diameter, Double.Parse(DN(r, 1), System.Globalization.CultureInfo.InvariantCulture)), NumberFormat)
+        GridMalha.Rows(GridMalha.CurrentRow.Index + 1).Cells(GridMalha.CurrentCell.ColumnIndex).Value = Format(cv.Convert("in", SystemOfUnits.diameter, Double.Parse(DN(r, 6), System.Globalization.CultureInfo.InvariantCulture)), NumberFormat)
 
     End Sub
 
