@@ -34,6 +34,7 @@ Imports DWSIM.DWSIM.GraphicObjects
 Imports DWSIM.DWSIM.Outros
 Imports WeifenLuo.WinFormsUI.Docking
 Imports System.Globalization
+Imports Microsoft.Msdn.Samples
 
 <System.Serializable()> Public Class FormFlowsheet
 
@@ -2707,6 +2708,17 @@ Imports System.Globalization
 
     Sub PasteObjects()
 
+        Dim pkey As String = New Random().Next().ToString & "_"
+
+        Dim ci As CultureInfo = CultureInfo.InvariantCulture
+
+        Dim excs As New Concurrent.ConcurrentBag(Of Exception)
+
+        Dim xdoc As XDocument = XDocument.Parse(Clipboard.GetText())
+
+        Dim data As List(Of XElement) = xdoc.Element("DWSIM_Simulation_Data").Element("GraphicObjects").Elements.ToList
+
+        FormMain.AddGraphicObjects(Me, data, excs, pkey)
 
     End Sub
 

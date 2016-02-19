@@ -1968,34 +1968,7 @@ Public Class FormMain
         Return builder.ToString()
     End Function 'RandomString 
 
-    Sub LoadXML(ByVal path As String, Optional ByVal simulationfilename As String = "", Optional ByVal forcommandline As Boolean = False)
-
-        Dim ci As CultureInfo = CultureInfo.InvariantCulture
-
-        Dim excs As New Concurrent.ConcurrentBag(Of Exception)
-
-        Dim xdoc As XDocument = XDocument.Load(path)
-
-        Dim form As FormFlowsheet = New FormFlowsheet()
-        If Not DWSIM.App.IsRunningOnMono Then form.FormObjList = New frmObjList
-        My.Application.CAPEOPENMode = False
-        My.Application.ActiveSimulation = form
-
-        Application.DoEvents()
-
-        Dim data As List(Of XElement) = xdoc.Element("DWSIM_Simulation_Data").Element("Settings").Elements.ToList
-
-        Try
-            form.Options.LoadData(data)
-        Catch ex As Exception
-            excs.Add(New Exception("Error Loading Flowsheet Settings", ex))
-        End Try
-
-        If simulationfilename <> "" Then Me.filename = simulationfilename Else Me.filename = path
-
-        form.Options.FilePath = Me.filename
-
-        data = xdoc.Element("DWSIM_Simulation_Data").Element("GraphicObjects").Elements.ToList
+    Sub AddGraphicObjects(form As FormFlowsheet, data As List(Of XElement), excs As Concurrent.ConcurrentBag(Of Exception), Optional ByVal pkey As String = "")
 
         For Each xel As XElement In data
             Try
@@ -2006,6 +1979,10 @@ Public Class FormMain
                     obj = GraphicObjects.GraphicObject.ReturnInstance(xel.Element("Type").Value)
                 End If
                 obj.LoadData(xel.Elements.ToList)
+                obj.Name = pkey & obj.Name
+                Dim searchtext As String = obj.Tag.Split("(")(0).Trim()
+                Dim objcount As Integer = (From go As GraphicObject In form.FormSurface.FlowsheetDesignSurface.drawingObjects Select go Where go.Tag.Contains(searchtext)).Count
+                If objcount > 0 Then obj.Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                 If Not TypeOf obj Is DWSIM.GraphicObjects.TableGraphic Then
                     form.FormSurface.FlowsheetDesignSurface.drawingObjects.Add(obj)
                     obj.CreateConnectors(0, 0)
@@ -2083,7 +2060,7 @@ Public Class FormMain
                                 .CustomUOCollection.Add(obj.Name, obj)
                             Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ExcelUO
                                 .ExcelUOCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.FlowsheetUO
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.FlowsheetUO
                                 .FlowsheetUOCollection.Add(obj.Name, obj)
                             Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CapeOpenUO
                                 obj.CreateConnectors(xel.Element("InputConnectors").Elements.Count, xel.Element("OutputConnectors").Elements.Count)
@@ -2208,7 +2185,7 @@ Public Class FormMain
 
         For Each xel As XElement In data
             Try
-                Dim id As String = xel.Element("Name").Value
+                Dim id As String = pkey & xel.Element("Name").Value
                 If id <> "" Then
                     Dim obj As GraphicObjects.GraphicObject = (From go As GraphicObjects.GraphicObject In
                                                             form.FormSurface.FlowsheetDesignSurface.drawingObjects Where go.Name = id).SingleOrDefault
@@ -2216,7 +2193,7 @@ Public Class FormMain
                         Dim i As Integer = 0
                         For Each xel2 As XElement In xel.Element("InputConnectors").Elements
                             If xel2.@IsAttached = True Then
-                                obj.InputConnectors(i).ConnectorName = xel2.@AttachedFromObjID & "|" & xel2.@AttachedFromConnIndex
+                                obj.InputConnectors(i).ConnectorName = pkey & xel2.@AttachedFromObjID & "|" & xel2.@AttachedFromConnIndex
                                 obj.InputConnectors(i).Type = [Enum].Parse(obj.InputConnectors(i).Type.GetType, xel2.@ConnType)
                             End If
                             i += 1
@@ -2230,14 +2207,14 @@ Public Class FormMain
 
         For Each xel As XElement In data
             Try
-                Dim id As String = xel.Element("Name").Value
+                Dim id As String = pkey & xel.Element("Name").Value
                 If id <> "" Then
                     Dim obj As GraphicObjects.GraphicObject = (From go As GraphicObjects.GraphicObject In
                                                             form.FormSurface.FlowsheetDesignSurface.drawingObjects Where go.Name = id).SingleOrDefault
                     If Not obj Is Nothing Then
                         For Each xel2 As XElement In xel.Element("OutputConnectors").Elements
                             If xel2.@IsAttached = True Then
-                                Dim objToID = xel2.@AttachedToObjID
+                                Dim objToID = pkey & xel2.@AttachedToObjID
                                 If objToID <> "" Then
                                     Dim objTo As GraphicObjects.GraphicObject = (From go As GraphicObjects.GraphicObject In
                                                                                     form.FormSurface.FlowsheetDesignSurface.drawingObjects Where go.Name = objToID).SingleOrDefault
@@ -2252,7 +2229,7 @@ Public Class FormMain
                         Next
                         For Each xel2 As XElement In xel.Element("EnergyConnector").Elements
                             If xel2.@IsAttached = True Then
-                                Dim objToID = xel2.@AttachedToObjID
+                                Dim objToID = pkey & xel2.@AttachedToObjID
                                 If objToID <> "" Then
                                     Dim objTo As GraphicObjects.GraphicObject = (From go As GraphicObjects.GraphicObject In
                                                                                     form.FormSurface.FlowsheetDesignSurface.drawingObjects Where go.Name = objToID).SingleOrDefault
@@ -2266,6 +2243,39 @@ Public Class FormMain
                 excs.Add(New Exception("Error Loading Flowsheet Object Connection Information", ex))
             End Try
         Next
+
+    End Sub
+
+    Sub LoadXML(ByVal path As String, Optional ByVal simulationfilename As String = "", Optional ByVal forcommandline As Boolean = False)
+
+        Dim ci As CultureInfo = CultureInfo.InvariantCulture
+
+        Dim excs As New Concurrent.ConcurrentBag(Of Exception)
+
+        Dim xdoc As XDocument = XDocument.Load(path)
+
+        Dim form As FormFlowsheet = New FormFlowsheet()
+        If Not DWSIM.App.IsRunningOnMono Then form.FormObjList = New frmObjList
+        My.Application.CAPEOPENMode = False
+        My.Application.ActiveSimulation = form
+
+        Application.DoEvents()
+
+        Dim data As List(Of XElement) = xdoc.Element("DWSIM_Simulation_Data").Element("Settings").Elements.ToList
+
+        Try
+            form.Options.LoadData(data)
+        Catch ex As Exception
+            excs.Add(New Exception("Error Loading Flowsheet Settings", ex))
+        End Try
+
+        If simulationfilename <> "" Then Me.filename = simulationfilename Else Me.filename = path
+
+        form.Options.FilePath = Me.filename
+
+        data = xdoc.Element("DWSIM_Simulation_Data").Element("GraphicObjects").Elements.ToList
+
+        AddGraphicObjects(form, data, excs)
 
         data = xdoc.Element("DWSIM_Simulation_Data").Element("Compounds").Elements.ToList
 
