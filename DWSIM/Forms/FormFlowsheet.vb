@@ -33,6 +33,7 @@ Imports DWSIM.DWSIM.FormClasses
 Imports DWSIM.DWSIM.GraphicObjects
 Imports DWSIM.DWSIM.Outros
 Imports WeifenLuo.WinFormsUI.Docking
+Imports System.Globalization
 
 <System.Serializable()> Public Class FormFlowsheet
 
@@ -865,6 +866,18 @@ Imports WeifenLuo.WinFormsUI.Docking
         FormProps.DockState = DockState.DockLeft
         FormLog.DockState = DockState.DockBottom
 
+    End Sub
+
+    Private Sub tsbCutObj_Click(sender As Object, e As EventArgs) Handles tsbCutObj.Click
+        CutObjects()
+    End Sub
+
+    Private Sub tsbCopyObj_Click(sender As Object, e As EventArgs) Handles tsbCopyObj.Click
+        CopyObjects()
+    End Sub
+
+    Private Sub tsbPasteObj_Click(sender As Object, e As EventArgs) Handles tsbPasteObj.Click
+        PasteObjects()
     End Sub
 
     Private Sub showflowsheettoolstripmenuitem_Click(sender As Object, e As EventArgs) Handles showflowsheettoolstripmenuitem.Click
@@ -2144,7 +2157,7 @@ Imports WeifenLuo.WinFormsUI.Docking
 
             With Me.FormProps.PGEx2
 
-                 .Item.Clear()
+                .Item.Clear()
 
                 .Item.Add(DWSIM.App.GetLocalString("Cor"), gobj2, "LineColor", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Cordotextodatabela"), True)
                 .Item.Add(DWSIM.App.GetLocalString("Cabealho"), gobj2, "HeaderFont", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Fontedotextodocabeal"), True)
@@ -2261,7 +2274,7 @@ Imports WeifenLuo.WinFormsUI.Docking
 
             With Me.FormProps.PGEx2
 
-               .Item.Clear()
+                .Item.Clear()
 
                 .Item.Add(DWSIM.App.GetLocalString("Autodimensionar"), gobj2, "AutoSize", False, "", DWSIM.App.GetLocalString("SelecioLiquidrueparaque"), True)
                 .Item.Add(DWSIM.App.GetLocalString("Altura"), gobj2, "Height", False, "", DWSIM.App.GetLocalString("Alturadafiguraempixe"), True)
@@ -2601,6 +2614,99 @@ Imports WeifenLuo.WinFormsUI.Docking
 
         QuestionBox_Button1.Text = button1text
         QuestionBox_Button2.Text = button2text
+
+    End Sub
+
+#End Region
+
+#Region "    Cut/Copy/Paste Objects"
+
+    Sub CutObjects()
+
+        CopyObjects()
+
+        Dim indexes As New ArrayList
+        For Each gobj As GraphicObject In Me.FormSurface.FlowsheetDesignSurface.SelectedObjects.Values
+            indexes.Add(gobj.Tag)
+        Next
+        For Each s As String In indexes
+            Dim gobj As GraphicObject
+            gobj = Me.GetFlowsheetGraphicObject(s)
+            If Not gobj Is Nothing Then
+                Me.DeleteSelectedObject(Me, New EventArgs(), gobj, False)
+                Me.FormSurface.FlowsheetDesignSurface.SelectedObjects.Remove(gobj.Name)
+            End If
+        Next
+
+    End Sub
+
+    Sub CopyObjects()
+
+        Dim xdoc As New XDocument()
+        Dim xel As XElement
+
+        Dim ppackages As New List(Of String)
+
+        Dim ci As CultureInfo = CultureInfo.InvariantCulture
+
+        xdoc.Add(New XElement("DWSIM_Simulation_Data"))
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("SimulationObjects"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("SimulationObjects")
+
+        For Each so As SimulationObjects_BaseClass In Collections.ObjectCollection.Values
+            If so.GraphicObject.Selected Then
+                xel.Add(New XElement("SimulationObject", {so.SaveData().ToArray()}))
+                If TypeOf so Is Streams.MaterialStream Then
+                    If Not ppackages.Contains(DirectCast(so, Streams.MaterialStream).PropertyPackage.Name) Then
+                        ppackages.Add(DirectCast(so, Streams.MaterialStream).PropertyPackage.Name)
+                    End If
+                ElseIf TypeOf so Is SimulationObjects_UnitOpBaseClass Then
+                    If Not ppackages.Contains(DirectCast(so, SimulationObjects_UnitOpBaseClass).PropertyPackage.Name) Then
+                        ppackages.Add(DirectCast(so, SimulationObjects_UnitOpBaseClass).PropertyPackage.Name)
+                    End If
+                End If
+            End If
+        Next
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("GraphicObjects"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("GraphicObjects")
+
+        For Each go As Microsoft.Msdn.Samples.GraphicObjects.GraphicObject In FormSurface.FlowsheetDesignSurface.drawingObjects
+            If Not go.IsConnector And go.Selected Then xel.Add(New XElement("GraphicObject", go.SaveData().ToArray()))
+        Next
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("PropertyPackages"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("PropertyPackages")
+
+        For Each pp As KeyValuePair(Of String, PropertyPackage) In Options.PropertyPackages
+            If ppackages.Contains(pp.Key) Then
+                Dim createdms As Boolean = False
+                If pp.Value.CurrentMaterialStream Is Nothing Then
+                    Dim ms As New Streams.MaterialStream("", "", Me, pp.Value)
+                    AddComponentsRows(ms)
+                    pp.Value.CurrentMaterialStream = ms
+                    createdms = True
+                End If
+                xel.Add(New XElement("PropertyPackage", {New XElement("ID", pp.Key),
+                                                         pp.Value.SaveData().ToArray()}))
+                If createdms Then pp.Value.CurrentMaterialStream = Nothing
+            End If
+        Next
+
+        xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("Compounds"))
+        xel = xdoc.Element("DWSIM_Simulation_Data").Element("Compounds")
+
+        For Each cp As ConstantProperties In Options.SelectedComponents.Values
+            xel.Add(New XElement("Compound", cp.SaveData().ToArray()))
+        Next
+
+        Clipboard.SetText(xdoc.ToString)
+
+    End Sub
+
+    Sub PasteObjects()
+
 
     End Sub
 

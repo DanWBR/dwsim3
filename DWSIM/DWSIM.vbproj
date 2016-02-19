@@ -3250,6 +3250,7 @@
     <None Include="Resources\clipboard_sign.png" />
     <None Include="Resources\chart_LLE.png" />
     <Content Include="Resources\control_equalizer_blue.png" />
+    <None Include="Resources\cut.png" />
     <Content Include="Resources\de.png" />
     <None Include="Resources\emblem-symbolic-link.png" />
     <None Include="Resources\de1.png" />
@@ -3261,6 +3262,7 @@
     <None Include="Resources\dwsim3bg.jpg" />
     <None Include="Resources\DWSIM-branco.png" />
     <None Include="Resources\dwsim 3 bg.png" />
+    <None Include="Resources\delete2.png" />
     <Content Include="Resources\es.png" />
     <None Include="Resources\Excel.png" />
     <None Include="Resources\Excel_copy1.jpg" />

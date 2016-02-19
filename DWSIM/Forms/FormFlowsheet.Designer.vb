@@ -26,6 +26,10 @@ Partial Class FormFlowsheet
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.ToolStripFlowsheet = New System.Windows.Forms.ToolStrip()
         Me.ToolStripLabel4 = New System.Windows.Forms.ToolStripLabel()
+        Me.tsbCutObj = New System.Windows.Forms.ToolStripButton()
+        Me.tsbCopyObj = New System.Windows.Forms.ToolStripButton()
+        Me.tsbPasteObj = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator12 = New System.Windows.Forms.ToolStripSeparator()
         Me.TSBtabela = New System.Windows.Forms.ToolStripButton()
         Me.TSBTexto = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton()
@@ -208,7 +212,7 @@ Partial Class FormFlowsheet
         'ToolStripFlowsheet
         '
         resources.ApplyResources(Me.ToolStripFlowsheet, "ToolStripFlowsheet")
-        Me.ToolStripFlowsheet.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel4, Me.TSBtabela, Me.TSBTexto, Me.ToolStripButton4, Me.ToolStripButton19, Me.ToolStripButton12, Me.ToolStripSeparator5, Me.ToolStripButton1, Me.TSTBZoom, Me.ToolStripButton2, Me.ToolStripButton20, Me.ToolStripButton3, Me.ToolStripSeparator6, Me.ToolStripButton18, Me.tsbConfigPage, Me.tsbConfigPrinter, Me.tsbPrint, Me.ToolStripSeparator4, Me.ToolStripButton16, Me.ToolStripButton17, Me.ToolStripSeparator8, Me.tsbAlignLefts, Me.tsbAlignCenters, Me.tsbAlignRights, Me.tsbAlignTops, Me.tsbAlignMiddles, Me.tsbAlignBottoms, Me.ToolStripSeparator9, Me.tsbAlignVertical, Me.tsbAlignHorizontal})
+        Me.ToolStripFlowsheet.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel4, Me.tsbCutObj, Me.tsbCopyObj, Me.tsbPasteObj, Me.ToolStripSeparator12, Me.TSBtabela, Me.TSBTexto, Me.ToolStripButton4, Me.ToolStripButton19, Me.ToolStripButton12, Me.ToolStripSeparator5, Me.ToolStripButton1, Me.TSTBZoom, Me.ToolStripButton2, Me.ToolStripButton20, Me.ToolStripButton3, Me.ToolStripSeparator6, Me.ToolStripButton18, Me.tsbConfigPage, Me.tsbConfigPrinter, Me.tsbPrint, Me.ToolStripSeparator4, Me.ToolStripButton16, Me.ToolStripButton17, Me.ToolStripSeparator8, Me.tsbAlignLefts, Me.tsbAlignCenters, Me.tsbAlignRights, Me.tsbAlignTops, Me.tsbAlignMiddles, Me.tsbAlignBottoms, Me.ToolStripSeparator9, Me.tsbAlignVertical, Me.tsbAlignHorizontal})
         Me.ToolStripFlowsheet.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow
         Me.ToolStripFlowsheet.Name = "ToolStripFlowsheet"
         '
@@ -216,6 +220,32 @@ Partial Class FormFlowsheet
         '
         resources.ApplyResources(Me.ToolStripLabel4, "ToolStripLabel4")
         Me.ToolStripLabel4.Name = "ToolStripLabel4"
+        '
+        'tsbCutObj
+        '
+        Me.tsbCutObj.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsbCutObj.Image = Global.DWSIM.My.Resources.Resources.cut
+        resources.ApplyResources(Me.tsbCutObj, "tsbCutObj")
+        Me.tsbCutObj.Name = "tsbCutObj"
+        '
+        'tsbCopyObj
+        '
+        Me.tsbCopyObj.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsbCopyObj.Image = Global.DWSIM.My.Resources.Resources.copy
+        resources.ApplyResources(Me.tsbCopyObj, "tsbCopyObj")
+        Me.tsbCopyObj.Name = "tsbCopyObj"
+        '
+        'tsbPasteObj
+        '
+        Me.tsbPasteObj.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsbPasteObj.Image = Global.DWSIM.My.Resources.Resources.paste_plain
+        resources.ApplyResources(Me.tsbPasteObj, "tsbPasteObj")
+        Me.tsbPasteObj.Name = "tsbPasteObj"
+        '
+        'ToolStripSeparator12
+        '
+        Me.ToolStripSeparator12.Name = "ToolStripSeparator12"
+        resources.ApplyResources(Me.ToolStripSeparator12, "ToolStripSeparator12")
         '
         'TSBtabela
         '
@@ -1490,4 +1520,8 @@ Partial Class FormFlowsheet
     Friend WithEvents showunitstoolstripmenuitem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripSeparator11 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents RestoreLayoutTSMI As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents tsbCutObj As System.Windows.Forms.ToolStripButton
+    Friend WithEvents tsbCopyObj As System.Windows.Forms.ToolStripButton
+    Friend WithEvents tsbPasteObj As System.Windows.Forms.ToolStripButton
+    Friend WithEvents ToolStripSeparator12 As System.Windows.Forms.ToolStripSeparator
 End Class
