@@ -112,6 +112,9 @@ Imports Microsoft.Msdn.Samples
 
     Private loaded As Boolean = False
 
+    Public UndoStack As New Stack(Of UndoRedoAction)
+    Public RedoStack As New Stack(Of UndoRedoAction)
+
 #End Region
 
 #Region "    Form Event Handlers "
@@ -867,6 +870,18 @@ Imports Microsoft.Msdn.Samples
         FormProps.DockState = DockState.DockLeft
         FormLog.DockState = DockState.DockBottom
 
+    End Sub
+
+    Public Sub tsbUndo_Click(sender As Object, e As EventArgs) Handles tsbUndo.Click
+        Dim act = UndoStack.Pop
+        UndoAction(act)
+        RedoStack.Push(act)
+    End Sub
+
+    Public Sub tsbRedo_Click(sender As Object, e As EventArgs) Handles tsbRedo.Click
+        Dim act = RedoStack.Pop
+        RedoAction(act)
+        UndoStack.Push(act)
     End Sub
 
     Private Sub tsbCutObj_Click(sender As Object, e As EventArgs) Handles tsbCutObj.Click
@@ -2831,6 +2846,18 @@ Imports Microsoft.Msdn.Samples
         End If
 
         FormMain.AddSimulationObjects(Me, objlist, excs, pkey)
+
+    End Sub
+
+#End Region
+
+#Region "    Undo/Redo Handlers"
+
+    Sub RedoAction(act As UndoRedoAction)
+
+    End Sub
+
+    Sub UndoAction(act As UndoRedoAction)
 
     End Sub
 

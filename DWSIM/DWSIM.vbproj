@@ -2750,6 +2750,7 @@
     <Content Include="Assets\help\UT_Triangular_LLE.htm" />
     <Content Include="Assets\help\UT_TrueCriticalPoint.htm" />
     <Content Include="Assets\help\UT_VesselSizing.htm" />
+    <None Include="Resources\undo_162.png" />
     <None Include="Assets\jcosmo.jar" />
     <Content Include="Assets\licenses\chemsep_database.txt" />
     <Content Include="Assets\licenses\dockpanel.txt" />
@@ -3302,6 +3303,7 @@
     <None Include="Resources\lightning1.png" />
     <None Include="Resources\lightbulb.png" />
     <None Include="Resources\page_white_acrobat.png" />
+    <None Include="Resources\redo_161.png" />
     <Content Include="Resources\ru.png" />
     <None Include="Resources\zoom.png" />
     <None Include="Resources\Services.png" />

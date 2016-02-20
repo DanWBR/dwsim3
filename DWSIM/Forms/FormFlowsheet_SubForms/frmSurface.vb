@@ -222,6 +222,10 @@ Public Class frmSurface
             Flowsheet.CopyObjects()
         ElseIf e.KeyCode = Keys.V And e.Control Then
             Flowsheet.PasteObjects()
+        ElseIf e.KeyCode = Keys.Z And e.Control Then
+            Flowsheet.tsbUndo_Click(sender, e)
+        ElseIf e.KeyCode = Keys.Y And e.Control Then
+            Flowsheet.tsbRedo_Click(sender, e)
         End If
 
         If Not Me.FlowsheetDesignSurface.SelectedObject Is Nothing Then

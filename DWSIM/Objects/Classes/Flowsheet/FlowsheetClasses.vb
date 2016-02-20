@@ -30,6 +30,28 @@ Namespace DWSIM.FormClasses
         Dica
     End Enum
 
+    Public Enum UndoRedoActionType
+        SimulationObjectProperty = 0
+        FlowsheetObjectProperty = 1
+        FlowsheetObjectConnection = 2
+        FlowsheetObjectDisconnection = 3
+        SystemOfUnits = 4
+    End Enum
+
+    <System.Serializable()> Public Class UndoRedoAction
+
+        Public Property ID As Integer = -1
+        Public Property Name As String = ""
+        Public Property AType As UndoRedoActionType
+        Public Property ObjID As String = ""
+        Public Property ObjID2 As String = ""
+        Public Property OldValue As Object = Nothing
+        Public Property NewValue As Object = Nothing
+        Public Property PropertyID As String = ""
+
+    End Class
+
+
     <System.Serializable()> Public Class ClsObjectCollections
 
         'Declares collections for holding graphic elements of the flowsheet.
