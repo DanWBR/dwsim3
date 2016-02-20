@@ -565,6 +565,30 @@ Namespace My
                 Me("CurrentEnvironment") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
+        Public Property ClipboardCopyMode_Compounds() As Integer
+            Get
+                Return CType(Me("ClipboardCopyMode_Compounds"),Integer)
+            End Get
+            Set
+                Me("ClipboardCopyMode_Compounds") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
+        Public Property ClipboardCopyMode_PropertyPackages() As Integer
+            Get
+                Return CType(Me("ClipboardCopyMode_PropertyPackages"),Integer)
+            End Get
+            Set
+                Me("ClipboardCopyMode_PropertyPackages") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

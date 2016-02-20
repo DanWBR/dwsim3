@@ -3495,8 +3495,8 @@ End Class
     Implements ECapeUser, ECapeUnknown, ECapeRoot
 
     Public ObjectType As Integer
-    Private _pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage
-    Private _ppid As String = ""
+    Friend _pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage
+    Friend _ppid As String = ""
 
     Friend _capeopenmode As Boolean = False
 

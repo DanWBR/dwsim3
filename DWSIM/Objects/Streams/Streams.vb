@@ -40,7 +40,7 @@ Namespace DWSIM.SimulationObjects.Streams
         Implements ECapeUser, ECapeUnknown, ECapeRoot
 
         Friend _pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage
-        Private _ppid As String = ""
+        Friend _ppid As String = ""
 
         Protected m_compositionbasis As CompBasis = CompBasis.Molar_Fractions
         Protected m_Phases As New Dictionary(Of Integer, DWSIM.ClassesBasicasTermodinamica.Fase)

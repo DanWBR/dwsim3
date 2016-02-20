@@ -2681,18 +2681,16 @@ Imports Microsoft.Msdn.Samples
         xel = xdoc.Element("DWSIM_Simulation_Data").Element("PropertyPackages")
 
         For Each pp As KeyValuePair(Of String, PropertyPackage) In Options.PropertyPackages
-            If ppackages.Contains(pp.Key) Then
-                Dim createdms As Boolean = False
-                If pp.Value.CurrentMaterialStream Is Nothing Then
-                    Dim ms As New Streams.MaterialStream("", "", Me, pp.Value)
-                    AddComponentsRows(ms)
-                    pp.Value.CurrentMaterialStream = ms
-                    createdms = True
-                End If
-                xel.Add(New XElement("PropertyPackage", {New XElement("ID", pp.Key),
-                                                         pp.Value.SaveData().ToArray()}))
-                If createdms Then pp.Value.CurrentMaterialStream = Nothing
+            Dim createdms As Boolean = False
+            If pp.Value.CurrentMaterialStream Is Nothing Then
+                Dim ms As New Streams.MaterialStream("", "", Me, pp.Value)
+                AddComponentsRows(ms)
+                pp.Value.CurrentMaterialStream = ms
+                createdms = True
             End If
+            xel.Add(New XElement("PropertyPackage", {New XElement("ID", pp.Key),
+                                                        pp.Value.SaveData().ToArray()}))
+            If createdms Then pp.Value.CurrentMaterialStream = Nothing
         Next
 
         xdoc.Element("DWSIM_Simulation_Data").Add(New XElement("Compounds"))
@@ -2719,6 +2717,120 @@ Imports Microsoft.Msdn.Samples
         Dim data As List(Of XElement) = xdoc.Element("DWSIM_Simulation_Data").Element("GraphicObjects").Elements.ToList
 
         FormMain.AddGraphicObjects(Me, data, excs, pkey)
+
+        If My.Settings.ClipboardCopyMode_Compounds = 1 Then
+
+            data = xdoc.Element("DWSIM_Simulation_Data").Element("Compounds").Elements.ToList
+
+            Dim complist As New List(Of ConstantProperties)
+
+            For Each xel As XElement In data
+                Dim obj As New ConstantProperties
+                obj.LoadData(xel.Elements.ToList)
+                complist.Add(obj)
+            Next
+
+            Dim idx As Integer
+
+            If Not Me.FrmStSim1.initialized Then Me.FrmStSim1.Init()
+
+            For Each comp In complist
+                If Not Me.Options.SelectedComponents.ContainsKey(comp.Name) Then
+                    If Not Me.Options.NotSelectedComponents.ContainsKey(comp.Name) Then
+                        idx = Me.FrmStSim1.AddCompToGrid(comp)
+                    Else
+                        For Each r As DataGridViewRow In Me.FrmStSim1.ogc1.Rows
+                            If r.Cells(0).Value = comp.Name Then
+                                idx = r.Index
+                                Exit For
+                            End If
+                        Next
+                    End If
+                    Me.FrmStSim1.AddCompToSimulation(idx)
+                End If
+            Next
+
+        End If
+
+        If My.Settings.ClipboardCopyMode_PropertyPackages = 1 Then
+
+            data = xdoc.Element("DWSIM_Simulation_Data").Element("PropertyPackages").Elements.ToList
+
+            For Each xel As XElement In data
+                Try
+                    Dim t As Type = Type.GetType(xel.Element("Type").Value, False)
+                    Dim obj As PropertyPackage = Activator.CreateInstance(t)
+                    obj.LoadData(xel.Elements.ToList)
+                    obj.UniqueID = pkey & obj.UniqueID
+                    obj.Tag = obj.Tag & " (C)"
+                    Me.Options.PropertyPackages.Add(obj.UniqueID, obj)
+                Catch ex As Exception
+                    excs.Add(New Exception("Error Loading Property Package Information", ex))
+                End Try
+            Next
+
+        End If
+
+        data = xdoc.Element("DWSIM_Simulation_Data").Element("SimulationObjects").Elements.ToList
+
+        Dim objlist As New Concurrent.ConcurrentBag(Of SimulationObjects_BaseClass)
+
+        Dim compoundstoremove As New List(Of String)
+
+        For Each xel As XElement In data
+            Dim id As String = pkey & xel.<Nome>.Value
+            Dim t As Type = Type.GetType(xel.Element("Type").Value, False)
+            Dim obj As SimulationObjects_BaseClass = Activator.CreateInstance(t)
+            Dim gobj As GraphicObjects.GraphicObject = (From go As GraphicObjects.GraphicObject In
+                                FormSurface.FlowsheetDesignSurface.drawingObjects Where go.Name = id).SingleOrDefault
+            obj.GraphicObject = gobj
+            obj.SetFlowsheet(Me)
+            If Not obj.GraphicObject.TipoObjeto = TipoObjeto.FlowsheetUO Then
+                obj.FillNodeItems(True)
+                obj.QTFillNodeItems()
+            End If
+            If Not gobj Is Nothing Then
+                obj.LoadData(xel.Elements.ToList)
+                obj.GraphicObject.Name = id
+                If TypeOf obj Is Streams.MaterialStream Then
+                    If My.Settings.ClipboardCopyMode_Compounds = 0 Then
+                        For Each subst As Substancia In DirectCast(obj, Streams.MaterialStream).Fases(0).Componentes.Values
+                            If Not Options.SelectedComponents.ContainsKey(subst.Nome) And Not compoundstoremove.Contains(subst.Nome) Then compoundstoremove.Add(subst.Nome)
+                        Next
+                    End If
+                    For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In DirectCast(obj, Streams.MaterialStream).Fases.Values
+                        For Each c As ConstantProperties In Options.SelectedComponents.Values
+                            If Not phase.Componentes.ContainsKey(c.Name) Then phase.Componentes.Add(c.Name, New Substancia(c.Name, "") With {.ConstantProperties = c})
+                            phase.Componentes(c.Name).ConstantProperties = c
+                        Next
+                    Next
+                End If
+            End If
+            If My.Settings.ClipboardCopyMode_PropertyPackages = 1 Then
+                If TypeOf obj Is Streams.MaterialStream Then
+                    DirectCast(obj, Streams.MaterialStream).PropertyPackage = Me.Options.PropertyPackages(pkey & DirectCast(obj, Streams.MaterialStream)._ppid)
+                ElseIf TypeOf obj Is SimulationObjects_UnitOpBaseClass Then
+                    DirectCast(obj, SimulationObjects_UnitOpBaseClass).PropertyPackage = Me.Options.PropertyPackages(pkey & DirectCast(obj, SimulationObjects_UnitOpBaseClass)._ppid)
+                End If
+            End If
+            objlist.Add(obj)
+        Next
+
+        If My.Settings.ClipboardCopyMode_Compounds = 0 Then
+
+            For Each obj As SimulationObjects_BaseClass In objlist
+                If TypeOf obj Is Streams.MaterialStream Then
+                    For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In DirectCast(obj, Streams.MaterialStream).Fases.Values
+                        For Each comp In compoundstoremove
+                            phase.Componentes.Remove(comp)
+                        Next
+                    Next
+                End If
+            Next
+
+        End If
+
+        FormMain.AddSimulationObjects(Me, objlist, excs, pkey)
 
     End Sub
 

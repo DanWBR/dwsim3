@@ -391,6 +391,33 @@
   <data name="FaTabStripItem2.Text" xml:space="preserve">
     <value>Backups</value>
   </data>
+  <data name="ComboBoxPropPackCopyMode.Items" xml:space="preserve">
+    <value>Do not copy, use default</value>
+  </data>
+  <data name="ComboBoxPropPackCopyMode.Items1" xml:space="preserve">
+    <value>Copy and associate</value>
+  </data>
+  <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>97, 13</value>
+  </data>
+  <data name="Label7.Text" xml:space="preserve">
+    <value>Property Packages</value>
+  </data>
+  <data name="ComboBoxCompoundCopyMode.Items" xml:space="preserve">
+    <value>Do not copy, keep existent</value>
+  </data>
+  <data name="ComboBoxCompoundCopyMode.Items1" xml:space="preserve">
+    <value>Copy and associate non-existent</value>
+  </data>
+  <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>63, 13</value>
+  </data>
+  <data name="Label5.Text" xml:space="preserve">
+    <value>Compounds</value>
+  </data>
+  <data name="GroupBox5.Text" xml:space="preserve">
+    <value>Cut/Copy/Paste Flowsheet Objects</value>
+  </data>
   <data name="chkLoadLegacyFiles.Text" xml:space="preserve">
     <value>Load binary (*.dwsim) files using legacy settings (pre-3.0 versions)</value>
   </data>
@@ -462,7 +489,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABo
-        KgAAAk1TRnQBSQFMAgEBCgEAAaQBBgGkAQYBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        KgAAAk1TRnQBSQFMAgEBCgEAAawBBgGsAQYBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABMAMAAQEBAAEYBgABJBIAAekCpwHpAqcB5wKlAeUCowHlAqMB5QKjAeQCogHiAqAB4QKfAd4CnAHe
         ApwB3AKaAdoCmAHaApgB2gKYAdoCmAHkAqIB4gKgAeECnwHeApwB3AGcAZoB2gKYAdoCmAHZApcB1wKV
         AdYClAHTApEB0wKRAdECjwHPAo0BzwKNAc8CjWAABvYD9APzAfIB8wHyA/ED8APuA+0D6wPpA+gB5wLm
@@ -660,8 +687,5 @@
   </data>
   <data name="OpenFileDialog1.Title" xml:space="preserve">
     <value>Add User Database</value>
-  </data>
-  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>365, 737</value>
   </data>
 </root>

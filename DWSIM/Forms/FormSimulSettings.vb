@@ -31,7 +31,7 @@ Public Class FormSimulSettings
 
     Private FrmChild As FormFlowsheet
     Dim loaded As Boolean = False
-    Dim initialized As Boolean = False
+    Public initialized As Boolean = False
     Public supports As Boolean = True
 
     Private prevsort As System.ComponentModel.ListSortDirection = System.ComponentModel.ListSortDirection.Ascending

@@ -79,6 +79,7 @@ Public Class FormOptions
         End If
 
         'solver
+
         cbSolverMode.SelectedIndex = My.Settings.SolverMode
         tbServiceBusNamespace.Text = My.Settings.ServiceBusConnectionString
         tbSolverTimeout.Text = My.Settings.SolverTimeoutSeconds
@@ -89,12 +90,16 @@ Public Class FormOptions
         chkStorePreviousSolutions.Checked = My.Settings.StorePreviousSolutions
 
         'databases
+
         Me.PopulateDBGrid()
 
         'script paths
         'For Each s As String In My.Settings.ScriptPaths
         '    Me.lbpaths.Items.Add(s)
         'Next
+
+        ComboBoxCompoundCopyMode.SelectedIndex = My.Settings.ClipboardCopyMode_Compounds
+        ComboBoxPropPackCopyMode.SelectedIndex = My.Settings.ClipboardCopyMode_PropertyPackages
 
         Me.cbGPU.Items.Clear()
 
@@ -681,4 +686,13 @@ Public Class FormOptions
     Private Sub chkEnableSIMD_CheckedChanged(sender As Object, e As EventArgs) Handles chkEnableSIMD.CheckedChanged
         My.Settings.UseSIMDExtensions = chkEnableSIMD.Checked
     End Sub
+
+    Private Sub ComboBoxCompoundCopyMode_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBoxCompoundCopyMode.SelectedIndexChanged
+        My.Settings.ClipboardCopyMode_Compounds = ComboBoxCompoundCopyMode.SelectedIndex
+    End Sub
+
+    Private Sub ComboBoxPropPackCopyMode_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBoxPropPackCopyMode.SelectedIndexChanged
+        My.Settings.ClipboardCopyMode_PropertyPackages = ComboBoxPropPackCopyMode.SelectedIndex
+    End Sub
+
 End Class

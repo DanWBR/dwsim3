@@ -216,6 +216,12 @@ Public Class frmSurface
             Flowsheet.Options.CalculatorActivated = True
             Flowsheet.FormSurface.LabelCalculator.Text = DWSIM.App.GetLocalString("CalculadorOcioso")
             Flowsheet.WriteToLog(DWSIM.App.GetLocalString("Calculadorativado"), Color.DimGray, DWSIM.FormClasses.TipoAviso.Informacao)
+        ElseIf e.KeyCode = Keys.X And e.Control Then
+            Flowsheet.CutObjects()
+        ElseIf e.KeyCode = Keys.C And e.Control Then
+            Flowsheet.CopyObjects()
+        ElseIf e.KeyCode = Keys.V And e.Control Then
+            Flowsheet.PasteObjects()
         End If
 
         If Not Me.FlowsheetDesignSurface.SelectedObject Is Nothing Then
