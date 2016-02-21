@@ -91,6 +91,8 @@ Partial Class FormOptions
         Me.KryptonLabel1 = New System.Windows.Forms.Label()
         Me.KryptonCheckBox6 = New System.Windows.Forms.CheckBox()
         Me.FaTabStripItem7 = New System.Windows.Forms.TabPage()
+        Me.GroupBox11 = New System.Windows.Forms.GroupBox()
+        Me.CheckBoxUndoRedoRecalc = New System.Windows.Forms.CheckBox()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.ComboBoxPropPackCopyMode = New System.Windows.Forms.ComboBox()
         Me.Label7 = New System.Windows.Forms.Label()
@@ -130,6 +132,7 @@ Partial Class FormOptions
         Me.GroupBox3.SuspendLayout()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStripItem7.SuspendLayout()
+        Me.GroupBox11.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
         Me.GroupBox13.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -622,12 +625,25 @@ Partial Class FormOptions
         'FaTabStripItem7
         '
         resources.ApplyResources(Me.FaTabStripItem7, "FaTabStripItem7")
+        Me.FaTabStripItem7.Controls.Add(Me.GroupBox11)
         Me.FaTabStripItem7.Controls.Add(Me.GroupBox5)
         Me.FaTabStripItem7.Controls.Add(Me.GroupBox13)
         Me.FaTabStripItem7.Controls.Add(Me.GroupBox1)
         Me.FaTabStripItem7.Controls.Add(Me.GroupBox9)
         Me.FaTabStripItem7.Controls.Add(Me.GroupBox6)
         Me.FaTabStripItem7.Name = "FaTabStripItem7"
+        '
+        'GroupBox11
+        '
+        resources.ApplyResources(Me.GroupBox11, "GroupBox11")
+        Me.GroupBox11.Controls.Add(Me.CheckBoxUndoRedoRecalc)
+        Me.GroupBox11.Name = "GroupBox11"
+        Me.GroupBox11.TabStop = False
+        '
+        'CheckBoxUndoRedoRecalc
+        '
+        resources.ApplyResources(Me.CheckBoxUndoRedoRecalc, "CheckBoxUndoRedoRecalc")
+        Me.CheckBoxUndoRedoRecalc.Name = "CheckBoxUndoRedoRecalc"
         '
         'GroupBox5
         '
@@ -812,6 +828,8 @@ Partial Class FormOptions
         Me.GroupBox3.PerformLayout()
         CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FaTabStripItem7.ResumeLayout(False)
+        Me.GroupBox11.ResumeLayout(False)
+        Me.GroupBox11.PerformLayout()
         Me.GroupBox5.ResumeLayout(False)
         Me.GroupBox5.PerformLayout()
         Me.GroupBox13.ResumeLayout(False)
@@ -910,4 +928,6 @@ Partial Class FormOptions
     Public WithEvents Label7 As System.Windows.Forms.Label
     Friend WithEvents ComboBoxCompoundCopyMode As System.Windows.Forms.ComboBox
     Public WithEvents Label5 As System.Windows.Forms.Label
+    Public WithEvents GroupBox11 As System.Windows.Forms.GroupBox
+    Public WithEvents CheckBoxUndoRedoRecalc As System.Windows.Forms.CheckBox
 End Class

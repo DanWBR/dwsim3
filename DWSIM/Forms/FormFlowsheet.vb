@@ -149,7 +149,7 @@ Imports Microsoft.Msdn.Samples
             Me.CAPEOPENFlowsheetMonitoringObjectsMOsToolStripMenuItem.Visible = False
             Me.WindowState = FormWindowState.Maximized
         Else
-            FormObjList = New frmObjList
+            'FormObjList = New frmObjList
             Me.MenuStrip1.Visible = False
             Me.WindowState = FormWindowState.Normal
         End If
@@ -2731,7 +2731,7 @@ Imports Microsoft.Msdn.Samples
 
         Dim data As List(Of XElement) = xdoc.Element("DWSIM_Simulation_Data").Element("GraphicObjects").Elements.ToList
 
-        FormMain.AddGraphicObjects(Me, data, excs, pkey)
+        FormMain.AddGraphicObjects(Me, data, excs, pkey, 20)
 
         If My.Settings.ClipboardCopyMode_Compounds = 1 Then
 

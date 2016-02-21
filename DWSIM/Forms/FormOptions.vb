@@ -100,6 +100,7 @@ Public Class FormOptions
 
         ComboBoxCompoundCopyMode.SelectedIndex = My.Settings.ClipboardCopyMode_Compounds
         ComboBoxPropPackCopyMode.SelectedIndex = My.Settings.ClipboardCopyMode_PropertyPackages
+        CheckBoxUndoRedoRecalc.Checked = My.Settings.UndoRedo_RecalculateFlowsheet
 
         Me.cbGPU.Items.Clear()
 
@@ -695,4 +696,7 @@ Public Class FormOptions
         My.Settings.ClipboardCopyMode_PropertyPackages = ComboBoxPropPackCopyMode.SelectedIndex
     End Sub
 
+    Private Sub CheckBoxUndoRedoRecalc_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBoxUndoRedoRecalc.CheckedChanged
+        My.Settings.UndoRedo_RecalculateFlowsheet = CheckBoxUndoRedoRecalc.Checked
+    End Sub
 End Class

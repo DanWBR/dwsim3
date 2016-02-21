@@ -589,6 +589,18 @@ Namespace My
                 Me("ClipboardCopyMode_PropertyPackages") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property UndoRedo_RecalculateFlowsheet() As Boolean
+            Get
+                Return CType(Me("UndoRedo_RecalculateFlowsheet"),Boolean)
+            End Get
+            Set
+                Me("UndoRedo_RecalculateFlowsheet") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

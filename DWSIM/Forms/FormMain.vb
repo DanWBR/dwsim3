@@ -1968,7 +1968,7 @@ Public Class FormMain
         Return builder.ToString()
     End Function 'RandomString 
 
-    Sub AddGraphicObjects(form As FormFlowsheet, data As List(Of XElement), excs As Concurrent.ConcurrentBag(Of Exception), Optional ByVal pkey As String = "")
+    Sub AddGraphicObjects(form As FormFlowsheet, data As List(Of XElement), excs As Concurrent.ConcurrentBag(Of Exception), Optional ByVal pkey As String = "", Optional ByVal shift As Integer = 0)
 
         Dim objcount As Integer
 
@@ -1982,6 +1982,8 @@ Public Class FormMain
                 End If
                 obj.LoadData(xel.Elements.ToList)
                 obj.Name = pkey & obj.Name
+                obj.X += shift
+                obj.Y += shift
                 objcount = (From go As GraphicObject In form.FormSurface.FlowsheetDesignSurface.drawingObjects Select go Where go.Tag.Contains(obj.Tag)).Count
                 If objcount > 0 Then obj.Tag = obj.Tag & " (" & (objcount + 1).ToString & ")"
                 If Not TypeOf obj Is DWSIM.GraphicObjects.TableGraphic Then
@@ -1989,86 +1991,86 @@ Public Class FormMain
                     obj.CreateConnectors(0, 0)
                     With form.Collections
                         Select Case obj.TipoObjeto
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.Compressor
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Compressor
                                 .CompressorCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.Cooler
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Cooler
                                 .CoolerCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.EnergyStream
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.EnergyStream
                                 .EnergyStreamCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.Heater
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Heater
                                 .HeaterCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.MaterialStream
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.MaterialStream
                                 .MaterialStreamCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.NodeEn
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.NodeEn
                                 .MixerENCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.NodeIn
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.NodeIn
                                 .MixerCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.NodeOut
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.NodeOut
                                 .SplitterCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.Pipe
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Pipe
                                 .PipeCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.Pump
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Pump
                                 .PumpCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.Tank
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Tank
                                 .TankCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.Expander
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Expander
                                 .TurbineCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.Valve
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Valve
                                 .ValveCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.Vessel
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Vessel
                                 .SeparatorCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.Expander
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Expander
                                 .TurbineCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.OT_Ajuste
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_Ajuste
                                 .AdjustCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.OT_Reciclo
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_Reciclo
                                 .RecycleCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.OT_Especificacao
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_Especificacao
                                 .SpecCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.RCT_Conversion
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_Conversion
                                 .ReactorConversionCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.RCT_Equilibrium
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_Equilibrium
                                 .ReactorEquilibriumCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.RCT_Gibbs
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_Gibbs
                                 .ReactorGibbsCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.RCT_CSTR
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_CSTR
                                 .ReactorCSTRCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.RCT_PFR
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RCT_PFR
                                 .ReactorPFRCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.HeatExchanger
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.HeatExchanger
                                 .HeatExchangerCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.ShortcutColumn
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ShortcutColumn
                                 .ShortcutColumnCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.DistillationColumn
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.DistillationColumn
                                 obj.CreateConnectors(xel.Element("InputConnectors").Elements.Count, xel.Element("OutputConnectors").Elements.Count)
                                 .DistillationColumnCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.AbsorptionColumn
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.AbsorptionColumn
                                 obj.CreateConnectors(xel.Element("InputConnectors").Elements.Count, xel.Element("OutputConnectors").Elements.Count)
                                 .AbsorptionColumnCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.RefluxedAbsorber
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.RefluxedAbsorber
                                 obj.CreateConnectors(xel.Element("InputConnectors").Elements.Count, xel.Element("OutputConnectors").Elements.Count)
                                 .RefluxedAbsorberCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.ReboiledAbsorber
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ReboiledAbsorber
                                 obj.CreateConnectors(xel.Element("InputConnectors").Elements.Count, xel.Element("OutputConnectors").Elements.Count)
                                 .ReboiledAbsorberCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.OT_EnergyRecycle
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OT_EnergyRecycle
                                 .EnergyRecycleCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.ComponentSeparator
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ComponentSeparator
                                 .ComponentSeparatorCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.OrificePlate
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.OrificePlate
                                 .OrificePlateCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.CustomUO
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CustomUO
                                 .CustomUOCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.ExcelUO
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.ExcelUO
                                 .ExcelUOCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.FlowsheetUO
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.FlowsheetUO
                                 .FlowsheetUOCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.CapeOpenUO
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.CapeOpenUO
                                 obj.CreateConnectors(xel.Element("InputConnectors").Elements.Count, xel.Element("OutputConnectors").Elements.Count)
                                 .CapeOpenUOCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.SolidSeparator
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.SolidSeparator
                                 .SolidsSeparatorCollection.Add(obj.Name, obj)
-                            Case Microsoft.MSDN.Samples.GraphicObjects.TipoObjeto.Filter
+                            Case Microsoft.Msdn.Samples.GraphicObjects.TipoObjeto.Filter
                                 .FilterCollection.Add(obj.Name, obj)
                         End Select
                         If Not DWSIM.App.IsRunningOnMono Then
