@@ -117,17 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>315, 13</value>
+  </data>
   <data name="Label1.Text" xml:space="preserve">
-    <value>DWSIM hat einen Fehler verursacht</value>
-  </data>
-  <data name="Label2.Text" xml:space="preserve">
-    <value>
-In den meisten Fällen können Sie DWSIM normal weiter ausführen. Falls Sie das Programm schließen wollen, können Sie die geöffneten Simulationen speichern.
-
-Falls der Fehler nicht zurück verfolgbar ist, wählen Sie "Abbrechen". Ein Speichern der offenen Simulationen ist nicht möglich. In diesem Fall aktivieren Sie "DWSIM neu starten", um das Programm neu zu starten.</value>
-  </data>
-  <data name="KryptonButton1.Text" xml:space="preserve">
-    <value>Speichern/Beenden</value>
+    <value>DWSIM hat einen unbehandelten Fehler / Ausnahme verursacht!</value>
   </data>
   <data name="KryptonButton2.Text" xml:space="preserve">
     <value>Fortsetzen</value>
@@ -135,16 +130,87 @@ Falls der Fehler nicht zurück verfolgbar ist, wählen Sie "Abbrechen". Ein Spei
   <data name="KryptonButton4.Text" xml:space="preserve">
     <value>Schließen</value>
   </data>
-  <data name="KryptonCheckBox1.Text" xml:space="preserve">
-    <value>DWSIM neu starten</value>
+  <data name="Button2.Text" xml:space="preserve">
+    <value>Sende Email</value>
   </data>
-  <data name="Button1.Text" xml:space="preserve">
+  <data name="TabPage1.Text" xml:space="preserve">
+    <value>Fehler</value>
+  </data>
+  <data name="TabPage2.Text" xml:space="preserve">
     <value>Details</value>
   </data>
-  <data name="Button2.Text" xml:space="preserve">
-    <value>Eine Rückmeldung</value>
+  <data name="LabelWithDivider2.Text" xml:space="preserve">
+    <value>Aktionen</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="Button1.Text" xml:space="preserve">
+    <value>Neustart</value>
+  </data>
+  <data name="Button3.Text" xml:space="preserve">
+    <value>Aktualisierungen
+prüfen</value>
+  </data>
+  <data name="Button4.Text" xml:space="preserve">
+    <value>Quelltext @ GitHub</value>
+  </data>
+  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>163, 13</value>
+  </data>
+  <data name="Label2.Text" xml:space="preserve">
+    <value>DWSIM normal weiter ausführen.</value>
+  </data>
+  <data name="Button5.Text" xml:space="preserve">
+    <value>Durchsuche Forum</value>
+  </data>
+  <data name="LabelWithDivider3.Text" xml:space="preserve">
+    <value>Zusätzlicher Support</value>
+  </data>
+  <data name="Button6.Text" xml:space="preserve">
+    <value>Durchsuche Wiki</value>
+  </data>
+  <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>413, 13</value>
+  </data>
+  <data name="Label3.Text" xml:space="preserve">
+    <value>DWSIM zwangsweise beenden. Alle nicht gespeicherten Änderungen gehen verloren.</value>
+  </data>
+  <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>104, 13</value>
+  </data>
+  <data name="Label4.Text" xml:space="preserve">
+    <value>DWSIM neu starten.</value>
+  </data>
+  <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>227, 13</value>
+  </data>
+  <data name="Label5.Text" xml:space="preserve">
+    <value>Auf Verfügbarkeit von Aktualisierungen prüfen.</value>
+  </data>
+  <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>303, 13</value>
+  </data>
+  <data name="Label6.Text" xml:space="preserve">
+    <value>Suche im DWSIM Forum nach Informationen zu diesem Fehler.</value>
+  </data>
+  <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>295, 13</value>
+  </data>
+  <data name="Label7.Text" xml:space="preserve">
+    <value>Suche im DWSIM Wiki nach Informationen zu diesem Fehler.</value>
+  </data>
+  <data name="Label8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>486, 26</value>
+  </data>
+  <data name="Label8.Text" xml:space="preserve">
+    <value>Sende eine Email an die Entwickler mit informationen zu diesem Fehler. Bitte zusätzliche Informationen
+hinzufügen, wie dieser Fehler zu reproduzieren ist.</value>
+  </data>
+  <data name="Label9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>318, 13</value>
+  </data>
+  <data name="Label9.Text" xml:space="preserve">
+    <value>Codezeile wo dieser Fehler auftrat, im GitHub-Repository ansehen.
+</value>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAEAMDAAAAEAGACoHAAAFgAAACgAAAAwAAAAYAAAAAEAGAAAAAAAAAAAAEgAAABIAAAAAAAAAAAA
@@ -273,6 +339,6 @@ Falls der Fehler nicht zurück verfolgbar ist, wählen Sie "Abbrechen". Ein Spei
 </value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Error</value>
+    <value>Unbehandelter Fehler</value>
   </data>
 </root>
