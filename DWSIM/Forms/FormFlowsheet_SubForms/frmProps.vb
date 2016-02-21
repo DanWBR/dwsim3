@@ -5,16 +5,17 @@ Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
 Imports DWSIM.DWSIM
 Imports System.Text
 Imports PropertyGridEx
+Imports DWSIM.DWSIM.FormClasses
 
 Public Class frmProps
     Inherits DockContent
 
-    Private ChildParent As FormFlowsheet
+    Private Flowsheet As FormFlowsheet
     Private Conversor As New DWSIM.SistemasDeUnidades.Conversor
 
     Private Sub _Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        ChildParent = My.Application.ActiveSimulation
+        Flowsheet = My.Application.ActiveSimulation
 
     End Sub
 
@@ -31,19 +32,27 @@ Public Class frmProps
     Public Sub PGEx1_PropertyValueChanged(ByVal s As Object, ByVal e As System.Windows.Forms.PropertyValueChangedEventArgs) Handles PGEx1.PropertyValueChanged
 
         If TypeOf Me.ParentForm Is FormFlowsheet Then
-            ChildParent = Me.ParentForm
+            Flowsheet = Me.ParentForm
         Else
-            ChildParent = My.Application.ActiveSimulation
+            Flowsheet = My.Application.ActiveSimulation
         End If
 
-        Dim sobj As Microsoft.MSDN.Samples.GraphicObjects.GraphicObject = ChildParent.FormSurface.FlowsheetDesignSurface.SelectedObject
+        Dim sobj As Microsoft.Msdn.Samples.GraphicObjects.GraphicObject = Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject
+
+        Flowsheet.UndoStack.Push(New UndoRedoAction() With {.AType = UndoRedoActionType.SimulationObjectProperty,
+                                                            .ID = New Random().Next(),
+                                                            .ObjID = sobj.Name,
+                                                            .OldValue = e.OldValue,
+                                                            .NewValue = e.ChangedItem.Value,
+                                                            .PropertyName = e.ChangedItem.Label})
 
         'handle changes internally
+
         If Not sobj Is Nothing Then
 
             If sobj.TipoObjeto <> TipoObjeto.GO_Tabela And sobj.TipoObjeto <> TipoObjeto.GO_MasterTable And sobj.TipoObjeto <> TipoObjeto.GO_SpreadsheetTable Then
 
-                ChildParent.Collections.ObjectCollection(sobj.Name).HandlePropertyChange(s, e)
+                Flowsheet.Collections.ObjectCollection(sobj.Name).HandlePropertyChange(s, e)
 
             ElseIf sobj.TipoObjeto = TipoObjeto.GO_MasterTable Then
 
@@ -64,7 +73,7 @@ Public Class frmProps
                     End If
                 End If
 
-                mt.Update(ChildParent)
+                mt.Update(Flowsheet)
 
             End If
 
@@ -89,28 +98,36 @@ Public Class frmProps
 
 
     Private Sub PGEx2_PropertyValueChanged(ByVal s As Object, ByVal e As System.Windows.Forms.PropertyValueChangedEventArgs) Handles PGEx2.PropertyValueChanged
+
         If TypeOf Me.ParentForm Is FormFlowsheet Then
-            ChildParent = Me.ParentForm
+            Flowsheet = Me.ParentForm
         Else
-            ChildParent = My.Application.ActiveSimulation
+            Flowsheet = My.Application.ActiveSimulation
         End If
+
+        Flowsheet.UndoStack.Push(New UndoRedoAction() With {.AType = UndoRedoActionType.FlowsheetObjectProperty,
+                                                    .ID = New Random().Next(),
+                                                    .ObjID = Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name,
+                                                    .OldValue = e.OldValue,
+                                                    .NewValue = e.ChangedItem.Value})
+
         If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Nome")) Then
             Try
-                If Not ChildParent.Collections.ObjectCollection(ChildParent.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).Tabela Is Nothing Then
-                    ChildParent.Collections.ObjectCollection(ChildParent.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).Tabela.HeaderText = ChildParent.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag
+                If Not Flowsheet.Collections.ObjectCollection(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).Tabela Is Nothing Then
+                    Flowsheet.Collections.ObjectCollection(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).Tabela.HeaderText = Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Tag
                 End If
-                ChildParent.FormObjList.TreeViewObj.Nodes.Find(ChildParent.FormSurface.FlowsheetDesignSurface.SelectedObject.Name, True)(0).Text = e.ChangedItem.Value
+                Flowsheet.FormObjList.TreeViewObj.Nodes.Find(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name, True)(0).Text = e.ChangedItem.Value
             Catch ex As Exception
-                'ChildParent.WriteToLog(ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
+                'Flowsheet.WriteToLog(ex.ToString, Color.Red, FormClasses.TipoAviso.Erro)
             Finally
-                'CType(FormFlowsheet.SearchSurfaceObjectsByTag(e.OldValue, ChildParent.FormSurface.FlowsheetDesignSurface), GraphicObject).Tag = e.ChangedItem.Value
-                For Each g As GraphicObject In ChildParent.FormSurface.FlowsheetDesignSurface.drawingObjects
+                'CType(FormFlowsheet.SearchSurfaceObjectsByTag(e.OldValue, Flowsheet.FormSurface.FlowsheetDesignSurface), GraphicObject).Tag = e.ChangedItem.Value
+                For Each g As GraphicObject In Flowsheet.FormSurface.FlowsheetDesignSurface.drawingObjects
                     If g.TipoObjeto = TipoObjeto.GO_MasterTable Then
-                        CType(g, DWSIM.GraphicObjects.MasterTableGraphic).Update(ChildParent)
+                        CType(g, DWSIM.GraphicObjects.MasterTableGraphic).Update(Flowsheet)
                     End If
                 Next
             End Try
-            ChildParent.FormSurface.FlowsheetDesignSurface.Invalidate()
+            Flowsheet.FormSurface.FlowsheetDesignSurface.Invalidate()
         End If
     End Sub
 

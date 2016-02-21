@@ -2858,6 +2858,16 @@ Imports Microsoft.Msdn.Samples
 
     Sub UndoAction(act As UndoRedoAction)
 
+        Select Case act.AType
+
+            Case UndoRedoActionType.FlowsheetObjectProperty
+
+       
+
+            Case UndoRedoActionType.SimulationObjectProperty
+
+        End Select
+
     End Sub
 
 #End Region

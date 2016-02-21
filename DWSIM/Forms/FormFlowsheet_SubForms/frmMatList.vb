@@ -6,7 +6,7 @@ Public Class frmMatList
 
     Protected Conversor As DWSIM.SistemasDeUnidades.Conversor
     Protected filename As String = ""
-    Protected ChildParent As FormFlowsheet
+    Protected Flowsheet As FormFlowsheet
     Protected RowsCreated As Boolean = False
 
     Public Function ReturnForm(ByVal str As String) As WeifenLuo.WinFormsUI.Docking.IDockContent
@@ -20,17 +20,17 @@ Public Class frmMatList
     End Function
 
     Private Sub frmMatList_Enter(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Enter
-        Me.ChildParent = My.Application.ActiveSimulation
+        Me.Flowsheet = My.Application.ActiveSimulation
         ToolStripLabel1.Text = ""
-        If Not ChildParent Is Nothing Then
+        If Not Flowsheet Is Nothing Then
             'TABELA DE CORRENTES
             Dim ms As DWSIM.SimulationObjects.Streams.MaterialStream
             DataGridView1.Columns.Clear()
             RowsCreated = False
             Dim i, n As Integer
-            n = ChildParent.Collections.CLCS_MaterialStreamCollection.Values.Count
+            n = Flowsheet.Collections.CLCS_MaterialStreamCollection.Values.Count
             i = 1
-            For Each ms In ChildParent.Collections.CLCS_MaterialStreamCollection.Values
+            For Each ms In Flowsheet.Collections.CLCS_MaterialStreamCollection.Values
                 ToolStripLabel1.Text = i & "/" & n & "..."
                 AddColumn(ms)
                 i += 1
@@ -50,17 +50,17 @@ Public Class frmMatList
 
         ToolStrip1.Visible = DWSIM.App.IsRunningOnMono
 
-        Me.ChildParent = My.Application.ActiveSimulation
+        Me.Flowsheet = My.Application.ActiveSimulation
 
     End Sub
 
     Sub AddColumn(ByRef ms As DWSIM.SimulationObjects.Streams.MaterialStream)
 
-        Me.ChildParent = My.Application.ActiveSimulation
+        Me.Flowsheet = My.Application.ActiveSimulation
         Me.Conversor = New DWSIM.SistemasDeUnidades.Conversor
 
         Dim su As DWSIM.SistemasDeUnidades.Unidades
-        su = ChildParent.Options.SelectedUnitSystem
+        su = Flowsheet.Options.SelectedUnitSystem
 
         Me.DataGridView1.Columns.Add(ms.Nome, ms.GraphicObject.Tag)
         Me.DataGridView1.Columns(ms.Nome).SortMode = DataGridViewColumnSortMode.NotSortable
@@ -98,7 +98,7 @@ Public Class frmMatList
         For Each prop As String In props
             value = ms.GetPropertyValue(prop, su)
             If Double.TryParse(value, New Double) Then
-                Me.DataGridView1.Rows.Item(i).Cells(col.Index).Value = Format(Double.Parse(value), ChildParent.Options.NumberFormat)
+                Me.DataGridView1.Rows.Item(i).Cells(col.Index).Value = Format(Double.Parse(value), Flowsheet.Options.NumberFormat)
             Else
                 Me.DataGridView1.Rows.Item(i).Cells(col.Index).Value = value
             End If

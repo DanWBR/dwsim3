@@ -4,7 +4,7 @@ Imports Microsoft.MSDN.Samples.GraphicObjects
 Public Class frmObjList
     Inherits DockContent
 
-    Private ChildParent As FormFlowsheet
+    Private Flowsheet As FormFlowsheet
 
     Public ACSC As New AutoCompleteStringCollection
 
@@ -19,8 +19,8 @@ Public Class frmObjList
     End Function
 
     Private Sub frmObjList_GotFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles TBSearch.GotFocus
-        If Not ChildParent Is Nothing Then
-            Dim arrays(ChildParent.Collections.ObjectCollection.Count) As String
+        If Not Flowsheet Is Nothing Then
+            Dim arrays(Flowsheet.Collections.ObjectCollection.Count) As String
             Dim aNode As TreeNode
             Dim i As Integer = 0
             For Each aNode In Me.TreeViewObj.Nodes
@@ -36,7 +36,7 @@ Public Class frmObjList
     End Sub
 
     Private Sub frmObjList_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        ChildParent = My.Application.ActiveSimulation
+        Flowsheet = My.Application.ActiveSimulation
     End Sub
 
     Private Sub TBSearch_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TBSearch.TextChanged
@@ -52,13 +52,13 @@ Public Class frmObjList
 
     Private Sub ToolStripMenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripMenuItem1.Click
         If Not Me.TreeViewObj.SelectedNode Is Nothing Then
-            ChildParent = My.Application.ActiveSimulation
-            Dim gObj = FormFlowsheet.SearchSurfaceObjectsByName(Me.TreeViewObj.SelectedNode.Name, ChildParent.FormSurface.FlowsheetDesignSurface)
+            Flowsheet = My.Application.ActiveSimulation
+            Dim gObj = FormFlowsheet.SearchSurfaceObjectsByName(Me.TreeViewObj.SelectedNode.Name, Flowsheet.FormSurface.FlowsheetDesignSurface)
 
             If Not gObj Is Nothing Then
 
-                ChildParent.FormSurface.FlowsheetDesignSurface.SelectedObject = gObj
-                Call ChildParent.FormSurface.FlowsheetDesignSurface_MouseUp(sender, New MouseEventArgs(Windows.Forms.MouseButtons.Left, 1, MousePosition.X, MousePosition.Y, 0))
+                Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject = gObj
+                Call Flowsheet.FormSurface.FlowsheetDesignSurface_MouseUp(sender, New MouseEventArgs(Windows.Forms.MouseButtons.Left, 1, MousePosition.X, MousePosition.Y, 0))
 
             End If
         End If
@@ -66,19 +66,19 @@ Public Class frmObjList
     End Sub
 
     Private Sub ToolStripMenuItem2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripMenuItem2.Click
-        ChildParent = My.Application.ActiveSimulation
+        Flowsheet = My.Application.ActiveSimulation
         Try
-            Dim gObj = FormFlowsheet.SearchSurfaceObjectsByName(Me.TreeViewObj.SelectedNode.Name, ChildParent.FormSurface.FlowsheetDesignSurface)
+            Dim gObj = FormFlowsheet.SearchSurfaceObjectsByName(Me.TreeViewObj.SelectedNode.Name, Flowsheet.FormSurface.FlowsheetDesignSurface)
             If Not gObj Is Nothing Then
 
-                ChildParent.FormSurface.FlowsheetDesignSurface.SelectedObject = gObj
-                Call ChildParent.FormSurface.FlowsheetDesignSurface_MouseUp(sender, New MouseEventArgs(Windows.Forms.MouseButtons.Left, 1, MousePosition.X, MousePosition.Y, 0))
+                Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject = gObj
+                Call Flowsheet.FormSurface.FlowsheetDesignSurface_MouseUp(sender, New MouseEventArgs(Windows.Forms.MouseButtons.Left, 1, MousePosition.X, MousePosition.Y, 0))
 
-                ChildParent.FormSurface.FlowsheetDesignSurface.AutoScrollPosition = New Point(gObj.X * ChildParent.FormSurface.FlowsheetDesignSurface.Zoom - ChildParent.FormSurface.Width / 2, gObj.Y * ChildParent.FormSurface.FlowsheetDesignSurface.Zoom - ChildParent.FormSurface.Height / 2)
+                Flowsheet.FormSurface.FlowsheetDesignSurface.AutoScrollPosition = New Point(gObj.X * Flowsheet.FormSurface.FlowsheetDesignSurface.Zoom - Flowsheet.FormSurface.Width / 2, gObj.Y * Flowsheet.FormSurface.FlowsheetDesignSurface.Zoom - Flowsheet.FormSurface.Height / 2)
 
             End If
         Catch ex As Exception
-            ChildParent.WriteToLog(ex.Message, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
+            Flowsheet.WriteToLog(ex.Message, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
         End Try
 
 

@@ -55,9 +55,9 @@ Public Class FormConfigureTable
 
     Private Sub KryptonButton1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles KryptonButton1.Click
 
-        Dim ChildParent As FormFlowsheet = My.Application.ActiveSimulation
+        Dim Flowsheet As FormFlowsheet = My.Application.ActiveSimulation
 
-        Dim obj As SimulationObjects_BaseClass = ChildParent.Collections.ObjectCollection(Me.objname)
+        Dim obj As SimulationObjects_BaseClass = Flowsheet.Collections.ObjectCollection(Me.objname)
 
         Dim ni As DWSIM.Outros.NodeItem
         For Each ni In obj.NodeTableItems.Values

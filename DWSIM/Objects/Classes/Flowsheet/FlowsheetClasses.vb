@@ -40,14 +40,14 @@ Namespace DWSIM.FormClasses
 
     <System.Serializable()> Public Class UndoRedoAction
 
-        Public Property ID As Integer = -1
-        Public Property Name As String = ""
-        Public Property AType As UndoRedoActionType
-        Public Property ObjID As String = ""
-        Public Property ObjID2 As String = ""
-        Public Property OldValue As Object = Nothing
-        Public Property NewValue As Object = Nothing
-        Public Property PropertyID As String = ""
+        Property ID As Integer = -1
+        Property Name As String = ""
+        Property AType As UndoRedoActionType
+        Property ObjID As String = ""
+        Property ObjID2 As String = ""
+        Property OldValue As Object = Nothing
+        Property NewValue As Object = Nothing
+        Property PropertyName As String = ""
 
     End Class
 

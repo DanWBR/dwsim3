@@ -27,7 +27,7 @@ Public Class FormPureComp
 
     Dim MatStream As DWSIM.SimulationObjects.Streams.MaterialStream
 
-    Public ChildParent As FormFlowsheet
+    Public Flowsheet As FormFlowsheet
 
     Public OnlyViewing As Boolean = True
 
@@ -37,13 +37,13 @@ Public Class FormPureComp
 
     Private Sub FormPureComp_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        Me.ChildParent = My.Application.ActiveSimulation
+        Me.Flowsheet = My.Application.ActiveSimulation
 
         OnlyViewing = False
         If constprop Is Nothing Then
             OnlyViewing = True
 
-            With Me.ChildParent
+            With Me.Flowsheet
                 Dim subst As DWSIM.ClassesBasicasTermodinamica.ConstantProperties
                 Me.ComboBox1.Items.Clear()
                 For Each subst In .Options.SelectedComponents.Values
@@ -52,34 +52,34 @@ Public Class FormPureComp
             End With
         End If
 
-        If ChildParent.Options.SelectedPropertyPackage Is Nothing Then
+        If Flowsheet.Options.SelectedPropertyPackage Is Nothing Then
             MessageBox.Show(DWSIM.App.GetLocalString("NoPropPackDefined"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
             Me.Close()
         Else
             If Not DWSIM.App.IsRunningOnMono Then Me.ComboBox1.SelectedIndex = 0
-            ChildParent.WriteToLog(DWSIM.App.GetLocalTipString("PURE001"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
+            Flowsheet.WriteToLog(DWSIM.App.GetLocalTipString("PURE001"), Color.Black, DWSIM.FormClasses.TipoAviso.Dica)
         End If
 
     End Sub
 
     Sub Populate()
 
-        Dim su As DWSIM.SistemasDeUnidades.Unidades = ChildParent.Options.SelectedUnitSystem
+        Dim su As DWSIM.SistemasDeUnidades.Unidades = Flowsheet.Options.SelectedUnitSystem
         Dim cv As New DWSIM.SistemasDeUnidades.Conversor
-        Dim nf As String = ChildParent.Options.NumberFormat
-        Dim pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage = ChildParent.Options.SelectedPropertyPackage
+        Dim nf As String = Flowsheet.Options.NumberFormat
+        Dim pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage = Flowsheet.Options.SelectedPropertyPackage
 
         Me.MatStream = New MaterialStream("", "")
 
         'add simulation compounds to the dummy material stream
-        Me.ChildParent.AddComponentsRows(Me.MatStream)
+        Me.Flowsheet.AddComponentsRows(Me.MatStream)
 
         pp.CurrentMaterialStream = MatStream
 
         'setting up datatable
         Dim Row As Integer
         Dim TD, VD As Double
-      
+
         'setting up liquid table
         Me.DataTableLiquid.Rows.Clear()
         Me.DataTableLiquid.Rows.Add(51)
@@ -756,7 +756,7 @@ Public Class FormPureComp
         If OnlyViewing = True Or constprop Is Nothing Then
             Dim name As String = ComboBox1.SelectedItem.ToString.Substring(ComboBox1.SelectedItem.ToString.IndexOf("[") + 1, ComboBox1.SelectedItem.ToString.Length - ComboBox1.SelectedItem.ToString.IndexOf("[") - 2)
             constprop = Nothing
-            constprop = Me.ChildParent.Options.SelectedComponents(name)
+            constprop = Me.Flowsheet.Options.SelectedComponents(name)
             SetCompStatus()
         End If
         Populate()
@@ -765,7 +765,7 @@ Public Class FormPureComp
     Private Sub GridProps_CellEndEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GridProps.CellEndEdit
 
         Dim cv As New DWSIM.SistemasDeUnidades.Conversor
-        Dim su As DWSIM.SistemasDeUnidades.Unidades = ChildParent.Options.SelectedUnitSystem
+        Dim su As DWSIM.SistemasDeUnidades.Unidades = Flowsheet.Options.SelectedUnitSystem
         Select Case e.RowIndex
             Case 0 '.Add(New Object() {DWSIM.App.GetLocalString("Database"), constprop.CurrentDB, ""})
             Case 1 '.Add(New Object() {DWSIM.App.GetLocalString("Type"), DWSIM.App.GetComponentType(constprop), ""})
@@ -857,7 +857,7 @@ Public Class FormPureComp
         constprop.IsModified = True
         SetCompStatus()
 
-        For Each mat As DWSIM.SimulationObjects.Streams.MaterialStream In Me.ChildParent.Collections.CLCS_MaterialStreamCollection.Values
+        For Each mat As DWSIM.SimulationObjects.Streams.MaterialStream In Me.Flowsheet.Collections.CLCS_MaterialStreamCollection.Values
             For Each p As DWSIM.ClassesBasicasTermodinamica.Fase In mat.Fases.Values
                 For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In p.Componentes.Values
                     If subst.ConstantProperties.Name = constprop.Name Then
@@ -905,7 +905,7 @@ Public Class FormPureComp
                         cpa = dwdb.Transfer(constprop.Name)
                         If cpa.Length = 1 Then
                             constprop = cpa(0)
-                            Me.ChildParent.Options.SelectedComponents(constprop.Name) = constprop
+                            Me.Flowsheet.Options.SelectedComponents(constprop.Name) = constprop
                         End If
                     End If
                 Catch ex As Exception
@@ -921,7 +921,7 @@ Public Class FormPureComp
                         cpa = csdb.Transfer(constprop.Name)
                         If cpa.Length = 1 Then
                             constprop = cpa(0)
-                            Me.ChildParent.Options.SelectedComponents(constprop.Name) = constprop
+                            Me.Flowsheet.Options.SelectedComponents(constprop.Name) = constprop
                         End If
                     End If
                 Catch ex As Exception
@@ -936,7 +936,7 @@ Public Class FormPureComp
                     For Each cp As ConstantProperties In componentes
                         If cp.Name = constprop.Name Then
                             constprop = cp
-                            Me.ChildParent.Options.SelectedComponents(constprop.Name) = constprop
+                            Me.Flowsheet.Options.SelectedComponents(constprop.Name) = constprop
                             Exit Select
                         End If
                     Next
@@ -951,7 +951,7 @@ Public Class FormPureComp
                         cpa = edb.Transfer(constprop.Name)
                         If cpa.Length = 1 Then
                             constprop = cpa(0)
-                            Me.ChildParent.Options.SelectedComponents(constprop.Name) = constprop
+                            Me.Flowsheet.Options.SelectedComponents(constprop.Name) = constprop
                         End If
                     End If
                 Catch ex As Exception
@@ -968,7 +968,7 @@ Public Class FormPureComp
                         cpa = bddb.Transfer(constprop.Name)
                         If cpa.Length = 1 Then
                             constprop = cpa(0)
-                            Me.ChildParent.Options.SelectedComponents(constprop.Name) = constprop
+                            Me.Flowsheet.Options.SelectedComponents(constprop.Name) = constprop
                         End If
                     End If
                 Catch ex As Exception
@@ -977,7 +977,7 @@ Public Class FormPureComp
                 End Try
         End Select
 
-        For Each mat As DWSIM.SimulationObjects.Streams.MaterialStream In Me.ChildParent.Collections.CLCS_MaterialStreamCollection.Values
+        For Each mat As DWSIM.SimulationObjects.Streams.MaterialStream In Me.Flowsheet.Collections.CLCS_MaterialStreamCollection.Values
             For Each p As DWSIM.ClassesBasicasTermodinamica.Fase In mat.Fases.Values
                 For Each subst As DWSIM.ClassesBasicasTermodinamica.Substancia In p.Componentes.Values
                     subst.ConstantProperties = constprop
