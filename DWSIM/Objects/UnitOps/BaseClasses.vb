@@ -3142,7 +3142,7 @@ Imports PropertyGridEx
     ''' <value></value>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Property GraphicObject() As GraphicObject
+    <Xml.Serialization.XmlIgnore> Public Property GraphicObject() As GraphicObject
         Get
             Return m_graphicobject
         End Get

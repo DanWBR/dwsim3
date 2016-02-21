@@ -1982,7 +1982,7 @@ Public Class FormMain
                 End If
                 obj.LoadData(xel.Elements.ToList)
                 obj.Name = pkey & obj.Name
-                objcount = (From go As GraphicObject In form.FormSurface.FlowsheetDesignSurface.drawingObjects Select go Where go.Tag.Equals(obj.Tag)).Count
+                objcount = (From go As GraphicObject In form.FormSurface.FlowsheetDesignSurface.drawingObjects Select go Where go.Tag.Contains(obj.Tag)).Count
                 If objcount > 0 Then obj.Tag = obj.Tag & " (" & (objcount + 1).ToString & ")"
                 If Not TypeOf obj Is DWSIM.GraphicObjects.TableGraphic Then
                     form.FormSurface.FlowsheetDesignSurface.drawingObjects.Add(obj)

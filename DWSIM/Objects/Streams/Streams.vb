@@ -2382,7 +2382,7 @@ Namespace DWSIM.SimulationObjects.Streams
                 If Not Me.GraphicObject Is Nothing Then Return Me.GraphicObject.Tag Else Return "temporary stream"
             End Get
             Set(ByVal value As String)
-                If Not Me.GraphicObject Is Nothing Then Me.GraphicObject.Tag = value Else Me.Nome = value
+                Me.Nome = value
             End Set
         End Property
 
@@ -5643,7 +5643,7 @@ Namespace DWSIM.SimulationObjects.Streams
                 If Not Me.GraphicObject Is Nothing Then Return Me.GraphicObject.Tag Else Return Me.m_ComponentName
             End Get
             Set(ByVal value As String)
-                If Not Me.GraphicObject Is Nothing Then Me.GraphicObject.Tag = value Else Me.m_ComponentName = value
+                Me.m_ComponentName = value
             End Set
         End Property
 

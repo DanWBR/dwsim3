@@ -2806,7 +2806,6 @@ Imports Microsoft.Msdn.Samples
             End If
             If Not gobj Is Nothing Then
                 obj.LoadData(xel.Elements.ToList)
-                obj.GraphicObject.Name = id
                 If TypeOf obj Is Streams.MaterialStream Then
                     If My.Settings.ClipboardCopyMode_Compounds = 0 Then
                         For Each subst As Substancia In DirectCast(obj, Streams.MaterialStream).Fases(0).Componentes.Values
