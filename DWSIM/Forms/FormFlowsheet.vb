@@ -393,7 +393,6 @@ Imports Microsoft.Msdn.Samples
             Try
                 If File.Exists(path) Then File.Delete(path)
             Catch ex As Exception
-                My.Application.Log.WriteException(ex)
             End Try
         End If
 
