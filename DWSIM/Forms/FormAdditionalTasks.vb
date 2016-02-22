@@ -86,9 +86,27 @@ Public Class FormAdditionalTasks
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
 
-        If cbtask1.Checked Then Task1()
-        If cbtask2.Checked Then Task2()
-        If cbtask3.Checked Then Task3()
+        If cbtask1.Checked Then
+            Try
+                Task1()
+            Catch ex As Exception
+                MessageBox.Show("Error running Task 1: " & ex.Message.ToString, "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End If
+        If cbtask2.Checked Then
+            Try
+                Task2()
+            Catch ex As Exception
+                MessageBox.Show("Error running Task 2: " & ex.Message.ToString, "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End If
+        If cbtask3.Checked Then
+            Try
+                Task3()
+            Catch ex As Exception
+                MessageBox.Show("Error running Task 3: " & ex.Message.ToString, "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End If
 
         If MessageBox.Show(DWSIM.App.GetLocalString("necessrioreiniciaroD"), "DWSIM", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
             If DWSIM.App.IsRunningOnMono Then
