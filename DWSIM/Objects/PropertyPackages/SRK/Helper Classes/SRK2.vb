@@ -20,6 +20,8 @@ Imports DWSIM.DWSIM.MathEx
 Imports System.Threading.Tasks
 Imports System.Linq
 Imports DWSIM.DWSIM.MathEx.PolySolve
+Imports Cudafy.Host
+Imports Cudafy
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
@@ -87,7 +89,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
         End Function
 
-      Shared Function Calc_SUM2(n As Integer, Vx As Double(), a As Double(,)) As Object
+        Shared Function Calc_SUM2(n As Integer, Vx As Double(), a As Double(,)) As Object
 
             Dim saml, aml(n), aml2(n) As Double
 
@@ -248,7 +250,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
                 ci(i) = 0.48 + 1.574 * w(i) - 0.176 * w(i) ^ 2
                 i = i + 1
             Loop Until i = n + 1
-            
+
             a = Calc_SUM1(n, ai, VKij)
 
             i = 0
@@ -318,6 +320,99 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
 
         Public Overrides Function CalcLnFug(ByVal T As Double, ByVal P As Double, ByVal Vx As Array, ByVal VKij As Object, ByVal VTc As Array, ByVal VPc As Array, ByVal Vw As Array, Optional ByVal otherargs As Object = Nothing, Optional ByVal forcephase As String = "") As Double()
 
+            If My.Settings.EnableGPUProcessing Then
+                Return CalcLnFugGPU(T, P, Vx, VKij, VTc, VPc, Vw, otherargs, forcephase)
+            Else
+                Return CalcLnFugCPU(T, P, Vx, VKij, VTc, VPc, Vw, otherargs, forcephase)
+            End If
+
+        End Function
+
+        Private Function CalcLnFugCPU(ByVal T As Double, ByVal P As Double, ByVal Vx As Double(), ByVal VKij As Double(,), ByVal Tc As Double(), ByVal Pc As Double(), ByVal w As Double(), Optional ByVal otherargs As Object = Nothing, Optional ByVal forcephase As String = "")
+
+            Dim n, R, coeff(3) As Double
+            Dim Vant(0, 4) As Double
+            Dim criterioOK As Boolean = False
+            Dim AG, BG, aml, bml As Double
+            Dim t1, t2, t3, t4, t5 As Double
+
+            n = UBound(Vx)
+
+            Dim ai(n), bi(n), tmp(n + 1), a(n, n), b(n, n) As Double
+            Dim aml2(n), amv2(n), LN_CF(n), PHI(n) As Double
+            Dim alpha(n), m(n), Tr(n) As Double
+
+            R = 8.314
+
+            Dim i As Integer
+            i = 0
+            Do
+                Tr(i) = T / Tc(i)
+                i = i + 1
+            Loop Until i = n + 1
+
+            i = 0
+            Do
+                alpha(i) = (1 + (0.48 + 1.574 * w(i) - 0.176 * w(i) ^ 2) * (1 - (T / Tc(i)) ^ 0.5)) ^ 2
+                ai(i) = 0.42748 * alpha(i) * R ^ 2 * Tc(i) ^ 2 / Pc(i)
+                bi(i) = 0.08664 * R * Tc(i) / Pc(i)
+                i = i + 1
+            Loop Until i = n + 1
+
+            a = Calc_SUM1(n, ai, VKij)
+
+            Dim tmpa As Object = Calc_SUM2(n, Vx, a)
+
+            aml2 = tmpa(0)
+            aml = tmpa(1)
+
+            i = 0
+            bml = 0
+            Do
+                bml = bml + Vx(i) * bi(i)
+                i = i + 1
+            Loop Until i = n + 1
+
+            AG = aml * P / (R * T) ^ 2
+            BG = bml * P / (R * T)
+
+            Dim _zarray As ArrayList, _mingz As Object, Z As Double
+
+
+            _zarray = CalcZ(T, P, Vx, VKij, Tc, Pc, w)
+            If forcephase <> "" Then
+                If forcephase = "L" Then
+                    Z = Common.Min(_zarray.ToArray())
+                ElseIf forcephase = "V" Then
+                    Z = Common.Max(_zarray.ToArray())
+                End If
+            Else
+                _mingz = ZtoMinG(_zarray.ToArray, T, P, Vx, VKij, Tc, Pc, w)
+                Z = _zarray(_mingz(0))
+            End If
+
+            Dim Pcorr As Double = P
+            Dim ZP As Double() = CheckRoot(Z, aml, bml, P, T, forcephase)
+            Z = ZP(0)
+            Pcorr = ZP(1)
+
+            i = 0
+            Do
+                t1 = bi(i) * (Z - 1) / bml
+                t2 = -Math.Log(Z - BG)
+                t3 = AG * (2 * aml2(i) / aml - bi(i) / bml)
+                t4 = Math.Log((Z + BG) / Z)
+                t5 = BG
+                LN_CF(i) = t1 + t2 - (t3 * t4 / t5) + Math.Log(Pcorr / P)
+                i = i + 1
+            Loop Until i = n + 1
+
+            Return LN_CF
+
+        End Function
+
+        Private Function CalcLnFugGPU(ByVal T As Double, ByVal P As Double, ByVal Vx As Array, ByVal VKij As Double(,), ByVal VTc As Array, ByVal VPc As Array, ByVal Vw As Array, Optional ByVal otherargs As Object = Nothing, Optional ByVal forcephase As String = "")
+
             Dim n, R, coeff(3) As Double
             Dim Vant(0, 4) As Double
             Dim criterioOK As Boolean = False
@@ -342,35 +437,20 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
                 i = i + 1
             Loop Until i = n + 1
 
-            i = 0
-            Do
-                alpha(i) = (1 + (0.48 + 1.574 * W(i) - 0.176 * W(i) ^ 2) * (1 - (T / Tc(i)) ^ 0.5)) ^ 2
-                ai(i) = 0.42748 * alpha(i) * R ^ 2 * Tc(i) ^ 2 / Pc(i)
-                bi(i) = 0.08664 * R * Tc(i) / Pc(i)
-                i = i + 1
-            Loop Until i = n + 1
+            Dim aml_temp(n), aml2_temp(n), bml_temp(n) As Double
 
-              a = Calc_SUM1(n, ai, VKij)
+            srk_gpu_func(n, Vx, VKij, Tc, Pc, W, T, alpha, ai, bi, a, aml_temp, bml_temp, aml2_temp)
 
-            Dim tmpa As Object = Calc_SUM2(n, Vx, a)
-
-            aml2 = tmpa(0)
-            aml = tmpa(1)
-
-            i = 0
-            bml = 0
-            Do
-                bml = bml + Vx(i) * bi(i)
-                i = i + 1
-            Loop Until i = n + 1
+            aml2 = aml2_temp
+            aml = MathEx.Common.Sum(aml_temp)
+            bml = MathEx.Common.Sum(bml_temp)
 
             AG = aml * P / (R * T) ^ 2
             BG = bml * P / (R * T)
 
-            Dim _zarray As ArrayList, _mingz As Object, Z As Double
+            Dim _zarray As List(Of Double), _mingz As Object, Z As Double
 
-
-            _zarray = CalcZ(T, P, Vx, VKij, VTc, VPc, Vw)
+            _zarray = CalcZ2(AG, BG)
             If forcephase <> "" Then
                 If forcephase = "L" Then
                     Z = Common.Min(_zarray.ToArray())
@@ -378,7 +458,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
                     Z = Common.Max(_zarray.ToArray())
                 End If
             Else
-                _mingz = ZtoMinG(_zarray.ToArray, T, P, Vx, VKij, VTc, VPc, Vw)
+                _mingz = ZtoMinG(_zarray.ToArray(), T, P, Vx, VKij, VTc, VPc, Vw)
                 Z = _zarray(_mingz(0))
             End If
 
@@ -399,6 +479,190 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs
             Loop Until i = n + 1
 
             Return LN_CF
+
+        End Function
+
+        Public Shared Sub srk_gpu_func(n As Integer, Vx As Double(), VKij As Double(,), Tc As Double(), Pc As Double(), w As Double(), T As Double, alpha As Double(), ai As Double(), bi As Double(), a As Double(,), aml_temp As Double(), bml_temp As Double(), aml2_temp As Double())
+
+            Dim gpu As GPGPU = My.MyApplication.gpu
+
+            'gpu.Lock()
+            gpu.SetCurrentContext()
+
+            Dim dev_alpha As Double() = Nothing
+            Dim dev_ai As Double() = Nothing
+            Dim dev_bi As Double() = Nothing
+            Dim dev_Tc As Double() = Nothing
+            Dim dev_Pc As Double() = Nothing
+            Dim dev_W As Double() = Nothing
+            Dim dev_a As Double(,) = Nothing
+            Dim dev_vkij As Double(,) = Nothing
+            Dim dev_Vx As Double() = Nothing
+            Dim dev_aml2_temp As Double() = Nothing
+            Dim dev_aml_temp As Double() = Nothing
+            Dim dev_bml_temp As Double() = Nothing
+
+            ' allocate the memory on the GPU
+            dev_alpha = gpu.Allocate(Of Double)(alpha)
+            dev_ai = gpu.Allocate(Of Double)(ai)
+            dev_bi = gpu.Allocate(Of Double)(bi)
+            dev_Tc = gpu.Allocate(Of Double)(Tc)
+            dev_Pc = gpu.Allocate(Of Double)(Pc)
+            dev_W = gpu.Allocate(Of Double)(w)
+            dev_a = gpu.Allocate(Of Double)(a)
+            dev_vkij = gpu.Allocate(Of Double)(VKij)
+            dev_Vx = gpu.Allocate(Of Double)(Vx)
+            dev_aml2_temp = gpu.Allocate(Of Double)(aml2_temp)
+            dev_aml_temp = gpu.Allocate(Of Double)(aml_temp)
+            dev_bml_temp = gpu.Allocate(Of Double)(bml_temp)
+
+            ' copy the arrays to the GPU
+            gpu.CopyToDevice(alpha, dev_alpha)
+            gpu.CopyToDevice(ai, dev_ai)
+            gpu.CopyToDevice(bi, dev_bi)
+            gpu.CopyToDevice(Tc, dev_Tc)
+            gpu.CopyToDevice(Pc, dev_Pc)
+            gpu.CopyToDevice(w, dev_W)
+            gpu.CopyToDevice(a, dev_a)
+            gpu.CopyToDevice(VKij, dev_vkij)
+            gpu.CopyToDevice(Vx, dev_Vx)
+            gpu.CopyToDevice(aml2_temp, dev_aml2_temp)
+            gpu.CopyToDevice(aml_temp, dev_aml_temp)
+            gpu.CopyToDevice(bml_temp, dev_bml_temp)
+
+            ' launch subs
+            gpu.Launch(n + 1, 1).srk_gpu_sum1(dev_alpha, dev_ai, dev_bi, dev_Tc, dev_Pc, dev_W, T)
+            gpu.Launch(New dim3(n + 1, n + 1), 1).srk_gpu_sum2(dev_a, dev_ai, dev_vkij)
+            gpu.Launch(n + 1, 1).srk_gpu_sum3(dev_Vx, dev_a, dev_aml_temp, dev_aml2_temp)
+            gpu.Launch(n + 1, 1).srk_gpu_sum4(dev_Vx, dev_bi, dev_bml_temp)
+
+            ' copy the arrays back from the GPU to the CPU
+            gpu.CopyFromDevice(dev_alpha, alpha)
+            gpu.CopyFromDevice(dev_ai, ai)
+            gpu.CopyFromDevice(dev_bi, bi)
+            gpu.CopyFromDevice(dev_Tc, Tc)
+            gpu.CopyFromDevice(dev_Pc, Pc)
+            gpu.CopyFromDevice(dev_W, w)
+            gpu.CopyFromDevice(dev_a, a)
+            gpu.CopyFromDevice(dev_vkij, VKij)
+            gpu.CopyFromDevice(dev_Vx, Vx)
+            gpu.CopyFromDevice(dev_aml2_temp, aml2_temp)
+            gpu.CopyFromDevice(dev_aml_temp, aml_temp)
+            gpu.CopyFromDevice(dev_bml_temp, bml_temp)
+
+            ' free the memory allocated on the GPU
+            gpu.Free(dev_alpha)
+            gpu.Free(dev_ai)
+            gpu.Free(dev_bi)
+            gpu.Free(dev_Tc)
+            gpu.Free(dev_Pc)
+            gpu.Free(dev_W)
+            gpu.Free(dev_a)
+            gpu.Free(dev_vkij)
+            gpu.Free(dev_Vx)
+            gpu.Free(dev_aml2_temp)
+            gpu.Free(dev_aml_temp)
+            gpu.Free(dev_bml_temp)
+
+            'gpu.Unlock()
+
+        End Sub
+
+        <Cudafy.Cudafy()> Private Shared Sub srk_gpu_sum1(thread As Cudafy.GThread, alpha As Double(), ai As Double(), bi As Double(), Tc As Double(), Pc As Double(), W As Double(), T As Double)
+
+            Dim i As Integer = thread.blockIdx.x
+
+            alpha(i) = (1 + (0.48 + 1.574 * W(i) - 0.176 * W(i) ^ 2) * (1 - (T / Tc(i)) ^ 0.5)) ^ 2
+            ai(i) = 0.42748 * alpha(i) * 8.314 ^ 2 * Tc(i) ^ 2 / Pc(i)
+            bi(i) = 0.08664 * 8.314 * Tc(i) / Pc(i)
+            i = i + 1
+
+        End Sub
+
+        <Cudafy.Cudafy()> Private Shared Sub srk_gpu_sum2(thread As Cudafy.GThread, a As Double(,), ai As Double(), VKij As Double(,))
+
+            Dim i As Integer = thread.blockIdx.x
+            Dim j As Integer = thread.blockIdx.y
+
+            a(i, j) = (ai(i) * ai(j)) ^ 0.5 * (1 - VKij(i, j))
+
+        End Sub
+
+        <Cudafy.Cudafy()> Private Shared Sub srk_gpu_sum3(thread As Cudafy.GThread, Vx As Double(), a As Double(,), aml_temp As Double(), aml2_temp As Double())
+
+            Dim i As Integer = thread.blockIdx.x
+
+            aml_temp(i) = 0
+            aml2_temp(i) = 0
+            For k As Integer = 0 To Vx.Length - 1
+                aml_temp(i) += Vx(i) * Vx(k) * a(i, k)
+                aml2_temp(i) += Vx(k) * a(k, i)
+            Next
+
+        End Sub
+
+        <Cudafy.Cudafy()> Private Shared Sub srk_gpu_sum4(thread As Cudafy.GThread, Vx As Double(), bi As Double(), bml_temp As Double())
+
+            Dim i As Integer = thread.blockIdx.x
+
+            bml_temp(i) = Vx(i) * bi(i)
+
+        End Sub
+
+        Shared Function CalcZ2(AG As Double, BG As Double) As List(Of Double)
+
+            Dim coeff(3) As Double
+            Dim Vant(0, 4) As Double
+
+            coeff(0) = -AG * BG
+            coeff(1) = AG - BG - BG ^ 2
+            coeff(2) = -1
+            coeff(3) = 1
+
+            Dim temp1 = Poly_Roots(coeff)
+            Dim tv = 0.0#
+            Dim ZV, tv2 As Double
+
+            Dim result As New List(Of Double)
+
+            If temp1(0, 0) > temp1(1, 0) Then
+                tv = temp1(1, 0)
+                temp1(1, 0) = temp1(0, 0)
+                temp1(0, 0) = tv
+                tv2 = temp1(1, 1)
+                temp1(1, 1) = temp1(0, 1)
+                temp1(0, 1) = tv2
+            End If
+            If temp1(0, 0) > temp1(2, 0) Then
+                tv = temp1(2, 0)
+                temp1(2, 0) = temp1(0, 0)
+                temp1(0, 0) = tv
+                tv2 = temp1(2, 1)
+                temp1(2, 1) = temp1(0, 1)
+                temp1(0, 1) = tv2
+            End If
+            If temp1(1, 0) > temp1(2, 0) Then
+                tv = temp1(2, 0)
+                temp1(2, 0) = temp1(1, 0)
+                temp1(1, 0) = tv
+                tv2 = temp1(2, 1)
+                temp1(2, 1) = temp1(1, 1)
+                temp1(1, 1) = tv2
+            End If
+
+            ZV = temp1(2, 0)
+            If temp1(2, 1) <> 0 Then
+                ZV = temp1(1, 0)
+                If temp1(1, 1) <> 0 Then
+                    ZV = temp1(0, 0)
+                End If
+            End If
+
+            If temp1(0, 1) = 0.0# And temp1(0, 0) > 0.0# Then result.Add(temp1(0, 0))
+            If temp1(1, 1) = 0.0# And temp1(1, 0) > 0.0# Then result.Add(temp1(1, 0))
+            If temp1(2, 1) = 0.0# And temp1(2, 0) > 0.0# Then result.Add(temp1(2, 0))
+
+            Return result
 
         End Function
 

@@ -433,7 +433,8 @@ Namespace DWSIM
                         Select Case My.Settings.CudafyTarget
                             Case 0
                                 My.MyApplication.gpumod = CudafyTranslator.Cudafy(GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.LeeKeslerPlocker), _
-                                            GetType(DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.PR))
+                                            GetType(DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.PR),
+                                            GetType(DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.SRK))
                                 My.MyApplication.gpumod.Serialize("emulator.cdfy")
                             Case 1
                                 Dim cp As New Cudafy.CompileProperties()
@@ -447,11 +448,13 @@ Namespace DWSIM
                                     .IncludeDirectoryPath = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\include"
                                 End With
                                 My.MyApplication.gpumod = CudafyTranslator.Cudafy(cp, GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.LeeKeslerPlocker), _
-                                            GetType(DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.PR))
+                                            GetType(DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.PR),
+                                            GetType(DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.SRK))
                                 My.MyApplication.gpumod.Serialize("cudacode.cdfy")
                             Case 2
                                 My.MyApplication.gpumod = CudafyTranslator.Cudafy(GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.LeeKeslerPlocker), _
-                                            GetType(DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.PR))
+                                            GetType(DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.PR),
+                                            GetType(DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.SRK))
                         End Select
                     End If
                 End If

@@ -19,6 +19,27 @@ Module Extensions
     End Sub
 
     <System.Runtime.CompilerServices.Extension()> _
+    Public Sub ExpandGroup(propertyGrid As PropertyGridEx.PropertyGridEx, groupName As String)
+        Dim root As GridItem = propertyGrid.SelectedGridItem
+        'Get the parent
+        While root.Parent IsNot Nothing
+            root = root.Parent
+        End While
+
+        If root IsNot Nothing Then
+            For Each g As GridItem In root.GridItems
+                For Each g2 As GridItem In g.GridItems
+                    If g2.Label = groupName Then
+                        g2.Expanded = True
+                        Exit For
+                    End If
+                Next
+            Next
+        End If
+
+    End Sub
+
+    <System.Runtime.CompilerServices.Extension()> _
     Public Function DropDownWidth(control As ListView) As Integer
         Dim maxWidth As Integer = 0, temp As Integer = 0
         For Each obj As Object In control.Items
