@@ -3581,7 +3581,6 @@ End Class
 
     Public Enum scriptlanguage
         IronPython = 2
-        Lua = 4
     End Enum
 
     Public Property ScriptExt_FontName() As String

@@ -185,48 +185,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
             End If
 
             Select Case Language
-                Case 4
-                    'Dim lscript As New Lua
-                    'lscript("Flowsheet") = FlowSheet
-                    'lscript("Spreadsheet") = FlowSheet.FormSpreadsheet
-                    'lscript("Plugins") = My.MyApplication.UtilityPlugins
-                    'Dim Solver As New DWSIM.Flowsheet.FlowsheetSolver
-                    'lscript("Solver") = Solver
-                    'lscript("Me") = Me
-                    'For Each variable In InputVariables
-                    '    lscript(variable.Key) = variable.Value
-                    'Next
-                    'lscript("ims1") = ims1
-                    'lscript("ims2") = ims2
-                    'lscript("ims3") = ims3
-                    'lscript("ims4") = ims4
-                    'lscript("ims5") = ims5
-                    'lscript("ims6") = ims6
-                    'lscript("oms1") = oms1
-                    'lscript("oms2") = oms2
-                    'lscript("oms3") = oms3
-                    'lscript("oms4") = oms4
-                    'lscript("oms5") = oms5
-                    'lscript("oms6") = oms6
-                    'lscript("ies1") = ies1
-                    'lscript("oes1") = oes1
-                    'lscript("DWSIM") = GetType(DWSIM.ClassesBasicasTermodinamica.Fase).Assembly
-                    'Try
-                    '    Dim txtcode As String = ""
-                    '    If Not Includes Is Nothing Then
-                    '        For Each fname As String In Me.Includes
-                    '            txtcode += File.ReadAllText(fname) + vbCrLf
-                    '        Next
-                    '    End If
-                    '    txtcode += Me.ScriptText
-                    '    lscript.DoString(txtcode)
-                    '    OutputVariables.Clear()
-                    'Catch ex As Exception
-                    '    Me.ErrorMessage = ex.ToString
-                    '    Me.DeCalculate()
-                    '    lscript = Nothing
-                    '    Throw ex
-                    'End Try
                 Case 2
                     engine = IronPython.Hosting.Python.CreateEngine()
                     Dim paths(My.Settings.ScriptPaths.Count - 1) As String
@@ -237,8 +195,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     End Try
                     engine.Runtime.LoadAssembly(GetType(System.String).Assembly)
                     engine.Runtime.LoadAssembly(GetType(DWSIM.ClassesBasicasTermodinamica.ConstantProperties).Assembly)
-                    engine.Runtime.LoadAssembly(GetType(Microsoft.Msdn.Samples.GraphicObjects.GraphicObject).Assembly)
-                    engine.Runtime.LoadAssembly(GetType(Microsoft.Msdn.Samples.DesignSurface.GraphicsSurface).Assembly)
+                    engine.Runtime.LoadAssembly(GetType(Microsoft.MSDN.Samples.GraphicObjects.GraphicObject).Assembly)
+                    engine.Runtime.LoadAssembly(GetType(Microsoft.MSDN.Samples.DesignSurface.GraphicsSurface).Assembly)
                     scope = engine.CreateScope()
                     scope.SetVariable("Flowsheet", FlowSheet)
                     scope.SetVariable("Spreadsheet", FlowSheet.FormSpreadsheet)
@@ -650,8 +608,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Select Case m_sl.Value
                 Case "IronPython"
                     Me._scriptlanguage = scriptlanguage.IronPython
-                Case "Lua"
-                    Me._scriptlanguage = scriptlanguage.Lua
             End Select
         End Sub
 
