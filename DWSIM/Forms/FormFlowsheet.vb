@@ -531,7 +531,7 @@ Imports Microsoft.Msdn.Samples
         Tag
     End Enum
 
-    Public Shared Function SearchSurfaceObjectsByName(ByVal Name As String, ByVal Surface As Microsoft.Msdn.Samples.DesignSurface.GraphicsSurface) As GraphicObject
+    Public Shared Function SearchSurfaceObjectsByName(ByVal Name As String, ByVal Surface As Microsoft.MSDN.Samples.DesignSurface.GraphicsSurface) As GraphicObject
 
         Dim gObj As GraphicObject = Nothing
         Dim gObj2 As GraphicObject = Nothing
@@ -545,7 +545,7 @@ Imports Microsoft.Msdn.Samples
 
     End Function
 
-    Public Shared Function SearchSurfaceObjectsByTag(ByVal Name As String, ByVal Surface As Microsoft.Msdn.Samples.DesignSurface.GraphicsSurface) As GraphicObject
+    Public Shared Function SearchSurfaceObjectsByTag(ByVal Name As String, ByVal Surface As Microsoft.MSDN.Samples.DesignSurface.GraphicsSurface) As GraphicObject
 
         Dim gObj As GraphicObject = Nothing
         Dim gObj2 As GraphicObject = Nothing
@@ -2862,7 +2862,7 @@ Imports Microsoft.Msdn.Samples
 
             Case UndoRedoActionType.FlowsheetObjectProperty
 
-       
+
 
             Case UndoRedoActionType.SimulationObjectProperty
 
