@@ -6,6 +6,7 @@ Imports DWSIM.DWSIM
 Imports System.Text
 Imports PropertyGridEx
 Imports DWSIM.DWSIM.FormClasses
+Imports System.Linq
 
 Public Class frmProps
     Inherits DockContent
@@ -39,12 +40,16 @@ Public Class frmProps
 
         Dim sobj As Microsoft.Msdn.Samples.GraphicObjects.GraphicObject = Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject
 
-        Flowsheet.UndoStack.Push(New UndoRedoAction() With {.AType = UndoRedoActionType.SimulationObjectProperty,
-                                                            .ID = New Random().Next(),
-                                                            .ObjID = sobj.Name,
-                                                            .OldValue = e.OldValue,
-                                                            .NewValue = e.ChangedItem.Value,
-                                                            .PropertyName = e.ChangedItem.Label})
+        Dim cprop As CustomProperty = (From pd As CustomProperty In PGEx1.Item Select pd Where pd.Name = e.ChangedItem.Label).SingleOrDefault
+
+        If cprop.Tag2 <> Nothing Then
+            Flowsheet.UndoStack.Push(New UndoRedoAction() With {.AType = UndoRedoActionType.SimulationObjectPropertyChanged,
+                                                                .ID = New Random().Next(),
+                                                                .ObjID = sobj.Name,
+                                                                .OldValue = e.OldValue,
+                                                                .NewValue = e.ChangedItem.Value,
+                                                                .PropertyName = cprop.Tag2})
+        End If
 
         'handle changes internally
 
@@ -105,11 +110,16 @@ Public Class frmProps
             Flowsheet = My.Application.ActiveSimulation
         End If
 
-        Flowsheet.UndoStack.Push(New UndoRedoAction() With {.AType = UndoRedoActionType.FlowsheetObjectProperty,
-                                                    .ID = New Random().Next(),
-                                                    .ObjID = Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name,
-                                                    .OldValue = e.OldValue,
-                                                    .NewValue = e.ChangedItem.Value})
+        Dim cprop As CustomProperty = (From pd As CustomProperty In PGEx1.Item Select pd Where pd.Name = e.ChangedItem.Label).SingleOrDefault
+
+        If cprop.Tag2 <> Nothing Then
+            Flowsheet.UndoStack.Push(New UndoRedoAction() With {.AType = UndoRedoActionType.FlowsheetObjectPropertyChanged,
+                                                        .ID = New Random().Next(),
+                                                        .ObjID = Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name,
+                                                        .OldValue = e.OldValue,
+                                                        .NewValue = e.ChangedItem.Value,
+                                                        .PropertyName = cprop.Tag2})
+        End If
 
         If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Nome")) Then
             Try

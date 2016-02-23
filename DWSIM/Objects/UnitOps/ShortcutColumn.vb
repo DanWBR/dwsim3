@@ -659,7 +659,9 @@ final:      FlowSheet.CalculationQueue.Enqueue(objargs)
                 End With
 
                 .Item.Add(DWSIM.App.GetLocalString("SCCondenserType"), Me, "condtype", False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("SCCondenserType"), True)
+                .Item(.Item.Count - 1).Tag2 = "condtype"
                 .Item.Add(DWSIM.App.GetLocalString("SCRefluxRatio"), Me, "m_refluxratio", False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("SCRefluxRatio"), True)
+                .Item(.Item.Count - 1).Tag2 = "PROP_SC_0"
                 .Item.Add(DWSIM.App.GetLocalString("SCLightKey"), DWSIM.App.GetComponentName(Me.m_lightkey), False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("SCLightKeyMF"), True)
                 With .Item(.Item.Count - 1)
                     .IsBrowsable = False
@@ -668,6 +670,7 @@ final:      FlowSheet.CalculationQueue.Enqueue(objargs)
                     .DefaultType = GetType(String)
                 End With
                 .Item.Add(DWSIM.App.GetLocalString("SCLightKeyMF"), Me, "m_lightkeymolarfrac", False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("SCLightKeyMF"), True)
+                .Item(.Item.Count - 1).Tag2 = "PROP_SC_2"
                 .Item.Add(DWSIM.App.GetLocalString("SCHeavyKey"), DWSIM.App.GetComponentName(Me.m_heavykey), False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("SCHeavyKey"), True)
                 With .Item(.Item.Count - 1)
                     .IsBrowsable = False
@@ -676,15 +679,18 @@ final:      FlowSheet.CalculationQueue.Enqueue(objargs)
                     .DefaultType = GetType(String)
                 End With
                 .Item.Add(DWSIM.App.GetLocalString("SCHeavyKeyMF"), Me, "m_heavykeymolarfrac", False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("SCHeavyKeyMF"), True)
+                .Item(.Item.Count - 1).Tag2 = "PROP_SC_1"
                 Dim valor = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.m_condenserpressure), FlowSheet.Options.NumberFormat)
                 .Item.Add(FT(DWSIM.App.GetLocalString("SCCondenserPressure"), su.spmp_pressure), Double.Parse(valor), False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("SCCondenserPressure"), True)
                 With .Item(.Item.Count - 1)
+                    .Tag2 = "PROP_SC_3"
                     .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_pressure, "P"}
                     .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                 End With
                 valor = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.m_boilerpressure), FlowSheet.Options.NumberFormat)
                 .Item.Add(FT(DWSIM.App.GetLocalString("SCReboilerPressure"), su.spmp_pressure), Double.Parse(valor), False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("SCReboilerPressure"), True)
                 With .Item(.Item.Count - 1)
+                    .Tag2 = "PROP_SC_4"
                     .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_pressure, "P"}
                     .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                 End With

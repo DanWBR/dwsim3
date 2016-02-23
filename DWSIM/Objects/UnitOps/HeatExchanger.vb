@@ -1288,12 +1288,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         AValue = Format(Conversor.ConverterDoSI(su.area, Me.Area), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("Area"), su.area), AValue, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("HeatTransferArea"), True)
                         With .Item(.Item.Count - 1)
+                            .Tag2 = "PROP_HX_1"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.area, "A"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With
                         AValue = Format(Conversor.ConverterDoSI(su.heat_transf_coeff, Me.OverallCoefficient), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("OverallHeatTranferCoefficient"), su.heat_transf_coeff), AValue, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("OverallHeatTranferCoefficientDesc"), True)
                         With .Item(.Item.Count - 1)
+                            .Tag2 = "PROP_HX_0"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.heat_transf_coeff, "U"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With
@@ -1301,12 +1303,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         AValue = Format(Conversor.ConverterDoSI(su.area, Me.Area), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("Area"), su.area), AValue, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("HeatTransferArea"), True)
                         With .Item(.Item.Count - 1)
+                            .Tag2 = "PROP_HX_1"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.area, "A"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With
                         AValue = Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.Q), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("HeatLoad"), su.spmp_heatflow), AValue, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("HeatLoadOfEquipment"), True)
                         With .Item(.Item.Count - 1)
+                            .Tag2 = "PROP_HX_2"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_heatflow, "E"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With
@@ -1314,12 +1318,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         AValue = Format(Conversor.ConverterDoSI(su.area, Me.Area), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("Area"), su.area), AValue, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("HeatTransferArea"), True)
                         With .Item(.Item.Count - 1)
+                            .Tag2 = "PROP_HX_1"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.area, "A"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With
                         AValue = Format(Conversor.ConverterDoSI(su.spmp_temperature, Me.TempHotOut), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("HXTempHotOut"), su.spmp_temperature), AValue, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("HXTempHotOutDesc"), True)
                         With .Item(.Item.Count - 1)
+                            .Tag2 = "PROP_HX_4"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_temperature, "T"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With
@@ -1327,12 +1333,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         AValue = Format(Conversor.ConverterDoSI(su.area, Me.Area), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("Area"), su.area), AValue, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("HeatTransferArea"), True)
                         With .Item(.Item.Count - 1)
+                            .Tag2 = "PROP_HX_1"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.area, "A"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With
                         AValue = Format(Conversor.ConverterDoSI(su.spmp_temperature, Me.TempColdOut), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("HXTempColdOut"), su.spmp_temperature), AValue, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("HXTempColdOutDesc"), True)
                         With .Item(.Item.Count - 1)
+                            .Tag2 = "PROP_HX_3"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_temperature, "T"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With
@@ -1343,6 +1351,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 AValue = Format(Conversor.ConverterDoSI(su.spmp_temperature, Me.TempColdOut), FlowSheet.Options.NumberFormat)
                                 .Item.Add(FT(DWSIM.App.GetLocalString("HXTempColdOut"), su.spmp_temperature), AValue, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("HXTempColdOutDesc"), True)
                                 With .Item(.Item.Count - 1)
+                                    .Tag2 = "PROP_HX_3"
                                     .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_temperature, "T"}
                                     .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                                 End With
@@ -1350,6 +1359,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 AValue = Format(Conversor.ConverterDoSI(su.spmp_temperature, Me.TempHotOut), FlowSheet.Options.NumberFormat)
                                 .Item.Add(FT(DWSIM.App.GetLocalString("HXTempHotOut"), su.spmp_temperature), AValue, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("HXTempHotOutDesc"), True)
                                 With .Item(.Item.Count - 1)
+                                    .Tag2 = "PROP_HX_4"
                                     .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_temperature, "T"}
                                     .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                                 End With
@@ -1365,12 +1375,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         AValue = Format(Conversor.ConverterDoSI(su.spmp_temperature, Me.TempColdOut), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("HXTempColdOut"), su.spmp_temperature), AValue, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("HXTempColdOutDesc"), True)
                         With .Item(.Item.Count - 1)
+                            .Tag2 = "PROP_HX_3"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_temperature, "T"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With
                         AValue = Format(Conversor.ConverterDoSI(su.spmp_temperature, Me.TempHotOut), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("HXTempHotOut"), su.spmp_temperature), AValue, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("HXTempHotOutDesc"), True)
                         With .Item(.Item.Count - 1)
+                            .Tag2 = "PROP_HX_4"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_temperature, "T"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With

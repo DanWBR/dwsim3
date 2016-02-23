@@ -991,6 +991,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 End With
 
                 .Item.Add(DWSIM.App.GetLocalString("PumpCalcMode"), Me, "CalcMode", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "", True)
+                .Item(.Item.Count - 1).Tag2 = "CalcMode"
 
                 Select Case Me.CalcMode
                     Case CalculationMode.Curves
@@ -1003,6 +1004,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             If Not Me.Curves("EFF").Enabled Then
                                 .Item.Add(DWSIM.App.GetLocalString("Eficincia0100"), Me, "Eficiencia", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Eficinciaglobaldabom"), True)
                                 With .Item(.Item.Count - 1)
+                                    .Tag2 = "PROP_PI_1"
                                     .DefaultValue = Nothing
                                     .DefaultType = GetType(Nullable(Of Double))
                                 End With
@@ -1012,17 +1014,20 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Dim valor = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT("Delta P", su.spmp_deltaP), Double.Parse(valor), False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Diferenadepressoentr"), True)
                         With .Item(.Item.Count - 1)
+                            .Tag2 = "PROP_PI_0"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_deltaP, "DP"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With
                         .Item.Add(DWSIM.App.GetLocalString("Eficincia0100"), Me, "Eficiencia", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Eficinciaglobaldabom"), True)
                         With .Item(.Item.Count - 1)
+                            .Tag2 = "PROP_PI_1"
                             .DefaultValue = Nothing
                             .DefaultType = GetType(Nullable(Of Double))
                         End With
                     Case CalculationMode.EnergyStream
                         .Item.Add(DWSIM.App.GetLocalString("Eficincia0100"), Me, "Eficiencia", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Eficinciaglobaldabom"), True)
                         With .Item(.Item.Count - 1)
+                            .Tag2 = "PROP_PI_1"
                             .DefaultValue = Nothing
                             .DefaultType = GetType(Nullable(Of Double))
                         End With
@@ -1030,6 +1035,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Dim valor = Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("Energianecessria"), su.spmp_heatflow), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Potnciarequeridapela"), True)
                         With .Item(.Item.Count - 1)
+                            .Tag2 = "PROP_PI_3"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_pressure, "E"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With
@@ -1042,6 +1048,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         End With
                         .Item.Add(DWSIM.App.GetLocalString("Eficincia0100"), Me, "Eficiencia", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Eficinciaglobaldabom"), True)
                         With .Item(.Item.Count - 1)
+                            .Tag2 = "PROP_PI_1"
                             .DefaultValue = Nothing
                             .DefaultType = GetType(Nullable(Of Double))
                         End With

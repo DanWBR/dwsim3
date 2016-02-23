@@ -697,6 +697,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Dim valor = Format(Conversor.ConverterDoSI(su.spmp_temperature, Me.FlashTemperature), FlowSheet.Options.NumberFormat)
                     .Item.Add(FT(DWSIM.App.GetLocalString("Temperatura"), su.spmp_temperature), Double.Parse(valor), False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("Temperaturadeseparao"), True)
                     With .Item(.Item.Count - 1)
+                        .Tag2 = "PROP_SV_0"
                         .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_temperature, "T"}
                         .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                     End With
@@ -706,6 +707,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Dim valor = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.FlashPressure), FlowSheet.Options.NumberFormat)
                     .Item.Add(FT(DWSIM.App.GetLocalString("Presso"), su.spmp_pressure), Double.Parse(valor), False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("Pressodeseparao"), True)
                     With .Item(.Item.Count - 1)
+                        .Tag2 = "PROP_SV_1"
                         .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_pressure, "P"}
                         .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                     End With

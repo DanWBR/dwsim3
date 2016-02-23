@@ -442,6 +442,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 End If
 
                 .Item.Add(DWSIM.App.GetLocalString("SplitterOperationMode"), Me, "OperationMode", False, DWSIM.App.GetLocalString("Parmetros2"), "", True)
+                .Item(.Item.Count - 1).Tag2 = "OperationMode"
 
                 Dim n As Integer = 0
                 For Each cp In Me.GraphicObject.OutputConnectors
@@ -471,6 +472,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Dim valor = Format(Conversor.ConverterDoSI(su.spmp_massflow, Me.StreamFlowSpec), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetPropertyName("PROP_SP_1"), su.spmp_massflow), valor, False, DWSIM.App.GetLocalString("Parmetros2"), "", True)
                         With .Item(.Item.Count - 1)
+                            .Tag2 = "PROP_SP_1"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_massflow, "W"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With
@@ -478,6 +480,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             valor = Format(Conversor.ConverterDoSI(su.spmp_massflow, Me.Stream2FlowSpec), FlowSheet.Options.NumberFormat)
                             .Item.Add(FT(DWSIM.App.GetPropertyName("PROP_SP_2"), su.spmp_massflow), valor, False, DWSIM.App.GetLocalString("Parmetros2"), "", True)
                             With .Item(.Item.Count - 1)
+                                .Tag2 = "PROP_SP_2"
                                 .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_massflow, "W"}
                                 .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                             End With
@@ -486,6 +489,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Dim valor = Format(Conversor.ConverterDoSI(su.spmp_molarflow, Me.StreamFlowSpec), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetPropertyName("PROP_SP_1"), su.spmp_molarflow), valor, False, DWSIM.App.GetLocalString("Parmetros2"), "", True)
                         With .Item(.Item.Count - 1)
+                            .Tag2 = "PROP_SP_1"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_molarflow, "M"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With
@@ -493,6 +497,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             valor = Format(Conversor.ConverterDoSI(su.spmp_molarflow, Me.Stream2FlowSpec), FlowSheet.Options.NumberFormat)
                             .Item.Add(FT(DWSIM.App.GetPropertyName("PROP_SP_2"), su.spmp_molarflow), valor, False, DWSIM.App.GetLocalString("Parmetros2"), "", True)
                             With .Item(.Item.Count - 1)
+                                .Tag2 = "PROP_SP_2"
                                 .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_molarflow, "M"}
                                 .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                             End With

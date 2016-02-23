@@ -1390,8 +1390,11 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 End If
 
                 .Item.Add(DWSIM.App.GetLocalString("InitializeOnLoad"), Me, "InitializeOnLoad", False, DWSIM.App.GetLocalString("Configuraes2"), DWSIM.App.GetLocalString("InitializeOnLoadDesc"), True)
+                .Item(.Item.Count - 1).Tag2 = "InitializeOnLoad"
                 .Item.Add(DWSIM.App.GetLocalString("UpdateOnSave"), Me, "UpdateOnSave", False, DWSIM.App.GetLocalString("Configuraes2"), DWSIM.App.GetLocalString("UpdateOnSaveDesc"), True)
+                .Item(.Item.Count - 1).Tag2 = "UpdateOnSave"
                 .Item.Add(DWSIM.App.GetLocalString("RedirectOutput"), Me, "RedirectOutput", False, DWSIM.App.GetLocalString("Configuraes2"), DWSIM.App.GetLocalString("RedirectOutputDesc"), True)
+                .Item(.Item.Count - 1).Tag2 = "RedirectOutput"
 
                 If Initialized Then
 
@@ -1407,6 +1410,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                       Fsheet.Collections.ObjectCollection(p.ObjectID).GetPropertyValue(p.ObjectProperty, Me.FlowSheet.Options.SelectedUnitSystem), False,
                                       DWSIM.App.GetLocalString("LinkedInputParms"), DWSIM.App.GetLocalString(""), True)
                             .Item(.Item.Count - 1).Tag = p.ID
+                            .Item(.Item.Count - 1).Tag2 = "[I][" & p.ID & "]"
                         End If
                     Next
 

@@ -436,11 +436,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Dim valor = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                 .Item.Add(FT(DWSIM.App.GetLocalString("Quedadepresso"), su.spmp_deltaP), Double.Parse(valor), False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Quedadepressoaplicad4"), True)
                 With .Item(.Item.Count - 1)
+                    .Tag2 = "PROP_CL_0"
                     .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_deltaP, "DP"}
                     .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                 End With
 
                 .Item.Add(DWSIM.App.GetLocalString("HeaterCoolerCalcMode"), Me, "CalcMode", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "", True)
+                .Item(.Item.Count - 1).Tag2 = "CalcMode"
 
                 Select Case Me.CalcMode
 
@@ -449,6 +451,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         valor = Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("CalorRemovido"), su.spmp_heatflow), Double.Parse(valor), False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Quantidadedecalorced"), True)
                         With .Item(.Item.Count - 1)
+                            .Tag2 = "PROP_CL_3"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_heatflow, "E"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With
@@ -458,6 +461,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         valor = Format(Conversor.ConverterDoSI(su.spmp_temperature, Me.OutletTemperature.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature"), su.spmp_temperature), Double.Parse(valor), False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "", True)
                         With .Item(.Item.Count - 1)
+                            .Tag2 = "PROP_CL_2"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_temperature, "T"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With
@@ -466,11 +470,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                         valor = Format(Me.OutletVaporFraction.GetValueOrDefault, FlowSheet.Options.NumberFormat)
                         .Item.Add(DWSIM.App.GetLocalString("FraomolardafaseFaseV"), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "", True)
+                        .Item(.Item.Count - 1).Tag2 = "PROP_CL_4"
 
                 End Select
 
                 .Item.Add(DWSIM.App.GetLocalString("Eficincia0100"), Me, "Eficiencia", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Eficinciadoaquecedor2"), True)
                 With .Item(.Item.Count - 1)
+                    .Tag2 = "PROP_CL_1"
                     .DefaultValue = Nothing
                     .DefaultType = GetType(Nullable(Of Double))
                 End With

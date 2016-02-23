@@ -338,16 +338,18 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 'End With
 
                 .Item.Add(DWSIM.App.GetLocalString("ValveCalcMode"), Me, "CalcMode", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "", True)
+                .Item(.Item.Count - 1).Tag2 = "CalcMode"
+
                 Dim valor As Double
 
                 Select Case Me.CalcMode
-
 
                     Case CalculationMode.DeltaP
 
                         valor = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("Quedadepresso"), su.spmp_deltaP), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString(""), True)
                         With .Item(.Item.Count - 1)
+                            .Tag2 = "PROP_VA_1"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_deltaP, "DP"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With
@@ -357,6 +359,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         valor = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.OutletPressure.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("ValveOutletPressure"), su.spmp_pressure), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "", True)
                         With .Item(.Item.Count - 1)
+                            .Tag2 = "PROP_VA_2"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_pressure, "P"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With

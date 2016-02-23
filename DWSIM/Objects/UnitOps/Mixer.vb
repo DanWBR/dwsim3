@@ -312,6 +312,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 End With
 
                 .Item.Add(DWSIM.App.GetLocalString("Pressoajusante"), Me, "PressureCalculation", False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("Selecioneumaopoquein"), True)
+                .Item(.Item.Count - 1).Tag2 = "PressureCalculation"
                 With .Item(.Item.Count - 1)
                     .DefaultValue = Nothing
                 End With

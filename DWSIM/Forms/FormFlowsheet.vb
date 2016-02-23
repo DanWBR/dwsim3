@@ -2175,20 +2175,35 @@ Imports Microsoft.Msdn.Samples
                 .Item.Clear()
 
                 .Item.Add(DWSIM.App.GetLocalString("Cor"), gobj2, "LineColor", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Cordotextodatabela"), True)
+                .Item(.Item.Count - 1).Tag2 = "LineColor"
                 .Item.Add(DWSIM.App.GetLocalString("Cabealho"), gobj2, "HeaderFont", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Fontedotextodocabeal"), True)
+                .Item(.Item.Count - 1).Tag2 = "HeaderFont"
                 .Item.Add(DWSIM.App.GetLocalString("Coluna1Fonte"), gobj2, "FontCol1", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Fontedotextodacoluna"), True)
+                .Item(.Item.Count - 1).Tag2 = "FontCol1"
                 .Item.Add(DWSIM.App.GetLocalString("Coluna2Fonte"), gobj2, "FontCol2", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Fontedotextodacoluna2"), True)
+                .Item(.Item.Count - 1).Tag2 = "FontCol2"
                 .Item.Add(DWSIM.App.GetLocalString("Coluna3Fonte"), gobj2, "FontCol3", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Fontedotextodacoluna3"), True)
+                .Item(.Item.Count - 1).Tag2 = "FontCol3"
                 .Item.Add(DWSIM.App.GetLocalString("Tratamentodotexto"), gobj2, "TextRenderStyle", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Tipodesuavizaoaplica"), True)
+                .Item(.Item.Count - 1).Tag2 = "TextRenderStyle"
                 .Item.Add(DWSIM.App.GetLocalString("Estilodaborda"), gobj2, "BorderStyle", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Estilodabordatraceja"), True)
+                .Item(.Item.Count - 1).Tag2 = "BorderStyle"
                 .Item.Add(DWSIM.App.GetLocalString("Cordaborda"), gobj2, "BorderColor", False, DWSIM.App.GetLocalString("Aparncia2"), "", True)
+                .Item(.Item.Count - 1).Tag2 = "BorderColor"
                 .Item.Add(DWSIM.App.GetLocalString("Espaamento"), gobj2, "Padding", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Espaamentoentreotext"), True)
+                .Item(.Item.Count - 1).Tag2 = "Padding"
                 .Item.Add(DWSIM.App.GetLocalString("Rotao"), gobj2, "Rotation", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Inclinaodatabelaemre"), True)
+                .Item(.Item.Count - 1).Tag2 = "Rotation"
                 .Item.Add(DWSIM.App.GetLocalString("Gradiente2"), gobj2, "IsGradientBackground", False, DWSIM.App.GetLocalString("Fundo"), "Selecione se deve ser utilizado um gradiente no fundo da tabela", True)
+                .Item(.Item.Count - 1).Tag2 = "IsGradientBackground"
                 .Item.Add(DWSIM.App.GetLocalString("Corsemgradiente"), gobj2, "FillColor", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Corsemgradiente"), True)
+                .Item(.Item.Count - 1).Tag2 = "FillColor"
                 .Item.Add(DWSIM.App.GetLocalString("Cor1gradiente"), gobj2, "BackgroundGradientColor1", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Cor1dogradientecasoa"), True)
+                .Item(.Item.Count - 1).Tag2 = "BackgroundGradientColor1"
                 .Item.Add(DWSIM.App.GetLocalString("Cor2gradiente"), gobj2, "BackgroundGradientColor2", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Cor2dogradientecasoa"), True)
+                .Item(.Item.Count - 1).Tag2 = "BackgroundGradientColor2"
                 .Item.Add(DWSIM.App.GetLocalString("Opacidade0255"), gobj2, "Opacity", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Nveldetransparnciada"), True)
+                .Item(.Item.Count - 1).Tag2 = "Opacity"
 
                 .PropertySort = PropertySort.Categorized
                 .ShowCustomProperties = True
@@ -2859,11 +2874,11 @@ Imports Microsoft.Msdn.Samples
 
         Select Case act.AType
 
-            Case UndoRedoActionType.FlowsheetObjectProperty
+            Case UndoRedoActionType.FlowsheetObjectPropertyChanged
 
 
 
-            Case UndoRedoActionType.SimulationObjectProperty
+            Case UndoRedoActionType.SimulationObjectPropertyChanged
 
         End Select
 

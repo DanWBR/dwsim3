@@ -310,6 +310,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Dim valor = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                 .Item.Add(FT(DWSIM.App.GetLocalString("Quedadepresso"), su.spmp_deltaP), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Quedadepressoaplicad5"), True)
                 With .Item(.Item.Count - 1)
+                    .Tag2 = "PROP_TK_0"
                     .DefaultValue = Nothing
                     .DefaultType = GetType(Nullable(Of Double))
                 End With
@@ -317,6 +318,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 valor = Format(Conversor.ConverterDoSI(su.volume, Me.Volume), FlowSheet.Options.NumberFormat)
                 .Item.Add(FT(DWSIM.App.GetLocalString("TKVol"), su.volume), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("TKVol"), True)
                 With .Item(.Item.Count - 1)
+                    .Tag2 = "PROP_TK_1"
                     .DefaultValue = Nothing
                     .DefaultType = GetType(Double)
                 End With

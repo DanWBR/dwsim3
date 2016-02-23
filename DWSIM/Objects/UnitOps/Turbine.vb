@@ -432,12 +432,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 End With
 
                 .Item.Add(DWSIM.App.GetLocalString("HeaterCoolerCalcMode"), Me, "CalcMode", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "", True)
+                .Item(.Item.Count - 1).Tag2 = "CalcMode"
 
                 Select Case Me.CalcMode
                     Case CalculationMode.Delta_P
                         Dim valor = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT("Delta P", su.spmp_deltaP), Double.Parse(valor), False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Diferenadepressoentr"), True)
                         With .Item(.Item.Count - 1)
+                            .Tag2 = "PROP_EX_0"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_deltaP, "DP"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With
@@ -445,6 +447,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Dim valor = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.POut.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("Presso"), su.spmp_pressure), Double.Parse(valor), False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Pressoajusante"), True)
                         With .Item(.Item.Count - 1)
+                            .Tag2 = "PROP_EX_4"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_pressure, "P"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With
@@ -452,6 +455,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 .Item.Add(DWSIM.App.GetLocalString("EficinciaAdiabtica01"), Me, "EficienciaAdiabatica", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "Eficiência da turbina em relação ao processo ideal isentrópico/adiabático", True)
                 With .Item(.Item.Count - 1)
+                    .Tag2 = "PROP_EX_1"
                     .DefaultValue = Nothing
                     .DefaultType = GetType(Nullable(Of Double))
                 End With
@@ -463,6 +467,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 .Item.Add(FT(DWSIM.App.GetLocalString("DeltaT2"), su.spmp_deltaT), Format(Conversor.ConverterDoSI(su.spmp_deltaT, Me.DeltaT.GetValueOrDefault), FlowSheet.Options.NumberFormat), True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("Diferenadetemperatur"), True)
                 With .Item(.Item.Count - 1)
+                    .Tag2 = "PROP_EX_2"
                     .DefaultValue = Nothing
                     .DefaultType = GetType(Nullable(Of Double))
                 End With

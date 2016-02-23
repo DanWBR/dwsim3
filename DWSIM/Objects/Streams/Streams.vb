@@ -978,10 +978,12 @@ Namespace DWSIM.SimulationObjects.Streams
                 ElseIf Me.GraphicObject.InputConnectors(0).AttachedConnector.AttachedFrom.TipoObjeto = TipoObjeto.OT_Reciclo Then
                     .Item.Add("[1] " & DWSIM.App.GetLocalString("Especificao"), Me, "SpecType", False, DWSIM.App.GetLocalString("Condies1"), "")
                 End If
+                .Item(.Item.Count - 1).Tag2 = "SpecType"
 
                 valor = Format(Conversor.ConverterDoSI(su.spmp_temperature, Me.Fases(0).SPMProperties.temperature.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                 .Item.Add("[2] " & FT(DWSIM.App.GetLocalString("Temperatura"), su.spmp_temperature), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Temperaturadacorrent"), True)
                 With .Item(.Item.Count - 1)
+                    .Tag2 = "PROP_MS_0"
                     Select Case Me.SpecType
                         Case Flashspec.Pressure_and_Enthalpy, Flashspec.Pressure_and_Entropy, Flashspec.Pressure_and_VaporFraction
                             .IsReadOnly = True
@@ -994,6 +996,7 @@ Namespace DWSIM.SimulationObjects.Streams
                 valor = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.Fases(0).SPMProperties.pressure.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                 .Item.Add(FT("[3] " & DWSIM.App.GetLocalString("Presso"), su.spmp_pressure), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Pressodacorrente"), True)
                 With .Item(.Item.Count - 1)
+                    .Tag2 = "PROP_MS_1"
                     Select Case Me.SpecType
                         Case Flashspec.Temperature_and_VaporFraction
                             .IsReadOnly = True
@@ -1006,18 +1009,21 @@ Namespace DWSIM.SimulationObjects.Streams
                 valor = Format(Conversor.ConverterDoSI(su.spmp_massflow, Me.Fases(0).SPMProperties.massflow.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                 .Item.Add("[4] " & FT(DWSIM.App.GetLocalString("Vazomssica"), su.spmp_massflow), valor, False, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Vazomssicadacorrente"), True)
                 With .Item(.Item.Count - 1)
+                    .Tag2 = "PROP_MS_2"
                     .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_massflow, "W"}
                     .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                 End With
                 valor = Format(Conversor.ConverterDoSI(su.spmp_molarflow, Me.Fases(0).SPMProperties.molarflow.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                 .Item.Add("[5] " & FT(DWSIM.App.GetLocalString("Vazomolar"), su.spmp_molarflow), valor, False, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Vazomolardacorrente"), True)
                 With .Item(.Item.Count - 1)
+                    .Tag2 = "PROP_MS_3"
                     .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_molarflow, "M"}
                     .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                 End With
                 valor = Format(Conversor.ConverterDoSI(su.spmp_volumetricFlow, Me.Fases(0).SPMProperties.volumetric_flow.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                 .Item.Add("[6] " & FT(DWSIM.App.GetLocalString("Vazovolumtrica"), su.spmp_volumetricFlow), valor, False, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Vazovolumtricadacorr"), True)
                 With .Item(.Item.Count - 1)
+                    .Tag2 = "PROP_MS_4"
                     .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_volumetricFlow, "Q"}
                     .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                 End With
@@ -1026,11 +1032,13 @@ Namespace DWSIM.SimulationObjects.Streams
                 valor = Format(Me.Fases(7).SPMProperties.molarfraction.GetValueOrDefault, FlowSheet.Options.NumberFormat)
                 f.Add(DWSIM.App.GetLocalString("Solid"), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True) 'solid
                 f.Item(0).IsReadOnly = True
+                f.Item(0).Tag2 = "PROP_MS_146"
                 valor = Format(Me.Fases(1).SPMProperties.molarfraction.GetValueOrDefault, FlowSheet.Options.NumberFormat)
                 f.Add(DWSIM.App.GetLocalString("OverallLiquid"), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True) ' liquid
                 f.Item(1).IsReadOnly = True
                 valor = Format(Me.Fases(2).SPMProperties.molarfraction.GetValueOrDefault, FlowSheet.Options.NumberFormat)
                 f.Add(DWSIM.App.GetLocalString("Vapor"), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("Fraomolardafasenamis"), True) 'vapour
+                f.Item(2).Tag2 = "PROP_MS_27"
 
                 If Not Me.GraphicObject.InputConnectors(0).IsAttached And _
                     (Me.SpecType = Flashspec.Pressure_and_VaporFraction Or Me.SpecType = Flashspec.Temperature_and_VaporFraction) _
@@ -1047,6 +1055,7 @@ Namespace DWSIM.SimulationObjects.Streams
                 valor = Format(Conversor.ConverterDoSI(su.spmp_enthalpy, Me.Fases(0).SPMProperties.enthalpy.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                 .Item.Add("[8] " & FlowSheet.FT(DWSIM.App.GetLocalString("EntalpiaEspecfica"), su.spmp_enthalpy), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("EntalpiaEspecficadam"), True)
                 With .Item(.Item.Count - 1)
+                    .Tag2 = "PROP_MS_7"
                     Select Case Me.SpecType
                         Case Flashspec.Pressure_and_Enthalpy
                             .IsReadOnly = False
@@ -1057,6 +1066,7 @@ Namespace DWSIM.SimulationObjects.Streams
                 valor = Format(Conversor.ConverterDoSI(su.spmp_entropy, Me.Fases(0).SPMProperties.entropy.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                 .Item.Add("[9] " & FlowSheet.FT(DWSIM.App.GetLocalString("EntropiaEspecfica"), su.spmp_entropy), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("EntropiaEspecficadam"), True)
                 With .Item(.Item.Count - 1)
+                    .Tag2 = "PROP_MS_8"
                     Select Case Me.SpecType
                         Case Flashspec.Pressure_and_Entropy
                             .IsReadOnly = False
@@ -5524,6 +5534,7 @@ Namespace DWSIM.SimulationObjects.Streams
                 Dim valor = Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.Energia.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                 .Item.Add(FT(DWSIM.App.GetPropertyName("PROP_ES_0"), su.spmp_heatflow), valor, False, DWSIM.App.GetLocalString("Propriedades2"), DWSIM.App.GetLocalString("Quantidadedeenergiap"), True)
                 With .Item(.Item.Count - 1)
+                    .Tag2 = "PROP_ES_0"
                     .DefaultValue = Nothing
                     .DefaultType = GetType(Nullable(Of Double))
                 End With

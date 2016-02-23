@@ -1271,18 +1271,22 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Case CapeParamType.CAPE_BOOLEAN
                             Dim par As BooleanParameter = TryCast(p, BooleanParameter)
                             .Item.Add(id, par, "Value", If(par.Mode = CapeParamMode.CAPE_OUTPUT, True, False), "4. Parameters", desc, True)
+                            .Item(.Item.Count - 1).Tag2 = id
                         Case CapeParamType.CAPE_INT
                             Dim par As IntegerParameter = TryCast(p, IntegerParameter)
                             .Item.Add(id, par, "Value", If(par.Mode = CapeParamMode.CAPE_OUTPUT, True, False), "4. Parameters", desc, True)
+                            .Item(.Item.Count - 1).Tag2 = id
                         Case CapeParamType.CAPE_OPTION
                             Dim par As OptionParameter = TryCast(p, OptionParameter)
                             .Item.Add(id, par, "Value", If(par.Mode = CapeParamMode.CAPE_OUTPUT, True, False), "4. Parameters", desc, True)
+                            .Item(.Item.Count - 1).Tag2 = id
                             With .Item(.Item.Count - 1)
                                 If Not par.OptionList Is Nothing Then .Choices = New PropertyGridEx.CustomChoices(par.OptionList, False)
                             End With
                         Case CapeParamType.CAPE_REAL
                             Dim par As RealParameter = TryCast(p, RealParameter)
                             .Item.Add(id, par, "SIValue", If(par.Mode = CapeParamMode.CAPE_OUTPUT, True, False), "4. Parameters", desc, True)
+                            .Item(.Item.Count - 1).Tag2 = id
                     End Select
                 Next
 

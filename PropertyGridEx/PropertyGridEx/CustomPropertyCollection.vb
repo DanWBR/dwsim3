@@ -180,7 +180,6 @@ Namespace PropertyGridEx
             Return Properties
         End Function
 
-
         Public Function GetPropertyOwner(ByVal pd As System.ComponentModel.PropertyDescriptor) As Object Implements System.ComponentModel.ICustomTypeDescriptor.GetPropertyOwner
             Return Me
         End Function

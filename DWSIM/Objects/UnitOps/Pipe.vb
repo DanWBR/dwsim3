@@ -1623,6 +1623,7 @@ Final3:     T = bbb
                     .CustomTypeConverter = New DWSIM.Editors.PipeEditor.PipeEditorConverter
                 End With
                 .Item.Add(DWSIM.App.GetLocalString("Equaopfluxo"), Me, "SelectedFlowPackage", False, DWSIM.App.GetLocalString("Perfis2"), DWSIM.App.GetLocalString("Selecioneaequaoparac"), True)
+                .Item(.Item.Count - 1).Tag2 = "SelectedFlowPackage"
                 .Item.Add("Status", Me.Profile, "Status", True, DWSIM.App.GetLocalString("Perfis2"), "", True)
                 .Item.Add(DWSIM.App.GetLocalString("PerfilTrmico"), Me, "ThermalProfile", False, DWSIM.App.GetLocalString("Perfis2"), DWSIM.App.GetLocalString("Cliquenobotocomretic3"), True)
                 With .Item(.Item.Count - 1)
@@ -1632,6 +1633,7 @@ Final3:     T = bbb
                 End With
 
                 .Item.Add(DWSIM.App.GetLocalString("PipeSpecMode"), Me, "Specification", False, DWSIM.App.GetLocalString("Parmetros3"), DWSIM.App.GetLocalString("PipeSpecModeDesc"), True)
+                .Item(.Item.Count - 1).Tag2 = "Specification"
 
                 Dim valor As Double
 
@@ -1641,6 +1643,7 @@ Final3:     T = bbb
                         valor = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.OutletPressure), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("ValveOutletPressure"), su.spmp_pressure), valor, False, DWSIM.App.GetLocalString("Parmetros3"), "", True)
                         With .Item(.Item.Count - 1)
+                            .Tag2 = "PROP_PI_3"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_pressure, "P"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With
@@ -1648,6 +1651,7 @@ Final3:     T = bbb
                         valor = Format(Conversor.ConverterDoSI(su.spmp_temperature, Me.OutletTemperature), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature"), su.spmp_temperature), valor, False, DWSIM.App.GetLocalString("Parmetros3"), "", True)
                         With .Item(.Item.Count - 1)
+                            .Tag2 = "PROP_PI_4"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_temperature, "T"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With

@@ -408,17 +408,24 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 '.Item.Add(DWSIM.App.GetLocalString("OPCalculationMethod"), Me, "CalculationMethod", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "", True)
                 .Item.Add(DWSIM.App.GetLocalString("OPOrificeType"), Me, "OrifType", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "", True)
+                .Item(.Item.Count - 1).Tag2 = "OrifType"
 
                 Dim valor As Double = 0
 
                 valor = Conversor.ConverterDoSI(su.diameter, Me.OrificeDiameter)
                 .Item.Add(FT(DWSIM.App.GetLocalString("OPOrificeDiameter"), su.diameter), Format(valor, FlowSheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "", True)
+                .Item(.Item.Count - 1).Tag2 = "PROP_OP_1"
                 .Item.Add(DWSIM.App.GetLocalString("OPBeta"), Format(Me.Beta, FlowSheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "", True)
+                .Item(.Item.Count - 1).Tag2 = "PROP_OP_2"
                 .Item.Add(DWSIM.App.GetLocalString("OPCorrectionFactor"), Format(Me.CorrectionFactor, FlowSheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "", True)
+                .Item(.Item.Count - 1).Tag2 = "PROP_OP_3"
 
                 .Item.Add(FT(DWSIM.App.GetLocalString("OPOrificePressureDrop"), su.spmp_deltaP), Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.OrificePressureDrop), FlowSheet.Options.NumberFormat), True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("Diferenadetemperatur"), True)
+                .Item(.Item.Count - 1).Tag2 = "PROP_OP_4"
                 .Item.Add(FT(DWSIM.App.GetLocalString("OPOverallPressureDrop"), su.spmp_deltaP), Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.OverallPressureDrop), FlowSheet.Options.NumberFormat), True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("Diferenadetemperatur"), True)
+                .Item(.Item.Count - 1).Tag2 = "PROP_OP_5"
                 .Item.Add(FT(DWSIM.App.GetLocalString("OPDeltaT"), su.spmp_deltaT), Format(Conversor.ConverterDoSI(su.spmp_deltaT, Me.DeltaT.GetValueOrDefault), FlowSheet.Options.NumberFormat), True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("Diferenadetemperatur"), True)
+                .Item(.Item.Count - 1).Tag2 = "PROP_OP_6"
 
 
                 If Me.GraphicObject.Calculated = False Then

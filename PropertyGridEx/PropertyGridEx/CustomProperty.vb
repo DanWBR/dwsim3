@@ -557,6 +557,12 @@ Namespace PropertyGridEx
         End Property
 
         <XmlIgnore()> _
+        Public Property Tag2() As Object
+
+        <XmlIgnore()> _
+        Public Property Tag3() As Object
+
+        <XmlIgnore()> _
         Public Property DefaultValue() As Object
             Get
                 Return oDefaultValue
