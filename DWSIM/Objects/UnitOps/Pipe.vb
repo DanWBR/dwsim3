@@ -347,10 +347,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                             Qlin = .Fases(3).SPMProperties.volumetric_flow.GetValueOrDefault + .Fases(4).SPMProperties.volumetric_flow.GetValueOrDefault + .Fases(5).SPMProperties.volumetric_flow.GetValueOrDefault + .Fases(6).SPMProperties.volumetric_flow.GetValueOrDefault
                             rho_l = .Fases(1).SPMProperties.density.GetValueOrDefault
+                            If Double.IsNaN(rho_l) Then rho_l = 0.0#
                             eta_l = .Fases(1).SPMProperties.viscosity.GetValueOrDefault
                             K_l = .Fases(1).SPMProperties.thermalConductivity.GetValueOrDefault
                             Cp_l = .Fases(1).SPMProperties.heatCapacityCp.GetValueOrDefault
                             tens = .Fases(0).TPMProperties.surfaceTension.GetValueOrDefault
+                            If Double.IsNaN(tens) Then tens = 0.0#
                             w_l = .Fases(1).SPMProperties.massflow.GetValueOrDefault
 
                             Qvin = .Fases(2).SPMProperties.volumetric_flow.GetValueOrDefault
@@ -550,10 +552,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                                 Qlin = .Fases(3).SPMProperties.volumetric_flow.GetValueOrDefault + .Fases(4).SPMProperties.volumetric_flow.GetValueOrDefault + .Fases(5).SPMProperties.volumetric_flow.GetValueOrDefault + .Fases(6).SPMProperties.volumetric_flow.GetValueOrDefault
                                 rho_l = .Fases(1).SPMProperties.density.GetValueOrDefault
+                                If Double.IsNaN(rho_l) Then rho_l = 0.0#
                                 eta_l = .Fases(1).SPMProperties.viscosity.GetValueOrDefault
                                 K_l = .Fases(1).SPMProperties.thermalConductivity.GetValueOrDefault
                                 Cp_l = .Fases(1).SPMProperties.heatCapacityCp.GetValueOrDefault
                                 tens = .Fases(0).TPMProperties.surfaceTension.GetValueOrDefault
+                                If Double.IsNaN(tens) Then rho_l = 0.0#
                                 w_l = .Fases(1).SPMProperties.massflow.GetValueOrDefault
 
                                 Qvin = .Fases(2).SPMProperties.volumetric_flow.GetValueOrDefault
