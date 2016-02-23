@@ -1527,15 +1527,11 @@ Imports System.Reflection
 
                         Dim InCon, OutCon As ConnectionPoint
                         For Each InCon In gobj.InputConnectors
-                            If InCon.IsAttached = True Then
-                                DisconnectObject(InCon.AttachedConnector.AttachedFrom, gobj, False)
-                            End If
+                            If InCon.IsAttached = True Then DisconnectObject(InCon.AttachedConnector.AttachedFrom, gobj, False)
                         Next
                         gobj = SelectedObj
                         For Each OutCon In gobj.OutputConnectors
-                            If OutCon.IsAttached = True Then
-                                DisconnectObject(gobj, OutCon.AttachedConnector.AttachedTo, False)
-                            End If
+                            If OutCon.IsAttached = True Then DisconnectObject(gobj, OutCon.AttachedConnector.AttachedTo, False)
                         Next
                         gobj = SelectedObj
 
@@ -1565,16 +1561,12 @@ Imports System.Reflection
                         Else
                             Dim obj As SimulationObjects_BaseClass = Me.Collections.ObjectCollection(SelectedObj.Name)
                             DeCalculateDisconnectedObject(Me, SelectedObj, "Out")
-                            If gobj.EnergyConnector.IsAttached = True Then
-                                DisconnectObject(gobj, gobj.EnergyConnector.AttachedConnector.AttachedTo, False)
-                            End If
                             gobj = SelectedObj
+                            If gobj.EnergyConnector.IsAttached = True Then DisconnectObject(gobj, gobj.EnergyConnector.AttachedConnector.AttachedTo, False)
                             Dim InCon, OutCon As ConnectionPoint
                             For Each InCon In gobj.InputConnectors
                                 Try
-                                    If InCon.IsAttached = True Then
-                                        DisconnectObject(InCon.AttachedConnector.AttachedFrom, gobj, False)
-                                    End If
+                                    If InCon.IsAttached = True Then DisconnectObject(InCon.AttachedConnector.AttachedFrom, gobj, False)
                                 Catch ex As Exception
 
                                 End Try
@@ -1582,9 +1574,7 @@ Imports System.Reflection
                             gobj = SelectedObj
                             For Each OutCon In gobj.OutputConnectors
                                 Try
-                                    If OutCon.IsAttached = True Then
-                                           DisconnectObject(gobj, OutCon.AttachedConnector.AttachedTo, False)
-                                    End If
+                                    If OutCon.IsAttached = True Then DisconnectObject(gobj, OutCon.AttachedConnector.AttachedTo, False)
                                 Catch ex As Exception
 
                                 End Try
@@ -1598,237 +1588,237 @@ Imports System.Reflection
                                                                          .OldValue = Me.Collections.ObjectCollection(namesel).SaveData(),
                                                                          .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_ObjectRemoved"), gobj.Tag)})
 
-                            'dispose object
-                            Me.Collections.ObjectCollection(namesel).Dispose()
+                        'dispose object
+                        Me.Collections.ObjectCollection(namesel).Dispose()
 
-                            Select Case SelectedObj.TipoObjeto
-                                Case TipoObjeto.NodeIn
-                                    Me.Collections.MixerCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_MixerCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.NodeOut
-                                    Me.Collections.SplitterCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeSP").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_SplitterCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.NodeEn
-                                    Me.Collections.MixerENCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeME").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_EnergyMixerCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.Pump
-                                    Me.Collections.PumpCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodePU").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_PumpCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.Tank
-                                    Me.Collections.TankCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeTQ").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_TankCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.Vessel
-                                    Me.Collections.SeparatorCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeSE").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_VesselCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.MaterialStream
-                                    Me.Collections.MaterialStreamCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeMS").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_MaterialStreamCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.Compressor
-                                    Me.Collections.CompressorCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeCO").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_CompressorCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.Expander
-                                    Me.Collections.TurbineCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeTU").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_TurbineCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.TPVessel
-                                    Me.Collections.TPSeparatorCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeTP").Nodes.RemoveByKey(namesel)
-                                Case TipoObjeto.Cooler
-                                    Me.Collections.CoolerCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeCL").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_CoolerCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.Heater
-                                    Me.Collections.HeaterCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeHT").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_HeaterCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.Pipe
-                                    Me.Collections.CLCS_PipeCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodePI").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.PipeCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.Valve
-                                    Me.Collections.ValveCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeVA").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_ValveCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.OT_Ajuste
-                                    Me.Collections.AdjustCollection.Remove(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_AdjustCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.OT_Especificacao
-                                    If Me.Collections.ObjectCollection.ContainsKey(Me.Collections.CLCS_SpecCollection(namesel).TargetObjectData.m_ID) Then
-                                        Me.Collections.ObjectCollection(Me.Collections.CLCS_SpecCollection(namesel).TargetObjectData.m_ID).IsSpecAttached = False
-                                        Me.Collections.ObjectCollection(Me.Collections.CLCS_SpecCollection(namesel).TargetObjectData.m_ID).AttachedSpecId = ""
-                                    End If
-                                    If Me.Collections.ObjectCollection.ContainsKey(Me.Collections.CLCS_SpecCollection(namesel).SourceObjectData.m_ID) Then
-                                        Me.Collections.ObjectCollection(Me.Collections.CLCS_SpecCollection(namesel).SourceObjectData.m_ID).IsSpecAttached = False
-                                        Me.Collections.ObjectCollection(Me.Collections.CLCS_SpecCollection(namesel).SourceObjectData.m_ID).AttachedSpecId = ""
-                                    End If
-                                    Me.Collections.SpecCollection.Remove(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_SpecCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.OT_Reciclo
-                                    Me.Collections.RecycleCollection.Remove(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_RecycleCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.OT_EnergyRecycle
-                                    Me.Collections.EnergyRecycleCollection.Remove(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_EnergyRecycleCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.HeatExchanger
-                                    Me.Collections.HeatExchangerCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeHE").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_HeatExchangerCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.ShortcutColumn
-                                    Me.Collections.HeatExchangerCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeSC").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_HeatExchangerCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.OrificePlate
-                                    Me.Collections.OrificePlateCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeOPL").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_OrificePlateCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.ComponentSeparator
-                                    Me.Collections.ComponentSeparatorCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeCSEP").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_ComponentSeparatorCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.CustomUO
-                                    Me.Collections.CustomUOCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeUO").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_CustomUOCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.ExcelUO
-                                    Me.Collections.ExcelUOCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeExcel").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_ExcelUOCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.FlowsheetUO
-                                    Me.Collections.FlowsheetUOCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeFS").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_FlowsheetUOCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.CapeOpenUO
-                                    Me.Collections.CapeOpenUOCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeCOUO").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_CapeOpenUOCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.SolidSeparator
-                                    Me.Collections.SolidsSeparatorCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeSS").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_SolidsSeparatorCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.Filter
-                                    Me.Collections.FilterCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeFT").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_FilterCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.RCT_Conversion
-                                    Me.Collections.ReactorConversionCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeRCONV").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_ReactorConversionCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.RCT_CSTR
-                                    Me.Collections.ReactorCSTRCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeRCSTR").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_ReactorCSTRCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.RCT_Equilibrium
-                                    Me.Collections.ReactorEquilibriumCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeREQ").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_ReactorEquilibriumCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.RCT_Gibbs
-                                    Me.Collections.ReactorGibbsCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeRGIB").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_ReactorGibbsCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.RCT_PFR
-                                    Me.Collections.ReactorPFRCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeRPFR").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_ReactorPFRCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.DistillationColumn
-                                    Me.Collections.DistillationColumnCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeDC").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_DistillationColumnCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.AbsorptionColumn
-                                    Me.Collections.AbsorptionColumnCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeAC").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_AbsorptionColumnCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.RefluxedAbsorber
-                                    Me.Collections.RefluxedAbsorberCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeRFA").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_RefluxedAbsorberCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                                Case TipoObjeto.ReboiledAbsorber
-                                    Me.Collections.ReboiledAbsorberCollection.Remove(namesel)
-                                    If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeRBA").Nodes.RemoveByKey(namesel)
-                                    'DWSIM
-                                    Me.Collections.CLCS_ReboiledAbsorberCollection.Remove(namesel)
-                                    Me.Collections.ObjectCollection.Remove(namesel)
-                            End Select
+                        Select Case SelectedObj.TipoObjeto
+                            Case TipoObjeto.NodeIn
+                                Me.Collections.MixerCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_MixerCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.NodeOut
+                                Me.Collections.SplitterCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeSP").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_SplitterCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.NodeEn
+                                Me.Collections.MixerENCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeME").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_EnergyMixerCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.Pump
+                                Me.Collections.PumpCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodePU").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_PumpCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.Tank
+                                Me.Collections.TankCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeTQ").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_TankCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.Vessel
+                                Me.Collections.SeparatorCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeSE").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_VesselCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.MaterialStream
+                                Me.Collections.MaterialStreamCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeMS").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_MaterialStreamCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.Compressor
+                                Me.Collections.CompressorCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeCO").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_CompressorCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.Expander
+                                Me.Collections.TurbineCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeTU").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_TurbineCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.TPVessel
+                                Me.Collections.TPSeparatorCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeTP").Nodes.RemoveByKey(namesel)
+                            Case TipoObjeto.Cooler
+                                Me.Collections.CoolerCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeCL").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_CoolerCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.Heater
+                                Me.Collections.HeaterCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeHT").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_HeaterCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.Pipe
+                                Me.Collections.CLCS_PipeCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodePI").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.PipeCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.Valve
+                                Me.Collections.ValveCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeVA").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_ValveCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.OT_Ajuste
+                                Me.Collections.AdjustCollection.Remove(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_AdjustCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.OT_Especificacao
+                                If Me.Collections.ObjectCollection.ContainsKey(Me.Collections.CLCS_SpecCollection(namesel).TargetObjectData.m_ID) Then
+                                    Me.Collections.ObjectCollection(Me.Collections.CLCS_SpecCollection(namesel).TargetObjectData.m_ID).IsSpecAttached = False
+                                    Me.Collections.ObjectCollection(Me.Collections.CLCS_SpecCollection(namesel).TargetObjectData.m_ID).AttachedSpecId = ""
+                                End If
+                                If Me.Collections.ObjectCollection.ContainsKey(Me.Collections.CLCS_SpecCollection(namesel).SourceObjectData.m_ID) Then
+                                    Me.Collections.ObjectCollection(Me.Collections.CLCS_SpecCollection(namesel).SourceObjectData.m_ID).IsSpecAttached = False
+                                    Me.Collections.ObjectCollection(Me.Collections.CLCS_SpecCollection(namesel).SourceObjectData.m_ID).AttachedSpecId = ""
+                                End If
+                                Me.Collections.SpecCollection.Remove(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_SpecCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.OT_Reciclo
+                                Me.Collections.RecycleCollection.Remove(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_RecycleCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.OT_EnergyRecycle
+                                Me.Collections.EnergyRecycleCollection.Remove(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_EnergyRecycleCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.HeatExchanger
+                                Me.Collections.HeatExchangerCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeHE").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_HeatExchangerCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.ShortcutColumn
+                                Me.Collections.HeatExchangerCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeSC").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_HeatExchangerCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.OrificePlate
+                                Me.Collections.OrificePlateCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeOPL").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_OrificePlateCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.ComponentSeparator
+                                Me.Collections.ComponentSeparatorCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeCSEP").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_ComponentSeparatorCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.CustomUO
+                                Me.Collections.CustomUOCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeUO").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_CustomUOCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.ExcelUO
+                                Me.Collections.ExcelUOCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeExcel").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_ExcelUOCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.FlowsheetUO
+                                Me.Collections.FlowsheetUOCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeFS").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_FlowsheetUOCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.CapeOpenUO
+                                Me.Collections.CapeOpenUOCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeCOUO").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_CapeOpenUOCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.SolidSeparator
+                                Me.Collections.SolidsSeparatorCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeSS").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_SolidsSeparatorCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.Filter
+                                Me.Collections.FilterCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeFT").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_FilterCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.RCT_Conversion
+                                Me.Collections.ReactorConversionCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeRCONV").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_ReactorConversionCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.RCT_CSTR
+                                Me.Collections.ReactorCSTRCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeRCSTR").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_ReactorCSTRCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.RCT_Equilibrium
+                                Me.Collections.ReactorEquilibriumCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeREQ").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_ReactorEquilibriumCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.RCT_Gibbs
+                                Me.Collections.ReactorGibbsCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeRGIB").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_ReactorGibbsCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.RCT_PFR
+                                Me.Collections.ReactorPFRCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeRPFR").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_ReactorPFRCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.DistillationColumn
+                                Me.Collections.DistillationColumnCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeDC").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_DistillationColumnCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.AbsorptionColumn
+                                Me.Collections.AbsorptionColumnCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeAC").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_AbsorptionColumnCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.RefluxedAbsorber
+                                Me.Collections.RefluxedAbsorberCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeRFA").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_RefluxedAbsorberCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                            Case TipoObjeto.ReboiledAbsorber
+                                Me.Collections.ReboiledAbsorberCollection.Remove(namesel)
+                                If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeRBA").Nodes.RemoveByKey(namesel)
+                                'DWSIM
+                                Me.Collections.CLCS_ReboiledAbsorberCollection.Remove(namesel)
+                                Me.Collections.ObjectCollection.Remove(namesel)
+                        End Select
 
-                            Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(gobj)
+                        Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(gobj)
 
                         End If
 
@@ -1877,6 +1867,8 @@ Imports System.Reflection
         Dim conObj As ConnectorGraphic = Nothing
         Dim SelObj As GraphicObject = gObjFrom
         Dim ObjToDisconnect As GraphicObject = Nothing
+        Dim gobj1 As GraphicObject = Nothing
+        Dim gobj2 As GraphicObject = Nothing
         ObjToDisconnect = gObjTo
         Dim i1, i2 As Integer
         If Not ObjToDisconnect Is Nothing Then
@@ -1886,6 +1878,9 @@ Imports System.Reflection
                     If Not conptObj.AttachedConnector Is Nothing Then
                         If conptObj.AttachedConnector.AttachedFrom.Name.ToString = ObjToDisconnect.Name.ToString Then
                             i1 = conptObj.AttachedConnector.AttachedFromConnectorIndex
+                            i2 = conptObj.AttachedConnector.AttachedToConnectorIndex
+                            gobj1 = gObjTo
+                            gobj2 = gObjFrom
                             DeCalculateDisconnectedObject(Me, SelObj, "In")
                             conptObj.AttachedConnector.AttachedFrom.OutputConnectors(conptObj.AttachedConnector.AttachedFromConnectorIndex).IsAttached = False
                             conptObj.AttachedConnector.AttachedFrom.OutputConnectors(conptObj.AttachedConnector.AttachedFromConnectorIndex).AttachedConnector = Nothing
@@ -1900,7 +1895,10 @@ Imports System.Reflection
                 If conptObj.IsAttached = True Then
                     If Not conptObj.AttachedConnector Is Nothing Then
                         If conptObj.AttachedConnector.AttachedTo.Name.ToString = ObjToDisconnect.Name.ToString Then
+                            i1 = conptObj.AttachedConnector.AttachedFromConnectorIndex
                             i2 = conptObj.AttachedConnector.AttachedToConnectorIndex
+                            gobj1 = gObjFrom
+                            gobj2 = gObjTo
                             DeCalculateDisconnectedObject(Me, SelObj, "Out")
                             conptObj.AttachedConnector.AttachedTo.InputConnectors(conptObj.AttachedConnector.AttachedToConnectorIndex).IsAttached = False
                             conptObj.AttachedConnector.AttachedTo.InputConnectors(conptObj.AttachedConnector.AttachedToConnectorIndex).AttachedConnector = Nothing
@@ -1912,7 +1910,10 @@ Imports System.Reflection
             Next
             If SelObj.EnergyConnector.IsAttached = True Then
                 If SelObj.EnergyConnector.AttachedConnector.AttachedFrom.Name.ToString = ObjToDisconnect.Name.ToString Then
-                    i1 = conptObj.AttachedConnector.AttachedFromConnectorIndex
+                    i1 = SelObj.EnergyConnector.AttachedConnector.AttachedFromConnectorIndex
+                    i2 = SelObj.EnergyConnector.AttachedConnector.AttachedToConnectorIndex
+                    gobj1 = ObjToDisconnect
+                    gobj2 = SelObj
                     DeCalculateDisconnectedObject(Me, SelObj, "Out")
                     SelObj.EnergyConnector.AttachedConnector.AttachedFrom.OutputConnectors(SelObj.EnergyConnector.AttachedConnector.AttachedFromConnectorIndex).IsAttached = False
                     SelObj.EnergyConnector.AttachedConnector.AttachedFrom.OutputConnectors(SelObj.EnergyConnector.AttachedConnector.AttachedFromConnectorIndex).AttachedConnector = Nothing
@@ -1924,11 +1925,11 @@ Imports System.Reflection
 
         If My.Application.PushUndoRedoAction Then AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.FlowsheetObjectDisconnected,
                                      .ID = New Random().Next(),
-                                     .ObjID = gObjFrom.Name,
-                                     .ObjID2 = gObjTo.Name,
+                                     .ObjID = gobj1.Name,
+                                     .ObjID2 = gobj2.Name,
                                      .OldValue = i1,
                                      .NewValue = i2,
-                                     .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_ObjectDisconnected"), gObjFrom.Tag, gObjTo.Tag)})
+                                     .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_ObjectDisconnected"), gobj1.Tag, gobj2.Tag)})
 
         If triggercalc Then ProcessCalculationQueue(Me, Nothing, False, False) Else Me.CalculationQueue.Clear()
 
@@ -2966,6 +2967,7 @@ Imports System.Reflection
 
                 If undo Then
                     Collections.ObjectCollection(FormSurface.AddObjectToSurface(gobj1.TipoObjeto, gobj1.X, gobj1.Y, gobj1.Tag, gobj1.Name)).LoadData(act.OldValue)
+                    FormSurface.FlowsheetDesignSurface.drawingObjects.FindObjectWithName(gobj1.Name).LoadData(gobj1.SaveData)
                     If gobj1.TipoObjeto = TipoObjeto.MaterialStream Then
                         For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In DirectCast(Collections.ObjectCollection(gobj1.Name), Streams.MaterialStream).Fases.Values
                             For Each c As ConstantProperties In Options.SelectedComponents.Values
@@ -3021,7 +3023,25 @@ Imports System.Reflection
 
             Case UndoRedoActionType.SystemOfUnitsAdded
 
+                Dim su = DirectCast(act.NewValue, DWSIM.SistemasDeUnidades.Unidades)
+
+                If undo Then
+                    Me.FrmStSim1.ComboBox2.SelectedIndex = 0
+                    Me.Options.AvailableUnitSystems.Remove(su.nome)
+                Else
+                    Me.Options.AvailableUnitSystems.Add(su.nome, su)
+                End If
+
             Case UndoRedoActionType.SystemOfUnitsRemoved
+
+                Dim su = DirectCast(act.NewValue, DWSIM.SistemasDeUnidades.Unidades)
+
+                If undo Then
+                    Me.Options.AvailableUnitSystems.Add(su.nome, su)
+                Else
+                    Me.FrmStSim1.ComboBox2.SelectedIndex = 0
+                    Me.Options.AvailableUnitSystems.Remove(su.nome)
+                End If
 
             Case UndoRedoActionType.SystemOfUnitsChanged
 
@@ -3031,6 +3051,7 @@ Imports System.Reflection
                 Dim method As FieldInfo = sobj.GetType().GetField(act.ObjID2)
                 method.SetValue(sobj, pval)
 
+                FrmStSim1.ComboBox2_SelectedIndexChanged(Me, New EventArgs)
 
         End Select
 
