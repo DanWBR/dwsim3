@@ -3123,18 +3123,26 @@ Imports System.Reflection
 
     Private Sub PopulateUndoRedoItems()
 
+        Dim count As Integer
+
         tsbUndo.DropDownItems.Clear()
+        count = 0
         For Each act In UndoStack
             Dim tsmi As New ToolStripMenuItem(act.Name, My.Resources.undo_161, AddressOf UndoActions) With {.Tag = act.ID}
             AddHandler tsmi.MouseEnter, AddressOf tsbUndo_MouseEnter
             tsbUndo.DropDownItems.Add(tsmi)
+            count += 1
+            If count > 15 Then Exit For
         Next
 
         tsbRedo.DropDownItems.Clear()
+        count = 0
         For Each act In RedoStack
             Dim tsmi As New ToolStripMenuItem(act.Name, My.Resources.redo_16, AddressOf RedoActions) With {.Tag = act.ID}
             AddHandler tsmi.MouseEnter, AddressOf tsbRedo_MouseEnter
             tsbRedo.DropDownItems.Add(tsmi)
+            count += 1
+            If count > 15 Then Exit For
         Next
 
     End Sub
