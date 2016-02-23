@@ -1559,10 +1559,14 @@ Imports System.Reflection
                         ElseIf SelectedObj.TipoObjeto = TipoObjeto.GO_SpreadsheetTable Then
                             Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(gobj)
                         Else
+
                             Dim obj As SimulationObjects_BaseClass = Me.Collections.ObjectCollection(SelectedObj.Name)
                             DeCalculateDisconnectedObject(Me, SelectedObj, "Out")
+
                             gobj = SelectedObj
+
                             If gobj.EnergyConnector.IsAttached = True Then DisconnectObject(gobj, gobj.EnergyConnector.AttachedConnector.AttachedTo, False)
+
                             Dim InCon, OutCon As ConnectionPoint
                             For Each InCon In gobj.InputConnectors
                                 Try
@@ -1908,14 +1912,14 @@ Imports System.Reflection
                 End If
             Next
             If SelObj.EnergyConnector.IsAttached = True Then
-                If SelObj.EnergyConnector.AttachedConnector.AttachedFrom.Name.ToString = ObjToDisconnect.Name.ToString Then
+                If SelObj.EnergyConnector.AttachedConnector.AttachedTo.Name.ToString = ObjToDisconnect.Name.ToString Then
                     i1 = SelObj.EnergyConnector.AttachedConnector.AttachedFromConnectorIndex
                     i2 = SelObj.EnergyConnector.AttachedConnector.AttachedToConnectorIndex
-                    gobj1 = ObjToDisconnect
-                    gobj2 = SelObj
+                    gobj1 = SelObj
+                    gobj2 = ObjToDisconnect
                     DeCalculateDisconnectedObject(Me, SelObj, "Out")
-                    SelObj.EnergyConnector.AttachedConnector.AttachedFrom.OutputConnectors(SelObj.EnergyConnector.AttachedConnector.AttachedFromConnectorIndex).IsAttached = False
-                    SelObj.EnergyConnector.AttachedConnector.AttachedFrom.OutputConnectors(SelObj.EnergyConnector.AttachedConnector.AttachedFromConnectorIndex).AttachedConnector = Nothing
+                    SelObj.EnergyConnector.AttachedConnector.AttachedTo.OutputConnectors(SelObj.EnergyConnector.AttachedConnector.AttachedToConnectorIndex).IsAttached = False
+                    SelObj.EnergyConnector.AttachedConnector.AttachedTo.OutputConnectors(SelObj.EnergyConnector.AttachedConnector.AttachedToConnectorIndex).AttachedConnector = Nothing
                     SelObj.EnergyConnector.IsAttached = False
                     Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(SelObj.EnergyConnector.AttachedConnector)
                 End If
