@@ -3054,8 +3054,6 @@ Imports System.Reflection
 
         Me.FormSurface.UpdateSelectedObject()
 
-        If My.Settings.UndoRedo_RecalculateFlowsheet Then CalculateAll2(Me, My.Settings.SolverMode)
-
     End Sub
 
     Sub AddUndoRedoAction(act As UndoRedoAction)
@@ -3079,6 +3077,18 @@ Imports System.Reflection
 
     Public Sub tsbUndo_Click(sender As Object, e As EventArgs) Handles tsbUndo.ButtonClick
 
+        UndoActions(tsbUndo.DropDownItems(0), e)
+
+    End Sub
+
+    Public Sub tsbRedo_Click(sender As Object, e As EventArgs) Handles tsbRedo.ButtonClick
+
+        RedoActions(tsbRedo.DropDownItems(0), e)
+
+    End Sub
+
+    Public Sub ProcessUndo()
+
         If UndoStack.Count > 0 Then
             Dim act = UndoStack.Pop()
             My.Application.PushUndoRedoAction = False
@@ -3088,13 +3098,11 @@ Imports System.Reflection
             tsbRedo.Enabled = True
         End If
 
-        PopulateUndoRedoItems()
-
         If UndoStack.Count = 0 Then tsbUndo.Enabled = False
 
     End Sub
 
-    Public Sub tsbRedo_Click(sender As Object, e As EventArgs) Handles tsbRedo.ButtonClick
+    Public Sub ProcessRedo()
 
         If RedoStack.Count > 0 Then
             Dim act = RedoStack.Pop()
@@ -3104,8 +3112,6 @@ Imports System.Reflection
             UndoStack.Push(act)
             tsbUndo.Enabled = True
         End If
-
-        PopulateUndoRedoItems()
 
         If RedoStack.Count = 0 Then tsbRedo.Enabled = False
 
@@ -3136,8 +3142,12 @@ Imports System.Reflection
         Do
             If UndoStack.Count = 0 Then Exit Do
             act = UndoStack.Peek
-            tsbUndo_Click(Me, New EventArgs)
+            ProcessUndo()
         Loop Until actID = act.ID
+
+        PopulateUndoRedoItems()
+
+        If My.Settings.UndoRedo_RecalculateFlowsheet Then CalculateAll2(Me, My.Settings.SolverMode)
 
     End Sub
 
@@ -3148,8 +3158,12 @@ Imports System.Reflection
         Do
             If RedoStack.Count = 0 Then Exit Do
             act = RedoStack.Peek
-            tsbRedo_Click(Me, New EventArgs)
+            ProcessRedo()
         Loop Until actID = act.ID
+
+        PopulateUndoRedoItems()
+
+        If My.Settings.UndoRedo_RecalculateFlowsheet Then CalculateAll2(Me, My.Settings.SolverMode)
 
     End Sub
 
