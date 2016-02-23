@@ -3052,6 +3052,8 @@ Imports System.Reflection
 
         End Select
 
+        Me.FormSurface.UpdateSelectedObject()
+
         If My.Settings.UndoRedo_RecalculateFlowsheet Then CalculateAll2(Me, My.Settings.SolverMode)
 
     End Sub
