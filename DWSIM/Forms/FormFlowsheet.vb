@@ -2969,7 +2969,11 @@ Imports System.Reflection
 
             Case UndoRedoActionType.CompoundAdded
 
+                Me.FrmStSim1.RemoveCompFromSimulation(act.ObjID)
+
             Case UndoRedoActionType.CompoundRemoved
+
+                Me.FrmStSim1.AddCompToSimulation(act.ObjID)
 
             Case UndoRedoActionType.ObjectAdded
 

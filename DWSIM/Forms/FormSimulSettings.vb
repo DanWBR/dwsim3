@@ -1063,7 +1063,7 @@ Public Class FormSimulSettings
 
                 FrmChild.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.CompoundAdded,
                           .ID = New Random().Next(),
-                          .NewValue = tmpcomp.Name,
+                          .ObjID = tmpcomp.Name,
                           .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_CompoundAdded"), DWSIM.App.GetComponentName(tmpcomp.Name))})
 
 
@@ -1073,6 +1073,18 @@ Public Class FormSimulSettings
         End If
 
     End Sub
+
+    Sub AddCompToSimulation(ByVal id As String)
+
+        For Each r As DataGridViewRow In Me.FrmChild.FrmStSim1.ogc1.Rows
+            If r.Cells(0).Value = id Then
+                AddCompToSimulation(r.Index)
+                Exit For
+            End If
+        Next
+
+    End Sub
+
 
     Sub RemoveCompFromSimulation(ByVal compid As String)
 
@@ -1107,7 +1119,7 @@ Public Class FormSimulSettings
         SetupKeyCompounds()
         FrmChild.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.CompoundRemoved,
           .ID = New Random().Next(),
-          .NewValue = tmpcomp.Name,
+          .ObjID = tmpcomp.Name,
           .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_CompoundRemoved"), DWSIM.App.GetComponentName(tmpcomp.Name))})
 
     End Sub
