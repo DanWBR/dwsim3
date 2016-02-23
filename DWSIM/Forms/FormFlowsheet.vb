@@ -1528,34 +1528,13 @@ Imports System.Reflection
                         Dim InCon, OutCon As ConnectionPoint
                         For Each InCon In gobj.InputConnectors
                             If InCon.IsAttached = True Then
-                                DeCalculateDisconnectedObject(Me, SelectedObj, "In")
-                                If InCon.AttachedConnector.AttachedFrom.EnergyConnector.IsAttached Then
-                                    With InCon.AttachedConnector.AttachedFrom.EnergyConnector
-                                        .IsAttached = False
-                                        gobj = .AttachedConnector
-                                        Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(gobj)
-                                        .AttachedConnector = Nothing
-                                    End With
-                                Else
-                                    With InCon.AttachedConnector.AttachedFrom.OutputConnectors(InCon.AttachedConnector.AttachedFromConnectorIndex)
-                                        .IsAttached = False
-                                        gobj = .AttachedConnector
-                                        Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(gobj)
-                                        .AttachedConnector = Nothing
-                                    End With
-                                End If
+                                DisconnectObject(InCon.AttachedConnector.AttachedFrom, gobj, False)
                             End If
                         Next
                         gobj = SelectedObj
                         For Each OutCon In gobj.OutputConnectors
                             If OutCon.IsAttached = True Then
-                                DeCalculateDisconnectedObject(Me, SelectedObj, "Out")
-                                With OutCon.AttachedConnector.AttachedTo.InputConnectors(OutCon.AttachedConnector.AttachedToConnectorIndex)
-                                    .IsAttached = False
-                                    gobj = .AttachedConnector
-                                    Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(gobj)
-                                    .AttachedConnector = Nothing
-                                End With
+                                DisconnectObject(gobj, OutCon.AttachedConnector.AttachedTo, False)
                             End If
                         Next
                         gobj = SelectedObj
@@ -1568,6 +1547,7 @@ Imports System.Reflection
                         Me.Collections.ObjectCollection.Remove(namesel)
                         Me.Collections.ObjectCollection.Remove(namesel)
                         Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(gobj)
+
                     Else
 
                         If SelectedObj.TipoObjeto = TipoObjeto.GO_Figura Then
@@ -1586,24 +1566,14 @@ Imports System.Reflection
                             Dim obj As SimulationObjects_BaseClass = Me.Collections.ObjectCollection(SelectedObj.Name)
                             DeCalculateDisconnectedObject(Me, SelectedObj, "Out")
                             If gobj.EnergyConnector.IsAttached = True Then
-                                With gobj.EnergyConnector.AttachedConnector.AttachedTo.InputConnectors(0)
-                                    .IsAttached = False
-                                    gobj = .AttachedConnector
-                                    Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(gobj)
-                                    .AttachedConnector = Nothing
-                                End With
+                                DisconnectObject(gobj, gobj.EnergyConnector.AttachedConnector.AttachedTo, False)
                             End If
                             gobj = SelectedObj
                             Dim InCon, OutCon As ConnectionPoint
                             For Each InCon In gobj.InputConnectors
                                 Try
                                     If InCon.IsAttached = True Then
-                                        With InCon.AttachedConnector.AttachedFrom.OutputConnectors(InCon.AttachedConnector.AttachedFromConnectorIndex)
-                                            .IsAttached = False
-                                            gobj = .AttachedConnector
-                                            Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(gobj)
-                                            .AttachedConnector = Nothing
-                                        End With
+                                        DisconnectObject(InCon.AttachedConnector.AttachedFrom, gobj, False)
                                     End If
                                 Catch ex As Exception
 
@@ -1613,12 +1583,7 @@ Imports System.Reflection
                             For Each OutCon In gobj.OutputConnectors
                                 Try
                                     If OutCon.IsAttached = True Then
-                                        With OutCon.AttachedConnector.AttachedTo.InputConnectors(OutCon.AttachedConnector.AttachedToConnectorIndex)
-                                            .IsAttached = False
-                                            gobj = .AttachedConnector
-                                            Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(gobj)
-                                            .AttachedConnector = Nothing
-                                        End With
+                                           DisconnectObject(gobj, OutCon.AttachedConnector.AttachedTo, False)
                                     End If
                                 Catch ex As Exception
 
@@ -1627,7 +1592,7 @@ Imports System.Reflection
 
                             gobj = SelectedObj
 
-                            AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.ObjectRemoved,
+                            If My.Application.PushUndoRedoAction Then AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.ObjectRemoved,
                                                                          .ID = New Random().Next(),
                                                                          .NewValue = gobj,
                                                                          .OldValue = Me.Collections.ObjectCollection(namesel).SaveData(),
@@ -1957,13 +1922,13 @@ Imports System.Reflection
             End If
         End If
 
-        AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.FlowsheetObjectDisconnected,
+        If My.Application.PushUndoRedoAction Then AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.FlowsheetObjectDisconnected,
                                      .ID = New Random().Next(),
                                      .ObjID = gObjFrom.Name,
                                      .ObjID2 = gObjTo.Name,
                                      .OldValue = i1,
                                      .NewValue = i2,
-                                     .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_ObjectConnected"), gObjFrom.Tag, gObjTo.Tag)})
+                                     .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_ObjectDisconnected"), gObjFrom.Tag, gObjTo.Tag)})
 
         If triggercalc Then ProcessCalculationQueue(Me, Nothing, False, False) Else Me.CalculationQueue.Clear()
 
@@ -2156,7 +2121,7 @@ Imports System.Reflection
                         Me.FormSurface.FlowsheetDesignSurface.Invalidate()
                     End If
                 End With
-                AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.FlowsheetObjectConnected,
+                If My.Application.PushUndoRedoAction Then AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.FlowsheetObjectConnected,
                                                      .ID = New Random().Next(),
                                                      .ObjID = gObjFrom.Name,
                                                      .ObjID2 = gObjTo.Name,
@@ -2932,11 +2897,9 @@ Imports System.Reflection
 
 #Region "    Undo/Redo Handlers"
 
-    Function ProcessAction(act As UndoRedoAction, undo As Boolean) As Boolean
+    Sub ProcessAction(act As UndoRedoAction, undo As Boolean)
 
         Dim pval As Object = Nothing
-
-        Dim keep As Boolean = False
 
         If undo Then pval = act.OldValue Else pval = act.NewValue
 
@@ -2959,8 +2922,6 @@ Imports System.Reflection
                     End If
                 End If
 
-                keep = True
-
             Case UndoRedoActionType.FlowsheetObjectPropertyChanged
 
                 Dim gobj = Me.FormSurface.FlowsheetDesignSurface.drawingObjects.FindObjectWithName(act.ObjID)
@@ -2972,8 +2933,6 @@ Imports System.Reflection
                 Else
                     gobj.GetType().GetProperty(act.PropertyName).SetValue(gobj, pval, Nothing)
                 End If
-
-                keep = True
 
             Case UndoRedoActionType.CompoundAdded
 
@@ -2993,11 +2952,12 @@ Imports System.Reflection
 
             Case UndoRedoActionType.ObjectAdded
 
+                Dim gobj1 = DirectCast(act.NewValue, GraphicObject)
+
                 If undo Then
-                    DeleteObject(act.ObjID, False)
+                    DeleteObject(gobj1.Tag, False)
                 Else
-                    Dim gobj1 = DirectCast(act.NewValue, GraphicObject)
-                    Collections.ObjectCollection(FormSurface.AddObjectToSurface(gobj1.TipoObjeto, gobj1.X, gobj1.Y, gobj1.Tag)).LoadData(act.OldValue)
+                    FormSurface.AddObjectToSurface(gobj1.TipoObjeto, gobj1.X, gobj1.Y, gobj1.Tag, gobj1.Name)
                 End If
 
             Case UndoRedoActionType.ObjectRemoved
@@ -3005,7 +2965,14 @@ Imports System.Reflection
                 Dim gobj1 = DirectCast(act.NewValue, GraphicObject)
 
                 If undo Then
-                    Collections.ObjectCollection(FormSurface.AddObjectToSurface(gobj1.TipoObjeto, gobj1.X, gobj1.Y, gobj1.Tag)).LoadData(act.OldValue)
+                    Collections.ObjectCollection(FormSurface.AddObjectToSurface(gobj1.TipoObjeto, gobj1.X, gobj1.Y, gobj1.Tag, gobj1.Name)).LoadData(act.OldValue)
+                    If gobj1.TipoObjeto = TipoObjeto.MaterialStream Then
+                        For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In DirectCast(Collections.ObjectCollection(gobj1.Name), Streams.MaterialStream).Fases.Values
+                            For Each c As ConstantProperties In Options.SelectedComponents.Values
+                                phase.Componentes(c.Name).ConstantProperties = c
+                            Next
+                        Next
+                    End If
                 Else
                     DeleteObject(gobj1.Tag, False)
                 End If
@@ -3041,8 +3008,6 @@ Imports System.Reflection
                     Me.Options.PropertyPackages.Add(pp.UniqueID, pp)
                 End If
 
-                keep = True
-
             Case UndoRedoActionType.PropertyPackageRemoved
 
                 If undo Then
@@ -3051,8 +3016,6 @@ Imports System.Reflection
                 Else
                     Me.Options.PropertyPackages.Remove(act.ObjID)
                 End If
-
-                keep = True
 
             Case UndoRedoActionType.PropertyPackagePropertyChanged
 
@@ -3068,26 +3031,27 @@ Imports System.Reflection
                 Dim method As FieldInfo = sobj.GetType().GetField(act.ObjID2)
                 method.SetValue(sobj, pval)
 
-                keep = True
 
         End Select
 
         If My.Settings.UndoRedo_RecalculateFlowsheet Then CalculateAll2(Me, My.Settings.SolverMode)
 
-        Return keep
-
-    End Function
+    End Sub
 
     Sub AddUndoRedoAction(act As UndoRedoAction)
 
-        UndoStack.Push(act)
+        If Me.MasterFlowsheet Is Nothing Then
 
-        RedoStack.Clear()
+            UndoStack.Push(act)
 
-        tsbUndo.Enabled = True
-        tsbRedo.Enabled = False
+            RedoStack.Clear()
 
-        PopulateUndoRedoItems()
+            tsbUndo.Enabled = True
+            tsbRedo.Enabled = False
+
+            PopulateUndoRedoItems()
+
+        End If
 
     End Sub
 
@@ -3095,7 +3059,10 @@ Imports System.Reflection
 
         If UndoStack.Count > 0 Then
             Dim act = UndoStack.Pop()
-            If ProcessAction(act, True) Then RedoStack.Push(act)
+            My.Application.PushUndoRedoAction = False
+            ProcessAction(act, True)
+            My.Application.PushUndoRedoAction = True
+            RedoStack.Push(act)
             tsbRedo.Enabled = True
         End If
 
@@ -3109,7 +3076,10 @@ Imports System.Reflection
 
         If RedoStack.Count > 0 Then
             Dim act = RedoStack.Pop()
-            If ProcessAction(act, False) Then UndoStack.Push(act)
+            My.Application.PushUndoRedoAction = False
+            ProcessAction(act, False)
+            My.Application.PushUndoRedoAction = True
+            UndoStack.Push(act)
             tsbUndo.Enabled = True
         End If
 
@@ -3140,6 +3110,7 @@ Imports System.Reflection
         Dim actID = DirectCast(sender, ToolStripMenuItem).Tag
         Dim act As UndoRedoAction
         Do
+            If UndoStack.Count = 0 Then Exit Do
             act = UndoStack.Peek
             tsbUndo_Click(Me, New EventArgs)
         Loop Until actID = act.ID
@@ -3151,6 +3122,7 @@ Imports System.Reflection
         Dim actID = DirectCast(sender, ToolStripMenuItem).Tag
         Dim act As UndoRedoAction
         Do
+            If RedoStack.Count = 0 Then Exit Do
             act = RedoStack.Peek
             tsbRedo_Click(Me, New EventArgs)
         Loop Until actID = act.ID

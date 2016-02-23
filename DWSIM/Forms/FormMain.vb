@@ -2392,6 +2392,8 @@ Public Class FormMain
 
     Sub LoadXML(ByVal path As String, Optional ByVal simulationfilename As String = "", Optional ByVal forcommandline As Boolean = False)
 
+        My.Application.PushUndoRedoAction = False
+
         Dim ci As CultureInfo = CultureInfo.InvariantCulture
 
         Dim excs As New Concurrent.ConcurrentBag(Of Exception)
@@ -2862,6 +2864,8 @@ Public Class FormMain
         form.UpdateFormText()
 
         Me.ToolStripStatusLabel1.Text = ""
+
+        My.Application.PushUndoRedoAction = True
 
         Application.DoEvents()
 

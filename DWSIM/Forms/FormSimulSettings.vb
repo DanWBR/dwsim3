@@ -1163,7 +1163,7 @@ Public Class FormSimulSettings
 
                 SetupKeyCompounds()
 
-                FrmChild.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.CompoundAdded,
+                If My.Application.PushUndoRedoAction Then FrmChild.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.CompoundAdded,
                           .ID = New Random().Next(),
                           .ObjID = tmpcomp.Name,
                           .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_CompoundAdded"), DWSIM.App.GetComponentName(tmpcomp.Name))})
@@ -1219,7 +1219,7 @@ Public Class FormSimulSettings
             Next
         Next
         SetupKeyCompounds()
-        FrmChild.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.CompoundRemoved,
+        If My.Application.PushUndoRedoAction Then FrmChild.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.CompoundRemoved,
           .ID = New Random().Next(),
           .ObjID = tmpcomp.Name,
           .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_CompoundRemoved"), DWSIM.App.GetComponentName(tmpcomp.Name))})

@@ -2360,7 +2360,7 @@ Public Class frmSurface
         Me.FlowsheetDesignSurface.Invalidate()
     End Sub
 
-    Public Function AddObjectToSurface(ByVal type As TipoObjeto, ByVal x As Integer, ByVal y As Integer, Optional ByVal tag As String = "") As String
+    Public Function AddObjectToSurface(ByVal type As TipoObjeto, ByVal x As Integer, ByVal y As Integer, Optional ByVal tag As String = "", Optional ByVal id As String = "") As String
 
         Flowsheet = My.Application.ActiveSimulation
 
@@ -2389,6 +2389,7 @@ Public Class frmSurface
                 If tag <> "" Then myNode.Tag = tag
                 gObj = myNode
                 gObj.Name = DWSIM.App.GetLocalString("AJ") & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.AdjustCollection.Add(gObj.Name, myNode)
                 'If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 'If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -2412,6 +2413,7 @@ Public Class frmSurface
                 If tag <> "" Then myNode.Tag = tag
                 gObj = myNode
                 gObj.Name = "ES-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.SpecCollection.Add(gObj.Name, myNode)
                 'If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 'If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -2433,6 +2435,7 @@ Public Class frmSurface
                 If tag <> "" Then myNode.Tag = tag
                 gObj = myNode
                 gObj.Name = "REC-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.RecycleCollection.Add(gObj.Name, myNode)
                 'If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 'If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -2459,6 +2462,7 @@ Public Class frmSurface
                 If tag <> "" Then myNode.Tag = tag
                 gObj = myNode
                 gObj.Name = "EREC-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.EnergyRecycleCollection.Add(gObj.Name, myNode)
                 'If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 'If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -2480,6 +2484,7 @@ Public Class frmSurface
                 If tag <> "" Then myNode.Tag = tag
                 gObj = myNode
                 gObj.Name = "MIST-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.MixerCollection.Add(gObj.Name, myNode)
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMX").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -2502,6 +2507,7 @@ Public Class frmSurface
                 If tag <> "" Then myNode.Tag = tag
                 gObj = myNode
                 gObj.Name = "MIST_ME-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.MixerENCollection.Add(gObj.Name, myNode)
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeME").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeME").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -2523,6 +2529,7 @@ Public Class frmSurface
                 If tag <> "" Then myNodeo.Tag = tag
                 gObj = myNodeo
                 gObj.Name = "DIV-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.SplitterCollection.Add(gObj.Name, myNodeo)
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeSP").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeSP").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -2544,6 +2551,7 @@ Public Class frmSurface
                 If tag <> "" Then myPump.Tag = tag
                 gObj = myPump
                 gObj.Name = "BB-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.PumpCollection.Add(gObj.Name, myPump)
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodePU").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodePU").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -2565,6 +2573,7 @@ Public Class frmSurface
                 If tag <> "" Then myTank.Tag = tag
                 gObj = myTank
                 gObj.Name = "TQ-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.TankCollection.Add(gObj.Name, myTank)
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeTQ").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeTQ").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -2586,6 +2595,7 @@ Public Class frmSurface
                 If tag <> "" Then myVessel.Tag = tag
                 gObj = myVessel
                 gObj.Name = "SEP-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.SeparatorCollection.Add(gObj.Name, myVessel)
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeSE").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeSE").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -2607,6 +2617,7 @@ Public Class frmSurface
                 If tag <> "" Then myVessel.Tag = tag
                 gObj = myVessel
                 gObj.Name = "SEPTF-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.TPSeparatorCollection.Add(gObj.Name, myVessel)
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeTP").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeTP").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -2623,6 +2634,7 @@ Public Class frmSurface
                 If tag <> "" Then myMStr.Tag = tag
                 gObj = myMStr
                 gObj.Name = "MAT-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.MaterialStreamCollection.Add(gObj.Name, myMStr)
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMS").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeMS").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -2649,6 +2661,7 @@ Public Class frmSurface
                 If tag <> "" Then myMStr.Tag = tag
                 gObj = myMStr
                 gObj.Name = "EN-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.EnergyStreamCollection.Add(gObj.Name, myMStr)
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeEN").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeEN").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -2670,6 +2683,7 @@ Public Class frmSurface
                 If tag <> "" Then myComp.Tag = tag
                 gObj = myComp
                 gObj.Name = "COMP-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.CompressorCollection.Add(gObj.Name, myComp)
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeCO").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeCO").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -2691,6 +2705,7 @@ Public Class frmSurface
                 If tag <> "" Then myComp.Tag = tag
                 gObj = myComp
                 gObj.Name = "TURB-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.TurbineCollection.Add(gObj.Name, myComp)
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeTU").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeTU").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -2712,6 +2727,7 @@ Public Class frmSurface
                 If tag <> "" Then myCool.Tag = tag
                 gObj = myCool
                 gObj.Name = "RESF-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.CoolerCollection.Add(gObj.Name, myCool)
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeCL").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeCL").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -2733,6 +2749,7 @@ Public Class frmSurface
                 If tag <> "" Then myHeat.Tag = tag
                 gObj = myHeat
                 gObj.Name = "AQ-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.HeaterCollection.Add(gObj.Name, myHeat)
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeHT").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeHT").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -2754,6 +2771,7 @@ Public Class frmSurface
                 If tag <> "" Then myPipe.Tag = tag
                 gObj = myPipe
                 gObj.Name = "TUB-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.PipeCollection.Add(gObj.Name, myPipe)
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodePI").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodePI").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -2775,6 +2793,7 @@ Public Class frmSurface
                 If tag <> "" Then myValve.Tag = tag
                 gObj = myValve
                 gObj.Name = "VALV-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.ValveCollection.Add(gObj.Name, myValve)
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeVA").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeVA").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -2796,6 +2815,7 @@ Public Class frmSurface
                 If tag <> "" Then myRconv.Tag = tag
                 gObj = myRconv
                 gObj.Name = "RC-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.ReactorConversionCollection.Add(gObj.Name, myRconv)
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRCONV").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRCONV").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -2819,6 +2839,7 @@ Public Class frmSurface
                 If tag <> "" Then myReq.Tag = tag
                 gObj = myReq
                 gObj.Name = "RE-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.ReactorEquilibriumCollection.Add(gObj.Name, myReq)
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeREQ").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeREQ").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -2842,6 +2863,7 @@ Public Class frmSurface
                 If tag <> "" Then myRgibbs.Tag = tag
                 gObj = myRgibbs
                 gObj.Name = "RG-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.ReactorGibbsCollection.Add(gObj.Name, myRgibbs)
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRGIB").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRGIB").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -2865,6 +2887,7 @@ Public Class frmSurface
                 If tag <> "" Then myRcstr.Tag = tag
                 gObj = myRcstr
                 gObj.Name = "CSTR-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.ReactorCSTRCollection.Add(gObj.Name, myRcstr)
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRCSTR").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRCSTR").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -2888,6 +2911,7 @@ Public Class frmSurface
                 If tag <> "" Then myRpfr.Tag = tag
                 gObj = myRpfr
                 gObj.Name = "PFR-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.ReactorPFRCollection.Add(gObj.Name, myRpfr)
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRPFR").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRPFR").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -2911,6 +2935,7 @@ Public Class frmSurface
                 If tag <> "" Then myHeatExchanger.Tag = tag
                 gObj = myHeatExchanger
                 gObj.Name = "HE-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.HeatExchangerCollection.Add(gObj.Name, myHeatExchanger)
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeHE").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeHE").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -2932,6 +2957,7 @@ Public Class frmSurface
                 If tag <> "" Then mySC.Tag = tag
                 gObj = mySC
                 gObj.Name = "SC-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.ShortcutColumnCollection.Add(gObj.Name, mySC)
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeSC").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeSC").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -2953,6 +2979,7 @@ Public Class frmSurface
                 If tag <> "" Then mySC.Tag = tag
                 gObj = mySC
                 gObj.Name = "DC-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.DistillationColumnCollection.Add(gObj.Name, mySC)
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeDC").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeDC").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -2978,6 +3005,7 @@ Public Class frmSurface
                 If tag <> "" Then mySC.Tag = tag
                 gObj = mySC
                 gObj.Name = "ABS-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.AbsorptionColumnCollection.Add(gObj.Name, mySC)
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeAC").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeAC").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -3003,6 +3031,7 @@ Public Class frmSurface
                 If tag <> "" Then mySC.Tag = tag
                 gObj = mySC
                 gObj.Name = "RBA-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.ReboiledAbsorberCollection.Add(gObj.Name, mySC)
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRBA").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRBA").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -3028,6 +3057,7 @@ Public Class frmSurface
                 If tag <> "" Then mySC.Tag = tag
                 gObj = mySC
                 gObj.Name = "RFA-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.RefluxedAbsorberCollection.Add(gObj.Name, mySC)
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRFA").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeRFA").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -3056,6 +3086,7 @@ Public Class frmSurface
                 If tag <> "" Then myCSep.Tag = tag
                 gObj = myCSep
                 gObj.Name = "CS-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.ComponentSeparatorCollection.Add(gObj.Name, myCSep)
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeCSEP").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeCSEP").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -3080,6 +3111,7 @@ Public Class frmSurface
                 If tag <> "" Then myCSep.Tag = tag
                 gObj = myCSep
                 gObj.Name = "SS-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.SolidsSeparatorCollection.Add(gObj.Name, myCSep)
                 Try
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeSS").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
@@ -3107,6 +3139,7 @@ Public Class frmSurface
                 If tag <> "" Then myCSep.Tag = tag
                 gObj = myCSep
                 gObj.Name = "FT-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.FilterCollection.Add(gObj.Name, myCSep)
                 Try
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeFT").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
@@ -3134,6 +3167,7 @@ Public Class frmSurface
                 If tag <> "" Then myOPL.Tag = tag
                 gObj = myOPL
                 gObj.Name = "OP-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.OrificePlateCollection.Add(gObj.Name, myOPL)
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeOPL").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
                 If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeOPL").Nodes(gObj.Name).ContextMenuStrip = Flowsheet.FormObjList.ContextMenuStrip1
@@ -3158,6 +3192,7 @@ Public Class frmSurface
                 If tag <> "" Then myCUO.Tag = tag
                 gObj = myCUO
                 gObj.Name = "UO-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.CustomUOCollection.Add(gObj.Name, myCUO)
                 Try
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeUO").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
@@ -3187,6 +3222,7 @@ Public Class frmSurface
                 If tag <> "" Then myEUO.Tag = tag
                 gObj = myEUO
                 gObj.Name = "EXL-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.ExcelUOCollection.Add(gObj.Name, myEUO)
                 Try
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeExcel").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
@@ -3214,6 +3250,7 @@ Public Class frmSurface
                 If tag <> "" Then myEUO.Tag = tag
                 gObj = myEUO
                 gObj.Name = "FS-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.FlowsheetUOCollection.Add(gObj.Name, myEUO)
                 Try
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeFS").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
@@ -3241,6 +3278,7 @@ Public Class frmSurface
                 If tag <> "" Then myCUO.Tag = tag
                 gObj = myCUO
                 gObj.Name = "COUO-" & Guid.NewGuid.ToString
+                If id <> "" Then gObj.Name = id
                 Flowsheet.Collections.CapeOpenUOCollection.Add(gObj.Name, myCUO)
                 Try
                     If Not DWSIM.App.IsRunningOnMono Then Flowsheet.FormObjList.TreeViewObj.Nodes("NodeCOUO").Nodes.Add(gObj.Name, gObj.Tag).Name = gObj.Name
@@ -3278,9 +3316,10 @@ Public Class frmSurface
                 Flowsheet.FormObjList.ACSC.AddRange(arrays)
                 Flowsheet.FormObjList.TBSearch.AutoCompleteCustomSource = Flowsheet.FormObjList.ACSC
             End If
-            Flowsheet.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.ObjectAdded,
+            If My.Application.PushUndoRedoAction Then Flowsheet.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.ObjectAdded,
                                      .ID = New Random().Next(),
                                      .ObjID = gObj.Name,
+                                     .NewValue = gObj,
                                      .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_ObjectAdded"), gObj.Tag)})
         End If
 
