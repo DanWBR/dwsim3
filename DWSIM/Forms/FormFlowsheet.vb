@@ -35,6 +35,7 @@ Imports DWSIM.DWSIM.Outros
 Imports WeifenLuo.WinFormsUI.Docking
 Imports System.Globalization
 Imports Microsoft.Msdn.Samples
+Imports System.Reflection
 
 <System.Serializable()> Public Class FormFlowsheet
 
@@ -530,7 +531,7 @@ Imports Microsoft.Msdn.Samples
         Tag
     End Enum
 
-    Public Shared Function SearchSurfaceObjectsByName(ByVal Name As String, ByVal Surface As Microsoft.MSDN.Samples.DesignSurface.GraphicsSurface) As GraphicObject
+    Public Shared Function SearchSurfaceObjectsByName(ByVal Name As String, ByVal Surface As Microsoft.Msdn.Samples.DesignSurface.GraphicsSurface) As GraphicObject
 
         Dim gObj As GraphicObject = Nothing
         Dim gObj2 As GraphicObject = Nothing
@@ -544,7 +545,7 @@ Imports Microsoft.Msdn.Samples
 
     End Function
 
-    Public Shared Function SearchSurfaceObjectsByTag(ByVal Name As String, ByVal Surface As Microsoft.MSDN.Samples.DesignSurface.GraphicsSurface) As GraphicObject
+    Public Shared Function SearchSurfaceObjectsByTag(ByVal Name As String, ByVal Surface As Microsoft.Msdn.Samples.DesignSurface.GraphicsSurface) As GraphicObject
 
         Dim gObj As GraphicObject = Nothing
         Dim gObj2 As GraphicObject = Nothing
@@ -2906,19 +2907,46 @@ Imports Microsoft.Msdn.Samples
 
 #Region "    Undo/Redo Handlers"
 
-    Sub RedoAction(act As UndoRedoAction)
+    Sub ProcessAction(act As UndoRedoAction, undo As Boolean)
 
-    End Sub
+        Dim pval As Object = Nothing
 
-    Sub UndoAction(act As UndoRedoAction)
+        If undo Then pval = act.OldValue Else pval = act.NewValue
 
         Select Case act.AType
 
-            Case UndoRedoActionType.FlowsheetObjectPropertyChanged
-
             Case UndoRedoActionType.SimulationObjectPropertyChanged
 
+                Dim fobj = Me.Collections.ObjectCollection(act.ObjID)
+
+                If fobj.GetProperties(SimulationObjects_BaseClass.PropertyType.ALL).Contains(act.PropertyName) Then
+                    'Property is listed, set using SetProperty
+                    fobj.SetPropertyValue(act.PropertyName, pval)
+                Else
+                    'Property not listed, set using Reflection
+                    Dim method As FieldInfo = fobj.GetType().GetField(act.PropertyName)
+                    If Not method Is Nothing Then
+                        method.SetValue(fobj, pval)
+                    Else
+                        fobj.GetType().GetProperty(act.PropertyName).SetValue(fobj, pval, Nothing)
+                    End If
+                End If
+
+            Case UndoRedoActionType.FlowsheetObjectPropertyChanged
+
+                Dim gobj = Me.FormSurface.FlowsheetDesignSurface.drawingObjects.FindObjectWithName(act.ObjID)
+
+                'Property not listed, set using Reflection
+                Dim method As FieldInfo = gobj.GetType().GetField(act.PropertyName)
+                If Not method Is Nothing Then
+                    method.SetValue(gobj, pval)
+                Else
+                    gobj.GetType().GetProperty(act.PropertyName).SetValue(gobj, pval, Nothing)
+                End If
+
         End Select
+
+        If My.Settings.UndoRedo_RecalculateFlowsheet Then CalculateAll2(Me, My.Settings.SolverMode)
 
     End Sub
 
@@ -2939,7 +2967,7 @@ Imports Microsoft.Msdn.Samples
 
         If UndoStack.Count > 0 Then
             Dim act = UndoStack.Pop()
-            UndoAction(act)
+            ProcessAction(act, True)
             RedoStack.Push(act)
             tsbRedo.Enabled = True
         End If
@@ -2954,7 +2982,7 @@ Imports Microsoft.Msdn.Samples
 
         If RedoStack.Count > 0 Then
             Dim act = RedoStack.Pop()
-            RedoAction(act)
+            ProcessAction(act, False)
             UndoStack.Push(act)
             tsbUndo.Enabled = True
         End If
