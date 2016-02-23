@@ -322,7 +322,6 @@ Public Class FormUnitGen
                 frm.AddUnitSystem(su)
 
                 frm.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.SystemOfUnitsAdded,
-                                         .ID = New Random().Next(),
                                          .NewValue = su,
                                          .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_SystemOfUnitsAdded"), su.nome)})
 

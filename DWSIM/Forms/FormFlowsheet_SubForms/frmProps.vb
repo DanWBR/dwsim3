@@ -44,7 +44,6 @@ Public Class frmProps
 
         If cprop.Tag2 <> Nothing Then
             Flowsheet.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.SimulationObjectPropertyChanged,
-                                                                .ID = New Random().Next(),
                                                                 .ObjID = sobj.Name,
                                                                 .OldValue = e.OldValue,
                                                                 .NewValue = e.ChangedItem.Value,
@@ -117,8 +116,7 @@ Public Class frmProps
 
         If cprop.Tag2 <> Nothing Then
             Flowsheet.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.FlowsheetObjectPropertyChanged,
-                                                        .ID = New Random().Next(),
-                                                        .ObjID = Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name,
+                                                         .ObjID = Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name,
                                                         .OldValue = e.OldValue,
                                                         .NewValue = e.ChangedItem.Value,
                                                         .PropertyName = cprop.Tag2,

@@ -789,7 +789,6 @@ Public Class FormSimulSettings
             End Select
 
             FrmChild.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.SystemOfUnitsChanged,
-                         .ID = New Random().Next(),
                          .ObjID = su.nome,
                          .ObjID2 = member,
                          .NewValue = cell.Value,
@@ -823,8 +822,7 @@ Public Class FormSimulSettings
             Dim str = Me.ComboBox2.SelectedItem
 
             FrmChild.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.SystemOfUnitsRemoved,
-                 .ID = New Random().Next(),
-                 .NewValue = FormMain.AvailableUnitSystems(str),
+                  .NewValue = FormMain.AvailableUnitSystems(str),
                  .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_SystemOfUnitsRemoved"), FormMain.AvailableUnitSystems(str).nome)})
 
             My.MyApplication.UserUnitSystems.Remove(str)
@@ -1024,7 +1022,6 @@ Public Class FormSimulSettings
         If DWSIM.App.IsRunningOnMono Then
             If dgvpp.SelectedCells.Count > 0 Then
                 FrmChild.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.PropertyPackageRemoved,
-                          .ID = New Random().Next(),
                           .ObjID = dgvpp.Rows(dgvpp.SelectedCells(0).RowIndex).Cells(0).Value,
                           .NewValue = FrmChild.Options.PropertyPackages(dgvpp.Rows(dgvpp.SelectedCells(0).RowIndex).Cells(0).Value).Clone,
                           .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_PropertyPackageRemoved"), dgvpp.Rows(dgvpp.SelectedCells(0).RowIndex).Cells(1).Value)})
@@ -1034,7 +1031,6 @@ Public Class FormSimulSettings
         Else
             If Not dgvpp.SelectedRows.Count = 0 Then
                 FrmChild.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.PropertyPackageRemoved,
-                   .ID = New Random().Next(),
                    .ObjID = dgvpp.Rows(dgvpp.SelectedCells(0).RowIndex).Cells(0).Value,
                    .NewValue = FrmChild.Options.PropertyPackages(dgvpp.SelectedRows(0).Cells(0).Value).Clone,
                    .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_PropertyPackageRemoved"), dgvpp.SelectedRows(0).Cells(1).Value)})
@@ -1164,7 +1160,6 @@ Public Class FormSimulSettings
                 SetupKeyCompounds()
 
                 If My.Application.PushUndoRedoAction Then FrmChild.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.CompoundAdded,
-                          .ID = New Random().Next(),
                           .ObjID = tmpcomp.Name,
                           .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_CompoundAdded"), DWSIM.App.GetComponentName(tmpcomp.Name))})
 
@@ -1220,7 +1215,6 @@ Public Class FormSimulSettings
         Next
         SetupKeyCompounds()
         If My.Application.PushUndoRedoAction Then FrmChild.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.CompoundRemoved,
-          .ID = New Random().Next(),
           .ObjID = tmpcomp.Name,
           .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_CompoundRemoved"), DWSIM.App.GetComponentName(tmpcomp.Name))})
 
@@ -1262,7 +1256,6 @@ Public Class FormSimulSettings
         Me.dgvpp.Rows.Add(New Object() {pp.UniqueID, pp.Tag, pp.ComponentName})
 
         FrmChild.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.PropertyPackageAdded,
-                                 .ID = New Random().Next(),
                                  .ObjID = pp.UniqueID,
                                  .NewValue = pp.Clone,
                                  .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_PropertyPackageAdded"), pp.Tag)})

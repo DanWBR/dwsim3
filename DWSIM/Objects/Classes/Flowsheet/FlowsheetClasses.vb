@@ -49,7 +49,7 @@ Namespace DWSIM.FormClasses
 
     <System.Serializable()> Public Class UndoRedoAction
 
-        Property ID As Integer = -1
+        Property ID As String = ""
         Property Name As String = ""
         Property AType As UndoRedoActionType
         Property ObjID As String = ""

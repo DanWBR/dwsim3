@@ -3317,7 +3317,6 @@ Public Class frmSurface
                 Flowsheet.FormObjList.TBSearch.AutoCompleteCustomSource = Flowsheet.FormObjList.ACSC
             End If
             If My.Application.PushUndoRedoAction Then Flowsheet.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.ObjectAdded,
-                                     .ID = New Random().Next(),
                                      .ObjID = gObj.Name,
                                      .NewValue = gObj,
                                      .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_ObjectAdded"), gObj.Tag)})
