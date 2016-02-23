@@ -3116,12 +3116,14 @@ Imports System.Reflection
         tsbUndo.DropDownItems.Clear()
         For Each act In UndoStack
             Dim tsmi As New ToolStripMenuItem(act.Name, My.Resources.undo_161, AddressOf UndoActions) With {.Tag = act.ID}
+            AddHandler tsmi.MouseEnter, AddressOf tsbUndo_MouseEnter
             tsbUndo.DropDownItems.Add(tsmi)
         Next
 
         tsbRedo.DropDownItems.Clear()
         For Each act In RedoStack
             Dim tsmi As New ToolStripMenuItem(act.Name, My.Resources.redo_16, AddressOf RedoActions) With {.Tag = act.ID}
+            AddHandler tsmi.MouseEnter, AddressOf tsbRedo_MouseEnter
             tsbRedo.DropDownItems.Add(tsmi)
         Next
 
@@ -3148,6 +3150,36 @@ Imports System.Reflection
             act = RedoStack.Peek
             tsbRedo_Click(Me, New EventArgs)
         Loop Until actID = act.ID
+
+    End Sub
+
+    Private Sub tsbUndo_MouseEnter(sender As Object, e As EventArgs)
+
+        Dim hovereditem As ToolStripMenuItem = DirectCast(sender, ToolStripMenuItem)
+
+        For Each tsmi As ToolStripMenuItem In tsbUndo.DropDownItems
+            tsmi.Checked = False
+        Next
+
+        For Each tsmi As ToolStripMenuItem In tsbUndo.DropDownItems
+            tsmi.Checked = True
+            If tsmi Is hovereditem Then Exit For
+        Next
+
+    End Sub
+
+    Private Sub tsbRedo_MouseEnter(sender As Object, e As EventArgs)
+
+        Dim hovereditem As ToolStripMenuItem = DirectCast(sender, ToolStripMenuItem)
+
+        For Each tsmi As ToolStripMenuItem In tsbRedo.DropDownItems
+            tsmi.Checked = False
+        Next
+
+        For Each tsmi As ToolStripMenuItem In tsbRedo.DropDownItems
+            tsmi.Checked = True
+            If tsmi Is hovereditem Then Exit For
+        Next
 
     End Sub
 
