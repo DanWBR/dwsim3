@@ -9,6 +9,7 @@ Imports DWSIM.DWSIM.SimulationObjects
 Imports System.Drawing.Drawing2D
 Imports System.Linq
 Imports System.Threading.Tasks
+Imports DWSIM.DWSIM.FormClasses
 
 Public Class frmSurface
     Inherits DockContent
@@ -3277,7 +3278,10 @@ Public Class frmSurface
                 Flowsheet.FormObjList.ACSC.AddRange(arrays)
                 Flowsheet.FormObjList.TBSearch.AutoCompleteCustomSource = Flowsheet.FormObjList.ACSC
             End If
-
+            Flowsheet.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.ObjectAdded,
+                                     .ID = New Random().Next(),
+                                     .ObjID = gObj.Name,
+                                     .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_ObjectAdded"), gObj.Tag)})
         End If
 
         Me.FlowsheetDesignSurface.Cursor = Cursors.Arrow
@@ -3767,12 +3771,12 @@ Public Class frmSurface
                         selectionControl = Nothing
                     End If
                 Case TipoObjeto.RCT_PFR
-                        Dim myobj As DWSIM.SimulationObjects.Reactors.Reactor_PFR = Flowsheet.Collections.ObjectCollection(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
-                        If myobj.Calculated Then
-                            Dim selectionControl As New FormGraphPFR
-                            selectionControl.form = myobj.FlowSheet
-                            selectionControl.Points = myobj.points
-                            selectionControl.ShowDialog()
+                    Dim myobj As DWSIM.SimulationObjects.Reactors.Reactor_PFR = Flowsheet.Collections.ObjectCollection(Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
+                    If myobj.Calculated Then
+                        Dim selectionControl As New FormGraphPFR
+                        selectionControl.form = myobj.FlowSheet
+                        selectionControl.Points = myobj.points
+                        selectionControl.ShowDialog()
                         selectionControl.Dispose()
                         selectionControl = Nothing
                     End If

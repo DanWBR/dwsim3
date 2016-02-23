@@ -49,6 +49,7 @@ Public Class frmProps
                                                                 .OldValue = e.OldValue,
                                                                 .NewValue = e.ChangedItem.Value,
                                                                 .PropertyName = cprop.Tag2,
+                                                                .Tag = Flowsheet.Options.SelectedUnitSystem,
                                                                 .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_FlowsheetObjectPropertyChanged"), sobj.Tag, e.ChangedItem.Label, .OldValue, .NewValue)})
         End If
 

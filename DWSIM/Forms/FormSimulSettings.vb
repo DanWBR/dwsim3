@@ -24,6 +24,7 @@ Imports System.IO
 Imports DWSIM.DWSIM.Outros
 Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
 Imports System.Linq
+Imports DWSIM.DWSIM.FormClasses
 
 Public Class FormSimulSettings
 
@@ -1060,6 +1061,12 @@ Public Class FormSimulSettings
 
                 SetupKeyCompounds()
 
+                FrmChild.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.CompoundAdded,
+                          .ID = New Random().Next(),
+                          .NewValue = tmpcomp.Name,
+                          .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_CompoundAdded"), DWSIM.App.GetComponentName(tmpcomp.Name))})
+
+
             End If
 
 
@@ -1098,6 +1105,10 @@ Public Class FormSimulSettings
             Next
         Next
         SetupKeyCompounds()
+        FrmChild.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.CompoundRemoved,
+          .ID = New Random().Next(),
+          .NewValue = tmpcomp.Name,
+          .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_CompoundRemoved"), DWSIM.App.GetComponentName(tmpcomp.Name))})
 
     End Sub
 

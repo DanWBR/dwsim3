@@ -1627,6 +1627,12 @@ Imports System.Reflection
 
                             gobj = SelectedObj
 
+                            AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.ObjectRemoved,
+                                                                         .ID = New Random().Next(),
+                                                                         .NewValue = gobj,
+                                                                         .OldValue = Me.Collections.ObjectCollection(namesel).SaveData(),
+                                                                         .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_ObjectRemoved"), gobj.Tag)})
+
                             'dispose object
                             Me.Collections.ObjectCollection(namesel).Dispose()
 
@@ -1907,12 +1913,14 @@ Imports System.Reflection
         Dim SelObj As GraphicObject = gObjFrom
         Dim ObjToDisconnect As GraphicObject = Nothing
         ObjToDisconnect = gObjTo
+        Dim i1, i2 As Integer
         If Not ObjToDisconnect Is Nothing Then
             Dim conptObj As ConnectionPoint = Nothing
             For Each conptObj In SelObj.InputConnectors
                 If conptObj.IsAttached = True Then
                     If Not conptObj.AttachedConnector Is Nothing Then
                         If conptObj.AttachedConnector.AttachedFrom.Name.ToString = ObjToDisconnect.Name.ToString Then
+                            i1 = conptObj.AttachedConnector.AttachedFromConnectorIndex
                             DeCalculateDisconnectedObject(Me, SelObj, "In")
                             conptObj.AttachedConnector.AttachedFrom.OutputConnectors(conptObj.AttachedConnector.AttachedFromConnectorIndex).IsAttached = False
                             conptObj.AttachedConnector.AttachedFrom.OutputConnectors(conptObj.AttachedConnector.AttachedFromConnectorIndex).AttachedConnector = Nothing
@@ -1927,6 +1935,7 @@ Imports System.Reflection
                 If conptObj.IsAttached = True Then
                     If Not conptObj.AttachedConnector Is Nothing Then
                         If conptObj.AttachedConnector.AttachedTo.Name.ToString = ObjToDisconnect.Name.ToString Then
+                            i2 = conptObj.AttachedConnector.AttachedToConnectorIndex
                             DeCalculateDisconnectedObject(Me, SelObj, "Out")
                             conptObj.AttachedConnector.AttachedTo.InputConnectors(conptObj.AttachedConnector.AttachedToConnectorIndex).IsAttached = False
                             conptObj.AttachedConnector.AttachedTo.InputConnectors(conptObj.AttachedConnector.AttachedToConnectorIndex).AttachedConnector = Nothing
@@ -1938,6 +1947,7 @@ Imports System.Reflection
             Next
             If SelObj.EnergyConnector.IsAttached = True Then
                 If SelObj.EnergyConnector.AttachedConnector.AttachedFrom.Name.ToString = ObjToDisconnect.Name.ToString Then
+                    i1 = conptObj.AttachedConnector.AttachedFromConnectorIndex
                     DeCalculateDisconnectedObject(Me, SelObj, "Out")
                     SelObj.EnergyConnector.AttachedConnector.AttachedFrom.OutputConnectors(SelObj.EnergyConnector.AttachedConnector.AttachedFromConnectorIndex).IsAttached = False
                     SelObj.EnergyConnector.AttachedConnector.AttachedFrom.OutputConnectors(SelObj.EnergyConnector.AttachedConnector.AttachedFromConnectorIndex).AttachedConnector = Nothing
@@ -1946,6 +1956,14 @@ Imports System.Reflection
                 End If
             End If
         End If
+
+        AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.FlowsheetObjectDisconnected,
+                                     .ID = New Random().Next(),
+                                     .ObjID = gObjFrom.Name,
+                                     .ObjID2 = gObjTo.Name,
+                                     .OldValue = i1,
+                                     .NewValue = i2,
+                                     .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_ObjectConnected"), gObjFrom.Tag, gObjTo.Tag)})
 
         If triggercalc Then ProcessCalculationQueue(Me, Nothing, False, False) Else Me.CalculationQueue.Clear()
 
@@ -2138,6 +2156,11 @@ Imports System.Reflection
                         Me.FormSurface.FlowsheetDesignSurface.Invalidate()
                     End If
                 End With
+                AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.FlowsheetObjectConnected,
+                                                     .ID = New Random().Next(),
+                                                     .ObjID = gObjFrom.Name,
+                                                     .ObjID2 = gObjTo.Name,
+                                                     .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_ObjectConnected"), gObjFrom.Tag, gObjTo.Tag)})
             Else
                 Throw New Exception(DWSIM.App.GetLocalString("Todasasconexespossve"))
             End If
@@ -2921,7 +2944,7 @@ Imports System.Reflection
 
                 If fobj.GetProperties(SimulationObjects_BaseClass.PropertyType.ALL).Contains(act.PropertyName) Then
                     'Property is listed, set using SetProperty
-                    fobj.SetPropertyValue(act.PropertyName, pval)
+                    fobj.SetPropertyValue(act.PropertyName, pval, act.Tag)
                 Else
                     'Property not listed, set using Reflection
                     Dim method As FieldInfo = fobj.GetType().GetField(act.PropertyName)
@@ -2943,6 +2966,34 @@ Imports System.Reflection
                 Else
                     gobj.GetType().GetProperty(act.PropertyName).SetValue(gobj, pval, Nothing)
                 End If
+
+            Case UndoRedoActionType.CompoundAdded
+
+            Case UndoRedoActionType.CompoundRemoved
+
+            Case UndoRedoActionType.ObjectAdded
+
+                DeleteObject(act.ObjID, False)
+
+            Case UndoRedoActionType.ObjectRemoved
+
+                Dim gobj1 = DirectCast(act.NewValue, GraphicObject)
+
+                Collections.ObjectCollection(FormSurface.AddObjectToSurface(gobj1.TipoObjeto, gobj1.X, gobj1.Y, gobj1.Tag)).LoadData(act.OldValue)
+
+            Case UndoRedoActionType.FlowsheetObjectConnected
+
+                Dim gobj1 = Me.FormSurface.FlowsheetDesignSurface.drawingObjects.FindObjectWithName(act.ObjID)
+                Dim gobj2 = Me.FormSurface.FlowsheetDesignSurface.drawingObjects.FindObjectWithName(act.ObjID2)
+
+                DisconnectObject(gobj1, gobj2)
+
+            Case UndoRedoActionType.FlowsheetObjectDisconnected
+                
+                Dim gobj1 = Me.FormSurface.FlowsheetDesignSurface.drawingObjects.FindObjectWithName(act.ObjID)
+                Dim gobj2 = Me.FormSurface.FlowsheetDesignSurface.drawingObjects.FindObjectWithName(act.ObjID2)
+
+                ConnectObject(gobj1, gobj2, act.OldValue, act.NewValue)
 
         End Select
 

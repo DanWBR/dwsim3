@@ -56,6 +56,7 @@ Namespace DWSIM.FormClasses
         Property ObjID2 As String = ""
         Property OldValue As Object = Nothing
         Property NewValue As Object = Nothing
+        Property Tag As Object = Nothing
         Property PropertyName As String = ""
 
     End Class
