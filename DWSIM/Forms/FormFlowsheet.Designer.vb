@@ -223,6 +223,7 @@ Partial Class FormFlowsheet
         '
         resources.ApplyResources(Me.ToolStripLabel4, "ToolStripLabel4")
         Me.ToolStripLabel4.Name = "ToolStripLabel4"
+        Me.ToolStripLabel4.Padding = New System.Windows.Forms.Padding(0, 0, 5, 0)
         '
         'tsbUndo
         '

@@ -3075,7 +3075,7 @@ Imports System.Reflection
 
     End Sub
 
-    Public Sub tsbUndo_Click(sender As Object, e As EventArgs) Handles tsbUndo.Click
+    Public Sub tsbUndo_Click(sender As Object, e As EventArgs) Handles tsbUndo.ButtonClick
 
         If UndoStack.Count > 0 Then
             Dim act = UndoStack.Pop()
@@ -3092,7 +3092,7 @@ Imports System.Reflection
 
     End Sub
 
-    Public Sub tsbRedo_Click(sender As Object, e As EventArgs) Handles tsbRedo.Click
+    Public Sub tsbRedo_Click(sender As Object, e As EventArgs) Handles tsbRedo.ButtonClick
 
         If RedoStack.Count > 0 Then
             Dim act = RedoStack.Pop()
@@ -3150,6 +3150,5 @@ Imports System.Reflection
     End Sub
 
 #End Region
-
 
 End Class

@@ -130,7 +130,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="ToolStripLabel4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>69, 22</value>
+    <value>74, 22</value>
   </data>
   <data name="ToolStripLabel4.Text" xml:space="preserve">
     <value>Fluxograma</value>
@@ -439,7 +439,7 @@
     <value>0, 25</value>
   </data>
   <data name="ToolStripFlowsheet.Size" type="System.Drawing.Size, System.Drawing">
-    <value>805, 25</value>
+    <value>864, 25</value>
   </data>
   <data name="ToolStripFlowsheet.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
