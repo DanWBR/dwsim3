@@ -14194,6 +14194,132 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Substância adicionada: {0}.
+        '''</summary>
+        Friend Shared ReadOnly Property UndoRedo_CompoundAdded() As String
+            Get
+                Return ResourceManager.GetString("UndoRedo_CompoundAdded", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  Looks up a localized string similar to Substância removida: {0}.
+        '''</summary>
+        Friend Shared ReadOnly Property UndoRedo_CompoundRemoved() As String
+            Get
+                Return ResourceManager.GetString("UndoRedo_CompoundRemoved", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  Looks up a localized string similar to Propriedade modificada: {0}, {1} de {2} para {3}.
+        '''</summary>
+        Friend Shared ReadOnly Property UndoRedo_FlowsheetObjectPropertyChanged() As String
+            Get
+                Return ResourceManager.GetString("UndoRedo_FlowsheetObjectPropertyChanged", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  Looks up a localized string similar to Propriedade modificada: {0}, {1} de {2} para {3}.
+        '''</summary>
+        Friend Shared ReadOnly Property UndoRedo_GraphicObjectPropertyChanged() As String
+            Get
+                Return ResourceManager.GetString("UndoRedo_GraphicObjectPropertyChanged", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  Looks up a localized string similar to Objeto adicionado: {0}.
+        '''</summary>
+        Friend Shared ReadOnly Property UndoRedo_ObjectAdded() As String
+            Get
+                Return ResourceManager.GetString("UndoRedo_ObjectAdded", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  Looks up a localized string similar to Objetos conectados: {0} a {1}.
+        '''</summary>
+        Friend Shared ReadOnly Property UndoRedo_ObjectConnected() As String
+            Get
+                Return ResourceManager.GetString("UndoRedo_ObjectConnected", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  Looks up a localized string similar to Objetos desconectados: {0} de {1}.
+        '''</summary>
+        Friend Shared ReadOnly Property UndoRedo_ObjectDisconnected() As String
+            Get
+                Return ResourceManager.GetString("UndoRedo_ObjectDisconnected", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  Looks up a localized string similar to Objeto removido: {0}.
+        '''</summary>
+        Friend Shared ReadOnly Property UndoRedo_ObjectRemoved() As String
+            Get
+                Return ResourceManager.GetString("UndoRedo_ObjectRemoved", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  Looks up a localized string similar to Pacote adicionado: {0}.
+        '''</summary>
+        Friend Shared ReadOnly Property UndoRedo_PropertyPackagePropertyAdded() As String
+            Get
+                Return ResourceManager.GetString("UndoRedo_PropertyPackagePropertyAdded", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  Looks up a localized string similar to Parâmetro modificado: {0}, {1} de {2} para {3}.
+        '''</summary>
+        Friend Shared ReadOnly Property UndoRedo_PropertyPackagePropertyChanged() As String
+            Get
+                Return ResourceManager.GetString("UndoRedo_PropertyPackagePropertyChanged", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  Looks up a localized string similar to Pacote removido: {0}.
+        '''</summary>
+        Friend Shared ReadOnly Property UndoRedo_PropertyPackagePropertyRemoved() As String
+            Get
+                Return ResourceManager.GetString("UndoRedo_PropertyPackagePropertyRemoved", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  Looks up a localized string similar to Sistema de Unidades adicionado: {0}.
+        '''</summary>
+        Friend Shared ReadOnly Property UndoRedo_SystemOfUnitsAdded() As String
+            Get
+                Return ResourceManager.GetString("UndoRedo_SystemOfUnitsAdded", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  Looks up a localized string similar to Sistema de Unidades modificado: {0}, {1} de {2} para {3}.
+        '''</summary>
+        Friend Shared ReadOnly Property UndoRedo_SystemOfUnitsChanged() As String
+            Get
+                Return ResourceManager.GetString("UndoRedo_SystemOfUnitsChanged", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
+        '''  Looks up a localized string similar to Sistema de Unidades removido: {0}.
+        '''</summary>
+        Friend Shared ReadOnly Property UndoRedo_SystemOfUnitsRemoved() As String
+            Get
+                Return ResourceManager.GetString("UndoRedo_SystemOfUnitsRemoved", resourceCulture)
+            End Get
+        End Property
+
+        '''<summary>
         '''  Looks up a localized string similar to Descarregar.
         '''</summary>
         Friend Shared ReadOnly Property Unload() As String

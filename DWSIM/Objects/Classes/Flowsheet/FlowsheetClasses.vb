@@ -35,10 +35,16 @@ Namespace DWSIM.FormClasses
         FlowsheetObjectPropertyChanged = 1
         FlowsheetObjectConnected = 2
         FlowsheetObjectDisconnected = 3
-        SystemOfUnits = 4
-        CompoundAdded = 5
-        CompoundRemoved = 6
-        PropertyPackagePropertyChanged = 7
+        ObjectAdded = 4
+        ObjectRemoved = 5
+        SystemOfUnitsAdded = 6
+        SystemOfUnitsRemoved = 7
+        SystemOfUnitsChanged = 8
+        CompoundAdded = 9
+        CompoundRemoved = 10
+        PropertyPackagePropertyChanged = 11
+        PropertyPackagePropertyAdded = 12
+        PropertyPackagePropertyRemoved = 13
     End Enum
 
     <System.Serializable()> Public Class UndoRedoAction

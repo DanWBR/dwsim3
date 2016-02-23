@@ -871,18 +871,6 @@ Imports Microsoft.Msdn.Samples
 
     End Sub
 
-    Public Sub tsbUndo_Click(sender As Object, e As EventArgs) Handles tsbUndo.Click
-        Dim act = UndoStack.Pop
-        UndoAction(act)
-        RedoStack.Push(act)
-    End Sub
-
-    Public Sub tsbRedo_Click(sender As Object, e As EventArgs) Handles tsbRedo.Click
-        Dim act = RedoStack.Pop
-        RedoAction(act)
-        UndoStack.Push(act)
-    End Sub
-
     Private Sub tsbCutObj_Click(sender As Object, e As EventArgs) Handles tsbCutObj.Click
         CutObjects()
     End Sub
@@ -2222,21 +2210,37 @@ Imports Microsoft.Msdn.Samples
                 .Item.Clear()
 
                 .Item.Add(DWSIM.App.GetLocalString("Cor"), gobj2, "LineColor", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Cordotextodatabela"), True)
+                .Item(.Item.Count - 1).Tag2 = "LineColor"
                 .Item.Add(DWSIM.App.GetLocalString("Cabealho"), gobj2, "HeaderFont", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Fontedotextodocabeal"), True)
+                .Item(.Item.Count - 1).Tag2 = "HeaderFont"
                 .Item.Add(DWSIM.App.GetLocalString("Coluna1Fonte"), gobj2, "FontCol1", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Fontedotextodacoluna"), True)
+                .Item(.Item.Count - 1).Tag2 = "FontCol1"
                 .Item.Add(DWSIM.App.GetLocalString("Coluna2Fonte"), gobj2, "FontCol2", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Fontedotextodacoluna2"), True)
+                .Item(.Item.Count - 1).Tag2 = "FontCol2"
                 .Item.Add(DWSIM.App.GetLocalString("Coluna3Fonte"), gobj2, "FontCol3", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Fontedotextodacoluna3"), True)
+                .Item(.Item.Count - 1).Tag2 = "FontCol3"
                 .Item.Add(DWSIM.App.GetLocalString("HeaderText"), gobj2, "HeaderText", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString(""), True)
+                .Item(.Item.Count - 1).Tag2 = "HeaderText"
                 .Item.Add(DWSIM.App.GetLocalString("Tratamentodotexto"), gobj2, "TextRenderStyle", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Tipodesuavizaoaplica"), True)
+                .Item(.Item.Count - 1).Tag2 = "TextRenderStyle"
                 .Item.Add(DWSIM.App.GetLocalString("Estilodaborda"), gobj2, "BorderStyle", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Estilodabordatraceja"), True)
+                .Item(.Item.Count - 1).Tag2 = "BorderStyle"
                 .Item.Add(DWSIM.App.GetLocalString("Cordaborda"), gobj2, "BorderColor", False, DWSIM.App.GetLocalString("Aparncia2"), "", True)
+                .Item(.Item.Count - 1).Tag2 = "BorderColor"
                 .Item.Add(DWSIM.App.GetLocalString("Espaamento"), gobj2, "Padding", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Espaamentoentreotext"), True)
+                .Item(.Item.Count - 1).Tag2 = "Padding"
                 .Item.Add(DWSIM.App.GetLocalString("Rotao"), gobj2, "Rotation", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Inclinaodatabelaemre"), True)
+                .Item(.Item.Count - 1).Tag2 = "Rotation"
                 .Item.Add(DWSIM.App.GetLocalString("Gradiente2"), gobj2, "IsGradientBackground", False, DWSIM.App.GetLocalString("Fundo"), "Selecione se deve ser utilizado um gradiente no fundo da tabela", True)
+                .Item(.Item.Count - 1).Tag2 = "IsGradientBackground"
                 .Item.Add(DWSIM.App.GetLocalString("Corsemgradiente"), gobj2, "FillColor", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Corsemgradiente"), True)
+                .Item(.Item.Count - 1).Tag2 = "FillColor"
                 .Item.Add(DWSIM.App.GetLocalString("Cor1gradiente"), gobj2, "BackgroundGradientColor1", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Cor1dogradientecasoa"), True)
+                .Item(.Item.Count - 1).Tag2 = "BackgroundGradientColor1"
                 .Item.Add(DWSIM.App.GetLocalString("Cor2gradiente"), gobj2, "BackgroundGradientColor2", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Cor2dogradientecasoa"), True)
+                .Item(.Item.Count - 1).Tag2 = "BackgroundGradientColor2"
                 .Item.Add(DWSIM.App.GetLocalString("Opacidade0255"), gobj2, "Opacity", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Nveldetransparnciada"), True)
+                .Item(.Item.Count - 1).Tag2 = "Opacity"
 
                 .PropertySort = PropertySort.Categorized
                 .ShowCustomProperties = True
@@ -2255,17 +2259,29 @@ Imports Microsoft.Msdn.Samples
                 .Item.Clear()
 
                 .Item.Add(DWSIM.App.GetLocalString("Cor"), gobj2, "LineColor", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Cordotextodatabela"), True)
+                .Item(.Item.Count - 1).Tag2 = "LineColor"
                 .Item.Add(DWSIM.App.GetLocalString("Coluna1Fonte"), gobj2, "FontCol1", False, DWSIM.App.GetLocalString("Formataodotexto1"), DWSIM.App.GetLocalString("Fontedotextodacoluna"), True)
+                .Item(.Item.Count - 1).Tag2 = "FontCol1"
                 .Item.Add(DWSIM.App.GetLocalString("Tratamentodotexto"), gobj2, "TextRenderStyle", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Tipodesuavizaoaplica"), True)
+                .Item(.Item.Count - 1).Tag2 = "TextRenderStyle"
                 .Item.Add(DWSIM.App.GetLocalString("Estilodaborda"), gobj2, "BorderStyle", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Estilodabordatraceja"), True)
+                .Item(.Item.Count - 1).Tag2 = "BorderStyle"
                 .Item.Add(DWSIM.App.GetLocalString("Cordaborda"), gobj2, "BorderColor", False, DWSIM.App.GetLocalString("Aparncia2"), "", True)
+                .Item(.Item.Count - 1).Tag2 = "BorderColor"
                 .Item.Add(DWSIM.App.GetLocalString("Espaamento"), gobj2, "Padding", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Espaamentoentreotext"), True)
+                .Item(.Item.Count - 1).Tag2 = "Padding"
                 .Item.Add(DWSIM.App.GetLocalString("Rotao"), gobj2, "Rotation", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Inclinaodatabelaemre"), True)
+                .Item(.Item.Count - 1).Tag2 = "Rotation"
                 .Item.Add(DWSIM.App.GetLocalString("Gradiente2"), gobj2, "IsGradientBackground", False, DWSIM.App.GetLocalString("Fundo"), "Selecione se deve ser utilizado um gradiente no fundo da tabela", True)
+                .Item(.Item.Count - 1).Tag2 = "IsGradientBackground"
                 .Item.Add(DWSIM.App.GetLocalString("Corsemgradiente"), gobj2, "FillColor", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Corsemgradiente"), True)
+                .Item(.Item.Count - 1).Tag2 = "FillColor"
                 .Item.Add(DWSIM.App.GetLocalString("Cor1gradiente"), gobj2, "BackgroundGradientColor1", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Cor1dogradientecasoa"), True)
+                .Item(.Item.Count - 1).Tag2 = "BackgroundGradientColor1"
                 .Item.Add(DWSIM.App.GetLocalString("Cor2gradiente"), gobj2, "BackgroundGradientColor2", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Cor2dogradientecasoa"), True)
+                .Item(.Item.Count - 1).Tag2 = "BackgroundGradientColor2"
                 .Item.Add(DWSIM.App.GetLocalString("Opacidade0255"), gobj2, "Opacity", False, DWSIM.App.GetLocalString("Fundo"), DWSIM.App.GetLocalString("Nveldetransparnciada"), True)
+                .Item(.Item.Count - 1).Tag2 = "Opacity"
 
                 .PropertySort = PropertySort.Categorized
                 .ShowCustomProperties = True
@@ -2284,11 +2300,16 @@ Imports Microsoft.Msdn.Samples
                 .Item.Clear()
 
                 .Item.Add(DWSIM.App.GetLocalString("Nome"), gobj.Tag, False, DWSIM.App.GetLocalString("Descrio1"), DWSIM.App.GetLocalString("Nomedoobjeto"), True)
+                .Item(.Item.Count - 1).Tag2 = "Tag"
                 .Item.Add(DWSIM.App.GetLocalString("Texto"), gobj2, "Text", False, "", DWSIM.App.GetLocalString("Textoaserexibidonaca"), True)
+                .Item(.Item.Count - 1).Tag2 = "Text"
                 .Item(.Item.Count - 1).CustomEditor = New System.ComponentModel.Design.MultilineStringEditor
                 .Item.Add(DWSIM.App.GetLocalString("Tratamentodotexto"), gobj2, "TextRenderStyle", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Tipodesuavizaoaplica"), True)
+                .Item(.Item.Count - 1).Tag2 = "TextRenderStyle"
                 .Item.Add(DWSIM.App.GetLocalString("Cor"), gobj2, "Color", False, "", DWSIM.App.GetLocalString("Cordotexto"), True)
+                .Item(.Item.Count - 1).Tag2 = "Color"
                 .Item.Add(DWSIM.App.GetLocalString("Fonte"), gobj2, "Font", False, "", DWSIM.App.GetLocalString("Fontedotexto"), True)
+                .Item(.Item.Count - 1).Tag2 = "Font"
 
                 .PropertySort = PropertySort.Categorized
                 .ShowCustomProperties = True
@@ -2307,9 +2328,13 @@ Imports Microsoft.Msdn.Samples
                 .Item.Clear()
 
                 .Item.Add(DWSIM.App.GetLocalString("Autodimensionar"), gobj2, "AutoSize", False, "", DWSIM.App.GetLocalString("SelecioLiquidrueparaque"), True)
+                .Item(.Item.Count - 1).Tag2 = "AutoSize"
                 .Item.Add(DWSIM.App.GetLocalString("Altura"), gobj2, "Height", False, "", DWSIM.App.GetLocalString("Alturadafiguraempixe"), True)
+                .Item(.Item.Count - 1).Tag2 = "Height"
                 .Item.Add(DWSIM.App.GetLocalString("Largura"), gobj2, "Width", False, "", DWSIM.App.GetLocalString("Larguradafiguraempix"), True)
+                .Item(.Item.Count - 1).Tag2 = "Width"
                 .Item.Add(DWSIM.App.GetLocalString("Rotao"), gobj2, "Rotation", False, "", DWSIM.App.GetLocalString("Rotaodafigurade0a360"), True)
+                .Item(.Item.Count - 1).Tag2 = "Rotation"
 
                 .PropertySort = PropertySort.Categorized
                 .ShowCustomProperties = True
@@ -2327,10 +2352,14 @@ Imports Microsoft.Msdn.Samples
 
                 .Item.Clear()
 
-                .Item.Add(DWSIM.App.GetLocalString("Autodimensionar"), gobj2, DWSIM.App.GetLocalString("AutoSize"), False, "", DWSIM.App.GetLocalString("SelecioLiquidrueparaque"), True)
+                .Item.Add(DWSIM.App.GetLocalString("Autodimensionar"), gobj2, "AutoSize", False, "", DWSIM.App.GetLocalString("SelecioLiquidrueparaque"), True)
+                .Item(.Item.Count - 1).Tag2 = "AutoSize"
                 .Item.Add(DWSIM.App.GetLocalString("Altura"), gobj2, "Height", False, "", DWSIM.App.GetLocalString("Alturadafiguraempixe"), True)
+                .Item(.Item.Count - 1).Tag2 = "Height"
                 .Item.Add(DWSIM.App.GetLocalString("Largura"), gobj2, "Width", False, "", DWSIM.App.GetLocalString("Larguradafiguraempix"), True)
+                .Item(.Item.Count - 1).Tag2 = "Width"
                 .Item.Add(DWSIM.App.GetLocalString("Rotao"), gobj2, "Rotation", False, "", DWSIM.App.GetLocalString("Rotaodafigurade0a360"), True)
+                .Item(.Item.Count - 1).Tag2 = "Rotation"
 
                 .PropertySort = PropertySort.Categorized
                 .ShowCustomProperties = True
@@ -2347,16 +2376,27 @@ Imports Microsoft.Msdn.Samples
                 .Item.Clear()
 
                 .Item.Add(DWSIM.App.GetLocalString("Nome"), gobj, "Tag", False, DWSIM.App.GetLocalString("Descrio1"), DWSIM.App.GetLocalString("Nomedoobjeto"), True)
+                .Item(.Item.Count - 1).Tag2 = "Tag"
                 .Item.Add(DWSIM.App.GetLocalString("Gradiente2"), gobj, "GradientMode", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("SelecioLiquidrueparaapl"), True)
+                .Item(.Item.Count - 1).Tag2 = "GradientMode"
                 .Item.Add("Gradiente_Cor1", gobj, "GradientColor1", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Cor1dogradienteseapl"), True)
+                .Item(.Item.Count - 1).Tag2 = "GradientColor1"
                 .Item.Add("Gradiente_Cor2", gobj, "GradientColor2", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Cor2dogradienteseapl"), True)
+                .Item(.Item.Count - 1).Tag2 = "GradientColor2"
                 .Item.Add(DWSIM.App.GetLocalString("Cor"), gobj, "FillColor", False, DWSIM.App.GetLocalString("Aparncia2"), "Cor de fundo, caso o modo de gradiente não esteja ativado", True)
+                .Item(.Item.Count - 1).Tag2 = "FillColor"
                 .Item.Add(DWSIM.App.GetLocalString("EspessuradaBorda"), gobj, "LineWidth", False, DWSIM.App.GetLocalString("Aparncia2"), DWSIM.App.GetLocalString("Espessuradabordadoob"), True)
+                .Item(.Item.Count - 1).Tag2 = "LineWidth"
                 .Item.Add(DWSIM.App.GetLocalString("Comprimento"), gobj, "Width", False, DWSIM.App.GetLocalString("Tamanho3"), DWSIM.App.GetLocalString("Comprimentodoobjetoe"), True)
+                .Item(.Item.Count - 1).Tag2 = "Width"
                 .Item.Add(DWSIM.App.GetLocalString("Altura"), gobj, "Height", False, DWSIM.App.GetLocalString("Tamanho3"), DWSIM.App.GetLocalString("Alturadoobjetoempixe"), True)
+                .Item(.Item.Count - 1).Tag2 = "Height"
                 .Item.Add(DWSIM.App.GetLocalString("Rotao"), gobj, "Rotation", False, DWSIM.App.GetLocalString("Tamanho3"), DWSIM.App.GetLocalString("Rotaodoobjetode0a360"), True)
+                .Item(.Item.Count - 1).Tag2 = "Rotation"
                 .Item.Add("X", gobj, "X", False, DWSIM.App.GetLocalString("Coordenadas4"), DWSIM.App.GetLocalString("Coordenadahorizontal"), True)
+                .Item(.Item.Count - 1).Tag2 = "X"
                 .Item.Add("Y", gobj, "Y", False, DWSIM.App.GetLocalString("Coordenadas4"), DWSIM.App.GetLocalString("Coordenadaverticaldo"), True)
+                .Item(.Item.Count - 1).Tag2 = "Y"
 
                 .PropertySort = PropertySort.Categorized
                 .ShowCustomProperties = True
@@ -2876,14 +2916,94 @@ Imports Microsoft.Msdn.Samples
 
             Case UndoRedoActionType.FlowsheetObjectPropertyChanged
 
-
-
             Case UndoRedoActionType.SimulationObjectPropertyChanged
 
         End Select
 
     End Sub
 
+    Sub AddUndoRedoAction(act As UndoRedoAction)
+
+        UndoStack.Push(act)
+
+        RedoStack.Clear()
+
+        tsbUndo.Enabled = True
+        tsbRedo.Enabled = False
+
+        PopulateUndoRedoItems()
+
+    End Sub
+
+    Public Sub tsbUndo_Click(sender As Object, e As EventArgs) Handles tsbUndo.Click
+
+        If UndoStack.Count > 0 Then
+            Dim act = UndoStack.Pop()
+            UndoAction(act)
+            RedoStack.Push(act)
+            tsbRedo.Enabled = True
+        End If
+
+        PopulateUndoRedoItems()
+
+        If UndoStack.Count = 0 Then tsbUndo.Enabled = False
+
+    End Sub
+
+    Public Sub tsbRedo_Click(sender As Object, e As EventArgs) Handles tsbRedo.Click
+
+        If RedoStack.Count > 0 Then
+            Dim act = RedoStack.Pop()
+            RedoAction(act)
+            UndoStack.Push(act)
+            tsbUndo.Enabled = True
+        End If
+
+        PopulateUndoRedoItems()
+
+        If RedoStack.Count = 0 Then tsbRedo.Enabled = False
+
+    End Sub
+
+    Private Sub PopulateUndoRedoItems()
+
+        tsbUndo.DropDownItems.Clear()
+        For Each act In UndoStack
+            Dim tsmi As New ToolStripMenuItem(act.Name, My.Resources.undo_161, AddressOf UndoActions) With {.Tag = act.ID}
+            tsbUndo.DropDownItems.Add(tsmi)
+        Next
+
+        tsbRedo.DropDownItems.Clear()
+        For Each act In RedoStack
+            Dim tsmi As New ToolStripMenuItem(act.Name, My.Resources.redo_16, AddressOf RedoActions) With {.Tag = act.ID}
+            tsbRedo.DropDownItems.Add(tsmi)
+        Next
+
+    End Sub
+
+    Sub UndoActions(sender As Object, e As EventArgs)
+
+        Dim actID = DirectCast(sender, ToolStripMenuItem).Tag
+        Dim act As UndoRedoAction
+        Do
+            act = UndoStack.Peek
+            tsbUndo_Click(Me, New EventArgs)
+        Loop Until actID = act.ID
+
+    End Sub
+
+    Sub RedoActions(sender As Object, e As EventArgs)
+
+        Dim actID = DirectCast(sender, ToolStripMenuItem).Tag
+        Dim act As UndoRedoAction
+        Do
+            act = RedoStack.Peek
+            tsbRedo_Click(Me, New EventArgs)
+        Loop Until actID = act.ID
+
+    End Sub
+
 #End Region
+
 
 End Class

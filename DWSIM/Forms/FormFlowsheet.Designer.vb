@@ -26,8 +26,8 @@ Partial Class FormFlowsheet
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.ToolStripFlowsheet = New System.Windows.Forms.ToolStrip()
         Me.ToolStripLabel4 = New System.Windows.Forms.ToolStripLabel()
-        Me.tsbUndo = New System.Windows.Forms.ToolStripButton()
-        Me.tsbRedo = New System.Windows.Forms.ToolStripButton()
+        Me.tsbUndo = New System.Windows.Forms.ToolStripSplitButton()
+        Me.tsbRedo = New System.Windows.Forms.ToolStripSplitButton()
         Me.ToolStripSeparator13 = New System.Windows.Forms.ToolStripSeparator()
         Me.tsbCutObj = New System.Windows.Forms.ToolStripButton()
         Me.tsbCopyObj = New System.Windows.Forms.ToolStripButton()
@@ -227,15 +227,17 @@ Partial Class FormFlowsheet
         'tsbUndo
         '
         Me.tsbUndo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.tsbUndo.Image = Global.DWSIM.My.Resources.Resources.undo_161
+        Me.tsbUndo.DropDownButtonWidth = 14
         resources.ApplyResources(Me.tsbUndo, "tsbUndo")
+        Me.tsbUndo.Image = Global.DWSIM.My.Resources.Resources.undo_161
         Me.tsbUndo.Name = "tsbUndo"
         '
         'tsbRedo
         '
         Me.tsbRedo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.tsbRedo.Image = Global.DWSIM.My.Resources.Resources.redo_16
+        Me.tsbRedo.DropDownButtonWidth = 14
         resources.ApplyResources(Me.tsbRedo, "tsbRedo")
+        Me.tsbRedo.Image = Global.DWSIM.My.Resources.Resources.redo_16
         Me.tsbRedo.Name = "tsbRedo"
         '
         'ToolStripSeparator13
@@ -1546,7 +1548,7 @@ Partial Class FormFlowsheet
     Friend WithEvents tsbCopyObj As System.Windows.Forms.ToolStripButton
     Friend WithEvents tsbPasteObj As System.Windows.Forms.ToolStripButton
     Friend WithEvents ToolStripSeparator12 As System.Windows.Forms.ToolStripSeparator
-    Friend WithEvents tsbUndo As System.Windows.Forms.ToolStripButton
-    Friend WithEvents tsbRedo As System.Windows.Forms.ToolStripButton
+    Friend WithEvents tsbUndo As System.Windows.Forms.ToolStripSplitButton
+    Friend WithEvents tsbRedo As System.Windows.Forms.ToolStripSplitButton
     Friend WithEvents ToolStripSeparator13 As System.Windows.Forms.ToolStripSeparator
 End Class

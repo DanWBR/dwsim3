@@ -5279,4 +5279,46 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   <data name="HXIgnoreLMTDErrorDesc" xml:space="preserve">
     <value>If True, an error on LMTD calculation doesn't throw an exception - a "temperature cross" message is shown instead. Useful for simulations with recycles.</value>
   </data>
+  <data name="UndoRedo_CompoundAdded" xml:space="preserve">
+    <value>Compound added: {0}</value>
+  </data>
+  <data name="UndoRedo_CompoundRemoved" xml:space="preserve">
+    <value>Compound removed: {0}</value>
+  </data>
+  <data name="UndoRedo_FlowsheetObjectPropertyChanged" xml:space="preserve">
+    <value>Property changed: {0}, {1} from {2} to {3}</value>
+  </data>
+  <data name="UndoRedo_GraphicObjectPropertyChanged" xml:space="preserve">
+    <value>Property changed: {0}, {1} from {2} to {3}</value>
+  </data>
+  <data name="UndoRedo_ObjectAdded" xml:space="preserve">
+    <value>Object added: {0}</value>
+  </data>
+  <data name="UndoRedo_ObjectConnected" xml:space="preserve">
+    <value>Objects connected: {0} to {1}</value>
+  </data>
+  <data name="UndoRedo_ObjectDisconnected" xml:space="preserve">
+    <value>Objects disconnected: {0} from {1}</value>
+  </data>
+  <data name="UndoRedo_ObjectRemoved" xml:space="preserve">
+    <value>Object removed: {0}</value>
+  </data>
+  <data name="UndoRedo_PropertyPackagePropertyAdded" xml:space="preserve">
+    <value>Package added: {0}</value>
+  </data>
+  <data name="UndoRedo_PropertyPackagePropertyChanged" xml:space="preserve">
+    <value>Parameter changed: {0}, {1} from {2} to {3}</value>
+  </data>
+  <data name="UndoRedo_PropertyPackagePropertyRemoved" xml:space="preserve">
+    <value>Package removed: {0}</value>
+  </data>
+  <data name="UndoRedo_SystemOfUnitsAdded" xml:space="preserve">
+    <value>System of Units added: {0}</value>
+  </data>
+  <data name="UndoRedo_SystemOfUnitsChanged" xml:space="preserve">
+    <value>System of Units changed: {0}, {1} from {2} to {3}</value>
+  </data>
+  <data name="UndoRedo_SystemOfUnitsRemoved" xml:space="preserve">
+    <value>System of Units removed: {0}</value>
+  </data>
 </root>
