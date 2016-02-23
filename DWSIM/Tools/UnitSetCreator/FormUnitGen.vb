@@ -16,6 +16,7 @@
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
 Imports System.Runtime.Serialization.Formatters.Binary
+Imports DWSIM.DWSIM.FormClasses
 
 
 Public Class FormUnitGen
@@ -313,15 +314,25 @@ Public Class FormUnitGen
             End With
 
             If FormMain.AvailableUnitSystems.ContainsKey(su.nome) Then
+
                 MessageBox.Show(DWSIM.App.GetLocalString("JexisteumSistemadeUn") & vbCrLf & DWSIM.App.GetLocalString("Porfavormodifiqueoet"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+
             Else
 
                 frm.AddUnitSystem(su)
 
+                frm.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.SystemOfUnitsAdded,
+                                         .ID = New Random().Next(),
+                                         .NewValue = su,
+                                         .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_SystemOfUnitsAdded"), su.nome)})
+
                 Me.Close()
+
             End If
         Else
+
             MessageBox.Show(DWSIM.App.GetLocalString("DefinaumnomeparaoSis"), DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Information)
+
         End If
 
     End Sub
@@ -330,5 +341,5 @@ Public Class FormUnitGen
 
     End Sub
 
-  
+
 End Class

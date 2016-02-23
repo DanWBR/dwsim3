@@ -2160,6 +2160,8 @@ Imports System.Reflection
                                                      .ID = New Random().Next(),
                                                      .ObjID = gObjFrom.Name,
                                                      .ObjID2 = gObjTo.Name,
+                                                     .OldValue = fidx,
+                                                     .NewValue = tidx,
                                                      .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_ObjectConnected"), gObjFrom.Tag, gObjTo.Tag)})
             Else
                 Throw New Exception(DWSIM.App.GetLocalString("Todasasconexespossve"))
@@ -2930,9 +2932,11 @@ Imports System.Reflection
 
 #Region "    Undo/Redo Handlers"
 
-    Sub ProcessAction(act As UndoRedoAction, undo As Boolean)
+    Function ProcessAction(act As UndoRedoAction, undo As Boolean) As Boolean
 
         Dim pval As Object = Nothing
+
+        Dim keep As Boolean = False
 
         If undo Then pval = act.OldValue Else pval = act.NewValue
 
@@ -2955,6 +2959,8 @@ Imports System.Reflection
                     End If
                 End If
 
+                keep = True
+
             Case UndoRedoActionType.FlowsheetObjectPropertyChanged
 
                 Dim gobj = Me.FormSurface.FlowsheetDesignSurface.drawingObjects.FindObjectWithName(act.ObjID)
@@ -2967,43 +2973,110 @@ Imports System.Reflection
                     gobj.GetType().GetProperty(act.PropertyName).SetValue(gobj, pval, Nothing)
                 End If
 
+                keep = True
+
             Case UndoRedoActionType.CompoundAdded
 
-                Me.FrmStSim1.RemoveCompFromSimulation(act.ObjID)
+                If undo Then
+                    Me.FrmStSim1.RemoveCompFromSimulation(act.ObjID)
+                Else
+                    Me.FrmStSim1.AddCompToSimulation(act.ObjID)
+                End If
 
             Case UndoRedoActionType.CompoundRemoved
 
-                Me.FrmStSim1.AddCompToSimulation(act.ObjID)
+                If undo Then
+                    Me.FrmStSim1.AddCompToSimulation(act.ObjID)
+                Else
+                    Me.FrmStSim1.RemoveCompFromSimulation(act.ObjID)
+                End If
 
             Case UndoRedoActionType.ObjectAdded
 
-                DeleteObject(act.ObjID, False)
+                If undo Then
+                    DeleteObject(act.ObjID, False)
+                Else
+                    Dim gobj1 = DirectCast(act.NewValue, GraphicObject)
+                    Collections.ObjectCollection(FormSurface.AddObjectToSurface(gobj1.TipoObjeto, gobj1.X, gobj1.Y, gobj1.Tag)).LoadData(act.OldValue)
+                End If
 
             Case UndoRedoActionType.ObjectRemoved
 
                 Dim gobj1 = DirectCast(act.NewValue, GraphicObject)
 
-                Collections.ObjectCollection(FormSurface.AddObjectToSurface(gobj1.TipoObjeto, gobj1.X, gobj1.Y, gobj1.Tag)).LoadData(act.OldValue)
+                If undo Then
+                    Collections.ObjectCollection(FormSurface.AddObjectToSurface(gobj1.TipoObjeto, gobj1.X, gobj1.Y, gobj1.Tag)).LoadData(act.OldValue)
+                Else
+                    DeleteObject(gobj1.Tag, False)
+                End If
 
             Case UndoRedoActionType.FlowsheetObjectConnected
 
                 Dim gobj1 = Me.FormSurface.FlowsheetDesignSurface.drawingObjects.FindObjectWithName(act.ObjID)
                 Dim gobj2 = Me.FormSurface.FlowsheetDesignSurface.drawingObjects.FindObjectWithName(act.ObjID2)
 
-                DisconnectObject(gobj1, gobj2)
+                If undo Then
+                    DisconnectObject(gobj1, gobj2)
+                Else
+                    ConnectObject(gobj1, gobj2, act.OldValue, act.NewValue)
+                End If
 
             Case UndoRedoActionType.FlowsheetObjectDisconnected
-                
+
                 Dim gobj1 = Me.FormSurface.FlowsheetDesignSurface.drawingObjects.FindObjectWithName(act.ObjID)
                 Dim gobj2 = Me.FormSurface.FlowsheetDesignSurface.drawingObjects.FindObjectWithName(act.ObjID2)
 
-                ConnectObject(gobj1, gobj2, act.OldValue, act.NewValue)
+                If undo Then
+                    ConnectObject(gobj1, gobj2, act.OldValue, act.NewValue)
+                Else
+                    DisconnectObject(gobj1, gobj2)
+                End If
+
+            Case UndoRedoActionType.PropertyPackageAdded
+
+                If undo Then
+                    Me.Options.PropertyPackages.Remove(act.ObjID)
+                Else
+                    Dim pp As PropertyPackage = DirectCast(act.NewValue, PropertyPackage)
+                    Me.Options.PropertyPackages.Add(pp.UniqueID, pp)
+                End If
+
+                keep = True
+
+            Case UndoRedoActionType.PropertyPackageRemoved
+
+                If undo Then
+                    Dim pp As PropertyPackage = DirectCast(act.NewValue, PropertyPackage)
+                    Me.Options.PropertyPackages.Add(pp.UniqueID, pp)
+                Else
+                    Me.Options.PropertyPackages.Remove(act.ObjID)
+                End If
+
+                keep = True
+
+            Case UndoRedoActionType.PropertyPackagePropertyChanged
+
+            Case UndoRedoActionType.SystemOfUnitsAdded
+
+            Case UndoRedoActionType.SystemOfUnitsRemoved
+
+            Case UndoRedoActionType.SystemOfUnitsChanged
+
+                Dim sobj = FormMain.AvailableUnitSystems(act.ObjID)
+
+                'Property not listed, set using Reflection
+                Dim method As FieldInfo = sobj.GetType().GetField(act.ObjID2)
+                method.SetValue(sobj, pval)
+
+                keep = True
 
         End Select
 
         If My.Settings.UndoRedo_RecalculateFlowsheet Then CalculateAll2(Me, My.Settings.SolverMode)
 
-    End Sub
+        Return keep
+
+    End Function
 
     Sub AddUndoRedoAction(act As UndoRedoAction)
 
@@ -3022,8 +3095,7 @@ Imports System.Reflection
 
         If UndoStack.Count > 0 Then
             Dim act = UndoStack.Pop()
-            ProcessAction(act, True)
-            RedoStack.Push(act)
+            If ProcessAction(act, True) Then RedoStack.Push(act)
             tsbRedo.Enabled = True
         End If
 
@@ -3037,8 +3109,7 @@ Imports System.Reflection
 
         If RedoStack.Count > 0 Then
             Dim act = RedoStack.Pop()
-            ProcessAction(act, False)
-            UndoStack.Push(act)
+            If ProcessAction(act, False) Then UndoStack.Push(act)
             tsbUndo.Enabled = True
         End If
 

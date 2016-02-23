@@ -636,83 +636,165 @@ Public Class FormSimulSettings
         If loaded Then
 
             Dim cell As DataGridViewCell = Me.DataGridView1.Rows(e.RowIndex).Cells(e.ColumnIndex)
+            Dim oldvalue As String = ""
+            Dim member As String = ""
 
             Dim su As DWSIM.SistemasDeUnidades.Unidades = FrmChild.Options.SelectedUnitSystem
 
             Select Case cell.Style.Tag
                 Case 1
+                    member = "spmp_temperature"
+                    oldvalue = su.spmp_temperature
                     su.spmp_temperature = cell.Value
                 Case 2
+                    member = "spmp_pressure"
+                    oldvalue = su.spmp_pressure
                     su.spmp_pressure = cell.Value
                 Case 3
+                    member = "spmp_massflow"
+                    oldvalue = su.spmp_massflow
                     su.spmp_massflow = cell.Value
                 Case 4
+                    member = "spmp_molarflow"
+                    oldvalue = su.spmp_molarflow
                     su.spmp_molarflow = cell.Value
                 Case 5
+                    member = "spmp_volumetricFlow"
+                    oldvalue = su.spmp_volumetricFlow
                     su.spmp_volumetricFlow = cell.Value
                 Case 6
+                    member = "spmp_enthalpy"
+                    oldvalue = su.spmp_enthalpy
                     su.spmp_enthalpy = cell.Value
                 Case 7
+                    member = "spmp_entropy"
+                    oldvalue = su.spmp_entropy
                     su.spmp_entropy = cell.Value
                 Case 8
+                    member = "spmp_molecularWeight"
+                    oldvalue = su.spmp_molecularWeight
                     su.spmp_molecularWeight = cell.Value
                 Case 9
+                    member = "tdp_surfaceTension"
+                    oldvalue = su.tdp_surfaceTension
                     su.tdp_surfaceTension = cell.Value
                 Case 10
+                    member = "spmp_density"
+                    oldvalue = su.spmp_density
                     su.spmp_density = cell.Value
                 Case 11
+                    member = "spmp_heatCapacityCp"
+                    oldvalue = su.spmp_heatCapacityCp
                     su.spmp_heatCapacityCp = cell.Value
                 Case 12
+                    member = "spmp_thermalConductivity"
+                    oldvalue = su.spmp_thermalConductivity
                     su.spmp_thermalConductivity = cell.Value
                 Case 13
+                    member = "spmp_cinematic_viscosity"
+                    oldvalue = su.spmp_cinematic_viscosity
                     su.spmp_cinematic_viscosity = cell.Value
                 Case 14
+                    member = "spmp_viscosity"
+                    oldvalue = su.spmp_viscosity
                     su.spmp_viscosity = cell.Value
                 Case 15
+                    member = "spmp_deltaP"
+                    oldvalue = su.spmp_deltaP
                     su.spmp_deltaP = cell.Value
                 Case 16
+                    member = "spmp_deltaT"
+                    oldvalue = su.spmp_deltaT
                     su.spmp_deltaT = cell.Value
                 Case 17
+                    member = "spmp_head"
+                    oldvalue = su.spmp_head
                     su.spmp_head = cell.Value
                 Case 18
+                    member = "spmp_heatflow"
+                    oldvalue = su.spmp_heatflow
                     su.spmp_heatflow = cell.Value
                 Case 19
+                    member = "time"
+                    oldvalue = su.time
                     su.time = cell.Value
                 Case 20
+                    member = "volume"
+                    oldvalue = su.volume
                     su.volume = cell.Value
                 Case 21
+                    member = "molar_volume"
+                    oldvalue = su.molar_volume
                     su.molar_volume = cell.Value
                 Case 22
+                    member = "area"
+                    oldvalue = su.area
                     su.area = cell.Value
                 Case 23
+                    member = "diameter"
+                    oldvalue = su.diameter
                     su.diameter = cell.Value
                 Case 24
+                    member = "force"
+                    oldvalue = su.force
                     su.force = cell.Value
                 Case 25
+                    member = "heat_transf_coeff"
+                    oldvalue = su.heat_transf_coeff
                     su.heat_transf_coeff = cell.Value
                 Case 26
+                    member = "accel"
+                    oldvalue = su.accel
                     su.accel = cell.Value
                 Case 27
+                    member = "spec_vol"
+                    oldvalue = su.spec_vol
                     su.spec_vol = cell.Value
                 Case 28
+                    member = "molar_conc"
+                    oldvalue = su.molar_conc
                     su.molar_conc = cell.Value
                 Case 29
+                    member = "mass_conc"
+                    oldvalue = su.mass_conc
                     su.mass_conc = cell.Value
                 Case 30
+                    member = "reac_rate"
+                    oldvalue = su.reac_rate
                     su.reac_rate = cell.Value
                 Case 31
+                    member = "molar_enthalpy"
+                    oldvalue = su.molar_enthalpy
                     su.molar_enthalpy = cell.Value
                 Case 32
+                    member = "molar_entropy"
+                    oldvalue = su.molar_entropy
                     su.molar_entropy = cell.Value
                 Case 33
+                    member = "velocity"
+                    oldvalue = su.velocity
                     su.velocity = cell.Value
                 Case 34
+                    member = "foulingfactor"
+                    oldvalue = su.foulingfactor
                     su.foulingfactor = cell.Value
                 Case 35
+                    member = "cakeresistance"
+                    oldvalue = su.cakeresistance
                     su.cakeresistance = cell.Value
                 Case 36
+                    member = "mediumresistance"
+                    oldvalue = su.mediumresistance
                     su.mediumresistance = cell.Value
             End Select
+
+            FrmChild.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.SystemOfUnitsChanged,
+                         .ID = New Random().Next(),
+                         .ObjID = su.nome,
+                         .ObjID2 = member,
+                         .NewValue = cell.Value,
+                         .OldValue = oldvalue,
+                         .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_SystemOfUnitsChanged"), su.nome, Me.DataGridView1.Rows(e.RowIndex).Cells(e.ColumnIndex - 1).Value, .OldValue, .NewValue)})
 
             Me.FrmChild.FormSurface.UpdateSelectedObject()
 
@@ -739,15 +821,25 @@ Public Class FormSimulSettings
             Me.ComboBox2.SelectedItem <> DWSIM.App.GetLocalString("Personalizado3CNTP") Then
 
             Dim str = Me.ComboBox2.SelectedItem
+
+            FrmChild.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.SystemOfUnitsRemoved,
+                 .ID = New Random().Next(),
+                 .NewValue = FormMain.AvailableUnitSystems(str),
+                 .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_SystemOfUnitsRemoved"), FormMain.AvailableUnitSystems(str).nome)})
+
             My.MyApplication.UserUnitSystems.Remove(str)
+
             FormMain.AvailableUnitSystems.Remove(Me.ComboBox2.SelectedItem)
+
             Me.ComboBox2.SelectedIndex = 0
             Me.ComboBox2.Items.Remove(str)
             Me.FrmChild.ToolStripComboBoxUnitSystem.SelectedIndex = 0
             Me.FrmChild.ToolStripComboBoxUnitSystem.Items.Remove(str)
 
         Else
+
             MessageBox.Show(DWSIM.App.GetLocalString("EsteSistemadeUnidade"))
+
         End If
 
 
@@ -931,11 +1023,21 @@ Public Class FormSimulSettings
     Private Sub btnDeletePP_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnDeletePP.Click
         If DWSIM.App.IsRunningOnMono Then
             If dgvpp.SelectedCells.Count > 0 Then
+                FrmChild.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.PropertyPackageRemoved,
+                          .ID = New Random().Next(),
+                          .ObjID = dgvpp.Rows(dgvpp.SelectedCells(0).RowIndex).Cells(0).Value,
+                          .NewValue = FrmChild.Options.PropertyPackages(dgvpp.Rows(dgvpp.SelectedCells(0).RowIndex).Cells(0).Value).Clone,
+                          .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_PropertyPackageRemoved"), dgvpp.Rows(dgvpp.SelectedCells(0).RowIndex).Cells(1).Value)})
                 FrmChild.Options.PropertyPackages.Remove(dgvpp.Rows(dgvpp.SelectedCells(0).RowIndex).Cells(0).Value)
                 dgvpp.Rows.RemoveAt(dgvpp.SelectedCells(0).RowIndex)
-            End If
+             End If
         Else
             If Not dgvpp.SelectedRows.Count = 0 Then
+                FrmChild.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.PropertyPackageRemoved,
+                   .ID = New Random().Next(),
+                   .ObjID = dgvpp.Rows(dgvpp.SelectedCells(0).RowIndex).Cells(0).Value,
+                   .NewValue = FrmChild.Options.PropertyPackages(dgvpp.SelectedRows(0).Cells(0).Value).Clone,
+                   .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_PropertyPackageRemoved"), dgvpp.SelectedRows(0).Cells(1).Value)})
                 FrmChild.Options.PropertyPackages.Remove(dgvpp.SelectedRows(0).Cells(0).Value)
                 dgvpp.Rows.Remove(dgvpp.SelectedRows(0))
             End If
@@ -1158,6 +1260,12 @@ Public Class FormSimulSettings
 
         FrmChild.Options.PropertyPackages.Add(pp.UniqueID, pp)
         Me.dgvpp.Rows.Add(New Object() {pp.UniqueID, pp.Tag, pp.ComponentName})
+
+        FrmChild.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.PropertyPackageAdded,
+                                 .ID = New Random().Next(),
+                                 .ObjID = pp.UniqueID,
+                                 .NewValue = pp.Clone,
+                                 .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_PropertyPackageAdded"), pp.Tag)})
 
     End Sub
 

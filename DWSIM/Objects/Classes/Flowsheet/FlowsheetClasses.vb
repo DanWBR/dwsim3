@@ -43,8 +43,8 @@ Namespace DWSIM.FormClasses
         CompoundAdded = 9
         CompoundRemoved = 10
         PropertyPackagePropertyChanged = 11
-        PropertyPackagePropertyAdded = 12
-        PropertyPackagePropertyRemoved = 13
+        PropertyPackageAdded = 12
+        PropertyPackageRemoved = 13
     End Enum
 
     <System.Serializable()> Public Class UndoRedoAction
