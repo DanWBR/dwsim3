@@ -872,6 +872,105 @@ Imports System.Reflection
 
     End Sub
 
+    Private Sub EditarToolStripMenuItem_DropDownOpened(sender As Object, e As EventArgs) Handles EditarToolStripMenuItem.DropDownOpened
+
+        Dim isenabled As Boolean = Me.FormSurface.FlowsheetDesignSurface.SelectedObjects.Count > 0
+
+        tsmiCut.Enabled = isenabled
+        tsmiCopy.Enabled = isenabled
+        tsmiPaste.Enabled = isenabled
+        tsmiCloneSelected.Enabled = isenabled
+        tsmiExportData.Enabled = isenabled
+        tsmiRemoveSelected.Enabled = isenabled
+        tsmiRecalc.Enabled = isenabled
+
+    End Sub
+
+    Public Sub tsmiUndo_Click(sender As Object, e As EventArgs) Handles tsmiUndo.Click
+        tsbUndo_Click(sender, e)
+    End Sub
+
+    Public Sub tsmiRedo_Click(sender As Object, e As EventArgs) Handles tsmiRedo.Click
+        tsbRedo_Click(sender, e)
+    End Sub
+
+    Public Sub tsmiCut_Click(sender As Object, e As EventArgs) Handles tsmiCut.Click
+        CutObjects()
+    End Sub
+
+    Public Sub tsmiCopy_Click(sender As Object, e As EventArgs) Handles tsmiCopy.Click
+        CopyObjects()
+    End Sub
+
+    Public Sub tsmiPaste_Click(sender As Object, e As EventArgs) Handles tsmiPaste.Click
+        PasteObjects()
+    End Sub
+
+    Public Sub tsmiRemoveSelected_Click(sender As Object, e As EventArgs) Handles tsmiRemoveSelected.Click
+        Dim n As Integer = Me.FormSurface.FlowsheetDesignSurface.SelectedObjects.Count
+        If n > 1 Then
+            If MessageBox.Show("Delete " & n & " objects?", "Mass delete", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+                Dim indexes As New ArrayList
+                For Each gobj As GraphicObject In Me.FormSurface.FlowsheetDesignSurface.SelectedObjects.Values
+                    indexes.Add(gobj.Tag)
+                Next
+                For Each s As String In indexes
+                    Dim gobj As GraphicObject
+                    gobj = GetFlowsheetGraphicObject(s)
+                    If Not gobj Is Nothing Then
+                        DeleteSelectedObject(sender, e, gobj, False)
+                        Me.FormSurface.FlowsheetDesignSurface.SelectedObjects.Remove(gobj.Name)
+                    End If
+                Next
+            End If
+        ElseIf n = 1 Then
+            DeleteSelectedObject(sender, e, Me.FormSurface.FlowsheetDesignSurface.SelectedObject)
+        End If
+    End Sub
+
+    Public Sub tsmiCloneSelected_Click(sender As Object, e As EventArgs) Handles tsmiCloneSelected.Click
+        For Each obj In Me.FormSurface.FlowsheetDesignSurface.SelectedObjects.Values
+            FormSurface.CloneObject(obj)
+        Next
+    End Sub
+
+    Public Sub tsmiRecalc_Click(sender As Object, e As EventArgs) Handles tsmiRecalc.Click
+
+        Dim obj As SimulationObjects_BaseClass = Collections.ObjectCollection(Me.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
+
+        'Call function to calculate flowsheet
+        Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+        With objargs
+            .Calculado = False
+            .Tag = obj.GraphicObject.Tag
+            .Nome = obj.Nome
+            .Tipo = obj.GraphicObject.TipoObjeto
+            .Emissor = "PropertyGrid"
+        End With
+
+        CalculationQueue.Enqueue(objargs)
+
+        CalculateAll2(Me, My.Settings.SolverMode, , True)
+
+    End Sub
+
+    Public Sub tsmiExportData_Click(sender As Object, e As EventArgs) Handles tsmiExportData.Click
+        'copy all simulation properties from the selected object to clipboard
+        Try
+            Select Case Me.FormSurface.FlowsheetDesignSurface.SelectedObject.TipoObjeto
+                Case TipoObjeto.GO_MasterTable
+                    DirectCast(Me.FormSurface.FlowsheetDesignSurface.SelectedObject, DWSIM.GraphicObjects.MasterTableGraphic).CopyToClipboard()
+                Case TipoObjeto.GO_SpreadsheetTable
+                    DirectCast(Me.FormSurface.FlowsheetDesignSurface.SelectedObject, DWSIM.GraphicObjects.SpreadsheetTableGraphic).CopyToClipboard()
+                Case TipoObjeto.GO_Tabela
+                    DirectCast(Me.FormSurface.FlowsheetDesignSurface.SelectedObject, DWSIM.GraphicObjects.TableGraphic).CopyToClipboard()
+                Case Else
+                    Collections.ObjectCollection(Me.FormSurface.FlowsheetDesignSurface.SelectedObject.Name).CopyDataToClipboard(Options.SelectedUnitSystem, Options.NumberFormat)
+            End Select
+        Catch ex As Exception
+            WriteToLog("Error copying data to clipboard: " & ex.ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
+        End Try
+    End Sub
     Private Sub tsbCutObj_Click(sender As Object, e As EventArgs) Handles tsbCutObj.Click
         CutObjects()
     End Sub
@@ -3182,6 +3281,8 @@ Imports System.Reflection
 
             tsbUndo.Enabled = True
             tsbRedo.Enabled = False
+            tsmiUndo.Enabled = True
+            tsmiRedo.Enabled = False
 
             PopulateUndoRedoItems()
 
@@ -3210,9 +3311,15 @@ Imports System.Reflection
             My.Application.PushUndoRedoAction = True
             RedoStack.Push(act)
             tsbRedo.Enabled = True
+            tsmiRedo.Enabled = True
         End If
 
-        If UndoStack.Count = 0 Then tsbUndo.Enabled = False
+        If UndoStack.Count = 0 Then
+            tsbUndo.Enabled = False
+            tsmiUndo.Enabled = False
+            tsbUndo.Text = DWSIM.App.GetLocalString("Undo")
+            tsmiUndo.Text = DWSIM.App.GetLocalString("Undo")
+        End If
 
     End Sub
 
@@ -3225,9 +3332,15 @@ Imports System.Reflection
             My.Application.PushUndoRedoAction = True
             UndoStack.Push(act)
             tsbUndo.Enabled = True
+            tsmiUndo.Enabled = True
         End If
 
-        If RedoStack.Count = 0 Then tsbRedo.Enabled = False
+        If RedoStack.Count = 0 Then
+            tsbRedo.Enabled = False
+            tsmiRedo.Enabled = False
+            tsbRedo.Text = DWSIM.App.GetLocalString("Redo")
+            tsmiRedo.Text = DWSIM.App.GetLocalString("Redo")
+        End If
 
     End Sub
 
@@ -3238,6 +3351,10 @@ Imports System.Reflection
         tsbUndo.DropDownItems.Clear()
         count = 0
         For Each act In UndoStack
+            If count = 0 Then
+                tsmiUndo.Text = DWSIM.App.GetLocalString("Undo") & " " & act.Name
+                tsbUndo.Text = DWSIM.App.GetLocalString("Undo") & " " & act.Name
+            End If
             Dim tsmi As New ToolStripMenuItem(act.Name, My.Resources.undo_161, AddressOf UndoActions) With {.Tag = act.ID}
             AddHandler tsmi.MouseEnter, AddressOf tsbUndo_MouseEnter
             tsbUndo.DropDownItems.Add(tsmi)
@@ -3248,6 +3365,10 @@ Imports System.Reflection
         tsbRedo.DropDownItems.Clear()
         count = 0
         For Each act In RedoStack
+            If count = 0 Then
+                tsmiRedo.Text = DWSIM.App.GetLocalString("Redo") & " " & act.Name
+                tsbRedo.Text = DWSIM.App.GetLocalString("Redo") & " " & act.Name
+            End If
             Dim tsmi As New ToolStripMenuItem(act.Name, My.Resources.redo_16, AddressOf RedoActions) With {.Tag = act.ID}
             AddHandler tsmi.MouseEnter, AddressOf tsbRedo_MouseEnter
             tsbRedo.DropDownItems.Add(tsmi)

@@ -12043,6 +12043,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Refazer.
+        '''</summary>
+        Friend Shared ReadOnly Property Redo() As String
+            Get
+                Return ResourceManager.GetString("Redo", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Redução Normal 2:1.
         '''</summary>
         Friend Shared ReadOnly Property ReduoNormal21() As String
@@ -14190,6 +14199,15 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Umaoumaiscorrentesna() As String
             Get
                 Return ResourceManager.GetString("Umaoumaiscorrentesna", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Desfazer.
+        '''</summary>
+        Friend Shared ReadOnly Property Undo() As String
+            Get
+                Return ResourceManager.GetString("Undo", resourceCulture)
             End Get
         End Property
         

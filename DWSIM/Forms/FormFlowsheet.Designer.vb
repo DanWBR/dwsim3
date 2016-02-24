@@ -21,16 +21,16 @@ Partial Class FormFlowsheet
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormFlowsheet))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.ToolStripFlowsheet = New System.Windows.Forms.ToolStrip()
         Me.ToolStripLabel4 = New System.Windows.Forms.ToolStripLabel()
         Me.tsbUndo = New System.Windows.Forms.ToolStripSplitButton()
         Me.tsbRedo = New System.Windows.Forms.ToolStripSplitButton()
         Me.ToolStripSeparator13 = New System.Windows.Forms.ToolStripSeparator()
-        Me.tsbCutObj = New System.Windows.Forms.ToolStripButton()
         Me.tsbCopyObj = New System.Windows.Forms.ToolStripButton()
+        Me.tsbCutObj = New System.Windows.Forms.ToolStripButton()
         Me.tsbPasteObj = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator12 = New System.Windows.Forms.ToolStripSeparator()
         Me.TSBtabela = New System.Windows.Forms.ToolStripButton()
@@ -98,6 +98,20 @@ Partial Class FormFlowsheet
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.ConfiguraçõesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ComponentesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.EditarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tsmiUndo = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tsmiRedo = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator14 = New System.Windows.Forms.ToolStripSeparator()
+        Me.tsmiCut = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tsmiCopy = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tsmiPaste = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator15 = New System.Windows.Forms.ToolStripSeparator()
+        Me.tsmiRemoveSelected = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator16 = New System.Windows.Forms.ToolStripSeparator()
+        Me.tsmiCloneSelected = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator17 = New System.Windows.Forms.ToolStripSeparator()
+        Me.tsmiRecalc = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tsmiExportData = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExibirToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.consoletsmi = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExibirListaDeItensACalcularToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -215,7 +229,7 @@ Partial Class FormFlowsheet
         'ToolStripFlowsheet
         '
         resources.ApplyResources(Me.ToolStripFlowsheet, "ToolStripFlowsheet")
-        Me.ToolStripFlowsheet.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel4, Me.tsbUndo, Me.tsbRedo, Me.ToolStripSeparator13, Me.tsbCutObj, Me.tsbCopyObj, Me.tsbPasteObj, Me.ToolStripSeparator12, Me.TSBtabela, Me.TSBTexto, Me.ToolStripButton4, Me.ToolStripButton19, Me.ToolStripButton12, Me.ToolStripSeparator5, Me.ToolStripButton1, Me.TSTBZoom, Me.ToolStripButton2, Me.ToolStripButton20, Me.ToolStripButton3, Me.ToolStripSeparator6, Me.ToolStripButton18, Me.tsbConfigPage, Me.tsbConfigPrinter, Me.tsbPrint, Me.ToolStripSeparator4, Me.ToolStripButton16, Me.ToolStripButton17, Me.ToolStripSeparator8, Me.tsbAlignLefts, Me.tsbAlignCenters, Me.tsbAlignRights, Me.tsbAlignTops, Me.tsbAlignMiddles, Me.tsbAlignBottoms, Me.ToolStripSeparator9, Me.tsbAlignVertical, Me.tsbAlignHorizontal})
+        Me.ToolStripFlowsheet.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel4, Me.tsbUndo, Me.tsbRedo, Me.ToolStripSeparator13, Me.tsbCopyObj, Me.tsbCutObj, Me.tsbPasteObj, Me.ToolStripSeparator12, Me.TSBtabela, Me.TSBTexto, Me.ToolStripButton4, Me.ToolStripButton19, Me.ToolStripButton12, Me.ToolStripSeparator5, Me.ToolStripButton1, Me.TSTBZoom, Me.ToolStripButton2, Me.ToolStripButton20, Me.ToolStripButton3, Me.ToolStripSeparator6, Me.ToolStripButton18, Me.tsbConfigPage, Me.tsbConfigPrinter, Me.tsbPrint, Me.ToolStripSeparator4, Me.ToolStripButton16, Me.ToolStripButton17, Me.ToolStripSeparator8, Me.tsbAlignLefts, Me.tsbAlignCenters, Me.tsbAlignRights, Me.tsbAlignTops, Me.tsbAlignMiddles, Me.tsbAlignBottoms, Me.ToolStripSeparator9, Me.tsbAlignVertical, Me.tsbAlignHorizontal})
         Me.ToolStripFlowsheet.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow
         Me.ToolStripFlowsheet.Name = "ToolStripFlowsheet"
         '
@@ -246,19 +260,19 @@ Partial Class FormFlowsheet
         Me.ToolStripSeparator13.Name = "ToolStripSeparator13"
         resources.ApplyResources(Me.ToolStripSeparator13, "ToolStripSeparator13")
         '
-        'tsbCutObj
-        '
-        Me.tsbCutObj.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.tsbCutObj.Image = Global.DWSIM.My.Resources.Resources.cut
-        resources.ApplyResources(Me.tsbCutObj, "tsbCutObj")
-        Me.tsbCutObj.Name = "tsbCutObj"
-        '
         'tsbCopyObj
         '
         Me.tsbCopyObj.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
         Me.tsbCopyObj.Image = Global.DWSIM.My.Resources.Resources.copy
         resources.ApplyResources(Me.tsbCopyObj, "tsbCopyObj")
         Me.tsbCopyObj.Name = "tsbCopyObj"
+        '
+        'tsbCutObj
+        '
+        Me.tsbCutObj.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsbCutObj.Image = Global.DWSIM.My.Resources.Resources.cut
+        resources.ApplyResources(Me.tsbCutObj, "tsbCutObj")
+        Me.tsbCutObj.Name = "tsbCutObj"
         '
         'tsbPasteObj
         '
@@ -562,33 +576,33 @@ Partial Class FormFlowsheet
         '
         'DataGridView1
         '
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridView1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle10.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridView1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle10
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.DataGridView1.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle11.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.DataGridView1.DefaultCellStyle = DataGridViewCellStyle11
         resources.ApplyResources(Me.DataGridView1, "DataGridView1")
         Me.DataGridView1.Name = "DataGridView1"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridView1.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle12.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridView1.RowHeadersDefaultCellStyle = DataGridViewCellStyle12
         '
         'TSTable
         '
@@ -711,7 +725,7 @@ Partial Class FormFlowsheet
         '
         Me.MenuStrip1.AllowItemReorder = True
         resources.ApplyResources(Me.MenuStrip1, "MenuStrip1")
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConfiguraçõesToolStripMenuItem, Me.ExibirToolStripMenuItem, Me.InserirToolStripMenuItem, Me.SuplementosToolStripMenuItem, Me.OtimizaToolStripMenuItem, Me.ResultadosToolStripMenuItem, Me.ArquivoToolStripMenuItem, Me.FerramentasToolStripMenuItem, Me.PluginsToolStripMenuItem, Me.ScriptsToolStripMenuItem})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConfiguraçõesToolStripMenuItem, Me.EditarToolStripMenuItem, Me.ExibirToolStripMenuItem, Me.InserirToolStripMenuItem, Me.SuplementosToolStripMenuItem, Me.OtimizaToolStripMenuItem, Me.ResultadosToolStripMenuItem, Me.ArquivoToolStripMenuItem, Me.FerramentasToolStripMenuItem, Me.PluginsToolStripMenuItem, Me.ScriptsToolStripMenuItem})
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.ShowItemToolTips = True
         '
@@ -730,6 +744,88 @@ Partial Class FormFlowsheet
         Me.ComponentesToolStripMenuItem.MergeIndex = 0
         Me.ComponentesToolStripMenuItem.Name = "ComponentesToolStripMenuItem"
         resources.ApplyResources(Me.ComponentesToolStripMenuItem, "ComponentesToolStripMenuItem")
+        '
+        'EditarToolStripMenuItem
+        '
+        Me.EditarToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsmiUndo, Me.tsmiRedo, Me.ToolStripSeparator14, Me.tsmiCut, Me.tsmiCopy, Me.tsmiPaste, Me.ToolStripSeparator15, Me.tsmiRemoveSelected, Me.ToolStripSeparator16, Me.tsmiCloneSelected, Me.ToolStripSeparator17, Me.tsmiRecalc, Me.tsmiExportData})
+        Me.EditarToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert
+        Me.EditarToolStripMenuItem.MergeIndex = 1
+        Me.EditarToolStripMenuItem.Name = "EditarToolStripMenuItem"
+        resources.ApplyResources(Me.EditarToolStripMenuItem, "EditarToolStripMenuItem")
+        '
+        'tsmiUndo
+        '
+        resources.ApplyResources(Me.tsmiUndo, "tsmiUndo")
+        Me.tsmiUndo.Image = Global.DWSIM.My.Resources.Resources.undo_161
+        Me.tsmiUndo.Name = "tsmiUndo"
+        '
+        'tsmiRedo
+        '
+        resources.ApplyResources(Me.tsmiRedo, "tsmiRedo")
+        Me.tsmiRedo.Image = Global.DWSIM.My.Resources.Resources.redo_16
+        Me.tsmiRedo.Name = "tsmiRedo"
+        '
+        'ToolStripSeparator14
+        '
+        Me.ToolStripSeparator14.Name = "ToolStripSeparator14"
+        resources.ApplyResources(Me.ToolStripSeparator14, "ToolStripSeparator14")
+        '
+        'tsmiCut
+        '
+        Me.tsmiCut.Image = Global.DWSIM.My.Resources.Resources.cut
+        Me.tsmiCut.Name = "tsmiCut"
+        resources.ApplyResources(Me.tsmiCut, "tsmiCut")
+        '
+        'tsmiCopy
+        '
+        Me.tsmiCopy.Image = Global.DWSIM.My.Resources.Resources.page_copy
+        Me.tsmiCopy.Name = "tsmiCopy"
+        resources.ApplyResources(Me.tsmiCopy, "tsmiCopy")
+        '
+        'tsmiPaste
+        '
+        Me.tsmiPaste.Image = Global.DWSIM.My.Resources.Resources.paste_plain
+        Me.tsmiPaste.Name = "tsmiPaste"
+        resources.ApplyResources(Me.tsmiPaste, "tsmiPaste")
+        '
+        'ToolStripSeparator15
+        '
+        Me.ToolStripSeparator15.Name = "ToolStripSeparator15"
+        resources.ApplyResources(Me.ToolStripSeparator15, "ToolStripSeparator15")
+        '
+        'tsmiRemoveSelected
+        '
+        Me.tsmiRemoveSelected.Image = Global.DWSIM.My.Resources.Resources.cross
+        Me.tsmiRemoveSelected.Name = "tsmiRemoveSelected"
+        resources.ApplyResources(Me.tsmiRemoveSelected, "tsmiRemoveSelected")
+        '
+        'ToolStripSeparator16
+        '
+        Me.ToolStripSeparator16.Name = "ToolStripSeparator16"
+        resources.ApplyResources(Me.ToolStripSeparator16, "ToolStripSeparator16")
+        '
+        'tsmiCloneSelected
+        '
+        Me.tsmiCloneSelected.Image = Global.DWSIM.My.Resources.Resources.sheep
+        Me.tsmiCloneSelected.Name = "tsmiCloneSelected"
+        resources.ApplyResources(Me.tsmiCloneSelected, "tsmiCloneSelected")
+        '
+        'ToolStripSeparator17
+        '
+        Me.ToolStripSeparator17.Name = "ToolStripSeparator17"
+        resources.ApplyResources(Me.ToolStripSeparator17, "ToolStripSeparator17")
+        '
+        'tsmiRecalc
+        '
+        Me.tsmiRecalc.Image = Global.DWSIM.My.Resources.Resources.arrow_refresh
+        Me.tsmiRecalc.Name = "tsmiRecalc"
+        resources.ApplyResources(Me.tsmiRecalc, "tsmiRecalc")
+        '
+        'tsmiExportData
+        '
+        Me.tsmiExportData.Image = Global.DWSIM.My.Resources.Resources.clipboard_sign
+        Me.tsmiExportData.Name = "tsmiExportData"
+        resources.ApplyResources(Me.tsmiExportData, "tsmiExportData")
         '
         'ExibirToolStripMenuItem
         '
@@ -1552,4 +1648,18 @@ Partial Class FormFlowsheet
     Friend WithEvents tsbUndo As System.Windows.Forms.ToolStripSplitButton
     Friend WithEvents tsbRedo As System.Windows.Forms.ToolStripSplitButton
     Friend WithEvents ToolStripSeparator13 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents EditarToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents tsmiUndo As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents tsmiRedo As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator14 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents tsmiCut As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents tsmiCopy As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents tsmiPaste As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator15 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents tsmiRemoveSelected As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator16 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents tsmiCloneSelected As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator17 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents tsmiRecalc As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents tsmiExportData As System.Windows.Forms.ToolStripMenuItem
 End Class

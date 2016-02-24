@@ -174,27 +174,9 @@ Public Class frmSurface
     Private Sub FlowsheetDesignSurface_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles FlowsheetDesignSurface.KeyDown
 
         If e.KeyCode = Keys.Delete Then
-            Dim n As Integer = Me.FlowsheetDesignSurface.SelectedObjects.Count
-            If n > 1 Then
-                If MessageBox.Show("Delete " & n & " objects?", "Mass delete", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-                    Dim indexes As New ArrayList
-                    For Each gobj As GraphicObject In Me.FlowsheetDesignSurface.SelectedObjects.Values
-                        indexes.Add(gobj.Tag)
-                    Next
-                    For Each s As String In indexes
-                        Dim gobj As GraphicObject
-                        gobj = Flowsheet.GetFlowsheetGraphicObject(s)
-                        If Not gobj Is Nothing Then
-                            Me.Flowsheet.DeleteSelectedObject(sender, e, gobj, False)
-                            Me.FlowsheetDesignSurface.SelectedObjects.Remove(gobj.Name)
-                        End If
-                    Next
-                End If
-            ElseIf n = 1 Then
-                Me.Flowsheet.DeleteSelectedObject(sender, e, Me.FlowsheetDesignSurface.SelectedObject)
-            End If
+
         ElseIf e.KeyCode = Keys.R And e.Control Then
-            Call Me.RecalcularToolStripMenuItem_Click(sender, e)
+
         ElseIf e.KeyCode = Keys.E And e.Control Then
             Call Me.EditCompTSMI_Click(sender, e)
         ElseIf e.KeyCode = Keys.F5 Then
@@ -218,15 +200,15 @@ Public Class frmSurface
             Flowsheet.FormSurface.LabelCalculator.Text = DWSIM.App.GetLocalString("CalculadorOcioso")
             Flowsheet.WriteToLog(DWSIM.App.GetLocalString("Calculadorativado"), Color.DimGray, DWSIM.FormClasses.TipoAviso.Informacao)
         ElseIf e.KeyCode = Keys.X And e.Control Then
-            Flowsheet.CutObjects()
+            'Flowsheet.CutObjects()
         ElseIf e.KeyCode = Keys.C And e.Control Then
-            Flowsheet.CopyObjects()
+            'Flowsheet.CopyObjects()
         ElseIf e.KeyCode = Keys.V And e.Control Then
-            Flowsheet.PasteObjects()
+            'Flowsheet.PasteObjects()
         ElseIf e.KeyCode = Keys.Z And e.Control Then
-            Flowsheet.tsbUndo_Click(sender, e)
+            'Flowsheet.tsbUndo_Click(sender, e)
         ElseIf e.KeyCode = Keys.Y And e.Control Then
-            Flowsheet.tsbRedo_Click(sender, e)
+            'Flowsheet.tsbRedo_Click(sender, e)
         End If
 
         If Not Me.FlowsheetDesignSurface.SelectedObject Is Nothing Then
@@ -1061,12 +1043,15 @@ Public Class frmSurface
         Me.ticks += 1
     End Sub
 
-    Private Sub ClonarToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ClonarToolStripMenuItem.Click
+    Public Sub ClonarToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ClonarToolStripMenuItem.Click
+        CloneObject(Me.FlowsheetDesignSurface.SelectedObject)
+    End Sub
+
+    Public Sub CloneObject(gobj As GraphicObject)
 
         Flowsheet = My.Application.ActiveSimulation
 
-        Dim obj As SimulationObjects_BaseClass = Flowsheet.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name)
-        Dim gObj As GraphicObject = Me.FlowsheetDesignSurface.SelectedObject
+        Dim obj As SimulationObjects_BaseClass = Flowsheet.Collections.ObjectCollection(gobj.Name)
         Dim newobj As SimulationObjects_BaseClass = obj.Clone
         newobj.Tabela = Nothing
         newobj.TabelaRapida = Nothing
@@ -3444,24 +3429,9 @@ Public Class frmSurface
 
     End Sub
 
-    Private Sub RecalcularToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RecalcularToolStripMenuItem.Click
+    Public Sub RecalcularToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RecalcularToolStripMenuItem.Click
 
-        Flowsheet = My.Application.ActiveSimulation
-        Dim obj As SimulationObjects_BaseClass = Flowsheet.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name)
-
-        'Call function to calculate flowsheet
-        Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
-        With objargs
-            .Calculado = False
-            .Tag = obj.GraphicObject.Tag
-            .Nome = obj.Nome
-            .Tipo = obj.GraphicObject.TipoObjeto
-            .Emissor = "PropertyGrid"
-        End With
-
-        Flowsheet.CalculationQueue.Enqueue(objargs)
-
-        CalculateAll2(Flowsheet, My.Settings.SolverMode, , True)
+        Me.Flowsheet.tsmiRecalc_Click(sender, e)
 
     End Sub
 
@@ -3858,21 +3828,7 @@ Public Class frmSurface
 
     Private Sub CopiarDadosParaÁreaDeTransferênciaToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles CopiarDadosParaÁreaDeTransferênciaToolStripMenuItem.Click
 
-        'copy all simulation properties from the selected object to clipboard
-        Try
-            Select Case Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto
-                Case TipoObjeto.GO_MasterTable
-                    DirectCast(Me.FlowsheetDesignSurface.SelectedObject, DWSIM.GraphicObjects.MasterTableGraphic).CopyToClipboard()
-                Case TipoObjeto.GO_SpreadsheetTable
-                    DirectCast(Me.FlowsheetDesignSurface.SelectedObject, DWSIM.GraphicObjects.SpreadsheetTableGraphic).CopyToClipboard()
-                Case TipoObjeto.GO_Tabela
-                    DirectCast(Me.FlowsheetDesignSurface.SelectedObject, DWSIM.GraphicObjects.TableGraphic).CopyToClipboard()
-                Case Else
-                    Flowsheet.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name).CopyDataToClipboard(Flowsheet.Options.SelectedUnitSystem, Flowsheet.Options.NumberFormat)
-            End Select
-        Catch ex As Exception
-            Me.Flowsheet.WriteToLog("Error copying data to clipboard: " & ex.ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
-        End Try
+        Me.Flowsheet.tsmiExportData_Click(sender, e)
 
     End Sub
 

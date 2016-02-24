@@ -5340,4 +5340,10 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   <data name="UndoRedo_Paste" xml:space="preserve">
     <value>Colar objetos</value>
   </data>
+  <data name="Redo" xml:space="preserve">
+    <value>Refazer</value>
+  </data>
+  <data name="Undo" xml:space="preserve">
+    <value>Desfazer</value>
+  </data>
 </root>
