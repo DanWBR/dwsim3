@@ -18,6 +18,7 @@
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
 Imports System.IO
+Imports DWSIM.DWSIM.FormClasses
 
 Public Class FormConfigPRSV2
 
@@ -156,7 +157,17 @@ gt2:            If ppu.m_pr._data.ContainsKey(cp.Name.ToLower) Then
 
     Private Sub KryptonDataGridView1_CellEndEdit(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles KryptonDataGridView1.CellEndEdit
 
-        _pp.Parameters(Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(0).Value) = Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(2).Value
+        Dim oldvalue = _pp.Parameters(Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(0).Value)
+        Dim newvalue = Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(2).Value
+        Dim parid As String = Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(0).Value
+        Dim parname As String = Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(1).Value
+
+        _pp.Parameters(parid) = newvalue
+        If Not _form Is Nothing Then
+            _form.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.PropertyPackagePropertyChanged,
+                                                               .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_PropertyPackagePropertyChanged"), _pp.Tag, parname, oldvalue, newvalue),
+                                                               .OldValue = oldvalue, .NewValue = newvalue, .Tag = _pp, .ObjID = parid, .PropertyName = "PARAM"})
+        End If
 
     End Sub
 
@@ -205,6 +216,7 @@ gt2:            If ppu.m_pr._data.ContainsKey(cp.Name.ToLower) Then
 
     Private Sub KryptonDataGridView2_CellValueChanged(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles KryptonDataGridView2.CellValueChanged
         If Loaded Then
+            Dim oldvalue As Double, tp As String = ""
             If TypeOf _pp Is PRSV2PropertyPackage Then
                 Dim ppu As PRSV2PropertyPackage = _pp
                 Dim value As Object = KryptonDataGridView2.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
@@ -212,10 +224,20 @@ gt2:            If ppu.m_pr._data.ContainsKey(cp.Name.ToLower) Then
                 Dim id2 As String = KryptonDataGridView2.Rows(e.RowIndex).Cells(1).Tag.ToString.ToLower
                 Select Case e.ColumnIndex
                     Case 2
+                        oldvalue = ppu.m_pr.InteractionParameters(id1)(id2).kij
                         ppu.m_pr.InteractionParameters(id1)(id2).kij = value
+                        tp = "PRSV2_KIJ"
                     Case 3
+                        oldvalue = ppu.m_pr.InteractionParameters(id1)(id2).kji
                         ppu.m_pr.InteractionParameters(id1)(id2).kji = value
+                        tp = "PRSV2_KJI"
                 End Select
+                If Not _form Is Nothing Then
+                    _form.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.PropertyPackagePropertyChanged,
+                                                                       .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_PropertyPackagePropertyChanged"), _pp.Tag, tp, oldvalue, value),
+                                                                       .OldValue = oldvalue, .NewValue = CDbl(value), .ObjID = id1, .ObjID2 = id2,
+                                                                       .Tag = _pp, .PropertyName = tp})
+                End If
             Else
                 Dim ppu As PRSV2VLPropertyPackage = _pp
                 Dim value As Object = KryptonDataGridView2.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
@@ -223,10 +245,20 @@ gt2:            If ppu.m_pr._data.ContainsKey(cp.Name.ToLower) Then
                 Dim id2 As String = KryptonDataGridView2.Rows(e.RowIndex).Cells(1).Tag.ToString.ToLower
                 Select Case e.ColumnIndex
                     Case 2
+                        oldvalue = ppu.m_pr.InteractionParameters(id1)(id2).kij
                         ppu.m_pr.InteractionParameters(id1)(id2).kij = value
+                        tp = "PRSV2VL_KIJ"
                     Case 3
+                        oldvalue = ppu.m_pr.InteractionParameters(id1)(id2).kji
                         ppu.m_pr.InteractionParameters(id1)(id2).kji = value
+                        tp = "PRSV2VL_KJI"
                 End Select
+                If Not _form Is Nothing Then
+                    _form.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.PropertyPackagePropertyChanged,
+                                                                       .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_PropertyPackagePropertyChanged"), _pp.Tag, tp, oldvalue, value),
+                                                                       .OldValue = oldvalue, .NewValue = CDbl(value), .ObjID = id1, .ObjID2 = id2,
+                                                                       .Tag = _pp, .PropertyName = tp})
+                End If
             End If
         End If
     End Sub

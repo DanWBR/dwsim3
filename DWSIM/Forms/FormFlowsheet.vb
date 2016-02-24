@@ -3022,6 +3022,64 @@ Imports System.Reflection
 
             Case UndoRedoActionType.PropertyPackagePropertyChanged
 
+                Dim pp As PropertyPackage = DirectCast(act.Tag, PropertyPackage)
+
+                If act.PropertyName = "PARAM" Then
+                    pp.Parameters(act.ObjID) = pval
+                ElseIf act.PropertyName = "PR_IP" Then
+                    Dim prip As Auxiliary.PengRobinson = pp.GetType.GetField("m_pr").GetValue(pp)
+                    prip.InteractionParameters(act.ObjID)(act.ObjID2).kij = pval
+                ElseIf act.PropertyName = "PRSV2_KIJ" Then
+                    Dim prip As Auxiliary.PRSV2 = pp.GetType.GetField("m_pr").GetValue(pp)
+                    prip.InteractionParameters(act.ObjID)(act.ObjID2).kij = pval
+                ElseIf act.PropertyName = "PRSV2_KJI Then" Then
+                    Dim prip As Auxiliary.PRSV2 = pp.GetType.GetField("m_pr").GetValue(pp)
+                    prip.InteractionParameters(act.ObjID)(act.ObjID2).kji = pval
+                ElseIf act.PropertyName = "PRSV2VL_KIJ" Then
+                    Dim prip As Auxiliary.PRSV2VL = pp.GetType.GetField("m_pr").GetValue(pp)
+                    prip.InteractionParameters(act.ObjID)(act.ObjID2).kij = pval
+                ElseIf act.PropertyName = "PRSV2VL_KJI Then" Then
+                    Dim prip As Auxiliary.PRSV2VL = pp.GetType.GetField("m_pr").GetValue(pp)
+                    prip.InteractionParameters(act.ObjID)(act.ObjID2).kji = pval
+                ElseIf act.PropertyName = "LK_IP" Then
+                    Dim prip As Auxiliary.LeeKeslerPlocker = pp.GetType.GetField("m_lk").GetValue(pp)
+                    prip.InteractionParameters(act.ObjID)(act.ObjID2).kij = pval
+                ElseIf act.PropertyName.Contains("NRTL") Then
+                    Dim nrtlip As Auxiliary.NRTL = pp.GetType.GetProperty("m_uni").GetValue(pp)
+                    Select Case act.PropertyName
+                        Case "NRTL_A12"
+                            nrtlip.InteractionParameters(act.ObjID)(act.ObjID2).A12 = pval
+                        Case "NRTL_A21"
+                            nrtlip.InteractionParameters(act.ObjID)(act.ObjID2).A21 = pval
+                        Case "NRTL_B12"
+                            nrtlip.InteractionParameters(act.ObjID)(act.ObjID2).B12 = pval
+                        Case "NRTL_B21"
+                            nrtlip.InteractionParameters(act.ObjID)(act.ObjID2).B21 = pval
+                        Case "NRTL_C12"
+                            nrtlip.InteractionParameters(act.ObjID)(act.ObjID2).C12 = pval
+                        Case "NRTL_C21"
+                            nrtlip.InteractionParameters(act.ObjID)(act.ObjID2).C21 = pval
+                        Case "NRTL_alpha12"
+                            nrtlip.InteractionParameters(act.ObjID)(act.ObjID2).alpha12 = pval
+                    End Select
+                ElseIf act.PropertyName.Contains("UNIQUAC") Then
+                    Dim uniquacip As Auxiliary.UNIQUAC = pp.GetType.GetProperty("m_uni").GetValue(pp)
+                    Select Case act.PropertyName
+                        Case "UNIQUAC_A12"
+                            uniquacip.InteractionParameters(act.ObjID)(act.ObjID2).A12 = pval
+                        Case "UNIQUAC_A21"
+                            uniquacip.InteractionParameters(act.ObjID)(act.ObjID2).A21 = pval
+                        Case "UNIQUAC_B12"
+                            uniquacip.InteractionParameters(act.ObjID)(act.ObjID2).B12 = pval
+                        Case "UNIQUAC_B21"
+                            uniquacip.InteractionParameters(act.ObjID)(act.ObjID2).B21 = pval
+                        Case "UNIQUAC_C12"
+                            uniquacip.InteractionParameters(act.ObjID)(act.ObjID2).C12 = pval
+                        Case "UNIQUAC_C21"
+                            uniquacip.InteractionParameters(act.ObjID)(act.ObjID2).C21 = pval
+                    End Select
+                End If
+
             Case UndoRedoActionType.SystemOfUnitsAdded
 
                 Dim su = DirectCast(act.NewValue, DWSIM.SistemasDeUnidades.Unidades)

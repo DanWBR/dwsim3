@@ -18,6 +18,7 @@
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
 Imports System.IO
+Imports DWSIM.DWSIM.FormClasses
 
 Public Class FormConfigPP
 
@@ -497,7 +498,17 @@ gt2:            If ppu.m_pr.InteractionParameters.ContainsKey(cp.Name) Then
 
     Private Sub KryptonDataGridView1_CellEndEdit(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles KryptonDataGridView1.CellEndEdit
 
-        _pp.Parameters(Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(0).Value) = Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(2).Value
+        Dim oldvalue = _pp.Parameters(Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(0).Value)
+        Dim newvalue = Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(2).Value
+        Dim parid As String = Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(0).Value
+        Dim parname As String = Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(1).Value
+
+        _pp.Parameters(parid) = newvalue
+        If Not _form Is Nothing Then
+            _form.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.PropertyPackagePropertyChanged,
+                                                               .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_PropertyPackagePropertyChanged"), _pp.Tag, parname, oldvalue, newvalue),
+                                                               .OldValue = oldvalue, .NewValue = newvalue, .Tag = _pp, .ObjID = parid, .PropertyName = "PARAM"})
+        End If
 
     End Sub
 
@@ -525,53 +536,74 @@ gt2:            If ppu.m_pr.InteractionParameters.ContainsKey(cp.Name) Then
 
     Private Sub KryptonDataGridView2_CellValueChanged(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles KryptonDataGridView2.CellValueChanged
         If Loaded Then
+            Dim oldvalue As Double = 0.0#
+            Dim newvalue As Double = 0.0#
+            Dim id1 As String = ""
+            Dim id2 As String = ""
             If TypeOf _pp Is SRKPropertyPackage Then
                 Dim ppu As DWSIM.SimulationObjects.PropertyPackages.SRKPropertyPackage = _pp
                 Dim value As Object = KryptonDataGridView2.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
-                Dim id1 As String = KryptonDataGridView2.Rows(e.RowIndex).Cells(0).Tag.ToString
-                Dim id2 As String = KryptonDataGridView2.Rows(e.RowIndex).Cells(1).Tag.ToString
+                id1 = KryptonDataGridView2.Rows(e.RowIndex).Cells(0).Tag.ToString
+                id2 = KryptonDataGridView2.Rows(e.RowIndex).Cells(1).Tag.ToString
                 Select Case e.ColumnIndex
                     Case 2
+                        oldvalue = ppu.m_pr.InteractionParameters(id1)(id2).kij
+                        newvalue = Convert.ToDouble(value)
                         ppu.m_pr.InteractionParameters(id1)(id2).kij = CDbl(value)
                 End Select
             ElseIf TypeOf _pp Is PengRobinsonPropertyPackage Then
                 Dim ppu As DWSIM.SimulationObjects.PropertyPackages.PengRobinsonPropertyPackage = _pp
                 Dim value As Object = KryptonDataGridView2.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
-                Dim id1 As String = KryptonDataGridView2.Rows(e.RowIndex).Cells(0).Tag.ToString
-                Dim id2 As String = KryptonDataGridView2.Rows(e.RowIndex).Cells(1).Tag.ToString
+                id1 = KryptonDataGridView2.Rows(e.RowIndex).Cells(0).Tag.ToString
+                id2 = KryptonDataGridView2.Rows(e.RowIndex).Cells(1).Tag.ToString
                 Select Case e.ColumnIndex
                     Case 2
+                        oldvalue = ppu.m_pr.InteractionParameters(id1)(id2).kij
+                        newvalue = Convert.ToDouble(value)
                         ppu.m_pr.InteractionParameters(id1)(id2).kij = CDbl(value)
                 End Select
             ElseIf TypeOf _pp Is UNIFACPropertyPackage Then
                 Dim ppu As DWSIM.SimulationObjects.PropertyPackages.UNIFACPropertyPackage = _pp
                 Dim value As Object = KryptonDataGridView2.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
-                Dim id1 As String = KryptonDataGridView2.Rows(e.RowIndex).Cells(0).Tag.ToString
-                Dim id2 As String = KryptonDataGridView2.Rows(e.RowIndex).Cells(1).Tag.ToString
+                id1 = KryptonDataGridView2.Rows(e.RowIndex).Cells(0).Tag.ToString
+                id2 = KryptonDataGridView2.Rows(e.RowIndex).Cells(1).Tag.ToString
                 Select Case e.ColumnIndex
                     Case 2
+                        oldvalue = ppu.m_pr.InteractionParameters(id1)(id2).kij
+                        newvalue = Convert.ToDouble(value)
                         ppu.m_pr.InteractionParameters(id1)(id2).kij = CDbl(value)
                 End Select
             ElseIf TypeOf _pp Is UNIFACLLPropertyPackage Then
                 Dim ppu As DWSIM.SimulationObjects.PropertyPackages.UNIFACLLPropertyPackage = _pp
                 Dim value As Object = KryptonDataGridView2.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
-                Dim id1 As String = KryptonDataGridView2.Rows(e.RowIndex).Cells(0).Tag.ToString
-                Dim id2 As String = KryptonDataGridView2.Rows(e.RowIndex).Cells(1).Tag.ToString
+                id1 = KryptonDataGridView2.Rows(e.RowIndex).Cells(0).Tag.ToString
+                id2 = KryptonDataGridView2.Rows(e.RowIndex).Cells(1).Tag.ToString
                 Select Case e.ColumnIndex
                     Case 2
+                        oldvalue = ppu.m_pr.InteractionParameters(id1)(id2).kij
+                        newvalue = Convert.ToDouble(value)
                         ppu.m_pr.InteractionParameters(id1)(id2).kij = CDbl(value)
                 End Select
             ElseIf TypeOf _pp Is MODFACPropertyPackage Then
                 Dim ppu As DWSIM.SimulationObjects.PropertyPackages.MODFACPropertyPackage = _pp
                 Dim value As Object = KryptonDataGridView2.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
-                Dim id1 As String = KryptonDataGridView2.Rows(e.RowIndex).Cells(0).Tag.ToString
-                Dim id2 As String = KryptonDataGridView2.Rows(e.RowIndex).Cells(1).Tag.ToString
+                id1 = KryptonDataGridView2.Rows(e.RowIndex).Cells(0).Tag.ToString
+                id2 = KryptonDataGridView2.Rows(e.RowIndex).Cells(1).Tag.ToString
                 Select Case e.ColumnIndex
                     Case 2
+                        oldvalue = ppu.m_pr.InteractionParameters(id1)(id2).kij
+                        newvalue = Convert.ToDouble(value)
                         ppu.m_pr.InteractionParameters(id1)(id2).kij = CDbl(value)
                 End Select
             End If
+            If Not _form Is Nothing Then
+                _form.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.PropertyPackagePropertyChanged,
+                                                                   .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_PropertyPackagePropertyChanged"), _pp.Tag, "PR_IP", oldvalue, newvalue),
+                                                                   .OldValue = oldvalue, .NewValue = newvalue, .ObjID = id1, .ObjID2 = id2,
+                                                                   .Tag = _pp, .PropertyName = "PR_IP"})
+            End If
         End If
+
     End Sub
 
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click

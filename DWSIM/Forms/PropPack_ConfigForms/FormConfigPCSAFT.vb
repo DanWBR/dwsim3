@@ -18,6 +18,7 @@
 
 Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports System.IO
+Imports DWSIM.DWSIM.FormClasses
 
 Public Class FormConfigPCSAFT
 
@@ -103,7 +104,17 @@ gt1:        If ppu.m_pr.Data.ContainsKey(cp.CAS_Number) Then
 
     Private Sub KryptonDataGridView1_CellEndEdit(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles KryptonDataGridView1.CellEndEdit
 
-        _pp.Parameters(Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(0).Value) = Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(2).Value
+        Dim oldvalue = _pp.Parameters(Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(0).Value)
+        Dim newvalue = Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(2).Value
+        Dim parid As String = Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(0).Value
+        Dim parname As String = Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(1).Value
+
+        _pp.Parameters(parid) = newvalue
+        If Not _form Is Nothing Then
+            _form.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.PropertyPackagePropertyChanged,
+                                                               .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_PropertyPackagePropertyChanged"), _pp.Tag, parname, oldvalue, newvalue),
+                                                               .OldValue = oldvalue, .NewValue = newvalue, .Tag = _pp, .ObjID = parid, .PropertyName = "PARAM"})
+        End If
 
     End Sub
 

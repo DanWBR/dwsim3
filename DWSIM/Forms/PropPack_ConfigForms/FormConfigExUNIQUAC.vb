@@ -20,6 +20,7 @@ Imports DWSIM.DWSIM.ClassesBasicasTermodinamica
 Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 Imports System.IO
 Imports System.Linq
+Imports DWSIM.DWSIM.FormClasses
 
 Public Class FormConfigExUNIQUAC
 
@@ -62,29 +63,29 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(id1) Then
                     Else
                         id2 = cp2.Formula
                     End If
-                        If Not ppu.m_uni.InteractionParameters(id1).ContainsKey(id2) Then
-                            'check if collection has id2 as primary id
-                            If ppu.m_uni.InteractionParameters.ContainsKey(id2) Then
-                                If Not ppu.m_uni.InteractionParameters(id2).ContainsKey(id1) Then
-                                    ppu.m_uni.InteractionParameters(id1).Add(id2, New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.ExUNIQUAC_IPData)
-                                    Dim uij0 As Double = ppu.m_uni.InteractionParameters(id1)(id2).uij0
-                                    Dim uijT As Double = ppu.m_uni.InteractionParameters(id1)(id2).uijT
-                                    dgvu1.Rows.Add(New Object() {DWSIM.App.GetComponentName(id1), DWSIM.App.GetComponentName(id2), Format(uij0, nf), Format(uijT, nf)})
-                                    With dgvu1.Rows(dgvu1.Rows.Count - 1)
-                                        .Cells(0).Tag = id1
-                                        .Cells(1).Tag = id2
-                                    End With
-                                End If
+                    If Not ppu.m_uni.InteractionParameters(id1).ContainsKey(id2) Then
+                        'check if collection has id2 as primary id
+                        If ppu.m_uni.InteractionParameters.ContainsKey(id2) Then
+                            If Not ppu.m_uni.InteractionParameters(id2).ContainsKey(id1) Then
+                                ppu.m_uni.InteractionParameters(id1).Add(id2, New DWSIM.SimulationObjects.PropertyPackages.Auxiliary.ExUNIQUAC_IPData)
+                                Dim uij0 As Double = ppu.m_uni.InteractionParameters(id1)(id2).uij0
+                                Dim uijT As Double = ppu.m_uni.InteractionParameters(id1)(id2).uijT
+                                dgvu1.Rows.Add(New Object() {DWSIM.App.GetComponentName(id1), DWSIM.App.GetComponentName(id2), Format(uij0, nf), Format(uijT, nf)})
+                                With dgvu1.Rows(dgvu1.Rows.Count - 1)
+                                    .Cells(0).Tag = id1
+                                    .Cells(1).Tag = id2
+                                End With
                             End If
-                        Else
-                            Dim uij0 As Double = ppu.m_uni.InteractionParameters(id1)(id2).uij0
-                            Dim uijT As Double = ppu.m_uni.InteractionParameters(id1)(id2).uijT
-                            dgvu1.Rows.Add(New Object() {DWSIM.App.GetComponentName(id1), DWSIM.App.GetComponentName(id2), Format(uij0, nf), Format(uijT, nf)})
-                            With dgvu1.Rows(dgvu1.Rows.Count - 1)
-                                .Cells(0).Tag = id1
-                                .Cells(1).Tag = id2
-                            End With
                         End If
+                    Else
+                        Dim uij0 As Double = ppu.m_uni.InteractionParameters(id1)(id2).uij0
+                        Dim uijT As Double = ppu.m_uni.InteractionParameters(id1)(id2).uijT
+                        dgvu1.Rows.Add(New Object() {DWSIM.App.GetComponentName(id1), DWSIM.App.GetComponentName(id2), Format(uij0, nf), Format(uijT, nf)})
+                        With dgvu1.Rows(dgvu1.Rows.Count - 1)
+                            .Cells(0).Tag = id1
+                            .Cells(1).Tag = id2
+                        End With
+                    End If
                 Next
             Else
                 ppu.m_uni.InteractionParameters.Add(id1, New Dictionary(Of String, DWSIM.SimulationObjects.PropertyPackages.Auxiliary.ExUNIQUAC_IPData))
@@ -115,7 +116,17 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(id1) Then
 
     Private Sub KryptonDataGridView1_CellEndEdit(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles KryptonDataGridView1.CellEndEdit
 
-        _pp.Parameters(Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(0).Value) = Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(2).Value
+        Dim oldvalue = _pp.Parameters(Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(0).Value)
+        Dim newvalue = Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(2).Value
+        Dim parid As String = Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(0).Value
+        Dim parname As String = Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(1).Value
+
+        _pp.Parameters(parid) = newvalue
+        If Not _form Is Nothing Then
+            _form.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.PropertyPackagePropertyChanged,
+                                                               .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_PropertyPackagePropertyChanged"), _pp.Tag, parname, oldvalue, newvalue),
+                                                               .OldValue = oldvalue, .NewValue = newvalue, .Tag = _pp, .ObjID = parid, .PropertyName = "PARAM"})
+        End If
 
     End Sub
 

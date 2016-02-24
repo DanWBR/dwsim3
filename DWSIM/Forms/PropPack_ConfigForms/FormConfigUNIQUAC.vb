@@ -21,6 +21,7 @@ Imports System.IO
 Imports System.Text
 Imports DotNumerics
 Imports System.Threading.Tasks
+Imports DWSIM.DWSIM.FormClasses
 
 Public Class FormConfigUNIQUAC
 
@@ -166,7 +167,17 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
 
     Private Sub KryptonDataGridView1_CellEndEdit(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles KryptonDataGridView1.CellEndEdit
 
-        _pp.Parameters(Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(0).Value) = Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(2).Value
+        Dim oldvalue = _pp.Parameters(Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(0).Value)
+        Dim newvalue = Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(2).Value
+        Dim parid As String = Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(0).Value
+        Dim parname As String = Me.KryptonDataGridView1.Rows(e.RowIndex).Cells(1).Value
+
+        _pp.Parameters(parid) = newvalue
+        If Not _form Is Nothing Then
+            _form.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.PropertyPackagePropertyChanged,
+                                                                   .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_PropertyPackagePropertyChanged"), _pp.Tag, "PR_IP", oldvalue, newvalue),
+                                                                   .OldValue = oldvalue, .NewValue = newvalue, .Tag = _pp, .ObjID = parid, .PropertyName = "PARAM"})
+        End If
 
     End Sub
 
@@ -216,6 +227,7 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
             Dim value As Object = dgvu1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
             Dim id1 As String = dgvu1.Rows(e.RowIndex).Cells(0).Tag.ToString
             Dim id2 As String = dgvu1.Rows(e.RowIndex).Cells(1).Tag.ToString
+            Dim oldvalue As Double = 0.0#, param As String = ""
             Select Case e.ColumnIndex
                 Case 2
                     Dim cb As DataGridViewComboBoxCell = dgvu1.Rows(e.RowIndex).Cells(2)
@@ -237,31 +249,58 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
                         Next
                     End If
                 Case 3
+                    param = "UNIQUAC_A12"
+                    oldvalue = ppu.m_uni.InteractionParameters(id1)(id2).A12
                     ppu.m_uni.InteractionParameters(id1)(id2).A12 = value
                 Case 4
+                    param = "UNIQUAC_A21"
+                    oldvalue = ppu.m_uni.InteractionParameters(id1)(id2).A21
                     ppu.m_uni.InteractionParameters(id1)(id2).A21 = value
                 Case 5
+                    param = "UNIQUAC_B12"
+                    oldvalue = ppu.m_uni.InteractionParameters(id1)(id2).B12
                     ppu.m_uni.InteractionParameters(id1)(id2).B12 = value
                 Case 6
+                    param = "UNIQUAC_B21"
+                    oldvalue = ppu.m_uni.InteractionParameters(id1)(id2).B21
                     ppu.m_uni.InteractionParameters(id1)(id2).B21 = value
                 Case 7
+                    param = "UNIQUAC_C12"
+                    oldvalue = ppu.m_uni.InteractionParameters(id1)(id2).C12
                     ppu.m_uni.InteractionParameters(id1)(id2).C12 = value
                 Case 8
+                    param = "UNIQUAC_C21"
+                    oldvalue = ppu.m_uni.InteractionParameters(id1)(id2).C21
                     ppu.m_uni.InteractionParameters(id1)(id2).C21 = value
             End Select
+            If Not _form Is Nothing Then
+                _form.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.PropertyPackagePropertyChanged,
+                                                                   .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_PropertyPackagePropertyChanged"), _pp.Tag, param, oldvalue, value),
+                                                                   .OldValue = oldvalue, .NewValue = value, .ObjID = id1, .ObjID2 = id2,
+                                                                   .Tag = _pp, .PropertyName = param})
+            End If
         End If
     End Sub
 
     Private Sub KryptonDataGridView2_CellValueChanged(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles KryptonDataGridView2.CellValueChanged
         If Loaded Then
+            Dim oldvalue As Double = 0.0#
+            Dim newvalue As Double = 0.0#
             Dim ppu As DWSIM.SimulationObjects.PropertyPackages.UNIQUACPropertyPackage = _pp
             Dim value As Object = KryptonDataGridView2.Rows(e.RowIndex).Cells(e.ColumnIndex).Value
             Dim id1 As String = KryptonDataGridView2.Rows(e.RowIndex).Cells(0).Tag.ToString
             Dim id2 As String = KryptonDataGridView2.Rows(e.RowIndex).Cells(1).Tag.ToString
             Select Case e.ColumnIndex
                 Case 2
-                    ppu.m_pr.InteractionParameters(id1)(id2).kij = value
+                    oldvalue = ppu.m_pr.InteractionParameters(id1)(id2).kij
+                    newvalue = Convert.ToDouble(value)
+                    ppu.m_pr.InteractionParameters(id1)(id2).kij = CDbl(value)
             End Select
+            If Not _form Is Nothing Then
+                _form.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.PropertyPackagePropertyChanged, .Name = DWSIM.App.GetLocalString("UndoRedo_PropertyPackagePropertyChanged"),
+                                                                       .OldValue = oldvalue, .NewValue = newvalue, .ObjID = id1, .ObjID2 = id2,
+                                                                       .Tag = _pp, .PropertyName = "PR_IP"})
+            End If
         End If
     End Sub
 
@@ -633,15 +672,15 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
         If e.Error Is Nothing Then
 
             If e.Result(9) = "Button1" Then
-                ppu.CurrentMaterialStream.Flowsheet.WriteToLog("UNIQUAC interaction parameter estimation from " & Format(e.Result(7), "N2") & " to " & Format(e.Result(8), "N2") & " K using UNIFAC finished, average activity coefficient error = " & Format(e.Result(6), "N2") & "%.", Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
+                ppu.CurrentMaterialStream.FlowSheet.WriteToLog("UNIQUAC interaction parameter estimation from " & Format(e.Result(7), "N2") & " to " & Format(e.Result(8), "N2") & " K using UNIFAC finished, average activity coefficient error = " & Format(e.Result(6), "N2") & "%.", Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
             ElseIf e.Result(9) = "Button5" Then
-                ppu.CurrentMaterialStream.Flowsheet.WriteToLog("UNIQUAC interaction parameter estimation from " & Format(e.Result(7), "N2") & " to " & Format(e.Result(8), "N2") & " K using UNIFAC-LL finished, average activity coefficient error = " & Format(e.Result(6), "N2") & "%.", Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
+                ppu.CurrentMaterialStream.FlowSheet.WriteToLog("UNIQUAC interaction parameter estimation from " & Format(e.Result(7), "N2") & " to " & Format(e.Result(8), "N2") & " K using UNIFAC-LL finished, average activity coefficient error = " & Format(e.Result(6), "N2") & "%.", Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
             Else
-                ppu.CurrentMaterialStream.Flowsheet.WriteToLog("UNIQUAC interaction parameter estimation from " & Format(e.Result(7), "N2") & " to " & Format(e.Result(8), "N2") & " K using MODFAC finished, average activity coefficient error = " & Format(e.Result(6), "N2") & "%.", Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
+                ppu.CurrentMaterialStream.FlowSheet.WriteToLog("UNIQUAC interaction parameter estimation from " & Format(e.Result(7), "N2") & " to " & Format(e.Result(8), "N2") & " K using MODFAC finished, average activity coefficient error = " & Format(e.Result(6), "N2") & "%.", Color.Blue, DWSIM.FormClasses.TipoAviso.Informacao)
             End If
 
             Dim row As Integer = dgvu1.SelectedCells(0).RowIndex
-            
+
             dgvu1.Rows(row).Cells(3).Value = e.Result(0)
             dgvu1.Rows(row).Cells(4).Value = e.Result(1)
             dgvu1.Rows(row).Cells(5).Value = e.Result(2)
@@ -651,7 +690,7 @@ gt1:        If ppu.m_uni.InteractionParameters.ContainsKey(cp.Name) Then
 
         Else
 
-            ppu.CurrentMaterialStream.Flowsheet.WriteToLog("UNIQUAC interaction parameter estimation from " & Format(e.Result(7), "N2") & " to " & Format(e.Result(8), "N2") & " K using MODFAC finished with an error: " & e.Error.ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Informacao)
+            ppu.CurrentMaterialStream.FlowSheet.WriteToLog("UNIQUAC interaction parameter estimation from " & Format(e.Result(7), "N2") & " to " & Format(e.Result(8), "N2") & " K using MODFAC finished with an error: " & e.Error.ToString, Color.Red, DWSIM.FormClasses.TipoAviso.Informacao)
 
         End If
 
