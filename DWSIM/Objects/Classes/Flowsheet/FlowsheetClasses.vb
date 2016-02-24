@@ -45,6 +45,8 @@ Namespace DWSIM.FormClasses
         PropertyPackagePropertyChanged = 11
         PropertyPackageAdded = 12
         PropertyPackageRemoved = 13
+        CutObjects = 14
+        PasteObjects = 15
     End Enum
 
     <System.Serializable()> Public Class UndoRedoAction

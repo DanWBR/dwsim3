@@ -2682,11 +2682,16 @@ Imports System.Reflection
 
 #Region "    Cut/Copy/Paste Objects"
 
-    Sub CutObjects()
+    Sub CutObjects(Optional ByVal addundo As Boolean = True)
 
         CopyObjects()
 
         My.Application.PushUndoRedoAction = False
+
+        If addundo Then AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.CutObjects,
+                                     .NewValue = Clipboard.GetText,
+                                     .OldValue = Me.FormSurface.FlowsheetDesignSurface.SelectedObjects.Values.ToList,
+                                     .Name = DWSIM.App.GetLocalString("UndoRedo_CutObjects")})
 
         Dim indexes As New ArrayList
         For Each gobj As GraphicObject In Me.FormSurface.FlowsheetDesignSurface.SelectedObjects.Values
@@ -2768,7 +2773,7 @@ Imports System.Reflection
 
     End Sub
 
-    Sub PasteObjects()
+    Sub PasteObjects(Optional ByVal addundo As Boolean = True)
 
         My.Application.PushUndoRedoAction = False
 
@@ -2904,6 +2909,11 @@ Imports System.Reflection
             If FormSurface.FlowsheetDesignSurface.SelectedObject Is Nothing Then FormSurface.FlowsheetDesignSurface.SelectedObject = obj.GraphicObject
             FormSurface.FlowsheetDesignSurface.SelectedObjects.Add(obj.Nome, obj.GraphicObject)
         Next
+
+        If addundo Then AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.PasteObjects,
+                                     .OldValue = Clipboard.GetText,
+                                     .NewValue = Me.FormSurface.FlowsheetDesignSurface.SelectedObjects.Values.ToList,
+                                     .Name = DWSIM.App.GetLocalString("UndoRedo_PasteObjects")})
 
         My.Application.PushUndoRedoAction = True
 
@@ -3125,6 +3135,34 @@ Imports System.Reflection
                 method.SetValue(sobj, pval)
 
                 FrmStSim1.ComboBox2_SelectedIndexChanged(Me, New EventArgs)
+
+            Case UndoRedoActionType.CutObjects
+
+                Dim xmldata As String, objlist As List(Of GraphicObject)
+                If undo Then
+                    xmldata = act.NewValue
+                    Clipboard.SetText(xmldata)
+                    PasteObjects(False)
+                Else
+                    objlist = act.NewValue
+                    For Each obj In objlist
+                        DeleteSelectedObject(Me, New EventArgs, obj, False)
+                    Next
+                End If
+
+            Case UndoRedoActionType.PasteObjects
+
+                Dim xmldata As String, objlist As List(Of GraphicObject)
+                If undo Then
+                    objlist = act.NewValue
+                    For Each obj In objlist
+                        DeleteSelectedObject(Me, New EventArgs, obj, False)
+                    Next
+                Else
+                    xmldata = act.NewValue
+                    Clipboard.SetText(xmldata)
+                    PasteObjects(False)
+                End If
 
         End Select
 

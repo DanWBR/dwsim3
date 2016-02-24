@@ -5315,4 +5315,10 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   <data name="UndoRedo_SystemOfUnitsRemoved" xml:space="preserve">
     <value>System of Units removed: {0}</value>
   </data>
+  <data name="UndoRedo_Cut" xml:space="preserve">
+    <value>Cut objects</value>
+  </data>
+  <data name="UndoRedo_Paste" xml:space="preserve">
+    <value>Paste objects</value>
+  </data>
 </root>

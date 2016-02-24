@@ -2196,6 +2196,8 @@ Public Class FormMain
                 If id <> "" Then
                     Dim obj As GraphicObjects.GraphicObject = (From go As GraphicObjects.GraphicObject In
                                                             form.FormSurface.FlowsheetDesignSurface.drawingObjects Where go.Name = id).SingleOrDefault
+                    If obj Is Nothing Then obj = (From go As GraphicObjects.GraphicObject In
+                                                                                    form.FormSurface.FlowsheetDesignSurface.drawingObjects Where go.Name = xel.Element("Name").Value).SingleOrDefault
                     If Not obj Is Nothing Then
                         Dim i As Integer = 0
                         For Each xel2 As XElement In xel.Element("InputConnectors").Elements
@@ -2225,12 +2227,15 @@ Public Class FormMain
                                 If objToID <> "" Then
                                     Dim objTo As GraphicObjects.GraphicObject = (From go As GraphicObjects.GraphicObject In
                                                                                     form.FormSurface.FlowsheetDesignSurface.drawingObjects Where go.Name = objToID).SingleOrDefault
+                                    If objTo Is Nothing Then objTo = (From go As GraphicObjects.GraphicObject In
+                                                                                    form.FormSurface.FlowsheetDesignSurface.drawingObjects Where go.Name = xel2.@AttachedToObjID).SingleOrDefault
                                     Dim fromidx As Integer = -1
                                     Dim cp As ConnectionPoint = (From cp2 As ConnectionPoint In objTo.InputConnectors Select cp2 Where cp2.ConnectorName.Split("|")(0) = obj.Name).SingleOrDefault
+                                    If cp Is Nothing Then cp = (From cp2 As ConnectionPoint In objTo.InputConnectors Select cp2 Where cp2.ConnectorName.Split("|")(0) = xel2.@AttachedToObjID).SingleOrDefault
                                     If Not cp Is Nothing Then
                                         fromidx = cp.ConnectorName.Split("|")(1)
                                     End If
-                                    form.ConnectObject(obj, objTo, fromidx, xel2.@AttachedToConnIndex)
+                                    If Not obj Is Nothing And Not objTo Is Nothing Then form.ConnectObject(obj, objTo, fromidx, xel2.@AttachedToConnIndex)
                                 End If
                             End If
                         Next
@@ -2240,7 +2245,9 @@ Public Class FormMain
                                 If objToID <> "" Then
                                     Dim objTo As GraphicObjects.GraphicObject = (From go As GraphicObjects.GraphicObject In
                                                                                     form.FormSurface.FlowsheetDesignSurface.drawingObjects Where go.Name = objToID).SingleOrDefault
-                                    form.ConnectObject(obj, objTo, -1, xel2.@AttachedToConnIndex)
+                                    If objTo Is Nothing Then obj = (From go As GraphicObjects.GraphicObject In
+                                                                                    form.FormSurface.FlowsheetDesignSurface.drawingObjects Where go.Name = xel2.@AttachedToObjID).SingleOrDefault
+                                    If Not obj Is Nothing And Not objTo Is Nothing Then form.ConnectObject(obj, objTo, -1, xel2.@AttachedToConnIndex)
                                 End If
                             End If
                         Next
