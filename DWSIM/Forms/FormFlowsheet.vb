@@ -1535,6 +1535,11 @@ Imports System.Reflection
                         Next
                         gobj = SelectedObj
 
+                        If My.Application.PushUndoRedoAction Then AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.ObjectRemoved,
+                                             .NewValue = gobj,
+                                             .OldValue = Me.Collections.ObjectCollection(namesel).SaveData(),
+                                             .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_ObjectRemoved"), gobj.Tag)})
+
                         Me.Collections.EnergyStreamCollection.Remove(namesel)
                         If Not DWSIM.App.IsRunningOnMono Then Me.FormObjList.TreeViewObj.Nodes("NodeEN").Nodes.RemoveByKey(namesel)
                         'DWSIM
@@ -1918,8 +1923,8 @@ Imports System.Reflection
                     gobj1 = SelObj
                     gobj2 = ObjToDisconnect
                     DeCalculateDisconnectedObject(Me, SelObj, "Out")
-                    SelObj.EnergyConnector.AttachedConnector.AttachedTo.OutputConnectors(SelObj.EnergyConnector.AttachedConnector.AttachedToConnectorIndex).IsAttached = False
-                    SelObj.EnergyConnector.AttachedConnector.AttachedTo.OutputConnectors(SelObj.EnergyConnector.AttachedConnector.AttachedToConnectorIndex).AttachedConnector = Nothing
+                    SelObj.EnergyConnector.AttachedConnector.AttachedTo.InputConnectors(SelObj.EnergyConnector.AttachedConnector.AttachedToConnectorIndex).IsAttached = False
+                    SelObj.EnergyConnector.AttachedConnector.AttachedTo.InputConnectors(SelObj.EnergyConnector.AttachedConnector.AttachedToConnectorIndex).AttachedConnector = Nothing
                     SelObj.EnergyConnector.IsAttached = False
                     Me.FormSurface.FlowsheetDesignSurface.DeleteSelectedObject(SelObj.EnergyConnector.AttachedConnector)
                 End If
@@ -1950,13 +1955,6 @@ Imports System.Reflection
 
             Dim con1OK As Boolean = False
             Dim con2OK As Boolean = False
-
-            'For Each gObj In Me.FormSurface.FlowsheetDesignSurface.drawingObjects
-
-            '    If gObjConnectFrom_Tag = gObj.Tag.ToString Then gObjFrom = gObj
-            '    If gObjConnectTo_Tag = gObj.Tag.ToString Then gObjTo = gObj
-
-            'Next
 
             'posicionar pontos nos primeiros slots livres
             Dim StartPos, EndPos As New Point
