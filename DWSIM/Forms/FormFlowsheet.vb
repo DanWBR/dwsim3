@@ -3280,9 +3280,11 @@ Imports System.Reflection
             RedoStack.Clear()
 
             tsbUndo.Enabled = True
-            tsbRedo.Enabled = False
             tsmiUndo.Enabled = True
+            tsbRedo.Enabled = False
             tsmiRedo.Enabled = False
+            tsbRedo.Text = DWSIM.App.GetLocalString("Redo")
+            tsmiRedo.Text = DWSIM.App.GetLocalString("Redo")
 
             PopulateUndoRedoItems()
 
