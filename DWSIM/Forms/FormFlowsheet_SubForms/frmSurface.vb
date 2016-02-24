@@ -173,11 +173,7 @@ Public Class frmSurface
 
     Private Sub FlowsheetDesignSurface_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles FlowsheetDesignSurface.KeyDown
 
-        If e.KeyCode = Keys.Delete Then
-
-        ElseIf e.KeyCode = Keys.R And e.Control Then
-
-        ElseIf e.KeyCode = Keys.E And e.Control Then
+        If e.KeyCode = Keys.E And e.Control Then
             Call Me.EditCompTSMI_Click(sender, e)
         ElseIf e.KeyCode = Keys.F5 Then
             If My.Computer.Keyboard.ShiftKeyDown Then
@@ -199,16 +195,6 @@ Public Class frmSurface
             Flowsheet.Options.CalculatorActivated = True
             Flowsheet.FormSurface.LabelCalculator.Text = DWSIM.App.GetLocalString("CalculadorOcioso")
             Flowsheet.WriteToLog(DWSIM.App.GetLocalString("Calculadorativado"), Color.DimGray, DWSIM.FormClasses.TipoAviso.Informacao)
-        ElseIf e.KeyCode = Keys.X And e.Control Then
-            'Flowsheet.CutObjects()
-        ElseIf e.KeyCode = Keys.C And e.Control Then
-            'Flowsheet.CopyObjects()
-        ElseIf e.KeyCode = Keys.V And e.Control Then
-            'Flowsheet.PasteObjects()
-        ElseIf e.KeyCode = Keys.Z And e.Control Then
-            'Flowsheet.tsbUndo_Click(sender, e)
-        ElseIf e.KeyCode = Keys.Y And e.Control Then
-            'Flowsheet.tsbRedo_Click(sender, e)
         End If
 
         If Not Me.FlowsheetDesignSurface.SelectedObject Is Nothing Then
