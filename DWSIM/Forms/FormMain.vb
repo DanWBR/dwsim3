@@ -3690,6 +3690,13 @@ ruf:                Application.DoEvents()
 
 #Region "    Click Handlers"
 
+    Private Sub VerToolStripMenuItem_DropDownOpened(sender As Object, e As EventArgs) Handles VerToolStripMenuItem.DropDownOpened
+
+        If Me.ActiveMdiChild IsNot Nothing Then
+            If TypeOf Me.ActiveMdiChild Is FormFlowsheet Then DirectCast(Me.ActiveMdiChild, FormFlowsheet).UpdateToolstripItemVisibility()
+        End If
+
+    End Sub
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles ButtonClose.Click
         Me.SettingsPanel.Visible = False
         If Not DWSIM.App.IsRunningOnMono Then My.Settings.Save()
@@ -4403,5 +4410,6 @@ ruf:                Application.DoEvents()
     End Sub
 
 #End Region
+
 
 End Class

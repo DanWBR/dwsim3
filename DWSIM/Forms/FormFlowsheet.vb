@@ -872,7 +872,7 @@ Imports System.Reflection
 
     End Sub
 
-    Private Sub EditarToolStripMenuItem_DropDownOpened(sender As Object, e As EventArgs) Handles EditarToolStripMenuItem.DropDownOpened
+    Sub UpdateToolstripItemVisibility()
 
         Dim isenabled As Boolean = Me.FormSurface.FlowsheetDesignSurface.SelectedObjects.Count > 0
 
