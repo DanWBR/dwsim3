@@ -2691,7 +2691,7 @@ Imports System.Reflection
         If addundo Then AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.CutObjects,
                                      .NewValue = Clipboard.GetText,
                                      .OldValue = Me.FormSurface.FlowsheetDesignSurface.SelectedObjects.Values.ToList,
-                                     .Name = DWSIM.App.GetLocalString("UndoRedo_CutObjects")})
+                                     .Name = DWSIM.App.GetLocalString("UndoRedo_Cut")})
 
         Dim indexes As New ArrayList
         For Each gobj As GraphicObject In Me.FormSurface.FlowsheetDesignSurface.SelectedObjects.Values
@@ -2913,7 +2913,7 @@ Imports System.Reflection
         If addundo Then AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.PasteObjects,
                                      .OldValue = Clipboard.GetText,
                                      .NewValue = Me.FormSurface.FlowsheetDesignSurface.SelectedObjects.Values.ToList,
-                                     .Name = DWSIM.App.GetLocalString("UndoRedo_PasteObjects")})
+                                     .Name = DWSIM.App.GetLocalString("UndoRedo_Paste")})
 
         My.Application.PushUndoRedoAction = True
 
