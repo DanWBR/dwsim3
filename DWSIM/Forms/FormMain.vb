@@ -1968,7 +1968,8 @@ Public Class FormMain
         Return builder.ToString()
     End Function 'RandomString 
 
-    Sub AddGraphicObjects(form As FormFlowsheet, data As List(Of XElement), excs As Concurrent.ConcurrentBag(Of Exception), Optional ByVal pkey As String = "", Optional ByVal shift As Integer = 0)
+    Sub AddGraphicObjects(form As FormFlowsheet, data As List(Of XElement), excs As Concurrent.ConcurrentBag(Of Exception),
+                          Optional ByVal pkey As String = "", Optional ByVal shift As Integer = 0)
 
         Dim objcount As Integer, searchtext As String
 
@@ -1986,7 +1987,7 @@ Public Class FormMain
                 obj.Y += shift
                 If pkey <> "" Then
                     searchtext = obj.Tag.Split("(")(0).Trim()
-                    objcount = (From go As GraphicObject In form.FormSurface.FlowsheetDesignSurface.drawingObjects Select go Where go.Tag.Contains(obj.Tag)).Count
+                    objcount = (From go As GraphicObject In form.FormSurface.FlowsheetDesignSurface.drawingObjects Select go Where go.Tag.Equals(obj.Tag)).Count
                     If objcount > 0 Then obj.Tag = searchtext & " (" & (objcount + 1).ToString & ")"
                 End If
                 If Not TypeOf obj Is DWSIM.GraphicObjects.TableGraphic Then

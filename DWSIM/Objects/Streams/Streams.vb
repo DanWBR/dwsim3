@@ -5647,7 +5647,7 @@ Namespace DWSIM.SimulationObjects.Streams
                 If Not Me.GraphicObject Is Nothing Then Return Me.GraphicObject.Name Else Return Me.m_ComponentDescription
             End Get
             Set(ByVal value As String)
-                If Not Me.GraphicObject Is Nothing Then Me.GraphicObject.Name = value Else Me.m_ComponentDescription = value
+                Me.m_ComponentDescription = value
             End Set
         End Property
 

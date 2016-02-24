@@ -2688,6 +2688,8 @@ Imports System.Reflection
 
         CopyObjects()
 
+        My.Application.PushUndoRedoAction = False
+
         Dim indexes As New ArrayList
         For Each gobj As GraphicObject In Me.FormSurface.FlowsheetDesignSurface.SelectedObjects.Values
             indexes.Add(gobj.Tag)
@@ -2700,6 +2702,8 @@ Imports System.Reflection
                 Me.FormSurface.FlowsheetDesignSurface.SelectedObjects.Remove(gobj.Name)
             End If
         Next
+
+        My.Application.PushUndoRedoAction = True
 
     End Sub
 
@@ -2768,6 +2772,8 @@ Imports System.Reflection
 
     Sub PasteObjects()
 
+        My.Application.PushUndoRedoAction = False
+
         Dim pkey As String = New Random().Next().ToString & "_"
 
         Dim ci As CultureInfo = CultureInfo.InvariantCulture
@@ -2778,7 +2784,7 @@ Imports System.Reflection
 
         Dim data As List(Of XElement) = xdoc.Element("DWSIM_Simulation_Data").Element("GraphicObjects").Elements.ToList
 
-        FormMain.AddGraphicObjects(Me, data, excs, pkey, 20)
+        FormMain.AddGraphicObjects(Me, data, excs, pkey, 40)
 
         If My.Settings.ClipboardCopyMode_Compounds = 1 Then
 
@@ -2834,6 +2840,9 @@ Imports System.Reflection
         End If
 
         data = xdoc.Element("DWSIM_Simulation_Data").Element("SimulationObjects").Elements.ToList
+
+        FormSurface.FlowsheetDesignSurface.SelectedObject = Nothing
+        FormSurface.FlowsheetDesignSurface.SelectedObjects.Clear()
 
         Dim objlist As New Concurrent.ConcurrentBag(Of SimulationObjects_BaseClass)
 
@@ -2892,6 +2901,13 @@ Imports System.Reflection
         End If
 
         FormMain.AddSimulationObjects(Me, objlist, excs, pkey)
+
+        For Each obj In objlist
+            If FormSurface.FlowsheetDesignSurface.SelectedObject Is Nothing Then FormSurface.FlowsheetDesignSurface.SelectedObject = obj.GraphicObject
+            FormSurface.FlowsheetDesignSurface.SelectedObjects.Add(obj.Nome, obj.GraphicObject)
+        Next
+
+        My.Application.PushUndoRedoAction = True
 
     End Sub
 
