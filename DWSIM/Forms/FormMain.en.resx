@@ -125,10 +125,16 @@
     <value>&amp;File</value>
   </data>
   <data name="VerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>61, 20</value>
+    <value>39, 20</value>
   </data>
   <data name="VerToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Settings</value>
+    <value>E&amp;dit</value>
+  </data>
+  <data name="FerramentasToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 20</value>
+  </data>
+  <data name="FerramentasToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Tools</value>
   </data>
   <data name="WindowsMenu.Size" type="System.Drawing.Size, System.Drawing">
     <value>68, 20</value>
@@ -224,7 +230,7 @@
     <value>Exi&amp;t DWSIM</value>
   </data>
   <data name="PreferênciasDoDWSIMToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>198, 22</value>
+    <value>159, 22</value>
   </data>
   <data name="PreferênciasDoDWSIMToolStripMenuItem.Text" xml:space="preserve">
     <value>General Settings</value>
@@ -235,10 +241,10 @@
   <data name="DatabaseManagerToolStripMenuItem.Text" xml:space="preserve">
     <value>User Database Manager</value>
   </data>
-  <data name="ConfiguraçõesAdicionaisToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="tsmiAdditionalConfig.Size" type="System.Drawing.Size, System.Drawing">
     <value>198, 22</value>
   </data>
-  <data name="ConfiguraçõesAdicionaisToolStripMenuItem.Text" xml:space="preserve">
+  <data name="tsmiAdditionalConfig.Text" xml:space="preserve">
     <value>Additional File Tasks</value>
   </data>
   <data name="CascadeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
@@ -258,6 +264,12 @@
   </data>
   <data name="TileHorizontalToolStripMenuItem.Text" xml:space="preserve">
     <value>Group &amp;Vertically</value>
+  </data>
+  <data name="MostrarBarraDeFerramentasToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>153, 22</value>
+  </data>
+  <data name="MostrarBarraDeFerramentasToolStripMenuItem.Text" xml:space="preserve">
+    <value>Show Toolstrip</value>
   </data>
   <data name="ContentsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>183, 22</value>
@@ -423,12 +435,6 @@
   </data>
   <data name="AboutToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;About DWSIM...</value>
-  </data>
-  <data name="MostrarBarraDeFerramentasToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>153, 22</value>
-  </data>
-  <data name="MostrarBarraDeFerramentasToolStripMenuItem.Text" xml:space="preserve">
-    <value>Show Toolstrip</value>
   </data>
   <data name="NewToolStripButton.Text" xml:space="preserve">
     <value>New Steady-State Simulation</value>

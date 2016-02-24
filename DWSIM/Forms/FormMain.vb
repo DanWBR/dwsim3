@@ -3695,7 +3695,7 @@ ruf:                Application.DoEvents()
         If Not DWSIM.App.IsRunningOnMono Then My.Settings.Save()
     End Sub
 
-    Private Sub ConfiguraçõesAdicionaisToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConfiguraçõesAdicionaisToolStripMenuItem.Click
+    Private Sub ConfiguraçõesAdicionaisToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles tsmiAdditionalConfig.Click
         Dim frma As New FormAdditionalTasks
         frma.ShowDialog(Me)
     End Sub

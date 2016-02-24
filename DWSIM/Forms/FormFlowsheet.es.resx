@@ -119,7 +119,7 @@
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="ToolStripLabel4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>103, 22</value>
+    <value>108, 22</value>
   </data>
   <data name="ToolStripLabel4.Text" xml:space="preserve">
     <value>Diagrama de Flujo</value>
@@ -169,8 +169,17 @@
   <data name="ToolStripButton17.Text" xml:space="preserve">
     <value>Conexión Rapida</value>
   </data>
+  <data name="tsbAlignBottoms.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 20</value>
+  </data>
+  <data name="tsbAlignVertical.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 20</value>
+  </data>
+  <data name="tsbAlignHorizontal.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 20</value>
+  </data>
   <data name="ToolStripFlowsheet.Size" type="System.Drawing.Size, System.Drawing">
-    <value>753, 25</value>
+    <value>869, 25</value>
   </data>
   <data name="ToolStripCalculator.Location" type="System.Drawing.Point, System.Drawing">
     <value>130, 0</value>

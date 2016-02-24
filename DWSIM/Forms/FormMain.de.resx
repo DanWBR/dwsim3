@@ -205,38 +205,44 @@
   <data name="PreferênciasDoDWSIMToolStripMenuItem.Text" xml:space="preserve">
     <value>Allgemeine Einstellungen</value>
   </data>
+  <data name="VerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 20</value>
+  </data>
+  <data name="VerToolStripMenuItem.Text" xml:space="preserve">
+    <value>E&amp;dit</value>
+  </data>
   <data name="DatabaseManagerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>208, 22</value>
+    <value>182, 22</value>
   </data>
   <data name="DatabaseManagerToolStripMenuItem.Text" xml:space="preserve">
     <value>Datenbank Manager</value>
   </data>
-  <data name="ConfiguraçõesAdicionaisToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>208, 22</value>
+  <data name="tsmiAdditionalConfig.Size" type="System.Drawing.Size, System.Drawing">
+    <value>182, 22</value>
   </data>
-  <data name="ConfiguraçõesAdicionaisToolStripMenuItem.Text" xml:space="preserve">
-    <value>Zusätzliche Einstellungen</value>
+  <data name="tsmiAdditionalConfig.Text" xml:space="preserve">
+    <value>Additional File Tasks</value>
   </data>
-  <data name="VerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>90, 20</value>
+  <data name="FerramentasToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 20</value>
   </data>
-  <data name="VerToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Einstellungen</value>
+  <data name="FerramentasToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Werkzeuge</value>
   </data>
   <data name="CascadeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>142, 22</value>
   </data>
   <data name="CascadeToolStripMenuItem.Text" xml:space="preserve">
     <value>Über&amp;lappend</value>
   </data>
   <data name="TileVerticalToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>142, 22</value>
   </data>
   <data name="TileVerticalToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Horizontal</value>
   </data>
   <data name="TileHorizontalToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>142, 22</value>
   </data>
   <data name="TileHorizontalToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Vertikal</value>
@@ -248,7 +254,7 @@
     <value>&amp;Fenster</value>
   </data>
   <data name="MostrarBarraDeFerramentasToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>149, 22</value>
   </data>
   <data name="MostrarBarraDeFerramentasToolStripMenuItem.Text" xml:space="preserve">
     <value>Zeige Tooltips</value>
