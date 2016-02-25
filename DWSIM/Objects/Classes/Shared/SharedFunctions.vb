@@ -208,7 +208,7 @@ Namespace DWSIM
             End If
         End Function
 
-        Public Shared Function IsMainThread()
+        Public Shared Function IsMainThread() As Boolean
             Return System.Threading.Thread.CurrentThread.ManagedThreadId = My.MyApplication.MainThreadId
         End Function
 

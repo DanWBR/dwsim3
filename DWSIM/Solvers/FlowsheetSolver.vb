@@ -1300,7 +1300,9 @@ Namespace DWSIM.Flowsheet
                             My.MyApplication.MasterCalculatorStopRequested = True
                             My.MyApplication.CalculatorStopRequested = False
                             If My.MyApplication.TaskCancellationTokenSource IsNot Nothing Then
-                                My.MyApplication.TaskCancellationTokenSource.Cancel()
+                                If Not My.MyApplication.TaskCancellationTokenSource.IsCancellationRequested Then
+                                    My.MyApplication.TaskCancellationTokenSource.Cancel()
+                                End If
                                 My.MyApplication.TaskCancellationTokenSource.Token.ThrowIfCancellationRequested()
                             Else
                                 Throw New Exception(DWSIM.App.GetLocalString("CalculationAborted"))
@@ -1867,8 +1869,7 @@ Namespace DWSIM.Flowsheet
                                 maintask.Start(My.MyApplication.AppTaskScheduler)
                                 If form.MasterFlowsheet Is Nothing Then
                                     While Not (Date.Now - d1).TotalMilliseconds >= My.Settings.SolverTimeoutSeconds * 1000
-                                        maintask.Wait(500, ct)
-                                        CheckCalculatorStatus()
+                                        maintask.Wait(200, ct)
                                         Application.DoEvents()
                                         If maintask.Status = TaskStatus.RanToCompletion Then Exit While
                                     End While
