@@ -174,10 +174,10 @@
     <value>FaTabStripItem1</value>
   </data>
   <data name="&gt;&gt;LinkLabel1.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="Button1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>722, 554</value>
+    <value>722, 592</value>
   </data>
   <data name="Button1.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
@@ -279,7 +279,7 @@
     <value>FaTabStripItem1</value>
   </data>
   <data name="&gt;&gt;Label2.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>11</value>
   </data>
   <data name="LinkLabel2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -306,7 +306,7 @@
     <value>FaTabStripItem1</value>
   </data>
   <data name="&gt;&gt;LinkLabel2.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>13</value>
   </data>
   <data name="Label5.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -333,7 +333,7 @@
     <value>FaTabStripItem1</value>
   </data>
   <data name="&gt;&gt;Label5.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>15</value>
   </data>
   <data name="Label6.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -360,7 +360,7 @@
     <value>FaTabStripItem1</value>
   </data>
   <data name="&gt;&gt;Label6.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>17</value>
   </data>
   <data name="LabelLicense.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -369,7 +369,7 @@
     <value>Microsoft Sans Serif, 8.25pt</value>
   </data>
   <data name="LabelLicense.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 245</value>
+    <value>12, 281</value>
   </data>
   <data name="LabelLicense.Size" type="System.Drawing.Size, System.Drawing">
     <value>422, 13</value>
@@ -390,13 +390,13 @@
     <value>FaTabStripItem1</value>
   </data>
   <data name="&gt;&gt;LabelLicense.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>19</value>
   </data>
   <data name="TextBox1.Font" type="System.Drawing.Font, System.Drawing">
     <value>Courier New, 8.25pt</value>
   </data>
   <data name="TextBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 261</value>
+    <value>15, 297</value>
   </data>
   <data name="TextBox1.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -612,7 +612,7 @@ END OF TERMS AND CONDITIONS</value>
     <value>FaTabStripItem1</value>
   </data>
   <data name="&gt;&gt;TextBox1.ZOrder" xml:space="preserve">
-    <value>19</value>
+    <value>21</value>
   </data>
   <data name="Label7.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -639,7 +639,7 @@ END OF TERMS AND CONDITIONS</value>
     <value>FaTabStripItem1</value>
   </data>
   <data name="&gt;&gt;Label7.ZOrder" xml:space="preserve">
-    <value>20</value>
+    <value>22</value>
   </data>
   <data name="LblOSInfo.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -666,7 +666,7 @@ END OF TERMS AND CONDITIONS</value>
     <value>FaTabStripItem1</value>
   </data>
   <data name="&gt;&gt;LblOSInfo.ZOrder" xml:space="preserve">
-    <value>18</value>
+    <value>20</value>
   </data>
   <data name="LblCLRInfo.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -693,7 +693,7 @@ END OF TERMS AND CONDITIONS</value>
     <value>FaTabStripItem1</value>
   </data>
   <data name="&gt;&gt;LblCLRInfo.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>16</value>
   </data>
   <data name="Label4.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -720,7 +720,7 @@ END OF TERMS AND CONDITIONS</value>
     <value>FaTabStripItem1</value>
   </data>
   <data name="&gt;&gt;Label4.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>18</value>
   </data>
   <data name="Label3.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -747,7 +747,7 @@ END OF TERMS AND CONDITIONS</value>
     <value>FaTabStripItem1</value>
   </data>
   <data name="&gt;&gt;Label3.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>14</value>
   </data>
   <data name="Label8.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -774,7 +774,7 @@ END OF TERMS AND CONDITIONS</value>
     <value>FaTabStripItem1</value>
   </data>
   <data name="&gt;&gt;Label8.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>12</value>
   </data>
   <data name="Label9.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -801,7 +801,7 @@ END OF TERMS AND CONDITIONS</value>
     <value>FaTabStripItem1</value>
   </data>
   <data name="&gt;&gt;Label9.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="Label10.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -828,10 +828,67 @@ END OF TERMS AND CONDITIONS</value>
     <value>FaTabStripItem1</value>
   </data>
   <data name="&gt;&gt;Label10.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>10</value>
   </data>
   <data name="FaTabStrip1.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 8.25pt</value>
+  </data>
+  <data name="lblGPGPUinfo.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblGPGPUinfo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>133, 244</value>
+  </data>
+  <data name="lblGPGPUinfo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>655, 33</value>
+  </data>
+  <data name="lblGPGPUinfo.TabIndex" type="System.Int32, mscorlib">
+    <value>29</value>
+  </data>
+  <data name="lblGPGPUinfo.Text" xml:space="preserve">
+    <value>[gpgpuinfo]</value>
+  </data>
+  <data name="&gt;&gt;lblGPGPUinfo.Name" xml:space="preserve">
+    <value>lblGPGPUinfo</value>
+  </data>
+  <data name="&gt;&gt;lblGPGPUinfo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblGPGPUinfo.Parent" xml:space="preserve">
+    <value>FaTabStripItem1</value>
+  </data>
+  <data name="&gt;&gt;lblGPGPUinfo.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="Label14.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Label14.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="Label14.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 244</value>
+  </data>
+  <data name="Label14.Size" type="System.Drawing.Size, System.Drawing">
+    <value>101, 13</value>
+  </data>
+  <data name="Label14.TabIndex" type="System.Int32, mscorlib">
+    <value>28</value>
+  </data>
+  <data name="Label14.Text" xml:space="preserve">
+    <value>Computing devices:</value>
+  </data>
+  <data name="&gt;&gt;Label14.Name" xml:space="preserve">
+    <value>Label14</value>
+  </data>
+  <data name="&gt;&gt;Label14.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Label14.Parent" xml:space="preserve">
+    <value>FaTabStripItem1</value>
+  </data>
+  <data name="&gt;&gt;Label14.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="Lblcpusimd.Location" type="System.Drawing.Point, System.Drawing">
     <value>133, 208</value>
@@ -855,7 +912,7 @@ END OF TERMS AND CONDITIONS</value>
     <value>FaTabStripItem1</value>
   </data>
   <data name="&gt;&gt;Lblcpusimd.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="Lblcpuinfo.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -882,7 +939,7 @@ END OF TERMS AND CONDITIONS</value>
     <value>FaTabStripItem1</value>
   </data>
   <data name="&gt;&gt;Lblcpuinfo.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
   <data name="Label13.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -909,7 +966,7 @@ END OF TERMS AND CONDITIONS</value>
     <value>FaTabStripItem1</value>
   </data>
   <data name="&gt;&gt;Label13.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="Label12.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -936,7 +993,7 @@ END OF TERMS AND CONDITIONS</value>
     <value>FaTabStripItem1</value>
   </data>
   <data name="&gt;&gt;Label12.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="Lblmem.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -963,7 +1020,7 @@ END OF TERMS AND CONDITIONS</value>
     <value>FaTabStripItem1</value>
   </data>
   <data name="&gt;&gt;Lblmem.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="Label11.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -990,10 +1047,10 @@ END OF TERMS AND CONDITIONS</value>
     <value>FaTabStripItem1</value>
   </data>
   <data name="&gt;&gt;Label11.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="FaTabStripItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>795, 450</value>
+    <value>795, 491</value>
   </data>
   <data name="FaTabStripItem1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1005,7 +1062,7 @@ END OF TERMS AND CONDITIONS</value>
     <value>FaTabStripItem1</value>
   </data>
   <data name="&gt;&gt;FaTabStripItem1.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.5875.28652, Culture=neutral, PublicKeyToken=null</value>
+    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.5898.24355, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;FaTabStripItem1.Parent" xml:space="preserve">
     <value>FaTabStrip1</value>
@@ -1113,7 +1170,7 @@ END OF TERMS AND CONDITIONS</value>
     <value>FaTabStripItem2</value>
   </data>
   <data name="&gt;&gt;FaTabStripItem2.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.5875.28652, Culture=neutral, PublicKeyToken=null</value>
+    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.5898.24355, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;FaTabStripItem2.Parent" xml:space="preserve">
     <value>FaTabStrip1</value>
@@ -1182,7 +1239,7 @@ END OF TERMS AND CONDITIONS</value>
     <value>FaTabStripItem3</value>
   </data>
   <data name="&gt;&gt;FaTabStripItem3.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.5875.28652, Culture=neutral, PublicKeyToken=null</value>
+    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.5898.24355, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;FaTabStripItem3.Parent" xml:space="preserve">
     <value>FaTabStrip1</value>
@@ -1263,7 +1320,7 @@ END OF TERMS AND CONDITIONS</value>
     <value>FaTabStripItem4</value>
   </data>
   <data name="&gt;&gt;FaTabStripItem4.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.5875.28652, Culture=neutral, PublicKeyToken=null</value>
+    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.5898.24355, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;FaTabStripItem4.Parent" xml:space="preserve">
     <value>FaTabStrip1</value>
@@ -1275,7 +1332,7 @@ END OF TERMS AND CONDITIONS</value>
     <value>7, 74</value>
   </data>
   <data name="FaTabStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>797, 471</value>
+    <value>797, 512</value>
   </data>
   <data name="FaTabStrip1.TabIndex" type="System.Int32, mscorlib">
     <value>22</value>
@@ -1287,7 +1344,7 @@ END OF TERMS AND CONDITIONS</value>
     <value>FaTabStrip1</value>
   </data>
   <data name="&gt;&gt;FaTabStrip1.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStrip, TabStrip, Version=2.0.5875.28652, Culture=neutral, PublicKeyToken=null</value>
+    <value>FarsiLibrary.Win.FATabStrip, TabStrip, Version=2.0.5898.24355, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;FaTabStrip1.Parent" xml:space="preserve">
     <value>$this</value>
@@ -1305,7 +1362,7 @@ END OF TERMS AND CONDITIONS</value>
     <value>Stretch</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>809, 586</value>
+    <value>809, 627</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterParent</value>

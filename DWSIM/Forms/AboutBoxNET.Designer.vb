@@ -71,6 +71,8 @@ Partial Class AboutBoxNET
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.AssemblyNamesComboBox = New System.Windows.Forms.ComboBox()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.lblGPGPUinfo = New System.Windows.Forms.Label()
         CType(Me.FaTabStrip1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStrip1.SuspendLayout()
         Me.FaTabStripItem1.SuspendLayout()
@@ -210,6 +212,8 @@ Partial Class AboutBoxNET
         'FaTabStripItem1
         '
         Me.FaTabStripItem1.CanClose = False
+        Me.FaTabStripItem1.Controls.Add(Me.lblGPGPUinfo)
+        Me.FaTabStripItem1.Controls.Add(Me.Label14)
         Me.FaTabStripItem1.Controls.Add(Me.Lblcpusimd)
         Me.FaTabStripItem1.Controls.Add(Me.Lblcpuinfo)
         Me.FaTabStripItem1.Controls.Add(Me.Label13)
@@ -412,6 +416,18 @@ Partial Class AboutBoxNET
         Me.AssemblyNamesComboBox.Name = "AssemblyNamesComboBox"
         Me.AssemblyNamesComboBox.Sorted = True
         '
+        'Label14
+        '
+        resources.ApplyResources(Me.Label14, "Label14")
+        Me.Label14.BackColor = System.Drawing.Color.Transparent
+        Me.Label14.Name = "Label14"
+        '
+        'lblGPGPUinfo
+        '
+        Me.lblGPGPUinfo.BackColor = System.Drawing.Color.Transparent
+        resources.ApplyResources(Me.lblGPGPUinfo, "lblGPGPUinfo")
+        Me.lblGPGPUinfo.Name = "lblGPGPUinfo"
+        '
         'AboutBoxNET
         '
         resources.ApplyResources(Me, "$this")
@@ -486,4 +502,6 @@ Partial Class AboutBoxNET
     Friend WithEvents Column5 As System.Windows.Forms.DataGridViewLinkColumn
     Friend WithEvents Column6 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column7 As System.Windows.Forms.DataGridViewLinkColumn
+    Public WithEvents lblGPGPUinfo As System.Windows.Forms.Label
+    Public WithEvents Label14 As System.Windows.Forms.Label
 End Class

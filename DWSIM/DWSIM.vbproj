@@ -1221,9 +1221,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Forms\AboutBoxMono.de.resx">
-      <DependentUpon>AboutBoxMono.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\AboutBoxMono.es.resx">
       <DependentUpon>AboutBoxMono.vb</DependentUpon>
     </EmbeddedResource>
@@ -3375,9 +3372,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormMain.es.resx">
       <DependentUpon>FormMain.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\AboutBoxNET.de.resx">
-      <DependentUpon>AboutBoxNET.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AboutBoxNET.resx">
       <DependentUpon>AboutBoxNET.vb</DependentUpon>
