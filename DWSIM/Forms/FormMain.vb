@@ -705,8 +705,6 @@ Public Class FormMain
             'load chempsep database, if existent
             If File.Exists(My.Settings.ChemSepDatabasePath) Then Me.LoadCSDB(My.Settings.ChemSepDatabasePath)
         Catch ex As Exception
-            ex.Data.Add("Reason", "Error loading ChemSep database")
-            Throw ex
         End Try
 
         'load DWSIM XML database
@@ -827,7 +825,6 @@ Public Class FormMain
                     End If
                 Next
             Catch ex As Exception
-                Console.WriteLine("Error loading CoolProp database: " & ex.Message.ToString)
             End Try
         End If
     End Sub
