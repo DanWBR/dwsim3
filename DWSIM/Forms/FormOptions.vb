@@ -560,7 +560,12 @@ Public Class FormOptions
         Catch ex As Exception
 
         End Try
-        
+        If loaded Then
+            If Not My.MyApplication.gpu Is Nothing Then
+                My.MyApplication.gpu.Dispose()
+                My.MyApplication.gpu = Nothing
+            End If
+        End If
     End Sub
 
     Private Sub chkEnableGPUProcessing_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles chkEnableGPUProcessing.CheckedChanged
