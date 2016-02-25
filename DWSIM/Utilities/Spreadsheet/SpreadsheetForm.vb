@@ -833,4 +833,7 @@ Public Class SpreadsheetForm
 
     End Sub
 
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        Clipboard.SetDataObject(Me.DataGridView1.GetClipboardContent)
+    End Sub
 End Class

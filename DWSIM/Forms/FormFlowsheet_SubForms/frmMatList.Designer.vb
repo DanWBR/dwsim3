@@ -39,6 +39,7 @@ Partial Class frmMatList
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
+        Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.dckMenu.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
@@ -104,7 +105,7 @@ Partial Class frmMatList
         'ToolStrip1
         '
         resources.ApplyResources(Me.ToolStrip1, "ToolStrip1")
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton1, Me.ToolStripLabel1})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton1, Me.ToolStripLabel1, Me.ToolStripButton2})
         Me.ToolStrip1.Name = "ToolStrip1"
         '
         'ToolStripButton1
@@ -117,6 +118,12 @@ Partial Class frmMatList
         '
         resources.ApplyResources(Me.ToolStripLabel1, "ToolStripLabel1")
         Me.ToolStripLabel1.Name = "ToolStripLabel1"
+        '
+        'ToolStripButton2
+        '
+        resources.ApplyResources(Me.ToolStripButton2, "ToolStripButton2")
+        Me.ToolStripButton2.Image = Global.DWSIM.My.Resources.Resources.page_copy
+        Me.ToolStripButton2.Name = "ToolStripButton2"
         '
         'DataGridView1
         '
@@ -169,4 +176,5 @@ Partial Class frmMatList
     Friend WithEvents ToolStripButton1 As System.Windows.Forms.ToolStripButton
     Public WithEvents DataGridView1 As System.Windows.Forms.DataGridView
     Friend WithEvents ToolStripLabel1 As System.Windows.Forms.ToolStripLabel
+    Friend WithEvents ToolStripButton2 As System.Windows.Forms.ToolStripButton
 End Class

@@ -124,6 +124,12 @@
   <data name="ToolStripButton1.Text" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="ToolStripButton2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>150, 22</value>
+  </data>
+  <data name="ToolStripButton2.Text" xml:space="preserve">
+    <value>Copy data to Clipboard</value>
+  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="DataGridView1.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>

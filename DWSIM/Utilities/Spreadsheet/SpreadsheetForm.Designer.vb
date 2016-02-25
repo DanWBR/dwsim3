@@ -84,6 +84,7 @@ Partial Class SpreadsheetForm
         Me.DockTopAutoHideToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DockBottomAutoHideToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DocumentToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Button4 = New System.Windows.Forms.Button()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.dckMenu.SuspendLayout()
@@ -444,12 +445,20 @@ Partial Class SpreadsheetForm
         Me.DocumentToolStripMenuItem.Name = "DocumentToolStripMenuItem"
         resources.ApplyResources(Me.DocumentToolStripMenuItem, "DocumentToolStripMenuItem")
         '
+        'Button4
+        '
+        resources.ApplyResources(Me.Button4, "Button4")
+        Me.Button4.Image = Global.DWSIM.My.Resources.Resources.page_copy
+        Me.Button4.Name = "Button4"
+        Me.Button4.UseVisualStyleBackColor = True
+        '
         'SpreadsheetForm
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CloseButton = False
         Me.CloseButtonVisible = False
+        Me.Controls.Add(Me.Button4)
         Me.Controls.Add(Me.tbTolerance)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.DataGridView1)
@@ -531,4 +540,5 @@ Partial Class SpreadsheetForm
     Friend WithEvents DockTopAutoHideToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents DockBottomAutoHideToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents DocumentToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Public WithEvents Button4 As System.Windows.Forms.Button
 End Class
