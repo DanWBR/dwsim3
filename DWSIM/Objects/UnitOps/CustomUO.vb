@@ -16,7 +16,7 @@
 '    You should have received a copy of the GNU General Public License
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
-Imports Microsoft.MSDN.Samples.GraphicObjects
+Imports Microsoft.Msdn.Samples.GraphicObjects
 Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
 Imports Microsoft.Scripting.Hosting
 Imports System.IO
@@ -24,6 +24,9 @@ Imports System.Runtime.InteropServices
 Imports CapeOpen
 Imports System.Runtime.Serialization.Formatters
 Imports System.Linq
+Imports System.ComponentModel
+Imports Wexman.Design
+Imports System.Drawing.Design
 
 Namespace DWSIM.SimulationObjects.UnitOps
 
@@ -195,8 +198,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     End Try
                     engine.Runtime.LoadAssembly(GetType(System.String).Assembly)
                     engine.Runtime.LoadAssembly(GetType(DWSIM.ClassesBasicasTermodinamica.ConstantProperties).Assembly)
-                    engine.Runtime.LoadAssembly(GetType(Microsoft.MSDN.Samples.GraphicObjects.GraphicObject).Assembly)
-                    engine.Runtime.LoadAssembly(GetType(Microsoft.MSDN.Samples.DesignSurface.GraphicsSurface).Assembly)
+                    engine.Runtime.LoadAssembly(GetType(Microsoft.Msdn.Samples.GraphicObjects.GraphicObject).Assembly)
+                    engine.Runtime.LoadAssembly(GetType(Microsoft.Msdn.Samples.DesignSurface.GraphicsSurface).Assembly)
                     scope = engine.CreateScope()
                     scope.SetVariable("Flowsheet", FlowSheet)
                     scope.SetVariable("Spreadsheet", FlowSheet.FormSpreadsheet)
@@ -928,7 +931,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 #Region "   Register/Unregister Procedures"
 
         <System.Runtime.InteropServices.ComRegisterFunction()> _
-       Private Shared Sub RegisterFunction(ByVal t As Type)
+        Private Shared Sub RegisterFunction(ByVal t As Type)
 
             Dim keyname As String = String.Concat("CLSID\\{", t.GUID.ToString, "}\\Implemented Categories")
             Dim key As Microsoft.Win32.RegistryKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(keyname, True)

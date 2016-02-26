@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DWSIM", "DWSIM\DWSIM.vbproj", "{34BE2D2D-9B3C-4C12-8C90-732E21CD7CB1}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -34,6 +34,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TabStrip", "TabStrip\TabStrip.csproj", "{F929CA6A-87BD-42C8-8D0A-6455DB6F55DC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunAsx86", "RunAsx86\RunAsx86.csproj", "{CAA85A70-4427-4075-A894-8EDDCA42DDD4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericDictionaryEditor", "GenericDictionaryEditor\GenericDictionaryEditor.csproj", "{A541272D-0C07-40BC-B03C-73D95E072B99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -193,6 +195,16 @@ Global
 		{CAA85A70-4427-4075-A894-8EDDCA42DDD4}.Release|Mixed Platforms.Build.0 = Release|x86
 		{CAA85A70-4427-4075-A894-8EDDCA42DDD4}.Release|x86.ActiveCfg = Release|x86
 		{CAA85A70-4427-4075-A894-8EDDCA42DDD4}.Release|x86.Build.0 = Release|x86
+		{A541272D-0C07-40BC-B03C-73D95E072B99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A541272D-0C07-40BC-B03C-73D95E072B99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A541272D-0C07-40BC-B03C-73D95E072B99}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A541272D-0C07-40BC-B03C-73D95E072B99}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A541272D-0C07-40BC-B03C-73D95E072B99}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A541272D-0C07-40BC-B03C-73D95E072B99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A541272D-0C07-40BC-B03C-73D95E072B99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A541272D-0C07-40BC-B03C-73D95E072B99}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A541272D-0C07-40BC-B03C-73D95E072B99}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A541272D-0C07-40BC-B03C-73D95E072B99}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

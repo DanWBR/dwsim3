@@ -175,9 +175,6 @@
     <Reference Include="GemBox.Spreadsheet">
       <HintPath>..\packages\GemBox.Spreadsheet.39.3.30.1037\lib\net30\GemBox.Spreadsheet.dll</HintPath>
     </Reference>
-    <Reference Include="GenericDictionaryEditor">
-      <HintPath>..\packages\GenDictEdit.1.1.0\lib\net20\GenericDictionaryEditor.dll</HintPath>
-    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.4.369, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\ICSharpCode.SharpZipLib.dll</HintPath>
@@ -1629,6 +1626,10 @@
     <ProjectReference Include="..\DockPanelSuite\WinFormsUI\WinFormsUI.csproj">
       <Project>{c75532c4-765b-418e-b09b-46d36b2abdb1}</Project>
       <Name>WinFormsUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GenericDictionaryEditor\GenericDictionaryEditor.csproj">
+      <Project>{a541272d-0c07-40bc-b03c-73d95e072b99}</Project>
+      <Name>GenericDictionaryEditor</Name>
     </ProjectReference>
     <ProjectReference Include="..\GraphicObjects\GraphicObjects.vbproj">
       <Project>{0C3364C4-717C-4A8B-A94D-8DDEEFC6AB43}</Project>
