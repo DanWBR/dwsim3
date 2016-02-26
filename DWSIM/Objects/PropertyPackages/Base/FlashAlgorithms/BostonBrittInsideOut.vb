@@ -125,6 +125,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
             If Abs(Pb - Pd) / Pb < 0.0000001 Then
                 'one comp only
+                Px = PP.AUX_PVAPM(T)
                 If Px <= P Then
                     L = 1
                     V = 0
