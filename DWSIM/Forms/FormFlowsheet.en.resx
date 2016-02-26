@@ -686,19 +686,19 @@
     <value>330, 6</value>
   </data>
   <data name="FerramentasToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 20</value>
+    <value>47, 20</value>
   </data>
   <data name="FerramentasToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Tools</value>
   </data>
   <data name="PontoCríticoRealToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 22</value>
+    <value>241, 22</value>
   </data>
   <data name="PontoCríticoRealToolStripMenuItem.Text" xml:space="preserve">
     <value>True Critical Point</value>
   </data>
   <data name="HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 22</value>
+    <value>241, 22</value>
   </data>
   <data name="HYDVerificaçãoDasCondiçõesDeFormaçãoDeHidratosToolStripMenuItem.Text" xml:space="preserve">
     <value>Hydrate Dissociation Utility</value>
@@ -721,7 +721,7 @@
 </value>
   </data>
   <data name="PropriedadesDosComponentesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 22</value>
+    <value>241, 22</value>
   </data>
   <data name="PropriedadesDosComponentesToolStripMenuItem.Text" xml:space="preserve">
     <value>Pure Component Properties</value>
@@ -744,7 +744,7 @@
 </value>
   </data>
   <data name="AnáliseDePetróleosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 22</value>
+    <value>241, 22</value>
   </data>
   <data name="AnáliseDePetróleosToolStripMenuItem.Text" xml:space="preserve">
     <value>Petroleum Analysis</value>
@@ -767,31 +767,31 @@
 </value>
   </data>
   <data name="DiagramaDeFasesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 22</value>
+    <value>241, 22</value>
   </data>
   <data name="DiagramaDeFasesToolStripMenuItem.Text" xml:space="preserve">
     <value>Stability Analysis</value>
   </data>
   <data name="DiagramaDeFasesToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 22</value>
+    <value>241, 22</value>
   </data>
   <data name="DiagramaDeFasesToolStripMenuItem1.Text" xml:space="preserve">
     <value>Phase Envelope</value>
   </data>
   <data name="DiagramaBinárioToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 22</value>
+    <value>241, 22</value>
   </data>
   <data name="DiagramaBinárioToolStripMenuItem.Text" xml:space="preserve">
     <value>Binary Envelope</value>
   </data>
   <data name="LLEDiagramToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 22</value>
+    <value>241, 22</value>
   </data>
   <data name="LLEDiagramToolStripMenuItem.Text" xml:space="preserve">
     <value>Triangular Phase Envelope (LLE)</value>
   </data>
   <data name="PropriedadesEspeciaisToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 22</value>
+    <value>241, 22</value>
   </data>
   <data name="PropriedadesEspeciaisToolStripMenuItem.Text" xml:space="preserve">
     <value>Special Properties</value>
@@ -814,7 +814,7 @@
 </value>
   </data>
   <data name="PSVSizingToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 22</value>
+    <value>241, 22</value>
   </data>
   <data name="PSVSizingToolStripMenuItem.Text" xml:space="preserve">
     <value>PSV Sizing</value>
@@ -837,13 +837,13 @@
 </value>
   </data>
   <data name="FlashVesselSizingToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 22</value>
+    <value>241, 22</value>
   </data>
   <data name="FlashVesselSizingToolStripMenuItem.Text" xml:space="preserve">
     <value>Flash Vessel Sizing</value>
   </data>
   <data name="PropriedadesDePetróleosToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 22</value>
+    <value>241, 22</value>
   </data>
   <data name="PropriedadesDePetróleosToolStripMenuItem.Text" xml:space="preserve">
     <value>Petroleum Cold Flow Properties</value>

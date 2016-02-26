@@ -774,6 +774,7 @@ Partial Class FormFlowsheet
         Me.ToolStripSeparator14.MergeAction = System.Windows.Forms.MergeAction.Insert
         Me.ToolStripSeparator14.MergeIndex = 2
         Me.ToolStripSeparator14.Name = "ToolStripSeparator14"
+        Me.ToolStripSeparator14.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never
         '
         'tsmiCut
         '

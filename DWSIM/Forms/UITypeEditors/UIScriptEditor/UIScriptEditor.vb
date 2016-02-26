@@ -110,7 +110,7 @@ Namespace DWSIM.Editors.CustomUO
                         obj.ScriptExt_FontSize = selectionControl.tscb2.SelectedItem
                         obj.ScriptExt_Includes = selectionControl.includes
                     End If
-                    value = selectionControl.Text
+                    value = selectionControl.txtScript.Text
                     selectionControl = Nothing
                 End If
 
