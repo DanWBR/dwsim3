@@ -2886,7 +2886,7 @@ Imports System.Reflection
 
         Dim data As List(Of XElement) = xdoc.Element("DWSIM_Simulation_Data").Element("GraphicObjects").Elements.ToList
 
-        FormMain.AddGraphicObjects(Me, data, excs, pkey, 40)
+        FormMain.AddGraphicObjects(Me, data, excs, pkey, 40, True)
 
         If My.Settings.ClipboardCopyMode_Compounds = 1 Then
 
@@ -3243,7 +3243,7 @@ Imports System.Reflection
                     Clipboard.SetText(xmldata)
                     PasteObjects(False)
                 Else
-                    objlist = act.NewValue
+                    objlist = act.OldValue
                     For Each obj In objlist
                         DeleteSelectedObject(Me, New EventArgs, obj, False)
                     Next
@@ -3258,7 +3258,7 @@ Imports System.Reflection
                         DeleteSelectedObject(Me, New EventArgs, obj, False)
                     Next
                 Else
-                    xmldata = act.NewValue
+                    xmldata = act.OldValue
                     Clipboard.SetText(xmldata)
                     PasteObjects(False)
                 End If
