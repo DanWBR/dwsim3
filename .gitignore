@@ -181,3 +181,4 @@ TCPServer/bin/Debug/*
 /TCPServer/bin/Debug
 /TabStrip/bin/Debug
 /GenericDictionaryEditor/bin/Debug
+/GenericDictionaryEditor/bin/Release/GenericDictionaryEditor.dll
