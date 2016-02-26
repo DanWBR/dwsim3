@@ -137,6 +137,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Throw New Exception("Definition file '" & Filename & "' :" & DWSIM.App.GetLocalString("Oarquivonoexisteoufo"))
                     End If
 
+                    xcl.Calculation = XlCalculation.xlCalculationManual
+
                     Dim mysheetIn As Excel.Worksheet = mybook.Sheets("Input")
                     Dim mysheetOut As Excel.Worksheet = mybook.Sheets("Output")
                     '=====================================================================================================
@@ -243,6 +245,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             Next
                         End If
                     Next
+
+                    xcl.Calculate()
 
                     '======= read results from Excel =============================================================
                     Dim Vmol As New Dictionary(Of String, Double)
