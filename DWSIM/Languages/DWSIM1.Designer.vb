@@ -14304,12 +14304,12 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized string similar to Pacote adicionado: {0}.
         '''</summary>
-        Friend Shared ReadOnly Property UndoRedo_PropertyPackagePropertyAdded() As String
+        Friend Shared ReadOnly Property UndoRedo_PropertyPackageAdded() As String
             Get
-                Return ResourceManager.GetString("UndoRedo_PropertyPackagePropertyAdded", resourceCulture)
+                Return ResourceManager.GetString("UndoRedo_PropertyPackageAdded", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Looks up a localized string similar to Parâmetro modificado: {0}, {1} de {2} para {3}.
         '''</summary>
@@ -14318,13 +14318,13 @@ Namespace My.Resources
                 Return ResourceManager.GetString("UndoRedo_PropertyPackagePropertyChanged", resourceCulture)
             End Get
         End Property
-        
+
         '''<summary>
         '''  Looks up a localized string similar to Pacote removido: {0}.
         '''</summary>
-        Friend Shared ReadOnly Property UndoRedo_PropertyPackagePropertyRemoved() As String
+        Friend Shared ReadOnly Property UndoRedo_PropertyPackageRemoved() As String
             Get
-                Return ResourceManager.GetString("UndoRedo_PropertyPackagePropertyRemoved", resourceCulture)
+                Return ResourceManager.GetString("UndoRedo_PropertyPackageRemoved", resourceCulture)
             End Get
         End Property
         
