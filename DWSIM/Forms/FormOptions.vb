@@ -120,6 +120,7 @@ Public Class FormOptions
                                   Next
                                   Return list
                               End Function).ContinueWith(Sub(t)
+                                                             Me.chkEnableGPUProcessing.Enabled = t.Result.Count > 0
                                                              Me.cbGPU.Items.AddRange(t.Result.ToArray)
                                                              CudafyModes.Target = My.Settings.CudafyTarget
                                                              If My.Settings.SelectedGPU <> "" Then
@@ -130,7 +131,7 @@ Public Class FormOptions
                                                                      End If
                                                                  Next
                                                              Else
-                                                                 If Me.cbGPU.Items.Count > 0 Then Me.cbGPU.SelectedIndex = 0 Else Me.cbGPU.Enabled = False
+                                                                 If Me.cbGPU.Items.Count > 0 Then Me.cbGPU.SelectedIndex = 0
                                                              End If
                                                          End Sub, TaskScheduler.FromCurrentSynchronizationContext)
 
