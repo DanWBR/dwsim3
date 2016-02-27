@@ -743,7 +743,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
 
             Dim tmp1 = MMm / V / 1000
 
-            Dim aux1 = -R / 2 * (0.45724 / T) ^ 0.5
+            Dim aux1 = -R / 2 * (0.42748 / T) ^ 0.5
             i = 0
             Dim aux2 = 0.0#
             Do
@@ -757,7 +757,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary
             Loop Until i = n + 1
 
             dadT = aux1 * aux2
-            Dim d2adt2 = R / 4 * (0.45724 / T) ^ 0.5 * (1 / T) * aux2
+            Dim d2adt2 = R / 4 * (0.42748 / T) ^ 0.5 * (1 / T) * aux2
             'Dim d2adt2 = 0.169049 * R / (T ^ (3 / 2))
 
             Dim dP_dT_V = R / (V - bm) - dadT / (V ^ 2 + V * bm)

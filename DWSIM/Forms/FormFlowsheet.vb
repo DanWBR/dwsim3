@@ -778,7 +778,7 @@ Imports System.Reflection
         Dim obj As GraphicObject = Me.FormSurface.FlowsheetDesignSurface.SelectedObject
 
         If obj Is Nothing Then
-            DWSIM.App.HelpRequested("frame.htm")
+            DWSIM.App.HelpRequested("Frame.htm")
         Else
             Select Case obj.TipoObjeto
                 Case TipoObjeto.MaterialStream
@@ -850,7 +850,7 @@ Imports System.Reflection
                 Case TipoObjeto.GO_SpreadsheetTable
                     DWSIM.App.HelpRequested("GO_SpreadsheetTable.htm")
                 Case Else
-                    DWSIM.App.HelpRequested("frame.htm")
+                    DWSIM.App.HelpRequested("Frame.htm")
             End Select
         End If
 

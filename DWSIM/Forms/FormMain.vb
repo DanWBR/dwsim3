@@ -4239,7 +4239,7 @@ ruf:                Application.DoEvents()
 
     Private Sub ContentsToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ContentsToolStripMenuItem.Click
         'call general help
-        DWSIM.App.HelpRequested("frame.htm")
+        DWSIM.App.HelpRequested("Frame.htm")
     End Sub
 
     Private Sub RegistrarTiposCOMToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RegistrarTiposCOMToolStripMenuItem.Click
@@ -4335,7 +4335,7 @@ ruf:                Application.DoEvents()
 
     Private Sub FormMain_HelpRequested(sender As System.Object, hlpevent As System.Windows.Forms.HelpEventArgs) Handles MyBase.HelpRequested
         'Load help - no special topic
-        DWSIM.App.HelpRequested("frame.htm")
+        DWSIM.App.HelpRequested("Frame.htm")
     End Sub
 #End Region
 

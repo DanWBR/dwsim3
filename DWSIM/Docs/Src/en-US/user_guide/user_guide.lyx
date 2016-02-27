@@ -113,14 +113,14 @@ User Guide
 \begin_layout Standard
 
 \emph on
-Version 3.6, Revision 0
+Version 3.7, Revision 0
 \end_layout
 
 \begin_layout Standard
 \paragraph_spacing onehalf
 
 \emph on
-January 2016
+March 2016
 \end_layout
 
 \begin_layout Standard
@@ -201,13 +201,11 @@ http://www.sourceforge.net/projects/dwsim
 \begin_layout Labeling
 \labelwidthstring 00.00.0000
 E-mail: 
-\begin_inset Flex URL
-status open
-
-\begin_layout Plain Layout
-
-danielwag@gmail.com
-\end_layout
+\begin_inset CommandInset href
+LatexCommand href
+name "dwsim@inforside.com.br"
+target "dwsim@inforside.com.br"
+type "mailto:"
 
 \end_inset
 
@@ -330,6 +328,121 @@ target "http://dwsim.inforside.com.br"
 Welcome screen
 \end_layout
 
+\begin_layout Subsection
+Additional File Tasks
+\end_layout
+
+\begin_layout Standard
+Upon first start, DWSIM will display an 
+\begin_inset Quotes sld
+\end_inset
+
+Additional File Tasks
+\begin_inset Quotes srd
+\end_inset
+
+ window, which will take care of some extra file copy operations specific
+ to your operational system and environment.
+ The files to be copied are necessary for some features to work, like the
+ IPOPT non-linear solver, CoolProp Property Package and others.
+ These features are contained in system-specific libraries.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename screens37/snap027.png
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset Quotes sld
+\end_inset
+
+Additional File Tasks
+\begin_inset Quotes srd
+\end_inset
+
+ window.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+After copying the required files, DWSIM needs to be restarted.
+ If everything went ok, this window won't be displayed anymore.
+ If for some reason you'll need to access it again, go to Tools > Additional
+ File Tasks (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figura-aft"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename screens37/snap026.png
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figura-aft"
+
+\end_inset
+
+Additional File Tasks menu item.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 When DWSIM is opened, the welcome screen is shown (Figure 
 \begin_inset CommandInset ref
@@ -402,73 +515,6 @@ Menu bar
 , with buttons to open/save/create simulations, component creator and data
  regression cases, configure the active simulation, general preferences,
  launch tools, configure the child windows view mode, etc.;
-\begin_inset Box Framed
-position "t"
-hor_pos "c"
-has_inner_box 0
-inner_pos "t"
-use_parbox 0
-width "100col%"
-special "none"
-height "1in"
-height_special "totalheight"
-status open
-
-\begin_layout Minisec
-
-\size footnotesize
-\emph on
-\begin_inset Tabular
-<lyxtabular version="3" rows="1" columns="2">
-<features>
-<column alignment="left" valignment="top" width="4text%">
-<column alignment="center" valignment="top" width="0">
-<row>
-<cell alignment="left" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\size footnotesize
-\emph on
-\begin_inset Graphics
-	filename dialog-information.png
-	scale 50
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="1" alignment="left" valignment="top" usebox="none" width="90text%">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\family sans
-\size footnotesize
-\emph on
-The menu bar is filled with other items if a simulation file is opened in
- DWSIM
-\family default
-.
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Itemize
@@ -1745,7 +1791,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename screens31/image0036.png
+	filename screens37/snap023.png
 	width 100text%
 
 \end_inset
@@ -1783,9 +1829,9 @@ Simulation interface.
 Menu bars
 \series default
 \emph default
- (left-right / up-down): simulation configuration, results viewer, image
- ant text insertion, zoom controls and flowsheet printing; unit ops and
- streams insertion buttons;
+ (left-right / up-down): edit flowsheet objects, results viewer, image ant
+ text insertion, zoom controls and flowsheet printing; unit ops and streams
+ insertion buttons;
 \end_layout
 
 \begin_layout Itemize
@@ -1892,7 +1938,7 @@ reference "fig:figura-posicaojanelas"
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
@@ -2369,7 +2415,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename ../snaps/pic0017.png
+	filename screens37/snap032.png
 	width 100text%
 
 \end_inset
@@ -2392,10 +2438,6 @@ Dragging items from the Object palette window.
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -2427,7 +2469,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename imagens/0018.JPG
+	filename screens37/snap033.png
 	width 100text%
 
 \end_inset
@@ -2926,6 +2968,193 @@ Calculated objects.
 \end_layout
 
 \begin_layout Subsubsection
+Undo/Redo actions
+\end_layout
+
+\begin_layout Standard
+DWSIM supports Undo and Redo for certain actions, like:
+\end_layout
+
+\begin_layout Itemize
+Changing a property of an object through the Property Grids (model and graphic
+ object properties)
+\end_layout
+
+\begin_layout Itemize
+Connecting, disconnecting objects
+\end_layout
+
+\begin_layout Itemize
+Adding and removing objects
+\end_layout
+
+\begin_layout Itemize
+Adding and removing compounds
+\end_layout
+
+\begin_layout Itemize
+Adding, removing and editing Property Packages
+\end_layout
+
+\begin_layout Standard
+To undo or redo an action, click on the 
+\begin_inset Quotes sld
+\end_inset
+
+Edit
+\begin_inset Quotes srd
+\end_inset
+
+ menu item and then on the corresponding menu items (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figuraundoredo"
+
+\end_inset
+
+).
+ You can also access a list of actions to undo or redo through the arrow
+ buttons located in the menu strip, near to the 
+\begin_inset Quotes sld
+\end_inset
+
+Flowsheet
+\begin_inset Quotes srd
+\end_inset
+
+ label (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figuraundoredo-1"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename screens37/snap034.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figuraundoredo-1"
+
+\end_inset
+
+Undo action list.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Quotes sld
+\end_inset
+
+Edit
+\begin_inset Quotes srd
+\end_inset
+
+ menu also contains some handy tools for handling flowsheet objects, as
+ well as simulation and application configuration menu items (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:figuraundoredo"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename screens37/snap025.png
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:figuraundoredo"
+
+\end_inset
+
+Edit menu.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Cut/Copy/Paste objects
+\end_layout
+
+\begin_layout Standard
+DWSIM also supports cutting, copying and pasting flowsheet objects inside
+ a flowsheet or between different flowsheets.
+ When copying objects between flowsheets, DWSIM may also copy compounds
+ and property packages from one flowsheet to another.
+ Cut/Copy/Paste behavior is an application setting and can be set in the
+ General Settings menu (Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Other"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Subsubsection
 Simulation
 \end_layout
 
@@ -3017,7 +3246,7 @@ button removes all items which may still be present in the calculator queue,
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -4778,7 +5007,7 @@ Currently, there is no way to export the generated binaries for a simulation
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Graphics
@@ -4811,6 +5040,266 @@ Data Regression Utility.
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section
+General Settings
+\end_layout
+
+\begin_layout Standard
+The application settings can be accessed through the Edit > General Settings
+ menu or by pressing the Alt+G shortcut key combination (Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:generalconfig1"
+
+\end_inset
+
+):
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename screens37/snap028.png
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:generalconfig1"
+
+\end_inset
+
+General Settings section.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Solver
+\end_layout
+
+\begin_layout Standard
+The Solver configuration tab display a group of settings to control the
+ behavior of DWSIM's solver.
+ Check the Wiki article
+\begin_inset CommandInset href
+LatexCommand href
+name "Solver Configuration"
+target "http://dwsim.inforside.com.br/wiki/index.php?title=Solver_Configuration"
+
+\end_inset
+
+for more details.
+\end_layout
+
+\begin_layout Subsection
+Datasets
+\end_layout
+
+\begin_layout Standard
+In the database tab, you have options to remove, add and edit compound and
+ interaction parameter datasets.
+ You can also add a reference to the ChemSep compound database from here.
+\end_layout
+
+\begin_layout Subsection
+Backup
+\end_layout
+
+\begin_layout Standard
+The Backup tab has options to control the frequency of the backup file saving.
+ You can also configure the option to save an existing file with another
+ name instead of overwriting it.
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Other"
+
+\end_inset
+
+Other
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename screens37/snap031.png
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:generalconfig1-1"
+
+\end_inset
+
+General Settings / Other section.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Messages
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Show tips
+\series default
+: displays context-sensitive tips on the flowsheet information (log) window.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Checks for updates
+\series default
+: DWSIM will check for updates on startup.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Show 
+\begin_inset Quotes sld
+\end_inset
+
+What's New
+\begin_inset Quotes srd
+\end_inset
+
+
+\series default
+: displays a window with information about what's new on the running version.
+\end_layout
+
+\begin_layout Subsubsection
+Debug mode
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Debug level
+\series default
+: controls the amount of information written to the flowsheet information
+ (log) window when solving the simulation.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Redirect console output
+\series default
+: redirects the output of the console to the console window inside DWSIM.
+\end_layout
+
+\begin_layout Subsubsection
+UI Language
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Language
+\series default
+: sets the UI language.
+ Requires a restart.
+\end_layout
+
+\begin_layout Subsubsection
+Compatibility
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Load binary files using legacy settings
+\series default
+: check this box to load older (pre-3.0) simulations in newer DWSIM builds.
+\end_layout
+
+\begin_layout Subsubsection
+Cut/Copy/Paste Flowsheet Objects
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Compounds
+\series default
+: controls how compounds are handled during cut/copy/paste operations.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Property Packages
+\series default
+: controls how Property Packages are handled during cut/copy/paste operations.
+\end_layout
+
+\begin_layout Subsubsection
+Undo/Redo
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Recalculate flowsheet
+\series default
+: defines if the flowsheet is to be recalculated after undo/redo operations.
 \end_layout
 
 \end_body
