@@ -24,11 +24,6 @@ Partial Class ScriptEditorFormMono
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ScriptEditorFormMono))
-        Me.FaTabStrip2 = New FarsiLibrary.Win.FATabStrip()
-        Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem()
-        Me.txtScript = New System.Windows.Forms.TextBox()
-        Me.FaTabStripItem4 = New FarsiLibrary.Win.FATabStripItem()
-        Me.ListBox1 = New System.Windows.Forms.ListBox()
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
         Me.OpenToolStripButton = New System.Windows.Forms.ToolStripButton()
         Me.SaveToolStripButton = New System.Windows.Forms.ToolStripButton()
@@ -54,51 +49,20 @@ Partial Class ScriptEditorFormMono
         Me.sfd1 = New System.Windows.Forms.SaveFileDialog()
         Me.ofd2 = New System.Windows.Forms.OpenFileDialog()
         Me.pd1 = New System.Windows.Forms.PrintDialog()
+        Me.FaTabStrip2 = New FarsiLibrary.Win.FATabStrip()
+        Me.FaTabStripItem3 = New FarsiLibrary.Win.FATabStripItem()
+        Me.txtScript = New System.Windows.Forms.TextBox()
+        Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
+        Me.tsl1 = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.FaTabStripItem4 = New FarsiLibrary.Win.FATabStripItem()
+        Me.ListBox1 = New System.Windows.Forms.ListBox()
+        Me.ToolStrip1.SuspendLayout()
         CType(Me.FaTabStrip2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FaTabStrip2.SuspendLayout()
         Me.FaTabStripItem3.SuspendLayout()
+        Me.StatusStrip1.SuspendLayout()
         Me.FaTabStripItem4.SuspendLayout()
-        Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
-        '
-        'FaTabStrip2
-        '
-        Me.FaTabStrip2.AlwaysShowClose = False
-        Me.FaTabStrip2.AlwaysShowMenuGlyph = False
-        resources.ApplyResources(Me.FaTabStrip2, "FaTabStrip2")
-        Me.FaTabStrip2.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem3, Me.FaTabStripItem4})
-        Me.FaTabStrip2.Name = "FaTabStrip2"
-        Me.FaTabStrip2.SelectedItem = Me.FaTabStripItem3
-        '
-        'FaTabStripItem3
-        '
-        Me.FaTabStripItem3.CanClose = False
-        Me.FaTabStripItem3.Controls.Add(Me.txtScript)
-        Me.FaTabStripItem3.IsDrawn = True
-        Me.FaTabStripItem3.Name = "FaTabStripItem3"
-        Me.FaTabStripItem3.Selected = True
-        resources.ApplyResources(Me.FaTabStripItem3, "FaTabStripItem3")
-        '
-        'txtScript
-        '
-        resources.ApplyResources(Me.txtScript, "txtScript")
-        Me.txtScript.Name = "txtScript"
-        '
-        'FaTabStripItem4
-        '
-        Me.FaTabStripItem4.CanClose = False
-        Me.FaTabStripItem4.Controls.Add(Me.ListBox1)
-        Me.FaTabStripItem4.IsDrawn = True
-        Me.FaTabStripItem4.Name = "FaTabStripItem4"
-        resources.ApplyResources(Me.FaTabStripItem4, "FaTabStripItem4")
-        '
-        'ListBox1
-        '
-        Me.ListBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
-        resources.ApplyResources(Me.ListBox1, "ListBox1")
-        Me.ListBox1.FormattingEnabled = True
-        Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
         '
         'ToolStrip1
         '
@@ -253,6 +217,57 @@ Partial Class ScriptEditorFormMono
         '
         Me.pd1.UseEXDialog = True
         '
+        'FaTabStrip2
+        '
+        Me.FaTabStrip2.AlwaysShowClose = False
+        Me.FaTabStrip2.AlwaysShowMenuGlyph = False
+        resources.ApplyResources(Me.FaTabStrip2, "FaTabStrip2")
+        Me.FaTabStrip2.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem3, Me.FaTabStripItem4})
+        Me.FaTabStrip2.Name = "FaTabStrip2"
+        Me.FaTabStrip2.SelectedItem = Me.FaTabStripItem3
+        '
+        'FaTabStripItem3
+        '
+        Me.FaTabStripItem3.CanClose = False
+        Me.FaTabStripItem3.Controls.Add(Me.txtScript)
+        Me.FaTabStripItem3.Controls.Add(Me.StatusStrip1)
+        Me.FaTabStripItem3.IsDrawn = True
+        Me.FaTabStripItem3.Name = "FaTabStripItem3"
+        Me.FaTabStripItem3.Selected = True
+        resources.ApplyResources(Me.FaTabStripItem3, "FaTabStripItem3")
+        '
+        'txtScript
+        '
+        resources.ApplyResources(Me.txtScript, "txtScript")
+        Me.txtScript.Name = "txtScript"
+        '
+        'StatusStrip1
+        '
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsl1})
+        resources.ApplyResources(Me.StatusStrip1, "StatusStrip1")
+        Me.StatusStrip1.Name = "StatusStrip1"
+        '
+        'tsl1
+        '
+        Me.tsl1.Name = "tsl1"
+        resources.ApplyResources(Me.tsl1, "tsl1")
+        '
+        'FaTabStripItem4
+        '
+        Me.FaTabStripItem4.CanClose = False
+        Me.FaTabStripItem4.Controls.Add(Me.ListBox1)
+        Me.FaTabStripItem4.IsDrawn = True
+        Me.FaTabStripItem4.Name = "FaTabStripItem4"
+        resources.ApplyResources(Me.FaTabStripItem4, "FaTabStripItem4")
+        '
+        'ListBox1
+        '
+        Me.ListBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
+        resources.ApplyResources(Me.ListBox1, "ListBox1")
+        Me.ListBox1.FormattingEnabled = True
+        Me.ListBox1.Name = "ListBox1"
+        Me.ListBox1.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
+        '
         'ScriptEditorFormMono
         '
         resources.ApplyResources(Me, "$this")
@@ -263,21 +278,19 @@ Partial Class ScriptEditorFormMono
         Me.Name = "ScriptEditorFormMono"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
+        Me.ToolStrip1.ResumeLayout(False)
+        Me.ToolStrip1.PerformLayout()
         CType(Me.FaTabStrip2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FaTabStrip2.ResumeLayout(False)
         Me.FaTabStripItem3.ResumeLayout(False)
         Me.FaTabStripItem3.PerformLayout()
+        Me.StatusStrip1.ResumeLayout(False)
+        Me.StatusStrip1.PerformLayout()
         Me.FaTabStripItem4.ResumeLayout(False)
-        Me.ToolStrip1.ResumeLayout(False)
-        Me.ToolStrip1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Public WithEvents FaTabStrip2 As FarsiLibrary.Win.FATabStrip
-    Public WithEvents FaTabStripItem3 As FarsiLibrary.Win.FATabStripItem
-    Public WithEvents FaTabStripItem4 As FarsiLibrary.Win.FATabStripItem
-    Public WithEvents ListBox1 As System.Windows.Forms.ListBox
     Public WithEvents ToolStrip1 As System.Windows.Forms.ToolStrip
     Public WithEvents OpenToolStripButton As System.Windows.Forms.ToolStripButton
     Public WithEvents SaveToolStripButton As System.Windows.Forms.ToolStripButton
@@ -300,8 +313,14 @@ Partial Class ScriptEditorFormMono
     Public WithEvents sfd1 As System.Windows.Forms.SaveFileDialog
     Public WithEvents ofd2 As System.Windows.Forms.OpenFileDialog
     Public WithEvents pd1 As System.Windows.Forms.PrintDialog
-    Friend WithEvents txtScript As System.Windows.Forms.TextBox
     Public WithEvents ToolStripSeparator3 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents HelpToolStripButton As System.Windows.Forms.ToolStripButton
     Friend WithEvents APIHelptsbutton As System.Windows.Forms.ToolStripButton
+    Public WithEvents FaTabStrip2 As FarsiLibrary.Win.FATabStrip
+    Public WithEvents FaTabStripItem3 As FarsiLibrary.Win.FATabStripItem
+    Friend WithEvents txtScript As System.Windows.Forms.TextBox
+    Friend WithEvents StatusStrip1 As System.Windows.Forms.StatusStrip
+    Public WithEvents FaTabStripItem4 As FarsiLibrary.Win.FATabStripItem
+    Public WithEvents ListBox1 As System.Windows.Forms.ListBox
+    Friend WithEvents tsl1 As System.Windows.Forms.ToolStripStatusLabel
 End Class

@@ -456,7 +456,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 .Item.Add(DWSIM.App.GetLocalString("InputVariables"), Me, "InputVariables", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "", True)
                 With .Item(.Item.Count - 1)
-                    .CustomEditor = New Wexman.Design.GenericDictionaryEditor(Of String, Double)(Type.GetType("System.Collections.Generic.Dictionary(Of String, Double)"))
+                    If Not DWSIM.App.IsRunningOnMono Then
+                        .CustomEditor = New Wexman.Design.GenericDictionaryEditor(Of String, Double)(Type.GetType("System.Collections.Generic.Dictionary(Of String, Double)")) With {.Title = DWSIM.App.GetLocalString("InputVariables")}
+                    End If
                 End With
 
                 .Item.Add(DWSIM.App.GetLocalString("CUO_ScriptText"), Me, "ScriptText", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Cliquenobotocomretic"), True)

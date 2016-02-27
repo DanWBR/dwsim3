@@ -117,144 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="FaTabStrip2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="FaTabStrip2.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Tahoma, 8.25pt</value>
-  </data>
-  <data name="txtScript.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="txtScript.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Courier New, 9.75pt</value>
-  </data>
-  <data name="txtScript.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="txtScript.Multiline" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="txtScript.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
-    <value>Both</value>
-  </data>
-  <data name="txtScript.Size" type="System.Drawing.Size, System.Drawing">
-    <value>608, 340</value>
-  </data>
-  <data name="txtScript.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;txtScript.Name" xml:space="preserve">
-    <value>txtScript</value>
-  </data>
-  <data name="&gt;&gt;txtScript.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txtScript.Parent" xml:space="preserve">
-    <value>FaTabStripItem3</value>
-  </data>
-  <data name="&gt;&gt;txtScript.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="FaTabStripItem3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>608, 340</value>
-  </data>
-  <data name="FaTabStripItem3.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="FaTabStripItem3.Title" xml:space="preserve">
-    <value>Script</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem3.Name" xml:space="preserve">
-    <value>FaTabStripItem3</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem3.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem3.Parent" xml:space="preserve">
-    <value>FaTabStrip2</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem3.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="ListBox1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="ListBox1.HorizontalScrollbar" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="ListBox1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="ListBox1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>608, 340</value>
-  </data>
-  <data name="ListBox1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;ListBox1.Name" xml:space="preserve">
-    <value>ListBox1</value>
-  </data>
-  <data name="&gt;&gt;ListBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;ListBox1.Parent" xml:space="preserve">
-    <value>FaTabStripItem4</value>
-  </data>
-  <data name="&gt;&gt;ListBox1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="FaTabStripItem4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>608, 340</value>
-  </data>
-  <data name="FaTabStripItem4.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="FaTabStripItem4.Title" xml:space="preserve">
-    <value>Inclusões</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem4.Name" xml:space="preserve">
-    <value>FaTabStripItem4</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem4.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem4.Parent" xml:space="preserve">
-    <value>FaTabStrip2</value>
-  </data>
-  <data name="&gt;&gt;FaTabStripItem4.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="FaTabStrip2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 25</value>
-  </data>
-  <data name="FaTabStrip2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>610, 361</value>
-  </data>
-  <data name="FaTabStrip2.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="FaTabStrip2.Text" xml:space="preserve">
-    <value>FaTabStrip2</value>
-  </data>
-  <data name="&gt;&gt;FaTabStrip2.Name" xml:space="preserve">
-    <value>FaTabStrip2</value>
-  </data>
-  <data name="&gt;&gt;FaTabStrip2.Type" xml:space="preserve">
-    <value>FarsiLibrary.Win.FATabStrip, TabStrip, Version=2.0.2773.39305, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;FaTabStrip2.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;FaTabStrip2.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <metadata name="ToolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>0, 0</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="OpenToolStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -408,6 +274,7 @@
   <data name="tscb1.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 25</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="tscb2.AutoSize" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
@@ -555,6 +422,169 @@
   <metadata name="pd1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>639, 17</value>
   </metadata>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="FaTabStrip2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="FaTabStrip2.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 8.25pt</value>
+  </data>
+  <data name="txtScript.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="txtScript.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Courier New, 9.75pt</value>
+  </data>
+  <data name="txtScript.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="txtScript.Multiline" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="txtScript.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
+    <value>Both</value>
+  </data>
+  <data name="txtScript.Size" type="System.Drawing.Size, System.Drawing">
+    <value>608, 318</value>
+  </data>
+  <data name="txtScript.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;txtScript.Name" xml:space="preserve">
+    <value>txtScript</value>
+  </data>
+  <data name="&gt;&gt;txtScript.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtScript.Parent" xml:space="preserve">
+    <value>FaTabStripItem3</value>
+  </data>
+  <data name="&gt;&gt;txtScript.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="StatusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>946, 17</value>
+  </metadata>
+  <data name="tsl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 17</value>
+  </data>
+  <data name="StatusStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 318</value>
+  </data>
+  <data name="StatusStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>608, 22</value>
+  </data>
+  <data name="StatusStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="StatusStrip1.Text" xml:space="preserve">
+    <value>StatusStrip1</value>
+  </data>
+  <data name="&gt;&gt;StatusStrip1.Name" xml:space="preserve">
+    <value>StatusStrip1</value>
+  </data>
+  <data name="&gt;&gt;StatusStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;StatusStrip1.Parent" xml:space="preserve">
+    <value>FaTabStripItem3</value>
+  </data>
+  <data name="&gt;&gt;StatusStrip1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="FaTabStripItem3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>608, 340</value>
+  </data>
+  <data name="FaTabStripItem3.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="FaTabStripItem3.Title" xml:space="preserve">
+    <value>Script</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem3.Name" xml:space="preserve">
+    <value>FaTabStripItem3</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem3.Type" xml:space="preserve">
+    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.5892.35695, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem3.Parent" xml:space="preserve">
+    <value>FaTabStrip2</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem3.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="ListBox1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="ListBox1.HorizontalScrollbar" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="ListBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="ListBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>608, 340</value>
+  </data>
+  <data name="ListBox1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;ListBox1.Name" xml:space="preserve">
+    <value>ListBox1</value>
+  </data>
+  <data name="&gt;&gt;ListBox1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ListBox1.Parent" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;ListBox1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="FaTabStripItem4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>608, 340</value>
+  </data>
+  <data name="FaTabStripItem4.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="FaTabStripItem4.Title" xml:space="preserve">
+    <value>Inclusões</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem4.Name" xml:space="preserve">
+    <value>FaTabStripItem4</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem4.Type" xml:space="preserve">
+    <value>FarsiLibrary.Win.FATabStripItem, TabStrip, Version=2.0.5892.35695, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem4.Parent" xml:space="preserve">
+    <value>FaTabStrip2</value>
+  </data>
+  <data name="&gt;&gt;FaTabStripItem4.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="FaTabStrip2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 25</value>
+  </data>
+  <data name="FaTabStrip2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>610, 361</value>
+  </data>
+  <data name="FaTabStrip2.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="FaTabStrip2.Text" xml:space="preserve">
+    <value>FaTabStrip2</value>
+  </data>
+  <data name="&gt;&gt;FaTabStrip2.Name" xml:space="preserve">
+    <value>FaTabStrip2</value>
+  </data>
+  <data name="&gt;&gt;FaTabStrip2.Type" xml:space="preserve">
+    <value>FarsiLibrary.Win.FATabStrip, TabStrip, Version=2.0.5892.35695, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;FaTabStrip2.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;FaTabStrip2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -716,6 +746,12 @@
   </data>
   <data name="&gt;&gt;pd1.Type" xml:space="preserve">
     <value>System.Windows.Forms.PrintDialog, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tsl1.Name" xml:space="preserve">
+    <value>tsl1</value>
+  </data>
+  <data name="&gt;&gt;tsl1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>ScriptEditorFormMono</value>

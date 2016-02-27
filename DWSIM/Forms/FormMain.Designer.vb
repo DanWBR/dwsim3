@@ -219,6 +219,8 @@ Partial Class FormMain
         '
         resources.ApplyResources(Me.PreferênciasDoDWSIMToolStripMenuItem, "PreferênciasDoDWSIMToolStripMenuItem")
         Me.PreferênciasDoDWSIMToolStripMenuItem.Image = Global.DWSIM.My.Resources.Resources.application_edit
+        Me.PreferênciasDoDWSIMToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert
+        Me.PreferênciasDoDWSIMToolStripMenuItem.MergeIndex = 12
         Me.PreferênciasDoDWSIMToolStripMenuItem.Name = "PreferênciasDoDWSIMToolStripMenuItem"
         '
         'FerramentasToolStripMenuItem

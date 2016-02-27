@@ -12826,6 +12826,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Linha {0}, Coluna {1}.
+        '''</summary>
+        Friend Shared ReadOnly Property ScriptEditor_LineColumn() As String
+            Get
+                Return ResourceManager.GetString("ScriptEditor_LineColumn", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Líquido de Esgotamento.
         '''</summary>
         Friend Shared ReadOnly Property SCStrippingLiquid() As String
@@ -14309,7 +14318,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("UndoRedo_PropertyPackageAdded", resourceCulture)
             End Get
         End Property
-
+        
         '''<summary>
         '''  Looks up a localized string similar to Parâmetro modificado: {0}, {1} de {2} para {3}.
         '''</summary>
@@ -14318,7 +14327,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("UndoRedo_PropertyPackagePropertyChanged", resourceCulture)
             End Get
         End Property
-
+        
         '''<summary>
         '''  Looks up a localized string similar to Pacote removido: {0}.
         '''</summary>

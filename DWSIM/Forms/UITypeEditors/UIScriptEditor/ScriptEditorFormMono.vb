@@ -64,15 +64,6 @@ Imports System.Drawing.Text
 
     End Sub
 
-    Private Sub txtScript_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs)
-        If e.KeyCode = Keys.F5 Then
-            Dim mycuo As DWSIM.SimulationObjects.UnitOps.CustomUO = My.Application.ActiveSimulation.Collections.ObjectCollection(My.Application.ActiveSimulation.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
-            mycuo.Includes = includes
-            mycuo.ScriptText = Me.txtScript.Text
-            mycuo.Calculate()
-        End If
-    End Sub
-
     Private Sub OpenToolStripButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OpenToolStripButton.Click
         If Me.txtScript.Text <> "" Then
             If MessageBox.Show(DWSIM.App.GetLocalString("DesejaSalvaroScriptAtual"), DWSIM.App.GetLocalString("Ateno"), MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
@@ -188,5 +179,8 @@ Imports System.Drawing.Text
 
     Private Sub txtScript_KeyDown_1(sender As Object, e As KeyEventArgs) Handles txtScript.KeyDown
         If e.KeyCode = Keys.F5 Then ToolStripButton1_Click(sender, e)
+        Dim line As Integer = txtScript.GetLineFromCharIndex(txtScript.SelectionStart)
+        Dim column As Integer = txtScript.SelectionStart - txtScript.GetFirstCharIndexOfCurrentLine()
+        tsl1.Text = String.Format(DWSIM.App.GetLocalString("ScriptEditor_LineColumn"), line, column)
     End Sub
 End Class

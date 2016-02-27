@@ -936,21 +936,25 @@ Imports System.Reflection
 
     Public Sub tsmiRecalc_Click(sender As Object, e As EventArgs) Handles tsmiRecalc.Click
 
-        Dim obj As SimulationObjects_BaseClass = Collections.ObjectCollection(Me.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
+        If Not Me.FormSurface.FlowsheetDesignSurface.SelectedObject Is Nothing Then
 
-        'Call function to calculate flowsheet
-        Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
-        With objargs
-            .Calculado = False
-            .Tag = obj.GraphicObject.Tag
-            .Nome = obj.Nome
-            .Tipo = obj.GraphicObject.TipoObjeto
-            .Emissor = "PropertyGrid"
-        End With
+            Dim obj As SimulationObjects_BaseClass = Collections.ObjectCollection(Me.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
 
-        CalculationQueue.Enqueue(objargs)
+            'Call function to calculate flowsheet
+            Dim objargs As New DWSIM.Outros.StatusChangeEventArgs
+            With objargs
+                .Calculado = False
+                .Tag = obj.GraphicObject.Tag
+                .Nome = obj.Nome
+                .Tipo = obj.GraphicObject.TipoObjeto
+                .Emissor = "PropertyGrid"
+            End With
 
-        CalculateAll2(Me, My.Settings.SolverMode, , True)
+            CalculationQueue.Enqueue(objargs)
+
+            CalculateAll2(Me, My.Settings.SolverMode, , True)
+
+        End If
 
     End Sub
 

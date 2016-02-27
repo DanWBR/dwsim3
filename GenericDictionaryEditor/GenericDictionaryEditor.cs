@@ -12,8 +12,14 @@ namespace Wexman.Design
     /// </summary>
     /// <typeparam name="TKey">The type of the Keys in the dictionary.</typeparam>
     /// <typeparam name="TValue">The type of the Values in the dictionary.</typeparam>
+    /// 
+
+
     public class GenericDictionaryEditor<TKey, TValue>: CollectionEditor
     {
+
+        public String Title;
+                
         /// <summary>
         /// Initializes a new instance of the GenericDictionaryEditor class using the specified collection type.
         /// </summary>
@@ -22,7 +28,7 @@ namespace Wexman.Design
             : base(type)
         {
         }
-
+           
         private GenericDictionaryEditorAttribute m_EditorAttribute;
 
         private CollectionEditor.CollectionForm m_Form;
@@ -34,7 +40,7 @@ namespace Wexman.Design
         protected override CollectionEditor.CollectionForm CreateCollectionForm()
         {
             m_Form = base.CreateCollectionForm();
-            m_Form.Text = this.m_EditorAttribute.Title ?? Wexman.Design.Properties.Resource1.GenericDictionaryEditorTitle;
+            m_Form.Text = Title;
 
             // Die Eigenschaft "CollectionEditable" muss hier per Reflection gesetzt werden (ist protected)
             Type formType = m_Form.GetType();
