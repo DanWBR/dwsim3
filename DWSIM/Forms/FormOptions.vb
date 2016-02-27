@@ -106,10 +106,6 @@ Public Class FormOptions
 
         Task.Factory.StartNew(Function()
                                   Dim list As New List(Of String)
-                                  CudafyModes.Target = eGPUType.Emulator
-                                  For Each prop As GPGPUProperties In CudafyHost.GetDeviceProperties(CudafyModes.Target, False)
-                                      list.Add("Emulator | " & prop.Name & " (" & prop.DeviceId & ")")
-                                  Next
                                   Try
                                       CudafyModes.Target = eGPUType.Cuda
                                       For Each prop As GPGPUProperties In CudafyHost.GetDeviceProperties(CudafyModes.Target, False)
@@ -134,7 +130,7 @@ Public Class FormOptions
                                                                      End If
                                                                  Next
                                                              Else
-                                                                 If Me.cbGPU.Items.Count > 0 Then Me.cbGPU.SelectedIndex = 0
+                                                                 If Me.cbGPU.Items.Count > 0 Then Me.cbGPU.SelectedIndex = 0 Else Me.cbGPU.Enabled = False
                                                              End If
                                                          End Sub, TaskScheduler.FromCurrentSynchronizationContext)
 
