@@ -788,7 +788,7 @@ Public Class FormSimulSettings
                     su.mediumresistance = cell.Value
             End Select
 
-            FrmChild.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.SystemOfUnitsChanged,
+            If initialized Then FrmChild.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.SystemOfUnitsChanged,
                          .ObjID = su.nome,
                          .ObjID2 = member,
                          .NewValue = cell.Value,

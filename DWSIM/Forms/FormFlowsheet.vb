@@ -2986,7 +2986,9 @@ Imports System.Reflection
                 If TypeOf obj Is Streams.MaterialStream Then
                     DirectCast(obj, Streams.MaterialStream).PropertyPackage = Me.Options.PropertyPackages(pkey & DirectCast(obj, Streams.MaterialStream)._ppid)
                 ElseIf TypeOf obj Is SimulationObjects_UnitOpBaseClass Then
-                    DirectCast(obj, SimulationObjects_UnitOpBaseClass).PropertyPackage = Me.Options.PropertyPackages(pkey & DirectCast(obj, SimulationObjects_UnitOpBaseClass)._ppid)
+                    If DirectCast(obj, SimulationObjects_UnitOpBaseClass)._ppid <> "" Then
+                        DirectCast(obj, SimulationObjects_UnitOpBaseClass).PropertyPackage = Me.Options.PropertyPackages(pkey & DirectCast(obj, SimulationObjects_UnitOpBaseClass)._ppid)
+                    End If
                 End If
             End If
             objlist.Add(obj)
