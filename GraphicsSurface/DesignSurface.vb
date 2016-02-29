@@ -85,6 +85,7 @@ Imports System.Collections.Generic
     Private startingRotation As Single = 0
     Private originalRotation As Single = 0
     Private selectionRect As Rectangle
+    Private rectp0 As Point
     Private hoverRect As Rectangle
     Private hoverrotation As Integer = 0
 
@@ -733,8 +734,8 @@ Imports System.Collections.Generic
         Else
             If e.Button And Windows.Forms.MouseButtons.Left And Me.SelectRectangle And Not My.Computer.Keyboard.ShiftKeyDown Then
                 selectionDragging = True
-                selectionRect.X = mousePT.X * Me.Zoom
-                selectionRect.Y = mousePT.Y * Me.Zoom
+                rectp0.X = mousePT.X * Me.Zoom
+                rectp0.Y = mousePT.Y * Me.Zoom
                 selectionRect.Height = 0
                 selectionRect.Width = 0
             End If
@@ -906,6 +907,7 @@ Imports System.Collections.Generic
                                     Me.SelectedObject, _
                                     String.Format("Object Moved to {0}, {1}", dragPoint.X, dragPoint.Y), _
                                     dragPoint, 0))
+
                         ElseIf rotating Then
 
                             Cursor.Current = Cursors.SizeAll
@@ -941,16 +943,35 @@ Imports System.Collections.Generic
 
                     If selectionDragging And SelectRectangle Then
 
-                        selectionRect.Width = dragPoint.X * Me.Zoom - selectionRect.X
-                        selectionRect.Height = dragPoint.Y * Me.Zoom - selectionRect.Y
+                        Dim x0, y0, x1, y1 As Integer
 
-                        Cursor.Current = Cursors.Default
+                        x0 = rectp0.X
+                        y0 = rectp0.Y
+                        x1 = dragPoint.X * Me.Zoom
+                        y1 = dragPoint.Y * Me.Zoom
+
+                        If x1 > x0 Then
+                            selectionRect.X = x0
+                        Else
+                            selectionRect.X = x1
+                        End If
+
+                        If y1 > y0 Then
+                            selectionRect.Y = y0
+                        Else
+                            selectionRect.Y = y1
+                        End If
+
+                        selectionRect.Width = Math.Abs(x1 - x0)
+                        selectionRect.Height = Math.Abs(y1 - y0)
+
+                    Cursor.Current = Cursors.Default
 
                     Else
 
-                        Cursor.Current = Cursors.Default
+                    Cursor.Current = Cursors.Default
 
-                    End If
+                End If
                 End If
 
             Else
