@@ -1585,6 +1585,21 @@ Imports System.Reflection
         m_simultadjustsolverenabled = tsbSimultAdjustSolver.Checked
     End Sub
 
+    Sub ChangeEditMenuStatus(status As Boolean)
+
+        tsmiCut.Enabled = status
+        tsmiCopy.Enabled = status
+        tsmiPaste.Enabled = status
+        tsmiRecalc.Enabled = status
+        tsmiCloneSelected.Enabled = status
+        tsmiRemoveSelected.Enabled = status
+        tsmiExportData.Enabled = status
+        tsbCutObj.Enabled = status
+        tsbCopyObj.Enabled = status
+        tsbPasteObj.Enabled = status
+
+    End Sub
+
 #End Region
 
 #Region "    Connect/Disconnect Objects "

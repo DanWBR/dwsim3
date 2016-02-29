@@ -195,6 +195,14 @@ Public Class frmSurface
             Flowsheet.Options.CalculatorActivated = True
             Flowsheet.FormSurface.LabelCalculator.Text = DWSIM.App.GetLocalString("CalculadorOcioso")
             Flowsheet.WriteToLog(DWSIM.App.GetLocalString("Calculadorativado"), Color.DimGray, DWSIM.FormClasses.TipoAviso.Informacao)
+        ElseIf e.KeyCode = Keys.X And e.Control Then
+            Flowsheet.tsmiCut_Click(Me, New EventArgs)
+        ElseIf e.KeyCode = Keys.C And e.Control Then
+            Flowsheet.tsmiCopy_Click(Me, New EventArgs)
+        ElseIf e.KeyCode = Keys.V And e.Control Then
+            Flowsheet.tsmiPaste_Click(Me, New EventArgs)
+        ElseIf e.KeyCode = Keys.Delete Then
+            Flowsheet.tsmiRemoveSelected_Click(Me, New EventArgs)
         End If
 
         If Not Me.FlowsheetDesignSurface.SelectedObject Is Nothing Then
@@ -254,6 +262,7 @@ Public Class frmSurface
             ByVal e As Microsoft.Msdn.Samples.DesignSurface.SelectionChangedEventArgs) Handles FlowsheetDesignSurface.SelectionChanged
 
         If Not e.SelectedObject Is Nothing Then
+
             If Not e.SelectedObject.IsConnector Then
                 If Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_Tabela Then
                     Flowsheet.FormProps.LblNomeObj.Text = DWSIM.App.GetLocalString("Tabela")
@@ -335,6 +344,8 @@ Public Class frmSurface
                 PGEx2.Refresh()
                 PGEx1.Refresh()
 
+                Flowsheet.ChangeEditMenuStatus(True)
+
             Else
 
                 Me.FlowsheetDesignSurface.SelectedObject = Nothing
@@ -345,6 +356,8 @@ Public Class frmSurface
 
             PGEx2.SelectedObject = Nothing
             PGEx1.SelectedObject = Nothing
+
+            Flowsheet.ChangeEditMenuStatus(False)
 
         End If
 
