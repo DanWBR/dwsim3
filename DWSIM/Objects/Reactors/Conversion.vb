@@ -754,7 +754,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                 Case 0
                     'PROP_HT_0    Pressure Drop
-                    value = cv.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault)
+                    value = Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault)
 
             End Select
 
@@ -792,7 +792,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                 Case 0
                     'PROP_HT_0	Pressure Drop
-                    Me.DeltaP = cv.ConverterParaSI(su.spmp_deltaP, propval)
+                    Me.DeltaP = Conversor.ConverterParaSI(su.spmp_deltaP, propval)
 
             End Select
             Return 1

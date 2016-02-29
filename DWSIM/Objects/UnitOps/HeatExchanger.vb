@@ -1272,12 +1272,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         AValue = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.HotSidePressureDrop), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("HXHotSidePressureDrop"), su.spmp_deltaP), AValue, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("HXHotSidePressureDrop"), True)
                         With .Item(.Item.Count - 1)
+                            .CustomTypeConverter = New System.ComponentModel.StringConverter
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_deltaP, "DP"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With
                         AValue = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.ColdSidePressureDrop), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("HXColdSidePressureDrop"), su.spmp_deltaP), AValue, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("HXColdSidePressureDrop"), True)
                         With .Item(.Item.Count - 1)
+                            .CustomTypeConverter = New System.ComponentModel.StringConverter
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_deltaP, "DP"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With
@@ -1288,6 +1290,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         AValue = Format(Conversor.ConverterDoSI(su.area, Me.Area), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("Area"), su.area), AValue, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("HeatTransferArea"), True)
                         With .Item(.Item.Count - 1)
+                            .CustomTypeConverter = New System.ComponentModel.StringConverter
                             .Tag2 = "PROP_HX_1"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.area, "A"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
@@ -1295,6 +1298,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         AValue = Format(Conversor.ConverterDoSI(su.heat_transf_coeff, Me.OverallCoefficient), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("OverallHeatTranferCoefficient"), su.heat_transf_coeff), AValue, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("OverallHeatTranferCoefficientDesc"), True)
                         With .Item(.Item.Count - 1)
+                            .CustomTypeConverter = New System.ComponentModel.StringConverter
                             .Tag2 = "PROP_HX_0"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.heat_transf_coeff, "U"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
@@ -1303,6 +1307,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         AValue = Format(Conversor.ConverterDoSI(su.area, Me.Area), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("Area"), su.area), AValue, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("HeatTransferArea"), True)
                         With .Item(.Item.Count - 1)
+                            .CustomTypeConverter = New System.ComponentModel.StringConverter
                             .Tag2 = "PROP_HX_1"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.area, "A"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
@@ -1310,6 +1315,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         AValue = Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.Q), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("HeatLoad"), su.spmp_heatflow), AValue, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("HeatLoadOfEquipment"), True)
                         With .Item(.Item.Count - 1)
+                            .CustomTypeConverter = New System.ComponentModel.StringConverter
                             .Tag2 = "PROP_HX_2"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_heatflow, "E"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
@@ -1318,6 +1324,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         AValue = Format(Conversor.ConverterDoSI(su.area, Me.Area), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("Area"), su.area), AValue, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("HeatTransferArea"), True)
                         With .Item(.Item.Count - 1)
+                            .CustomTypeConverter = New System.ComponentModel.StringConverter
                             .Tag2 = "PROP_HX_1"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.area, "A"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
@@ -1325,6 +1332,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         AValue = Format(Conversor.ConverterDoSI(su.spmp_temperature, Me.TempHotOut), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("HXTempHotOut"), su.spmp_temperature), AValue, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("HXTempHotOutDesc"), True)
                         With .Item(.Item.Count - 1)
+                            .CustomTypeConverter = New System.ComponentModel.StringConverter
                             .Tag2 = "PROP_HX_4"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_temperature, "T"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
@@ -1333,6 +1341,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         AValue = Format(Conversor.ConverterDoSI(su.area, Me.Area), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("Area"), su.area), AValue, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("HeatTransferArea"), True)
                         With .Item(.Item.Count - 1)
+                            .CustomTypeConverter = New System.ComponentModel.StringConverter
                             .Tag2 = "PROP_HX_1"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.area, "A"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
@@ -1340,6 +1349,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         AValue = Format(Conversor.ConverterDoSI(su.spmp_temperature, Me.TempColdOut), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("HXTempColdOut"), su.spmp_temperature), AValue, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("HXTempColdOutDesc"), True)
                         With .Item(.Item.Count - 1)
+                            .CustomTypeConverter = New System.ComponentModel.StringConverter
                             .Tag2 = "PROP_HX_3"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_temperature, "T"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
@@ -1351,6 +1361,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 AValue = Format(Conversor.ConverterDoSI(su.spmp_temperature, Me.TempColdOut), FlowSheet.Options.NumberFormat)
                                 .Item.Add(FT(DWSIM.App.GetLocalString("HXTempColdOut"), su.spmp_temperature), AValue, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("HXTempColdOutDesc"), True)
                                 With .Item(.Item.Count - 1)
+                                    .CustomTypeConverter = New System.ComponentModel.StringConverter
                                     .Tag2 = "PROP_HX_3"
                                     .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_temperature, "T"}
                                     .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
@@ -1359,6 +1370,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                 AValue = Format(Conversor.ConverterDoSI(su.spmp_temperature, Me.TempHotOut), FlowSheet.Options.NumberFormat)
                                 .Item.Add(FT(DWSIM.App.GetLocalString("HXTempHotOut"), su.spmp_temperature), AValue, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("HXTempHotOutDesc"), True)
                                 With .Item(.Item.Count - 1)
+                                    .CustomTypeConverter = New System.ComponentModel.StringConverter
                                     .Tag2 = "PROP_HX_4"
                                     .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_temperature, "T"}
                                     .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
@@ -1375,6 +1387,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         AValue = Format(Conversor.ConverterDoSI(su.spmp_temperature, Me.TempColdOut), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("HXTempColdOut"), su.spmp_temperature), AValue, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("HXTempColdOutDesc"), True)
                         With .Item(.Item.Count - 1)
+                            .CustomTypeConverter = New System.ComponentModel.StringConverter
                             .Tag2 = "PROP_HX_3"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_temperature, "T"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
@@ -1382,6 +1395,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         AValue = Format(Conversor.ConverterDoSI(su.spmp_temperature, Me.TempHotOut), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("HXTempHotOut"), su.spmp_temperature), AValue, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("HXTempHotOutDesc"), True)
                         With .Item(.Item.Count - 1)
+                            .CustomTypeConverter = New System.ComponentModel.StringConverter
                             .Tag2 = "PROP_HX_4"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_temperature, "T"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
@@ -1507,61 +1521,61 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 Case 0
                     'PROP_HX_0	Global Heat Transfer Coefficient (U)
-                    value = cv.ConverterDoSI(su.heat_transf_coeff, Me.OverallCoefficient.GetValueOrDefault)
+                    value = Conversor.ConverterDoSI(su.heat_transf_coeff, Me.OverallCoefficient.GetValueOrDefault)
                 Case 1
                     'PROP_HX_1	Heat Exchange Area (A)
-                    value = cv.ConverterDoSI(su.area, Me.Area.GetValueOrDefault)
+                    value = Conversor.ConverterDoSI(su.area, Me.Area.GetValueOrDefault)
                 Case 2
                     'PROP_HX_2	Heat Load
-                    value = cv.ConverterDoSI(su.spmp_heatflow, Me.Q.GetValueOrDefault)
+                    value = Conversor.ConverterDoSI(su.spmp_heatflow, Me.Q.GetValueOrDefault)
                 Case 3
-                    value = cv.ConverterDoSI(su.spmp_temperature, Me.TempColdOut)
+                    value = Conversor.ConverterDoSI(su.spmp_temperature, Me.TempColdOut)
                 Case 4
-                    value = cv.ConverterDoSI(su.spmp_temperature, Me.TempHotOut)
+                    value = Conversor.ConverterDoSI(su.spmp_temperature, Me.TempHotOut)
                 Case 5
-                    value = cv.ConverterDoSI(su.diameter, Me.STProperties.Shell_Di)
+                    value = Conversor.ConverterDoSI(su.diameter, Me.STProperties.Shell_Di)
                 Case 6
-                    value = cv.ConverterDoSI(su.foulingfactor, Me.STProperties.Shell_Fouling)
+                    value = Conversor.ConverterDoSI(su.foulingfactor, Me.STProperties.Shell_Fouling)
                 Case 7
                     value = Me.STProperties.Shell_BaffleCut
                 Case 8
                     value = Me.STProperties.Shell_NumberOfShellsInSeries
                 Case 9
-                    value = cv.ConverterDoSI(su.thickness, Me.STProperties.Shell_BaffleSpacing)
+                    value = Conversor.ConverterDoSI(su.thickness, Me.STProperties.Shell_BaffleSpacing)
                 Case 10
-                    value = cv.ConverterDoSI(su.diameter, Me.STProperties.Tube_Di)
+                    value = Conversor.ConverterDoSI(su.diameter, Me.STProperties.Tube_Di)
                 Case 11
-                    value = cv.ConverterDoSI(su.diameter, Me.STProperties.Tube_De)
+                    value = Conversor.ConverterDoSI(su.diameter, Me.STProperties.Tube_De)
                 Case 12
-                    value = cv.ConverterDoSI(su.distance, Me.STProperties.Tube_Length)
+                    value = Conversor.ConverterDoSI(su.distance, Me.STProperties.Tube_Length)
                 Case 13
-                    value = cv.ConverterDoSI(su.foulingfactor, Me.STProperties.Tube_Fouling)
+                    value = Conversor.ConverterDoSI(su.foulingfactor, Me.STProperties.Tube_Fouling)
                 Case 14
                     value = Me.STProperties.Tube_PassesPerShell
                 Case 15
                     value = Me.STProperties.Tube_NumberPerShell
                 Case 16
-                    value = cv.ConverterDoSI(su.thickness, Me.STProperties.Tube_Pitch)
+                    value = Conversor.ConverterDoSI(su.thickness, Me.STProperties.Tube_Pitch)
                 Case 17
-                    value = cv.ConverterDoSI(su.foulingfactor, Me.STProperties.OverallFoulingFactor)
+                    value = Conversor.ConverterDoSI(su.foulingfactor, Me.STProperties.OverallFoulingFactor)
                 Case 18
                     value = Me.LMTD_F
                 Case 19
-                    value = cv.ConverterDoSI(su.spmp_deltaT, Me.LMTD)
+                    value = Conversor.ConverterDoSI(su.spmp_deltaT, Me.LMTD)
                 Case 20
-                    value = cv.ConverterDoSI(su.foulingfactor, Me.STProperties.Ft)
+                    value = Conversor.ConverterDoSI(su.foulingfactor, Me.STProperties.Ft)
                 Case 21
-                    value = cv.ConverterDoSI(su.foulingfactor, Me.STProperties.Fc)
+                    value = Conversor.ConverterDoSI(su.foulingfactor, Me.STProperties.Fc)
                 Case 22
-                    value = cv.ConverterDoSI(su.foulingfactor, Me.STProperties.Fs)
+                    value = Conversor.ConverterDoSI(su.foulingfactor, Me.STProperties.Fs)
                 Case 23
-                    value = cv.ConverterDoSI("", Me.STProperties.ReS)
+                    value = Conversor.ConverterDoSI("", Me.STProperties.ReS)
                 Case 24
-                    value = cv.ConverterDoSI("", Me.STProperties.ReT)
+                    value = Conversor.ConverterDoSI("", Me.STProperties.ReT)
                 Case 25
                     value = ThermalEfficiency
                 Case 26
-                    value = cv.ConverterDoSI(su.spmp_heatflow, MaxHeatExchange)
+                    value = Conversor.ConverterDoSI(su.spmp_heatflow, MaxHeatExchange)
             End Select
 
             Return value
@@ -1606,43 +1620,43 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 Case 0
                     'PROP_HX_0	Global Heat Transfer Coefficient (U)
-                    Me.OverallCoefficient = cv.ConverterParaSI(su.heat_transf_coeff, propval)
+                    Me.OverallCoefficient = Conversor.ConverterParaSI(su.heat_transf_coeff, propval)
                 Case 1
                     'PROP_HX_1	Heat Exchange Area (A)
-                    Me.Area = cv.ConverterParaSI(su.area, propval)
+                    Me.Area = Conversor.ConverterParaSI(su.area, propval)
                 Case 2
                     'PROP_HX_1	Heat Load (Q)
-                    Me.Q = cv.ConverterParaSI(su.spmp_heatflow, propval)
+                    Me.Q = Conversor.ConverterParaSI(su.spmp_heatflow, propval)
                 Case 3
                     'PROP_HX_3	Cold Fluid Outlet Temperature
-                    Me.TempColdOut = cv.ConverterParaSI(su.spmp_temperature, propval)
+                    Me.TempColdOut = Conversor.ConverterParaSI(su.spmp_temperature, propval)
                 Case 4
                     'PROP_HX_4	Hot Fluid Outlet Temperature
-                    Me.TempHotOut = cv.ConverterParaSI(su.spmp_temperature, propval)
+                    Me.TempHotOut = Conversor.ConverterParaSI(su.spmp_temperature, propval)
                 Case 5
-                    Me.STProperties.Shell_Di = cv.ConverterParaSI(su.diameter, propval)
+                    Me.STProperties.Shell_Di = Conversor.ConverterParaSI(su.diameter, propval)
                 Case 6
-                    Me.STProperties.Shell_Fouling = cv.ConverterParaSI(su.foulingfactor, propval)
+                    Me.STProperties.Shell_Fouling = Conversor.ConverterParaSI(su.foulingfactor, propval)
                 Case 7
                     Me.STProperties.Shell_BaffleCut = propval
                 Case 8
                     Me.STProperties.Shell_NumberOfShellsInSeries = propval
                 Case 9
-                    Me.STProperties.Shell_BaffleSpacing = cv.ConverterParaSI(su.thickness, propval)
+                    Me.STProperties.Shell_BaffleSpacing = Conversor.ConverterParaSI(su.thickness, propval)
                 Case 10
-                    Me.STProperties.Tube_Di = cv.ConverterParaSI(su.diameter, propval)
+                    Me.STProperties.Tube_Di = Conversor.ConverterParaSI(su.diameter, propval)
                 Case 11
-                    Me.STProperties.Tube_De = cv.ConverterParaSI(su.diameter, propval)
+                    Me.STProperties.Tube_De = Conversor.ConverterParaSI(su.diameter, propval)
                 Case 12
-                    Me.STProperties.Tube_Length = cv.ConverterParaSI(su.distance, propval)
+                    Me.STProperties.Tube_Length = Conversor.ConverterParaSI(su.distance, propval)
                 Case 13
-                    Me.STProperties.Tube_Fouling = cv.ConverterParaSI(su.foulingfactor, propval)
+                    Me.STProperties.Tube_Fouling = Conversor.ConverterParaSI(su.foulingfactor, propval)
                 Case 14
                     Me.STProperties.Tube_PassesPerShell = propval
                 Case 15
                     Me.STProperties.Tube_NumberPerShell = propval
                 Case 16
-                    Me.STProperties.Tube_Pitch = cv.ConverterParaSI(su.thickness, propval)
+                    Me.STProperties.Tube_Pitch = Conversor.ConverterParaSI(su.thickness, propval)
             End Select
             Return 1
         End Function

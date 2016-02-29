@@ -220,10 +220,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     With specstr.Fases(0).Componentes(cs.ComponentID)
                         Select Case cs.SepSpec
                             Case SeparationSpec.MassFlow
-                                .MassFlow = cv.ConverterParaSI(su.spmp_massflow, cs.SpecValue)
+                                .MassFlow = Conversor.ConverterParaSI(su.spmp_massflow, cs.SpecValue)
                                 .MolarFlow = .MassFlow / .ConstantProperties.Molar_Weight * 1000
                             Case SeparationSpec.MolarFlow
-                                .MolarFlow = cv.ConverterParaSI(su.spmp_molarflow, cs.SpecValue)
+                                .MolarFlow = Conversor.ConverterParaSI(su.spmp_molarflow, cs.SpecValue)
                                 .MassFlow = .MolarFlow * .ConstantProperties.Molar_Weight / 1000
                             Case SeparationSpec.PercentInletMassFlow
                                 Dim mf As Double = instr.Fases(0).Componentes(cs.ComponentID).MassFlow.GetValueOrDefault
@@ -576,7 +576,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 Case 0
 
-                    value = cv.ConverterDoSI(su.spmp_heatflow, Me.EnergyImb)
+                    value = Conversor.ConverterDoSI(su.spmp_heatflow, Me.EnergyImb)
 
             End Select
 

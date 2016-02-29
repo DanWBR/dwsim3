@@ -10,20 +10,20 @@
 
         With props
             .Shell_BaffleCut = tbBaffleCut.Text
-            .Shell_BaffleSpacing = cv.ConverterParaSI(su.thickness, tbBaffleSpacing.Text)
+            .Shell_BaffleSpacing = Conversor.ConverterParaSI(su.thickness, tbBaffleSpacing.Text)
             .Shell_NumberOfPasses = tbNumberOfShellPasses.Text
             .Tube_NumberPerShell = tbNumberOfTubesPerShell.Text
-            .Shell_Di = cv.ConverterParaSI(su.diameter, tbShellDi.Text)
-            .Shell_Fouling = cv.ConverterParaSI(su.foulingfactor, tbShellFoulingFactor.Text)
+            .Shell_Di = Conversor.ConverterParaSI(su.diameter, tbShellDi.Text)
+            .Shell_Fouling = Conversor.ConverterParaSI(su.foulingfactor, tbShellFoulingFactor.Text)
             .Shell_NumberOfShellsInSeries = tbShellsInSeries.Text
-            .Tube_De = cv.ConverterParaSI(su.diameter, tbTubeDe.Text)
-            .Tube_Di = cv.ConverterParaSI(su.diameter, tbTubeDi.Text)
-            .Tube_Roughness = cv.ConverterParaSI(su.diameter, tbTubeRoughness.Text)
-            .Tube_Fouling = cv.ConverterParaSI(su.foulingfactor, tbTubeFoulingFactor.Text)
-            .Tube_Length = cv.ConverterParaSI(su.distance, tbTubeLength.Text)
+            .Tube_De = Conversor.ConverterParaSI(su.diameter, tbTubeDe.Text)
+            .Tube_Di = Conversor.ConverterParaSI(su.diameter, tbTubeDi.Text)
+            .Tube_Roughness = Conversor.ConverterParaSI(su.diameter, tbTubeRoughness.Text)
+            .Tube_Fouling = Conversor.ConverterParaSI(su.foulingfactor, tbTubeFoulingFactor.Text)
+            .Tube_Length = Conversor.ConverterParaSI(su.distance, tbTubeLength.Text)
             .Tube_PassesPerShell = tbTubePassesPerShell.Text
-            .Tube_Pitch = cv.ConverterParaSI(su.thickness, tbTubePitch.Text)
-            .Tube_ThermalConductivity = cv.ConverterParaSI(su.spmp_thermalConductivity, tbTubeThermalCond.Text)
+            .Tube_Pitch = Conversor.ConverterParaSI(su.thickness, tbTubePitch.Text)
+            .Tube_ThermalConductivity = Conversor.ConverterParaSI(su.spmp_thermalConductivity, tbTubeThermalCond.Text)
             .Shell_BaffleOrientation = cbBaffleOrientation.SelectedIndex
             .Shell_BaffleType = cbBaffleType.SelectedIndex
             .Tube_Layout = cbTubeLayout.SelectedIndex
@@ -42,20 +42,20 @@
 
         With props
             tbBaffleCut.Text = Format(.Shell_BaffleCut, nf)
-            tbBaffleSpacing.Text = Format(cv.ConverterDoSI(su.thickness, .Shell_BaffleSpacing), nf)
+            tbBaffleSpacing.Text = Format(Conversor.ConverterDoSI(su.thickness, .Shell_BaffleSpacing), nf)
             tbNumberOfShellPasses.Text = .Shell_NumberOfPasses
             tbNumberOfTubesPerShell.Text = .Tube_NumberPerShell
-            tbShellDi.Text = Format(cv.ConverterDoSI(su.diameter, .Shell_Di), nf)
-            tbShellFoulingFactor.Text = cv.ConverterDoSI(su.foulingfactor, .Shell_Fouling)
+            tbShellDi.Text = Format(Conversor.ConverterDoSI(su.diameter, .Shell_Di), nf)
+            tbShellFoulingFactor.Text = Conversor.ConverterDoSI(su.foulingfactor, .Shell_Fouling)
             tbShellsInSeries.Text = .Shell_NumberOfShellsInSeries
-            tbTubeDe.Text = Format(cv.ConverterDoSI(su.diameter, .Tube_De), nf)
-            tbTubeDi.Text = Format(cv.ConverterDoSI(su.diameter, .Tube_Di), nf)
-            tbTubeFoulingFactor.Text = cv.ConverterDoSI(su.foulingfactor, .Tube_Fouling)
-            tbTubeLength.Text = Format(cv.ConverterDoSI(su.distance, .Tube_Length), nf)
+            tbTubeDe.Text = Format(Conversor.ConverterDoSI(su.diameter, .Tube_De), nf)
+            tbTubeDi.Text = Format(Conversor.ConverterDoSI(su.diameter, .Tube_Di), nf)
+            tbTubeFoulingFactor.Text = Conversor.ConverterDoSI(su.foulingfactor, .Tube_Fouling)
+            tbTubeLength.Text = Format(Conversor.ConverterDoSI(su.distance, .Tube_Length), nf)
             tbTubePassesPerShell.Text = .Tube_PassesPerShell
-            tbTubePitch.Text = Format(cv.ConverterDoSI(su.thickness, .Tube_Pitch), nf)
-            tbTubeRoughness.Text = cv.ConverterDoSI(su.diameter, .Tube_Roughness)
-            tbTubeThermalCond.Text = cv.ConverterDoSI(su.spmp_thermalConductivity, .Tube_ThermalConductivity)
+            tbTubePitch.Text = Format(Conversor.ConverterDoSI(su.thickness, .Tube_Pitch), nf)
+            tbTubeRoughness.Text = Conversor.ConverterDoSI(su.diameter, .Tube_Roughness)
+            tbTubeThermalCond.Text = Conversor.ConverterDoSI(su.spmp_thermalConductivity, .Tube_ThermalConductivity)
             cbBaffleOrientation.SelectedIndex = .Shell_BaffleOrientation
             cbBaffleType.SelectedIndex = .Shell_BaffleType
             cbTubeLayout.SelectedIndex = .Tube_Layout

@@ -1988,10 +1988,10 @@ Namespace DWSIM.SimulationObjects.Reactors
             Select Case propidx
                 Case 0
                     'PROP_GR_0	Pressure Drop
-                    value = cv.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault)
+                    value = Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault)
                 Case 0
                     'PROP_GR_1	Outlet Temperature
-                    value = cv.ConverterDoSI(su.spmp_temperature, Me.OutletTemperature)
+                    value = Conversor.ConverterDoSI(su.spmp_temperature, Me.OutletTemperature)
             End Select
 
             Return value
@@ -2027,10 +2027,10 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                 Case 0
                     'PROP_GR_0	Pressure Drop
-                    Me.DeltaP = cv.ConverterParaSI(su.spmp_deltaP, propval)
+                    Me.DeltaP = Conversor.ConverterParaSI(su.spmp_deltaP, propval)
                 Case 1
                     'PROP_GR_1	Outlet Temperature
-                    Me.OutletTemperature = cv.ConverterParaSI(su.spmp_temperature, propval)
+                    Me.OutletTemperature = Conversor.ConverterParaSI(su.spmp_temperature, propval)
 
             End Select
             Return 1

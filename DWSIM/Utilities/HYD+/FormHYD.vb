@@ -229,7 +229,7 @@ Public Class FormHYD
                     Me.KryptonButton2.Enabled = False
                     fasesTC = DWSIM.App.GetLocalString("ND")
                 Else
-                    Label8.Text = Format(cv.ConverterDoSI(su.spmp_pressure, PH), nf)
+                    Label8.Text = Format(Conversor.ConverterDoSI(su.spmp_pressure, PH), nf)
                     Me.KryptonButton2.Enabled = True
                     If CheckBox1.Checked Then
                         fasesTC = DWSIM.App.GetLocalString("VaporAndHydrate") & " (" & tipoTC & ")"
@@ -249,7 +249,7 @@ Public Class FormHYD
                     Me.KryptonButton3.Enabled = False
                     fasesPC = DWSIM.App.GetLocalString("ND")
                 Else
-                    Label14.Text = Format(cv.ConverterDoSI(su.spmp_temperature, TH), nf)
+                    Label14.Text = Format(Conversor.ConverterDoSI(su.spmp_temperature, TH), nf)
                     Me.KryptonButton3.Enabled = True
                     If CheckBox1.Checked Then
                         fasesPC = DWSIM.App.GetLocalString("VaporAndHydrate") & " (" & tipoPC & ")"
@@ -258,9 +258,9 @@ Public Class FormHYD
                         If TH > resPC(0) Then fasesPC = DWSIM.App.GetLocalString("LquidoguaGseHidrato") & tipoPC & ")"
                         If Math.Abs(TH - resPC(0)) < 0.01 Then fasesPC = DWSIM.App.GetLocalString("SlidoGeloLquidoguaGs1") & tipoPC & ")"
                     End If
-                    End If
-                Label17.Text = Format(cv.ConverterDoSI(su.spmp_pressure, P), nf)
-                Label9.Text = Format(cv.ConverterDoSI(su.spmp_temperature, T), nf)
+                End If
+                Label17.Text = Format(Conversor.ConverterDoSI(su.spmp_pressure, P), nf)
+                Label9.Text = Format(Conversor.ConverterDoSI(su.spmp_temperature, T), nf)
                 Label12.Text = fasesPC
                 Label10.Text = fasesTC
 
@@ -302,8 +302,8 @@ Public Class FormHYD
         Dim frmdet As New FormHYD_DET
         With frmdet
             .res = resTC
-            .P = cv.ConverterParaSI(su.spmp_pressure, Label8.Text)
-            .T = cv.ConverterParaSI(su.spmp_temperature, Label9.Text)
+            .P = Conversor.ConverterParaSI(su.spmp_pressure, Label8.Text)
+            .T = Conversor.ConverterParaSI(su.spmp_temperature, Label9.Text)
             If Label10.ToString.Contains("sII") Then .sI = False
             .model = ComboBox1.SelectedIndex
             .nomes = nomesglobal
@@ -318,8 +318,8 @@ Public Class FormHYD
         Dim frmdet As New FormHYD_DET
         With frmdet
             .res = resPC
-            .P = cv.ConverterParaSI(su.spmp_pressure, Label17.Text)
-            .T = cv.ConverterParaSI(su.spmp_temperature, Label14.Text)
+            .P = Conversor.ConverterParaSI(su.spmp_pressure, Label17.Text)
+            .T = Conversor.ConverterParaSI(su.spmp_temperature, Label14.Text)
             If Label12.ToString.Contains("sII") Then .sI = False
             .model = ComboBox1.SelectedIndex
             .nomes = nomesglobal

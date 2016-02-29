@@ -44,12 +44,12 @@ Public Class FormTable
             For Each ps In .Sections.Values
                 If ps.Tipo = "Tubulaosimples" Then
                     For Each res In ps.Resultados
-                        Me.DataGridView1.Rows.Add(New Object() {cv.ConverterDoSI(su.distance, comp_ant), cv.ConverterDoSI(su.spmp_pressure, res.PressaoInicial.GetValueOrDefault), cv.ConverterDoSI(su.spmp_temperature, res.TemperaturaInicial.GetValueOrDefault), cv.ConverterDoSI(su.velocity, res.LiqVel), cv.ConverterDoSI(su.velocity, res.VapVel), cv.ConverterDoSI(su.spmp_heatflow, res.CalorTransferido), res.HoldupDeLiquido, DWSIM.App.GetLocalString(res.TipoFluxo), cv.ConverterDoSI(su.heat_transf_coeff, res.HTC), cv.ConverterDoSI(su.heat_transf_coeff, res.HTC_internal), cv.ConverterDoSI(su.heat_transf_coeff, res.HTC_pipewall), cv.ConverterDoSI(su.heat_transf_coeff, res.HTC_insulation), cv.ConverterDoSI(su.heat_transf_coeff, res.HTC_external)})
+                        Me.DataGridView1.Rows.Add(New Object() {Conversor.ConverterDoSI(su.distance, comp_ant), Conversor.ConverterDoSI(su.spmp_pressure, res.PressaoInicial.GetValueOrDefault), Conversor.ConverterDoSI(su.spmp_temperature, res.TemperaturaInicial.GetValueOrDefault), Conversor.ConverterDoSI(su.velocity, res.LiqVel), Conversor.ConverterDoSI(su.velocity, res.VapVel), Conversor.ConverterDoSI(su.spmp_heatflow, res.CalorTransferido), res.HoldupDeLiquido, DWSIM.App.GetLocalString(res.TipoFluxo), Conversor.ConverterDoSI(su.heat_transf_coeff, res.HTC), Conversor.ConverterDoSI(su.heat_transf_coeff, res.HTC_internal), Conversor.ConverterDoSI(su.heat_transf_coeff, res.HTC_pipewall), Conversor.ConverterDoSI(su.heat_transf_coeff, res.HTC_insulation), Conversor.ConverterDoSI(su.heat_transf_coeff, res.HTC_external)})
                         comp_ant += ps.Comprimento / ps.Incrementos
                     Next
                 Else
                     For Each res In ps.Resultados
-                        Me.DataGridView1.Rows.Add(New Object() {cv.ConverterDoSI(su.distance, comp_ant), cv.ConverterDoSI(su.spmp_pressure, res.PressaoInicial.GetValueOrDefault), cv.ConverterDoSI(su.spmp_temperature, res.TemperaturaInicial.GetValueOrDefault), cv.ConverterDoSI(su.velocity, res.LiqVel), cv.ConverterDoSI(su.velocity, res.VapVel), cv.ConverterDoSI(su.spmp_heatflow, res.CalorTransferido), res.HoldupDeLiquido, DWSIM.App.GetLocalString(res.TipoFluxo)})
+                        Me.DataGridView1.Rows.Add(New Object() {Conversor.ConverterDoSI(su.distance, comp_ant), Conversor.ConverterDoSI(su.spmp_pressure, res.PressaoInicial.GetValueOrDefault), Conversor.ConverterDoSI(su.spmp_temperature, res.TemperaturaInicial.GetValueOrDefault), Conversor.ConverterDoSI(su.velocity, res.LiqVel), Conversor.ConverterDoSI(su.velocity, res.VapVel), Conversor.ConverterDoSI(su.spmp_heatflow, res.CalorTransferido), res.HoldupDeLiquido, DWSIM.App.GetLocalString(res.TipoFluxo)})
                     Next
                 End If
             Next

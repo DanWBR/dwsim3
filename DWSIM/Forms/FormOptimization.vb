@@ -502,9 +502,9 @@ Public Class FormOptimization
             Me.selectedoptcase.econtext = New ExpressionContext
             With Me.selectedoptcase.econtext
                 .Imports.AddType(GetType(System.Math))
-                .Variables.Add(objName, cv.ConverterDoSI(Me.selectedoptcase.variables(Me.keysind(0)).unit, t))
+                .Variables.Add(objName, Conversor.ConverterDoSI(Me.selectedoptcase.variables(Me.keysind(0)).unit, t))
                 For i = 1 To Me.keysaux.Count
-                    .Variables.Add(AobjName(i), cv.ConverterDoSI(Me.selectedoptcase.variables(Me.keysaux(i - 1)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(i - 1)).objectID).GetPropertyValue(AobjProp(i))))
+                    .Variables.Add(AobjName(i), Conversor.ConverterDoSI(Me.selectedoptcase.variables(Me.keysaux(i - 1)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(i - 1)).objectID).GetPropertyValue(AobjProp(i))))
                 Next
                 Me.selectedoptcase.exbase = .CompileGeneric(Of Double)(Me.selectedoptcase.expression)
             End With
@@ -523,7 +523,7 @@ Public Class FormOptimization
         For Each row As DataGridViewRow In Me.dgVariables.Rows
             var = Me.selectedoptcase.variables(row.Cells(0).Value)
             If var.objectID <> "SpreadsheetCell" Then
-                row.Cells(8).Value = Format(cv.ConverterDoSI(Me.selectedoptcase.variables(row.Cells(0).Value).unit, form.Collections.ObjectCollection(var.objectID).GetPropertyValue(var.propID)), nf)
+                row.Cells(8).Value = Format(Conversor.ConverterDoSI(Me.selectedoptcase.variables(row.Cells(0).Value).unit, form.Collections.ObjectCollection(var.objectID).GetPropertyValue(var.propID)), nf)
             Else
                 row.Cells(8).Value = form.FormSpreadsheet.GetCellValue(var.propID).Value
             End If
@@ -578,10 +578,10 @@ Public Class FormOptimization
             With Me.selectedoptcase.econtext
                 .Imports.AddType(GetType(System.Math))
                 For i = 1 To Me.keysind.Count
-                    .Variables.Add(objName(i), cv.ConverterDoSI(Me.selectedoptcase.variables(varID(i)).unit, x(i)))
+                    .Variables.Add(objName(i), Conversor.ConverterDoSI(Me.selectedoptcase.variables(varID(i)).unit, x(i)))
                 Next
                 For i = 1 To Me.keysaux.Count
-                    .Variables.Add(AobjName(i), cv.ConverterDoSI(Me.selectedoptcase.variables(AvarID(i)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(i - 1)).objectID).GetPropertyValue(AobjProp(i))))
+                    .Variables.Add(AobjName(i), Conversor.ConverterDoSI(Me.selectedoptcase.variables(AvarID(i)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(i - 1)).objectID).GetPropertyValue(AobjProp(i))))
                 Next
             End With
 
@@ -605,10 +605,10 @@ Public Class FormOptimization
                     pen_val = ReturnPenaltyValue()
                     If Me.selectedoptcase.objfunctype = OPTObjectiveFunctionType.Expression Then
                         With Me.selectedoptcase.econtext
-                            .Variables(objName(i)) = cv.ConverterDoSI(Me.selectedoptcase.variables(varID(i)).unit, x0)
+                            .Variables(objName(i)) = Conversor.ConverterDoSI(Me.selectedoptcase.variables(varID(i)).unit, x0)
                             For j = 1 To Me.keysaux.Count
                                 If AobjID(i) <> "SpreadsheetCell" Then
-                                    .Variables(AobjName(j)) = cv.ConverterDoSI(Me.selectedoptcase.variables(AvarID(j)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(j - 1)).objectID).GetPropertyValue(AobjProp(j)))
+                                    .Variables(AobjName(j)) = Conversor.ConverterDoSI(Me.selectedoptcase.variables(AvarID(j)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(j - 1)).objectID).GetPropertyValue(AobjProp(j)))
                                 Else
                                     .Variables(AobjName(j)) = form.FormSpreadsheet.GetCellValue(AobjProp(j)).Value
                                 End If
@@ -638,10 +638,10 @@ Public Class FormOptimization
                     pen_val = ReturnPenaltyValue()
                     If Me.selectedoptcase.objfunctype = OPTObjectiveFunctionType.Expression Then
                         With Me.selectedoptcase.econtext
-                            .Variables(objName(i)) = cv.ConverterDoSI(Me.selectedoptcase.variables(varID(i)).unit, x1)
+                            .Variables(objName(i)) = Conversor.ConverterDoSI(Me.selectedoptcase.variables(varID(i)).unit, x1)
                             For j = 1 To Me.keysaux.Count
                                 If AobjID(i) <> "SpreadsheetCell" Then
-                                    .Variables(AobjName(j)) = cv.ConverterDoSI(Me.selectedoptcase.variables(AvarID(j)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(j - 1)).objectID).GetPropertyValue(AobjProp(j)))
+                                    .Variables(AobjName(j)) = Conversor.ConverterDoSI(Me.selectedoptcase.variables(AvarID(j)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(j - 1)).objectID).GetPropertyValue(AobjProp(j)))
                                 Else
                                     .Variables(AobjName(j)) = form.FormSpreadsheet.GetCellValue(AobjProp(j)).Value
                                 End If
@@ -669,10 +669,10 @@ Public Class FormOptimization
                     pen_val = ReturnPenaltyValue()
                     If Me.selectedoptcase.objfunctype = OPTObjectiveFunctionType.Expression Then
                         With Me.selectedoptcase.econtext
-                            .Variables(objName(i)) = cv.ConverterDoSI(Me.selectedoptcase.variables(varID(i)).unit, x2)
+                            .Variables(objName(i)) = Conversor.ConverterDoSI(Me.selectedoptcase.variables(varID(i)).unit, x2)
                             For j = 1 To Me.keysaux.Count
                                 If AobjID(i) <> "SpreadsheetCell" Then
-                                    .Variables(AobjName(j)) = cv.ConverterDoSI(Me.selectedoptcase.variables(AvarID(j)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(j - 1)).objectID).GetPropertyValue(AobjProp(j)))
+                                    .Variables(AobjName(j)) = Conversor.ConverterDoSI(Me.selectedoptcase.variables(AvarID(j)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(j - 1)).objectID).GetPropertyValue(AobjProp(j)))
                                 Else
                                     .Variables(AobjName(j)) = form.FormSpreadsheet.GetCellValue(AobjProp(j)).Value
                                 End If
@@ -703,10 +703,10 @@ Public Class FormOptimization
                 If Me.selectedoptcase.objfunctype = OPTObjectiveFunctionType.Expression Then
                     With Me.selectedoptcase.econtext
                         .Imports.AddType(GetType(System.Math))
-                        .Variables(objName(i)) = cv.ConverterDoSI(Me.selectedoptcase.variables(varID(i)).unit, x3)
+                        .Variables(objName(i)) = Conversor.ConverterDoSI(Me.selectedoptcase.variables(varID(i)).unit, x3)
                         For j = 1 To Me.keysaux.Count
                             If AobjID(i) <> "SpreadsheetCell" Then
-                                .Variables(AobjName(j)) = cv.ConverterDoSI(Me.selectedoptcase.variables(AvarID(j)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(j - 1)).objectID).GetPropertyValue(AobjProp(j)))
+                                .Variables(AobjName(j)) = Conversor.ConverterDoSI(Me.selectedoptcase.variables(AvarID(j)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(j - 1)).objectID).GetPropertyValue(AobjProp(j)))
                             Else
                                 .Variables(AobjName(j)) = form.FormSpreadsheet.GetCellValue(AobjProp(j)).Value
                             End If
@@ -735,10 +735,10 @@ Public Class FormOptimization
                     pen_val = ReturnPenaltyValue()
                     If Me.selectedoptcase.objfunctype = OPTObjectiveFunctionType.Expression Then
                         With Me.selectedoptcase.econtext
-                            .Variables(objName(i)) = cv.ConverterDoSI(Me.selectedoptcase.variables(varID(i)).unit, x4)
+                            .Variables(objName(i)) = Conversor.ConverterDoSI(Me.selectedoptcase.variables(varID(i)).unit, x4)
                             For j = 1 To Me.keysaux.Count
                                 If AobjID(i) <> "SpreadsheetCell" Then
-                                    .Variables(AobjName(j)) = cv.ConverterDoSI(Me.selectedoptcase.variables(AvarID(j)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(j - 1)).objectID).GetPropertyValue(AobjProp(j)))
+                                    .Variables(AobjName(j)) = Conversor.ConverterDoSI(Me.selectedoptcase.variables(AvarID(j)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(j - 1)).objectID).GetPropertyValue(AobjProp(j)))
                                 Else
                                     .Variables(AobjName(j)) = form.FormSpreadsheet.GetCellValue(AobjProp(j)).Value
                                 End If
@@ -776,11 +776,11 @@ Public Class FormOptimization
             If Me.selectedoptcase.objfunctype = OPTObjectiveFunctionType.Expression Then
                 With Me.selectedoptcase.econtext
                     For i = 1 To Me.keysind.Count
-                        .Variables(objName(i)) = cv.ConverterDoSI(Me.selectedoptcase.variables(varID(i)).unit, x(i))
+                        .Variables(objName(i)) = Conversor.ConverterDoSI(Me.selectedoptcase.variables(varID(i)).unit, x(i))
                     Next
                     For j = 1 To Me.keysaux.Count
                         If AobjID(i) <> "SpreadsheetCell" Then
-                            .Variables(AobjName(j)) = cv.ConverterDoSI(Me.selectedoptcase.variables(AvarID(j)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(j - 1)).objectID).GetPropertyValue(AobjProp(j)))
+                            .Variables(AobjName(j)) = Conversor.ConverterDoSI(Me.selectedoptcase.variables(AvarID(j)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(j - 1)).objectID).GetPropertyValue(AobjProp(j)))
                         Else
                             .Variables(AobjName(j)) = form.FormSpreadsheet.GetCellValue(AobjProp(j)).Value
                         End If
@@ -840,11 +840,11 @@ Public Class FormOptimization
             .Imports.AddType(GetType(System.Math))
             For i = 0 To Me.keysind.Count - 1
                 .Variables.DefineVariable(objName(i), GetType(Double))
-                .Variables(objName(i)) = cv.ConverterDoSI(Me.selectedoptcase.variables(varID(i)).unit, x(i))
+                .Variables(objName(i)) = Conversor.ConverterDoSI(Me.selectedoptcase.variables(varID(i)).unit, x(i))
             Next
             For i = 0 To Me.keysaux.Count - 1
                 .Variables.DefineVariable(AobjName(i), GetType(Double))
-                .Variables(AobjName(i)) = cv.ConverterDoSI(Me.selectedoptcase.variables(AvarID(i)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(i)).objectID).GetPropertyValue(AobjProp(i)))
+                .Variables(AobjName(i)) = Conversor.ConverterDoSI(Me.selectedoptcase.variables(AvarID(i)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(i)).objectID).GetPropertyValue(AobjProp(i)))
             Next
         End With
 
@@ -943,10 +943,10 @@ Public Class FormOptimization
             With Me.selectedoptcase.econtext
                 .Imports.AddType(GetType(System.Math))
                 For i = 0 To Me.keysind.Count - 1
-                    .Variables.Add(objName(i), cv.ConverterDoSI(Me.selectedoptcase.variables(varID(i)).unit, x(i)))
+                    .Variables.Add(objName(i), Conversor.ConverterDoSI(Me.selectedoptcase.variables(varID(i)).unit, x(i)))
                 Next
                 For i = 0 To Me.keysaux.Count - 1
-                    .Variables.Add(AobjName(i), cv.ConverterDoSI(Me.selectedoptcase.variables(AvarID(i)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(i)).objectID).GetPropertyValue(AobjProp(i))))
+                    .Variables.Add(AobjName(i), Conversor.ConverterDoSI(Me.selectedoptcase.variables(AvarID(i)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(i)).objectID).GetPropertyValue(AobjProp(i))))
                 Next
             End With
 
@@ -974,10 +974,10 @@ Public Class FormOptimization
                     pen_val = ReturnPenaltyValue()
                     If Me.selectedoptcase.objfunctype = OPTObjectiveFunctionType.Expression Then
                         With Me.selectedoptcase.econtext
-                            .Variables(objName(i)) = cv.ConverterDoSI(Me.selectedoptcase.variables(varID(i)).unit, x0)
+                            .Variables(objName(i)) = Conversor.ConverterDoSI(Me.selectedoptcase.variables(varID(i)).unit, x0)
                             For j = 0 To Me.keysaux.Count - 1
                                 If AobjID(i) <> "SpreadsheetCell" Then
-                                    .Variables(AobjName(j)) = cv.ConverterDoSI(Me.selectedoptcase.variables(AvarID(j)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(j)).objectID).GetPropertyValue(AobjProp(j)))
+                                    .Variables(AobjName(j)) = Conversor.ConverterDoSI(Me.selectedoptcase.variables(AvarID(j)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(j)).objectID).GetPropertyValue(AobjProp(j)))
                                 Else
                                     .Variables(AobjName(j)) = form.FormSpreadsheet.GetCellValue(AobjProp(j)).Value
                                 End If
@@ -1007,10 +1007,10 @@ Public Class FormOptimization
                     pen_val = ReturnPenaltyValue()
                     If Me.selectedoptcase.objfunctype = OPTObjectiveFunctionType.Expression Then
                         With Me.selectedoptcase.econtext
-                            .Variables(objName(i)) = cv.ConverterDoSI(Me.selectedoptcase.variables(varID(i)).unit, x1)
+                            .Variables(objName(i)) = Conversor.ConverterDoSI(Me.selectedoptcase.variables(varID(i)).unit, x1)
                             For j = 0 To Me.keysaux.Count - 1
                                 If AobjID(i) <> "SpreadsheetCell" Then
-                                    .Variables(AobjName(j)) = cv.ConverterDoSI(Me.selectedoptcase.variables(AvarID(j)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(j)).objectID).GetPropertyValue(AobjProp(j)))
+                                    .Variables(AobjName(j)) = Conversor.ConverterDoSI(Me.selectedoptcase.variables(AvarID(j)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(j)).objectID).GetPropertyValue(AobjProp(j)))
                                 Else
                                     .Variables(AobjName(j)) = form.FormSpreadsheet.GetCellValue(AobjProp(j)).Value
                                 End If
@@ -1038,10 +1038,10 @@ Public Class FormOptimization
                     pen_val = ReturnPenaltyValue()
                     If Me.selectedoptcase.objfunctype = OPTObjectiveFunctionType.Expression Then
                         With Me.selectedoptcase.econtext
-                            .Variables(objName(i)) = cv.ConverterDoSI(Me.selectedoptcase.variables(varID(i)).unit, x2)
+                            .Variables(objName(i)) = Conversor.ConverterDoSI(Me.selectedoptcase.variables(varID(i)).unit, x2)
                             For j = 0 To Me.keysaux.Count - 1
                                 If AobjID(i) <> "SpreadsheetCell" Then
-                                    .Variables(AobjName(j)) = cv.ConverterDoSI(Me.selectedoptcase.variables(AvarID(j)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(j)).objectID).GetPropertyValue(AobjProp(j)))
+                                    .Variables(AobjName(j)) = Conversor.ConverterDoSI(Me.selectedoptcase.variables(AvarID(j)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(j)).objectID).GetPropertyValue(AobjProp(j)))
                                 Else
                                     .Variables(AobjName(j)) = form.FormSpreadsheet.GetCellValue(AobjProp(j)).Value
                                 End If
@@ -1070,10 +1070,10 @@ Public Class FormOptimization
                 pen_val = ReturnPenaltyValue()
                 If Me.selectedoptcase.objfunctype = OPTObjectiveFunctionType.Expression Then
                     With Me.selectedoptcase.econtext
-                        .Variables(objName(i)) = cv.ConverterDoSI(Me.selectedoptcase.variables(varID(i)).unit, x3)
+                        .Variables(objName(i)) = Conversor.ConverterDoSI(Me.selectedoptcase.variables(varID(i)).unit, x3)
                         For j = 0 To Me.keysaux.Count - 1
                             If AobjID(i) <> "SpreadsheetCell" Then
-                                .Variables(AobjName(j)) = cv.ConverterDoSI(Me.selectedoptcase.variables(AvarID(j)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(j)).objectID).GetPropertyValue(AobjProp(j)))
+                                .Variables(AobjName(j)) = Conversor.ConverterDoSI(Me.selectedoptcase.variables(AvarID(j)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(j)).objectID).GetPropertyValue(AobjProp(j)))
                             Else
                                 .Variables(AobjName(j)) = form.FormSpreadsheet.GetCellValue(AobjProp(j)).Value
                             End If
@@ -1102,10 +1102,10 @@ Public Class FormOptimization
                     pen_val = ReturnPenaltyValue()
                     If Me.selectedoptcase.objfunctype = OPTObjectiveFunctionType.Expression Then
                         With Me.selectedoptcase.econtext
-                            .Variables(objName(i)) = cv.ConverterDoSI(Me.selectedoptcase.variables(varID(i)).unit, x4)
+                            .Variables(objName(i)) = Conversor.ConverterDoSI(Me.selectedoptcase.variables(varID(i)).unit, x4)
                             For j = 0 To Me.keysaux.Count - 1
                                 If AobjID(i) <> "SpreadsheetCell" Then
-                                    .Variables(AobjName(j)) = cv.ConverterDoSI(Me.selectedoptcase.variables(AvarID(j)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(j)).objectID).GetPropertyValue(AobjProp(j)))
+                                    .Variables(AobjName(j)) = Conversor.ConverterDoSI(Me.selectedoptcase.variables(AvarID(j)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(j)).objectID).GetPropertyValue(AobjProp(j)))
                                 Else
                                     .Variables(AobjName(j)) = form.FormSpreadsheet.GetCellValue(AobjProp(j)).Value
                                 End If
@@ -1159,7 +1159,7 @@ Public Class FormOptimization
 
         For Each row As DataGridViewRow In Me.dgVariables.Rows
             var = Me.selectedoptcase.variables(row.Cells(0).Value)
-            row.Cells(8).Value = Format(cv.ConverterDoSI(var.unit, var.currentvalue), nf)
+            row.Cells(8).Value = Format(Conversor.ConverterDoSI(var.unit, var.currentvalue), nf)
         Next
 
         Application.DoEvents()
@@ -1290,10 +1290,10 @@ Public Class FormOptimization
                         .objectID = Me.ReturnObject(dgrow.Cells(3).Value).Nome
                         .propID = Me.ReturnPropertyID(.objectID, dgrow.Cells(4).Value)
                     End If
-                    .lowerlimit = cv.ConverterParaSI(dgrow.Cells(9).Value, dgrow.Cells(5).Value)
-                    .upperlimit = cv.ConverterParaSI(dgrow.Cells(9).Value, dgrow.Cells(6).Value)
-                    .initialvalue = cv.ConverterParaSI(dgrow.Cells(9).Value, dgrow.Cells(7).Value)
-                    .currentvalue = cv.ConverterParaSI(dgrow.Cells(9).Value, dgrow.Cells(8).Value)
+                    .lowerlimit = Conversor.ConverterParaSI(dgrow.Cells(9).Value, dgrow.Cells(5).Value)
+                    .upperlimit = Conversor.ConverterParaSI(dgrow.Cells(9).Value, dgrow.Cells(6).Value)
+                    .initialvalue = Conversor.ConverterParaSI(dgrow.Cells(9).Value, dgrow.Cells(7).Value)
+                    .currentvalue = Conversor.ConverterParaSI(dgrow.Cells(9).Value, dgrow.Cells(8).Value)
                     Select Case dgrow.Cells(2).Value.ToString
                         Case "DEP"
                             .type = OPTVariableType.Dependent
@@ -1353,10 +1353,10 @@ Public Class FormOptimization
                         End If
                     End If
                     dgrow.Cells(9).Value = .unit
-                    dgrow.Cells(5).Value = cv.ConverterDoSI(.unit, .lowerlimit)
-                    dgrow.Cells(6).Value = cv.ConverterDoSI(.unit, .upperlimit)
-                    dgrow.Cells(7).Value = cv.ConverterDoSI(.unit, .initialvalue)
-                    dgrow.Cells(8).Value = cv.ConverterDoSI(.unit, .currentvalue)
+                    dgrow.Cells(5).Value = Conversor.ConverterDoSI(.unit, .lowerlimit)
+                    dgrow.Cells(6).Value = Conversor.ConverterDoSI(.unit, .upperlimit)
+                    dgrow.Cells(7).Value = Conversor.ConverterDoSI(.unit, .initialvalue)
+                    dgrow.Cells(8).Value = Conversor.ConverterDoSI(.unit, .currentvalue)
                     Select Case .type
                         Case OPTVariableType.Dependent
                             dgrow.Cells(2).Value = "DEP"

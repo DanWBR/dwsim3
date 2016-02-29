@@ -46,7 +46,7 @@ Public Class UIStagesEditorForm
             .Clear()
             i = 0
             Do
-                .Add(New Object() {i, dc.Stages(i).Name, cvt.ConverterDoSI(form.Options.SelectedUnitSystem.spmp_pressure, dc.Stages(i).P), dc.Stages(i).Efficiency})
+                .Add(New Object() {i, dc.Stages(i).Name, Conversor.ConverterDoSI(form.Options.SelectedUnitSystem.spmp_pressure, dc.Stages(i).P), dc.Stages(i).Efficiency})
                 i = i + 1
             Loop Until i = dc.Stages.Count
             Select Case dc.ColumnType
@@ -119,7 +119,7 @@ Public Class UIStagesEditorForm
         If loaded Then
             If e.ColumnIndex = 2 Then
                 'pressure
-                dc.Stages(e.RowIndex).P = cvt.ConverterParaSI(form.Options.SelectedUnitSystem.spmp_pressure, dgv1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value)
+                dc.Stages(e.RowIndex).P = Conversor.ConverterParaSI(form.Options.SelectedUnitSystem.spmp_pressure, dgv1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value)
             ElseIf e.ColumnIndex = 3 Then
                 'efficiency
                 dc.Stages(e.RowIndex).Efficiency = dgv1.Rows(e.RowIndex).Cells(e.ColumnIndex).Value

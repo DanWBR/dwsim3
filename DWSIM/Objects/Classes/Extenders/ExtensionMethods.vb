@@ -40,6 +40,26 @@ Module Extensions
     End Sub
 
     <System.Runtime.CompilerServices.Extension()> _
+    Public Function GetUnits(control As System.Windows.Forms.GridItem) As String
+        If control.Value.ToString().Split(" ").Length > 1 Then
+            Return control.Value.ToString().Split(" ")(1)
+        Else
+            Return ""
+        End If
+    End Function
+
+    <System.Runtime.CompilerServices.Extension()> _
+    Public Function GetValue(control As System.Windows.Forms.GridItem) As Double
+        If control.Value.ToString().Split(" ").Length > 1 Then
+            Return Convert.ToDouble(control.Value.ToString().Split(" ")(0))
+        ElseIf control.Value.ToString().Split(" ").Length = 1 Then
+            Return Convert.ToDouble(control.Value)
+        Else
+            Return Double.NaN
+        End If
+    End Function
+
+    <System.Runtime.CompilerServices.Extension()> _
     Public Function DropDownWidth(control As ListView) As Integer
         Dim maxWidth As Integer = 0, temp As Integer = 0
         For Each obj As Object In control.Items

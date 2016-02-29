@@ -134,11 +134,11 @@ Imports DWSIM.DWSIM.SimulationObjects
                                                Case "Molar_Weight"
                                                     .Molar_Weight = Double.Parse(node4.Attributes("Value").Value, nf)
                                                 Case "Critical_Temperature"
-                                                    .Critical_Temperature = conv.ConverterParaSI(node4.Attributes("Unit").Value, node4.Attributes("Value").Value)
+                                                    .Critical_Temperature = Conversor.ConverterParaSI(node4.Attributes("Unit").Value, node4.Attributes("Value").Value)
                                                 Case "Critical_Pressure"
-                                                    .Critical_Pressure = conv.ConverterParaSI(node4.Attributes("Unit").Value, node4.Attributes("Value").Value)
+                                                    .Critical_Pressure = Conversor.ConverterParaSI(node4.Attributes("Unit").Value, node4.Attributes("Value").Value)
                                                 Case "Critical_Volume"
-                                                    .Critical_Volume = conv.ConverterParaSI(node4.Attributes("Unit").Value, node4.Attributes("Value").Value)
+                                                    .Critical_Volume = Conversor.ConverterParaSI(node4.Attributes("Unit").Value, node4.Attributes("Value").Value)
                                                 Case "Critical_Compressibility"
                                                     .Critical_Compressibility = Double.Parse(node4.Attributes("Value").Value, nf)
                                                 Case "Acentric_Factor"
@@ -156,11 +156,11 @@ Imports DWSIM.DWSIM.SimulationObjects
                                                 Case "CS_Liquid_Molar_Volume"
                                                     .Chao_Seader_Liquid_Molar_Volume = Double.Parse(node4.Attributes("Value").Value, nf)
                                                 Case "IG_Entropy_of_Formation_25C"
-                                                    .IG_Entropy_of_Formation_25C = conv.ConverterParaSI(node4.Attributes("Unit").Value, node4.Attributes("Value").Value)
+                                                    .IG_Entropy_of_Formation_25C = Conversor.ConverterParaSI(node4.Attributes("Unit").Value, node4.Attributes("Value").Value)
                                                 Case "IG_Enthalpy_of_Formation_25C"
-                                                    .IG_Enthalpy_of_Formation_25C = conv.ConverterParaSI(node4.Attributes("Unit").Value, node4.Attributes("Value").Value)
+                                                    .IG_Enthalpy_of_Formation_25C = Conversor.ConverterParaSI(node4.Attributes("Unit").Value, node4.Attributes("Value").Value)
                                                 Case "IG_Gibbs_Energy_of_Formation_25C"
-                                                    .IG_Gibbs_Energy_of_Formation_25C = conv.ConverterParaSI(node4.Attributes("Unit").Value, node4.Attributes("Value").Value)
+                                                    .IG_Gibbs_Energy_of_Formation_25C = Conversor.ConverterParaSI(node4.Attributes("Unit").Value, node4.Attributes("Value").Value)
                                                 Case "Dipole_Moment"
                                                     .Dipole_Moment = Double.Parse(node4.Attributes("Value").Value, nf)
                                                 Case "Vapor_Pressure_Constant_EqNo"

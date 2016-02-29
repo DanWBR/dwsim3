@@ -59,13 +59,13 @@ Public Class FormGraph
                     For Each ps In .Sections.Values
                         If ps.Tipo = "Tubulaosimples" Then
                             For Each res In ps.Resultados
-                                vx(i) = cv.ConverterDoSI(su.distance, comp_ant)
+                                vx(i) = Conversor.ConverterDoSI(su.distance, comp_ant)
                                 comp_ant += ps.Comprimento / ps.Incrementos
                                 i += 1
                             Next
                         Else
                             For Each res In ps.Resultados
-                                vx(i) = cv.ConverterDoSI(su.distance, comp_ant)
+                                vx(i) = Conversor.ConverterDoSI(su.distance, comp_ant)
                                 i += 1
                             Next
                         End If
@@ -82,13 +82,13 @@ Public Class FormGraph
                     For Each ps In .Sections.Values
                         If ps.Tipo = "Tubulaosimples" Then
                             For Each res In ps.Resultados
-                                vx(i) = cv.ConverterDoSI(su.spmp_pressure, res.PressaoInicial)
+                                vx(i) = Conversor.ConverterDoSI(su.spmp_pressure, res.PressaoInicial)
                                 comp_ant += ps.Comprimento / ps.Incrementos
                                 i += 1
                             Next
                         Else
                             For Each res In ps.Resultados
-                                vx(i) = cv.ConverterDoSI(su.spmp_pressure, res.PressaoInicial)
+                                vx(i) = Conversor.ConverterDoSI(su.spmp_pressure, res.PressaoInicial)
                                 i += 1
                             Next
                         End If
@@ -104,13 +104,13 @@ Public Class FormGraph
                     For Each ps In .Sections.Values
                         If ps.Tipo = "Tubulaosimples" Then
                             For Each res In ps.Resultados
-                                vx(i) = cv.ConverterDoSI(su.spmp_temperature, res.TemperaturaInicial)
+                                vx(i) = Conversor.ConverterDoSI(su.spmp_temperature, res.TemperaturaInicial)
                                 comp_ant += ps.Comprimento / ps.Incrementos
                                 i += 1
                             Next
                         Else
                             For Each res In ps.Resultados
-                                vx(i) = cv.ConverterDoSI(su.spmp_temperature, res.TemperaturaInicial)
+                                vx(i) = Conversor.ConverterDoSI(su.spmp_temperature, res.TemperaturaInicial)
                                 i += 1
                             Next
                         End If
@@ -126,13 +126,13 @@ Public Class FormGraph
                     For Each ps In .Sections.Values
                         If ps.Tipo = "Tubulaosimples" Then
                             For Each res In ps.Resultados
-                                vx(i) = cv.ConverterDoSI(su.velocity, res.LiqVel)
+                                vx(i) = Conversor.ConverterDoSI(su.velocity, res.LiqVel)
                                 comp_ant += ps.Comprimento / ps.Incrementos
                                 i += 1
                             Next
                         Else
                             For Each res In ps.Resultados
-                                vx(i) = cv.ConverterDoSI(su.velocity, res.LiqVel)
+                                vx(i) = Conversor.ConverterDoSI(su.velocity, res.LiqVel)
                                 i += 1
                             Next
                         End If
@@ -148,13 +148,13 @@ Public Class FormGraph
                     For Each ps In .Sections.Values
                         If ps.Tipo = "Tubulaosimples" Then
                             For Each res In ps.Resultados
-                                vx(i) = cv.ConverterDoSI(su.velocity, res.VapVel)
+                                vx(i) = Conversor.ConverterDoSI(su.velocity, res.VapVel)
                                 comp_ant += ps.Comprimento / ps.Incrementos
                                 i += 1
                             Next
                         Else
                             For Each res In ps.Resultados
-                                vx(i) = cv.ConverterDoSI(su.velocity, res.VapVel)
+                                vx(i) = Conversor.ConverterDoSI(su.velocity, res.VapVel)
                                 i += 1
                             Next
                         End If
@@ -170,13 +170,13 @@ Public Class FormGraph
                     For Each ps In .Sections.Values
                         If ps.Tipo = "Tubulaosimples" Then
                             For Each res In ps.Resultados
-                                vx(i) = cv.ConverterDoSI(su.spmp_heatflow, res.CalorTransferido)
+                                vx(i) = Conversor.ConverterDoSI(su.spmp_heatflow, res.CalorTransferido)
                                 comp_ant += ps.Comprimento / ps.Incrementos
                                 i += 1
                             Next
                         Else
                             For Each res In ps.Resultados
-                                vx(i) = cv.ConverterDoSI(su.spmp_heatflow, res.CalorTransferido)
+                                vx(i) = Conversor.ConverterDoSI(su.spmp_heatflow, res.CalorTransferido)
                                 i += 1
                             Next
                         End If
@@ -195,7 +195,7 @@ Public Class FormGraph
                     Dim i As Integer = 0
                     For Each ps In .Sections.Values
                         For Each res In ps.Resultados
-                            vy(i) = cv.ConverterDoSI(su.heat_transf_coeff, res.HTC)
+                            vy(i) = Conversor.ConverterDoSI(su.heat_transf_coeff, res.HTC)
                             i += 1
                         Next
                     Next
@@ -231,13 +231,13 @@ Public Class FormGraph
                     For Each ps In .Sections.Values
                         If ps.Tipo = "Tubulaosimples" Then
                             For Each res In ps.Resultados
-                                vy(i) = cv.ConverterDoSI(su.distance, comp_ant)
+                                vy(i) = Conversor.ConverterDoSI(su.distance, comp_ant)
                                 comp_ant += ps.Comprimento / ps.Incrementos
                                 i += 1
                             Next
                         Else
                             For Each res In ps.Resultados
-                                vy(i) = cv.ConverterDoSI(su.distance, comp_ant)
+                                vy(i) = Conversor.ConverterDoSI(su.distance, comp_ant)
                                 i += 1
                             Next
                         End If
@@ -253,13 +253,13 @@ Public Class FormGraph
                     For Each ps In .Sections.Values
                         If ps.Tipo = "Tubulaosimples" Then
                             For Each res In ps.Resultados
-                                vy(i) = cv.ConverterDoSI(su.spmp_pressure, res.PressaoInicial)
+                                vy(i) = Conversor.ConverterDoSI(su.spmp_pressure, res.PressaoInicial)
                                 comp_ant += ps.Comprimento / ps.Incrementos
                                 i += 1
                             Next
                         Else
                             For Each res In ps.Resultados
-                                vy(i) = cv.ConverterDoSI(su.spmp_pressure, res.PressaoInicial)
+                                vy(i) = Conversor.ConverterDoSI(su.spmp_pressure, res.PressaoInicial)
                                 i += 1
                             Next
                         End If
@@ -275,13 +275,13 @@ Public Class FormGraph
                     For Each ps In .Sections.Values
                         If ps.Tipo = "Tubulaosimples" Then
                             For Each res In ps.Resultados
-                                vy(i) = cv.ConverterDoSI(su.spmp_temperature, res.TemperaturaInicial)
+                                vy(i) = Conversor.ConverterDoSI(su.spmp_temperature, res.TemperaturaInicial)
                                 comp_ant += ps.Comprimento / ps.Incrementos
                                 i += 1
                             Next
                         Else
                             For Each res In ps.Resultados
-                                vy(i) = cv.ConverterDoSI(su.spmp_temperature, res.TemperaturaInicial)
+                                vy(i) = Conversor.ConverterDoSI(su.spmp_temperature, res.TemperaturaInicial)
                                 i += 1
                             Next
                         End If
@@ -297,13 +297,13 @@ Public Class FormGraph
                     For Each ps In .Sections.Values
                         If ps.Tipo = "Tubulaosimples" Then
                             For Each res In ps.Resultados
-                                vy(i) = cv.ConverterDoSI(su.velocity, res.LiqVel)
+                                vy(i) = Conversor.ConverterDoSI(su.velocity, res.LiqVel)
                                 comp_ant += ps.Comprimento / ps.Incrementos
                                 i += 1
                             Next
                         Else
                             For Each res In ps.Resultados
-                                vy(i) = cv.ConverterDoSI(su.velocity, res.LiqVel)
+                                vy(i) = Conversor.ConverterDoSI(su.velocity, res.LiqVel)
                                 i += 1
                             Next
                         End If
@@ -319,14 +319,14 @@ Public Class FormGraph
                     For Each ps In .Sections.Values
                         If ps.Tipo = "Tubulaosimples" Then
                             For Each res In ps.Resultados
-                                vy(i) = cv.ConverterDoSI(su.velocity, res.VapVel)
+                                vy(i) = Conversor.ConverterDoSI(su.velocity, res.VapVel)
                                 comp_ant += ps.Comprimento / ps.Incrementos
                                 i += 1
                             Next
                         Else
                             For Each res In ps.Resultados
                                 i += 1
-                                vy(i) = cv.ConverterDoSI(su.velocity, res.VapVel)
+                                vy(i) = Conversor.ConverterDoSI(su.velocity, res.VapVel)
                             Next
                         End If
                     Next
@@ -341,13 +341,13 @@ Public Class FormGraph
                     For Each ps In .Sections.Values
                         If ps.Tipo = "Tubulaosimples" Then
                             For Each res In ps.Resultados
-                                vy(i) = cv.ConverterDoSI(su.spmp_heatflow, res.CalorTransferido)
+                                vy(i) = Conversor.ConverterDoSI(su.spmp_heatflow, res.CalorTransferido)
                                 comp_ant += ps.Comprimento / ps.Incrementos
                                 i += 1
                             Next
                         Else
                             For Each res In ps.Resultados
-                                vy(i) = cv.ConverterDoSI(su.spmp_heatflow, res.CalorTransferido)
+                                vy(i) = Conversor.ConverterDoSI(su.spmp_heatflow, res.CalorTransferido)
                                 i += 1
                             Next
                         End If

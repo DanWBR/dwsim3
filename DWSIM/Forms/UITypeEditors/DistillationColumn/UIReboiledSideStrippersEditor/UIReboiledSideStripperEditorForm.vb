@@ -40,9 +40,9 @@ Public Class UIReboiledSideStripperEditorForm
             .Clear()
             For Each rss As ReboiledSideStripper In dc.RebSStrCol.Collection.Values
                 If dc.MaterialStreams.ContainsKey(rss.ProductStreamID) Then
-                    '.Add(New Object() {.Count + 1, rss.Name, rss.Stages.Count, rss.FromStage, rss.ToStage, cvt.ConverterDoSI(form.Options.SelectedUnitSystem.spmp_molarflow, rss.ProductRate), rss.BoilUpRatio, dc.MaterialStreams(rss.ProductStreamID).Tag, rss.ID})
+                    '.Add(New Object() {.Count + 1, rss.Name, rss.Stages.Count, rss.FromStage, rss.ToStage, Conversor.ConverterDoSI(form.Options.SelectedUnitSystem.spmp_molarflow, rss.ProductRate), rss.BoilUpRatio, dc.MaterialStreams(rss.ProductStreamID).Tag, rss.ID})
                 Else
-                    .Add(New Object() {.Count + 1, rss.Name, rss.Stages.Count, rss.FromStage, rss.ToStage, rss.BoilUpRatio, cvt.ConverterDoSI(form.Options.SelectedUnitSystem.spmp_molarflow, rss.ProductRate), "", rss.ID})
+                    .Add(New Object() {.Count + 1, rss.Name, rss.Stages.Count, rss.FromStage, rss.ToStage, rss.BoilUpRatio, Conversor.ConverterDoSI(form.Options.SelectedUnitSystem.spmp_molarflow, rss.ProductRate), "", rss.ID})
                 End If
             Next
         End With
@@ -108,7 +108,7 @@ Public Class UIReboiledSideStripperEditorForm
                 Case 5
                     dc.RebSStrCol.Collection(id).BoilUpRatio = value
                 Case 6
-                    dc.RebSStrCol.Collection(id).ProductRate = cvt.ConverterParaSI(form.Options.SelectedUnitSystem.spmp_molarflow, value)
+                    dc.RebSStrCol.Collection(id).ProductRate = Conversor.ConverterParaSI(form.Options.SelectedUnitSystem.spmp_molarflow, value)
                 Case 7
                     Dim msid As String = dc.RebSStrCol.Collection(id).ProductStreamID
                     If dc.MaterialStreams.ContainsKey(msid) Then

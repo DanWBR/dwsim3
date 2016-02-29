@@ -462,10 +462,10 @@ final:          Me.IterationsTaken = Me.IterationCount.ToString
                     value = Me.MaximumIterations
                 Case 1
                     'PROP_ER_1	Power Tolerance
-                    value = cv.ConverterDoSI(su.spmp_heatflow, Me.ConvergenceParameters.Energy)
+                    value = Conversor.ConverterDoSI(su.spmp_heatflow, Me.ConvergenceParameters.Energy)
                 Case 2
                     'PROP_ER_2	Power Error
-                    value = cv.ConverterDoSI(su.spmp_heatflow, Me.ConvergenceHistory.EnergyE)
+                    value = Conversor.ConverterDoSI(su.spmp_heatflow, Me.ConvergenceHistory.EnergyE)
             End Select
 
             Return value
@@ -508,7 +508,7 @@ final:          Me.IterationsTaken = Me.IterationCount.ToString
                     Me.MaximumIterations = propval
                 Case 1
                     'PROP_ER_1	Power Tolerance
-                    Me.ConvergenceParameters.Energy = cv.ConverterParaSI(su.spmp_heatflow, propval)
+                    Me.ConvergenceParameters.Energy = Conversor.ConverterParaSI(su.spmp_heatflow, propval)
 
             End Select
             Return 1

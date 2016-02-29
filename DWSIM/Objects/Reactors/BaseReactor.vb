@@ -175,7 +175,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                         amounts(sb.CompName) = 8.314 * T
                 End Select
 
-                amounts(sb.CompName) = conv.ConverterDoSI(rxn.ConcUnit, amounts(sb.CompName))
+                amounts(sb.CompName) = Conversor.ConverterDoSI(rxn.ConcUnit, amounts(sb.CompName))
 
             Next
 

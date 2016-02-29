@@ -121,9 +121,9 @@ Public Class FrmCritpt
 
             Dim ppc, ptc, pvc, pzc, tpc, ttc, tvc, tzc As Double
 
-            ppc = Format(cv.ConverterDoSI(su.spmp_pressure, pr.AUX_PCM(DWSIM.SimulationObjects.PropertyPackages.Fase.Mixture)), nf)
-            ptc = Format(cv.ConverterDoSI(su.spmp_temperature, pr.AUX_TCM(DWSIM.SimulationObjects.PropertyPackages.Fase.Mixture)), nf)
-            pvc = Format(cv.ConverterDoSI(su.molar_volume, pr.AUX_VCM(DWSIM.SimulationObjects.PropertyPackages.Fase.Mixture) * 1000), nf)
+            ppc = Format(Conversor.ConverterDoSI(su.spmp_pressure, pr.AUX_PCM(DWSIM.SimulationObjects.PropertyPackages.Fase.Mixture)), nf)
+            ptc = Format(Conversor.ConverterDoSI(su.spmp_temperature, pr.AUX_TCM(DWSIM.SimulationObjects.PropertyPackages.Fase.Mixture)), nf)
+            pvc = Format(Conversor.ConverterDoSI(su.molar_volume, pr.AUX_VCM(DWSIM.SimulationObjects.PropertyPackages.Fase.Mixture) * 1000), nf)
             pzc = Format(pr.AUX_ZCM(DWSIM.SimulationObjects.PropertyPackages.Fase.Mixture), nf)
 
             Grid1.Rows.Add(New Object() {Grid1.Rows.Count + 1, "PCP", ptc, ppc, pvc, pzc})
@@ -134,9 +134,9 @@ Public Class FrmCritpt
                 tmp = pc(0)
 
                 For Each tmp In pc
-                    ttc = Format(cv.ConverterDoSI(su.spmp_temperature, tmp(0)), nf)
-                    tpc = Format(cv.ConverterDoSI(su.spmp_pressure, tmp(1)), nf)
-                    tvc = Format(cv.ConverterDoSI(su.molar_volume, tmp(2) * 1000), nf)
+                    ttc = Format(Conversor.ConverterDoSI(su.spmp_temperature, tmp(0)), nf)
+                    tpc = Format(Conversor.ConverterDoSI(su.spmp_pressure, tmp(1)), nf)
+                    tvc = Format(Conversor.ConverterDoSI(su.molar_volume, tmp(2) * 1000), nf)
                     tzc = Format(tmp(1) * tmp(2) / (8.314 * tmp(0)), nf)
                     Grid1.Rows.Add(New Object() {Grid1.Rows.Count + 1, "TCP", ttc, tpc, tvc, tzc})
                 Next

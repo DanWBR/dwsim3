@@ -70,13 +70,13 @@
             Dim su As DWSIM.SistemasDeUnidades.Unidades = Frm.Options.SelectedUnitSystem
             Dim conv As New DWSIM.SistemasDeUnidades.Conversor
 
-            Me.LblLiq.Text = Format(conv.ConverterDoSI(su.spmp_volumetricFlow, ql), Frm.Options.NumberFormat) & " " & su.spmp_volumetricFlow & _
-                            ", " & Format(conv.ConverterDoSI(su.spmp_massflow, wl), Frm.Options.NumberFormat) & " " & su.spmp_massflow & _
-                            ", " & Format(conv.ConverterDoSI(su.spmp_density, rhol), Frm.Options.NumberFormat) & " " & su.spmp_density
+            Me.LblLiq.Text = Format(Conversor.ConverterDoSI(su.spmp_volumetricFlow, ql), Frm.Options.NumberFormat) & " " & su.spmp_volumetricFlow & _
+                            ", " & Format(Conversor.ConverterDoSI(su.spmp_massflow, wl), Frm.Options.NumberFormat) & " " & su.spmp_massflow & _
+                            ", " & Format(Conversor.ConverterDoSI(su.spmp_density, rhol), Frm.Options.NumberFormat) & " " & su.spmp_density
 
-            Me.LblGas.Text = Format(conv.ConverterDoSI(su.spmp_molarflow, msv.Fases(0).SPMProperties.molarflow.GetValueOrDefault), Frm.Options.NumberFormat) & " " & su.spmp_molarflow & _
-                            ", " & Format(conv.ConverterDoSI(su.spmp_massflow, wv), Frm.Options.NumberFormat) & " " & su.spmp_massflow & _
-                            ", " & Format(conv.ConverterDoSI(su.spmp_density, rhov), Frm.Options.NumberFormat) & " " & su.spmp_density
+            Me.LblGas.Text = Format(Conversor.ConverterDoSI(su.spmp_molarflow, msv.Fases(0).SPMProperties.molarflow.GetValueOrDefault), Frm.Options.NumberFormat) & " " & su.spmp_molarflow & _
+                            ", " & Format(Conversor.ConverterDoSI(su.spmp_massflow, wv), Frm.Options.NumberFormat) & " " & su.spmp_massflow & _
+                            ", " & Format(Conversor.ConverterDoSI(su.spmp_density, rhov), Frm.Options.NumberFormat) & " " & su.spmp_density
 
             Me.RLD = Me.tbRLD.Text
             Me.C = Me.tbC.Text

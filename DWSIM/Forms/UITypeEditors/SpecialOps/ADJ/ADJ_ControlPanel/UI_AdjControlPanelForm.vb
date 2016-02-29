@@ -27,7 +27,7 @@ Public Class UI_AdjControlPanelForm
         myADJ = formC.Collections.CLCS_AdjustCollection(formC.FormSurface.FlowsheetDesignSurface.SelectedObject.Name)
 
         With myADJ
-            Me.tbAjuste.Text = cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), .AdjustValue)
+            Me.tbAjuste.Text = Conversor.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), .AdjustValue)
             Me.tbMaxIt.Text = .MaximumIterations
             Me.tbStep.Text = .StepSize
             Me.tbTol.Text = .Tolerance
@@ -94,38 +94,38 @@ Public Class UI_AdjControlPanelForm
                 rfVal = Me.GetMnpVarValue()
             End If
         End If
-            Dim tol, maxit, adjval, stepsize, max, min As Double
-            With myADJ
-                If myADJ.Referenced Then
-                    If Not rfVal = Nothing Then
-                        adjval = rfVal + .AdjustValue
-                    Else
-                        Me.btnIniciar.Enabled = True
-                        Exit Sub
-                    End If
+        Dim tol, maxit, adjval, stepsize, max, min As Double
+        With myADJ
+            If myADJ.Referenced Then
+                If Not rfVal = Nothing Then
+                    adjval = rfVal + .AdjustValue
                 Else
-                    adjval = .AdjustValue
+                    Me.btnIniciar.Enabled = True
+                    Exit Sub
                 End If
-                maxit = .MaximumIterations
-                stepsize = .StepSize
-                tol = .Tolerance
-                If Me.usemaxmin Then
-                    min = .MinVal.GetValueOrDefault
-                    max = .MaxVal.GetValueOrDefault
-                End If
-            End With
+            Else
+                adjval = .AdjustValue
+            End If
+            maxit = .MaximumIterations
+            stepsize = .StepSize
+            tol = .Tolerance
+            If Me.usemaxmin Then
+                min = .MinVal.GetValueOrDefault
+                max = .MaxVal.GetValueOrDefault
+            End If
+        End With
 
-            With Me.Grid1.Columns
-                .Clear()
-                .Add("c1", DWSIM.App.GetLocalString("Iter"))
-                .Add("c2", "Var.")
-                .Add("c3", DWSIM.App.GetLocalString("Erro"))
-            End With
-            For Each co As DataGridViewColumn In Me.Grid1.Columns
-                co.SortMode = DataGridViewColumnSortMode.NotSortable
-                co.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-                co.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
-            Next
+        With Me.Grid1.Columns
+            .Clear()
+            .Add("c1", DWSIM.App.GetLocalString("Iter"))
+            .Add("c2", "Var.")
+            .Add("c3", DWSIM.App.GetLocalString("Erro"))
+        End With
+        For Each co As DataGridViewColumn In Me.Grid1.Columns
+            co.SortMode = DataGridViewColumnSortMode.NotSortable
+            co.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            co.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
+        Next
 
         If Me.rbSecante.Checked Then
 
@@ -176,8 +176,8 @@ Public Class UI_AdjControlPanelForm
                 cvVal = Me.GetCtlVarValue()
                 cnt += 1
 
-                py1.Add(cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), adjval))
-                py2.Add(cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), cvVal))
+                py1.Add(Conversor.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), adjval))
+                py2.Add(Conversor.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), cvVal))
 
                 AtualizaGrafico()
 
@@ -241,8 +241,8 @@ Public Class UI_AdjControlPanelForm
                 Me.lblStatus.Text = DWSIM.App.GetLocalString("Ajustando")
                 Me.lblItXdeY.Text = DWSIM.App.GetLocalString("Procurandosubinterva")
                 Me.tbErro.Text = f
-                py1.Add(cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), adjval))
-                py2.Add(cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), cvVal))
+                py1.Add(Conversor.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), adjval))
+                py2.Add(Conversor.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), cvVal))
                 AtualizaGrafico()
                 minval = minval + delta
                 Me.SetMnpVarValue(minval)
@@ -254,8 +254,8 @@ Public Class UI_AdjControlPanelForm
                 Me.lblStatus.Text = DWSIM.App.GetLocalString("Ajustando")
                 Me.lblItXdeY.Text = DWSIM.App.GetLocalString("Procurandosubinterva")
                 Me.tbErro.Text = f_inf
-                py1.Add(cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), adjval))
-                py2.Add(cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), cvVal))
+                py1.Add(Conversor.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), adjval))
+                py2.Add(Conversor.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), cvVal))
                 AtualizaGrafico()
                 l += 1
                 If l > 5 Then
@@ -361,8 +361,8 @@ Public Class UI_AdjControlPanelForm
                 Me.tbErro.Text = fbb
                 iter2 += 1
 
-                py1.Add(cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), adjval))
-                py2.Add(cv.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), cvVal))
+                py1.Add(Conversor.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), adjval))
+                py2.Add(Conversor.ConverterDoSI(myADJ.ControlledObject.GetPropertyUnit(myADJ.ControlledObjectData.m_Property, su), cvVal))
 
                 AtualizaGrafico()
 

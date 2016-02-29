@@ -143,10 +143,10 @@ Public Class FormHYD_DET
 
         If model <> 2 Then
 
-            Label8.Text = Format(cv.ConverterDoSI(su.spmp_pressure, P), nf)
-            Label9.Text = Format(cv.ConverterDoSI(su.spmp_temperature, T), nf)
+            Label8.Text = Format(Conversor.ConverterDoSI(su.spmp_pressure, P), nf)
+            Label9.Text = Format(Conversor.ConverterDoSI(su.spmp_temperature, T), nf)
             Label10.Text = fases
-            Label11.Text = Format(cv.ConverterDoSI(su.spmp_temperature, res(0)), nf)
+            Label11.Text = Format(Conversor.ConverterDoSI(su.spmp_temperature, res(0)), nf)
             Label12.Text = Format(res(1), "####0.########")
             Label13.Text = Format(res(2) / 1000, "####0.0000#")
             Label14.Text = Format(res(3) / 1000, "####0.0000#")
@@ -163,10 +163,10 @@ Public Class FormHYD_DET
 
         Else
 
-            Label8.Text = Format(cv.ConverterDoSI(su.spmp_pressure, P), nf)
-            Label9.Text = Format(cv.ConverterDoSI(su.spmp_temperature, T), nf)
+            Label8.Text = Format(Conversor.ConverterDoSI(su.spmp_pressure, P), nf)
+            Label9.Text = Format(Conversor.ConverterDoSI(su.spmp_temperature, T), nf)
             Label10.Text = fases
-            Label11.Text = Format(cv.ConverterDoSI(su.spmp_temperature, res(0)), nf)
+            Label11.Text = Format(Conversor.ConverterDoSI(su.spmp_temperature, res(0)), nf)
             Label12.Text = Format(res(1), "####0.########")
             Label13.Text = DWSIM.App.GetLocalString("ND") 'Format(res(2) / 1000, "####0.0000#")
             Label14.Text = DWSIM.App.GetLocalString("ND") 'Format(res(3) / 1000, "####0.0000#")

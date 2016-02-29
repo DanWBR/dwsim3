@@ -769,7 +769,7 @@ Namespace DWSIM.SistemasDeUnidades
 
     <System.Serializable()> Public Class Conversor
 
-        Public Function ConverterParaSI(ByVal unidade As String, ByVal valor As Double)
+        Public Shared Function ConverterParaSI(ByVal unidade As String, ByVal valor As Double)
 
             Select Case unidade
 
@@ -1175,7 +1175,7 @@ Namespace DWSIM.SistemasDeUnidades
 
         End Function
 
-        Public Function ConverterDoSI(ByVal unidade As String, ByVal valor As Double)
+        Public Shared Function ConverterDoSI(ByVal unidade As String, ByVal valor As Double)
 
             Select Case unidade
 
@@ -1577,10 +1577,10 @@ Namespace DWSIM.SistemasDeUnidades
 
         End Function
 
-        Public Function Convert(fromunit As String, tounit As String, value As Double) As Double
+        Public Shared Function Convert(fromunit As String, tounit As String, value As Double) As Double
 
-            Dim sival As Double = Me.ConverterParaSI(fromunit, value)
-            Return Double.Parse(Me.ConverterDoSI(tounit, sival))
+            Dim sival As Double = ConverterParaSI(fromunit, value)
+            Return Double.Parse(ConverterDoSI(tounit, sival))
 
         End Function
 

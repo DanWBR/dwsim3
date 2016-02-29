@@ -472,6 +472,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Dim valor = Format(Conversor.ConverterDoSI(su.spmp_massflow, Me.StreamFlowSpec), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetPropertyName("PROP_SP_1"), su.spmp_massflow), valor, False, DWSIM.App.GetLocalString("Parmetros2"), "", True)
                         With .Item(.Item.Count - 1)
+                            .CustomTypeConverter = New System.ComponentModel.StringConverter
                             .Tag2 = "PROP_SP_1"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_massflow, "W"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
@@ -480,6 +481,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             valor = Format(Conversor.ConverterDoSI(su.spmp_massflow, Me.Stream2FlowSpec), FlowSheet.Options.NumberFormat)
                             .Item.Add(FT(DWSIM.App.GetPropertyName("PROP_SP_2"), su.spmp_massflow), valor, False, DWSIM.App.GetLocalString("Parmetros2"), "", True)
                             With .Item(.Item.Count - 1)
+                                .CustomTypeConverter = New System.ComponentModel.StringConverter
                                 .Tag2 = "PROP_SP_2"
                                 .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_massflow, "W"}
                                 .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
@@ -489,6 +491,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Dim valor = Format(Conversor.ConverterDoSI(su.spmp_molarflow, Me.StreamFlowSpec), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetPropertyName("PROP_SP_1"), su.spmp_molarflow), valor, False, DWSIM.App.GetLocalString("Parmetros2"), "", True)
                         With .Item(.Item.Count - 1)
+                            .CustomTypeConverter = New System.ComponentModel.StringConverter
                             .Tag2 = "PROP_SP_1"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_molarflow, "M"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
@@ -497,6 +500,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             valor = Format(Conversor.ConverterDoSI(su.spmp_molarflow, Me.Stream2FlowSpec), FlowSheet.Options.NumberFormat)
                             .Item.Add(FT(DWSIM.App.GetPropertyName("PROP_SP_2"), su.spmp_molarflow), valor, False, DWSIM.App.GetLocalString("Parmetros2"), "", True)
                             With .Item(.Item.Count - 1)
+                                .CustomTypeConverter = New System.ComponentModel.StringConverter
                                 .Tag2 = "PROP_SP_2"
                                 .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_molarflow, "M"}
                                 .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
@@ -515,15 +519,15 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Select Case prop
                 Case "PROP_SP_1"
                     If Me.OperationMode = OpMode.StreamMassFlowSpec Then
-                        value = cv.ConverterDoSI(su.spmp_massflow, Me.StreamFlowSpec)
+                        value = Conversor.ConverterDoSI(su.spmp_massflow, Me.StreamFlowSpec)
                     Else
-                        value = cv.ConverterDoSI(su.spmp_molarflow, Me.StreamFlowSpec)
+                        value = Conversor.ConverterDoSI(su.spmp_molarflow, Me.StreamFlowSpec)
                     End If
                 Case "PROP_SP_2"
                     If Me.OperationMode = OpMode.StreamMassFlowSpec Then
-                        value = cv.ConverterDoSI(su.spmp_massflow, Me.Stream2FlowSpec)
+                        value = Conversor.ConverterDoSI(su.spmp_massflow, Me.Stream2FlowSpec)
                     Else
-                        value = cv.ConverterDoSI(su.spmp_molarflow, Me.Stream2FlowSpec)
+                        value = Conversor.ConverterDoSI(su.spmp_molarflow, Me.Stream2FlowSpec)
                     End If
                 Case "SR1"
                     If Me.Ratios.Count > 0 Then value = Me.Ratios(0)
@@ -567,15 +571,15 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Select Case prop
                 Case "PROP_SP_1"
                     If Me.OperationMode = OpMode.StreamMassFlowSpec Then
-                        Me.StreamFlowSpec = cv.ConverterParaSI(su.spmp_massflow, propval)
+                        Me.StreamFlowSpec = Conversor.ConverterParaSI(su.spmp_massflow, propval)
                     Else
-                        Me.StreamFlowSpec = cv.ConverterParaSI(su.spmp_molarflow, propval)
+                        Me.StreamFlowSpec = Conversor.ConverterParaSI(su.spmp_molarflow, propval)
                     End If
                 Case "PROP_SP_2"
                     If Me.OperationMode = OpMode.StreamMassFlowSpec Then
-                        Me.Stream2FlowSpec = cv.ConverterParaSI(su.spmp_massflow, propval)
+                        Me.Stream2FlowSpec = Conversor.ConverterParaSI(su.spmp_massflow, propval)
                     Else
-                        Me.Stream2FlowSpec = cv.ConverterParaSI(su.spmp_molarflow, propval)
+                        Me.Stream2FlowSpec = Conversor.ConverterParaSI(su.spmp_molarflow, propval)
                     End If
                 Case "SR1"
                     If propval >= 0 And propval <= 1 Then

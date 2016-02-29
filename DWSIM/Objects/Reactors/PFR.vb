@@ -184,7 +184,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                     Next
 
                     rx = kxf * rxf - kxr * rxr
-                    Rxi(rxn.ID) = conv.ConverterParaSI(rxn.VelUnit, rx)
+                    Rxi(rxn.ID) = Conversor.ConverterParaSI(rxn.VelUnit, rx)
 
                     Kf(i) = kxf
                     Kr(i) = kxr
@@ -220,7 +220,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                     denmval = rxn.Expr.Evaluate
 
-                    rx = conv.ConverterParaSI(rxn.VelUnit, numval / denmval)
+                    rx = Conversor.ConverterParaSI(rxn.VelUnit, numval / denmval)
 
                 End If
 
@@ -478,7 +478,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                                 rxr *= (C(sb.CompName) * convfactors(sb.CompName)) ^ sb.ReverseOrder
                             Next
 
-                            rx = conv.ConverterParaSI(rxn.VelUnit, kxf * rxf - kxr * rxr)
+                            rx = Conversor.ConverterParaSI(rxn.VelUnit, kxf * rxf - kxr * rxr)
 
                             If Kf.Count - 1 <= i Then
                                 Kf.Add(kxf)
@@ -525,7 +525,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                                 Throw New Exception(DWSIM.App.GetLocalString("PFRDenominatorEvaluationError") & " " & rxn.Name)
                             End Try
 
-                            rx = conv.ConverterParaSI(rxn.VelUnit, numval / denmval)
+                            rx = Conversor.ConverterParaSI(rxn.VelUnit, numval / denmval)
 
                         End If
 
@@ -1214,7 +1214,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                 Case 0
                     'PROP_HT_0	Pressure Drop
-                    value = cv.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault)
+                    value = Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault)
 
             End Select
 
@@ -1251,7 +1251,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                 Case 0
                     'PROP_HT_0	Pressure Drop
-                    Me.DeltaP = cv.ConverterParaSI(su.spmp_deltaP, propval)
+                    Me.DeltaP = Conversor.ConverterParaSI(su.spmp_deltaP, propval)
 
             End Select
             Return 1

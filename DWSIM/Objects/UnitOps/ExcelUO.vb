@@ -978,7 +978,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             Select Case propType
                 Case "Calc"
-                    value = cv.ConverterDoSI(su.spmp_heatflow, DeltaQ.GetValueOrDefault)
+                    value = Conversor.ConverterDoSI(su.spmp_heatflow, DeltaQ.GetValueOrDefault)
                 Case "In"
                     value = InputParams(propID).Value
                 Case "Out"
@@ -1033,7 +1033,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             Select Case propType
                 Case "Calc"
-                    DeltaQ = cv.ConverterParaSI(su.spmp_heatflow, propval)
+                    DeltaQ = Conversor.ConverterParaSI(su.spmp_heatflow, propval)
                 Case "In"
                     InputParams(propID).Value = propval
                 Case "Out"

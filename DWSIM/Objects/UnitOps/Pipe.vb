@@ -1719,19 +1719,19 @@ Final3:     T = bbb
 
             Select Case propidx
                 Case 0
-                    value = cv.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault)
+                    value = Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault)
                 Case 1
-                    value = cv.ConverterDoSI(su.spmp_deltaT, Me.DeltaT.GetValueOrDefault)
+                    value = Conversor.ConverterDoSI(su.spmp_deltaT, Me.DeltaT.GetValueOrDefault)
                 Case 2
-                    value = cv.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ.GetValueOrDefault)
+                    value = Conversor.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ.GetValueOrDefault)
                 Case 3
-                    value = cv.ConverterDoSI(su.spmp_pressure, Me.OutletPressure)
+                    value = Conversor.ConverterDoSI(su.spmp_pressure, Me.OutletPressure)
                 Case 4
-                    value = cv.ConverterDoSI(su.spmp_temperature, Me.OutletTemperature)
+                    value = Conversor.ConverterDoSI(su.spmp_temperature, Me.OutletTemperature)
                 Case 5
-                    value = cv.ConverterDoSI(su.heat_transf_coeff, Me.ThermalProfile.CGTC_Definido)
+                    value = Conversor.ConverterDoSI(su.heat_transf_coeff, Me.ThermalProfile.CGTC_Definido)
                 Case 6
-                    value = cv.ConverterDoSI(su.spmp_temperature, Me.ThermalProfile.Temp_amb_definir)
+                    value = Conversor.ConverterDoSI(su.spmp_temperature, Me.ThermalProfile.Temp_amb_definir)
             End Select
 
             Return value
@@ -1755,15 +1755,15 @@ Final3:     T = bbb
 
             Select Case propidx
                 Case 2
-                    Me.ThermalProfile.Calor_trocado = cv.ConverterParaSI(su.spmp_heatflow, propval)
+                    Me.ThermalProfile.Calor_trocado = Conversor.ConverterParaSI(su.spmp_heatflow, propval)
                 Case 3
-                    Me.OutletPressure = cv.ConverterParaSI(su.spmp_pressure, propval)
+                    Me.OutletPressure = Conversor.ConverterParaSI(su.spmp_pressure, propval)
                 Case 4
-                    Me.OutletTemperature = cv.ConverterParaSI(su.spmp_temperature, propval)
+                    Me.OutletTemperature = Conversor.ConverterParaSI(su.spmp_temperature, propval)
                 Case 5
-                    Me.ThermalProfile.CGTC_Definido = cv.ConverterParaSI(su.heat_transf_coeff, propval)
+                    Me.ThermalProfile.CGTC_Definido = Conversor.ConverterParaSI(su.heat_transf_coeff, propval)
                 Case 6
-                    Me.ThermalProfile.Temp_amb_definir = cv.ConverterParaSI(su.spmp_temperature, propval)
+                    Me.ThermalProfile.Temp_amb_definir = Conversor.ConverterParaSI(su.spmp_temperature, propval)
             End Select
 
             Return 1

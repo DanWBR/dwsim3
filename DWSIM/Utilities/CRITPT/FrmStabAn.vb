@@ -99,8 +99,8 @@ Public Class FrmStabAn
 
                 i = 0
                 Do
-                    px.Add(cv.ConverterDoSI(su.spmp_temperature, res(i)(0)))
-                    py.Add(cv.ConverterDoSI(su.spmp_pressure, res(i)(1)))
+                    px.Add(Conversor.ConverterDoSI(su.spmp_temperature, res(i)(0)))
+                    py.Add(Conversor.ConverterDoSI(su.spmp_pressure, res(i)(1)))
                     i += 1
                 Loop Until i = res.Count
 
@@ -113,7 +113,7 @@ Public Class FrmStabAn
                 End With
                 With Me.GraphPvap.GraphPane
                     .CurveList.Clear()
-                    .AddCurve(DWSIM.App.GetLocalString("PontoCrtico"), New Double() {cv.ConverterDoSI(su.spmp_temperature, pc(0))}, New Double() {cv.ConverterDoSI(su.spmp_pressure, pc(1))}, Color.Black, ZedGraph.SymbolType.Circle)
+                    .AddCurve(DWSIM.App.GetLocalString("PontoCrtico"), New Double() {Conversor.ConverterDoSI(su.spmp_temperature, pc(0))}, New Double() {Conversor.ConverterDoSI(su.spmp_pressure, pc(1))}, Color.Black, ZedGraph.SymbolType.Circle)
                     .AddCurve(DWSIM.App.GetLocalString("LimitedeEstabilidade"), px.ToArray(GetType(Double)), py.ToArray(GetType(Double)), Color.Red, ZedGraph.SymbolType.None).Line.IsSmooth = True
                     .AxisChange(Me.CreateGraphics)
                 End With

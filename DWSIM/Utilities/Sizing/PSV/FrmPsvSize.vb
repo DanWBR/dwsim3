@@ -185,13 +185,13 @@ Public Class FrmPsvSize
             Me.saimat = Frm.Collections.CLCS_MaterialStreamCollection(Me.valve.GraphicObject.OutputConnectors(0).AttachedConnector.AttachedTo.Name)
 
 
-            Me.TextBox1.Text = Format(cv.ConverterDoSI(su.spmp_temperature, entmat.Fases(0).SPMProperties.temperature), nf)
-            Me.TextBox2.Text = Format(cv.ConverterDoSI(su.spmp_pressure, entmat.Fases(0).SPMProperties.pressure), nf)
-            Me.TextBox4.Text = Format(cv.ConverterDoSI(su.spmp_pressure, saimat.Fases(0).SPMProperties.pressure), nf)
+            Me.TextBox1.Text = Format(Conversor.ConverterDoSI(su.spmp_temperature, entmat.Fases(0).SPMProperties.temperature), nf)
+            Me.TextBox2.Text = Format(Conversor.ConverterDoSI(su.spmp_pressure, entmat.Fases(0).SPMProperties.pressure), nf)
+            Me.TextBox4.Text = Format(Conversor.ConverterDoSI(su.spmp_pressure, saimat.Fases(0).SPMProperties.pressure), nf)
 
-            Me.TextBox8.Text = Format(cv.ConverterDoSI(su.spmp_volumetricFlow, entmat.Fases(0).SPMProperties.volumetric_flow.GetValueOrDefault), nf)
-            Me.TextBox7.Text = Format(cv.ConverterDoSI(su.spmp_volumetricFlow, entmat.Fases(3).SPMProperties.volumetric_flow.GetValueOrDefault), nf)
-            Me.TextBox5.Text = Format(cv.ConverterDoSI(su.spmp_volumetricFlow, entmat.Fases(2).SPMProperties.volumetric_flow.GetValueOrDefault), nf)
+            Me.TextBox8.Text = Format(Conversor.ConverterDoSI(su.spmp_volumetricFlow, entmat.Fases(0).SPMProperties.volumetric_flow.GetValueOrDefault), nf)
+            Me.TextBox7.Text = Format(Conversor.ConverterDoSI(su.spmp_volumetricFlow, entmat.Fases(3).SPMProperties.volumetric_flow.GetValueOrDefault), nf)
+            Me.TextBox5.Text = Format(Conversor.ConverterDoSI(su.spmp_volumetricFlow, entmat.Fases(2).SPMProperties.volumetric_flow.GetValueOrDefault), nf)
 
             'Gás
             'Líquido

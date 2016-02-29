@@ -490,19 +490,19 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                     For i = 0 To chead.x.Count - 1
                         If Double.TryParse(chead.x(i), New Double) And Double.TryParse(chead.y(i), New Double) Then
-                            xhead.Add(cv.ConverterParaSI(chead.xunit, chead.x(i)))
-                            yhead.Add(cv.ConverterParaSI(chead.yunit, chead.y(i)))
+                            xhead.Add(Conversor.ConverterParaSI(chead.xunit, chead.x(i)))
+                            yhead.Add(Conversor.ConverterParaSI(chead.yunit, chead.y(i)))
                         End If
                     Next
                     For i = 0 To cnpsh.x.Count - 1
                         If Double.TryParse(cnpsh.x(i), New Double) And Double.TryParse(cnpsh.y(i), New Double) Then
-                            xnpsh.Add(cv.ConverterParaSI(cnpsh.xunit, cnpsh.x(i)))
-                            ynpsh.Add(cv.ConverterParaSI(cnpsh.yunit, cnpsh.y(i)))
+                            xnpsh.Add(Conversor.ConverterParaSI(cnpsh.xunit, cnpsh.x(i)))
+                            ynpsh.Add(Conversor.ConverterParaSI(cnpsh.yunit, cnpsh.y(i)))
                         End If
                     Next
                     For i = 0 To ceff.x.Count - 1
                         If Double.TryParse(ceff.x(i), New Double) And Double.TryParse(ceff.y(i), New Double) Then
-                            xeff.Add(cv.ConverterParaSI(ceff.xunit, ceff.x(i)))
+                            xeff.Add(Conversor.ConverterParaSI(ceff.xunit, ceff.x(i)))
                             If ceff.yunit = "%" Then
                                 yeff.Add(ceff.y(i) / 100)
                             Else
@@ -512,14 +512,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Next
                     For i = 0 To cpower.x.Count - 1
                         If Double.TryParse(cpower.x(i), New Double) And Double.TryParse(cpower.y(i), New Double) Then
-                            xpower.Add(cv.ConverterParaSI(cpower.xunit, cpower.x(i)))
-                            ypower.Add(cv.ConverterParaSI(cpower.yunit, cpower.y(i)))
+                            xpower.Add(Conversor.ConverterParaSI(cpower.xunit, cpower.x(i)))
+                            ypower.Add(Conversor.ConverterParaSI(cpower.yunit, cpower.y(i)))
                         End If
                     Next
                     For i = 0 To csystem.x.Count - 1
                         If Double.TryParse(csystem.x(i), New Double) And Double.TryParse(csystem.y(i), New Double) Then
-                            xsystem.Add(cv.ConverterParaSI(csystem.xunit, csystem.x(i)))
-                            ysystem.Add(cv.ConverterParaSI(csystem.yunit, csystem.y(i)))
+                            xsystem.Add(Conversor.ConverterParaSI(csystem.xunit, csystem.x(i)))
+                            ysystem.Add(Conversor.ConverterParaSI(csystem.yunit, csystem.y(i)))
                         End If
                     Next
 
@@ -1014,12 +1014,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Dim valor = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT("Delta P", su.spmp_deltaP), Double.Parse(valor), False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Diferenadepressoentr"), True)
                         With .Item(.Item.Count - 1)
+                            .CustomTypeConverter = New System.ComponentModel.StringConverter
                             .Tag2 = "PROP_PI_0"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_deltaP, "DP"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With
                         .Item.Add(DWSIM.App.GetLocalString("Eficincia0100"), Me, "Eficiencia", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Eficinciaglobaldabom"), True)
                         With .Item(.Item.Count - 1)
+                            .CustomTypeConverter = New System.ComponentModel.StringConverter
                             .Tag2 = "PROP_PI_1"
                             .DefaultValue = Nothing
                             .DefaultType = GetType(Nullable(Of Double))
@@ -1027,6 +1029,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Case CalculationMode.EnergyStream
                         .Item.Add(DWSIM.App.GetLocalString("Eficincia0100"), Me, "Eficiencia", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Eficinciaglobaldabom"), True)
                         With .Item(.Item.Count - 1)
+                            .CustomTypeConverter = New System.ComponentModel.StringConverter
                             .Tag2 = "PROP_PI_1"
                             .DefaultValue = Nothing
                             .DefaultType = GetType(Nullable(Of Double))
@@ -1035,6 +1038,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Dim valor = Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("Energianecessria"), su.spmp_heatflow), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Potnciarequeridapela"), True)
                         With .Item(.Item.Count - 1)
+                            .CustomTypeConverter = New System.ComponentModel.StringConverter
                             .Tag2 = "PROP_PI_3"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_pressure, "E"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
@@ -1043,6 +1047,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         Dim valor = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.Pout), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("Pressoajusante"), su.spmp_pressure), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Diferenadepressoentr"), True)
                         With .Item(.Item.Count - 1)
+                            .CustomTypeConverter = New System.ComponentModel.StringConverter
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_pressure, "P"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
                         End With
@@ -1152,16 +1157,16 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 Case 0
                     'PROP_PU_0	Pressure Increase (Head)
-                    value = cv.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault)
+                    value = Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault)
                 Case 1
                     'PROP_PU_1(Efficiency)
                     value = Me.Eficiencia.GetValueOrDefault
                 Case 2
                     'PROP_PU_2(Delta - T)
-                    value = cv.ConverterDoSI(su.spmp_deltaT, Me.DeltaT.GetValueOrDefault)
+                    value = Conversor.ConverterDoSI(su.spmp_deltaT, Me.DeltaT.GetValueOrDefault)
                 Case 3
                     'PROP_PU_3	Power Required
-                    value = cv.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ.GetValueOrDefault)
+                    value = Conversor.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ.GetValueOrDefault)
 
             End Select
 
@@ -1203,12 +1208,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Select Case propidx
                 Case 0
                     'PROP_PU_0	Pressure Increase (Head)
-                    Me.DeltaP = cv.ConverterParaSI(su.spmp_deltaP, propval)
+                    Me.DeltaP = Conversor.ConverterParaSI(su.spmp_deltaP, propval)
                 Case 1
                     'PROP_PU_1(Efficiency)
                     Me.Eficiencia = propval
                 Case 3
-                    Me.DeltaQ = cv.ConverterParaSI(su.spmp_heatflow, propval)
+                    Me.DeltaQ = Conversor.ConverterParaSI(su.spmp_heatflow, propval)
             End Select
             Return 1
         End Function

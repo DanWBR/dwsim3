@@ -414,6 +414,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 valor = Conversor.ConverterDoSI(su.diameter, Me.OrificeDiameter)
                 .Item.Add(FT(DWSIM.App.GetLocalString("OPOrificeDiameter"), su.diameter), Format(valor, FlowSheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "", True)
+                .Item(.Item.Count - 1).CustomTypeConverter = New System.ComponentModel.StringConverter
                 .Item(.Item.Count - 1).Tag2 = "PROP_OP_1"
                 .Item.Add(DWSIM.App.GetLocalString("OPBeta"), Format(Me.Beta, FlowSheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "", True)
                 .Item(.Item.Count - 1).Tag2 = "PROP_OP_2"
@@ -452,7 +453,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     value = Me.OrifType
                 Case 1
                     'PROP_OP_1	Orifice Diameter	1
-                    value = cv.ConverterDoSI(su.diameter, Me.OrificeDiameter)
+                    value = Conversor.ConverterDoSI(su.diameter, Me.OrificeDiameter)
                 Case 2
                     'PROP_OP_2	Beta (d/D)	1
                     value = Me.Beta
@@ -461,13 +462,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     value = Me.CorrectionFactor
                 Case 4
                     'PROP_OP_4	Overall Pressure Drop	0
-                    value = cv.ConverterDoSI(su.spmp_deltaP, Me.OverallPressureDrop)
+                    value = Conversor.ConverterDoSI(su.spmp_deltaP, Me.OverallPressureDrop)
                 Case 5
                     'PROP_OP_5	Orifice Pressure Drop	0
-                    value = cv.ConverterDoSI(su.spmp_deltaP, Me.OrificePressureDrop)
+                    value = Conversor.ConverterDoSI(su.spmp_deltaP, Me.OrificePressureDrop)
                 Case 6
                     'PROP_OP_6	Delta T	0
-                    value = cv.ConverterDoSI(su.spmp_deltaT, Me.DeltaT.GetValueOrDefault)
+                    value = Conversor.ConverterDoSI(su.spmp_deltaT, Me.DeltaT.GetValueOrDefault)
             End Select
 
             Return value
@@ -518,7 +519,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Me.OrifType = propval
                 Case 1
                     'PROP_OP_1	Orifice Diameter	1
-                    Me.OrificeDiameter = cv.ConverterParaSI(su.diameter, propval)
+                    Me.OrificeDiameter = Conversor.ConverterParaSI(su.diameter, propval)
                 Case 2
                     'PROP_OP_2	Beta (d/D)	1
                     Me.Beta = propval

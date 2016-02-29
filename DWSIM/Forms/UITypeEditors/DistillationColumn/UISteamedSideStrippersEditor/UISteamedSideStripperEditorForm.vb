@@ -58,9 +58,9 @@ Public Class UISteamedSideStripperEditorForm
             .Clear()
             For Each sss As SteamedSideStripper In dc.StmSStrCol.Collection.Values
                 If dc.MaterialStreams.ContainsKey(sss.ProductStreamID) And dc.MaterialStreams.ContainsKey(sss.SteamStreamID) Then
-                    '.Add(New Object() {.Count + 1, sss.Name, sss.Stages.Count, sss.FromStage, sss.ToStage, cvt.ConverterDoSI(form.Options.SelectedUnitSystem.spmp_molarflow, sss.ProductRate), dc.MaterialStreams(sss.ProductStreamID).Tag, dc.MaterialStreams(sss.SteamStreamID).Tag, sss.ID})
+                    '.Add(New Object() {.Count + 1, sss.Name, sss.Stages.Count, sss.FromStage, sss.ToStage, Conversor.ConverterDoSI(form.Options.SelectedUnitSystem.spmp_molarflow, sss.ProductRate), dc.MaterialStreams(sss.ProductStreamID).Tag, dc.MaterialStreams(sss.SteamStreamID).Tag, sss.ID})
                 Else
-                    .Add(New Object() {.Count + 1, sss.Name, sss.Stages.Count, sss.FromStage, sss.ToStage, cvt.ConverterDoSI(form.Options.SelectedUnitSystem.spmp_molarflow, sss.ProductRate), "", "", sss.ID})
+                    .Add(New Object() {.Count + 1, sss.Name, sss.Stages.Count, sss.FromStage, sss.ToStage, Conversor.ConverterDoSI(form.Options.SelectedUnitSystem.spmp_molarflow, sss.ProductRate), "", "", sss.ID})
                 End If
             Next
         End With
@@ -126,7 +126,7 @@ Public Class UISteamedSideStripperEditorForm
                 Case 4
                     dc.StmSStrCol.Collection(id).ToStage = value
                 Case 5
-                    dc.StmSStrCol.Collection(id).ProductRate = cvt.ConverterParaSI(form.Options.SelectedUnitSystem.spmp_molarflow, value)
+                    dc.StmSStrCol.Collection(id).ProductRate = Conversor.ConverterParaSI(form.Options.SelectedUnitSystem.spmp_molarflow, value)
                 Case 6
                     Dim msid As String = dc.StmSStrCol.Collection(id).ProductStreamID
                     If dc.MaterialStreams.ContainsKey(msid) Then

@@ -114,7 +114,7 @@ Public Class CompositionEditorForm
                     total += row.Cells(0).Value
                 Next
                 Dim cv As New DWSIM.SistemasDeUnidades.Conversor
-                Q = cv.ConverterParaSI(SU.spmp_molarflow, total)
+                Q = Conversor.ConverterParaSI(SU.spmp_molarflow, total)
                 For Each row In Me.GridComp.Rows
                     Me.Componentes(row.HeaderCell.Tag).FracaoMolar = row.Cells(0).Value / total
                 Next
@@ -134,7 +134,7 @@ Public Class CompositionEditorForm
                     total += row.Cells(0).Value
                 Next
                 Dim cv As New DWSIM.SistemasDeUnidades.Conversor
-                W = cv.ConverterParaSI(SU.spmp_massflow, total)
+                W = Conversor.ConverterParaSI(SU.spmp_massflow, total)
                 For Each row In Me.GridComp.Rows
                     Me.Componentes(row.HeaderCell.Tag).FracaoMassica = row.Cells(0).Value / total
                 Next
@@ -416,12 +416,12 @@ Public Class CompositionEditorForm
                 ElseIf Me.RadioButton3.Checked Then
                     Dim cv As New DWSIM.SistemasDeUnidades.Conversor
                     For Each row In Me.GridComp.Rows
-                        row.Cells(0).Value = cv.ConverterDoSI(SU.spmp_molarflow, Me.Componentes(row.HeaderCell.Tag).FracaoMolar.GetValueOrDefault * Q)
+                        row.Cells(0).Value = Conversor.ConverterDoSI(SU.spmp_molarflow, Me.Componentes(row.HeaderCell.Tag).FracaoMolar.GetValueOrDefault * Q)
                     Next
                 ElseIf Me.RadioButton4.Checked Then
                     Dim cv As New DWSIM.SistemasDeUnidades.Conversor
                     For Each row In Me.GridComp.Rows
-                        row.Cells(0).Value = cv.ConverterDoSI(SU.spmp_massflow, Me.Componentes(row.HeaderCell.Tag).FracaoMassica.GetValueOrDefault * W)
+                        row.Cells(0).Value = Conversor.ConverterDoSI(SU.spmp_massflow, Me.Componentes(row.HeaderCell.Tag).FracaoMassica.GetValueOrDefault * W)
                     Next
                 ElseIf Me.RadioButton5.Checked Then
                     'molarity = mol solute per liter solution

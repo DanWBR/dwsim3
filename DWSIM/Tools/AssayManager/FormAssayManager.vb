@@ -89,13 +89,13 @@ Public Class FormAssayManager
 
                 If .IsBulk Then
 
-                    tb_mw.Text = Format(cv.ConverterDoSI(su.spmp_molecularWeight, .MW), nf)
+                    tb_mw.Text = Format(Conversor.ConverterDoSI(su.spmp_molecularWeight, .MW), nf)
                     tb_sg.Text = Format(.SG60, nf)
-                    tb_wk.Text = Format(cv.ConverterDoSI(su.spmp_temperature, .NBPAVG), nf)
-                    tb_t1.Text = Format(cv.ConverterDoSI(su.spmp_temperature, .T1), nf)
-                    tb_t2.Text = Format(cv.ConverterDoSI(su.spmp_temperature, .T2), nf)
-                    tb_v1.Text = Format(cv.ConverterDoSI(su.spmp_cinematic_viscosity, .V1), nf)
-                    tb_v2.Text = Format(cv.ConverterDoSI(su.spmp_cinematic_viscosity, .V2), nf)
+                    tb_wk.Text = Format(Conversor.ConverterDoSI(su.spmp_temperature, .NBPAVG), nf)
+                    tb_t1.Text = Format(Conversor.ConverterDoSI(su.spmp_temperature, .T1), nf)
+                    tb_t2.Text = Format(Conversor.ConverterDoSI(su.spmp_temperature, .T2), nf)
+                    tb_v1.Text = Format(Conversor.ConverterDoSI(su.spmp_cinematic_viscosity, .V1), nf)
+                    tb_v2.Text = Format(Conversor.ConverterDoSI(su.spmp_cinematic_viscosity, .V2), nf)
 
                     GroupBoxBulk.Enabled = True
                     GroupBoxCurves.Enabled = False
@@ -105,9 +105,9 @@ Public Class FormAssayManager
                     ComboBoxDistMethod.SelectedIndex = .NBPType
                     ComboBoxBasis.SelectedItem = .CurveBasis
                     TextBoxBulkD.Text = Format(.API, nf)
-                    TextBoxBulkMW.Text = Format(cv.ConverterDoSI(su.spmp_molecularWeight, .MW), nf)
-                    TextBoxVT1.Text = Format(cv.ConverterDoSI(su.spmp_temperature, .T1), nf)
-                    TextBoxVT2.Text = Format(cv.ConverterDoSI(su.spmp_temperature, .T2), nf)
+                    TextBoxBulkMW.Text = Format(Conversor.ConverterDoSI(su.spmp_molecularWeight, .MW), nf)
+                    TextBoxVT1.Text = Format(Conversor.ConverterDoSI(su.spmp_temperature, .T1), nf)
+                    TextBoxVT2.Text = Format(Conversor.ConverterDoSI(su.spmp_temperature, .T2), nf)
                     TextBoxKAPI.Text = Format(.K_API, nf)
                     CheckBoxMW.Checked = .HasMWCurve
                     CheckBoxSG.Checked = .HasSGCurve
@@ -132,7 +132,7 @@ Public Class FormAssayManager
                     For i = 0 To .PX.Count - 1
                         idx = gridcurves.Rows.Add()
                         gridcurves.Rows(idx).Cells("vap").Value = Format(.PX(i) * 100, nf)
-                        gridcurves.Rows(idx).Cells("temp").Value = Format(cv.ConverterDoSI(su.spmp_temperature, .PY_NBP(i)), nf)
+                        gridcurves.Rows(idx).Cells("temp").Value = Format(Conversor.ConverterDoSI(su.spmp_temperature, .PY_NBP(i)), nf)
                         If CheckBoxMW.Checked Then
                             gridcurves.Rows(idx).Cells("mm").Value = Format(.PY_MW(i), nf)
                         End If
@@ -140,8 +140,8 @@ Public Class FormAssayManager
                             gridcurves.Rows(idx).Cells("dens").Value = Format(.PY_SG(i), nf)
                         End If
                         If CheckBoxVISC.Checked Then
-                            gridcurves.Rows(idx).Cells("visc1").Value = Format(cv.ConverterDoSI(su.spmp_cinematic_viscosity, .PY_V1(i)), nf)
-                            gridcurves.Rows(idx).Cells("visc2").Value = Format(cv.ConverterDoSI(su.spmp_cinematic_viscosity, .PY_V2(i)), nf)
+                            gridcurves.Rows(idx).Cells("visc1").Value = Format(Conversor.ConverterDoSI(su.spmp_cinematic_viscosity, .PY_V1(i)), nf)
+                            gridcurves.Rows(idx).Cells("visc2").Value = Format(Conversor.ConverterDoSI(su.spmp_cinematic_viscosity, .PY_V2(i)), nf)
                         End If
                     Next
 
@@ -160,7 +160,7 @@ Public Class FormAssayManager
 
     Private Sub tb_mw_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tb_mw.TextChanged
         If loaded Then
-            currentassay.MW = cv.ConverterParaSI(su.spmp_molecularWeight, tb_mw.Text)
+            currentassay.MW = Conversor.ConverterParaSI(su.spmp_molecularWeight, tb_mw.Text)
         End If
     End Sub
 
@@ -172,31 +172,31 @@ Public Class FormAssayManager
 
     Private Sub tb_wk_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tb_wk.TextChanged
         If loaded Then
-            currentassay.NBPAVG = cv.ConverterParaSI(su.spmp_temperature, tb_wk.Text)
+            currentassay.NBPAVG = Conversor.ConverterParaSI(su.spmp_temperature, tb_wk.Text)
         End If
     End Sub
 
     Private Sub tb_t1_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tb_t1.TextChanged
         If loaded Then
-            currentassay.T1 = cv.ConverterParaSI(su.spmp_temperature, tb_t1.Text)
+            currentassay.T1 = Conversor.ConverterParaSI(su.spmp_temperature, tb_t1.Text)
         End If
     End Sub
 
     Private Sub tb_t2_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tb_t2.TextChanged
         If loaded Then
-            currentassay.T2 = cv.ConverterParaSI(su.spmp_temperature, tb_t2.Text)
+            currentassay.T2 = Conversor.ConverterParaSI(su.spmp_temperature, tb_t2.Text)
         End If
     End Sub
 
     Private Sub tb_v1_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tb_v1.TextChanged
         If loaded Then
-            currentassay.V1 = cv.ConverterParaSI(su.spmp_cinematic_viscosity, tb_v1.Text)
+            currentassay.V1 = Conversor.ConverterParaSI(su.spmp_cinematic_viscosity, tb_v1.Text)
         End If
     End Sub
 
     Private Sub tb_v2_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tb_v2.TextChanged
         If loaded Then
-            currentassay.V2 = cv.ConverterParaSI(su.spmp_cinematic_viscosity, tb_v2.Text)
+            currentassay.V2 = Conversor.ConverterParaSI(su.spmp_cinematic_viscosity, tb_v2.Text)
         End If
     End Sub
 
@@ -219,13 +219,13 @@ Public Class FormAssayManager
 
     Private Sub TextBoxVT1_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxVT1.TextChanged
         If loaded Then
-            currentassay.T1 = cv.ConverterParaSI(su.spmp_temperature, TextBoxVT1.Text)
+            currentassay.T1 = Conversor.ConverterParaSI(su.spmp_temperature, TextBoxVT1.Text)
         End If
     End Sub
 
     Private Sub TextBoxVT2_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxVT2.TextChanged
         If loaded Then
-            currentassay.T2 = cv.ConverterParaSI(su.spmp_temperature, TextBoxVT2.Text)
+            currentassay.T2 = Conversor.ConverterParaSI(su.spmp_temperature, TextBoxVT2.Text)
         End If
     End Sub
 
@@ -237,7 +237,7 @@ Public Class FormAssayManager
 
     Private Sub TextBoxBulkMW_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TextBoxBulkMW.TextChanged
         If loaded Then
-            currentassay.MW = cv.ConverterParaSI(su.spmp_molecularWeight, TextBoxBulkMW.Text)
+            currentassay.MW = Conversor.ConverterParaSI(su.spmp_molecularWeight, TextBoxBulkMW.Text)
         End If
     End Sub
 
@@ -299,15 +299,15 @@ Public Class FormAssayManager
                 Case "vap"
                     currentassay.PX(e.RowIndex) = value / 100
                 Case "temp"
-                    currentassay.PY_NBP(e.RowIndex) = cv.ConverterParaSI(su.spmp_temperature, value)
+                    currentassay.PY_NBP(e.RowIndex) = Conversor.ConverterParaSI(su.spmp_temperature, value)
                 Case "mm"
                     currentassay.PY_MW(e.RowIndex) = value
                 Case "dens"
                     currentassay.PY_SG(e.RowIndex) = value
                 Case "visc1"
-                    currentassay.PY_V1(e.RowIndex) = cv.ConverterParaSI(su.spmp_cinematic_viscosity, value)
+                    currentassay.PY_V1(e.RowIndex) = Conversor.ConverterParaSI(su.spmp_cinematic_viscosity, value)
                 Case "visc2"
-                    currentassay.PY_V2(e.RowIndex) = cv.ConverterParaSI(su.spmp_cinematic_viscosity, value)
+                    currentassay.PY_V2(e.RowIndex) = Conversor.ConverterParaSI(su.spmp_cinematic_viscosity, value)
             End Select
         End If
     End Sub

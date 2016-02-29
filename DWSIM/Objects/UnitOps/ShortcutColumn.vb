@@ -683,6 +683,7 @@ final:      FlowSheet.CalculationQueue.Enqueue(objargs)
                 Dim valor = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.m_condenserpressure), FlowSheet.Options.NumberFormat)
                 .Item.Add(FT(DWSIM.App.GetLocalString("SCCondenserPressure"), su.spmp_pressure), Double.Parse(valor), False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("SCCondenserPressure"), True)
                 With .Item(.Item.Count - 1)
+                    .CustomTypeConverter = New System.ComponentModel.StringConverter
                     .Tag2 = "PROP_SC_3"
                     .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_pressure, "P"}
                     .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
@@ -690,6 +691,7 @@ final:      FlowSheet.CalculationQueue.Enqueue(objargs)
                 valor = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.m_boilerpressure), FlowSheet.Options.NumberFormat)
                 .Item.Add(FT(DWSIM.App.GetLocalString("SCReboilerPressure"), su.spmp_pressure), Double.Parse(valor), False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("SCReboilerPressure"), True)
                 With .Item(.Item.Count - 1)
+                    .CustomTypeConverter = New System.ComponentModel.StringConverter
                     .Tag2 = "PROP_SC_4"
                     .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_pressure, "P"}
                     .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
@@ -776,10 +778,10 @@ final:      FlowSheet.CalculationQueue.Enqueue(objargs)
                     value = Me.m_lightkeymolarfrac
                 Case 3
                     'PROP_SC_3	Condenser Pressure
-                    value = cv.ConverterDoSI(su.spmp_pressure, Me.m_condenserpressure)
+                    value = Conversor.ConverterDoSI(su.spmp_pressure, Me.m_condenserpressure)
                 Case 4
                     'PROP_SC_4	Reboiler Pressure
-                    value = cv.ConverterDoSI(su.spmp_pressure, Me.m_boilerpressure)
+                    value = Conversor.ConverterDoSI(su.spmp_pressure, Me.m_boilerpressure)
                 Case 5
                     'PROP_SC_5	Minimun Reflux Ratio
                     value = Me.m_Rmin
@@ -791,22 +793,22 @@ final:      FlowSheet.CalculationQueue.Enqueue(objargs)
                     value = Me.ofs
                 Case 8
                     'PROP_SC_8	Stripping Liquid Molar Flow
-                    value = cv.ConverterDoSI(su.spmp_molarflow, Me.L_)
+                    value = Conversor.ConverterDoSI(su.spmp_molarflow, Me.L_)
                 Case 9
                     'PROP_SC_9	Rectify Liquid Molar Flow
-                    value = cv.ConverterDoSI(su.spmp_molarflow, Me.L)
+                    value = Conversor.ConverterDoSI(su.spmp_molarflow, Me.L)
                 Case 10
                     'PROP_SC_10	Stripping Vapor Molar Flow
-                    value = cv.ConverterDoSI(su.spmp_molarflow, Me.V_)
+                    value = Conversor.ConverterDoSI(su.spmp_molarflow, Me.V_)
                 Case 11
                     'PROP_SC_11	Rectify Vapor Molar Flow
-                    value = cv.ConverterDoSI(su.spmp_molarflow, Me.V)
+                    value = Conversor.ConverterDoSI(su.spmp_molarflow, Me.V)
                 Case 12
                     'PROP_SC_12	Condenser Duty
-                    value = cv.ConverterDoSI(su.spmp_heatflow, Me.m_Qc)
+                    value = Conversor.ConverterDoSI(su.spmp_heatflow, Me.m_Qc)
                 Case 13
                     'PROP_SC_13	Reboiler Duty
-                    value = cv.ConverterDoSI(su.spmp_heatflow, Me.m_Qb)
+                    value = Conversor.ConverterDoSI(su.spmp_heatflow, Me.m_Qb)
             End Select
 
             Return value
@@ -857,10 +859,10 @@ final:      FlowSheet.CalculationQueue.Enqueue(objargs)
                     Me.m_lightkeymolarfrac = propval
                 Case 3
                     'PROP_SC_3	Condenser Pressure
-                    Me.m_condenserpressure = cv.ConverterParaSI(su.spmp_pressure, propval)
+                    Me.m_condenserpressure = Conversor.ConverterParaSI(su.spmp_pressure, propval)
                 Case 4
                     'PROP_SC_4	Reboiler Pressure
-                    Me.m_boilerpressure = cv.ConverterParaSI(su.spmp_pressure, propval)
+                    Me.m_boilerpressure = Conversor.ConverterParaSI(su.spmp_pressure, propval)
 
             End Select
             Return 1

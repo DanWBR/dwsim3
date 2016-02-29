@@ -349,6 +349,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         valor = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("Quedadepresso"), su.spmp_deltaP), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString(""), True)
                         With .Item(.Item.Count - 1)
+                            .CustomTypeConverter = New System.ComponentModel.StringConverter
                             .Tag2 = "PROP_VA_1"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_deltaP, "DP"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
@@ -359,6 +360,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         valor = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.OutletPressure.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("ValveOutletPressure"), su.spmp_pressure), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "", True)
                         With .Item(.Item.Count - 1)
+                            .CustomTypeConverter = New System.ComponentModel.StringConverter
                             .Tag2 = "PROP_VA_2"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_pressure, "P"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
@@ -397,13 +399,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     value = Me.CalcMode
                 Case 1
                     'PROP_VA_1	Pressure Drop
-                    value = cv.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault)
+                    value = Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault)
                 Case 2
                     'PROP_VA_2	Outlet Pressure
-                    value = cv.ConverterDoSI(su.spmp_pressure, Me.OutletPressure.GetValueOrDefault)
+                    value = Conversor.ConverterDoSI(su.spmp_pressure, Me.OutletPressure.GetValueOrDefault)
                 Case 3
                     'PROP_VA_3	Temperature Drop
-                    value = cv.ConverterDoSI(su.spmp_deltaT, Me.DeltaT.GetValueOrDefault)
+                    value = Conversor.ConverterDoSI(su.spmp_deltaT, Me.DeltaT.GetValueOrDefault)
             End Select
 
             Return value
@@ -446,10 +448,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Me.CalcMode = propval
                 Case 1
                     'PROP_VA_1	Pressure Drop
-                    Me.DeltaP = cv.ConverterParaSI(su.spmp_deltaP, propval)
+                    Me.DeltaP = Conversor.ConverterParaSI(su.spmp_deltaP, propval)
                 Case 2
                     'PROP_VA_2	Outlet Pressure
-                    Me.OutletPressure = cv.ConverterParaSI(su.spmp_pressure, propval)
+                    Me.OutletPressure = Conversor.ConverterParaSI(su.spmp_pressure, propval)
             End Select
             Return 1
         End Function

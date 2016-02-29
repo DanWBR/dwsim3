@@ -352,8 +352,8 @@ Public Class FormDataRegression
                     If b Then
                         Vx1.Add(currcase.x1p(i))
                         Vy.Add(currcase.yp(i))
-                        VP.Add(cv.ConverterParaSI(currcase.punit, currcase.pp(i)))
-                        VT.Add(cv.ConverterParaSI(currcase.tunit, currcase.tp(0)))
+                        VP.Add(Conversor.ConverterParaSI(currcase.punit, currcase.pp(i)))
+                        VT.Add(Conversor.ConverterParaSI(currcase.tunit, currcase.tp(0)))
                     End If
                     i += 1
                 Next
@@ -363,8 +363,8 @@ Public Class FormDataRegression
                     If b Then
                         Vx1.Add(currcase.x1p(i))
                         Vy.Add(currcase.yp(i))
-                        VP.Add(cv.ConverterParaSI(currcase.punit, currcase.pp(0)))
-                        VT.Add(cv.ConverterParaSI(currcase.tunit, currcase.tp(i)))
+                        VP.Add(Conversor.ConverterParaSI(currcase.punit, currcase.pp(0)))
+                        VT.Add(Conversor.ConverterParaSI(currcase.tunit, currcase.tp(i)))
                     End If
                     i += 1
                 Next
@@ -375,8 +375,8 @@ Public Class FormDataRegression
                     If b Then
                         Vx1.Add(currcase.x1p(i))
                         Vy.Add(currcase.yp(i))
-                        VP.Add(cv.ConverterParaSI(currcase.punit, currcase.pp(i)))
-                        VT.Add(cv.ConverterParaSI(currcase.tunit, currcase.tp(i)))
+                        VP.Add(Conversor.ConverterParaSI(currcase.punit, currcase.pp(i)))
+                        VT.Add(Conversor.ConverterParaSI(currcase.tunit, currcase.tp(i)))
                     End If
                     i += 1
                 Next
@@ -386,8 +386,8 @@ Public Class FormDataRegression
                     If b Then
                         Vx1.Add(currcase.x1p(i))
                         Vx2.Add(currcase.x2p(i))
-                        VP.Add(cv.ConverterParaSI(currcase.punit, currcase.pp(i)))
-                        VT.Add(cv.ConverterParaSI(currcase.tunit, currcase.tp(0)))
+                        VP.Add(Conversor.ConverterParaSI(currcase.punit, currcase.pp(i)))
+                        VT.Add(Conversor.ConverterParaSI(currcase.tunit, currcase.tp(0)))
                     End If
                     i += 1
                 Next
@@ -397,8 +397,8 @@ Public Class FormDataRegression
                     If b Then
                         Vx1.Add(currcase.x1p(i))
                         Vx2.Add(currcase.x2p(i))
-                        VP.Add(cv.ConverterParaSI(currcase.punit, currcase.pp(0)))
-                        VT.Add(cv.ConverterParaSI(currcase.tunit, currcase.tp(i)))
+                        VP.Add(Conversor.ConverterParaSI(currcase.punit, currcase.pp(0)))
+                        VT.Add(Conversor.ConverterParaSI(currcase.tunit, currcase.tp(i)))
                     End If
                     i += 1
                 Next
@@ -408,8 +408,8 @@ Public Class FormDataRegression
                     If b Then
                         Vx1.Add(currcase.x1p(i))
                         Vx2.Add(currcase.x2p(i))
-                        VP.Add(cv.ConverterParaSI(currcase.punit, currcase.pp(i)))
-                        VT.Add(cv.ConverterParaSI(currcase.tunit, currcase.tp(i)))
+                        VP.Add(Conversor.ConverterParaSI(currcase.punit, currcase.pp(i)))
+                        VT.Add(Conversor.ConverterParaSI(currcase.tunit, currcase.tp(i)))
                     End If
                     i += 1
                 Next
@@ -418,9 +418,9 @@ Public Class FormDataRegression
                 For Each b As Boolean In currcase.checkp
                     If b Then
                         Vx1.Add(currcase.x1p(i))
-                        VP.Add(cv.ConverterParaSI(currcase.punit, currcase.pp(0)))
-                        VTL.Add(cv.ConverterParaSI(currcase.tunit, currcase.tl(i)))
-                        VTS.Add(cv.ConverterParaSI(currcase.tunit, currcase.ts(i)))
+                        VP.Add(Conversor.ConverterParaSI(currcase.punit, currcase.pp(0)))
+                        VTL.Add(Conversor.ConverterParaSI(currcase.tunit, currcase.tl(i)))
+                        VTS.Add(Conversor.ConverterParaSI(currcase.tunit, currcase.ts(i)))
                     End If
                     i += 1
                 Next
@@ -1441,7 +1441,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
 
                 For i As Integer = 0 To currcase.tp.Count - 1
                     If currcase.checkp(i) Then
-                        px(i) = cv.ConverterParaSI(Me.cbTunit.SelectedItem.ToString(), currcase.tp(i))
+                        px(i) = Conversor.ConverterParaSI(Me.cbTunit.SelectedItem.ToString(), currcase.tp(i))
                     End If
                 Next
 
@@ -1562,8 +1562,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                             Try
                                 px.Add(Double.Parse(.x1p(i)))
                                 py1.Add(Double.Parse(.tp(i)))
-                                py2.Add(cv.ConverterDoSI(.tunit, .calct(j)))
-                                py4.Add(cv.ConverterDoSI(.tunit, .calct(j)))
+                                py2.Add(Conversor.ConverterDoSI(.tunit, .calct(j)))
+                                py4.Add(Conversor.ConverterDoSI(.tunit, .calct(j)))
                                 px2.Add(Double.Parse(.yp(i)))
                                 py3.Add(Double.Parse(.tp(i)))
                                 py5.Add(Double.Parse(.calcy(j)))
@@ -1591,8 +1591,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                             Try
                                 px.Add(Double.Parse(.x1p(i)))
                                 py1.Add(Double.Parse(.pp(i)))
-                                py2.Add(cv.ConverterDoSI(.punit, .calcp(j)))
-                                py4.Add(cv.ConverterDoSI(.punit, .calcp(j)))
+                                py2.Add(Conversor.ConverterDoSI(.punit, .calcp(j)))
+                                py4.Add(Conversor.ConverterDoSI(.punit, .calcp(j)))
                                 px2.Add(Double.Parse(.yp(i)))
                                 py3.Add(Double.Parse(.pp(i)))
                                 py5.Add(Double.Parse(.calcy(j)))
@@ -1620,8 +1620,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                             Try
                                 px.Add(Double.Parse(.x1p(i)))
                                 py1.Add(Double.Parse(.tp(i)))
-                                py2.Add(cv.ConverterDoSI(.tunit, .calct(j)))
-                                py4.Add(cv.ConverterDoSI(.punit, .calcp(j)))
+                                py2.Add(Conversor.ConverterDoSI(.tunit, .calct(j)))
+                                py4.Add(Conversor.ConverterDoSI(.punit, .calcp(j)))
                                 py3.Add(Double.Parse(.pp(i)))
                                 py5.Add(Double.Parse(.calcy(j)))
                             Catch ex As Exception
@@ -1763,10 +1763,10 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             For Each b As Boolean In .checkp
                 If b Then
                     Try
-                        Me.gridstats.Rows.Add(New Object() {.x1p(i), .calcx1l1(j), .x2p(i), .calcx1l2(j), .yp(i), .calcy(j), .tp(i), cv.ConverterDoSI(.tunit, .calct(j)), .pp(i), cv.ConverterDoSI(.punit, .calcp(j)), _
+                        Me.gridstats.Rows.Add(New Object() {.x1p(i), .calcx1l1(j), .x2p(i), .calcx1l2(j), .yp(i), .calcy(j), .tp(i), Conversor.ConverterDoSI(.tunit, .calct(j)), .pp(i), Conversor.ConverterDoSI(.punit, .calcp(j)), _
                                                             .calcy(j) - .yp(i), (.calcy(j) - .yp(i)) / .yp(i), (.calcy(j) - .yp(i)) / .yp(i) * 100, _
-                                                           cv.ConverterDoSI(.punit, .calcp(j)) - .pp(i), (cv.ConverterDoSI(.punit, .calcp(j)) - .pp(i)) / .pp(i), (cv.ConverterDoSI(.punit, .calcp(j)) - .pp(i)) / .pp(i) * 100, _
-                                                            cv.ConverterDoSI(.tunit, .calct(j)) - .tp(i), (cv.ConverterDoSI(.tunit, .calct(j)) - .tp(i)) / .tp(i), (cv.ConverterDoSI(.tunit, .calct(j)) - .tp(i)) / .tp(i) * 100, _
+                                                           Conversor.ConverterDoSI(.punit, .calcp(j)) - .pp(i), (Conversor.ConverterDoSI(.punit, .calcp(j)) - .pp(i)) / .pp(i), (Conversor.ConverterDoSI(.punit, .calcp(j)) - .pp(i)) / .pp(i) * 100, _
+                                                            Conversor.ConverterDoSI(.tunit, .calct(j)) - .tp(i), (Conversor.ConverterDoSI(.tunit, .calct(j)) - .tp(i)) / .tp(i), (Conversor.ConverterDoSI(.tunit, .calct(j)) - .tp(i)) / .tp(i) * 100, _
                                                             .calcx1l1(j) - .x1p(i), (.calcx1l1(j) - .x1p(i)) / .x1p(i), (.calcx1l1(j) - .x1p(i)) / .x1p(i) * 100, _
                                                             .calcx1l2(j) - .x2p(i), (.calcx1l2(j) - .x2p(i)) / .x2p(i), (.calcx1l2(j) - .x2p(i)) / .x2p(i) * 100, (.calctl(j) - .tl(i)) / .tl(i) * 100, (.calcts(j) - .ts(i)) / .ts(i) * 100})
                     Catch ex As Exception
@@ -2641,7 +2641,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
 
     Private Sub tbTitle_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tbTitle.TextChanged
         Me.Text = tbTitle.Text
-   End Sub
+    End Sub
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
 
@@ -2677,7 +2677,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                         Me.gridInEst.Rows(0).Cells(1).Value = estimates(0)
                         Me.gridInEst.Rows(1).Cells(1).Value = estimates(1)
                     Catch ex As Exception
-                         MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     Finally
                         Cursor = Cursors.Default
                     End Try
@@ -2687,7 +2687,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                         Me.gridInEst.Rows(0).Cells(1).Value = estimates(0)
                         Me.gridInEst.Rows(1).Cells(1).Value = estimates(1)
                     Catch ex As Exception
-                         MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     Finally
                         Cursor = Cursors.Default
                     End Try
@@ -3225,7 +3225,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
 
             If Me.GridExpData.Rows(c.RowIndex).Cells("colP").Value IsNot Nothing Then
                 If Me.GridExpData.Rows(c.RowIndex).Cells("colP").Value.ToString() <> "" Then
-                    P = cv.ConverterParaSI(Me.cbPunit.SelectedItem.ToString(), Me.GridExpData.Rows(c.RowIndex).Cells("colP").Value)
+                    P = Conversor.ConverterParaSI(Me.cbPunit.SelectedItem.ToString(), Me.GridExpData.Rows(c.RowIndex).Cells("colP").Value)
                 Else
                     P = 0
                 End If
@@ -3234,7 +3234,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             End If
             If Me.GridExpData.Rows(c.RowIndex).Cells("colT").Value IsNot Nothing Then
                 If Me.GridExpData.Rows(c.RowIndex).Cells("colT").Value.ToString() <> "" Then
-                    T = cv.ConverterParaSI(Me.cbTunit.SelectedItem.ToString(), Me.GridExpData.Rows(c.RowIndex).Cells("colT").Value)
+                    T = Conversor.ConverterParaSI(Me.cbTunit.SelectedItem.ToString(), Me.GridExpData.Rows(c.RowIndex).Cells("colT").Value)
                 Else
                     T = 0
                 End If
@@ -3280,14 +3280,14 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                             result = Interfaces.ExcelIntegration.TVFFlash(model, 1, T, 1, New Object() {comp1, comp2}, New Double() {y1, 1 - y1}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
                             P = result(4, 0)
                             x11 = result(2, 1)
-                            Me.GridExpData.Rows(c.RowIndex).Cells("colP").Value = Format(cv.ConverterDoSI(Me.cbPunit.SelectedItem.ToString, P), "N4")
+                            Me.GridExpData.Rows(c.RowIndex).Cells("colP").Value = Format(Conversor.ConverterDoSI(Me.cbPunit.SelectedItem.ToString, P), "N4")
                             Me.GridExpData.Rows(c.RowIndex).Cells("colx1").Value = Format(x11, "N4")
                         ElseIf T = 0.0# Then
                             'P-y => x, T
                             result = Interfaces.ExcelIntegration.PVFFlash(model, 1, P, 1, New Object() {comp1, comp2}, New Double() {y1, 1 - y1}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
                             T = result(4, 0)
                             x11 = result(2, 1)
-                            Me.GridExpData.Rows(c.RowIndex).Cells("colT").Value = Format(cv.ConverterDoSI(Me.cbTunit.SelectedItem.ToString, T), "N4")
+                            Me.GridExpData.Rows(c.RowIndex).Cells("colT").Value = Format(Conversor.ConverterDoSI(Me.cbTunit.SelectedItem.ToString, T), "N4")
                             Me.GridExpData.Rows(c.RowIndex).Cells("colx1").Value = Format(x11, "N4")
                         End If
                     Case 2
@@ -3296,14 +3296,14 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                             result = Interfaces.ExcelIntegration.TVFFlash(model, 1, T, 0, New Object() {comp1, comp2}, New Double() {x11, 1 - x11}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
                             P = result(4, 0)
                             y1 = result(2, 0)
-                            Me.GridExpData.Rows(c.RowIndex).Cells("colP").Value = Format(cv.ConverterDoSI(Me.cbPunit.SelectedItem.ToString, P), "N4")
+                            Me.GridExpData.Rows(c.RowIndex).Cells("colP").Value = Format(Conversor.ConverterDoSI(Me.cbPunit.SelectedItem.ToString, P), "N4")
                             Me.GridExpData.Rows(c.RowIndex).Cells("coly1").Value = Format(y1, "N4")
                         ElseIf T = 0.0# Then
                             'P-x => y, T
                             result = Interfaces.ExcelIntegration.PVFFlash(model, 1, P, 0, New Object() {comp1, comp2}, New Double() {x11, 1 - x11}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
                             T = result(4, 0)
                             y1 = result(2, 0)
-                            Me.GridExpData.Rows(c.RowIndex).Cells("colT").Value = Format(cv.ConverterDoSI(Me.cbTunit.SelectedItem.ToString, T), "N4")
+                            Me.GridExpData.Rows(c.RowIndex).Cells("colT").Value = Format(Conversor.ConverterDoSI(Me.cbTunit.SelectedItem.ToString, T), "N4")
                             Me.GridExpData.Rows(c.RowIndex).Cells("coly1").Value = Format(y1, "N4")
                         End If
                     Case 3
@@ -3312,14 +3312,14 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                             result = Interfaces.ExcelIntegration.PVFFlash(model, 1, P, 0, New Object() {comp1, comp2}, New Double() {x11, 1 - x11}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
                             T = result(4, 0)
                             y1 = result(2, 0)
-                            Me.GridExpData.Rows(c.RowIndex).Cells("colT").Value = Format(cv.ConverterDoSI(Me.cbTunit.SelectedItem.ToString, T), "N4")
+                            Me.GridExpData.Rows(c.RowIndex).Cells("colT").Value = Format(Conversor.ConverterDoSI(Me.cbTunit.SelectedItem.ToString, T), "N4")
                             Me.GridExpData.Rows(c.RowIndex).Cells("coly1").Value = Format(y1, "N4")
                         ElseIf x11 = -1 Then
                             'P-y => x, T
                             result = Interfaces.ExcelIntegration.PVFFlash(model, 1, P, 1, New Object() {comp1, comp2}, New Double() {y1, 1 - y1}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
                             P = result(4, 0)
                             x11 = result(2, 1)
-                            Me.GridExpData.Rows(c.RowIndex).Cells("colT").Value = Format(cv.ConverterDoSI(Me.cbTunit.SelectedItem.ToString, T), "N4")
+                            Me.GridExpData.Rows(c.RowIndex).Cells("colT").Value = Format(Conversor.ConverterDoSI(Me.cbTunit.SelectedItem.ToString, T), "N4")
                             Me.GridExpData.Rows(c.RowIndex).Cells("colx1").Value = Format(x11, "N4")
                         End If
                     Case 4
@@ -3328,14 +3328,14 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                             result = Interfaces.ExcelIntegration.TVFFlash(model, 1, T, 0, New Object() {comp1, comp2}, New Double() {x11, 1 - x11}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
                             P = result(4, 0)
                             y1 = result(2, 0)
-                            Me.GridExpData.Rows(c.RowIndex).Cells("colP").Value = Format(cv.ConverterDoSI(Me.cbPunit.SelectedItem.ToString, P), "N4")
+                            Me.GridExpData.Rows(c.RowIndex).Cells("colP").Value = Format(Conversor.ConverterDoSI(Me.cbPunit.SelectedItem.ToString, P), "N4")
                             Me.GridExpData.Rows(c.RowIndex).Cells("coly1").Value = Format(y1, "N4")
                         ElseIf x11 = -1 Then
                             'T-y => x, P
                             result = Interfaces.ExcelIntegration.TVFFlash(model, 1, T, 1, New Object() {comp1, comp2}, New Double() {y1, 1 - y1}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
                             P = result(4, 0)
                             x11 = result(2, 1)
-                            Me.GridExpData.Rows(c.RowIndex).Cells("colP").Value = Format(cv.ConverterDoSI(Me.cbPunit.SelectedItem.ToString, P), "N4")
+                            Me.GridExpData.Rows(c.RowIndex).Cells("colP").Value = Format(Conversor.ConverterDoSI(Me.cbPunit.SelectedItem.ToString, P), "N4")
                             Me.GridExpData.Rows(c.RowIndex).Cells("colx1").Value = Format(x11, "N4")
                         End If
                 End Select

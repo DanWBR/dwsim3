@@ -248,14 +248,14 @@ Public Class FrmColdProperties
 
             RVP = (10 ^ ((Log(TVP / 6894.76) + 7261 / (310.95 * 1.8) - 12.82) / (2799 / (310.95 * 1.8) - 2.227)) + 14.6959) * 6894.76
 
-            Me.TextBox1.Text = Format(cv.ConverterDoSI(su.spmp_pressure, TVP), nf)
-            Me.TextBox2.Text = Format(cv.ConverterDoSI(su.spmp_pressure, RVP), nf)
-            Me.TextBox3.Text = Format(cv.ConverterDoSI(su.spmp_viscosity, v1), nf)
-            Me.TextBox4.Text = Format(cv.ConverterDoSI(su.spmp_viscosity, v2), nf)
-            Me.TextBox5.Text = Format(cv.ConverterDoSI(su.spmp_temperature, FlashPoint), nf)
-            Me.TextBox6.Text = Format(cv.ConverterDoSI(su.spmp_temperature, PourPoint), nf)
-            Me.TextBox7.Text = Format(cv.ConverterDoSI(su.spmp_temperature, CloudPoint), nf)
-            Me.TextBox8.Text = Format(cv.ConverterDoSI(su.spmp_temperature, FreezingPoint), nf)
+            Me.TextBox1.Text = Format(Conversor.ConverterDoSI(su.spmp_pressure, TVP), nf)
+            Me.TextBox2.Text = Format(Conversor.ConverterDoSI(su.spmp_pressure, RVP), nf)
+            Me.TextBox3.Text = Format(Conversor.ConverterDoSI(su.spmp_viscosity, v1), nf)
+            Me.TextBox4.Text = Format(Conversor.ConverterDoSI(su.spmp_viscosity, v2), nf)
+            Me.TextBox5.Text = Format(Conversor.ConverterDoSI(su.spmp_temperature, FlashPoint), nf)
+            Me.TextBox6.Text = Format(Conversor.ConverterDoSI(su.spmp_temperature, PourPoint), nf)
+            Me.TextBox7.Text = Format(Conversor.ConverterDoSI(su.spmp_temperature, CloudPoint), nf)
+            Me.TextBox8.Text = Format(Conversor.ConverterDoSI(su.spmp_temperature, FreezingPoint), nf)
             Me.TextBox9.Text = Format(RefractionIndex, nf)
             Me.TextBox10.Text = Format(CetaneIndex, nf)
 
@@ -263,6 +263,6 @@ Public Class FrmColdProperties
 
     End Sub
 
-  
+
 
 End Class

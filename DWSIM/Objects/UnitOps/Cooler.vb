@@ -436,6 +436,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Dim valor = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                 .Item.Add(FT(DWSIM.App.GetLocalString("Quedadepresso"), su.spmp_deltaP), Double.Parse(valor), False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Quedadepressoaplicad4"), True)
                 With .Item(.Item.Count - 1)
+                    .CustomTypeConverter = New System.ComponentModel.StringConverter
                     .Tag2 = "PROP_CL_0"
                     .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_deltaP, "DP"}
                     .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
@@ -451,6 +452,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         valor = Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("CalorRemovido"), su.spmp_heatflow), Double.Parse(valor), False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Quantidadedecalorced"), True)
                         With .Item(.Item.Count - 1)
+                            .CustomTypeConverter = New System.ComponentModel.StringConverter
                             .Tag2 = "PROP_CL_3"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_heatflow, "E"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
@@ -461,6 +463,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         valor = Format(Conversor.ConverterDoSI(su.spmp_temperature, Me.OutletTemperature.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature"), su.spmp_temperature), Double.Parse(valor), False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), "", True)
                         With .Item(.Item.Count - 1)
+                            .CustomTypeConverter = New System.ComponentModel.StringConverter
                             .Tag2 = "PROP_CL_2"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_temperature, "T"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
@@ -514,22 +517,22 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 Case 0
                     'PROP_HT_0	Pressure Drop
-                    value = cv.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault)
+                    value = Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault)
                 Case 1
                     'PROP_HT_1(Efficiency)
                     value = Me.Eficiencia.GetValueOrDefault
                 Case 2
                     'PROP_HT_2	Outlet Temperature
-                    value = cv.ConverterDoSI(su.spmp_temperature, Me.OutletTemperature.GetValueOrDefault)
+                    value = Conversor.ConverterDoSI(su.spmp_temperature, Me.OutletTemperature.GetValueOrDefault)
                 Case 3
                     'PROP_CL_3	Heat Removed
-                    value = cv.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ.GetValueOrDefault)
+                    value = Conversor.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ.GetValueOrDefault)
                 Case 4
                     'PROP_HT_4 Outlet Vapour fraction
                     value = Me.OutletVaporFraction.GetValueOrDefault
                 Case 5
                     'PROP_HT_5 DeltaT
-                    value = cv.ConverterDoSI(su.spmp_deltaT, Me.DeltaT.GetValueOrDefault)
+                    value = Conversor.ConverterDoSI(su.spmp_deltaT, Me.DeltaT.GetValueOrDefault)
 
             End Select
 
@@ -572,16 +575,16 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 Case 0
                     'PROP_HT_0	Pressure Drop
-                    Me.DeltaP = cv.ConverterParaSI(su.spmp_deltaP, propval)
+                    Me.DeltaP = Conversor.ConverterParaSI(su.spmp_deltaP, propval)
                 Case 1
                     'PROP_HT_1(Efficiency)
                     Me.Eficiencia = propval
                 Case 2
                     'PROP_HT_2	Outlet Temperature
-                    Me.OutletTemperature = cv.ConverterParaSI(su.spmp_temperature, propval)
+                    Me.OutletTemperature = Conversor.ConverterParaSI(su.spmp_temperature, propval)
                 Case 3
                     'PROP_HT_3	Heat Added
-                    Me.DeltaQ = cv.ConverterParaSI(su.spmp_heatflow, propval)
+                    Me.DeltaQ = Conversor.ConverterParaSI(su.spmp_heatflow, propval)
                 Case 4
                     'PROP_HT_4	Outlet Vapour fraction
                     Me.OutletVaporFraction = propval

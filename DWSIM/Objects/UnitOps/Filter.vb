@@ -467,19 +467,24 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 Dim value As Double
 
-                value = Converter.ConverterDoSI(su.mediumresistance, Me.FilterMediumResistance)
+                value = Conversor.ConverterDoSI(su.mediumresistance, Me.FilterMediumResistance)
                 .Item.Add(FT(DWSIM.App.GetLocalString("FilterMediumResistance"), su.mediumresistance), Format(value, FlowSheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("FilterMediumResistanceDesc"), True)
+                .Item(.Item.Count - 1).CustomTypeConverter = New System.ComponentModel.StringConverter
                 .Item(.Item.Count - 1).Tag2 = "PROP_FT_4"
-                value = Converter.ConverterDoSI(su.cakeresistance, Me.SpecificCakeResistance)
+                value = Conversor.ConverterDoSI(su.cakeresistance, Me.SpecificCakeResistance)
                 .Item.Add(FT(DWSIM.App.GetLocalString("FilterSpecificCakeResistance"), su.cakeresistance), Format(value, FlowSheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("FilterSpecificCakeResistanceDesc"), True)
+                .Item(.Item.Count - 1).CustomTypeConverter = New System.ComponentModel.StringConverter
                 .Item(.Item.Count - 1).Tag2 = "PROP_FT_5"
-                value = Converter.ConverterDoSI(su.time, Me.FilterCycleTime)
+                value = Conversor.ConverterDoSI(su.time, Me.FilterCycleTime)
                 .Item.Add(FT(DWSIM.App.GetLocalString("FilterCycleTime"), su.time), Format(value, FlowSheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("FilterCycleTimeDesc"), True)
+                .Item(.Item.Count - 1).CustomTypeConverter = New System.ComponentModel.StringConverter
                 .Item(.Item.Count - 1).Tag2 = "PROP_FT_3"
 
                 .Item.Add(DWSIM.App.GetLocalString("FilterSubmergedAreaFraction"), Me, "SubmergedAreaFraction", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("FilterSubmergedAreaFractionDesc"), True)
+                .Item(.Item.Count - 1).CustomTypeConverter = New System.ComponentModel.StringConverter
                 .Item(.Item.Count - 1).Tag2 = "PROP_FT_6"
                 .Item.Add(DWSIM.App.GetLocalString("FilterCakeRelativeHumidity"), Me, "CakeRelativeHumidity", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("FilterCakeRelativeHumidityDesc"), True)
+                .Item(.Item.Count - 1).CustomTypeConverter = New System.ComponentModel.StringConverter
                 .Item(.Item.Count - 1).Tag2 = "PROP_FT_2"
 
                 .Item.Add(DWSIM.App.GetLocalString("FilterCalculationMode"), Me, "CalcMode", False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("FilterCalculationModeDesc"), True)
@@ -487,23 +492,25 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 Select Case Me.CalcMode
                     Case CalculationMode.Design
-                        value = Converter.ConverterDoSI(su.spmp_deltaP, Me.PressureDrop)
+                        value = Conversor.ConverterDoSI(su.spmp_deltaP, Me.PressureDrop)
                         .Item.Add(FT(DWSIM.App.GetLocalString("FilterPressureDrop"), su.spmp_deltaP), Format(value, FlowSheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("FilterPressureDropDesc"), True)
+                        .Item(.Item.Count - 1).CustomTypeConverter = New System.ComponentModel.StringConverter
                         .Item(.Item.Count - 1).Tag2 = "PROP_FT_7"
                     Case CalculationMode.Simulation
-                        value = Converter.ConverterDoSI(su.area, Me.TotalFilterArea)
+                        value = Conversor.ConverterDoSI(su.area, Me.TotalFilterArea)
                         .Item.Add(FT(DWSIM.App.GetLocalString("FilterArea"), su.area), Format(value, FlowSheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("FilterAreaDesc"), True)
+                        .Item(.Item.Count - 1).CustomTypeConverter = New System.ComponentModel.StringConverter
                         .Item(.Item.Count - 1).Tag2 = "PROP_FT_1"
                 End Select
 
                 If Me.GraphicObject.Calculated Then
                     Select Case Me.CalcMode
                         Case CalculationMode.Design
-                            .Item.Add(FT(DWSIM.App.GetLocalString("FilterArea"), su.area), Format(Converter.ConverterDoSI(su.area, Me.TotalFilterArea), FlowSheet.Options.NumberFormat), True, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("FilterAreaDesc"), True)
+                            .Item.Add(FT(DWSIM.App.GetLocalString("FilterArea"), su.area), Format(Conversor.ConverterDoSI(su.area, Me.TotalFilterArea), FlowSheet.Options.NumberFormat), True, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("FilterAreaDesc"), True)
                         Case CalculationMode.Simulation
-                            .Item.Add(FT(DWSIM.App.GetLocalString("FilterPressureDrop"), su.spmp_deltaP), Format(Converter.ConverterDoSI(su.spmp_deltaP, Me.PressureDrop), FlowSheet.Options.NumberFormat), True, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("FilterPressureDropDesc"), True)
+                            .Item.Add(FT(DWSIM.App.GetLocalString("FilterPressureDrop"), su.spmp_deltaP), Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.PressureDrop), FlowSheet.Options.NumberFormat), True, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("FilterPressureDropDesc"), True)
                     End Select
-                    .Item.Add(FT(DWSIM.App.GetLocalString("CSepEnergyImbalance"), su.spmp_heatflow), Format(Converter.ConverterDoSI(su.spmp_heatflow, Me.EnergyImb), FlowSheet.Options.NumberFormat), True, DWSIM.App.GetLocalString("Resultados3"), "", True)
+                    .Item.Add(FT(DWSIM.App.GetLocalString("CSepEnergyImbalance"), su.spmp_heatflow), Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.EnergyImb), FlowSheet.Options.NumberFormat), True, DWSIM.App.GetLocalString("Resultados3"), "", True)
                 End If
 
                 If Me.IsSpecAttached = True Then
@@ -534,28 +541,28 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Select Case propidx
                 Case 0
                     'PROP_FT_0	Energy Balance	
-                    value = cv.ConverterDoSI(su.spmp_heatflow, Me.EnergyImb)
+                    value = Conversor.ConverterDoSI(su.spmp_heatflow, Me.EnergyImb)
                 Case 1
                     'PROP_FT_1	Total Filter Area	
-                    value = cv.ConverterDoSI(su.area, Me.TotalFilterArea)
+                    value = Conversor.ConverterDoSI(su.area, Me.TotalFilterArea)
                 Case 2
                     'PROP_FT_2	Cake Relative Humidity (%)	
                     value = Me.CakeRelativeHumidity
                 Case 3
                     'PROP_FT_3	Cycle Time	
-                    value = cv.ConverterDoSI(su.time, Me.FilterCycleTime)
+                    value = Conversor.ConverterDoSI(su.time, Me.FilterCycleTime)
                 Case 4
                     'PROP_FT_4	Filter Medium Resistance	
-                    value = cv.ConverterDoSI(su.mediumresistance, Me.FilterMediumResistance)
+                    value = Conversor.ConverterDoSI(su.mediumresistance, Me.FilterMediumResistance)
                 Case 5
                     'PROP_FT_5	Specific Cake Resistance	
-                    value = cv.ConverterDoSI(su.cakeresistance, Me.SpecificCakeResistance)
+                    value = Conversor.ConverterDoSI(su.cakeresistance, Me.SpecificCakeResistance)
                 Case 6
                     'PROP_FT_6	Submerged Area Fraction	
                     value = Me.SubmergedAreaFraction
                 Case 7
                     'PROP_FT_7	Total Pressure Drop	
-                    value = cv.ConverterDoSI(su.spmp_pressure, Me.PressureDrop)
+                    value = Conversor.ConverterDoSI(su.spmp_pressure, Me.PressureDrop)
             End Select
 
             Return value
@@ -582,25 +589,25 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     'PROP_FT_0	Energy Balance	
                 Case 1
                     'PROP_FT_1	Total Filter Area	
-                    Me.TotalFilterArea = cv.ConverterParaSI(su.area, propval)
+                    Me.TotalFilterArea = Conversor.ConverterParaSI(su.area, propval)
                 Case 2
                     'PROP_FT_2	Cake Relative Humidity (%)	
                     Me.CakeRelativeHumidity = propval
                 Case 3
                     'PROP_FT_3	Cycle Time	
-                    Me.FilterCycleTime = cv.ConverterParaSI(su.time, propval)
+                    Me.FilterCycleTime = Conversor.ConverterParaSI(su.time, propval)
                 Case 4
                     'PROP_FT_4	Filter Medium Resistance	
-                    Me.FilterMediumResistance = cv.ConverterParaSI(su.mediumresistance, propval)
+                    Me.FilterMediumResistance = Conversor.ConverterParaSI(su.mediumresistance, propval)
                 Case 5
                     'PROP_FT_5	Specific Cake Resistance	
-                    Me.SpecificCakeResistance = cv.ConverterParaSI(su.cakeresistance, propval)
+                    Me.SpecificCakeResistance = Conversor.ConverterParaSI(su.cakeresistance, propval)
                 Case 6
                     'PROP_FT_6	Submerged Area Fraction	
                     Me.SubmergedAreaFraction = propval
                 Case 7
                     'PROP_FT_7	Total Pressure Drop	
-                    Me.PressureDrop = cv.ConverterParaSI(su.spmp_deltaP, propval)
+                    Me.PressureDrop = Conversor.ConverterParaSI(su.spmp_deltaP, propval)
             End Select
 
             Return 1

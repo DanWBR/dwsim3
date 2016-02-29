@@ -310,6 +310,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Dim valor = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                 .Item.Add(FT(DWSIM.App.GetLocalString("Quedadepresso"), su.spmp_deltaP), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Quedadepressoaplicad5"), True)
                 With .Item(.Item.Count - 1)
+                    .CustomTypeConverter = New System.ComponentModel.StringConverter
                     .Tag2 = "PROP_TK_0"
                     .DefaultValue = Nothing
                     .DefaultType = GetType(Nullable(Of Double))
@@ -318,6 +319,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 valor = Format(Conversor.ConverterDoSI(su.volume, Me.Volume), FlowSheet.Options.NumberFormat)
                 .Item.Add(FT(DWSIM.App.GetLocalString("TKVol"), su.volume), valor, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("TKVol"), True)
                 With .Item(.Item.Count - 1)
+                    .CustomTypeConverter = New System.ComponentModel.StringConverter
                     .Tag2 = "PROP_TK_1"
                     .DefaultValue = Nothing
                     .DefaultType = GetType(Double)
@@ -336,6 +338,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Else
                     .Item.Add(FT(DWSIM.App.GetLocalString("TKResTime"), su.time), Format(Conversor.ConverterDoSI(su.time, Me.ResidenceTime), FlowSheet.Options.NumberFormat), True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("TKResTime"), True)
                     With .Item(.Item.Count - 1)
+                        .CustomTypeConverter = New System.ComponentModel.StringConverter
                         .DefaultValue = Nothing
                         .DefaultType = GetType(Double)
                     End With
@@ -356,7 +359,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 Case 0
                     'PROP_TK_0	Pressure Drop
-                    value = cv.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault)
+                    value = Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault)
 
             End Select
 
@@ -399,10 +402,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Select Case propidx
                 Case 0
                     'PROP_TK_0	Pressure Drop
-                    Me.DeltaP = cv.ConverterParaSI(su.spmp_deltaP, propval)
+                    Me.DeltaP = Conversor.ConverterParaSI(su.spmp_deltaP, propval)
                 Case 1
                     'PROP_TK_1	Volume
-                    Me.DeltaP = cv.ConverterParaSI(su.volume, propval)
+                    Me.DeltaP = Conversor.ConverterParaSI(su.volume, propval)
             End Select
             Return 1
         End Function

@@ -53,7 +53,7 @@ Public Class UIPumpAroundsEditorForm
         With Me.dgv1.Rows
             .Clear()
             For Each pa As PumpAround In dc.PArCol.Collection.Values
-                .Add(New Object() {.Count + 1, pa.Name, pa.FromStage, pa.ToStage, cvt.ConverterDoSI(form.Options.SelectedUnitSystem.spmp_deltaP, pa.DeltaP), pa.ID})
+                .Add(New Object() {.Count + 1, pa.Name, pa.FromStage, pa.ToStage, Conversor.ConverterDoSI(form.Options.SelectedUnitSystem.spmp_deltaP, pa.DeltaP), pa.ID})
             Next
         End With
 
@@ -105,7 +105,7 @@ Public Class UIPumpAroundsEditorForm
                 Case 3
                     dc.PArCol.Collection(id).ToStage = value
                 Case 4
-                    dc.PArCol.Collection(id).DeltaP = cvt.ConverterParaSI(form.Options.SelectedUnitSystem.spmp_deltaP, value)
+                    dc.PArCol.Collection(id).DeltaP = Conversor.ConverterParaSI(form.Options.SelectedUnitSystem.spmp_deltaP, value)
             End Select
         End If
     End Sub

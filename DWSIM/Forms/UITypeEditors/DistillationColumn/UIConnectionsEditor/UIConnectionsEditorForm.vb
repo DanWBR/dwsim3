@@ -106,7 +106,7 @@ Public Class UIConnectionsEditorForm
                 Dim st = (From st2 As Stage In dc.Stages Select st2 Where st2.ID = str.AssociatedStage).FirstOrDefault
                 If st Is Nothing Then st = (From st2 As Stage In dc.Stages Select st2 Where st2.Name = str.AssociatedStage).FirstOrDefault
                 If st Is Nothing Then st = dc.Stages(0)
-                Me.dgv2.Rows.Add(New Object() {dgv2.Rows.Count + 1, st.Name, ReturnObjTag(str.StreamID), str.StreamPhase.ToString, cvt.ConverterDoSI(form.Options.SelectedUnitSystem.spmp_molarflow, str.FlowRate.Value), str.ID})
+                Me.dgv2.Rows.Add(New Object() {dgv2.Rows.Count + 1, st.Name, ReturnObjTag(str.StreamID), str.StreamPhase.ToString, Conversor.ConverterDoSI(form.Options.SelectedUnitSystem.spmp_molarflow, str.FlowRate.Value), str.ID})
                 Me.dgv2.Rows(Me.dgv2.Rows.Count - 1).Cells(2).Tag = st.ID
             End If
         Next
@@ -556,7 +556,7 @@ Public Class UIConnectionsEditorForm
                         If dc.MaterialStreams.ContainsKey(id) Then dc.MaterialStreams(id).StreamPhase = StreamInformation.Phase.V
                     End If
                 Case 4
-                    If dc.MaterialStreams.ContainsKey(id) Then dc.MaterialStreams(id).FlowRate.Value = cvt.ConverterParaSI(form.Options.SelectedUnitSystem.spmp_molarflow, value)
+                    If dc.MaterialStreams.ContainsKey(id) Then dc.MaterialStreams(id).FlowRate.Value = Conversor.ConverterParaSI(form.Options.SelectedUnitSystem.spmp_molarflow, value)
             End Select
             dc.CheckConnPos()
             form.FormSurface.FlowsheetDesignSurface.Invalidate()

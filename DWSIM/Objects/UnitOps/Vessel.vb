@@ -697,6 +697,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Dim valor = Format(Conversor.ConverterDoSI(su.spmp_temperature, Me.FlashTemperature), FlowSheet.Options.NumberFormat)
                     .Item.Add(FT(DWSIM.App.GetLocalString("Temperatura"), su.spmp_temperature), Double.Parse(valor), False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("Temperaturadeseparao"), True)
                     With .Item(.Item.Count - 1)
+                        .CustomTypeConverter = New System.ComponentModel.StringConverter
                         .Tag2 = "PROP_SV_0"
                         .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_temperature, "T"}
                         .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
@@ -707,6 +708,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Dim valor = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.FlashPressure), FlowSheet.Options.NumberFormat)
                     .Item.Add(FT(DWSIM.App.GetLocalString("Presso"), su.spmp_pressure), Double.Parse(valor), False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("Pressodeseparao"), True)
                     With .Item(.Item.Count - 1)
+                        .CustomTypeConverter = New System.ComponentModel.StringConverter
                         .Tag2 = "PROP_SV_1"
                         .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_pressure, "P"}
                         .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
@@ -733,10 +735,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 Case 0
                     'PROP_SV_0	Separation Temperature
-                    value = cv.ConverterDoSI(su.spmp_temperature, Me.FlashTemperature)
+                    value = Conversor.ConverterDoSI(su.spmp_temperature, Me.FlashTemperature)
                 Case 1
                     'PROP_SV_1	Separation Pressure
-                    value = cv.ConverterDoSI(su.spmp_pressure, Me.FlashPressure)
+                    value = Conversor.ConverterDoSI(su.spmp_pressure, Me.FlashPressure)
 
             End Select
 
@@ -772,10 +774,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Select Case propidx
                 Case 0
                     'PROP_SV_0	Separation Temperature
-                    Me.FlashTemperature = cv.ConverterParaSI(su.spmp_temperature, propval)
+                    Me.FlashTemperature = Conversor.ConverterParaSI(su.spmp_temperature, propval)
                 Case 1
                     'PROP_SV_1	Separation Pressure
-                    Me.FlashPressure = cv.ConverterParaSI(su.spmp_pressure, propval)
+                    Me.FlashPressure = Conversor.ConverterParaSI(su.spmp_pressure, propval)
             End Select
             Return 1
         End Function

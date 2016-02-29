@@ -738,22 +738,22 @@ Namespace DWSIM.SimulationObjects.SpecialOps
                     value = Me.MaximumIterations
                 Case 1
                     'PROP_RY_1	Mass Flow Tolerance
-                    value = cv.ConverterDoSI(su.spmp_massflow, Me.ConvergenceParameters.VazaoMassica)
+                    value = Conversor.ConverterDoSI(su.spmp_massflow, Me.ConvergenceParameters.VazaoMassica)
                 Case 2
                     'PROP_RY_2	Temperature Tolerance
-                    value = cv.ConverterDoSI(su.spmp_temperature, Me.ConvergenceParameters.Temperatura)
+                    value = Conversor.ConverterDoSI(su.spmp_temperature, Me.ConvergenceParameters.Temperatura)
                 Case 3
                     'PROP_RY_3	Pressure Tolerance
-                    value = cv.ConverterDoSI(su.spmp_pressure, Me.ConvergenceParameters.Pressao)
+                    value = Conversor.ConverterDoSI(su.spmp_pressure, Me.ConvergenceParameters.Pressao)
                 Case 4
                     'PROP_RY_4	Mass Flow Error
-                    value = cv.ConverterDoSI(su.spmp_massflow, Me.ConvergenceHistory.VazaoMassicaE)
+                    value = Conversor.ConverterDoSI(su.spmp_massflow, Me.ConvergenceHistory.VazaoMassicaE)
                 Case 5
                     'PROP_RY_5	Temperature Error
-                    value = cv.ConverterDoSI(su.spmp_temperature, Me.ConvergenceHistory.TemperaturaE)
+                    value = Conversor.ConverterDoSI(su.spmp_temperature, Me.ConvergenceHistory.TemperaturaE)
                 Case 6
                     'PROP_RY_6	Pressure Error
-                    value = cv.ConverterDoSI(su.spmp_pressure, Me.ConvergenceHistory.PressaoE)
+                    value = Conversor.ConverterDoSI(su.spmp_pressure, Me.ConvergenceHistory.PressaoE)
             End Select
 
             Return value
@@ -799,13 +799,13 @@ Namespace DWSIM.SimulationObjects.SpecialOps
                     Me.MaximumIterations = propval
                 Case 1
                     'PROP_RY_1	Mass Flow Tolerance
-                    Me.ConvergenceParameters.VazaoMassica = cv.ConverterParaSI(su.spmp_massflow, propval)
+                    Me.ConvergenceParameters.VazaoMassica = Conversor.ConverterParaSI(su.spmp_massflow, propval)
                 Case 2
                     'PROP_RY_2	Temperature Tolerance
-                    Me.ConvergenceParameters.Temperatura = cv.ConverterParaSI(su.spmp_temperature, propval)
+                    Me.ConvergenceParameters.Temperatura = Conversor.ConverterParaSI(su.spmp_temperature, propval)
                 Case 3
                     'PROP_RY_3	Pressure Tolerance
-                    Me.ConvergenceParameters.Pressao = cv.ConverterParaSI(su.spmp_pressure, propval)
+                    Me.ConvergenceParameters.Pressao = Conversor.ConverterParaSI(su.spmp_pressure, propval)
 
             End Select
             Return 1

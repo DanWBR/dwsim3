@@ -61,15 +61,15 @@ Public Class FormPCBulk
 
         If tb_mw.Text <> "" Then MW = Double.Parse(tb_mw.Text)
         If tb_sg.Text <> "" Then SG = Double.Parse(tb_sg.Text)
-        If tb_wk.Text <> "" Then TB = cv.ConverterParaSI(su.spmp_temperature, Double.Parse(tb_wk.Text))
-        If tb_v1.Text <> "" Then V1 = cv.ConverterParaSI(su.spmp_cinematic_viscosity, Double.Parse(tb_v1.Text)) Else V1 = 0.0#
-        If tb_v2.Text <> "" Then V2 = cv.ConverterParaSI(su.spmp_cinematic_viscosity, Double.Parse(tb_v2.Text)) Else V2 = 0.0#
-        If tb_t1.Text <> "" Then T1 = cv.ConverterParaSI(su.spmp_temperature, Double.Parse(tb_t1.Text))
-        If tb_t2.Text <> "" Then T2 = cv.ConverterParaSI(su.spmp_temperature, Double.Parse(tb_t2.Text))
+        If tb_wk.Text <> "" Then TB = Conversor.ConverterParaSI(su.spmp_temperature, Double.Parse(tb_wk.Text))
+        If tb_v1.Text <> "" Then V1 = Conversor.ConverterParaSI(su.spmp_cinematic_viscosity, Double.Parse(tb_v1.Text)) Else V1 = 0.0#
+        If tb_v2.Text <> "" Then V2 = Conversor.ConverterParaSI(su.spmp_cinematic_viscosity, Double.Parse(tb_v2.Text)) Else V2 = 0.0#
+        If tb_t1.Text <> "" Then T1 = Conversor.ConverterParaSI(su.spmp_temperature, Double.Parse(tb_t1.Text))
+        If tb_t2.Text <> "" Then T2 = Conversor.ConverterParaSI(su.spmp_temperature, Double.Parse(tb_t2.Text))
 
         MW0 = Double.Parse(Me.TextBoxMW0.Text)
         SG0 = Double.Parse(Me.TextBoxSG0.Text)
-        TB0 = cv.ConverterParaSI(su.spmp_temperature, Double.Parse(Me.TextBoxTB0.Text))
+        TB0 = Conversor.ConverterParaSI(su.spmp_temperature, Double.Parse(Me.TextBoxTB0.Text))
 
         'Dim dMF(n), dMW(n), dSG(n), dTB(n), dMW_(n), dSG_(n), dTB_(n), dVA(n), dVB(n), dV1(n), dV2(n), dV1_(n), dV2_(n), q(n) As Double()
         Array.Resize(dMF, n + 1)
@@ -501,14 +501,14 @@ Public Class FormPCBulk
             With subst
                 nm = .Nome
                 fm = Format(.FracaoMolar, nf)
-                nbp = Format(cv.ConverterDoSI(su.spmp_temperature, .ConstantProperties.NBP), nf)
+                nbp = Format(Conversor.ConverterDoSI(su.spmp_temperature, .ConstantProperties.NBP), nf)
                 sgi = Format(.ConstantProperties.PF_SG, nf)
                 mm = Format(.ConstantProperties.PF_MM, nf)
-                ct = Format(cv.ConverterDoSI(su.spmp_temperature, .ConstantProperties.Critical_Temperature), nf)
-                cp = Format(cv.ConverterDoSI(su.spmp_pressure, .ConstantProperties.Critical_Pressure), nf)
+                ct = Format(Conversor.ConverterDoSI(su.spmp_temperature, .ConstantProperties.Critical_Temperature), nf)
+                cp = Format(Conversor.ConverterDoSI(su.spmp_pressure, .ConstantProperties.Critical_Pressure), nf)
                 af = Format(.ConstantProperties.Acentric_Factor, nf)
-                visc1 = Format(cv.ConverterDoSI(su.spmp_cinematic_viscosity, .ConstantProperties.PF_v1), "E")
-                visc2 = Format(cv.ConverterDoSI(su.spmp_cinematic_viscosity, .ConstantProperties.PF_v2), "E")
+                visc1 = Format(Conversor.ConverterDoSI(su.spmp_cinematic_viscosity, .ConstantProperties.PF_v1), "E")
+                visc2 = Format(Conversor.ConverterDoSI(su.spmp_cinematic_viscosity, .ConstantProperties.PF_v2), "E")
                 prvs = Format(.ConstantProperties.PR_Volume_Translation_Coefficient, "N6")
                 srkvs = Format(.ConstantProperties.SRK_Volume_Translation_Coefficient, "N6")
             End With
@@ -700,12 +700,12 @@ Public Class FormPCBulk
         Me.LabelVisc1.Text = su.spmp_cinematic_viscosity
         Me.LabelVisc2.Text = su.spmp_cinematic_viscosity
 
-        Me.tb_t1.Text = cv.ConverterDoSI(su.spmp_temperature, 37.78 + 273.15).ToString(nf)
-        Me.tb_t2.Text = cv.ConverterDoSI(su.spmp_temperature, 98.89 + 273.15).ToString(nf)
+        Me.tb_t1.Text = Conversor.ConverterDoSI(su.spmp_temperature, 37.78 + 273.15).ToString(nf)
+        Me.tb_t2.Text = Conversor.ConverterDoSI(su.spmp_temperature, 98.89 + 273.15).ToString(nf)
 
         Me.TextBoxSG0.Text = (0.7).ToString(nf)
         Me.TextBoxMW0.Text = 80
-        Me.TextBoxTB0.Text = cv.ConverterDoSI(su.spmp_temperature, 333).ToString(nf)
+        Me.TextBoxTB0.Text = Conversor.ConverterDoSI(su.spmp_temperature, 333).ToString(nf)
 
         With Me.DataGridView2.Columns
             .Item(2).HeaderText += " (" & su.spmp_temperature & ")"
@@ -785,7 +785,7 @@ Public Class FormPCBulk
         'salvar ensaio
 
         Try
-            Dim myassay As Assay.Assay = New Assay.Assay(tb_mw.Text, tb_sg.Text, tb_wk.Text, cv.ConverterParaSI("C", tb_t1.Text), cv.ConverterParaSI("C", tb_t2.Text), cv.ConverterParaSI("cSt", tb_v1.Text), cv.ConverterParaSI("cSt", tb_v2.Text))
+            Dim myassay As Assay.Assay = New Assay.Assay(tb_mw.Text, tb_sg.Text, tb_wk.Text, Conversor.ConverterParaSI("C", tb_t1.Text), Conversor.ConverterParaSI("C", tb_t2.Text), Conversor.ConverterParaSI("cSt", tb_v1.Text), Conversor.ConverterParaSI("cSt", tb_v2.Text))
             myassay.Name = Me.TextBox1.Text
             frm.Options.PetroleumAssays.Add(Guid.NewGuid().ToString, myassay)
             MessageBox.Show("Assay data was saved succesfully.", "DWSIM", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -809,11 +809,11 @@ Public Class FormPCBulk
 
                 Me.tb_mw.Text = Format(myassay.MW, nf)
                 Me.tb_sg.Text = Format(myassay.SG60, nf)
-                Me.tb_t1.Text = Format(cv.ConverterDoSI("C", myassay.T1), nf)
-                Me.tb_t2.Text = Format(cv.ConverterDoSI("C", myassay.T2), nf)
+                Me.tb_t1.Text = Format(Conversor.ConverterDoSI("C", myassay.T1), nf)
+                Me.tb_t2.Text = Format(Conversor.ConverterDoSI("C", myassay.T2), nf)
                 Me.tb_wk.Text = Format(myassay.NBPAVG, nf)
-                Me.tb_v1.Text = Format(cv.ConverterDoSI("cSt", myassay.V1), nf)
-                Me.tb_v2.Text = Format(cv.ConverterDoSI("cSt", myassay.V2), nf)
+                Me.tb_v1.Text = Format(Conversor.ConverterDoSI("cSt", myassay.V1), nf)
+                Me.tb_v2.Text = Format(Conversor.ConverterDoSI("cSt", myassay.V2), nf)
 
             End If
 

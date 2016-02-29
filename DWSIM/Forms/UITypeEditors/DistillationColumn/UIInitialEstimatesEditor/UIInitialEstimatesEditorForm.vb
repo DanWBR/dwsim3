@@ -55,7 +55,7 @@ Public Class UIInitialEstimatesEditorForm
         Dim i As Integer = 0
         Dim count As Integer = dc.Stages.Count
         For Each st As Stage In dc.Stages
-            dgvv.Rows.Add(New Object() {dc.Stages(i).Name, Format(cvt.ConverterDoSI(su.spmp_temperature, dc.InitialEstimates.StageTemps(i).Value), nf), Format(cvt.ConverterDoSI(su.spmp_molarflow, dc.InitialEstimates.VapMolarFlows(i).Value), nf), Format(cvt.ConverterDoSI(su.spmp_molarflow, dc.InitialEstimates.LiqMolarFlows(i).Value), nf)})
+            dgvv.Rows.Add(New Object() {dc.Stages(i).Name, Format(Conversor.ConverterDoSI(su.spmp_temperature, dc.InitialEstimates.StageTemps(i).Value), nf), Format(Conversor.ConverterDoSI(su.spmp_molarflow, dc.InitialEstimates.VapMolarFlows(i).Value), nf), Format(Conversor.ConverterDoSI(su.spmp_molarflow, dc.InitialEstimates.LiqMolarFlows(i).Value), nf)})
             dgvv.Rows(dgvv.Rows.Count - 1).HeaderCell.Value = i.ToString()
             i += 1
         Next
@@ -219,11 +219,11 @@ Public Class UIInitialEstimatesEditorForm
             Dim count As Integer = dc.Stages.Count
             Select Case e.ColumnIndex
                 Case 1
-                    dc.InitialEstimates.StageTemps(e.RowIndex).Value = cvt.ConverterParaSI(su.spmp_temperature, value)
+                    dc.InitialEstimates.StageTemps(e.RowIndex).Value = Conversor.ConverterParaSI(su.spmp_temperature, value)
                 Case 2
-                    dc.InitialEstimates.VapMolarFlows(e.RowIndex).Value = cvt.ConverterParaSI(su.spmp_molarflow, value)
+                    dc.InitialEstimates.VapMolarFlows(e.RowIndex).Value = Conversor.ConverterParaSI(su.spmp_molarflow, value)
                 Case 3
-                    dc.InitialEstimates.LiqMolarFlows(e.RowIndex).Value = cvt.ConverterParaSI(su.spmp_molarflow, value)
+                    dc.InitialEstimates.LiqMolarFlows(e.RowIndex).Value = Conversor.ConverterParaSI(su.spmp_molarflow, value)
             End Select
         End If
     End Sub
@@ -291,9 +291,9 @@ Public Class UIInitialEstimatesEditorForm
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
         Dim i, j As Integer
         For i = 0 To dc.NumberOfStages - 1
-            dgvv.Rows(i).Cells(1).Value = Format(cvt.ConverterDoSI(su.spmp_temperature, dc.Tf(i)), nf)
-            dgvv.Rows(i).Cells(2).Value = Format(cvt.ConverterDoSI(su.spmp_molarflow, dc.Vf(i)), nf)
-            dgvv.Rows(i).Cells(3).Value = Format(cvt.ConverterDoSI(su.spmp_molarflow, dc.Lf(i)), nf)
+            dgvv.Rows(i).Cells(1).Value = Format(Conversor.ConverterDoSI(su.spmp_temperature, dc.Tf(i)), nf)
+            dgvv.Rows(i).Cells(2).Value = Format(Conversor.ConverterDoSI(su.spmp_molarflow, dc.Vf(i)), nf)
+            dgvv.Rows(i).Cells(3).Value = Format(Conversor.ConverterDoSI(su.spmp_molarflow, dc.Lf(i)), nf)
             For j = 0 To dc.compids.Count - 1
                 dgvcl.Rows(i).Cells(j + 1).Value = Format(dc.xf(i)(j), nf)
                 dgvcv.Rows(i).Cells(j + 1).Value = Format(dc.yf(i)(j), nf)
@@ -318,7 +318,7 @@ Public Class UIInitialEstimatesEditorForm
         Dim i As Integer = 0
         Dim count As Integer = dc.Stages.Count
         For Each st As Stage In dc.Stages
-            dgvv.Rows.Add(New Object() {dc.Stages(i).Name, Format(cvt.ConverterDoSI(su.spmp_temperature, _ies.StageTemps(i).Value), nf), Format(cvt.ConverterDoSI(su.spmp_molarflow, _ies.VapMolarFlows(i).Value), nf), Format(cvt.ConverterDoSI(su.spmp_molarflow, _ies.LiqMolarFlows(i).Value), nf)})
+            dgvv.Rows.Add(New Object() {dc.Stages(i).Name, Format(Conversor.ConverterDoSI(su.spmp_temperature, _ies.StageTemps(i).Value), nf), Format(Conversor.ConverterDoSI(su.spmp_molarflow, _ies.VapMolarFlows(i).Value), nf), Format(Conversor.ConverterDoSI(su.spmp_molarflow, _ies.LiqMolarFlows(i).Value), nf)})
             dgvv.Rows(dgvv.Rows.Count - 1).HeaderCell.Value = i
             dgvv_CellValueChanged(Me, New DataGridViewCellEventArgs(1, dgvcv.Rows.Count - 1))
             dgvv_CellValueChanged(Me, New DataGridViewCellEventArgs(2, dgvcv.Rows.Count - 1))

@@ -450,8 +450,8 @@ Public Class FormLLEDiagram
 
         mat.SetFlowsheet(Frm)
         pp.CurrentMaterialStream = mat
-        P = cv.ConverterParaSI(su.spmp_pressure, tbP.Text)
-        T = cv.ConverterParaSI(su.spmp_temperature, tbT.Text)
+        P = Conversor.ConverterParaSI(su.spmp_pressure, tbP.Text)
+        T = Conversor.ConverterParaSI(su.spmp_temperature, tbT.Text)
         mat.Fases(0).SPMProperties.pressure = P
         mat.Fases(0).SPMProperties.temperature = T
 
@@ -620,10 +620,10 @@ Public Class FormLLEDiagram
             cbPropPack.SelectedIndex = 0
 
             Me.lblT.Text = su.spmp_temperature
-            Me.tbT.Text = Format(cv.ConverterDoSI(su.spmp_temperature, 298.15), nf)
+            Me.tbT.Text = Format(Conversor.ConverterDoSI(su.spmp_temperature, 298.15), nf)
 
             Me.lblP.Text = su.spmp_pressure
-            Me.tbP.Text = Format(cv.ConverterDoSI(su.spmp_pressure, 101400), nf)
+            Me.tbP.Text = Format(Conversor.ConverterDoSI(su.spmp_pressure, 101400), nf)
 
             DataGridView1.Columns(0).HeaderText = "[1] " & cbComp1.Text
             DataGridView1.Columns(1).HeaderText = "[1] " & cbComp2.Text

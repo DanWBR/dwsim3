@@ -194,9 +194,9 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             Dim spval1, spval2, spfval1, spfval2 As Double
             Dim spci1, spci2 As Integer
 
-            spval1 = cv.ConverterParaSI(_specs("C").SpecUnit, _specs("C").SpecValue)
+            spval1 = Conversor.ConverterParaSI(_specs("C").SpecUnit, _specs("C").SpecValue)
             spci1 = _specs("C").ComponentIndex
-            spval2 = cv.ConverterParaSI(_specs("R").SpecUnit, _specs("R").SpecValue)
+            spval2 = Conversor.ConverterParaSI(_specs("R").SpecUnit, _specs("R").SpecValue)
             spci2 = _specs("R").ComponentIndex
 
             Dim sum1(_ns) As Double
@@ -669,9 +669,9 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             Dim spval1, spval2, spfval1, spfval2 As Double
             Dim spci1, spci2 As Integer
 
-            spval1 = cv.ConverterParaSI(_specs("C").SpecUnit, _specs("C").SpecValue)
+            spval1 = Conversor.ConverterParaSI(_specs("C").SpecUnit, _specs("C").SpecValue)
             spci1 = _specs("C").ComponentIndex
-            spval2 = cv.ConverterParaSI(_specs("R").SpecUnit, _specs("R").SpecValue)
+            spval2 = Conversor.ConverterParaSI(_specs("R").SpecUnit, _specs("R").SpecValue)
             spci2 = _specs("R").ComponentIndex
 
             Dim sum1(_ns) As Double
@@ -1147,9 +1147,9 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
             Dim spval1, spval2 As Double
             Dim spci1, spci2 As Integer
 
-            spval1 = cv.ConverterParaSI(specs("C").SpecUnit, specs("C").SpecValue)
+            spval1 = Conversor.ConverterParaSI(specs("C").SpecUnit, specs("C").SpecValue)
             spci1 = specs("C").ComponentIndex
-            spval2 = cv.ConverterParaSI(specs("R").SpecUnit, specs("R").SpecValue)
+            spval2 = Conversor.ConverterParaSI(specs("R").SpecUnit, specs("R").SpecValue)
             spci2 = specs("R").ComponentIndex
 
             _ns = ns
@@ -2027,8 +2027,8 @@ restart:            fx = Me.FunctionValue(xvar)
             Dim cv As New SistemasDeUnidades.Conversor
             Dim spval1, spval2 As Double
 
-            spval1 = cv.ConverterParaSI(specs("C").SpecUnit, specs("C").SpecValue)
-            spval2 = cv.ConverterParaSI(specs("R").SpecUnit, specs("R").SpecValue)
+            spval1 = Conversor.ConverterParaSI(specs("C").SpecUnit, specs("C").SpecValue)
+            spval2 = Conversor.ConverterParaSI(specs("R").SpecUnit, specs("R").SpecValue)
 
             Select Case specs("C").SType
                 Case ColumnSpec.SpecType.Component_Fraction, _
@@ -3632,9 +3632,9 @@ restart:            fx = Me.FunctionValue(xvar)
             Dim spval1, spval2 As Double
             Dim spci1, spci2 As Integer
 
-            spval1 = cv.ConverterParaSI(specs("C").SpecUnit, specs("C").SpecValue)
+            spval1 = Conversor.ConverterParaSI(specs("C").SpecUnit, specs("C").SpecValue)
             spci1 = specs("C").ComponentIndex
-            spval2 = cv.ConverterParaSI(specs("R").SpecUnit, specs("R").SpecValue)
+            spval2 = Conversor.ConverterParaSI(specs("R").SpecUnit, specs("R").SpecValue)
             spci2 = specs("R").ComponentIndex
 
             Dim ic, ec As Integer

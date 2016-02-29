@@ -525,6 +525,7 @@ fix:            Me.PropertyPackage.CurrentMaterialStream = form.Collections.CLCS
                         Dim valor = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT("Delta P", su.spmp_deltaP), Double.Parse(valor), False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Diferenadepressoentr"), True)
                         With .Item(.Item.Count - 1)
+                            .CustomTypeConverter = New System.ComponentModel.StringConverter
                             .Tag2 = "PROP_CO_0"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_deltaP, "DP"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
@@ -533,6 +534,7 @@ fix:            Me.PropertyPackage.CurrentMaterialStream = form.Collections.CLCS
                         Dim valor = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.POut.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                         .Item.Add(FT(DWSIM.App.GetLocalString("Presso"), su.spmp_pressure), Double.Parse(valor), False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("Pressoajusante"), True)
                         With .Item(.Item.Count - 1)
+                            .CustomTypeConverter = New System.ComponentModel.StringConverter
                             .Tag2 = "PROP_CO_4"
                             .Tag = New Object() {FlowSheet.Options.NumberFormat, su.spmp_pressure, "P"}
                             .CustomEditor = New DWSIM.Editors.Generic.UIUnitConverter
@@ -586,19 +588,19 @@ fix:            Me.PropertyPackage.CurrentMaterialStream = form.Collections.CLCS
 
                 Case 0
                     'PROP_CO_0	Pressure Increase (Head)
-                    value = cv.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault)
+                    value = Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault)
                 Case 1
                     'PROP_CO_1(Efficiency)
                     value = Me.EficienciaAdiabatica.GetValueOrDefault
                 Case 2
                     'PROP_CO_2(Delta - T)
-                    value = cv.ConverterDoSI(su.spmp_deltaT, Me.DeltaT.GetValueOrDefault)
+                    value = Conversor.ConverterDoSI(su.spmp_deltaT, Me.DeltaT.GetValueOrDefault)
                 Case 3
                     'PROP_CO_3	Power Required
-                    value = cv.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ.GetValueOrDefault)
+                    value = Conversor.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ.GetValueOrDefault)
                 Case 4
                     'PROP_CO_4	Pressure Out
-                    value = cv.ConverterDoSI(su.spmp_pressure, Me.POut.GetValueOrDefault)
+                    value = Conversor.ConverterDoSI(su.spmp_pressure, Me.POut.GetValueOrDefault)
 
             End Select
 
@@ -641,13 +643,13 @@ fix:            Me.PropertyPackage.CurrentMaterialStream = form.Collections.CLCS
             Select Case propidx
                 Case 0
                     'PROP_CO_0	Pressure Increase (Head)
-                    Me.DeltaP = cv.ConverterParaSI(su.spmp_deltaP, propval)
+                    Me.DeltaP = Conversor.ConverterParaSI(su.spmp_deltaP, propval)
                 Case 1
                     'PROP_CO_1(Efficiency)
                     Me.EficienciaAdiabatica = propval
                 Case 4
                     'PROP_CO_4(Pressure Out)
-                    Me.POut = cv.ConverterParaSI(su.spmp_pressure, propval)
+                    Me.POut = Conversor.ConverterParaSI(su.spmp_pressure, propval)
             End Select
             Return 1
         End Function

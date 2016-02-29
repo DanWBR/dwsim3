@@ -341,8 +341,8 @@
             yunit = Me.selectedpump.Curves("HEAD").yunit
             For i = 0 To x.Count - 1
                 If Double.TryParse(x(i), New Double) And Double.TryParse(y(i), New Double) Then
-                    pxh.Add(cv.ConverterDoSI(flowunit, cv.ConverterParaSI(xunit, x(i))))
-                    pyh.Add(cv.ConverterDoSI(headunit, cv.ConverterParaSI(yunit, y(i))))
+                    pxh.Add(Conversor.ConverterDoSI(flowunit, Conversor.ConverterParaSI(xunit, x(i))))
+                    pyh.Add(Conversor.ConverterDoSI(headunit, Conversor.ConverterParaSI(yunit, y(i))))
                 End If
             Next
         End If
@@ -354,8 +354,8 @@
             yunit = Me.selectedpump.Curves("POWER").yunit
             For i = 0 To x.Count - 1
                 If Double.TryParse(x(i), New Double) And Double.TryParse(y(i), New Double) Then
-                    pxp.Add(cv.ConverterDoSI(flowunit, cv.ConverterParaSI(xunit, x(i))))
-                    pyp.Add(cv.ConverterDoSI(powerunit, cv.ConverterParaSI(yunit, y(i))))
+                    pxp.Add(Conversor.ConverterDoSI(flowunit, Conversor.ConverterParaSI(xunit, x(i))))
+                    pyp.Add(Conversor.ConverterDoSI(powerunit, Conversor.ConverterParaSI(yunit, y(i))))
                 End If
             Next
         End If
@@ -367,7 +367,7 @@
             yunit = Me.selectedpump.Curves("EFF").yunit
             For i = 0 To x.Count - 1
                 If Double.TryParse(x(i), New Double) And Double.TryParse(y(i), New Double) Then
-                    pxe.Add(cv.ConverterDoSI(flowunit, cv.ConverterParaSI(xunit, x(i))))
+                    pxe.Add(Conversor.ConverterDoSI(flowunit, Conversor.ConverterParaSI(xunit, x(i))))
                     If yunit = "%" Then
                         If effunit = "%" Then
                             pye.Add(CDbl(y(i)))
@@ -392,8 +392,8 @@
             yunit = Me.selectedpump.Curves("NPSH").yunit
             For i = 0 To x.Count - 1
                 If Double.TryParse(x(i), New Double) And Double.TryParse(y(i), New Double) Then
-                    pxn.Add(cv.ConverterDoSI(flowunit, cv.ConverterParaSI(xunit, x(i))))
-                    pyn.Add(cv.ConverterDoSI(headunit, cv.ConverterParaSI(yunit, y(i))))
+                    pxn.Add(Conversor.ConverterDoSI(flowunit, Conversor.ConverterParaSI(xunit, x(i))))
+                    pyn.Add(Conversor.ConverterDoSI(headunit, Conversor.ConverterParaSI(yunit, y(i))))
                 End If
             Next
         End If
@@ -405,17 +405,17 @@
             yunit = Me.selectedpump.Curves("SYSTEM").yunit
             For i = 0 To x.Count - 1
                 If Double.TryParse(x(i), New Double) And Double.TryParse(y(i), New Double) Then
-                    pxs.Add(cv.ConverterDoSI(flowunit, cv.ConverterParaSI(xunit, x(i))))
-                    pys.Add(cv.ConverterDoSI(headunit, cv.ConverterParaSI(yunit, y(i))))
+                    pxs.Add(Conversor.ConverterDoSI(flowunit, Conversor.ConverterParaSI(xunit, x(i))))
+                    pys.Add(Conversor.ConverterDoSI(headunit, Conversor.ConverterParaSI(yunit, y(i))))
                 End If
             Next
         End If
 
-        pxop.Add(cv.ConverterDoSI(flowunit, Me.selectedpump.CurveFlow))
-        pyop.Add(cv.ConverterDoSI(headunit, Me.selectedpump.CurveSysHead))
+        pxop.Add(Conversor.ConverterDoSI(flowunit, Me.selectedpump.CurveFlow))
+        pyop.Add(Conversor.ConverterDoSI(headunit, Me.selectedpump.CurveSysHead))
 
-        pxnd.Add(cv.ConverterDoSI(flowunit, Me.selectedpump.CurveFlow))
-        pynd.Add(cv.ConverterDoSI(headunit, Me.selectedpump.NPSH))
+        pxnd.Add(Conversor.ConverterDoSI(flowunit, Me.selectedpump.CurveFlow))
+        pynd.Add(Conversor.ConverterDoSI(headunit, Me.selectedpump.NPSH))
 
         Dim line As New ZedGraph.LineObj(Color.Black, 0, 0, 0, 0)
 

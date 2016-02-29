@@ -302,6 +302,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Import Include="DWSIM.DWSIM.SistemasDeUnidades" />
     <Import Include="Microsoft.VisualBasic" />
     <Import Include="System" />
     <Import Include="System.Collections" />
@@ -867,7 +868,7 @@
     <Compile Include="Objects\UnitOps\Splitter.vb" />
     <Compile Include="Objects\Streams\Streams.vb" />
     <Compile Include="Objects\Classes\Thermo\BaseThermoClasses.vb" />
-    <Compile Include="Objects\Classes\Units\SistemasDeUnidades.vb" />
+    <Compile Include="Objects\Classes\Units\SystemsOfUnits.vb" />
     <Compile Include="Objects\UnitOps\Tank.vb" />
     <Compile Include="Objects\UnitOps\Turbine.vb" />
     <Compile Include="Objects\UnitOps\Valve.vb" />

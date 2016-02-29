@@ -199,13 +199,15 @@ Imports PropertyGridEx
 
         'handle other property changes
 
-        Dim Conversor = New DWSIM.SistemasDeUnidades.Conversor
-
         Dim sobj As Microsoft.Msdn.Samples.GraphicObjects.GraphicObject = Me.GraphicObject
 
         FlowSheet.FormSurface.FlowsheetDesignSurface.SelectedObject = sobj
 
         If Not sobj Is Nothing Then
+
+            Dim value As Double, units As String
+            value = e.ChangedItem.GetValue
+            units = e.ChangedItem.GetUnits
 
             If sobj.TipoObjeto = TipoObjeto.FlowsheetUO Then
 
@@ -248,31 +250,59 @@ Imports PropertyGridEx
                     Dim T, P, W, Q, QV, HM, SM, VF As Double
 
                     If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Temperatura")) Then
-                        T = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+                        If units <> "" Then
+                            T = Conversor.ConverterParaSI(units, value)
+                        Else
+                            T = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+                        End If
                         ms.Fases(0).SPMProperties.temperature = T
                     ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Presso")) Then
-                        P = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
+                        If units <> "" Then
+                            P = Conversor.ConverterParaSI(units, value)
+                        Else
+                            P = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
+                        End If
                         ms.Fases(0).SPMProperties.pressure = P
                     ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Vazomssica")) Then
-                        W = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_massflow, e.ChangedItem.Value)
+                        If units <> "" Then
+                            W = Conversor.ConverterParaSI(units, value)
+                        Else
+                            W = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_massflow, e.ChangedItem.Value)
+                        End If
                         ms.Fases(0).SPMProperties.massflow = W
                         ms.Fases(0).SPMProperties.molarflow = Nothing
                         ms.Fases(0).SPMProperties.volumetric_flow = Nothing
                     ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Vazomolar")) Then
-                        Q = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_molarflow, e.ChangedItem.Value)
+                        If units <> "" Then
+                            Q = Conversor.ConverterParaSI(units, value)
+                        Else
+                            Q = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_molarflow, e.ChangedItem.Value)
+                        End If
                         ms.Fases(0).SPMProperties.molarflow = Q
                         ms.Fases(0).SPMProperties.massflow = Nothing
                         ms.Fases(0).SPMProperties.volumetric_flow = Nothing
                     ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Vazovolumtrica")) Then
-                        QV = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_volumetricFlow, e.ChangedItem.Value)
+                        If units <> "" Then
+                            QV = Conversor.ConverterParaSI(units, value)
+                        Else
+                            QV = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_volumetricFlow, e.ChangedItem.Value)
+                        End If
                         ms.Fases(0).SPMProperties.volumetric_flow = QV
                         ms.Fases(0).SPMProperties.massflow = Nothing
                         ms.Fases(0).SPMProperties.molarflow = Nothing
                     ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("EntalpiaEspecfica")) Then
-                        HM = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_enthalpy, e.ChangedItem.Value)
+                        If units <> "" Then
+                            HM = Conversor.ConverterParaSI(units, value)
+                        Else
+                            HM = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_enthalpy, e.ChangedItem.Value)
+                        End If
                         ms.Fases(0).SPMProperties.enthalpy = HM
                     ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("EntropiaEspecfica")) Then
-                        SM = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_entropy, e.ChangedItem.Value)
+                        If units <> "" Then
+                            SM = Conversor.ConverterParaSI(units, value)
+                        Else
+                            SM = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_entropy, e.ChangedItem.Value)
+                        End If
                         ms.Fases(0).SPMProperties.entropy = SM
                     ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Vapor")) Then
                         VF = e.ChangedItem.Value
@@ -299,8 +329,12 @@ Imports PropertyGridEx
 
                 If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Energia")) Then
 
-                    es.Energia = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_heatflow, e.ChangedItem.Value)
-
+                    If units <> "" Then
+                        es.Energia = Conversor.ConverterParaSI(units, value)
+                    Else
+                        es.Energia = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_heatflow, e.ChangedItem.Value)
+                    End If
+                    
                 End If
 
                 If FlowSheet.Options.CalculatorActivated Then
@@ -363,18 +397,34 @@ Imports PropertyGridEx
 
                     Select Case sp.OperationMode
                         Case SimulationObjects.UnitOps.Splitter.OpMode.StreamMassFlowSpec
-                            sp.StreamFlowSpec = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_massflow, e.ChangedItem.Value)
+                            If units <> "" Then
+                                sp.StreamFlowSpec = Conversor.ConverterParaSI(units, value)
+                            Else
+                                sp.StreamFlowSpec = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_massflow, e.ChangedItem.Value)
+                            End If
                         Case SimulationObjects.UnitOps.Splitter.OpMode.StreamMoleFlowSpec
-                            sp.StreamFlowSpec = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_molarflow, e.ChangedItem.Value)
+                            If units <> "" Then
+                                sp.StreamFlowSpec = Conversor.ConverterParaSI(units, value)
+                            Else
+                                sp.StreamFlowSpec = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_molarflow, e.ChangedItem.Value)
+                            End If
                     End Select
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetPropertyName("PROP_SP_2")) Then
 
                     Select Case sp.OperationMode
                         Case SimulationObjects.UnitOps.Splitter.OpMode.StreamMassFlowSpec
-                            sp.Stream2FlowSpec = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_massflow, e.ChangedItem.Value)
+                            If units <> "" Then
+                                sp.Stream2FlowSpec = Conversor.ConverterParaSI(units, value)
+                            Else
+                                sp.Stream2FlowSpec = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_molarflow, e.ChangedItem.Value)
+                            End If
                         Case SimulationObjects.UnitOps.Splitter.OpMode.StreamMoleFlowSpec
-                            sp.Stream2FlowSpec = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_molarflow, e.ChangedItem.Value)
+                            If units <> "" Then
+                                sp.Stream2FlowSpec = Conversor.ConverterParaSI(units, value)
+                            Else
+                                sp.Stream2FlowSpec = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_molarflow, e.ChangedItem.Value)
+                            End If
                     End Select
 
                 End If
@@ -407,12 +457,20 @@ Imports PropertyGridEx
                 If e.ChangedItem.Label.Contains("Delta P") Then
 
                     If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
-                    bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.DeltaP = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    End If
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Pressoajusante")) Then
 
                     If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
-                    bb.Pout = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.Pout = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.Pout = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
+                    End If
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Eficincia")) Then
 
@@ -443,13 +501,21 @@ Imports PropertyGridEx
 
                 If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
 
-                    bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.DeltaP = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    End If
 
                     'If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("ValveOutletPressure")) Then
 
-                    bb.OutletPressure = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.OutletPressure = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.OutletPressure = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
+                    End If
 
                 End If
 
@@ -475,15 +541,35 @@ Imports PropertyGridEx
                 Dim ft As DWSIM.SimulationObjects.UnitOps.Filter = FlowSheet.Collections.CLCS_FilterCollection.Item(sobj.Name)
 
                 If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("FilterMediumResistance")) Then
-                    ft.FilterMediumResistance = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.mediumresistance, e.ChangedItem.Value)
+                    If units <> "" Then
+                        ft.FilterMediumResistance = Conversor.ConverterParaSI(units, value)
+                    Else
+                        ft.FilterMediumResistance = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.mediumresistance, e.ChangedItem.Value)
+                    End If
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("FilterSpecificCakeResistance")) Then
-                    ft.SpecificCakeResistance = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.cakeresistance, e.ChangedItem.Value)
+                    If units <> "" Then
+                        ft.SpecificCakeResistance = Conversor.ConverterParaSI(units, value)
+                    Else
+                        ft.SpecificCakeResistance = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.cakeresistance, e.ChangedItem.Value)
+                    End If
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("FilterCycleTime")) Then
-                    ft.FilterCycleTime = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.time, e.ChangedItem.Value)
+                    If units <> "" Then
+                        ft.FilterCycleTime = Conversor.ConverterParaSI(units, value)
+                    Else
+                        ft.FilterCycleTime = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.time, e.ChangedItem.Value)
+                    End If
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("FilterPressureDrop")) Then
-                    ft.PressureDrop = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    If units <> "" Then
+                        ft.PressureDrop = Conversor.ConverterParaSI(units, value)
+                    Else
+                        ft.PressureDrop = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    End If
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("FilterArea")) Then
-                    ft.TotalFilterArea = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.area, e.ChangedItem.Value)
+                    If units <> "" Then
+                        ft.TotalFilterArea = Conversor.ConverterParaSI(units, value)
+                    Else
+                        ft.TotalFilterArea = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.area, e.ChangedItem.Value)
+                    End If
                 End If
 
                 If FlowSheet.Options.CalculatorActivated Then
@@ -510,11 +596,19 @@ Imports PropertyGridEx
                 If e.ChangedItem.Label.Contains("Delta P") Then
 
                     If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
-                    bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.DeltaP = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    End If
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Presso")) Then
                     If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
-                    bb.POut = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.POut = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.POut = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
+                    End If
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Eficincia")) Then
                     If Convert.ToDouble(e.ChangedItem.Value) <= 20.0# Or Convert.ToDouble(e.ChangedItem.Value) > 100.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
@@ -545,11 +639,19 @@ Imports PropertyGridEx
                 If e.ChangedItem.Label.Contains("Delta P") Then
 
                     If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
-                    bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
-
+                    If units <> "" Then
+                        bb.DeltaP = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    End If
+                 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Presso")) Then
                     If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
-                    bb.POut = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.POut = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.POut = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
+                    End If
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Eficincia")) Then
 
@@ -580,11 +682,19 @@ Imports PropertyGridEx
 
                 If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature")) Then
 
-                    bb.OutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
-
+                    If units <> "" Then
+                        bb.OutletTemperature = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.OutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+                    End If
+                    
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("ValveOutletPressure")) Then
 
-                    bb.OutletPressure = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.OutletPressure = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.OutletPressure = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
+                    End If
 
                 End If
 
@@ -615,16 +725,28 @@ Imports PropertyGridEx
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Calor")) Then
 
-                    bb.DeltaQ = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_heatflow, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.DeltaQ = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.DeltaQ = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_heatflow, e.ChangedItem.Value)
+                    End If
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
 
                     If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
-                    bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.DeltaP = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    End If
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature")) Then
 
-                    bb.OutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.OutletTemperature = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.OutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+                    End If
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("FraomolardafaseFaseV")) Then
 
@@ -659,16 +781,28 @@ Imports PropertyGridEx
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Calor")) Then
 
-                    bb.DeltaQ = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_heatflow, e.ChangedItem.Value)
-
+                    If units <> "" Then
+                        bb.DeltaQ = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.DeltaQ = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_heatflow, e.ChangedItem.Value)
+                    End If
+                    
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
 
                     If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
-                    bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.DeltaP = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    End If
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature")) Then
 
-                    bb.OutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.OutletTemperature = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.OutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+                    End If
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("FraomolardafaseFaseV")) Then
 
@@ -700,16 +834,28 @@ Imports PropertyGridEx
                 If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
 
                     If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
-                    bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.DeltaP = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    End If
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("AquecimentoResfriame")) Then
 
-                    bb.DeltaQ = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_heatflow, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.DeltaQ = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.DeltaQ = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_heatflow, e.ChangedItem.Value)
+                    End If
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("TKVol")) Then
 
                     If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
-                    bb.Volume = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.volume, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.Volume = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.Volume = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.volume, e.ChangedItem.Value)
+                    End If
 
                 End If
 
@@ -789,10 +935,18 @@ Imports PropertyGridEx
 
                 Dim T, P As Double
                 If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Temperatura")) Then
-                    T = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+                    If units <> "" Then
+                        T = Conversor.ConverterParaSI(units, value)
+                    Else
+                        T = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+                    End If
                     vessel.FlashTemperature = T
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Presso")) Then
-                    P = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
+                    If units <> "" Then
+                        P = Conversor.ConverterParaSI(units, value)
+                    Else
+                        P = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
+                    End If
                     vessel.FlashPressure = P
                 End If
 
@@ -836,11 +990,19 @@ Imports PropertyGridEx
                 If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
 
                     If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
-                    bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.DeltaP = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    End If
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature")) Then
 
-                    bb.OutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.OutletTemperature = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.OutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+                    End If
 
                 End If
 
@@ -868,11 +1030,19 @@ Imports PropertyGridEx
                 If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
 
                     If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
-                    bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.DeltaP = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    End If
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature")) Then
 
-                    bb.OutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.OutletTemperature = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.OutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+                    End If
 
                 End If
 
@@ -900,11 +1070,19 @@ Imports PropertyGridEx
                 If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
 
                     If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
-                    bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.DeltaP = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    End If
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature")) Then
 
-                    bb.OutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.OutletTemperature = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.OutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+                    End If
 
                 End If
 
@@ -931,26 +1109,46 @@ Imports PropertyGridEx
 
                 If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("RSCTRIsothermalTemperature")) Then
 
-                    bb.IsothermalTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
-
+                    If units <> "" Then
+                        bb.IsothermalTemperature = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.IsothermalTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+                    End If
+                    
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature")) Then
 
-                    bb.OutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.OutletTemperature = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.OutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+                    End If
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
 
                     If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
-                    bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.DeltaP = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    End If
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("CSTRCatalystAmount")) Then
 
                     If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
-                    bb.CatalystAmount = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.mass, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.CatalystAmount = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.CatalystAmount = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.mass, e.ChangedItem.Value)
+                    End If
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("RCSTRPGridItem1")) Then
 
                     If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
-                    bb.Volume = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.volume, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.Volume = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.Volume = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.volume, e.ChangedItem.Value)
+                    End If
 
                 End If
 
@@ -978,31 +1176,55 @@ Imports PropertyGridEx
                 If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
 
                     If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
-                    bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.DeltaP = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    End If
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature")) Then
 
-                    bb.OutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.OutletTemperature = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.OutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+                    End If
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("RCSTRPGridItem1")) Then
 
                     If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
-                    bb.Volume = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.volume, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.Volume = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.Volume = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.volume, e.ChangedItem.Value)
+                    End If
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("PFRLength")) Then
 
                     If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
-                    bb.Length = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.distance, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.Length = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.Length = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.distance, e.ChangedItem.Value)
+                    End If
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("PFRCatalystLoading")) Then
 
                     If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
-                    bb.CatalystLoading = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_density, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.CatalystLoading = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.CatalystLoading = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_density, e.ChangedItem.Value)
+                    End If
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("PFRCatalystParticleDiameter")) Then
 
                     If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
-                    bb.CatalystParticleDiameter = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.diameter, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.CatalystParticleDiameter = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.CatalystParticleDiameter = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.diameter, e.ChangedItem.Value)
+                    End If
 
                 End If
 
@@ -1030,31 +1252,59 @@ Imports PropertyGridEx
                 If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("OverallHeatTranferCoefficient")) Then
 
                     If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
-                    bb.OverallCoefficient = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.heat_transf_coeff, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.OverallCoefficient = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.OverallCoefficient = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.heat_transf_coeff, e.ChangedItem.Value)
+                    End If
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Area")) Then
 
-                    bb.Area = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.area, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.Area = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.Area = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.area, e.ChangedItem.Value)
+                    End If
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HeatLoad")) Then
 
-                    bb.Q = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_heatflow, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.Q = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.Q = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_heatflow, e.ChangedItem.Value)
+                    End If
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HXHotSidePressureDrop")) Then
 
-                    bb.HotSidePressureDrop = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.HotSidePressureDrop = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.HotSidePressureDrop = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    End If
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HXColdSidePressureDrop")) Then
 
-                    bb.ColdSidePressureDrop = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.ColdSidePressureDrop = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.ColdSidePressureDrop = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
+                    End If
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HXTempHotOut")) Then
 
-                    bb.HotSideOutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.HotSideOutletTemperature = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.HotSideOutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+                    End If
 
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HXTempColdOut")) Then
 
-                    bb.ColdSideOutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+                    If units <> "" Then
+                        bb.ColdSideOutletTemperature = Conversor.ConverterParaSI(units, value)
+                    Else
+                        bb.ColdSideOutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
+                    End If
 
                 End If
 
@@ -1083,10 +1333,18 @@ Imports PropertyGridEx
                 If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("SCCondenserType")) Then
                     sc.GraphicObject.Shape = sc.condtype
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("SCCondenserPressure")) Then
-                    Pc = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
+                    If units <> "" Then
+                        Pc = Conversor.ConverterParaSI(units, value)
+                    Else
+                        Pc = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
+                    End If
                     sc.m_condenserpressure = Pc
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("SCReboilerPressure")) Then
-                    Pr = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
+                    If units <> "" Then
+                        Pr = Conversor.ConverterParaSI(units, value)
+                    Else
+                        Pr = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_pressure, e.ChangedItem.Value)
+                    End If
                     sc.m_boilerpressure = Pr
                 ElseIf e.ChangedItem.Label.Equals(DWSIM.App.GetLocalString("SCLightKey")) Then
                     sc.m_lightkey = e.ChangedItem.Value
@@ -1116,7 +1374,11 @@ Imports PropertyGridEx
                 Dim op As DWSIM.SimulationObjects.UnitOps.OrificePlate = FlowSheet.Collections.CLCS_OrificePlateCollection.Item(sobj.Name)
 
                 If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("OPOrificeDiameter")) Then
-                    op.OrificeDiameter = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.diameter, e.ChangedItem.Value)
+                    If units <> "" Then
+                        op.OrificeDiameter = Conversor.ConverterParaSI(units, value)
+                    Else
+                        op.OrificeDiameter = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.diameter, e.ChangedItem.Value)
+                    End If
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("OPBeta")) Then
                     op.Beta = e.ChangedItem.Value
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("OPCorrectionFactor")) Then

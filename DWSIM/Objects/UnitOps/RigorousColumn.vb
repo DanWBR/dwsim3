@@ -1194,19 +1194,19 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 Case 0
                     'PROP_DC_0	Condenser Pressure
-                    value = cv.ConverterDoSI(su.spmp_pressure, Me.CondenserPressure)
+                    value = Conversor.ConverterDoSI(su.spmp_pressure, Me.CondenserPressure)
                 Case 1
                     'PROP_DC_1	Reboiler Pressure
-                    value = cv.ConverterDoSI(su.spmp_pressure, Me.ReboilerPressure)
+                    value = Conversor.ConverterDoSI(su.spmp_pressure, Me.ReboilerPressure)
                 Case 2
                     'PROP_DC_2	Condenser Pressure Drop
-                    value = cv.ConverterDoSI(su.spmp_deltaP, Me.CondenserDeltaP)
+                    value = Conversor.ConverterDoSI(su.spmp_deltaP, Me.CondenserDeltaP)
                 Case 5
                     'PROP_DC_5	Condenser Duty
-                    value = cv.ConverterDoSI(su.spmp_heatflow, Me.CondenserDuty)
+                    value = Conversor.ConverterDoSI(su.spmp_heatflow, Me.CondenserDuty)
                 Case 6
                     'PROP_DC_6	Reboiler Duty
-                    value = cv.ConverterDoSI(su.spmp_heatflow, Me.ReboilerDuty)
+                    value = Conversor.ConverterDoSI(su.spmp_heatflow, Me.ReboilerDuty)
                 Case 7
                     'PROP_DC_7	Number of Stages
                     value = Me.NumberOfStages
@@ -1221,12 +1221,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             If prop.Contains("Stage_Pressure_") Then
                 Dim stageindex As Integer = prop.Split("_")(2)
-                If Me.Stages.Count >= stageindex Then value = cv.ConverterDoSI(su.spmp_pressure, Me.Stages(stageindex - 1).P)
+                If Me.Stages.Count >= stageindex Then value = Conversor.ConverterDoSI(su.spmp_pressure, Me.Stages(stageindex - 1).P)
             End If
 
             If prop.Contains("Stage_Temperature_") Then
                 Dim stageindex As Integer = prop.Split("_")(2)
-                If Me.Stages.Count >= stageindex Then value = cv.ConverterDoSI(su.spmp_temperature, Me.Stages(stageindex - 1).T)
+                If Me.Stages.Count >= stageindex Then value = Conversor.ConverterDoSI(su.spmp_temperature, Me.Stages(stageindex - 1).T)
             End If
 
             If prop.Contains("Stage_Efficiency_") Then
@@ -1294,13 +1294,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 Case 0
                     'PROP_DC_0	Condenser Pressure
-                    Me.CondenserPressure = cv.ConverterParaSI(su.spmp_pressure, propval)
+                    Me.CondenserPressure = Conversor.ConverterParaSI(su.spmp_pressure, propval)
                 Case 1
                     'PROP_DC_1	Reboiler Pressure
-                    Me.ReboilerPressure = cv.ConverterParaSI(su.spmp_pressure, propval)
+                    Me.ReboilerPressure = Conversor.ConverterParaSI(su.spmp_pressure, propval)
                 Case 2
                     'PROP_DC_2	Condenser Pressure Drop
-                    Me.CondenserDeltaP = cv.ConverterParaSI(su.spmp_deltaP, propval)
+                    Me.CondenserDeltaP = Conversor.ConverterParaSI(su.spmp_deltaP, propval)
 
             End Select
 
@@ -1313,12 +1313,12 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             If prop.Contains("Stage_Pressure_") Then
                 Dim stageindex As Integer = prop.Split("_")(2)
-                If Me.Stages.Count >= stageindex Then Me.Stages(stageindex - 1).P = cv.ConverterParaSI(su.spmp_pressure, propval)
+                If Me.Stages.Count >= stageindex Then Me.Stages(stageindex - 1).P = Conversor.ConverterParaSI(su.spmp_pressure, propval)
             End If
 
             If prop.Contains("Stage_Temperature_") Then
                 Dim stageindex As Integer = prop.Split("_")(2)
-                If Me.Stages.Count >= stageindex Then Me.Stages(stageindex - 1).T = cv.ConverterParaSI(su.spmp_temperature, propval)
+                If Me.Stages.Count >= stageindex Then Me.Stages(stageindex - 1).T = Conversor.ConverterParaSI(su.spmp_temperature, propval)
             End If
 
             If prop.Contains("Stage_Efficiency_") Then
@@ -1417,10 +1417,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 Case 0
                     'PROP_DC_0	Condenser Pressure
-                    value = cv.ConverterDoSI(su.spmp_pressure, Me.CondenserPressure)
+                    value = Conversor.ConverterDoSI(su.spmp_pressure, Me.CondenserPressure)
                 Case 1
                     'PROP_DC_1	Reboiler Pressure
-                    value = cv.ConverterDoSI(su.spmp_pressure, Me.ReboilerPressure)
+                    value = Conversor.ConverterDoSI(su.spmp_pressure, Me.ReboilerPressure)
                 Case 2
                     'PROP_DC_7	Number of Stages
                     value = Me.NumberOfStages
@@ -1460,10 +1460,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 Case 0
                     'PROP_DC_0	Condenser Pressure
-                    Me.CondenserPressure = cv.ConverterParaSI(su.spmp_pressure, propval)
+                    Me.CondenserPressure = Conversor.ConverterParaSI(su.spmp_pressure, propval)
                 Case 1
                     'PROP_DC_1	Reboiler Pressure
-                    Me.ReboilerPressure = cv.ConverterParaSI(su.spmp_pressure, propval)
+                    Me.ReboilerPressure = Conversor.ConverterParaSI(su.spmp_pressure, propval)
 
             End Select
             Return 1
@@ -1535,13 +1535,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 Case 0
                     'PROP_DC_0	Condenser Pressure
-                    value = cv.ConverterDoSI(su.spmp_pressure, Me.CondenserPressure)
+                    value = Conversor.ConverterDoSI(su.spmp_pressure, Me.CondenserPressure)
                 Case 1
                     'PROP_DC_1	Reboiler Pressure
-                    value = cv.ConverterDoSI(su.spmp_pressure, Me.ReboilerPressure)
+                    value = Conversor.ConverterDoSI(su.spmp_pressure, Me.ReboilerPressure)
                 Case 3
                     'PROP_DC_6	Reboiler Duty
-                    value = cv.ConverterDoSI(su.spmp_heatflow, Me.ReboilerDuty)
+                    value = Conversor.ConverterDoSI(su.spmp_heatflow, Me.ReboilerDuty)
                 Case 4
                     'PROP_DC_7	Number of Stages
                     value = Me.NumberOfStages
@@ -1587,10 +1587,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 Case 0
                     'PROP_DC_0	Condenser Pressure
-                    Me.CondenserPressure = cv.ConverterParaSI(su.spmp_pressure, propval)
+                    Me.CondenserPressure = Conversor.ConverterParaSI(su.spmp_pressure, propval)
                 Case 1
                     'PROP_DC_1	Reboiler Pressure
-                    Me.ReboilerPressure = cv.ConverterParaSI(su.spmp_pressure, propval)
+                    Me.ReboilerPressure = Conversor.ConverterParaSI(su.spmp_pressure, propval)
 
             End Select
             Return 1
@@ -1662,16 +1662,16 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 Case 0
                     'PROP_DC_0	Condenser Pressure
-                    value = cv.ConverterDoSI(su.spmp_pressure, Me.CondenserPressure)
+                    value = Conversor.ConverterDoSI(su.spmp_pressure, Me.CondenserPressure)
                 Case 1
                     'PROP_DC_1	Reboiler Pressure
-                    value = cv.ConverterDoSI(su.spmp_pressure, Me.ReboilerPressure)
+                    value = Conversor.ConverterDoSI(su.spmp_pressure, Me.ReboilerPressure)
                 Case 2
                     'PROP_DC_2	Condenser Pressure Drop
-                    value = cv.ConverterDoSI(su.spmp_deltaP, Me.CondenserDeltaP)
+                    value = Conversor.ConverterDoSI(su.spmp_deltaP, Me.CondenserDeltaP)
                 Case 5
                     'PROP_DC_5	Condenser Duty
-                    value = cv.ConverterDoSI(su.spmp_heatflow, Me.CondenserDuty)
+                    value = Conversor.ConverterDoSI(su.spmp_heatflow, Me.CondenserDuty)
                 Case 6
                     'PROP_DC_7	Number of Stages
                     value = Me.NumberOfStages
@@ -1717,13 +1717,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 Case 0
                     'PROP_DC_0	Condenser Pressure
-                    Me.CondenserPressure = cv.ConverterParaSI(su.spmp_pressure, propval)
+                    Me.CondenserPressure = Conversor.ConverterParaSI(su.spmp_pressure, propval)
                 Case 1
                     'PROP_DC_1	Reboiler Pressure
-                    Me.ReboilerPressure = cv.ConverterParaSI(su.spmp_pressure, propval)
+                    Me.ReboilerPressure = Conversor.ConverterParaSI(su.spmp_pressure, propval)
                 Case 2
                     'PROP_DC_2	Condenser Pressure Drop
-                    Me.CondenserDeltaP = cv.ConverterParaSI(su.spmp_deltaP, propval)
+                    Me.CondenserDeltaP = Conversor.ConverterParaSI(su.spmp_deltaP, propval)
 
             End Select
             Return 1
@@ -2625,14 +2625,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                 Select Case Me.ColumnType
                     Case ColType.DistillationColumn
-                        val = Format(cv.ConverterDoSI(su.spmp_pressure, Me.CondenserPressure), nf)
+                        val = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.CondenserPressure), nf)
                         .Item.Add(FT(DWSIM.App.GetLocalString("DCCondenserPressure"), su.spmp_pressure), val, False, DWSIM.App.GetLocalString("DCColumnProperties"), "", True)
                         .Item(.Item.Count).Tag2 = "PROP_DC_0"
-                        val = Format(cv.ConverterDoSI(su.spmp_pressure, Me.ReboilerPressure), nf)
+                        val = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.ReboilerPressure), nf)
                         .Item.Add(FT(DWSIM.App.GetLocalString("DCReboilerPressure"), su.spmp_pressure), val, False, DWSIM.App.GetLocalString("DCColumnProperties"), "", True)
                         .Item(.Item.Count).Tag2 = "PROP_DC_1"
                         .Item.Add(DWSIM.App.GetLocalString("DCCondenserType"), Me, "CondenserType", False, DWSIM.App.GetLocalString("DCColumnProperties"), "", True)
-                        val = Format(cv.ConverterDoSI(su.spmp_deltaP, Me.CondenserDeltaP), nf)
+                        val = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.CondenserDeltaP), nf)
                         .Item.Add(FT(DWSIM.App.GetLocalString("DCCondenserDeltaP"), su.spmp_deltaP), val, False, DWSIM.App.GetLocalString("DCColumnProperties"), "", True)
                         '.Item.Add(DWSIM.App.GetLocalString("DCRefluxRatio"), Me, "RefluxRatio", False, DWSIM.App.GetLocalString("DCColumnProperties"), "", True)
                         Dim units As String() = New String() {}
@@ -2745,15 +2745,15 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             .CustomEditor = New System.Drawing.Design.UITypeEditor
                         End With
                     Case ColType.AbsorptionColumn
-                        val = Format(cv.ConverterDoSI(su.spmp_pressure, Me.CondenserPressure), nf)
+                        val = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.CondenserPressure), nf)
                         .Item.Add(FT(DWSIM.App.GetLocalString("DCFirstStgPressure"), su.spmp_pressure), val, False, DWSIM.App.GetLocalString("DCColumnProperties"), "", True)
-                        val = Format(cv.ConverterDoSI(su.spmp_pressure, Me.ReboilerPressure), nf)
+                        val = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.ReboilerPressure), nf)
                         .Item.Add(FT(DWSIM.App.GetLocalString("DCLastStgPressure"), su.spmp_pressure), val, False, DWSIM.App.GetLocalString("DCColumnProperties"), "", True)
                         .Item.Add(DWSIM.App.GetLocalString("DCOperationMode"), Me, "OperationMode", False, DWSIM.App.GetLocalString("DCColumnProperties"), "", True)
                     Case ColType.ReboiledAbsorber
-                        val = Format(cv.ConverterDoSI(su.spmp_pressure, Me.CondenserPressure), nf)
+                        val = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.CondenserPressure), nf)
                         .Item.Add(FT(DWSIM.App.GetLocalString("DCFirstStgPressure"), su.spmp_pressure), val, False, DWSIM.App.GetLocalString("DCColumnProperties"), "", True)
-                        val = Format(cv.ConverterDoSI(su.spmp_pressure, Me.ReboilerPressure), nf)
+                        val = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.ReboilerPressure), nf)
                         .Item.Add(FT(DWSIM.App.GetLocalString("DCReboilerPressure"), su.spmp_pressure), val, False, DWSIM.App.GetLocalString("DCColumnProperties"), "", True)
                         Dim units As String() = New String() {}
                         Dim rspec As New PropertyGridEx.CustomPropertyCollection()
@@ -2802,13 +2802,13 @@ Namespace DWSIM.SimulationObjects.UnitOps
                             .CustomEditor = New System.Drawing.Design.UITypeEditor
                         End With
                     Case ColType.RefluxedAbsorber
-                        val = Format(cv.ConverterDoSI(su.spmp_pressure, Me.CondenserPressure), nf)
+                        val = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.CondenserPressure), nf)
                         .Item.Add(FT(DWSIM.App.GetLocalString("DCCondenserPressure"), su.spmp_pressure), val, False, DWSIM.App.GetLocalString("DCColumnProperties"), "", True)
-                        val = Format(cv.ConverterDoSI(su.spmp_pressure, Me.ReboilerPressure), nf)
-                        val = Format(cv.ConverterDoSI(su.spmp_pressure, Me.ReboilerPressure), nf)
+                        val = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.ReboilerPressure), nf)
+                        val = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.ReboilerPressure), nf)
                         .Item.Add(FT(DWSIM.App.GetLocalString("DCLastStgPressure"), su.spmp_pressure), val, False, DWSIM.App.GetLocalString("DCColumnProperties"), "", True)
                         .Item.Add(DWSIM.App.GetLocalString("DCCondenserType"), Me, "CondenserType", False, DWSIM.App.GetLocalString("DCColumnProperties"), "", True)
-                        val = Format(cv.ConverterDoSI(su.spmp_deltaP, Me.CondenserDeltaP), nf)
+                        val = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.CondenserDeltaP), nf)
                         .Item.Add(FT(DWSIM.App.GetLocalString("DCCondenserDeltaP"), su.spmp_deltaP), val, False, DWSIM.App.GetLocalString("DCColumnProperties"), "", True)
                         Dim units As String() = New String() {}
                         If Not Me.CondenserType = condtype.Full_Reflux Then
@@ -2925,7 +2925,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                        Me.SolvingMethod = SolvingMethods.RefAbsColSolvingMethod.NaphtaliSandholm_SimultaneousCorrection Or _
                         Me.SolvingMethod = SolvingMethods.AbsColSolvingMethod.NaphtaliSandholm_SimultaneousCorrection Then
                     .Item.Add(DWSIM.App.GetLocalString("DC_SC_NumericalDerivativeStep"), Me, "SC_NumericalDerivativeStep", False, DWSIM.App.GetLocalString("DCSolvingMethod1"), "", True)
-                    val = Format(cv.ConverterDoSI(su.spmp_deltaT, Me.SC_MaximumTemperatureChange), nf)
+                    val = Format(Conversor.ConverterDoSI(su.spmp_deltaT, Me.SC_MaximumTemperatureChange), nf)
                     .Item.Add(FT(DWSIM.App.GetLocalString("DC_SC_MaximumTemperatureChange"), su.spmp_deltaT), val, False, DWSIM.App.GetLocalString("DCSolvingMethod1"), "", True)
                     .Item.Add(DWSIM.App.GetLocalString("DCUseDampingFactor"), Me, "UseDampingFactor", False, DWSIM.App.GetLocalString("DCSolvingMethod1"), "", True)
                     .Item.Add(DWSIM.App.GetLocalString("DCUseNewtonUpdate"), Me, "UseNewtonUpdate", False, DWSIM.App.GetLocalString("DCSolvingMethod1"), "", True)
@@ -2946,16 +2946,16 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     End If
                     Select Case Me.ColumnType
                         Case ColType.DistillationColumn
-                            val = Format(cv.ConverterDoSI(su.spmp_heatflow, Me.CondenserDuty), nf)
+                            val = Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.CondenserDuty), nf)
                             .Item.Add(FT(DWSIM.App.GetLocalString("DCCondenserDuty"), su.spmp_heatflow), val, True, DWSIM.App.GetLocalString("DCResults"), "", True)
-                            val = Format(cv.ConverterDoSI(su.spmp_heatflow, Me.ReboilerDuty), nf)
+                            val = Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.ReboilerDuty), nf)
                             .Item.Add(FT(DWSIM.App.GetLocalString("DCReboilerDuty"), su.spmp_heatflow), val, True, DWSIM.App.GetLocalString("DCResults"), "", True)
                         Case ColType.AbsorptionColumn
                         Case ColType.ReboiledAbsorber
-                            val = Format(cv.ConverterDoSI(su.spmp_heatflow, Me.ReboilerDuty), nf)
+                            val = Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.ReboilerDuty), nf)
                             .Item.Add(FT(DWSIM.App.GetLocalString("DCReboilerDuty"), su.spmp_heatflow), val, True, DWSIM.App.GetLocalString("DCResults"), "", True)
                         Case ColType.RefluxedAbsorber
-                            val = Format(cv.ConverterDoSI(su.spmp_heatflow, Me.CondenserDuty), nf)
+                            val = Format(Conversor.ConverterDoSI(su.spmp_heatflow, Me.CondenserDuty), nf)
                             .Item.Add(FT(DWSIM.App.GetLocalString("DCCondenserDuty"), su.spmp_heatflow), val, True, DWSIM.App.GetLocalString("DCResults"), "", True)
                     End Select
                     .Item.Add(DWSIM.App.GetLocalString("DCResults1"), __dc, False, DWSIM.App.GetLocalString("DCResults"), "", True)
@@ -3016,23 +3016,23 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("DCCondenserDeltaP")) Then
 
-                Me.CondenserDeltaP = cv.ConverterParaSI(su.spmp_deltaP, e.ChangedItem.Value)
+                Me.CondenserDeltaP = Conversor.ConverterParaSI(su.spmp_deltaP, e.ChangedItem.Value)
 
             ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("DCCondenserPressure")) Or _
             e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("DCFirstStgPressure")) Then
 
-                Me.CondenserPressure = cv.ConverterParaSI(su.spmp_pressure, e.ChangedItem.Value)
+                Me.CondenserPressure = Conversor.ConverterParaSI(su.spmp_pressure, e.ChangedItem.Value)
                 Me.Stages(0).P = Me.CondenserPressure
 
             ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("DCReboilerPressure")) Or _
             e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("DCLastStgPressure")) Then
 
-                Me.ReboilerPressure = cv.ConverterParaSI(su.spmp_pressure, e.ChangedItem.Value)
+                Me.ReboilerPressure = Conversor.ConverterParaSI(su.spmp_pressure, e.ChangedItem.Value)
                 Me.Stages(Me.Stages.Count - 1).P = Me.ReboilerPressure
 
             ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("DCDistillateFlowRate")) Then
 
-                Me.DistillateFlowRate = cv.ConverterParaSI(su.spmp_molarflow, e.ChangedItem.Value)
+                Me.DistillateFlowRate = Conversor.ConverterParaSI(su.spmp_molarflow, e.ChangedItem.Value)
 
             ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("DCCondenserType")) Then
 
@@ -3078,7 +3078,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             ElseIf e.ChangedItem.Label = DWSIM.App.GetLocalString("DCReboilerSpecComp") And e.ChangedItem.Parent.Label = DWSIM.App.GetLocalString("DCReboilerSpecs") Then
                 Me.Specs("R").ComponentID = e.ChangedItem.Value
             ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("DC_SC_MaximumTemperatureChange")) Then
-                Me.SC_MaximumTemperatureChange = cv.ConverterParaSI(su.spmp_deltaT, e.ChangedItem.Value)
+                Me.SC_MaximumTemperatureChange = Conversor.ConverterParaSI(su.spmp_deltaT, e.ChangedItem.Value)
             End If
 
 
@@ -3286,7 +3286,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             Dim cv As New SistemasDeUnidades.Conversor
 
-            vaprate = cv.ConverterParaSI(Me.VaporFlowRateUnit, Me.VaporFlowRate)
+            vaprate = Conversor.ConverterParaSI(Me.VaporFlowRateUnit, Me.VaporFlowRate)
 
             Dim sum1(ns), sum0_ As Double
             sum0_ = 0
@@ -3305,17 +3305,17 @@ Namespace DWSIM.SimulationObjects.UnitOps
             End If
             If Me.Specs("R").SType = ColumnSpec.SpecType.Product_Molar_Flow_Rate Then
                 If Me.CondenserType = condtype.Full_Reflux Then
-                    vaprate = sumF - cv.ConverterParaSI(Me.Specs("R").SpecUnit, Me.Specs("R").SpecValue) - sum0_
+                    vaprate = sumF - Conversor.ConverterParaSI(Me.Specs("R").SpecUnit, Me.Specs("R").SpecValue) - sum0_
                     distrate = 0.0
                 ElseIf Me.CondenserType = condtype.Partial_Condenser Then
                     If Me.Specs("C").SType = ColumnSpec.SpecType.Product_Molar_Flow_Rate Then
-                        distrate = cv.ConverterParaSI(Me.Specs("C").SpecUnit, Me.Specs("C").SpecValue)
+                        distrate = Conversor.ConverterParaSI(Me.Specs("C").SpecUnit, Me.Specs("C").SpecValue)
                     Else
-                        distrate = sumF - cv.ConverterParaSI(Me.Specs("R").SpecUnit, Me.Specs("R").SpecValue) - sum0_ - vaprate
+                        distrate = sumF - Conversor.ConverterParaSI(Me.Specs("R").SpecUnit, Me.Specs("R").SpecValue) - sum0_ - vaprate
                     End If
 
                 Else
-                    distrate = sumF - cv.ConverterParaSI(Me.Specs("R").SpecUnit, Me.Specs("R").SpecValue) - sum0_
+                    distrate = sumF - Conversor.ConverterParaSI(Me.Specs("R").SpecUnit, Me.Specs("R").SpecValue) - sum0_
                     vaprate = 0.0
                 End If
             Else
