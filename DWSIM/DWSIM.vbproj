@@ -2749,6 +2749,10 @@
     <Content Include="Assets\help\UT_Triangular_LLE.htm" />
     <Content Include="Assets\help\UT_TrueCriticalPoint.htm" />
     <Content Include="Assets\help\UT_VesselSizing.htm" />
+    <None Include="Resources\text_indent_remove.png" />
+    <None Include="Resources\text_indent.png" />
+    <None Include="Resources\text_padding_left1.png" />
+    <None Include="Resources\text_padding_left.png" />
     <None Include="Resources\undo_162.png" />
     <None Include="Assets\jcosmo.jar" />
     <Content Include="Assets\licenses\chemsep_database.txt" />

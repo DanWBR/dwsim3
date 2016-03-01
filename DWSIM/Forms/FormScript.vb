@@ -561,6 +561,85 @@ Imports DWSIM.DWSIM.Outros
         End If
     End Sub
 
+    Private Sub ToolStripButton2_Click_1(sender As Object, e As EventArgs) Handles btnComment.Click
+        If Not DWSIM.App.IsRunningOnMono Then
+            Dim scontrol As ScriptEditorControl = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl)
+            Dim lines = scontrol.txtScript.SelectedText.Split(Environment.NewLine, vbCr, vbLf, vbCrLf)
+            Dim newlines As String = ""
+            For Each l In lines
+                If l <> "" Then newlines += l.Insert(0, "#") & Environment.NewLine
+            Next
+            scontrol.txtScript.ReplaceSelection(newlines.TrimEnd(Environment.NewLine, vbCr, vbLf, vbCrLf))
+        Else
+            Dim scontrol As ScriptEditorControlMono = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControlMono)
+            Dim lines = scontrol.txtScript.SelectedText.Split(Environment.NewLine, vbCr, vbLf, vbCrLf)
+            Dim newlines As String = ""
+            For Each l In lines
+                If l <> "" Then newlines += l.Insert(0, "#") & Environment.NewLine
+            Next
+            scontrol.txtScript.SelectedText = newlines.TrimEnd(Environment.NewLine, vbCr, vbLf, vbCrLf)
+        End If
+    End Sub
+
+    Private Sub btnUncomment_Click(sender As Object, e As EventArgs) Handles btnUncomment.Click
+        If Not DWSIM.App.IsRunningOnMono Then
+            Dim scontrol As ScriptEditorControl = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl)
+            Dim lines = scontrol.txtScript.SelectedText.Split(Environment.NewLine, vbCr, vbLf, vbCrLf)
+            Dim newlines As String = ""
+            For Each l In lines
+                If l <> "" Then newlines += l.TrimStart("#") & Environment.NewLine
+            Next
+            scontrol.txtScript.ReplaceSelection(newlines.TrimEnd(Environment.NewLine, vbCr, vbLf, vbCrLf))
+        Else
+            Dim scontrol As ScriptEditorControlMono = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControlMono)
+            Dim lines = scontrol.txtScript.SelectedText.Split(Environment.NewLine, vbCr, vbLf, vbCrLf)
+            Dim newlines As String = ""
+            For Each l In lines
+                If l <> "" Then newlines += l.TrimStart("#") & Environment.NewLine
+            Next
+            scontrol.txtScript.SelectedText = newlines.TrimEnd(Environment.NewLine, vbCr, vbLf, vbCrLf)
+        End If
+    End Sub
+
+    Private Sub btnIdent_Click(sender As Object, e As EventArgs) Handles btnIdent.Click
+        If Not DWSIM.App.IsRunningOnMono Then
+            Dim scontrol As ScriptEditorControl = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl)
+            Dim lines = scontrol.txtScript.SelectedText.Split(Environment.NewLine, vbCr, vbLf, vbCrLf)
+            Dim newlines As String = ""
+            For Each l In lines
+                If l <> "" Then newlines += l.Insert(0, vbTab) & Environment.NewLine
+            Next
+            scontrol.txtScript.ReplaceSelection(newlines.TrimEnd(Environment.NewLine, vbCr, vbLf, vbCrLf))
+        Else
+            Dim scontrol As ScriptEditorControlMono = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControlMono)
+            Dim lines = scontrol.txtScript.SelectedText.Split(Environment.NewLine, vbCr, vbLf, vbCrLf)
+            Dim newlines As String = ""
+            For Each l In lines
+                If l <> "" Then newlines += l.Insert(0, vbTab) & Environment.NewLine
+            Next
+            scontrol.txtScript.SelectedText = newlines.TrimEnd(Environment.NewLine, vbCr, vbLf, vbCrLf)
+        End If
+    End Sub
+
+    Private Sub btnIdentRemove_Click(sender As Object, e As EventArgs) Handles btnIdentRemove.Click
+        If Not DWSIM.App.IsRunningOnMono Then
+            Dim scontrol As ScriptEditorControl = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControl)
+            Dim lines = scontrol.txtScript.SelectedText.Split(Environment.NewLine, vbCr, vbLf, vbCrLf)
+            Dim newlines As String = ""
+            For Each l In lines
+                If l <> "" Then newlines += l.TrimStart(vbTab) & Environment.NewLine
+            Next
+            scontrol.txtScript.ReplaceSelection(newlines.TrimEnd(Environment.NewLine, vbCr, vbLf, vbCrLf))
+        Else
+            Dim scontrol As ScriptEditorControlMono = DirectCast(TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControlMono)
+            Dim lines = scontrol.txtScript.SelectedText.Split(Environment.NewLine, vbCr, vbLf, vbCrLf)
+            Dim newlines As String = ""
+            For Each l In lines
+                If l <> "" Then newlines += l.TrimStart(vbTab) & Environment.NewLine
+            Next
+            scontrol.txtScript.SelectedText = newlines.TrimEnd(Environment.NewLine, vbCr, vbLf, vbCrLf)
+        End If
+    End Sub
 End Class
 
 Public Class DataGridViewTextStream
