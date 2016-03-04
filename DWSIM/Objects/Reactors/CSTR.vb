@@ -191,6 +191,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                     rxn.ExpContext.Variables.Clear()
                     rxn.ExpContext.Variables.Add("T", ims.Fases(0).SPMProperties.temperature.GetValueOrDefault)
+                    rxn.ExpContext.Options.ParseCulture = Globalization.CultureInfo.InvariantCulture
 
                     Dim ir As Integer = 1
                     Dim ip As Integer = 1
@@ -485,6 +486,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                         rxn.ExpContext = New Ciloci.Flee.ExpressionContext
                         rxn.ExpContext.Imports.AddType(GetType(System.Math))
+                        rxn.ExpContext.Options.ParseCulture = Globalization.CultureInfo.InvariantCulture
 
                         rxn.ExpContext.Variables.Clear()
                         rxn.ExpContext.Variables.Add("T", ims.Fases(0).SPMProperties.temperature.GetValueOrDefault)

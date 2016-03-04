@@ -208,6 +208,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                     rxn.ExpContext = New Ciloci.Flee.ExpressionContext
                     rxn.ExpContext.Imports.AddType(GetType(System.Math))
                     rxn.ExpContext.Variables.Clear()
+                    rxn.ExpContext.Options.ParseCulture = Globalization.CultureInfo.InvariantCulture
                     rxn.ExpContext.Variables.Add("T", ims.Fases(0).SPMProperties.temperature.GetValueOrDefault)
 
                     rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.Expression)

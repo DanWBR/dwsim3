@@ -195,6 +195,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                     rxn.ExpContext = New Ciloci.Flee.ExpressionContext
                     rxn.ExpContext.Imports.AddType(GetType(System.Math))
+                    rxn.ExpContext.Options.ParseCulture = Globalization.CultureInfo.InvariantCulture
 
                     rxn.ExpContext.Variables.Clear()
                     rxn.ExpContext.Variables.Add("T", T)
@@ -494,6 +495,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                             rxn.ExpContext = New Ciloci.Flee.ExpressionContext
                             rxn.ExpContext.Imports.AddType(GetType(System.Math))
+                            rxn.ExpContext.Options.ParseCulture = Globalization.CultureInfo.InvariantCulture
 
                             rxn.ExpContext.Variables.Clear()
                             rxn.ExpContext.Variables.Add("T", T)

@@ -692,6 +692,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                         Case Reaction.KOpt.Expression
                             rxn.ExpContext = New Ciloci.Flee.ExpressionContext
                             rxn.ExpContext.Imports.AddType(GetType(System.Math))
+                            rxn.ExpContext.Options.ParseCulture = Globalization.CultureInfo.InvariantCulture
                             rxn.ExpContext.Variables.Add("T", T)
                             rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.Expression)
                             Try

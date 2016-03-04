@@ -61,7 +61,7 @@ Public Class FormReacManager
             If Me.DockState = WeifenLuo.WinFormsUI.Docking.DockState.Float Then
                 Dim floatWin = Me.DockHandler.FloatPane.FloatWindow
                 If Not floatWin Is Nothing Then
-                    floatWin.SetBounds(floatWin.Location.X, floatWin.Location.Y, 1000, 250)
+                    floatWin.SetBounds(floatWin.Location.X, floatWin.Location.Y, 440, 490)
                 End If
             End If
         End If
