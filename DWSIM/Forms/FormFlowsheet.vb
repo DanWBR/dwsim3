@@ -3045,248 +3045,256 @@ Imports System.Reflection
 
     Sub ProcessAction(act As UndoRedoAction, undo As Boolean)
 
-        Dim pval As Object = Nothing
+        Try
 
-        If undo Then pval = act.OldValue Else pval = act.NewValue
+            Dim pval As Object = Nothing
 
-        Select Case act.AType
+            If undo Then pval = act.OldValue Else pval = act.NewValue
 
-            Case UndoRedoActionType.SimulationObjectPropertyChanged
+            Select Case act.AType
 
-                Dim fobj = Me.Collections.ObjectCollection(act.ObjID)
+                Case UndoRedoActionType.SimulationObjectPropertyChanged
 
-                If fobj.GetProperties(SimulationObjects_BaseClass.PropertyType.ALL).Contains(act.PropertyName) Then
-                    'Property is listed, set using SetProperty
-                    fobj.SetPropertyValue(act.PropertyName, pval, act.Tag)
-                Else
-                    'Property not listed, set using Reflection
-                    Dim method As FieldInfo = fobj.GetType().GetField(act.PropertyName)
-                    If Not method Is Nothing Then
-                        method.SetValue(fobj, pval)
+                    Dim fobj = Me.Collections.ObjectCollection(act.ObjID)
+
+                    If fobj.GetProperties(SimulationObjects_BaseClass.PropertyType.ALL).Contains(act.PropertyName) Then
+                        'Property is listed, set using SetProperty
+                        fobj.SetPropertyValue(act.PropertyName, pval, act.Tag)
                     Else
-                        fobj.GetType().GetProperty(act.PropertyName).SetValue(fobj, pval, Nothing)
+                        'Property not listed, set using Reflection
+                        Dim method As FieldInfo = fobj.GetType().GetField(act.PropertyName)
+                        If Not method Is Nothing Then
+                            method.SetValue(fobj, pval)
+                        Else
+                            fobj.GetType().GetProperty(act.PropertyName).SetValue(fobj, pval, Nothing)
+                        End If
                     End If
-                End If
 
-            Case UndoRedoActionType.FlowsheetObjectPropertyChanged
+                Case UndoRedoActionType.FlowsheetObjectPropertyChanged
 
-                Dim gobj = Me.FormSurface.FlowsheetDesignSurface.drawingObjects.FindObjectWithName(act.ObjID)
+                    Dim gobj = Me.FormSurface.FlowsheetDesignSurface.drawingObjects.FindObjectWithName(act.ObjID)
 
-                'Property not listed, set using Reflection
-                Dim method As FieldInfo = gobj.GetType().GetField(act.PropertyName)
-                If Not method Is Nothing Then
-                    method.SetValue(gobj, pval)
-                Else
-                    gobj.GetType().GetProperty(act.PropertyName).SetValue(gobj, pval, Nothing)
-                End If
+                    'Property not listed, set using Reflection
+                    Dim method As FieldInfo = gobj.GetType().GetField(act.PropertyName)
+                    If Not method Is Nothing Then
+                        method.SetValue(gobj, pval)
+                    Else
+                        gobj.GetType().GetProperty(act.PropertyName).SetValue(gobj, pval, Nothing)
+                    End If
 
-            Case UndoRedoActionType.CompoundAdded
+                Case UndoRedoActionType.CompoundAdded
 
-                If undo Then
-                    Me.FrmStSim1.RemoveCompFromSimulation(act.ObjID)
-                Else
-                    Me.FrmStSim1.AddCompToSimulation(act.ObjID)
-                End If
+                    If undo Then
+                        Me.FrmStSim1.RemoveCompFromSimulation(act.ObjID)
+                    Else
+                        Me.FrmStSim1.AddCompToSimulation(act.ObjID)
+                    End If
 
-            Case UndoRedoActionType.CompoundRemoved
+                Case UndoRedoActionType.CompoundRemoved
 
-                If undo Then
-                    Me.FrmStSim1.AddCompToSimulation(act.ObjID)
-                Else
-                    Me.FrmStSim1.RemoveCompFromSimulation(act.ObjID)
-                End If
+                    If undo Then
+                        Me.FrmStSim1.AddCompToSimulation(act.ObjID)
+                    Else
+                        Me.FrmStSim1.RemoveCompFromSimulation(act.ObjID)
+                    End If
 
-            Case UndoRedoActionType.ObjectAdded
+                Case UndoRedoActionType.ObjectAdded
 
-                Dim gobj1 = DirectCast(act.NewValue, GraphicObject)
+                    Dim gobj1 = DirectCast(act.NewValue, GraphicObject)
 
-                If undo Then
-                    DeleteObject(gobj1.Tag, False)
-                Else
-                    FormSurface.AddObjectToSurface(gobj1.TipoObjeto, gobj1.X, gobj1.Y, gobj1.Tag, gobj1.Name)
-                End If
+                    If undo Then
+                        DeleteObject(gobj1.Tag, False)
+                    Else
+                        FormSurface.AddObjectToSurface(gobj1.TipoObjeto, gobj1.X, gobj1.Y, gobj1.Tag, gobj1.Name)
+                    End If
 
-            Case UndoRedoActionType.ObjectRemoved
+                Case UndoRedoActionType.ObjectRemoved
 
-                Dim gobj1 = DirectCast(act.NewValue, GraphicObject)
+                    Dim gobj1 = DirectCast(act.NewValue, GraphicObject)
 
-                If undo Then
-                    Collections.ObjectCollection(FormSurface.AddObjectToSurface(gobj1.TipoObjeto, gobj1.X, gobj1.Y, gobj1.Tag, gobj1.Name)).LoadData(act.OldValue)
-                    FormSurface.FlowsheetDesignSurface.drawingObjects.FindObjectWithName(gobj1.Name).LoadData(gobj1.SaveData)
-                    If gobj1.TipoObjeto = TipoObjeto.MaterialStream Then
-                        For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In DirectCast(Collections.ObjectCollection(gobj1.Name), Streams.MaterialStream).Fases.Values
-                            For Each c As ConstantProperties In Options.SelectedComponents.Values
-                                phase.Componentes(c.Name).ConstantProperties = c
+                    If undo Then
+                        Collections.ObjectCollection(FormSurface.AddObjectToSurface(gobj1.TipoObjeto, gobj1.X, gobj1.Y, gobj1.Tag, gobj1.Name)).LoadData(act.OldValue)
+                        FormSurface.FlowsheetDesignSurface.drawingObjects.FindObjectWithName(gobj1.Name).LoadData(gobj1.SaveData)
+                        If gobj1.TipoObjeto = TipoObjeto.MaterialStream Then
+                            For Each phase As DWSIM.ClassesBasicasTermodinamica.Fase In DirectCast(Collections.ObjectCollection(gobj1.Name), Streams.MaterialStream).Fases.Values
+                                For Each c As ConstantProperties In Options.SelectedComponents.Values
+                                    phase.Componentes(c.Name).ConstantProperties = c
+                                Next
                             Next
+                        End If
+                    Else
+                        DeleteObject(gobj1.Tag, False)
+                    End If
+
+                Case UndoRedoActionType.FlowsheetObjectConnected
+
+                    Dim gobj1 = Me.FormSurface.FlowsheetDesignSurface.drawingObjects.FindObjectWithName(act.ObjID)
+                    Dim gobj2 = Me.FormSurface.FlowsheetDesignSurface.drawingObjects.FindObjectWithName(act.ObjID2)
+
+                    If undo Then
+                        DisconnectObject(gobj1, gobj2)
+                    Else
+                        ConnectObject(gobj1, gobj2, act.OldValue, act.NewValue)
+                    End If
+
+                Case UndoRedoActionType.FlowsheetObjectDisconnected
+
+                    Dim gobj1 = Me.FormSurface.FlowsheetDesignSurface.drawingObjects.FindObjectWithName(act.ObjID)
+                    Dim gobj2 = Me.FormSurface.FlowsheetDesignSurface.drawingObjects.FindObjectWithName(act.ObjID2)
+
+                    If undo Then
+                        ConnectObject(gobj1, gobj2, act.OldValue, act.NewValue)
+                    Else
+                        DisconnectObject(gobj1, gobj2)
+                    End If
+
+                Case UndoRedoActionType.PropertyPackageAdded
+
+                    If undo Then
+                        Me.Options.PropertyPackages.Remove(act.ObjID)
+                    Else
+                        Dim pp As PropertyPackage = DirectCast(act.NewValue, PropertyPackage)
+                        Me.Options.PropertyPackages.Add(pp.UniqueID, pp)
+                    End If
+
+                Case UndoRedoActionType.PropertyPackageRemoved
+
+                    If undo Then
+                        Dim pp As PropertyPackage = DirectCast(act.NewValue, PropertyPackage)
+                        Me.Options.PropertyPackages.Add(pp.UniqueID, pp)
+                    Else
+                        Me.Options.PropertyPackages.Remove(act.ObjID)
+                    End If
+
+                Case UndoRedoActionType.PropertyPackagePropertyChanged
+
+                    Dim pp As PropertyPackage = DirectCast(act.Tag, PropertyPackage)
+
+                    If act.PropertyName = "PARAM" Then
+                        pp.Parameters(act.ObjID) = pval
+                    ElseIf act.PropertyName = "PR_IP" Then
+                        Dim prip As Auxiliary.PengRobinson = pp.GetType.GetField("m_pr").GetValue(pp)
+                        prip.InteractionParameters(act.ObjID)(act.ObjID2).kij = pval
+                    ElseIf act.PropertyName = "PRSV2_KIJ" Then
+                        Dim prip As Auxiliary.PRSV2 = pp.GetType.GetField("m_pr").GetValue(pp)
+                        prip.InteractionParameters(act.ObjID)(act.ObjID2).kij = pval
+                    ElseIf act.PropertyName = "PRSV2_KJI Then" Then
+                        Dim prip As Auxiliary.PRSV2 = pp.GetType.GetField("m_pr").GetValue(pp)
+                        prip.InteractionParameters(act.ObjID)(act.ObjID2).kji = pval
+                    ElseIf act.PropertyName = "PRSV2VL_KIJ" Then
+                        Dim prip As Auxiliary.PRSV2VL = pp.GetType.GetField("m_pr").GetValue(pp)
+                        prip.InteractionParameters(act.ObjID)(act.ObjID2).kij = pval
+                    ElseIf act.PropertyName = "PRSV2VL_KJI Then" Then
+                        Dim prip As Auxiliary.PRSV2VL = pp.GetType.GetField("m_pr").GetValue(pp)
+                        prip.InteractionParameters(act.ObjID)(act.ObjID2).kji = pval
+                    ElseIf act.PropertyName = "LK_IP" Then
+                        Dim prip As Auxiliary.LeeKeslerPlocker = pp.GetType.GetField("m_lk").GetValue(pp)
+                        prip.InteractionParameters(act.ObjID)(act.ObjID2).kij = pval
+                    ElseIf act.PropertyName.Contains("NRTL") Then
+                        Dim nrtlip As Auxiliary.NRTL = pp.GetType.GetProperty("m_uni").GetValue(pp)
+                        Select Case act.PropertyName
+                            Case "NRTL_A12"
+                                nrtlip.InteractionParameters(act.ObjID)(act.ObjID2).A12 = pval
+                            Case "NRTL_A21"
+                                nrtlip.InteractionParameters(act.ObjID)(act.ObjID2).A21 = pval
+                            Case "NRTL_B12"
+                                nrtlip.InteractionParameters(act.ObjID)(act.ObjID2).B12 = pval
+                            Case "NRTL_B21"
+                                nrtlip.InteractionParameters(act.ObjID)(act.ObjID2).B21 = pval
+                            Case "NRTL_C12"
+                                nrtlip.InteractionParameters(act.ObjID)(act.ObjID2).C12 = pval
+                            Case "NRTL_C21"
+                                nrtlip.InteractionParameters(act.ObjID)(act.ObjID2).C21 = pval
+                            Case "NRTL_alpha12"
+                                nrtlip.InteractionParameters(act.ObjID)(act.ObjID2).alpha12 = pval
+                        End Select
+                    ElseIf act.PropertyName.Contains("UNIQUAC") Then
+                        Dim uniquacip As Auxiliary.UNIQUAC = pp.GetType.GetProperty("m_uni").GetValue(pp)
+                        Select Case act.PropertyName
+                            Case "UNIQUAC_A12"
+                                uniquacip.InteractionParameters(act.ObjID)(act.ObjID2).A12 = pval
+                            Case "UNIQUAC_A21"
+                                uniquacip.InteractionParameters(act.ObjID)(act.ObjID2).A21 = pval
+                            Case "UNIQUAC_B12"
+                                uniquacip.InteractionParameters(act.ObjID)(act.ObjID2).B12 = pval
+                            Case "UNIQUAC_B21"
+                                uniquacip.InteractionParameters(act.ObjID)(act.ObjID2).B21 = pval
+                            Case "UNIQUAC_C12"
+                                uniquacip.InteractionParameters(act.ObjID)(act.ObjID2).C12 = pval
+                            Case "UNIQUAC_C21"
+                                uniquacip.InteractionParameters(act.ObjID)(act.ObjID2).C21 = pval
+                        End Select
+                    End If
+
+                Case UndoRedoActionType.SystemOfUnitsAdded
+
+                    Dim su = DirectCast(act.NewValue, DWSIM.SistemasDeUnidades.Unidades)
+
+                    If undo Then
+                        Me.FrmStSim1.ComboBox2.SelectedIndex = 0
+                        Me.Options.AvailableUnitSystems.Remove(su.nome)
+                    Else
+                        Me.Options.AvailableUnitSystems.Add(su.nome, su)
+                    End If
+
+                Case UndoRedoActionType.SystemOfUnitsRemoved
+
+                    Dim su = DirectCast(act.NewValue, DWSIM.SistemasDeUnidades.Unidades)
+
+                    If undo Then
+                        Me.Options.AvailableUnitSystems.Add(su.nome, su)
+                    Else
+                        Me.FrmStSim1.ComboBox2.SelectedIndex = 0
+                        Me.Options.AvailableUnitSystems.Remove(su.nome)
+                    End If
+
+                Case UndoRedoActionType.SystemOfUnitsChanged
+
+                    Dim sobj = FormMain.AvailableUnitSystems(act.ObjID)
+
+                    'Property not listed, set using Reflection
+                    Dim method As FieldInfo = sobj.GetType().GetField(act.ObjID2)
+                    method.SetValue(sobj, pval)
+
+                    FrmStSim1.ComboBox2_SelectedIndexChanged(Me, New EventArgs)
+
+                Case UndoRedoActionType.CutObjects
+
+                    Dim xmldata As String, objlist As List(Of GraphicObject)
+                    If undo Then
+                        xmldata = act.NewValue
+                        Clipboard.SetText(xmldata)
+                        PasteObjects(False)
+                    Else
+                        objlist = act.OldValue
+                        For Each obj In objlist
+                            DeleteSelectedObject(Me, New EventArgs, obj, False)
                         Next
                     End If
-                Else
-                    DeleteObject(gobj1.Tag, False)
-                End If
 
-            Case UndoRedoActionType.FlowsheetObjectConnected
+                Case UndoRedoActionType.PasteObjects
 
-                Dim gobj1 = Me.FormSurface.FlowsheetDesignSurface.drawingObjects.FindObjectWithName(act.ObjID)
-                Dim gobj2 = Me.FormSurface.FlowsheetDesignSurface.drawingObjects.FindObjectWithName(act.ObjID2)
+                    Dim xmldata As String, objlist As List(Of GraphicObject)
+                    If undo Then
+                        objlist = act.NewValue
+                        For Each obj In objlist
+                            DeleteSelectedObject(Me, New EventArgs, obj, False)
+                        Next
+                    Else
+                        xmldata = act.OldValue
+                        Clipboard.SetText(xmldata)
+                        PasteObjects(False)
+                    End If
 
-                If undo Then
-                    DisconnectObject(gobj1, gobj2)
-                Else
-                    ConnectObject(gobj1, gobj2, act.OldValue, act.NewValue)
-                End If
+            End Select
 
-            Case UndoRedoActionType.FlowsheetObjectDisconnected
+            Me.FormSurface.UpdateSelectedObject()
 
-                Dim gobj1 = Me.FormSurface.FlowsheetDesignSurface.drawingObjects.FindObjectWithName(act.ObjID)
-                Dim gobj2 = Me.FormSurface.FlowsheetDesignSurface.drawingObjects.FindObjectWithName(act.ObjID2)
+        Catch ex As Exception
 
-                If undo Then
-                    ConnectObject(gobj1, gobj2, act.OldValue, act.NewValue)
-                Else
-                    DisconnectObject(gobj1, gobj2)
-                End If
+            WriteToLog(ex.ToString(), Color.Red, TipoAviso.Erro)
 
-            Case UndoRedoActionType.PropertyPackageAdded
-
-                If undo Then
-                    Me.Options.PropertyPackages.Remove(act.ObjID)
-                Else
-                    Dim pp As PropertyPackage = DirectCast(act.NewValue, PropertyPackage)
-                    Me.Options.PropertyPackages.Add(pp.UniqueID, pp)
-                End If
-
-            Case UndoRedoActionType.PropertyPackageRemoved
-
-                If undo Then
-                    Dim pp As PropertyPackage = DirectCast(act.NewValue, PropertyPackage)
-                    Me.Options.PropertyPackages.Add(pp.UniqueID, pp)
-                Else
-                    Me.Options.PropertyPackages.Remove(act.ObjID)
-                End If
-
-            Case UndoRedoActionType.PropertyPackagePropertyChanged
-
-                Dim pp As PropertyPackage = DirectCast(act.Tag, PropertyPackage)
-
-                If act.PropertyName = "PARAM" Then
-                    pp.Parameters(act.ObjID) = pval
-                ElseIf act.PropertyName = "PR_IP" Then
-                    Dim prip As Auxiliary.PengRobinson = pp.GetType.GetField("m_pr").GetValue(pp)
-                    prip.InteractionParameters(act.ObjID)(act.ObjID2).kij = pval
-                ElseIf act.PropertyName = "PRSV2_KIJ" Then
-                    Dim prip As Auxiliary.PRSV2 = pp.GetType.GetField("m_pr").GetValue(pp)
-                    prip.InteractionParameters(act.ObjID)(act.ObjID2).kij = pval
-                ElseIf act.PropertyName = "PRSV2_KJI Then" Then
-                    Dim prip As Auxiliary.PRSV2 = pp.GetType.GetField("m_pr").GetValue(pp)
-                    prip.InteractionParameters(act.ObjID)(act.ObjID2).kji = pval
-                ElseIf act.PropertyName = "PRSV2VL_KIJ" Then
-                    Dim prip As Auxiliary.PRSV2VL = pp.GetType.GetField("m_pr").GetValue(pp)
-                    prip.InteractionParameters(act.ObjID)(act.ObjID2).kij = pval
-                ElseIf act.PropertyName = "PRSV2VL_KJI Then" Then
-                    Dim prip As Auxiliary.PRSV2VL = pp.GetType.GetField("m_pr").GetValue(pp)
-                    prip.InteractionParameters(act.ObjID)(act.ObjID2).kji = pval
-                ElseIf act.PropertyName = "LK_IP" Then
-                    Dim prip As Auxiliary.LeeKeslerPlocker = pp.GetType.GetField("m_lk").GetValue(pp)
-                    prip.InteractionParameters(act.ObjID)(act.ObjID2).kij = pval
-                ElseIf act.PropertyName.Contains("NRTL") Then
-                    Dim nrtlip As Auxiliary.NRTL = pp.GetType.GetProperty("m_uni").GetValue(pp)
-                    Select Case act.PropertyName
-                        Case "NRTL_A12"
-                            nrtlip.InteractionParameters(act.ObjID)(act.ObjID2).A12 = pval
-                        Case "NRTL_A21"
-                            nrtlip.InteractionParameters(act.ObjID)(act.ObjID2).A21 = pval
-                        Case "NRTL_B12"
-                            nrtlip.InteractionParameters(act.ObjID)(act.ObjID2).B12 = pval
-                        Case "NRTL_B21"
-                            nrtlip.InteractionParameters(act.ObjID)(act.ObjID2).B21 = pval
-                        Case "NRTL_C12"
-                            nrtlip.InteractionParameters(act.ObjID)(act.ObjID2).C12 = pval
-                        Case "NRTL_C21"
-                            nrtlip.InteractionParameters(act.ObjID)(act.ObjID2).C21 = pval
-                        Case "NRTL_alpha12"
-                            nrtlip.InteractionParameters(act.ObjID)(act.ObjID2).alpha12 = pval
-                    End Select
-                ElseIf act.PropertyName.Contains("UNIQUAC") Then
-                    Dim uniquacip As Auxiliary.UNIQUAC = pp.GetType.GetProperty("m_uni").GetValue(pp)
-                    Select Case act.PropertyName
-                        Case "UNIQUAC_A12"
-                            uniquacip.InteractionParameters(act.ObjID)(act.ObjID2).A12 = pval
-                        Case "UNIQUAC_A21"
-                            uniquacip.InteractionParameters(act.ObjID)(act.ObjID2).A21 = pval
-                        Case "UNIQUAC_B12"
-                            uniquacip.InteractionParameters(act.ObjID)(act.ObjID2).B12 = pval
-                        Case "UNIQUAC_B21"
-                            uniquacip.InteractionParameters(act.ObjID)(act.ObjID2).B21 = pval
-                        Case "UNIQUAC_C12"
-                            uniquacip.InteractionParameters(act.ObjID)(act.ObjID2).C12 = pval
-                        Case "UNIQUAC_C21"
-                            uniquacip.InteractionParameters(act.ObjID)(act.ObjID2).C21 = pval
-                    End Select
-                End If
-
-            Case UndoRedoActionType.SystemOfUnitsAdded
-
-                Dim su = DirectCast(act.NewValue, DWSIM.SistemasDeUnidades.Unidades)
-
-                If undo Then
-                    Me.FrmStSim1.ComboBox2.SelectedIndex = 0
-                    Me.Options.AvailableUnitSystems.Remove(su.nome)
-                Else
-                    Me.Options.AvailableUnitSystems.Add(su.nome, su)
-                End If
-
-            Case UndoRedoActionType.SystemOfUnitsRemoved
-
-                Dim su = DirectCast(act.NewValue, DWSIM.SistemasDeUnidades.Unidades)
-
-                If undo Then
-                    Me.Options.AvailableUnitSystems.Add(su.nome, su)
-                Else
-                    Me.FrmStSim1.ComboBox2.SelectedIndex = 0
-                    Me.Options.AvailableUnitSystems.Remove(su.nome)
-                End If
-
-            Case UndoRedoActionType.SystemOfUnitsChanged
-
-                Dim sobj = FormMain.AvailableUnitSystems(act.ObjID)
-
-                'Property not listed, set using Reflection
-                Dim method As FieldInfo = sobj.GetType().GetField(act.ObjID2)
-                method.SetValue(sobj, pval)
-
-                FrmStSim1.ComboBox2_SelectedIndexChanged(Me, New EventArgs)
-
-            Case UndoRedoActionType.CutObjects
-
-                Dim xmldata As String, objlist As List(Of GraphicObject)
-                If undo Then
-                    xmldata = act.NewValue
-                    Clipboard.SetText(xmldata)
-                    PasteObjects(False)
-                Else
-                    objlist = act.OldValue
-                    For Each obj In objlist
-                        DeleteSelectedObject(Me, New EventArgs, obj, False)
-                    Next
-                End If
-
-            Case UndoRedoActionType.PasteObjects
-
-                Dim xmldata As String, objlist As List(Of GraphicObject)
-                If undo Then
-                    objlist = act.NewValue
-                    For Each obj In objlist
-                        DeleteSelectedObject(Me, New EventArgs, obj, False)
-                    Next
-                Else
-                    xmldata = act.OldValue
-                    Clipboard.SetText(xmldata)
-                    PasteObjects(False)
-                End If
-
-        End Select
-
-        Me.FormSurface.UpdateSelectedObject()
+        End Try
 
     End Sub
 

@@ -2627,10 +2627,10 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     Case ColType.DistillationColumn
                         val = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.CondenserPressure), nf)
                         .Item.Add(FT(DWSIM.App.GetLocalString("DCCondenserPressure"), su.spmp_pressure), val, False, DWSIM.App.GetLocalString("DCColumnProperties"), "", True)
-                        .Item(.Item.Count).Tag2 = "PROP_DC_0"
+                        .Item(.Item.Count - 1).Tag2 = "PROP_DC_0"
                         val = Format(Conversor.ConverterDoSI(su.spmp_pressure, Me.ReboilerPressure), nf)
                         .Item.Add(FT(DWSIM.App.GetLocalString("DCReboilerPressure"), su.spmp_pressure), val, False, DWSIM.App.GetLocalString("DCColumnProperties"), "", True)
-                        .Item(.Item.Count).Tag2 = "PROP_DC_1"
+                        .Item(.Item.Count - 1).Tag2 = "PROP_DC_1"
                         .Item.Add(DWSIM.App.GetLocalString("DCCondenserType"), Me, "CondenserType", False, DWSIM.App.GetLocalString("DCColumnProperties"), "", True)
                         val = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.CondenserDeltaP), nf)
                         .Item.Add(FT(DWSIM.App.GetLocalString("DCCondenserDeltaP"), su.spmp_deltaP), val, False, DWSIM.App.GetLocalString("DCColumnProperties"), "", True)

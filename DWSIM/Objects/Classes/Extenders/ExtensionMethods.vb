@@ -50,10 +50,21 @@ Module Extensions
 
     <System.Runtime.CompilerServices.Extension()> _
     Public Function GetValue(control As System.Windows.Forms.GridItem) As Double
+        Dim istring As Object
         If control.Value.ToString().Split(" ").Length > 1 Then
-            Return Convert.ToDouble(control.Value.ToString().Split(" ")(0))
+            istring = control.Value.ToString().Split(" ")(0)
+            If Double.TryParse(istring.ToString, New Double) Then
+                Return Convert.ToDouble(istring)
+            Else
+                Return Double.NaN
+            End If
         ElseIf control.Value.ToString().Split(" ").Length = 1 Then
-            Return Convert.ToDouble(control.Value)
+            istring = control.Value
+            If Double.TryParse(istring.ToString, New Double) Then
+                Return Convert.ToDouble(control.Value)
+            Else
+                Return Double.NaN
+            End If
         Else
             Return Double.NaN
         End If

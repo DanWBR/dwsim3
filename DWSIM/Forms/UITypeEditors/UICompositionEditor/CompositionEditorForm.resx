@@ -147,6 +147,9 @@
   <data name="GridComp.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 16</value>
   </data>
+  <data name="GridComp.RowHeadersWidth" type="System.Int32, mscorlib">
+    <value>200</value>
+  </data>
   <data name="GridComp.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
     <value>Vertical</value>
   </data>

@@ -12,7 +12,6 @@ Public Class frmProps
     Inherits DockContent
 
     Private Flowsheet As FormFlowsheet
-    Private Conversor As New DWSIM.SistemasDeUnidades.Conversor
 
     Private Sub _Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
@@ -42,14 +41,18 @@ Public Class frmProps
 
         Dim cprop As CustomProperty = (From pd As CustomProperty In PGEx1.Item Select pd Where pd.Name = e.ChangedItem.Label).SingleOrDefault
 
-        If cprop.Tag2 <> Nothing Then
-            Flowsheet.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.SimulationObjectPropertyChanged,
-                                                                .ObjID = sobj.Name,
-                                                                .OldValue = e.OldValue,
-                                                                .NewValue = e.ChangedItem.Value,
-                                                                .PropertyName = cprop.Tag2,
-                                                                .Tag = Flowsheet.Options.SelectedUnitSystem,
-                                                                .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_FlowsheetObjectPropertyChanged"), sobj.Tag, e.ChangedItem.Label, .OldValue, .NewValue)})
+        If Not cprop Is Nothing Then
+            If cprop.Tag2 <> Nothing Then
+                If Double.TryParse(e.ChangedItem.Value, New Double) Then
+                    Flowsheet.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.SimulationObjectPropertyChanged,
+                                                                        .ObjID = sobj.Name,
+                                                                        .OldValue = e.OldValue,
+                                                                        .NewValue = e.ChangedItem.Value,
+                                                                        .PropertyName = cprop.Tag2,
+                                                                        .Tag = Flowsheet.Options.SelectedUnitSystem,
+                                                                        .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_FlowsheetObjectPropertyChanged"), sobj.Tag, e.ChangedItem.Label, .OldValue, .NewValue)})
+                End If
+            End If
         End If
 
         'handle changes internally
@@ -112,15 +115,18 @@ Public Class frmProps
         End If
 
         Dim cprop As CustomProperty = (From pd As CustomProperty In PGEx2.Item Select pd Where pd.Name = e.ChangedItem.Label).SingleOrDefault
+
         Dim sobj As Microsoft.Msdn.Samples.GraphicObjects.GraphicObject = Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject
 
-        If cprop.Tag2 <> Nothing Then
-            Flowsheet.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.FlowsheetObjectPropertyChanged,
-                                                         .ObjID = Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name,
-                                                        .OldValue = e.OldValue,
-                                                        .NewValue = e.ChangedItem.Value,
-                                                        .PropertyName = cprop.Tag2,
-                                                        .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_GraphicObjectPropertyChanged"), sobj.Tag, e.ChangedItem.Label, .OldValue, .NewValue)})
+        If Not cprop Is Nothing Then
+            If cprop.Tag2 <> Nothing Then
+                Flowsheet.AddUndoRedoAction(New UndoRedoAction() With {.AType = UndoRedoActionType.FlowsheetObjectPropertyChanged,
+                                                             .ObjID = Flowsheet.FormSurface.FlowsheetDesignSurface.SelectedObject.Name,
+                                                            .OldValue = e.OldValue,
+                                                            .NewValue = e.ChangedItem.Value,
+                                                            .PropertyName = cprop.Tag2,
+                                                            .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_GraphicObjectPropertyChanged"), sobj.Tag, e.ChangedItem.Label, .OldValue, .NewValue)})
+            End If
         End If
 
         If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Nome")) Then

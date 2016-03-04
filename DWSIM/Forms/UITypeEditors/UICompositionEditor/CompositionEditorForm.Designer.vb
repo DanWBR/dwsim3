@@ -28,8 +28,6 @@ Partial Class CompositionEditorForm
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.GridComp = New System.Windows.Forms.DataGridView()
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.col2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.GroupBox38 = New System.Windows.Forms.GroupBox()
         Me.ButtonEqualize = New System.Windows.Forms.Button()
         Me.KButton23 = New System.Windows.Forms.Button()
@@ -54,6 +52,8 @@ Partial Class CompositionEditorForm
         Me.Label6 = New System.Windows.Forms.Label()
         Me.tbTag = New System.Windows.Forms.TextBox()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.col2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.GroupBox1.SuspendLayout()
         CType(Me.GridComp, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox38.SuspendLayout()
@@ -87,33 +87,9 @@ Partial Class CompositionEditorForm
         DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
         DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.GridComp.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.GridComp.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.GridComp.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.GridComp.ShowCellToolTips = False
-        '
-        'Column2
-        '
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle1.Format = "N4"
-        DataGridViewCellStyle1.FormatProvider = New System.Globalization.CultureInfo("pt-BR")
-        Me.Column2.DefaultCellStyle = DataGridViewCellStyle1
-        Me.Column2.FillWeight = 50.0!
-        resources.ApplyResources(Me.Column2, "Column2")
-        Me.Column2.Name = "Column2"
-        Me.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'col2
-        '
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle2.Format = "N4"
-        Me.col2.DefaultCellStyle = DataGridViewCellStyle2
-        Me.col2.FillWeight = 50.0!
-        resources.ApplyResources(Me.col2, "col2")
-        Me.col2.Name = "col2"
-        Me.col2.ReadOnly = True
         '
         'GroupBox38
         '
@@ -263,6 +239,28 @@ Partial Class CompositionEditorForm
         Me.GroupBox4.Name = "GroupBox4"
         Me.GroupBox4.TabStop = False
         '
+        'Column2
+        '
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle1.Format = "N4"
+        DataGridViewCellStyle1.FormatProvider = New System.Globalization.CultureInfo("pt-BR")
+        Me.Column2.DefaultCellStyle = DataGridViewCellStyle1
+        Me.Column2.FillWeight = 50.0!
+        resources.ApplyResources(Me.Column2, "Column2")
+        Me.Column2.Name = "Column2"
+        Me.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'col2
+        '
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle2.Format = "N4"
+        Me.col2.DefaultCellStyle = DataGridViewCellStyle2
+        Me.col2.FillWeight = 50.0!
+        resources.ApplyResources(Me.col2, "col2")
+        Me.col2.Name = "col2"
+        Me.col2.ReadOnly = True
+        '
         'CompositionEditorForm
         '
         resources.ApplyResources(Me, "$this")
@@ -311,9 +309,9 @@ Partial Class CompositionEditorForm
     Public WithEvents ButtonEqualize As System.Windows.Forms.Button
     Public WithEvents RadioButton7 As System.Windows.Forms.RadioButton
     Public WithEvents Label5 As System.Windows.Forms.Label
-    Friend WithEvents Column2 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents col2 As System.Windows.Forms.DataGridViewTextBoxColumn
     Public WithEvents Label6 As System.Windows.Forms.Label
     Friend WithEvents tbTag As System.Windows.Forms.TextBox
     Friend WithEvents GroupBox4 As System.Windows.Forms.GroupBox
+    Friend WithEvents Column2 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents col2 As System.Windows.Forms.DataGridViewTextBoxColumn
 End Class
