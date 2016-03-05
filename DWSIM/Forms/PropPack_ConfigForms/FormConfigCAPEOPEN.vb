@@ -209,82 +209,88 @@ Imports System.Linq
                 b = False
             Next
 
-            If _phasemappings("Vapor").PhaseLabel = "" Then
-                i = 0
-                For Each s In staggr
-                    If s = "Vapor" And Not alreadymapped(i) Then
-                        _phasemappings("Vapor").PhaseLabel = plist(i)
-                        alreadymapped(i) = True
-                        Exit For
-                    End If
-                    i += 1
-                Next
-                If _phasemappings("Vapor").PhaseLabel = "" Then _phasemappings("Vapor").PhaseLabel = "Disabled"
-            End If
+            If _coversion = "1.0" Then
 
-            If _phasemappings("Liquid1").PhaseLabel = "" Then
-                i = 0
-                For Each s In staggr
-                    If s = "Liquid" And Not alreadymapped(i) Then
-                        _phasemappings("Liquid1").PhaseLabel = plist(i)
-                        alreadymapped(i) = True
-                        Exit For
-                    End If
-                    i += 1
-                Next
-                If _phasemappings("Liquid1").PhaseLabel = "" Then _phasemappings("Liquid1").PhaseLabel = "Disabled"
-            End If
+            Else
 
-            If _phasemappings("Liquid2").PhaseLabel = "" Then
-                i = 0
-                For Each s In staggr
-                    If s = "Liquid" And Not alreadymapped(i) Then
-                        _phasemappings("Liquid2").PhaseLabel = plist(i)
-                        alreadymapped(i) = True
-                        Exit For
-                    End If
-                    i += 1
-                Next
-                If _phasemappings("Liquid2").PhaseLabel = "" Then _phasemappings("Liquid2").PhaseLabel = "Disabled"
-            End If
+                If _phasemappings("Vapor").PhaseLabel = "" Then
+                    i = 0
+                    For Each s In staggr
+                        If s = "Vapor" And Not alreadymapped(i) Then
+                            _phasemappings("Vapor").PhaseLabel = plist(i)
+                            alreadymapped(i) = True
+                            Exit For
+                        End If
+                        i += 1
+                    Next
+                    If _phasemappings("Vapor").PhaseLabel = "" Then _phasemappings("Vapor").PhaseLabel = "Disabled"
+                End If
 
-            If _phasemappings("Liquid3").PhaseLabel = "" Then
-                i = 0
-                For Each s In staggr
-                    If s = "Liquid" And Not alreadymapped(i) Then
-                        _phasemappings("Liquid3").PhaseLabel = plist(i)
-                        alreadymapped(i) = True
-                        Exit For
-                    End If
-                    i += 1
-                Next
-                If _phasemappings("Liquid3").PhaseLabel = "" Then _phasemappings("Liquid3").PhaseLabel = "Disabled"
-            End If
+                If _phasemappings("Liquid1").PhaseLabel = "" Then
+                    i = 0
+                    For Each s In staggr
+                        If s = "Liquid" And Not alreadymapped(i) Then
+                            _phasemappings("Liquid1").PhaseLabel = plist(i)
+                            alreadymapped(i) = True
+                            Exit For
+                        End If
+                        i += 1
+                    Next
+                    If _phasemappings("Liquid1").PhaseLabel = "" Then _phasemappings("Liquid1").PhaseLabel = "Disabled"
+                End If
 
-            If _phasemappings("Aqueous").PhaseLabel = "" Then
-                i = 0
-                For Each s In staggr
-                    If s = "Liquid" And Not alreadymapped(i) Then
-                        _phasemappings("Aqueous").PhaseLabel = plist(i)
-                        alreadymapped(i) = True
-                        Exit For
-                    End If
-                    i += 1
-                Next
-                If _phasemappings("Aqueous").PhaseLabel = "" Then _phasemappings("Aqueous").PhaseLabel = "Disabled"
-            End If
+                If _phasemappings("Liquid2").PhaseLabel = "" Then
+                    i = 0
+                    For Each s In staggr
+                        If s = "Liquid" And Not alreadymapped(i) Then
+                            _phasemappings("Liquid2").PhaseLabel = plist(i)
+                            alreadymapped(i) = True
+                            Exit For
+                        End If
+                        i += 1
+                    Next
+                    If _phasemappings("Liquid2").PhaseLabel = "" Then _phasemappings("Liquid2").PhaseLabel = "Disabled"
+                End If
 
-            If _phasemappings("Solid").PhaseLabel = "" Then
-                i = 0
-                For Each s In staggr
-                    If s = "Solid" And Not alreadymapped(i) Then
-                        _phasemappings("Solid").PhaseLabel = plist(i)
-                        alreadymapped(i) = True
-                        Exit For
-                    End If
-                    i += 1
-                Next
-                If _phasemappings("Solid").PhaseLabel = "" Then _phasemappings("Solid").PhaseLabel = "Disabled"
+                If _phasemappings("Liquid3").PhaseLabel = "" Then
+                    i = 0
+                    For Each s In staggr
+                        If s = "Liquid" And Not alreadymapped(i) Then
+                            _phasemappings("Liquid3").PhaseLabel = plist(i)
+                            alreadymapped(i) = True
+                            Exit For
+                        End If
+                        i += 1
+                    Next
+                    If _phasemappings("Liquid3").PhaseLabel = "" Then _phasemappings("Liquid3").PhaseLabel = "Disabled"
+                End If
+
+                If _phasemappings("Aqueous").PhaseLabel = "" Then
+                    i = 0
+                    For Each s In staggr
+                        If s = "Liquid" And Not alreadymapped(i) Then
+                            _phasemappings("Aqueous").PhaseLabel = plist(i)
+                            alreadymapped(i) = True
+                            Exit For
+                        End If
+                        i += 1
+                    Next
+                    If _phasemappings("Aqueous").PhaseLabel = "" Then _phasemappings("Aqueous").PhaseLabel = "Disabled"
+                End If
+
+                If _phasemappings("Solid").PhaseLabel = "" Then
+                    i = 0
+                    For Each s In staggr
+                        If s = "Solid" And Not alreadymapped(i) Then
+                            _phasemappings("Solid").PhaseLabel = plist(i)
+                            alreadymapped(i) = True
+                            Exit For
+                        End If
+                        i += 1
+                    Next
+                    If _phasemappings("Solid").PhaseLabel = "" Then _phasemappings("Solid").PhaseLabel = "Disabled"
+                End If
+
             End If
 
             For Each kvp As KeyValuePair(Of String, PhaseInfo) In _phasemappings
