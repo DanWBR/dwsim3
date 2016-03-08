@@ -7,6 +7,7 @@ Imports System.Reflection
 Imports System.ComponentModel
 Imports FarsiLibrary.Win
 Imports DWSIM.DWSIM.Outros
+Imports System.Threading
 
 <System.Serializable()> Public Class FormScript
 
@@ -14,6 +15,7 @@ Imports DWSIM.DWSIM.Outros
 
     Public fc As FormFlowsheet
     Private reader As Jolt.XmlDocCommentReader
+    Public Shared AbortScript As Boolean = False
 
     Private Sub FormVBScript_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Me.Load
 
@@ -87,6 +89,7 @@ Imports DWSIM.DWSIM.Outros
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton1.Click
 
+        AbortScript = False
         If Not Me.TabStripScripts.SelectedItem Is Nothing Then
             If DWSIM.App.IsRunningOnMono Then
                 RunScript(DirectCast(Me.TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControlMono).txtScript.Text, fc)
@@ -123,6 +126,7 @@ Imports DWSIM.DWSIM.Outros
         scope = engine.CreateScope()
         scope.SetVariable("Plugins", My.MyApplication.UtilityPlugins)
         scope.SetVariable("Flowsheet", fsheet)
+        scope.SetVariable("AbortScript", AbortScript)
         scope.SetVariable("Spreadsheet", fsheet.FormSpreadsheet)
         Dim Solver As New DWSIM.Flowsheet.FlowsheetSolver
         scope.SetVariable("Solver", Solver)
@@ -639,6 +643,10 @@ Imports DWSIM.DWSIM.Outros
             Next
             scontrol.txtScript.SelectedText = newlines.TrimEnd(Environment.NewLine, vbCr, vbLf, vbCrLf)
         End If
+    End Sub
+
+    Private Sub ToolStripButton2_Click_2(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
+        AbortScript = True
     End Sub
 End Class
 
