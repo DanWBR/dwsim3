@@ -647,6 +647,7 @@ Imports System.Threading
 
     Private Sub ToolStripButton2_Click_2(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
         AbortScript = True
+        Application.DoEvents()
     End Sub
 End Class
 

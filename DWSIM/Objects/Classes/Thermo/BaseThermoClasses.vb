@@ -238,13 +238,13 @@ Namespace DWSIM.ClassesBasicasTermodinamica
         Public SPMProperties As New SinglePhaseMixtureProperties
         Public TPMProperties As New TwoPhaseMixtureProperties
 
-        Public ReadOnly Property PhaseProperties As SinglePhaseMixtureProperties
+        Public ReadOnly Property Properties As SinglePhaseMixtureProperties
             Get
                 Return SPMProperties
             End Get
         End Property
 
-        Public ReadOnly Property PhaseProperties2 As TwoPhaseMixtureProperties
+        Public ReadOnly Property Properties2 As TwoPhaseMixtureProperties
             Get
                 Return TPMProperties
             End Get

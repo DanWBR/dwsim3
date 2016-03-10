@@ -23,6 +23,8 @@ Imports System.Linq
 Imports DWSIM.DWSIM.SimulationObjects.PropertyPackages
 Imports System.Runtime.InteropServices
 Imports System.Threading.Tasks
+Imports System.Runtime.Serialization
+Imports System.Reflection
 
 Namespace DWSIM.SimulationObjects.Streams
 
@@ -43,7 +45,7 @@ Namespace DWSIM.SimulationObjects.Streams
         Friend _ppid As String = ""
 
         Protected m_compositionbasis As CompBasis = CompBasis.Molar_Fractions
-        Protected m_Phases As New Dictionary(Of Integer, DWSIM.ClassesBasicasTermodinamica.Fase)
+        Protected m_Phases As New Dictionary(Of String, DWSIM.ClassesBasicasTermodinamica.Fase)
 
         Private _inequilibrium As Boolean = False
 
@@ -82,7 +84,7 @@ Namespace DWSIM.SimulationObjects.Streams
                 End If
                 .Add(New XElement("PropertyPackage", ppid))
                 .Add(New XElement("Phases"))
-                For Each kvp As KeyValuePair(Of Integer, DWSIM.ClassesBasicasTermodinamica.Fase) In m_Phases
+                For Each kvp As KeyValuePair(Of String, DWSIM.ClassesBasicasTermodinamica.Fase) In m_Phases
                     .Item(.Count - 1).Add(New XElement("Phase", {New XElement("ID", kvp.Key), kvp.Value.SaveData().ToArray()}))
                 Next
             End With
@@ -216,8 +218,8 @@ Namespace DWSIM.SimulationObjects.Streams
             MyBase.PropertyValueChanged(s, e)
             If e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("UOPropertyPackage")) Then
                 If e.ChangedItem.Value <> "" Then
-                    If Flowsheet.Options.PropertyPackages.ContainsKey(e.ChangedItem.Value) Then
-                        Me.PropertyPackage = Flowsheet.Options.PropertyPackages(e.ChangedItem.Value)
+                    If FlowSheet.Options.PropertyPackages.ContainsKey(e.ChangedItem.Value) Then
+                        Me.PropertyPackage = FlowSheet.Options.PropertyPackages(e.ChangedItem.Value)
                     End If
                 End If
             End If
@@ -305,7 +307,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property Fases() As Dictionary(Of Integer, DWSIM.ClassesBasicasTermodinamica.Fase)
+        Public ReadOnly Property Fases() As Dictionary(Of String, DWSIM.ClassesBasicasTermodinamica.Fase)
             Get
                 Return m_Phases
             End Get
@@ -606,8 +608,8 @@ Namespace DWSIM.SimulationObjects.Streams
             End If
 
             For Each nti As Outros.NodeItem In Me.NodeTableItems.Values
-                nti.Value = GetPropertyValue(nti.Text, Flowsheet.Options.SelectedUnitSystem)
-                nti.Unit = GetPropertyUnit(nti.Text, Flowsheet.Options.SelectedUnitSystem)
+                nti.Value = GetPropertyValue(nti.Text, FlowSheet.Options.SelectedUnitSystem)
+                nti.Unit = GetPropertyUnit(nti.Text, FlowSheet.Options.SelectedUnitSystem)
             Next
 
             Me.QTNodeTableItems = New System.Collections.Generic.Dictionary(Of Integer, DWSIM.Outros.NodeItem)
@@ -1055,7 +1057,7 @@ Namespace DWSIM.SimulationObjects.Streams
                     .IsBrowsable = True
                     .BrowsableLabelStyle = PropertyGridEx.BrowsableTypeConverter.LabelStyle.lsEllipsis
                     .CustomEditor = New System.Drawing.Design.UITypeEditor
-                End With        
+                End With
 
                 valor = Format(Conversor.ConverterDoSI(su.spmp_enthalpy, Me.Fases(0).SPMProperties.enthalpy.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                 .Item.Add("[8] " & FlowSheet.FT(DWSIM.App.GetLocalString("EntalpiaEspecfica"), su.spmp_enthalpy), valor, True, DWSIM.App.GetLocalString("Condies1"), DWSIM.App.GetLocalString("EntalpiaEspecficadam"), True)
@@ -1789,7 +1791,7 @@ Namespace DWSIM.SimulationObjects.Streams
                         proplist.Add("PROP_MS_" + CStr(i))
                     Next
                     For i = 102 To 105
-                        For Each subst As ConstantProperties In Flowsheet.Options.SelectedComponents.Values
+                        For Each subst As ConstantProperties In FlowSheet.Options.SelectedComponents.Values
                             proplist.Add("PROP_MS_" + CStr(i) + "," + subst.Name)
                         Next
                     Next
@@ -1800,7 +1802,7 @@ Namespace DWSIM.SimulationObjects.Streams
                     For i = 131 To 148
                         proplist.Add("PROP_MS_" + CStr(i))
                     Next
-                    For Each subst As ConstantProperties In Flowsheet.Options.SelectedComponents.Values
+                    For Each subst As ConstantProperties In FlowSheet.Options.SelectedComponents.Values
                         proplist.Add("PROP_MS_102" + "," + subst.Name)
                         proplist.Add("PROP_MS_103" + "," + subst.Name)
                         proplist.Add("PROP_MS_104" + "," + subst.Name)
@@ -1854,7 +1856,7 @@ Namespace DWSIM.SimulationObjects.Streams
                     For i = 131 To 148
                         proplist.Add("PROP_MS_" + CStr(i))
                     Next
-                    For Each subst As ConstantProperties In Me.Flowsheet.Options.SelectedComponents.Values
+                    For Each subst As ConstantProperties In Me.FlowSheet.Options.SelectedComponents.Values
                         proplist.Add("PROP_MS_102" + "," + subst.Name)
                         proplist.Add("PROP_MS_103" + "," + subst.Name)
                         proplist.Add("PROP_MS_104" + "," + subst.Name)
@@ -2499,8 +2501,8 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' <returns>The created and initialized Material Object.</returns>
         ''' <remarks></remarks>
         Public Function CreateMaterialObject() As Object Implements CapeOpen.ICapeThermoMaterialObject.CreateMaterialObject
-            Dim mat As New Streams.MaterialStream("temporary stream", "temporary stream", Me.Flowsheet, Me.PropertyPackage)
-            Me.Flowsheet.AddComponentsRows(mat)
+            Dim mat As New Streams.MaterialStream("temporary stream", "temporary stream", Me.FlowSheet, Me.PropertyPackage)
+            Me.FlowSheet.AddComponentsRows(mat)
             Return mat
         End Function
 
@@ -3702,7 +3704,7 @@ Namespace DWSIM.SimulationObjects.Streams
             Else
                 'get ID
                 Dim id As String = CType(source, ICapeIdentification).ComponentDescription
-                Dim myms As MaterialStream = Me.Flowsheet.Collections.ObjectCollection(id)
+                Dim myms As MaterialStream = Me.FlowSheet.Collections.ObjectCollection(id)
                 'proceed with copy
                 Me.Assign(myms)
                 Me.AssignProps(myms)
@@ -3721,7 +3723,7 @@ Namespace DWSIM.SimulationObjects.Streams
         ''' <remarks></remarks>
         Public Function CreateMaterial() As Object Implements ICapeThermoMaterial.CreateMaterial
             Dim mat As Streams.MaterialStream = Me.Clone
-            mat.SetFlowsheet(Me.Flowsheet)
+            mat.SetFlowsheet(Me.FlowSheet)
             mat.ClearAllProps()
             Return mat
         End Function
