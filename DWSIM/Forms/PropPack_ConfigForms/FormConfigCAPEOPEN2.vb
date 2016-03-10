@@ -21,8 +21,8 @@ Public Class FormConfigCAPEOPEN2
     Private Sub FormConfigCAPEOPEN2_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         'loads the resource manager
-        If My.MyApplication._ResourceManager Is Nothing Then
-            My.MyApplication._ResourceManager = New System.Resources.ResourceManager("DWSIM.DWSIM", System.Reflection.Assembly.GetExecutingAssembly())
+        If My.Application._ResourceManager Is Nothing Then
+            My.Application._ResourceManager = New System.Resources.ResourceManager("DWSIM.DWSIM", System.Reflection.Assembly.GetExecutingAssembly())
         End If
 
         Application.EnableVisualStyles()

@@ -96,7 +96,7 @@ Imports DWSIM.DWSIM.SimulationObjects
             xmlinput.Load(reader)
         End If
 
-        Dim cult As Globalization.CultureInfo = My.MyApplication._CultureInfo.Clone
+        Dim cult As Globalization.CultureInfo = My.Application._CultureInfo.Clone
         Dim nf As Globalization.NumberFormatInfo = cult.NumberFormat
 
         Dim pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage

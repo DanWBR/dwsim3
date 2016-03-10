@@ -88,8 +88,8 @@ Namespace DWSIM.Flowsheet
                     Thread.Sleep(sleeptime * 1000)
                     Application.DoEvents()
                     time += sleeptime
-                    If My.MyApplication.CalculatorStopRequested = True Then
-                        My.MyApplication.CalculatorStopRequested = False
+                    If My.Application.CalculatorStopRequested = True Then
+                        My.Application.CalculatorStopRequested = False
                         client.SendText("abort", 3)
                     End If
                     If Abort Then Throw New Exception(ErrorMsg)

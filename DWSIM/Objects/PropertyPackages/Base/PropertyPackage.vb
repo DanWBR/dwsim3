@@ -386,7 +386,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
         ''' <remarks></remarks>
         Public Overridable ReadOnly Property FlashBase() As Auxiliary.FlashAlgorithms.FlashAlgorithm
             Get
-                If Not My.Application.CAPEOPENMode And Not My.MyApplication.IsRunningParallelTasks Then
+                If Not My.Application.CAPEOPENMode And Not My.Application.IsRunningParallelTasks Then
                     If Not Me.Parameters.ContainsKey("PP_FLASHALGORITHM") Then
                         Me.Parameters.Add("PP_FLASHALGORITHM", 2)
                     End If
@@ -394,21 +394,21 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 End If
                 Select Case FlashAlgorithm
                     Case FlashMethod.DWSIMDefault
-                        'If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then
+                        'If My.Application.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then
                         Return New Auxiliary.FlashAlgorithms.DWSIMDefault
                         'Else
                         '    If _dwdf Is Nothing Then _dwdf = New Auxiliary.FlashAlgorithms.DWSIMDefault
                         '    Return _dwdf
                         'End If
                     Case FlashMethod.InsideOut
-                        'If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then
+                        'If My.Application.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then
                         Return New Auxiliary.FlashAlgorithms.BostonBrittInsideOut
                         'Else
                         '    If _bbio Is Nothing Then _bbio = New Auxiliary.FlashAlgorithms.BostonBrittInsideOut
                         '    Return _bbio
                         'End If
                     Case FlashMethod.InsideOut3P
-                        'If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then
+                        'If My.Application.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then
                         Return New Auxiliary.FlashAlgorithms.BostonFournierInsideOut3P With
                                                     {.StabSearchCompIDs = _tpcompids, .StabSearchSeverity = _tpseverity}
                         'Else
@@ -418,7 +418,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         'Return _brio3
                         'End If
                     Case FlashMethod.GibbsMin2P
-                        'If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then
+                        'If My.Application.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then
                         Return New Auxiliary.FlashAlgorithms.GibbsMinimization3P With
                                                     {.ForceTwoPhaseOnly = True}
                         'Else
@@ -426,7 +426,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         'Return _gm3
                         'End If
                     Case FlashMethod.GibbsMin3P
-                        'If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then
+                        'If My.Application.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then
                         Return New Auxiliary.FlashAlgorithms.GibbsMinimization3P With
                                                     {.ForceTwoPhaseOnly = False, .StabSearchCompIDs = _tpcompids, .StabSearchSeverity = _tpseverity}
                         'Else
@@ -437,7 +437,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         'Return _gm3
                         'End If
                     Case FlashMethod.NestedLoops3P, FlashMethod.NestedLoops3PV2, FlashMethod.NestedLoops3PV3
-                        'If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then
+                        'If My.Application.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then
                         Return New Auxiliary.FlashAlgorithms.NestedLoops3PV3 With
                                                     {.StabSearchCompIDs = _tpcompids, .StabSearchSeverity = _tpseverity}
                         'Else
@@ -451,7 +451,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
                             constprops.Add(su.ConstantProperties)
                         Next
-                        'If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then
+                        'If My.Application.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then
                         Return New Auxiliary.FlashAlgorithms.NestedLoopsSLE With {.CompoundProperties = constprops}
                         'Else
                         'If _nlsle Is Nothing Then _nlsle = New Auxiliary.FlashAlgorithms.NestedLoopsSLE
@@ -463,7 +463,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
                             constprops.Add(su.ConstantProperties)
                         Next
-                        'If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then
+                        'If My.Application.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then
                         Return New Auxiliary.FlashAlgorithms.NestedLoopsSLE With {.CompoundProperties = constprops, .SolidSolution = True}
                         'Else
                         'If _nlsle Is Nothing Then _nlsle = New Auxiliary.FlashAlgorithms.NestedLoopsSLE
@@ -476,7 +476,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         For Each su As Substancia In Me.CurrentMaterialStream.Fases(0).Componentes.Values
                             constprops.Add(su.ConstantProperties)
                         Next
-                        'If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then
+                        'If My.Application.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then
                         Return New Auxiliary.FlashAlgorithms.NestedLoopsImmiscible With
                                                     {.CompoundProperties = constprops, .StabSearchCompIDs = _tpcompids, .StabSearchSeverity = _tpseverity}
                         'Else
@@ -487,14 +487,14 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                         'Return _nli
                         'End If
                     Case FlashMethod.SimpleLLE
-                        'If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then
+                        'If My.Application.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then
                         Return New Auxiliary.FlashAlgorithms.SimpleLLE
                         'Else
                         'If _simplelle Is Nothing Then _simplelle = New Auxiliary.FlashAlgorithms.SimpleLLE
                         'Return _simplelle
                         'End If
                     Case Else
-                        'If My.MyApplication.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then
+                        'If My.Application.IsRunningParallelTasks Or ForceNewFlashAlgorithmInstance Then
                         Return New Auxiliary.FlashAlgorithms.DWSIMDefault
                         'Else
                         'If _dwdf Is Nothing Then _dwdf = New Auxiliary.FlashAlgorithms.DWSIMDefault
@@ -728,13 +728,13 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim alreadymt As Boolean = False
 
             If My.Settings.EnableParallelProcessing Then
-                My.MyApplication.IsRunningParallelTasks = True
+                My.Application.IsRunningParallelTasks = True
                 Dim task1 = Task.Factory.StartNew(Sub()
                                                       fugliq = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
                                                   End Sub,
-                                                        My.MyApplication.TaskCancellationTokenSource.Token,
+                                                        My.Application.TaskCancellationTokenSource.Token,
                                                         TaskCreationOptions.None,
-                                                        My.MyApplication.AppTaskScheduler)
+                                                        My.Application.AppTaskScheduler)
                 Dim task2 = Task.Factory.StartNew(Sub()
                                                       If type = "LV" Then
                                                           fugvap = Me.DW_CalcFugCoeff(Vy, T, P, State.Vapor)
@@ -742,11 +742,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                                                           fugvap = Me.DW_CalcFugCoeff(Vy, T, P, State.Liquid)
                                                       End If
                                                   End Sub,
-                                                    My.MyApplication.TaskCancellationTokenSource.Token,
+                                                    My.Application.TaskCancellationTokenSource.Token,
                                                     TaskCreationOptions.None,
-                                                    My.MyApplication.AppTaskScheduler)
+                                                    My.Application.AppTaskScheduler)
                 Task.WaitAll(task1, task2)
-                My.MyApplication.IsRunningParallelTasks = False
+                My.Application.IsRunningParallelTasks = False
             Else
                 fugliq = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
                 If type = "LV" Then
@@ -763,7 +763,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             K = fugliq.DivideY(fugvap)
 
             Dim cprops As List(Of ConstantProperties) = Nothing
-     
+
             If cprops Is Nothing Then cprops = DW_GetConstantProperties()
 
             If My.Settings.EnableParallelProcessing Then
@@ -962,7 +962,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
             Dim fugliq As Object = Nothing
 
             If My.Settings.EnableParallelProcessing Then
-                My.MyApplication.IsRunningParallelTasks = True
+                My.Application.IsRunningParallelTasks = True
                 Dim task1 As Task = New Task(Sub()
                                                  fugliq = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
                                              End Sub)
@@ -972,7 +972,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 task1.Start()
                 task2.Start()
                 Task.WaitAll(task1, task2)
-                My.MyApplication.IsRunningParallelTasks = False
+                My.Application.IsRunningParallelTasks = False
             Else
                 fugliq = Me.DW_CalcFugCoeff(Vx, T, P, State.Liquid)
                 fugvap = Me.DW_CalcFugCoeff(Vx, T, P, State.Vapor)
@@ -2623,7 +2623,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
                             Dim MWM As Double = xl * Me.AUX_MMM(Vx, "L") + xl2 * Me.AUX_MMM(Vx2, "L") + xv * Me.AUX_MMM(Vy, "V") + xs * Me.AUX_MMM(Vs, "S")
 
                             Dim HM, HV, HL1, HL2, HS As Double
-                           
+
                             If xl <> 0 Then HL1 = Me.DW_CalcEnthalpy(Vx, T, P, State.Liquid) * Me.AUX_MMM(Vx, "L")
                             If xl2 <> 0 Then HL2 = Me.DW_CalcEnthalpy(Vx2, T, P, State.Liquid) * Me.AUX_MMM(Vx2, "L")
                             If xv <> 0 Then HV = Me.DW_CalcEnthalpy(Vy, T, P, State.Vapor) * Me.AUX_MMM(Vy, "V")

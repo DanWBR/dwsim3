@@ -198,7 +198,7 @@ Public Class FormMain
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        My.MyApplication.MainThreadID = Threading.Thread.CurrentThread.ManagedThreadId
+        My.Application.MainThreadID = Threading.Thread.CurrentThread.ManagedThreadId
 
         If My.Settings.BackupFolder = "" Then My.Settings.BackupFolder = My.Computer.FileSystem.SpecialDirectories.Temp & Path.DirectorySeparatorChar & "DWSIM"
 
@@ -217,7 +217,7 @@ Public Class FormMain
         Dim pluginlist As List(Of Interfaces.IUtilityPlugin) = GetPlugins(LoadPluginAssemblies())
 
         For Each ip As Interfaces.IUtilityPlugin In pluginlist
-            My.MyApplication.UtilityPlugins.Add(ip.UniqueID, ip)
+            My.Application.UtilityPlugins.Add(ip.UniqueID, ip)
         Next
 
         'load external property packages from 'propertypackages' folder, if there is any
@@ -445,7 +445,7 @@ Public Class FormMain
 
         If latestfolders.Count > 0 Then
             Me.FileToolStripMenuItem.DropDownItems.Insert(Me.FileToolStripMenuItem.DropDownItems.Count - 1, New ToolStripSeparator())
-       End If
+        End If
 
     End Sub
 
@@ -455,7 +455,7 @@ Public Class FormMain
         FPP.ComponentName = DWSIM.App.GetLocalString("FPP")
         FPP.ComponentDescription = DWSIM.App.GetLocalString("DescFPP")
         PropertyPackages.Add(FPP.ComponentName.ToString, FPP)
-    
+
         Dim CPPP As CoolPropPropertyPackage = New CoolPropPropertyPackage()
         CPPP.ComponentName = "CoolProp"
         CPPP.ComponentDescription = DWSIM.App.GetLocalString("DescCPPP")
@@ -480,7 +480,7 @@ Public Class FormMain
         PCSAFTPP.ComponentName = "PC-SAFT"
         PCSAFTPP.ComponentDescription = DWSIM.App.GetLocalString("DescPCSAFTPP")
         PropertyPackages.Add(PCSAFTPP.ComponentName.ToString, PCSAFTPP)
-      
+
         Dim PRPP As PengRobinsonPropertyPackage = New PengRobinsonPropertyPackage()
         PRPP.ComponentName = "Peng-Robinson (PR)"
         PRPP.ComponentDescription = DWSIM.App.GetLocalString("DescPengRobinsonPP")
@@ -628,62 +628,72 @@ Public Class FormMain
         CheckAdditionalFileTasks()
 
         Dim cmdLine() As String = System.Environment.GetCommandLineArgs()
-        If UBound(cmdLine) = 1 And Not cmdLine(0).StartsWith("-") Then
-            Try
-                Me.filename = cmdLine(1)
-                Try
-                    Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Abrindosimulao") + " (" + Me.filename + ")"
-                    Application.DoEvents()
-                    Select Case Path.GetExtension(Me.filename).ToLower()
-                        Case ".dwsim"
-                            Me.LoadF(Me.filename)
-                        Case ".dwxml"
-                            Me.LoadXML(Me.filename)
-                        Case ".dwxmz"
-                            Me.LoadAndExtractXMLZIP(Me.filename)
-                        Case ".dwcsd"
-                            Dim NewMDIChild As New FormCompoundCreator()
-                            NewMDIChild.MdiParent = Me
-                            NewMDIChild.Show()
-                            Dim objStreamReader As New FileStream(Me.filename, FileMode.Open)
-                            Dim x As New BinaryFormatter()
-                            NewMDIChild.mycase = x.Deserialize(objStreamReader)
-                            objStreamReader.Close()
-                            NewMDIChild.WriteData()
-                        Case ".dwrsd"
-                            Dim NewMDIChild As New FormDataRegression()
-                            NewMDIChild.MdiParent = Me
-                            NewMDIChild.Show()
-                            Dim objStreamReader As New FileStream(Me.filename, FileMode.Open)
-                            Dim x As New BinaryFormatter()
-                            NewMDIChild.currcase = x.Deserialize(objStreamReader)
-                            objStreamReader.Close()
-                            NewMDIChild.LoadCase(NewMDIChild.currcase, False)
-                    End Select
-                Catch ex As Exception
-                    MessageBox.Show(DWSIM.App.GetLocalString("Erroaoabrirarquivo") & " " & ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-                Finally
-                    Me.ToolStripStatusLabel1.Text = ""
-                End Try
-            Catch ex As Exception
-                MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-            End Try
-        Else
-            If My.Settings.BackupFiles.Count > 0 Then
-                Me.FrmRec = New FormRecoverFiles
-                If Me.FrmRec.ShowDialog(Me) = Windows.Forms.DialogResult.Ignore Then
-                    Dim frmw As New FormWelcome
-                    frmw.ShowDialog(Me)
-                End If
-            Else
-                Dim frmw As New FormWelcome
-                frmw.ShowDialog(Me)
-            End If
 
+        If UBound(cmdLine) = 1 Then
+            If Not cmdLine(0).StartsWith("-") And Not cmdLine(1).Contains("DWSIM.exe") Then
+                Try
+                    Me.filename = cmdLine(1)
+                    Try
+                        Me.ToolStripStatusLabel1.Text = DWSIM.App.GetLocalString("Abrindosimulao") + " (" + Me.filename + ")"
+                        Application.DoEvents()
+                        Select Case Path.GetExtension(Me.filename).ToLower()
+                            Case ".dwsim"
+                                Me.LoadF(Me.filename)
+                            Case ".dwxml"
+                                Me.LoadXML(Me.filename)
+                            Case ".dwxmz"
+                                Me.LoadAndExtractXMLZIP(Me.filename)
+                            Case ".dwcsd"
+                                Dim NewMDIChild As New FormCompoundCreator()
+                                NewMDIChild.MdiParent = Me
+                                NewMDIChild.Show()
+                                Dim objStreamReader As New FileStream(Me.filename, FileMode.Open)
+                                Dim x As New BinaryFormatter()
+                                NewMDIChild.mycase = x.Deserialize(objStreamReader)
+                                objStreamReader.Close()
+                                NewMDIChild.WriteData()
+                            Case ".dwrsd"
+                                Dim NewMDIChild As New FormDataRegression()
+                                NewMDIChild.MdiParent = Me
+                                NewMDIChild.Show()
+                                Dim objStreamReader As New FileStream(Me.filename, FileMode.Open)
+                                Dim x As New BinaryFormatter()
+                                NewMDIChild.currcase = x.Deserialize(objStreamReader)
+                                objStreamReader.Close()
+                                NewMDIChild.LoadCase(NewMDIChild.currcase, False)
+                        End Select
+                    Catch ex As Exception
+                        MessageBox.Show(DWSIM.App.GetLocalString("Erroaoabrirarquivo") & " " & ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Finally
+                        Me.ToolStripStatusLabel1.Text = ""
+                    End Try
+                Catch ex As Exception
+                    MessageBox.Show(ex.Message, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
+            Else
+                OpenWelcomeScreen()
+            End If
+        Else
+            OpenWelcomeScreen()
         End If
 
         'check for updates
         If My.Settings.CheckForUpdates Then Me.bgUpdater.RunWorkerAsync()
+
+    End Sub
+
+    Sub OpenWelcomeScreen()
+
+        If My.Settings.BackupFiles.Count > 0 Then
+            Me.FrmRec = New FormRecoverFiles
+            If Me.FrmRec.ShowDialog(Me) = Windows.Forms.DialogResult.Ignore Then
+                Dim frmw As New FormWelcome
+                frmw.ShowDialog(Me)
+            End If
+        Else
+            Dim frmw As New FormWelcome
+            frmw.ShowDialog(Me)
+        End If
 
     End Sub
 
@@ -3735,7 +3745,7 @@ ruf:                Application.DoEvents()
                         Dim NewMDIChild As New FormCompoundCreator()
                         NewMDIChild.MdiParent = Me
                         NewMDIChild.Show()
-                         Dim objStreamReader As New FileStream(Me.filename, FileMode.Open)
+                        Dim objStreamReader As New FileStream(Me.filename, FileMode.Open)
                         Dim x As New BinaryFormatter()
                         NewMDIChild.mycase = x.Deserialize(objStreamReader)
                         objStreamReader.Close()
@@ -4360,7 +4370,7 @@ ruf:                Application.DoEvents()
     End Sub
 
     Private Sub bgSaveBackup_DoWork(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles bgSaveBackup.DoWork
-        If Not My.MyApplication.CalculatorBusy Then
+        If Not My.Application.CalculatorBusy Then
             Dim bw As BackgroundWorker = CType(sender, BackgroundWorker)
             Dim folder As String = My.Settings.BackupFolder
             If Not Directory.Exists(My.Settings.BackupFolder) Then Directory.CreateDirectory(My.Settings.BackupFolder)

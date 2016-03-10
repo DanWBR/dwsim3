@@ -1134,7 +1134,7 @@ Namespace DWSIM.SimulationObjects.UnitOps.Auxiliary.SepOps.SolvingMethods
                                 Optional ByVal llex As Boolean = False) As Object
 
             Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
-            Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism, .TaskScheduler = My.MyApplication.AppTaskScheduler}
+            Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism, .TaskScheduler = My.Application.AppTaskScheduler}
 
             llextr = llex 'liq-liq extractor
 
@@ -1760,9 +1760,9 @@ restart:            fx = Me.FunctionValue(xvar)
 
                 If doparallel Then
                     If My.Settings.EnableGPUProcessing Then
-                        'My.MyApplication.gpu.EnableMultithreading()
+                        'My.Application.gpu.EnableMultithreading()
                     End If
-                    My.MyApplication.IsRunningParallelTasks = True
+                    My.Application.IsRunningParallelTasks = True
                     Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                              Sub(ipar)
                                                                  If llextr Then
@@ -1771,9 +1771,9 @@ restart:            fx = Me.FunctionValue(xvar)
                                                                      tmp(ipar) = pp.DW_CalcKvalue(xc(ipar), yc(ipar), Tj(ipar), P(ipar))
                                                                  End If
                                                              End Sub),
-                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      My.Application.TaskCancellationTokenSource.Token,
                                                       TaskCreationOptions.None,
-                                                      My.MyApplication.AppTaskScheduler)
+                                                      My.Application.AppTaskScheduler)
                     task1.Wait()
                     For i = 0 To ns
                         For j = 0 To nc - 1
@@ -1782,10 +1782,10 @@ restart:            fx = Me.FunctionValue(xvar)
                         Next
                         Kbj_ant(i) = Kbj(i)
                     Next
-                    My.MyApplication.IsRunningParallelTasks = False
+                    My.Application.IsRunningParallelTasks = False
                     'If My.Settings.EnableGPUProcessing Then
-                    '    My.MyApplication.gpu.DisableMultithreading()
-                    '    My.MyApplication.gpu.FreeAll()
+                    '    My.Application.gpu.DisableMultithreading()
+                    '    My.Application.gpu.FreeAll()
                     'End If
                 Else
                     For i = 0 To ns
@@ -1836,18 +1836,18 @@ restart:            fx = Me.FunctionValue(xvar)
                 'update A/B/C/D/E/F
 
                 If doparallel Then
-                    My.MyApplication.IsRunningParallelTasks = True
+                    My.Application.IsRunningParallelTasks = True
                     If My.Settings.EnableGPUProcessing Then
-                        ' My.MyApplication.gpu.EnableMultithreading()
+                        ' My.Application.gpu.EnableMultithreading()
                     End If
                     Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                              Sub(ipar)
                                                                  'new Ks
                                                                  K2(ipar) = pp.DW_CalcKvalue(xc(ipar), yc(ipar), Tj2(ipar), P(ipar))
                                                              End Sub),
-                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      My.Application.TaskCancellationTokenSource.Token,
                                                       TaskCreationOptions.None,
-                                                      My.MyApplication.AppTaskScheduler)
+                                                      My.Application.AppTaskScheduler)
                     task1.Wait()
                     For i = 0 To ns
                         For j = 0 To nc - 1
@@ -1855,10 +1855,10 @@ restart:            fx = Me.FunctionValue(xvar)
                             If Double.IsNaN(K2(i)(j)) Or Double.IsInfinity(K2(i)(j)) Then K2(i)(j) = pp.AUX_PVAPi(j, Tj(i)) / P(i)
                         Next
                     Next
-                    My.MyApplication.IsRunningParallelTasks = False
+                    My.Application.IsRunningParallelTasks = False
                     'If My.Settings.EnableGPUProcessing Then
-                    '    My.MyApplication.gpu.DisableMultithreading()
-                    '    My.MyApplication.gpu.FreeAll()
+                    '    My.Application.gpu.DisableMultithreading()
+                    '    My.Application.gpu.FreeAll()
                     'End If
                 Else
                     For i = 0 To ns
@@ -1875,9 +1875,9 @@ restart:            fx = Me.FunctionValue(xvar)
                 End If
 
                 If doparallel Then
-                    My.MyApplication.IsRunningParallelTasks = True
+                    My.Application.IsRunningParallelTasks = True
                     If My.Settings.EnableGPUProcessing Then
-                        'My.MyApplication.gpu.EnableMultithreading()
+                        'My.Application.gpu.EnableMultithreading()
                     End If
                     Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                               Sub(ipar)
@@ -1892,14 +1892,14 @@ restart:            fx = Me.FunctionValue(xvar)
                                                                   Hl1(ipar) = pp.DW_CalcEnthalpyDeparture(xc(ipar), Tj1(ipar), P(ipar), PropertyPackages.State.Liquid)
                                                                   Hl2(ipar) = pp.DW_CalcEnthalpyDeparture(xc(ipar), Tj2(ipar), P(ipar), PropertyPackages.State.Liquid)
                                                               End Sub),
-                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      My.Application.TaskCancellationTokenSource.Token,
                                                       TaskCreationOptions.None,
-                                                      My.MyApplication.AppTaskScheduler)
+                                                      My.Application.AppTaskScheduler)
                     task1.Wait()
-                    My.MyApplication.IsRunningParallelTasks = False
+                    My.Application.IsRunningParallelTasks = False
                     'If My.Settings.EnableGPUProcessing Then
-                    '    My.MyApplication.gpu.DisableMultithreading()
-                    '    My.MyApplication.gpu.FreeAll()
+                    '    My.Application.gpu.DisableMultithreading()
+                    '    My.Application.gpu.FreeAll()
                     'End If
                 Else
                     For i = 0 To ns
@@ -2013,7 +2013,7 @@ restart:            fx = Me.FunctionValue(xvar)
                                 ByVal specs As Dictionary(Of String, SepOps.ColumnSpec)) As Object
 
             Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
-            Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism, .TaskScheduler = My.MyApplication.AppTaskScheduler}
+            Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism, .TaskScheduler = My.Application.AppTaskScheduler}
 
             Dim ic As Integer
             Dim t_error, t_error_ant As Double
@@ -2092,17 +2092,17 @@ restart:            fx = Me.FunctionValue(xvar)
             Next
 
             If doparallel Then
-                My.MyApplication.IsRunningParallelTasks = True
+                My.Application.IsRunningParallelTasks = True
                 Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                          Sub(ipar)
                                                              Hl(ipar) = pp.DW_CalcEnthalpy(x(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Liquid) * pp.AUX_MMM(x(ipar)) / 1000
                                                              Hv(ipar) = pp.DW_CalcEnthalpy(y(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Vapor) * pp.AUX_MMM(y(ipar)) / 1000
                                                          End Sub),
-                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      My.Application.TaskCancellationTokenSource.Token,
                                                       TaskCreationOptions.None,
-                                                      My.MyApplication.AppTaskScheduler)
+                                                      My.Application.AppTaskScheduler)
                 task1.Wait()
-                My.MyApplication.IsRunningParallelTasks = False
+                My.Application.IsRunningParallelTasks = False
             Else
                 For i = 0 To ns
                     CheckCalculatorStatus()
@@ -2223,16 +2223,16 @@ restart:            fx = Me.FunctionValue(xvar)
 
                 'tomich
                 If doparallel Then
-                    My.MyApplication.IsRunningParallelTasks = True
+                    My.Application.IsRunningParallelTasks = True
                     Dim t1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, nc, poptions,
                                                                  Sub(ipar)
                                                                      xt(ipar) = Tomich.TDMASolve(at(ipar), bt(ipar), ct(ipar), dt(ipar))
                                                                  End Sub),
-                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      My.Application.TaskCancellationTokenSource.Token,
                                                       TaskCreationOptions.None,
-                                                      My.MyApplication.AppTaskScheduler)
+                                                      My.Application.AppTaskScheduler)
                     t1.Wait()
-                    My.MyApplication.IsRunningParallelTasks = False
+                    My.Application.IsRunningParallelTasks = False
                 Else
                     For i = 0 To nc - 1
                         xt(i) = Tomich.TDMASolve(at(i), bt(i), ct(i), dt(i))
@@ -2274,7 +2274,7 @@ restart:            fx = Me.FunctionValue(xvar)
                 Next
 
                 If doparallel Then
-                    My.MyApplication.IsRunningParallelTasks = True
+                    My.Application.IsRunningParallelTasks = True
                     Dim t1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                                  Sub(ipar)
                                                                      Dim tmpvar As Object = pp.DW_CalcBubT(xc(ipar), P(ipar), Tj(ipar), K(ipar), True)
@@ -2282,11 +2282,11 @@ restart:            fx = Me.FunctionValue(xvar)
                                                                      K(ipar) = tmpvar(6)
                                                                      If Tj(ipar) < 0 Or Double.IsNaN(Tj(ipar)) Then Tj(ipar) = Tj_ant(ipar)
                                                                  End Sub),
-                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      My.Application.TaskCancellationTokenSource.Token,
                                                       TaskCreationOptions.None,
-                                                      My.MyApplication.AppTaskScheduler)
+                                                      My.Application.AppTaskScheduler)
                     t1.Wait()
-                    My.MyApplication.IsRunningParallelTasks = False
+                    My.Application.IsRunningParallelTasks = False
                 Else
                     For i = 0 To ns
                         CheckCalculatorStatus()
@@ -2329,17 +2329,17 @@ restart:            fx = Me.FunctionValue(xvar)
                 Next
 
                 If doparallel Then
-                    My.MyApplication.IsRunningParallelTasks = True
+                    My.Application.IsRunningParallelTasks = True
                     Dim t1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                                                      Sub(ipar)
                                                                                          Hl(ipar) = pp.DW_CalcEnthalpy(xc(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Liquid) * pp.AUX_MMM(xc(ipar)) / 1000
                                                                                          Hv(ipar) = pp.DW_CalcEnthalpy(yc(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Vapor) * pp.AUX_MMM(yc(ipar)) / 1000
                                                                                      End Sub),
-                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      My.Application.TaskCancellationTokenSource.Token,
                                                       TaskCreationOptions.None,
-                                                      My.MyApplication.AppTaskScheduler)
+                                                      My.Application.AppTaskScheduler)
                     t1.Wait()
-                    My.MyApplication.IsRunningParallelTasks = False
+                    My.Application.IsRunningParallelTasks = False
                 Else
                     For i = 0 To ns
                         CheckCalculatorStatus()
@@ -2695,7 +2695,7 @@ restart:            fx = Me.FunctionValue(xvar)
                 Dim H(ns), dHldT(ns), dHvdT(ns), dHdTa(ns), dHdTb(ns), dHdTc(ns), dHl(ns), dHv(ns) As Double
 
                 If doparallel Then
-                    My.MyApplication.IsRunningParallelTasks = True
+                    My.Application.IsRunningParallelTasks = True
                     Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                              Sub(ipar)
                                                                  Hl(ipar) = pp.DW_CalcEnthalpy(xc(ipar), Tj(ipar), P(ipar), PropertyPackages.State.Liquid) * pp.AUX_MMM(xc(ipar)) / 1000
@@ -2708,13 +2708,13 @@ restart:            fx = Me.FunctionValue(xvar)
                                                                      dHv(ipar) = pp.DW_CalcEnthalpy(yc(ipar), Tj(ipar) - 1, P(ipar), PropertyPackages.State.Vapor) * pp.AUX_MMM(yc(ipar)) / 1000
                                                                  End If
                                                              End Sub),
-                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      My.Application.TaskCancellationTokenSource.Token,
                                                       TaskCreationOptions.None,
-                                                      My.MyApplication.AppTaskScheduler)
+                                                      My.Application.AppTaskScheduler)
                     While Not task1.IsCompleted
                         Application.DoEvents()
                     End While
-                    My.MyApplication.IsRunningParallelTasks = False
+                    My.Application.IsRunningParallelTasks = False
                 Else
                     For i = 0 To ns
                         Hl(i) = pp.DW_CalcEnthalpy(xc(i), Tj(i), P(i), PropertyPackages.State.Liquid) * pp.AUX_MMM(xc(i)) / 1000
@@ -2851,7 +2851,7 @@ restart:            fx = Me.FunctionValue(xvar)
         Public Function FunctionValue(ByVal x() As Double) As Double()
 
             Dim doparallel As Boolean = My.Settings.EnableParallelProcessing
-            Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism, .TaskScheduler = My.MyApplication.AppTaskScheduler}
+            Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism, .TaskScheduler = My.Application.AppTaskScheduler}
 
             Dim nc, ns As Integer
             Dim i, j As Integer
@@ -2965,7 +2965,7 @@ restart:            fx = Me.FunctionValue(xvar)
             'calculate K-values
 
             If doparallel Then
-                My.MyApplication.IsRunningParallelTasks = True
+                My.Application.IsRunningParallelTasks = True
                 Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                          Sub(ipar)
                                                              Dim tmp0 As Object
@@ -2979,11 +2979,11 @@ restart:            fx = Me.FunctionValue(xvar)
                                                                  Kval(ipar)(jj) = tmp0(jj)
                                                              Next
                                                          End Sub),
-                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      My.Application.TaskCancellationTokenSource.Token,
                                                       TaskCreationOptions.None,
-                                                      My.MyApplication.AppTaskScheduler)
+                                                      My.Application.AppTaskScheduler)
                 task1.Wait()
-                My.MyApplication.IsRunningParallelTasks = False
+                My.Application.IsRunningParallelTasks = False
             Else
                 Dim tmp0 As Object
                 For i = 0 To ns
@@ -3004,7 +3004,7 @@ restart:            fx = Me.FunctionValue(xvar)
             'calculate enthalpies
 
             If doparallel Then
-                My.MyApplication.IsRunningParallelTasks = True
+                My.Application.IsRunningParallelTasks = True
                 Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, ns + 1, poptions,
                                                          Sub(ipar)
                                                              If Vj(ipar) <> 0 Then
@@ -3022,11 +3022,11 @@ restart:            fx = Me.FunctionValue(xvar)
                                                                  Hl(ipar) = 0
                                                              End If
                                                          End Sub),
-                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      My.Application.TaskCancellationTokenSource.Token,
                                                       TaskCreationOptions.None,
-                                                      My.MyApplication.AppTaskScheduler)
+                                                      My.Application.AppTaskScheduler)
                 task1.Wait()
-                My.MyApplication.IsRunningParallelTasks = False
+                My.Application.IsRunningParallelTasks = False
             Else
                 For i = 0 To ns
                     If Vj(i) <> 0 Then

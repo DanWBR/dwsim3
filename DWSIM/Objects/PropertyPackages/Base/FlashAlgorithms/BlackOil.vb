@@ -133,24 +133,24 @@ out:        Return New Object() {L, V, Vx, Vy, 1, 0.0#, PP.RET_NullVector, 0.0#,
                 Do
 
                     If My.Settings.EnableParallelProcessing Then
-                        My.MyApplication.IsRunningParallelTasks = True
+                        My.Application.IsRunningParallelTasks = True
                         If My.Settings.EnableGPUProcessing Then
-                            'My.MyApplication.gpu.EnableMultithreading()
+                            'My.Application.gpu.EnableMultithreading()
                         End If
                         Dim task1 = Task.Factory.StartNew(Sub()
                                                               fx = Herror("PT", x1, P, Vz, PP)(0)
                                                           End Sub,
-                                                              My.MyApplication.TaskCancellationTokenSource.Token,
+                                                              My.Application.TaskCancellationTokenSource.Token,
                                                               TaskCreationOptions.None,
-                                                              My.MyApplication.AppTaskScheduler)
+                                                              My.Application.AppTaskScheduler)
                         Dim task2 = Task.Factory.StartNew(Sub()
                                                               fx2 = Herror("PT", x1 + epsilon(j), P, Vz, PP)(0)
                                                           End Sub,
-                                                          My.MyApplication.TaskCancellationTokenSource.Token,
+                                                          My.Application.TaskCancellationTokenSource.Token,
                                                           TaskCreationOptions.None,
-                                                          My.MyApplication.AppTaskScheduler)
+                                                          My.Application.AppTaskScheduler)
                         Task.WaitAll(task1, task2)
-                        My.MyApplication.IsRunningParallelTasks = False
+                        My.Application.IsRunningParallelTasks = False
                     Else
                         fx = Herror("PT", x1, P, Vz, PP)(0)
                         fx2 = Herror("PT", x1 + epsilon(j), P, Vz, PP)(0)
@@ -253,24 +253,24 @@ out:        Return New Object() {L, V, Vx, Vy, 1, 0.0#, PP.RET_NullVector, 0.0#,
                 Do
 
                     If My.Settings.EnableParallelProcessing Then
-                        My.MyApplication.IsRunningParallelTasks = True
+                        My.Application.IsRunningParallelTasks = True
                         If My.Settings.EnableGPUProcessing Then
-                            'My.MyApplication.gpu.EnableMultithreading()
+                            'My.Application.gpu.EnableMultithreading()
                         End If
                         Dim task1 = Task.Factory.StartNew(Sub()
                                                               fx = Serror("PT", x1, P, Vz, PP)(0)
                                                           End Sub,
-                                                              My.MyApplication.TaskCancellationTokenSource.Token,
+                                                              My.Application.TaskCancellationTokenSource.Token,
                                                               TaskCreationOptions.None,
-                                                              My.MyApplication.AppTaskScheduler)
+                                                              My.Application.AppTaskScheduler)
                         Dim task2 = Task.Factory.StartNew(Sub()
                                                               fx2 = Serror("PT", x1 + epsilon(j), P, Vz, PP)(0)
                                                           End Sub,
-                                                          My.MyApplication.TaskCancellationTokenSource.Token,
+                                                          My.Application.TaskCancellationTokenSource.Token,
                                                           TaskCreationOptions.None,
-                                                          My.MyApplication.AppTaskScheduler)
+                                                          My.Application.AppTaskScheduler)
                         Task.WaitAll(task1, task2)
-                        My.MyApplication.IsRunningParallelTasks = False
+                        My.Application.IsRunningParallelTasks = False
                     Else
                         fx = Serror("PT", x1, P, Vz, PP)(0)
                         fx2 = Serror("PT", x1 + epsilon(j), P, Vz, PP)(0)

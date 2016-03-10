@@ -478,17 +478,17 @@ out:
             Dim alreadymt As Boolean = False
 
             If My.Settings.EnableParallelProcessing Then
-                My.MyApplication.IsRunningParallelTasks = True
+                My.Application.IsRunningParallelTasks = True
                 Dim task1 As Task = New Task(Sub()
                                                  Ki1 = PP.DW_CalcKvalue(Vx1EST, VyEST, T, P)
                                              End Sub)
-                    Dim task2 As Task = New Task(Sub()
-                                                     Ki2 = PP.DW_CalcKvalue(Vx2EST, VyEST, T, P)
-                                                 End Sub)
-                    task1.Start()
-                    task2.Start()
-                    Task.WaitAll(task1, task2)
-                My.MyApplication.IsRunningParallelTasks = False
+                Dim task2 As Task = New Task(Sub()
+                                                 Ki2 = PP.DW_CalcKvalue(Vx2EST, VyEST, T, P)
+                                             End Sub)
+                task1.Start()
+                task2.Start()
+                Task.WaitAll(task1, task2)
+                My.Application.IsRunningParallelTasks = False
             Else
                 Ki1 = PP.DW_CalcKvalue(Vx1EST, VyEST, T, P)
                 Ki2 = PP.DW_CalcKvalue(Vx2EST, VyEST, T, P)
@@ -595,10 +595,10 @@ out:
             Do
 
                 If My.Settings.EnableParallelProcessing Then
-                    My.MyApplication.IsRunningParallelTasks = True
+                    My.Application.IsRunningParallelTasks = True
                     If My.Settings.EnableGPUProcessing Then
-                        'If Not My.MyApplication.gpu.IsMultithreadingEnabled Then
-                        '    My.MyApplication.gpu.EnableMultithreading()
+                        'If Not My.Application.gpu.IsMultithreadingEnabled Then
+                        '    My.Application.gpu.EnableMultithreading()
                         'Else
                         '    alreadymt = True
                         'End If
@@ -616,7 +616,7 @@ out:
                     task2.Start()
                     task3.Start()
                     Task.WaitAll(task1, task2, task3)
-                    My.MyApplication.IsRunningParallelTasks = False
+                    My.Application.IsRunningParallelTasks = False
                 Else
                     CFL1 = proppack.DW_CalcFugCoeff(Vx1, T, P, State.Liquid)
                     CFL2 = proppack.DW_CalcFugCoeff(Vx2, T, P, State.Liquid)
@@ -811,7 +811,7 @@ out:
             Dim alreadymt As Boolean = False
 
             If My.Settings.EnableParallelProcessing Then
-                My.MyApplication.IsRunningParallelTasks = True
+                My.Application.IsRunningParallelTasks = True
                 Dim task1 As Task = New Task(Sub()
                                                  Dim ErrRes1 = Herror("PV", 0, P, Vz, PP)
                                                  Span(0).X = 0
@@ -827,7 +827,7 @@ out:
                 task1.Start()
                 task2.Start()
                 Task.WaitAll(task1, task2)
-                My.MyApplication.IsRunningParallelTasks = False
+                My.Application.IsRunningParallelTasks = False
             Else
                 ErrRes = Herror("PV", 0, P, Vz, PP)
                 Tb = ErrRes(1)
@@ -1011,17 +1011,17 @@ out:
                 Do
 
                     If My.Settings.EnableParallelProcessing Then
-                        My.MyApplication.IsRunningParallelTasks = True
+                        My.Application.IsRunningParallelTasks = True
                         Dim task1 As Task = New Task(Sub()
                                                          fx = Serror(x1, {P, Vz, PP})
                                                      End Sub)
-                            Dim task2 As Task = New Task(Sub()
-                                                             fx2 = Serror(x1 + epsilon(j), {P, Vz, PP})
-                                                         End Sub)
-                            task1.Start()
-                            task2.Start()
-                            Task.WaitAll(task1, task2)
-                        My.MyApplication.IsRunningParallelTasks = False
+                        Dim task2 As Task = New Task(Sub()
+                                                         fx2 = Serror(x1 + epsilon(j), {P, Vz, PP})
+                                                     End Sub)
+                        task1.Start()
+                        task2.Start()
+                        Task.WaitAll(task1, task2)
+                        My.Application.IsRunningParallelTasks = False
                     Else
                         fx = Serror(x1, {P, Vz, PP})
                         fx2 = Serror(x1 + epsilon(j), {P, Vz, PP})
@@ -1118,21 +1118,21 @@ alt:
             Dim alreadymt As Boolean = False
 
             If My.Settings.EnableParallelProcessing Then
-                My.MyApplication.IsRunningParallelTasks = True
+                My.Application.IsRunningParallelTasks = True
                 Dim task1 As Task = New Task(Sub()
                                                  If V > 0 Then _Hv = proppack.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
                                              End Sub)
-                    Dim task2 As Task = New Task(Sub()
-                                                     If L1 > 0 Then _Hl1 = proppack.DW_CalcEnthalpy(Vx1, T, P, State.Liquid)
-                                                 End Sub)
-                    Dim task3 As Task = New Task(Sub()
-                                                     If L2 > 0 Then _Hl2 = proppack.DW_CalcEnthalpy(Vx2, T, P, State.Liquid)
-                                                 End Sub)
-                    task1.Start()
-                    task2.Start()
-                    task3.Start()
-                    Task.WaitAll(task1, task2, task3)
-                My.MyApplication.IsRunningParallelTasks = False
+                Dim task2 As Task = New Task(Sub()
+                                                 If L1 > 0 Then _Hl1 = proppack.DW_CalcEnthalpy(Vx1, T, P, State.Liquid)
+                                             End Sub)
+                Dim task3 As Task = New Task(Sub()
+                                                 If L2 > 0 Then _Hl2 = proppack.DW_CalcEnthalpy(Vx2, T, P, State.Liquid)
+                                             End Sub)
+                task1.Start()
+                task2.Start()
+                task3.Start()
+                Task.WaitAll(task1, task2, task3)
+                My.Application.IsRunningParallelTasks = False
             Else
                 If V > 0 Then _Hv = proppack.DW_CalcEnthalpy(Vy, T, P, State.Vapor)
                 If L1 > 0 Then _Hl1 = proppack.DW_CalcEnthalpy(Vx1, T, P, State.Liquid)

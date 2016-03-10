@@ -476,7 +476,7 @@ Imports System.Reflection
                         If Not Me.ScriptCollection Is Nothing Then
                             For Each scr As Script In Me.ScriptCollection.Values
                                 If scr.Linked And scr.LinkedEventType = sourceevent And scr.LinkedObjectType = sourceobj And scr.LinkedObjectName = sourceobjname Then
-                                    If My.MyApplication.CommandLineMode Then
+                                    If My.Application.CommandLineMode Then
                                         Console.WriteLine()
                                         Console.WriteLine("Running script '" & scr.Title & "' for event '" & scr.LinkedEventType.ToString & "', linked to '" & Me.Collections.ObjectCollection(scr.LinkedObjectName).GraphicObject.Tag & "'...")
                                         Console.WriteLine()
@@ -499,8 +499,8 @@ Imports System.Reflection
 
     Public Sub AddUnitSystem(ByVal su As DWSIM.SistemasDeUnidades.Unidades)
 
-        If Not My.MyApplication.UserUnitSystems.ContainsKey(su.nome) Then
-            My.MyApplication.UserUnitSystems.Add(su.nome, su)
+        If Not My.Application.UserUnitSystems.ContainsKey(su.nome) Then
+            My.Application.UserUnitSystems.Add(su.nome, su)
             FormMain.AvailableUnitSystems.Add(su.nome, su)
             Me.FrmStSim1.ComboBox2.Items.Add(su.nome)
             Me.ToolStripComboBoxUnitSystem.Items.Add(su.nome)
@@ -613,7 +613,7 @@ Imports System.Reflection
 
                 frsht.UIThread(New System.Action(Sub()
 
-                                                     If Not My.MyApplication.CommandLineMode Then
+                                                     If Not My.Application.CommandLineMode Then
 
                                                          Dim frlog = frsht.FormLog
 
@@ -1226,9 +1226,9 @@ Imports System.Reflection
     End Sub
 
     Private Sub ToolStripButton14_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton14.Click
-        My.MyApplication.CalculatorStopRequested = True
-        If My.MyApplication.TaskCancellationTokenSource IsNot Nothing Then
-            My.MyApplication.TaskCancellationTokenSource.Cancel()
+        My.Application.CalculatorStopRequested = True
+        If My.Application.TaskCancellationTokenSource IsNot Nothing Then
+            My.Application.TaskCancellationTokenSource.Cancel()
         End If
     End Sub
 
@@ -2532,7 +2532,7 @@ Imports System.Reflection
 
         'process plugin list
 
-        For Each iplugin As Interfaces.IUtilityPlugin In My.MyApplication.UtilityPlugins.Values
+        For Each iplugin As Interfaces.IUtilityPlugin In My.Application.UtilityPlugins.Values
 
             Dim tsmi As New ToolStripMenuItem
             With tsmi
@@ -2551,7 +2551,7 @@ Imports System.Reflection
 
         Dim tsmi As ToolStripMenuItem = CType(sender, ToolStripMenuItem)
 
-        Dim myUPlugin As Interfaces.IUtilityPlugin = My.MyApplication.UtilityPlugins.Item(tsmi.Tag)
+        Dim myUPlugin As Interfaces.IUtilityPlugin = My.Application.UtilityPlugins.Item(tsmi.Tag)
 
         myUPlugin.SetFlowsheet(Me)
         Select Case myUPlugin.DisplayMode

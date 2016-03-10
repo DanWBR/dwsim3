@@ -203,8 +203,9 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     scope = engine.CreateScope()
                     scope.SetVariable("Flowsheet", FlowSheet)
                     scope.SetVariable("Spreadsheet", FlowSheet.FormSpreadsheet)
-                    scope.SetVariable("Plugins", My.MyApplication.UtilityPlugins)
+                    scope.SetVariable("Plugins", My.Application.UtilityPlugins)
                     scope.SetVariable("Me", Me)
+                    scope.SetVariable("Application", My.Application)
                     For Each variable In InputVariables
                         scope.SetVariable(variable.Key, variable.Value)
                     Next

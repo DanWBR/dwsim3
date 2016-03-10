@@ -801,9 +801,9 @@ out:
                 Do
 
                     If My.Settings.EnableParallelProcessing Then
-                        My.MyApplication.IsRunningParallelTasks = True
+                        My.Application.IsRunningParallelTasks = True
                         If My.Settings.EnableGPUProcessing Then
-                            My.MyApplication.gpu.EnableMultithreading()
+                            My.Application.gpu.EnableMultithreading()
                         End If
                         Try
                             Dim task1 As Task = New Task(Sub()
@@ -819,11 +819,11 @@ out:
                             Throw ae.Flatten().InnerException
                         Finally
                             If My.Settings.EnableGPUProcessing Then
-                                My.MyApplication.gpu.DisableMultithreading()
-                                My.MyApplication.gpu.FreeAll()
+                                My.Application.gpu.DisableMultithreading()
+                                My.Application.gpu.FreeAll()
                             End If
                         End Try
-                        My.MyApplication.IsRunningParallelTasks = False
+                        My.Application.IsRunningParallelTasks = False
                     Else
                         fx = Herror(x1, {P, Vz, PP})
                         fx2 = Herror(x1 + epsilon(j), {P, Vz, PP})
@@ -934,9 +934,9 @@ alt:
                 Do
 
                     If My.Settings.EnableParallelProcessing Then
-                        My.MyApplication.IsRunningParallelTasks = True
+                        My.Application.IsRunningParallelTasks = True
                         If My.Settings.EnableGPUProcessing Then
-                            My.MyApplication.gpu.EnableMultithreading()
+                            My.Application.gpu.EnableMultithreading()
                         End If
                         Try
                             Dim task1 As Task = New Task(Sub()
@@ -952,11 +952,11 @@ alt:
                             Throw ae.Flatten().InnerException
                         Finally
                             If My.Settings.EnableGPUProcessing Then
-                                My.MyApplication.gpu.DisableMultithreading()
-                                My.MyApplication.gpu.FreeAll()
+                                My.Application.gpu.DisableMultithreading()
+                                My.Application.gpu.FreeAll()
                             End If
                         End Try
-                        My.MyApplication.IsRunningParallelTasks = False
+                        My.Application.IsRunningParallelTasks = False
                     Else
                         fx = Serror(x1, {P, Vz, PP})
                         fx2 = Serror(x1 + epsilon(j), {P, Vz, PP})

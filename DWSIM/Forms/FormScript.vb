@@ -15,7 +15,6 @@ Imports System.Threading
 
     Public fc As FormFlowsheet
     Private reader As Jolt.XmlDocCommentReader
-    Public Shared AbortScript As Boolean = False
 
     Private Sub FormVBScript_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Me.Load
 
@@ -89,7 +88,7 @@ Imports System.Threading
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton1.Click
 
-        AbortScript = False
+        My.Application.CalculatorStopRequested = False
         If Not Me.TabStripScripts.SelectedItem Is Nothing Then
             If DWSIM.App.IsRunningOnMono Then
                 RunScript(DirectCast(Me.TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControlMono).txtScript.Text, fc)
@@ -118,15 +117,15 @@ Imports System.Threading
         engine.Runtime.LoadAssembly(GetType(DWSIM.ClassesBasicasTermodinamica.ConstantProperties).Assembly)
         engine.Runtime.LoadAssembly(GetType(Microsoft.Msdn.Samples.GraphicObjects.GraphicObject).Assembly)
         engine.Runtime.LoadAssembly(GetType(Microsoft.Msdn.Samples.DesignSurface.GraphicsSurface).Assembly)
-        If My.MyApplication.CommandLineMode Then
+        If My.Application.CommandLineMode Then
             engine.Runtime.IO.SetOutput(Console.OpenStandardOutput, Console.OutputEncoding)
         Else
             engine.Runtime.IO.SetOutput(New DataGridViewTextStream(fsheet), UTF8Encoding.UTF8)
         End If
         scope = engine.CreateScope()
-        scope.SetVariable("Plugins", My.MyApplication.UtilityPlugins)
+        scope.SetVariable("Plugins", My.Application.UtilityPlugins)
         scope.SetVariable("Flowsheet", fsheet)
-        scope.SetVariable("AbortScript", AbortScript)
+        scope.SetVariable("Application", My.Application)
         scope.SetVariable("Spreadsheet", fsheet.FormSpreadsheet)
         Dim Solver As New DWSIM.Flowsheet.FlowsheetSolver
         scope.SetVariable("Solver", Solver)
@@ -139,7 +138,7 @@ Imports System.Threading
             source.Execute(scope)
         Catch ex As Exception
             Dim ops As ExceptionOperations = engine.GetService(Of ExceptionOperations)()
-            If My.MyApplication.CommandLineMode Then
+            If My.Application.CommandLineMode Then
                 Console.WriteLine()
                 Console.WriteLine("Error running script: " & ops.FormatException(ex).ToString)
                 Console.WriteLine()
@@ -645,8 +644,8 @@ Imports System.Threading
         End If
     End Sub
 
-    Private Sub ToolStripButton2_Click_2(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
-        AbortScript = True
+    Private Sub ToolStripButton2_Click_2(sender As Object, e As EventArgs)
+        My.Application.CalculatorStopRequested = True
         Application.DoEvents()
     End Sub
 End Class

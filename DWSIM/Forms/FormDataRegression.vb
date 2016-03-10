@@ -451,7 +451,7 @@ Public Class FormDataRegression
                                 Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                 Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
                                 If doparallel Then
-                                    My.MyApplication.IsRunningParallelTasks = True
+                                    My.Application.IsRunningParallelTasks = True
                                     Try
                                         Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
                                                                                  Sub(ipar)
@@ -464,7 +464,7 @@ Public Class FormDataRegression
                                     Catch ae As AggregateException
                                         Throw ae.Flatten().InnerException
                                     End Try
-                                    My.MyApplication.IsRunningParallelTasks = False
+                                    My.Application.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
                                         result = Interfaces.ExcelIntegration.PVFFlash(proppack, 2, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
@@ -477,7 +477,7 @@ Public Class FormDataRegression
                                 Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                 Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
                                 If doparallel Then
-                                    My.MyApplication.IsRunningParallelTasks = True
+                                    My.Application.IsRunningParallelTasks = True
                                     Try
                                         Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
                                                                                  Sub(ipar)
@@ -490,7 +490,7 @@ Public Class FormDataRegression
                                     Catch ae As AggregateException
                                         Throw ae.Flatten().InnerException
                                     End Try
-                                    My.MyApplication.IsRunningParallelTasks = False
+                                    My.Application.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
                                         result = Interfaces.ExcelIntegration.TVFFlash(proppack, 2, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
@@ -509,7 +509,7 @@ Public Class FormDataRegression
                                 Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                 Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing)
                                 If doparallel Then
-                                    My.MyApplication.IsRunningParallelTasks = True
+                                    My.Application.IsRunningParallelTasks = True
                                     Try
                                         Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
                                                                                  Sub(ipar)
@@ -522,7 +522,7 @@ Public Class FormDataRegression
                                     Catch ae As AggregateException
                                         Throw ae.Flatten().InnerException
                                     End Try
-                                    My.MyApplication.IsRunningParallelTasks = False
+                                    My.Application.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
                                         result = Interfaces.ExcelIntegration.PVFFlash(proppack, 2, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
@@ -535,7 +535,7 @@ Public Class FormDataRegression
                                 Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                 Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing)
                                 If doparallel Then
-                                    My.MyApplication.IsRunningParallelTasks = True
+                                    My.Application.IsRunningParallelTasks = True
                                     Try
                                         Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
                                                                              Sub(ipar)
@@ -548,7 +548,7 @@ Public Class FormDataRegression
                                     Catch ae As AggregateException
                                         Throw ae.Flatten().InnerException
                                     End Try
-                                    My.MyApplication.IsRunningParallelTasks = False
+                                    My.Application.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
                                         result = Interfaces.ExcelIntegration.TVFFlash(proppack, 1, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
@@ -569,7 +569,7 @@ Public Class FormDataRegression
                             Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
                             If PVF Then
                                 If doparallel Then
-                                    My.MyApplication.IsRunningParallelTasks = True
+                                    My.Application.IsRunningParallelTasks = True
                                     Try
                                         Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
                                                                                  Sub(ipar)
@@ -582,7 +582,7 @@ Public Class FormDataRegression
                                     Catch ae As AggregateException
                                         Throw ae.Flatten().InnerException
                                     End Try
-                                    My.MyApplication.IsRunningParallelTasks = False
+                                    My.Application.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
                                         result = Interfaces.ExcelIntegration.PVFFlash(proppack, 2, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
@@ -595,7 +595,7 @@ Public Class FormDataRegression
                                 Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                 Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
                                 If doparallel Then
-                                    My.MyApplication.IsRunningParallelTasks = True
+                                    My.Application.IsRunningParallelTasks = True
                                     Try
                                         Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
                                                                                  Sub(ipar)
@@ -608,7 +608,7 @@ Public Class FormDataRegression
                                     Catch ae As AggregateException
                                         Throw ae.Flatten().InnerException
                                     End Try
-                                    My.MyApplication.IsRunningParallelTasks = False
+                                    My.Application.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
                                         result = Interfaces.ExcelIntegration.TVFFlash(proppack, 2, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
@@ -629,7 +629,7 @@ Public Class FormDataRegression
                             Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}}, Nothing, Nothing, Nothing, Nothing)
                             If PVF Then
                                 If doparallel Then
-                                    My.MyApplication.IsRunningParallelTasks = True
+                                    My.Application.IsRunningParallelTasks = True
                                     Try
                                         Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
                                                                                             Sub(ipar)
@@ -642,7 +642,7 @@ Public Class FormDataRegression
                                     Catch ae As AggregateException
                                         Throw ae.Flatten().InnerException
                                     End Try
-                                    My.MyApplication.IsRunningParallelTasks = False
+                                    My.Application.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
                                         result = Interfaces.ExcelIntegration.PVFFlash(proppack, 2, VP(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}}, Nothing, Nothing, Nothing, Nothing)
@@ -655,7 +655,7 @@ Public Class FormDataRegression
                                 Interfaces.ExcelIntegration.AddCompounds(proppack, New Object() {currcase.comp1, currcase.comp2})
                                 Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}}, Nothing, Nothing, Nothing, Nothing)
                                 If doparallel Then
-                                    My.MyApplication.IsRunningParallelTasks = True
+                                    My.Application.IsRunningParallelTasks = True
                                     Try
                                         Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
                                                                                  Sub(ipar)
@@ -668,7 +668,7 @@ Public Class FormDataRegression
                                     Catch ae As AggregateException
                                         Throw ae.Flatten().InnerException
                                     End Try
-                                    My.MyApplication.IsRunningParallelTasks = False
+                                    My.Application.IsRunningParallelTasks = False
                                 Else
                                     For i = 0 To np - 1
                                         result = Interfaces.ExcelIntegration.TVFFlash(proppack, 2, VT(0), 0.0#, New Object() {currcase.comp1, currcase.comp2}, New Double() {Vx1(i), 1 - Vx1(i)}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}}, Nothing, Nothing, Nothing, Nothing)
@@ -1031,7 +1031,7 @@ Public Class FormDataRegression
                         Case "PC-SAFT", "Peng-Robinson", "Soave-Redlich-Kwong", "Lee-Kesler-Plöcker"
                             Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
                             If doparallel Then
-                                My.MyApplication.IsRunningParallelTasks = True
+                                My.Application.IsRunningParallelTasks = True
                                 Try
                                     Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
                                                                                 Sub(ipar)
@@ -1053,7 +1053,7 @@ Public Class FormDataRegression
                                 Catch ae As AggregateException
                                     Throw ae.Flatten().InnerException
                                 End Try
-                                My.MyApplication.IsRunningParallelTasks = False
+                                My.Application.IsRunningParallelTasks = False
                             Else
                                 For i = 0 To np - 1
                                     If Me.currcase.useTLdata Then
@@ -1078,7 +1078,7 @@ Public Class FormDataRegression
                         Case "UNIQUAC"
                             Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing)
                             If doparallel Then
-                                My.MyApplication.IsRunningParallelTasks = True
+                                My.Application.IsRunningParallelTasks = True
                                 Try
                                     Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
                                                                          Sub(ipar)
@@ -1100,7 +1100,7 @@ Public Class FormDataRegression
                                 Catch ae As AggregateException
                                     Throw ae.Flatten().InnerException
                                 End Try
-                                My.MyApplication.IsRunningParallelTasks = False
+                                My.Application.IsRunningParallelTasks = False
                             Else
                                 For i = 0 To np - 1
                                     If Me.currcase.useTLdata Then
@@ -1127,7 +1127,7 @@ Public Class FormDataRegression
                         Case "PRSV2-M", "PRSV2-VL"
                             Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, x(0)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(1), 0.0#}}, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
                             If doparallel Then
-                                My.MyApplication.IsRunningParallelTasks = True
+                                My.Application.IsRunningParallelTasks = True
                                 Try
                                     Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
                                                                              Sub(ipar)
@@ -1149,7 +1149,7 @@ Public Class FormDataRegression
                                 Catch ae As AggregateException
                                     Throw ae.Flatten().InnerException
                                 End Try
-                                My.MyApplication.IsRunningParallelTasks = False
+                                My.Application.IsRunningParallelTasks = False
                             Else
                                 For i = 0 To np - 1
                                     If Me.currcase.useTLdata Then
@@ -1176,7 +1176,7 @@ Public Class FormDataRegression
                         Case "NRTL"
                             Interfaces.ExcelIntegration.SetIP(proppack.ComponentName, proppack, New Object() {currcase.comp1, currcase.comp2}, New Double(,) {{0.0#, 0.0#}, {0.0#, 0.0#}}, New Double(,) {{0.0#, x(0)}, {x(1), 0.0#}}, New Double(,) {{0.0#, x(1)}, {x(0), 0.0#}}, New Double(,) {{0.0#, x(2)}, {x(2), 0.0#}}, Nothing, Nothing, Nothing, Nothing)
                             If doparallel Then
-                                My.MyApplication.IsRunningParallelTasks = True
+                                My.Application.IsRunningParallelTasks = True
                                 Try
                                     Dim task1 As Task = Task.Factory.StartNew(Sub() Parallel.For(0, np, poptions,
                                                                              Sub(ipar)
@@ -1198,7 +1198,7 @@ Public Class FormDataRegression
                                 Catch ae As AggregateException
                                     Throw ae.Flatten().InnerException
                                 End Try
-                                My.MyApplication.IsRunningParallelTasks = False
+                                My.Application.IsRunningParallelTasks = False
                             Else
                                 For i = 0 To np - 1
                                     If Me.currcase.useTLdata Then
@@ -2715,7 +2715,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
         nrtl.InteractionParameters(ppn.RET_VIDS()(0))(ppn.RET_VIDS()(1)).alpha12 = 0.2
 
         If My.Settings.EnableParallelProcessing Then
-            My.MyApplication.IsRunningParallelTasks = True
+            My.Application.IsRunningParallelTasks = True
             Try
                 Dim task1 As Task = New Task(Sub()
                                                  a1 = nrtl.GAMMA_MR(298.15, New Double() {0.25, 0.75}, ppn.RET_VIDS)
@@ -2733,7 +2733,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             Catch ae As AggregateException
                 Throw ae.Flatten().InnerException
             End Try
-            My.MyApplication.IsRunningParallelTasks = False
+            My.Application.IsRunningParallelTasks = False
         Else
             a1 = nrtl.GAMMA_MR(298.15, New Double() {0.25, 0.75}, ppn.RET_VIDS)
             a2 = nrtl.GAMMA_MR(298.15, New Double() {0.5, 0.5}, ppn.RET_VIDS)
@@ -2767,7 +2767,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
         uniquac.InteractionParameters(ppu.RET_VIDS()(0))(ppu.RET_VIDS()(1)).A21 = x(1)
 
         If My.Settings.EnableParallelProcessing Then
-            My.MyApplication.IsRunningParallelTasks = True
+            My.Application.IsRunningParallelTasks = True
             Try
                 Dim task1 As Task = New Task(Sub()
                                                  a1 = uniquac.GAMMA_MR(298.15, New Double() {0.25, 0.75}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR)
@@ -2785,7 +2785,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             Catch ae As AggregateException
                 Throw ae.Flatten().InnerException
             End Try
-            My.MyApplication.IsRunningParallelTasks = False
+            My.Application.IsRunningParallelTasks = False
         Else
             a1 = uniquac.GAMMA_MR(298.15, New Double() {0.25, 0.75}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR)
             a2 = uniquac.GAMMA_MR(298.15, New Double() {0.5, 0.5}, ppu.RET_VIDS, ppu.RET_VQ, ppu.RET_VR)
@@ -2871,8 +2871,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
         If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
 
         If My.Settings.EnableParallelProcessing Then
-            My.MyApplication.IsRunningParallelTasks = True
-            If My.Settings.EnableGPUProcessing Then My.MyApplication.gpu.EnableMultithreading()
+            My.Application.IsRunningParallelTasks = True
+            If My.Settings.EnableGPUProcessing Then My.Application.gpu.EnableMultithreading()
             Try
                 Dim task1 As Task = New Task(Sub()
                                                  Select Case model
@@ -2918,11 +2918,11 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 Throw ae.Flatten().InnerException
             Finally
                 If My.Settings.EnableGPUProcessing Then
-                    My.MyApplication.gpu.DisableMultithreading()
-                    My.MyApplication.gpu.FreeAll()
+                    My.Application.gpu.DisableMultithreading()
+                    My.Application.gpu.FreeAll()
                 End If
             End Try
-            My.MyApplication.IsRunningParallelTasks = False
+            My.Application.IsRunningParallelTasks = False
         Else
             Select Case model
                 Case "UNIFAC"
@@ -3051,8 +3051,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
         If My.Settings.EnableGPUProcessing Then DWSIM.App.InitComputeDevice()
 
         If My.Settings.EnableParallelProcessing Then
-            My.MyApplication.IsRunningParallelTasks = True
-            If My.Settings.EnableGPUProcessing Then My.MyApplication.gpu.EnableMultithreading()
+            My.Application.IsRunningParallelTasks = True
+            If My.Settings.EnableGPUProcessing Then My.Application.gpu.EnableMultithreading()
             Try
                 Dim task1 As Task = New Task(Sub()
                                                  Select Case model
@@ -3098,11 +3098,11 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 Throw ae.Flatten().InnerException
             Finally
                 If My.Settings.EnableGPUProcessing Then
-                    My.MyApplication.gpu.DisableMultithreading()
-                    My.MyApplication.gpu.FreeAll()
+                    My.Application.gpu.DisableMultithreading()
+                    My.Application.gpu.FreeAll()
                 End If
             End Try
-            My.MyApplication.IsRunningParallelTasks = False
+            My.Application.IsRunningParallelTasks = False
         Else
             Select Case model
                 Case "UNIFAC"

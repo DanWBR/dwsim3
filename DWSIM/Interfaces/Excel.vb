@@ -641,7 +641,7 @@ Namespace Interfaces
 
                 If My.Settings.EnableGPUProcessing Then
                     DWSIM.App.InitComputeDevice()
-                    My.MyApplication.gpu.EnableMultithreading()
+                    My.Application.gpu.EnableMultithreading()
                 End If
 
                 If prop.ToLower <> "molecularweight" Then
@@ -649,8 +649,8 @@ Namespace Interfaces
                 End If
 
                 If My.Settings.EnableGPUProcessing Then
-                    My.MyApplication.gpu.DisableMultithreading()
-                    My.MyApplication.gpu.FreeAll()
+                    My.Application.gpu.DisableMultithreading()
+                    My.Application.gpu.FreeAll()
                 End If
 
                 Dim results As Double() = Nothing
@@ -763,14 +763,14 @@ Namespace Interfaces
 
                 If My.Settings.EnableGPUProcessing Then
                     DWSIM.App.InitComputeDevice()
-                    My.MyApplication.gpu.EnableMultithreading()
+                    My.Application.gpu.EnableMultithreading()
                 End If
 
                 pp.CalcEquilibrium(ms, "TP", "UNDEFINED")
 
                 If My.Settings.EnableGPUProcessing Then
-                    My.MyApplication.gpu.DisableMultithreading()
-                    My.MyApplication.gpu.FreeAll()
+                    My.Application.gpu.DisableMultithreading()
+                    My.Application.gpu.FreeAll()
                 End If
 
                 Dim labels As String() = Nothing
@@ -973,14 +973,14 @@ Namespace Interfaces
 
                 If My.Settings.EnableGPUProcessing Then
                     DWSIM.App.InitComputeDevice()
-                    My.MyApplication.gpu.EnableMultithreading()
+                    My.Application.gpu.EnableMultithreading()
                 End If
 
                 pp.CalcEquilibrium(ms, "PH", "UNDEFINED")
 
                 If My.Settings.EnableGPUProcessing Then
-                    My.MyApplication.gpu.DisableMultithreading()
-                    My.MyApplication.gpu.FreeAll()
+                    My.Application.gpu.DisableMultithreading()
+                    My.Application.gpu.FreeAll()
                 End If
 
                 Dim labels As String() = Nothing
@@ -1097,14 +1097,14 @@ Namespace Interfaces
 
                 If My.Settings.EnableGPUProcessing Then
                     DWSIM.App.InitComputeDevice()
-                    My.MyApplication.gpu.EnableMultithreading()
+                    My.Application.gpu.EnableMultithreading()
                 End If
 
                 pp.CalcEquilibrium(ms, "PS", "UNDEFINED")
 
                 If My.Settings.EnableGPUProcessing Then
-                    My.MyApplication.gpu.DisableMultithreading()
-                    My.MyApplication.gpu.FreeAll()
+                    My.Application.gpu.DisableMultithreading()
+                    My.Application.gpu.FreeAll()
                 End If
 
                 Dim labels As String() = Nothing
@@ -1221,14 +1221,14 @@ Namespace Interfaces
 
                 If My.Settings.EnableGPUProcessing Then
                     DWSIM.App.InitComputeDevice()
-                    My.MyApplication.gpu.EnableMultithreading()
+                    My.Application.gpu.EnableMultithreading()
                 End If
 
                 pp.CalcEquilibrium(ms, "PVF", "UNDEFINED")
 
                 If My.Settings.EnableGPUProcessing Then
-                    My.MyApplication.gpu.DisableMultithreading()
-                    My.MyApplication.gpu.FreeAll()
+                    My.Application.gpu.DisableMultithreading()
+                    My.Application.gpu.FreeAll()
                 End If
 
                 Dim labels As String() = Nothing
@@ -1345,14 +1345,14 @@ Namespace Interfaces
 
                 If My.Settings.EnableGPUProcessing Then
                     DWSIM.App.InitComputeDevice()
-                    My.MyApplication.gpu.EnableMultithreading()
+                    My.Application.gpu.EnableMultithreading()
                 End If
 
                 pp.CalcEquilibrium(ms, "TVF", "UNDEFINED")
 
                 If My.Settings.EnableGPUProcessing Then
-                    My.MyApplication.gpu.DisableMultithreading()
-                    My.MyApplication.gpu.FreeAll()
+                    My.Application.gpu.DisableMultithreading()
+                    My.Application.gpu.FreeAll()
                 End If
 
                 Dim labels As String() = Nothing
@@ -1495,7 +1495,7 @@ Namespace Interfaces
                     End With
                 Case "Soave-Redlich-Kwong (SRK)"
                     With CType(pp, SRKPropertyPackage).m_pr.InteractionParameters
-                         If Not TypeOf ip1 Is ExcelMissing And Not ip1 Is Nothing Then
+                        If Not TypeOf ip1 Is ExcelMissing And Not ip1 Is Nothing Then
                             .Clear()
                             i = 0
                             For Each c1 As String In compounds
@@ -1816,14 +1816,14 @@ Namespace Interfaces
 
                 If My.Settings.EnableGPUProcessing Then
                     DWSIM.App.InitComputeDevice()
-                    My.MyApplication.gpu.EnableMultithreading()
+                    My.Application.gpu.EnableMultithreading()
                 End If
 
                 pp.CalcEquilibrium(ms, "TP", "UNDEFINED")
 
                 If My.Settings.EnableGPUProcessing Then
-                    My.MyApplication.gpu.DisableMultithreading()
-                    My.MyApplication.gpu.FreeAll()
+                    My.Application.gpu.DisableMultithreading()
+                    My.Application.gpu.FreeAll()
                 End If
 
                 Dim labels As String() = Nothing
@@ -1929,14 +1929,14 @@ Namespace Interfaces
 
                 If My.Settings.EnableGPUProcessing Then
                     DWSIM.App.InitComputeDevice()
-                    My.MyApplication.gpu.EnableMultithreading()
+                    My.Application.gpu.EnableMultithreading()
                 End If
 
                 pp.CalcEquilibrium(ms, "PH", "UNDEFINED")
 
                 If My.Settings.EnableGPUProcessing Then
-                    My.MyApplication.gpu.DisableMultithreading()
-                    My.MyApplication.gpu.FreeAll()
+                    My.Application.gpu.DisableMultithreading()
+                    My.Application.gpu.FreeAll()
                 End If
 
                 Dim labels As String() = Nothing
@@ -2044,14 +2044,14 @@ Namespace Interfaces
 
                 If My.Settings.EnableGPUProcessing Then
                     DWSIM.App.InitComputeDevice()
-                    My.MyApplication.gpu.EnableMultithreading()
+                    My.Application.gpu.EnableMultithreading()
                 End If
 
                 pp.CalcEquilibrium(ms, "PS", "UNDEFINED")
 
                 If My.Settings.EnableGPUProcessing Then
-                    My.MyApplication.gpu.DisableMultithreading()
-                    My.MyApplication.gpu.FreeAll()
+                    My.Application.gpu.DisableMultithreading()
+                    My.Application.gpu.FreeAll()
                 End If
 
                 Dim labels As String() = Nothing
@@ -2159,14 +2159,14 @@ Namespace Interfaces
 
                 If My.Settings.EnableGPUProcessing Then
                     DWSIM.App.InitComputeDevice()
-                    My.MyApplication.gpu.EnableMultithreading()
+                    My.Application.gpu.EnableMultithreading()
                 End If
 
                 pp.CalcEquilibrium(ms, "PVF", "UNDEFINED")
 
                 If My.Settings.EnableGPUProcessing Then
-                    My.MyApplication.gpu.DisableMultithreading()
-                    My.MyApplication.gpu.FreeAll()
+                    My.Application.gpu.DisableMultithreading()
+                    My.Application.gpu.FreeAll()
                 End If
 
                 Dim labels As String() = Nothing
@@ -2274,14 +2274,14 @@ Namespace Interfaces
 
                 If My.Settings.EnableGPUProcessing Then
                     DWSIM.App.InitComputeDevice()
-                    My.MyApplication.gpu.EnableMultithreading()
+                    My.Application.gpu.EnableMultithreading()
                 End If
 
                 pp.CalcEquilibrium(ms, "TVF", "UNDEFINED")
 
                 If My.Settings.EnableGPUProcessing Then
-                    My.MyApplication.gpu.DisableMultithreading()
-                    My.MyApplication.gpu.FreeAll()
+                    My.Application.gpu.DisableMultithreading()
+                    My.Application.gpu.FreeAll()
                 End If
 
                 Dim labels As String() = Nothing

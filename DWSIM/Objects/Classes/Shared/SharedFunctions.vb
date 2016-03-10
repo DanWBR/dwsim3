@@ -61,20 +61,20 @@ Namespace DWSIM
 
         Public Shared Function GetLocalTipString(ByVal id As String) As String
 
-            If My.MyApplication._HelpManager Is Nothing Then
+            If My.Application._HelpManager Is Nothing Then
 
                 'loads the current language
-                My.MyApplication._CultureInfo = New Globalization.CultureInfo(My.Settings.CultureInfo)
+                My.Application._CultureInfo = New Globalization.CultureInfo(My.Settings.CultureInfo)
                 My.Application.ChangeUICulture(My.Settings.CultureInfo)
 
                 'loads the resource manager
-                My.MyApplication._HelpManager = New System.Resources.ResourceManager("DWSIM.Tips", System.Reflection.Assembly.GetExecutingAssembly())
+                My.Application._HelpManager = New System.Resources.ResourceManager("DWSIM.Tips", System.Reflection.Assembly.GetExecutingAssembly())
 
             End If
 
             If id <> "" Then
                 Dim retstr As String
-                retstr = My.MyApplication._HelpManager.GetString(id, My.MyApplication._CultureInfo)
+                retstr = My.Application._HelpManager.GetString(id, My.Application._CultureInfo)
                 If retstr Is Nothing Then Return id Else Return retstr
             Else
                 Return ""
@@ -84,7 +84,7 @@ Namespace DWSIM
 
         Public Shared Function GetLocalString(ByVal id As String) As String
 
-            If My.MyApplication._ResourceManager Is Nothing Then
+            If My.Application._ResourceManager Is Nothing Then
 
                 Dim cultureinfo As String = "en"
                 Try
@@ -96,17 +96,17 @@ Namespace DWSIM
                 End Try
 
                 'loads the current language
-                My.MyApplication._CultureInfo = New Globalization.CultureInfo(cultureinfo)
+                My.Application._CultureInfo = New Globalization.CultureInfo(cultureinfo)
                 My.Application.ChangeUICulture(cultureinfo)
 
                 'loads the resource manager
-                My.MyApplication._ResourceManager = New System.Resources.ResourceManager("DWSIM.DWSIM", System.Reflection.Assembly.GetExecutingAssembly())
+                My.Application._ResourceManager = New System.Resources.ResourceManager("DWSIM.DWSIM", System.Reflection.Assembly.GetExecutingAssembly())
 
             End If
 
             If id <> "" Then
                 Dim retstr As String
-                retstr = My.MyApplication._ResourceManager.GetString(id, My.MyApplication._CultureInfo)
+                retstr = My.Application._ResourceManager.GetString(id, My.Application._CultureInfo)
                 If retstr Is Nothing Then Return id Else Return retstr
             Else
                 Return ""
@@ -115,21 +115,21 @@ Namespace DWSIM
 
         Public Shared Function GetPropertyName(ByVal PropID As String, Optional ByRef fp As FormMain = Nothing) As String
 
-            If My.MyApplication._ResourceManager Is Nothing Then
+            If My.Application._ResourceManager Is Nothing Then
 
                 'loads the current language
-                My.MyApplication._CultureInfo = New Globalization.CultureInfo(My.Settings.CultureInfo)
+                My.Application._CultureInfo = New Globalization.CultureInfo(My.Settings.CultureInfo)
                 My.Application.ChangeUICulture(My.Settings.CultureInfo)
 
                 'loads the resource manager
-                My.MyApplication._ResourceManager = New System.Resources.ResourceManager("DWSIM.DWSIM", System.Reflection.Assembly.GetExecutingAssembly())
+                My.Application._ResourceManager = New System.Resources.ResourceManager("DWSIM.DWSIM", System.Reflection.Assembly.GetExecutingAssembly())
 
             End If
 
             'loads the property name manager
-            If My.MyApplication._PropertyNameManager Is Nothing Then
+            If My.Application._PropertyNameManager Is Nothing Then
 
-                My.MyApplication._PropertyNameManager = New System.Resources.ResourceManager("DWSIM.Properties", System.Reflection.Assembly.GetExecutingAssembly())
+                My.Application._PropertyNameManager = New System.Resources.ResourceManager("DWSIM.Properties", System.Reflection.Assembly.GetExecutingAssembly())
 
             End If
 
@@ -139,10 +139,10 @@ Namespace DWSIM
                 Dim sname As String = ""
                 If PropID.Split(",").Length = 2 Then
                     sname = PropID.Split(",")(1)
-                    retstr = My.MyApplication._PropertyNameManager.GetString(prop, My.MyApplication._CultureInfo) + " - " + DWSIM.App.GetComponentName(sname, fp)
+                    retstr = My.Application._PropertyNameManager.GetString(prop, My.Application._CultureInfo) + " - " + DWSIM.App.GetComponentName(sname, fp)
                     If retstr Is Nothing Then Return PropID Else Return retstr
                 Else
-                    retstr = My.MyApplication._PropertyNameManager.GetString(prop, My.MyApplication._CultureInfo)
+                    retstr = My.Application._PropertyNameManager.GetString(prop, My.Application._CultureInfo)
                     If retstr Is Nothing Then Return PropID Else Return retstr
                 End If
             Else
@@ -209,7 +209,7 @@ Namespace DWSIM
         End Function
 
         Public Shared Function IsMainThread() As Boolean
-            Return System.Threading.Thread.CurrentThread.ManagedThreadId = My.MyApplication.MainThreadId
+            Return System.Threading.Thread.CurrentThread.ManagedThreadId = My.Application.MainThreadId
         End Function
 
         Public Shared Function IsRunningOnMono() As Boolean
@@ -297,7 +297,7 @@ Namespace DWSIM
             My.Settings.BackupInterval = source.Configs("Backup").GetInt("BackupInterval", 5)
 
             My.Settings.CultureInfo = source.Configs("Localization").Get("CultureInfo", "en-US")
-         
+
             My.Settings.ChemSepDatabasePath = source.Configs("Databases").Get("ChemSepDBPath", "")
             My.Settings.ReplaceComps = source.Configs("Databases").GetBoolean("ReplaceComps", True)
 
@@ -367,7 +367,7 @@ Namespace DWSIM
             source.Configs("Backup").Set("BackupInterval", My.Settings.BackupInterval)
 
             source.Configs("Localization").Set("CultureInfo", My.Settings.CultureInfo)
-          
+
             source.Configs("Databases").Set("ChemSepDBPath", My.Settings.ChemSepDatabasePath)
             source.Configs("Databases").Set("ReplaceComps", My.Settings.ReplaceComps)
 
@@ -403,7 +403,7 @@ Namespace DWSIM
 
         Shared Sub InitComputeDevice()
 
-            If My.MyApplication.gpu Is Nothing Then
+            If My.Application.gpu Is Nothing Then
 
                 'set target language
 
@@ -418,24 +418,24 @@ Namespace DWSIM
 
                 Dim gputype As eGPUType = My.Settings.CudafyTarget
 
-                My.MyApplication.gpu = CudafyHost.GetDevice(gputype, My.Settings.CudafyDeviceID)
+                My.Application.gpu = CudafyHost.GetDevice(gputype, My.Settings.CudafyDeviceID)
 
                 'cudafy all classes that contain a gpu function
 
-                If My.MyApplication.gpumod Is Nothing Then
+                If My.Application.gpumod Is Nothing Then
                     Select Case My.Settings.CudafyTarget
                         Case 0, 1
-                            My.MyApplication.gpumod = CudafyModule.TryDeserialize("cudacode.cdfy")
+                            My.Application.gpumod = CudafyModule.TryDeserialize("cudacode.cdfy")
                         Case 2
                             'OpenCL code is device-specific and must be compiled on each initialization
                     End Select
-                    If My.MyApplication.gpumod Is Nothing OrElse Not My.MyApplication.gpumod.TryVerifyChecksums() Then
+                    If My.Application.gpumod Is Nothing OrElse Not My.Application.gpumod.TryVerifyChecksums() Then
                         Select Case My.Settings.CudafyTarget
                             Case 0
-                                My.MyApplication.gpumod = CudafyTranslator.Cudafy(GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.LeeKeslerPlocker), _
+                                My.Application.gpumod = CudafyTranslator.Cudafy(GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.LeeKeslerPlocker), _
                                             GetType(DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.PR),
                                             GetType(DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.SRK))
-                                My.MyApplication.gpumod.Serialize("emulator.cdfy")
+                                My.Application.gpumod.Serialize("emulator.cdfy")
                             Case 1
                                 Dim cp As New Cudafy.CompileProperties()
                                 With cp
@@ -447,12 +447,12 @@ Namespace DWSIM
                                     .CompilerPath = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\bin\nvcc.exe"
                                     .IncludeDirectoryPath = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v6.5\include"
                                 End With
-                                My.MyApplication.gpumod = CudafyTranslator.Cudafy(cp, GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.LeeKeslerPlocker), _
+                                My.Application.gpumod = CudafyTranslator.Cudafy(cp, GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.LeeKeslerPlocker), _
                                             GetType(DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.PR),
                                             GetType(DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.SRK))
-                                My.MyApplication.gpumod.Serialize("cudacode.cdfy")
+                                My.Application.gpumod.Serialize("cudacode.cdfy")
                             Case 2
-                                My.MyApplication.gpumod = CudafyTranslator.Cudafy(GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.LeeKeslerPlocker), _
+                                My.Application.gpumod = CudafyTranslator.Cudafy(GetType(DWSIM.SimulationObjects.PropertyPackages.Auxiliary.LeeKeslerPlocker), _
                                             GetType(DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.PR),
                                             GetType(DWSIM.SimulationObjects.PropertyPackages.ThermoPlugs.SRK))
                         End Select
@@ -461,7 +461,7 @@ Namespace DWSIM
 
                 'load cudafy module
 
-                If Not My.MyApplication.gpu.IsModuleLoaded(My.MyApplication.gpumod.Name) Then My.MyApplication.gpu.LoadModule(My.MyApplication.gpumod)
+                If Not My.Application.gpu.IsModuleLoaded(My.Application.gpumod.Name) Then My.Application.gpu.LoadModule(My.Application.gpumod)
 
             End If
 

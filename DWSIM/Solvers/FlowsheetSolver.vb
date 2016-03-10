@@ -289,7 +289,7 @@ Namespace DWSIM.Flowsheet
                             End If
                         End If
                         If doparallel Then
-                            My.MyApplication.IsRunningParallelTasks = True
+                            My.Application.IsRunningParallelTasks = True
                             Dim task1 As Task = New Task(Sub()
                                                              If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
                                                                  .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
@@ -374,7 +374,7 @@ Namespace DWSIM.Flowsheet
                                     task6.Start()
                                     Task.WaitAll(task1, task2, task3, task4, task5, task6)
                             End Select
-                            My.MyApplication.IsRunningParallelTasks = False
+                            My.Application.IsRunningParallelTasks = False
                         Else
                             If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
@@ -457,7 +457,7 @@ Namespace DWSIM.Flowsheet
                             End If
                         End If
                         If doparallel Then
-                            My.MyApplication.IsRunningParallelTasks = True
+                            My.Application.IsRunningParallelTasks = True
                             Dim task1 As Task = New Task(Sub()
                                                              If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
                                                                  .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
@@ -542,7 +542,7 @@ Namespace DWSIM.Flowsheet
                                     task6.Start()
                                     Task.WaitAll(task1, task2, task3, task4, task5, task6)
                             End Select
-                            My.MyApplication.IsRunningParallelTasks = False
+                            My.Application.IsRunningParallelTasks = False
                         Else
                             If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
@@ -629,7 +629,7 @@ Namespace DWSIM.Flowsheet
                             End If
                         End If
                         If doparallel Then
-                            My.MyApplication.IsRunningParallelTasks = True
+                            My.Application.IsRunningParallelTasks = True
                             Dim task1 As Task = New Task(Sub()
                                                              If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
                                                                  .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
@@ -714,7 +714,7 @@ Namespace DWSIM.Flowsheet
                                     task6.Start()
                                     Task.WaitAll(task1, task2, task3, task4, task5, task6)
                             End Select
-                            My.MyApplication.IsRunningParallelTasks = False
+                            My.Application.IsRunningParallelTasks = False
                         Else
                             If ms.Fases(3).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
                                 .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid1)
@@ -1051,7 +1051,7 @@ Namespace DWSIM.Flowsheet
 
             Dim loopex As New List(Of Exception)
 
-            My.MyApplication.CalculatorStopRequested = False
+            My.Application.CalculatorStopRequested = False
 
             While form.CalculationQueue.Count >= 1
 
@@ -1237,7 +1237,7 @@ Namespace DWSIM.Flowsheet
             Next
 
             Dim poptions As New ParallelOptions() With {.MaxDegreeOfParallelism = My.Settings.MaxDegreeOfParallelism,
-                                                        .TaskScheduler = My.MyApplication.AppTaskScheduler}
+                                                        .TaskScheduler = My.Application.AppTaskScheduler}
 
             For Each li In orderedlist
                 Dim objlist As New ArrayList
@@ -1294,16 +1294,16 @@ Namespace DWSIM.Flowsheet
         ''' <remarks></remarks>
         Public Shared Sub CheckCalculatorStatus()
             If DWSIM.App.IsMainThread Then
-                If Not My.MyApplication.IsRunningParallelTasks Then
+                If Not My.Application.IsRunningParallelTasks Then
                     If Not My.Application.CAPEOPENMode Then
-                        If My.MyApplication.CalculatorStopRequested = True Then
-                            My.MyApplication.MasterCalculatorStopRequested = True
-                            My.MyApplication.CalculatorStopRequested = False
-                            If My.MyApplication.TaskCancellationTokenSource IsNot Nothing Then
-                                If Not My.MyApplication.TaskCancellationTokenSource.IsCancellationRequested Then
-                                    My.MyApplication.TaskCancellationTokenSource.Cancel()
+                        If My.Application.CalculatorStopRequested = True Then
+                            My.Application.MasterCalculatorStopRequested = True
+                            My.Application.CalculatorStopRequested = False
+                            If My.Application.TaskCancellationTokenSource IsNot Nothing Then
+                                If Not My.Application.TaskCancellationTokenSource.IsCancellationRequested Then
+                                    My.Application.TaskCancellationTokenSource.Cancel()
                                 End If
-                                My.MyApplication.TaskCancellationTokenSource.Token.ThrowIfCancellationRequested()
+                                My.Application.TaskCancellationTokenSource.Token.ThrowIfCancellationRequested()
                             Else
                                 Throw New Exception(DWSIM.App.GetLocalString("CalculationAborted"))
                             End If
@@ -1557,15 +1557,15 @@ Namespace DWSIM.Flowsheet
 
             If form.Options.CalculatorActivated Then
 
-                If form.MasterFlowsheet Is Nothing Then My.MyApplication.CalculatorBusy = True
+                If form.MasterFlowsheet Is Nothing Then My.Application.CalculatorBusy = True
 
                 'this is the cancellation token for background threads. it checks for calculator stop requests and forwards the request to the tasks.
 
                 If form.MasterFlowsheet Is Nothing Then
                     If ts Is Nothing Then ts = New CancellationTokenSource
-                    My.MyApplication.TaskCancellationTokenSource = ts
+                    My.Application.TaskCancellationTokenSource = ts
                 End If
-                Dim ct As CancellationToken = My.MyApplication.TaskCancellationTokenSource.Token
+                Dim ct As CancellationToken = My.Application.TaskCancellationTokenSource.Token
 
                 Dim obj As SimulationObjects_BaseClass
 
@@ -1662,7 +1662,7 @@ Namespace DWSIM.Flowsheet
 
                 If My.Settings.EnableGPUProcessing And form.MasterFlowsheet Is Nothing Then
                     DWSIM.App.InitComputeDevice()
-                    My.MyApplication.gpu.EnableMultithreading()
+                    My.Application.gpu.EnableMultithreading()
                 End If
 
                 Select Case mode
@@ -1681,7 +1681,7 @@ Namespace DWSIM.Flowsheet
 
                         If form.CalculationQueue Is Nothing Then form.CalculationQueue = New Queue(Of DWSIM.Outros.StatusChangeEventArgs)
 
-                        My.MyApplication.MasterCalculatorStopRequested = False
+                        My.Application.MasterCalculatorStopRequested = False
 
                         Dim objargs As DWSIM.Outros.StatusChangeEventArgs = Nothing
 
@@ -1847,14 +1847,14 @@ Namespace DWSIM.Flowsheet
                             Select Case My.Settings.TaskScheduler
                                 Case 0 'default
                                     If My.Settings.EnableGPUProcessing Then
-                                        My.MyApplication.AppTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext
+                                        My.Application.AppTaskScheduler = TaskScheduler.FromCurrentSynchronizationContext
                                     Else
-                                        My.MyApplication.AppTaskScheduler = TaskScheduler.Default
+                                        My.Application.AppTaskScheduler = TaskScheduler.Default
                                     End If
                                 Case 1 'sta
-                                    My.MyApplication.AppTaskScheduler = New DWSIM.Auxiliary.TaskSchedulers.StaTaskScheduler(nthreads)
+                                    My.Application.AppTaskScheduler = New DWSIM.Auxiliary.TaskSchedulers.StaTaskScheduler(nthreads)
                                 Case 2 'limited concurrency
-                                    My.MyApplication.AppTaskScheduler = New DWSIM.Auxiliary.TaskSchedulers.LimitedConcurrencyLevelTaskScheduler(nthreads)
+                                    My.Application.AppTaskScheduler = New DWSIM.Auxiliary.TaskSchedulers.LimitedConcurrencyLevelTaskScheduler(nthreads)
                             End Select
 
                         End If
@@ -1862,11 +1862,11 @@ Namespace DWSIM.Flowsheet
                         Try
                             If mode = 0 Then
                                 'this task will run synchronously with the UI thread.
-                                maintask.RunSynchronously(My.MyApplication.AppTaskScheduler)
+                                maintask.RunSynchronously(My.Application.AppTaskScheduler)
                             Else
                                 form.UpdateStatusLabel(DWSIM.App.GetLocalString("Calculando") & " " & DWSIM.App.GetLocalString("Fluxograma") & "...")
                                 'this task will run asynchronously.
-                                maintask.Start(My.MyApplication.AppTaskScheduler)
+                                maintask.Start(My.Application.AppTaskScheduler)
                                 If form.MasterFlowsheet Is Nothing Then
                                     While Not (Date.Now - d1).TotalMilliseconds >= My.Settings.SolverTimeoutSeconds * 1000
                                         maintask.Wait(200, ct)
@@ -1899,7 +1899,7 @@ Namespace DWSIM.Flowsheet
 
                         'If form.Visible Then ts.Dispose()
 
-                        'My.MyApplication.TaskCancellationTokenSource = Nothing
+                        'My.Application.TaskCancellationTokenSource = Nothing
 
                         'clears the object lists.
 
@@ -1951,8 +1951,8 @@ Namespace DWSIM.Flowsheet
                 'Frees GPU memory if enabled.
 
                 If My.Settings.EnableGPUProcessing And form.MasterFlowsheet Is Nothing Then
-                    My.MyApplication.gpu.DisableMultithreading()
-                    My.MyApplication.gpu.FreeAll()
+                    My.Application.gpu.DisableMultithreading()
+                    My.Application.gpu.FreeAll()
                 End If
 
                 'updates the display status of all objects in the calculation list.
@@ -2072,7 +2072,7 @@ Namespace DWSIM.Flowsheet
 
                 End If
 
-                If form.MasterFlowsheet Is Nothing Then My.MyApplication.CalculatorBusy = False
+                If form.MasterFlowsheet Is Nothing Then My.Application.CalculatorBusy = False
 
                 form.ProcessScripts(Script.EventType.SolverFinished, Script.ObjectType.Solver)
 

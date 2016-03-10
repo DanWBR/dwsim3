@@ -558,9 +558,9 @@ Public Class FormOptions
 
         End Try
         If loaded Then
-            If Not My.MyApplication.gpu Is Nothing Then
-                My.MyApplication.gpu.Dispose()
-                My.MyApplication.gpu = Nothing
+            If Not My.Application.gpu Is Nothing Then
+                My.Application.gpu.Dispose()
+                My.Application.gpu = Nothing
             End If
         End If
     End Sub

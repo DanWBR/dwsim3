@@ -452,21 +452,21 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Dim gl, gv As Double
 
             If My.Settings.EnableParallelProcessing Then
-                My.MyApplication.IsRunningParallelTasks = True
+                My.Application.IsRunningParallelTasks = True
                 Dim task1 = Task.Factory.StartNew(Sub()
                                                       fcv = pp.DW_CalcFugCoeff(Vz, T, P, State.Vapor)
                                                   End Sub,
-                                                      My.MyApplication.TaskCancellationTokenSource.Token,
+                                                      My.Application.TaskCancellationTokenSource.Token,
                                                       TaskCreationOptions.None,
-                                                      My.MyApplication.AppTaskScheduler)
+                                                      My.Application.AppTaskScheduler)
                 Dim task2 = Task.Factory.StartNew(Sub()
                                                       fcl = pp.DW_CalcFugCoeff(Vz, T, P, State.Liquid)
                                                   End Sub,
-                                                  My.MyApplication.TaskCancellationTokenSource.Token,
+                                                  My.Application.TaskCancellationTokenSource.Token,
                                                   TaskCreationOptions.None,
-                                                  My.MyApplication.AppTaskScheduler)
+                                                  My.Application.AppTaskScheduler)
                 Task.WaitAll(task1, task2)
-                My.MyApplication.IsRunningParallelTasks = False
+                My.Application.IsRunningParallelTasks = False
             Else
                 fcv = pp.DW_CalcFugCoeff(Vz, T, P, State.Vapor)
                 fcl = pp.DW_CalcFugCoeff(Vz, T, P, State.Liquid)
@@ -579,21 +579,21 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         Loop Until j = n + 1
 
                         If My.Settings.EnableParallelProcessing Then
-                            My.MyApplication.IsRunningParallelTasks = True
+                            My.Application.IsRunningParallelTasks = True
                             Dim task1 = Task.Factory.StartNew(Sub()
                                                                   fcv = pp.DW_CalcFugCoeff(currcomp, T, P, State.Vapor)
                                                               End Sub,
-                                                                  My.MyApplication.TaskCancellationTokenSource.Token,
+                                                                  My.Application.TaskCancellationTokenSource.Token,
                                                                   TaskCreationOptions.None,
-                                                                  My.MyApplication.AppTaskScheduler)
+                                                                  My.Application.AppTaskScheduler)
                             Dim task2 = Task.Factory.StartNew(Sub()
                                                                   fcl = pp.DW_CalcFugCoeff(currcomp, T, P, State.Liquid)
                                                               End Sub,
-                                                              My.MyApplication.TaskCancellationTokenSource.Token,
+                                                              My.Application.TaskCancellationTokenSource.Token,
                                                               TaskCreationOptions.None,
-                                                              My.MyApplication.AppTaskScheduler)
+                                                              My.Application.AppTaskScheduler)
                             Task.WaitAll(task1, task2)
-                            My.MyApplication.IsRunningParallelTasks = False
+                            My.Application.IsRunningParallelTasks = False
                         Else
                             fcv = pp.DW_CalcFugCoeff(currcomp, T, P, State.Vapor)
                             fcl = pp.DW_CalcFugCoeff(currcomp, T, P, State.Liquid)
@@ -845,7 +845,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Dim i As Integer = 0
                 Do
                     If My.Settings.EnableParallelProcessing Then
-                        My.MyApplication.IsRunningParallelTasks = True
+                        My.Application.IsRunningParallelTasks = True
                         Dim task1 As Task = New Task(Sub()
                                                          fx = 1 - CalcPIP(Vx, P, Tinv, pp, eos)(0)
                                                      End Sub)
@@ -855,7 +855,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         task1.Start()
                         task2.Start()
                         Task.WaitAll(task1, task2)
-                        My.MyApplication.IsRunningParallelTasks = False
+                        My.Application.IsRunningParallelTasks = False
                     Else
                         fx = 1 - CalcPIP(Vx, P, Tinv, pp, eos)(0)
                         fx2 = 1 - CalcPIP(Vx, P, Tinv - 1, pp, eos)(0)

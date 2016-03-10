@@ -153,8 +153,8 @@ Namespace DWSIM.Flowsheet
 
                     'the user requested the calculation to be cancelled.
 
-                    If My.MyApplication.CalculatorStopRequested = True Then
-                        My.MyApplication.CalculatorStopRequested = False
+                    If My.Application.CalculatorStopRequested = True Then
+                        My.Application.CalculatorStopRequested = False
                         msg = New BrokeredMessage("")
                         msg.Properties.Add("requestID", requestID)
                         msg.Properties.Add("type", "abort")

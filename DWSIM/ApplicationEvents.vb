@@ -15,33 +15,33 @@ Namespace My
     ' NetworkAvailabilityChanged: Raised when the network connection is connected or disconnected.
     Partial Friend Class MyApplication
 
-        Public Shared _ResourceManager As System.Resources.ResourceManager
-        Public Shared _HelpManager As System.Resources.ResourceManager
-        Public Shared _PropertyNameManager As System.Resources.ResourceManager
-        Public Shared _CultureInfo As System.Globalization.CultureInfo
-        Public Shared CalculatorStopRequested As Boolean = False
-        Public Shared MasterCalculatorStopRequested As Boolean = False
-        Public Shared CommandLineMode As Boolean = False
+        Public _ResourceManager As System.Resources.ResourceManager
+        Public _HelpManager As System.Resources.ResourceManager
+        Public _PropertyNameManager As System.Resources.ResourceManager
+        Public _CultureInfo As System.Globalization.CultureInfo
+        Public CalculatorStopRequested As Boolean = False
+        Public MasterCalculatorStopRequested As Boolean = False
+        Public CommandLineMode As Boolean = False
 
-        Public Shared MainThreadId As Integer
-        Public Shared CalculatorBusy As Boolean = False
+        Public MainThreadId As Integer
+        Public CalculatorBusy As Boolean = False
 
-        Public Shared UtilityPlugins As Dictionary(Of String, Interfaces.IUtilityPlugin)
+        Public UtilityPlugins As Dictionary(Of String, Interfaces.IUtilityPlugin)
 
-        Public Shared IsRunningParallelTasks As Boolean = False
-        Public Shared TaskCancellationTokenSource As New Threading.CancellationTokenSource
+        Public IsRunningParallelTasks As Boolean = False
+        Public TaskCancellationTokenSource As New Threading.CancellationTokenSource
 
-        Public Shared AppTaskScheduler As Tasks.TaskScheduler = Tasks.TaskScheduler.Default
+        Public AppTaskScheduler As Tasks.TaskScheduler = Tasks.TaskScheduler.Default
 
         Public PushUndoRedoAction As Boolean = True
 
         Public ActiveSimulation As FormFlowsheet
         Public CAPEOPENMode As Boolean = False
-        Public Shared gpu As Cudafy.Host.GPGPU
-        Public Shared gpumod As CudafyModule
-        Public Shared prevlang As Integer = 0 '0 = CUDA, 1 = OpenCL
+        Public gpu As Cudafy.Host.GPGPU
+        Public gpumod As CudafyModule
+        Public prevlang As Integer = 0 '0 = CUDA, 1 = OpenCL
 
-        Public Shared UserUnitSystems As Dictionary(Of String, DWSIM.SistemasDeUnidades.Unidades)
+        Public UserUnitSystems As Dictionary(Of String, DWSIM.SistemasDeUnidades.Unidades)
 
         Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
 

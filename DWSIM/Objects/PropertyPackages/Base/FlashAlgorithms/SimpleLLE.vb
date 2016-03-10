@@ -255,17 +255,17 @@ out:        d2 = Date.Now
             x1 = Tref
             Do
                 If My.Settings.EnableParallelProcessing Then
-                    My.MyApplication.IsRunningParallelTasks = True
+                    My.Application.IsRunningParallelTasks = True
                     Dim task1 As Task = New Task(Sub()
                                                      fx = Herror(x1, {P, Vz, PP})
                                                  End Sub)
-                        Dim task2 As Task = New Task(Sub()
-                                                         fx2 = Herror(x1 + 1, {P, Vz, PP})
-                                                     End Sub)
-                        task1.Start()
-                        task2.Start()
-                        Task.WaitAll(task1, task2)
-                    My.MyApplication.IsRunningParallelTasks = False
+                    Dim task2 As Task = New Task(Sub()
+                                                     fx2 = Herror(x1 + 1, {P, Vz, PP})
+                                                 End Sub)
+                    task1.Start()
+                    task2.Start()
+                    Task.WaitAll(task1, task2)
+                    My.Application.IsRunningParallelTasks = False
                 Else
                     fx = Herror(x1, {P, Vz, PP})
                     fx2 = Herror(x1 + 1, {P, Vz, PP})
@@ -355,7 +355,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
             x1 = Tref
             Do
                 If My.Settings.EnableParallelProcessing Then
-                    My.MyApplication.IsRunningParallelTasks = True
+                    My.Application.IsRunningParallelTasks = True
                     Dim task1 As Task = New Task(Sub()
                                                      fx = Serror(x1, {P, Vz, PP})
                                                  End Sub)
@@ -365,7 +365,7 @@ alt:            T = bo.BrentOpt(Tinf, Tsup, 10, tolEXT, maxitEXT, {P, Vz, PP})
                     task1.Start()
                     task2.Start()
                     Task.WaitAll(task1, task2)
-                    My.MyApplication.IsRunningParallelTasks = False
+                    My.Application.IsRunningParallelTasks = False
                 Else
                     fx = Serror(x1, {P, Vz, PP})
                     fx2 = Serror(x1 + 1, {P, Vz, PP})

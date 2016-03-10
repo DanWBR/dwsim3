@@ -825,7 +825,7 @@ Public Class FormSimulSettings
                   .NewValue = FormMain.AvailableUnitSystems(str),
                  .Name = String.Format(DWSIM.App.GetLocalString("UndoRedo_SystemOfUnitsRemoved"), FormMain.AvailableUnitSystems(str).nome)})
 
-            My.MyApplication.UserUnitSystems.Remove(str)
+            My.Application.UserUnitSystems.Remove(str)
 
             FormMain.AvailableUnitSystems.Remove(Me.ComboBox2.SelectedItem)
 

@@ -325,7 +325,7 @@ Public Class FormLLEDiagram
 
         If My.Settings.EnableGPUProcessing Then
             DWSIM.App.InitComputeDevice()
-            My.MyApplication.gpu.EnableMultithreading()
+            My.Application.gpu.EnableMultithreading()
         End If
 
         Try
@@ -334,8 +334,8 @@ Public Class FormLLEDiagram
             MessageBox.Show(ex.Message.ToString, "Error", MessageBoxButtons.OK)
         Finally
             If My.Settings.EnableGPUProcessing Then
-                My.MyApplication.gpu.DisableMultithreading()
-                My.MyApplication.gpu.FreeAll()
+                My.Application.gpu.DisableMultithreading()
+                My.Application.gpu.FreeAll()
             End If
         End Try
 

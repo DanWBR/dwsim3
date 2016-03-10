@@ -656,7 +656,7 @@ Partial Class FormMain
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException)
             AddHandler Application.ThreadException, AddressOf MyApplication_UnhandledException
             AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf MyApplication_UnhandledException2
-            My.MyApplication.UtilityPlugins = New Dictionary(Of String, Interfaces.IUtilityPlugin)
+            My.Application.UtilityPlugins = New Dictionary(Of String, Interfaces.IUtilityPlugin)
 
             'settings workaround for Mono
             'load settings from INI file
@@ -673,7 +673,7 @@ Partial Class FormMain
 
         ' This call is required by the Windows Form Designer.
 
-        If Not My.MyApplication.CommandLineMode Or Not My.Application.CAPEOPENMode Then
+        If Not My.Application.CommandLineMode Or Not My.Application.CAPEOPENMode Then
             InitializeComponent()
         End If
 
@@ -686,8 +686,8 @@ Partial Class FormMain
 
         'load user unit systems
 
-        If My.MyApplication.UserUnitSystems Is Nothing Then My.MyApplication.UserUnitSystems = New Dictionary(Of String, DWSIM.SistemasDeUnidades.Unidades)
-        If My.MyApplication.UtilityPlugins Is Nothing Then My.MyApplication.UtilityPlugins = New Dictionary(Of String, Interfaces.IUtilityPlugin)
+        If My.Application.UserUnitSystems Is Nothing Then My.Application.UserUnitSystems = New Dictionary(Of String, DWSIM.SistemasDeUnidades.Unidades)
+        If My.Application.UtilityPlugins Is Nothing Then My.Application.UtilityPlugins = New Dictionary(Of String, Interfaces.IUtilityPlugin)
 
         Dim xdoc As New XDocument()
         Dim xel As XElement
@@ -734,7 +734,7 @@ Partial Class FormMain
             End If
 
             For Each su As DWSIM.SistemasDeUnidades.Unidades In myarraylist
-                If Not My.MyApplication.UserUnitSystems.ContainsKey(su.nome) Then My.MyApplication.UserUnitSystems.Add(su.nome, su)
+                If Not My.Application.UserUnitSystems.ContainsKey(su.nome) Then My.Application.UserUnitSystems.Add(su.nome, su)
             Next
 
         End If
@@ -757,10 +757,10 @@ Partial Class FormMain
             .Add(DWSIM.App.GetLocalString("Personalizado4"), New DWSIM.SistemasDeUnidades.UnidadesSI_Deriv4)
             .Add(DWSIM.App.GetLocalString("Personalizado5"), New DWSIM.SistemasDeUnidades.UnidadesSI_Deriv5)
 
-            If Not My.MyApplication.UserUnitSystems Is Nothing Then
-                If My.MyApplication.UserUnitSystems.Count > 0 Then
+            If Not My.Application.UserUnitSystems Is Nothing Then
+                If My.Application.UserUnitSystems.Count > 0 Then
                     Dim su As New DWSIM.SistemasDeUnidades.Unidades
-                    For Each su In My.MyApplication.UserUnitSystems.Values
+                    For Each su In My.Application.UserUnitSystems.Values
                         If Not .ContainsKey(su.nome) Then .Add(su.nome, su)
                     Next
                 End If
