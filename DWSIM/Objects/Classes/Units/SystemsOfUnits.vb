@@ -872,6 +872,8 @@ Namespace DWSIM.SistemasDeUnidades
                     Return valor / 543440
                 Case "ft3/min"
                     Return valor / 35.3147 / 60
+                Case "ft3/d"
+                    Return valor / 35.3147 / 60 / 60 / 24
                 Case "ft3/s"
                     Return valor / 35.3147
                 Case "gal[UK]/h"
@@ -1145,14 +1147,18 @@ Namespace DWSIM.SistemasDeUnidades
                     Return valor / 3600
                 Case "m3/d"
                     Return valor / 3600 / 24
-                Case "m3/d @ BR"
+                Case "m3/d @ BR", "m3/d @ 20 C, 1 atm"
                     Return valor / (24.055 * 3600 * 24 / 1000)
                 Case "m3/d @ CNTP"
                     Return valor / (22.71 * 3600 * 24 / 1000)
-                Case "m3/d @ NC"
+                Case "m3/d @ NC", "m3/d @ 0 C, 1 atm"
                     Return valor / (22.71 * 3600 * 24 / 1000)
-                Case "m3/d @ SC"
+                Case "m3/d @ SC", "m3/d @ 15.56 C, 1 atm"
                     Return valor / (23.69 * 3600 * 24 / 1000)
+                Case "ft3/d @ 60 F, 14.7 psia"
+                    Return valor / (23.69 * 3600 * 24 / 1000) / 35.3147
+                Case "ft3/d @ 0 C, 1 atm"
+                    Return valor / (22.71 * 3600 * 24 / 1000) / 35.3147
                 Case "°F"
                     Return (valor - 32) * 5 / 9 + 273.15
                 Case "°F."
@@ -1252,6 +1258,8 @@ Namespace DWSIM.SistemasDeUnidades
                     Return valor * 543440
                 Case "ft3/min"
                     Return valor * 35.3147 * 60
+                Case "ft3/d"
+                    Return valor * 35.3147 * 60 * 60 * 24
                 Case "ft3/s"
                     Return valor * 35.3147
                 Case "gal[UK]/h"
@@ -1547,14 +1555,18 @@ Namespace DWSIM.SistemasDeUnidades
                     Return valor * 3600
                 Case "m3/d"
                     Return valor * 3600 * 24
-                Case "m3/d @ BR"
+                Case "m3/d @ BR", "m3/d @ 20 C, 1 atm"
                     Return valor * (24.055 * 3600 * 24 / 1000)
                 Case "m3/d @ CNTP"
                     Return valor * (22.71 * 3600 * 24 / 1000)
-                Case "m3/d @ NC"
+                Case "m3/d @ NC", "m3/d @ 0 C, 1 atm"
                     Return valor * (22.71 * 3600 * 24 / 1000)
-                Case "m3/d @ SC"
+                Case "m3/d @ SC", "m3/d @ 15.56 C, 1 atm"
                     Return valor * (23.69 * 3600 * 24 / 1000)
+                Case "ft3/d @ 60 F, 14.7 psia"
+                    Return valor * (23.69 * 3600 * 24 / 1000) * 35.3147
+                Case "ft3/d @ 0 C, 1 atm"
+                    Return valor * (22.71 * 3600 * 24 / 1000) * 35.3147
                 Case "°F"
                     Return (valor - 273.15) * 9 / 5 + 32
                 Case "°F."

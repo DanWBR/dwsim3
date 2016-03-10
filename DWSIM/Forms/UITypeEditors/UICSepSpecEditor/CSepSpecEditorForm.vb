@@ -16,7 +16,7 @@ Public Class CSepSpecEditorForm
         Dim cbspec, cbunits As New DataGridViewComboBoxCell
 
         cbspec.Items.AddRange(New Object() {"Mass Flow", "Molar Flow", "% Inlet Mass Flow", "% Inlet Molar Flow"})
-        cbunits.Items.AddRange(New Object() {"-", "%", "g/s", "lbm/h", "kg/s", "kg/h", "kg/d", "kg/min", "lb/min", "lb/s", "mol/s", "lbmol/h", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"})
+        cbunits.Items.AddRange(New Object() {"-", "%", "g/s", "lbm/h", "kg/s", "kg/h", "kg/d", "kg/min", "lb/min", "lb/s", "mol/s", "lbmol/h", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC", "m3/d @ 0 C, 1 atm", "m3/d @ 15.56 C, 1 atm", "m3/d @ 20 C, 1 atm", "ft3/d @ 60 F, 14.7 psia", "ft3/d @ 0 C, 1 atm"})
 
         Me.DataGridView1.Columns(2).CellTemplate = cbspec
         Me.DataGridView1.Columns(4).CellTemplate = cbunits

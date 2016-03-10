@@ -53,12 +53,12 @@ Public Class FormUnitGen
             .Add(New Object() {DWSIM.App.GetLocalString("Vazomssica")})
             .Item(.Count - 1).Cells(1) = cb
             cb = New DataGridViewComboBoxCell
-            cb.Items.AddRange(New Object() {"mol/s", "lbmol/h", "mol/h", "mol/d", "kmol/s", "kmol/h", "kmol/d", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC"})
+            cb.Items.AddRange(New Object() {"mol/s", "lbmol/h", "mol/h", "mol/d", "kmol/s", "kmol/h", "kmol/d", "m3/d @ BR", "m3/d @ NC", "m3/d @ CNTP", "m3/d @ SC", "m3/d @ 0 C, 1 atm", "m3/d @ 15.56 C, 1 atm", "m3/d @ 20 C, 1 atm", "ft3/d @ 60 F, 14.7 psia", "ft3/d @ 0 C, 1 atm"})
             cb.Value = currentset.spmp_molarflow
             .Add(New Object() {DWSIM.App.GetLocalString("Vazomolar")})
             .Item(.Count - 1).Cells(1) = cb
             cb = New DataGridViewComboBoxCell
-            cb.Items.AddRange(New Object() {"m3/s", "ft3/s", "cm3/s", "m3/h", "m3/d", "bbl/h", "bbl/d", "ft3/min", "gal[UK]/h", "gal[UK]/s", "gal[US]/h", "gal[US]/min", "L/h", "L/min", "L/s"})
+            cb.Items.AddRange(New Object() {"m3/s", "ft3/s", "cm3/s", "m3/h", "m3/d", "bbl/h", "bbl/d", "ft3/min", "ft3/d", "gal[UK]/h", "gal[UK]/s", "gal[US]/h", "gal[US]/min", "L/h", "L/min", "L/s"})
             cb.Value = currentset.spmp_volumetricFlow
             .Add(New Object() {DWSIM.App.GetLocalString("Vazovolumtrica")})
             .Item(.Count - 1).Cells(1) = cb

@@ -42,7 +42,7 @@ Module Extensions
     <System.Runtime.CompilerServices.Extension()> _
     Public Function GetUnits(control As System.Windows.Forms.GridItem) As String
         If control.Value.ToString().Split(" ").Length > 1 Then
-            Return control.Value.ToString().Split(" ")(1)
+            Return control.Value.ToString.Substring(control.Value.ToString.IndexOf(" "c) + 1, control.Value.ToString.Length - control.Value.ToString.IndexOf(" "c) - 1)
         Else
             Return ""
         End If
