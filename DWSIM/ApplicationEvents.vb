@@ -19,29 +19,29 @@ Namespace My
         Public _HelpManager As System.Resources.ResourceManager
         Public _PropertyNameManager As System.Resources.ResourceManager
         Public _CultureInfo As System.Globalization.CultureInfo
-        Public CalculatorStopRequested As Boolean = False
-        Public MasterCalculatorStopRequested As Boolean = False
-        Public CommandLineMode As Boolean = False
+        Public Property CalculatorStopRequested As Boolean = False
+        Public Property MasterCalculatorStopRequested As Boolean = False
+        Public Property CommandLineMode As Boolean = False
 
-        Public MainThreadId As Integer
-        Public CalculatorBusy As Boolean = False
+        Public Property MainThreadId As Integer
+        Public Property CalculatorBusy As Boolean = False
 
         Public UtilityPlugins As Dictionary(Of String, Interfaces.IUtilityPlugin)
 
-        Public IsRunningParallelTasks As Boolean = False
-        Public TaskCancellationTokenSource As New Threading.CancellationTokenSource
+        Public Property IsRunningParallelTasks As Boolean = False
+        Public Property TaskCancellationTokenSource As New Threading.CancellationTokenSource
 
-        Public AppTaskScheduler As Tasks.TaskScheduler = Tasks.TaskScheduler.Default
+        Public Property AppTaskScheduler As Tasks.TaskScheduler = Tasks.TaskScheduler.Default
 
-        Public PushUndoRedoAction As Boolean = True
+        Public Property PushUndoRedoAction As Boolean = True
 
-        Public ActiveSimulation As FormFlowsheet
-        Public CAPEOPENMode As Boolean = False
-        Public gpu As Cudafy.Host.GPGPU
-        Public gpumod As CudafyModule
-        Public prevlang As Integer = 0 '0 = CUDA, 1 = OpenCL
+        Public Property ActiveSimulation As FormFlowsheet
+        Public Property CAPEOPENMode As Boolean = False
+        Public Property gpu As Cudafy.Host.GPGPU
+        Public Property gpumod As CudafyModule
+        Public Property prevlang As Integer = 0 '0 = CUDA, 1 = OpenCL
 
-        Public UserUnitSystems As Dictionary(Of String, DWSIM.SistemasDeUnidades.Unidades)
+        Public Property UserUnitSystems As Dictionary(Of String, DWSIM.SistemasDeUnidades.Unidades)
 
         Private Sub MyApplication_Shutdown(sender As Object, e As EventArgs) Handles Me.Shutdown
 

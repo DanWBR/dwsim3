@@ -125,7 +125,7 @@ Imports System.Threading
         scope = engine.CreateScope()
         scope.SetVariable("Plugins", My.Application.UtilityPlugins)
         scope.SetVariable("Flowsheet", fsheet)
-        scope.SetVariable("Application", My.Application)
+        scope.SetVariable("AbortScript", My.Application.CalculatorStopRequested)
         scope.SetVariable("Spreadsheet", fsheet.FormSpreadsheet)
         Dim Solver As New DWSIM.Flowsheet.FlowsheetSolver
         scope.SetVariable("Solver", Solver)

@@ -205,7 +205,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                     scope.SetVariable("Spreadsheet", FlowSheet.FormSpreadsheet)
                     scope.SetVariable("Plugins", My.Application.UtilityPlugins)
                     scope.SetVariable("Me", Me)
-                    scope.SetVariable("Application", My.Application)
+                    scope.SetVariable("AbortScript", My.Application.CalculatorStopRequested)
                     For Each variable In InputVariables
                         scope.SetVariable(variable.Key, variable.Value)
                     Next
