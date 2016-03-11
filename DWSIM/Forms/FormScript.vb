@@ -16,6 +16,8 @@ Imports System.Threading
     Public fc As FormFlowsheet
     Private reader As Jolt.XmlDocCommentReader
 
+    Public Shared Property AbortScript As Boolean
+
     Private Sub FormVBScript_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Me.Load
 
         If Not DWSIM.App.IsRunningOnMono Then reader = New Jolt.XmlDocCommentReader(My.Application.Info.DirectoryPath & Path.DirectorySeparatorChar & "DWSIM.xml")
@@ -88,7 +90,7 @@ Imports System.Threading
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripButton1.Click
 
-        My.Application.CalculatorStopRequested = False
+        AbortScript = False
         If Not Me.TabStripScripts.SelectedItem Is Nothing Then
             If DWSIM.App.IsRunningOnMono Then
                 RunScript(DirectCast(Me.TabStripScripts.SelectedItem.Controls(0).Controls(0), ScriptEditorControlMono).txtScript.Text, fc)
@@ -125,7 +127,7 @@ Imports System.Threading
         scope = engine.CreateScope()
         scope.SetVariable("Plugins", My.Application.UtilityPlugins)
         scope.SetVariable("Flowsheet", fsheet)
-        scope.SetVariable("AbortScript", My.Application.CalculatorStopRequested)
+        scope.SetVariable("AbortScript", AbortScript)
         scope.SetVariable("Spreadsheet", fsheet.FormSpreadsheet)
         Dim Solver As New DWSIM.Flowsheet.FlowsheetSolver
         scope.SetVariable("Solver", Solver)
@@ -644,10 +646,11 @@ Imports System.Threading
         End If
     End Sub
 
-    Private Sub ToolStripButton2_Click_2(sender As Object, e As EventArgs)
-        My.Application.CalculatorStopRequested = True
+    Private Sub ToolStripButton2_Click_2(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
+        AbortScript = True
         Application.DoEvents()
     End Sub
+
 End Class
 
 Public Class DataGridViewTextStream
