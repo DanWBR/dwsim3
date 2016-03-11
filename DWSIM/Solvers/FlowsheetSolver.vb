@@ -1869,7 +1869,7 @@ Namespace DWSIM.Flowsheet
                                 maintask.Start(My.Application.AppTaskScheduler)
                                 If form.MasterFlowsheet Is Nothing Then
                                     While Not (Date.Now - d1).TotalMilliseconds >= My.Settings.SolverTimeoutSeconds * 1000
-                                        maintask.Wait(200, ct)
+                                        maintask.Wait(500, ct)
                                         Application.DoEvents()
                                         If maintask.Status = TaskStatus.RanToCompletion Then Exit While
                                     End While
