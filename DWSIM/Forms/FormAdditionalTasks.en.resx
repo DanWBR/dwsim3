@@ -160,19 +160,19 @@ IPOPT: solver for nonlinear equations (Windows only)</value>
     <value>15, 361</value>
   </data>
   <data name="cbtask3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>214, 17</value>
+    <value>256, 17</value>
   </data>
   <data name="cbtask3.Text" xml:space="preserve">
     <value>Copy platform-specific configuration files</value>
   </data>
   <data name="cbtask2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>232, 17</value>
+    <value>279, 17</value>
   </data>
   <data name="cbtask2.Text" xml:space="preserve">
     <value>Copy IPOPT libraries to '/usr/lib' (Linux only)</value>
   </data>
   <data name="cbtask1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>167, 17</value>
+    <value>199, 17</value>
   </data>
   <data name="cbtask1.Text" xml:space="preserve">
     <value>Copy platform-specific libraries</value>

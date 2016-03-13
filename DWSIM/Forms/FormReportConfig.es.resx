@@ -131,28 +131,28 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="CheckBox8.Size" type="System.Drawing.Size, System.Drawing">
-    <value>222, 17</value>
+    <value>207, 17</value>
   </data>
   <data name="CheckBox8.Text" xml:space="preserve">
-    <value>Incluir las propiedades de la Fase Acuosa</value>
+    <value>Incluir Propiedades de la Fase Acuosa</value>
   </data>
   <data name="CheckBox7.Size" type="System.Drawing.Size, System.Drawing">
-    <value>220, 17</value>
+    <value>205, 17</value>
   </data>
   <data name="CheckBox7.Text" xml:space="preserve">
-    <value>Incluir las propiedades de Fase Líquida 2</value>
+    <value>Incluir Propiedades de Fase Líquida 2</value>
   </data>
   <data name="CheckBox6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>220, 17</value>
+    <value>205, 17</value>
   </data>
   <data name="CheckBox6.Text" xml:space="preserve">
-    <value>Incluir las propiedades de Fase Líquida 1</value>
+    <value>Incluir Propiedades de Fase Líquida 1</value>
   </data>
   <data name="CheckBox5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>247, 17</value>
+    <value>232, 17</value>
   </data>
   <data name="CheckBox5.Text" xml:space="preserve">
-    <value>Incluir las propiedades de fase líquida (Mezcla)</value>
+    <value>Incluir Propiedades de fase líquida (Mezcla)</value>
   </data>
   <data name="CheckBox4.Size" type="System.Drawing.Size, System.Drawing">
     <value>188, 17</value>
@@ -167,7 +167,7 @@
     <value>Incluir Propiedades de Mezcla</value>
   </data>
   <data name="CheckBox2.Text" xml:space="preserve">
-    <value>Incluir composición molar</value>
+    <value>Incluir Composición Molar</value>
   </data>
   <data name="CheckBox1.Text" xml:space="preserve">
     <value>Incluir condiciones</value>

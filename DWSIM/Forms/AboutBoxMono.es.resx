@@ -117,4 +117,132 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>455, 13</value>
+  </data>
+  <data name="Label1.Text" xml:space="preserve">
+    <value>DWSIM - Optimización, Modelado y Simulación de Procesos de Código Abierto.</value>
+  </data>
+  <data name="FaTabStripItem1.Title" xml:space="preserve">
+    <value>Información General</value>
+  </data>
+  <data name="FaTabStripItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>735, 397</value>
+  </data>
+  <data name="FaTabStripItem2.Title" xml:space="preserve">
+    <value>Componentes Externos</value>
+  </data>
+  <data name="FaTabStripItem3.Title" xml:space="preserve">
+    <value>Ensambles Cargados</value>
+  </data>
+  <data name="FaTabStripItem4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>735, 397</value>
+  </data>
+  <data name="FaTabStripItem4.Title" xml:space="preserve">
+    <value>Detalles de Ensamble</value>
+  </data>
+  <data name="Label13.Size" type="System.Drawing.Size, System.Drawing">
+    <value>120, 13</value>
+  </data>
+  <data name="Label13.Text" xml:space="preserve">
+    <value>Extensiones CPU SIMD:</value>
+  </data>
+  <data name="Label12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>69, 13</value>
+  </data>
+  <data name="Label12.Text" xml:space="preserve">
+    <value>Info de CPU:</value>
+  </data>
+  <data name="Label10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>86, 13</value>
+  </data>
+  <data name="Label10.Text" xml:space="preserve">
+    <value>Desarrolladores:</value>
+  </data>
+  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>61, 13</value>
+  </data>
+  <data name="Label2.Text" xml:space="preserve">
+    <value>Sitios Web:</value>
+  </data>
+  <data name="Label3.Text" xml:space="preserve">
+    <value>Diseño Splash Screen:</value>
+  </data>
+  <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>69, 13</value>
+  </data>
+  <data name="Label5.Text" xml:space="preserve">
+    <value>Traductores:</value>
+  </data>
+  <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>68, 13</value>
+  </data>
+  <data name="Label4.Text" xml:space="preserve">
+    <value>Info de CLR:</value>
+  </data>
+  <data name="LabelLicense.Size" type="System.Drawing.Size, System.Drawing">
+    <value>455, 13</value>
+  </data>
+  <data name="LabelLicense.Text" xml:space="preserve">
+    <value>DWSIM se distribuye bajo los términos de la Licencia Pública General de GNU (GPL) versión 3.</value>
+  </data>
+  <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>63, 13</value>
+  </data>
+  <data name="Label7.Text" xml:space="preserve">
+    <value>Info de SO:</value>
+  </data>
+  <data name="DataGridView1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>735, 397</value>
+  </data>
+  <data name="Column1.HeaderText" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Column1.Width" type="System.Int32, mscorlib">
+    <value>69</value>
+  </data>
+  <data name="Column2.HeaderText" xml:space="preserve">
+    <value>Versión</value>
+  </data>
+  <data name="Column3.HeaderText" xml:space="preserve">
+    <value>Año</value>
+  </data>
+  <data name="Column3.Width" type="System.Int32, mscorlib">
+    <value>51</value>
+  </data>
+  <data name="Column5.HeaderText" xml:space="preserve">
+    <value>Sitio Web</value>
+  </data>
+  <data name="Column6.HeaderText" xml:space="preserve">
+    <value>Nombre de Licencia</value>
+  </data>
+  <data name="Column6.Width" type="System.Int32, mscorlib">
+    <value>114</value>
+  </data>
+  <data name="Column7.HeaderText" xml:space="preserve">
+    <value>Texto de Licencia</value>
+  </data>
+  <data name="Column7.Width" type="System.Int32, mscorlib">
+    <value>105</value>
+  </data>
+  <data name="colAssemblyName.Text" xml:space="preserve">
+    <value>Ensamble</value>
+  </data>
+  <data name="colAssemblyVersion.Text" xml:space="preserve">
+    <value>Versión</value>
+  </data>
+  <data name="colAssemblyBuilt.Text" xml:space="preserve">
+    <value>Fecha de Compilación</value>
+  </data>
+  <data name="AssemblyDetailsListView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>735, 376</value>
+  </data>
+  <data name="AssemblyNamesComboBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>735, 21</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Acerca de DWSIM</value>
+  </data>
 </root>

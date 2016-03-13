@@ -22,46 +22,32 @@ Partial Class SplashScreen
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(SplashScreen))
         Me.Version = New System.Windows.Forms.Label()
         Me.LabelLicense = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'Version
         '
-        Me.Version.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.Version.AutoSize = True
+        resources.ApplyResources(Me.Version, "Version")
         Me.Version.BackColor = System.Drawing.Color.Transparent
-        Me.Version.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Version.ForeColor = System.Drawing.Color.White
-        Me.Version.Location = New System.Drawing.Point(164, 393)
         Me.Version.Name = "Version"
-        Me.Version.Size = New System.Drawing.Size(98, 15)
-        Me.Version.TabIndex = 3
-        Me.Version.Text = "Versão {0}.{1:00}"
         '
         'LabelLicense
         '
-        Me.LabelLicense.Anchor = System.Windows.Forms.AnchorStyles.None
+        resources.ApplyResources(Me.LabelLicense, "LabelLicense")
         Me.LabelLicense.BackColor = System.Drawing.Color.Transparent
         Me.LabelLicense.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.LabelLicense.Font = New System.Drawing.Font("Arial", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelLicense.ForeColor = System.Drawing.Color.White
-        Me.LabelLicense.Location = New System.Drawing.Point(43, 450)
         Me.LabelLicense.Name = "LabelLicense"
-        Me.LabelLicense.Size = New System.Drawing.Size(595, 20)
-        Me.LabelLicense.TabIndex = 6
-        Me.LabelLicense.Text = "This software is released under the terms of the GNU General Public License (GPL)" & _
-    " version 3."
-        Me.LabelLicense.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'SplashScreen
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.BackgroundImage = Global.DWSIM.My.Resources.Resources.dwsim_3_bg
-        Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(685, 481)
         Me.ControlBox = False
         Me.Controls.Add(Me.LabelLicense)
         Me.Controls.Add(Me.Version)
@@ -72,7 +58,6 @@ Partial Class SplashScreen
         Me.Name = "SplashScreen"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.TransparencyKey = System.Drawing.Color.Red
         Me.ResumeLayout(False)
         Me.PerformLayout()

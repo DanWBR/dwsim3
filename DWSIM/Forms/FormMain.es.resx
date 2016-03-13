@@ -134,10 +134,16 @@
     <value>&amp;Herramientas</value>
   </data>
   <data name="WindowsMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>67, 20</value>
+    <value>66, 20</value>
   </data>
   <data name="WindowsMenu.Text" xml:space="preserve">
     <value>&amp;Ventanas</value>
+  </data>
+  <data name="VerToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 20</value>
+  </data>
+  <data name="VerToolStripMenuItem1.Text" xml:space="preserve">
+    <value>&amp;Ver</value>
   </data>
   <data name="HelpToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 20</value>
@@ -221,19 +227,22 @@
     <value>&amp;Salir de DWSIM</value>
   </data>
   <data name="PreferênciasDoDWSIMToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>193, 22</value>
+    <value>231, 22</value>
   </data>
   <data name="PreferênciasDoDWSIMToolStripMenuItem.Text" xml:space="preserve">
     <value>Configuración General</value>
   </data>
   <data name="DatabaseManagerToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>209, 22</value>
+    <value>263, 22</value>
   </data>
   <data name="DatabaseManagerToolStripMenuItem.Text" xml:space="preserve">
     <value>Gestor de Base de Datos</value>
   </data>
   <data name="tsmiAdditionalConfig.Size" type="System.Drawing.Size, System.Drawing">
-    <value>209, 22</value>
+    <value>263, 22</value>
+  </data>
+  <data name="tsmiAdditionalConfig.Text" xml:space="preserve">
+    <value>Configuraciones Adicionales</value>
   </data>
   <data name="CascadeToolStripMenuItem.Text" xml:space="preserve">
     <value>En &amp;Cascada</value>
@@ -252,6 +261,18 @@
   </data>
   <data name="DocumentaçãoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>196, 22</value>
+  </data>
+  <data name="DocumentaçãoToolStripMenuItem.Text" xml:space="preserve">
+    <value>Documentación</value>
+  </data>
+  <data name="ManualTécnicoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>160, 22</value>
+  </data>
+  <data name="GuiaDoUsuárioToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>160, 22</value>
+  </data>
+  <data name="GuiaDoUsuárioToolStripMenuItem.Text" xml:space="preserve">
+    <value>Guia del Usuario</value>
   </data>
   <data name="toolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
     <value>193, 6</value>
@@ -284,7 +305,7 @@
 </value>
   </data>
   <data name="DownloadsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>353, 22</value>
+    <value>352, 22</value>
   </data>
   <data name="DownloadsToolStripMenuItem.Text" xml:space="preserve">
     <value>Descargas</value>
@@ -311,7 +332,7 @@
 </value>
   </data>
   <data name="WikiToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>353, 22</value>
+    <value>352, 22</value>
   </data>
   <data name="FórumToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -335,7 +356,7 @@
 </value>
   </data>
   <data name="FórumToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>353, 22</value>
+    <value>352, 22</value>
   </data>
   <data name="FórumToolStripMenuItem.Text" xml:space="preserve">
     <value>Foro</value>
@@ -362,7 +383,7 @@
 </value>
   </data>
   <data name="RastreamentoDeBugsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>353, 22</value>
+    <value>352, 22</value>
   </data>
   <data name="RastreamentoDeBugsToolStripMenuItem.Text" xml:space="preserve">
     <value>Seguimiento de errores/Peticiones y Soporte Técnico</value>
@@ -414,12 +435,6 @@
   </data>
   <data name="ToolStripButton3.Text" xml:space="preserve">
     <value>Agrupar en cascada</value>
-  </data>
-  <data name="ToolStripButton5.Text" xml:space="preserve">
-    <value>Agrupar horizontalmente</value>
-  </data>
-  <data name="ToolStripButton4.Text" xml:space="preserve">
-    <value>Agrupar verticalmente</value>
   </data>
   <data name="ToolStripButton6.Text" xml:space="preserve">
     <value>Mostrar Ayuda Contextual</value>

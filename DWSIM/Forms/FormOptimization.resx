@@ -571,7 +571,7 @@
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>WeifenLuo.WinFormsUI.Docking.DockContent, WeifenLuo.WinFormsUI.Docking, Version=2.7.0.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481</value>
+    <value>WeifenLuo.WinFormsUI.Docking.DockContent, WeifenLuo.WinFormsUI.Docking, Version=2.9.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;Column7.Name" xml:space="preserve">
     <value>Column7</value>

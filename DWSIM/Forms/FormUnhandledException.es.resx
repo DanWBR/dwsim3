@@ -117,28 +117,93 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>495, 13</value>
+  </data>
   <data name="Label1.Text" xml:space="preserve">
-    <value>DWSIM produjo un error.</value>
-  </data>
-  <data name="Label2.Text" xml:space="preserve">
-    <value>
-En la mayoría de los casos, puede seguir ejecutando DWSIM normalmente. Si elige cerrar la aplicación, puede guardar simulaciones abiertas.
-
-Si el error es irrecuperable, haga clic en el botón 'Cerrar'. No se pueden guardar simulaciones abiertas. En este caso, marque la casilla 'Reiniciar DWSIM' para reiniciar el programa.</value>
-  </data>
-  <data name="KryptonButton1.Text" xml:space="preserve">
-    <value>Guardar y Salir</value>
+    <value>DWSIM generó un error (excepción) inesperado. Haga clic en "Detalles" para obtener más información.</value>
   </data>
   <data name="KryptonButton4.Text" xml:space="preserve">
     <value>Cerrar</value>
   </data>
-  <data name="KryptonCheckBox1.Text" xml:space="preserve">
-    <value>Reiniciar DWSIM</value>
+  <data name="TabPage1.Text" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="TabPage2.Text" xml:space="preserve">
+    <value>Detalles</value>
+  </data>
+  <data name="LabelWithDivider2.Text" xml:space="preserve">
+    <value>Acciones</value>
   </data>
   <data name="Button1.Text" xml:space="preserve">
     <value>Detalles</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="Button3.Text" xml:space="preserve">
+    <value>Actualizaciones</value>
+  </data>
+  <data name="Label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>141, 275</value>
+  </data>
+  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>674, 39</value>
+  </data>
+  <data name="Label2.Text" xml:space="preserve">
+    <value>En la mayoría de los casos, puede seguir ejecutando DWSIM normalmente. Si elige cerrar la aplicación, puede guardar simulaciones abiertas.
+Si el error es irrecuperable, haga clic en el botón 'Cerrar'. 
+No se pueden guardar simulaciones abiertas. En este caso, marque la casilla 'Reiniciar DWSIM' para reiniciar el programa.</value>
+  </data>
+  <data name="Button5.Text" xml:space="preserve">
+    <value>Buscar en Foros</value>
+  </data>
+  <data name="LabelWithDivider3.Text" xml:space="preserve">
+    <value>Soporte Adicional</value>
+  </data>
+  <data name="Button6.Text" xml:space="preserve">
+    <value>Buscar Wiki</value>
+  </data>
+  <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>354, 13</value>
+  </data>
+  <data name="Label3.Text" xml:space="preserve">
+    <value>Forzar el cierre de DWSIM. Se perderán todos los cambios no guardados.</value>
+  </data>
+  <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>92, 13</value>
+  </data>
+  <data name="Label4.Text" xml:space="preserve">
+    <value>Reiniciar DWSIM.</value>
+  </data>
+  <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>271, 13</value>
+  </data>
+  <data name="Label5.Text" xml:space="preserve">
+    <value>Compruebe el servidor de actualizaciones para DWSIM.</value>
+  </data>
+  <data name="Label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>315, 13</value>
+  </data>
+  <data name="Label6.Text" xml:space="preserve">
+    <value>Buscar información sobre el error en los foros de soporte DWSIM.</value>
+  </data>
+  <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>326, 13</value>
+  </data>
+  <data name="Label7.Text" xml:space="preserve">
+    <value>Buscar información sobre el error en la base de conocimientos Wiki.</value>
+  </data>
+  <data name="Label8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>524, 13</value>
+  </data>
+  <data name="Label8.Text" xml:space="preserve">
+    <value>Enviar un correo a los desarrolladores. Por favor, incluya información adicional que ayude a reproducir el error.</value>
+  </data>
+  <data name="Label9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>347, 13</value>
+  </data>
+  <data name="Label9.Text" xml:space="preserve">
+    <value>Ver la línea de código donde se produjo el error en el repositorio GitHub.</value>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAEAMDAAAAEAGACoHAAAFgAAACgAAAAwAAAAYAAAAAEAGAAAAAAAAAAAAEgAAABIAAAAAAAAAAAA

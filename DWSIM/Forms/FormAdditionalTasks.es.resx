@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,97 +117,64 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Version.Text" xml:space="preserve">
-    <value>Versão {0}.{1:00}</value>
+  <data name="Label1.Text" xml:space="preserve">
+    <value>Para que funcione correctamente, DWSIM necesita realizar algunas copias de archivos específicos para el sistema operativo y/o entorno actual. Seleccione a continuación las tareas que desea realizar y haga clic en "Ejecutar tarea".</value>
   </data>
-  <data name="&gt;&gt;LabelLicense.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Button1.Text" xml:space="preserve">
+    <value>Ejecutar Tareas</value>
+  </data>
+  <data name="Label8.Text" xml:space="preserve">
+    <value>Copia archivos de configuración específicos al directorio raiz de DWSIM, con instrucciones sobre donde encontrar las bibliotecas específicas de la plataforma.</value>
+  </data>
+  <data name="Label7.Text" xml:space="preserve">
+    <value>Copiar la biblioteca IPOPT y otras bibliotecas auxiliares para las bibliotecas del sistema de directorio por defecto, normalmente '/usr/lib'. Se requiere privilegios de administrador (sudo). El comando se ejecutará en la ventana de terminal utilizado para iniciar DWSIM y esperará la contraseña del usuario. 
+
+NOTA: Esta biblioteca de IPOPT es precompilada y puede no funcionar con su distribución Linux. Si IPOPT falla, debe compilarlo e instalarlo manualmente. Más información http://www.coin-or.org/Ipopt/documentation/node14.html</value>
+  </data>
+  <data name="Label6.Text" xml:space="preserve">
+    <value>Copias versiones específicas de las bibliotecas a la carpeta raíz de DWSIM:
+lpsolve55: biblioteca con métodos para la resolución de sistemas lineales 
+PC_SAFT_PROP: métodos para el Paquete de Propiedades (PP) 'PC-SAFT' 
+fprops_ascend: métodos para el PP 'FPROPS' 
+CoolProp: métodos para el PP 'CoolProp' (excepto Linux 32 bits) 
+PetAz: Método de carga cálculo de caida de presión en tuberías Petalas-Aziz (Windows de 32 bits) 
+IPOPT: solver de ecuaciones no lineales (sólo Windows)</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
+  <data name="cbtask3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>390, 17</value>
   </data>
-  <data name="Version.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Arial, 9pt</value>
+  <data name="cbtask3.Text" xml:space="preserve">
+    <value>Copiar Archivos de configuración específicos para la plataforma</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Version.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+  <data name="cbtask2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>359, 17</value>
   </data>
-  <data name="Version.Size" type="System.Drawing.Size, System.Drawing">
-    <value>98, 15</value>
+  <data name="cbtask2.Text" xml:space="preserve">
+    <value>Copiar Bibliotecas del paquete IPOPT al directorio'/usr/lib'</value>
   </data>
-  <data name="&gt;&gt;Version.Name" xml:space="preserve">
-    <value>Version</value>
+  <data name="cbtask1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>304, 17</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>SplashScreen</value>
+  <data name="cbtask1.Text" xml:space="preserve">
+    <value>Copiar Bibliotecas específicas para la plataforma</value>
   </data>
-  <data name="&gt;&gt;Version.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="LabelWithDivider12.Text" xml:space="preserve">
+    <value>Tareas</value>
   </data>
-  <data name="LabelLicense.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
+  <data name="Label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>87, 13</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="$this.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
+  <data name="Label3.Text" xml:space="preserve">
+    <value>Versión/Entorno:</value>
   </data>
-  <data name="&gt;&gt;LabelLicense.Name" xml:space="preserve">
-    <value>LabelLicense</value>
+  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>151, 13</value>
   </data>
-  <data name="LabelLicense.Text" xml:space="preserve">
-    <value>This software is released under the terms of the GNU General Public License (GPL) version 3.</value>
+  <data name="Label2.Text" xml:space="preserve">
+    <value>Sistema Operativo/Plataforma:</value>
   </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>685, 481</value>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Ejecutar Tareas Adicionales</value>
   </data>
-  <data name="LabelLicense.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>None</value>
-  </data>
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterScreen</value>
-  </data>
-  <data name="&gt;&gt;Version.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="LabelLicense.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="Version.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Version.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;LabelLicense.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;LabelLicense.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="Version.Location" type="System.Drawing.Point, System.Drawing">
-    <value>164, 393</value>
-  </data>
-  <data name="LabelLicense.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Arial, 9pt</value>
-  </data>
-  <data name="Version.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>None</value>
-  </data>
-  <data name="LabelLicense.Location" type="System.Drawing.Point, System.Drawing">
-    <value>43, 450</value>
-  </data>
-  <data name="LabelLicense.Size" type="System.Drawing.Size, System.Drawing">
-    <value>595, 20</value>
-  </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>es</value>
-  </metadata>
 </root>

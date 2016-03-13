@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="FaTabStripItem4.Title" xml:space="preserve">
-    <value>Inclusiones</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="OpenToolStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -208,7 +205,7 @@
 </value>
   </data>
   <data name="CopyToolStripButton.Text" xml:space="preserve">
-    <value>Copia</value>
+    <value>Copiar</value>
   </data>
   <data name="PasteToolStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -230,10 +227,10 @@
     <value>Pegar</value>
   </data>
   <data name="ToolStripButton2.Text" xml:space="preserve">
-    <value>Seleccione los archivos que incluyen</value>
+    <value>Incluir Archivo</value>
   </data>
   <data name="ToolStripButton3.Text" xml:space="preserve">
-    <value>Eliminar la selección incluye archivo</value>
+    <value>Eliminar Archivos Seleccionados</value>
   </data>
   <data name="ToolStripButton4.Text" xml:space="preserve">
     <value>Aumentar la opacidad</value>
@@ -241,8 +238,29 @@
   <data name="ToolStripButton5.Text" xml:space="preserve">
     <value>Reducir la opacidad</value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Editor de Script</value>
+  <data name="btnDebug.Text" xml:space="preserve">
+    <value>Ejecutar Script (F5)</value>
+  </data>
+  <data name="HelpToolStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIVSURBVDhPtVJNaxNRFM1PyE+Yn1AUXLjK0uWgDWQZwUUX
+        KsGFBEEcCkIwqBEpGiydsSo2kupsasdo7Yi2toh0sFZjG5JpiZo20/TpVOmH5njvm8BYahEXHji8+968
+        c+55l4n8F0zM+rhVWkHmdg29A/PoK1Yw8uIjOp/3xpvqBgrjLeilZbjNLXxZ34bwt6jexMVCGRndQenl
+        0p+NWHzPXoP3rQ3bAbQhQM0E5Np2BKprbZzrm8TIs8puE+68+r0NwwZiacCwALEBCVcAqet8JlAjk1PZ
+        JzsNJt6u4+FMS3ZmMV9mmFNAMhesbBZLC6oFdOsd8oVXocmdx018Ej9k1FgqiJ0zgS6qlR6BVI4iEFRN
+        IJlxMF/1cfTMcGiQvbskB6ZqgairJ6BCTJKYu9tlAUW1oSRsNDwfB+JXQ4PzN6s07W0ZPxDS5aSgJEFn
+        06Y9CaOqSauJRvMr9qmXQ4P8/RoWvU16eyBUEq5kbigwiKoOMTBQ0zbKlTq6TxihwejkZ1iOJwfEwmiC
+        BQ49yaW50J7Fh0xJw3IxbM3hwo2x0ICRHZzFgveTunYERK5lgo5YMxx8WPFw5Li+U8wYm66jNz+Naov+
+        Beqiao58N5NrPluoryJO0QeKU7sNGKPPazh9aRzGo/eYmVvEMk270fTlmzl2N3XW9xL/jv7iaxw7+wAH
+        E9ew//AVxE8OItv/9O/Cf0ck8gud2vKswuxNZgAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="HelpToolStripButton.Text" xml:space="preserve">
+    <value>Ayuda</value>
+  </data>
+  <data name="APIHelptsbutton.Text" xml:space="preserve">
+    <value>Ayuda de API</value>
   </data>
   <data name="ofd1.Filter" xml:space="preserve">
     <value>Todos los archivos|*.*</value>
@@ -250,16 +268,22 @@
   <data name="ofd1.Title" xml:space="preserve">
     <value>Incluir Archivos de Script</value>
   </data>
+  <data name="sfd1.Filter" xml:space="preserve">
+    <value>Todos los archivos|*.*</value>
+  </data>
+  <data name="sfd1.Title" xml:space="preserve">
+    <value>Guardar Script</value>
+  </data>
   <data name="ofd2.Filter" xml:space="preserve">
     <value>Todos los archivos|*.*</value>
   </data>
   <data name="ofd2.Title" xml:space="preserve">
     <value>Abrir archivo Script</value>
   </data>
-  <data name="sfd1.Filter" xml:space="preserve">
-    <value>Todos los archivos|*.*</value>
+  <data name="FaTabStripItem4.Title" xml:space="preserve">
+    <value>Archivos Incluidos</value>
   </data>
-  <data name="sfd1.Title" xml:space="preserve">
-    <value>Guardar Script</value>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Editor de Script</value>
   </data>
 </root>

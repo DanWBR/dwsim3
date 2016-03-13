@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,97 +117,144 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Version.Text" xml:space="preserve">
-    <value>Versão {0}.{1:00}</value>
-  </data>
-  <data name="&gt;&gt;LabelLicense.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
+  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>455, 13</value>
   </data>
-  <data name="Version.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Arial, 9pt</value>
+  <data name="Label1.Text" xml:space="preserve">
+    <value>DWSIM - Optimización, Modelado y Simulación de Procesos de Código Abierto.</value>
+  </data>
+  <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>61, 13</value>
+  </data>
+  <data name="Label2.Text" xml:space="preserve">
+    <value>Sitios Web:</value>
+  </data>
+  <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>69, 13</value>
+  </data>
+  <data name="Label5.Text" xml:space="preserve">
+    <value>Traductores:</value>
+  </data>
+  <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>63, 13</value>
+  </data>
+  <data name="Label7.Text" xml:space="preserve">
+    <value>Info de SO:</value>
+  </data>
+  <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>68, 13</value>
+  </data>
+  <data name="Label4.Text" xml:space="preserve">
+    <value>Info de CLR:</value>
+  </data>
+  <data name="Label3.Text" xml:space="preserve">
+    <value>Diseño Splash Screen:</value>
+  </data>
+  <data name="Label10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>86, 13</value>
+  </data>
+  <data name="Label10.Text" xml:space="preserve">
+    <value>Desarrolladores:</value>
+  </data>
+  <data name="FaTabStripItem1.Title" xml:space="preserve">
+    <value>Información  General</value>
+  </data>
+  <data name="FaTabStripItem2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>795, 491</value>
+  </data>
+  <data name="FaTabStripItem2.Title" xml:space="preserve">
+    <value>Componentes Externos</value>
+  </data>
+  <data name="FaTabStripItem3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>795, 491</value>
+  </data>
+  <data name="FaTabStripItem3.Title" xml:space="preserve">
+    <value>Ensambles Cargados</value>
+  </data>
+  <data name="FaTabStripItem4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>795, 491</value>
+  </data>
+  <data name="FaTabStripItem4.Title" xml:space="preserve">
+    <value>Detalles de Ensamble</value>
+  </data>
+  <data name="Label14.Size" type="System.Drawing.Size, System.Drawing">
+    <value>67, 13</value>
+  </data>
+  <data name="Label14.Text" xml:space="preserve">
+    <value>Dispositivos:</value>
+  </data>
+  <data name="Label13.Size" type="System.Drawing.Size, System.Drawing">
+    <value>120, 13</value>
+  </data>
+  <data name="Label13.Text" xml:space="preserve">
+    <value>Extensiones CPU SIMD:</value>
+  </data>
+  <data name="Label12.Size" type="System.Drawing.Size, System.Drawing">
+    <value>69, 13</value>
+  </data>
+  <data name="Label12.Text" xml:space="preserve">
+    <value>Info de CPU:</value>
+  </data>
+  <data name="Label11.Size" type="System.Drawing.Size, System.Drawing">
+    <value>87, 13</value>
+  </data>
+  <data name="Label11.Text" xml:space="preserve">
+    <value>Uso de Memoria:</value>
+  </data>
+  <data name="DataGridView1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>795, 491</value>
+  </data>
+  <data name="AssemblyInfoListView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>795, 491</value>
+  </data>
+  <data name="colAssemblyName.Text" xml:space="preserve">
+    <value>Ensamble</value>
+  </data>
+  <data name="colAssemblyVersion.Text" xml:space="preserve">
+    <value>Versión</value>
+  </data>
+  <data name="colAssemblyBuilt.Text" xml:space="preserve">
+    <value>Fecha de Compilación</value>
+  </data>
+  <data name="AssemblyDetailsListView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>795, 470</value>
+  </data>
+  <data name="AssemblyNamesComboBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>795, 21</value>
+  </data>
+  <data name="Column1.HeaderText" xml:space="preserve">
+    <value>Nombre</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Version.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+  <data name="Column1.Width" type="System.Int32, mscorlib">
+    <value>69</value>
   </data>
-  <data name="Version.Size" type="System.Drawing.Size, System.Drawing">
-    <value>98, 15</value>
+  <data name="Column2.HeaderText" xml:space="preserve">
+    <value>Versión</value>
   </data>
-  <data name="&gt;&gt;Version.Name" xml:space="preserve">
-    <value>Version</value>
+  <data name="Column3.HeaderText" xml:space="preserve">
+    <value>Año</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>SplashScreen</value>
+  <data name="Column3.Width" type="System.Int32, mscorlib">
+    <value>51</value>
   </data>
-  <data name="&gt;&gt;Version.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Column5.HeaderText" xml:space="preserve">
+    <value>Sitio Web</value>
   </data>
-  <data name="LabelLicense.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
+  <data name="Column5.Width" type="System.Int32, mscorlib">
+    <value>77</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="$this.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Stretch</value>
+  <data name="Column6.HeaderText" xml:space="preserve">
+    <value>Nombre de Licencia</value>
   </data>
-  <data name="&gt;&gt;LabelLicense.Name" xml:space="preserve">
-    <value>LabelLicense</value>
+  <data name="Column6.Width" type="System.Int32, mscorlib">
+    <value>114</value>
   </data>
-  <data name="LabelLicense.Text" xml:space="preserve">
-    <value>This software is released under the terms of the GNU General Public License (GPL) version 3.</value>
+  <data name="Column7.HeaderText" xml:space="preserve">
+    <value>Texto de Licencia</value>
   </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>685, 481</value>
+  <data name="Column7.Width" type="System.Int32, mscorlib">
+    <value>105</value>
   </data>
-  <data name="LabelLicense.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>None</value>
-  </data>
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterScreen</value>
-  </data>
-  <data name="&gt;&gt;Version.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="LabelLicense.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="Version.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;Version.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;LabelLicense.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;LabelLicense.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="Version.Location" type="System.Drawing.Point, System.Drawing">
-    <value>164, 393</value>
-  </data>
-  <data name="LabelLicense.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Arial, 9pt</value>
-  </data>
-  <data name="Version.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>None</value>
-  </data>
-  <data name="LabelLicense.Location" type="System.Drawing.Point, System.Drawing">
-    <value>43, 450</value>
-  </data>
-  <data name="LabelLicense.Size" type="System.Drawing.Size, System.Drawing">
-    <value>595, 20</value>
-  </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>es</value>
-  </metadata>
 </root>

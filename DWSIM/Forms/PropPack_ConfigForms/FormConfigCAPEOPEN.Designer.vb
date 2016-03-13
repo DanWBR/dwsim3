@@ -215,7 +215,7 @@ Partial Class FormConfigCAPEOPEN
         Me.FaTabStrip1.AlwaysShowMenuGlyph = False
         Me.FaTabStrip1.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem1, Me.FaTabStripItem2, Me.FaTabStripItem3})
         Me.FaTabStrip1.Name = "FaTabStrip1"
-        Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem1
+        Me.FaTabStrip1.SelectedItem = Me.FaTabStripItem2
         '
         'FaTabStripItem1
         '
@@ -234,6 +234,7 @@ Partial Class FormConfigCAPEOPEN
         Me.FaTabStripItem2.Controls.Add(Me.Label4)
         Me.FaTabStripItem2.IsDrawn = True
         Me.FaTabStripItem2.Name = "FaTabStripItem2"
+        Me.FaTabStripItem2.Selected = True
         '
         'dgmap
         '
@@ -263,7 +264,6 @@ Partial Class FormConfigCAPEOPEN
         Me.FaTabStripItem3.Controls.Add(Me.Label5)
         Me.FaTabStripItem3.IsDrawn = True
         Me.FaTabStripItem3.Name = "FaTabStripItem3"
-        Me.FaTabStripItem3.Selected = True
         '
         'dgvph
         '

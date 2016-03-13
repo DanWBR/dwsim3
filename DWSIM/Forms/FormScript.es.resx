@@ -132,22 +132,6 @@
   <data name="NewToolStripButton.Text" xml:space="preserve">
     <value>&amp;Nuevo</value>
   </data>
-  <data name="SaveToolStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIySURBVDhPrZLfS5NRGMfff6H7boIuuq2pMZyL1eAt11CW
-        DcOKsB9vpFmaLtNExco0av6CbIVLJ61Wk3BSkT/AFCkRZSpZmrmiJQ41xSaCwdfznL15XEUX0Reem5f3
-        8znnec4j/Zc8fxYGla91CS3eRTx0z6OpMYS7jmnU1X6B/VYA18snUVoyjsKCt8jLHcH5c36ouCQR2NUJ
-        1Nas4G9ZXlmFKbULh1Kf8lJxSfI+WeCCyopv6q+/h+DQ/DJ2WV5Ao1FgPegRAveDOS4oLfmq/h6dn/DH
-        4AJizD4UXJrCAUuzEDgbZrjgou2DiohshIcnQtgme5GTPYbkJKcQ1N8OckHW2REVi+RXuM8fxGaDG4oy
-        ALPZIQQ11Z+5QDk1oKJ/hjv7P2FTfCMOH3mFxMQ6IbhROYWOdrCnBI4dfwPr0V4+bRoY9UzXppMjcDdS
-        rC8hy3YhuFI2gTYf2A4Aza4f7N2/o/zaLB8qDYx6zszwr8P7k1thNFYIweXCMXgeAfedq2xxwjClZUeV
-        Jd2GtDNFETiJwfs8MBjKhMCWN8pgoLoqzE8miH1GjE7G4PsZjE7OQsm9ij2mFg7rdrug1xcJAa2l4w7W
-        r00Cgk/n38S7wBwC04u4UGxHrMHF4CbEJtyDLj5fCDIzhljfSxzeavRgyw4Zj9t64GvvQ0d3P3pfD2Kv
-        2QqNvgFxDN6urYdWmyMElJMnevh60obRktA701PRtGlg1DOdSkXwzrisaMG/RZLWAE60OMW5fNhvAAAA
-        AElFTkSuQmCC
-</value>
-  </data>
   <data name="SaveToolStripButton.Text" xml:space="preserve">
     <value>Guardar</value>
   </data>
@@ -221,8 +205,26 @@
   <data name="PasteToolStripButton.Text" xml:space="preserve">
     <value>Pegar</value>
   </data>
+  <data name="btnUndo.Text" xml:space="preserve">
+    <value>Deshacer (Ctrl+Z)</value>
+  </data>
+  <data name="btnRedo.Text" xml:space="preserve">
+    <value>Rehacer (Ctrl+Y)</value>
+  </data>
+  <data name="btnComment.Text" xml:space="preserve">
+    <value>Comentar Líneas</value>
+  </data>
+  <data name="btnUncomment.Text" xml:space="preserve">
+    <value>Descomentar Líneas</value>
+  </data>
+  <data name="btnIdentRemove.Text" xml:space="preserve">
+    <value>Remover Indentación</value>
+  </data>
   <data name="ToolStripButton1.Text" xml:space="preserve">
     <value>Ejecutar Script</value>
+  </data>
+  <data name="ToolStripButton2.Text" xml:space="preserve">
+    <value>Interrumpir Script</value>
   </data>
   <data name="HelpToolStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -239,18 +241,36 @@
         E9ew//AVxE8OItv/9O/Cf0ck8gud2vKswuxNZgAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="HelpToolStripButton.Text" xml:space="preserve">
+    <value>Ayuda</value>
+  </data>
+  <data name="APIHelptsbutton.Text" xml:space="preserve">
+    <value>Ayuda de la API</value>
+  </data>
   <data name="ToolStripLabel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>66, 22</value>
   </data>
   <data name="ToolStripLabel1.Text" xml:space="preserve">
     <value>Renombrar</value>
   </data>
+  <data name="ofd1.Filter" xml:space="preserve">
+    <value>Todos los archivos|*.*</value>
+  </data>
+  <data name="ofd1.Title" xml:space="preserve">
+    <value>Incluir Archivos Script</value>
+  </data>
+  <data name="sfd1.Filter" xml:space="preserve">
+    <value>Todos los archivos|*.*</value>
+  </data>
+  <data name="sfd1.Title" xml:space="preserve">
+    <value>Guardar Script</value>
+  </data>
   <data name="imageList1.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABs
-        CQAAAk1TRnQBSQFMAgEBBQEAAcwBAQHMAQEBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        CQAAAk1TRnQBSQFMAgEBBQEAAdQBAQHUAQEBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAASADAAEBAQABCAYAAQgYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -293,8 +313,17 @@
         AcEC/wHvBP8B4wf/AfcF/ws=
 </value>
   </data>
+  <data name="ofd2.Filter" xml:space="preserve">
+    <value>Todos los archivos|*.*</value>
+  </data>
+  <data name="ofd2.Title" xml:space="preserve">
+    <value>Abrir Archivo Script</value>
+  </data>
   <data name="FaTabStripItem4.Title" xml:space="preserve">
     <value>Inclusiones</value>
+  </data>
+  <data name="DocumentToolStripMenuItem.Text" xml:space="preserve">
+    <value>Documento</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1742,32 +1771,5 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Gestor de Scripts</value>
-  </data>
-  <data name="HelpToolStripButton.Text" xml:space="preserve">
-    <value>Ayuda</value>
-  </data>
-  <data name="ofd1.Filter" xml:space="preserve">
-    <value>Todos los archivos|*.*</value>
-  </data>
-  <data name="ofd1.Title" xml:space="preserve">
-    <value>Incluir Archivos Script</value>
-  </data>
-  <data name="ofd2.Filter" xml:space="preserve">
-    <value>Todos los archivos|*.*</value>
-  </data>
-  <data name="ofd2.Title" xml:space="preserve">
-    <value>Abrir Archivo Script</value>
-  </data>
-  <data name="sfd1.Filter" xml:space="preserve">
-    <value>Todos los archivos|*.*</value>
-  </data>
-  <data name="sfd1.Title" xml:space="preserve">
-    <value>Guardar Script</value>
-  </data>
-  <data name="DocumentToolStripMenuItem.Text" xml:space="preserve">
-    <value>Documento</value>
-  </data>
-  <data name="btnUndo.Text" xml:space="preserve">
-    <value>Deshacer (Ctrl+Z)</value>
   </data>
 </root>

@@ -203,7 +203,7 @@
     <value>Asignación de Fases</value>
   </data>
   <data name="Label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>528, 13</value>
+    <value>510, 13</value>
   </data>
   <data name="Label4.Text" xml:space="preserve">
     <value>Configurar el mapeo de componente/compuesto de DWSIM para el Paquete de Propiedades CAPE-OPEN.</value>
@@ -215,7 +215,7 @@
     <value>Equivalente en el PP CAPE-OPEN</value>
   </data>
   <data name="Label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>439, 13</value>
+    <value>421, 13</value>
   </data>
   <data name="Label5.Text" xml:space="preserve">
     <value>Configurar el mapeo de fases de DWSIM para el Paquete de Propiedades CAPE-OPEN.</value>
@@ -224,7 +224,7 @@
     <value>ID</value>
   </data>
   <data name="col1.HeaderText" xml:space="preserve">
-    <value>Componente/compuesto (DWSIM)</value>
+    <value>Componente/Compuesto (DWSIM)</value>
   </data>
   <data name="col2.HeaderText" xml:space="preserve">
     <value>Equivalente en el PP CAPE-OPEN</value>

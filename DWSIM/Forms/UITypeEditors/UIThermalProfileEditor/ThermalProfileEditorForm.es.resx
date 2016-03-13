@@ -188,22 +188,22 @@
     <value>327, 19</value>
   </data>
   <data name="CheckBoxICTE.Text" xml:space="preserve">
-    <value>Incluir el coeficiente de transferencia de calor externa</value>
+    <value>Incluir el Coeficiente de Transferencia de Calor Externo</value>
   </data>
   <data name="CheckBoxICTI.Size" type="System.Drawing.Size, System.Drawing">
     <value>327, 19</value>
   </data>
   <data name="CheckBoxICTI.Text" xml:space="preserve">
-    <value>Incluir el coeficiente de transferencia de calor interna</value>
+    <value>Incluir el Coeficiente de Transferencia de Calor Interno</value>
   </data>
   <data name="CheckBoxII.Text" xml:space="preserve">
-    <value>Incluir aislamiento</value>
+    <value>Incluir Aislamiento</value>
   </data>
   <data name="CheckBoxIPT.Size" type="System.Drawing.Size, System.Drawing">
     <value>264, 19</value>
   </data>
   <data name="CheckBoxIPT.Text" xml:space="preserve">
-    <value>Incluir las paredes de tuberías</value>
+    <value>Incluir las Paredes de Tuberías</value>
   </data>
   <data name="Label38.Size" type="System.Drawing.Size, System.Drawing">
     <value>101, 13</value>

@@ -246,6 +246,6 @@
 </value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Salida de Consola</value>
+    <value>Consola de Salida</value>
   </data>
 </root>
