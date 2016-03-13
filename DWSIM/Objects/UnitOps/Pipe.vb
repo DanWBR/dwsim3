@@ -266,7 +266,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             Dim Tin, Pin, Tout, Pout, Tout_ant, Pout_ant, Tout_ant2, Pout_ant2, Toutj, Text, Win, Qin, Qvin, Qlin, TinP, PinP, _
                 rho_l, rho_v, Cp_l, Cp_v, Cp_m, K_l, K_v, eta_l, eta_v, tens, Hin, Hout, HinP, _
-                fT, fT_ant, fT_ant2, fP, fP_ant, fP_ant2, w_v, w_l, w, z, z2, dzdT, hins, houts As Double
+                fT, fT_ant, fT_ant2, fP, fP_ant, fP_ant2, w_v, w_l, w, z, z2, dzdT As Double
             Dim cntP, cntT As Integer
 
             If Me.Specification = specmode.OutletTemperature Then
@@ -343,8 +343,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         With oms
 
                             w = .Fases(0).SPMProperties.massflow.GetValueOrDefault
-                            hins = .Fases(0).SPMProperties.enthalpy.GetValueOrDefault
-
+                            Tin = .Fases(0).SPMProperties.temperature.GetValueOrDefault
                             Qlin = .Fases(3).SPMProperties.volumetric_flow.GetValueOrDefault + .Fases(4).SPMProperties.volumetric_flow.GetValueOrDefault + .Fases(5).SPMProperties.volumetric_flow.GetValueOrDefault + .Fases(6).SPMProperties.volumetric_flow.GetValueOrDefault
                             rho_l = .Fases(1).SPMProperties.density.GetValueOrDefault
                             If Double.IsNaN(rho_l) Then rho_l = 0.0#
@@ -469,7 +468,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                                 .HTC_external = resultU(4)
                                             End With
                                         End If
-                                        If U <> 0 Then
+                                        If U <> 0.0# Then
                                             DQ = (Tout - Tin) / Math.Log((Text - Tin) / (Text - Tout)) * U / 1000 * A
                                             If Double.IsNaN(DQ) Then
                                                 DQ = 0.0#
@@ -510,6 +509,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                             Loop Until Math.Abs(fT) < Me.TolT
 
+                            Hout = Hin + DQ / Win
+
                             If IncludeJTEffect Then
 
                                 Cp_m = (w_l * Cp_l + w_v * Cp_v) / w
@@ -530,9 +531,8 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                     eta = 1 / (Cp_m * w) * (w_v / rho_v * (-Tin / z * dzdT))
                                 End If
 
-                                Dim dh As Double = Cp_m * (Tout - Tin) - eta * Cp_m * (Pout - Pin)
-                                houts = hins + dh / w
-
+                                Hout = Hout - eta * Cp_m * (Pout - Pin) / w
+                          
                                 Toutj = Tout + eta * (Pin - Pout) / 1000
 
                                 Tout_ant = Tout
@@ -540,15 +540,23 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
                             End If
 
+                            oms.PropertyPackage.CurrentMaterialStream = oms
+
                             oms.Fases(0).SPMProperties.temperature = Tout
                             oms.Fases(0).SPMProperties.pressure = Pout
+                            oms.Fases(0).SPMProperties.enthalpy = Hout
+
+                            If oms.PropertyPackage.AUX_IS_SINGLECOMP(PropertyPackages.Fase.Mixture) Then
+                                oms.SpecType = Streams.MaterialStream.Flashspec.Pressure_and_Enthalpy
+                            End If
 
                             oms.Calculate(True, True)
 
                             With oms
 
                                 w = .Fases(0).SPMProperties.massflow.GetValueOrDefault
-                                hins = .Fases(0).SPMProperties.enthalpy.GetValueOrDefault
+                                Hout = .Fases(0).SPMProperties.enthalpy.GetValueOrDefault
+                                Tout = .Fases(0).SPMProperties.temperature.GetValueOrDefault
 
                                 Qlin = .Fases(3).SPMProperties.volumetric_flow.GetValueOrDefault + .Fases(4).SPMProperties.volumetric_flow.GetValueOrDefault + .Fases(5).SPMProperties.volumetric_flow.GetValueOrDefault + .Fases(6).SPMProperties.volumetric_flow.GetValueOrDefault
                                 rho_l = .Fases(1).SPMProperties.density.GetValueOrDefault
@@ -587,8 +595,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
                                                                                                    .HTC_pipewall = results.HTC_pipewall})
 
                             End With
-
-                            Hout = Hin + DQ / Win
 
                             Hin = Hout
                             Tin = Tout
