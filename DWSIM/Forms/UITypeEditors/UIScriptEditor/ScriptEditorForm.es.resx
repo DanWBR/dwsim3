@@ -310,4 +310,7 @@
   <data name="sfd1.Title" xml:space="preserve">
     <value>Guardar Scripts</value>
   </data>
+  <data name="btnUndo.Text" xml:space="preserve">
+    <value>Deshacer (Ctrl+Z)</value>
+  </data>
 </root>

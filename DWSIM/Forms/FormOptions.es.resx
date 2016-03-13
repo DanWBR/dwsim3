@@ -181,7 +181,7 @@
     <value>Activar Cálculos en Paralelo (CPU)</value>
   </data>
   <data name="GroupBox11.Text" xml:space="preserve">
-    <value>Tareas</value>
+    <value>Deshacer/Rehacer</value>
   </data>
   <data name="cbudb.Text" xml:space="preserve">
     <value>Reemplazar componentes presentes mientras se importa la base de datos.</value>
@@ -342,5 +342,8 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>DWSIM - Configuración General</value>
+  </data>
+  <data name="CheckBoxUndoRedoRecalc.Text" xml:space="preserve">
+    <value>Recalcular Diagrama al Rehacer/ Rehacer acciones</value>
   </data>
 </root>

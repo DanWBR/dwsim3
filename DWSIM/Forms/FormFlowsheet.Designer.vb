@@ -863,13 +863,13 @@ Partial Class FormFlowsheet
         '
         'TSMIMaterialStream
         '
-        Me.TSMIMaterialStream.Image = Global.DWSIM.My.Resources.Resources.arrow_right
+        Me.TSMIMaterialStream.Image = Global.DWSIM.My.Resources.Resources.stream_mat_16
         resources.ApplyResources(Me.TSMIMaterialStream, "TSMIMaterialStream")
         Me.TSMIMaterialStream.Name = "TSMIMaterialStream"
         '
         'TSMIEnergyStream
         '
-        Me.TSMIEnergyStream.Image = Global.DWSIM.My.Resources.Resources.arrow_right2
+        Me.TSMIEnergyStream.Image = Global.DWSIM.My.Resources.Resources.stream_en_16
         resources.ApplyResources(Me.TSMIEnergyStream, "TSMIEnergyStream")
         Me.TSMIEnergyStream.Name = "TSMIEnergyStream"
         '
@@ -881,121 +881,121 @@ Partial Class FormFlowsheet
         '
         'TSMIMixer
         '
-        Me.TSMIMixer.Image = Global.DWSIM.My.Resources.Resources.node_in_copy
+        Me.TSMIMixer.Image = Global.DWSIM.My.Resources.Resources.uo_mixer_16
         resources.ApplyResources(Me.TSMIMixer, "TSMIMixer")
         Me.TSMIMixer.Name = "TSMIMixer"
         '
         'TSMISplitter
         '
-        Me.TSMISplitter.Image = Global.DWSIM.My.Resources.Resources.node_out_copy
+        Me.TSMISplitter.Image = Global.DWSIM.My.Resources.Resources.uo_split_16
         resources.ApplyResources(Me.TSMISplitter, "TSMISplitter")
         Me.TSMISplitter.Name = "TSMISplitter"
         '
         'TSMICompressor
         '
-        Me.TSMICompressor.Image = Global.DWSIM.My.Resources.Resources.compressor_copy
+        Me.TSMICompressor.Image = Global.DWSIM.My.Resources.Resources.uo_compr_16
         resources.ApplyResources(Me.TSMICompressor, "TSMICompressor")
         Me.TSMICompressor.Name = "TSMICompressor"
         '
         'TSMIExpander
         '
-        Me.TSMIExpander.Image = Global.DWSIM.My.Resources.Resources.turbina_copy
+        Me.TSMIExpander.Image = Global.DWSIM.My.Resources.Resources.uo_expan_16
         resources.ApplyResources(Me.TSMIExpander, "TSMIExpander")
         Me.TSMIExpander.Name = "TSMIExpander"
         '
         'TSMIPump
         '
-        Me.TSMIPump.Image = Global.DWSIM.My.Resources.Resources.pump_copy
+        Me.TSMIPump.Image = Global.DWSIM.My.Resources.Resources.uo_pump_16
         resources.ApplyResources(Me.TSMIPump, "TSMIPump")
         Me.TSMIPump.Name = "TSMIPump"
         '
         'TSMIPipe
         '
-        Me.TSMIPipe.Image = Global.DWSIM.My.Resources.Resources.pipe_copy
+        Me.TSMIPipe.Image = Global.DWSIM.My.Resources.Resources.uo_pipe_16
         resources.ApplyResources(Me.TSMIPipe, "TSMIPipe")
         Me.TSMIPipe.Name = "TSMIPipe"
         '
         'TSMIValve
         '
-        Me.TSMIValve.Image = Global.DWSIM.My.Resources.Resources.valve_copy
+        Me.TSMIValve.Image = Global.DWSIM.My.Resources.Resources.uo_valve_16
         resources.ApplyResources(Me.TSMIValve, "TSMIValve")
         Me.TSMIValve.Name = "TSMIValve"
         '
         'TSMISeparator
         '
-        Me.TSMISeparator.Image = Global.DWSIM.My.Resources.Resources.vessel_copy
+        Me.TSMISeparator.Image = Global.DWSIM.My.Resources.Resources.uo_flash_16
         resources.ApplyResources(Me.TSMISeparator, "TSMISeparator")
         Me.TSMISeparator.Name = "TSMISeparator"
         '
         'TSMIHeater
         '
-        Me.TSMIHeater.Image = Global.DWSIM.My.Resources.Resources.heater_copy
+        Me.TSMIHeater.Image = Global.DWSIM.My.Resources.Resources.uo_heater_16
         resources.ApplyResources(Me.TSMIHeater, "TSMIHeater")
         Me.TSMIHeater.Name = "TSMIHeater"
         '
         'TSMICooler
         '
-        Me.TSMICooler.Image = Global.DWSIM.My.Resources.Resources.cooler_copy
+        Me.TSMICooler.Image = Global.DWSIM.My.Resources.Resources.uo_cooler_16
         resources.ApplyResources(Me.TSMICooler, "TSMICooler")
         Me.TSMICooler.Name = "TSMICooler"
         '
         'TSMIOrificePlate
         '
-        Me.TSMIOrificePlate.Image = Global.DWSIM.My.Resources.Resources.orifice2
+        Me.TSMIOrificePlate.Image = Global.DWSIM.My.Resources.Resources.uo_orifice_16
         resources.ApplyResources(Me.TSMIOrificePlate, "TSMIOrificePlate")
         Me.TSMIOrificePlate.Name = "TSMIOrificePlate"
         '
         'TSMIComponentSeparator
         '
-        Me.TSMIComponentSeparator.Image = Global.DWSIM.My.Resources.Resources.comp_separator
+        Me.TSMIComponentSeparator.Image = Global.DWSIM.My.Resources.Resources.uo_compsep_16
         resources.ApplyResources(Me.TSMIComponentSeparator, "TSMIComponentSeparator")
         Me.TSMIComponentSeparator.Name = "TSMIComponentSeparator"
         '
         'TSMIHeatExchanger
         '
-        Me.TSMIHeatExchanger.Image = Global.DWSIM.My.Resources.Resources.heater_copy
+        Me.TSMIHeatExchanger.Image = Global.DWSIM.My.Resources.Resources.uo_hx_16
         resources.ApplyResources(Me.TSMIHeatExchanger, "TSMIHeatExchanger")
         Me.TSMIHeatExchanger.Name = "TSMIHeatExchanger"
         '
         'TSMITank
         '
-        Me.TSMITank.Image = Global.DWSIM.My.Resources.Resources.tank_copy
+        Me.TSMITank.Image = Global.DWSIM.My.Resources.Resources.uo_tank_16
         resources.ApplyResources(Me.TSMITank, "TSMITank")
         Me.TSMITank.Name = "TSMITank"
         '
         'TSMIExcelUO
         '
-        Me.TSMIExcelUO.Image = Global.DWSIM.My.Resources.Resources.Excel
+        Me.TSMIExcelUO.Image = Global.DWSIM.My.Resources.Resources.uo_excel_16
         Me.TSMIExcelUO.Name = "TSMIExcelUO"
         resources.ApplyResources(Me.TSMIExcelUO, "TSMIExcelUO")
         '
         'TSMICUO
         '
-        Me.TSMICUO.Image = Global.DWSIM.My.Resources.Resources.greyscale_20
+        Me.TSMICUO.Image = Global.DWSIM.My.Resources.Resources.uo_custom_16
         Me.TSMICUO.Name = "TSMICUO"
         resources.ApplyResources(Me.TSMICUO, "TSMICUO")
         '
         'TSMICOUO
         '
-        Me.TSMICOUO.Image = Global.DWSIM.My.Resources.Resources.colan2
+        Me.TSMICOUO.Image = Global.DWSIM.My.Resources.Resources.uo_co_16
         Me.TSMICOUO.Name = "TSMICOUO"
         resources.ApplyResources(Me.TSMICOUO, "TSMICOUO")
         '
         'TSMISolidsSeparator
         '
-        Me.TSMISolidsSeparator.Image = Global.DWSIM.My.Resources.Resources.comp_separator
+        Me.TSMISolidsSeparator.Image = Global.DWSIM.My.Resources.Resources.uo_solidsep_16
         Me.TSMISolidsSeparator.Name = "TSMISolidsSeparator"
         resources.ApplyResources(Me.TSMISolidsSeparator, "TSMISolidsSeparator")
         '
         'TSMIFilter
         '
-        Me.TSMIFilter.Image = Global.DWSIM.My.Resources.Resources.comp_separator
+        Me.TSMIFilter.Image = Global.DWSIM.My.Resources.Resources.uo_filter_16
         Me.TSMIFilter.Name = "TSMIFilter"
         resources.ApplyResources(Me.TSMIFilter, "TSMIFilter")
         '
         'TSMIFlowsheet
         '
-        Me.TSMIFlowsheet.Image = Global.DWSIM.My.Resources.Resources.Vector_Badge
+        Me.TSMIFlowsheet.Image = Global.DWSIM.My.Resources.Resources.uo_fs_16
         Me.TSMIFlowsheet.Name = "TSMIFlowsheet"
         resources.ApplyResources(Me.TSMIFlowsheet, "TSMIFlowsheet")
         '
@@ -1007,31 +1007,31 @@ Partial Class FormFlowsheet
         '
         'TSMIColShortcut
         '
-        Me.TSMIColShortcut.Image = Global.DWSIM.My.Resources.Resources.vessel_copy
+        Me.TSMIColShortcut.Image = Global.DWSIM.My.Resources.Resources.col_sc_16
         resources.ApplyResources(Me.TSMIColShortcut, "TSMIColShortcut")
         Me.TSMIColShortcut.Name = "TSMIColShortcut"
         '
         'TSMIColDist
         '
-        Me.TSMIColDist.Image = Global.DWSIM.My.Resources.Resources.vessel_copy
+        Me.TSMIColDist.Image = Global.DWSIM.My.Resources.Resources.col_dc_16
         resources.ApplyResources(Me.TSMIColDist, "TSMIColDist")
         Me.TSMIColDist.Name = "TSMIColDist"
         '
         'TSMIColAbs
         '
-        Me.TSMIColAbs.Image = Global.DWSIM.My.Resources.Resources.vessel_copy
+        Me.TSMIColAbs.Image = Global.DWSIM.My.Resources.Resources.col_abs_16
         resources.ApplyResources(Me.TSMIColAbs, "TSMIColAbs")
         Me.TSMIColAbs.Name = "TSMIColAbs"
         '
         'TSMIColAbsReb
         '
-        Me.TSMIColAbsReb.Image = Global.DWSIM.My.Resources.Resources.vessel_copy
+        Me.TSMIColAbsReb.Image = Global.DWSIM.My.Resources.Resources.col_rebabs_16
         resources.ApplyResources(Me.TSMIColAbsReb, "TSMIColAbsReb")
         Me.TSMIColAbsReb.Name = "TSMIColAbsReb"
         '
         'TSMIColAbsCond
         '
-        Me.TSMIColAbsCond.Image = Global.DWSIM.My.Resources.Resources.vessel_copy
+        Me.TSMIColAbsCond.Image = Global.DWSIM.My.Resources.Resources.col_rflabs_16
         resources.ApplyResources(Me.TSMIColAbsCond, "TSMIColAbsCond")
         Me.TSMIColAbsCond.Name = "TSMIColAbsCond"
         '
@@ -1043,31 +1043,31 @@ Partial Class FormFlowsheet
         '
         'TSMIReactorConv
         '
-        Me.TSMIReactorConv.Image = Global.DWSIM.My.Resources.Resources.r_conv2
+        Me.TSMIReactorConv.Image = Global.DWSIM.My.Resources.Resources.re_conv_16
         resources.ApplyResources(Me.TSMIReactorConv, "TSMIReactorConv")
         Me.TSMIReactorConv.Name = "TSMIReactorConv"
         '
         'TSMIReactorEquilibrium
         '
-        Me.TSMIReactorEquilibrium.Image = Global.DWSIM.My.Resources.Resources.r_equil1
+        Me.TSMIReactorEquilibrium.Image = Global.DWSIM.My.Resources.Resources.re_equi_16
         resources.ApplyResources(Me.TSMIReactorEquilibrium, "TSMIReactorEquilibrium")
         Me.TSMIReactorEquilibrium.Name = "TSMIReactorEquilibrium"
         '
         'TSMIReactorGibbs
         '
-        Me.TSMIReactorGibbs.Image = Global.DWSIM.My.Resources.Resources.r_gibbs1
+        Me.TSMIReactorGibbs.Image = Global.DWSIM.My.Resources.Resources.re_gibbs_16
         resources.ApplyResources(Me.TSMIReactorGibbs, "TSMIReactorGibbs")
         Me.TSMIReactorGibbs.Name = "TSMIReactorGibbs"
         '
         'TSMIReactorCSTR
         '
-        Me.TSMIReactorCSTR.Image = Global.DWSIM.My.Resources.Resources.r_cstr
+        Me.TSMIReactorCSTR.Image = Global.DWSIM.My.Resources.Resources.re_cstr_16
         resources.ApplyResources(Me.TSMIReactorCSTR, "TSMIReactorCSTR")
         Me.TSMIReactorCSTR.Name = "TSMIReactorCSTR"
         '
         'TSMIReactorPFR
         '
-        Me.TSMIReactorPFR.Image = Global.DWSIM.My.Resources.Resources.r_pfr
+        Me.TSMIReactorPFR.Image = Global.DWSIM.My.Resources.Resources.re_pfr_16
         resources.ApplyResources(Me.TSMIReactorPFR, "TSMIReactorPFR")
         Me.TSMIReactorPFR.Name = "TSMIReactorPFR"
         '
@@ -1079,25 +1079,25 @@ Partial Class FormFlowsheet
         '
         'TSMIRecycle
         '
-        Me.TSMIRecycle.Image = Global.DWSIM.My.Resources.Resources.reciclo_mini
+        Me.TSMIRecycle.Image = Global.DWSIM.My.Resources.Resources.lo_recy_16
         resources.ApplyResources(Me.TSMIRecycle, "TSMIRecycle")
         Me.TSMIRecycle.Name = "TSMIRecycle"
         '
         'TSMIEnergyRecycle
         '
-        Me.TSMIEnergyRecycle.Image = Global.DWSIM.My.Resources.Resources.reciclo_e
+        Me.TSMIEnergyRecycle.Image = Global.DWSIM.My.Resources.Resources.lo_enrecy_16
         resources.ApplyResources(Me.TSMIEnergyRecycle, "TSMIEnergyRecycle")
         Me.TSMIEnergyRecycle.Name = "TSMIEnergyRecycle"
         '
         'TSMIAdjust
         '
-        Me.TSMIAdjust.Image = Global.DWSIM.My.Resources.Resources.ajuste_mini
+        Me.TSMIAdjust.Image = Global.DWSIM.My.Resources.Resources.lo_adjust_16
         resources.ApplyResources(Me.TSMIAdjust, "TSMIAdjust")
         Me.TSMIAdjust.Name = "TSMIAdjust"
         '
         'TSMISpecification
         '
-        Me.TSMISpecification.Image = Global.DWSIM.My.Resources.Resources.especificacao_mini
+        Me.TSMISpecification.Image = Global.DWSIM.My.Resources.Resources.lo_spec_16
         resources.ApplyResources(Me.TSMISpecification, "TSMISpecification")
         Me.TSMISpecification.Name = "TSMISpecification"
         '

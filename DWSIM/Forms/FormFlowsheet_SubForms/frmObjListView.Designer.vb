@@ -48,45 +48,46 @@ Partial Class frmObjListView
         '
         Me.ImageList.ImageStream = CType(resources.GetObject("ImageList.ImageStream"), System.Windows.Forms.ImageListStreamer)
         Me.ImageList.TransparentColor = System.Drawing.Color.White
-        Me.ImageList.Images.SetKeyName(0, "rot_comp.png")
-        Me.ImageList.Images.SetKeyName(1, "hx_cooler.png")
-        Me.ImageList.Images.SetKeyName(2, "hx_heater.png")
-        Me.ImageList.Images.SetKeyName(3, "node_mix.png")
-        Me.ImageList.Images.SetKeyName(4, "node_split.png")
-        Me.ImageList.Images.SetKeyName(5, "pipe-m.png")
-        Me.ImageList.Images.SetKeyName(6, "rot_pump.png")
-        Me.ImageList.Images.SetKeyName(7, "r_conv3.png")
-        Me.ImageList.Images.SetKeyName(8, "r_cstr2.png")
-        Me.ImageList.Images.SetKeyName(9, "r_equib2.png")
-        Me.ImageList.Images.SetKeyName(10, "r_gibbs2.png")
-        Me.ImageList.Images.SetKeyName(11, "r_pfr2.png")
-        Me.ImageList.Images.SetKeyName(12, "lo_matre.png")
-        Me.ImageList.Images.SetKeyName(13, "tank-m.png")
-        Me.ImageList.Images.SetKeyName(14, "rot_expa.png")
-        Me.ImageList.Images.SetKeyName(15, "valve-m.png")
-        Me.ImageList.Images.SetKeyName(16, "col_short.png")
-        Me.ImageList.Images.SetKeyName(17, "col_dist.png")
-        Me.ImageList.Images.SetKeyName(18, "col_absorb.png")
-        Me.ImageList.Images.SetKeyName(19, "col_absorbcond.png")
-        Me.ImageList.Images.SetKeyName(20, "col_absorbrebo.png")
-        Me.ImageList.Images.SetKeyName(21, "arrow_mat.png")
-        Me.ImageList.Images.SetKeyName(22, "arrow_energy.png")
-        Me.ImageList.Images.SetKeyName(23, "lo_adjust.png")
-        Me.ImageList.Images.SetKeyName(24, "lo_specif.png")
-        Me.ImageList.Images.SetKeyName(25, "lo_energyre.png")
-        Me.ImageList.Images.SetKeyName(26, "vessel_compsep.png")
-        Me.ImageList.Images.SetKeyName(27, "vessel_filter.png")
-        Me.ImageList.Images.SetKeyName(28, "vessel_flash.png")
-        Me.ImageList.Images.SetKeyName(29, "vessel_solidsep.png")
-        Me.ImageList.Images.SetKeyName(30, "orifice-m.png")
-        Me.ImageList.Images.SetKeyName(31, "uo_custom.png")
-        Me.ImageList.Images.SetKeyName(32, "uo_excel.png")
-        Me.ImageList.Images.SetKeyName(33, "uo_flowsheet.png")
-        Me.ImageList.Images.SetKeyName(34, "colan2.jpg")
-        Me.ImageList.Images.SetKeyName(35, "hx.png")
+        Me.ImageList.Images.SetKeyName(0, "stream_mat_32.png")
+        Me.ImageList.Images.SetKeyName(1, "stream_en_32.png")
+        Me.ImageList.Images.SetKeyName(2, "uo_mixer_32.png")
+        Me.ImageList.Images.SetKeyName(3, "uo_split_32.png")
+        Me.ImageList.Images.SetKeyName(4, "uo_cooler_32.png")
+        Me.ImageList.Images.SetKeyName(5, "uo_heater_32.png")
+        Me.ImageList.Images.SetKeyName(6, "uo_pipe_32.png")
+        Me.ImageList.Images.SetKeyName(7, "uo_valve_32.png")
+        Me.ImageList.Images.SetKeyName(8, "uo_pump_32.png")
+        Me.ImageList.Images.SetKeyName(9, "uo_compr_32.png")
+        Me.ImageList.Images.SetKeyName(10, "uo_expan_32.png")
+        Me.ImageList.Images.SetKeyName(11, "uo_hx_32.png")
+        Me.ImageList.Images.SetKeyName(12, "col_sc_32.png")
+        Me.ImageList.Images.SetKeyName(13, "col_dc_32.png")
+        Me.ImageList.Images.SetKeyName(14, "col_abs_32.png")
+        Me.ImageList.Images.SetKeyName(15, "col_rebabs_32.png")
+        Me.ImageList.Images.SetKeyName(16, "col_rflabs_32.png")
+        Me.ImageList.Images.SetKeyName(17, "uo_compsep_32.png")
+        Me.ImageList.Images.SetKeyName(18, "uo_tank_32.png")
+        Me.ImageList.Images.SetKeyName(19, "uo_flash_32.png")
+        Me.ImageList.Images.SetKeyName(20, "re_conv_32.png")
+        Me.ImageList.Images.SetKeyName(21, "re_equi_32.png")
+        Me.ImageList.Images.SetKeyName(22, "re_gibbs_32.png")
+        Me.ImageList.Images.SetKeyName(23, "re_cstr_32.png")
+        Me.ImageList.Images.SetKeyName(24, "re_pfr_32.png")
+        Me.ImageList.Images.SetKeyName(25, "uo_orifice_32.png")
+        Me.ImageList.Images.SetKeyName(26, "lo_adjust_32.png")
+        Me.ImageList.Images.SetKeyName(27, "lo_spec_32.png")
+        Me.ImageList.Images.SetKeyName(28, "lo_recy_32.png")
+        Me.ImageList.Images.SetKeyName(29, "lo_enrecy_32.png")
+        Me.ImageList.Images.SetKeyName(30, "uo_custom_32.png")
+        Me.ImageList.Images.SetKeyName(31, "uo_excel_32.png")
+        Me.ImageList.Images.SetKeyName(32, "uo_fs_32.png")
+        Me.ImageList.Images.SetKeyName(33, "uo_co_32.png")
+        Me.ImageList.Images.SetKeyName(34, "uo_solidsep_32.png")
+        Me.ImageList.Images.SetKeyName(35, "uo_filter_32.png")
         '
         'DataGridView1
         '
+        resources.ApplyResources(Me.DataGridView1, "DataGridView1")
         Me.DataGridView1.AllowUserToAddRows = False
         Me.DataGridView1.AllowUserToDeleteRows = False
         Me.DataGridView1.AllowUserToOrderColumns = True
@@ -99,7 +100,6 @@ Partial Class frmObjListView
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView1.ColumnHeadersVisible = False
         Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.col0, Me.col1, Me.col2})
-        resources.ApplyResources(Me.DataGridView1, "DataGridView1")
         Me.DataGridView1.MultiSelect = False
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.ReadOnly = True
@@ -130,64 +130,64 @@ Partial Class frmObjListView
         '
         'dckMenu
         '
+        resources.ApplyResources(Me.dckMenu, "dckMenu")
         Me.dckMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FloatToolStripMenuItem, Me.DockLeftToolStripMenuItem, Me.DockRightToolStripMenuItem, Me.DockTopToolStripMenuItem, Me.DockBottomToolStripMenuItem, Me.DockLeftAutoHideToolStripMenuItem, Me.DockRightAutoHideToolStripMenuItem, Me.DockTopAutoHideToolStripMenuItem, Me.DockBottomAutoHideToolStripMenuItem, Me.DocumentToolStripMenuItem})
         Me.dckMenu.Name = "dckMenu"
-        resources.ApplyResources(Me.dckMenu, "dckMenu")
         '
         'FloatToolStripMenuItem
         '
-        Me.FloatToolStripMenuItem.Name = "FloatToolStripMenuItem"
         resources.ApplyResources(Me.FloatToolStripMenuItem, "FloatToolStripMenuItem")
+        Me.FloatToolStripMenuItem.Name = "FloatToolStripMenuItem"
         '
         'DockLeftToolStripMenuItem
         '
-        Me.DockLeftToolStripMenuItem.Name = "DockLeftToolStripMenuItem"
         resources.ApplyResources(Me.DockLeftToolStripMenuItem, "DockLeftToolStripMenuItem")
+        Me.DockLeftToolStripMenuItem.Name = "DockLeftToolStripMenuItem"
         '
         'DockRightToolStripMenuItem
         '
-        Me.DockRightToolStripMenuItem.Name = "DockRightToolStripMenuItem"
         resources.ApplyResources(Me.DockRightToolStripMenuItem, "DockRightToolStripMenuItem")
+        Me.DockRightToolStripMenuItem.Name = "DockRightToolStripMenuItem"
         '
         'DockTopToolStripMenuItem
         '
-        Me.DockTopToolStripMenuItem.Name = "DockTopToolStripMenuItem"
         resources.ApplyResources(Me.DockTopToolStripMenuItem, "DockTopToolStripMenuItem")
+        Me.DockTopToolStripMenuItem.Name = "DockTopToolStripMenuItem"
         '
         'DockBottomToolStripMenuItem
         '
-        Me.DockBottomToolStripMenuItem.Name = "DockBottomToolStripMenuItem"
         resources.ApplyResources(Me.DockBottomToolStripMenuItem, "DockBottomToolStripMenuItem")
+        Me.DockBottomToolStripMenuItem.Name = "DockBottomToolStripMenuItem"
         '
         'DockLeftAutoHideToolStripMenuItem
         '
-        Me.DockLeftAutoHideToolStripMenuItem.Name = "DockLeftAutoHideToolStripMenuItem"
         resources.ApplyResources(Me.DockLeftAutoHideToolStripMenuItem, "DockLeftAutoHideToolStripMenuItem")
+        Me.DockLeftAutoHideToolStripMenuItem.Name = "DockLeftAutoHideToolStripMenuItem"
         '
         'DockRightAutoHideToolStripMenuItem
         '
-        Me.DockRightAutoHideToolStripMenuItem.Name = "DockRightAutoHideToolStripMenuItem"
         resources.ApplyResources(Me.DockRightAutoHideToolStripMenuItem, "DockRightAutoHideToolStripMenuItem")
+        Me.DockRightAutoHideToolStripMenuItem.Name = "DockRightAutoHideToolStripMenuItem"
         '
         'DockTopAutoHideToolStripMenuItem
         '
-        Me.DockTopAutoHideToolStripMenuItem.Name = "DockTopAutoHideToolStripMenuItem"
         resources.ApplyResources(Me.DockTopAutoHideToolStripMenuItem, "DockTopAutoHideToolStripMenuItem")
+        Me.DockTopAutoHideToolStripMenuItem.Name = "DockTopAutoHideToolStripMenuItem"
         '
         'DockBottomAutoHideToolStripMenuItem
         '
-        Me.DockBottomAutoHideToolStripMenuItem.Name = "DockBottomAutoHideToolStripMenuItem"
         resources.ApplyResources(Me.DockBottomAutoHideToolStripMenuItem, "DockBottomAutoHideToolStripMenuItem")
+        Me.DockBottomAutoHideToolStripMenuItem.Name = "DockBottomAutoHideToolStripMenuItem"
         '
         'DocumentToolStripMenuItem
         '
-        Me.DocumentToolStripMenuItem.Name = "DocumentToolStripMenuItem"
         resources.ApplyResources(Me.DocumentToolStripMenuItem, "DocumentToolStripMenuItem")
+        Me.DocumentToolStripMenuItem.Name = "DocumentToolStripMenuItem"
         '
         'frmObjListView
         '
-        Me.AllowDrop = True
         resources.ApplyResources(Me, "$this")
+        Me.AllowDrop = True
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CloseButton = False
         Me.CloseButtonVisible = False

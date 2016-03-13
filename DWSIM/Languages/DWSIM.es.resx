@@ -5174,7 +5174,7 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
     <value>El cálculo Flash PSF no está soportado.</value>
   </data>
   <data name="PP_FLASHALGORITHMIDEALKFALLBACK" xml:space="preserve">
-    <value>Utilizar K ideal na solução trivial</value>
+    <value>Utilizar K ideal en la solución trivial</value>
   </data>
   <data name="DescSEAPP" xml:space="preserve">
     <value>Este Paquete de Propiedades contiene rutinas para calcular las propiedades del agua de mar utilizando los procedimientos descritos en la especificación IAPWS-08 ("Publicada en "IAPWS Formulación de 2008" para las propiedades termodinámicas del agua de mar").</value>
@@ -5234,22 +5234,22 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
     <value>No User Database existente!</value>
   </data>
   <data name="Unsupported_Feature" xml:space="preserve">
-    <value>Este recurso não é suportado nesta plataforma.</value>
+    <value>Esta función no es compatible con esta plataforma.</value>
   </data>
   <data name="ParallelPInvokeError" xml:space="preserve">
-    <value>Este recurso utiliza uma biblioteca nativa (não-.NET) da plataforma em execução, e não funciona com o modo de cálculo em paralelo na CPU ativado. por favor desative esse recurso e tente novamente.</value>
+    <value>Esta función utiliza una biblioteca nativa (.NET) de plataforma de ejecución, y no funciona con el modo de cálculo paralelo habilitado. por favor desactive esta función y vuelva a intentarlo.</value>
   </data>
   <data name="PipeSpecMode" xml:space="preserve">
-    <value>Especificação de Cálculo</value>
+    <value>Especificación de Cálculo</value>
   </data>
   <data name="PipeSpecModeDesc" xml:space="preserve">
-    <value>Length = Especifica-se o comprimento dos segmentos, calculam-se temperatura e pressão; OutletPressure = Especificam-se a pressão e comprimento dos segmentos e calculam-se a temperatura e comprimento do primeiro e único segmento como tubulação simples; OutletTemperature = Especificam-se a temperatura e o comprimento dos segmentos e calculam-se a pressão e o calor trocado.</value>
+    <value>Length = Especifique la longitud de los segmentos, se estima la temperatura y la presión; OutletPressure = Especifique la presión y la longitud de los segmentos y calcular la temperatura y la longitud del primero y único segmento de tubería simple; OutletTemperature = Especifica la temperatura y la longitud de los segmentos y calcular la presión y el calor intercambiado.</value>
   </data>
   <data name="PipeOutletPressureRestriction" xml:space="preserve">
-    <value>No modo de cálculo de pressão na saída, a tubulação deve possuir apenas um segmento e este deve ser do tipo "Tubulação Simples".</value>
+    <value>En modo de cálculo de presión de salida, el tubo debe tener sólo un segmento y esto debe ser de tipo "Tuberia Simple".</value>
   </data>
   <data name="CompoundNotFound" xml:space="preserve">
-    <value>substância não encontrada no banco de dados.</value>
+    <value>Sustancia no se encuentra en la base de datos.</value>
   </data>
   <data name="MaximumHeatExchange" xml:space="preserve">
     <value>Troca térmica máxima (teórica)</value>
@@ -5261,7 +5261,7 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
     <value>Eficiência térmica</value>
   </data>
   <data name="ThermalEfficiencyDesc" xml:space="preserve">
-    <value>Quantidade de calor trocado em relação à máxima possível.</value>
+    <value>Cantidad de calor intercambiada en relación con el máximo posible.</value>
   </data>
   <data name="DescSourWaterPP" xml:space="preserve">
     <value>The Sour Water Property Package is based on the SWEQ model described in the USEPA Report EPA-600/2-80-067: 'A new correlation of NH3, CO2, and H2S volatility data from aqueous sour water systems', by Wilson, Grant M., available online at http://nepis.epa.gov/Exe/ZyPDF.cgi?Dockey=9101B309.PDF  
@@ -5269,19 +5269,19 @@ Una modificiación al termino de atracción en la EE de Peng-Robinson publicado 
 In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour water systems including the effects of release by caustic (NaOH) addition are considered. The original model is applicable for temperatures between 20°C (68°F) and 140°C (285°F), and pressures up to 50 psi. in DWSIM, use of the PR EOS to correct vapour phase non-idealities extends this range but, due to lack of experimental data, exact ranges cannot be specified.</value>
   </data>
   <data name="SourWaterPP" xml:space="preserve">
-    <value>Águas Ácidas</value>
+    <value>Aguas Ácidas</value>
   </data>
   <data name="CalculatingWith" xml:space="preserve">
     <value>Calculando objecto '{0}' com el Paquete de Propiedades {1}...</value>
   </data>
   <data name="NonConfigurablePP" xml:space="preserve">
-    <value>Este pacote de propriedades não possui opções de configuração.</value>
+    <value>Este Paquete de Propiedades no posee opciones de configuración.</value>
   </data>
   <data name="HXIgnoreLMTDError" xml:space="preserve">
     <value>Ignorar erro no cálculo da MLDT</value>
   </data>
   <data name="HXIgnoreLMTDErrorDesc" xml:space="preserve">
-    <value>Se verdadeiro, um erro no cálculo da MLDT não resulta em interrupção do cálculo. Útil para simulações com reciclos.</value>
+    <value>Si esta activada, un error en el cálculo de MLDT no da lugar a la interrupción del cálculo. Útil para las simulaciones con reciclos.</value>
   </data>
   <data name="UndoRedo_CompoundAdded" xml:space="preserve">
     <value>Substância adicionada: {0}</value>
@@ -5332,10 +5332,10 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
     <value>Colar objetos</value>
   </data>
   <data name="Redo" xml:space="preserve">
-    <value>Refazer ação: </value>
+    <value>Rehacer </value>
   </data>
   <data name="Undo" xml:space="preserve">
-    <value>Desfazer ação: </value>
+    <value>Deshacer acción: </value>
   </data>
   <data name="ScriptEditor_LineColumn" xml:space="preserve">
     <value>Linha {0}, Coluna {1}</value>
