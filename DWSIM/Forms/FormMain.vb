@@ -52,7 +52,6 @@ Public Class FormMain
     Public Shared m_childcount As Integer = 1
     Public filename As String
     Public sairdevez As Boolean = False
-    Public SairDiretoERRO As Boolean = False
     Public loadedCSDB As Boolean = False
     Public pathsep As Char
 
@@ -63,6 +62,7 @@ Public Class FormMain
     Private dropdownlist As ArrayList
 
     Private dlok As Boolean = False
+    Public CancelClosing As Boolean = False
 
     Private tmpform2 As FormFlowsheet
 
@@ -136,11 +136,10 @@ Public Class FormMain
 
     Private Sub FormParent_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
 
-        If Not Me.SairDiretoERRO Then
-            If Me.MdiChildren.Length > 0 Then
-                Dim ms As MsgBoxResult = MessageBox.Show(DWSIM.App.GetLocalString("Existemsimulaesabert"), DWSIM.App.GetLocalString("Ateno"), MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-                If ms = MsgBoxResult.No Then e.Cancel = True
-            End If
+        If Me.MdiChildren.Length > 0 And Not Me.CancelClosing Then
+            Me.CancelClosing = False
+            Dim ms As MsgBoxResult = MessageBox.Show(DWSIM.App.GetLocalString("Existemsimulaesabert"), DWSIM.App.GetLocalString("Ateno"), MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+            If ms = MsgBoxResult.No Then e.Cancel = True
         End If
 
         If Not e.Cancel Then

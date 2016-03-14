@@ -431,8 +431,6 @@ Imports System.Reflection
 
     Private Sub FormChild2_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
 
-        If FormMain.SairDiretoERRO Then Exit Sub
-
         If Me.m_overrideCloseQuestion = False Then
 
             Dim x = MessageBox.Show(DWSIM.App.GetLocalString("Desejasalvarasaltera"), DWSIM.App.GetLocalString("Fechando") & " " & Me.Options.SimNome & " (" & System.IO.Path.GetFileName(Me.Options.FilePath) & ") ...", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
@@ -445,6 +443,7 @@ Imports System.Reflection
 
             ElseIf x = MsgBoxResult.Cancel Then
 
+                FormMain.CancelClosing = True
                 e.Cancel = True
 
             Else
