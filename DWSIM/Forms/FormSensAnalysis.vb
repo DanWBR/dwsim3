@@ -626,7 +626,7 @@ Public Class FormSensAnalysis
                                     .Variables.Add(var.name, form.FormSpreadsheet.GetCellValue(var.propID).Value)
                                 End If
                             Next
-                            Me.selectedsacase.exbase = Me.selectedsacase.econtext.CompileGeneric(Of Double)(Me.selectedsacase.expression)
+                            Me.selectedsacase.exbase = Me.selectedsacase.econtext.CompileGeneric(Of Double)(Me.selectedsacase.expression.Replace(","c, "."c))
                         End With
                         dvval = Me.selectedsacase.exbase.Evaluate
                         'store results
@@ -742,7 +742,7 @@ Public Class FormSensAnalysis
                     .Variables.Add(row.Cells(1).Value, CDbl(row.Cells(4).Value))
                 End With
             Next
-            Dim exbase As IGenericExpression(Of Double) = econtext.CompileGeneric(Of Double)(Me.tbExpression.Text)
+            Dim exbase As IGenericExpression(Of Double) = econtext.CompileGeneric(Of Double)(Me.tbExpression.Text.Replace(","c, "."c))
             Me.tbCurrentValue.Text = exbase.Evaluate
             If EnableAutoSave Then SaveForm(selectedsacase)
         Catch ex As Exception

@@ -192,7 +192,7 @@ Public Class FormReacConv
                 .ExpContext.Variables.Add("T", CDbl(300))
                 Try
                     .ExpContext.Options.ParseCulture = Globalization.CultureInfo.InvariantCulture
-                    .Expr = .ExpContext.CompileGeneric(Of Double)(Me.tbExp.Text)
+                    .Expr = .ExpContext.CompileGeneric(Of Double)(Me.tbExp.Text.Replace(","c, "."c))
                     .Expression = Me.tbExp.Text
                 Catch ex As ExpressionCompileException
                     Select Case ex.Reason

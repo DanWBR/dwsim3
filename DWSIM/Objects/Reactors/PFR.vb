@@ -213,11 +213,11 @@ Namespace DWSIM.SimulationObjects.Reactors
                         End If
                     Next
 
-                    rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.RateEquationNumerator)
+                    rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.RateEquationNumerator.Replace(","c, "."c))
 
                     numval = rxn.Expr.Evaluate
 
-                    rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.RateEquationDenominator)
+                    rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.RateEquationDenominator.Replace(","c, "."c))
 
                     denmval = rxn.Expr.Evaluate
 
@@ -514,14 +514,14 @@ Namespace DWSIM.SimulationObjects.Reactors
                             Next
 
                             Try
-                                rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.RateEquationNumerator)
+                                rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.RateEquationNumerator.Replace(","c, "."c))
                                 numval = rxn.Expr.Evaluate
                             Catch ex As Exception
                                 Throw New Exception(DWSIM.App.GetLocalString("PFRNumeratorEvaluationError") & " " & rxn.Name)
                             End Try
 
                             Try
-                                rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.RateEquationDenominator)
+                                rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.RateEquationDenominator.Replace(","c, "."c))
                                 denmval = rxn.Expr.Evaluate
                             Catch ex As Exception
                                 Throw New Exception(DWSIM.App.GetLocalString("PFRDenominatorEvaluationError") & " " & rxn.Name)

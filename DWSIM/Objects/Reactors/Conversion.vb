@@ -211,7 +211,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                     rxn.ExpContext.Options.ParseCulture = Globalization.CultureInfo.InvariantCulture
                     rxn.ExpContext.Variables.Add("T", ims.Fases(0).SPMProperties.temperature.GetValueOrDefault)
 
-                    rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.Expression)
+                    rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.Expression.Replace(","c, "."c))
                     X = rxn.Expr.Evaluate / 100
 
                     If X < 0 Or X > 1 Then Throw New ArgumentOutOfRangeException("Conversion Expression", "The conversion expression for reaction " & rxn.Name & " results in a value that is out of the valid range (0 to 100%).")
@@ -249,7 +249,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                     rxn.ExpContext.Variables.Clear()
                     rxn.ExpContext.Variables.Add("T", ims.Fases(0).SPMProperties.temperature.GetValueOrDefault)
 
-                    rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.Expression)
+                    rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.Expression.Replace(","c, "."c))
                     X = rxn.Expr.Evaluate / 100.0#
 
                     If X < 0.0# Or X > 1.0# Then

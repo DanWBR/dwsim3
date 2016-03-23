@@ -694,7 +694,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                             rxn.ExpContext.Imports.AddType(GetType(System.Math))
                             rxn.ExpContext.Options.ParseCulture = Globalization.CultureInfo.InvariantCulture
                             rxn.ExpContext.Variables.Add("T", T)
-                            rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.Expression)
+                            rxn.Expr = rxn.ExpContext.CompileGeneric(Of Double)(rxn.Expression.Replace(","c, "."c))
                             Try
                                 rxn.ConstantKeqValue = Exp(rxn.Expr.Evaluate)
                             Catch ex As Exception

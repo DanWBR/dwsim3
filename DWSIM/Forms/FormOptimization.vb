@@ -506,7 +506,7 @@ Public Class FormOptimization
                 For i = 1 To Me.keysaux.Count
                     .Variables.Add(AobjName(i), Conversor.ConverterDoSI(Me.selectedoptcase.variables(Me.keysaux(i - 1)).unit, form.Collections.ObjectCollection(Me.selectedoptcase.variables(Me.keysaux(i - 1)).objectID).GetPropertyValue(AobjProp(i))))
                 Next
-                Me.selectedoptcase.exbase = .CompileGeneric(Of Double)(Me.selectedoptcase.expression)
+                Me.selectedoptcase.exbase = .CompileGeneric(Of Double)(Me.selectedoptcase.expression.Replace(","c, "."c))
             End With
             value = Me.selectedoptcase.exbase.Evaluate
         Else
@@ -613,7 +613,7 @@ Public Class FormOptimization
                                     .Variables(AobjName(j)) = form.FormSpreadsheet.GetCellValue(AobjProp(j)).Value
                                 End If
                             Next
-                            Me.selectedoptcase.exbase = .CompileGeneric(Of Double)(Me.selectedoptcase.expression)
+                            Me.selectedoptcase.exbase = .CompileGeneric(Of Double)(Me.selectedoptcase.expression.Replace(","c, "."c))
                         End With
                         f0 = Me.selectedoptcase.exbase.Evaluate + pen_val
                     Else
@@ -646,7 +646,7 @@ Public Class FormOptimization
                                     .Variables(AobjName(j)) = form.FormSpreadsheet.GetCellValue(AobjProp(j)).Value
                                 End If
                             Next
-                            Me.selectedoptcase.exbase = .CompileGeneric(Of Double)(Me.selectedoptcase.expression)
+                            Me.selectedoptcase.exbase = .CompileGeneric(Of Double)(Me.selectedoptcase.expression.Replace(","c, "."c))
                         End With
                         f1 = Me.selectedoptcase.exbase.Evaluate + pen_val
                     Else
@@ -677,7 +677,7 @@ Public Class FormOptimization
                                     .Variables(AobjName(j)) = form.FormSpreadsheet.GetCellValue(AobjProp(j)).Value
                                 End If
                             Next
-                            Me.selectedoptcase.exbase = .CompileGeneric(Of Double)(Me.selectedoptcase.expression)
+                            Me.selectedoptcase.exbase = .CompileGeneric(Of Double)(Me.selectedoptcase.expression.Replace(","c, "."c))
                         End With
                         f2 = Me.selectedoptcase.exbase.Evaluate + pen_val
                     Else
@@ -711,7 +711,7 @@ Public Class FormOptimization
                                 .Variables(AobjName(j)) = form.FormSpreadsheet.GetCellValue(AobjProp(j)).Value
                             End If
                         Next
-                        Me.selectedoptcase.exbase = .CompileGeneric(Of Double)(Me.selectedoptcase.expression)
+                        Me.selectedoptcase.exbase = .CompileGeneric(Of Double)(Me.selectedoptcase.expression.Replace(","c, "."c))
                     End With
                     f3 = Me.selectedoptcase.exbase.Evaluate + pen_val
                 Else
@@ -743,7 +743,7 @@ Public Class FormOptimization
                                     .Variables(AobjName(j)) = form.FormSpreadsheet.GetCellValue(AobjProp(j)).Value
                                 End If
                             Next
-                            Me.selectedoptcase.exbase = .CompileGeneric(Of Double)(Me.selectedoptcase.expression)
+                            Me.selectedoptcase.exbase = .CompileGeneric(Of Double)(Me.selectedoptcase.expression.Replace(","c, "."c))
                         End With
                         f4 = Me.selectedoptcase.exbase.Evaluate + pen_val
                     Else
@@ -785,7 +785,7 @@ Public Class FormOptimization
                             .Variables(AobjName(j)) = form.FormSpreadsheet.GetCellValue(AobjProp(j)).Value
                         End If
                     Next
-                    Me.selectedoptcase.exbase = .CompileGeneric(Of Double)(Me.selectedoptcase.expression)
+                    Me.selectedoptcase.exbase = .CompileGeneric(Of Double)(Me.selectedoptcase.expression.Replace(","c, "."c))
                 End With
                 Dim value As Double = Me.selectedoptcase.exbase.Evaluate
                 If Me.selectedoptcase.type = OPTType.Minimization Then f = value + pen_val Else f = -(value + pen_val)
@@ -866,7 +866,7 @@ Public Class FormOptimization
 
         Dim value As Double
         If Me.selectedoptcase.objfunctype = OPTObjectiveFunctionType.Expression Then
-            Me.selectedoptcase.exbase = Me.selectedoptcase.econtext.CompileGeneric(Of Double)(Me.selectedoptcase.expression)
+            Me.selectedoptcase.exbase = Me.selectedoptcase.econtext.CompileGeneric(Of Double)(Me.selectedoptcase.expression.Replace(","c, "."c))
             value = Me.selectedoptcase.exbase.Evaluate
         Else
             FobjID = Me.selectedoptcase.variables(Me.keydep).objectID
@@ -982,7 +982,7 @@ Public Class FormOptimization
                                     .Variables(AobjName(j)) = form.FormSpreadsheet.GetCellValue(AobjProp(j)).Value
                                 End If
                             Next
-                            Me.selectedoptcase.exbase = .CompileGeneric(Of Double)(Me.selectedoptcase.expression)
+                            Me.selectedoptcase.exbase = .CompileGeneric(Of Double)(Me.selectedoptcase.expression.Replace(","c, "."c))
                         End With
                         f0 = Me.selectedoptcase.exbase.Evaluate + pen_val
                     Else
@@ -1015,7 +1015,7 @@ Public Class FormOptimization
                                     .Variables(AobjName(j)) = form.FormSpreadsheet.GetCellValue(AobjProp(j)).Value
                                 End If
                             Next
-                            Me.selectedoptcase.exbase = .CompileGeneric(Of Double)(Me.selectedoptcase.expression)
+                            Me.selectedoptcase.exbase = .CompileGeneric(Of Double)(Me.selectedoptcase.expression.Replace(","c, "."c))
                         End With
                         f1 = Me.selectedoptcase.exbase.Evaluate + pen_val
                     Else
@@ -1046,7 +1046,7 @@ Public Class FormOptimization
                                     .Variables(AobjName(j)) = form.FormSpreadsheet.GetCellValue(AobjProp(j)).Value
                                 End If
                             Next
-                            Me.selectedoptcase.exbase = .CompileGeneric(Of Double)(Me.selectedoptcase.expression)
+                            Me.selectedoptcase.exbase = .CompileGeneric(Of Double)(Me.selectedoptcase.expression.Replace(","c, "."c))
                         End With
                         f2 = Me.selectedoptcase.exbase.Evaluate + pen_val
                     Else
@@ -1078,7 +1078,7 @@ Public Class FormOptimization
                                 .Variables(AobjName(j)) = form.FormSpreadsheet.GetCellValue(AobjProp(j)).Value
                             End If
                         Next
-                        Me.selectedoptcase.exbase = .CompileGeneric(Of Double)(Me.selectedoptcase.expression)
+                        Me.selectedoptcase.exbase = .CompileGeneric(Of Double)(Me.selectedoptcase.expression.Replace(","c, "."c))
                     End With
                     f3 = Me.selectedoptcase.exbase.Evaluate + pen_val
                 Else
@@ -1110,7 +1110,7 @@ Public Class FormOptimization
                                     .Variables(AobjName(j)) = form.FormSpreadsheet.GetCellValue(AobjProp(j)).Value
                                 End If
                             Next
-                            Me.selectedoptcase.exbase = .CompileGeneric(Of Double)(Me.selectedoptcase.expression)
+                            Me.selectedoptcase.exbase = .CompileGeneric(Of Double)(Me.selectedoptcase.expression.Replace(","c, "."c))
                         End With
                         f4 = Me.selectedoptcase.exbase.Evaluate + pen_val
                     Else
@@ -1402,7 +1402,7 @@ Public Class FormOptimization
                     End With
                 End If
             Next
-            Dim exbase As IGenericExpression(Of Double) = econtext.CompileGeneric(Of Double)(Me.tbExpression.Text)
+            Dim exbase As IGenericExpression(Of Double) = econtext.CompileGeneric(Of Double)(Me.tbExpression.Text.Replace(","c, "."c))
             Me.tbCurrentValue.Text = exbase.Evaluate
         Catch ex As Exception
             Me.tbCurrentValue.Text = ex.Message
