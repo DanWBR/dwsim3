@@ -140,6 +140,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             If Me.CalcMode = CalculationMode.DeltaP Then
                 P2 = Pi - Me.DeltaP.GetValueOrDefault
+                Me.OutletPressure = P2
             Else
                 P2 = Me.OutletPressure.GetValueOrDefault
                 Me.DeltaP = P2 - Pi
