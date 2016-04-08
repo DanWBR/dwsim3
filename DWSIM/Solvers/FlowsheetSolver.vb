@@ -229,6 +229,10 @@ Namespace DWSIM.Flowsheet
 
                 ms.Calculate(True, True)
 
+                ms.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
+
+                If ms.IsSpecAttached = True And ms.SpecVarType = DWSIM.SimulationObjects.SpecialOps.Helpers.Spec.TipoVar.Fonte Then form.Collections.CLCS_SpecCollection(ms.AttachedSpecId).Calculate()
+
                 form.UpdateStatusLabel(preLab)
 
                 form.WriteToLog(ms.GraphicObject.Tag & ": " & DWSIM.App.GetLocalString("Calculadocomsucesso"), Color.DarkGreen, DWSIM.FormClasses.TipoAviso.Informacao)
@@ -275,6 +279,8 @@ Namespace DWSIM.Flowsheet
 
             ms.Calculate(True, True)
 
+            ms.UpdatePropertyNodes(form.Options.SelectedUnitSystem, form.Options.NumberFormat)
+        
             form.ProcessScripts(Script.EventType.ObjectCalculationFinished, Script.ObjectType.FlowsheetObject, ms.Nome)
 
             RaiseEvent MaterialStreamCalculationFinished(form, New System.EventArgs(), ms)
