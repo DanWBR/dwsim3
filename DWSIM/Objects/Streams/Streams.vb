@@ -1144,7 +1144,11 @@ Namespace DWSIM.SimulationObjects.Streams
                 .PropertySort = PropertySort.Categorized
                 .ShowCustomProperties = True
 
+                Dim item = .SelectedGridItem
+
                 pgrid.ExpandGroup("[7] " & DWSIM.App.GetLocalString("Fraomolardafase"))
+
+                pgrid.SelectedGridItem = item
 
             End With
 

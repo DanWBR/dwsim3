@@ -16,8 +16,8 @@
 '    You should have received a copy of the GNU General Public License
 '    along with DWSIM.  If not, see <http://www.gnu.org/licenses/>.
 
-Imports Microsoft.MSDN.Samples.GraphicObjects
-Imports DWSIM.DWSIM.Flowsheet.FlowSheetSolver
+Imports Microsoft.Msdn.Samples.GraphicObjects
+Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
 
 Namespace DWSIM.SimulationObjects.UnitOps
 
@@ -360,6 +360,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Case 0
                     'PROP_TK_0	Pressure Drop
                     value = Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault)
+
+                Case 1
+                    'PROP_TK_1	Volume
+                    value = Conversor.ConverterDoSI(su.volume, Me.Volume)
+
+                Case 2
+                    'PROP_TK_2	Residence Time
+                    value = Conversor.ConverterDoSI(su.time, Me.ResidenceTime)
 
             End Select
 

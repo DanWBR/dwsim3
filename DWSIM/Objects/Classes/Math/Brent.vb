@@ -48,7 +48,7 @@ Namespace DWSIM.MathEx.BrentOpt
                 y = func(x_inf, otherargs)
                 x_inf = x_inf + delta_x
                 y_inf = func(x_inf, otherargs)
-            Loop Until y * y_inf < 0 Or x_inf > x_sup
+            Loop Until y * y_inf <= 0.0# Or x_inf > x_sup
             x_sup = x_inf - delta_x
 
             Dim aaa, bbb, ccc, ddd, eee, min11, min22, faa, fbb, fcc, ppp, qqq, rrr, sss, tol11, xmm As Double
@@ -65,13 +65,13 @@ Namespace DWSIM.MathEx.BrentOpt
 
             iter2 = 0
             Do
-                If (fbb > 0 And fcc > 0) Or (fbb < 0 And fcc < 0) Then
+                If (fbb > 0.0# And fcc > 0.0#) Or (fbb < 0.0# And fcc < 0.0#) Then
                     ccc = aaa
                     fcc = faa
                     ddd = bbb - aaa
                     eee = ddd
                 End If
-                If Math.Abs(fcc) < Math.Abs(fbb) Then
+                If Math.Abs(fcc) <= Math.Abs(fbb) Then
                     aaa = bbb
                     bbb = ccc
                     ccc = aaa
@@ -81,7 +81,7 @@ Namespace DWSIM.MathEx.BrentOpt
                 End If
                 tol11 = tol
                 xmm = 0.5 * (ccc - bbb)
-                If (Math.Abs(xmm) <= tol11) Or (fbb = 0) Then GoTo Final3
+                If (Math.Abs(xmm) <= tol11) Or (fbb = 0.0#) Then GoTo Final3
                 If Math.Abs(fbb) < tol11 Then GoTo Final3
                 If (Math.Abs(eee) >= tol11) And (Math.Abs(faa) > Math.Abs(fbb)) Then
                     sss = fbb / faa
