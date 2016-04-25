@@ -24,7 +24,6 @@ Partial Class FormWelcome
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormWelcome))
-        Me.Button7 = New System.Windows.Forms.Button()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.lvlatest = New System.Windows.Forms.ListView()
@@ -53,13 +52,6 @@ Partial Class FormWelcome
         Me.Label16 = New System.Windows.Forms.Label()
         Me.lvlatestfolders = New System.Windows.Forms.ListView()
         Me.SuspendLayout()
-        '
-        'Button7
-        '
-        resources.ApplyResources(Me.Button7, "Button7")
-        Me.Button7.ForeColor = System.Drawing.Color.Black
-        Me.Button7.Name = "Button7"
-        Me.Button7.UseVisualStyleBackColor = True
         '
         'Label11
         '
@@ -218,9 +210,10 @@ Partial Class FormWelcome
         'Button8
         '
         resources.ApplyResources(Me.Button8, "Button8")
+        Me.Button8.BackgroundImage = Global.DWSIM.My.Resources.Resources.paypal_donate
         Me.Button8.ForeColor = System.Drawing.Color.Black
         Me.Button8.Name = "Button8"
-        Me.Button8.UseVisualStyleBackColor = True
+        Me.Button8.UseVisualStyleBackColor = False
         '
         'Button5
         '
@@ -307,7 +300,6 @@ Partial Class FormWelcome
         Me.Controls.Add(Me.Label13)
         Me.Controls.Add(Me.Label14)
         Me.Controls.Add(Me.Button6)
-        Me.Controls.Add(Me.Button7)
         Me.Controls.Add(Me.Label11)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Label12)
@@ -329,10 +321,9 @@ Partial Class FormWelcome
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.ResumeLayout(False)
-        Me.PerformLayout
+        Me.PerformLayout()
 
-End Sub
-    Public WithEvents Button7 As System.Windows.Forms.Button
+    End Sub
     Public WithEvents Label10 As System.Windows.Forms.Label
     Public WithEvents Label9 As System.Windows.Forms.Label
     Public WithEvents Label4 As System.Windows.Forms.Label

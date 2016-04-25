@@ -54,7 +54,7 @@ Public Class FormWelcome
 
     End Sub
 
-    Private Sub KryptonButton3_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button7.Click
+    Private Sub KryptonButton3_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Me.Close()
     End Sub
 
