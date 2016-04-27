@@ -255,6 +255,18 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             objval = 0.0#
             objval0 = 0.0#
 
+            SwarmOps.Globals.Random = New RandomOps.MersenneTwister()
+            Dim sproblem As New GibbsProblem(Me) With {._Dim = initval.Length, ._LB = lconstr, ._UB = uconstr, ._Name = "Gibbs"}
+            Dim opt As New SwarmOps.Optimizers.PS(sproblem)
+            opt.MaxIterations = 1000
+            opt.RequireFeasible = True
+            Dim statistics As New SwarmOps.Statistics(opt, True)
+            Dim sresult = opt.Optimize(initval)
+            statistics.Compute()
+
+            initval = statistics.BestParameters
+            Dim val = FunctionValue(initval)
+
             Dim obj As Double
             Dim status As IpoptReturnCode
             Using problem As New Ipopt(initval.Length, lconstr, uconstr, 0, Nothing, Nothing, _
@@ -286,7 +298,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 WriteDebugInfo("PT Flash [GM]: Maximum iterations exceeded. Recalculating with Nested-Loops PT-Flash...")
                 result = _nl.Flash_PT(Vz, P, T, PP, ReuseKI, PrevKi)
             Else
-                FunctionValue(initval)
+                val = FunctionValue(initval)
                 result = New Object() {L, V, Vx1, Vy, ecount, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
             End If
 
@@ -1840,8 +1852,7 @@ out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, 
         End Function
 
         'Function Values
-
-        Private Function FunctionValue(ByVal x() As Double) As Double
+        Public Function FunctionValue(ByVal x() As Double) As Double
 
             CheckCalculatorStatus()
 
@@ -2060,7 +2071,7 @@ out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, 
 
         End Function
 
-        Private Function FunctionGradient(ByVal x() As Double) As Double()
+        Public Function FunctionGradient(ByVal x() As Double) As Double()
 
             Dim g(x.Length - 1) As Double
             Dim epsilon As Double = 0.000001
@@ -2262,7 +2273,7 @@ out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, 
 
         End Function
 
-        Private Function FunctionHessian(ByVal x() As Double) As Double()
+        Public Function FunctionHessian(ByVal x() As Double) As Double()
 
             Dim epsilon As Double = 0.001
 
@@ -2400,6 +2411,70 @@ out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, 
             objval0 = objval
             objval = obj_value
             Return True
+        End Function
+
+    End Class
+
+    Public Class GibbsProblem
+
+        Inherits SwarmOps.Problem
+
+        Public _Dim As Integer, _LB(), _UB() As Double, _Name As String
+
+        Private _gf As GibbsMinimization3P
+
+        Sub New(gf As GibbsMinimization3P)
+            _gf = gf
+        End Sub
+
+        Public Overrides ReadOnly Property Dimensionality As Integer
+            Get
+                Return _Dim
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property LowerBound As Double()
+            Get
+                Return _LB
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property MinFitness As Double
+            Get
+                Return Double.MinValue
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property Name As String
+            Get
+                Return _Name
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property UpperBound As Double()
+            Get
+                Return _UB
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property HasGradient As Boolean
+            Get
+                Return True
+            End Get
+        End Property
+
+        Public Overrides Function Gradient(x() As Double, ByRef v() As Double) As Integer
+
+            v = _gf.FunctionGradient(x)
+
+            Return 0
+
+        End Function
+
+        Public Overrides Function Fitness(parameters() As Double) As Double
+
+            Return _gf.FunctionValue(parameters)
+
         End Function
 
     End Class

@@ -1620,6 +1620,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AlgLib\AlgLib.csproj">
+      <Project>{3ed0d35e-07e6-48a4-91df-e0c85063aa7d}</Project>
+      <Name>AlgLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CoolPropInterface\CoolPropInterface.csproj">
       <Project>{a5f6e7cc-0710-4129-9faa-9fbe9bc4ffcf}</Project>
       <Name>CoolPropInterface</Name>
@@ -1651,6 +1655,14 @@
     <ProjectReference Include="..\PropertyGridEx\PropertyGridEx\PropertyGridEx.vbproj">
       <Project>{B0BB47F2-21C4-41FC-B6E6-40757ADFC4A1}</Project>
       <Name>PropertyGridEx</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RandomOps\RandomOps.csproj">
+      <Project>{f5dfafed-c786-4dc3-9818-16c992de3990}</Project>
+      <Name>RandomOps</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SwarmOps\SwarmOps.csproj">
+      <Project>{8f45efaa-9eac-403f-b2b0-123f0321056e}</Project>
+      <Name>SwarmOps</Name>
     </ProjectReference>
     <ProjectReference Include="..\TabStrip\TabStrip.csproj">
       <Project>{f929ca6a-87bd-42c8-8d0a-6455db6f55dc}</Project>
