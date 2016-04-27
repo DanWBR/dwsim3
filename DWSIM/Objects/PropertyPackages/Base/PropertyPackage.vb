@@ -2506,13 +2506,23 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
         Public Sub DW_CalcVazaoMassica()
             With Me.CurrentMaterialStream
-                .Fases(0).SPMProperties.massflow = .Fases(0).SPMProperties.molarflow.GetValueOrDefault * Me.AUX_MMM(Fase.Mixture) / 1000
+                Dim mw As Double = Me.AUX_MMM(Fase.Mixture)
+                If mw <> 0.0# Then
+                    .Fases(0).SPMProperties.massflow = .Fases(0).SPMProperties.molarflow.GetValueOrDefault * mw / 1000
+                Else
+                    .Fases(0).SPMProperties.massflow = 0.0#
+                End If
             End With
         End Sub
 
         Public Sub DW_CalcVazaoMolar()
             With Me.CurrentMaterialStream
-                .Fases(0).SPMProperties.molarflow = .Fases(0).SPMProperties.massflow.GetValueOrDefault / Me.AUX_MMM(Fase.Mixture) * 1000
+                Dim mw As Double = Me.AUX_MMM(Fase.Mixture)
+                If mw <> 0.0# Then
+                    .Fases(0).SPMProperties.molarflow = .Fases(0).SPMProperties.massflow.GetValueOrDefault / mw * 1000
+                Else
+                    .Fases(0).SPMProperties.molarflow = 0.0#
+                End If
             End With
         End Sub
 
@@ -5892,7 +5902,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
             Dim subst As DWSIM.ClassesBasicasTermodinamica.Substancia
 
             For Each subst In Me.CurrentMaterialStream.Fases(Me.RET_PHASEID(fase)).Componentes.Values
-                val += subst.FracaoMolar.GetValueOrDefault * subst.ConstantProperties.Molar_Weight
+                If Not Double.IsNaN(subst.FracaoMolar.GetValueOrDefault) Then val += subst.FracaoMolar.GetValueOrDefault * subst.ConstantProperties.Molar_Weight
             Next
 
             Return val
@@ -8023,7 +8033,7 @@ Final3:
             Dim i As Integer = 0
 
             For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
-                val += Vz(i) * subst.ConstantProperties.Molar_Weight
+                If Not Double.IsNaN(Vz(i)) Then val += Vz(i) * subst.ConstantProperties.Molar_Weight
                 i += 1
             Next
 

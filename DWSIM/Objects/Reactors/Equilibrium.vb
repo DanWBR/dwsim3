@@ -950,57 +950,13 @@ Namespace DWSIM.SimulationObjects.Reactors
                     ims.Fases(0).SPMProperties.temperature = Tout
                     T = ims.Fases(0).SPMProperties.temperature.GetValueOrDefault
 
-                    With pp
-                        .CurrentMaterialStream = ims
-                        'Calcular corrente de matéria com T e P
-                        '.DW_CalcVazaoMolar()
-                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
-                        If ims.Fases(1).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
-                        Else
-                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
-                        End If
-                        If ims.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                        Else
-                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                        End If
-                        .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Mixture)
-                        .DW_CalcOverallProps()
-                        .DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                        .DW_CalcCompMassFlow(-1)
-                        .DW_CalcCompMolarFlow(-1)
-                        .DW_CalcCompVolFlow(-1)
-                        .DW_CalcVazaoVolumetrica()
-
-                    End With
+                    pp.CurrentMaterialStream = ims
+                    ims.Calculate(True, True)
 
                 Case OperationMode.Isothermic
 
-                    With pp
-                        .CurrentMaterialStream = ims
-                        'Calcular corrente de matéria com T e P
-                        '.DW_CalcVazaoMolar()
-                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
-                        If ims.Fases(1).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
-                        Else
-                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
-                        End If
-                        If ims.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                        Else
-                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                        End If
-                        .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Mixture)
-                        .DW_CalcOverallProps()
-                        .DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                        .DW_CalcCompMassFlow(-1)
-                        .DW_CalcCompMolarFlow(-1)
-                        .DW_CalcCompVolFlow(-1)
-                        .DW_CalcVazaoVolumetrica()
-
-                    End With
+                    pp.CurrentMaterialStream = ims
+                    ims.Calculate(True, True)
 
                     'Products Enthalpy (kJ/kg * kg/s = kW)
                     Hp = ims.Fases(0).SPMProperties.enthalpy.GetValueOrDefault * ims.Fases(0).SPMProperties.massflow.GetValueOrDefault
@@ -1018,30 +974,8 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                     ims.Fases(0).SPMProperties.temperature = Tout
 
-                    With pp
-                        .CurrentMaterialStream = ims
-                        'Calcular corrente de matéria com T e P
-                        '.DW_CalcVazaoMolar()
-                        .DW_CalcEquilibrium(DWSIM.SimulationObjects.PropertyPackages.FlashSpec.T, DWSIM.SimulationObjects.PropertyPackages.FlashSpec.P)
-                        If ims.Fases(1).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
-                        Else
-                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid)
-                        End If
-                        If ims.Fases(2).SPMProperties.molarfraction.GetValueOrDefault > 0 Then
-                            .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                        Else
-                            .DW_ZerarPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                        End If
-                        .DW_CalcPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Mixture)
-                        .DW_CalcOverallProps()
-                        .DW_CalcTwoPhaseProps(DWSIM.SimulationObjects.PropertyPackages.Fase.Liquid, DWSIM.SimulationObjects.PropertyPackages.Fase.Vapor)
-                        .DW_CalcCompMassFlow(-1)
-                        .DW_CalcCompMolarFlow(-1)
-                        .DW_CalcCompVolFlow(-1)
-                        .DW_CalcVazaoVolumetrica()
-
-                    End With
+                    pp.CurrentMaterialStream = ims
+                    ims.Calculate(True, True)
 
                     'Products Enthalpy (kJ/kg * kg/s = kW)
                     Hp = ims.Fases(0).SPMProperties.enthalpy.GetValueOrDefault * ims.Fases(0).SPMProperties.massflow.GetValueOrDefault
@@ -1054,6 +988,7 @@ Namespace DWSIM.SimulationObjects.Reactors
             Dim W As Double = ims.Fases(0).SPMProperties.massflow.GetValueOrDefault
 
             'do a flash calc (calculate final temperature/enthalpy)
+            pp.CurrentMaterialStream = ims
             tmp = pp.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.T, PropertyPackages.FlashSpec.P, ims.Fases(0).SPMProperties.temperature.GetValueOrDefault, ims.Fases(0).SPMProperties.pressure.GetValueOrDefault, 0)
 
             'Return New Object() {xl, xv, T, P, H, S, 1, 1, Vx, Vy}
@@ -1108,12 +1043,8 @@ Namespace DWSIM.SimulationObjects.Reactors
                         j += 1
                     Next
                     .Fases(0).SPMProperties.massflow = W * (wtotaly * xv / (wtotaly * xv + wtotalx * xl))
-                    .Fases(0).SPMProperties.massfraction = (wtotaly * xv / (wtotaly * xv + wtotalx * xl))
-                    .Fases(0).SPMProperties.molarfraction = 1
-                    .Fases(3).SPMProperties.massfraction = 0
-                    .Fases(3).SPMProperties.molarfraction = 0
-                    .Fases(2).SPMProperties.massfraction = 1
-                    .Fases(2).SPMProperties.molarfraction = 1
+                    .Fases(0).SPMProperties.massfraction = 1.0#
+                    .Fases(0).SPMProperties.molarfraction = 1.0#
                 End With
             End If
 
@@ -1138,12 +1069,8 @@ Namespace DWSIM.SimulationObjects.Reactors
                         j += 1
                     Next
                     .Fases(0).SPMProperties.massflow = W * (wtotalx * xl / (wtotaly * xv + wtotalx * xl))
-                    .Fases(0).SPMProperties.massfraction = (wtotalx * xl / (wtotaly * xv + wtotalx * xl))
-                    .Fases(0).SPMProperties.molarfraction = 1
-                    .Fases(3).SPMProperties.massfraction = 1
-                    .Fases(3).SPMProperties.molarfraction = 1
-                    .Fases(2).SPMProperties.massfraction = 0
-                    .Fases(2).SPMProperties.molarfraction = 0
+                    .Fases(0).SPMProperties.massfraction = 1.0#
+                    .Fases(0).SPMProperties.molarfraction = 1.0#
                 End With
             End If
 
