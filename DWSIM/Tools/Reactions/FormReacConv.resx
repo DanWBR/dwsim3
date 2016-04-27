@@ -483,6 +483,9 @@
   <data name="tbExp.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
   </data>
+  <data name="tbExp.Text" xml:space="preserve">
+    <value>100</value>
+  </data>
   <data name="&gt;&gt;tbExp.Name" xml:space="preserve">
     <value>tbExp</value>
   </data>

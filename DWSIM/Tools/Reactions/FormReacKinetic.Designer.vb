@@ -135,13 +135,11 @@ Partial Class FormReacKinetic
         '
         'KryptonLabel18
         '
-        Me.KryptonLabel18.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         resources.ApplyResources(Me.KryptonLabel18, "KryptonLabel18")
         Me.KryptonLabel18.Name = "KryptonLabel18"
         '
         'KryptonLabel17
         '
-        Me.KryptonLabel17.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         resources.ApplyResources(Me.KryptonLabel17, "KryptonLabel17")
         Me.KryptonLabel17.Name = "KryptonLabel17"
         '
@@ -152,8 +150,8 @@ Partial Class FormReacKinetic
         '
         'KryptonLabel15
         '
-        Me.KryptonLabel15.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         resources.ApplyResources(Me.KryptonLabel15, "KryptonLabel15")
+        Me.KryptonLabel15.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.KryptonLabel15.Name = "KryptonLabel15"
         '
         'tbRevA
@@ -163,8 +161,8 @@ Partial Class FormReacKinetic
         '
         'KryptonLabel16
         '
-        Me.KryptonLabel16.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         resources.ApplyResources(Me.KryptonLabel16, "KryptonLabel16")
+        Me.KryptonLabel16.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.KryptonLabel16.Name = "KryptonLabel16"
         '
         'tbFwdE
@@ -174,7 +172,6 @@ Partial Class FormReacKinetic
         '
         'KryptonLabel14
         '
-        Me.KryptonLabel14.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         resources.ApplyResources(Me.KryptonLabel14, "KryptonLabel14")
         Me.KryptonLabel14.Name = "KryptonLabel14"
         '
@@ -185,8 +182,8 @@ Partial Class FormReacKinetic
         '
         'KryptonLabel13
         '
-        Me.KryptonLabel13.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         resources.ApplyResources(Me.KryptonLabel13, "KryptonLabel13")
+        Me.KryptonLabel13.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.KryptonLabel13.Name = "KryptonLabel13"
         '
         'KryptonLabel11
@@ -217,14 +214,14 @@ Partial Class FormReacKinetic
         '
         'KryptonLabel10
         '
-        Me.KryptonLabel10.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         resources.ApplyResources(Me.KryptonLabel10, "KryptonLabel10")
+        Me.KryptonLabel10.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.KryptonLabel10.Name = "KryptonLabel10"
         '
         'KryptonLabel5
         '
-        Me.KryptonLabel5.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         resources.ApplyResources(Me.KryptonLabel5, "KryptonLabel5")
+        Me.KryptonLabel5.ImageKey = Global.DWSIM.My.Resources.DWSIM.NewVersionAvailable
         Me.KryptonLabel5.Name = "KryptonLabel5"
         '
         'tbCompBase

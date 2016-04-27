@@ -120,19 +120,56 @@
   <data name="KryptonButton3.Text" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="KryptonLabel18.Text" xml:space="preserve">
-    <value>T in K</value>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Kinetic Reaction Parameters</value>
   </data>
-  <data name="KryptonLabel17.Text" xml:space="preserve">
-    <value>T in K</value>
+  <data name="GroupBox3.Text" xml:space="preserve">
+    <value>Direct and Reverse Reactions Velocity Constant (k and k')</value>
   </data>
-  <data name="KryptonLabel15.Text" xml:space="preserve">
-    <value>E '</value>
-  </data>
-  <data name="KryptonLabel16.Text" xml:space="preserve">
-    <value>A '</value>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="KryptonLabel18.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="KryptonLabel18.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 13</value>
+  </data>
+  <data name="KryptonLabel18.Text" xml:space="preserve">
+    <value>E' in J/mol, T in K</value>
+  </data>
+  <data name="KryptonLabel17.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="KryptonLabel17.Size" type="System.Drawing.Size, System.Drawing">
+    <value>88, 13</value>
+  </data>
+  <data name="KryptonLabel17.Text" xml:space="preserve">
+    <value>E in J/mol, T in K</value>
+  </data>
+  <data name="KryptonLabel15.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="KryptonLabel15.Size" type="System.Drawing.Size, System.Drawing">
+    <value>16, 13</value>
+  </data>
+  <data name="KryptonLabel16.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="KryptonLabel16.Size" type="System.Drawing.Size, System.Drawing">
+    <value>16, 13</value>
+  </data>
+  <data name="KryptonLabel14.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="KryptonLabel14.Size" type="System.Drawing.Size, System.Drawing">
+    <value>14, 13</value>
+  </data>
+  <data name="KryptonLabel13.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="KryptonLabel13.Size" type="System.Drawing.Size, System.Drawing">
+    <value>14, 13</value>
+  </data>
   <data name="KryptonLabel11.Size" type="System.Drawing.Size, System.Drawing">
     <value>65, 13</value>
   </data>
@@ -157,14 +194,23 @@
   <data name="cbVelUnit.Size" type="System.Drawing.Size, System.Drawing">
     <value>196, 21</value>
   </data>
+  <data name="KryptonLabel10.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="KryptonLabel10.Size" type="System.Drawing.Size, System.Drawing">
+    <value>189, 13</value>
+  </data>
   <data name="KryptonLabel10.Text" xml:space="preserve">
     <value>Reverse Reaction [k' = A' exp(-E'/RT)]</value>
   </data>
+  <data name="KryptonLabel5.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="KryptonLabel5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>171, 13</value>
+  </data>
   <data name="KryptonLabel5.Text" xml:space="preserve">
     <value>Direct Reaction [k = A exp(-E/RT)]</value>
-  </data>
-  <data name="GroupBox3.Text" xml:space="preserve">
-    <value>Direct and Reverse Reactions Velocity Constant (k and k')</value>
   </data>
   <data name="KryptonLabel9.Text" xml:space="preserve">
     <value>Base Component</value>
@@ -214,8 +260,8 @@
   <data name="tbPhase.Size" type="System.Drawing.Size, System.Drawing">
     <value>133, 21</value>
   </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Kinetic Reaction Parameters</value>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>Components, Stoichiometry and Reaction Orders</value>
   </data>
   <data name="KryptonLabel3.Text" xml:space="preserve">
     <value>Equation</value>
@@ -259,10 +305,9 @@
   <data name="KryptonLabel1.Text" xml:space="preserve">
     <value>Stoichiometry</value>
   </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>Components, Stoichiometry and Reaction Orders</value>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Identification</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="KryptonLabel19.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -274,8 +319,5 @@
   </data>
   <data name="KryptonLabel20.Text" xml:space="preserve">
     <value>Name</value>
-  </data>
-  <data name="GroupBox4.Text" xml:space="preserve">
-    <value>Identification</value>
   </data>
 </root>

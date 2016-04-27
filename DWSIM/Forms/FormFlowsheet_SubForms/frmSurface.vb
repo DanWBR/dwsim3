@@ -144,6 +144,10 @@ Public Class frmSurface
             End If
             Flowsheet.PopulatePGEx2(Me.FlowsheetDesignSurface.SelectedObject)
             Try
+                Dim selitem As String = ""
+                If PGEx1.SelectedGridItem IsNot Nothing Then selitem = PGEx1.SelectedGridItem.Label
+                Dim selitem2 As String = ""
+                If PGEx2.SelectedGridItem IsNot Nothing Then selitem2 = PGEx2.SelectedGridItem.Label
                 If Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_Tabela Then
                     CType(Me.FlowsheetDesignSurface.SelectedObject, DWSIM.GraphicObjects.TableGraphic).PopulateGrid(PGEx1)
                 ElseIf Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_MasterTable Then
@@ -153,13 +157,22 @@ Public Class frmSurface
                 Else
                     Flowsheet.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name).PopulatePropertyGrid(PGEx1, Flowsheet.Options.SelectedUnitSystem)
                 End If
+                If selitem <> "" Then
+                    Try
+                        PGEx1.EnumerateAllItems().Where(Function(x) x.Label = selitem)(0).Select()
+                    Catch ex As Exception
+                    End Try
+                End If
+                If selitem2 <> "" Then
+                    Try
+                        PGEx2.EnumerateAllItems().Where(Function(x) x.Label = selitem2)(0).Select()
+                    Catch ex As Exception
+                    End Try
+                End If
                 Flowsheet.FormProps.ResumeLayout()
             Catch ex As Exception
                 PGEx1.SelectedObject = Nothing
                 MessageBox.Show(ex.Message & " - " & ex.StackTrace, DWSIM.App.GetLocalString("Erro"), MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Finally
-                PGEx2.Refresh()
-                PGEx1.Refresh()
             End Try
 
         Else

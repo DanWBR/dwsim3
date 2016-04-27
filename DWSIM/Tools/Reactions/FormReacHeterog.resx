@@ -184,7 +184,7 @@
     <value>22</value>
   </data>
   <data name="Label1.Text" xml:space="preserve">
-    <value>Variáveis das equações: Temperatura (T) em K, quantidades dos reagentes e produtos (R1, R2, ..., Rn; P1, P2, ... PN), na unidade de quantidade selecionada e taxa de reação (r) na unidade de velocidade selecionada.</value>
+    <value>Variáveis das equações: Temperatura (T) em K, quantidades dos reagentes e produtos (R1, R2, ..., Rn; P1, P2, ... Pn), na unidade de quantidade selecionada e taxa de reação (r) na unidade de velocidade selecionada.</value>
   </data>
   <data name="&gt;&gt;Label1.Name" xml:space="preserve">
     <value>Label1</value>

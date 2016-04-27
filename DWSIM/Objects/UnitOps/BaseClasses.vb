@@ -334,7 +334,7 @@ Imports PropertyGridEx
                     Else
                         es.Energia = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_heatflow, e.ChangedItem.Value)
                     End If
-                    
+
                 End If
 
                 If FlowSheet.Options.CalculatorActivated Then
@@ -644,7 +644,7 @@ Imports PropertyGridEx
                     Else
                         bb.DeltaP = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_deltaP, e.ChangedItem.Value)
                     End If
-                 
+
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Presso")) Then
                     If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
                     If units <> "" Then
@@ -687,7 +687,7 @@ Imports PropertyGridEx
                     Else
                         bb.OutletTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
                     End If
-                    
+
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("ValveOutletPressure")) Then
 
                     If units <> "" Then
@@ -786,7 +786,7 @@ Imports PropertyGridEx
                     Else
                         bb.DeltaQ = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_heatflow, e.ChangedItem.Value)
                     End If
-                    
+
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("Quedadepresso")) Then
 
                     If Convert.ToDouble(e.ChangedItem.Value) < 0.0# Then Throw New InvalidCastException(DWSIM.App.GetLocalString("Ovalorinformadonovli"))
@@ -1114,7 +1114,7 @@ Imports PropertyGridEx
                     Else
                         bb.IsothermalTemperature = Conversor.ConverterParaSI(FlowSheet.Options.SelectedUnitSystem.spmp_temperature, e.ChangedItem.Value)
                     End If
-                    
+
                 ElseIf e.ChangedItem.Label.Contains(DWSIM.App.GetLocalString("HeaterCoolerOutletTemperature")) Then
 
                     If units <> "" Then
