@@ -783,7 +783,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                     q = .Fases(0).SPMProperties.volumetric_flow.GetValueOrDefault
                     rho = .Fases(0).SPMProperties.density.GetValueOrDefault
                     eta = .Fases(0).SPMProperties.viscosity.GetValueOrDefault
-                    Qlin = .Fases(1).SPMProperties.volumetric_flow.GetValueOrDefault
+                    Qlin = .Fases(3).SPMProperties.volumetric_flow.GetValueOrDefault + .Fases(4).SPMProperties.volumetric_flow.GetValueOrDefault + .Fases(6).SPMProperties.volumetric_flow.GetValueOrDefault
                     rho_l = .Fases(1).SPMProperties.density.GetValueOrDefault
                     eta_l = .Fases(1).SPMProperties.viscosity.GetValueOrDefault
                     tens = .Fases(0).TPMProperties.surfaceTension.GetValueOrDefault

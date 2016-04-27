@@ -746,7 +746,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
 
             End If
 
-            If phaseID > 0 Then
+            If phaseID > 0 And phaseID <> 1 Then
                 If Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density.GetValueOrDefault > 0 And overallmolarflow > 0 Then
                     result = overallmolarflow * phasemolarfrac * Me.AUX_MMM(fase) / 1000 / Me.CurrentMaterialStream.Fases(phaseID).SPMProperties.density.GetValueOrDefault
                 Else
