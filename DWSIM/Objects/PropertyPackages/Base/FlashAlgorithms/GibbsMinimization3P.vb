@@ -38,7 +38,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         Public ForceTwoPhaseOnly As Boolean = False
         Public L1sat As Double = 0.0#
-        Dim ThreePhase As Boolean = False
+        Public ThreePhase As Boolean = False
         Dim n, ecount As Integer
         Dim etol As Double = 0.01
         Dim itol As Double = 0.01
@@ -300,7 +300,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     SwarmOps.Globals.Random = New RandomOps.MersenneTwister()
 
-                    Dim sproblem As New GibbsProblem(Me) With {._Dim = initval.Length, ._LB = lconstr, ._UB = uconstr, ._Name = "Gibbs"}
+                    Dim sproblem As New GibbsProblem(Me) With {._Dim = initval.Length, ._LB = lconstr, ._UB = uconstr, ._INIT = initval, ._Name = "Gibbs"}
                     sproblem.MaxIterations = maxit_e * initval.Length * 10
                     sproblem.MinIterations = maxit_e * 10
                     sproblem.Tolerance = 0.0000000000000001
@@ -308,6 +308,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     opt.Problem = sproblem
                     opt.RequireFeasible = True
                     Dim sresult = opt.Optimize(opt.DefaultParameters)
+
+                    If Not sresult.Feasible Then Throw New Exception("PT Flash [GM]: Feasible solution not found after " & sresult.Iterations & " iterations.")
 
                     initval = sresult.Parameters
 
@@ -534,14 +536,16 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                                     SwarmOps.Globals.Random = New RandomOps.MersenneTwister()
 
-                                    Dim sproblem As New GibbsProblem(Me) With {._Dim = initval2.Length, ._LB = lconstr2, ._UB = uconstr2, ._Name = "Gibbs3P"}
+                                    Dim sproblem As New GibbsProblem(Me) With {._Dim = initval2.Length, ._LB = lconstr2, ._UB = uconstr2, ._INIT = initval2, ._Name = "Gibbs3P"}
                                     sproblem.MaxIterations = maxit_e * initval2.Length * 10
                                     sproblem.MinIterations = maxit_e * 10
-                                    sproblem.Tolerance = 0.0000000000000001
+                                    sproblem.Tolerance = 1.0E-20
                                     Dim opt As SwarmOps.Optimizer = GetSolver(Solver)
                                     opt.Problem = sproblem
                                     opt.RequireFeasible = True
                                     Dim sresult = opt.Optimize(opt.DefaultParameters)
+
+                                    If Not sresult.Feasible Then Throw New Exception("PT Flash [GM]: Feasible solution not found after " & sresult.Iterations & " iterations.")
 
                                     initval2 = sresult.Parameters
 
@@ -2367,29 +2371,6 @@ out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, 
 
         End Function
 
-        'ALGLIB
-
-        Public Function falglib(x() As Double, fx() As Double, jac As Double(,), obj As Object)
-
-            fx = New Double() {FunctionValue(x)}
-            Dim grad = FunctionGradient(x)
-            For i = 0 To grad.Length - 1
-                jac(0, i) = grad(i)
-            Next
-
-            Return Nothing
-
-        End Function
-
-        Public Function falglib2(x() As Double, ByRef fx As Double, grad As Double(), obj As Object)
-
-            fx = FunctionValue(x)
-            grad = FunctionGradient(x)
-
-            Return Nothing
-
-        End Function
-
         'IPOPT
 
         Public Function eval_f(ByVal n As Integer, ByVal x As Double(), ByVal new_x As Boolean, ByRef obj_value As Double) As Boolean
@@ -2533,6 +2514,17 @@ out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, 
             End Get
         End Property
 
+        Public Overrides ReadOnly Property LowerInit As Double()
+            Get
+                Return _INIT
+            End Get
+        End Property
+        Public Overrides ReadOnly Property UpperInit As Double()
+            Get
+                Return _INIT
+            End Get
+        End Property
+
         Public Overrides ReadOnly Property MinFitness As Double
             Get
                 Return Double.MinValue
@@ -2568,6 +2560,27 @@ out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, 
         Public Overrides Function Fitness(parameters() As Double) As Double
 
             Return _gf.FunctionValue(parameters)
+
+        End Function
+
+        Public Overrides Function Feasible(parameters() As Double) As Boolean
+
+            Dim n = parameters.Length / 2 - 1
+
+            If _gf.threephase Then
+                Dim constraints(n) As Double
+                _gf.eval_g(n + 1, parameters, False, n + 1, constraints)
+                Dim valid As Boolean = True
+                For i = 0 To n
+                    If constraints(i) < 0.0# Or constraints(i) > 1000.0# Then
+                        valid = False
+                        Exit For
+                    End If
+                Next
+                Return MyBase.Feasible(parameters) And valid
+            Else
+                Return MyBase.Feasible(parameters)
+            End If
 
         End Function
 
