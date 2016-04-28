@@ -74,8 +74,6 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
         Public Overrides Function Flash_PT(ByVal Vz() As Double, ByVal P As Double, ByVal T As Double, ByVal PP As PropertyPackage, Optional ByVal ReuseKI As Boolean = False, Optional ByVal PrevKi() As Double = Nothing) As Object
 
-            DWSIM.App.CheckParallelPInvoke()
-
             Dim i, j, k As Integer
 
             Dim d1, d2 As Date, dt As TimeSpan
@@ -287,6 +285,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     initval = solver.ComputeMin(AddressOf FunctionValue, variables)
                     solver = Nothing
                 Case OptimizationMethod.IPOPT
+                    DWSIM.App.CheckParallelPInvoke()
                     Using problem As New Ipopt(initval.Length, lconstr, uconstr, 0, Nothing, Nothing, _
                            0, 0, AddressOf eval_f, AddressOf eval_g, _
                            AddressOf eval_grad_f, AddressOf eval_jac_g, AddressOf eval_h)
