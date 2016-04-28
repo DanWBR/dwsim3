@@ -534,7 +534,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                                     SwarmOps.Globals.Random = New RandomOps.MersenneTwister()
 
                                     Dim sproblem As New GibbsProblem(Me) With {._Dim = initval2.Length, ._LB = lconstr2, ._UB = uconstr2, ._Name = "Gibbs3P"}
-                                    sproblem.MaxIterations = maxit_e * initval.Length
+                                    sproblem.MaxIterations = maxit_e * initval2.Length
                                     Dim opt As SwarmOps.Optimizer = GetSolver(Solver)
                                     opt.Problem = sproblem
                                     opt.RequireFeasible = True
