@@ -1620,10 +1620,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AlgLib\AlgLib.csproj">
-      <Project>{3ed0d35e-07e6-48a4-91df-e0c85063aa7d}</Project>
-      <Name>AlgLib</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CoolPropInterface\CoolPropInterface.csproj">
       <Project>{a5f6e7cc-0710-4129-9faa-9fbe9bc4ffcf}</Project>
       <Name>CoolPropInterface</Name>

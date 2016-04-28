@@ -301,8 +301,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     SwarmOps.Globals.Random = New RandomOps.MersenneTwister()
 
                     Dim sproblem As New GibbsProblem(Me) With {._Dim = initval.Length, ._LB = lconstr, ._UB = uconstr, ._Name = "Gibbs"}
-                    sproblem.MaxIterations = maxit_e * initval.Length
-                    sproblem.MinIterations = maxit_e
+                    sproblem.MaxIterations = maxit_e * initval.Length * 10
+                    sproblem.MinIterations = maxit_e * 10
                     sproblem.Tolerance = 0.0000000000000001
                     Dim opt As SwarmOps.Optimizer = GetSolver(Solver)
                     opt.Problem = sproblem
@@ -535,8 +535,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                                     SwarmOps.Globals.Random = New RandomOps.MersenneTwister()
 
                                     Dim sproblem As New GibbsProblem(Me) With {._Dim = initval2.Length, ._LB = lconstr2, ._UB = uconstr2, ._Name = "Gibbs3P"}
-                                    sproblem.MaxIterations = maxit_e * initval2.Length
-                                    sproblem.MinIterations = maxit_e
+                                    sproblem.MaxIterations = maxit_e * initval2.Length * 10
+                                    sproblem.MinIterations = maxit_e * 10
                                     sproblem.Tolerance = 0.0000000000000001
                                     Dim opt As SwarmOps.Optimizer = GetSolver(Solver)
                                     opt.Problem = sproblem
@@ -2364,6 +2364,29 @@ out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, 
             Next
 
             Return h
+
+        End Function
+
+        'ALGLIB
+
+        Public Function falglib(x() As Double, fx() As Double, jac As Double(,), obj As Object)
+
+            fx = New Double() {FunctionValue(x)}
+            Dim grad = FunctionGradient(x)
+            For i = 0 To grad.Length - 1
+                jac(0, i) = grad(i)
+            Next
+
+            Return Nothing
+
+        End Function
+
+        Public Function falglib2(x() As Double, ByRef fx As Double, grad As Double(), obj As Object)
+
+            fx = FunctionValue(x)
+            grad = FunctionGradient(x)
+
+            Return Nothing
 
         End Function
 

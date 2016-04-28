@@ -41,8 +41,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomOps", "RandomOps\Rand
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwarmOps", "SwarmOps\SwarmOps.csproj", "{8F45EFAA-9EAC-403F-B2B0-123F0321056E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgLib", "AlgLib\AlgLib.csproj", "{3ED0D35E-07E6-48A4-91DF-E0C85063AA7D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -231,16 +229,6 @@ Global
 		{8F45EFAA-9EAC-403F-B2B0-123F0321056E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{8F45EFAA-9EAC-403F-B2B0-123F0321056E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{8F45EFAA-9EAC-403F-B2B0-123F0321056E}.Release|x86.ActiveCfg = Release|Any CPU
-		{3ED0D35E-07E6-48A4-91DF-E0C85063AA7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3ED0D35E-07E6-48A4-91DF-E0C85063AA7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3ED0D35E-07E6-48A4-91DF-E0C85063AA7D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{3ED0D35E-07E6-48A4-91DF-E0C85063AA7D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{3ED0D35E-07E6-48A4-91DF-E0C85063AA7D}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{3ED0D35E-07E6-48A4-91DF-E0C85063AA7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3ED0D35E-07E6-48A4-91DF-E0C85063AA7D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3ED0D35E-07E6-48A4-91DF-E0C85063AA7D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{3ED0D35E-07E6-48A4-91DF-E0C85063AA7D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{3ED0D35E-07E6-48A4-91DF-E0C85063AA7D}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
