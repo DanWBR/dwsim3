@@ -334,6 +334,8 @@ Namespace DWSIM.FormClasses
 
         Public CalculateBubbleAndDewPoints As Boolean = False
 
+        Public PreferredGibbsMinimizationMethod As DWSIM.Optimization.OptimizationMethod = Optimization.OptimizationMethod.IPOPT
+
         Public ValidateEquilibriumCalc As Boolean = False
         Public UsePhaseIdentificationAlgorithm As Boolean = False
 

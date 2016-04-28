@@ -25,6 +25,7 @@ Imports Cureos.Numerics
 Imports DotNumerics.Optimization
 Imports System.Threading.Tasks
 Imports DotNumerics
+Imports DWSIM.DWSIM.Optimization
 
 Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
@@ -59,14 +60,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
         Dim Vant, T, Tant, P As Double
         Dim Ki1(n) As Double
 
-        Public Enum numsolver
-            Limited_Memory_BGFS = 0
-            Truncated_Newton = 1
-            Simplex = 2
-            IPOPT = 3
-        End Enum
-
-        Public Property Solver As numsolver = numsolver.IPOPT
+        Public Property Solver As OptimizationMethod = OptimizationMethod.IPOPT
 
         Public Enum ObjFuncType As Integer
             MinGibbs = 0
@@ -255,32 +249,68 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             objval = 0.0#
             objval0 = 0.0#
 
-            SwarmOps.Globals.Random = New RandomOps.MersenneTwister()
-            Dim sproblem As New GibbsProblem(Me) With {._Dim = initval.Length, ._LB = lconstr, ._UB = uconstr, ._Name = "Gibbs"}
-            Dim opt As New SwarmOps.Optimizers.PS(sproblem)
-            opt.MaxIterations = 1000
-            opt.RequireFeasible = True
-            Dim statistics As New SwarmOps.Statistics(opt, True)
-            Dim sresult = opt.Optimize(initval)
-            statistics.Compute()
-
-            initval = statistics.BestParameters
-            Dim val = FunctionValue(initval)
-
             Dim obj As Double
-            Dim status As IpoptReturnCode
-            Using problem As New Ipopt(initval.Length, lconstr, uconstr, 0, Nothing, Nothing, _
-             0, 0, AddressOf eval_f, AddressOf eval_g, _
-             AddressOf eval_grad_f, AddressOf eval_jac_g, AddressOf eval_h)
-                problem.AddOption("tol", etol)
-                problem.AddOption("max_iter", maxit_e)
-                problem.AddOption("mu_strategy", "adaptive")
-                problem.AddOption("hessian_approximation", "limited-memory")
-                'problem.AddOption("hessian_approximation", "exact")
-                'problem.SetIntermediateCallback(AddressOf intermediate)
-                'solve the problem 
-                status = problem.SolveProblem(initval, obj, Nothing, Nothing, Nothing, Nothing)
-            End Using
+            Dim status As IpoptReturnCode = IpoptReturnCode.Feasible_Point_Found
+
+            objval = 0.0#
+            objval0 = 0.0#
+
+            Select Case Me.Solver
+                Case OptimizationMethod.Limited_Memory_BGFS
+                    Dim variables(n) As OptBoundVariable
+                    For i = 0 To n
+                        variables(i) = New OptBoundVariable("x" & CStr(i + 1), initval(i), False, lconstr(i), uconstr(i))
+                    Next
+                    Dim solver As New L_BFGS_B
+                    solver.Tolerance = etol
+                    solver.MaxFunEvaluations = maxit_e
+                    initval = solver.ComputeMin(AddressOf FunctionValue, AddressOf FunctionGradient, variables)
+                    solver = Nothing
+                Case OptimizationMethod.Truncated_Newton
+                    Dim variables(n) As OptBoundVariable
+                    For i = 0 To n
+                        variables(i) = New OptBoundVariable("x" & CStr(i + 1), initval(i), False, lconstr(i), uconstr(i))
+                    Next
+                    Dim solver As New TruncatedNewton
+                    solver.Tolerance = etol
+                    solver.MaxFunEvaluations = maxit_e
+                    initval = solver.ComputeMin(AddressOf FunctionValue, AddressOf FunctionGradient, variables)
+                    solver = Nothing
+                Case OptimizationMethod.Simplex
+                    Dim variables(n) As OptBoundVariable
+                    For i = 0 To n
+                        variables(i) = New OptBoundVariable("x" & CStr(i + 1), initval(i), False, lconstr(i), uconstr(i))
+                    Next
+                    Dim solver As New Simplex
+                    solver.Tolerance = etol
+                    solver.MaxFunEvaluations = maxit_e
+                    initval = solver.ComputeMin(AddressOf FunctionValue, variables)
+                    solver = Nothing
+                Case OptimizationMethod.IPOPT
+                    Using problem As New Ipopt(initval.Length, lconstr, uconstr, 0, Nothing, Nothing, _
+                           0, 0, AddressOf eval_f, AddressOf eval_g, _
+                           AddressOf eval_grad_f, AddressOf eval_jac_g, AddressOf eval_h)
+                        problem.AddOption("tol", etol)
+                        problem.AddOption("max_iter", maxit_e)
+                        problem.AddOption("mu_strategy", "adaptive")
+                        problem.AddOption("hessian_approximation", "limited-memory")
+                        status = problem.SolveProblem(initval, obj, Nothing, Nothing, Nothing, Nothing)
+                    End Using
+                Case OptimizationMethod.DifferentialEvolution, OptimizationMethod.GradientDescent, OptimizationMethod.LocalUnimodalSampling,
+                    OptimizationMethod.ManyOptimizingLiaisons, OptimizationMethod.Mesh, OptimizationMethod.ParticleSwarm, OptimizationMethod.ParticleSwarmOptimization
+
+                    SwarmOps.Globals.Random = New RandomOps.MersenneTwister()
+
+                    Dim sproblem As New GibbsProblem(Me) With {._Dim = initval.Length, ._LB = lconstr, ._UB = uconstr, ._Name = "Gibbs"}
+                    sproblem.MaxIterations = maxit_e * initval.Length
+                    Dim opt As SwarmOps.Optimizer = GetSolver(Solver)
+                    opt.Problem = sproblem
+                    opt.RequireFeasible = True
+                    Dim sresult = opt.Optimize(opt.DefaultParameters)
+
+                    initval = sresult.Parameters
+
+            End Select
 
             For i = 0 To initval.Length - 1
                 If Double.IsNaN(initval(i)) Then initval(i) = 0.0#
@@ -298,7 +328,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 WriteDebugInfo("PT Flash [GM]: Maximum iterations exceeded. Recalculating with Nested-Loops PT-Flash...")
                 result = _nl.Flash_PT(Vz, P, T, PP, ReuseKI, PrevKi)
             Else
-                val = FunctionValue(initval)
+                FunctionValue(initval)
                 result = New Object() {L, V, Vx1, Vy, ecount, 0.0#, PP.RET_NullVector, 0.0#, PP.RET_NullVector}
             End If
 
@@ -452,10 +482,10 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                             objval = 0.0#
                             objval0 = 0.0#
 
-                            Solver = numsolver.IPOPT
+                            status = IpoptReturnCode.Invalid_Problem_Definition
 
                             Select Case Me.Solver
-                                Case numsolver.Limited_Memory_BGFS
+                                Case OptimizationMethod.Limited_Memory_BGFS
                                     Dim variables(2 * n + 1) As OptBoundVariable
                                     For i = 0 To 2 * n + 1
                                         variables(i) = New OptBoundVariable("x" & CStr(i + 1), initval2(i), False, lconstr2(i), uconstr2(i))
@@ -465,7 +495,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                                     solver.MaxFunEvaluations = maxit_e
                                     initval2 = solver.ComputeMin(AddressOf FunctionValue, AddressOf FunctionGradient, variables)
                                     solver = Nothing
-                                Case numsolver.Truncated_Newton
+                                Case OptimizationMethod.Truncated_Newton
                                     Dim variables(2 * n + 1) As OptBoundVariable
                                     For i = 0 To 2 * n + 1
                                         variables(i) = New OptBoundVariable("x" & CStr(i + 1), initval2(i), False, lconstr2(i), uconstr2(i))
@@ -475,7 +505,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                                     solver.MaxFunEvaluations = maxit_e
                                     initval2 = solver.ComputeMin(AddressOf FunctionValue, AddressOf FunctionGradient, variables)
                                     solver = Nothing
-                                Case numsolver.Simplex
+                                Case OptimizationMethod.Simplex
                                     Dim variables(2 * n + 1) As OptBoundVariable
                                     For i = 0 To 2 * n + 1
                                         variables(i) = New OptBoundVariable("x" & CStr(i + 1), initval2(i), False, lconstr2(i), uconstr2(i))
@@ -485,7 +515,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                                     solver.MaxFunEvaluations = maxit_e
                                     initval2 = solver.ComputeMin(AddressOf FunctionValue, variables)
                                     solver = Nothing
-                                Case numsolver.IPOPT
+                                Case OptimizationMethod.IPOPT
                                     Using problem As New Ipopt(initval2.Length, lconstr2, uconstr2, n + 1, glow, gup, (n + 1) * 2, 0, _
                                             AddressOf eval_f, AddressOf eval_g, _
                                             AddressOf eval_grad_f, AddressOf eval_jac_g, AddressOf eval_h)
@@ -498,6 +528,20 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                                         'solve the problem 
                                         status = problem.SolveProblem(initval2, obj, g, Nothing, Nothing, Nothing)
                                     End Using
+                                Case OptimizationMethod.DifferentialEvolution, OptimizationMethod.GradientDescent, OptimizationMethod.LocalUnimodalSampling,
+                                        OptimizationMethod.ManyOptimizingLiaisons, OptimizationMethod.Mesh, OptimizationMethod.ParticleSwarm, OptimizationMethod.ParticleSwarmOptimization
+
+                                    SwarmOps.Globals.Random = New RandomOps.MersenneTwister()
+
+                                    Dim sproblem As New GibbsProblem(Me) With {._Dim = initval2.Length, ._LB = lconstr2, ._UB = uconstr2, ._Name = "Gibbs3P"}
+                                    sproblem.MaxIterations = maxit_e * initval.Length
+                                    Dim opt As SwarmOps.Optimizer = GetSolver(Solver)
+                                    opt.Problem = sproblem
+                                    opt.RequireFeasible = True
+                                    Dim sresult = opt.Optimize(opt.DefaultParameters)
+
+                                    initval2 = sresult.Parameters
+
                             End Select
 
                             For i = 0 To initval2.Length - 1
@@ -2413,13 +2457,36 @@ out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, 
             Return True
         End Function
 
+        Private Function GetSolver(solver As OptimizationMethod) As SwarmOps.Optimizer
+
+            Select Case solver
+                Case OptimizationMethod.DifferentialEvolution
+                    Return New SwarmOps.Optimizers.DE()
+                Case OptimizationMethod.GradientDescent
+                    Return New SwarmOps.Optimizers.GD()
+                Case OptimizationMethod.LocalUnimodalSampling
+                    Return New SwarmOps.Optimizers.LUS()
+                Case OptimizationMethod.ManyOptimizingLiaisons
+                    Return New SwarmOps.Optimizers.MOL()
+                Case OptimizationMethod.Mesh
+                    Return New SwarmOps.Optimizers.MESH()
+                Case OptimizationMethod.ParticleSwarm
+                    Return New SwarmOps.Optimizers.PS()
+                Case OptimizationMethod.ParticleSwarmOptimization
+                    Return New SwarmOps.Optimizers.PSO()
+                Case Else
+                    Return Nothing
+            End Select
+
+        End Function
+
     End Class
 
     Public Class GibbsProblem
 
         Inherits SwarmOps.Problem
 
-        Public _Dim As Integer, _LB(), _UB() As Double, _Name As String
+        Public _Dim As Integer, _LB(), _UB(), _INIT() As Double, _Name As String
 
         Private _gf As GibbsMinimization3P
 
