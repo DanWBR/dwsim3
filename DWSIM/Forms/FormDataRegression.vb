@@ -63,7 +63,6 @@ Public Class FormDataRegression
         'get list of compounds
         Dim compounds As New ArrayList
         For Each c As ConstantProperties In FormMain.AvailableComponents.Values
-            'compounds.Add(DWSIM.App.GetComponentName(c.Name))
             compounds.Add(c.Name)
         Next
 
@@ -206,10 +205,10 @@ Public Class FormDataRegression
                     gridInEst.Rows.Add(New Object() {"kij", .llim1, .iepar1, .ulim1, .fixed1})
                 Case "UNIQUAC"
                     gridInEst.Rows.Clear()
-                    If .llim1 = 0.0# Then .llim1 = -10000.0#
-                    If .ulim1 = 0.0# Then .ulim1 = 10000.0#
-                    If .llim2 = 0.0# Then .llim2 = -10000.0#
-                    If .ulim2 = 0.0# Then .ulim2 = 10000.0#
+                    If .llim1 = 0.0# Then .llim1 = -5000.0#
+                    If .ulim1 = 0.0# Then .ulim1 = 5000.0#
+                    If .llim2 = 0.0# Then .llim2 = -5000.0#
+                    If .ulim2 = 0.0# Then .ulim2 = 5000.0#
                     gridInEst.Rows.Add(New Object() {"A12 (cal/mol)", .llim1, .iepar1, .ulim1, .fixed1})
                     gridInEst.Rows.Add(New Object() {"A21 (cal/mol)", .llim2, .iepar2, .ulim2, .fixed2})
                 Case "PRSV2-M", "PRSV2-VL"
@@ -222,16 +221,17 @@ Public Class FormDataRegression
                     gridInEst.Rows.Add(New Object() {"kji", .llim2, .iepar2, .ulim2, .fixed2})
                 Case "NRTL"
                     gridInEst.Rows.Clear()
-                    If .llim1 = 0.0# Then .llim1 = -10000.0#
-                    If .ulim1 = 0.0# Then .ulim1 = 10000.0#
-                    If .llim2 = 0.0# Then .llim2 = -10000.0#
-                    If .ulim2 = 0.0# Then .ulim2 = 10000.0#
+                    If .llim1 = 0.0# Then .llim1 = -5000.0#
+                    If .ulim1 = 0.0# Then .ulim1 = 5000.0#
+                    If .llim2 = 0.0# Then .llim2 = -5000.0#
+                    If .ulim2 = 0.0# Then .ulim2 = 5000.0#
                     If .llim2 = 0.0# Then .llim2 = 0.0#
                     If .ulim2 = 0.0# Then .ulim2 = 0.8#
                     gridInEst.Rows.Add(New Object() {"A12 (cal/mol)", .llim1, .iepar1, .ulim1, .fixed1})
                     gridInEst.Rows.Add(New Object() {"A21 (cal/mol)", .llim2, .iepar2, .ulim2, .fixed2})
                     gridInEst.Rows.Add(New Object() {"alpha12", .llim3, .iepar3, .ulim3, .fixed3})
             End Select
+
             Me.chkTL.Checked = .useTLdata
             Me.chkTS.Checked = .useTSdata
             Me.chkIdealVaporPhase.Checked = .idealvapormodel
@@ -243,8 +243,11 @@ Public Class FormDataRegression
             Me.tbTitle.Text = .title
             Me.tbDescription.Text = .description
             Me.tbIPDBName.Text = .databasepath
+
             Dim val0 As Boolean, val1, val2, val3, val4, val5, val6, val7 As String, i As Integer
+
             If .checkp Is Nothing Then .checkp = New ArrayList
+
             For i = 0 To .x1p.Count - 1
                 If .checkp.Count - 1 >= i Then val0 = .checkp(i) Else val0 = True
                 If Double.TryParse(.x1p(i), New Double) Then val1 = Double.Parse(.x1p(i)).ToString() Else val1 = ""
@@ -3508,44 +3511,44 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
         Select Case currcase.model
             Case "PC-SAFT"
                 initval2 = initval
-                lconstr2 = New Double() {-0.5#}
-                uconstr2 = New Double() {0.5#}
+                lconstr2 = New Double() {currcase.llim1}
+                uconstr2 = New Double() {currcase.ulim1}
                 fixed = New Boolean() {currcase.fixed1}
                 nvar = 1
             Case "Peng-Robinson"
                 initval2 = initval
-                lconstr2 = New Double() {-0.5#}
-                uconstr2 = New Double() {0.5#}
+                lconstr2 = New Double() {currcase.llim1}
+                uconstr2 = New Double() {currcase.ulim1}
                 fixed = New Boolean() {currcase.fixed1}
                 nvar = 1
             Case "PRSV2-M", "PRSV2-VL"
                 nvar = 2
                 initval2 = initval
-                lconstr2 = New Double() {-0.5#, -0.5#}
-                uconstr2 = New Double() {0.5#, 0.5#}
+                lconstr2 = New Double() {currcase.llim1, currcase.llim2}
+                uconstr2 = New Double() {currcase.ulim1, currcase.ulim2}
                 fixed = New Boolean() {currcase.fixed1, currcase.fixed2}
             Case "Soave-Redlich-Kwong"
                 initval2 = initval
-                lconstr2 = New Double() {-0.5#}
-                uconstr2 = New Double() {0.5#}
+                lconstr2 = New Double() {currcase.llim1}
+                uconstr2 = New Double() {currcase.ulim1}
                 nvar = 1
                 fixed = New Boolean() {currcase.fixed1}
             Case "UNIQUAC"
                 nvar = 2
                 initval2 = initval
-                lconstr2 = New Double() {-10000.0#, -10000.0#}
-                uconstr2 = New Double() {10000.0#, 10000.0#}
+                lconstr2 = New Double() {currcase.llim1, currcase.llim2}
+                uconstr2 = New Double() {currcase.ulim1, currcase.ulim2}
                 fixed = New Boolean() {currcase.fixed1, currcase.fixed2}
             Case "NRTL"
                 nvar = 3
                 initval2 = initval
-                lconstr2 = New Double() {-10000.0#, -10000.0#, 0.0#}
-                uconstr2 = New Double() {10000.0#, 10000.0#, 0.8#}
+                lconstr2 = New Double() {currcase.llim1, currcase.llim2, currcase.llim3}
+                uconstr2 = New Double() {currcase.ulim1, currcase.ulim2, currcase.ulim3}
                 fixed = New Boolean() {currcase.fixed1, currcase.fixed2, currcase.fixed3}
             Case "Lee-Kesler-Plöcker"
                 initval2 = initval
-                lconstr2 = New Double() {0.9#}
-                uconstr2 = New Double() {1.1#}
+                lconstr2 = New Double() {currcase.llim1}
+                uconstr2 = New Double() {currcase.ulim1}
                 nvar = 1
                 fixed = New Boolean() {currcase.fixed1}
         End Select

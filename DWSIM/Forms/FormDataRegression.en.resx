@@ -118,9 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="graph.Size" type="System.Drawing.Size, System.Drawing">
-    <value>686, 439</value>
-  </data>
   <data name="FaTabStripItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>686, 439</value>
   </data>
@@ -129,6 +126,18 @@
   </data>
   <data name="FaTabStripItem2.Title" xml:space="preserve">
     <value>y-x chart</value>
+  </data>
+  <data name="FaTabStripItem3.Title" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="FaTabStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>688, 460</value>
+  </data>
+  <data name="graph.Size" type="System.Drawing.Size, System.Drawing">
+    <value>686, 439</value>
+  </data>
+  <data name="ContextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>222, 158</value>
   </data>
   <data name="ToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>221, 22</value>
@@ -172,15 +181,6 @@
   <data name="ToolStripMenuItem7.Text" xml:space="preserve">
     <value>Generate Points (PRSV2-VL)</value>
   </data>
-  <data name="ContextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>222, 158</value>
-  </data>
-  <data name="FaTabStripItem3.Title" xml:space="preserve">
-    <value>Data</value>
-  </data>
-  <data name="FaTabStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>688, 460</value>
-  </data>
   <data name="GroupBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>491, 555</value>
   </data>
@@ -193,8 +193,20 @@
   <data name="btnDoReg.Text" xml:space="preserve">
     <value>Run Regression</value>
   </data>
+  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>482, 611</value>
+  </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>Regression Information</value>
+  </data>
+  <data name="Panel1.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>476, 592</value>
+  </data>
+  <data name="Panel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>476, 592</value>
+  </data>
   <data name="chkDoTDepRegression.Location" type="System.Drawing.Point, System.Drawing">
-    <value>13, 482</value>
+    <value>13, 511</value>
   </data>
   <data name="chkDoTDepRegression.Size" type="System.Drawing.Size, System.Drawing">
     <value>248, 17</value>
@@ -266,13 +278,16 @@
     <value>Calc Once</value>
   </data>
   <data name="cbObjFunc.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 532</value>
+    <value>294, 534</value>
+  </data>
+  <data name="cbObjFunc.Size" type="System.Drawing.Size, System.Drawing">
+    <value>150, 21</value>
   </data>
   <data name="LabelWithDivider12.Text" xml:space="preserve">
     <value>Compounds</value>
   </data>
   <data name="Label7.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 535</value>
+    <value>192, 537</value>
   </data>
   <data name="Label7.Size" type="System.Drawing.Size, System.Drawing">
     <value>96, 13</value>
@@ -287,16 +302,16 @@
     <value>Compounds</value>
   </data>
   <data name="cbRegMethod.Location" type="System.Drawing.Point, System.Drawing">
-    <value>109, 505</value>
+    <value>59, 534</value>
   </data>
   <data name="Label6.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 508</value>
+    <value>10, 537</value>
   </data>
   <data name="Label6.Text" xml:space="preserve">
     <value>Method</value>
   </data>
   <data name="LabelWithDivider3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 462</value>
+    <value>10, 491</value>
   </data>
   <data name="LabelWithDivider3.Text" xml:space="preserve">
     <value>Regression Parameters</value>
@@ -308,7 +323,7 @@
     <value>Model</value>
   </data>
   <data name="GridExpData.Size" type="System.Drawing.Size, System.Drawing">
-    <value>431, 184</value>
+    <value>431, 215</value>
   </data>
   <data name="cbDataType.Items" xml:space="preserve">
     <value>Txy (VLE)</value>
@@ -346,17 +361,8 @@
   <data name="LabelWithDivider2.Text" xml:space="preserve">
     <value>Experimental Data</value>
   </data>
-  <data name="Panel1.MinimumSize" type="System.Drawing.Size, System.Drawing">
-    <value>476, 592</value>
-  </data>
-  <data name="Panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>476, 592</value>
-  </data>
-  <data name="GroupBox2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>482, 611</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>Regression Information</value>
+  <data name="GroupBox4.Text" xml:space="preserve">
+    <value>Information</value>
   </data>
   <data name="BtnSelectIPDB.Location" type="System.Drawing.Point, System.Drawing">
     <value>233, 45</value>
@@ -399,9 +405,6 @@
   </data>
   <data name="Label10.Text" xml:space="preserve">
     <value>Title</value>
-  </data>
-  <data name="GroupBox4.Text" xml:space="preserve">
-    <value>Information</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>1183, 714</value>
