@@ -29,6 +29,7 @@ Partial Class FormDataRegression
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.FaTabStrip1 = New FarsiLibrary.Win.FATabStrip()
         Me.FaTabStripItem1 = New FarsiLibrary.Win.FATabStripItem()
         Me.graph = New ZedGraph.ZedGraphControl()
@@ -86,7 +87,9 @@ Partial Class FormDataRegression
         Me.Label9 = New System.Windows.Forms.Label()
         Me.gridInEst = New System.Windows.Forms.DataGridView()
         Me.colpar = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colmin = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colval = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colmax = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.cf = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.btnCancel = New System.Windows.Forms.Button()
         Me.cbPunit = New System.Windows.Forms.ComboBox()
@@ -99,7 +102,6 @@ Partial Class FormDataRegression
         Me.Label7 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.cbRegMethod = New System.Windows.Forms.ComboBox()
-        Me.Label3 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.cbCompound1 = New System.Windows.Forms.ComboBox()
         Me.LabelWithDivider3 = New System.Windows.Forms.LabelWithDivider()
@@ -125,7 +127,6 @@ Partial Class FormDataRegression
         Me.Label12 = New System.Windows.Forms.Label()
         Me.tbIPDBName = New System.Windows.Forms.TextBox()
         Me.BtnNewIPDB = New System.Windows.Forms.Button()
-        Me.LabelWithDivider4 = New System.Windows.Forms.LabelWithDivider()
         Me.tbDescription = New System.Windows.Forms.TextBox()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.tbTitle = New System.Windows.Forms.TextBox()
@@ -478,7 +479,6 @@ Partial Class FormDataRegression
         Me.Panel1.Controls.Add(Me.Label2)
         Me.Panel1.Controls.Add(Me.cbRegMethod)
         Me.Panel1.Controls.Add(Me.btnDoReg)
-        Me.Panel1.Controls.Add(Me.Label3)
         Me.Panel1.Controls.Add(Me.Label6)
         Me.Panel1.Controls.Add(Me.cbCompound1)
         Me.Panel1.Controls.Add(Me.LabelWithDivider3)
@@ -550,8 +550,16 @@ Partial Class FormDataRegression
         DataGridViewCellStyle2.BackColor = System.Drawing.Color.WhiteSmoke
         Me.gridInEst.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle2
         Me.gridInEst.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.gridInEst.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.gridInEst.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.gridInEst.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colpar, Me.colval, Me.cf})
+        Me.gridInEst.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colpar, Me.colmin, Me.colval, Me.colmax, Me.cf})
         Me.gridInEst.Name = "gridInEst"
         Me.gridInEst.RowHeadersVisible = False
         '
@@ -563,14 +571,24 @@ Partial Class FormDataRegression
         Me.colpar.ReadOnly = True
         Me.colpar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
+        'colmin
+        '
+        resources.ApplyResources(Me.colmin, "colmin")
+        Me.colmin.Name = "colmin"
+        '
         'colval
         '
         Me.colval.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        DataGridViewCellStyle3.Format = "N4"
-        Me.colval.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle4.Format = "N4"
+        Me.colval.DefaultCellStyle = DataGridViewCellStyle4
         resources.ApplyResources(Me.colval, "colval")
         Me.colval.Name = "colval"
         Me.colval.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'colmax
+        '
+        resources.ApplyResources(Me.colmax, "colmax")
+        Me.colmax.Name = "colmax"
         '
         'cf
         '
@@ -646,13 +664,8 @@ Partial Class FormDataRegression
         resources.ApplyResources(Me.cbRegMethod, "cbRegMethod")
         Me.cbRegMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbRegMethod.FormattingEnabled = True
-        Me.cbRegMethod.Items.AddRange(New Object() {resources.GetString("cbRegMethod.Items"), resources.GetString("cbRegMethod.Items1"), resources.GetString("cbRegMethod.Items2"), resources.GetString("cbRegMethod.Items3")})
+        Me.cbRegMethod.Items.AddRange(New Object() {resources.GetString("cbRegMethod.Items"), resources.GetString("cbRegMethod.Items1"), resources.GetString("cbRegMethod.Items2"), resources.GetString("cbRegMethod.Items3"), resources.GetString("cbRegMethod.Items4"), resources.GetString("cbRegMethod.Items5"), resources.GetString("cbRegMethod.Items6"), resources.GetString("cbRegMethod.Items7"), resources.GetString("cbRegMethod.Items8"), resources.GetString("cbRegMethod.Items9"), resources.GetString("cbRegMethod.Items10")})
         Me.cbRegMethod.Name = "cbRegMethod"
-        '
-        'Label3
-        '
-        resources.ApplyResources(Me.Label3, "Label3")
-        Me.Label3.Name = "Label3"
         '
         'Label6
         '
@@ -680,8 +693,8 @@ Partial Class FormDataRegression
         'GridExpData
         '
         resources.ApplyResources(Me.GridExpData, "GridExpData")
-        DataGridViewCellStyle4.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.GridExpData.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.GridExpData.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle5
         Me.GridExpData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.GridExpData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.GridExpData.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.check, Me.colx1, Me.colx2, Me.coly1, Me.colT, Me.coltl, Me.colts, Me.colP})
@@ -691,7 +704,7 @@ Partial Class FormDataRegression
         '
         'check
         '
-        Me.check.DefaultCellStyle = DataGridViewCellStyle5
+        Me.check.DefaultCellStyle = DataGridViewCellStyle6
         Me.check.FillWeight = 60.9137!
         resources.ApplyResources(Me.check, "check")
         Me.check.Name = "check"
@@ -786,7 +799,6 @@ Partial Class FormDataRegression
         Me.GroupBox4.Controls.Add(Me.Label12)
         Me.GroupBox4.Controls.Add(Me.tbIPDBName)
         Me.GroupBox4.Controls.Add(Me.BtnNewIPDB)
-        Me.GroupBox4.Controls.Add(Me.LabelWithDivider4)
         Me.GroupBox4.Controls.Add(Me.tbDescription)
         Me.GroupBox4.Controls.Add(Me.Label11)
         Me.GroupBox4.Controls.Add(Me.tbTitle)
@@ -824,12 +836,6 @@ Partial Class FormDataRegression
         Me.BtnNewIPDB.Image = Global.DWSIM.My.Resources.Resources.page_white
         Me.BtnNewIPDB.Name = "BtnNewIPDB"
         Me.BtnNewIPDB.UseVisualStyleBackColor = True
-        '
-        'LabelWithDivider4
-        '
-        resources.ApplyResources(Me.LabelWithDivider4, "LabelWithDivider4")
-        Me.LabelWithDivider4.Gap = 5
-        Me.LabelWithDivider4.Name = "LabelWithDivider4"
         '
         'tbDescription
         '
@@ -889,7 +895,6 @@ Partial Class FormDataRegression
     Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
     Friend WithEvents cbCompound2 As System.Windows.Forms.ComboBox
     Friend WithEvents cbCompound1 As System.Windows.Forms.ComboBox
-    Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents cbModel As System.Windows.Forms.ComboBox
     Friend WithEvents Label4 As System.Windows.Forms.Label
@@ -978,12 +983,13 @@ Partial Class FormDataRegression
     Friend WithEvents BtnSaveIPDB As System.Windows.Forms.Button
     Friend WithEvents Label12 As System.Windows.Forms.Label
     Friend WithEvents tbIPDBName As System.Windows.Forms.TextBox
-    Public WithEvents LabelWithDivider4 As System.Windows.Forms.LabelWithDivider
     Friend WithEvents BtnSelectIPDB As System.Windows.Forms.Button
     Friend WithEvents DBOpenDlg As System.Windows.Forms.OpenFileDialog
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
     Friend WithEvents Button3 As System.Windows.Forms.Button
     Friend WithEvents colpar As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents colmin As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents colval As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents colmax As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents cf As System.Windows.Forms.DataGridViewCheckBoxColumn
 End Class

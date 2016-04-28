@@ -143,23 +143,37 @@ Public Class FormDataRegression
             Next
             Select Case cbModel.SelectedItem.ToString()
                 Case "Peng-Robinson", "Soave-Redlich-Kwong"
-                    .iepar1 = gridInEst.Rows(0).Cells(1).Value
-                    .fixed1 = gridInEst.Rows(0).Cells(2).Value
+                    .iepar1 = gridInEst.Rows(0).Cells(2).Value
+                    .fixed1 = gridInEst.Rows(0).Cells(4).Value
+                    .llim1 = gridInEst.Rows(0).Cells(1).Value
+                    .ulim1 = gridInEst.Rows(0).Cells(3).Value
                 Case "PC-SAFT", "Lee-Kesler-Plöcker"
-                    .iepar1 = gridInEst.Rows(0).Cells(1).Value
-                    .fixed1 = gridInEst.Rows(0).Cells(2).Value
+                    .iepar1 = gridInEst.Rows(0).Cells(2).Value
+                    .fixed1 = gridInEst.Rows(0).Cells(4).Value
+                    .llim1 = gridInEst.Rows(0).Cells(1).Value
+                    .ulim1 = gridInEst.Rows(0).Cells(3).Value
                 Case "UNIQUAC", "PRSV2-M", "PRSV2-VL"
-                    .iepar1 = gridInEst.Rows(0).Cells(1).Value
-                    .iepar2 = gridInEst.Rows(1).Cells(1).Value
-                    .fixed1 = gridInEst.Rows(0).Cells(2).Value
-                    .fixed2 = gridInEst.Rows(1).Cells(2).Value
+                    .iepar1 = gridInEst.Rows(0).Cells(2).Value
+                    .iepar2 = gridInEst.Rows(1).Cells(2).Value
+                    .fixed1 = gridInEst.Rows(0).Cells(4).Value
+                    .fixed2 = gridInEst.Rows(1).Cells(4).Value
+                    .llim1 = gridInEst.Rows(0).Cells(1).Value
+                    .ulim1 = gridInEst.Rows(0).Cells(3).Value
+                    .llim2 = gridInEst.Rows(1).Cells(1).Value
+                    .ulim2 = gridInEst.Rows(1).Cells(3).Value
                 Case "NRTL"
-                    .iepar1 = gridInEst.Rows(0).Cells(1).Value
-                    .iepar2 = gridInEst.Rows(1).Cells(1).Value
-                    .iepar3 = gridInEst.Rows(2).Cells(1).Value
-                    .fixed1 = gridInEst.Rows(0).Cells(2).Value
-                    .fixed2 = gridInEst.Rows(1).Cells(2).Value
-                    .fixed3 = gridInEst.Rows(2).Cells(2).Value
+                    .iepar1 = gridInEst.Rows(0).Cells(2).Value
+                    .iepar2 = gridInEst.Rows(1).Cells(2).Value
+                    .iepar3 = gridInEst.Rows(2).Cells(2).Value
+                    .fixed1 = gridInEst.Rows(0).Cells(4).Value
+                    .fixed2 = gridInEst.Rows(1).Cells(4).Value
+                    .fixed3 = gridInEst.Rows(2).Cells(4).Value
+                    .llim1 = gridInEst.Rows(0).Cells(1).Value
+                    .ulim1 = gridInEst.Rows(0).Cells(3).Value
+                    .llim2 = gridInEst.Rows(1).Cells(1).Value
+                    .ulim2 = gridInEst.Rows(1).Cells(3).Value
+                    .llim3 = gridInEst.Rows(2).Cells(1).Value
+                    .ulim3 = gridInEst.Rows(2).Cells(3).Value
             End Select
 
         End With
@@ -182,23 +196,41 @@ Public Class FormDataRegression
             Select Case cbModel.SelectedItem.ToString()
                 Case "Peng-Robinson", "Soave-Redlich-Kwong"
                     gridInEst.Rows.Clear()
-                    gridInEst.Rows.Add(New Object() {"kij", .iepar1, .fixed1})
+                    If .llim1 = 0.0# Then .llim1 = -0.5#
+                    If .ulim1 = 0.0# Then .ulim1 = 0.5#
+                    gridInEst.Rows.Add(New Object() {"kij", .llim1, .iepar1, .ulim1, .fixed1})
                 Case "PC-SAFT", "Lee-Kesler-Plöcker"
                     gridInEst.Rows.Clear()
-                    gridInEst.Rows.Add(New Object() {"kij", .iepar1, .fixed1})
+                    If .llim1 = 0.0# Then .llim1 = 0.5#
+                    If .ulim1 = 0.0# Then .ulim1 = 1.5#
+                    gridInEst.Rows.Add(New Object() {"kij", .llim1, .iepar1, .ulim1, .fixed1})
                 Case "UNIQUAC"
                     gridInEst.Rows.Clear()
-                    gridInEst.Rows.Add(New Object() {"A12 (cal/mol)", .iepar1, .fixed1})
-                    gridInEst.Rows.Add(New Object() {"A21 (cal/mol)", .iepar2, .fixed2})
+                    If .llim1 = 0.0# Then .llim1 = -10000.0#
+                    If .ulim1 = 0.0# Then .ulim1 = 10000.0#
+                    If .llim2 = 0.0# Then .llim2 = -10000.0#
+                    If .ulim2 = 0.0# Then .ulim2 = 10000.0#
+                    gridInEst.Rows.Add(New Object() {"A12 (cal/mol)", .llim1, .iepar1, .ulim1, .fixed1})
+                    gridInEst.Rows.Add(New Object() {"A21 (cal/mol)", .llim2, .iepar2, .ulim2, .fixed2})
                 Case "PRSV2-M", "PRSV2-VL"
                     gridInEst.Rows.Clear()
-                    gridInEst.Rows.Add(New Object() {"kij", .iepar1, .fixed1})
-                    gridInEst.Rows.Add(New Object() {"kji", .iepar2, .fixed2})
+                    If .llim1 = 0.0# Then .llim1 = -0.5#
+                    If .ulim1 = 0.0# Then .ulim1 = 0.5#
+                    If .llim2 = 0.0# Then .llim2 = -0.5#
+                    If .ulim2 = 0.0# Then .ulim2 = 0.5#
+                    gridInEst.Rows.Add(New Object() {"kij", .llim1, .iepar1, .ulim1, .fixed1})
+                    gridInEst.Rows.Add(New Object() {"kji", .llim2, .iepar2, .ulim2, .fixed2})
                 Case "NRTL"
                     gridInEst.Rows.Clear()
-                    gridInEst.Rows.Add(New Object() {"A12 (cal/mol)", .iepar1, .fixed1})
-                    gridInEst.Rows.Add(New Object() {"A21 (cal/mol)", .iepar2, .fixed2})
-                    gridInEst.Rows.Add(New Object() {"alpha12", .iepar3, .fixed3})
+                    If .llim1 = 0.0# Then .llim1 = -10000.0#
+                    If .ulim1 = 0.0# Then .ulim1 = 10000.0#
+                    If .llim2 = 0.0# Then .llim2 = -10000.0#
+                    If .ulim2 = 0.0# Then .ulim2 = 10000.0#
+                    If .llim2 = 0.0# Then .llim2 = 0.0#
+                    If .ulim2 = 0.0# Then .ulim2 = 0.8#
+                    gridInEst.Rows.Add(New Object() {"A12 (cal/mol)", .llim1, .iepar1, .ulim1, .fixed1})
+                    gridInEst.Rows.Add(New Object() {"A21 (cal/mol)", .llim2, .iepar2, .ulim2, .fixed2})
+                    gridInEst.Rows.Add(New Object() {"alpha12", .llim3, .iepar3, .ulim3, .fixed3})
             End Select
             Me.chkTL.Checked = .useTLdata
             Me.chkTS.Checked = .useTSdata
@@ -315,7 +347,7 @@ Public Class FormDataRegression
         End Select
     End Sub
 
-    Private Function FunctionValue(ByVal x() As Double) As Double
+    Public Function FunctionValue(ByVal x() As Double) As Double
 
         Application.DoEvents()
         If cancel Then Exit Function
@@ -1251,7 +1283,9 @@ Public Class FormDataRegression
         Catch ex As Exception
 
             itn += 1
-            Me.tbRegResults.AppendText("Iteration #" & itn & ", Exception: " & ex.ToString & vbCrLf)
+            Me.tbRegResults.AppendText("Iteration #" & itn & ", Exception: " & ex.Message.ToString & vbCrLf)
+
+            f = Double.MaxValue
 
         End Try
 
@@ -1259,7 +1293,7 @@ Public Class FormDataRegression
 
     End Function
 
-    Private Function FunctionGradient(ByVal x() As Double) As Double()
+    Public Function FunctionGradient(ByVal x() As Double) As Double()
 
         Application.DoEvents()
         If cancel Then
@@ -1288,6 +1322,29 @@ Public Class FormDataRegression
         Next
 
         Return g
+
+    End Function
+
+    Private Function GetSolver(solver As String) As SwarmOps.Optimizer
+
+        Select Case solver
+            Case "Differential Evolution"
+                Return New SwarmOps.Optimizers.DE()
+            Case "Gradient Descent"
+                Return New SwarmOps.Optimizers.GD()
+            Case "Local Unimodal Sampling"
+                Return New SwarmOps.Optimizers.LUS()
+            Case "Many Optimizing Liaisons"
+                Return New SwarmOps.Optimizers.MOL()
+            Case "Mesh"
+                Return New SwarmOps.Optimizers.MESH()
+            Case "Particle Swarm"
+                Return New SwarmOps.Optimizers.PS()
+            Case "Particle Swarm Optimization"
+                Return New SwarmOps.Optimizers.PSO()
+            Case Else
+                Return Nothing
+        End Select
 
     End Function
 
@@ -3476,14 +3533,14 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             Case "UNIQUAC"
                 nvar = 2
                 initval2 = initval
-                lconstr2 = New Double() {-3000000.0#, -3000000.0#}
-                uconstr2 = New Double() {3000000.0#, 3000000.0#}
+                lconstr2 = New Double() {-10000.0#, -10000.0#}
+                uconstr2 = New Double() {10000.0#, 10000.0#}
                 fixed = New Boolean() {currcase.fixed1, currcase.fixed2}
             Case "NRTL"
                 nvar = 3
                 initval2 = initval
-                lconstr2 = New Double() {-3000000.0#, -3000000.0#, 0.0#}
-                uconstr2 = New Double() {3000000.0#, 3000000.0#, 0.8#}
+                lconstr2 = New Double() {-10000.0#, -10000.0#, 0.0#}
+                uconstr2 = New Double() {10000.0#, 10000.0#, 0.8#}
                 fixed = New Boolean() {currcase.fixed1, currcase.fixed2, currcase.fixed3}
             Case "Lee-Kesler-Plöcker"
                 initval2 = initval
@@ -3573,6 +3630,32 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                     'solve the problem 
                     status = problem.SolveProblem(initval2, obj, Nothing, Nothing, Nothing, Nothing)
                 End Using
+
+            Case "Particle Swarm", "Local Unimodal Sampling", "Gradient Descent", "Differential Evolution",
+                "Particle Swarm Optimization", "Many Optimizing Liaisons", "Mesh"
+
+                SwarmOps.Globals.Random = New RandomOps.MersenneTwister()
+
+                For i = 0 To nvar - 1
+                    If fixed(i) Then
+                        lconstr2(i) = initval2(i)
+                        uconstr2(i) = initval2(i)
+                    End If
+                Next
+
+                Dim sproblem As New RegressionProblem(Me) With {._Dim = initval2.Length, ._LB = lconstr2, ._UB = uconstr2, ._INIT = initval2, ._Name = "Regression"}
+                sproblem.MaxIterations = currcase.maxits * initval2.Length
+                sproblem.MinIterations = currcase.maxits
+                sproblem.Tolerance = currcase.tolerance
+                Dim opt As SwarmOps.Optimizer = GetSolver(currcase.method)
+                opt.Problem = sproblem
+                opt.RequireFeasible = True
+                Dim sresult = opt.Optimize(opt.DefaultParameters)
+
+                If Not sresult.Feasible Then Throw New Exception("Error: Feasible solution not found after " & sresult.Iterations & " iterations.")
+
+                'initval2 = sresult.Parameters
+
         End Select
 
         Me.tbRegResults.AppendText("Finished!")
@@ -3657,6 +3740,83 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
 
 End Class
 
+Public Class RegressionProblem
+
+    Inherits SwarmOps.Problem
+
+    Public _Dim As Integer, _LB(), _UB(), _INIT() As Double, _Name As String
+
+    Private _f As FormDataRegression
+    Private _fit As Double
+
+    Sub New(f As FormDataRegression)
+        _f = f
+    End Sub
+
+    Public Overrides ReadOnly Property Dimensionality As Integer
+        Get
+            Return _Dim
+        End Get
+    End Property
+
+    Public Overrides ReadOnly Property LowerBound As Double()
+        Get
+            Return _LB
+        End Get
+    End Property
+
+    Public Overrides ReadOnly Property LowerInit As Double()
+        Get
+            Return _INIT
+        End Get
+    End Property
+    Public Overrides ReadOnly Property UpperInit As Double()
+        Get
+            Return _INIT
+        End Get
+    End Property
+
+    Public Overrides ReadOnly Property MinFitness As Double
+        Get
+            Return Double.MinValue
+        End Get
+    End Property
+
+    Public Overrides ReadOnly Property Name As String
+        Get
+            Return _Name
+        End Get
+    End Property
+
+    Public Overrides ReadOnly Property UpperBound As Double()
+        Get
+            Return _UB
+        End Get
+    End Property
+
+    Public Overrides ReadOnly Property HasGradient As Boolean
+        Get
+            Return True
+        End Get
+    End Property
+
+    Public Overrides Function Gradient(x() As Double, ByRef v() As Double) As Integer
+
+        v = _f.FunctionGradient(x)
+
+        Return 0
+
+    End Function
+
+    Public Overrides Function Fitness(parameters() As Double) As Double
+
+        Return _f.FunctionValue(parameters)
+
+    End Function
+
+End Class
+
+
 Namespace DWSIM.Optimization.DatRegression
 
 
@@ -3680,6 +3840,12 @@ Namespace DWSIM.Optimization.DatRegression
         Public iepar1 As Double = 0.0#
         Public iepar2 As Double = 0.0#
         Public iepar3 As Double = 0.0#
+        Public llim1 As Double = 0.0#
+        Public llim2 As Double = 0.0#
+        Public llim3 As Double = 0.0#
+        Public ulim1 As Double = 0.0#
+        Public ulim2 As Double = 0.0#
+        Public ulim3 As Double = 0.0#
         Public fixed1 As Boolean = False
         Public fixed2 As Boolean = False
         Public fixed3 As Boolean = False
