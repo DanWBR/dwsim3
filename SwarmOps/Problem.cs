@@ -144,6 +144,33 @@ namespace SwarmOps
         }
 
         /// <summary>
+        /// Threshold for an acceptable tolerance.
+        /// </summary>
+        public double Tolerance
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Minimum number of iterations.
+        /// </summary>
+        public double MinIterations
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Previous fitness value.
+        /// </summary>
+        public virtual double PreviousFitnessValue
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Return dimensionality of the problem, that is, the number
         /// of parameters in a candidate solution.
         /// </summary>
@@ -292,8 +319,11 @@ namespace SwarmOps
         /// <param name="feasible">Feasibility of best found candidate solution.</param>
         public virtual bool Continue(int iterations, double fitness, bool feasible)
         {
-            return (iterations < MaxIterations &&
+            if (iterations <= MinIterations) return true;
+            var comparison = (iterations < MaxIterations && Math.Abs((fitness - PreviousFitnessValue) / fitness) > Tolerance &&
                     !(fitness <= AcceptableFitness && (!RequireFeasible || feasible)));
+            PreviousFitnessValue = fitness;
+            return comparison;
         }
         #endregion
     }

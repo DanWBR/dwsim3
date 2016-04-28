@@ -303,6 +303,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                     Dim sproblem As New GibbsProblem(Me) With {._Dim = initval.Length, ._LB = lconstr, ._UB = uconstr, ._Name = "Gibbs"}
                     sproblem.MaxIterations = maxit_e * initval.Length
+                    sproblem.MinIterations = maxit_e
+                    sproblem.Tolerance = 0.0000000000000001
                     Dim opt As SwarmOps.Optimizer = GetSolver(Solver)
                     opt.Problem = sproblem
                     opt.RequireFeasible = True
@@ -535,6 +537,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
 
                                     Dim sproblem As New GibbsProblem(Me) With {._Dim = initval2.Length, ._LB = lconstr2, ._UB = uconstr2, ._Name = "Gibbs3P"}
                                     sproblem.MaxIterations = maxit_e * initval2.Length
+                                    sproblem.MinIterations = maxit_e
+                                    sproblem.Tolerance = 0.0000000000000001
                                     Dim opt As SwarmOps.Optimizer = GetSolver(Solver)
                                     opt.Problem = sproblem
                                     opt.RequireFeasible = True
@@ -2489,6 +2493,7 @@ out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, 
         Public _Dim As Integer, _LB(), _UB(), _INIT() As Double, _Name As String
 
         Private _gf As GibbsMinimization3P
+        Private _fit As Double
 
         Sub New(gf As GibbsMinimization3P)
             _gf = gf
