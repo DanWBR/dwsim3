@@ -309,7 +309,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                     opt.RequireFeasible = True
                     Dim sresult = opt.Optimize(opt.DefaultParameters)
 
-                    If Not sresult.Feasible Then Throw New Exception("PT Flash [GM]: Feasible solution not found after " & sresult.Iterations & " iterations.")
+                    If Not sresult.Feasible Or Not CheckSolution() Then Throw New Exception("PT Flash [GM]: Feasible solution not found after " & sresult.Iterations & " iterations.")
 
                     initval = sresult.Parameters
 
@@ -545,7 +545,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                                     opt.RequireFeasible = True
                                     Dim sresult = opt.Optimize(opt.DefaultParameters)
 
-                                    If Not sresult.Feasible Then Throw New Exception("PT Flash [GM]: Feasible solution not found after " & sresult.Iterations & " iterations.")
+                                    If Not sresult.Feasible Or Not CheckSolution() Then Throw New Exception("PT Flash [GM]: Feasible solution not found after " & sresult.Iterations & " iterations.")
 
                                     initval2 = sresult.Parameters
 
@@ -1899,6 +1899,27 @@ out:        Return New Object() {L1, V, Vx1, Vy, T, ecount, Ki1, L2, Vx2, 0.0#, 
             Loop
 
 out:        Return New Object() {L1, V, Vx1, Vy, P, ecount, Ki1, L2, Vx2, 0.0#, PP.RET_NullVector}
+
+        End Function
+
+        Public Function CheckSolution() As Boolean
+
+            If V < 0.0# Then Return False
+            If L < 0.0# Then Return False
+            If L1 < 0.0# Then Return False
+            If L2 < 0.0# Then Return False
+
+            If ThreePhase Then
+                For i As Integer = 0 To n
+                    If (fi(i) * F - Vy(i) * V - Vx1(i) * L1 - Vx2(i) * L2) / F > 0.01 Then Return False
+                Next
+            Else
+                For i As Integer = 0 To n
+                    If (fi(i) * F - Vy(i) * V - Vx1(i) * L) / F > 0.01 Then Return False
+                Next
+            End If
+
+            Return True
 
         End Function
 
