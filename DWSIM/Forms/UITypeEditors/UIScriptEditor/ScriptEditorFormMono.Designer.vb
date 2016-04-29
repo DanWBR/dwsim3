@@ -197,7 +197,6 @@ Partial Class ScriptEditorFormMono
         '
         'ofd1
         '
-        Me.ofd1.FileName = "OpenFileDialog1"
         resources.ApplyResources(Me.ofd1, "ofd1")
         Me.ofd1.Multiselect = True
         Me.ofd1.SupportMultiDottedExtensions = True
@@ -224,7 +223,7 @@ Partial Class ScriptEditorFormMono
         Me.FaTabStrip2.AlwaysShowMenuGlyph = False
         Me.FaTabStrip2.Items.AddRange(New FarsiLibrary.Win.FATabStripItem() {Me.FaTabStripItem3, Me.FaTabStripItem4})
         Me.FaTabStrip2.Name = "FaTabStrip2"
-        Me.FaTabStrip2.SelectedItem = Me.FaTabStripItem4
+        Me.FaTabStrip2.SelectedItem = Me.FaTabStripItem3
         '
         'FaTabStripItem3
         '
@@ -234,6 +233,7 @@ Partial Class ScriptEditorFormMono
         Me.FaTabStripItem3.Controls.Add(Me.StatusStrip1)
         Me.FaTabStripItem3.IsDrawn = True
         Me.FaTabStripItem3.Name = "FaTabStripItem3"
+        Me.FaTabStripItem3.Selected = True
         '
         'txtScript
         '
@@ -258,7 +258,6 @@ Partial Class ScriptEditorFormMono
         Me.FaTabStripItem4.Controls.Add(Me.ListBox1)
         Me.FaTabStripItem4.IsDrawn = True
         Me.FaTabStripItem4.Name = "FaTabStripItem4"
-        Me.FaTabStripItem4.Selected = True
         '
         'ListBox1
         '
