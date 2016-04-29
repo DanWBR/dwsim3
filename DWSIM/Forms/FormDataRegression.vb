@@ -225,8 +225,8 @@ Public Class FormDataRegression
                     If .ulim1 = 0.0# Then .ulim1 = 5000.0#
                     If .llim2 = 0.0# Then .llim2 = -5000.0#
                     If .ulim2 = 0.0# Then .ulim2 = 5000.0#
-                    If .llim2 = 0.0# Then .llim2 = 0.0#
-                    If .ulim2 = 0.0# Then .ulim2 = 0.8#
+                    If .llim3 = 0.0# Then .llim3 = 0.0#
+                    If .ulim3 = 0.0# Then .ulim3 = 0.8#
                     gridInEst.Rows.Add(New Object() {"A12 (cal/mol)", .llim1, .iepar1, .ulim1, .fixed1})
                     gridInEst.Rows.Add(New Object() {"A21 (cal/mol)", .llim2, .iepar2, .ulim2, .fixed2})
                     gridInEst.Rows.Add(New Object() {"alpha12", .llim3, .iepar3, .ulim3, .fixed3})
