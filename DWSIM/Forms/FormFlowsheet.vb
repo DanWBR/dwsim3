@@ -589,6 +589,12 @@ Imports System.Reflection
 
     End Function
 
+    Public Function GetReaction(reactionname As String) As Reaction
+
+        Return Options.Reactions.Values.Where(Function(x) x.Name = reactionname).FirstOrDefault()
+
+    End Function
+
     Public Function gscTogoc(ByVal X As Integer, ByVal Y As Integer) As Point
         Dim myNewPoint As Point
         myNewPoint.X = CInt((X - Me.FormSurface.FlowsheetDesignSurface.AutoScrollPosition.X) / Me.FormSurface.FlowsheetDesignSurface.Zoom)

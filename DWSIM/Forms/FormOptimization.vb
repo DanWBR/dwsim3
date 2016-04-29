@@ -459,7 +459,6 @@ Public Class FormOptimization
             form.WriteToLog("Optimization finished successfully.", Color.SeaGreen, DWSIM.FormClasses.TipoAviso.Informacao)
         Catch ex As Exception
             form.WriteToLog("Optimization error: " & ex.Message, Color.Red, DWSIM.FormClasses.TipoAviso.Erro)
-            MsgBox(ex.Message, MsgBoxStyle.Exclamation, DWSIM.App.GetLocalString("Erro"))
         Finally
             Me.btnRun.Enabled = True
             Me.btnAbort.Enabled = False
@@ -814,7 +813,7 @@ Public Class FormOptimization
         Application.DoEvents()
 
         If Me.abortCalc Then
-            Return f
+            Throw New Exception("Optimization aborted")
         End If
 
         Dim varID(x.Length), objID(x.Length), objProp(x.Length), objName(x.Length), FobjID, FobjProp As String
@@ -909,7 +908,7 @@ Public Class FormOptimization
         Application.DoEvents()
 
         If Me.abortCalc Then
-            Return g
+            Throw New Exception("Optimization aborted")
         End If
 
         Dim varID(x.Length - 1), objID(x.Length - 1), objProp(x.Length - 1), objName(x.Length - 1), FobjID, FobjProp As String
@@ -1346,6 +1345,7 @@ Public Class FormOptimization
                     dgrow.Cells(1).Value = .name
                     If .objectID = "SpreadsheetCell" Then
                         dgrow.Cells(3).Value = DWSIM.App.GetLocalString(.objectID)
+                        dgrow.Cells(4).Value = .propID
                     Else
                         If form.Collections.ObjectCollection.ContainsKey(.objectID) Then
                             dgrow.Cells(3).Value = form.Collections.ObjectCollection(.objectID).GraphicObject.Tag
