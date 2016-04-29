@@ -1306,7 +1306,7 @@ Public Class FormDataRegression
 
         Dim g(x.Length - 1) As Double
 
-        Dim epsilon As Double = 0.00001
+        Dim epsilon As Double = 0.01
 
         Dim f2(x.Length - 1), f3(x.Length - 1) As Double
         Dim x2(x.Length - 1), x3(x.Length - 1) As Double
@@ -1317,8 +1317,13 @@ Public Class FormDataRegression
                 x2(j) = x(j)
                 x3(j) = x(j)
             Next
-            x2(i) = x(i) + epsilon
-            x3(i) = x(i) - epsilon
+            If x(i) <> 0.0# Then
+                x2(i) = x(i) * (1 + epsilon)
+                x3(i) = x(i) * (1 - epsilon)
+            Else
+                x2(i) = x(i) + epsilon / 1000
+                x3(i) = x(i) - epsilon / 1000
+            End If
             f2(i) = FunctionValue(x2)
             f3(i) = FunctionValue(x3)
             g(i) = (f2(i) - f3(i)) / (x2(i) - x3(i))
@@ -3830,7 +3835,7 @@ Namespace DWSIM.Optimization.DatRegression
         Public model As String = "Peng-Robinson"
         Public datatype As DataType = DataType.Pxy
         Public tp, x1p, x2p, yp, pp, calct, calcp, calcy, calcx1l1, calcx1l2, checkp, ts, tl, calcts, calctl As New ArrayList
-        Public method As String = "IPOPT"
+        Public method As String = "Local Unimodal Sampling"
         Public objfunction As String = "Least Squares (min T/P)"
         Public includesd As Boolean = False
         Public results As String = ""
