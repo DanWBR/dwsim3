@@ -469,6 +469,10 @@ Public Class FormOptimization
 
     Public Function CalcFuncVal_Brent(ByVal t As Double) As Double
 
+        If Me.abortCalc Then
+            Throw New Exception("Optimization aborted")
+        End If
+
         Dim objID, objProp, objName As String
         Dim AobjID(Me.keysaux.Count), AobjProp(Me.keysaux.Count), AobjName(Me.keysaux.Count) As String
         Dim i As Integer
