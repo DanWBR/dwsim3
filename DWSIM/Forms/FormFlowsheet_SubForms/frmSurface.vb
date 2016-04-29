@@ -157,6 +157,8 @@ Public Class frmSurface
                 Else
                     Flowsheet.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name).PopulatePropertyGrid(PGEx1, Flowsheet.Options.SelectedUnitSystem)
                 End If
+                PGEx1.Refresh()
+                PGEx2.Refresh()
                 If selitem <> "" Then
                     Try
                         PGEx1.EnumerateAllItems().Where(Function(x) x.Label = selitem)(0).Select()
