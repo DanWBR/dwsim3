@@ -95,8 +95,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                         Vn2(i) = Vz(i) * 0.05
                     End If
                 Next
-                L1 = Vn1.Sum
-                L2 = Vn2.Sum
+                L1 = Vn1.SumY
+                L2 = Vn2.SumY
             End If
 
             If UseInitialEstimatesForPhase1 Then
@@ -112,11 +112,8 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             End If
 
             'renormalise Vn's
-            S = Vn1.Sum() + Vn2.Sum()
-            For i = 0 To n
-                Vn1(i) /= S
-                Vn2(i) /= S
-            Next
+            S = Vn1.SumY + Vn2.SumY
+            Vn1 = Vn1.MultiplyConstY(1 / S)
 
             'calculate vapour pressures
             For i = 0 To n
@@ -133,43 +130,48 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Vx1_ant = Vx1.Clone
                 Vx2_ant = Vx2.Clone
 
-                For i = 0 To n
-                    Vx1(i) = Vn1(i) / L1
-                    Vx2(i) = Vn2(i) / L2
-                Next
+                Vx1 = Vn1.MultiplyConstY(1 / L1)
+                Vx2 = Vn2.MultiplyConstY(1 / L2)
 
                 fi1 = PP.DW_CalcFugCoeff(Vx1, T, P, State.Liquid)
                 fi2 = PP.DW_CalcFugCoeff(Vx2, T, P, State.Liquid)
 
-                For i = 0 To n
-                    gamma1(i) = P / Vp(i) * fi1(i)
-                    gamma2(i) = P / Vp(i) * fi2(i)
-                Next
+                'For i = 0 To n
+                '    gamma1(i) = P / Vp(i) * fi1(i)
+                '    gamma2(i) = P / Vp(i) * fi2(i)
+                'Next
+                gamma1 = fi1.MultiplyConstY(P).DivideY(Vp)
+                gamma2 = fi2.MultiplyConstY(P).DivideY(Vp)
 
                 err_ant = err
-                err = 0.0#
-                e1 = 0
-                e2 = 0
-                S = 0
-                For i = 0 To n
-                    err += Abs(Vx1(i) * gamma1(i) - Vx2(i) * gamma2(i))
-                    e1 += Abs(Vx1(i) - Vx1_ant(i))
-                    e2 += Abs(Vx2(i) - Vx2_ant(i))
-                    S += Abs(Vx1(i) - Vx2(i))
-                Next
-
+                'err = 0.0#
+                'e1 = 0
+                'e2 = 0
+                'S = 0
+                'For i = 0 To n
+                '    err += Abs(Vx1(i) * gamma1(i) - Vx2(i) * gamma2(i))
+                '    e1 += Abs(Vx1(i) - Vx1_ant(i))
+                '    e2 += Abs(Vx2(i) - Vx2_ant(i))
+                '    S += Abs(Vx1(i) - Vx2(i))
+                'Next
+                err = Vx1.MultiplyY(gamma1).SubtractY(Vx2.MultiplyY(gamma2)).AbsSumY()
+                e1 = Vx1_ant.NegateY.AddY(Vx1).AbsSumY
+                e2 = Vx2_ant.NegateY.AddY(Vx2).AbsSumY
+                S = Vx2.NegateY.AddY(Vx1).AbsSumY
 
                 If Double.IsNaN(err) Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashError"))
 
                 If ecount > 0 And (Abs(err) < 0.000001 Or L1 < 0.0001 Or L2 < 0.0001 Or S < 0.0001) Then Exit Do
 
-                For i = 0 To n
-                    Vn1(i) = Vz(i) / (1 + gamma1(i) * L2 / (gamma2(i) * L1))
-                    Vn2(i) = Vz(i) - Vn1(i)
-                Next
+                'For i = 0 To n
+                '    Vn1(i) = Vz(i) / (1 + gamma1(i) * L2 / (gamma2(i) * L1))
+                '    Vn2(i) = Vz(i) - Vn1(i)
+                'Next
+                Vn1 = Vz.DivideY(gamma1.MultiplyConstY(L2).DivideY(gamma2.MultiplyConstY(L1)).AddConstY(1))
+                Vn2 = Vz.SubtractY(Vn1)
 
-                L1 = Vn1.Sum
-                L2 = Vn2.Sum
+                L1 = Vn1.SumY
+                L2 = Vn2.SumY
 
                 ecount += 1
 
@@ -188,13 +190,14 @@ out:        d2 = Date.Now
             Else
                 'order liquid phases by mixture NBP
                 Dim VNBP = PP.RET_VTB()
-                Dim nbp1 As Double = 0
-                Dim nbp2 As Double = 0
+                Dim nbp1, nbp2 As Double
 
-                For i = 0 To n
-                    nbp1 += Vx1(i) * VNBP(i)
-                    nbp2 += Vx2(i) * VNBP(i)
-                Next
+                'For i = 0 To n
+                '    nbp1 += Vx1(i) * VNBP(i)
+                '    nbp2 += Vx2(i) * VNBP(i)
+                'Next
+                nbp1 = Vx1.MultiplyY(VNBP).SumY
+                nbp2 = Vx2.MultiplyY(VNBP).SumY
 
                 If nbp1 >= nbp2 Then
                     Return New Object() {L1, V, Vx1, PP.RET_NullVector, ecount, L2, Vx2, 0.0#, PP.RET_NullVector, gamma1, gamma2}

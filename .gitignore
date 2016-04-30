@@ -185,3 +185,7 @@ TCPServer/bin/Debug/*
 /AlgLib/bin/Release
 /RandomOps/bin/Release
 /SwarmOps/bin/Release
+RandomOps/bin/Debug/RandomOps.dll
+SwarmOps/bin/Debug/RandomOps.dll
+SwarmOps/bin/Debug/SwarmOps.dll
+AlgLib/bin/Debug/AlgLib.dll
