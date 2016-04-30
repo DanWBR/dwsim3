@@ -2715,9 +2715,9 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 If cbDataType.SelectedItem.ToString.Contains("LL") Then
                     Try
                         Dim estimates As Double() = EstimateNRTL(cbCompound1.SelectedItem.ToString, cbCompound2.SelectedItem.ToString, "UNIFAC-LL")
-                        Me.gridInEst.Rows(0).Cells(1).Value = estimates(0)
-                        Me.gridInEst.Rows(1).Cells(1).Value = estimates(1)
-                        Me.gridInEst.Rows(2).Cells(1).Value = estimates(2)
+                        Me.gridInEst.Rows(0).Cells(2).Value = estimates(0)
+                        Me.gridInEst.Rows(1).Cells(2).Value = estimates(1)
+                        Me.gridInEst.Rows(2).Cells(2).Value = estimates(2)
                     Catch ex As Exception
                         MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     Finally
@@ -2726,9 +2726,9 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 Else
                     Try
                         Dim estimates As Double() = EstimateNRTL(cbCompound1.SelectedItem.ToString, cbCompound2.SelectedItem.ToString, "UNIFAC")
-                        Me.gridInEst.Rows(0).Cells(1).Value = estimates(0)
-                        Me.gridInEst.Rows(1).Cells(1).Value = estimates(1)
-                        Me.gridInEst.Rows(2).Cells(1).Value = estimates(2)
+                        Me.gridInEst.Rows(0).Cells(2).Value = estimates(0)
+                        Me.gridInEst.Rows(1).Cells(2).Value = estimates(1)
+                        Me.gridInEst.Rows(2).Cells(2).Value = estimates(2)
                     Catch ex As Exception
                         MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     Finally
@@ -2739,8 +2739,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 If cbDataType.SelectedItem.ToString.Contains("LL") Then
                     Try
                         Dim estimates As Double() = EstimateUNIQUAC(cbCompound1.SelectedItem.ToString, cbCompound2.SelectedItem.ToString, "UNIFAC-LL")
-                        Me.gridInEst.Rows(0).Cells(1).Value = estimates(0)
-                        Me.gridInEst.Rows(1).Cells(1).Value = estimates(1)
+                        Me.gridInEst.Rows(0).Cells(2).Value = estimates(0)
+                        Me.gridInEst.Rows(1).Cells(2).Value = estimates(1)
                     Catch ex As Exception
                         MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     Finally
@@ -2749,8 +2749,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
                 Else
                     Try
                         Dim estimates As Double() = EstimateUNIQUAC(cbCompound1.SelectedItem.ToString, cbCompound2.SelectedItem.ToString, "UNIFAC")
-                        Me.gridInEst.Rows(0).Cells(1).Value = estimates(0)
-                        Me.gridInEst.Rows(1).Cells(1).Value = estimates(1)
+                        Me.gridInEst.Rows(0).Cells(2).Value = estimates(0)
+                        Me.gridInEst.Rows(1).Cells(2).Value = estimates(1)
                     Catch ex As Exception
                         MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     Finally
@@ -3239,9 +3239,9 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             Case "NRTL"
                 Try
                     Dim estimates As Double() = EstimateNRTL(cbCompound1.SelectedItem.ToString, cbCompound2.SelectedItem.ToString, "MODFAC")
-                    Me.gridInEst.Rows(0).Cells(1).Value = estimates(0)
-                    Me.gridInEst.Rows(1).Cells(1).Value = estimates(1)
-                    Me.gridInEst.Rows(2).Cells(1).Value = estimates(2)
+                    Me.gridInEst.Rows(0).Cells(2).Value = estimates(0)
+                    Me.gridInEst.Rows(1).Cells(2).Value = estimates(1)
+                    Me.gridInEst.Rows(2).Cells(2).Value = estimates(2)
                 Catch ex As Exception
                     MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Finally
@@ -3250,8 +3250,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             Case "UNIQUAC"
                 Try
                     Dim estimates As Double() = EstimateUNIQUAC(cbCompound1.SelectedItem.ToString, cbCompound2.SelectedItem.ToString, "MODFAC")
-                    Me.gridInEst.Rows(0).Cells(1).Value = estimates(0)
-                    Me.gridInEst.Rows(1).Cells(1).Value = estimates(1)
+                    Me.gridInEst.Rows(0).Cells(2).Value = estimates(0)
+                    Me.gridInEst.Rows(1).Cells(2).Value = estimates(1)
                 Catch ex As Exception
                     MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Finally
@@ -3725,9 +3725,9 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             Case "NRTL"
                 Try
                     Dim estimates As Double() = EstimateNRTL(cbCompound1.SelectedItem.ToString, cbCompound2.SelectedItem.ToString, "MODFAC-NIST")
-                    Me.gridInEst.Rows(0).Cells(1).Value = estimates(0)
-                    Me.gridInEst.Rows(1).Cells(1).Value = estimates(1)
-                    Me.gridInEst.Rows(2).Cells(1).Value = estimates(2)
+                    Me.gridInEst.Rows(0).Cells(2).Value = estimates(0)
+                    Me.gridInEst.Rows(1).Cells(2).Value = estimates(1)
+                    Me.gridInEst.Rows(2).Cells(2).Value = estimates(2)
                 Catch ex As Exception
                     MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Finally
@@ -3736,8 +3736,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             Case "UNIQUAC"
                 Try
                     Dim estimates As Double() = EstimateUNIQUAC(cbCompound1.SelectedItem.ToString, cbCompound2.SelectedItem.ToString, "MODFAC-NIST")
-                    Me.gridInEst.Rows(0).Cells(1).Value = estimates(0)
-                    Me.gridInEst.Rows(1).Cells(1).Value = estimates(1)
+                    Me.gridInEst.Rows(0).Cells(2).Value = estimates(0)
+                    Me.gridInEst.Rows(1).Cells(2).Value = estimates(1)
                 Catch ex As Exception
                     MessageBox.Show(ex.ToString, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Finally
