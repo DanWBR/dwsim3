@@ -370,6 +370,42 @@ Public Class FormCompoundCreator
                 tbBOPNAN.Text = .cp.BO_PNA_N
                 tbBOPNAA.Text = .cp.BO_PNA_A
 
+            ElseIf .cp.IsIon Or .cp.IsSalt Or .cp.IsHydratedSalt Then
+
+                'electrolyte
+
+                RadioButton3.Checked = True
+
+                .cp.IsBlackOil = False
+
+                TextBoxCAS.Text = .cp.CAS_Number
+                TextBoxFormula.Text = .cp.Formula
+                TextBoxMW.Text = .cp.Molar_Weight
+                TextBoxSMILES.Text = .cp.SMILES
+
+                If Not .cp.SMILES = "" Then
+                    RenderSMILES()
+                End If
+
+                rbIon.Checked = .cp.IsIon
+                rbSalt.Checked = .cp.IsSalt
+                rbHydratedSalt.Checked = .cp.IsHydratedSalt
+                tbPositiveIonFormula.Text = .cp.PositiveIon
+                tbNegativeIonFormula.Text = .cp.NegativeIon
+                tbEsteqCoeffPosIon.Text = .cp.PositiveIonStoichCoeff
+                tbEsteqCoeffNegIon.Text = .cp.NegativeIonStoichCoeff
+                tbElecIonCharge.Text = .cp.Charge
+                tbHydrNumber.Text = .cp.HydrationNumber
+
+                tbElecGibbsEnergyForm.Text = .cp.Electrolyte_DelGF
+                tbElecEnthForm.Text = .cp.Electrolyte_DelHF
+                tbElecHeatCapacityForm.Text = .cp.Electrolyte_Cp0
+
+                tbElecSolidDensT.Text = .cp.SolidTs
+                tbElecSolidDens.Text = .cp.SolidDensityAtTs
+                tbElecSolidTf.Text = .cp.TemperatureOfFusion
+                tbElecEnthFusion.Text = .cp.EnthalpyOfFusionAtTf
+
             Else
 
                 RadioButton1.Checked = True
@@ -857,9 +893,11 @@ Public Class FormCompoundCreator
                     If row.Index < Me.GridExpDataCpS.Rows.Count - 1 Then mycase.DataCpS.Add(New Double() {Conversor.ConverterParaSI(su.spmp_temperature, row.Cells(0).Value), Conversor.ConverterParaSI(su.spmp_heatCapacityCp, row.Cells(1).Value) * .cp.Molar_Weight})
                 Next
 
-            Else
+            ElseIf RadioButton2.Checked Then
 
                 .cp.IsBlackOil = True
+
+                .cp.CompCreatorStudyFile = .Filename
 
                 .cp.BO_GOR = Conversor.ConverterParaSI(su.gor, CheckEmptyTextBox(tbBOGOR))
                 .cp.BO_BSW = CheckEmptyTextBox(tbBOBSW)
@@ -874,6 +912,38 @@ Public Class FormCompoundCreator
                 .cp.BO_PNA_P = CheckEmptyTextBox(tbBOPNAP)
                 .cp.BO_PNA_N = CheckEmptyTextBox(tbBOPNAN)
                 .cp.BO_PNA_A = CheckEmptyTextBox(tbBOPNAA)
+
+            Else
+
+                'electrolyte
+
+                .cp.IsBlackOil = False
+
+                .cp.CAS_Number = TextBoxCAS.Text
+                .cp.CompCreatorStudyFile = .Filename
+                .cp.Formula = TextBoxFormula.Text
+                .cp.Molar_Weight = CheckEmptyTextBox(TextBoxMW)
+                .cp.SMILES = TextBoxSMILES.Text
+
+                .cp.IsIon = rbIon.Checked
+                .cp.IsSalt = rbSalt.Checked
+                .cp.IsHydratedSalt = rbHydratedSalt.Checked
+                .cp.PositiveIon = tbPositiveIonFormula.Text
+                .cp.NegativeIon = tbNegativeIonFormula.Text
+                .cp.PositiveIonStoichCoeff = CheckEmptyTextBox(tbEsteqCoeffPosIon)
+                .cp.NegativeIonStoichCoeff = CheckEmptyTextBox(tbEsteqCoeffNegIon)
+                .cp.Charge = CheckEmptyTextBox(tbElecIonCharge)
+                .cp.HydrationNumber = CheckEmptyTextBox(tbHydrNumber)
+                .cp.StoichSum = .cp.PositiveIonStoichCoeff + .cp.NegativeIonStoichCoeff
+
+                .cp.Electrolyte_DelGF = CheckEmptyTextBox(tbElecGibbsEnergyForm)
+                .cp.Electrolyte_DelHF = CheckEmptyTextBox(tbElecEnthForm)
+                .cp.Electrolyte_Cp0 = CheckEmptyTextBox(tbElecHeatCapacityForm)
+
+                .cp.SolidTs = CheckEmptyTextBox(tbElecSolidDensT)
+                .cp.SolidDensityAtTs = CheckEmptyTextBox(tbElecSolidDens)
+                .cp.TemperatureOfFusion = CheckEmptyTextBox(tbElecSolidTf)
+                .cp.EnthalpyOfFusionAtTf = CheckEmptyTextBox(tbElecEnthFusion)
 
             End If
 
@@ -2735,7 +2805,15 @@ Public Class FormCompoundCreator
                 tbPVAP_B.TextChanged, tbPVAP_A.TextChanged, tbPVAP_E.TextChanged, _
                  tbLIQVISC_E.TextChanged, tbLIQVISC_D.TextChanged, tbLIQVISC_C.TextChanged, tbLIQVISC_B.TextChanged, tbLIQVISC_A.TextChanged, _
                 tbLIQDENS_E.TextChanged, tbLIQDENS_D.TextChanged, tbLIQDENS_C.TextChanged, tbLIQDENS_B.TextChanged, tbLIQDENS_A.TextChanged, _
-                tbRoS_A.TextChanged, tbRoS_E.TextChanged, tbRoS_D.TextChanged, tbRoS_C.TextChanged, tbRoS_B.TextChanged, tbCpS_E.TextChanged, tbCpS_D.TextChanged, tbCpS_C.TextChanged, tbCpS_B.TextChanged, tbCpS_A.TextChanged, cbEqSolidDENS.SelectedIndexChanged, cbEqCpS.SelectedIndexChanged, tbCPLiquid_E.TextChanged, tbCPLiquid_D.TextChanged, tbCPLiquid_C.TextChanged, tbCPLiquid_B.TextChanged, tbCPLiquid_A.TextChanged, tbCPIG_E.TextChanged, tbCPIG_D.TextChanged, tbCPIG_C.TextChanged, tbCPIG_B.TextChanged, tbCPIG_A.TextChanged
+                tbRoS_A.TextChanged, tbRoS_E.TextChanged, tbRoS_D.TextChanged, tbRoS_C.TextChanged, tbRoS_B.TextChanged, tbCpS_E.TextChanged,
+                tbCpS_D.TextChanged, tbCpS_C.TextChanged, tbCpS_B.TextChanged, tbCpS_A.TextChanged, cbEqSolidDENS.SelectedIndexChanged, cbEqCpS.SelectedIndexChanged,
+                tbCPLiquid_E.TextChanged, tbCPLiquid_D.TextChanged, tbCPLiquid_C.TextChanged, tbCPLiquid_B.TextChanged, tbCPLiquid_A.TextChanged, tbCPIG_E.TextChanged,
+                tbCPIG_D.TextChanged, tbCPIG_C.TextChanged, tbCPIG_B.TextChanged, tbCPIG_A.TextChanged,
+                tbElecEnthForm.TextChanged, tbElecEnthFusion.TextChanged, tbElecGibbsEnergyForm.TextChanged, tbElecHeatCapacityForm.TextChanged,
+                tbElecIonCharge.TextChanged, tbElecSolidDens.TextChanged, tbElecSolidDensT.TextChanged, tbElecSolidTf.TextChanged,
+                tbPositiveIonFormula.TextChanged, tbNegativeIonFormula.TextChanged, tbEsteqCoeffNegIon.TextChanged, tbEsteqCoeffPosIon.TextChanged,
+                tbHydrNumber.TextChanged
+
         If loaded Then
             SetCompCreatorSaveStatus(False)
             SetUserDBSaveStatus(False)
@@ -2940,7 +3018,7 @@ Public Class FormCompoundCreator
 
     End Sub
 
-    Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged, RadioButton2.CheckedChanged
+    Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged, RadioButton2.CheckedChanged, RadioButton3.CheckedChanged
 
         If RadioButton1.Checked Then
             Me.FaTabStripItem1.Visible = True
@@ -2954,10 +3032,11 @@ Public Class FormCompoundCreator
             Me.FaTabStripItem9.Visible = True
             Me.FaTabStripItem10.Visible = True
             Me.FaTabStripItem11.Visible = True
-            Me.FaTabStripItemBO.Visible = False
             Me.FaTabStrip2.SelectedItem = Me.FaTabStripItem1
             Me.FaTabStripItem1.Selected = True
-        Else
+            Me.FaTabStripItemBO.Visible = False
+            Me.FaTabStripItemEL.Visible = False
+        ElseIf RadioButton2.Checked Then
             Me.FaTabStripItem1.Visible = False
             Me.FaTabStripItem2.Visible = False
             Me.FaTabStripItem3.Visible = False
@@ -2972,13 +3051,41 @@ Public Class FormCompoundCreator
             Me.FaTabStripItemBO.Visible = True
             Me.FaTabStrip2.SelectedItem = Me.FaTabStripItemBO
             Me.FaTabStripItemBO.Selected = True
+            Me.FaTabStripItemEL.Visible = False
+        Else
+            Me.FaTabStripItem1.Visible = True
+            Me.FaTabStripItem2.Visible = False
+            Me.FaTabStripItem3.Visible = False
+            Me.FaTabStripItem4.Visible = False
+            Me.FaTabStripItem5.Visible = False
+            Me.FaTabStripItem6.Visible = False
+            Me.FaTabStripItem7.Visible = False
+            Me.FaTabStripItem8.Visible = False
+            Me.FaTabStripItem9.Visible = False
+            Me.FaTabStripItem10.Visible = False
+            Me.FaTabStripItem11.Visible = False
+            Me.FaTabStripItemBO.Visible = False
+            Me.FaTabStripItemEL.Visible = True
+            Me.FaTabStrip2.SelectedItem = Me.FaTabStripItem1
         End If
+
         Me.FaTabStrip2.Refresh()
 
     End Sub
 
     Private Sub tbDBPath_TextChanged(sender As Object, e As EventArgs) Handles tbDBPath.TextChanged
         If tbDBPath.Text <> "" Then btnSaveToDB.Enabled = True Else btnSaveToDB.Enabled = False
+    End Sub
+
+    Private Sub rbIon_CheckedChanged(sender As Object, e As EventArgs) Handles rbIon.CheckedChanged, rbSalt.CheckedChanged, rbHydratedSalt.CheckedChanged
+
+        tbHydrNumber.Enabled = rbHydratedSalt.Checked
+        tbPositiveIonFormula.Enabled = Not rbIon.Checked
+        tbNegativeIonFormula.Enabled = Not rbIon.Checked
+        tbEsteqCoeffNegIon.Enabled = Not rbIon.Checked
+        tbEsteqCoeffPosIon.Enabled = Not rbIon.Checked
+        tbElecIonCharge.Enabled = rbIon.Checked
+
     End Sub
 
 End Class

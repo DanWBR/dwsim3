@@ -203,6 +203,8 @@ Namespace DWSIM
                 Return GetLocalString("CompPseudo")
             ElseIf comp.IsBlackOil Then
                 Return "Black Oil"
+            ElseIf comp.IsIon Or comp.IsSalt Or comp.IsHydratedSalt Then
+                Return GetLocalString("Electrolyte")
             Else
                 Return GetLocalString("CompNormal")
             End If

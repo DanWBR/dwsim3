@@ -340,7 +340,7 @@ Public Class frmSurface
                                 CType(Me.FlowsheetDesignSurface.SelectedObject, DWSIM.GraphicObjects.MasterTableGraphic).PopulateGrid(PGEx1, Flowsheet)
                             ElseIf Me.FlowsheetDesignSurface.SelectedObject.TipoObjeto = TipoObjeto.GO_SpreadsheetTable Then
                                 CType(Me.FlowsheetDesignSurface.SelectedObject, DWSIM.GraphicObjects.SpreadsheetTableGraphic).PopulateGrid(PGEx1)
-                            Else
+                            ElseIf Flowsheet.Collections.ObjectCollection.ContainsKey(Me.FlowsheetDesignSurface.SelectedObject.Name) Then
                                 Flowsheet.Collections.ObjectCollection(Me.FlowsheetDesignSurface.SelectedObject.Name).PopulatePropertyGrid(PGEx1, Flowsheet.Options.SelectedUnitSystem)
                             End If
                             'Flowsheet.FormProps.ResumeLayout()

@@ -4915,6 +4915,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Eletrólito.
+        '''</summary>
+        Friend Shared ReadOnly Property Electrolyte() As String
+            Get
+                Return ResourceManager.GetString("Electrolyte", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to [Eletrólito] Capacidade Calorífica no Estado Padrão a 298 K.
         '''</summary>
         Friend Shared ReadOnly Property Electrolyte_Cp0() As String
