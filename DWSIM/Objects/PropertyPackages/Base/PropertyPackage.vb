@@ -5816,11 +5816,7 @@ redirect2:                      result = Me.FlashBase.Flash_PS(RET_VMOL(Fase.Mix
 
             For Each subst In Me.CurrentMaterialStream.Fases(0).Componentes.Values
                 Tc = subst.ConstantProperties.Critical_Temperature
-                If T / Tc <= 1 Then
-                    val += subst.FracaoMolar.GetValueOrDefault * Me.AUX_PVAPi(subst.Nome, T)
-                Else
-                    val += subst.FracaoMolar.GetValueOrDefault * Me.AUX_PVAPi(subst.Nome, 0.5 * Tc)
-                End If
+                val += subst.FracaoMolar.GetValueOrDefault * Me.AUX_PVAPi(subst.Nome, T)
             Next
 
             Return val
