@@ -1202,6 +1202,7 @@ alt:
 
             Dim d1, d2 As Date, dt As TimeSpan
             Dim i, j, ff, k As Integer
+            n = UBound(Vz)
 
             d1 = Date.Now
 
@@ -1600,8 +1601,6 @@ out:        L1 = L1 * (1 - V) 'calculate global phase fractions
             maxit_e = CInt(PP.Parameters("PP_PTFMEI"))
             itol = CDbl(PP.Parameters("PP_PTFILT"))
             maxit_i = CInt(PP.Parameters("PP_PTFMII"))
-
-            n = UBound(Vz)
 
             ReDim Vx1(n), Vx2(n), Vy(n), Ki1(n)
             Dim Pant, L1ant, L2ant, gamma1(n), gamma2(n), VL(n), VP(n) As Double
