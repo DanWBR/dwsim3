@@ -40,6 +40,7 @@ Namespace DWSIM.SimulationObjects.Reactors
         Dim DN As Dictionary(Of String, Double)
         Dim N00 As Dictionary(Of String, Double)
         Dim Rxi As New Dictionary(Of String, Double)
+        Dim RxiT As New Dictionary(Of String, Double)
         Dim DHRi As New Dictionary(Of String, Double)
 
         Public points As ArrayList
@@ -113,6 +114,7 @@ Namespace DWSIM.SimulationObjects.Reactors
             Kf = New ArrayList
             Kr = New ArrayList
             Rxi = New Dictionary(Of String, Double)
+            RxiT = New Dictionary(Of String, Double)
 
         End Sub
 
@@ -361,6 +363,9 @@ Namespace DWSIM.SimulationObjects.Reactors
             'conversion factors for different basis other than molar concentrations
             Dim convfactors As New Dictionary(Of String, Double)
 
+            RxiT.Clear()
+            DHRi.Clear()
+
             'do the calculations on each dV
             Dim currvol As Double = 0
             Do
@@ -391,42 +396,50 @@ Namespace DWSIM.SimulationObjects.Reactors
                         'process reaction i
                         rxn = form.Options.Reactions(ar(i))
 
+                        Dim m0 As Double = 0.0#
+
                         'initial mole flows
                         For Each sb As ReactionStoichBase In rxn.Components.Values
 
                             Select Case rxn.ReactionPhase
                                 Case PhaseName.Liquid
+                                    m0 = ims.Fases(3).Componentes(sb.CompName).MolarFlow.GetValueOrDefault
+                                    If m0 = 0.0# Then m0 = 0.0000000001
                                     If Not N0.ContainsKey(sb.CompName) Then
-                                        N0.Add(sb.CompName, ims.Fases(3).Componentes(sb.CompName).MolarFlow.GetValueOrDefault)
+                                        N0.Add(sb.CompName, m0)
                                         N00.Add(sb.CompName, N0(sb.CompName))
                                         N.Add(sb.CompName, N0(sb.CompName))
                                         C0.Add(sb.CompName, N0(sb.CompName) / ims.Fases(3).SPMProperties.volumetric_flow.GetValueOrDefault)
                                     Else
-                                        N0(sb.CompName) = ims.Fases(3).Componentes(sb.CompName).MolarFlow.GetValueOrDefault
+                                        N0(sb.CompName) = m0
                                         N(sb.CompName) = N0(sb.CompName)
                                         C0(sb.CompName) = N0(sb.CompName) / ims.Fases(3).SPMProperties.volumetric_flow.GetValueOrDefault
                                     End If
                                     vol = ims.Fases(3).SPMProperties.volumetric_flow.GetValueOrDefault
                                 Case PhaseName.Vapor
+                                    m0 = ims.Fases(2).Componentes(sb.CompName).MolarFlow.GetValueOrDefault
+                                    If m0 = 0.0# Then m0 = 0.0000000001
                                     If Not N0.ContainsKey(sb.CompName) Then
-                                        N0.Add(sb.CompName, ims.Fases(2).Componentes(sb.CompName).MolarFlow.GetValueOrDefault)
+                                        N0.Add(sb.CompName, m0)
                                         N00.Add(sb.CompName, N0(sb.CompName))
                                         N.Add(sb.CompName, N0(sb.CompName))
                                         C0.Add(sb.CompName, N0(sb.CompName) / ims.Fases(2).SPMProperties.volumetric_flow.GetValueOrDefault)
                                     Else
-                                        N0(sb.CompName) = ims.Fases(2).Componentes(sb.CompName).MolarFlow.GetValueOrDefault
+                                        N0(sb.CompName) = m0
                                         N(sb.CompName) = N0(sb.CompName)
                                         C0(sb.CompName) = N0(sb.CompName) / ims.Fases(2).SPMProperties.volumetric_flow.GetValueOrDefault
                                     End If
                                     vol = ims.Fases(2).SPMProperties.volumetric_flow.GetValueOrDefault
                                 Case PhaseName.Mixture
+                                    m0 = ims.Fases(0).Componentes(sb.CompName).MolarFlow.GetValueOrDefault
+                                    If m0 = 0.0# Then m0 = 0.0000000001
                                     If Not N0.ContainsKey(sb.CompName) Then
-                                        N0.Add(sb.CompName, ims.Fases(0).Componentes(sb.CompName).MolarFlow.GetValueOrDefault)
+                                        N0.Add(sb.CompName, m0)
                                         N00.Add(sb.CompName, N0(sb.CompName))
                                         N.Add(sb.CompName, N0(sb.CompName))
                                         C0.Add(sb.CompName, N0(sb.CompName) / ims.Fases(0).SPMProperties.volumetric_flow.GetValueOrDefault)
                                     Else
-                                        N0(sb.CompName) = ims.Fases(0).Componentes(sb.CompName).MolarFlow.GetValueOrDefault
+                                        N0(sb.CompName) = m0
                                         N(sb.CompName) = N0(sb.CompName)
                                         C0(sb.CompName) = N0(sb.CompName) / ims.Fases(0).SPMProperties.volumetric_flow.GetValueOrDefault
                                     End If
@@ -555,9 +568,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                     Loop Until i = ar.Count
 
-                    '
-                    '   SOLVE ODEs
-                    '
+                    'SOLVE ODEs
 
                     Me.activeAL = Me.ReactionsSequence.IndexOfValue(ar)
 
@@ -654,8 +665,6 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                     Loop Until i = ar.Count
 
-                    DHRi.Clear()
-
                     i = 0
                     Do
 
@@ -665,12 +674,10 @@ Namespace DWSIM.SimulationObjects.Reactors
                         'Heat released (or absorbed) (kJ/s = kW) (Ideal Gas)
                         Select Case Me.ReactorOperationMode
                             Case OperationMode.Adiabatic
-                                DHr = rxn.ReactionHeat * Abs(DNj(rxn.BaseReactant)) / 1000 * Rxi(rxn.ID) / Ri(rxn.BaseReactant)
+                                If Ri(rxn.BaseReactant) <> 0.0# Then DHr = rxn.ReactionHeat * Abs(DNj(rxn.BaseReactant)) / 1000 * Rxi(rxn.ID) / Ri(rxn.BaseReactant)
                             Case OperationMode.Isothermic
-                                DHr += rxn.ReactionHeat * Abs(DNj(rxn.BaseReactant)) / 1000 * Rxi(rxn.ID) / Ri(rxn.BaseReactant)
+                                If Ri(rxn.BaseReactant) <> 0.0# Then DHr += rxn.ReactionHeat * Abs(DNj(rxn.BaseReactant)) / 1000 * Rxi(rxn.ID) / Ri(rxn.BaseReactant)
                         End Select
-
-                        DHRi.Add(rxn.ID, DHr)
 
                         i += 1
 
@@ -836,6 +843,26 @@ Namespace DWSIM.SimulationObjects.Reactors
             Loop Until currvol - Me.Volume > dV * Me.Volume * 0.98
 
             Me.DeltaP = P0 - P
+
+            RxiT.Clear()
+            DHRi.Clear()
+
+            For Each ar As ArrayList In Me.ReactionsSequence.Values
+
+                i = 0
+                Do
+
+                    'process reaction i
+                    Dim rxn = form.Options.Reactions(ar(i))
+
+                    RxiT.Add(rxn.ID, (N(rxn.BaseReactant) - N00(rxn.BaseReactant)) / rxn.Components(rxn.BaseReactant).StoichCoeff / 1000)
+                    DHRi.Add(rxn.ID, rxn.ReactionHeat * RxiT(rxn.ID) * rxn.Components(rxn.BaseReactant).StoichCoeff / 1000)
+
+                    i += 1
+
+                Loop Until i = ar.Count
+
+            Next
 
             If Me.ReactorOperationMode = OperationMode.Isothermic Then
 
@@ -1056,6 +1083,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                     .CustomEditor = New DWSIM.Editors.Streams.UIInputESSelector
                 End With
 
+                If Not FlowSheet.Options.ReactionSets.ContainsKey(Me.ReactionSetID) Then Me.ReactionSetID = "DefaultSet"
                 .Item.Add(DWSIM.App.GetLocalString("RConvPGridItem1"), FlowSheet.Options.ReactionSets(Me.ReactionSetID).Name, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("RConvPGridItem1Help"), True)
                 With .Item(.Item.Count - 1)
                     .CustomEditor = New DWSIM.Editors.Reactors.UIReactionSetSelector
@@ -1145,8 +1173,9 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                     'CustomPropertyCollection
                     Dim m2 As New PropertyGridEx.CustomPropertyCollection()
-                    For Each dbl As KeyValuePair(Of String, Double) In Rxi
-                        m2.Add(form.Options.Reactions(dbl.Key).Name, Format(dbl.Value / C(form.Options.Reactions(dbl.Key).BaseReactant), FlowSheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("ReactionExtents"), DWSIM.App.GetLocalString(""), True)
+                    For Each dbl As KeyValuePair(Of String, Double) In RxiT
+                        Dim value = dbl.Value / C(form.Options.Reactions(dbl.Key).BaseReactant)
+                        m2.Add(form.Options.Reactions(dbl.Key).Name, value, False, DWSIM.App.GetLocalString("ReactionExtents"), DWSIM.App.GetLocalString(""), True)
                         m2.Item(m2.Count - 1).IsReadOnly = True
                         m2.Item(m2.Count - 1).DefaultValue = Nothing
                         m2.Item(m2.Count - 1).DefaultType = GetType(Nullable(Of Double))
@@ -1162,8 +1191,8 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                     'CustomPropertyCollection
                     Dim m3 As New PropertyGridEx.CustomPropertyCollection()
-                    For Each dbl As KeyValuePair(Of String, Double) In Rxi
-                        m3.Add(form.Options.Reactions(dbl.Key).Name, Format(dbl.Value / C(form.Options.Reactions(dbl.Key).BaseReactant) / Me.Volume, FlowSheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("ReactionExtents"), DWSIM.App.GetLocalString(""), True)
+                    For Each dbl As KeyValuePair(Of String, Double) In RxiT
+                        m3.Add(form.Options.Reactions(dbl.Key).Name, dbl.Value / C(form.Options.Reactions(dbl.Key).BaseReactant) / Me.Volume, False, DWSIM.App.GetLocalString("ReactionExtents"), DWSIM.App.GetLocalString(""), True)
                         m3.Item(m3.Count - 1).IsReadOnly = True
                         m3.Item(m3.Count - 1).DefaultValue = Nothing
                         m3.Item(m3.Count - 1).DefaultType = GetType(Nullable(Of Double))
@@ -1180,7 +1209,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                     'CustomPropertyCollection
                     Dim m4 As New PropertyGridEx.CustomPropertyCollection()
                     For Each dbl As KeyValuePair(Of String, Double) In DHRi
-                        m4.Add(form.Options.Reactions(dbl.Key).Name, Format(Conversor.ConverterDoSI(su.spmp_heatflow, dbl.Value), FlowSheet.Options.NumberFormat), False, DWSIM.App.GetLocalString("ReactionHeats"), DWSIM.App.GetLocalString(""), True)
+                        m4.Add(form.Options.Reactions(dbl.Key).Name, Conversor.ConverterDoSI(su.spmp_heatflow, dbl.Value), False, DWSIM.App.GetLocalString("ReactionHeats"), DWSIM.App.GetLocalString(""), True)
                         m4.Item(m4.Count - 1).IsReadOnly = True
                         m4.Item(m4.Count - 1).DefaultValue = Nothing
                         m4.Item(m4.Count - 1).DefaultType = GetType(Nullable(Of Double))

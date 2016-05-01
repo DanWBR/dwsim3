@@ -649,6 +649,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                     .CustomEditor = New DWSIM.Editors.Streams.UIInputESSelector
                 End With
 
+                If Not FlowSheet.Options.ReactionSets.ContainsKey(Me.ReactionSetID) Then Me.ReactionSetID = "DefaultSet"
                 .Item.Add(DWSIM.App.GetLocalString("RConvPGridItem1"), FlowSheet.Options.ReactionSets(Me.ReactionSetID).Name, False, DWSIM.App.GetLocalString("Parmetrosdeclculo2"), DWSIM.App.GetLocalString("RConvPGridItem1Help"), True)
                 With .Item(.Item.Count - 1)
                     .CustomEditor = New DWSIM.Editors.Reactors.UIReactionSetSelector
