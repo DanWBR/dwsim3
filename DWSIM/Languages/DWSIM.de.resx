@@ -4073,7 +4073,7 @@ Oberflächenspannung (flüssig): Brock-Bird-Methode</value>
     <value>Fehler bei der Berechnung des Wärmetauschers: Die Parameter führen zu einer physikalisch inkonsistenten Lösung.</value>
   </data>
   <data name="TKResTime" xml:space="preserve">
-    <value>Tankverweilzeit</value>
+    <value>Verweilzeit</value>
   </data>
   <data name="TKVol" xml:space="preserve">
     <value>Tankvolumen</value>

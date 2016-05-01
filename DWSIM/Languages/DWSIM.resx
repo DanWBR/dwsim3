@@ -4073,7 +4073,7 @@ Tensão Superficial da Fase Líquida: Método Brock-Bird</value>
     <value>Erro ao calcular o trocador: os parâmetros fornecidos geraram uma solução inconsistente.</value>
   </data>
   <data name="TKResTime" xml:space="preserve">
-    <value>Tempo de residência do fluido no tanque</value>
+    <value>Tempo de residência do fluido</value>
   </data>
   <data name="TKVol" xml:space="preserve">
     <value>Volume do tanque</value>

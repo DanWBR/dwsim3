@@ -1244,4 +1244,34 @@
   <data name="PROP_MS_154" xml:space="preserve">
     <value>Fluxo de Energia</value>
   </data>
+  <data name="PROP_CS_1" xml:space="preserve">
+    <value>Tempo de residência</value>
+  </data>
+  <data name="PROP_CS_2" xml:space="preserve">
+    <value>Volume</value>
+  </data>
+  <data name="PROP_CS_3" xml:space="preserve">
+    <value>Variação de temperatura</value>
+  </data>
+  <data name="PROP_PF_1" xml:space="preserve">
+    <value>Tempo de residência</value>
+  </data>
+  <data name="PROP_PF_2" xml:space="preserve">
+    <value>Volume</value>
+  </data>
+  <data name="PROP_PF_3" xml:space="preserve">
+    <value>Comprimento</value>
+  </data>
+  <data name="PROP_PF_4" xml:space="preserve">
+    <value>Carga de catalisador</value>
+  </data>
+  <data name="PROP_PF_5" xml:space="preserve">
+    <value>Diâmetro do catalisador</value>
+  </data>
+  <data name="PROP_PF_6" xml:space="preserve">
+    <value>Fração de vazios do catalisador</value>
+  </data>
+  <data name="PROP_PF_7" xml:space="preserve">
+    <value>Variação de temperatura</value>
+  </data>
 </root>

@@ -4063,7 +4063,7 @@
     <value>Error calculating the exchanger: input parameters generated a physically inconsistent solution.</value>
   </data>
   <data name="TKResTime" xml:space="preserve">
-    <value>Tank fluid residence time</value>
+    <value>Residence time</value>
   </data>
   <data name="TKVol" xml:space="preserve">
     <value>Tank volume</value>

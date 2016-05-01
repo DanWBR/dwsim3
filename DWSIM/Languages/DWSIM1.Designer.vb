@@ -13978,7 +13978,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Tempo de residência do fluido no tanque.
+        '''  Looks up a localized string similar to Tempo de residência do fluido.
         '''</summary>
         Friend Shared ReadOnly Property TKResTime() As String
             Get

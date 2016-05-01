@@ -54,6 +54,8 @@ Namespace DWSIM.SimulationObjects.Reactors
 
         Public Property Length As Double = 1.0#
 
+        Public Property ResidenceTime() As Double
+
         Public Property Volume() As Double
             Get
                 Return m_vol
@@ -903,6 +905,8 @@ Namespace DWSIM.SimulationObjects.Reactors
                 End With
             End If
 
+            ResidenceTime = Volume / ims.Fases(0).Properties.volumetric_flow.GetValueOrDefault
+
             'Corrente de energia - atualizar valor da potência (kJ/s)
             With form.Collections.CLCS_EnergyStreamCollection(Me.GraphicObject.InputConnectors(1).AttachedConnector.AttachedFrom.Name)
                 .Energia = Me.DeltaQ.GetValueOrDefault
@@ -1132,6 +1136,8 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                 If Me.GraphicObject.Calculated Then
 
+                    .Item.Add(FT(DWSIM.App.GetLocalString("TKResTime"), su.time), Format(Conversor.ConverterDoSI(su.time, Me.ResidenceTime), FlowSheet.Options.NumberFormat), True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("TKResTime"), True)
+
                     valor = Format(Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault), FlowSheet.Options.NumberFormat)
                     .Item.Add(FT(DWSIM.App.GetLocalString("Quedadepresso"), su.spmp_deltaP), valor, True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("Quedadepressoaplicad6"), True)
                     With .Item(.Item.Count - 1)
@@ -1242,14 +1248,26 @@ Namespace DWSIM.SimulationObjects.Reactors
             Dim propidx As Integer = CInt(prop.Split("_")(2))
 
             Select Case propidx
-
                 Case 0
-                    'PROP_HT_0	Pressure Drop
                     value = Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault)
-
+                Case 1
+                    value = Conversor.ConverterDoSI(su.time, Me.ResidenceTime)
+                Case 2
+                    value = Conversor.ConverterDoSI(su.volume, Me.Volume)
+                Case 3
+                    value = Conversor.ConverterDoSI(su.distance, Me.Length)
+                Case 4
+                    value = Conversor.ConverterDoSI(su.spmp_density, Me.CatalystLoading)
+                Case 5
+                    value = Conversor.ConverterDoSI(su.diameter, Me.CatalystParticleDiameter)
+                Case 6
+                    value = CatalystVoidFraction
+                Case 7
+                    value = Conversor.ConverterDoSI(su.spmp_deltaT, Me.DeltaT)
             End Select
 
             Return value
+
         End Function
 
         Public Overloads Overrides Function GetProperties(ByVal proptype As SimulationObjects_BaseClass.PropertyType) As String()
@@ -1257,15 +1275,15 @@ Namespace DWSIM.SimulationObjects.Reactors
             Dim proplist As New ArrayList
             Select Case proptype
                 Case PropertyType.RW
-                    For i = 0 To 0
+                    For i = 0 To 7
                         proplist.Add("PROP_PF_" + CStr(i))
                     Next
                 Case PropertyType.WR
-                    For i = 0 To 0
+                    For i = 0 To 7
                         proplist.Add("PROP_PF_" + CStr(i))
                     Next
                 Case PropertyType.ALL
-                    For i = 0 To 0
+                    For i = 0 To 7
                         proplist.Add("PROP_PF_" + CStr(i))
                     Next
             End Select
@@ -1279,11 +1297,22 @@ Namespace DWSIM.SimulationObjects.Reactors
             Dim propidx As Integer = CInt(prop.Split("_")(2))
 
             Select Case propidx
-
                 Case 0
-                    'PROP_HT_0	Pressure Drop
                     Me.DeltaP = Conversor.ConverterParaSI(su.spmp_deltaP, propval)
-
+                Case 1
+                    Me.ResidenceTime = Conversor.ConverterParaSI(su.time, propval)
+                Case 2
+                    Me.Volume = Conversor.ConverterParaSI(su.volume, propval)
+                Case 3
+                    Me.Length = Conversor.ConverterParaSI(su.distance, propval)
+                Case 4
+                    Me.CatalystLoading = Conversor.ConverterParaSI(su.spmp_density, propval)
+                Case 5
+                    Me.CatalystParticleDiameter = Conversor.ConverterParaSI(su.diameter, propval)
+                Case 6
+                    CatalystVoidFraction = propval
+                Case 7
+                    Me.DeltaT = Conversor.ConverterParaSI(su.spmp_deltaT, propval)
             End Select
             Return 1
         End Function
@@ -1295,11 +1324,22 @@ Namespace DWSIM.SimulationObjects.Reactors
             Dim propidx As Integer = CInt(prop.Split("_")(2))
 
             Select Case propidx
-
                 Case 0
-                    'PROP_HT_0	Pressure Drop
                     value = su.spmp_deltaP
-
+                Case 1
+                    value = su.time
+                Case 2
+                    value = su.volume
+                Case 3
+                    value = su.distance
+                Case 4
+                    value = su.spmp_density
+                Case 5
+                    value = su.diameter
+                Case 6
+                    value = ""
+                Case 7
+                    value = su.spmp_deltaT
             End Select
 
             Return value

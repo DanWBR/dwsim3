@@ -3280,7 +3280,7 @@ Las propiedades se calculan directamente desde la Ecuación de Estado o datos ex
     <value>LIQ Flujo másico</value>
   </data>
   <data name="TKResTime" xml:space="preserve">
-    <value>Tiempo de Residencia en el Tanque</value>
+    <value>Tiempo de Residencia</value>
   </data>
   <data name="Erroaosalvararquivo" xml:space="preserve">
     <value>Error al guardar el archivo: </value>

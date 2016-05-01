@@ -50,6 +50,8 @@ Namespace DWSIM.SimulationObjects.Reactors
         <System.NonSerialized()> Dim pp As DWSIM.SimulationObjects.PropertyPackages.PropertyPackage
         <System.NonSerialized()> Dim ppr As New DWSIM.SimulationObjects.PropertyPackages.RaoultPropertyPackage()
 
+        Public Property ResidenceTime() As Double
+
         Public Property IsothermalTemperature() As Double
             Get
                 Return m_isotemp
@@ -792,6 +794,8 @@ Namespace DWSIM.SimulationObjects.Reactors
                 End With
             End If
 
+            ResidenceTime = Volume / ims.Fases(0).Properties.volumetric_flow.GetValueOrDefault
+
             'Corrente de energia - atualizar valor da potência (kJ/s)
             With form.Collections.CLCS_EnergyStreamCollection(Me.GraphicObject.InputConnectors(1).AttachedConnector.AttachedFrom.Name)
                 .Energia = Me.DeltaQ.GetValueOrDefault
@@ -1005,6 +1009,8 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                 If Me.GraphicObject.Calculated Then
 
+                    .Item.Add(FT(DWSIM.App.GetLocalString("TKResTime"), su.time), Format(Conversor.ConverterDoSI(su.time, Me.ResidenceTime), FlowSheet.Options.NumberFormat), True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("TKResTime"), True)
+
                     .Item.Add(FT(DWSIM.App.GetLocalString("DeltaT2"), su.spmp_deltaT), Format(Conversor.ConverterDoSI(su.spmp_deltaT, Me.DeltaT.GetValueOrDefault), FlowSheet.Options.NumberFormat), True, DWSIM.App.GetLocalString("Resultados3"), DWSIM.App.GetLocalString("Diferenadetemperatur"), True)
                     With .Item(.Item.Count - 1)
                         .DefaultValue = Nothing
@@ -1101,11 +1107,14 @@ Namespace DWSIM.SimulationObjects.Reactors
             Dim propidx As Integer = CInt(prop.Split("_")(2))
 
             Select Case propidx
-
                 Case 0
-                    'PROP_HT_0	Pressure Drop
                     value = Conversor.ConverterDoSI(su.spmp_deltaP, Me.DeltaP.GetValueOrDefault)
-
+                Case 1
+                    value = Conversor.ConverterDoSI(su.time, Me.ResidenceTime)
+                Case 2
+                    value = Conversor.ConverterDoSI(su.volume, Me.Volume)
+                Case 3
+                    value = Conversor.ConverterDoSI(su.spmp_deltaT, Me.DeltaT)
             End Select
 
             Return value
@@ -1116,15 +1125,15 @@ Namespace DWSIM.SimulationObjects.Reactors
             Dim proplist As New ArrayList
             Select Case proptype
                 Case PropertyType.RW
-                    For i = 0 To 0
+                    For i = 0 To 3
                         proplist.Add("PROP_CS_" + CStr(i))
                     Next
                 Case PropertyType.WR
-                    For i = 0 To 0
+                    For i = 0 To 3
                         proplist.Add("PROP_CS_" + CStr(i))
                     Next
                 Case PropertyType.ALL
-                    For i = 0 To 0
+                    For i = 0 To 3
                         proplist.Add("PROP_CS_" + CStr(i))
                     Next
             End Select
@@ -1138,11 +1147,14 @@ Namespace DWSIM.SimulationObjects.Reactors
             Dim propidx As Integer = CInt(prop.Split("_")(2))
 
             Select Case propidx
-
                 Case 0
-                    'PROP_HT_0	Pressure Drop
                     Me.DeltaP = Conversor.ConverterParaSI(su.spmp_deltaP, propval)
-
+                Case 1
+                    Me.ResidenceTime = Conversor.ConverterParaSI(su.time, propval)
+                Case 2
+                    Me.Volume = Conversor.ConverterParaSI(su.volume, propval)
+                Case 3
+                    Me.DeltaT = Conversor.ConverterParaSI(su.spmp_deltaT, propval)
             End Select
             Return 1
         End Function
@@ -1154,11 +1166,14 @@ Namespace DWSIM.SimulationObjects.Reactors
             Dim propidx As Integer = CInt(prop.Split("_")(2))
 
             Select Case propidx
-
                 Case 0
-                    'PROP_HT_0	Pressure Drop
                     value = su.spmp_deltaP
-
+                Case 1
+                    value = su.time
+                Case 2
+                    value = su.volume
+                Case 3
+                    value = su.spmp_deltaT
             End Select
 
             Return value
