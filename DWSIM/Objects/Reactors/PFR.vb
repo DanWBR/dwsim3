@@ -1174,7 +1174,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                     'CustomPropertyCollection
                     Dim m2 As New PropertyGridEx.CustomPropertyCollection()
                     For Each dbl As KeyValuePair(Of String, Double) In RxiT
-                        Dim value = dbl.Value / C(form.Options.Reactions(dbl.Key).BaseReactant)
+                        Dim value = dbl.Value
                         m2.Add(form.Options.Reactions(dbl.Key).Name, value, False, DWSIM.App.GetLocalString("ReactionExtents"), DWSIM.App.GetLocalString(""), True)
                         m2.Item(m2.Count - 1).IsReadOnly = True
                         m2.Item(m2.Count - 1).DefaultValue = Nothing
@@ -1192,7 +1192,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                     'CustomPropertyCollection
                     Dim m3 As New PropertyGridEx.CustomPropertyCollection()
                     For Each dbl As KeyValuePair(Of String, Double) In RxiT
-                        m3.Add(form.Options.Reactions(dbl.Key).Name, dbl.Value / C(form.Options.Reactions(dbl.Key).BaseReactant) / Me.Volume, False, DWSIM.App.GetLocalString("ReactionExtents"), DWSIM.App.GetLocalString(""), True)
+                        m3.Add(form.Options.Reactions(dbl.Key).Name, dbl.Value / Me.Volume, False, DWSIM.App.GetLocalString("ReactionExtents"), DWSIM.App.GetLocalString(""), True)
                         m3.Item(m3.Count - 1).IsReadOnly = True
                         m3.Item(m3.Count - 1).DefaultValue = Nothing
                         m3.Item(m3.Count - 1).DefaultType = GetType(Nullable(Of Double))
