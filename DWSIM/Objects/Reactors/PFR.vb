@@ -1264,6 +1264,8 @@ Namespace DWSIM.SimulationObjects.Reactors
                     value = CatalystVoidFraction
                 Case 7
                     value = Conversor.ConverterDoSI(su.spmp_deltaT, Me.DeltaT)
+                Case 8
+                    value = Conversor.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ)
             End Select
 
             Return value
@@ -1275,15 +1277,15 @@ Namespace DWSIM.SimulationObjects.Reactors
             Dim proplist As New ArrayList
             Select Case proptype
                 Case PropertyType.RW
-                    For i = 0 To 7
+                    For i = 0 To 8
                         proplist.Add("PROP_PF_" + CStr(i))
                     Next
                 Case PropertyType.WR
-                    For i = 0 To 7
+                    For i = 0 To 8
                         proplist.Add("PROP_PF_" + CStr(i))
                     Next
                 Case PropertyType.ALL
-                    For i = 0 To 7
+                    For i = 0 To 8
                         proplist.Add("PROP_PF_" + CStr(i))
                     Next
             End Select
@@ -1340,6 +1342,8 @@ Namespace DWSIM.SimulationObjects.Reactors
                     value = ""
                 Case 7
                     value = su.spmp_deltaT
+                Case 8
+                    value = su.spmp_heatflow
             End Select
 
             Return value

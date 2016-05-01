@@ -198,6 +198,9 @@
   <data name="PROP_CS_3" xml:space="preserve">
     <value>Temperature delta</value>
   </data>
+  <data name="PROP_CS_4" xml:space="preserve">
+    <value>Heat load</value>
+  </data>
   <data name="PROP_DC_0" xml:space="preserve">
     <value>Condenser Pressure</value>
     <comment>1</comment>
@@ -1033,6 +1036,9 @@
   </data>
   <data name="PROP_PF_7" xml:space="preserve">
     <value>Temperature delta</value>
+  </data>
+  <data name="PROP_PF_8" xml:space="preserve">
+    <value>Heat load</value>
   </data>
   <data name="PROP_PS_0" xml:space="preserve">
     <value>Pressure Drop</value>

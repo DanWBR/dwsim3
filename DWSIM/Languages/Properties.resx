@@ -1274,4 +1274,10 @@
   <data name="PROP_PF_7" xml:space="preserve">
     <value>Variação de temperatura</value>
   </data>
+  <data name="PROP_CS_4" xml:space="preserve">
+    <value>Carga térmica</value>
+  </data>
+  <data name="PROP_PF_8" xml:space="preserve">
+    <value>Carga térmica</value>
+  </data>
 </root>
