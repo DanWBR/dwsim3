@@ -1158,18 +1158,18 @@ Namespace DWSIM.SimulationObjects.UnitOps
                 Select Case proptype
                     Case PropertyType.ALL
                         For Each p In InputParams.Values
-                            proplist.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & " / " & DWSIM.App.GetPropertyName(p.ObjectProperty) & " / [I][" & p.ID & "]")
+                            If Fsheet.Collections.ObjectCollection.ContainsKey(p.ObjectID) Then proplist.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & " / " & DWSIM.App.GetPropertyName(p.ObjectProperty) & " / [I][" & p.ID & "]")
                         Next
                         For Each p In OutputParams.Values
-                            proplist.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & " / " & DWSIM.App.GetPropertyName(p.ObjectProperty) & " / [O][" & p.ID & "]")
+                            If Fsheet.Collections.ObjectCollection.ContainsKey(p.ObjectID) Then proplist.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & " / " & DWSIM.App.GetPropertyName(p.ObjectProperty) & " / [O][" & p.ID & "]")
                         Next
                     Case PropertyType.WR
                         For Each p In InputParams.Values
-                            proplist.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & " / " & DWSIM.App.GetPropertyName(p.ObjectProperty) & " / [I][" & p.ID & "]")
+                            If Fsheet.Collections.ObjectCollection.ContainsKey(p.ObjectID) Then proplist.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & " / " & DWSIM.App.GetPropertyName(p.ObjectProperty) & " / [I][" & p.ID & "]")
                         Next
                     Case PropertyType.RO
                         For Each p In OutputParams.Values
-                            proplist.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & " / " & DWSIM.App.GetPropertyName(p.ObjectProperty) & " / [O][" & p.ID & "]")
+                            If Fsheet.Collections.ObjectCollection.ContainsKey(p.ObjectID) Then proplist.Add(Fsheet.Collections.ObjectCollection(p.ObjectID).GraphicObject.Tag & " / " & DWSIM.App.GetPropertyName(p.ObjectProperty) & " / [O][" & p.ID & "]")
                         Next
                 End Select
             End If
@@ -1182,7 +1182,7 @@ Namespace DWSIM.SimulationObjects.UnitOps
             Dim cv As New DWSIM.SistemasDeUnidades.Conversor
             Dim pkey As String = prop.Split("][")(1).TrimStart("[").TrimEnd("]")
 
-            Fsheet.Collections.ObjectCollection(InputParams(pkey).ObjectID).SetPropertyValue(InputParams(pkey).ObjectProperty, propval, su)
+            If Fsheet.Collections.ObjectCollection.ContainsKey(InputParams(pkey).ObjectID) Then Fsheet.Collections.ObjectCollection(InputParams(pkey).ObjectID).SetPropertyValue(InputParams(pkey).ObjectProperty, propval, su)
 
             Return 1
 
@@ -1194,14 +1194,14 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             Try
                 If prop.Contains("[I]") Then
-                    Return Fsheet.Collections.ObjectCollection(InputParams(pkey).ObjectID).GetPropertyUnit(InputParams(pkey).ObjectProperty, su)
+                    If Fsheet.Collections.ObjectCollection.ContainsKey(InputParams(pkey).ObjectID) Then Return Fsheet.Collections.ObjectCollection(InputParams(pkey).ObjectID).GetPropertyUnit(InputParams(pkey).ObjectProperty, su)
                 Else
-                    Return Fsheet.Collections.ObjectCollection(OutputParams(pkey).ObjectID).GetPropertyUnit(OutputParams(pkey).ObjectProperty, su)
+                    If Fsheet.Collections.ObjectCollection.ContainsKey(OutputParams(pkey).ObjectID) Then Return Fsheet.Collections.ObjectCollection(OutputParams(pkey).ObjectID).GetPropertyUnit(OutputParams(pkey).ObjectProperty, su)
                 End If
             Catch ex As Exception
                 Return ex.ToString
             End Try
-
+            Return ""
         End Function
 
         Public Overrides Sub QTFillNodeItems()
