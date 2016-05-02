@@ -4225,7 +4225,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
-    <PreBuildEvent>"C:\Program Files (x86)\Git\bin\git.exe" rev-parse --short HEAD &gt; "$(ProjectDir)version.txt"
+    <PreBuildEvent>"C:\Program Files\Git\cmd\git.exe" rev-parse --short HEAD &gt; "$(ProjectDir)version.txt"
 Exit 0</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
