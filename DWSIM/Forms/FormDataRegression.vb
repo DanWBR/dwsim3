@@ -2635,7 +2635,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             Case "PC-SAFT", "Peng-Robinson", "Soave-Redlich-Kwong"
                 With gridInEst.Rows
                     .Clear()
-                    .Add(New Object() {"kij", 0.0#, False})
+                    .Add(New Object() {"kij", -0.5, 0.0#, 0.5, False})
                 End With
                 Button1.Enabled = False
                 Button2.Enabled = False
@@ -2646,7 +2646,7 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             Case "Lee-Kesler-Plöcker"
                 With gridInEst.Rows
                     .Clear()
-                    .Add(New Object() {"kij", 1.0#, False})
+                    .Add(New Object() {"kij", 0.9, 1.0#, 1.1, False})
                 End With
                 Button1.Enabled = False
                 Button2.Enabled = False
@@ -2657,8 +2657,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             Case "PRSV2-M"
                 With gridInEst.Rows
                     .Clear()
-                    .Add(New Object() {"kij", 0.0#, False})
-                    .Add(New Object() {"kji", 0.0#, False})
+                    .Add(New Object() {"kij", -0.5, 0.0#, 0.5, False})
+                    .Add(New Object() {"kji", -0.5, 0.0#, 0.5, False})
                 End With
                 Button1.Enabled = False
                 Button2.Enabled = False
@@ -2669,8 +2669,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             Case "PRSV2-VL"
                 With gridInEst.Rows
                     .Clear()
-                    .Add(New Object() {"kij", 0.001#, False})
-                    .Add(New Object() {"kji", 0.001#, False})
+                    .Add(New Object() {"kij", -0.5, 0.0#, 0.5, False})
+                    .Add(New Object() {"kji", -0.5, 0.0#, 0.5, False})
                 End With
                 Button1.Enabled = False
                 Button2.Enabled = False
@@ -2681,8 +2681,8 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             Case "UNIQUAC"
                 With gridInEst.Rows
                     .Clear()
-                    .Add(New Object() {"A12 (cal/mol)", 0.0#, False})
-                    .Add(New Object() {"A21 (cal/mol)", 0.0#, False})
+                    .Add(New Object() {"A12 (cal/mol)", -5000, 0.0#, 5000, False})
+                    .Add(New Object() {"A21 (cal/mol)", -5000, 0.0#, 5000, False})
                 End With
                 Button1.Enabled = True
                 Button2.Enabled = True
@@ -2692,9 +2692,9 @@ ByVal new_lambda As Boolean, ByVal nele_hess As Integer, ByRef iRow As Integer()
             Case "NRTL"
                 With gridInEst.Rows
                     .Clear()
-                    .Add(New Object() {"A12 (cal/mol)", 0.0#, False})
-                    .Add(New Object() {"A21 (cal/mol)", 0.0#, False})
-                    .Add(New Object() {"alpha12", 0.3#, False})
+                    .Add(New Object() {"A12 (cal/mol)", -5000, 0.0#, 5000, False})
+                    .Add(New Object() {"A21 (cal/mol)", -5000, 0.0#, 5000, False})
+                    .Add(New Object() {"alpha12", 0.0#, 0.3#, 0.8#, False})
                 End With
                 Button1.Enabled = True
                 Button2.Enabled = True
