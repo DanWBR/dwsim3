@@ -1119,9 +1119,9 @@ Namespace DWSIM.SimulationObjects.Reactors
                 Case 2
                     value = Conversor.ConverterDoSI(su.volume, Me.Volume)
                 Case 3
-                    value = Conversor.ConverterDoSI(su.spmp_deltaT, Me.DeltaT)
+                    value = Conversor.ConverterDoSI(su.spmp_deltaT, Me.DeltaT.GetValueOrDefault)
                 Case 4
-                    value = Conversor.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ)
+                    value = Conversor.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ.GetValueOrDefault)
             End Select
 
             Return value

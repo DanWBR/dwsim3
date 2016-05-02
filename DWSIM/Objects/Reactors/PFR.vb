@@ -1263,9 +1263,9 @@ Namespace DWSIM.SimulationObjects.Reactors
                 Case 6
                     value = CatalystVoidFraction
                 Case 7
-                    value = Conversor.ConverterDoSI(su.spmp_deltaT, Me.DeltaT)
+                    value = Conversor.ConverterDoSI(su.spmp_deltaT, Me.DeltaT.GetValueOrDefault)
                 Case 8
-                    value = Conversor.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ)
+                    value = Conversor.ConverterDoSI(su.spmp_heatflow, Me.DeltaQ.GetValueOrDefault)
             End Select
 
             Return value
