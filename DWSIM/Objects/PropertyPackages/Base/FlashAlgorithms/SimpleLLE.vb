@@ -114,6 +114,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             'renormalise Vn's
             S = Vn1.SumY + Vn2.SumY
             Vn1 = Vn1.MultiplyConstY(1 / S)
+            Vn2 = Vn2.MultiplyConstY(1 / S)
 
             'calculate vapour pressures
             For i = 0 To n

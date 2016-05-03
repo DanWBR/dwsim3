@@ -744,7 +744,7 @@ out:
 
                 End If
 
-                If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt"))
+                If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt2"))
 
                 ecount += 1
 
@@ -1454,6 +1454,10 @@ alt:
             Dim Tant, dTant, dT, DF, L1ant, L2ant, gamma1(n), gamma2(n), VL(n) As Double
             Dim Vx1ant(n), Vx2ant(n), Vyant(n), e1, e2, e3, e4 As Double
 
+            Dim MinT, MaxT As Double
+            MinT = 0
+            MaxT = 2000
+
             Tant = Tref
             T = Tref
             ecount = 0
@@ -1556,9 +1560,20 @@ alt:
                 'Detect symetric oscillations in vicinity to critical point of a component
                 'Do damping for new temperature in this case to avoid problems.
                 dT = T - Tant
+                If dT > 5 Then dT = 5
+                If dT < -5 Then dT = -5
                 T = Tant + DF * dT
-                If Abs(dTant + dT) < 0.05 Then
+                If dT > 0 And T > MaxT Then T = MaxT - (MaxT - Tant) * 0.5
+                If dT < 0 And T < MinT Then T = MinT - (MinT - Tant) * 0.5
+                If dT > 0 And Tant > MinT Then MinT = (Tant + MinT) / 2
+                If dT < 0 And Tant < MaxT Then MaxT = (Tant + MaxT) / 2
+
+                If (Abs(dT) = Abs(dTant)) And (dT * dTant < 0) Then
+                    'symetric oscillation detected
                     DF *= 0.8
+                Else
+                    DF *= 1.05
+                    If DF > 1 Then DF = 1
                 End If
 
                 'calculate new Ki's and vapour composition
@@ -1567,6 +1582,10 @@ alt:
                     Vy(i) = Ki1(i) * Vx1(i)
                     If VL(i) > 0 Then VL(i) = Vz(i) / (1 + V * (Vy(i) / VL(i) - 1))
                 Next
+
+
+                Vy = Vy.NormalizeY()
+                VL = VL.NormalizeY()
 
                 e1 = 0.0#
                 e2 = 0.0#
@@ -1582,7 +1601,7 @@ alt:
                 e3 = Math.Abs(T - Tant) + Math.Abs(L1 - L1ant) + Math.Abs(L2 - L2ant)
 
                 ecount += 1
-                If ecount > maxit_e Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt"))
+                If ecount > maxit_e * 100 Then Throw New Exception(DWSIM.App.GetLocalString("PropPack_FlashMaxIt"))
             Loop Until (e1 + e2 + e3 + e4) < etol
 
 out:        L1 = L1 * (1 - V) 'calculate global phase fractions
