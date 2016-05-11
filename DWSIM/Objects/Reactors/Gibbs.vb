@@ -1146,6 +1146,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                             T = ims.Fases(0).SPMProperties.temperature.GetValueOrDefault
 
                             pp.CurrentMaterialStream = ims
+                            ims.SpecType = Streams.MaterialStream.Flashspec.Temperature_and_Pressure
                             ims.Calculate(True, True)
 
                         Case OperationMode.Isothermic
@@ -1168,6 +1169,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                             Me.DeltaT = Tout - T
 
                             ims.Fases(0).SPMProperties.temperature = Tout
+                            ims.SpecType = Streams.MaterialStream.Flashspec.Temperature_and_Pressure
 
                             pp.CurrentMaterialStream = ims
                             ims.Calculate(True, True)
@@ -1419,6 +1421,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                                 Me.DeltaT = T - T0
 
                                 ims.Fases(0).SPMProperties.temperature = T
+                                ims.SpecType = Streams.MaterialStream.Flashspec.Temperature_and_Pressure
 
                                 pp.CurrentMaterialStream = ims
                                 ims.Calculate(True, True)
@@ -1426,6 +1429,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                             Case OperationMode.Isothermic
 
+                                ims.SpecType = Streams.MaterialStream.Flashspec.Temperature_and_Pressure
                                 pp.CurrentMaterialStream = ims
                                 ims.Calculate(True, True)
 
@@ -1445,6 +1449,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                                 Me.DeltaT = T - T0
 
                                 ims.Fases(0).SPMProperties.temperature = OutletTemperature
+                                ims.SpecType = Streams.MaterialStream.Flashspec.Temperature_and_Pressure
                                 pp.CurrentMaterialStream = ims
                                 ims.Calculate(True, True)
 

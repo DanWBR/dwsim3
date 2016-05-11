@@ -951,11 +951,13 @@ Namespace DWSIM.SimulationObjects.Reactors
                     T = ims.Fases(0).SPMProperties.temperature.GetValueOrDefault
 
                     pp.CurrentMaterialStream = ims
+                    ims.SpecType = Streams.MaterialStream.Flashspec.Temperature_and_Pressure
                     ims.Calculate(True, True)
 
                 Case OperationMode.Isothermic
 
                     pp.CurrentMaterialStream = ims
+                    ims.SpecType = Streams.MaterialStream.Flashspec.Temperature_and_Pressure
                     ims.Calculate(True, True)
 
                     'Products Enthalpy (kJ/kg * kg/s = kW)
@@ -973,6 +975,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                     Me.DeltaT = Tout - T
 
                     ims.Fases(0).SPMProperties.temperature = Tout
+                    ims.SpecType = Streams.MaterialStream.Flashspec.Temperature_and_Pressure
 
                     pp.CurrentMaterialStream = ims
                     ims.Calculate(True, True)
