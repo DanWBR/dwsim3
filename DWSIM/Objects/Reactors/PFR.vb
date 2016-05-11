@@ -760,6 +760,7 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                     CheckCalculatorStatus()
 
+                    ims.SpecType = Streams.MaterialStream.Flashspec.Temperature_and_Pressure
                     ims.Calculate(True, True)
 
                     CheckCalculatorStatus()
