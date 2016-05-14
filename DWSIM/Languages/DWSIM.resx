@@ -5352,4 +5352,7 @@ In this model, chemical and physical equilibria of NH3, CO2, and H2S in sour wat
   <data name="Electrolyte" xml:space="preserve">
     <value>Eletrólito</value>
   </data>
+  <data name="ActivateAdjustSolver" xml:space="preserve">
+    <value>Puts the adjust under control of the Simultaneous Adjust Solver.</value>
+  </data>
 </root>

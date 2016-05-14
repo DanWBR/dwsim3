@@ -430,7 +430,7 @@ Namespace DWSIM.SimulationObjects.SpecialOps
                 .Item.Add(DWSIM.App.GetLocalString("NmeroMximodeIteraes"), Me, "MaximumIterations", False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("Nmeromximodeiteraesa"), True)
                 .Item.Add(DWSIM.App.GetLocalString("Tolerncia"), Me, "Tolerance", False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("Diferenamximaentreos"), True)
                 .Item.Add(DWSIM.App.GetLocalString("DeltaStepsize"), Me, "StepSize", False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("Variaoinicialnovalor"), True)
-                .Item.Add(DWSIM.App.GetLocalString("SimultaneousAdjust"), Me, "SimultaneousAdjust", False, DWSIM.App.GetLocalString("Parmetros2"), "Puts the adjust under control of the Simultaneous Adjust Solver.", True)
+                .Item.Add(DWSIM.App.GetLocalString("SimultaneousAdjust"), Me, "SimultaneousAdjust", False, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("ActivateAdjustSolver"), True)
                 .Item.Add(DWSIM.App.GetLocalString("PaineldeControle"), Me, "Status", True, DWSIM.App.GetLocalString("Parmetros2"), DWSIM.App.GetLocalString("CliqueparaexibiroPai"), True)
                 With .Item(.Item.Count - 1)
                     .IsBrowsable = False
