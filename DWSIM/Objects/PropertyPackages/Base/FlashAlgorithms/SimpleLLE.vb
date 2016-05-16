@@ -49,7 +49,7 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             n = UBound(Vz)
 
             Dim Vx1(n), Vx2(n), Vy(n), Vn1(n), Vn2(n), Ki(n), fi1(n), fi2(n), gamma1(n), gamma2(n), Vp(n) As Double
-            Dim Vx1_ant(n), Vx2_ant(n) As Double
+            Dim Vx1_ant(n), Vx2_ant(n), Vn1_ant(n), Vn2_ant(n), L1_ant, L2_ant As Double
             Dim d1, d2 As Date, dt As TimeSpan
             Dim L1, L2, V, S As Double
             Dim e1, e2 As Double
@@ -130,9 +130,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
             Do
                 Vx1_ant = Vx1.Clone
                 Vx2_ant = Vx2.Clone
+                Vn1_ant = Vn1.Clone
+                Vn2_ant = Vn2.Clone
 
-                Vx1 = Vn1.MultiplyConstY(1 / L1)
-                Vx2 = Vn2.MultiplyConstY(1 / L2)
+                Vx1 = Vn1.MultiplyConstY(1 / L1).NormalizeY
+                Vx2 = Vn2.MultiplyConstY(1 / L2).NormalizeY
 
                 fi1 = PP.DW_CalcFugCoeff(Vx1, T, P, State.Liquid)
                 fi2 = PP.DW_CalcFugCoeff(Vx2, T, P, State.Liquid)
@@ -171,9 +173,19 @@ Namespace DWSIM.SimulationObjects.PropertyPackages.Auxiliary.FlashAlgorithms
                 Vn1 = Vz.DivideY(gamma1.MultiplyConstY(L2).DivideY(gamma2.MultiplyConstY(L1)).AddConstY(1))
                 Vn2 = Vz.SubtractY(Vn1)
 
-                L1 = Vn1.SumY
-                L2 = Vn2.SumY
+                L1_ant = L1
+                L2_ant = L2
 
+                L1 = Vn1.SumY
+                L2 = 1 - L1
+
+                If Abs(L1_ant - L2) < 0.0001 And Abs(L2_ant - L1) < 0.0001 Then 'detect oscilating condition
+                    'replace with average of both oscilating compositions to stabilise calculations
+                    Vn1 = Vn1.AddY(Vn1_ant).MultiplyConstY(0.5)
+                    Vn2 = Vz.SubtractY(Vn1)
+                    L1 = Vn1.SumY
+                    L2 = 1 - L1
+                End If
                 ecount += 1
 
                 If ecount > 10000 Then Throw New Exception(DWSIM.App.GetLocalString("Nmeromximodeiteraesa3"))
