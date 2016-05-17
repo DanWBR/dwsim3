@@ -367,7 +367,8 @@ Namespace DWSIM.SimulationObjects.Reactors
             ims.Fases(0).SPMProperties.pressure = Pout
 
             'Reactants Enthalpy (kJ/kg * kg/s = kW)
-            Hr = ims.Fases(0).SPMProperties.enthalpy.GetValueOrDefault * ims.Fases(0).SPMProperties.massflow.GetValueOrDefault
+            Hr0 = ims.Fases(0).SPMProperties.enthalpy.GetValueOrDefault * ims.Fases(0).SPMProperties.massflow.GetValueOrDefault
+            Hr = Hr0
 
             N00.Clear()
 
@@ -708,10 +709,8 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                     Case OperationMode.Adiabatic
 
-                        Me.DeltaQ = form.Collections.CLCS_EnergyStreamCollection(Me.GraphicObject.InputConnectors(1).AttachedConnector.AttachedFrom.Name).Energia.GetValueOrDefault
-
                         'Products Enthalpy (kJ/kg * kg/s = kW)
-                        Hp = Me.DeltaQ.GetValueOrDefault + Hr + Hid_p - Hid_r - DHr
+                        Hp = Hr + Hid_p - Hid_r - DHr
 
                         tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pout, Hp / ims.Fases(0).SPMProperties.massflow.GetValueOrDefault, Tin)
                         Dim Tout As Double = tmp(2)
@@ -725,6 +724,9 @@ Namespace DWSIM.SimulationObjects.Reactors
                         Me.DeltaT = 0.0#
 
                     Case OperationMode.OutletTemperature
+
+                        'Products Enthalpy (kJ/kg * kg/s = kW)
+                        Hp = Hr + Hid_p - Hid_r - DHr
 
                         Me.DeltaT = Me.OutletTemperature - T
 
@@ -761,8 +763,13 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                 'Products Enthalpy (kJ/kg * kg/s = kW)
                 Hp = ims.Fases(0).SPMProperties.enthalpy.GetValueOrDefault * ims.Fases(0).SPMProperties.massflow.GetValueOrDefault
+
                 'Heat (kW)
                 Me.DeltaQ = DHr + Hp - Hr0
+
+            Else
+
+                Me.DeltaQ = 0.0#
 
             End If
 
