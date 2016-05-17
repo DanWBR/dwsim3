@@ -745,6 +745,8 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                         Case OperationMode.Isothermic
 
+                            Me.DeltaT = 0.0#
+
                         Case OperationMode.OutletTemperature
 
                             Me.DeltaQ = form.Collections.CLCS_EnergyStreamCollection(Me.GraphicObject.InputConnectors(1).AttachedConnector.AttachedFrom.Name).Energia.GetValueOrDefault
@@ -752,7 +754,7 @@ Namespace DWSIM.SimulationObjects.Reactors
                             'Products Enthalpy (kJ/kg * kg/s = kW)
                             Hp = Me.dV * Me.DeltaQ.GetValueOrDefault + Hr + Hid_p - Hid_r - DHr
 
-                            Me.DeltaT = Me.DeltaT.GetValueOrDefault + Me.OutletTemperature - T
+                            Me.DeltaT = Me.OutletTemperature - T0
                             ims.Fases(0).SPMProperties.temperature = Me.OutletTemperature
                             T = ims.Fases(0).SPMProperties.temperature.GetValueOrDefault
 
@@ -867,13 +869,12 @@ Namespace DWSIM.SimulationObjects.Reactors
 
             Next
 
-            If Me.ReactorOperationMode = OperationMode.Isothermic Then
+            If Me.ReactorOperationMode = OperationMode.Isothermic Or Me.ReactorOperationMode = OperationMode.OutletTemperature Then
 
                 'Products Enthalpy (kJ/kg * kg/s = kW)
                 Hp = ims.Fases(0).SPMProperties.enthalpy.GetValueOrDefault * ims.Fases(0).SPMProperties.massflow.GetValueOrDefault
                 'Heat (kW)
                 Me.DeltaQ = DHr + Hp - Hr0
-                Me.DeltaT = 0
 
             End If
 

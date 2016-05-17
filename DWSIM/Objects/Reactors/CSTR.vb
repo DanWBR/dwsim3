@@ -715,19 +715,20 @@ Namespace DWSIM.SimulationObjects.Reactors
 
                         tmp = Me.PropertyPackage.DW_CalcEquilibrio_ISOL(PropertyPackages.FlashSpec.P, PropertyPackages.FlashSpec.H, Pout, Hp / ims.Fases(0).SPMProperties.massflow.GetValueOrDefault, Tin)
                         Dim Tout As Double = tmp(2)
+
                         Me.DeltaT = Tout - Tin
 
                         ims.Fases(0).SPMProperties.temperature = Tout
 
                     Case OperationMode.Isothermic
 
+                        Me.DeltaT = 0.0#
+
                     Case OperationMode.OutletTemperature
 
-                        Tin = Me.OutletTemperature
+                        Me.DeltaT = Me.OutletTemperature - T
 
-                        Me.DeltaT = Tin - Tin0
-
-                        ims.Fases(0).SPMProperties.temperature = Tin
+                        ims.Fases(0).SPMProperties.temperature = Me.OutletTemperature
 
                 End Select
 
@@ -762,7 +763,6 @@ Namespace DWSIM.SimulationObjects.Reactors
                 Hp = ims.Fases(0).SPMProperties.enthalpy.GetValueOrDefault * ims.Fases(0).SPMProperties.massflow.GetValueOrDefault
                 'Heat (kW)
                 Me.DeltaQ = DHr + Hp - Hr0
-                Me.DeltaT = Tin - Tin0
 
             End If
 
