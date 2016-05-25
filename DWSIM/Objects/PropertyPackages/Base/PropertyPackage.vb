@@ -759,6 +759,9 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 End If
             End If
 
+                If K(i) < 0.0000000000000001 Then K(i) = 0.0000000000000001
+            Next
+
             Return K
 
         End Function
