@@ -8425,7 +8425,7 @@ Final3:
         ''' casno argument wherever available.</remarks>
         Public Overridable Sub GetComponentList(ByRef compIds As Object, ByRef formulae As Object, ByRef names As Object, ByRef boilTemps As Object, ByRef molWt As Object, ByRef casNo As Object) Implements CapeOpen.ICapeThermoPropertyPackage.GetComponentList
 
-            Dim ids, formulas, nms, bts, casnos, molws As New ArrayList
+            Dim ids, formulas, nms, casnos As New List(Of String), bts, molws As New List(Of Double)
 
             If My.Application.CAPEOPENMode Then
                 For Each c As ConstantProperties In _selectedcomps.Values
@@ -8447,36 +8447,13 @@ Final3:
                 Next
             End If
 
-            Dim _i(ids.Count - 1) As String
-            Dim _f(ids.Count - 1) As String
-            Dim _n(ids.Count - 1) As String
-            Dim _c(ids.Count - 1) As String
-            Dim _b(ids.Count - 1) As Double
-            Dim _m(ids.Count - 1) As Double
-
-            Array.Copy(ids.ToArray, _i, ids.Count)
-            Array.Copy(formulas.ToArray, _f, ids.Count)
-            Array.Copy(nms.ToArray, _n, ids.Count)
-            Array.Copy(casnos.ToArray, _c, ids.Count)
-            Array.Copy(bts.ToArray, _b, ids.Count)
-            Array.Copy(molws.ToArray, _m, ids.Count)
-
-            If ids.Count > 0 Then
-                compIds = _i
-                formulae = _f
-                names = _n
-                boilTemps = _b
-                casNo = _c
-                molWt = _m
-            Else
-                compIds = Nothing
-                formulae = Nothing
-                names = Nothing
-                casNo = Nothing
-                boilTemps = Nothing
-                molWt = Nothing
-            End If
-
+            compIds = ids.ToArray
+            formulae = formulas.ToArray
+            names = nms.ToArray
+            boilTemps = bts.ToArray
+            casNo = casnos.ToArray
+            molWt = molws.ToArray
+            
         End Sub
 
         ''' <summary>
@@ -10508,6 +10485,7 @@ Final3:
             Dim filename As String = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "Henry.txt"
             Dim HenryLines() As String = IO.File.ReadAllLines(filename)
 
+            m_Henry.Clear()
             For i = 2 To HenryLines.Length - 1
                 Dim HP As New HenryParam
                 HP.Component = HenryLines(i).Split(";")(1)
