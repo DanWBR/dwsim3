@@ -216,27 +216,11 @@ Namespace DWSIM.SimulationObjects.PropertyPackages
                 'try to find chemsep xml database
 
                 Dim cspath As String = ""
-                Try
-                    If My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v96") IsNot Nothing Then
-                        cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v96").GetValue("")
-                    ElseIf My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v95") IsNot Nothing Then
-                        cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v95").GetValue("")
-                    ElseIf My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v94") IsNot Nothing Then
-                        cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v94").GetValue("")
-                    ElseIf My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v93") IsNot Nothing Then
-                        cspath = My.Computer.Registry.LocalMachine.OpenSubKey("Software").OpenSubKey("ChemSepL6v93").GetValue("")
-                    End If
-                    cspath += Path.DirectorySeparatorChar + "pcd" + pathsep + "chemsep1.xml"
-                Catch ex As Exception
-                    DWSIM.App.WriteToConsole(ex.ToString, 1)
-                Finally
-                    If Not File.Exists(cspath) Then
-                        cspath = My.Application.Info.DirectoryPath & pathsep & "chemsepdb" & pathsep & "chemsep1.xml"
-                        If File.Exists(cspath) Then My.Settings.ChemSepDatabasePath = cspath
-                    Else
-                        My.Settings.ChemSepDatabasePath = cspath
-                    End If
-                End Try
+                 If Not File.Exists(My.Settings.ChemSepDatabasePath) Then My.Settings.ChemSepDatabasePath = ""
+
+                If File.Exists(My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "chemsep1.xml") Then
+                    If My.Settings.ChemSepDatabasePath = "" Then My.Settings.ChemSepDatabasePath = My.Application.Info.DirectoryPath & pathsep & "data" & pathsep & "databases" & pathsep & "chemsep1.xml"
+                End If
 
                 'load chempsep database if existent
 
