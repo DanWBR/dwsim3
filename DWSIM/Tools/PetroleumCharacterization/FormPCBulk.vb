@@ -87,16 +87,16 @@ Public Class FormPCBulk
         Array.Resize(dV2_, n + 1)
         Array.Resize(q, n + 1)
 
-        If MW <> 0 Then
+        If MW <> 0.0# Then
 
             DistMW()
 
-            If SG <> 0 And TB <> 0 Then
+            If SG <> 0.0# And TB <> 0.0# Then
 
                 DistSG()
                 DistTB()
 
-            ElseIf SG = 0 And TB <> 0 Then
+            ElseIf SG = 0.0# And TB <> 0.0# Then
 
                 For i = 1 To n
                     dSG(i) = PropertyMethods.d15_Riazi(dMW(i))
@@ -104,33 +104,33 @@ Public Class FormPCBulk
 
                 DistTB()
 
-            ElseIf SG = 0 And TB = 0 Then
+            ElseIf SG = 0.0# And TB = 0.0# Then
 
                 For i = 1 To n
                     dSG(i) = PropertyMethods.d15_Riazi(dMW(i))
-                    dTB(i) = 1080 - Math.Exp(6.97996 - 0.01964 * dMW(i) ^ (2 / 3))
+                    dTB(i) = 1080.0# - Math.Exp(6.97996 - 0.01964 * dMW(i) ^ (2 / 3))
                 Next
 
-            ElseIf SG <> 0 And TB = 0 Then
+            ElseIf SG <> 0.0# And TB = 0.0# Then
 
                 DistSG()
 
                 For i = 1 To n
-                    dTB(i) = 1080 - Math.Exp(6.97996 - 0.01964 * dMW(i) ^ (2 / 3))
+                    dTB(i) = 1080.0# - Math.Exp(6.97996 - 0.01964 * dMW(i) ^ (2 / 3))
                 Next
 
             End If
 
-        ElseIf SG <> 0 Then
+        ElseIf SG <> 0.0# Then
 
             DistSG()
 
-            If MW <> 0 And TB <> 0 Then
+            If MW <> 0.0# And TB <> 0.0# Then
 
                 DistMW()
                 DistTB()
 
-            ElseIf MW = 0 And TB <> 0 Then
+            ElseIf MW = 0.0# And TB <> 0.0# Then
 
                 DistTB()
 
@@ -149,7 +149,7 @@ Public Class FormPCBulk
 
                 Next
 
-            ElseIf MW = 0 And TB = 0 Then
+            ElseIf MW = 0.0# And TB = 0.0# Then
 
                 For i = 1 To n
                     dMW(i) = ((Math.Log(1.07 - dSG(i)) - 3.56073) / (-2.93886)) ^ 10
@@ -168,16 +168,16 @@ Public Class FormPCBulk
 
             End If
 
-        ElseIf TB <> 0 Then
+        ElseIf TB <> 0.0# Then
 
             DistTB()
 
-            If MW <> 0 And SG <> 0 Then
+            If MW <> 0.0# And SG <> 0.0# Then
 
                 DistMW()
                 DistSG()
 
-            ElseIf MW = 0 And SG <> 0 Then
+            ElseIf MW = 0.0# And SG <> 0.0# Then
 
                 DistSG()
 
@@ -196,7 +196,7 @@ Public Class FormPCBulk
 
                 Next
 
-            ElseIf MW = 0 And SG = 0 Then
+            ElseIf MW = 0.0# And SG = 0.0# Then
 
                 For i = 1 To n
 
@@ -215,7 +215,7 @@ Public Class FormPCBulk
 
                 Next
 
-            ElseIf MW <> 0 And SG = 0 Then
+            ElseIf MW <> 0.0# And SG = 0.0# Then
 
                 DistMW()
 
@@ -235,13 +235,13 @@ Public Class FormPCBulk
         V10 = PropertyMethods.ViscTwu(T1, 37.8 + 273.15, 98.9 + 273.15, v37, v98)
         V20 = PropertyMethods.ViscTwu(T2, 37.8 + 273.15, 98.9 + 273.15, v37, v98)
 
-        If V1 <> 0 And V2 <> 0 Then
+        If V1 <> 0.0# And V2 <> 0.0# Then
 
             DistVISC1()
 
             DistVISC2()
 
-        ElseIf V1 = 0 And V2 <> 0 Then
+        ElseIf V1 = 0.0# And V2 <> 0.0# Then
 
             T1 = 37.8 + 273.15
 
@@ -251,7 +251,7 @@ Public Class FormPCBulk
 
             DistVISC2()
 
-        ElseIf V1 <> 0 And V2 = 0 Then
+        ElseIf V1 <> 0.0# And V2 = 0.0# Then
 
             T2 = 98.9 + 273.15
 
@@ -261,7 +261,7 @@ Public Class FormPCBulk
 
             DistVISC1()
 
-        ElseIf V1 = 0 And V2 = 0 Then
+        ElseIf V1 = 0.0# And V2 = 0.0# Then
 
             T2 = 98.9 + 273.15
             T1 = 37.8 + 273.15

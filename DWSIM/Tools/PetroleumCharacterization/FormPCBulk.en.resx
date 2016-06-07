@@ -142,12 +142,6 @@
   <data name="Label17.Text" xml:space="preserve">
     <value>[dimensionless]</value>
   </data>
-  <data name="Label18.Size" type="System.Drawing.Size, System.Drawing">
-    <value>49, 13</value>
-  </data>
-  <data name="Label18.Text" xml:space="preserve">
-    <value>kg / kmol</value>
-  </data>
   <data name="Label19.Size" type="System.Drawing.Size, System.Drawing">
     <value>126, 13</value>
   </data>
@@ -308,8 +302,8 @@
   <data name="GroupBox4.Text" xml:space="preserve">
     <value>Methods and Correlations</value>
   </data>
-  <data name="Label21.Location" type="System.Drawing.Point, System.Drawing">
-    <value>490, 41</value>
+  <data name="LabelTemp4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>484, 41</value>
   </data>
   <data name="TextBoxTB0.Location" type="System.Drawing.Point, System.Drawing">
     <value>416, 38</value>
