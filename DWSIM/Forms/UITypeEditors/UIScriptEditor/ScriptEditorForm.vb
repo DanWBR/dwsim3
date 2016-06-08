@@ -45,7 +45,11 @@ Imports System.Linq
 
     Private Sub ScriptEditorForm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        reader = New Jolt.XmlDocCommentReader(Assembly.GetExecutingAssembly())
+        Try
+            reader = New Jolt.XmlDocCommentReader(Assembly.GetExecutingAssembly())
+        Catch ex As Exception
+
+        End Try
 
         Me.txtScript.Tag = 0
 
