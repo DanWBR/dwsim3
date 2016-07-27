@@ -1507,7 +1507,6 @@ Namespace DWSIM.SimulationObjects.UnitOps
 
             End With
 
-
         End Sub
 
         Public Overrides Function GetPropertyValue(ByVal prop As String, Optional ByVal su As SistemasDeUnidades.Unidades = Nothing) As Object
