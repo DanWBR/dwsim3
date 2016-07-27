@@ -99,7 +99,7 @@ Namespace DWSIM.FlowPackages
 
                 g = 9.8
 
-                teta = Math.Asin(deltaz / L) ' * 180 / Math.PI
+                teta = Math.Atan(deltaz / (L ^ 2 - deltaz ^ 2) ^ 0.5)
 
                 qv = qv / 24 / 60 / 60
                 ql = ql / 24 / 60 / 60

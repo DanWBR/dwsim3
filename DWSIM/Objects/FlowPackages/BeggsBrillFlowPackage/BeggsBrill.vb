@@ -122,7 +122,7 @@ Namespace DWSIM.FlowPackages
                 deltaz = deltaz * 3.28084
 
                 'inclinação da tubulação (graus)
-                Dim teta = Math.Asin(Math.Sin(deltaz / L)) * 180 / Math.PI
+                Dim teta = Math.Atan(deltaz / (L ^ 2 - deltaz ^ 2) ^ 0.5) * 180 / Math.PI
 
                 'área da seção transversal (ft2)
                 Dim ap = Math.PI * D ^ 2 / 4

@@ -7062,25 +7062,22 @@ Final3:
 
         Public Function AUX_INT_CPDTi(ByVal T1 As Double, ByVal T2 As Double, ByVal subst As String) As Double
 
-            Dim deltaT As Double = (T2 - T1) / 10
+            Dim nsteps As Integer = Math.Abs(T2 - T1) / 5
+
+            If nsteps < 5 Then nsteps = 5
+
+            Dim deltaT As Double = (T2 - T1) / nsteps
+
             Dim i As Integer
             Dim integral, Ti As Double
 
             Ti = T1 + deltaT / 2
 
-            If My.Settings.EnableParallelProcessing Then
-                Dim values As New Concurrent.ConcurrentBag(Of Double)
-                Parallel.For(0, 10, Sub(ii)
-                                        values.Add(Me.AUX_CPi(subst, Ti + deltaT * ii) * deltaT)
-                                    End Sub)
-                integral = values.Sum
-            Else
-                integral = 0.0#
-                For i = 0 To 9
-                    integral += Me.AUX_CPi(subst, Ti) * deltaT
-                    Ti += deltaT
-                Next
-            End If
+            integral = 0.0#
+            For i = 0 To nsteps - 1
+                integral += Me.AUX_CPi(subst, Ti) * deltaT
+                Ti += deltaT
+            Next
 
             Return integral
 
@@ -7111,27 +7108,24 @@ Final3:
 
         Public Function AUX_INT_CPDT_Ti(ByVal T1 As Double, ByVal T2 As Double, ByVal subst As String) As Double
 
-            Dim deltaT As Double = (T2 - T1) / 10
+            Dim nsteps As Integer = Math.Abs(T2 - T1) / 5
+
+            If nsteps < 5 Then nsteps = 5
+
+            Dim deltaT As Double = (T2 - T1) / nsteps
+
             Dim i As Integer
             Dim integral, Ti As Double
 
             Ti = T1 + deltaT / 2
 
-            If My.Settings.EnableParallelProcessing Then
-                Dim values As New Concurrent.ConcurrentBag(Of Double)
-                Parallel.For(0, 10, Sub(ii)
-                                        values.Add(Me.AUX_CPi(subst, Ti + deltaT * ii) * deltaT / (Ti + deltaT * (ii - 1)))
-                                    End Sub)
-                integral = values.Sum
-            Else
-                integral = 0.0#
-                For i = 0 To 9
-                    integral += Me.AUX_CPi(subst, Ti) * deltaT / (Ti - deltaT)
-                    Ti += deltaT
-                Next
-            End If
+            integral = 0.0#
+            For i = 0 To nsteps - 1
+                integral += Me.AUX_CPi(subst, Ti) * deltaT / (Ti - deltaT)
+                Ti += deltaT
+            Next
 
-            Return integral 'KJ/Kg
+            Return integral 'kJ/Kg
 
         End Function
 
