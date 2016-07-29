@@ -18,11 +18,11 @@
 '
 
 Imports System.Collections.Generic
-Imports Microsoft.MSDN.Samples.GraphicObjects
+Imports Microsoft.Msdn.Samples.GraphicObjects
 Imports DWSIM.DWSIM.SimulationObjects
 Imports DWSIM.DWSIM.MathEx
 Imports System.Math
-Imports DWSIM.DWSIM.Flowsheet.FlowSheetSolver
+Imports DWSIM.DWSIM.Flowsheet.FlowsheetSolver
 
 Namespace DWSIM.SimulationObjects.UnitOps
 
