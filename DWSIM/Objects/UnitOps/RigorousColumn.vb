@@ -2064,21 +2064,21 @@ Namespace DWSIM.SimulationObjects.UnitOps
                         ElseIf i = Me.NumberOfStages - 1 Then
                             _st(_st.Count - 1).Name = DWSIM.App.GetLocalString("DCReboiler")
                         Else
-                            _st(_st.Count - 1).Name = DWSIM.App.GetLocalString("DCStage") & "_" & _st.Count - 1
+                            _st(_st.Count - 1).Name = DWSIM.App.GetLocalString("DCStage") & _st.Count - 1
                         End If
                     Case ColType.AbsorptionColumn
-                        _st(_st.Count - 1).Name = DWSIM.App.GetLocalString("DCStage") & "_" & _st.Count - 1
+                        _st(_st.Count - 1).Name = DWSIM.App.GetLocalString("DCStage") & _st.Count - 1
                     Case ColType.ReboiledAbsorber
                         If i = Me.NumberOfStages - 1 Then
                             _st(_st.Count - 1).Name = DWSIM.App.GetLocalString("DCReboiler")
                         Else
-                            _st(_st.Count - 1).Name = DWSIM.App.GetLocalString("DCStage") & "_" & _st.Count - 1
+                            _st(_st.Count - 1).Name = DWSIM.App.GetLocalString("DCStage") & _st.Count - 1
                         End If
                     Case ColType.RefluxedAbsorber
                         If i = 0 Then
                             _st(_st.Count - 1).Name = DWSIM.App.GetLocalString("DCCondenser")
                         Else
-                            _st(_st.Count - 1).Name = DWSIM.App.GetLocalString("DCStage") & "_" & _st.Count - 1
+                            _st(_st.Count - 1).Name = DWSIM.App.GetLocalString("DCStage") & _st.Count - 1
                         End If
                 End Select
             Next
